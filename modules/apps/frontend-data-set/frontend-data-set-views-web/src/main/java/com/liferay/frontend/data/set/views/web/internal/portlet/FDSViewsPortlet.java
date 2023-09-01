@@ -20,6 +20,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -244,16 +245,22 @@ public class FDSViewsPortlet extends MVCPortlet {
 						ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
 						_language.get(locale, "sortable"), "sortable", false)));
 
-		fdsFieldObjectDefinition.setEnableLocalization(true);
+		if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
+			fdsFieldObjectDefinition.setEnableLocalization(true);
 
-		_objectDefinitionLocalService.updateObjectDefinition(fdsFieldObjectDefinition);
+			fdsFieldObjectDefinition =
+				_objectDefinitionLocalService.updateObjectDefinition(
+					fdsFieldObjectDefinition);
+		}
 
 		ObjectField fieldLabelObjectField = ObjectFieldUtil.createObjectField(
 			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 			ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 			_language.get(locale, "column-label"), "label", false);
 
-		fieldLabelObjectField.setLocalized(true);
+		if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
+			fieldLabelObjectField.setLocalized(true);
+		}
 
 		_objectFieldLocalService.addCustomObjectField(
 			fieldLabelObjectField.getExternalReferenceCode(), userId,
@@ -269,8 +276,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 			fieldLabelObjectField.getName(),
 			fieldLabelObjectField.getReadOnly(),
 			fieldLabelObjectField.getReadOnlyConditionExpression(),
-			fieldLabelObjectField.isRequired(),
-			fieldLabelObjectField.isState(),
+			fieldLabelObjectField.isRequired(), fieldLabelObjectField.isState(),
 			fieldLabelObjectField.getObjectFieldSettings());
 
 		_objectDefinitionLocalService.publishSystemObjectDefinition(

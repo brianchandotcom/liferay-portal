@@ -10,6 +10,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -23,6 +24,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.Serializable;
+
+import java.util.Map;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -69,13 +72,8 @@ public class SaveFDSFieldsMVCResourceCommand
 			JSONObject creationDataJSONObject =
 				creationDataJSONArray.getJSONObject(i);
 
-			ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
-				0, objectDefinition.getObjectDefinitionId(),
+			Map<String, Serializable> labelField =
 				HashMapBuilder.<String, Serializable>put(
-					"label_i18n", HashMapBuilder.put(
-						themeDisplay.getLanguageId(), String.valueOf(creationDataJSONObject.get("name"))
-					).build()
-				).put(
 					"name", String.valueOf(creationDataJSONObject.get("name"))
 				).put(
 					"r_fdsViewFDSFieldRelationship_c_fdsViewId", fdsViewId
@@ -85,7 +83,24 @@ public class SaveFDSFieldsMVCResourceCommand
 					"sortable", true
 				).put(
 					"type", String.valueOf(creationDataJSONObject.get("type"))
-				).build(),
+				).build();
+
+			if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
+				labelField.put(
+					"label_i18n",
+					HashMapBuilder.put(
+						themeDisplay.getLanguageId(),
+						String.valueOf(creationDataJSONObject.get("name"))
+					).build());
+			}
+			else {
+				labelField.put(
+					"label",
+					String.valueOf(creationDataJSONObject.get("name")));
+			}
+
+			ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
+				0, objectDefinition.getObjectDefinitionId(), labelField,
 				new ServiceContext());
 
 			JSONObject jsonObject = _jsonFactory.createJSONObject(

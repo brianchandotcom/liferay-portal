@@ -11,7 +11,11 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {FDS_INTERNAL_CELL_RENDERERS} from '@liferay/frontend-data-set-web';
-import {InputLocalized, LocalizedValue, ManagementToolbar} from 'frontend-js-components-web';
+import {
+	InputLocalized,
+	LocalizedValue,
+	ManagementToolbar,
+} from 'frontend-js-components-web';
 import {
 	IClientExtensionRenderer,
 	IInternalRenderer,
@@ -412,14 +416,16 @@ const EditFDSFieldModalContent = ({
 		(cellRenderer: IInternalRenderer) => cellRenderer.name
 	);
 
-	let fdsFieldTranslations = fdsField.label_i18n;
-	let fieldLabel = fdsField.label_i18n[defaultLanguageId] || '';
+	const fdsFieldTranslations = fdsField.label_i18n;
+	const fieldLabel = Liferay.FeatureFlags['LPS-172017']
+		? fdsField.label_i18n[defaultLanguageId] || ''
+		: fdsField.label;
 
-	const [translations, setTranslations] = useState(fdsFieldTranslations);
+	const [i18nFieldLabels, setI18nFieldLabels] = useState(fdsFieldTranslations);
 
 	const editFDSField = async () => {
-		const body = {
-			label_i18n: translations,
+		let body;
+		const bodyTmp = {
 			renderer: selectedFDSFieldRenderer,
 			rendererType: !fdsInternalCellRendererNames.includes(
 				selectedFDSFieldRenderer
@@ -428,6 +434,13 @@ const EditFDSFieldModalContent = ({
 				: 'internal',
 			sortable: fdsFieldSortable,
 		};
+
+		if (Liferay.FeatureFlags['LPS-172017']) {
+			body = {...bodyTmp, label_i18n: i18nFieldLabels};
+		}
+		else {
+			body = {...bodyTmp, label: fdsFieldLabelRef.current?.value};
+		}
 
 		const response = await fetch(
 			`${API_URL.FDS_FIELDS}/by-external-reference-code/${fdsField.externalReferenceCode}`,
@@ -546,10 +559,7 @@ const EditFDSFieldModalContent = ({
 	return (
 		<>
 			<ClayModal.Header>
-				{Liferay.Util.sub(
-					Liferay.Language.get('edit-x'),
-					fieldLabel
-				)}
+				{Liferay.Util.sub(Liferay.Language.get('edit-x'), fieldLabel)}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
@@ -569,16 +579,16 @@ const EditFDSFieldModalContent = ({
 				{Liferay.FeatureFlags['LPS-172017'] ? (
 					<ClayForm.Group>
 						<InputLocalized
+							id={fdsFieldLabelInputId}
 							label={Liferay.Language.get('label')}
 							name="label"
-							onChange={(translation: any) => {
-								console.log(translation);
-								setTranslations({
-									...translations,
-									...translation
+							onChange={(newFieldLabel) => {
+								setI18nFieldLabels({
+									...i18nFieldLabels,
+									...newFieldLabel,
 								});
 							}}
-							translations={translations}
+							translations={i18nFieldLabels}
 						/>
 					</ClayForm.Group>
 				) : (
@@ -588,13 +598,14 @@ const EditFDSFieldModalContent = ({
 						</label>
 
 						<ClayInput
-							// defaultValue={fdsField.label}
+							defaultValue={fieldLabel}
 							id={fdsFieldLabelInputId}
 							ref={fdsFieldLabelRef}
 							type="text"
 						/>
 					</ClayForm.Group>
 				)}
+
 				<ClayForm.Group>
 					<label htmlFor={fdsFieldRendererSelectId}>
 						{Liferay.Language.get('renderer')}

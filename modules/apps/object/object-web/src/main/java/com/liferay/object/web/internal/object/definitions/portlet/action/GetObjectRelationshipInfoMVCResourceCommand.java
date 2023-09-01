@@ -28,11 +28,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + ObjectPortletKeys.OBJECT_DEFINITIONS,
-		"mvc.command.name=/object_definitions/get_object_relationship_types"
+		"mvc.command.name=/object_definitions/get_object_relationship_info"
 	},
 	service = MVCResourceCommand.class
 )
-public class GetObjectRelationshipTypesMVCResourceCommand
+public class GetObjectRelationshipInfoMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override
@@ -53,7 +53,12 @@ public class GetObjectRelationshipTypesMVCResourceCommand
 			JSONUtil.put(
 				"objectRelationshipTypes",
 				ObjectRelationshipUtil.getObjectRelationshipTypes(
-					objectDefinition, _systemObjectDefinitionManagerRegistry)));
+					objectDefinition, _systemObjectDefinitionManagerRegistry)
+			).put(
+				"parameterRequired",
+				ObjectRelationshipUtil.isParameterRequired(
+					objectDefinition, _systemObjectDefinitionManagerRegistry)
+			));
 	}
 
 	@Reference

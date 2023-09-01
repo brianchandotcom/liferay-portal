@@ -12,6 +12,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.string.StringBundler;
@@ -151,6 +152,44 @@ public class ObjectRelationshipUtil {
 		}
 
 		return relatedObjectDefinitions;
+	}
+
+	public static String getRESTContextPath(
+		ObjectDefinition objectDefinition,
+		SystemObjectDefinitionManagerRegistry
+			systemObjectDefinitionManagerRegistry) {
+
+		if (!objectDefinition.isUnmodifiableSystemObject()) {
+			return objectDefinition.getRESTContextPath();
+		}
+
+		SystemObjectDefinitionManager systemObjectDefinitionManager =
+			systemObjectDefinitionManagerRegistry.
+				getSystemObjectDefinitionManager(objectDefinition.getName());
+
+		if (systemObjectDefinitionManager == null) {
+			return StringPool.BLANK;
+		}
+
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
+
+		return jaxRsApplicationDescriptor.getRESTContextPath();
+	}
+
+	public static boolean isParameterRequired(
+		ObjectDefinition objectDefinition,
+		SystemObjectDefinitionManagerRegistry
+			systemObjectDefinitionManagerRegistry) {
+
+		String restContextPath = getRESTContextPath(
+			objectDefinition, systemObjectDefinitionManagerRegistry);
+
+		if (restContextPath.matches(".*/\\{\\w+}/.*")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Set<String> _defaultObjectRelationshipTypes =

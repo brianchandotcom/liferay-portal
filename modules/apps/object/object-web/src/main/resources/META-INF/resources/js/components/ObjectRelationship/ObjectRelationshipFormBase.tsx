@@ -193,8 +193,7 @@ export function ObjectRelationshipFormBase({
 	) => {
 		const url = createResourceURL(baseResourceURL, {
 			objectDefinitionId: objectDefinition?.id,
-			p_p_resource_id:
-				'/object_definitions/get_object_relationship_types',
+			p_p_resource_id: '/object_definitions/get_object_relationship_info',
 		}).href;
 
 		const {objectRelationshipTypes} = await API.fetchJSON<{

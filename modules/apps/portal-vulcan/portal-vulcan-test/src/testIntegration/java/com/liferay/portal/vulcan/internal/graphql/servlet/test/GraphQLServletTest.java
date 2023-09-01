@@ -30,6 +30,9 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+
 /**
  * @author Luis Miguel Barcos
  */
@@ -113,11 +116,20 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 
 			Assert.assertNull(
 				JSONUtil.getValueAsJSONObject(jsonObject, "JSONObject/data"));
-			Assert.assertEquals(
-				"Maximum query depth exceeded 2 > 1",
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					"extensions",
+					JSONUtil.put(
+						"code", "Bad Request"
+					).put(
+						"exception", JSONUtil.put("errno", 400)
+					)
+				).put(
+					"message", "Maximum query depth exceeded 2 > 1"
+				).toString(),
 				JSONUtil.getValueAsString(
-					jsonObject, "JSONArray/errors", "Object/0",
-					"Object/message"));
+					jsonObject, "JSONArray/errors", "Object/0"),
+				JSONCompareMode.LENIENT);
 
 			serviceRegistration.unregister();
 		}

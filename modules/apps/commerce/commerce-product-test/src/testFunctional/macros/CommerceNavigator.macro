@@ -204,6 +204,10 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/lists");
 	}
 
+	macro openCommerceCountriesAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_address_web_internal_portlet_CommerceCountryPortlet");
+	}
+
 	macro searchCatalog {
 		Type(
 			locator1 = "AppBuilder#SEARCH_BAR_INPUT",

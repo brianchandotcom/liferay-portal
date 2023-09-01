@@ -14,13 +14,13 @@ import {SIZES, ScreenSize, Size} from '../constants/sizes';
 
 interface IPreviewProps {
 	activeSize: Size;
+	open: boolean;
 	previewRef: React.RefObject<HTMLDivElement>;
 }
 
 const SEGMENT_SIMULATION_EVENT = 'SegmentSimulation:changeSegment';
 
-export default function Preview({activeSize, previewRef}: IPreviewProps) {
-	const [visible, setVisible] = useState<boolean>(true);
+export default function Preview({activeSize, open, previewRef}: IPreviewProps) {
 	const [segmentMessage, setSegmentMessage] = useState<string | null>(null);
 	const [size, setSize] = useState<ScreenSize | undefined>(
 		activeSize.screenSize
@@ -29,49 +29,19 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 	const previewWrapperRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		const wrapper = document.getElementById('wrapper');
-
-		const onCloseSimulationPanel = () => {
-			setVisible(false);
-
-			if (wrapper) {
-				wrapper.removeAttribute('inert');
-			}
-		};
-		const onOpenSimulationPanel = () => {
-			setVisible(true);
-
-			if (wrapper) {
-				wrapper.setAttribute('inert', '');
-			}
-		};
-
 		const handleSegmentChange = ({message}: {message: string}) => {
 			setSegmentMessage(message);
 		};
 
-		Liferay.on(
-			'SimulationMenu:closeSimulationPanel',
-			onCloseSimulationPanel
-		);
-		Liferay.on('SimulationMenu:openSimulationPanel', onOpenSimulationPanel);
 		Liferay.on(SEGMENT_SIMULATION_EVENT, handleSegmentChange);
 
 		return () => {
-			Liferay.detach(
-				'SimulationMenu:closeSimulationPanel',
-				onCloseSimulationPanel
-			);
-			Liferay.detach(
-				'SimulationMenu:openSimulationPanel',
-				onOpenSimulationPanel
-			);
 			Liferay.detach(SEGMENT_SIMULATION_EVENT);
 		};
 	}, []);
 
 	const updateAutosizePreview = useCallback(() => {
-		if (!visible || !previewWrapperRef.current) {
+		if (!open || !previewWrapperRef.current) {
 			return;
 		}
 
@@ -86,7 +56,7 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 				  }
 				: activeSize.screenSize
 		);
-	}, [activeSize.id, activeSize.screenSize, visible]);
+	}, [activeSize.id, activeSize.screenSize, open]);
 
 	useEffect(() => {
 		updateAutosizePreview();
@@ -100,7 +70,7 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 
 	useEventListener('resize', handleWindowResize, false, window);
 
-	if (!visible) {
+	if (!open) {
 		return null;
 	}
 

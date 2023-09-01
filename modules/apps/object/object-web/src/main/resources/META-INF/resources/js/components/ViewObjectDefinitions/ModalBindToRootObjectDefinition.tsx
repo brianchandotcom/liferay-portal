@@ -253,11 +253,19 @@ export function ModalBindToRootObjectDefinition({
 									  )
 									: ''
 							}
-							onChange={async (selectedTreeEdgeOption) => {
-								handleSelectTreeEdgeOption(
-									selectedTreeEdgeOption,
-									index
+							onChange={(selectedTreeEdgeOption) => {
+								const isOptionAlreadySelected = selectedTreeEdgeOptions.some(
+									({objectRelationshipId}) =>
+										objectRelationshipId ===
+										selectedTreeEdgeOption.objectRelationshipId
 								);
+
+								if (!isOptionAlreadySelected) {
+									handleSelectTreeEdgeOption(
+										selectedTreeEdgeOption,
+										index
+									);
+								}
 							}}
 							options={treeEdgeOptions}
 							readonly={

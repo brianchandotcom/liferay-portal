@@ -1687,3 +1687,25 @@ If you are providing your own `DLProcessor` implementation via a hook, convert i
 ### Why was this change made?
 
 There were some `DLProcessor` registration logic duplicated between the `DLProcessorRegistryImpl` and `HookHotDeployListener`.
+
+---------------------------------------
+
+## Removed support for DestinationEventListener and MessageBusEventListener
+- **Date:** 2023-Sep-1
+- **JIRA Ticket:** [LPS-195116](https://liferay.atlassian.net/browse/LPS-195116)
+
+### What changed?
+
+The interfaces `DestinationEventListener` and `MessageBusEventListener` and the support to register any listener to listen to `MessageListener` and `Destination` registration and unregistration are removed.
+
+### Who is affected?
+
+This affects anyone registering such listeners to listen to these events.
+
+### How should I update my code?
+
+The removal of this extension point has no direct replacement.
+
+### Why was this change made?
+
+These listeners are not used in Liferay. Liferay decided to not support these extension points.

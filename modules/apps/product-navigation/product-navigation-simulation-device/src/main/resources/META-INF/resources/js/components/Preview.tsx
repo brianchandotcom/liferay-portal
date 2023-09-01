@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {SIZES, ScreenSize, Size} from '../constants/sizes';
+import {useCustomSize} from '../contexts/CustomSizeContext';
 
 interface IPreviewProps {
 	activeSize: Size;
@@ -25,6 +26,7 @@ export default function Preview({activeSize, open, previewRef}: IPreviewProps) {
 	const [size, setSize] = useState<ScreenSize | undefined>(
 		activeSize.screenSize
 	);
+	const customSize = useCustomSize();
 
 	const previewWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -103,7 +105,7 @@ export default function Preview({activeSize, open, previewRef}: IPreviewProps) {
 					}
 				)}
 				ref={previewRef}
-				style={size}
+				style={activeSize.id === SIZES.custom.id ? customSize : size}
 			>
 				<iframe
 					className="border-0 h-100 w-100"

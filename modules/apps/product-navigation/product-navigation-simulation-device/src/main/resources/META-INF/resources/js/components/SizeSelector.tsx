@@ -14,6 +14,11 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {SIZES, Size} from '../constants/sizes';
+import {
+	useCustomSize,
+	useSetCustomHeight,
+	useSetCustomWidth,
+} from '../contexts/CustomSizeContext';
 
 interface ISizeSelectorProps {
 	activeSize: Size;
@@ -213,10 +218,10 @@ function CustomSizeSelector({
 	open,
 	previewRef,
 }: ICustomSizeSelectorProps) {
-	const [height, setHeight] = useState<number>(
-		SIZES.custom.screenSize.height
-	);
-	const [width, setWidth] = useState<number>(SIZES.custom.screenSize.width);
+	const {height, width} = useCustomSize();
+
+	const setHeight = useSetCustomHeight();
+	const setWidth = useSetCustomWidth();
 
 	const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
@@ -249,7 +254,7 @@ function CustomSizeSelector({
 		return () => {
 			resizeObserver.disconnect();
 		};
-	}, [open, previewRef]);
+	}, [open, previewRef, setHeight, setWidth]);
 
 	return (
 		<div id={id}>

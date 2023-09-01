@@ -12,6 +12,7 @@ import Preview from './Preview';
 import SizeSelector from './SizeSelector';
 
 import '../../css/main.scss';
+import {CustomSizeContextProvider} from '../contexts/CustomSizeContext';
 
 interface IProps {
 	portletNamespace: string;
@@ -69,7 +70,7 @@ export default function App({portletNamespace: namespace}: IProps) {
 	}
 
 	return (
-		<>
+		<CustomSizeContextProvider>
 			<SizeSelector
 				activeSize={activeSize}
 				namespace={namespace}
@@ -85,7 +86,7 @@ export default function App({portletNamespace: namespace}: IProps) {
 					previewRef={previewRef}
 				/>
 			</ReactPortal>
-		</>
+		</CustomSizeContextProvider>
 	);
 }
 

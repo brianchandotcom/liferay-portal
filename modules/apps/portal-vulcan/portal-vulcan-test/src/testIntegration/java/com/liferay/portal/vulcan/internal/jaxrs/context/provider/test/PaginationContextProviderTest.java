@@ -23,9 +23,7 @@ import javax.ws.rs.core.Feature;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -49,182 +47,243 @@ public class PaginationContextProviderTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
+	@Test
+	public void test() throws Exception {
 		MockFeature mockFeature = new MockFeature(_feature);
 
-		_contextProvider = (ContextProvider<Pagination>)mockFeature.getObject(
-			"com.liferay.portal.vulcan.internal.jaxrs.context.provider." +
-				"PaginationContextProvider");
+		ContextProvider<Pagination> contextProvider =
+			(ContextProvider<Pagination>)mockFeature.getObject(
+				"com.liferay.portal.vulcan.internal.jaxrs.context.provider." +
+					"PaginationContextProvider");
 
 		Bundle bundle = FrameworkUtil.getBundle(
 			PaginationContextProviderTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		_mockResource = new MockResource();
+		MockResource mockResource = new MockResource();
 
-		_serviceRegistration = bundleContext.registerService(
-			EntityModelResource.class, _mockResource,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"component.name", MockResource.class.getCanonicalName()
-			).put(
-				"osgi.jaxrs.resource", "true"
-			).build());
-	}
+		Class<? extends MockResource> clazz = mockResource.getClass();
 
-	@After
-	public void tearDown() throws Exception {
-		_serviceRegistration.unregister();
-	}
+		ServiceRegistration<EntityModelResource> serviceRegistration =
+			bundleContext.registerService(
+				EntityModelResource.class, mockResource,
+				HashMapDictionaryBuilder.<String, Object>put(
+					"component.name", MockResource.class.getCanonicalName()
+				).put(
+					"osgi.jaxrs.resource", "true"
+				).build());
 
-	@Test
-	public void testCreateContextOverPageSizeLimit() throws Exception {
-		_modifyPageSizeLimitConfiguration(20);
+		// Context over page size limit
 
-		Pagination pagination = _contextProvider.createContext(
-			new MockMessage(
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_CONFIGURATION_SERVICE_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"pageSizeLimit", 20
+						).build())) {
+
+			MockHttpServletRequest mockHttpServletRequest =
 				new MockHttpServletRequest() {
 					{
 						addParameter("pageSize", "21");
 					}
-				},
-				_getMockResourceMethod(), _mockResource));
+				};
 
-		Assert.assertEquals(1, pagination.getPage());
-		Assert.assertEquals(20, pagination.getPageSize());
-	}
+			Pagination pagination = contextProvider.createContext(
+				new MockMessage(
+					mockHttpServletRequest,
+					clazz.getMethod(MockResource.METHOD_NAME, String.class),
+					mockResource));
 
-	@Test
-	public void testCreateContextUnderPageSizeLimit() throws Exception {
-		Pagination pagination = _contextProvider.createContext(
+			Assert.assertEquals(1, pagination.getPage());
+			Assert.assertEquals(20, pagination.getPageSize());
+		}
+
+		// Context under page size limit
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest() {
+				{
+					addParameter("page", "1");
+					addParameter("pageSize", "19");
+				}
+			};
+
+		Pagination pagination = contextProvider.createContext(
 			new MockMessage(
-				new MockHttpServletRequest() {
-					{
-						addParameter("page", "1");
-						addParameter("pageSize", "19");
-					}
-				},
-				_getMockResourceMethod(), _mockResource));
+				mockHttpServletRequest,
+				clazz.getMethod(MockResource.METHOD_NAME, String.class),
+				mockResource));
 
 		Assert.assertEquals(1, pagination.getPage());
 		Assert.assertEquals(19, pagination.getPageSize());
-	}
 
-	@Test
-	public void testCreateContextWithNegativePageParameter() throws Exception {
+		// Context with negative page
+
+		MockHttpServletRequest negativePageMockHttpServletRequest =
+			new MockHttpServletRequest() {
+				{
+					addParameter("page", "-1");
+				}
+			};
+
 		_assertException(
 			"Page -1 is not a number greater than or equal to 1",
-			() -> _contextProvider.createContext(
+			() -> contextProvider.createContext(
 				new MockMessage(
-					new MockHttpServletRequest() {
-						{
-							addParameter("page", "-1");
-						}
-					},
-					_getMockResourceMethod(), _mockResource)));
-	}
+					negativePageMockHttpServletRequest,
+					clazz.getMethod(MockResource.METHOD_NAME, String.class),
+					mockResource)));
 
-	@Test
-	public void testCreateContextWithNegativePageSizeAndPageSizeLimit()
-		throws Exception {
+		// Context with page size unlimited and page size limit
 
-		_modifyPageSizeLimitConfiguration(30);
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_CONFIGURATION_SERVICE_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"pageSizeLimit", 30
+						).build())) {
 
-		Pagination pagination = _contextProvider.createContext(
-			new MockMessage(
-				new MockHttpServletRequest() {
-					{
-						addParameter("pageSize", "-1");
-					}
-				},
-				_getMockResourceMethod(), _mockResource));
+			mockHttpServletRequest = new MockHttpServletRequest() {
+				{
+					addParameter("pageSize", "-1");
+				}
+			};
 
-		Assert.assertEquals(1, pagination.getPage());
-		Assert.assertEquals(30, pagination.getPageSize());
-	}
+			pagination = contextProvider.createContext(
+				new MockMessage(
+					mockHttpServletRequest,
+					clazz.getMethod(MockResource.METHOD_NAME, String.class),
+					mockResource));
 
-	@Test
-	public void testCreateContextWithNullPaginationAndPageSizeLimit()
-		throws Exception {
+			Assert.assertEquals(1, pagination.getPage());
+			Assert.assertEquals(30, pagination.getPageSize());
+		}
 
-		_modifyPageSizeLimitConfiguration(10);
+		// Context with null pagination and page size limit
 
-		Pagination pagination = _contextProvider.createContext(
-			new MockMessage(
-				new MockHttpServletRequest(), _getMockResourceMethod(),
-				_mockResource));
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_CONFIGURATION_SERVICE_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"pageSizeLimit", 10
+						).build())) {
 
-		Assert.assertEquals(1, pagination.getPage());
-		Assert.assertEquals(10, pagination.getPageSize());
-	}
+			mockHttpServletRequest = new MockHttpServletRequest();
 
-	@Test
-	public void testCreateContextWithNullPaginationParameters()
-		throws Exception {
+			pagination = contextProvider.createContext(
+				new MockMessage(
+					mockHttpServletRequest,
+					clazz.getMethod(MockResource.METHOD_NAME, String.class),
+					mockResource));
 
-		_modifyPageSizeLimitConfiguration(0);
+			Assert.assertEquals(1, pagination.getPage());
+			Assert.assertEquals(10, pagination.getPageSize());
+		}
 
-		Pagination pagination = _contextProvider.createContext(
-			new MockMessage(
-				new MockHttpServletRequest(), _getMockResourceMethod(),
-				_mockResource));
+		// Context with null pagination and unlimited page size limit
 
-		Assert.assertEquals(1, pagination.getPage());
-		Assert.assertEquals(20, pagination.getPageSize());
-	}
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_CONFIGURATION_SERVICE_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"pageSizeLimit", 0
+						).build())) {
 
-	@Test
-	public void testCreateContextWithPageParameterZero() throws Exception {
+			mockHttpServletRequest = new MockHttpServletRequest();
+
+			pagination = contextProvider.createContext(
+				new MockMessage(
+					mockHttpServletRequest,
+					clazz.getMethod(MockResource.METHOD_NAME, String.class),
+					mockResource));
+
+			Assert.assertEquals(1, pagination.getPage());
+			Assert.assertEquals(20, pagination.getPageSize());
+		}
+
+		// Context with page parameter zero
+
+		MockHttpServletRequest pageZeroMockHttpServletRequest =
+			new MockHttpServletRequest() {
+				{
+					addParameter("page", "0");
+				}
+			};
+
 		_assertException(
 			"Page 0 is not a number greater than or equal to 1",
-			() -> _contextProvider.createContext(
+			() -> contextProvider.createContext(
 				new MockMessage(
-					new MockHttpServletRequest() {
-						{
-							addParameter("page", "0");
-						}
-					},
-					_getMockResourceMethod(), _mockResource)));
-	}
+					pageZeroMockHttpServletRequest,
+					clazz.getMethod(MockResource.METHOD_NAME, String.class),
+					mockResource)));
 
-	@Test
-	public void testCreateContextWithPageSizeEqualsPageSizeLimit()
-		throws Exception {
+		// Context with page size equal to the limit
 
-		_modifyPageSizeLimitConfiguration(20);
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_CONFIGURATION_SERVICE_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"pageSizeLimit", 20
+						).build())) {
 
-		Pagination pagination = _contextProvider.createContext(
-			new MockMessage(
-				new MockHttpServletRequest() {
-					{
-						addParameter("page", "1");
-						addParameter("pageSize", "20");
-					}
-				},
-				_getMockResourceMethod(), _mockResource));
+			mockHttpServletRequest = new MockHttpServletRequest() {
+				{
+					addParameter("page", "1");
+					addParameter("pageSize", "20");
+				}
+			};
 
-		Assert.assertEquals(1, pagination.getPage());
-		Assert.assertEquals(20, pagination.getPageSize());
-	}
+			pagination = contextProvider.createContext(
+				new MockMessage(
+					mockHttpServletRequest,
+					clazz.getMethod(MockResource.METHOD_NAME, String.class),
+					mockResource));
 
-	@Test
-	public void testCreateContextWithPageSizeZeroAndPageSizeLimit()
-		throws Exception {
+			Assert.assertEquals(1, pagination.getPage());
+			Assert.assertEquals(20, pagination.getPageSize());
+		}
 
-		_modifyPageSizeLimitConfiguration(30);
+		// Context with page size zero and page size limit
 
-		Pagination pagination = _contextProvider.createContext(
-			new MockMessage(
-				new MockHttpServletRequest() {
-					{
-						addParameter("pageSize", "0");
-					}
-				},
-				_getMockResourceMethod(), _mockResource));
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						_CONFIGURATION_SERVICE_PID,
+						HashMapDictionaryBuilder.<String, Object>put(
+							"pageSizeLimit", 30
+						).build())) {
 
-		Assert.assertEquals(1, pagination.getPage());
-		Assert.assertEquals(30, pagination.getPageSize());
+			mockHttpServletRequest = new MockHttpServletRequest() {
+				{
+					addParameter("pageSize", "0");
+				}
+			};
+
+			pagination = contextProvider.createContext(
+				new MockMessage(
+					mockHttpServletRequest,
+					clazz.getMethod(MockResource.METHOD_NAME, String.class),
+					mockResource));
+
+			Assert.assertEquals(1, pagination.getPage());
+			Assert.assertEquals(30, pagination.getPageSize());
+		}
+
+		serviceRegistration.unregister();
 	}
 
 	private void _assertException(
@@ -244,34 +303,13 @@ public class PaginationContextProviderTest {
 		}
 	}
 
-	private Method _getMockResourceMethod() {
-		Class<? extends MockResource> clazz = _mockResource.getClass();
-
-		return clazz.getMethod(MockResource.METHOD_NAME, String.class);
-	}
-
-	private void _modifyPageSizeLimitConfiguration(int pageSize)
-		throws Exception {
-
-		new CompanyConfigurationTemporarySwapper(
-			TestPropsValues.getCompanyId(), _CONFIGURATION_SERVICE_PID,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"pageSizeLimit", pageSize
-			).build());
-	}
-
 	private static final String _CONFIGURATION_SERVICE_PID =
 		"com.liferay.portal.vulcan.internal.configuration." +
 			"HeadlessAPICompanyConfiguration";
-
-	private ContextProvider<Pagination> _contextProvider;
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.vulcan.internal.jaxrs.feature.VulcanFeature"
 	)
 	private Feature _feature;
-
-	private MockResource _mockResource;
-	private ServiceRegistration<EntityModelResource> _serviceRegistration;
 
 }

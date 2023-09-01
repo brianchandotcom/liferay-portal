@@ -15,7 +15,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class QueueProjectEventHandler extends BaseObjectEventHandler {
+public class QueueJobEventHandler extends BaseObjectEventHandler {
 
 	@Override
 	public String process() throws Exception {
@@ -41,7 +41,7 @@ public class QueueProjectEventHandler extends BaseObjectEventHandler {
 		return jobEntity.toString();
 	}
 
-	protected QueueProjectEventHandler(
+	protected QueueJobEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);

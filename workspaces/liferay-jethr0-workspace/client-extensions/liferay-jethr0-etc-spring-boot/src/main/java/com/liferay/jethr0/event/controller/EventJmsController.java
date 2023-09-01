@@ -49,8 +49,8 @@ public class EventJmsController {
 			(eventType == EventHandler.EventType.COMPUTER_TEMPORARILY_ONLINE) ||
 			(eventType == EventHandler.EventType.CREATE_BUILD) ||
 			(eventType == EventHandler.EventType.CREATE_JENKINS_COHORT) ||
-			(eventType == EventHandler.EventType.CREATE_PROJECT) ||
-			(eventType == EventHandler.EventType.QUEUE_PROJECT)) {
+			(eventType == EventHandler.EventType.CREATE_JOB) ||
+			(eventType == EventHandler.EventType.QUEUE_JOB)) {
 
 			EventHandler eventHandler = _eventHandlerFactory.newEventHandler(
 				messageJSONObject);

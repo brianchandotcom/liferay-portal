@@ -19,7 +19,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class CreateProjectEventHandler extends BaseObjectEventHandler {
+public class CreateJobEventHandler extends BaseObjectEventHandler {
 
 	@Override
 	public String process() throws Exception {
@@ -93,7 +93,7 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 		return jobEntity.toString();
 	}
 
-	protected CreateProjectEventHandler(
+	protected CreateJobEventHandler(
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.cache;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -24,21 +25,19 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = KaleoTaskScriptedAssignmentCache.class)
 public class KaleoTaskScriptedAssignmentCache {
 
-	public Collection<KaleoTaskAssignment> getKaleoTaskAssignments(String key) {
-		return _portalCache.get(key);
-	}
+	public Collection<KaleoTaskAssignment> getKaleoTaskAssignments(
+		KaleoInstanceToken kaleoInstanceToken) {
 
-	public String getKey(KaleoInstanceToken kaleoInstanceToken) {
-		return kaleoInstanceToken.getKaleoInstanceTokenId() + "#" +
-			kaleoInstanceToken.getCurrentKaleoNodeId();
+		return _portalCache.get(_getKey(kaleoInstanceToken));
 	}
 
 	public void putKaleoTaskAssignments(
-		String key, Collection<KaleoTaskAssignment> kaleoTaskAssignments,
-		int timeToLive) {
+		KaleoInstanceToken kaleoInstanceToken,
+		Collection<KaleoTaskAssignment> kaleoTaskAssignments, int timeToLive) {
 
 		_portalCache.put(
-			key, new ArrayList<>(kaleoTaskAssignments), timeToLive);
+			_getKey(kaleoInstanceToken), new ArrayList<>(kaleoTaskAssignments),
+			timeToLive);
 	}
 
 	@Activate
@@ -53,6 +52,11 @@ public class KaleoTaskScriptedAssignmentCache {
 	protected void deactivate() {
 		_multiVMPool.removePortalCache(
 			KaleoTaskScriptedAssignmentCache.class.getName());
+	}
+
+	private String _getKey(KaleoInstanceToken kaleoInstanceToken) {
+		return kaleoInstanceToken.getKaleoInstanceTokenId() + StringPool.POUND +
+			kaleoInstanceToken.getCurrentKaleoNodeId();
 	}
 
 	@Reference

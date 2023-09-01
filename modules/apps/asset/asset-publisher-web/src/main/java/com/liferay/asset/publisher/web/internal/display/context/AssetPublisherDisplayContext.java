@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -192,11 +193,10 @@ public class AssetPublisherDisplayContext {
 		_themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
 		_assetPublisherPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				AssetPublisherPortletInstanceConfiguration.class);
+			ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				AssetPublisherPortletInstanceConfiguration.class,
+				_themeDisplay);
 
 		_httpServletRequest = portal.getHttpServletRequest(portletRequest);
 	}

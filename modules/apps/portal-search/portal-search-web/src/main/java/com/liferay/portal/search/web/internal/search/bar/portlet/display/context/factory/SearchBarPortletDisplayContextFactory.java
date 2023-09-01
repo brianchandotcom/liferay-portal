@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -62,14 +61,11 @@ public class SearchBarPortletDisplayContextFactory {
 		_portal = portal;
 		_renderRequest = renderRequest;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		_searchBarPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				SearchBarPortletInstanceConfiguration.class);
+			ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				SearchBarPortletInstanceConfiguration.class,
+				(ThemeDisplay)renderRequest.getAttribute(
+					WebKeys.THEME_DISPLAY));
 	}
 
 	public SearchBarPortletDisplayContext create(
@@ -117,8 +113,7 @@ public class SearchBarPortletDisplayContextFactory {
 
 		SearchBarPortletInstanceConfiguration
 			searchBarPortletInstanceConfiguration =
-				getSearchBarPortletInstanceConfiguration(
-					themeDisplay.getPortletDisplay());
+				getSearchBarPortletInstanceConfiguration(themeDisplay);
 
 		searchBarPortletDisplayContext.setAvailableEverythingSearchScope(
 			isAvailableEverythingSearchScope());
@@ -270,12 +265,11 @@ public class SearchBarPortletDisplayContextFactory {
 	}
 
 	protected SearchBarPortletInstanceConfiguration
-		getSearchBarPortletInstanceConfiguration(
-			PortletDisplay portletDisplay) {
+		getSearchBarPortletInstanceConfiguration(ThemeDisplay themeDisplay) {
 
 		try {
-			return portletDisplay.getPortletInstanceConfiguration(
-				SearchBarPortletInstanceConfiguration.class);
+			return ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				SearchBarPortletInstanceConfiguration.class, themeDisplay);
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

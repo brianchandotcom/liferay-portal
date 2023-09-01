@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-KBSearchPortletInstanceConfiguration kbSearchPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(KBSearchPortletInstanceConfiguration.class);
+KBSearchPortletInstanceConfiguration kbSearchPortletInstanceConfiguration = ConfigurationProviderUtil.getPortletInstanceConfiguration(KBSearchPortletInstanceConfiguration.class, themeDisplay);
 
 request.setAttribute("init.jsp-enableKBArticleAssetLinks", kbSearchPortletInstanceConfiguration.enableKBArticleAssetLinks());
 request.setAttribute("init.jsp-enableKBArticleDescription", kbSearchPortletInstanceConfiguration.enableKBArticleDescription());

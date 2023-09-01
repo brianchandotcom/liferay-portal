@@ -7,7 +7,7 @@ package com.liferay.commerce.product.content.web.internal.display.context;
 
 import com.liferay.commerce.product.content.web.internal.configuration.CPContentPortletInstanceConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -22,15 +22,11 @@ public class CPContentConfigurationDisplayContext {
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		_cpContentPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				CPContentPortletInstanceConfiguration.class);
+			ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				CPContentPortletInstanceConfiguration.class,
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY));
 	}
 
 	public String getDisplayStyle() {

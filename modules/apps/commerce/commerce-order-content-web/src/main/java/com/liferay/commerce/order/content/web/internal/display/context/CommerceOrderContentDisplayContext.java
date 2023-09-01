@@ -168,14 +168,14 @@ public class CommerceOrderContentDisplayContext {
 
 		_portletDisplay = _cpRequestHelper.getPortletDisplay();
 
-		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
+		_themeDisplay = _cpRequestHelper.getThemeDisplay();
 
 		_commerceOrderDateFormatDate = FastDateFormatFactoryUtil.getDate(
-			DateFormat.MEDIUM, themeDisplay.getLocale(),
-			themeDisplay.getTimeZone());
+			DateFormat.MEDIUM, _themeDisplay.getLocale(),
+			_themeDisplay.getTimeZone());
 		_commerceOrderDateFormatTime = FastDateFormatFactoryUtil.getTime(
-			DateFormat.MEDIUM, themeDisplay.getLocale(),
-			themeDisplay.getTimeZone());
+			DateFormat.MEDIUM, _themeDisplay.getLocale(),
+			_themeDisplay.getTimeZone());
 
 		_commerceContext = (CommerceContext)httpServletRequest.getAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT);
@@ -510,9 +510,10 @@ public class CommerceOrderContentDisplayContext {
 
 			OpenCommerceOrderContentPortletInstanceConfiguration
 				openCommerceOrderContentPortletInstanceConfiguration =
-					_portletDisplay.getPortletInstanceConfiguration(
+					_configurationProvider.getPortletInstanceConfiguration(
 						OpenCommerceOrderContentPortletInstanceConfiguration.
-							class);
+							class,
+						_themeDisplay);
 
 			return openCommerceOrderContentPortletInstanceConfiguration.
 				displayStyle();
@@ -520,8 +521,9 @@ public class CommerceOrderContentDisplayContext {
 		else if (portletId.equals(CommercePortletKeys.COMMERCE_ORDER_CONTENT)) {
 			CommerceOrderContentPortletInstanceConfiguration
 				commerceOrderContentPortletInstanceConfiguration =
-					_portletDisplay.getPortletInstanceConfiguration(
-						CommerceOrderContentPortletInstanceConfiguration.class);
+					_configurationProvider.getPortletInstanceConfiguration(
+						CommerceOrderContentPortletInstanceConfiguration.class,
+						_themeDisplay);
 
 			return commerceOrderContentPortletInstanceConfiguration.
 				displayStyle();
@@ -541,9 +543,10 @@ public class CommerceOrderContentDisplayContext {
 
 			OpenCommerceOrderContentPortletInstanceConfiguration
 				openCommerceOrderContentPortletInstanceConfiguration =
-					_portletDisplay.getPortletInstanceConfiguration(
+					_configurationProvider.getPortletInstanceConfiguration(
 						OpenCommerceOrderContentPortletInstanceConfiguration.
-							class);
+							class,
+						_themeDisplay);
 
 			return openCommerceOrderContentPortletInstanceConfiguration.
 				displayStyleGroupId();
@@ -551,8 +554,9 @@ public class CommerceOrderContentDisplayContext {
 		else if (portletId.equals(CommercePortletKeys.COMMERCE_ORDER_CONTENT)) {
 			CommerceOrderContentPortletInstanceConfiguration
 				commerceOrderContentPortletInstanceConfiguration =
-					_portletDisplay.getPortletInstanceConfiguration(
-						CommerceOrderContentPortletInstanceConfiguration.class);
+					_configurationProvider.getPortletInstanceConfiguration(
+						CommerceOrderContentPortletInstanceConfiguration.class,
+						_themeDisplay);
 
 			return commerceOrderContentPortletInstanceConfiguration.
 				displayStyleGroupId();
@@ -1159,8 +1163,9 @@ public class CommerceOrderContentDisplayContext {
 	public boolean isShowCommerceOrderCreateTime() throws PortalException {
 		CommerceOrderContentPortletInstanceConfiguration
 			commerceOrderContentPortletInstanceConfiguration =
-				_portletDisplay.getPortletInstanceConfiguration(
-					CommerceOrderContentPortletInstanceConfiguration.class);
+				_configurationProvider.getPortletInstanceConfiguration(
+					CommerceOrderContentPortletInstanceConfiguration.class,
+					_themeDisplay);
 
 		return commerceOrderContentPortletInstanceConfiguration.
 			showCommerceOrderCreateTime();
@@ -1373,5 +1378,6 @@ public class CommerceOrderContentDisplayContext {
 	private final PortletDisplay _portletDisplay;
 	private final PortletResourcePermission _portletResourcePermission;
 	private SearchContainer<CommerceOrder> _searchContainer;
+	private final ThemeDisplay _themeDisplay;
 
 }

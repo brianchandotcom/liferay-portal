@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.math.BigDecimal;
@@ -62,12 +61,10 @@ public class CommerceCartContentMiniDisplayContext
 			commerceProductPortletResourcePermission, configurationProvider,
 			cpDefinitionHelper, cpInstanceHelper, httpServletRequest, portal);
 
-		PortletDisplay portletDisplay =
-			commerceCartContentRequestHelper.getPortletDisplay();
-
 		_commerceCartContentMiniPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				CommerceCartContentMiniPortletInstanceConfiguration.class);
+			configurationProvider.getPortletInstanceConfiguration(
+				CommerceCartContentMiniPortletInstanceConfiguration.class,
+				commerceCartContentRequestHelper.getThemeDisplay());
 
 		_commerceOrderHttpHelper = commerceOrderHttpHelper;
 		_percentageFormatter = percentageFormatter;

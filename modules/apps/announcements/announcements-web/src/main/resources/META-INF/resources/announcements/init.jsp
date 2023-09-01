@@ -12,5 +12,5 @@
 <%@ page import="com.liferay.portal.kernel.model.ModelHintsUtil" %>
 
 <%
-AnnouncementsPortletInstanceConfiguration announcementsPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(AnnouncementsPortletInstanceConfiguration.class);
+AnnouncementsPortletInstanceConfiguration announcementsPortletInstanceConfiguration = ConfigurationProviderUtil.getPortletInstanceConfiguration(AnnouncementsPortletInstanceConfiguration.class, themeDisplay);
 %>

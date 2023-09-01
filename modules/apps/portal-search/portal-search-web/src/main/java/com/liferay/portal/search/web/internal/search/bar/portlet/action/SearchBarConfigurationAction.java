@@ -6,10 +6,10 @@
 package com.liferay.portal.search.web.internal.search.bar.portlet.action;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
@@ -44,8 +44,7 @@ public class SearchBarConfigurationAction extends DefaultConfigurationAction {
 
 		SearchBarPortletInstanceConfiguration
 			searchBarPortletInstanceConfiguration =
-				_getSearchBarPortletInstanceConfiguration(
-					themeDisplay.getPortletDisplay());
+				_getSearchBarPortletInstanceConfiguration(themeDisplay);
 
 		long displayStyleGroupId =
 			searchBarPortletInstanceConfiguration.displayStyleGroupId();
@@ -79,18 +78,20 @@ public class SearchBarConfigurationAction extends DefaultConfigurationAction {
 	}
 
 	@Reference
+	protected ConfigurationProvider configurationProvider;
+
+	@Reference
 	protected SearchBarPrecedenceHelper searchBarPrecedenceHelper;
 
 	@Reference
 	protected SearchCapabilities searchCapabilities;
 
 	private SearchBarPortletInstanceConfiguration
-		_getSearchBarPortletInstanceConfiguration(
-			PortletDisplay portletDisplay) {
+		_getSearchBarPortletInstanceConfiguration(ThemeDisplay themeDisplay) {
 
 		try {
-			return portletDisplay.getPortletInstanceConfiguration(
-				SearchBarPortletInstanceConfiguration.class);
+			return configurationProvider.getPortletInstanceConfiguration(
+				SearchBarPortletInstanceConfiguration.class, themeDisplay);
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

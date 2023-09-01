@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -93,12 +92,10 @@ public class CommerceCartContentDisplayContext {
 
 		commerceContext = commerceCartContentRequestHelper.getCommerceContext();
 
-		PortletDisplay portletDisplay =
-			commerceCartContentRequestHelper.getPortletDisplay();
-
 		_commerceCartContentPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				CommerceCartContentPortletInstanceConfiguration.class);
+			configurationProvider.getPortletInstanceConfiguration(
+				CommerceCartContentPortletInstanceConfiguration.class,
+				commerceCartContentRequestHelper.getThemeDisplay());
 
 		_configurationProvider = configurationProvider;
 		_httpServletRequest = httpServletRequest;

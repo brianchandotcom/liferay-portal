@@ -27,13 +27,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -490,11 +490,9 @@ public class EditKBArticleDisplayContext {
 			return _kbSectionPortletInstanceConfiguration;
 		}
 
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
 		_kbSectionPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				KBSectionPortletInstanceConfiguration.class);
+			ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				KBSectionPortletInstanceConfiguration.class, _themeDisplay);
 
 		return _kbSectionPortletInstanceConfiguration;
 	}

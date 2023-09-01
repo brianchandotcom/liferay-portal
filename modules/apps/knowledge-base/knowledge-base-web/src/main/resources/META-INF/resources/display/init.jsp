@@ -12,7 +12,7 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-KBDisplayPortletInstanceConfiguration kbDisplayPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(KBDisplayPortletInstanceConfiguration.class);
+KBDisplayPortletInstanceConfiguration kbDisplayPortletInstanceConfiguration = ConfigurationProviderUtil.getPortletInstanceConfiguration(KBDisplayPortletInstanceConfiguration.class, themeDisplay);
 
 long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
 

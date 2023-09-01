@@ -14,10 +14,9 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -80,15 +79,12 @@ public class ProductListRendererFormNavigatorEntry
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		try {
 			CPSearchResultsPortletInstanceConfiguration
 				cpSearchResultsPortletInstanceConfiguration =
-					portletDisplay.getPortletInstanceConfiguration(
-						CPSearchResultsPortletInstanceConfiguration.class);
+					_configurationProvider.getPortletInstanceConfiguration(
+						CPSearchResultsPortletInstanceConfiguration.class,
+						serviceContext.getThemeDisplay());
 
 			String selectionStyle =
 				cpSearchResultsPortletInstanceConfiguration.selectionStyle();
@@ -106,6 +102,9 @@ public class ProductListRendererFormNavigatorEntry
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductListRendererFormNavigatorEntry.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Language _language;

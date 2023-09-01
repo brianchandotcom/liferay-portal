@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-QuestionsConfiguration questionsConfiguration = portletDisplay.getPortletInstanceConfiguration(QuestionsConfiguration.class);
+QuestionsConfiguration questionsConfiguration = ConfigurationProviderUtil.getPortletInstanceConfiguration(QuestionsConfiguration.class, themeDisplay);
 
 long rootTopicId = questionsConfiguration.rootTopicId();
 

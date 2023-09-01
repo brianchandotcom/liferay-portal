@@ -7,7 +7,6 @@ package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration;
@@ -32,15 +31,11 @@ public class AssetCategoriesSearchFacetDisplayContext
 
 		_httpServletRequest = httpServletRequest;
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		_categoryFacetPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				CategoryFacetPortletInstanceConfiguration.class);
+			ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				CategoryFacetPortletInstanceConfiguration.class,
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY));
 
 		CategoryFacetFieldConfiguration categoryFacetFieldConfiguration =
 			ConfigurationProviderUtil.getSystemConfiguration(

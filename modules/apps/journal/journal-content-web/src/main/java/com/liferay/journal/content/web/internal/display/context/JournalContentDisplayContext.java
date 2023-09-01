@@ -111,8 +111,9 @@ public class JournalContentDisplayContext {
 		if (journalContentDisplayContext == null) {
 			JournalContentPortletInstanceConfiguration
 				journalContentPortletInstanceConfiguration =
-					portletDisplay.getPortletInstanceConfiguration(
-						JournalContentPortletInstanceConfiguration.class);
+					ConfigurationProviderUtil.getPortletInstanceConfiguration(
+						JournalContentPortletInstanceConfiguration.class,
+						themeDisplay);
 
 			journalContentDisplayContext = new JournalContentDisplayContext(
 				portletRequest, portletResponse, themeDisplay,

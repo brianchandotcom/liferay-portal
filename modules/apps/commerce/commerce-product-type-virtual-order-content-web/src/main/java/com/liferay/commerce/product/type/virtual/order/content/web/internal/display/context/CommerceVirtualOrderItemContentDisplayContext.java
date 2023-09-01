@@ -27,12 +27,12 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -79,13 +79,12 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 			new CommerceVirtualOrderItemContentRequestHelper(
 				httpServletRequest);
 
-		PortletDisplay portletDisplay =
-			_commerceVirtualOrderItemContentRequestHelper.getPortletDisplay();
-
 		_commerceVirtualOrderItemContentPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
+			ConfigurationProviderUtil.getPortletInstanceConfiguration(
 				CommerceVirtualOrderItemContentPortletInstanceConfiguration.
-					class);
+					class,
+				_commerceVirtualOrderItemContentRequestHelper.
+					getThemeDisplay());
 	}
 
 	public JournalArticleDisplay getArticleDisplay() throws Exception {

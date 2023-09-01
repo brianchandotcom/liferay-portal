@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
@@ -129,8 +130,9 @@ public class JournalContentPortletToolbarContributor
 
 		JournalContentPortletInstanceConfiguration
 			journalContentPortletInstanceConfiguration =
-				portletDisplay.getPortletInstanceConfiguration(
-					JournalContentPortletInstanceConfiguration.class);
+				_configurationProvider.getPortletInstanceConfiguration(
+					JournalContentPortletInstanceConfiguration.class,
+					themeDisplay);
 
 		if (journalContentPortletInstanceConfiguration.
 				sortStructuresByByName()) {
@@ -309,6 +311,9 @@ public class JournalContentPortletToolbarContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentPortletToolbarContributor.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DDMStructureService _ddmStructureService;

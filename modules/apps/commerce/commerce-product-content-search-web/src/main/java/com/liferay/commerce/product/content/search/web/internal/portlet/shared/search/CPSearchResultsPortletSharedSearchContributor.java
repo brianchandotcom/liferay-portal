@@ -17,6 +17,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -144,12 +144,11 @@ public class CPSearchResultsPortletSharedSearchContributor
 
 		queryConfig.setHighlightEnabled(false);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		CPSearchResultsPortletInstanceConfiguration
 			cpSearchResultsPortletInstanceConfiguration =
-				portletDisplay.getPortletInstanceConfiguration(
-					CPSearchResultsPortletInstanceConfiguration.class);
+				_configurationProvider.getPortletInstanceConfiguration(
+					CPSearchResultsPortletInstanceConfiguration.class,
+					themeDisplay);
 
 		_paginate(
 			cpSearchResultsPortletInstanceConfiguration,
@@ -208,6 +207,9 @@ public class CPSearchResultsPortletSharedSearchContributor
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Portal _portal;

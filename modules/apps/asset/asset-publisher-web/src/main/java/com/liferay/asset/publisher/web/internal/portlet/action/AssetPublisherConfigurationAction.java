@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -474,14 +473,10 @@ public class AssetPublisherConfigurationAction
 				HttpServletRequest httpServletRequest)
 		throws ConfigurationException {
 
-		ThemeDisplay themeDisplay =
+		return ConfigurationProviderUtil.getPortletInstanceConfiguration(
+			AssetPublisherPortletInstanceConfiguration.class,
 			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return portletDisplay.getPortletInstanceConfiguration(
-			AssetPublisherPortletInstanceConfiguration.class);
+				WebKeys.THEME_DISPLAY));
 	}
 
 	private String[] _getClassTypeIds(

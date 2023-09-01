@@ -25,8 +25,7 @@ import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -64,13 +63,10 @@ public class CPCompareContentMiniDisplayContext {
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
-		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		_cpCompareContentMiniPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				CPCompareContentMiniPortletInstanceConfiguration.class);
+			ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				CPCompareContentMiniPortletInstanceConfiguration.class,
+				_cpRequestHelper.getThemeDisplay());
 
 		CommerceContext commerceContext =
 			(CommerceContext)httpServletRequest.getAttribute(

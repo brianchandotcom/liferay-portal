@@ -12,7 +12,7 @@
 <div id="<%= liferayPortletResponse.getNamespace() %>-questions-root">
 
 	<%
-	QuestionsConfiguration questionsConfiguration = portletDisplay.getPortletInstanceConfiguration(QuestionsConfiguration.class);
+	QuestionsConfiguration questionsConfiguration = ConfigurationProviderUtil.getPortletInstanceConfiguration(QuestionsConfiguration.class, themeDisplay);
 	%>
 
 	<react:component

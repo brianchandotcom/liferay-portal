@@ -6,7 +6,7 @@
 package com.liferay.portal.search.web.internal.custom.facet.display.context;
 
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.custom.facet.configuration.CustomFacetPortletInstanceConfiguration;
@@ -31,11 +31,9 @@ public class CustomFacetDisplayContext implements FacetDisplayContext {
 
 		_themeDisplay = themeDisplay;
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		_customFacetPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				CustomFacetPortletInstanceConfiguration.class);
+			ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				CustomFacetPortletInstanceConfiguration.class, themeDisplay);
 	}
 
 	public List<BucketDisplayContext> getBucketDisplayContexts() {

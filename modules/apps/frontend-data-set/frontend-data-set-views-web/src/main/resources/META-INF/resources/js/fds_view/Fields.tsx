@@ -417,11 +417,19 @@ const EditFDSFieldModalContent = ({
 	);
 
 	const fdsFieldTranslations = fdsField.label_i18n;
-	const fieldLabel = Liferay.FeatureFlags['LPS-172017']
-		? fdsField.label_i18n[defaultLanguageId] || ''
-		: fdsField.label;
 
-	const [i18nFieldLabels, setI18nFieldLabels] = useState(fdsFieldTranslations);
+	let fieldLabel: string;
+
+	if (Liferay.FeatureFlags['LPS-172017']) {
+		fieldLabel = fdsField.label_i18n[defaultLanguageId] ?? fdsField.name;
+	}
+	else {
+		fieldLabel = fdsField.label;
+	}
+
+	const [i18nFieldLabels, setI18nFieldLabels] = useState(
+		fdsFieldTranslations
+	);
 
 	const editFDSField = async () => {
 		let body;
@@ -680,7 +688,13 @@ const Fields = ({
 
 		const responseJSON = await response.json();
 
-		const storedFDSFields = responseJSON?.items;
+		const storedFDSFields = responseJSON?.items.map((field: any) => {
+			if (!field.label) {
+				field.label = field.name;
+			}
+
+			return field;
+		});
 
 		if (!storedFDSFields) {
 			openToast({
@@ -884,10 +898,22 @@ const Fields = ({
 		});
 
 	const onEditFDSField = ({editedFDSField}: {editedFDSField: IFDSField}) => {
+		let updatedFDSField: IFDSField;
+
+		if (!editedFDSField.label) {
+			updatedFDSField = {
+				...editedFDSField,
+				label: editedFDSField.name,
+			};
+		}
+		else {
+			updatedFDSField = {...editedFDSField};
+		}
+
 		setFDSFields(
 			fdsFields?.map((fdsField) => {
-				if (fdsField.id === editedFDSField.id) {
-					return editedFDSField;
+				if (fdsField.id === updatedFDSField.id) {
+					return updatedFDSField;
 				}
 
 				return fdsField;

@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.environment.EnvironmentEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.task.TaskEntity;
 
 import java.util.HashMap;
@@ -57,6 +57,10 @@ public interface BuildEntity extends Entity {
 
 	public JenkinsNodeEntity.Type getJenkinsNodeType();
 
+	public JobEntity getJobEntity();
+
+	public long getJobEntityId();
+
 	public String getJobName();
 
 	public int getMaxNodeCount();
@@ -64,10 +68,6 @@ public interface BuildEntity extends Entity {
 	public int getMinNodeRAM();
 
 	public Set<BuildEntity> getParentBuildEntities();
-
-	public ProjectEntity getProjectEntity();
-
-	public long getProjectEntityId();
 
 	public State getState();
 
@@ -98,9 +98,9 @@ public interface BuildEntity extends Entity {
 
 	public boolean requiresGoodBattery();
 
-	public void setJobName(String jobName);
+	public void setJobEntity(JobEntity jobEntity);
 
-	public void setProjectEntity(ProjectEntity projectEntity);
+	public void setJobName(String jobName);
 
 	public void setState(State state);
 

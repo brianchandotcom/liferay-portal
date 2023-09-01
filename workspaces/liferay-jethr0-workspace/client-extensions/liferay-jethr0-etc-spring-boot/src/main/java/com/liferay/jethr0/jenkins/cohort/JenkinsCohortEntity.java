@@ -7,7 +7,7 @@ package com.liferay.jethr0.jenkins.cohort;
 
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 
 import java.util.Set;
 
@@ -21,15 +21,15 @@ public interface JenkinsCohortEntity extends Entity {
 
 	public void addJenkinsServerEntity(JenkinsServerEntity jenkinsServerEntity);
 
-	public void addProjectEntities(Set<ProjectEntity> projectEntities);
+	public void addJobEntities(Set<JobEntity> jobEntities);
 
-	public void addProjectEntity(ProjectEntity projectEntity);
+	public void addJobEntity(JobEntity jobEntity);
 
 	public Set<JenkinsServerEntity> getJenkinsServerEntities();
 
-	public String getName();
+	public Set<JobEntity> getJobEntities();
 
-	public Set<ProjectEntity> getProjectEntities();
+	public String getName();
 
 	public void removeJenkinsServerEntities(
 		Set<JenkinsServerEntity> jenkinsServerEntities);
@@ -37,9 +37,9 @@ public interface JenkinsCohortEntity extends Entity {
 	public void removeJenkinsServerEntity(
 		JenkinsServerEntity jenkinsServerEntity);
 
-	public void removeProjectEntities(Set<ProjectEntity> projectEntities);
+	public void removeJobEntities(Set<JobEntity> jobEntities);
 
-	public void removeProjectEntity(ProjectEntity projectEntity);
+	public void removeJobEntity(JobEntity jobEntity);
 
 	public void setName(String name);
 

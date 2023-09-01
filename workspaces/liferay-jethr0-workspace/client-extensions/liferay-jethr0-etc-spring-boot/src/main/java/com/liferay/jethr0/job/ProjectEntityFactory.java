@@ -15,15 +15,15 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectEntityFactory extends BaseEntityFactory<ProjectEntity> {
+public class ProjectEntityFactory extends BaseEntityFactory<JobEntity> {
 
 	@Override
-	public ProjectEntity newEntity(JSONObject jsonObject) {
-		return new DefaultProjectEntity(jsonObject);
+	public JobEntity newEntity(JSONObject jsonObject) {
+		return new DefaultJobEntity(jsonObject);
 	}
 
 	protected ProjectEntityFactory() {
-		super(ProjectEntity.class);
+		super(JobEntity.class);
 	}
 
 }

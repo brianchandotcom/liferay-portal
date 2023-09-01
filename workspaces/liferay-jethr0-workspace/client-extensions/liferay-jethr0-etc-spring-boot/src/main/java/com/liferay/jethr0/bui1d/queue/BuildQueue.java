@@ -11,7 +11,7 @@ import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.environment.repository.EnvironmentEntityRepository;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.dalo.ProjectToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.job.queue.ProjectQueue;
 import com.liferay.jethr0.job.repository.ProjectEntityRepository;
@@ -58,16 +58,16 @@ public class BuildQueue {
 		sort();
 	}
 
-	public void addProjectEntities(Set<ProjectEntity> projectEntities) {
-		for (ProjectEntity projectEntity : projectEntities) {
-			_projectQueue.addProjectEntity(projectEntity);
+	public void addJobEntities(Set<JobEntity> jobEntities) {
+		for (JobEntity jobEntity : jobEntities) {
+			_projectQueue.addJobEntity(jobEntity);
 		}
 
 		sort();
 	}
 
-	public void addProjectEntity(ProjectEntity projectEntity) {
-		addProjectEntities(Collections.singleton(projectEntity));
+	public void addJobEntity(JobEntity jobEntity) {
+		addJobEntities(Collections.singleton(jobEntity));
 	}
 
 	public List<BuildEntity> getBuildEntities() {
@@ -81,8 +81,8 @@ public class BuildQueue {
 	}
 
 	public void initialize() {
-		for (ProjectEntity projectEntity : _projectQueue.getProjectEntities()) {
-			for (BuildEntity buildEntity : projectEntity.getBuildEntities()) {
+		for (JobEntity jobEntity : _projectQueue.getJobEntities()) {
+			for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
 				_buildRunEntityRepository.getAll(buildEntity);
 				_buildParameterEntityRepository.getAll(buildEntity);
 				_environmentEntityRepository.getAll(buildEntity);
@@ -129,11 +129,9 @@ public class BuildQueue {
 
 			_projectQueue.sort();
 
-			for (ProjectEntity projectEntity :
-					_projectQueue.getProjectEntities()) {
-
+			for (JobEntity jobEntity : _projectQueue.getJobEntities()) {
 				List<BuildEntity> buildEntities = new ArrayList<>(
-					projectEntity.getBuildEntities());
+					jobEntity.getBuildEntities());
 
 				buildEntities.removeAll(Collections.singleton(null));
 

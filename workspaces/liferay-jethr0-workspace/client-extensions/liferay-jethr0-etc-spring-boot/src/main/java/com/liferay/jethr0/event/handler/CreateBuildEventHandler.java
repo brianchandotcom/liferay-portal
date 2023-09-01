@@ -11,7 +11,7 @@ import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.ProjectEntityRepository;
 
 import org.json.JSONObject;
@@ -25,8 +25,8 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 	public String process() throws Exception {
 		JSONObject messageJSONObject = getMessageJSONObject();
 
-		ProjectEntity projectEntity = getProjectEntity(
-			messageJSONObject.optJSONObject("project"));
+		JobEntity jobEntity = getJobEntity(
+			messageJSONObject.optJSONObject("job"));
 
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
@@ -34,7 +34,7 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 			messageJSONObject.optJSONObject("build"));
 
 		BuildEntity buildEntity = buildEntityRepository.add(
-			projectEntity, buildJSONObject);
+			jobEntity, buildJSONObject);
 
 		JSONObject parametersJSONObject = buildJSONObject.optJSONObject(
 			"parameters");
@@ -54,24 +54,24 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 			}
 		}
 
-		if (projectEntity.getState() == ProjectEntity.State.COMPLETED) {
-			projectEntity.setState(ProjectEntity.State.QUEUED);
+		if (jobEntity.getState() == JobEntity.State.COMPLETED) {
+			jobEntity.setState(JobEntity.State.QUEUED);
 
 			ProjectEntityRepository projectEntityRepository =
 				getProjectEntityRepository();
 
-			projectEntityRepository.update(projectEntity);
+			projectEntityRepository.update(jobEntity);
 		}
 
 		BuildQueue buildQueue = getBuildQueue();
 
-		buildQueue.addProjectEntity(projectEntity);
+		buildQueue.addJobEntity(jobEntity);
 
 		JenkinsQueue jenkinsQueue = getJenkinsQueue();
 
 		jenkinsQueue.invoke();
 
-		return projectEntity.toString();
+		return jobEntity.toString();
 	}
 
 	protected CreateBuildEventHandler(

@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.environment.EnvironmentEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -130,6 +130,16 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
+	public JobEntity getJobEntity() {
+		return _jobEntity;
+	}
+
+	@Override
+	public long getJobEntityId() {
+		return _jobEntityId;
+	}
+
+	@Override
 	public String getJobName() {
 		return _jobName;
 	}
@@ -145,7 +155,7 @@ public abstract class BaseBuildEntity
 		).put(
 			"jobName", getJobName()
 		).put(
-			"r_projectToBuilds_c_projectId", getProjectEntityId()
+			"r_jobToBuilds_c_jobId", getJobEntityId()
 		).put(
 			"state", state.getJSONObject()
 		);
@@ -191,16 +201,6 @@ public abstract class BaseBuildEntity
 
 	public Set<BuildEntity> getParentBuildEntities() {
 		return _parentBuildEntities;
-	}
-
-	@Override
-	public ProjectEntity getProjectEntity() {
-		return _projectEntity;
-	}
-
-	@Override
-	public long getProjectEntityId() {
-		return _projectEntityId;
 	}
 
 	@Override
@@ -295,20 +295,20 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
-	public void setJobName(String jobName) {
-		_jobName = jobName;
+	public void setJobEntity(JobEntity jobEntity) {
+		_jobEntity = jobEntity;
+
+		if (_jobEntity != null) {
+			_jobEntityId = _jobEntity.getId();
+		}
+		else {
+			_jobEntityId = 0;
+		}
 	}
 
 	@Override
-	public void setProjectEntity(ProjectEntity projectEntity) {
-		_projectEntity = projectEntity;
-
-		if (_projectEntity != null) {
-			_projectEntityId = _projectEntity.getId();
-		}
-		else {
-			_projectEntityId = 0;
-		}
+	public void setJobName(String jobName) {
+		_jobName = jobName;
 	}
 
 	@Override
@@ -321,7 +321,7 @@ public abstract class BaseBuildEntity
 
 		_buildName = jsonObject.getString("buildName");
 		_jobName = jsonObject.getString("jobName");
-		_projectEntityId = jsonObject.optLong("r_projectToBuilds_c_projectId");
+		_jobEntityId = jsonObject.optLong("r_jobToBuilds_c_jobId");
 		_state = State.get(jsonObject.getJSONObject("state"));
 	}
 
@@ -354,10 +354,10 @@ public abstract class BaseBuildEntity
 
 	private final String _buildName;
 	private final Set<BuildEntity> _childBuildEntities = new HashSet<>();
+	private JobEntity _jobEntity;
+	private long _jobEntityId;
 	private String _jobName;
 	private final Set<BuildEntity> _parentBuildEntities = new HashSet<>();
-	private ProjectEntity _projectEntity;
-	private long _projectEntityId;
 	private State _state;
 
 }

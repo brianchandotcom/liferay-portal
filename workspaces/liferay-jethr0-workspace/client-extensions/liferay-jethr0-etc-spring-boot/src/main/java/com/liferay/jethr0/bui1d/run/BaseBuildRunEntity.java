@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -70,11 +70,11 @@ public abstract class BaseBuildRunEntity
 			"BUILD_RUN_ID", String.valueOf(getId())
 		);
 
-		ProjectEntity projectEntity = buildEntity.getProjectEntity();
+		JobEntity jobEntity = buildEntity.getJobEntity();
 
-		if (projectEntity != null) {
+		if (jobEntity != null) {
 			jobParametersJSONObject.put(
-				"PROJECT_ID", String.valueOf(projectEntity.getId()));
+				"JOB_ID", String.valueOf(jobEntity.getId()));
 		}
 
 		invokeJSONObject.put("jobParameters", jobParametersJSONObject);

@@ -7,7 +7,7 @@ package com.liferay.jethr0.job.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.ProjectEntityFactory;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -23,40 +23,38 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectEntityDALO extends BaseEntityDALO<ProjectEntity> {
+public class ProjectEntityDALO extends BaseEntityDALO<JobEntity> {
 
-	public Set<ProjectEntity> getProjectsByState(
-		ProjectEntity.State... states) {
-
-		Set<ProjectEntity> projectEntities = new HashSet<>();
+	public Set<JobEntity> getProjectsByState(JobEntity.State... states) {
+		Set<JobEntity> jobEntities = new HashSet<>();
 
 		String filter = null;
 
 		if (states.length > 0) {
 			Set<String> stateQueries = new HashSet<>();
 
-			for (ProjectEntity.State state : states) {
+			for (JobEntity.State state : states) {
 				stateQueries.add("(state eq '" + state.getKey() + "')");
 			}
 
 			filter = StringUtil.join(" or ", stateQueries);
 		}
 
-		List<ProjectEntity.State> statesList = Arrays.asList(states);
+		List<JobEntity.State> statesList = Arrays.asList(states);
 
-		for (ProjectEntity projectEntity : getAll(filter, null)) {
-			if (!statesList.contains(projectEntity.getState())) {
+		for (JobEntity jobEntity : getAll(filter, null)) {
+			if (!statesList.contains(jobEntity.getState())) {
 				continue;
 			}
 
-			projectEntities.add(projectEntity);
+			jobEntities.add(jobEntity);
 		}
 
-		return projectEntities;
+		return jobEntities;
 	}
 
 	@Override
-	protected EntityFactory<ProjectEntity> getEntityFactory() {
+	protected EntityFactory<JobEntity> getEntityFactory() {
 		return _projectEntityFactory;
 	}
 

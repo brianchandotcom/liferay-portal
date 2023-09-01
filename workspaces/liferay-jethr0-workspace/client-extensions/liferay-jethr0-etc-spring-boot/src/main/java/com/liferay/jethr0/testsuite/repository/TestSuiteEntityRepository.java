@@ -6,7 +6,7 @@
 package com.liferay.jethr0.testsuite.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.testsuite.TestSuiteEntity;
 import com.liferay.jethr0.testsuite.dalo.ProjectsToTestSuitesEntityRelationshipDALO;
 import com.liferay.jethr0.testsuite.dalo.TestSuiteEntityDALO;
@@ -24,21 +24,21 @@ import org.springframework.context.annotation.Configuration;
 public class TestSuiteEntityRepository
 	extends BaseEntityRepository<TestSuiteEntity> {
 
-	public Set<TestSuiteEntity> getAll(ProjectEntity projectEntity) {
+	public Set<TestSuiteEntity> getAll(JobEntity jobEntity) {
 		Set<TestSuiteEntity> testSuiteEntities = new HashSet<>();
 
 		Set<Long> testSuiteEntityIds =
 			_projectsToTestSuitesEntityRelationshipDALO.getChildEntityIds(
-				projectEntity);
+				jobEntity);
 
 		for (TestSuiteEntity testSuiteEntity : getAll()) {
 			if (!testSuiteEntityIds.contains(testSuiteEntity.getId())) {
 				continue;
 			}
 
-			projectEntity.addTestSuiteEntity(testSuiteEntity);
+			jobEntity.addTestSuiteEntity(testSuiteEntity);
 
-			testSuiteEntity.addProjectEntity(projectEntity);
+			testSuiteEntity.addJobEntity(jobEntity);
 
 			testSuiteEntities.add(testSuiteEntity);
 		}

@@ -8,7 +8,7 @@ package com.liferay.jethr0.gitbranch.repository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.gitbranch.GitBranchEntity;
 import com.liferay.jethr0.gitbranch.dalo.GitBranchEntityDALO;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.dalo.ProjectsToGitBranchesEntityRelationshipDALO;
 
 import java.util.HashSet;
@@ -24,21 +24,21 @@ import org.springframework.context.annotation.Configuration;
 public class GitBranchEntityRepository
 	extends BaseEntityRepository<GitBranchEntity> {
 
-	public Set<GitBranchEntity> getAll(ProjectEntity projectEntity) {
+	public Set<GitBranchEntity> getAll(JobEntity jobEntity) {
 		Set<GitBranchEntity> projectGitBranchEntities = new HashSet<>();
 
 		Set<Long> gitBranchEntityIds =
 			_projectsToGitBranchesEntityRelationshipDALO.getChildEntityIds(
-				projectEntity);
+				jobEntity);
 
 		for (GitBranchEntity gitBranchEntity : getAll()) {
 			if (!gitBranchEntityIds.contains(gitBranchEntity.getId())) {
 				continue;
 			}
 
-			gitBranchEntity.addProjectEntity(projectEntity);
+			gitBranchEntity.addJobEntity(jobEntity);
 
-			projectEntity.addGitBranchEntity(gitBranchEntity);
+			jobEntity.addGitBranchEntity(gitBranchEntity);
 
 			projectGitBranchEntities.add(gitBranchEntity);
 		}

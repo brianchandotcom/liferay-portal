@@ -8,7 +8,7 @@ package com.liferay.jethr0.job.repository;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.dalo.ProjectEntityDALO;
 import com.liferay.jethr0.job.dalo.ProjectToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.util.StringUtil;
@@ -24,12 +24,11 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectEntityRepository
-	extends BaseEntityRepository<ProjectEntity> {
+public class ProjectEntityRepository extends BaseEntityRepository<JobEntity> {
 
-	public ProjectEntity add(
+	public JobEntity add(
 		String name, int position, int priority, Date startDate,
-		ProjectEntity.State state, ProjectEntity.Type type) {
+		JobEntity.State state, JobEntity.Type type) {
 
 		JSONObject jsonObject = new JSONObject();
 
@@ -51,21 +50,20 @@ public class ProjectEntityRepository
 	}
 
 	@Override
-	public ProjectEntity getById(long id) {
+	public JobEntity getById(long id) {
 		if (hasEntity(id)) {
 			return super.getById(id);
 		}
 
-		ProjectEntity projectEntity = _projectEntityDALO.get(id);
+		JobEntity jobEntity = _projectEntityDALO.get(id);
 
-		projectEntity.addBuildEntities(
-			_buildEntityRepository.getAll(projectEntity));
+		jobEntity.addBuildEntities(_buildEntityRepository.getAll(jobEntity));
 
-		for (BuildEntity buildEntity : projectEntity.getBuildEntities()) {
-			buildEntity.setProjectEntity(projectEntity);
+		for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
+			buildEntity.setJobEntity(jobEntity);
 		}
 
-		return add(projectEntity);
+		return add(jobEntity);
 	}
 
 	@Override
@@ -77,7 +75,7 @@ public class ProjectEntityRepository
 	public void initialize() {
 		addAll(
 			_projectEntityDALO.getProjectsByState(
-				ProjectEntity.State.QUEUED, ProjectEntity.State.RUNNING));
+				JobEntity.State.QUEUED, JobEntity.State.RUNNING));
 	}
 
 	@Override
@@ -86,9 +84,9 @@ public class ProjectEntityRepository
 			return;
 		}
 
-		for (ProjectEntity projectEntity : getAll()) {
-			projectEntity.addBuildEntities(
-				_buildEntityRepository.getAll(projectEntity));
+		for (JobEntity jobEntity : getAll()) {
+			jobEntity.addBuildEntities(
+				_buildEntityRepository.getAll(jobEntity));
 		}
 
 		_initializedRelationships = true;

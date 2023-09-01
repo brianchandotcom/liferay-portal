@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.job.comparator;
 
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.prioritizer.ProjectPrioritizerEntity;
 
 import java.util.Date;
@@ -30,11 +30,9 @@ public class StartDateProjectComparatorEntity
 	}
 
 	@Override
-	public int compare(
-		ProjectEntity projectEntity1, ProjectEntity projectEntity2) {
-
-		Date startDate1 = projectEntity1.getStartDate();
-		Date startDate2 = projectEntity2.getStartDate();
+	public int compare(JobEntity jobEntity1, JobEntity jobEntity2) {
+		Date startDate1 = jobEntity1.getStartDate();
+		Date startDate2 = jobEntity2.getStartDate();
 
 		if ((startDate1 == null) && (startDate2 == null)) {
 			return 0;

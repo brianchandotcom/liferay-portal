@@ -7,7 +7,7 @@ package com.liferay.jethr0.jenkins.cohort;
 
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 
 import java.util.Set;
 
@@ -34,18 +34,23 @@ public abstract class BaseJenkinsCohortEntity
 	}
 
 	@Override
-	public void addProjectEntities(Set<ProjectEntity> projectEntities) {
-		addRelatedEntities(projectEntities);
+	public void addJobEntities(Set<JobEntity> jobEntities) {
+		addRelatedEntities(jobEntities);
 	}
 
 	@Override
-	public void addProjectEntity(ProjectEntity projectEntity) {
-		addRelatedEntity(projectEntity);
+	public void addJobEntity(JobEntity jobEntity) {
+		addRelatedEntity(jobEntity);
 	}
 
 	@Override
 	public Set<JenkinsServerEntity> getJenkinsServerEntities() {
 		return getRelatedEntities(JenkinsServerEntity.class);
+	}
+
+	@Override
+	public Set<JobEntity> getJobEntities() {
+		return getRelatedEntities(JobEntity.class);
 	}
 
 	@Override
@@ -63,11 +68,6 @@ public abstract class BaseJenkinsCohortEntity
 	}
 
 	@Override
-	public Set<ProjectEntity> getProjectEntities() {
-		return getRelatedEntities(ProjectEntity.class);
-	}
-
-	@Override
 	public void removeJenkinsServerEntities(
 		Set<JenkinsServerEntity> jenkinsServerEntities) {
 
@@ -82,13 +82,13 @@ public abstract class BaseJenkinsCohortEntity
 	}
 
 	@Override
-	public void removeProjectEntities(Set<ProjectEntity> projectEntities) {
-		removeRelatedEntities(projectEntities);
+	public void removeJobEntities(Set<JobEntity> jobEntities) {
+		removeRelatedEntities(jobEntities);
 	}
 
 	@Override
-	public void removeProjectEntity(ProjectEntity projectEntity) {
-		removeRelatedEntity(projectEntity);
+	public void removeJobEntity(JobEntity jobEntity) {
+		removeRelatedEntity(jobEntity);
 	}
 
 	@Override

@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.job.comparator;
 
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.prioritizer.ProjectPrioritizerEntity;
 
 import org.json.JSONObject;
@@ -28,11 +28,9 @@ public class PriorityProjectComparatorEntity
 	}
 
 	@Override
-	public int compare(
-		ProjectEntity projectEntity1, ProjectEntity projectEntity2) {
-
+	public int compare(JobEntity jobEntity1, JobEntity jobEntity2) {
 		return Integer.compare(
-			projectEntity1.getPriority(), projectEntity2.getPriority());
+			jobEntity1.getPriority(), jobEntity2.getPriority());
 	}
 
 }

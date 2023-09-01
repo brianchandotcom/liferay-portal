@@ -7,7 +7,7 @@ package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.ProjectEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
@@ -27,30 +27,29 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 		super(eventHandlerContext, messageJSONObject);
 	}
 
-	protected ProjectEntity getProjectEntity(JSONObject projectJSONObject)
+	protected JobEntity getJobEntity(JSONObject jobJSONObject)
 		throws Exception {
 
-		if (projectJSONObject == null) {
-			throw new Exception("Missing project");
+		if (jobJSONObject == null) {
+			throw new Exception("Missing job");
 		}
 
-		long projectEntityId = projectJSONObject.optLong("id");
+		long jobEntityId = jobJSONObject.optLong("id");
 
-		if (projectEntityId <= 0) {
-			throw new Exception("Missing ID from project");
+		if (jobEntityId <= 0) {
+			throw new Exception("Missing ID from job");
 		}
 
 		ProjectEntityRepository projectEntityRepository =
 			getProjectEntityRepository();
 
-		ProjectEntity projectEntity = projectEntityRepository.getById(
-			projectEntityId);
+		JobEntity jobEntity = projectEntityRepository.getById(jobEntityId);
 
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
-		buildEntityRepository.getAll(projectEntity);
+		buildEntityRepository.getAll(jobEntity);
 
-		return projectEntity;
+		return jobEntity;
 	}
 
 	protected JSONObject validateBuildJSONObject(JSONObject buildJSONObject)
@@ -223,54 +222,54 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 		return jsonArray;
 	}
 
-	protected JSONObject validateProjectJSONObject(JSONObject projectJSONObject)
+	protected JSONObject validateJobJSONObject(JSONObject jobJSONObject)
 		throws Exception {
 
-		if (projectJSONObject == null) {
-			throw new Exception("Missing project");
+		if (jobJSONObject == null) {
+			throw new Exception("Missing job");
 		}
 
-		if (projectJSONObject.has("id")) {
-			return projectJSONObject;
+		if (jobJSONObject.has("id")) {
+			return jobJSONObject;
 		}
 
-		String name = projectJSONObject.optString("name");
+		String name = jobJSONObject.optString("name");
 
 		if (name.isEmpty()) {
-			throw new Exception("Missing name from project");
+			throw new Exception("Missing name from job");
 		}
 
-		int priority = projectJSONObject.optInt("priority");
+		int priority = jobJSONObject.optInt("priority");
 
 		if (priority <= 0) {
-			throw new Exception("Missing priority from project");
+			throw new Exception("Missing priority from job");
 		}
 
-		ProjectEntity.State state = ProjectEntity.State.getByKey(
-			projectJSONObject.optString("state"));
+		JobEntity.State state = JobEntity.State.getByKey(
+			jobJSONObject.optString("state"));
 
 		if (state == null) {
-			state = ProjectEntity.State.OPENED;
+			state = JobEntity.State.OPENED;
 		}
 
-		ProjectEntity.Type type = ProjectEntity.Type.getByKey(
-			projectJSONObject.optString("type"));
+		JobEntity.Type type = JobEntity.Type.getByKey(
+			jobJSONObject.optString("type"));
 
 		if (type == null) {
 			throw new Exception(
-				"Project type is not one of the following: " +
-					ProjectEntity.Type.getKeys());
+				"Job type is not one of the following: " +
+					JobEntity.Type.getKeys());
 		}
 
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
 			"builds",
-			validateBuildsJSONArray(projectJSONObject.optJSONArray("builds"))
+			validateBuildsJSONArray(jobJSONObject.optJSONArray("builds"))
 		).put(
 			"jenkinsCohorts",
 			validateJenkinsCohortsJSONArray(
-				projectJSONObject.optJSONArray("jenkinsCohorts"))
+				jobJSONObject.optJSONArray("jenkinsCohorts"))
 		).put(
 			"name", name
 		).put(

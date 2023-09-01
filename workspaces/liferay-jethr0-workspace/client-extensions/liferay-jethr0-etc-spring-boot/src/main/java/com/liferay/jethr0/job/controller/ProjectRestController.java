@@ -6,7 +6,7 @@
 package com.liferay.jethr0.job.controller;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.queue.ProjectQueue;
 import com.liferay.jethr0.job.repository.ProjectEntityRepository;
 
@@ -32,40 +32,38 @@ public class ProjectRestController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<String> project(
-		@AuthenticationPrincipal Jwt jwt, @PathVariable("id") int projectId) {
+		@AuthenticationPrincipal Jwt jwt, @PathVariable("id") int jobEntityId) {
 
-		ProjectEntity projectEntity = _projectEntityRepository.getById(
-			projectId);
+		JobEntity jobEntity = _projectEntityRepository.getById(jobEntityId);
 
-		JSONObject projectJSONObject = projectEntity.getJSONObject();
+		JSONObject jobJSONObject = jobEntity.getJSONObject();
 
 		JSONArray buildsJSONArray = new JSONArray();
 
-		for (BuildEntity buildEntity : projectEntity.getBuildEntities()) {
+		for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
 			buildsJSONArray.put(buildEntity.getJSONObject());
 		}
 
-		projectJSONObject.put("builds", buildsJSONArray);
+		jobJSONObject.put("builds", buildsJSONArray);
 
-		return new ResponseEntity<>(
-			projectJSONObject.toString(), HttpStatus.OK);
+		return new ResponseEntity<>(jobJSONObject.toString(), HttpStatus.OK);
 	}
 
 	@GetMapping("/queue")
 	public ResponseEntity<String> projectQueue(
 		@AuthenticationPrincipal Jwt jwt) {
 
-		JSONArray projectsJSONArray = new JSONArray();
+		JSONArray jobsJSONArray = new JSONArray();
 
-		for (ProjectEntity projectEntity : _projectQueue.getProjectEntities()) {
-			JSONObject projectJSONObject = projectEntity.getJSONObject();
+		for (JobEntity jobEntity : _projectQueue.getJobEntities()) {
+			JSONObject jobJSONObject = jobEntity.getJSONObject();
 
 			int completedBuilds = 0;
 			int queuedBuilds = 0;
 			int runningBuilds = 0;
 			int totalBuilds = 0;
 
-			for (BuildEntity buildEntity : projectEntity.getBuildEntities()) {
+			for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
 				if (buildEntity.getState() == BuildEntity.State.COMPLETED) {
 					completedBuilds++;
 				}
@@ -79,7 +77,7 @@ public class ProjectRestController {
 				totalBuilds++;
 			}
 
-			projectJSONObject.put(
+			jobJSONObject.put(
 				"completedBuilds", completedBuilds
 			).put(
 				"queuedBuilds", queuedBuilds
@@ -89,11 +87,10 @@ public class ProjectRestController {
 				"totalBuilds", totalBuilds
 			);
 
-			projectsJSONArray.put(projectJSONObject);
+			jobsJSONArray.put(jobJSONObject);
 		}
 
-		return new ResponseEntity<>(
-			projectsJSONArray.toString(), HttpStatus.OK);
+		return new ResponseEntity<>(jobsJSONArray.toString(), HttpStatus.OK);
 	}
 
 	@Autowired

@@ -8,7 +8,7 @@ package com.liferay.jethr0.task.repository;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.dalo.BuildToTasksEntityRelationshipDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.dalo.ProjectToTasksEntityRelationshipDALO;
 import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.task.dalo.TaskEntityDALO;
@@ -46,26 +46,25 @@ public class TaskEntityRepository extends BaseEntityRepository<TaskEntity> {
 		return buildTaskEntities;
 	}
 
-	public Set<TaskEntity> getAll(ProjectEntity projectEntity) {
-		Set<TaskEntity> projectTaskEntities = new HashSet<>();
+	public Set<TaskEntity> getAll(JobEntity jobEntity) {
+		Set<TaskEntity> taskEntities = new HashSet<>();
 
 		Set<Long> taskIds =
-			_projectToTasksEntityRelationshipDALO.getChildEntityIds(
-				projectEntity);
+			_projectToTasksEntityRelationshipDALO.getChildEntityIds(jobEntity);
 
 		for (TaskEntity taskEntity : getAll()) {
 			if (!taskIds.contains(taskEntity.getId())) {
 				continue;
 			}
 
-			taskEntity.setProjectEntity(projectEntity);
+			taskEntity.setJobEntity(jobEntity);
 
-			projectEntity.addTaskEntity(taskEntity);
+			jobEntity.addTaskEntity(taskEntity);
 
-			projectTaskEntities.add(taskEntity);
+			taskEntities.add(taskEntity);
 		}
 
-		return projectTaskEntities;
+		return taskEntities;
 	}
 
 	@Override

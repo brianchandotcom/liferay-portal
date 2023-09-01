@@ -6,7 +6,7 @@
 package com.liferay.jethr0.gitbranch;
 
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 
 import java.net.URL;
 
@@ -17,15 +17,15 @@ import java.util.Set;
  */
 public interface GitBranchEntity extends Entity {
 
-	public void addProjectEntities(Set<ProjectEntity> projectEntities);
+	public void addJobEntities(Set<JobEntity> jobEntities);
 
-	public void addProjectEntity(ProjectEntity projectEntity);
+	public void addJobEntity(JobEntity jobEntity);
 
 	public String getBranchName();
 
 	public String getBranchSHA();
 
-	public Set<ProjectEntity> getProjectEntities();
+	public Set<JobEntity> getJobEntities();
 
 	public boolean getRebased();
 
@@ -37,9 +37,9 @@ public interface GitBranchEntity extends Entity {
 
 	public URL getURL();
 
-	public void removeProjectEntities(Set<ProjectEntity> projectEntities);
+	public void removeJobEntities(Set<JobEntity> jobEntities);
 
-	public void removeProjectEntity(ProjectEntity projectEntity);
+	public void removeJobEntity(JobEntity jobEntity);
 
 	public void setBranchName(String branchName);
 

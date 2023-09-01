@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.ProjectEntityRepository;
 
 import org.json.JSONObject;
@@ -31,29 +31,27 @@ public class BuildCompletedEventHandler extends BaseJenkinsEventHandler {
 
 		buildEntity.setState(BuildEntity.State.COMPLETED);
 
-		ProjectEntity projectEntity = buildEntity.getProjectEntity();
+		JobEntity jobEntity = buildEntity.getJobEntity();
 
-		ProjectEntity.State projectState = ProjectEntity.State.COMPLETED;
+		JobEntity.State jobState = JobEntity.State.COMPLETED;
 
-		for (BuildEntity projectBuildEntity :
-				projectEntity.getBuildEntities()) {
-
-			BuildEntity.State buildState = projectBuildEntity.getState();
+		for (BuildEntity jobBuildEntity : jobEntity.getBuildEntities()) {
+			BuildEntity.State buildState = jobBuildEntity.getState();
 
 			if (buildState != BuildEntity.State.COMPLETED) {
-				projectState = ProjectEntity.State.RUNNING;
+				jobState = JobEntity.State.RUNNING;
 
 				break;
 			}
 		}
 
-		if (projectState == ProjectEntity.State.COMPLETED) {
-			projectEntity.setState(projectState);
+		if (jobState == JobEntity.State.COMPLETED) {
+			jobEntity.setState(jobState);
 
 			ProjectEntityRepository projectEntityRepository =
 				getProjectEntityRepository();
 
-			projectEntityRepository.update(projectEntity);
+			projectEntityRepository.update(jobEntity);
 		}
 
 		BuildEntityRepository buildEntityRepository = getBuildRepository();

@@ -22,7 +22,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public interface ProjectEntity extends Entity {
+public interface JobEntity extends Entity {
 
 	public void addBuildEntities(Set<BuildEntity> buildEntities);
 

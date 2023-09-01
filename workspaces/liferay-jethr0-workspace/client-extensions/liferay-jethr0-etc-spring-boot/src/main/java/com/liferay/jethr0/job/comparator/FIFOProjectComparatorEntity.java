@@ -5,7 +5,7 @@
 
 package com.liferay.jethr0.job.comparator;
 
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.prioritizer.ProjectPrioritizerEntity;
 
 import java.util.Date;
@@ -29,11 +29,9 @@ public class FIFOProjectComparatorEntity extends BaseProjectComparatorEntity {
 	}
 
 	@Override
-	public int compare(
-		ProjectEntity projectEntity1, ProjectEntity projectEntity2) {
-
-		Date createdDate1 = projectEntity1.getCreatedDate();
-		Date createdDate2 = projectEntity2.getCreatedDate();
+	public int compare(JobEntity jobEntity1, JobEntity jobEntity2) {
+		Date createdDate1 = jobEntity1.getCreatedDate();
+		Date createdDate2 = jobEntity2.getCreatedDate();
 
 		return createdDate1.compareTo(createdDate2);
 	}

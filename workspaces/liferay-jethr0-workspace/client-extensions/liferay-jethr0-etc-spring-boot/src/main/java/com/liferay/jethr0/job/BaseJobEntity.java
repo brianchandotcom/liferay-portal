@@ -21,8 +21,7 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseProjectEntity
-	extends BaseEntity implements ProjectEntity {
+public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 
 	@Override
 	public void addBuildEntities(Set<BuildEntity> buildEntities) {
@@ -97,8 +96,8 @@ public abstract class BaseProjectEntity
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		ProjectEntity.State state = getState();
-		ProjectEntity.Type type = getType();
+		JobEntity.State state = getState();
+		JobEntity.Type type = getType();
 
 		jsonObject.put(
 			"name", getName()
@@ -243,7 +242,7 @@ public abstract class BaseProjectEntity
 		_state = state;
 	}
 
-	protected BaseProjectEntity(JSONObject jsonObject) {
+	protected BaseJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_name = jsonObject.getString("name");

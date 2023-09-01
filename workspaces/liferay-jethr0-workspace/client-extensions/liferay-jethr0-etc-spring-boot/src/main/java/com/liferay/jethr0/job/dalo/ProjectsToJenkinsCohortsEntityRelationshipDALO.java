@@ -9,7 +9,7 @@ import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntity;
 import com.liferay.jethr0.jenkins.cohort.JenkinsCohortEntityFactory;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.ProjectEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ProjectsToJenkinsCohortsEntityRelationshipDALO
-	extends BaseEntityRelationshipDALO<ProjectEntity, JenkinsCohortEntity> {
+	extends BaseEntityRelationshipDALO<JobEntity, JenkinsCohortEntity> {
 
 	@Override
 	public EntityFactory<JenkinsCohortEntity> getChildEntityFactory() {
@@ -28,7 +28,7 @@ public class ProjectsToJenkinsCohortsEntityRelationshipDALO
 	}
 
 	@Override
-	public EntityFactory<ProjectEntity> getParentEntityFactory() {
+	public EntityFactory<JobEntity> getParentEntityFactory() {
 		return _projectEntityFactory;
 	}
 

@@ -6,7 +6,7 @@
 package com.liferay.jethr0.testsuite;
 
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 
 import java.util.Set;
 
@@ -15,17 +15,17 @@ import java.util.Set;
  */
 public interface TestSuiteEntity extends Entity {
 
-	public void addProjectEntities(Set<ProjectEntity> projectEntities);
+	public void addJobEntities(Set<JobEntity> jobEntities);
 
-	public void addProjectEntity(ProjectEntity projectEntity);
+	public void addJobEntity(JobEntity jobEntity);
+
+	public Set<JobEntity> getJobEntities();
 
 	public String getName();
 
-	public Set<ProjectEntity> getProjectEntities();
+	public void removeJobEntities(Set<JobEntity> jobEntities);
 
-	public void removeProjectEntities(Set<ProjectEntity> projectEntities);
-
-	public void removeProjectEntity(ProjectEntity projectEntity);
+	public void removeJobEntity(JobEntity jobEntity);
 
 	public void setName(String name);
 

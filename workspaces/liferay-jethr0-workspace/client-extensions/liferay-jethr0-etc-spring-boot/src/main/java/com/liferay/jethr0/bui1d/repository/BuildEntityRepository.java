@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.dalo.BuildEntityDALO;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.dalo.ProjectToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.job.repository.ProjectEntityRepository;
 
@@ -27,20 +27,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 
-	public BuildEntity add(ProjectEntity projectEntity, JSONObject jsonObject) {
-		jsonObject.put("r_projectToBuilds_c_projectId", projectEntity.getId());
+	public BuildEntity add(JobEntity jobEntity, JSONObject jsonObject) {
+		jsonObject.put("r_jobToBuilds_c_jobId", jobEntity.getId());
 
 		BuildEntity buildEntity = add(jsonObject);
 
-		buildEntity.setProjectEntity(projectEntity);
+		buildEntity.setJobEntity(jobEntity);
 
-		projectEntity.addBuildEntity(buildEntity);
+		jobEntity.addBuildEntity(buildEntity);
 
 		return buildEntity;
 	}
 
 	public BuildEntity add(
-		ProjectEntity projectEntity, String buildName, String jobName,
+		JobEntity jobEntity, String buildName, String jobName,
 		BuildEntity.State state) {
 
 		JSONObject jsonObject = new JSONObject();
@@ -53,16 +53,15 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 			"state", state.getJSONObject()
 		);
 
-		return add(projectEntity, jsonObject);
+		return add(jobEntity, jsonObject);
 	}
 
-	public Set<BuildEntity> getAll(ProjectEntity projectEntity) {
+	public Set<BuildEntity> getAll(JobEntity jobEntity) {
 		Set<BuildEntity> buildEntities = new HashSet<>(
-			_projectToBuildsEntityRelationshipDALO.getChildEntities(
-				projectEntity));
+			_projectToBuildsEntityRelationshipDALO.getChildEntities(jobEntity));
 
 		for (BuildEntity buildEntity : buildEntities) {
-			buildEntity.setProjectEntity(projectEntity);
+			buildEntity.setJobEntity(jobEntity);
 		}
 
 		return addAll(buildEntities);
@@ -86,15 +85,15 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 		_projectEntityRepository.initializeRelationships();
 
 		for (BuildEntity buildEntity : getAll()) {
-			ProjectEntity projectEntity = null;
+			JobEntity jobEntity = null;
 
-			long projectId = buildEntity.getProjectEntityId();
+			long jobEntityId = buildEntity.getJobEntityId();
 
-			if (projectId != 0) {
-				projectEntity = _projectEntityRepository.getById(projectId);
+			if (jobEntityId != 0) {
+				jobEntity = _projectEntityRepository.getById(jobEntityId);
 			}
 
-			buildEntity.setProjectEntity(projectEntity);
+			buildEntity.setJobEntity(jobEntity);
 
 			buildEntity.addBuildParameterEntities(
 				_buildParameterEntityRepository.getAll(buildEntity));

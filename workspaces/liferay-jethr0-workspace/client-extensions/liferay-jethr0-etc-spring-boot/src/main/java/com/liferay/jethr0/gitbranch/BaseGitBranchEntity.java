@@ -6,7 +6,7 @@
 package com.liferay.jethr0.gitbranch;
 
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -23,13 +23,13 @@ import org.json.JSONObject;
 public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 
 	@Override
-	public void addProjectEntities(Set<ProjectEntity> projectEntities) {
-		_projectEntities.addAll(projectEntities);
+	public void addJobEntities(Set<JobEntity> jobEntities) {
+		_jobEntities.addAll(jobEntities);
 	}
 
 	@Override
-	public void addProjectEntity(ProjectEntity projectEntity) {
-		addProjectEntities(Collections.singleton(projectEntity));
+	public void addJobEntity(JobEntity jobEntity) {
+		addJobEntities(Collections.singleton(jobEntity));
 	}
 
 	@Override
@@ -40,6 +40,11 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	@Override
 	public String getBranchSHA() {
 		return _branchSHA;
+	}
+
+	@Override
+	public Set<JobEntity> getJobEntities() {
+		return _jobEntities;
 	}
 
 	@Override
@@ -63,11 +68,6 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 		);
 
 		return jsonObject;
-	}
-
-	@Override
-	public Set<ProjectEntity> getProjectEntities() {
-		return _projectEntities;
 	}
 
 	@Override
@@ -96,13 +96,13 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 	}
 
 	@Override
-	public void removeProjectEntities(Set<ProjectEntity> projectEntities) {
-		_projectEntities.removeAll(projectEntities);
+	public void removeJobEntities(Set<JobEntity> jobEntities) {
+		_jobEntities.removeAll(jobEntities);
 	}
 
 	@Override
-	public void removeProjectEntity(ProjectEntity projectEntity) {
-		_projectEntities.remove(projectEntity);
+	public void removeJobEntity(JobEntity jobEntity) {
+		_jobEntities.remove(jobEntity);
 	}
 
 	@Override
@@ -154,7 +154,7 @@ public class BaseGitBranchEntity extends BaseEntity implements GitBranchEntity {
 
 	private String _branchName;
 	private String _branchSHA;
-	private final Set<ProjectEntity> _projectEntities = new HashSet<>();
+	private final Set<JobEntity> _jobEntities = new HashSet<>();
 	private boolean _rebased;
 	private String _repositoryName;
 	private String _upstreamBranchName;

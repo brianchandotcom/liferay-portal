@@ -8,7 +8,7 @@ package com.liferay.jethr0.task;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.entity.BaseEntity;
 import com.liferay.jethr0.environment.EnvironmentEntity;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.task.run.TaskRunEntity;
 
 import java.util.Collections;
@@ -61,6 +61,11 @@ public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 	}
 
 	@Override
+	public JobEntity getJobEntity() {
+		return _jobEntity;
+	}
+
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
@@ -78,11 +83,6 @@ public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 	@Override
 	public String getName() {
 		return _name;
-	}
-
-	@Override
-	public ProjectEntity getProjectEntity() {
-		return _projectEntity;
 	}
 
 	@Override
@@ -118,13 +118,13 @@ public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 	}
 
 	@Override
-	public void setName(String name) {
-		_name = name;
+	public void setJobEntity(JobEntity jobEntity) {
+		_jobEntity = jobEntity;
 	}
 
 	@Override
-	public void setProjectEntity(ProjectEntity projectEntity) {
-		_projectEntity = projectEntity;
+	public void setName(String name) {
+		_name = name;
 	}
 
 	protected BaseTaskEntity(JSONObject jsonObject) {
@@ -135,8 +135,8 @@ public class BaseTaskEntity extends BaseEntity implements TaskEntity {
 
 	private BuildEntity _buildEntity;
 	private final Set<EnvironmentEntity> _environmentEntities = new HashSet<>();
+	private JobEntity _jobEntity;
 	private String _name;
-	private ProjectEntity _projectEntity;
 	private final Set<TaskRunEntity> _taskRunEntities = new HashSet<>();
 
 }

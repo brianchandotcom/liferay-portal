@@ -6,7 +6,7 @@
 package com.liferay.jethr0.testsuite;
 
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.job.ProjectEntity;
+import com.liferay.jethr0.job.JobEntity;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -20,13 +20,18 @@ import org.json.JSONObject;
 public class BaseTestSuiteEntity extends BaseEntity implements TestSuiteEntity {
 
 	@Override
-	public void addProjectEntities(Set<ProjectEntity> projectEntities) {
-		_projectEntities.addAll(projectEntities);
+	public void addJobEntities(Set<JobEntity> jobEntities) {
+		_jobEntities.addAll(jobEntities);
 	}
 
 	@Override
-	public void addProjectEntity(ProjectEntity projectEntity) {
-		addProjectEntities(Collections.singleton(projectEntity));
+	public void addJobEntity(JobEntity jobEntity) {
+		addJobEntities(Collections.singleton(jobEntity));
+	}
+
+	@Override
+	public Set<JobEntity> getJobEntities() {
+		return _jobEntities;
 	}
 
 	@Override
@@ -44,18 +49,13 @@ public class BaseTestSuiteEntity extends BaseEntity implements TestSuiteEntity {
 	}
 
 	@Override
-	public Set<ProjectEntity> getProjectEntities() {
-		return _projectEntities;
+	public void removeJobEntities(Set<JobEntity> jobEntities) {
+		_jobEntities.removeAll(jobEntities);
 	}
 
 	@Override
-	public void removeProjectEntities(Set<ProjectEntity> projectEntities) {
-		_projectEntities.removeAll(projectEntities);
-	}
-
-	@Override
-	public void removeProjectEntity(ProjectEntity projectEntity) {
-		_projectEntities.remove(projectEntity);
+	public void removeJobEntity(JobEntity jobEntity) {
+		_jobEntities.remove(jobEntity);
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class BaseTestSuiteEntity extends BaseEntity implements TestSuiteEntity {
 		_name = jsonObject.getString("name");
 	}
 
+	private final Set<JobEntity> _jobEntities = new HashSet<>();
 	private String _name;
-	private final Set<ProjectEntity> _projectEntities = new HashSet<>();
 
 }

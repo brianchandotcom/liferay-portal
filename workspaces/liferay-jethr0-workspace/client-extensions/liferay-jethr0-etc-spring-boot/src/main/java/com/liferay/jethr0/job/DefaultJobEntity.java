@@ -10,9 +10,9 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class DefaultProjectEntity extends BaseProjectEntity {
+public class DefaultJobEntity extends BaseJobEntity {
 
-	protected DefaultProjectEntity(JSONObject jsonObject) {
+	protected DefaultJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

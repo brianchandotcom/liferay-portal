@@ -10,12 +10,12 @@ import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
+import com.liferay.jethr0.event.controller.EventJmsController;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
-import com.liferay.jethr0.jms.JMSEventHandler;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -75,8 +75,8 @@ public class JenkinsQueue {
 		update();
 	}
 
-	public void setJmsEventHandler(JMSEventHandler jmsEventHandler) {
-		_jmsEventHandler = jmsEventHandler;
+	public void setEventJmsController(EventJmsController eventJmsController) {
+		_eventJmsController = eventJmsController;
 	}
 
 	public void update() {
@@ -110,7 +110,7 @@ public class JenkinsQueue {
 				BuildRunEntity buildRunEntity = _buildRunEntityRepository.add(
 					buildEntity, BuildRunEntity.State.QUEUED);
 
-				_jmsEventHandler.send(
+				_eventJmsController.send(
 					jenkinsServerEntity,
 					String.valueOf(
 						buildRunEntity.getInvokeJSONObject(jenkinsNodeEntity)));
@@ -132,6 +132,7 @@ public class JenkinsQueue {
 	@Autowired
 	private BuildRunEntityRepository _buildRunEntityRepository;
 
+	private EventJmsController _eventJmsController;
 	private boolean _initialized;
 
 	@Autowired
@@ -145,7 +146,5 @@ public class JenkinsQueue {
 
 	@Value("${jenkins.server.urls}")
 	private String _jenkinsServerURLs;
-
-	private JMSEventHandler _jmsEventHandler;
 
 }

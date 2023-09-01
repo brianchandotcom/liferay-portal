@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jethr0.jms;
+package com.liferay.jethr0.event.controller;
 
 import com.liferay.jethr0.event.handler.EventHandler;
 import com.liferay.jethr0.event.handler.EventHandlerFactory;
@@ -25,7 +25,7 @@ import org.springframework.jms.core.JmsTemplate;
  * @author Michael Hashimoto
  */
 @Configuration
-public class JMSEventHandler {
+public class EventJmsController {
 
 	@JmsListener(destination = "${jms.jenkins.event.queue}")
 	public void process(String message) {
@@ -84,7 +84,7 @@ public class JMSEventHandler {
 		_jmsTemplate.convertAndSend(queueName, message);
 	}
 
-	private static final Log _log = LogFactory.getLog(JMSEventHandler.class);
+	private static final Log _log = LogFactory.getLog(EventJmsController.class);
 
 	@Autowired
 	private EventHandlerFactory _eventHandlerFactory;

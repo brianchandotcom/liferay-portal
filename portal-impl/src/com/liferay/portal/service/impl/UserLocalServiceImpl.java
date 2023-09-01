@@ -54,9 +54,6 @@ import com.liferay.portal.kernel.exception.UserSmsException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Contact;
@@ -143,7 +140,6 @@ import com.liferay.portal.kernel.service.persistence.TeamPersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupPersistence;
 import com.liferay.portal.kernel.service.persistence.UserGroupRolePersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Digester;
@@ -4104,19 +4100,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		_groupPersistence.removeUsers(groupId, userIds);
 
 		reindex(userIds);
-
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				Message message = new Message();
-
-				message.put("groupId", groupId);
-				message.put("userIds", userIds);
-
-				MessageBusUtil.sendMessage(
-					DestinationNames.SUBSCRIPTION_CLEAN_UP, message);
-
-				return null;
-			});
 	}
 
 	/**
@@ -4140,19 +4123,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		_organizationPersistence.removeUsers(organizationId, userIds);
 
 		reindex(userIds);
-
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				Message message = new Message();
-
-				message.put("groupId", group.getGroupId());
-				message.put("userIds", userIds);
-
-				MessageBusUtil.sendMessage(
-					DestinationNames.SUBSCRIPTION_CLEAN_UP, message);
-
-				return null;
-			});
 	}
 
 	/**
@@ -6598,19 +6568,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		userPersistence.removeGroups(userId, groupIds);
-
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				Message message = new Message();
-
-				message.put("groupIds", groupIds);
-				message.put("userId", userId);
-
-				MessageBusUtil.sendMessage(
-					DestinationNames.SUBSCRIPTION_CLEAN_UP, message);
-
-				return null;
-			});
 	}
 
 	protected void unsetUserOrganizations(long userId, long[] organizationIds)
@@ -6631,19 +6588,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			userId, organizationIds);
 
 		reindex(userId);
-
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				Message message = new Message();
-
-				message.put("groupIds", groupIds);
-				message.put("userId", userId);
-
-				MessageBusUtil.sendMessage(
-					DestinationNames.SUBSCRIPTION_CLEAN_UP, message);
-
-				return null;
-			});
 	}
 
 	protected void updateGroups(

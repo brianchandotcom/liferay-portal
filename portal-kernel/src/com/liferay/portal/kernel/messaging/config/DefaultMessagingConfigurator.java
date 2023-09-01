@@ -37,8 +37,7 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 		ServiceLatch serviceLatch = SystemBundleUtil.newServiceLatch();
 
 		serviceLatch.waitFor(DestinationFactory.class);
-		serviceLatch.waitFor(
-			MessageBus.class, messageBus -> _messageBus = messageBus);
+		serviceLatch.waitFor(MessageBus.class);
 		serviceLatch.openOn(this::initialize);
 	}
 
@@ -142,7 +141,6 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 	private final Set<DestinationConfiguration> _destinationConfigurations =
 		new HashSet<>();
 	private final List<Destination> _destinations = new ArrayList<>();
-	private volatile MessageBus _messageBus;
 	private final Map<String, List<MessageListener>> _messageListeners =
 		new HashMap<>();
 	private final List<ServiceRegistration<?>> _serviceRegistrations =

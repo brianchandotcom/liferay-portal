@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.vulcan.internal.graphql.exception.MaxQueryDepthExceededException;
 
 import graphql.analysis.QueryDepthInfo;
 
@@ -82,13 +83,15 @@ public class MaxQueryDepthInstrumentationTest {
 
 			Assert.fail();
 		}
-		catch (Exception exception) {
-			Assert.assertTrue(exception instanceof AbortExecutionException);
+		catch (MaxQueryDepthExceededException maxQueryDepthExceededException) {
+			Assert.assertTrue(
+				maxQueryDepthExceededException instanceof
+					AbortExecutionException);
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Maximum query depth exceeded ", limit + maxDepthLimit,
 					" > ", maxDepthLimit),
-				exception.getMessage());
+				maxQueryDepthExceededException.getMessage());
 		}
 	}
 

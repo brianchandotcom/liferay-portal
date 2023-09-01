@@ -20,6 +20,9 @@ export default function updateEditableValues({
 }): {
 	readonly content: string;
 	readonly editableValues: {
+		'com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor': {
+			[x: string]: unknown;
+		};
 		'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor': {
 			[x: string]: unknown;
 		};

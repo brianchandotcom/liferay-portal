@@ -8,11 +8,11 @@ export default function updateFragmentEntryLinkContent({
 	content,
 	fragmentEntryLinkId,
 }: {
-	collectionContentId: string;
+	collectionContentId?: string;
 	content: string;
 	fragmentEntryLinkId: string;
 }): {
-	readonly collectionContentId: string;
+	readonly collectionContentId: string | undefined;
 	readonly content: string;
 	readonly fragmentEntryLinkId: string;
 	readonly type: 'UPDATE_FRAGMENT_ENTRY_LINK_CONTENT';

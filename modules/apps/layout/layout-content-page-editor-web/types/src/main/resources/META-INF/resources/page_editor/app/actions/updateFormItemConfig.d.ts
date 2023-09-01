@@ -4,7 +4,7 @@
  */
 
 import type {DeletedLayoutDataItem, LayoutData} from '../../types/LayoutData';
-import type {FragmentEntryLink} from './addFragmentEntryLinks';
+import type {FragmentEntryLinkMap} from './addFragmentEntryLinks';
 export default function updateFormItemConfig({
 	addedFragmentEntryLinks,
 	deletedItems,
@@ -15,7 +15,7 @@ export default function updateFormItemConfig({
 	removedFragmentEntryLinkIds,
 	restoredFragmentEntryLinkIds,
 }: {
-	addedFragmentEntryLinks?: FragmentEntryLink[] | null;
+	addedFragmentEntryLinks?: FragmentEntryLinkMap | null;
 	deletedItems?: DeletedLayoutDataItem[];
 	isMapping: boolean;
 	itemId: string;
@@ -24,9 +24,7 @@ export default function updateFormItemConfig({
 	removedFragmentEntryLinkIds?: string[];
 	restoredFragmentEntryLinkIds?: string[];
 }): {
-	readonly addedFragmentEntryLinks:
-		| FragmentEntryLink<string, string>[]
-		| null;
+	readonly addedFragmentEntryLinks: FragmentEntryLinkMap | null;
 	readonly deletedItems: DeletedLayoutDataItem[];
 	readonly isMapping: boolean;
 	readonly itemId: string;

@@ -11,12 +11,12 @@ export default function switchSidebarPanel({
 }: {
 	hidden?: boolean;
 	itemConfigurationOpen?: boolean;
-	sidebarOpen: boolean;
-	sidebarPanelId: string;
+	sidebarOpen?: boolean;
+	sidebarPanelId?: string | null;
 }): {
 	readonly hidden: boolean;
 	readonly itemConfigurationOpen: boolean;
-	readonly sidebarOpen: boolean;
-	readonly sidebarPanelId: string;
+	readonly sidebarOpen: boolean | undefined;
+	readonly sidebarPanelId: string | null | undefined;
 	readonly type: 'SWITCH_SIDEBAR_PANEL';
 };

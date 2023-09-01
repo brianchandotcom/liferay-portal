@@ -10,6 +10,7 @@ export interface FragmentEntryLinkComment {
 		userId: string;
 	};
 	body: string;
+	children?: FragmentEntryLinkComment[];
 	commentId: string;
 	dateDescription: string;
 	edited: false;

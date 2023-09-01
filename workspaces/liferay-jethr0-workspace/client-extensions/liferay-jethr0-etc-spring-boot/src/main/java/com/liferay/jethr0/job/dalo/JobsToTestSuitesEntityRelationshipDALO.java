@@ -7,10 +7,10 @@ package com.liferay.jethr0.job.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.gitbranch.GitBranchEntity;
-import com.liferay.jethr0.gitbranch.GitBranchEntityFactory;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.JobEntityFactory;
+import com.liferay.jethr0.testsuite.TestSuiteEntity;
+import com.liferay.jethr0.testsuite.TestSuiteEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -19,12 +19,12 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectsToGitBranchesEntityRelationshipDALO
-	extends BaseEntityRelationshipDALO<JobEntity, GitBranchEntity> {
+public class JobsToTestSuitesEntityRelationshipDALO
+	extends BaseEntityRelationshipDALO<JobEntity, TestSuiteEntity> {
 
 	@Override
-	public EntityFactory<GitBranchEntity> getChildEntityFactory() {
-		return _gitBranchEntityFactory;
+	public EntityFactory<TestSuiteEntity> getChildEntityFactory() {
+		return _testSuiteEntityFactory;
 	}
 
 	@Override
@@ -34,13 +34,13 @@ public class ProjectsToGitBranchesEntityRelationshipDALO
 
 	@Override
 	protected String getObjectRelationshipName() {
-		return "projectsToGitBranches";
+		return "jobsToTestSuites";
 	}
 
 	@Autowired
-	private GitBranchEntityFactory _gitBranchEntityFactory;
+	private JobEntityFactory _jobEntityFactory;
 
 	@Autowired
-	private JobEntityFactory _jobEntityFactory;
+	private TestSuiteEntityFactory _testSuiteEntityFactory;
 
 }

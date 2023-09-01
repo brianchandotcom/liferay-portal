@@ -9,8 +9,8 @@ import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.dalo.ProjectEntityDALO;
-import com.liferay.jethr0.job.dalo.ProjectToBuildsEntityRelationshipDALO;
+import com.liferay.jethr0.job.dalo.JobEntityDALO;
+import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.util.Date;
@@ -55,7 +55,7 @@ public class ProjectEntityRepository extends BaseEntityRepository<JobEntity> {
 			return super.getById(id);
 		}
 
-		JobEntity jobEntity = _projectEntityDALO.get(id);
+		JobEntity jobEntity = _jobEntityDALO.get(id);
 
 		jobEntity.addBuildEntities(_buildEntityRepository.getAll(jobEntity));
 
@@ -67,14 +67,14 @@ public class ProjectEntityRepository extends BaseEntityRepository<JobEntity> {
 	}
 
 	@Override
-	public ProjectEntityDALO getEntityDALO() {
-		return _projectEntityDALO;
+	public JobEntityDALO getEntityDALO() {
+		return _jobEntityDALO;
 	}
 
 	@Override
 	public void initialize() {
 		addAll(
-			_projectEntityDALO.getProjectsByState(
+			_jobEntityDALO.getJobsByState(
 				JobEntity.State.QUEUED, JobEntity.State.RUNNING));
 	}
 
@@ -102,10 +102,10 @@ public class ProjectEntityRepository extends BaseEntityRepository<JobEntity> {
 	private boolean _initializedRelationships;
 
 	@Autowired
-	private ProjectEntityDALO _projectEntityDALO;
+	private JobEntityDALO _jobEntityDALO;
 
 	@Autowired
-	private ProjectToBuildsEntityRelationshipDALO
-		_projectToBuildsEntityRelationshipDALO;
+	private JobToBuildsEntityRelationshipDALO
+		_jobToBuildsEntityRelationshipDALO;
 
 }

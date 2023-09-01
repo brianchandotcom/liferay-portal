@@ -7,8 +7,8 @@ package com.liferay.jethr0.job.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.job.comparator.JobComparatorEntity;
-import com.liferay.jethr0.job.comparator.JobComparatorEntityFactory;
+import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
+import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -17,15 +17,15 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectComparatorEntityDALO
-	extends BaseEntityDALO<JobComparatorEntity> {
+public class JobPrioritizerEntityDALO
+	extends BaseEntityDALO<JobPrioritizerEntity> {
 
 	@Override
-	public EntityFactory<JobComparatorEntity> getEntityFactory() {
-		return _jobComparatorEntityFactory;
+	protected EntityFactory<JobPrioritizerEntity> getEntityFactory() {
+		return _jobPrioritizerEntityFactory;
 	}
 
 	@Autowired
-	private JobComparatorEntityFactory _jobComparatorEntityFactory;
+	private JobPrioritizerEntityFactory _jobPrioritizerEntityFactory;
 
 }

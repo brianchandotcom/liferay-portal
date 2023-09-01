@@ -7,8 +7,8 @@ package com.liferay.jethr0.testsuite.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.dalo.JobsToTestSuitesEntityRelationshipDALO;
 import com.liferay.jethr0.testsuite.TestSuiteEntity;
-import com.liferay.jethr0.testsuite.dalo.ProjectsToTestSuitesEntityRelationshipDALO;
 import com.liferay.jethr0.testsuite.dalo.TestSuiteEntityDALO;
 
 import java.util.HashSet;
@@ -28,7 +28,7 @@ public class TestSuiteEntityRepository
 		Set<TestSuiteEntity> testSuiteEntities = new HashSet<>();
 
 		Set<Long> testSuiteEntityIds =
-			_projectsToTestSuitesEntityRelationshipDALO.getChildEntityIds(
+			_jobsToTestSuitesEntityRelationshipDALO.getChildEntityIds(
 				jobEntity);
 
 		for (TestSuiteEntity testSuiteEntity : getAll()) {
@@ -52,8 +52,8 @@ public class TestSuiteEntityRepository
 	}
 
 	@Autowired
-	private ProjectsToTestSuitesEntityRelationshipDALO
-		_projectsToTestSuitesEntityRelationshipDALO;
+	private JobsToTestSuitesEntityRelationshipDALO
+		_jobsToTestSuitesEntityRelationshipDALO;
 
 	@Autowired
 	private TestSuiteEntityDALO _testSuiteEntityDALO;

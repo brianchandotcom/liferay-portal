@@ -9,7 +9,7 @@ import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.dalo.BuildToTasksEntityRelationshipDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.dalo.ProjectToTasksEntityRelationshipDALO;
+import com.liferay.jethr0.job.dalo.JobToTasksEntityRelationshipDALO;
 import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.task.dalo.TaskEntityDALO;
 
@@ -49,8 +49,8 @@ public class TaskEntityRepository extends BaseEntityRepository<TaskEntity> {
 	public Set<TaskEntity> getAll(JobEntity jobEntity) {
 		Set<TaskEntity> taskEntities = new HashSet<>();
 
-		Set<Long> taskIds =
-			_projectToTasksEntityRelationshipDALO.getChildEntityIds(jobEntity);
+		Set<Long> taskIds = _jobToTasksEntityRelationshipDALO.getChildEntityIds(
+			jobEntity);
 
 		for (TaskEntity taskEntity : getAll()) {
 			if (!taskIds.contains(taskEntity.getId())) {
@@ -77,8 +77,7 @@ public class TaskEntityRepository extends BaseEntityRepository<TaskEntity> {
 		_buildToTasksEntityRelationshipDALO;
 
 	@Autowired
-	private ProjectToTasksEntityRelationshipDALO
-		_projectToTasksEntityRelationshipDALO;
+	private JobToTasksEntityRelationshipDALO _jobToTasksEntityRelationshipDALO;
 
 	@Autowired
 	private TaskEntityDALO _taskEntityDALO;

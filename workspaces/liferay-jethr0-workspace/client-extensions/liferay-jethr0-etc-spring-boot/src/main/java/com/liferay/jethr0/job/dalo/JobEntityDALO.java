@@ -23,9 +23,9 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectEntityDALO extends BaseEntityDALO<JobEntity> {
+public class JobEntityDALO extends BaseEntityDALO<JobEntity> {
 
-	public Set<JobEntity> getProjectsByState(JobEntity.State... states) {
+	public Set<JobEntity> getJobsByState(JobEntity.State... states) {
 		Set<JobEntity> jobEntities = new HashSet<>();
 
 		String filter = null;

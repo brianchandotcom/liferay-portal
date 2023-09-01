@@ -7,8 +7,8 @@ package com.liferay.jethr0.job.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.job.comparator.JobComparatorEntity;
-import com.liferay.jethr0.job.dalo.ProjectComparatorEntityDALO;
-import com.liferay.jethr0.job.dalo.ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO;
+import com.liferay.jethr0.job.dalo.JobComparatorEntityDALO;
+import com.liferay.jethr0.job.dalo.JobPrioritizerToJobComparatorsEntityRelationshipDALO;
 import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
 
 import java.util.HashSet;
@@ -58,7 +58,7 @@ public class ProjectComparatorEntityRepository
 		Set<JobComparatorEntity> jobComparatorEntities = new HashSet<>();
 
 		Set<Long> jobComparatorIds =
-			_projectPrioritizerToProjectComparatorsEntityRelationshipDALO.
+			_jobPrioritizerToJobComparatorsEntityRelationshipDALO.
 				getChildEntityIds(jobPrioritizerEntity);
 
 		for (JobComparatorEntity jobComparatorEntity : getAll()) {
@@ -77,8 +77,8 @@ public class ProjectComparatorEntityRepository
 	}
 
 	@Override
-	public ProjectComparatorEntityDALO getEntityDALO() {
-		return _projectComparatorEntityDALO;
+	public JobComparatorEntityDALO getEntityDALO() {
+		return _jobComparatorEntityDALO;
 	}
 
 	@Override
@@ -107,13 +107,13 @@ public class ProjectComparatorEntityRepository
 	}
 
 	@Autowired
-	private ProjectComparatorEntityDALO _projectComparatorEntityDALO;
+	private JobComparatorEntityDALO _jobComparatorEntityDALO;
+
+	@Autowired
+	private JobPrioritizerToJobComparatorsEntityRelationshipDALO
+		_jobPrioritizerToJobComparatorsEntityRelationshipDALO;
 
 	private ProjectPrioritizerEntityRepository
 		_projectPrioritizerEntityRepository;
-
-	@Autowired
-	private ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO
-		_projectPrioritizerToProjectComparatorsEntityRelationshipDALO;
 
 }

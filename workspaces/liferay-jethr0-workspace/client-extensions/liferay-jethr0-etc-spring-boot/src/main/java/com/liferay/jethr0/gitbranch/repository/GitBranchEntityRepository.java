@@ -9,7 +9,7 @@ import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.gitbranch.GitBranchEntity;
 import com.liferay.jethr0.gitbranch.dalo.GitBranchEntityDALO;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.dalo.ProjectsToGitBranchesEntityRelationshipDALO;
+import com.liferay.jethr0.job.dalo.JobsToGitBranchesEntityRelationshipDALO;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +28,7 @@ public class GitBranchEntityRepository
 		Set<GitBranchEntity> projectGitBranchEntities = new HashSet<>();
 
 		Set<Long> gitBranchEntityIds =
-			_projectsToGitBranchesEntityRelationshipDALO.getChildEntityIds(
+			_jobsToGitBranchesEntityRelationshipDALO.getChildEntityIds(
 				jobEntity);
 
 		for (GitBranchEntity gitBranchEntity : getAll()) {
@@ -55,7 +55,7 @@ public class GitBranchEntityRepository
 	private GitBranchEntityDALO _gitBranchEntityDALO;
 
 	@Autowired
-	private ProjectsToGitBranchesEntityRelationshipDALO
-		_projectsToGitBranchesEntityRelationshipDALO;
+	private JobsToGitBranchesEntityRelationshipDALO
+		_jobsToGitBranchesEntityRelationshipDALO;
 
 }

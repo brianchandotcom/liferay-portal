@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.dalo.BuildEntityDALO;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.dalo.ProjectToBuildsEntityRelationshipDALO;
+import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.job.repository.ProjectEntityRepository;
 
 import java.util.HashSet;
@@ -58,7 +58,7 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 
 	public Set<BuildEntity> getAll(JobEntity jobEntity) {
 		Set<BuildEntity> buildEntities = new HashSet<>(
-			_projectToBuildsEntityRelationshipDALO.getChildEntities(jobEntity));
+			_jobToBuildsEntityRelationshipDALO.getChildEntities(jobEntity));
 
 		for (BuildEntity buildEntity : buildEntities) {
 			buildEntity.setJobEntity(jobEntity);
@@ -129,10 +129,11 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 	private BuildParameterEntityRepository _buildParameterEntityRepository;
 	private BuildRunEntityRepository _buildRunEntityRepository;
 	private boolean _initializedRelationships;
-	private ProjectEntityRepository _projectEntityRepository;
 
 	@Autowired
-	private ProjectToBuildsEntityRelationshipDALO
-		_projectToBuildsEntityRelationshipDALO;
+	private JobToBuildsEntityRelationshipDALO
+		_jobToBuildsEntityRelationshipDALO;
+
+	private ProjectEntityRepository _projectEntityRepository;
 
 }

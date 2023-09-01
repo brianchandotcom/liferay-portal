@@ -12,7 +12,7 @@ import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.environment.repository.EnvironmentEntityRepository;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.dalo.ProjectToBuildsEntityRelationshipDALO;
+import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.job.queue.ProjectQueue;
 import com.liferay.jethr0.job.repository.ProjectEntityRepository;
 import com.liferay.jethr0.task.repository.TaskEntityRepository;
@@ -179,14 +179,14 @@ public class BuildQueue {
 	private EnvironmentEntityRepository _environmentEntityRepository;
 
 	@Autowired
+	private JobToBuildsEntityRelationshipDALO
+		_jobToBuildsEntityRelationshipDALO;
+
+	@Autowired
 	private ProjectEntityRepository _projectEntityRepository;
 
 	@Autowired
 	private ProjectQueue _projectQueue;
-
-	@Autowired
-	private ProjectToBuildsEntityRelationshipDALO
-		_projectToBuildsEntityRelationshipDALO;
 
 	private final List<BuildEntity> _sortedBuildEntities = new ArrayList<>();
 

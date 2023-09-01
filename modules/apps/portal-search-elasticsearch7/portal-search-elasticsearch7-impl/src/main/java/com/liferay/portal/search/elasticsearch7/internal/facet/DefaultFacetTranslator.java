@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -208,7 +209,13 @@ public class DefaultFacetTranslator implements FacetTranslator {
 						new IncludeExclude(include, null));
 				}
 
-				int minDocCount = dataJSONObject.getInt("frequencyThreshold");
+				int minDocCount = -1;
+
+				if (Validator.isNotNull(
+						dataJSONObject.get("frequencyThreshold"))) {
+
+					minDocCount = dataJSONObject.getInt("frequencyThreshold");
+				}
 
 				if (minDocCount >= 0) {
 					termsAggregationBuilder.minDocCount(minDocCount);

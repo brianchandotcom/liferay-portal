@@ -49,7 +49,11 @@ public class NestedFacetProcessor
 
 		termsAggregationBuilder.field(nestedFacet.getFieldName());
 
-		int minDocCount = dataJSONObject.getInt("frequencyThreshold");
+		int minDocCount = -1;
+
+		if (Validator.isNotNull(dataJSONObject.get("frequencyThreshold"))) {
+			minDocCount = dataJSONObject.getInt("frequencyThreshold");
+		}
 
 		if (minDocCount >= 0) {
 			termsAggregationBuilder.minDocCount(minDocCount);

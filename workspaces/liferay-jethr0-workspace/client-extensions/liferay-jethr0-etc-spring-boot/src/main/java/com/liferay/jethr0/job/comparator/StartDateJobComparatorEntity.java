@@ -15,16 +15,15 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class StartDateProjectComparatorEntity
-	extends BaseProjectComparatorEntity {
+public class StartDateJobComparatorEntity extends BaseJobComparatorEntity {
 
-	public StartDateProjectComparatorEntity(
+	public StartDateJobComparatorEntity(
 		JobPrioritizerEntity jobPrioritizerEntity, JSONObject jsonObject) {
 
 		super(jobPrioritizerEntity, jsonObject);
 	}
 
-	public StartDateProjectComparatorEntity(JSONObject jsonObject) {
+	public StartDateJobComparatorEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 

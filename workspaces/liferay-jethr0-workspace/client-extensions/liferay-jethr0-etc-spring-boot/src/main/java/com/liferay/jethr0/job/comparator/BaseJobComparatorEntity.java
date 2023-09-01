@@ -16,9 +16,8 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public abstract class BaseProjectComparatorEntity
-	extends BaseEntity
-	implements Comparator<JobEntity>, ProjectComparatorEntity {
+public abstract class BaseJobComparatorEntity
+	extends BaseEntity implements Comparator<JobEntity>, JobComparatorEntity {
 
 	@Override
 	public JobPrioritizerEntity getJobPrioritizerEntity() {
@@ -34,12 +33,12 @@ public abstract class BaseProjectComparatorEntity
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		ProjectComparatorEntity.Type type = getType();
+		JobComparatorEntity.Type type = getType();
 
 		jsonObject.put(
 			"position", getPosition()
 		).put(
-			"r_jobPrioritizerToProjectComparators_c_jobPrioritizerId",
+			"r_jobPrioritizerToJobComparators_c_jobPrioritizerId",
 			getJobPrioritizerEntityId()
 		).put(
 			"type", type.getJSONObject()
@@ -89,7 +88,7 @@ public abstract class BaseProjectComparatorEntity
 		_value = value;
 	}
 
-	protected BaseProjectComparatorEntity(
+	protected BaseJobComparatorEntity(
 		JobPrioritizerEntity jobPrioritizerEntity, JSONObject jsonObject) {
 
 		super(jsonObject);
@@ -101,12 +100,12 @@ public abstract class BaseProjectComparatorEntity
 		_value = jsonObject.optString("value");
 	}
 
-	protected BaseProjectComparatorEntity(JSONObject jsonObject) {
+	protected BaseJobComparatorEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_position = jsonObject.getInt("position");
 		_jobPrioritizerEntityId = jsonObject.optLong(
-			"r_jobPrioritizerToProjectComparators_c_jobPrioritizerId");
+			"r_jobPrioritizerToJobComparators_c_jobPrioritizerId");
 		_type = Type.get(jsonObject.getJSONObject("type"));
 		_value = jsonObject.optString("value");
 	}

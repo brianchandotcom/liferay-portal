@@ -16,28 +16,28 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ProjectComparatorEntityFactory
-	extends BaseEntityFactory<ProjectComparatorEntity> {
+	extends BaseEntityFactory<JobComparatorEntity> {
 
 	@Override
-	public ProjectComparatorEntity newEntity(JSONObject jsonObject) {
-		ProjectComparatorEntity.Type type = ProjectComparatorEntity.Type.get(
+	public JobComparatorEntity newEntity(JSONObject jsonObject) {
+		JobComparatorEntity.Type type = JobComparatorEntity.Type.get(
 			jsonObject.getJSONObject("type"));
 
-		if (type == ProjectComparatorEntity.Type.FIFO) {
-			return new FIFOProjectComparatorEntity(jsonObject);
+		if (type == JobComparatorEntity.Type.FIFO) {
+			return new FIFOJobComparatorEntity(jsonObject);
 		}
-		else if (type == ProjectComparatorEntity.Type.PROJECT_PRIORITY) {
-			return new PriorityProjectComparatorEntity(jsonObject);
+		else if (type == JobComparatorEntity.Type.JOB_PRIORITY) {
+			return new PriorityJobComparatorEntity(jsonObject);
 		}
-		else if (type == ProjectComparatorEntity.Type.PROJECT_START_DATE) {
-			return new StartDateProjectComparatorEntity(jsonObject);
+		else if (type == JobComparatorEntity.Type.JOB_START_DATE) {
+			return new StartDateJobComparatorEntity(jsonObject);
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
 	protected ProjectComparatorEntityFactory() {
-		super(ProjectComparatorEntity.class);
+		super(JobComparatorEntity.class);
 	}
 
 }

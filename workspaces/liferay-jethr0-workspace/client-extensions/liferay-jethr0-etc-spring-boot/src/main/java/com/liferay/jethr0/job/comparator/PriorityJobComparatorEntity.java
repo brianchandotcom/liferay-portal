@@ -8,31 +8,27 @@ package com.liferay.jethr0.job.comparator;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
 
-import java.util.Date;
-
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public class FIFOProjectComparatorEntity extends BaseProjectComparatorEntity {
+public class PriorityJobComparatorEntity extends BaseJobComparatorEntity {
 
-	public FIFOProjectComparatorEntity(
+	public PriorityJobComparatorEntity(
 		JobPrioritizerEntity jobPrioritizerEntity, JSONObject jsonObject) {
 
 		super(jobPrioritizerEntity, jsonObject);
 	}
 
-	public FIFOProjectComparatorEntity(JSONObject jsonObject) {
+	public PriorityJobComparatorEntity(JSONObject jsonObject) {
 		super(jsonObject);
 	}
 
 	@Override
 	public int compare(JobEntity jobEntity1, JobEntity jobEntity2) {
-		Date createdDate1 = jobEntity1.getCreatedDate();
-		Date createdDate2 = jobEntity2.getCreatedDate();
-
-		return createdDate1.compareTo(createdDate2);
+		return Integer.compare(
+			jobEntity1.getPriority(), jobEntity2.getPriority());
 	}
 
 }

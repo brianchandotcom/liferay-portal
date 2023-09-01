@@ -53,17 +53,17 @@ public class ProjectPrioritizerEntityRepository
 	@Override
 	public void initializeRelationships() {
 		for (JobPrioritizerEntity jobPrioritizerEntity : getAll()) {
-			for (long projectComparatorEntityId :
+			for (long jobComparatorEntityId :
 					_projectPrioritizerToProjectComparatorsEntityRelationshipDALO.
 						getChildEntityIds(jobPrioritizerEntity)) {
 
-				if (projectComparatorEntityId == 0) {
+				if (jobComparatorEntityId == 0) {
 					continue;
 				}
 
-				jobPrioritizerEntity.addProjectComparatorEntity(
+				jobPrioritizerEntity.addJobComparatorEntity(
 					_projectComparatorEntityRepository.getById(
-						projectComparatorEntityId));
+						jobComparatorEntityId));
 			}
 		}
 	}
@@ -74,14 +74,14 @@ public class ProjectPrioritizerEntityRepository
 		_projectComparatorEntityRepository = projectComparatorEntityRepository;
 	}
 
+	@Autowired
+	private JobPrioritizerEntityFactory _jobPrioritizerEntityFactory;
+
 	private ProjectComparatorEntityRepository
 		_projectComparatorEntityRepository;
 
 	@Autowired
 	private ProjectPrioritizerEntityDALO _projectPrioritizerEntityDALO;
-
-	@Autowired
-	private JobPrioritizerEntityFactory _jobPrioritizerEntityFactory;
 
 	@Autowired
 	private ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO

@@ -12,8 +12,8 @@ import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.gitbranch.repository.GitBranchEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.comparator.BaseProjectComparatorEntity;
-import com.liferay.jethr0.job.comparator.ProjectComparatorEntity;
+import com.liferay.jethr0.job.comparator.BaseJobComparatorEntity;
+import com.liferay.jethr0.job.comparator.JobComparatorEntity;
 import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
 import com.liferay.jethr0.job.repository.ProjectComparatorEntityRepository;
 import com.liferay.jethr0.job.repository.ProjectEntityRepository;
@@ -189,16 +189,16 @@ public class ProjectQueue {
 				}
 			}
 
-			_sortedProjectComparatorEntities.clear();
+			_sortedJobComparatorEntities.clear();
 
-			_sortedProjectComparatorEntities.addAll(
-				_jobPrioritizerEntity.getProjectComparatorEntities());
+			_sortedJobComparatorEntities.addAll(
+				_jobPrioritizerEntity.getJobComparatorEntities());
 
 			Collections.sort(
-				_sortedProjectComparatorEntities,
-				Comparator.comparingInt(ProjectComparatorEntity::getPosition));
+				_sortedJobComparatorEntities,
+				Comparator.comparingInt(JobComparatorEntity::getPosition));
 
-			_jobEntities.sort(new PrioritizedProjectComparator());
+			_jobEntities.sort(new PrioritizedJobComparator());
 
 			for (int i = 0; i < _jobEntities.size(); i++) {
 				JobEntity jobEntity = _jobEntities.get(i);
@@ -268,13 +268,13 @@ public class ProjectQueue {
 			_liferayJobPrioritizer);
 
 		_projectComparatorEntityRepository.add(
-			jobPrioritizerEntity, 1,
-			ProjectComparatorEntity.Type.PROJECT_START_DATE, null);
+			jobPrioritizerEntity, 1, JobComparatorEntity.Type.JOB_START_DATE,
+			null);
 		_projectComparatorEntityRepository.add(
-			jobPrioritizerEntity, 2,
-			ProjectComparatorEntity.Type.PROJECT_PRIORITY, null);
+			jobPrioritizerEntity, 2, JobComparatorEntity.Type.JOB_PRIORITY,
+			null);
 		_projectComparatorEntityRepository.add(
-			jobPrioritizerEntity, 3, ProjectComparatorEntity.Type.FIFO, null);
+			jobPrioritizerEntity, 3, JobComparatorEntity.Type.FIFO, null);
 
 		return jobPrioritizerEntity;
 	}
@@ -310,8 +310,8 @@ public class ProjectQueue {
 	private ProjectPrioritizerEntityRepository
 		_projectPrioritizerEntityRepository;
 
-	private final List<ProjectComparatorEntity>
-		_sortedProjectComparatorEntities = new ArrayList<>();
+	private final List<JobComparatorEntity> _sortedJobComparatorEntities =
+		new ArrayList<>();
 
 	@Autowired
 	private TaskEntityRepository _taskEntityRepository;
@@ -319,24 +319,21 @@ public class ProjectQueue {
 	@Autowired
 	private TestSuiteEntityRepository _testSuiteEntityRepository;
 
-	private class PrioritizedProjectComparator
-		implements Comparator<JobEntity> {
+	private class PrioritizedJobComparator implements Comparator<JobEntity> {
 
 		@Override
 		public int compare(JobEntity jobEntity1, JobEntity jobEntity2) {
-			for (ProjectComparatorEntity projectComparatorEntity :
-					_sortedProjectComparatorEntities) {
+			for (JobComparatorEntity jobComparatorEntity :
+					_sortedJobComparatorEntities) {
 
-				if (!(projectComparatorEntity instanceof
-						BaseProjectComparatorEntity)) {
-
+				if (!(jobComparatorEntity instanceof BaseJobComparatorEntity)) {
 					continue;
 				}
 
-				BaseProjectComparatorEntity baseProjectComparator =
-					(BaseProjectComparatorEntity)projectComparatorEntity;
+				BaseJobComparatorEntity baseJobComparatorEntity =
+					(BaseJobComparatorEntity)jobComparatorEntity;
 
-				int result = baseProjectComparator.compare(
+				int result = baseJobComparatorEntity.compare(
 					jobEntity1, jobEntity2);
 
 				if (result != 0) {

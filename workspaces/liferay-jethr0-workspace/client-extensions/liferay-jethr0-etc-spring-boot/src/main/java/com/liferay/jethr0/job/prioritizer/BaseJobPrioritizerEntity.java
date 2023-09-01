@@ -6,7 +6,7 @@
 package com.liferay.jethr0.job.prioritizer;
 
 import com.liferay.jethr0.entity.BaseEntity;
-import com.liferay.jethr0.job.comparator.ProjectComparatorEntity;
+import com.liferay.jethr0.job.comparator.JobComparatorEntity;
 
 import java.util.Set;
 
@@ -19,17 +19,22 @@ public abstract class BaseJobPrioritizerEntity
 	extends BaseEntity implements JobPrioritizerEntity {
 
 	@Override
-	public void addProjectComparatorEntities(
-		Set<ProjectComparatorEntity> projectComparatorEntities) {
+	public void addJobComparatorEntities(
+		Set<JobComparatorEntity> jobComparatorEntities) {
 
-		addRelatedEntities(projectComparatorEntities);
+		addRelatedEntities(jobComparatorEntities);
 	}
 
 	@Override
-	public void addProjectComparatorEntity(
-		ProjectComparatorEntity projectComparatorEntity) {
+	public void addJobComparatorEntity(
+		JobComparatorEntity jobComparatorEntity) {
 
-		addRelatedEntity(projectComparatorEntity);
+		addRelatedEntity(jobComparatorEntity);
+	}
+
+	@Override
+	public Set<JobComparatorEntity> getJobComparatorEntities() {
+		return getRelatedEntities(JobComparatorEntity.class);
 	}
 
 	@Override
@@ -47,22 +52,17 @@ public abstract class BaseJobPrioritizerEntity
 	}
 
 	@Override
-	public Set<ProjectComparatorEntity> getProjectComparatorEntities() {
-		return getRelatedEntities(ProjectComparatorEntity.class);
+	public void removeJobComparatorEntities(
+		Set<JobComparatorEntity> jobComparatorEntities) {
+
+		removeRelatedEntities(jobComparatorEntities);
 	}
 
 	@Override
-	public void removeProjectComparatorEntities(
-		Set<ProjectComparatorEntity> projectComparatorEntities) {
+	public void removeJobComparatorEntity(
+		JobComparatorEntity jobComparatorEntity) {
 
-		removeRelatedEntities(projectComparatorEntities);
-	}
-
-	@Override
-	public void removeProjectComparatorEntity(
-		ProjectComparatorEntity projectComparatorEntity) {
-
-		removeRelatedEntity(projectComparatorEntity);
+		removeRelatedEntity(jobComparatorEntity);
 	}
 
 	@Override

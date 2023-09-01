@@ -7,7 +7,7 @@ package com.liferay.jethr0.job.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.job.comparator.ProjectComparatorEntity;
+import com.liferay.jethr0.job.comparator.JobComparatorEntity;
 import com.liferay.jethr0.job.comparator.ProjectComparatorEntityFactory;
 import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
 import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntityFactory;
@@ -21,10 +21,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO
 	extends BaseEntityRelationshipDALO
-		<JobPrioritizerEntity, ProjectComparatorEntity> {
+		<JobPrioritizerEntity, JobComparatorEntity> {
 
 	@Override
-	public EntityFactory<ProjectComparatorEntity> getChildEntityFactory() {
+	public EntityFactory<JobComparatorEntity> getChildEntityFactory() {
 		return _projectComparatorEntityFactory;
 	}
 
@@ -39,9 +39,9 @@ public class ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO
 	}
 
 	@Autowired
-	private ProjectComparatorEntityFactory _projectComparatorEntityFactory;
+	private JobPrioritizerEntityFactory _jobPrioritizerEntityFactory;
 
 	@Autowired
-	private JobPrioritizerEntityFactory _jobPrioritizerEntityFactory;
+	private ProjectComparatorEntityFactory _projectComparatorEntityFactory;
 
 }

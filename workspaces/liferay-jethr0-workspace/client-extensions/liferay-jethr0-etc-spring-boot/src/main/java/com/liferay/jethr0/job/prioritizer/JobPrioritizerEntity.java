@@ -6,7 +6,7 @@
 package com.liferay.jethr0.job.prioritizer;
 
 import com.liferay.jethr0.entity.Entity;
-import com.liferay.jethr0.job.comparator.ProjectComparatorEntity;
+import com.liferay.jethr0.job.comparator.JobComparatorEntity;
 
 import java.util.Set;
 
@@ -15,21 +15,20 @@ import java.util.Set;
  */
 public interface JobPrioritizerEntity extends Entity {
 
-	public void addProjectComparatorEntities(
-		Set<ProjectComparatorEntity> projectComparatorEntities);
+	public void addJobComparatorEntities(
+		Set<JobComparatorEntity> jobComparatorEntities);
 
-	public void addProjectComparatorEntity(
-		ProjectComparatorEntity projectComparatorEntity);
+	public void addJobComparatorEntity(JobComparatorEntity jobComparatorEntity);
+
+	public Set<JobComparatorEntity> getJobComparatorEntities();
 
 	public String getName();
 
-	public Set<ProjectComparatorEntity> getProjectComparatorEntities();
+	public void removeJobComparatorEntities(
+		Set<JobComparatorEntity> jobComparatorEntities);
 
-	public void removeProjectComparatorEntities(
-		Set<ProjectComparatorEntity> projectComparatorEntities);
-
-	public void removeProjectComparatorEntity(
-		ProjectComparatorEntity projectComparatorEntity);
+	public void removeJobComparatorEntity(
+		JobComparatorEntity jobComparatorEntity);
 
 	public void setName(String name);
 

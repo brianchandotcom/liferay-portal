@@ -6,7 +6,7 @@
 package com.liferay.jethr0.job.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
-import com.liferay.jethr0.job.comparator.ProjectComparatorEntity;
+import com.liferay.jethr0.job.comparator.JobComparatorEntity;
 import com.liferay.jethr0.job.dalo.ProjectComparatorEntityDALO;
 import com.liferay.jethr0.job.dalo.ProjectPrioritizerToProjectComparatorsEntityRelationshipDALO;
 import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
@@ -24,18 +24,18 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ProjectComparatorEntityRepository
-	extends BaseEntityRepository<ProjectComparatorEntity> {
+	extends BaseEntityRepository<JobComparatorEntity> {
 
-	public ProjectComparatorEntity add(
+	public JobComparatorEntity add(
 		JobPrioritizerEntity jobPrioritizerEntity, long position,
-		ProjectComparatorEntity.Type type, String value) {
+		JobComparatorEntity.Type type, String value) {
 
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
 			"position", position
 		).put(
-			"r_projectPrioritizerToProjectComparators_c_projectPrioritizerId",
+			"r_jobPrioritizerToJobComparators_c_jobPrioritizerId",
 			jobPrioritizerEntity.getId()
 		).put(
 			"type", type.getJSONObject()
@@ -43,43 +43,37 @@ public class ProjectComparatorEntityRepository
 			"value", value
 		);
 
-		ProjectComparatorEntity projectComparatorEntity = add(jsonObject);
+		JobComparatorEntity jobComparatorEntity = add(jsonObject);
 
-		projectComparatorEntity.setJobPrioritizerEntity(jobPrioritizerEntity);
+		jobComparatorEntity.setJobPrioritizerEntity(jobPrioritizerEntity);
 
-		jobPrioritizerEntity.addProjectComparatorEntity(
-			projectComparatorEntity);
+		jobPrioritizerEntity.addJobComparatorEntity(jobComparatorEntity);
 
-		return projectComparatorEntity;
+		return jobComparatorEntity;
 	}
 
-	public Set<ProjectComparatorEntity> getAll(
+	public Set<JobComparatorEntity> getAll(
 		JobPrioritizerEntity jobPrioritizerEntity) {
 
-		Set<ProjectComparatorEntity> projectComparatorEntities =
-			new HashSet<>();
+		Set<JobComparatorEntity> jobComparatorEntities = new HashSet<>();
 
-		Set<Long> projectComparatorIds =
+		Set<Long> jobComparatorIds =
 			_projectPrioritizerToProjectComparatorsEntityRelationshipDALO.
 				getChildEntityIds(jobPrioritizerEntity);
 
-		for (ProjectComparatorEntity projectComparatorEntity : getAll()) {
-			if (!projectComparatorIds.contains(
-					projectComparatorEntity.getId())) {
-
+		for (JobComparatorEntity jobComparatorEntity : getAll()) {
+			if (!jobComparatorIds.contains(jobComparatorEntity.getId())) {
 				continue;
 			}
 
-			jobPrioritizerEntity.addProjectComparatorEntity(
-				projectComparatorEntity);
+			jobPrioritizerEntity.addJobComparatorEntity(jobComparatorEntity);
 
-			projectComparatorEntity.setJobPrioritizerEntity(
-				jobPrioritizerEntity);
+			jobComparatorEntity.setJobPrioritizerEntity(jobPrioritizerEntity);
 
-			projectComparatorEntities.add(projectComparatorEntity);
+			jobComparatorEntities.add(jobComparatorEntity);
 		}
 
-		return projectComparatorEntities;
+		return jobComparatorEntities;
 	}
 
 	@Override
@@ -89,11 +83,11 @@ public class ProjectComparatorEntityRepository
 
 	@Override
 	public void initializeRelationships() {
-		for (ProjectComparatorEntity projectComparatorEntity : getAll()) {
+		for (JobComparatorEntity jobComparatorEntity : getAll()) {
 			JobPrioritizerEntity jobPrioritizerEntity = null;
 
 			long jenkinsServerId =
-				projectComparatorEntity.getJobPrioritizerEntityId();
+				jobComparatorEntity.getJobPrioritizerEntityId();
 
 			if (jenkinsServerId != 0) {
 				jobPrioritizerEntity =
@@ -101,8 +95,7 @@ public class ProjectComparatorEntityRepository
 						jenkinsServerId);
 			}
 
-			projectComparatorEntity.setJobPrioritizerEntity(
-				jobPrioritizerEntity);
+			jobComparatorEntity.setJobPrioritizerEntity(jobPrioritizerEntity);
 		}
 	}
 

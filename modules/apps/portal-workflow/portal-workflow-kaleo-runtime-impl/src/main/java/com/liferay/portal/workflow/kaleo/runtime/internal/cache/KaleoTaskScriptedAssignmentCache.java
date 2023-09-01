@@ -5,10 +5,8 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.cache;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 
 import java.util.ArrayList;
@@ -26,24 +24,24 @@ import org.osgi.service.component.annotations.Reference;
 public class KaleoTaskScriptedAssignmentCache {
 
 	public Collection<KaleoTaskAssignment> getKaleoTaskAssignments(
-		KaleoInstanceToken kaleoInstanceToken) {
+		long kaleoTaskInstanceTokenId) {
 
-		return _portalCache.get(_getKey(kaleoInstanceToken));
+		return _portalCache.get(kaleoTaskInstanceTokenId);
 	}
 
 	public void putKaleoTaskAssignments(
-		KaleoInstanceToken kaleoInstanceToken,
+		long kaleoTaskInstanceTokenId,
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments, int timeToLive) {
 
 		_portalCache.put(
-			_getKey(kaleoInstanceToken), new ArrayList<>(kaleoTaskAssignments),
+			kaleoTaskInstanceTokenId, new ArrayList<>(kaleoTaskAssignments),
 			timeToLive);
 	}
 
 	@Activate
 	protected void activate() {
 		_portalCache =
-			(PortalCache<String, ArrayList<KaleoTaskAssignment>>)
+			(PortalCache<Long, ArrayList<KaleoTaskAssignment>>)
 				_multiVMPool.getPortalCache(
 					KaleoTaskScriptedAssignmentCache.class.getName());
 	}
@@ -54,14 +52,9 @@ public class KaleoTaskScriptedAssignmentCache {
 			KaleoTaskScriptedAssignmentCache.class.getName());
 	}
 
-	private String _getKey(KaleoInstanceToken kaleoInstanceToken) {
-		return kaleoInstanceToken.getKaleoInstanceTokenId() + StringPool.POUND +
-			kaleoInstanceToken.getCurrentKaleoNodeId();
-	}
-
 	@Reference
 	private MultiVMPool _multiVMPool;
 
-	private PortalCache<String, ArrayList<KaleoTaskAssignment>> _portalCache;
+	private PortalCache<Long, ArrayList<KaleoTaskAssignment>> _portalCache;
 
 }

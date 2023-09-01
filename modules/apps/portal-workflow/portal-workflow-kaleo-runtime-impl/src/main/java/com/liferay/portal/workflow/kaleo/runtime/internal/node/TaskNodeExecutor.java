@@ -26,11 +26,13 @@ import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskLocalService;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -165,12 +167,23 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 			Date dueDate)
 		throws PortalException {
 
-		return _kaleoTaskInstanceTokenLocalService.addKaleoTaskInstanceToken(
-			kaleoInstanceToken.getKaleoInstanceTokenId(),
-			kaleoTask.getKaleoTaskId(), kaleoTask.getName(),
+		KaleoTaskInstanceToken kaleoTaskInstanceToken =
+			_kaleoTaskInstanceTokenLocalService.addKaleoTaskInstanceToken(
+				kaleoInstanceToken.getKaleoInstanceTokenId(),
+				kaleoTask.getKaleoTaskId(), kaleoTask.getName(),
+				Collections.emptyList(), dueDate, workflowContext,
+				serviceContext);
+
+		executionContext.setKaleoTaskInstanceToken(kaleoTaskInstanceToken);
+
+		_kaleoTaskAssignmentInstanceLocalService.addTaskAssignmentInstances(
+			kaleoTaskInstanceToken,
 			_aggregateKaleoTaskAssignmentSelector.getKaleoTaskAssignments(
 				kaleoTask.getKaleoTaskAssignments(), executionContext),
-			dueDate, workflowContext, serviceContext);
+			workflowContext, serviceContext);
+
+		return _kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
+			kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
 	}
 
 	@Reference
@@ -182,6 +195,10 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 
 	@Reference
 	private KaleoLogLocalService _kaleoLogLocalService;
+
+	@Reference
+	private KaleoTaskAssignmentInstanceLocalService
+		_kaleoTaskAssignmentInstanceLocalService;
 
 	@Reference
 	private KaleoTaskInstanceTokenLocalService

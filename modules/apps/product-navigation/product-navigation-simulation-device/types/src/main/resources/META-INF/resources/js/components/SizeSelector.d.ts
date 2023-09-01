@@ -9,12 +9,14 @@ import {Size} from '../constants/sizes';
 interface ISizeSelectorProps {
 	activeSize: Size;
 	namespace: string;
+	open: boolean;
 	previewRef: React.RefObject<HTMLDivElement>;
 	setActiveSize: Function;
 }
 declare function SizeSelector({
 	activeSize,
 	namespace,
+	open,
 	previewRef,
 	setActiveSize,
 }: ISizeSelectorProps): JSX.Element;

@@ -80,21 +80,14 @@ public class JSResolveModulesServlet
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 					httpServletRequest);
 
-			StringBuilder sb = new StringBuilder();
-
-			sb.append(
-				absolutePortalURLBuilder.forServlet(
-					getURL()
-				).build());
-
-			sb.append(StringPool.QUESTION);
-
-			sb.append(httpServletRequest.getQueryString());
+			String url = absolutePortalURLBuilder.forServlet(
+				getURL()
+			).build();
 
 			// Send a redirect so that the AMD loader knows that it must update
 			// its resolvePath to the new URL.
 
-			httpServletResponse.sendRedirect(sb.toString());
+			httpServletResponse.sendRedirect(url);
 
 			return;
 		}

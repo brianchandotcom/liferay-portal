@@ -783,21 +783,12 @@ public class ObjectEntryDisplayContextImpl
 				objectEntry.getExternalReferenceCode());
 		}
 
-		if (GetterUtil.getBoolean(
-				ddmFormField.getProperty(
-					"accountEntryRestrictedObjectField")) &&
-			(objectEntry != null)) {
-
-			ddmFormField.setReadOnly(true);
+		if (FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
+			ddmFormField.setReadOnly(
+				_isReadOnly(objectEntry, objectField, readOnly));
 		}
 		else {
-			if (FeatureFlagManagerUtil.isEnabled("LPS-170122")) {
-				ddmFormField.setReadOnly(
-					_isReadOnly(objectEntry, objectField, readOnly));
-			}
-			else {
-				ddmFormField.setReadOnly(readOnly);
-			}
+			ddmFormField.setReadOnly(readOnly);
 		}
 
 		ddmFormField.setRequired(objectField.isRequired());
@@ -926,19 +917,6 @@ public class ObjectEntryDisplayContextImpl
 
 						_setDDMFormFieldValueValue(
 							ddmFormField, ddmFormFieldValue, values);
-					}
-
-					// TODO Temporary workaround for LPS-171782
-
-					if (GetterUtil.getBoolean(
-							ddmFormField.getProperty(
-								"accountEntryRestrictedObjectField"))) {
-
-						Value value = ddmFormFieldValue.getValue();
-
-						ddmFormField.setReadOnly(
-							Validator.isNotNull(
-								value.getString(LocaleUtil.ROOT)));
 					}
 
 					return ddmFormFieldValue;

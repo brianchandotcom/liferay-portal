@@ -13,7 +13,7 @@ import com.liferay.jethr0.environment.repository.EnvironmentEntityRepository;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
-import com.liferay.jethr0.job.queue.ProjectQueue;
+import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.task.repository.TaskEntityRepository;
 
@@ -60,7 +60,7 @@ public class BuildQueue {
 
 	public void addJobEntities(Set<JobEntity> jobEntities) {
 		for (JobEntity jobEntity : jobEntities) {
-			_projectQueue.addJobEntity(jobEntity);
+			_jobQueue.addJobEntity(jobEntity);
 		}
 
 		sort();
@@ -76,12 +76,12 @@ public class BuildQueue {
 		}
 	}
 
-	public ProjectQueue getProjectQueue() {
-		return _projectQueue;
+	public JobQueue getJobQueue() {
+		return _jobQueue;
 	}
 
 	public void initialize() {
-		for (JobEntity jobEntity : _projectQueue.getJobEntities()) {
+		for (JobEntity jobEntity : _jobQueue.getJobEntities()) {
 			for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
 				_buildRunEntityRepository.getAll(buildEntity);
 				_buildParameterEntityRepository.getAll(buildEntity);
@@ -117,8 +117,8 @@ public class BuildQueue {
 		}
 	}
 
-	public void setProjectQueue(ProjectQueue projectQueue) {
-		_projectQueue = projectQueue;
+	public void setJobQueue(JobQueue jobQueue) {
+		_jobQueue = jobQueue;
 
 		sort();
 	}
@@ -127,9 +127,9 @@ public class BuildQueue {
 		synchronized (_sortedBuildEntities) {
 			_sortedBuildEntities.clear();
 
-			_projectQueue.sort();
+			_jobQueue.sort();
 
-			for (JobEntity jobEntity : _projectQueue.getJobEntities()) {
+			for (JobEntity jobEntity : _jobQueue.getJobEntities()) {
 				List<BuildEntity> buildEntities = new ArrayList<>(
 					jobEntity.getBuildEntities());
 
@@ -182,11 +182,11 @@ public class BuildQueue {
 	private JobEntityRepository _jobEntityRepository;
 
 	@Autowired
-	private JobToBuildsEntityRelationshipDALO
-		_jobToBuildsEntityRelationshipDALO;
+	private JobQueue _jobQueue;
 
 	@Autowired
-	private ProjectQueue _projectQueue;
+	private JobToBuildsEntityRelationshipDALO
+		_jobToBuildsEntityRelationshipDALO;
 
 	private final List<BuildEntity> _sortedBuildEntities = new ArrayList<>();
 

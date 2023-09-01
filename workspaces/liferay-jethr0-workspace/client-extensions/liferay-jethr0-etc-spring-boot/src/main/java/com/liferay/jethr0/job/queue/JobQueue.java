@@ -42,7 +42,7 @@ import org.springframework.scheduling.annotation.Scheduled;
  */
 @Configuration
 @EnableScheduling
-public class ProjectQueue {
+public class JobQueue {
 
 	public void addJobEntities(Set<JobEntity> jobEntities) {
 		if (jobEntities == null) {
@@ -274,7 +274,7 @@ public class ProjectQueue {
 		return jobPrioritizerEntity;
 	}
 
-	private static final Log _log = LogFactory.getLog(ProjectQueue.class);
+	private static final Log _log = LogFactory.getLog(JobQueue.class);
 
 	@Autowired
 	private BuildEntityRepository _buildEntityRepository;

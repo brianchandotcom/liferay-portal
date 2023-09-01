@@ -7,7 +7,7 @@ package com.liferay.jethr0.job.controller;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.queue.ProjectQueue;
+import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 
 import org.json.JSONArray;
@@ -30,32 +30,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ProjectRestController {
 
-	@GetMapping("/{id}")
-	public ResponseEntity<String> project(
-		@AuthenticationPrincipal Jwt jwt, @PathVariable("id") int jobEntityId) {
-
-		JobEntity jobEntity = _jobEntityRepository.getById(jobEntityId);
-
-		JSONObject jobJSONObject = jobEntity.getJSONObject();
-
-		JSONArray buildsJSONArray = new JSONArray();
-
-		for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
-			buildsJSONArray.put(buildEntity.getJSONObject());
-		}
-
-		jobJSONObject.put("builds", buildsJSONArray);
-
-		return new ResponseEntity<>(jobJSONObject.toString(), HttpStatus.OK);
-	}
-
 	@GetMapping("/queue")
-	public ResponseEntity<String> projectQueue(
-		@AuthenticationPrincipal Jwt jwt) {
-
+	public ResponseEntity<String> jobQueue(@AuthenticationPrincipal Jwt jwt) {
 		JSONArray jobsJSONArray = new JSONArray();
 
-		for (JobEntity jobEntity : _projectQueue.getJobEntities()) {
+		for (JobEntity jobEntity : _jobQueue.getJobEntities()) {
 			JSONObject jobJSONObject = jobEntity.getJSONObject();
 
 			int completedBuilds = 0;
@@ -93,10 +72,29 @@ public class ProjectRestController {
 		return new ResponseEntity<>(jobsJSONArray.toString(), HttpStatus.OK);
 	}
 
+	@GetMapping("/{id}")
+	public ResponseEntity<String> project(
+		@AuthenticationPrincipal Jwt jwt, @PathVariable("id") int jobEntityId) {
+
+		JobEntity jobEntity = _jobEntityRepository.getById(jobEntityId);
+
+		JSONObject jobJSONObject = jobEntity.getJSONObject();
+
+		JSONArray buildsJSONArray = new JSONArray();
+
+		for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
+			buildsJSONArray.put(buildEntity.getJSONObject());
+		}
+
+		jobJSONObject.put("builds", buildsJSONArray);
+
+		return new ResponseEntity<>(jobJSONObject.toString(), HttpStatus.OK);
+	}
+
 	@Autowired
 	private JobEntityRepository _jobEntityRepository;
 
 	@Autowired
-	private ProjectQueue _projectQueue;
+	private JobQueue _jobQueue;
 
 }

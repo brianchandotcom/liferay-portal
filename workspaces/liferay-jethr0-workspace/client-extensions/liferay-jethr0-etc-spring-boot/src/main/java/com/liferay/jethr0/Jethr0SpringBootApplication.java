@@ -11,7 +11,7 @@ import com.liferay.jethr0.entity.repository.EntityRepository;
 import com.liferay.jethr0.event.controller.EventJmsController;
 import com.liferay.jethr0.event.handler.EventHandlerContext;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
-import com.liferay.jethr0.job.queue.ProjectQueue;
+import com.liferay.jethr0.job.queue.JobQueue;
 
 import java.util.Map;
 
@@ -55,10 +55,10 @@ public class Jethr0SpringBootApplication {
 			entityRepository.initialize();
 		}
 
-		ProjectQueue projectQueue = configurableApplicationContext.getBean(
-			ProjectQueue.class);
+		JobQueue jobQueue = configurableApplicationContext.getBean(
+			JobQueue.class);
 
-		projectQueue.initialize();
+		jobQueue.initialize();
 
 		BuildQueue buildQueue = configurableApplicationContext.getBean(
 			BuildQueue.class);

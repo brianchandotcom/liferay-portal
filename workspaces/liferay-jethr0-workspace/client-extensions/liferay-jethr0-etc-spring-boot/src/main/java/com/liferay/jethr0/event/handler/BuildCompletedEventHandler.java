@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.repository.ProjectEntityRepository;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 
 import org.json.JSONObject;
 
@@ -48,10 +48,9 @@ public class BuildCompletedEventHandler extends BaseJenkinsEventHandler {
 		if (jobState == JobEntity.State.COMPLETED) {
 			jobEntity.setState(jobState);
 
-			ProjectEntityRepository projectEntityRepository =
-				getProjectEntityRepository();
+			JobEntityRepository jobEntityRepository = getJobEntityRepository();
 
-			projectEntityRepository.update(jobEntity);
+			jobEntityRepository.update(jobEntity);
 		}
 
 		BuildEntityRepository buildEntityRepository = getBuildRepository();

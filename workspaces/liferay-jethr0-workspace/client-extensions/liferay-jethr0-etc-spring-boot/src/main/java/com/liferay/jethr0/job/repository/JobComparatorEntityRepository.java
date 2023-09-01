@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectComparatorEntityRepository
+public class JobComparatorEntityRepository
 	extends BaseEntityRepository<JobComparatorEntity> {
 
 	public JobComparatorEntity add(
@@ -90,30 +90,27 @@ public class ProjectComparatorEntityRepository
 				jobComparatorEntity.getJobPrioritizerEntityId();
 
 			if (jenkinsServerId != 0) {
-				jobPrioritizerEntity =
-					_projectPrioritizerEntityRepository.getById(
-						jenkinsServerId);
+				jobPrioritizerEntity = _jobPrioritizerEntityRepository.getById(
+					jenkinsServerId);
 			}
 
 			jobComparatorEntity.setJobPrioritizerEntity(jobPrioritizerEntity);
 		}
 	}
 
-	public void setProjectPrioritizerEntityRepository(
-		ProjectPrioritizerEntityRepository projectPrioritizerEntityRepository) {
+	public void setJobPrioritizerEntityRepository(
+		JobPrioritizerEntityRepository jobPrioritizerEntityRepository) {
 
-		_projectPrioritizerEntityRepository =
-			projectPrioritizerEntityRepository;
+		_jobPrioritizerEntityRepository = jobPrioritizerEntityRepository;
 	}
 
 	@Autowired
 	private JobComparatorEntityDALO _jobComparatorEntityDALO;
 
+	private JobPrioritizerEntityRepository _jobPrioritizerEntityRepository;
+
 	@Autowired
 	private JobPrioritizerToJobComparatorsEntityRelationshipDALO
 		_jobPrioritizerToJobComparatorsEntityRelationshipDALO;
-
-	private ProjectPrioritizerEntityRepository
-		_projectPrioritizerEntityRepository;
 
 }

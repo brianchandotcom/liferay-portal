@@ -14,7 +14,7 @@ import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.job.queue.ProjectQueue;
-import com.liferay.jethr0.job.repository.ProjectEntityRepository;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.task.repository.TaskEntityRepository;
 
 import java.util.ArrayList;
@@ -179,11 +179,11 @@ public class BuildQueue {
 	private EnvironmentEntityRepository _environmentEntityRepository;
 
 	@Autowired
-	private JobToBuildsEntityRelationshipDALO
-		_jobToBuildsEntityRelationshipDALO;
+	private JobEntityRepository _jobEntityRepository;
 
 	@Autowired
-	private ProjectEntityRepository _projectEntityRepository;
+	private JobToBuildsEntityRelationshipDALO
+		_jobToBuildsEntityRelationshipDALO;
 
 	@Autowired
 	private ProjectQueue _projectQueue;

@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectPrioritizerEntityRepository
+public class JobPrioritizerEntityRepository
 	extends BaseEntityRepository<JobPrioritizerEntity> {
 
 	public JobPrioritizerEntity add(String name) {
@@ -62,17 +62,19 @@ public class ProjectPrioritizerEntityRepository
 				}
 
 				jobPrioritizerEntity.addJobComparatorEntity(
-					_projectComparatorEntityRepository.getById(
+					_jobComparatorEntityRepository.getById(
 						jobComparatorEntityId));
 			}
 		}
 	}
 
-	public void setProjectComparatorEntityRepository(
-		ProjectComparatorEntityRepository projectComparatorEntityRepository) {
+	public void setJobComparatorEntityRepository(
+		JobComparatorEntityRepository jobComparatorEntityRepository) {
 
-		_projectComparatorEntityRepository = projectComparatorEntityRepository;
+		_jobComparatorEntityRepository = jobComparatorEntityRepository;
 	}
+
+	private JobComparatorEntityRepository _jobComparatorEntityRepository;
 
 	@Autowired
 	private JobPrioritizerEntityDALO _jobPrioritizerEntityDALO;
@@ -83,8 +85,5 @@ public class ProjectPrioritizerEntityRepository
 	@Autowired
 	private JobPrioritizerToJobComparatorsEntityRelationshipDALO
 		_jobPrioritizerToJobComparatorsEntityRelationshipDALO;
-
-	private ProjectComparatorEntityRepository
-		_projectComparatorEntityRepository;
 
 }

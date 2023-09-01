@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class ProjectEntityRepository extends BaseEntityRepository<JobEntity> {
+public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 
 	public JobEntity add(
 		String name, int position, int priority, Date startDate,

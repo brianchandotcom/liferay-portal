@@ -11,7 +11,7 @@ import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
-import com.liferay.jethr0.job.repository.ProjectEntityRepository;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -82,7 +82,7 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 			return;
 		}
 
-		_projectEntityRepository.initializeRelationships();
+		_jobEntityRepository.initializeRelationships();
 
 		for (BuildEntity buildEntity : getAll()) {
 			JobEntity jobEntity = null;
@@ -90,7 +90,7 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 			long jobEntityId = buildEntity.getJobEntityId();
 
 			if (jobEntityId != 0) {
-				jobEntity = _projectEntityRepository.getById(jobEntityId);
+				jobEntity = _jobEntityRepository.getById(jobEntityId);
 			}
 
 			buildEntity.setJobEntity(jobEntity);
@@ -117,10 +117,10 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 		_buildRunEntityRepository = buildRunEntityRepository;
 	}
 
-	public void setProjectEntityRepository(
-		ProjectEntityRepository projectEntityRepository) {
+	public void setJobEntityRepository(
+		JobEntityRepository jobEntityRepository) {
 
-		_projectEntityRepository = projectEntityRepository;
+		_jobEntityRepository = jobEntityRepository;
 	}
 
 	@Autowired
@@ -129,11 +129,10 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 	private BuildParameterEntityRepository _buildParameterEntityRepository;
 	private BuildRunEntityRepository _buildRunEntityRepository;
 	private boolean _initializedRelationships;
+	private JobEntityRepository _jobEntityRepository;
 
 	@Autowired
 	private JobToBuildsEntityRelationshipDALO
 		_jobToBuildsEntityRelationshipDALO;
-
-	private ProjectEntityRepository _projectEntityRepository;
 
 }

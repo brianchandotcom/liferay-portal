@@ -14,7 +14,7 @@ import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
-import com.liferay.jethr0.job.repository.ProjectEntityRepository;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -61,8 +61,8 @@ public class EventHandlerContext {
 		return _jenkinsServerEntityRepository;
 	}
 
-	public ProjectEntityRepository getProjectEntityRepository() {
-		return _projectEntityRepository;
+	public JobEntityRepository getJobEntityRepository() {
+		return _jobEntityRepository;
 	}
 
 	public void setEventJmsController(EventJmsController eventJmsController) {
@@ -96,6 +96,6 @@ public class EventHandlerContext {
 	private JenkinsServerEntityRepository _jenkinsServerEntityRepository;
 
 	@Autowired
-	private ProjectEntityRepository _projectEntityRepository;
+	private JobEntityRepository _jobEntityRepository;
 
 }

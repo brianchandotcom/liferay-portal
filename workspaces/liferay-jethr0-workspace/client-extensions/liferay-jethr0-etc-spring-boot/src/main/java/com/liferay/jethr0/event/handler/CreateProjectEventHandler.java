@@ -10,7 +10,7 @@ import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.repository.ProjectEntityRepository;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
 import org.json.JSONArray;
@@ -100,10 +100,9 @@ public class CreateProjectEventHandler extends BaseObjectEventHandler {
 	}
 
 	private JobEntity _createJobEntity(JSONObject jobJSONObject) {
-		ProjectEntityRepository projectEntityRepository =
-			getProjectEntityRepository();
+		JobEntityRepository jobEntityRepository = getJobEntityRepository();
 
-		return projectEntityRepository.add(jobJSONObject);
+		return jobEntityRepository.add(jobJSONObject);
 	}
 
 }

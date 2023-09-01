@@ -12,7 +12,7 @@ import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.repository.ProjectEntityRepository;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 
 import org.json.JSONObject;
 
@@ -57,10 +57,9 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 		if (jobEntity.getState() == JobEntity.State.COMPLETED) {
 			jobEntity.setState(JobEntity.State.QUEUED);
 
-			ProjectEntityRepository projectEntityRepository =
-				getProjectEntityRepository();
+			JobEntityRepository jobEntityRepository = getJobEntityRepository();
 
-			projectEntityRepository.update(jobEntity);
+			jobEntityRepository.update(jobEntity);
 		}
 
 		BuildQueue buildQueue = getBuildQueue();

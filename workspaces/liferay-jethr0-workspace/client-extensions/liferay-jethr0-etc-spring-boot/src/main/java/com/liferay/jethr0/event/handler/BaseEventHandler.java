@@ -14,7 +14,7 @@ import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
-import com.liferay.jethr0.job.repository.ProjectEntityRepository;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 
 import org.json.JSONObject;
 
@@ -66,12 +66,12 @@ public abstract class BaseEventHandler implements EventHandler {
 		return _eventHandlerContext.getJenkinsServerEntityRepository();
 	}
 
-	protected JSONObject getMessageJSONObject() {
-		return _messageJSONObject;
+	protected JobEntityRepository getJobEntityRepository() {
+		return _eventHandlerContext.getJobEntityRepository();
 	}
 
-	protected ProjectEntityRepository getProjectEntityRepository() {
-		return _eventHandlerContext.getProjectEntityRepository();
+	protected JSONObject getMessageJSONObject() {
+		return _messageJSONObject;
 	}
 
 	private final EventHandlerContext _eventHandlerContext;

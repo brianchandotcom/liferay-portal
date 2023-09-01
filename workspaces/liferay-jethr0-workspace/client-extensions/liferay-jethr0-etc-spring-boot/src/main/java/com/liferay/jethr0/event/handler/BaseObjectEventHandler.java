@@ -8,7 +8,7 @@ package com.liferay.jethr0.event.handler;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.repository.ProjectEntityRepository;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -40,10 +40,9 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 			throw new Exception("Missing ID from job");
 		}
 
-		ProjectEntityRepository projectEntityRepository =
-			getProjectEntityRepository();
+		JobEntityRepository jobEntityRepository = getJobEntityRepository();
 
-		JobEntity jobEntity = projectEntityRepository.getById(jobEntityId);
+		JobEntity jobEntity = jobEntityRepository.getById(jobEntityId);
 
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
 

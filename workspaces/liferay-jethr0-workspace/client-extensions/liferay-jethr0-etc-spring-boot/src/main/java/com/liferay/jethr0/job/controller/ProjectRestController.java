@@ -8,7 +8,7 @@ package com.liferay.jethr0.job.controller;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.queue.ProjectQueue;
-import com.liferay.jethr0.job.repository.ProjectEntityRepository;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,7 +34,7 @@ public class ProjectRestController {
 	public ResponseEntity<String> project(
 		@AuthenticationPrincipal Jwt jwt, @PathVariable("id") int jobEntityId) {
 
-		JobEntity jobEntity = _projectEntityRepository.getById(jobEntityId);
+		JobEntity jobEntity = _jobEntityRepository.getById(jobEntityId);
 
 		JSONObject jobJSONObject = jobEntity.getJSONObject();
 
@@ -94,7 +94,7 @@ public class ProjectRestController {
 	}
 
 	@Autowired
-	private ProjectEntityRepository _projectEntityRepository;
+	private JobEntityRepository _jobEntityRepository;
 
 	@Autowired
 	private ProjectQueue _projectQueue;

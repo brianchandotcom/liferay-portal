@@ -15,9 +15,9 @@ import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.comparator.BaseJobComparatorEntity;
 import com.liferay.jethr0.job.comparator.JobComparatorEntity;
 import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
-import com.liferay.jethr0.job.repository.ProjectComparatorEntityRepository;
-import com.liferay.jethr0.job.repository.ProjectEntityRepository;
-import com.liferay.jethr0.job.repository.ProjectPrioritizerEntityRepository;
+import com.liferay.jethr0.job.repository.JobComparatorEntityRepository;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.job.repository.JobPrioritizerEntityRepository;
 import com.liferay.jethr0.task.repository.TaskEntityRepository;
 import com.liferay.jethr0.testsuite.repository.TestSuiteEntityRepository;
 
@@ -87,31 +87,28 @@ public class ProjectQueue {
 	}
 
 	public void initialize() {
-		_projectComparatorEntityRepository.initialize();
-		_projectPrioritizerEntityRepository.initialize();
+		_jobComparatorEntityRepository.initialize();
+		_jobPrioritizerEntityRepository.initialize();
 
-		_projectComparatorEntityRepository.
-			setProjectPrioritizerEntityRepository(
-				_projectPrioritizerEntityRepository);
+		_jobComparatorEntityRepository.setJobPrioritizerEntityRepository(
+			_jobPrioritizerEntityRepository);
 
-		_projectPrioritizerEntityRepository.
-			setProjectComparatorEntityRepository(
-				_projectComparatorEntityRepository);
+		_jobPrioritizerEntityRepository.setJobComparatorEntityRepository(
+			_jobComparatorEntityRepository);
 
-		_projectComparatorEntityRepository.initializeRelationships();
-		_projectPrioritizerEntityRepository.initializeRelationships();
+		_jobComparatorEntityRepository.initializeRelationships();
+		_jobPrioritizerEntityRepository.initializeRelationships();
 
 		_buildParameterEntityRepository.initialize();
 		_buildEntityRepository.initialize();
 		_buildRunEntityRepository.initialize();
-		_projectEntityRepository.initialize();
+		_jobEntityRepository.initialize();
 
 		_buildEntityRepository.setBuildParameterEntityRepository(
 			_buildParameterEntityRepository);
 		_buildEntityRepository.setBuildRunEntityRepository(
 			_buildRunEntityRepository);
-		_buildEntityRepository.setProjectEntityRepository(
-			_projectEntityRepository);
+		_buildEntityRepository.setJobEntityRepository(_jobEntityRepository);
 
 		_buildRunEntityRepository.setBuildEntityRepository(
 			_buildEntityRepository);
@@ -119,17 +116,16 @@ public class ProjectQueue {
 		_buildParameterEntityRepository.setBuildRepository(
 			_buildEntityRepository);
 
-		_projectEntityRepository.setBuildEntityRepository(
-			_buildEntityRepository);
+		_jobEntityRepository.setBuildEntityRepository(_buildEntityRepository);
 
 		_buildParameterEntityRepository.initializeRelationships();
 		_buildEntityRepository.initializeRelationships();
 		_buildRunEntityRepository.initializeRelationships();
-		_projectEntityRepository.initializeRelationships();
+		_jobEntityRepository.initializeRelationships();
 
 		setJobPrioritizerEntity(_getDefaultJobPrioritizerEntity());
 
-		addJobEntities(_projectEntityRepository.getAll());
+		addJobEntities(_jobEntityRepository.getAll());
 
 		update();
 	}
@@ -205,7 +201,7 @@ public class ProjectQueue {
 
 				jobEntity.setPosition(i + 1);
 
-				_projectEntityRepository.update(jobEntity);
+				_jobEntityRepository.update(jobEntity);
 			}
 		}
 	}
@@ -257,23 +253,22 @@ public class ProjectQueue {
 
 	private JobPrioritizerEntity _getDefaultJobPrioritizerEntity() {
 		JobPrioritizerEntity jobPrioritizerEntity =
-			_projectPrioritizerEntityRepository.getByName(
-				_liferayJobPrioritizer);
+			_jobPrioritizerEntityRepository.getByName(_liferayJobPrioritizer);
 
 		if (jobPrioritizerEntity != null) {
 			return jobPrioritizerEntity;
 		}
 
-		jobPrioritizerEntity = _projectPrioritizerEntityRepository.add(
+		jobPrioritizerEntity = _jobPrioritizerEntityRepository.add(
 			_liferayJobPrioritizer);
 
-		_projectComparatorEntityRepository.add(
+		_jobComparatorEntityRepository.add(
 			jobPrioritizerEntity, 1, JobComparatorEntity.Type.JOB_START_DATE,
 			null);
-		_projectComparatorEntityRepository.add(
+		_jobComparatorEntityRepository.add(
 			jobPrioritizerEntity, 2, JobComparatorEntity.Type.JOB_PRIORITY,
 			null);
-		_projectComparatorEntityRepository.add(
+		_jobComparatorEntityRepository.add(
 			jobPrioritizerEntity, 3, JobComparatorEntity.Type.FIFO, null);
 
 		return jobPrioritizerEntity;
@@ -293,22 +288,21 @@ public class ProjectQueue {
 	@Autowired
 	private GitBranchEntityRepository _gitBranchEntityRepository;
 
+	@Autowired
+	private JobComparatorEntityRepository _jobComparatorEntityRepository;
+
 	private final List<JobEntity> _jobEntities = new ArrayList<>();
+
+	@Autowired
+	private JobEntityRepository _jobEntityRepository;
+
 	private JobPrioritizerEntity _jobPrioritizerEntity;
+
+	@Autowired
+	private JobPrioritizerEntityRepository _jobPrioritizerEntityRepository;
 
 	@Value("${liferay.jethr0.job.prioritizer}")
 	private String _liferayJobPrioritizer;
-
-	@Autowired
-	private ProjectComparatorEntityRepository
-		_projectComparatorEntityRepository;
-
-	@Autowired
-	private ProjectEntityRepository _projectEntityRepository;
-
-	@Autowired
-	private ProjectPrioritizerEntityRepository
-		_projectPrioritizerEntityRepository;
 
 	private final List<JobComparatorEntity> _sortedJobComparatorEntities =
 		new ArrayList<>();

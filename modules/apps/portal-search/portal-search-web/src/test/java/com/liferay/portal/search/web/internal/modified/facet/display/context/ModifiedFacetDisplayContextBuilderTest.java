@@ -6,6 +6,7 @@
 package com.liferay.portal.search.web.internal.modified.facet.display.context;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -449,11 +450,16 @@ public class ModifiedFacetDisplayContextBuilderTest
 	private ModifiedFacetDisplayContextBuilder
 		_createModifiedFacetDisplayContextBuilder() {
 
+		configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			Mockito.mock(ModifiedFacetPortletInstanceConfiguration.class)
+		);
+
 		try {
 			return new ModifiedFacetDisplayContextBuilder(
-				_dateFormatFactory,
-				getRenderRequest(
-					ModifiedFacetPortletInstanceConfiguration.class));
+				_dateFormatFactory, getRenderRequest());
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

@@ -9,8 +9,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -58,10 +56,6 @@ public class JournalEditArticleDisplayContextTest {
 		BeanPropertiesUtil beanPropertiesUtil = new BeanPropertiesUtil();
 
 		beanPropertiesUtil.setBeanProperties(_beanProperties);
-
-		ReflectionTestUtil.setFieldValue(
-			ConfigurationProviderUtil.class, "_configurationProvider",
-			Mockito.mock(ConfigurationProvider.class));
 
 		LanguageUtil languageUtil = new LanguageUtil();
 

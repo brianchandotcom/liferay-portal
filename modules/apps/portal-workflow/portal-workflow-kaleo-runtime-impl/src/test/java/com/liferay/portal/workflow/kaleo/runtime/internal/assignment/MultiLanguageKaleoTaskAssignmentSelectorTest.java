@@ -5,8 +5,10 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.assignment;
 
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -21,6 +23,7 @@ import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentImpl;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.ScriptingAssigneeSelector;
 import com.liferay.portal.workflow.kaleo.runtime.constants.AssigneeConstants;
+import com.liferay.portal.workflow.kaleo.runtime.internal.configuration.WorkflowTaskScriptConfiguration;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 
 import java.util.Collection;
@@ -87,6 +90,21 @@ public class MultiLanguageKaleoTaskAssignmentSelectorTest {
 		Assert.assertEquals(_USER_ID, kaleoTaskAssignment.getAssigneeClassPK());
 	}
 
+	private ConfigurationProvider _getConfigurationProvider()
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider = Mockito.mock(
+			ConfigurationProvider.class);
+
+		Mockito.when(
+			configurationProvider.getConfiguration(Mockito.any(), Mockito.any())
+		).thenReturn(
+			Mockito.mock(WorkflowTaskScriptConfiguration.class)
+		);
+
+		return configurationProvider;
+	}
+
 	private ExecutionContext _getExecutionContext() {
 		ExecutionContext executionContext = Mockito.mock(
 			ExecutionContext.class);
@@ -136,12 +154,16 @@ public class MultiLanguageKaleoTaskAssignmentSelectorTest {
 	}
 
 	private MultiLanguageKaleoTaskAssignmentSelector
-		_getMultiLanguageKaleoTaskAssignmentSelector() {
+			_getMultiLanguageKaleoTaskAssignmentSelector()
+		throws ConfigurationException {
 
 		MultiLanguageKaleoTaskAssignmentSelector
 			multiLanguageKaleoTaskAssignmentSelector =
 				new MultiLanguageKaleoTaskAssignmentSelector();
 
+		ReflectionTestUtil.setFieldValue(
+			multiLanguageKaleoTaskAssignmentSelector, "_configurationProvider",
+			_getConfigurationProvider());
 		ReflectionTestUtil.setFieldValue(
 			multiLanguageKaleoTaskAssignmentSelector,
 			"_kaleoInstanceLocalService", _getKaleoInstanceLocalService());

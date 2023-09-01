@@ -11,9 +11,7 @@ import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.DDMFormWebConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -29,6 +27,7 @@ import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Carolina Barbosa
@@ -52,6 +51,10 @@ public class DDMFormUploadValidatorTest {
 
 	@AfterClass
 	public static void tearDownClass() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+
 		_frameworkUtilMockedStatic.close();
 	}
 
@@ -90,9 +93,8 @@ public class DDMFormUploadValidatorTest {
 			Mockito.any(Class.class), Mockito.anyLong()
 		);
 
-		ReflectionTestUtil.setFieldValue(
-			ConfigurationProviderUtil.class, "_configurationProvider",
-			_configurationProvider);
+		_serviceRegistration = _bundleContext.registerService(
+			ConfigurationProvider.class, _configurationProvider, null);
 	}
 
 	private File _mockFile(long length) {
@@ -115,5 +117,7 @@ public class DDMFormUploadValidatorTest {
 		Mockito.mock(ConfigurationProvider.class);
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
+	private static ServiceRegistration<ConfigurationProvider>
+		_serviceRegistration;
 
 }

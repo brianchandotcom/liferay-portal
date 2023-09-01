@@ -6,16 +6,19 @@
 package com.liferay.cookies.internal.manager;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.cookies.CookiesManager;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -30,10 +33,16 @@ public class CookiesDomainTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
+	@BeforeClass
+	public static void setUpClass() {
+		CookiesManager cookiesManager = new CookiesManagerImpl();
+
 		ReflectionTestUtil.setFieldValue(
-			CookiesManagerUtil.class, "_cookiesManager", _cookiesManager);
+			cookiesManager, "_configurationProvider",
+			Mockito.mock(ConfigurationProvider.class));
+
+		ReflectionTestUtil.setFieldValue(
+			CookiesManagerUtil.class, "_cookiesManager", cookiesManager);
 	}
 
 	@Test
@@ -121,7 +130,5 @@ public class CookiesDomainTest {
 				value);
 		}
 	}
-
-	private final CookiesManager _cookiesManager = new CookiesManagerImpl();
 
 }

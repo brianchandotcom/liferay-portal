@@ -6,6 +6,7 @@
 package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -46,11 +47,16 @@ public class UserSearchFacetDisplayContextTest
 			String parameterValue, String order)
 		throws Exception {
 
+		configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			Mockito.mock(UserFacetPortletInstanceConfiguration.class)
+		);
+
 		UserSearchFacetDisplayContextBuilder
 			userSearchFacetDisplayContextBuilder =
-				new UserSearchFacetDisplayContextBuilder(
-					getRenderRequest(
-						UserFacetPortletInstanceConfiguration.class));
+				new UserSearchFacetDisplayContextBuilder(getRenderRequest());
 
 		userSearchFacetDisplayContextBuilder.setFacet(facet);
 		userSearchFacetDisplayContextBuilder.setFrequenciesVisible(true);

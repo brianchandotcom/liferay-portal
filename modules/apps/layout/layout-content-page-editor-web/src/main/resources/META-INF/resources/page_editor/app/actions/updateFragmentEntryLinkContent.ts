@@ -10,7 +10,7 @@ export default function updateFragmentEntryLinkContent({
 	content,
 	fragmentEntryLinkId,
 }: {
-	collectionContentId: string;
+	collectionContentId?: string;
 	content: string;
 	fragmentEntryLinkId: string;
 }) {

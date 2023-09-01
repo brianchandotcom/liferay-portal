@@ -3,5 +3,4 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export const BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR =
-	'com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor';
+export const BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR = 'com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor' as const;

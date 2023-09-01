@@ -6,17 +6,17 @@
 import {CHANGE_MASTER_LAYOUT} from './types';
 
 import type {LayoutData} from '../../types/LayoutData';
-import type {FragmentEntryLink} from './addFragmentEntryLinks';
+import type {FragmentEntryLinkMap} from './addFragmentEntryLinks';
 
 type MasterLayoutOptions =
 	| {masterLayoutData: null; masterLayoutPlid: '0'}
 	| {masterLayoutData: LayoutData; masterLayoutPlid: string};
 
 export default function changeMasterLayout({
-	fragmentEntryLinks = [],
+	fragmentEntryLinks = {},
 	masterLayoutData = null,
 	masterLayoutPlid = '0',
-}: MasterLayoutOptions & {fragmentEntryLinks: FragmentEntryLink[]}) {
+}: MasterLayoutOptions & {fragmentEntryLinks: FragmentEntryLinkMap}) {
 	return {
 		fragmentEntryLinks,
 		masterLayoutData,

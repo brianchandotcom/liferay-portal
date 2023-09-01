@@ -3,6 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
+
+import addFragmentEntryLinkComment from '../actions/addFragmentEntryLinkComment';
+import addFragmentEntryLinks, {
+	FragmentEntryLinkMap,
+} from '../actions/addFragmentEntryLinks';
+import addItem from '../actions/addItem';
+import changeMasterLayout from '../actions/changeMasterLayout';
+import deleteFragmentEntryLinkComment from '../actions/deleteFragmentEntryLinkComment';
+import deleteItem from '../actions/deleteItem';
+import duplicateItem from '../actions/duplicateItem';
+import editFragmentEntryLinkComment from '../actions/editFragmentEntryLinkComment';
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_FRAGMENT_ENTRY_LINK_COMMENT,
@@ -19,18 +31,37 @@ import {
 	UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
 	UPDATE_PREVIEW_IMAGE,
 } from '../actions/types';
-import {BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/backgroundImageFragmentEntryProcessor';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
+import updateCollectionDisplayCollection from '../actions/updateCollectionDisplayCollection';
+import updateEditableValues from '../actions/updateEditableValues';
+import updateFormItemConfig from '../actions/updateFormItemConfig';
+import updateFragmentEntryLinkConfiguration from '../actions/updateFragmentEntryLinkConfiguration';
+import updateFragmentEntryLinkContent from '../actions/updateFragmentEntryLinkContent';
+import updatePreviewImage from '../actions/updatePreviewImage';
 
-export const INITIAL_STATE = {};
+export const INITIAL_STATE: FragmentEntryLinkMap = {};
 
 export default function fragmentEntryLinksReducer(
 	fragmentEntryLinks = INITIAL_STATE,
-	action
-) {
+	action: ReturnType<
+		| typeof addItem
+		| typeof addFragmentEntryLinks
+		| typeof addFragmentEntryLinkComment
+		| typeof changeMasterLayout
+		| typeof deleteItem
+		| typeof deleteFragmentEntryLinkComment
+		| typeof duplicateItem
+		| typeof editFragmentEntryLinkComment
+		| typeof updateCollectionDisplayCollection
+		| typeof updateEditableValues
+		| typeof updateFormItemConfig
+		| typeof updateFragmentEntryLinkConfiguration
+		| typeof updateFragmentEntryLinkContent
+		| typeof updatePreviewImage
+	>
+): FragmentEntryLinkMap {
 	switch (action.type) {
 		case ADD_ITEM: {
-			const newFragmentEntryLinks = {};
+			const newFragmentEntryLinks: FragmentEntryLinkMap = {};
 
 			if (action.fragmentEntryLinkIds) {
 				action.fragmentEntryLinkIds.forEach((fragmentEntryLinkId) => {
@@ -50,7 +81,7 @@ export default function fragmentEntryLinksReducer(
 		}
 
 		case ADD_FRAGMENT_ENTRY_LINKS: {
-			const newFragmentEntryLinks = {};
+			const newFragmentEntryLinks: FragmentEntryLinkMap = {};
 
 			action.fragmentEntryLinks.forEach((fragmentEntryLink) => {
 				newFragmentEntryLinks[
@@ -98,7 +129,7 @@ export default function fragmentEntryLinksReducer(
 			};
 		}
 		case CHANGE_MASTER_LAYOUT: {
-			const nextFragmentEntryLinks = {
+			const nextFragmentEntryLinks: FragmentEntryLinkMap = {
 				...(action.fragmentEntryLinks || {}),
 			};
 
@@ -116,7 +147,7 @@ export default function fragmentEntryLinksReducer(
 		}
 
 		case DELETE_ITEM: {
-			const newFragmentEntryLinks = {};
+			const newFragmentEntryLinks: FragmentEntryLinkMap = {};
 
 			if (action.fragmentEntryLinkIds) {
 				action.fragmentEntryLinkIds.forEach((fragmentEntryLinkId) => {
@@ -144,18 +175,19 @@ export default function fragmentEntryLinksReducer(
 			let nextComments;
 
 			if (action.parentCommentId) {
-				nextComments = comments.map((comment) =>
-					comment.commentId === action.parentCommentId
-						? {
-								...comment,
-								children: comment.children.filter(
-									(childComment) =>
-										childComment.commentId !==
-										action.commentId
-								),
-						  }
-						: comment
-				);
+				nextComments = comments.map((comment) => {
+					if (comment.commentId !== action.parentCommentId) {
+						return comment;
+					}
+
+					return {
+						...comment,
+						children: comment.children?.filter(
+							(childComment) =>
+								childComment.commentId !== action.commentId
+						),
+					};
+				});
 			}
 			else {
 				nextComments = comments.filter(
@@ -173,7 +205,9 @@ export default function fragmentEntryLinksReducer(
 		}
 
 		case DUPLICATE_ITEM: {
-			const nextFragmentEntryLinks = {...fragmentEntryLinks};
+			const nextFragmentEntryLinks: FragmentEntryLinkMap = {
+				...fragmentEntryLinks,
+			};
 
 			action.addedFragmentEntryLinks.forEach((fragmentEntryLink) => {
 				nextFragmentEntryLinks[
@@ -193,19 +227,21 @@ export default function fragmentEntryLinksReducer(
 			let nextComments;
 
 			if (action.parentCommentId) {
-				nextComments = comments.map((comment) =>
-					comment.commentId === action.parentCommentId
-						? {
-								...comment,
-								children: comment.children.map((childComment) =>
-									childComment.commentId ===
-									action.fragmentEntryLinkComment.commentId
-										? action.fragmentEntryLinkComment
-										: childComment
-								),
-						  }
-						: comment
-				);
+				nextComments = comments.map((comment) => {
+					if (comment.commentId !== action.parentCommentId) {
+						return comment;
+					}
+
+					return {
+						...comment,
+						children: comment.children?.map((childComment) =>
+							childComment.commentId ===
+							action.fragmentEntryLinkComment.commentId
+								? action.fragmentEntryLinkComment
+								: childComment
+						),
+					};
+				});
 			}
 			else {
 				nextComments = comments.map((comment) =>
@@ -252,7 +288,7 @@ export default function fragmentEntryLinksReducer(
 			};
 
 		case UPDATE_FORM_ITEM_CONFIG: {
-			const newFragmentEntryLinks = action.addedFragmentEntryLinks
+			const newFragmentEntryLinks: FragmentEntryLinkMap = action.addedFragmentEntryLinks
 				? {...action.addedFragmentEntryLinks}
 				: {};
 
@@ -302,13 +338,11 @@ export default function fragmentEntryLinksReducer(
 
 			let collectionContent = fragmentEntryLink.collectionContent || {};
 
-			if (
-				action.collectionContentId !== null &&
-				action.collectionContentId !== undefined
-			) {
-				collectionContent = {...collectionContent};
-
-				collectionContent[action.collectionContentId] = action.content;
+			if (!isNullOrUndefined(action.collectionContentId)) {
+				collectionContent = {
+					...collectionContent,
+					[action.collectionContentId]: action.content,
+				};
 			}
 
 			return {
@@ -322,20 +356,32 @@ export default function fragmentEntryLinksReducer(
 		}
 
 		case UPDATE_PREVIEW_IMAGE: {
-			const getUpdatedEditableValues = (editableValues = {}) =>
-				Object.entries(editableValues).map(([key, value]) => [
-					key,
-					Object.fromEntries(
-						Object.entries(value).map(([key, value]) => [
+			const objectIsFileEntry = (
+				object: any
+			): object is {fileEntryId: string; url: string} => {
+				return (
+					object &&
+					typeof object === 'object' &&
+					'fileEntryId' in object &&
+					object.fileEntryId === action.fileEntryId
+				);
+			};
+
+			const updateFileEntryPreviewURL = <T>(object: T): T => {
+				if (objectIsFileEntry(object)) {
+					return {...object, url: action.previewURL};
+				}
+				else if (object && typeof object === 'object') {
+					return Object.fromEntries(
+						Object.entries(object).map(([key, value]) => [
 							key,
-							typeof value === 'object' &&
-							value.url &&
-							value.fileEntryId
-								? {...value, url: action.previewURL}
-								: value,
+							updateFileEntryPreviewURL(value),
 						])
-					),
-				]);
+					) as T;
+				}
+
+				return object;
+			};
 
 			const newFragmentEntryLinks = action.contents.map(
 				({content, fragmentEntryLinkId}) => {
@@ -348,23 +394,9 @@ export default function fragmentEntryLinksReducer(
 						{
 							...fragmentEntryLinks[fragmentEntryLinkId],
 							content,
-							editableValues: {
-								...editableValues,
-								[BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR]: Object.fromEntries(
-									getUpdatedEditableValues(
-										editableValues[
-											BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR
-										]
-									)
-								),
-								[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: Object.fromEntries(
-									getUpdatedEditableValues(
-										editableValues[
-											EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-										]
-									)
-								),
-							},
+							editableValues: updateFileEntryPreviewURL(
+								editableValues
+							),
 						},
 					];
 				}

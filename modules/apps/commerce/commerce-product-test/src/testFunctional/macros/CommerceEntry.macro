@@ -62,16 +62,10 @@ definition {
 		}
 
 		if (isSet(userRole)) {
-			ApplicationsMenu.gotoPortlet(
-				category = "Accounts",
-				panel = "Control Panel",
-				portlet = "Accounts");
-
-			LexiconEntry.gotoEntry(rowEntry = ${accountName});
-
-			Account.addAssigneeToRoleViaUsersTab(
-				accountRoleTitle = ${userRole},
-				accountUserName = ${userEmailAddress});
+			JSONAccountRole.associateUser(
+				accountEntryName = ${accountName},
+				accountRole = ${userRole},
+				userEmailAddress = ${userEmail});
 		}
 	}
 
@@ -220,6 +214,8 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#SUBJECT_TO_VAT_CHECKBOX");
 
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+
+		Button.clickSave();
 	}
 
 	macro addNewCurrenciesEntry {
@@ -430,6 +426,8 @@ definition {
 			value1 = ${code});
 
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
+
+		Button.clickSave();
 	}
 
 	macro addNewWarehousesEntry {

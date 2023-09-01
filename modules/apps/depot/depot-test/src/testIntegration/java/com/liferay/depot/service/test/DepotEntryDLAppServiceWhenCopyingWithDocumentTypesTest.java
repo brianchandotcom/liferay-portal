@@ -123,7 +123,7 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 	}
 
 	@Test
-	public void testCopyFileShouldCopyDocumentTypeToRelatedGroupDDMStructuresAvailable()
+	public void testCopyFileShouldCopyDocumentTypeToRelatedGroupWhenDDMStructuresAvailable()
 		throws Exception {
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
@@ -160,7 +160,7 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 	}
 
 	@Test
-	public void testCopyFileShouldNotCopyDocumentTypeFromRelatedGroupIfNotDDMStructuresAvailable()
+	public void testCopyFileShouldNotCopyDocumentTypeFromRelatedGroupUnlessDDMStructuresAvailable()
 		throws Exception {
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
@@ -251,7 +251,7 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 	}
 
 	@Test
-	public void testCopyFileShouldNotCopyDocumentTypeToRelatedGroupIfNotDDMStructuresAvailable()
+	public void testCopyFileShouldNotCopyDocumentTypeToRelatedGroupUnlessDDMStructuresAvailable()
 		throws Exception {
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
@@ -338,7 +338,7 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 	}
 
 	@Test(expected = InvalidFileEntryTypeException.class)
-	public void testCopyFileThrowsExceptionWhenCopyDocumentTypeFromRelatedGroupDDMStructuresAvailable()
+	public void testCopyFileThrowsExceptionWhenCopyDocumentTypeFromRelatedGroupWhenDDMStructuresAvailable()
 		throws Exception {
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(

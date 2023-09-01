@@ -13,7 +13,6 @@ import ClayModal from '@clayui/modal';
 import {FDS_INTERNAL_CELL_RENDERERS} from '@liferay/frontend-data-set-web';
 import {
 	InputLocalized,
-	LocalizedValue,
 	ManagementToolbar,
 } from 'frontend-js-components-web';
 import {
@@ -36,6 +35,7 @@ import OrderableTable from '../components/OrderableTable';
 import '../../css/FDSEntries.scss';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
 interface IFDSField {
 	externalReferenceCode: string;

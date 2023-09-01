@@ -2683,6 +2683,8 @@ definition {
 			locator1 = "TextInput#REVIEW_DATE",
 			value1 = ${reviewDate});
 
+		var reviewDateTime = StringUtil.removeSpaces(${reviewDateTime});
+
 		Type.sendKeys(
 			locator1 = "TextInput#REVIEW_DATE_TIME",
 			value1 = ${reviewDateTime});

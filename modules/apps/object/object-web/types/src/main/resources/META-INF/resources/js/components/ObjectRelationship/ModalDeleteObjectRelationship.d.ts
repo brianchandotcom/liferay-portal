@@ -8,7 +8,7 @@
 interface ModalDeleteObjectRelationshipProps {
 	handleOnClose: () => void;
 	objectRelationship: ObjectRelationship;
-	setObjectRelationship: (value: ObjectRelationship | null) => void;
+	setObjectRelationship?: (value: ObjectRelationship | null) => void;
 }
 export declare function ModalDeleteObjectRelationship({
 	handleOnClose,

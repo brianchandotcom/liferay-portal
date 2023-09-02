@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,36 +36,81 @@ import java.util.SortedMap;
  */
 public class PortalUpgradeProcess extends UpgradeProcess {
 
+	public static void createPortalRelease(Connection connection)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"insert into Release_ (releaseId, createDate, ",
+					"modifiedDate, servletContextName, schemaVersion, ",
+					"buildNumber, verified, testString) values (",
+					ReleaseConstants.DEFAULT_ID, ", ?, ?, ?, ?, ?, ?, ?)"))) {
+
+			Date date = new Date(System.currentTimeMillis());
+
+			preparedStatement.setDate(1, date);
+			preparedStatement.setDate(2, date);
+
+			preparedStatement.setString(
+				3, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+
+			Version schemaVersion = getLatestSchemaVersion();
+
+			preparedStatement.setString(4, String.valueOf(schemaVersion));
+
+			preparedStatement.setInt(5, ReleaseInfo.getBuildNumber());
+			preparedStatement.setBoolean(6, false);
+			preparedStatement.setString(7, ReleaseConstants.TEST_STRING);
+
+			preparedStatement.executeUpdate();
+
+			_currentPortalReleaseDTODCLSingleton.destroy(null);
+
+			_currentPortalReleaseDTODCLSingleton.getSingleton(
+				() -> new PortalReleaseDTO(
+					schemaVersion, 0, ReleaseConstants.TEST_STRING));
+		}
+	}
+
 	public static Version getCurrentSchemaVersion(Connection connection)
 		throws SQLException {
 
-		return _currentSchemaVersionDCLSingleton.getSingleton(
-			() -> {
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							"select schemaVersion from Release_ where " +
-								"servletContextName = ?")) {
+		PortalReleaseDTO portalReleaseDTO = _getCurrentPortalReleaseDTO(
+			connection);
 
-					preparedStatement.setString(
-						1, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
+		if (portalReleaseDTO == PortalReleaseDTO._NULL_INSTANCE) {
+			return new Version(0, 0, 0);
+		}
 
-					try (ResultSet resultSet =
-							preparedStatement.executeQuery()) {
+		return portalReleaseDTO._schemaVersion;
+	}
 
-						while (resultSet.next()) {
-							String schemaVersion = resultSet.getString(
-								"schemaVersion");
+	public static int getCurrentState(Connection connection)
+		throws SQLException {
 
-							return Version.parseVersion(schemaVersion);
-						}
-					}
-				}
-				catch (SQLException sqlException) {
-					ReflectionUtil.throwException(sqlException);
-				}
+		PortalReleaseDTO portalReleaseDTO = _getCurrentPortalReleaseDTO(
+			connection);
 
-				return new Version(0, 0, 0);
-			});
+		if (portalReleaseDTO == PortalReleaseDTO._NULL_INSTANCE) {
+			throw new IllegalArgumentException(
+				"No Release exists with the primary key " +
+					ReleaseConstants.DEFAULT_ID);
+		}
+
+		return portalReleaseDTO._state;
+	}
+
+	public static String getCurrentTestString(Connection connection)
+		throws SQLException {
+
+		PortalReleaseDTO portalReleaseDTO = _getCurrentPortalReleaseDTO(
+			connection);
+
+		if (portalReleaseDTO == PortalReleaseDTO._NULL_INSTANCE) {
+			return null;
+		}
+
+		return portalReleaseDTO._testString;
 	}
 
 	public static Version getLatestSchemaVersion() {
@@ -104,6 +150,19 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		}
 
 		return requiredSchemaVersion;
+	}
+
+	public static boolean hasCurrentPortalReleaseDTO(Connection connection)
+		throws SQLException {
+
+		PortalReleaseDTO portalReleaseDTO = _getCurrentPortalReleaseDTO(
+			connection);
+
+		if (portalReleaseDTO == PortalReleaseDTO._NULL_INSTANCE) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public static boolean isInLatestSchemaVersion(Connection connection)
@@ -168,19 +227,21 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 			Connection connection, Version newSchemaVersion)
 		throws SQLException {
 
+		PortalReleaseDTO portalReleaseDTO = _getCurrentPortalReleaseDTO(
+			connection);
+
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update Release_ set schemaVersion = ? where " +
-					"servletContextName = ?")) {
+				"update Release_ set schemaVersion = ? where releaseId = 1")) {
 
 			preparedStatement.setString(1, newSchemaVersion.toString());
-			preparedStatement.setString(
-				2, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 
 			if (preparedStatement.executeUpdate() > 0) {
-				_currentSchemaVersionDCLSingleton.destroy(null);
+				_currentPortalReleaseDTODCLSingleton.destroy(null);
 
-				_currentSchemaVersionDCLSingleton.getSingleton(
-					() -> newSchemaVersion);
+				_currentPortalReleaseDTODCLSingleton.getSingleton(
+					() -> new PortalReleaseDTO(
+						newSchemaVersion, portalReleaseDTO._state,
+						portalReleaseDTO._testString));
 			}
 		}
 	}
@@ -241,6 +302,37 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		return pendingUpgradeProcesses.keySet();
 	}
 
+	private static PortalReleaseDTO _getCurrentPortalReleaseDTO(
+			Connection connection)
+		throws SQLException {
+
+		return _currentPortalReleaseDTODCLSingleton.getSingleton(
+			() -> {
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							"select schemaVersion, state_, testString from " +
+								"Release_ where releaseId = 1")) {
+
+					try (ResultSet resultSet =
+							preparedStatement.executeQuery()) {
+
+						while (resultSet.next()) {
+							return new PortalReleaseDTO(
+								Version.parseVersion(
+									resultSet.getString("schemaVersion")),
+								resultSet.getInt("state_"),
+								resultSet.getString("testString"));
+						}
+					}
+				}
+				catch (SQLException sqlException) {
+					ReflectionUtil.throwException(sqlException);
+				}
+
+				return PortalReleaseDTO._NULL_INSTANCE;
+			});
+	}
+
 	private static void _registerUpgradeProcesses(
 		PortalUpgradeProcessRegistry... portalUpgradeProcessRegistries) {
 
@@ -253,21 +345,24 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _initializeRelease(Connection connection) throws Exception {
+		PortalReleaseDTO portalReleaseDTO = _getCurrentPortalReleaseDTO(
+			connection);
+
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update Release_ set schemaVersion = ?, buildNumber = ? " +
-					"where servletContextName = ? and buildNumber < ?")) {
+					"where releaseId = 1 and buildNumber < ?")) {
 
 			preparedStatement.setString(1, _initialSchemaVersion.toString());
 			preparedStatement.setInt(2, ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
-			preparedStatement.setString(
-				3, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
-			preparedStatement.setInt(4, ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
+			preparedStatement.setInt(3, ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
 
 			if (preparedStatement.executeUpdate() > 0) {
-				_currentSchemaVersionDCLSingleton.destroy(null);
+				_currentPortalReleaseDTODCLSingleton.destroy(null);
 
-				_currentSchemaVersionDCLSingleton.getSingleton(
-					() -> _initialSchemaVersion);
+				_currentPortalReleaseDTODCLSingleton.getSingleton(
+					() -> new PortalReleaseDTO(
+						_initialSchemaVersion, portalReleaseDTO._state,
+						portalReleaseDTO._testString));
 			}
 		}
 	}
@@ -275,8 +370,8 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalUpgradeProcess.class);
 
-	private static final DCLSingleton<Version>
-		_currentSchemaVersionDCLSingleton = new DCLSingleton<>();
+	private static final DCLSingleton<PortalReleaseDTO>
+		_currentPortalReleaseDTODCLSingleton = new DCLSingleton<>();
 	private static final Version _initialSchemaVersion = new Version(0, 1, 0);
 	private static final UpgradeVersionTreeMap _upgradeVersionTreeMap =
 		new UpgradeVersionTreeMap() {
@@ -295,6 +390,25 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 				PortalUpgradeProcessRegistryImpl(),
 			new com.liferay.portal.upgrade.v7_4_x.
 				PortalUpgradeProcessRegistryImpl());
+	}
+
+	private static class PortalReleaseDTO {
+
+		private PortalReleaseDTO(
+			Version schemaVersion, int state, String testString) {
+
+			_schemaVersion = schemaVersion;
+			_state = state;
+			_testString = testString;
+		}
+
+		private static final PortalReleaseDTO _NULL_INSTANCE =
+			new PortalReleaseDTO(null, -1, null);
+
+		private final Version _schemaVersion;
+		private final int _state;
+		private final String _testString;
+
 	}
 
 }

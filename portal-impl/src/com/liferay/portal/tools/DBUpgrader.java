@@ -66,17 +66,19 @@ import org.osgi.framework.ServiceReference;
 public class DBUpgrader {
 
 	public static void checkReleaseState() throws Exception {
-		if (_getReleaseColumnValue("state_") == ReleaseConstants.STATE_GOOD) {
-			return;
-		}
+		try (Connection connection = DataAccess.getConnection()) {
+			if (PortalUpgradeProcess.getCurrentState(connection) ==
+					ReleaseConstants.STATE_GOOD) {
 
-		if (StartupHelperUtil.isUpgrading()) {
-			try (Connection connection = DataAccess.getConnection()) {
-				if (PortalUpgradeProcess.supportsRetry(connection)) {
-					System.out.println("Retrying upgrade");
+				return;
+			}
 
-					return;
-				}
+			if (StartupHelperUtil.isUpgrading() &&
+				PortalUpgradeProcess.supportsRetry(connection)) {
+
+				System.out.println("Retrying upgrade");
+
+				return;
 			}
 		}
 

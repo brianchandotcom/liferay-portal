@@ -51,7 +51,6 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,12 +61,9 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteAdministrationPanelCategoryDisplayContext {
 
 	public SiteAdministrationPanelCategoryDisplayContext(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			Group group)
-		throws PortalException {
+		PortletRequest portletRequest, Group group) {
 
 		_portletRequest = portletRequest;
-		_portletResponse = portletResponse;
 
 		if (group != null) {
 			_group = group;
@@ -377,7 +373,7 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		}
 
 		ProductMenuDisplayContext productMenuDisplayContext =
-			new ProductMenuDisplayContext(_portletRequest, _portletResponse);
+			new ProductMenuDisplayContext(_portletRequest);
 
 		_collapsedPanel = Objects.equals(
 			_panelCategory.getKey(),
@@ -414,14 +410,14 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 	public boolean isLayoutsTreeDisabled() throws PortalException {
 		ProductMenuDisplayContext productMenuDisplayContext =
-			new ProductMenuDisplayContext(_portletRequest, _portletResponse);
+			new ProductMenuDisplayContext(_portletRequest);
 
 		return productMenuDisplayContext.isLayoutsTreeDisabled();
 	}
 
 	public boolean isShowLayoutsTree() throws Exception {
 		ProductMenuDisplayContext productMenuDisplayContext =
-			new ProductMenuDisplayContext(_portletRequest, _portletResponse);
+			new ProductMenuDisplayContext(_portletRequest);
 
 		return productMenuDisplayContext.isShowLayoutsTree();
 	}
@@ -483,10 +479,6 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 	}
 
 	private Layout _getFirstLayout(Group group) {
-		if (_firstLayout != null) {
-			return _firstLayout;
-		}
-
 		Layout layout = LayoutLocalServiceUtil.fetchFirstLayout(
 			group.getGroupId(), false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			false);
@@ -540,7 +532,6 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		SiteAdministrationPanelCategoryDisplayContext.class);
 
 	private Boolean _collapsedPanel;
-	private Layout _firstLayout;
 	private Group _group;
 	private String _groupName;
 	private final GroupProvider _groupProvider;
@@ -553,7 +544,6 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 	private final PanelCategory _panelCategory;
 	private final PanelCategoryHelper _panelCategoryHelper;
 	private final PortletRequest _portletRequest;
-	private final PortletResponse _portletResponse;
 	private final RecentGroupManager _recentGroupManager;
 	private Boolean _showStagingInfo;
 	private String _stagingGroupURL;

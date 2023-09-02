@@ -40,5 +40,5 @@ page import="java.util.Objects" %>
 <portlet:defineObjects />
 
 <%
-ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayContext(liferayPortletRequest, liferayPortletResponse);
+ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayContext(liferayPortletRequest);
 %>

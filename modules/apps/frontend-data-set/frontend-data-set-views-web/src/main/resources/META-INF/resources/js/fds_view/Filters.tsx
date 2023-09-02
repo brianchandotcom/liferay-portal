@@ -726,9 +726,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 		}
 	};
 
-	const onCreationButtonClick = (
-		filterType: filterTypes = filterTypes.SELECTION
-	) => {
+	const onCreationButtonClick = (filterType: filterTypes) => {
 		const availableFields = fields.filter(
 			(item) =>
 				(filterType === filterTypes.SELECTION &&
@@ -863,8 +861,14 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 				]}
 				creationMenuItems={[
 					{
-						label: Liferay.Language.get('new-filter'),
-						onClick: onCreationButtonClick,
+						label: Liferay.Language.get('date-range'),
+						onClick: () =>
+							onCreationButtonClick(filterTypes.DATE_RANGE),
+					},
+					{
+						label: Liferay.Language.get('selection'),
+						onClick: () =>
+							onCreationButtonClick(filterTypes.SELECTION),
 					},
 				]}
 				disableSave={!newFiltersOrder.length}

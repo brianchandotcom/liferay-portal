@@ -11,6 +11,7 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -167,15 +168,16 @@ public class ProductMenuDisplayContext {
 			ParamUtil.getString(originalHttpServletRequest, "p_p_id"));
 		String mvcRenderCommandName = ParamUtil.getString(
 			originalHttpServletRequest,
-			PortalUtil.getPortletNamespace(_PORTLET_NAME) +
+			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES) +
 				"mvcRenderCommandName");
 		String mvcPath = ParamUtil.getString(
 			originalHttpServletRequest, "mvcPath");
 
-		if (!ppid.equals(_PORTLET_NAME) ||
-			(ppid.equals(_PORTLET_NAME) &&
+		if (!ppid.equals(LayoutAdminPortletKeys.GROUP_PAGES) ||
+			(ppid.equals(LayoutAdminPortletKeys.GROUP_PAGES) &&
 			 Validator.isNotNull(mvcRenderCommandName)) ||
-			(ppid.equals(_PORTLET_NAME) && Validator.isNotNull(mvcPath))) {
+			(ppid.equals(LayoutAdminPortletKeys.GROUP_PAGES) &&
+			 Validator.isNotNull(mvcPath))) {
 
 			return false;
 		}
@@ -213,7 +215,7 @@ public class ProductMenuDisplayContext {
 
 	private boolean _hasAdministrationPortletPermission() throws Exception {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			_themeDisplay.getCompanyId(), _PORTLET_NAME);
+			_themeDisplay.getCompanyId(), LayoutAdminPortletKeys.GROUP_PAGES);
 
 		if (portlet == null) {
 			return false;
@@ -261,9 +263,6 @@ public class ProductMenuDisplayContext {
 
 		return _enableApplicationsMenu;
 	}
-
-	private static final String _PORTLET_NAME =
-		"com_liferay_layout_admin_web_portlet_GroupPagesPortlet";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ProductMenuDisplayContext.class);

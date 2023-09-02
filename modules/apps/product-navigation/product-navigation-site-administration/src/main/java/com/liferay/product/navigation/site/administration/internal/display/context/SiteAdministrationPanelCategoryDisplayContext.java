@@ -419,7 +419,7 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		return productMenuDisplayContext.isLayoutsTreeDisabled();
 	}
 
-	public boolean isShowLayoutsTree() throws PortalException {
+	public boolean isShowLayoutsTree() throws Exception {
 		ProductMenuDisplayContext productMenuDisplayContext =
 			new ProductMenuDisplayContext(_portletRequest, _portletResponse);
 

@@ -17,6 +17,10 @@
 			<matches>.*The web application \[.*\] appears to have started a thread.*\[Thread-[0-9]+\].*</matches>
 		</ignore-error>
 		<ignore-error description="">
+			<contains></contains>
+			<matches>Email .* will be ignored because it is included in mail.send.blacklist</matches>
+		</ignore-error>
+		<ignore-error description="">
 			<contains>[antelope:post]</contains>
 			<matches></matches>
 		</ignore-error>
@@ -49,16 +53,12 @@
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="">
-			<contains>Do NOT use sidecar in production</contains>
-			<matches></matches>
-		</ignore-error>
-		<ignore-error description="">
 			<contains>Do NOT use Hypersonic in production</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="">
-			<contains></contains>
-			<matches>Email .* will be ignored because it is included in mail.send.blacklist</matches>
+			<contains>Do NOT use sidecar in production</contains>
+			<matches></matches>
 		</ignore-error>
 		<ignore-error description="">
 			<contains>INFO:</contains>
@@ -193,11 +193,11 @@
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-88418 - temporarily ignore until fixed">
-			<contains>There is already an index on table</contains>
+			<contains>SQLSTATE=42710</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-88418 - temporarily ignore until fixed">
-			<contains>SQLSTATE=42710</contains>
+			<contains>There is already an index on table</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-88431">
@@ -242,15 +242,15 @@
 		</ignore-error>
 		<ignore-error description="LPS-122481 - temporarily ignore until fixed">
 			<contains></contains>
+			<matches>Declarative Service Unsatisfied Component Checker check result.*\n.*com.liferay.depot.web((.|\n)*)</matches>
+		</ignore-error>
+		<ignore-error description="LPS-122481 - temporarily ignore until fixed">
+			<contains></contains>
 			<matches>Portlet com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet from com.liferay.configuration.admin.web.*failed to initialize</matches>
 		</ignore-error>
 		<ignore-error description="LPS-122481 - temporarily ignore until fixed">
 			<contains></contains>
 			<matches>Portlet com_liferay_depot_web_portlet_Depot.*failed to initialize</matches>
-		</ignore-error>
-		<ignore-error description="LPS-122481 - temporarily ignore until fixed">
-			<contains></contains>
-			<matches>Declarative Service Unsatisfied Component Checker check result.*\n.*com.liferay.depot.web((.|\n)*)</matches>
 		</ignore-error>
 		<ignore-error description="LPS-123610">
 			<contains>No default user was found for company</contains>
@@ -305,11 +305,11 @@
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-170903 - temporarily ignore until fixed">
-			<contains>SAX Security Manager could not be setup</contains>
+			<contains>SAX Feature unsupported</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-170903 - temporarily ignore until fixed">
-			<contains>SAX Feature unsupported</contains>
+			<contains>SAX Security Manager could not be setup</contains>
 			<matches></matches>
 		</ignore-error>
 		<ignore-error description="LPS-180463">

@@ -145,20 +145,6 @@ public class ProductMenuDisplayContext {
 		return _rootPanelCategoryKey;
 	}
 
-	public boolean hasUserPanelCategory() {
-		List<PanelCategory> panelCategories = getChildPanelCategories();
-
-		for (PanelCategory panelCategory : panelCategories) {
-			String panelCategoryKey = panelCategory.getKey();
-
-			if (panelCategoryKey.equals(PanelCategoryKeys.USER)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	public boolean isLayoutsTreeDisabled() {
 		HttpServletRequest originalHttpServletRequest =
 			PortalUtil.getOriginalServletRequest(_httpServletRequest);

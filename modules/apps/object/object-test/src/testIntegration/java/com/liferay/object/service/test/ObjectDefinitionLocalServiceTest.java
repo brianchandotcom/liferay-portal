@@ -2044,7 +2044,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 	private void _deleteObjectDefinitionHierarchy(
 			ObjectDefinitionLocalService objectDefinitionLocalService)
-		throws PortalException {
+		throws Exception {
 
 		for (String objectDefinitionName :
 				new String[] {"C_A", "C_AA", "C_AAA", "C_AAB", "C_AB"}) {

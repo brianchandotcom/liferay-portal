@@ -264,7 +264,7 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 	public int getNotificationsCount() {
 		if (_notificationsCount != null) {
-			return _notificationsCount.intValue();
+			return _notificationsCount;
 		}
 
 		_notificationsCount = 0;
@@ -453,7 +453,7 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 
 	public boolean isShowStagingInfo() throws PortalException {
 		if (_showStagingInfo != null) {
-			return _showStagingInfo.booleanValue();
+			return _showStagingInfo;
 		}
 
 		_showStagingInfo = false;

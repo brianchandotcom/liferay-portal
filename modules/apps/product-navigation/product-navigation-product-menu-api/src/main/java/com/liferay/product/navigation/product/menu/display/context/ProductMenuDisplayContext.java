@@ -13,7 +13,6 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -33,7 +32,6 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,13 +40,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ProductMenuDisplayContext {
 
-	public ProductMenuDisplayContext(
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws PortalException {
-
-		_portletRequest = portletRequest;
-		_portletResponse = portletResponse;
-
+	public ProductMenuDisplayContext(PortletRequest portletRequest) {
 		_httpServletRequest = PortalUtil.getHttpServletRequest(portletRequest);
 		_panelAppRegistry = (PanelAppRegistry)portletRequest.getAttribute(
 			ApplicationListWebKeys.PANEL_APP_REGISTRY);
@@ -282,8 +274,6 @@ public class ProductMenuDisplayContext {
 	private final PanelAppRegistry _panelAppRegistry;
 	private final PanelCategoryHelper _panelCategoryHelper;
 	private final PanelCategoryRegistry _panelCategoryRegistry;
-	private final PortletRequest _portletRequest;
-	private final PortletResponse _portletResponse;
 	private String _rootPanelCategoryKey;
 	private final ThemeDisplay _themeDisplay;
 

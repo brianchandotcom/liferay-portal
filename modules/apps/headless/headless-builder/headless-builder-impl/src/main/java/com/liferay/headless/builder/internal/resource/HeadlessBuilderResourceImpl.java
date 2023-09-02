@@ -10,7 +10,6 @@ import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.application.endpoint.EndpointMatcher;
 import com.liferay.headless.builder.internal.helper.EndpointHelper;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -93,21 +92,12 @@ public class HeadlessBuilderResourceImpl {
 				successUnsafeFunction)
 		throws Exception {
 
-		EndpointMatcher endpointMatcher = _endpointMatcherFunction.apply(
-			_company.getCompanyId());
+		APIApplication.Endpoint endpoint = _getEndpoint(path, scope);
 
-		if (endpointMatcher == null) {
+		if (endpoint == null) {
 			return Response.status(
 				Response.Status.NOT_FOUND
 			).build();
-		}
-
-		APIApplication.Endpoint endpoint = endpointMatcher.getEndpoint(
-			"/" + path, scope);
-
-		if (endpoint == null) {
-			throw new NoSuchModelException(
-				"Endpoint /%s does not exist for " + path);
 		}
 
 		if (endpoint.getResponseSchema() == null) {
@@ -118,6 +108,19 @@ public class HeadlessBuilderResourceImpl {
 		return Response.ok(
 			successUnsafeFunction.apply(endpoint)
 		).build();
+	}
+
+	private APIApplication.Endpoint _getEndpoint(
+		String path, APIApplication.Endpoint.Scope scope) {
+
+		EndpointMatcher endpointMatcher = _endpointMatcherFunction.apply(
+			_company.getCompanyId());
+
+		if (endpointMatcher == null) {
+			return null;
+		}
+
+		return endpointMatcher.getEndpoint("/" + path, scope);
 	}
 
 	@Context

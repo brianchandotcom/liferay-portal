@@ -18,9 +18,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.portlet.ControlPanelEntry;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -190,13 +191,11 @@ public class ProductMenuDisplayContext {
 		return true;
 	}
 
-	public boolean isShowLayoutsTree() throws PortalException {
+	public boolean isShowLayoutsTree() throws Exception {
 		Group group = _themeDisplay.getScopeGroup();
 
 		if ((group != null) && !group.isCompany() && !group.isDepot() &&
-			PortletPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), 0, _PORTLET_NAME,
-				ActionKeys.ACCESS_IN_CONTROL_PANEL, true)) {
+			_hasAdministrationPortletPermission()) {
 
 			return true;
 		}
@@ -214,6 +213,27 @@ public class ProductMenuDisplayContext {
 		List<PanelCategory> childPanelCategories = getChildPanelCategories();
 
 		if (childPanelCategories.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _hasAdministrationPortletPermission() throws Exception {
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			_themeDisplay.getCompanyId(), _PORTLET_NAME);
+
+		if (portlet == null) {
+			return false;
+		}
+
+		ControlPanelEntry controlPanelEntry =
+			portlet.getControlPanelEntryInstance();
+
+		if (!controlPanelEntry.hasAccessPermission(
+				_themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroup(), portlet)) {
+
 			return false;
 		}
 

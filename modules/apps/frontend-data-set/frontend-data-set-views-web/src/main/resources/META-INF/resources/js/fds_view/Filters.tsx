@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayDatePicker from '@clayui/date-picker';
 import ClayForm, {
@@ -304,7 +305,7 @@ function AddFDSFilterModalContent({
 
 					<ClaySelectWithOption
 						aria-label={Liferay.Language.get('filter-by')}
-						disabled={!!filter}
+						disabled={!!filter || picklists.length == 0}
 						onChange={(event) => {
 							const newVal = fields.find(
 								(item) => item.name === event.target.value
@@ -330,6 +331,12 @@ function AddFDSFilterModalContent({
 						value={selectedField?.name}
 					/>
 				</ClayForm.Group>
+
+				{filterType === filterTypes.SELECTION && picklists.length == 0 && (
+					<ClayAlert displayType="info" title="Info">
+						{Liferay.Language.get('no-filter-sources-available')}
+					</ClayAlert>
+				)}
 
 				{selectedField && filterType === filterTypes.DATE_RANGE && (
 					<ClayForm.Group className="form-group-autofit">

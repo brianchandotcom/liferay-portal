@@ -610,11 +610,20 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 			<div class="drop-here-info">
 				<div class="drop-here-indicator">
 					<div class="drop-icons">
-						<aui:icon cssClass="drop-icon" image="picture" markupView="lexicon" />
+						<clay:icon
+							cssClass="drop-icon"
+							symbol="picture"
+						/>
 
-						<aui:icon cssClass="drop-icon" image="picture" markupView="lexicon" />
+						<clay:icon
+							cssClass="drop-icon"
+							symbol="picture"
+						/>
 
-						<aui:icon cssClass="drop-icon" image="picture" markupView="lexicon" />
+						<clay:icon
+							cssClass="drop-icon"
+							symbol="picture"
+						/>
 					</div>
 
 					<div class="drop-text">

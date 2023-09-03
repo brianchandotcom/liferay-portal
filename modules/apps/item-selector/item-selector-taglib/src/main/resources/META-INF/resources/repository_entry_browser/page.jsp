@@ -607,9 +607,21 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 		</liferay-ui:search-container>
 
 		<c:if test="<%= !showSearchInfo && (uploadURL != null) %>">
-			<liferay-ui:drop-here-info
-				message="drop-files-here"
-			/>
+			<div class="drop-here-info">
+				<div class="drop-here-indicator">
+					<div class="drop-icons">
+						<aui:icon cssClass="drop-icon" image="picture" markupView="lexicon" />
+
+						<aui:icon cssClass="drop-icon" image="picture" markupView="lexicon" />
+
+						<aui:icon cssClass="drop-icon" image="picture" markupView="lexicon" />
+					</div>
+
+					<div class="drop-text">
+						<liferay-ui:message key="drop-files-here" />
+					</div>
+				</div>
+			</div>
 		</c:if>
 	</c:if>
 

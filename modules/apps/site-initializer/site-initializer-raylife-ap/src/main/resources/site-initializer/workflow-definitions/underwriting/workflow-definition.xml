@@ -25,30 +25,30 @@
 			</label>
 		</labels>
 		<script>
-		<![CDATA[
-			  import com.liferay.object.model.ObjectEntry;
-			  import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-			  import com.liferay.portal.kernel.util.GetterUtil;
-			  import com.liferay.portal.kernel.workflow.WorkflowConstants;
+			<![CDATA[
+				import com.liferay.object.model.ObjectEntry;
+				import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+				import com.liferay.portal.kernel.util.GetterUtil;
+				import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
-			  import java.io.Serializable;
+				import java.io.Serializable;
 
-			  import java.util.Map;
+				import java.util.Map;
 
-			  long classPK = GetterUtil.getLong((String) workflowContext.get(
-				WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+				long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
-			  ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(classPK);
+				ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(classPK);
 
-			  Map<String, Serializable> values = objectEntry.getValues();
+				Map<String, Serializable> values = objectEntry.getValues();
 
-			  String status = values.get("applicationStatus").toString();
+				String status = values.get("applicationStatus").toString();
 
-			  if (status.equals("underwriting")) {
-				returnValue = "yes";
-			  } else {
-				returnValue = "no";
-			  }]]>
+				if (status.equals("underwriting")) {
+					returnValue = "yes";
+				} else {
+					returnValue = "no";
+				}
+			]]>
 		</script>
 		<script-language>groovy</script-language>
 		<transitions>
@@ -125,33 +125,32 @@
 				<name>Reviewed</name>
 				<description></description>
 				<script>
-	  <![CDATA[
-	  import com.liferay.object.model.ObjectEntry;
-	  import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-	  import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-	  import com.liferay.portal.kernel.util.GetterUtil;
-	  import com.liferay.portal.kernel.workflow.WorkflowConstants;
-	  import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
+					<![CDATA[
+						import com.liferay.object.model.ObjectEntry;
+						import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+						import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+						import com.liferay.portal.kernel.util.GetterUtil;
+						import com.liferay.portal.kernel.workflow.WorkflowConstants;
+						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
 
-	  import java.io.Serializable;
+						import java.io.Serializable;
 
-	  import java.util.Map;
+						import java.util.Map;
 
-	  long classPK = GetterUtil.getLong((String) workflowContext.get(
-		WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+						long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
-	  ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(classPK);
+						ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(classPK);
 
-	  Map<String, Serializable> values = objectEntry.getValues();
+						Map<String, Serializable> values = objectEntry.getValues();
 
-	  values.put("applicationStatus", "reviewed");
+						values.put("applicationStatus", "reviewed");
 
-	  long userId = UserLocalServiceUtil.getUserIdByEmailAddress(serviceContext.getCompanyId(),
-		"ryan.underwriter@mailinator.com");
+						long userId = UserLocalServiceUtil.getUserIdByEmailAddress(serviceContext.getCompanyId(), "ryan.underwriter@mailinator.com");
 
-	  ObjectEntryLocalServiceUtil.updateObjectEntry(userId, classPK, values, serviceContext);
+						ObjectEntryLocalServiceUtil.updateObjectEntry(userId, classPK, values, serviceContext);
 
-	  WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);]]>
+						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);
+					]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>
@@ -184,31 +183,31 @@
 				<description></description>
 				<script>
 					<![CDATA[
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
+						import com.liferay.object.model.ObjectEntry;
+						import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+						import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+						import com.liferay.portal.kernel.util.GetterUtil;
+						import com.liferay.portal.kernel.workflow.WorkflowConstants;
+						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
 
-import java.io.Serializable;
+						import java.io.Serializable;
 
-import java.util.Map;
+						import java.util.Map;
 
-long classPK = GetterUtil.getLong((String) workflowContext.get(
-	WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+						long classPK = GetterUtil.getLong((String) workflowContext.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
 
-ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(classPK);
+						ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(classPK);
 
-Map<String, Serializable> values = objectEntry.getValues();
+						Map<String, Serializable> values = objectEntry.getValues();
 
-values.put("applicationStatus", "rejected");
+						values.put("applicationStatus", "rejected");
 
-long userId = UserLocalServiceUtil.getUserIdByEmailAddress(serviceContext.getCompanyId(), "ryan.underwriter@mailinator.com");
+						long userId = UserLocalServiceUtil.getUserIdByEmailAddress(serviceContext.getCompanyId(), "ryan.underwriter@mailinator.com");
 
-ObjectEntryLocalServiceUtil.updateObjectEntry(userId, classPK, values, serviceContext);
+						ObjectEntryLocalServiceUtil.updateObjectEntry(userId, classPK, values, serviceContext);
 
-WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("denied"), workflowContext);]]>
+						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("denied"), workflowContext);
+					]]>
 				</script>
 				<script-language>groovy</script-language>
 				<priority>1</priority>

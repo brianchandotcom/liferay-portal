@@ -120,6 +120,7 @@ public class SalesforceObjectEntryManagerImplTest
 				"Status", TestPropsValues.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+				false,
 				Arrays.asList(
 					ListTypeEntryUtil.createListTypeEntry(
 						"Completed", "completed",

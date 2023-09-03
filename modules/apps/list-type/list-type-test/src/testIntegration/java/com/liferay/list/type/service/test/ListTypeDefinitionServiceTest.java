@@ -147,7 +147,7 @@ public class ListTypeDefinitionServiceTest {
 			null, user.getUserId(),
 			Collections.singletonMap(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			Collections.emptyList());
+			false, Collections.emptyList());
 	}
 
 	private void _setUser(User user) {
@@ -168,7 +168,7 @@ public class ListTypeDefinitionServiceTest {
 					null,
 					Collections.singletonMap(
 						LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-					Collections.emptyList());
+					false, Collections.emptyList());
 		}
 		finally {
 			if (listTypeDefinition != null) {

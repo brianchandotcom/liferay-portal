@@ -100,7 +100,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
-				Collections.singletonList(listTypeEntry));
+				false, Collections.singletonList(listTypeEntry));
 
 		_objectDefinition1 = _publishObjectDefinition(
 			Arrays.asList(

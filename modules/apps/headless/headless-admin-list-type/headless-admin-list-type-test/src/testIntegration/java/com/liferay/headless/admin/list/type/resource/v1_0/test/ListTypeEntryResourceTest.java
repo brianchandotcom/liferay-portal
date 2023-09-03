@@ -38,7 +38,7 @@ public class ListTypeEntryResourceTest
 			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(LocaleUtil.getDefault(), "test"),
-				Collections.emptyList());
+				false, Collections.emptyList());
 	}
 
 	@Override

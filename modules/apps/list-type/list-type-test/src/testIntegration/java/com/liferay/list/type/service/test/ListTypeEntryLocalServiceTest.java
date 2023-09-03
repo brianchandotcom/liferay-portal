@@ -52,7 +52,7 @@ public class ListTypeEntryLocalServiceTest {
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
-				Collections.emptyList());
+				false, Collections.emptyList());
 
 		_listTypeEntry = _listTypeEntryLocalService.addListTypeEntry(
 			null, TestPropsValues.getUserId(),

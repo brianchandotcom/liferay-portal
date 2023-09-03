@@ -68,7 +68,7 @@ public class ListTypeDefinitionLocalServiceTest {
 		try {
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
-				Collections.singletonMap(LocaleUtil.US, ""),
+				Collections.singletonMap(LocaleUtil.US, ""), false,
 				Collections.emptyList());
 
 			Assert.fail();
@@ -180,6 +180,7 @@ public class ListTypeDefinitionLocalServiceTest {
 			null, TestPropsValues.getUserId(),
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
+			false,
 			Collections.singletonList(
 				ListTypeEntryUtil.createListTypeEntry(
 					RandomTestUtil.randomString())));

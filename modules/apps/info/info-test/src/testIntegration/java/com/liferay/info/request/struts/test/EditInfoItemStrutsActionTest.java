@@ -620,7 +620,7 @@ public class EditInfoItemStrutsActionTest {
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
-				_listTypeEntries);
+				false, _listTypeEntries);
 
 		List<ObjectField> objectFields = Arrays.asList(
 			new AttachmentObjectFieldBuilder(

@@ -211,7 +211,7 @@ public class DefaultObjectEntryManagerImplTest
 				null, adminUser.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
-				Collections.emptyList());
+				false, Collections.emptyList());
 		_localizedObjectFieldI18nValues = HashMapBuilder.<String, Object>put(
 			"localizedLongTextObjectFieldName_i18n",
 			HashMapBuilder.put(

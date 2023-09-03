@@ -97,7 +97,7 @@ public class BaseNotificationTypeTest {
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
-				Collections.singletonList(listTypeEntry));
+				false, Collections.singletonList(listTypeEntry));
 
 		childObjectEntryValues = LinkedHashMapBuilder.<String, Object>put(
 			"booleanObjectField", RandomTestUtil.randomBoolean()

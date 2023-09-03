@@ -134,7 +134,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.US, RandomTestUtil.randomString()),
-				listTypeEntries);
+				false, listTypeEntries);
 
 		_objectDefinition1 = _addObjectDefinition(
 			1, ObjectDefinitionConstants.SCOPE_COMPANY);

@@ -124,6 +124,7 @@ public class ObjectFieldLocalServiceTest {
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				false,
 				Collections.singletonList(
 					ListTypeEntryUtil.createListTypeEntry(_listTypeEntryKey)));
 	}

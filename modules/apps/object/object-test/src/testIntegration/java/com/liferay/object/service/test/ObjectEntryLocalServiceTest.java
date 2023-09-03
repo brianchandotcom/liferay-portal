@@ -181,6 +181,7 @@ public class ObjectEntryLocalServiceTest {
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+				false,
 				ListUtil.concat(
 					_createListTypeEntries(
 						"listTypeEntryKey", "List Type Entry Key ", 3),

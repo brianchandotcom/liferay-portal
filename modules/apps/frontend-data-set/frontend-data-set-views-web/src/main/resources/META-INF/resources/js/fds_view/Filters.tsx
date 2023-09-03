@@ -305,7 +305,11 @@ function AddFDSFilterModalContent({
 
 					<ClaySelectWithOption
 						aria-label={Liferay.Language.get('filter-by')}
-						disabled={!!filter || picklists.length == 0}
+						disabled={
+							!!filter ||
+							(filterType === filterTypes.SELECTION &&
+								picklists.length == 0)
+						}
 						onChange={(event) => {
 							const newVal = fields.find(
 								(item) => item.name === event.target.value

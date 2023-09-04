@@ -138,6 +138,8 @@ definition {
 	@description = "This is a test for LPS-191554. The administrator could display related object entries inside of form on associated display page."
 	@priority = 4
 	test DisplayRelatedObjectEntiresInsideFormOnAssociatedDisplayPage {
+		property custom.properties = "feature.flag.LPS-183727=true";
+
 		task ("Given a site administrator has two objects with one to many relationship") {
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Text",
@@ -274,6 +276,8 @@ definition {
 	@description = "This is a test for LPS-191554. The administrator could display related object entries outside of form on associated display page."
 	@priority = 4
 	test DisplayRelatedObjectEntiresOutsideFormOnAssociatedDisplayPage {
+		property custom.properties = "feature.flag.LPS-183727=true";
+
 		task ("Given a site administrator has two objects with one to many relationship") {
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Text",

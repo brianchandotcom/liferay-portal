@@ -153,21 +153,21 @@ definition {
 	test AssertCRUDWithCreatedStandardObject {
 		property portal.acceptance = "true";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Feature Flags",
-			configurationName = "Beta",
-			configurationScope = "Virtual Instance Scope");
-
-		Check.checkToggleSwitch(
-			key_featureFlag = "LPS-135430",
-			locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
-
 		task ("Given portal configured with Salesforce") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Feature Flags",
+				configurationName = "Beta",
+				configurationScope = "Virtual Instance Scope");
+
+			Check.checkToggleSwitch(
+				key_featureFlag = "LPS-135430",
+				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
+
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",

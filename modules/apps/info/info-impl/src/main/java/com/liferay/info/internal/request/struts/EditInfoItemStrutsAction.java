@@ -287,8 +287,11 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 				_log.debug(infoFormValidationException);
 			}
 
-			SessionErrors.add(
-				httpServletRequest, formItemId, infoFormValidationException);
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-182728")) {
+				SessionErrors.add(
+					httpServletRequest, formItemId,
+					infoFormValidationException);
+			}
 
 			if (infoFormValidationException instanceof
 					InfoFormValidationException.RuleValidation) {

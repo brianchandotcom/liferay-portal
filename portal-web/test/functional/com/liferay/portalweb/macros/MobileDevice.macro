@@ -63,7 +63,7 @@ definition {
 
 	macro previewBy {
 		if (isSet(previewBy)) {
-			Click(
+			Click.waitForMenuToggleJSClick(
 				key_fieldLabel = "Preview By",
 				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
 
@@ -71,7 +71,7 @@ definition {
 		}
 
 		if (isSet(experience)) {
-			Click(
+			Click.waitForMenuToggleJSClick(
 				key_fieldLabel = "Experience",
 				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
 
@@ -79,7 +79,7 @@ definition {
 		}
 
 		if (isSet(segment)) {
-			Click(
+			Click.waitForMenuToggleJSClick(
 				key_fieldLabel = "Segment",
 				locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
 

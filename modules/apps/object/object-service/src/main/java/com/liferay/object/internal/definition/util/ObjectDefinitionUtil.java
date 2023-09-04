@@ -66,6 +66,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"Bookmark", "/bookmarks"
 		).put(
+			"FDSAction", "/data-set-manager/actions"
+		).put(
 			"FDSDateFilter", "/data-set-manager/date-filters"
 		).put(
 			"FDSDynamicFilter", "/data-set-manager/dynamic-filters"

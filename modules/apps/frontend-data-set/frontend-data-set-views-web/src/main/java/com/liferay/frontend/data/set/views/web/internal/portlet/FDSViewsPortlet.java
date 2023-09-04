@@ -104,6 +104,46 @@ public class FDSViewsPortlet extends MVCPortlet {
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
+	private void _addLocalizedCustomObjectField(
+			String label, String name, ObjectDefinition objectDefinition,
+			long userId)
+		throws Exception {
+
+		ObjectField objectField = ObjectFieldUtil.createObjectField(
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, true, false, null, label, name,
+			false);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
+			objectField.setLocalized(true);
+		}
+
+		_objectFieldLocalService.addCustomObjectField(
+			objectField.getExternalReferenceCode(), userId,
+			objectField.getListTypeDefinitionId(),
+			objectDefinition.getObjectDefinitionId(),
+			objectField.getBusinessType(), objectField.getDBType(),
+			objectField.isIndexed(), objectField.isIndexedAsKeyword(),
+			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
+			objectField.isLocalized(), objectField.getName(),
+			objectField.getReadOnly(),
+			objectField.getReadOnlyConditionExpression(),
+			objectField.isRequired(), objectField.isState(),
+			objectField.getObjectFieldSettings());
+	}
+
+	private void _enableObjectDefinitionLocalization(
+		ObjectDefinition objectDefinition) {
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
+			objectDefinition.setEnableLocalization(true);
+
+			objectDefinition =
+				_objectDefinitionLocalService.updateObjectDefinition(
+					objectDefinition);
+		}
+	}
+
 	private synchronized void _generate(
 			long companyId, Locale locale, long userId)
 		throws Exception {
@@ -183,6 +223,11 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "actions-order"),
+						"fdsActionsOrder", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
 						_language.get(locale, "fields-order"), "fdsFieldsOrder",
 						false),
 					ObjectFieldUtil.createObjectField(
@@ -245,39 +290,11 @@ public class FDSViewsPortlet extends MVCPortlet {
 						ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
 						_language.get(locale, "sortable"), "sortable", false)));
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
-			fdsFieldObjectDefinition.setEnableLocalization(true);
+		_enableObjectDefinitionLocalization(fdsFieldObjectDefinition);
 
-			fdsFieldObjectDefinition =
-				_objectDefinitionLocalService.updateObjectDefinition(
-					fdsFieldObjectDefinition);
-		}
-
-		ObjectField fieldLabelObjectField = ObjectFieldUtil.createObjectField(
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-			_language.get(locale, "column-label"), "label", false);
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
-			fieldLabelObjectField.setLocalized(true);
-		}
-
-		_objectFieldLocalService.addCustomObjectField(
-			fieldLabelObjectField.getExternalReferenceCode(), userId,
-			fieldLabelObjectField.getListTypeDefinitionId(),
-			fdsFieldObjectDefinition.getObjectDefinitionId(),
-			fieldLabelObjectField.getBusinessType(),
-			fieldLabelObjectField.getDBType(),
-			fieldLabelObjectField.isIndexed(),
-			fieldLabelObjectField.isIndexedAsKeyword(),
-			fieldLabelObjectField.getIndexedLanguageId(),
-			fieldLabelObjectField.getLabelMap(),
-			fieldLabelObjectField.isLocalized(),
-			fieldLabelObjectField.getName(),
-			fieldLabelObjectField.getReadOnly(),
-			fieldLabelObjectField.getReadOnlyConditionExpression(),
-			fieldLabelObjectField.isRequired(), fieldLabelObjectField.isState(),
-			fieldLabelObjectField.getObjectFieldSettings());
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "column-label"), "label",
+			fdsFieldObjectDefinition, userId);
 
 		_objectDefinitionLocalService.publishSystemObjectDefinition(
 			userId, fdsFieldObjectDefinition.getObjectDefinitionId());
@@ -409,6 +426,71 @@ public class FDSViewsPortlet extends MVCPortlet {
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap("FDSView FDSSort Relationship"),
 			"fdsViewFDSSortRelationship",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectDefinition fdsActionObjectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"FDSAction", userId, 0, "FDSAction", "FDSAction", false,
+				LocalizedMapUtil.getLocalizedMap("FDS Action"), true,
+				"FDSAction", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap("FDS Actions"),
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "type"), "type", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "icon"), "icon", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "confirmation-message-type"),
+						"confirmationMessageType", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "method"), "method", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "permission-key"),
+						"permissionKey", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "url"), "url", false)));
+
+		_enableObjectDefinitionLocalization(fdsActionObjectDefinition);
+
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "confirmation-message"),
+			"confirmationMessage", fdsActionObjectDefinition, userId);
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "label"), "label", fdsActionObjectDefinition,
+			userId);
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "success-message"), "successMessage",
+			fdsActionObjectDefinition, userId);
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "error-message"), "errorMessage",
+			fdsActionObjectDefinition, userId);
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "title"), "title", fdsActionObjectDefinition,
+			userId);
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, fdsActionObjectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			userId, fdsViewObjectDefinition.getObjectDefinitionId(),
+			fdsActionObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap("FDSView FDSAction Relationship"),
+			"fdsViewFDSActionRelationship",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 

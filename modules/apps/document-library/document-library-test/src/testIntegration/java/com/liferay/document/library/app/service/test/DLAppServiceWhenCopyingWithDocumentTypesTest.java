@@ -280,7 +280,7 @@ public class DLAppServiceWhenCopyingWithDocumentTypesTest
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		List<FileEntry> fileEntries = _dlAppService.getFileEntries(
-			_childGroup.getGroupId(), folder.getFolderId());
+			targetGroup.getGroupId(), folder.getFolderId());
 
 		Assert.assertEquals(fileEntries.toString(), 1, fileEntries.size());
 

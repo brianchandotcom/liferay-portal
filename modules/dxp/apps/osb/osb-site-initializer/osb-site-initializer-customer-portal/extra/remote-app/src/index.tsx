@@ -7,7 +7,7 @@ import {ApolloProvider} from '@apollo/client';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
-import {createRoot} from 'react-dom/client';
+import {Root, createRoot} from 'react-dom/client';
 import {SWRConfig} from 'swr';
 import './common/styles/global.scss';
 
@@ -92,6 +92,8 @@ const CustomerPortalApp: React.FC<CustomerPortalAppProps> = ({
 };
 
 class CustomerPortalWebComponent extends HTMLElement {
+	private root: Root | undefined;
+
 	connectedCallback() {
 		const properties = {
 			articleAccountSupportURL: super.getAttribute(
@@ -135,24 +137,26 @@ class CustomerPortalWebComponent extends HTMLElement {
 			),
 		};
 
-		const root = createRoot(this);
+		if (!this.root) {
+			this.root = createRoot(this);
 
-		root.render(
-			<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
-				<SWRConfig
-					value={{
-						provider: SWRCacheProvider,
-						revalidateOnFocus: false,
-					}}
-				>
-					<CustomerPortalApp
-						{...properties}
-						apis={apis}
-						route={super.getAttribute('route') as string}
-					/>
-				</SWRConfig>
-			</ClayIconSpriteContext.Provider>
-		);
+			this.root.render(
+				<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
+					<SWRConfig
+						value={{
+							provider: SWRCacheProvider,
+							revalidateOnFocus: false,
+						}}
+					>
+						<CustomerPortalApp
+							{...properties}
+							apis={apis}
+							route={super.getAttribute('route') as string}
+						/>
+					</SWRConfig>
+				</ClayIconSpriteContext.Provider>
+			);
+		}
 	}
 }
 

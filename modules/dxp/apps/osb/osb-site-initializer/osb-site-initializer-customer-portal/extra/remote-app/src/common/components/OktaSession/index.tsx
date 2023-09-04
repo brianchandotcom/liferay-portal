@@ -51,7 +51,13 @@ const OktaSession = () => {
 	};
 
 	const onClickSignIn = () => {
-		window.location.href = oktaSessionDomain;
+		if (window.location.protocol === 'http:') {
+			window.location.href = oktaSessionDomain;
+
+			return;
+		}
+
+		window.location.href = '/c/portal/logout';
 	};
 
 	if (open && status === 'inactive') {

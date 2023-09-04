@@ -61,7 +61,13 @@ public class APIEndpointRelevantObjectEntryModelListener
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		if (_isModified(originalObjectEntry, objectEntry)) {
+		if (!_equals(
+				originalObjectEntry.getValues(), objectEntry.getValues(),
+				"httpMethod", "path",
+				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId")) {
+
 			_validate(objectEntry);
 		}
 	}
@@ -103,17 +109,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 		}
 
 		return true;
-	}
-
-	private boolean _isModified(
-		ObjectEntry originalObjectEntry, ObjectEntry objectEntry) {
-
-		return !_equals(
-			originalObjectEntry.getValues(), objectEntry.getValues(),
-			"httpMethod", "path",
-			"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
-			"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
-			"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId");
 	}
 
 	private void _validate(ObjectEntry objectEntry) {

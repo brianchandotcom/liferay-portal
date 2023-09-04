@@ -69,7 +69,7 @@ public class ExpandoUtil {
 					ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE),
 				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_TEXT_BOX);
 
-			Serializable value = getExpandoValue(
+			Serializable value = _getExpandoValue(
 				httpServletRequest, "ExpandoAttribute--" + name + "--", type,
 				displayType);
 
@@ -87,7 +87,7 @@ public class ExpandoUtil {
 			expandoBridge, PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
-	public static Serializable getExpandoValue(
+	private static Serializable _getExpandoValue(
 			HttpServletRequest httpServletRequest, String name, int type,
 			String displayType)
 		throws PortalException {

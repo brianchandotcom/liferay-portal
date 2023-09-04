@@ -100,9 +100,7 @@ const GoalsEntries = ({mdfRequest}: IProps) => (
 				},
 				{
 					title: 'Additional Options',
-					value: mdfRequest.additionalOption?.name
-						? mdfRequest.additionalOption?.name
-						: 'N/A',
+					value: mdfRequest.additionalOption?.name,
 				},
 				{
 					title: 'Target Audience/Role',

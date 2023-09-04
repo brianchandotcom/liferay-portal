@@ -143,37 +143,11 @@ definition {
 		}
 	}
 
-	@priority = 3
-	test PreviewCustomDefault {
-		MobileDevice.previewPG(deviceType = "custom");
-	}
-
-	@priority = 3
-	test PreviewCustomHeightWidth {
-		MobileDevice.previewPG(
-			deviceType = "custom",
-			height = 500,
-			width = 500);
-	}
-
-	@priority = 3
-	test PreviewDesktop {
-		MobileDevice.previewPG(deviceType = "desktop");
-	}
-
-	@priority = 3
-	test PreviewSmartphone {
-		MobileDevice.previewPG(deviceType = "smartphone");
-	}
-
-	@priority = 3
-	test PreviewTablet {
-		MobileDevice.previewPG(deviceType = "tablet");
-	}
-
-	@description = "This is a test for LPS-128810. View collection items on content page when select segment."
+	@description = "This is a test for LPS-128810 and LPS-186155. View collection items on content page when select segment."
 	@priority = 4
-	test ViewCollectionItemsOnContentPageWhenSelectSegment {
+	test PreviewContentOnContentPageBySegment {
+		property custom.properties = "feature.flag.LPS-186558=true";
+
 		task ("Add a segment with a Regular Role field") {
 			var roleId = JSONPermissionSetter.setRoleId(roleTitle = "Owner");
 
@@ -302,9 +276,7 @@ definition {
 		}
 
 		task ("Select the segment on Simulation panel") {
-			Check.checkNotVisible(
-				checkboxName = "New Segment",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+			MobileDevice.previewBy(segment = "New Segment");
 		}
 
 		task ("View only the web content with tag shown in simulation modal when select segment") {
@@ -317,6 +289,34 @@ definition {
 				locator1 = "Fragment#FRAGMENT_TEXT_IN_COLLECTION_DISPLAY",
 				row = 2);
 		}
+	}
+
+	@priority = 3
+	test PreviewCustomDefault {
+		MobileDevice.previewPG(deviceType = "custom");
+	}
+
+	@priority = 3
+	test PreviewCustomHeightWidth {
+		MobileDevice.previewPG(
+			deviceType = "custom",
+			height = 500,
+			width = 500);
+	}
+
+	@priority = 3
+	test PreviewDesktop {
+		MobileDevice.previewPG(deviceType = "desktop");
+	}
+
+	@priority = 3
+	test PreviewSmartphone {
+		MobileDevice.previewPG(deviceType = "smartphone");
+	}
+
+	@priority = 3
+	test PreviewTablet {
+		MobileDevice.previewPG(deviceType = "tablet");
 	}
 
 	@description = "This is a test for LPS-187159. View info alert message under Simulation panel in content page."

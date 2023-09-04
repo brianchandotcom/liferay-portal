@@ -27,6 +27,7 @@ import com.liferay.object.exception.ObjectDefinitionPluralLabelException;
 import com.liferay.object.exception.ObjectDefinitionRootObjectDefinitionIdException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
+import com.liferay.object.exception.ObjectDefinitionSystemException;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
@@ -51,6 +52,7 @@ import com.liferay.object.service.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.test.util.TreeTestUtil;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
@@ -62,17 +64,26 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.model.UserNotificationEventTable;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -82,6 +93,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.sql.Connection;
@@ -1304,6 +1316,84 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteCompanyObjectDefinitions() throws Exception {
+		String originalName = PrincipalThreadLocal.getName();
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		Company company = CompanyTestUtil.addCompany();
+
+		PortalInstances.initCompany(company);
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(
+					company.getCompanyId())) {
+
+			User user = UserTestUtil.getAdminUser(company.getCompanyId());
+
+			Assert.assertNotNull(user);
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			ObjectDefinition customObjectDefinition =
+				_objectDefinitionLocalService.addCustomObjectDefinition(
+					user.getUserId(), 0, false, false, false,
+					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
+					null, LocalizedMapUtil.getLocalizedMap("Ables"), true,
+					ObjectDefinitionConstants.SCOPE_COMPANY,
+					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+					Arrays.asList(
+						ObjectFieldUtil.createObjectField(
+							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+							ObjectFieldConstants.DB_TYPE_STRING,
+							RandomTestUtil.randomString(),
+							StringUtil.randomId())));
+
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				user.getUserId(),
+				customObjectDefinition.getObjectDefinitionId());
+
+			ObjectDefinition modifiableSystemObjectDefinition =
+				ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
+					user.getUserId(), null,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					"Test", null, null,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					ObjectDefinitionConstants.SCOPE_SITE, null, 1,
+					_objectDefinitionLocalService,
+					Collections.singletonList(
+						ObjectFieldUtil.createObjectField(
+							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+							ObjectFieldConstants.DB_TYPE_STRING,
+							StringUtil.randomId(), Collections.emptyList())));
+
+			_objectDefinitionLocalService.publishSystemObjectDefinition(
+				user.getUserId(),
+				modifiableSystemObjectDefinition.getObjectDefinitionId());
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+		}
+
+		Assert.assertNull(
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				company.getCompanyId(), "Able"));
+
+		Assert.assertNull(
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				company.getCompanyId(), "Test"));
+	}
+
+	@Test
 	public void testDeleteObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -1313,7 +1403,7 @@ public class ObjectDefinitionLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Arrays.asList(
+				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
@@ -1375,6 +1465,35 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinition.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(objectDefinition.getObjectDefinitionId())));
+
+		// Delete modifiable system object definition
+
+		ObjectDefinition modifiableSystemObjectDefinition =
+			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
+				_objectDefinitionLocalService,
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						StringUtil.randomId(), Collections.emptyList())));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			modifiableSystemObjectDefinition.getObjectDefinitionId());
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionSystemException.class, false,
+			"Only allowed bundles can delete system object definitions",
+			() -> _objectDefinitionLocalService.deleteObjectDefinition(
+				modifiableSystemObjectDefinition.getObjectDefinitionId()));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			modifiableSystemObjectDefinition.getObjectDefinitionId());
 	}
 
 	@Test
@@ -2576,6 +2695,9 @@ public class ObjectDefinitionLocalServiceTest {
 	private static ObjectFolderLocalService _objectFolderLocalService;
 
 	private static ObjectFolder _uncategorizedObjectFolder;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private MessageBus _messageBus;

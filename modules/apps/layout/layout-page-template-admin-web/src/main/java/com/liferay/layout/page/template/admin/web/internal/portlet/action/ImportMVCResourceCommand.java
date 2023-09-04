@@ -9,6 +9,7 @@ import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -56,6 +57,8 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -67,13 +70,27 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 		File file = uploadPortletRequest.getFile("file");
 
-		boolean overwrite = ParamUtil.getBoolean(
-			resourceRequest, "overwrite", true);
+		boolean validFile = true;
 
-		JSONObject jsonObject = _importFile(
-			file, themeDisplay.getScopeGroupId(),
-			layoutPageTemplateCollectionId, themeDisplay.getLocale(), overwrite,
-			themeDisplay.getUserId());
+		if (_featureFlagManager.isEnabled("LPS-174939")) {
+			validFile = _layoutsImporter.validateFile(
+				themeDisplay.getScopeGroupId(), layoutPageTemplateCollectionId,
+				file);
+		}
+
+		if (validFile) {
+			jsonObject = _importFile(
+				file, themeDisplay.getScopeGroupId(),
+				layoutPageTemplateCollectionId, themeDisplay.getLocale(),
+				ParamUtil.getBoolean(resourceRequest, "overwrite", true),
+				themeDisplay.getUserId());
+
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse, jsonObject);
+		}
+		else {
+			jsonObject.put("valid", false);
+		}
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);
@@ -174,6 +191,9 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportMVCResourceCommand.class);
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private JSONFactory _jsonFactory;

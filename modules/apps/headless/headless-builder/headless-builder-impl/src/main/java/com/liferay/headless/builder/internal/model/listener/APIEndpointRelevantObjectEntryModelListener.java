@@ -66,6 +66,19 @@ public class APIEndpointRelevantObjectEntryModelListener
 		}
 	}
 
+	private boolean _equals(
+		Map<String, Serializable> map1, Map<String, Serializable> map2,
+		String... parameters) {
+
+		for (String parameter : parameters) {
+			if (!Objects.equals(map1.get(parameter), map2.get(parameter))) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private boolean _isAPIApplication(long apiApplicationId) throws Exception {
 		if (apiApplicationId == 0) {
 			return false;
@@ -116,32 +129,12 @@ public class APIEndpointRelevantObjectEntryModelListener
 	private boolean _isModified(
 		ObjectEntry originalObjectEntry, ObjectEntry objectEntry) {
 
-		Map<String, Serializable> originalValues =
-			originalObjectEntry.getValues();
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		if (Objects.equals(
-				values.get("httpMethod"), originalValues.get("httpMethod")) &&
-			Objects.equals(values.get("path"), originalValues.get("path")) &&
-			Objects.equals(
-				originalValues.get(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"),
-				values.get(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId")) &&
-			Objects.equals(
-				originalValues.get(
-					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId"),
-				values.get("r_requestAPISchemaToAPIEndpoints_c_apiSchemaId")) &&
-			Objects.equals(
-				originalValues.get(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId"),
-				values.get(
-					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId"))) {
-
-			return false;
-		}
-
-		return true;
+		return !_equals(
+			originalObjectEntry.getValues(), objectEntry.getValues(),
+			"httpMethod", "path",
+			"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+			"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+			"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId");
 	}
 
 	private void _validate(ObjectEntry objectEntry) {

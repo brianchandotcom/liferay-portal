@@ -114,36 +114,36 @@ definition {
 		}
 
 		task ("And then the user is able to create entries") {
-			ObjectPortlet.addSingleFieldEntryViaUI(entry = "New Entry");
+			ObjectPortlet.addSingleFieldEntryViaUI(entry = "New Entry 162131");
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "New Entry",
+				key_entry = "New Entry 162131",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to update entries") {
-			ObjectPortlet.viewEntryDetails(entry = "New Entry");
+			ObjectPortlet.viewEntryDetails(entry = "New Entry 162131");
 
 			Type(
 				locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
-				value1 = "Entry Updated");
+				value1 = "Entry 162131 Updated");
 
 			PortletEntry.save();
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry 162131 Updated",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to delete entries") {
-			ObjectPortlet.deleteEntry(entry = "Entry Updated");
+			ObjectPortlet.deleteEntry(entry = "Entry 162131 Updated");
 
 			AssertElementNotPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry 162131 Updated",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 	}
@@ -297,38 +297,38 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Last Name",
-				text = "New Entry");
+				text = "New Entry 185429");
 
 			CreateObject.saveObject();
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "New Entry",
+				key_entry = "New Entry 185429",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to update entries") {
-			ObjectPortlet.viewEntryDetails(entry = "New Entry");
+			ObjectPortlet.viewEntryDetails(entry = "New Entry 185429");
 
 			PortletEntry.inputText(
 				fieldLabel = "Last Name",
-				text = "Entry Updated");
+				text = "Entry 185429 Updated");
 
 			CreateObject.saveObject();
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry 185429 Updated",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to delete entries") {
-			ObjectPortlet.deleteEntry(entry = "Entry Updated");
+			ObjectPortlet.deleteEntry(entry = "Entry 185429 Updated");
 
 			AssertElementNotPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry 185429 Updated",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 	}
@@ -393,7 +393,7 @@ definition {
 		}
 
 		task ("And then the user is able to create entries") {
-			ObjectPortlet.addSingleFieldEntryViaUI(entry = "New Entry");
+			ObjectPortlet.addSingleFieldEntryViaUI(entry = "New Entry 185427");
 
 			ObjectAdmin.goToCustomObject(objectName = "PoshiTest");
 
@@ -403,26 +403,26 @@ definition {
 		}
 
 		task ("And then the user is able to update entries") {
-			ObjectPortlet.viewEntryDetails(entry = "New Entry");
+			ObjectPortlet.viewEntryDetails(entry = "New Entry 185427");
 
 			Type(
 				locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
-				value1 = "Entry Updated");
+				value1 = "Entry 185427 Updated");
 
 			PortletEntry.save();
 
 			ObjectAdmin.goToCustomObject(objectName = "PoshiTest");
 
 			AssertElementPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry 185427 Updated",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to delete entries") {
-			ObjectPortlet.deleteEntry(entry = "Entry Updated");
+			ObjectPortlet.deleteEntry(entry = "Entry 185427 Updated");
 
 			AssertElementNotPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry 185427 Updated",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 	}
@@ -495,38 +495,38 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Last Name",
-				text = "New Entry");
+				text = "New Entry 185428");
 
 			CreateObject.saveObject();
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "New Entry",
+				key_entry = "New Entry 185428",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to update entries") {
-			ObjectPortlet.viewEntryDetails(entry = "New Entry");
+			ObjectPortlet.viewEntryDetails(entry = "New Entry 185428");
 
 			PortletEntry.inputText(
 				fieldLabel = "Last Name",
-				text = "Entry Updated");
+				text = "Entry 185428 Updated");
 
 			CreateObject.saveObject();
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry 185428 Updated",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to delete entries") {
-			ObjectPortlet.deleteEntry(entry = "Entry Updated");
+			ObjectPortlet.deleteEntry(entry = "Entry 185428 Updated");
 
 			AssertElementNotPresent(
-				key_entry = "Entry Updated",
+				key_entry = "Entry 185428 Updated",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 	}

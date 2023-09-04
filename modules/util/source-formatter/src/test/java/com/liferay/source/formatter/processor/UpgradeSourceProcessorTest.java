@@ -97,6 +97,16 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaAddFileEntryParameterCheck() throws Exception {
+		test(
+			"upgrade/UpgradeJavaAddFileEntryParameterCheck.testjava",
+			StringBundler.concat(
+				"Unable to format method addFileEntry from DLAppLocalService ",
+				"and DLAppLocalServiceUtil. Fill the new parameters manually, ",
+				"see LPS-194818"));
+	}
+
+	@Test
 	public void testUpgradeJavaAddFolderParameterCheck() throws Exception {
 		test("upgrade/UpgradeJavaAddFolderParameterCheck.testjava");
 	}

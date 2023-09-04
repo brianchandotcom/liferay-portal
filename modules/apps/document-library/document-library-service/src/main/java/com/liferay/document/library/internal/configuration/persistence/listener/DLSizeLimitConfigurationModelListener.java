@@ -63,13 +63,4 @@ public class DLSizeLimitConfigurationModelListener
 		}
 	}
 
-	protected void setDLSizeLimitManagedServiceFactory(
-		DLSizeLimitManagedServiceFactory dlSizeLimitManagedServiceFactory) {
-
-		_dlSizeLimitManagedServiceFactory = dlSizeLimitManagedServiceFactory;
-	}
-
-	@Reference
-	private DLSizeLimitManagedServiceFactory _dlSizeLimitManagedServiceFactory;
-
 }

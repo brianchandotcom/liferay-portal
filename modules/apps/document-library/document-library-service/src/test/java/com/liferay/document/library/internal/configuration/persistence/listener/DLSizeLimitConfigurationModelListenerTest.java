@@ -29,13 +29,6 @@ public class DLSizeLimitConfigurationModelListenerTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		_dlSizeLimitConfigurationModelListener.
-			setDLSizeLimitManagedServiceFactory(
-				Mockito.mock(DLSizeLimitManagedServiceFactory.class));
-	}
-
 	@Test
 	public void testEmptyConfigurationValue() throws Exception {
 		_dlSizeLimitConfigurationModelListener.onBeforeSave(

@@ -148,12 +148,16 @@ export declare type TState = {
 	elements: Elements<ObjectDefinitionNodeData | ObjectRelationshipEdgeData>;
 	isLoadingObjectFolder: boolean;
 	filterOperators: TFilterOperators;
+	forbiddenChars: string[];
+	forbiddenLastChars: string[];
+	forbiddenNames: string[];
 	leftSidebarItems: LeftSidebarItem[];
 	objectDefinitionPermissionsURL: string;
 	objectDefinitions: ObjectDefinition[];
 	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectFolderName: string;
 	objectFolders: ObjectFolder[];
+	objectWebLearnResources: ObjectWebLearnResources;
 	rightSidebarType: RightSidebarType;
 	selectedObjectDefinitionNode: Node<ObjectDefinitionNodeData> | null;
 	selectedObjectFolder: ObjectFolder;

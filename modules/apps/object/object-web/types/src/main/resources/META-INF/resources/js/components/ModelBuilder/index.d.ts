@@ -11,9 +11,13 @@ interface CustomObjectFolderWrapperProps {
 	companyKeyValuePairs: KeyValuePair[];
 	editObjectDefinitionURL: string;
 	filterOperators: TFilterOperators;
+	forbiddenChars: string[];
+	forbiddenLastChars: string[];
+	forbiddenNames: string[];
 	objectDefinitionPermissionsURL: string;
 	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectRelationshipDeletionTypes: LabelValueObject[];
+	objectWebLearnResources: ObjectWebLearnResources;
 	siteKeyValuePairs: KeyValuePair[];
 	workflowStatusJSONArray: LabelValueObject[];
 }

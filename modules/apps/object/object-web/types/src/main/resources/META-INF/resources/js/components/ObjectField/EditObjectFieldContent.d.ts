@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React from 'react';
+import React, {ElementType} from 'react';
 import {EditObjectFieldProps} from './EditObjectField';
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
+import './EditObjectFieldContent.scss';
 interface EditObjectFieldContentProps
 	extends Omit<
 		EditObjectFieldProps,
@@ -14,12 +15,15 @@ interface EditObjectFieldContentProps
 		| 'forbiddenNames'
 		| 'objectFieldId'
 	> {
+	containerWrapper: ElementType;
 	errors: ObjectFieldErrors;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	modelBuilder?: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
 }
 export declare function EditObjectFieldContent({
+	containerWrapper,
 	creationLanguageId,
 	errors,
 	filterOperators,
@@ -27,6 +31,7 @@ export declare function EditObjectFieldContent({
 	isApproved,
 	isDefaultStorageType,
 	learnResources,
+	modelBuilder,
 	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
 	objectName,

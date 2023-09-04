@@ -6,13 +6,16 @@
 /// <reference types="react" />
 
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
+import '../../EditObjectFieldContent.scss';
 interface FormulaContainerProps {
 	errors: ObjectFieldErrors;
+	modelBuilder?: boolean;
 	objectFieldSettings: ObjectFieldSetting[];
 	setValues: (values: Partial<ObjectField>) => void;
 }
 export declare function FormulaContainer({
 	errors,
+	modelBuilder,
 	objectFieldSettings,
 	setValues,
 }: FormulaContainerProps): JSX.Element;

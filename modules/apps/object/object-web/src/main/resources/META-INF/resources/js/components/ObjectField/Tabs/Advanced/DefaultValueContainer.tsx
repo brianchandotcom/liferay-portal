@@ -28,7 +28,8 @@ interface DefaultValueContainerProps {
 	creationLanguageId: Liferay.Language.Locale;
 	disabled?: boolean;
 	errors: ObjectFieldErrors;
-	learnResources: object;
+	learnResources: ObjectWebLearnResources;
+	modelBuilder?: boolean;
 	objectFieldBusinessType: ObjectFieldBusinessType;
 	objectFieldSettings: ObjectFieldSetting[];
 	setValues: (value: Partial<ObjectField>) => void;
@@ -59,6 +60,7 @@ export function DefaultValueContainer({
 	creationLanguageId,
 	errors,
 	learnResources,
+	modelBuilder = false,
 	setValues,
 	sidebarElements,
 	values,
@@ -110,7 +112,13 @@ export function DefaultValueContainer({
 		];
 
 	return (
-		<>
+		<div
+			className={classNames({
+				'lfr-objects__edit-object-field-card-content':
+					modelBuilder === false,
+				'lfr-objects__edit-object-field-model-builder-panel': modelBuilder,
+			})}
+		>
 			{!values.state && (
 				<ClayAlert displayType="info" title="Info">
 					{Liferay.Language.get(
@@ -256,6 +264,6 @@ export function DefaultValueContainer({
 						}
 					/>
 				)}
-		</>
+		</div>
 	);
 }

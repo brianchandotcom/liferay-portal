@@ -4,12 +4,16 @@
  */
 
 import {ExpressionBuilder} from '@liferay/object-js-components-web';
+import classNames from 'classnames';
 import React from 'react';
 
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 
+import '../../EditObjectFieldContent.scss';
+
 interface FormulaContainerProps {
 	errors: ObjectFieldErrors;
+	modelBuilder?: boolean;
 	objectFieldSettings: ObjectFieldSetting[];
 	setValues: (values: Partial<ObjectField>) => void;
 }
@@ -31,6 +35,7 @@ const getNewObjectFieldSettings = (
 
 export function FormulaContainer({
 	errors,
+	modelBuilder = false,
 	objectFieldSettings,
 	setValues,
 }: FormulaContainerProps) {
@@ -39,7 +44,13 @@ export function FormulaContainer({
 	);
 
 	return (
-		<>
+		<div
+			className={classNames({
+				'lfr-objects__edit-object-field-card-content':
+					modelBuilder === false,
+				'lfr-objects__edit-object-field-model-builder-panel': modelBuilder,
+			})}
+		>
 			<ExpressionBuilder
 				error={errors.script}
 				feedbackMessage={Liferay.Language.get(
@@ -86,6 +97,6 @@ export function FormulaContainer({
 				)}`}
 				value={(currentScript?.value as string) ?? ''}
 			/>
-		</>
+		</div>
 	);
 }

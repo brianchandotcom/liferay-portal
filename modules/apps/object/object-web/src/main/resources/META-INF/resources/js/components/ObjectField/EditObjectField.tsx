@@ -5,6 +5,7 @@
 
 import {
 	API,
+	Card,
 	SidePanelForm,
 	SidebarCategory,
 	openToast,
@@ -24,7 +25,7 @@ export interface EditObjectFieldProps {
 	forbiddenNames: string[];
 	isApproved: boolean;
 	isDefaultStorageType: boolean;
-	learnResources: object;
+	learnResources: ObjectWebLearnResources;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldId: number;
 	objectFieldTypes: ObjectFieldType[];
@@ -130,6 +131,7 @@ export default function EditObjectField({
 			title={Liferay.Language.get('field')}
 		>
 			<EditObjectFieldContent
+				containerWrapper={Card}
 				creationLanguageId={creationLanguageId}
 				errors={errors}
 				filterOperators={filterOperators}

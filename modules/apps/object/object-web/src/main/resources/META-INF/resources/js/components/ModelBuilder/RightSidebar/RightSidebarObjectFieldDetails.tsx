@@ -3,26 +3,33 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayPanel from '@clayui/panel';
+import {API} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
+import {Node, isNode} from 'react-flow-renderer';
 
+import {objectFieldInitialValues} from '../../ObjectField/EditObjectField';
+import {EditObjectFieldContent} from '../../ObjectField/EditObjectFieldContent';
+import {useObjectFieldForm} from '../../ObjectField/useObjectFieldForm';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
 
 import './RightSidebarObjectFieldDetails.scss';
 
-import {API} from '@liferay/object-js-components-web';
-import {Node, isNode} from 'react-flow-renderer';
-
-import {objectFieldInitialValues} from '../../ObjectField/EditObjectField';
-import {BasicInfoTab} from '../../ObjectField/Tabs/BasicInfo/BasicInfoTab';
-import {useObjectFieldForm} from '../../ObjectField/useObjectFieldForm';
-
 export function RightSidebarObjectFieldDetails() {
-	const [load, setLoad] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const [
-		{elements, filterOperators, workflowStatusJSONArray},
+		{
+			elements,
+			filterOperators,
+			forbiddenChars,
+			forbiddenLastChars,
+			forbiddenNames,
+			objectWebLearnResources,
+			workflowStatusJSONArray,
+		},
 	] = useFolderContext();
 
 	const selectedNode = elements.find((element) => {
@@ -39,6 +46,9 @@ export function RightSidebarObjectFieldDetails() {
 	const onSubmit = async () => {};
 
 	const {errors, handleChange, setValues, values} = useObjectFieldForm({
+		forbiddenChars,
+		forbiddenLastChars,
+		forbiddenNames,
 		initialValues: objectFieldInitialValues,
 		onSubmit,
 	});
@@ -46,12 +56,12 @@ export function RightSidebarObjectFieldDetails() {
 	useEffect(() => {
 		const makeFetch = async () => {
 			if (selectedField) {
-				setLoad(true);
+				setLoading(true);
 				const ObjectFieldResponse = await API.getObjectField(
 					selectedField?.id as number
 				);
 				setValues(ObjectFieldResponse);
-				setLoad(false);
+				setLoading(false);
 			}
 		};
 		makeFetch();
@@ -62,38 +72,51 @@ export function RightSidebarObjectFieldDetails() {
 		<div onBlur={onSubmit}>
 			<div className="lfr-objects__model-builder-right-sidebar-definition-node-title">
 				<span>{selectedField?.label}</span>
+
+				<ClayButtonWithIcon
+					aria-label="Trash"
+					displayType="secondary"
+					symbol="trash"
+					title="Trash"
+				/>
 			</div>
 
 			<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
-				{load ? (
+				{loading ? (
 					<ClayLoadingIndicator displayType="secondary" size="sm" />
 				) : (
-					<BasicInfoTab
+					<EditObjectFieldContent
+						containerWrapper={ClayPanel}
+						creationLanguageId={
+							selectedNode.data?.defaultLanguageId ?? 'en_US'
+						}
 						errors={errors}
 						filterOperators={filterOperators}
 						handleChange={handleChange}
 						isApproved={
-							selectedNode.data?.status.label === 'Approved'
+							selectedNode.data?.status.label === 'approved'
 						}
 						isDefaultStorageType={
-							selectedNode.data?.storageType === 'default'
+							selectedNode.data?.storageType === 'default' ?? true
 						}
+						learnResources={objectWebLearnResources}
+						modelBuilder
 						objectDefinitionExternalReferenceCode={
-							selectedNode.data?.externalReferenceCode as string
+							selectedNode.data?.externalReferenceCode ?? ''
 						}
 						objectFieldTypes={[]}
 						objectName={selectedNode.data?.name as string}
-						objectRelationshipId={
-							selectedField?.relationshipId as number
-						}
+						objectRelationshipId={0}
 						readOnly={
-							selectedNode.data
-								?.hasObjectDefinitionUpdateResourcePermission as boolean
+							!selectedNode.data
+								?.hasObjectDefinitionUpdateResourcePermission ??
+							false
 						}
+						readOnlySidebarElements={[]}
 						setValues={setValues}
+						sidebarElements={[]}
 						values={values}
 						workflowStatusJSONArray={workflowStatusJSONArray}
-						wrapper={ClayPanel}
 					/>
 				)}
 			</div>

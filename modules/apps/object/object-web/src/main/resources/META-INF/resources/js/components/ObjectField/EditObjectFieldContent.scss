@@ -1,0 +1,15 @@
+.lfr-objects__edit-object-field {
+	&-card-content {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	&-content-panel {
+		padding: 1rem 0 0 !important;
+	}
+
+	&-model-builder-panel {
+		margin-top: 1rem;
+	}
+}

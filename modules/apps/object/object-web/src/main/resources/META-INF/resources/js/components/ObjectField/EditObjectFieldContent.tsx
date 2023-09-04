@@ -4,13 +4,15 @@
  */
 
 import ClayTabs from '@clayui/tabs';
-import {Card} from '@liferay/object-js-components-web';
-import React, {useState} from 'react';
+import classNames from 'classnames';
+import React, {ElementType, useState} from 'react';
 
 import {EditObjectFieldProps} from './EditObjectField';
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
 import {AdvancedTab} from './Tabs/Advanced/AdvancedTab';
 import {BasicInfoTab} from './Tabs/BasicInfo/BasicInfoTab';
+
+import './EditObjectFieldContent.scss';
 
 interface EditObjectFieldContentProps
 	extends Omit<
@@ -20,8 +22,10 @@ interface EditObjectFieldContentProps
 		| 'forbiddenNames'
 		| 'objectFieldId'
 	> {
+	containerWrapper: ElementType;
 	errors: ObjectFieldErrors;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	modelBuilder?: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
 }
@@ -29,6 +33,7 @@ interface EditObjectFieldContentProps
 const TABS = [Liferay.Language.get('basic-info')];
 
 export function EditObjectFieldContent({
+	containerWrapper,
 	creationLanguageId,
 	errors,
 	filterOperators,
@@ -36,6 +41,7 @@ export function EditObjectFieldContent({
 	isApproved,
 	isDefaultStorageType,
 	learnResources,
+	modelBuilder = false,
 	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
 	objectName,
@@ -75,13 +81,19 @@ export function EditObjectFieldContent({
 					</ClayTabs>
 
 					<ClayTabs.Content activeIndex={activeIndex} fade>
-						<ClayTabs.TabPane>
+						<ClayTabs.TabPane
+							className={classNames({
+								'lfr-objects__edit-object-field-content-panel': modelBuilder,
+							})}
+						>
 							<BasicInfoTab
+								containerWrapper={containerWrapper}
 								errors={errors}
 								filterOperators={filterOperators}
 								handleChange={handleChange}
 								isApproved={isApproved}
 								isDefaultStorageType={isDefaultStorageType}
+								modelBuilder={modelBuilder}
 								objectDefinitionExternalReferenceCode={
 									objectDefinitionExternalReferenceCode
 								}
@@ -94,16 +106,21 @@ export function EditObjectFieldContent({
 								workflowStatusJSONArray={
 									workflowStatusJSONArray
 								}
-								wrapper={Card}
 							/>
 						</ClayTabs.TabPane>
 
-						<ClayTabs.TabPane>
+						<ClayTabs.TabPane
+							className={classNames({
+								'lfr-objects__edit-object-field-content-panel': modelBuilder,
+							})}
+						>
 							<AdvancedTab
+								containerWrapper={containerWrapper}
 								creationLanguageId={creationLanguageId}
 								errors={errors}
 								isDefaultStorageType={isDefaultStorageType}
 								learnResources={learnResources}
+								modelBuilder={modelBuilder}
 								readOnlySidebarElements={
 									readOnlySidebarElements
 								}
@@ -116,11 +133,13 @@ export function EditObjectFieldContent({
 				</>
 			) : (
 				<BasicInfoTab
+					containerWrapper={containerWrapper}
 					errors={errors}
 					filterOperators={filterOperators}
 					handleChange={handleChange}
 					isApproved={isApproved}
 					isDefaultStorageType={isDefaultStorageType}
+					modelBuilder={modelBuilder}
 					objectDefinitionExternalReferenceCode={
 						objectDefinitionExternalReferenceCode
 					}
@@ -131,7 +150,6 @@ export function EditObjectFieldContent({
 					setValues={setValues}
 					values={values}
 					workflowStatusJSONArray={workflowStatusJSONArray}
-					wrapper={Card}
 				/>
 			)}
 		</>

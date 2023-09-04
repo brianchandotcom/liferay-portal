@@ -410,6 +410,70 @@ interface ObjectValidation {
 	system?: boolean;
 }
 
+interface ObjectFieldNode extends Partial<ObjectField> {
+	primaryKey: boolean;
+	required: boolean;
+	selected: boolean;
+}
+
+interface ObjectDefinitionNodeData
+	extends Omit<ObjectDefinition, 'objectFields'> {
+	hasObjectDefinitionDeleteResourcePermission: boolean;
+	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
+	hasObjectDefinitionUpdateResourcePermission: boolean;
+	hasObjectDefinitionViewResourcePermission: boolean;
+	hasSelfRelationships: boolean;
+	linked: boolean;
+	nodeSelected: boolean;
+	objectFields: ObjectFieldNode[];
+}
+
+type ObjectWebLearnResources = {
+	'object-web': {
+		general: {
+			[key: string]: {
+				message: string;
+				url: string;
+			};
+		};
+	};
+};
+
+interface PickListItem {
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	name: string;
+	name_i18n: LocalizedValue<string>;
+}
+
+interface PickList {
+	actions: Actions;
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	listTypeEntries: PickListItem[];
+	name: string;
+	name_i18n: LocalizedValue<string>;
+}
+
+type NotificationTemplate = {
+	attachmentObjectFieldIds: string[] | number[];
+	bcc: string;
+	body: LocalizedValue<string>;
+	cc: string;
+	description: string;
+	externalReferenceCode: string;
+	from: string;
+	fromName: LocalizedValue<string>;
+	id: number;
+	name: string;
+	objectDefinitionId: number | null;
+	subject: LocalizedValue<string>;
+	to: LocalizedValue<string>;
+	type: 'email' | 'userNotification';
+};
+
 type ObjectValidationType = {
 	label: string;
 	name: string;

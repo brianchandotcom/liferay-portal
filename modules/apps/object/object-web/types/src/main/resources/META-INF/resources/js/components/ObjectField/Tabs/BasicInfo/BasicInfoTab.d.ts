@@ -20,11 +20,13 @@ export interface AggregationFilters {
 	valueList?: LabelValueObject[];
 }
 interface BasicInfoTabProps {
+	containerWrapper: ElementType;
 	errors: ObjectFieldErrors;
 	filterOperators: TFilterOperators;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	isApproved: boolean;
 	isDefaultStorageType: boolean;
+	modelBuilder?: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
@@ -33,14 +35,15 @@ interface BasicInfoTabProps {
 	setValues: (values: Partial<ObjectField>) => void;
 	values: Partial<ObjectField>;
 	workflowStatusJSONArray: LabelValueObject[];
-	wrapper: ElementType;
 }
 export declare function BasicInfoTab({
+	containerWrapper: ContainerWrapper,
 	errors,
 	filterOperators,
 	handleChange,
 	isApproved,
 	isDefaultStorageType,
+	modelBuilder,
 	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
 	objectName,
@@ -49,6 +52,5 @@ export declare function BasicInfoTab({
 	setValues,
 	values,
 	workflowStatusJSONArray,
-	wrapper: Wrapper,
 }: BasicInfoTabProps): JSX.Element;
 export {};

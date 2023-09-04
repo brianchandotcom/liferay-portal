@@ -6,11 +6,13 @@
 import React from 'react';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 import {AggregationFilters} from './BasicInfoTab';
+import '../../EditObjectFieldContent.scss';
 interface BasicInfoContainerProps {
 	creationLanguageId2?: Liferay.Language.Locale;
 	errors: ObjectFieldErrors;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	isApproved: boolean;
+	modelBuilder?: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
@@ -26,6 +28,7 @@ export declare function BasicInfoContainer({
 	errors,
 	handleChange,
 	isApproved,
+	modelBuilder,
 	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
 	objectName,

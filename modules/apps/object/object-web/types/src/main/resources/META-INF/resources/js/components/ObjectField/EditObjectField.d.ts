@@ -15,7 +15,7 @@ export interface EditObjectFieldProps {
 	forbiddenNames: string[];
 	isApproved: boolean;
 	isDefaultStorageType: boolean;
-	learnResources: object;
+	learnResources: ObjectWebLearnResources;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldId: number;
 	objectFieldTypes: ObjectFieldType[];

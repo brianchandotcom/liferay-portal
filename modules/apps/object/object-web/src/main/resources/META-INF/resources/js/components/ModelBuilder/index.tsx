@@ -15,9 +15,13 @@ interface CustomObjectFolderWrapperProps {
 	companyKeyValuePairs: KeyValuePair[];
 	editObjectDefinitionURL: string;
 	filterOperators: TFilterOperators;
+	forbiddenChars: string[];
+	forbiddenLastChars: string[];
+	forbiddenNames: string[];
 	objectDefinitionPermissionsURL: string;
 	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectRelationshipDeletionTypes: LabelValueObject[];
+	objectWebLearnResources: ObjectWebLearnResources;
 	siteKeyValuePairs: KeyValuePair[];
 	workflowStatusJSONArray: LabelValueObject[];
 }
@@ -27,9 +31,13 @@ export default function CustomObjectFolderWrapper({
 	companyKeyValuePairs,
 	editObjectDefinitionURL,
 	filterOperators,
+	forbiddenChars,
+	forbiddenLastChars,
+	forbiddenNames,
 	objectDefinitionPermissionsURL,
 	objectDefinitionsStorageTypes,
 	objectRelationshipDeletionTypes,
+	objectWebLearnResources,
 	siteKeyValuePairs,
 	workflowStatusJSONArray
 }: CustomObjectFolderWrapperProps) {
@@ -40,8 +48,12 @@ export default function CustomObjectFolderWrapper({
 					baseResourceURL,
 					editObjectDefinitionURL,
 					filterOperators,
+					forbiddenChars,
+					forbiddenLastChars,
+					forbiddenNames,
 					objectDefinitionPermissionsURL,
 					objectDefinitionsStorageTypes,
+					objectWebLearnResources,
 					workflowStatusJSONArray,
 				}}
 			>

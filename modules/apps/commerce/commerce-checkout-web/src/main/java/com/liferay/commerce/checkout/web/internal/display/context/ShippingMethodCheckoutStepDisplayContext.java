@@ -24,8 +24,8 @@ import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedO
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.BigDecimalUtil;

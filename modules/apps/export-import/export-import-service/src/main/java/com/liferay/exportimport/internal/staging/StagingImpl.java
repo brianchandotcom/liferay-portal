@@ -54,6 +54,7 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHel
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.exception.LayoutPrototypeException;
@@ -91,7 +92,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.model.adapter.StagedTheme;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.scheduler.CronTextUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;

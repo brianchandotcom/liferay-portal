@@ -17,7 +17,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;

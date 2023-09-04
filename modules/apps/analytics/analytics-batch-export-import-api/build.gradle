@@ -5,6 +5,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly project(":apps:analytics:analytics-message-storage-api")
 	compileOnly project(":apps:analytics:analytics-settings-api")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 }

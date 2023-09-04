@@ -9,9 +9,9 @@ import com.liferay.commerce.product.configuration.CPFriendlyURLConfiguration;
 import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 
 import org.osgi.service.component.annotations.Component;

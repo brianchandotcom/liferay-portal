@@ -48,11 +48,11 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.converter.SkuDTOC
 import com.liferay.headless.commerce.delivery.catalog.internal.util.v1_0.SkuOptionUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;

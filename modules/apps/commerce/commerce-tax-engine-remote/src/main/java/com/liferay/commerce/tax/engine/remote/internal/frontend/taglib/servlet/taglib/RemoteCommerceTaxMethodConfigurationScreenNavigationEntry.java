@@ -11,10 +11,10 @@ import com.liferay.commerce.tax.engine.remote.internal.constants.RemoteCommerceT
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

@@ -9,9 +9,9 @@ import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalServic
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;

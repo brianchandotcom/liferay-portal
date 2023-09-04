@@ -8,7 +8,6 @@ package com.liferay.portal.configuration.module.configuration;
 import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 

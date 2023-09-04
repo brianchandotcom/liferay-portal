@@ -12,6 +12,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-form-navigator")
 	compileOnly project(":apps:login:login-web-api")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal-settings:portal-settings-api")
 	compileOnly project(":apps:portal:portal-encryptor")
 	compileOnly project(":apps:static:osgi:osgi-util")

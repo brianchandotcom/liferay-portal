@@ -20,8 +20,8 @@ import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.fedex.internal.helper.FedExCommerceShippingOptionHelper;
 import com.liferay.commerce.shipping.origin.locator.CommerceShippingOriginLocator;
 import com.liferay.commerce.util.CommerceShippingHelper;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Collections;

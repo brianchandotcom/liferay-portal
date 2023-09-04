@@ -12,7 +12,7 @@ import com.liferay.digital.signature.model.DSDocument;
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.digital.signature.model.DSRecipient;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsUtil;

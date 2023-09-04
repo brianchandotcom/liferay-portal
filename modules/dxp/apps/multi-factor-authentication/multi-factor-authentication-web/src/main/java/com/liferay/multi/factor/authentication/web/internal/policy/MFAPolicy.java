@@ -12,9 +12,9 @@ import com.liferay.multi.factor.authentication.web.internal.system.configuration
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collections;

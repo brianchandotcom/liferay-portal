@@ -10,10 +10,10 @@ import com.liferay.account.validator.AccountEntryEmailAddressValidator;
 import com.liferay.account.validator.AccountEntryEmailAddressValidatorFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
 import com.liferay.portal.kernel.util.StringUtil;
 

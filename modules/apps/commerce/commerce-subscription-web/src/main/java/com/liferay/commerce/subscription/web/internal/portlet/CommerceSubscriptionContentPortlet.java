@@ -11,7 +11,7 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceSubscriptionEntryService;
 import com.liferay.commerce.subscription.web.internal.display.context.CommerceSubscriptionContentDisplayContext;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;

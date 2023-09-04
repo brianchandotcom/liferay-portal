@@ -8,8 +8,8 @@ package com.liferay.ai.creator.openai.internal.configuration.manager;
 import com.liferay.ai.creator.openai.configuration.AICreatorOpenAICompanyConfiguration;
 import com.liferay.ai.creator.openai.configuration.AICreatorOpenAIGroupConfiguration;
 import com.liferay.ai.creator.openai.configuration.manager.AICreatorOpenAIConfigurationManager;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Validator;
 

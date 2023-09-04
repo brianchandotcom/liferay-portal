@@ -9,11 +9,11 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.internal.configuration.AccountEntryGroupConfiguration;
 import com.liferay.account.settings.AccountEntryGroupSettings;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import org.osgi.service.component.annotations.Component;

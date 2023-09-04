@@ -18,7 +18,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.test.util.BaseObjectEntryManagerImplTestCase;
 import com.liferay.object.storage.salesforce.configuration.SalesforceConfiguration;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;

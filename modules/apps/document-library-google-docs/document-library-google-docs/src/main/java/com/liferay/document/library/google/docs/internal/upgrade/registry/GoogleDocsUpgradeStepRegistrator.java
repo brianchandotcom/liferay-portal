@@ -10,7 +10,7 @@ import com.liferay.document.library.google.docs.internal.upgrade.v1_0_0.PortletP
 import com.liferay.document.library.google.docs.internal.upgrade.v2_0_0.DLFileEntryTypeUpgradeProcess;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

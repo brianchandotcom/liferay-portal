@@ -12,6 +12,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal-security:portal-security-permission-api")
 	compileOnly project(":apps:portal:portal-aop-api")
 	compileOnly project(":apps:portal:portal-dao-orm-custom-sql-api")

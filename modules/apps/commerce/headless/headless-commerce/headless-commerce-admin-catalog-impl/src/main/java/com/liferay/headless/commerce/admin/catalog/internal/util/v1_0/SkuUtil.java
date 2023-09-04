@@ -25,13 +25,13 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuSubscriptionConfi
 import com.liferay.headless.commerce.admin.catalog.internal.util.DateConfigUtil;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;

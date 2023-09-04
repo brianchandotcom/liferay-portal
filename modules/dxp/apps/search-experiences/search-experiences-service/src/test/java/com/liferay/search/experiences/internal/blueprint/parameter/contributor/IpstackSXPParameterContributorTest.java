@@ -5,8 +5,8 @@
 
 package com.liferay.search.experiences.internal.blueprint.parameter.contributor;
 
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;

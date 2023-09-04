@@ -7,9 +7,9 @@ package com.liferay.click.to.chat.web.internal.portal.settings.configuration.adm
 
 import com.liferay.click.to.chat.web.internal.configuration.ClickToChatConfiguration;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 

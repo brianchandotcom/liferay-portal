@@ -6,8 +6,8 @@
 package com.liferay.portal.search.elasticsearch7.internal.deep.pagination.configuration;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.search.elasticsearch7.configuration.DeepPaginationConfiguration;
 
 import org.osgi.service.component.annotations.Component;

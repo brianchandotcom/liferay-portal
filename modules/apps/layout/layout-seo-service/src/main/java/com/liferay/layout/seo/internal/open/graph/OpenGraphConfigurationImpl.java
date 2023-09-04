@@ -10,10 +10,10 @@ import com.liferay.layout.seo.internal.configuration.LayoutSEOGroupConfiguration
 import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.open.graph.OpenGraphConfiguration;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import org.osgi.service.component.annotations.Component;

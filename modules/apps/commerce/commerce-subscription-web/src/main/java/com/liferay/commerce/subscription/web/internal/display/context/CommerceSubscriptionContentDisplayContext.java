@@ -20,11 +20,11 @@ import com.liferay.commerce.subscription.web.internal.display.context.helper.Com
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.commerce.util.comparator.CommerceSubscriptionEntryCreateDateComparator;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;

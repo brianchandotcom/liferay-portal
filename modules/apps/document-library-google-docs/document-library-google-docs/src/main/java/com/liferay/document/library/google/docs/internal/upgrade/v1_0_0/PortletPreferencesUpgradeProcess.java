@@ -7,7 +7,7 @@ package com.liferay.document.library.google.docs.internal.upgrade.v1_0_0;
 
 import com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;

@@ -23,7 +23,7 @@ import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.info.item.renderer.InfoItemRendererRegistry;
 import com.liferay.osgi.util.service.Snapshot;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import javax.servlet.ServletContext;

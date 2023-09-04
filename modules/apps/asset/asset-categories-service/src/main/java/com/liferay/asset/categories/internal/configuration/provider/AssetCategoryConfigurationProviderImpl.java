@@ -7,8 +7,8 @@ package com.liferay.asset.categories.internal.configuration.provider;
 
 import com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration;
 import com.liferay.asset.kernel.configuration.provider.AssetCategoryConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

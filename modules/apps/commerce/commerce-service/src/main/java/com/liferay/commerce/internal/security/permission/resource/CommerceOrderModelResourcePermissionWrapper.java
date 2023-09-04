@@ -10,7 +10,7 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.resource.BaseModelResourcePermissionWrapper;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;

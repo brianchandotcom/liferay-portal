@@ -12,7 +12,7 @@ import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.notification.type.NotificationType;
 import com.liferay.notification.type.NotificationTypeServiceTracker;
 import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerConfiguration;

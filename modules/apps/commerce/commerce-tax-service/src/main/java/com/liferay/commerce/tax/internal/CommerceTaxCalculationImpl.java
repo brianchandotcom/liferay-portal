@@ -24,10 +24,10 @@ import com.liferay.commerce.tax.configuration.CommerceShippingTaxConfiguration;
 import com.liferay.commerce.tax.model.CommerceTaxMethod;
 import com.liferay.commerce.tax.service.CommerceTaxMethodLocalService;
 import com.liferay.commerce.util.CommerceTaxEngineRegistry;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 
 import java.math.BigDecimal;

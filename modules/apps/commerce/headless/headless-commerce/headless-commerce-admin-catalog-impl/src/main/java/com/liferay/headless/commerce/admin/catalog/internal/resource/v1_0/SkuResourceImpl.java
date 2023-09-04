@@ -34,8 +34,8 @@ import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SkuVirtual
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTAware;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;

@@ -7,9 +7,9 @@ package com.liferay.message.boards.moderation.internal.kaleo.runtime.condition;
 
 import com.liferay.message.boards.moderation.configuration.MBModerationGroupConfiguration;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;

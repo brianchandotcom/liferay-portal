@@ -8,7 +8,7 @@ package com.liferay.accessibility.menu.web.internal.servlet.taglib;
 import com.liferay.accessibility.menu.web.internal.constants.AccessibilityMenuPortletKeys;
 import com.liferay.accessibility.menu.web.internal.util.AccessibilitySettingsUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.taglib.portletext.RuntimeTag;

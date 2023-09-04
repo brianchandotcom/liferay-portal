@@ -7,10 +7,10 @@ package com.liferay.commerce.punchout.portal.security.auto.login;
 
 import com.liferay.commerce.punchout.portal.security.auto.login.internal.constants.PunchOutAutoLoginConstants;
 import com.liferay.commerce.punchout.portal.security.auto.login.internal.module.configuration.PunchOutAccessTokenAutoLoginConfiguration;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;

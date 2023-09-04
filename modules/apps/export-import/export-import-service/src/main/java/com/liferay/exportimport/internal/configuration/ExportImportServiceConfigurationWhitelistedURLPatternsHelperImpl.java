@@ -10,10 +10,10 @@ import com.liferay.exportimport.configuration.ExportImportServiceConfigurationWh
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.url.pattern.mapper.URLPatternMapper;
 import com.liferay.petra.url.pattern.mapper.URLPatternMapperFactory;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.ArrayUtil;

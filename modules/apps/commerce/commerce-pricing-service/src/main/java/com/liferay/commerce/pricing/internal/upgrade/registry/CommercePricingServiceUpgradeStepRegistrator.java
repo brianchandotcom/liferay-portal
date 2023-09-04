@@ -7,7 +7,7 @@ package com.liferay.commerce.pricing.internal.upgrade.registry;
 
 import com.liferay.commerce.pricing.internal.upgrade.v2_0_1.CommercePriceModifierUpgradeProcess;
 import com.liferay.commerce.pricing.internal.upgrade.v2_1_0.CommercePricingConfigurationUpgradeProcess;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;

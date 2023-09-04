@@ -10,8 +10,8 @@ import com.liferay.exportimport.internal.upgrade.v1_0_1.SystemEventsUpgradeProce
 import com.liferay.exportimport.internal.upgrade.v1_0_1.UpgradeBackgroundTaskExecutorClassNames;
 import com.liferay.exportimport.internal.upgrade.v1_0_2.ExportImportServiceConfigurationUpgradeProcess;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.model.Release;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.SystemEventLocalService;

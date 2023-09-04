@@ -7,8 +7,8 @@ package com.liferay.knowledge.base.internal.configuration;
 
 import com.liferay.knowledge.base.configuration.KBServiceConfigurationProvider;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.io.IOException;

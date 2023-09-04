@@ -10,11 +10,11 @@ import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.inventory.method.CommerceInventoryMethod;
 import com.liferay.commerce.inventory.method.CommerceInventoryMethodRegistry;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 

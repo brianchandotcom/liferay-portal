@@ -9,10 +9,10 @@ import com.liferay.document.library.google.docs.internal.util.constants.GoogleDo
 import com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.visibility.controller.DLFileEntryTypeVisibilityController;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;

@@ -1025,9 +1025,10 @@ public class ObjectDefinitionLocalServiceImpl
 				"Object definition " + objectDefinition);
 		}
 
-		if (objectDefinition.isChildNode()) {
+		if (objectDefinition.isRootDescendantNode()) {
 			String errorMessage =
-				"cannot be changed when the object definition is a child node";
+				"cannot be changed when the object definition is a root " +
+					"descendant node";
 
 			if (!Objects.equals(
 					objectDefinition.getAccountEntryRestrictedObjectFieldId(),

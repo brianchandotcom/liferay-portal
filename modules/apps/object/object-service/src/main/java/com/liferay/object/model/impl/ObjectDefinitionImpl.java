@@ -144,19 +144,6 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	}
 
 	@Override
-	public boolean isChildNode() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
-			return false;
-		}
-
-		if ((getRootObjectDefinitionId() > 0) && !isRootNode()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isDefaultStorageType() {
 		if (Objects.equals(
 				getStorageType(),
@@ -174,6 +161,19 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean isRootDescendantNode() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+			return false;
+		}
+
+		if ((getRootObjectDefinitionId() > 0) && !isRootNode()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

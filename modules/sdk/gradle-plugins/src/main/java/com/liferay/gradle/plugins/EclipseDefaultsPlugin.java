@@ -221,6 +221,8 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 			configurationContainer.getByName(
 				JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
 
+		compileOnlyConfiguration.setCanBeResolved(true);
+
 		// Other
 
 		EclipseClasspath eclipseClasspath =

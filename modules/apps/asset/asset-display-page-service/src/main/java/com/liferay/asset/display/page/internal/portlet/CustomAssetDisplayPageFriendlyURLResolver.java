@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 
 import java.util.Map;
 
@@ -46,18 +45,19 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 			return null;
 		}
 
-		Tuple tuple = _getPathParts(friendlyURL);
+		String[] parts = _getPathParts(friendlyURL);
 
-		String itemReference = (String)tuple.getObject(1);
-
-		long[] split = StringUtil.split(itemReference, StringPool.SLASH, 0L);
+		if (parts.length < 4) {
+			return null;
+		}
 
 		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			new ClassPKInfoItemIdentifier(split[1]);
+			new ClassPKInfoItemIdentifier(GetterUtil.getLong(parts[3]));
 
 		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 			new InfoItemReference(
-				_portal.getClassName(split[0]), classPKInfoItemIdentifier));
+				_portal.getClassName(GetterUtil.getLong(parts[2])),
+				classPKInfoItemIdentifier));
 	}
 
 	@Override
@@ -70,10 +70,14 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 			return null;
 		}
 
-		Tuple tuple = _getPathParts(friendlyURL);
+		String[] parts = _getPathParts(friendlyURL);
+
+		if (parts.length < 4) {
+			return null;
+		}
 
 		return layoutLocalService.fetchLayoutByFriendlyURL(
-			groupId, false, (String)tuple.getObject(0));
+			groupId, false, parts[1]);
 	}
 
 	@Override
@@ -84,15 +88,15 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 			return null;
 		}
 
-		Tuple tuple = _getPathParts(friendlyURL);
+		String[] parts = _getPathParts(friendlyURL);
 
-		String itemReference = (String)tuple.getObject(1);
-
-		String[] split = StringUtil.split(itemReference, StringPool.SLASH);
+		if (parts.length < 4) {
+			return null;
+		}
 
 		return layoutDisplayPageProviderRegistry.
 			getLayoutDisplayPageProviderByClassName(
-				_portal.getClassName(GetterUtil.getLong(split[0])));
+				_portal.getClassName(GetterUtil.getLong(parts[2])));
 	}
 
 	@Override
@@ -100,21 +104,13 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 		return false;
 	}
 
-	private Tuple _getPathParts(String path) {
+	private String[] _getPathParts(String path) {
 		String urlSeparator = getURLSeparator();
 
 		String urlInfo = path.substring(
 			path.indexOf(urlSeparator) + urlSeparator.length() - 1);
 
-		String friendlyURL = urlInfo.substring(
-			0,
-			urlInfo.lastIndexOf(
-				StringPool.SLASH, urlInfo.lastIndexOf(StringPool.SLASH) - 1));
-
-		String itemReference = urlInfo.substring(
-			friendlyURL.indexOf(StringPool.SLASH) + friendlyURL.length() + 1);
-
-		return new Tuple(friendlyURL, itemReference);
+		return StringUtil.split(urlInfo, StringPool.SLASH);
 	}
 
 	@Reference

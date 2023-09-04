@@ -134,6 +134,13 @@ public class CPInstanceUnitOfMeasureLocalServiceImpl
 			companyId, key, sku, null);
 	}
 
+	public CPInstanceUnitOfMeasure fetchPrimaryCPInstanceUnitOfMeasure(
+		long cpInstanceId) {
+
+		return cpInstanceUnitOfMeasurePersistence.fetchByC_P_First(
+			cpInstanceId, true, null);
+	}
+
 	@Override
 	public List<CPInstanceUnitOfMeasure> getActiveCPInstanceUnitOfMeasures(
 		long cpInstanceId) {

@@ -821,16 +821,16 @@ definition {
 
 		task ("When navigation to process builder page") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
-				domain = "tango.com",
-				portalInstanceId = "tango.com",
-				virtualHost = "tango.com");
+				domain = "liferay.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
 
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 			User.firstLoginPG(
 				password = "test",
 				userEmailAddress = "test@www.able.com",
-				virtualHostsURL = "http://tango.com:8080");
+				virtualHostsURL = "http://www.able.com:8080");
 
 			ApplicationsMenu.gotoPortlet(
 				category = "Workflow",
@@ -866,7 +866,7 @@ definition {
 
 		task ("When creating a workflow in a virtual instance") {
 			HeadlessPortalInstanceAPI.addPortalInstance(
-				domain = "www.able.com",
+				domain = "liferay.com",
 				portalInstanceId = "www.able.com",
 				virtualHost = "www.able.com");
 

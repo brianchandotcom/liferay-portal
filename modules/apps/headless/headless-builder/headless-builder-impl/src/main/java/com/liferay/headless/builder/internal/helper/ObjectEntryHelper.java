@@ -5,7 +5,10 @@
 
 package com.liferay.headless.builder.internal.helper;
 
+import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.filter.parser.ObjectDefinitionFilterParser;
@@ -13,8 +16,10 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
@@ -222,6 +227,21 @@ public class ObjectEntryHelper {
 			objectRelationshipNames);
 	}
 
+	public List<String> getUniqueObjectFieldNames(
+			long companyId, String objectDefinitionExternalReferenceCode)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode, companyId);
+
+		return TransformUtil.transform(
+			_objectFieldLocalService.getObjectFields(
+				objectDefinition.getObjectDefinitionId()),
+			objectField -> _getUniqueFieldName(objectField));
+	}
+
 	public boolean isValidObjectEntry(
 			long objectEntryId, String externalReferenceCode)
 		throws Exception {
@@ -292,6 +312,19 @@ public class ObjectEntryHelper {
 		return relatedObjectDefinition;
 	}
 
+	private String _getUniqueFieldName(ObjectField objectField) {
+		if (Objects.equals(
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
+					objectField),
+				"true")) {
+
+			return objectField.getName();
+		}
+
+		return null;
+	}
+
 	private <T> T _withNestedFields(
 			List<String> nestedFields,
 			UnsafeSupplier<T, Exception> unsafeSupplier)
@@ -324,6 +357,9 @@ public class ObjectEntryHelper {
 
 	@Reference(target = "(object.entry.manager.storage.type=default)")
 	private ObjectEntryManager _objectEntryManager;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

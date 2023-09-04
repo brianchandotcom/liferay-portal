@@ -17,6 +17,7 @@ import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,9 +25,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -105,6 +108,8 @@ public class BatchEngineBundleTracker {
 	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
+	private final Map<Bundle, Set<Long>> _processedCompaniesMap =
+		new HashMap<>();
 	private final Map
 		<Bundle, ServiceRegistration<PortalInstanceLifecycleListener>>
 			_serviceRegistrations = new HashMap<>();
@@ -167,12 +172,34 @@ public class BatchEngineBundleTracker {
 
 						@Override
 						public void portalInstanceRegistered(Company company) {
+							Set<Long> companyIds =
+								_processedCompaniesMap.computeIfAbsent(
+									bundle, bundle -> new HashSet<>());
+
+							if (companyIds.contains(company.getCompanyId())) {
+								return;
+							}
+
+							companyIds.add(company.getCompanyId());
+
 							_batchEngineUnitProcessor.processBatchEngineUnits(
 								TransformUtil.transform(
 									multiCompanyBatchEngineUnits,
 									batchEngineUnit ->
 										new CompanyBatchEngineUnitWrapper(
 											batchEngineUnit, company)));
+						}
+
+						@Override
+						public void portalInstanceUnregistered(
+							Company company) {
+
+							Set<Long> companyIds = _processedCompaniesMap.get(
+								bundle);
+
+							if (SetUtil.isNotEmpty(companyIds)) {
+								companyIds.remove(company.getCompanyId());
+							}
 						}
 
 					},
@@ -196,6 +223,8 @@ public class BatchEngineBundleTracker {
 			if (serviceRegistration != null) {
 				serviceRegistration.unregister();
 			}
+
+			_processedCompaniesMap.remove(bundle);
 		}
 
 	}

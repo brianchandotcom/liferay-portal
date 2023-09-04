@@ -96,6 +96,7 @@ function getDataSetProps(
 				modalType: 'edit',
 				name_i18n: itemData.name_i18n,
 				readOnly,
+				system: values.system,
 			});
 		}
 
@@ -134,7 +135,7 @@ function getDataSetProps(
 		type: 'item',
 	};
 
-	const addItemMenu = readOnly ? [] : [addButton];
+	const addItemMenu = readOnly || values?.system ? [] : [addButton];
 
 	return {
 		actionParameterName: '',

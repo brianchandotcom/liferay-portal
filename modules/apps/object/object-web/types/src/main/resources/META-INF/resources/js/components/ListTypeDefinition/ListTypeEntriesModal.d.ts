@@ -14,6 +14,7 @@ export interface IModalState extends Partial<PickListItem> {
 	pickListId?: number;
 	readOnly?: boolean;
 	reloadIframeWindow?: () => void;
+	system?: boolean;
 }
 declare function ListTypeEntriesModal(): JSX.Element | null;
 export default ListTypeEntriesModal;

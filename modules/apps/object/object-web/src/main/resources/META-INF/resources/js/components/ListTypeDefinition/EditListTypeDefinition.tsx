@@ -85,6 +85,7 @@ export default function EditListTypeDefinition({
 
 						<Input
 							autoComplete="off"
+							disabled={values?.system}
 							error={errors.externalReferenceCode}
 							feedbackMessage={Liferay.Language.get(
 								'unique-key-for-referencing-the-picklist-definition'

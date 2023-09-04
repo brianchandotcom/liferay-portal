@@ -359,6 +359,7 @@ interface PickList {
 	listTypeEntries: PickListItem[];
 	name: string;
 	name_i18n: LocalizedValue<string>;
+	system: boolean;
 }
 
 type NotificationTemplate = {

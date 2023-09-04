@@ -46,7 +46,9 @@ public class CPInstanceUnitOfMeasureScreenNavigationEntry
 
 	@Override
 	public boolean isVisible(User user, CPInstance cpInstance) {
-		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-11287")) {
+		if ((cpInstance != null) &&
+			FeatureFlagManagerUtil.isEnabled("COMMERCE-11287")) {
+
 			return true;
 		}
 

@@ -19,6 +19,9 @@ public class CPInstanceScreenNavigationConstants {
 	public static final String CATEGORY_KEY_SUBSCRIPTION_OVERRIDE =
 		"subscription-override";
 
+	public static final String CATEGORY_KEY_UNITS_OF_MEASURE =
+		"units-of-measure";
+
 	public static final String SCREEN_NAVIGATION_KEY_CP_INSTANCE_GENERAL =
 		"cp.instance.general";
 

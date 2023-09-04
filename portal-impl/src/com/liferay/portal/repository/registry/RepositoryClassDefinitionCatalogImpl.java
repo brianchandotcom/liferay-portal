@@ -7,6 +7,7 @@ package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
@@ -20,10 +21,11 @@ import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -64,28 +66,37 @@ public class RepositoryClassDefinitionCatalogImpl
 	public Iterable<RepositoryClassDefinition>
 		getExternalRepositoryClassDefinitions(long companyId) {
 
+		Collection<RepositoryClassDefinition>
+			systemExternalRepositoryClassDefinitions =
+				_getSystemExternalRepositoryData(Map::values);
+
 		Map<String, RepositoryClassDefinition>
 			companyRepositoryClassDefinitions =
 				_externalRepositoryClassDefinitions.get(companyId);
 
-		if (companyRepositoryClassDefinitions == null) {
-			return Collections.emptyList();
+		if (companyRepositoryClassDefinitions != null) {
+			systemExternalRepositoryClassDefinitions.addAll(
+				companyRepositoryClassDefinitions.values());
 		}
 
-		return companyRepositoryClassDefinitions.values();
+		return systemExternalRepositoryClassDefinitions;
 	}
 
 	@Override
 	public Collection<String> getExternalRepositoryClassNames(long companyId) {
+		Collection<String> systemExternalRepositoryClassNames =
+			_getSystemExternalRepositoryData(Map::keySet);
+
 		Map<String, RepositoryClassDefinition>
 			companyRepositoryClassDefinitions =
 				_externalRepositoryClassDefinitions.get(companyId);
 
-		if (companyRepositoryClassDefinitions == null) {
-			return Collections.emptyList();
+		if (companyRepositoryClassDefinitions != null) {
+			systemExternalRepositoryClassNames.addAll(
+				companyRepositoryClassDefinitions.keySet());
 		}
 
-		return companyRepositoryClassDefinitions.keySet();
+		return systemExternalRepositoryClassNames;
 	}
 
 	@Override
@@ -104,10 +115,17 @@ public class RepositoryClassDefinitionCatalogImpl
 				companyId);
 
 		if (companyRepositoryClassDefinitions == null) {
-			return null;
+			return _getSystemRepositoryClassDefinition(className);
 		}
 
-		return companyRepositoryClassDefinitions.get(className);
+		RepositoryClassDefinition repositoryClassDefinition =
+			companyRepositoryClassDefinitions.get(className);
+
+		if (repositoryClassDefinition == null) {
+			return _getSystemRepositoryClassDefinition(className);
+		}
+
+		return repositoryClassDefinition;
 	}
 
 	@Override
@@ -173,6 +191,37 @@ public class RepositoryClassDefinitionCatalogImpl
 		_externalRepositoryClassDefinitions.remove(className);
 
 		_repositoryClassDefinitions.remove(className);
+	}
+
+	private <T> Collection<T> _getSystemExternalRepositoryData(
+		Function<Map<String, RepositoryClassDefinition>, Collection<T>>
+			function) {
+
+		Map<String, RepositoryClassDefinition>
+			systemRepositoryClassDefinitions =
+				_externalRepositoryClassDefinitions.get(
+					CompanyConstants.SYSTEM);
+
+		if (systemRepositoryClassDefinitions == null) {
+			return new ArrayList<>();
+		}
+
+		return new ArrayList<>(
+			function.apply(systemRepositoryClassDefinitions));
+	}
+
+	private RepositoryClassDefinition _getSystemRepositoryClassDefinition(
+		String className) {
+
+		Map<String, RepositoryClassDefinition>
+			systemRepositoryClassDefinitions = _repositoryClassDefinitions.get(
+				CompanyConstants.SYSTEM);
+
+		if (systemRepositoryClassDefinitions == null) {
+			return null;
+		}
+
+		return systemRepositoryClassDefinitions.get(className);
 	}
 
 	private final BundleContext _bundleContext =

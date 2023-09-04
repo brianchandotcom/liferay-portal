@@ -5,12 +5,12 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/layout_templates_list/init.jsp" %>
 
 <%
-String layoutTemplateId = (String)request.getAttribute("liferay-ui:layout-templates-list:layoutTemplateId");
-String layoutTemplateIdPrefix = (String)request.getAttribute("liferay-ui:layout-templates-list:layoutTemplateIdPrefix");
-List<LayoutTemplate> layoutTemplates = (List<LayoutTemplate>)request.getAttribute("liferay-ui:layout-templates-list:layoutTemplates");
+String layoutTemplateId = (String)request.getAttribute("liferay-layout:layout-templates-list:layoutTemplateId");
+String layoutTemplateIdPrefix = (String)request.getAttribute("liferay-layout:layout-templates-list:layoutTemplateIdPrefix");
+List<LayoutTemplate> layoutTemplates = (List<LayoutTemplate>)request.getAttribute("liferay-layout:layout-templates-list:layoutTemplates");
 %>
 
 <div class="container-fluid <portlet:namespace />layout-template-list lfr-page-layouts">
@@ -63,25 +63,32 @@ List<LayoutTemplate> layoutTemplates = (List<LayoutTemplate>)request.getAttribut
 <aui:script require="frontend-js-web/index as frontendJsWeb">
 	const {delegate} = frontendJsWeb;
 
-	const delegateHandler = delegate(document.querySelector('.<portlet:namespace />layout-template-list.lfr-page-layouts'), 'click', '.lfr-layout-template', (event) => {
-		const layoutTemplateInput = event.delegateTarget.querySelector('input');
+	const delegateHandler = delegate(
+		document.querySelector(
+			'.<portlet:namespace />layout-template-list.lfr-page-layouts'
+		),
+		'click',
+		'.lfr-layout-template',
+		(event) => {
+			const layoutTemplateInput = event.delegateTarget.querySelector('input');
 
-		if (layoutTemplateInput) {
-			layoutTemplateInput.checked = true;
+			if (layoutTemplateInput) {
+				layoutTemplateInput.checked = true;
+			}
+
+			const currentActiveCard = event.currentTarget.querySelector('.active');
+
+			if (currentActiveCard) {
+				currentActiveCard.classList.remove('active');
+			}
+
+			const card = event.delegateTarget.querySelector('.card');
+
+			if (card) {
+				card.classList.add('active');
+			}
 		}
-
-		const currentActiveCard = event.currentTarget.querySelector('.active');
-
-		if (currentActiveCard) {
-			currentActiveCard.classList.remove('active');
-		}
-
-		const card = event.delegateTarget.querySelector('.card');
-
-		if (card) {
-			card.classList.add('active');
-		}
-	});
+	);
 
 	const onDestroyPortlet = () => {
 		delegateHandler.dispose();

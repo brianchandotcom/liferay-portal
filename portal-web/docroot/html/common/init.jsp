@@ -126,7 +126,6 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.model.impl.*" %><%@
-page import="com.liferay.portal.plugin.PluginUtil" %><%@
 page import="com.liferay.portal.security.sso.SSOUtil" %><%@
 page import="com.liferay.portal.service.*" %><%@
 page import="com.liferay.portal.struts.Definition" %><%@

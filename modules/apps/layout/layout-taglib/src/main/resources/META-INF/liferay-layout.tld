@@ -52,6 +52,26 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>layout-templates-list</name>
+		<tag-class>com.liferay.layout.taglib.servlet.taglib.LayoutTemplatesListTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>layoutTemplateId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>layoutTemplateIdPrefix</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>layoutTemplates</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates a component that renders a list of fragments.</description>
 		<name>render-fragment-layout</name>
 		<tag-class>com.liferay.layout.taglib.servlet.taglib.RenderFragmentLayoutTag</tag-class>

@@ -35,9 +35,8 @@ import org.osgi.service.component.annotations.Reference;
 public class EndpointHelper {
 
 	public Map<String, Object> getResponseEntityMap(
-			long companyId, APIApplication.Endpoint.PathParameter pathParameter,
-			String pathParameterValue, APIApplication.Schema schema,
-			String scopeKey)
+			long companyId, APIApplication.Schema schema, String pathParameter,
+			String pathParameterValue, String scopeKey)
 		throws Exception {
 
 		Set<String> relationshipsNames = new HashSet<>();
@@ -46,9 +45,7 @@ public class EndpointHelper {
 			relationshipsNames.addAll(property.getObjectRelationshipNames());
 		}
 
-		if (Objects.equals(
-				APIApplication.Endpoint.PathParameter.ID, pathParameter)) {
-
+		if (Objects.equals(pathParameter, "id")) {
 			return _getResponseEntityMap(
 				_objectEntryHelper.getObjectEntry(
 					companyId, ListUtil.fromCollection(relationshipsNames),

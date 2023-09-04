@@ -175,14 +175,14 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 		String layoutUuid = ParamUtil.getString(
 			uploadPortletRequest, "layoutUuid");
 
+		JournalArticle latestArticle = _journalArticleService.fetchArticle(
+			groupId, articleId);
+
 		if ((displayPageType == AssetDisplayPageConstants.TYPE_DEFAULT) ||
 			(displayPageType == AssetDisplayPageConstants.TYPE_SPECIFIC)) {
 
 			Layout targetLayout = _journalHelper.getArticleLayout(
 				layoutUuid, groupId);
-
-			JournalArticle latestArticle = _journalArticleService.fetchArticle(
-				groupId, articleId);
 
 			if ((displayPageType == AssetDisplayPageConstants.TYPE_SPECIFIC) &&
 				(targetLayout == null) && (latestArticle != null) &&
@@ -307,6 +307,12 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 					JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER) {
 
 			smallFile = uploadPortletRequest.getFile("smallFile");
+
+			if (((smallFile == null) || (smallFile.length() == 0)) &&
+				(latestArticle != null)) {
+
+				smallImageId = latestArticle.getSmallImageId();
+			}
 		}
 
 		String articleURL = ParamUtil.getString(

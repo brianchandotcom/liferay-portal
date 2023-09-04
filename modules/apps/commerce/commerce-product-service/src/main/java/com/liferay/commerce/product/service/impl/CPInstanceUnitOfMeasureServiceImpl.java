@@ -87,6 +87,23 @@ public class CPInstanceUnitOfMeasureServiceImpl
 
 	@Override
 	public CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
+			long cpInstanceUnitOfMeasureId)
+		throws PortalException {
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
+				cpInstanceUnitOfMeasureId);
+
+		if (cpInstanceUnitOfMeasure != null) {
+			_checkCommerceCatalog(
+				cpInstanceUnitOfMeasure.getCPInstanceId(), ActionKeys.VIEW);
+		}
+
+		return cpInstanceUnitOfMeasure;
+	}
+
+	@Override
+	public CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
 			long cpInstanceId, String key)
 		throws PortalException {
 
@@ -94,6 +111,17 @@ public class CPInstanceUnitOfMeasureServiceImpl
 
 		return cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
 			cpInstanceId, key);
+	}
+
+	@Override
+	public CPInstanceUnitOfMeasure fetchPrimaryCPInstanceUnitOfMeasure(
+			long cpInstanceId)
+		throws PortalException {
+
+		_checkCommerceCatalog(cpInstanceId, ActionKeys.VIEW);
+
+		return cpInstanceUnitOfMeasureLocalService.
+			fetchPrimaryCPInstanceUnitOfMeasure(cpInstanceId);
 	}
 
 	@Override

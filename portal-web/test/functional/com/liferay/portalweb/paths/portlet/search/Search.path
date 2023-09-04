@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>GLOBAL_SEARCH_BAR</td>
-	<td>//input[@ref='searchInput']</td>
+	<td>//div[contains(@id,'search-bar')]//input</td>
 	<td></td>
 </tr>
 <tr>

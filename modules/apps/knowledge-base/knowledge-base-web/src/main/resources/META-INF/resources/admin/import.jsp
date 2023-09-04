@@ -12,6 +12,7 @@ long parentKBFolderId = ParamUtil.getLong(request, "parentKBFolderId");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getTitle());
 
 renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 %>

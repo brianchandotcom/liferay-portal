@@ -18,6 +18,7 @@
 
 	if (Validator.isNotNull(backURL)) {
 		portletDisplay.setURLBack(backURL);
+		portletDisplay.setURLBackTitle(portletDisplay.getTitle());
 	}
 
 	boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
@@ -25,6 +26,7 @@
 	if (portletTitleBasedNavigation) {
 		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(redirect);
+		portletDisplay.setURLBackTitle(portletDisplay.getTitle());
 
 		renderResponse.setTitle(kbTemplate.getTitle());
 	}

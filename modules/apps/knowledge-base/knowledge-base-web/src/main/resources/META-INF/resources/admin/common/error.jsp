@@ -22,6 +22,7 @@ if (portletTitleBasedNavigation) {
 	}
 
 	portletDisplay.setURLBack(backURL);
+	portletDisplay.setURLBackTitle(portletDisplay.getTitle());
 
 	renderResponse.setTitle(LanguageUtil.get(resourceBundle, "error"));
 }

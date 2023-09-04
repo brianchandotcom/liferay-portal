@@ -17,6 +17,7 @@ String content = BeanParamUtil.getString(kbTemplate, request, "content");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getTitle());
 
 renderResponse.setTitle((kbTemplate == null) ? LanguageUtil.get(request, "new-template") : kbTemplate.getTitle());
 %>

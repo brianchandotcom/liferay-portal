@@ -26,6 +26,7 @@ long parentResourcePrimKey = ParamUtil.getLong(request, "parentResourcePrimKey",
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getTitle());
 
 renderResponse.setTitle((kbFolder == null) ? LanguageUtil.get(resourceBundle, "new-folder") : kbFolder.getName());
 %>

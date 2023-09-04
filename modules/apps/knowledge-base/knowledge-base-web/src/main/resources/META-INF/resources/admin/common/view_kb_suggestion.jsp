@@ -12,6 +12,7 @@ ViewKBSuggestionDisplayContext viewKBSuggestionDisplayContext = new ViewKBSugges
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(viewKBSuggestionDisplayContext.getRedirect());
+portletDisplay.setURLBackTitle(portletDisplay.getTitle());
 
 renderResponse.setTitle(viewKBSuggestionDisplayContext.getKBCommentTitle());
 %>

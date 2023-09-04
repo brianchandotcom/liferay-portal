@@ -2,33 +2,24 @@
  * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
-
 /// <reference types="react" />
-
-import {Edge, Elements, Node} from 'react-flow-renderer';
-import {TYPES} from './ModelBuilderContext/typesEnum';
-declare type TDropDownType =
-	| 'checkbox'
-	| 'contextual'
-	| 'group'
-	| 'item'
-	| 'radio'
-	| 'radiogroup'
-	| 'divider';
+import { Edge, Elements, Node } from 'react-flow-renderer';
+import { TYPES } from './ModelBuilderContext/typesEnum';
+declare type TDropDownType = 'checkbox' | 'contextual' | 'group' | 'item' | 'radio' | 'radiogroup' | 'divider';
 export declare type DropDownItems = {
-	active?: boolean;
-	checked?: boolean;
-	disabled?: boolean;
-	href?: string;
-	items?: Array<IItem>;
-	label?: string;
-	name?: string;
-	onChange?: Function;
-	onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
-	symbolLeft?: string;
-	symbolRight?: string;
-	type?: TDropDownType;
-	value?: string;
+    active?: boolean;
+    checked?: boolean;
+    disabled?: boolean;
+    href?: string;
+    items?: Array<IItem>;
+    label?: string;
+    name?: string;
+    onChange?: Function;
+    onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+    symbolLeft?: string;
+    symbolRight?: string;
+    type?: TDropDownType;
+    value?: string;
 };
 export declare type TAction =
 	| {
@@ -128,6 +119,15 @@ export declare type TAction =
 			};
 			type: TYPES.SET_SHOW_CHANGES_SAVED;
 	  }
+      | {
+              payload: {
+                  edges: Edge<ObjectRelationshipEdgeData>[];
+                  nodes: Node<ObjectDefinitionNodeData>[];
+                  selectedNode: Node<ObjectDefinitionNodeData>;
+                  updatedField: ObjectField;
+              };
+              type: TYPES.UPDATE_OBJECT_FIELD;
+        }
 	| {
 			payload: {
 				currentObjectFolderName: string;
@@ -166,7 +166,8 @@ export declare type TState = {
 	workflowStatusJSONArray: LabelValueObject[];
 };
 export interface LeftSidebarItem {
-	hiddenObjectFolderObjectDefinitionNodes: boolean;
+	folderName: string;
+	hiddenFolderObjectDefinitionNodes: boolean;
 	id?: string;
 	leftSidebarObjectDefinitionItems?: LeftSidebarObjectDefinitionItem[];
 	name: string;
@@ -196,12 +197,8 @@ export interface ObjectRelationshipEdgeData {
 	type: string;
 }
 export declare type nonRelationshipObjectFieldsInfo = {
-	label: LocalizedValue<string>;
-	name: string;
+    label: LocalizedValue<string>;
+    name: string;
 };
-export declare type RightSidebarType =
-	| 'empty'
-	| 'objectFieldDetails'
-	| 'objectDefinitionDetails'
-	| 'objectRelationshipDetails';
+export declare type RightSidebarType = 'empty' | 'objectFieldDetails' | 'objectDefinitionDetails' | 'objectRelationshipDetails';
 export {};

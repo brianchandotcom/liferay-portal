@@ -409,7 +409,40 @@ export async function putObjectRelationship({
 	});
 }
 
-export async function save({
+export async function putListTypeDefinition({
+	externalReferenceCode,
+	id,
+	listTypeEntries,
+	name_i18n,
+}: Partial<ListTypeDefinition>) {
+	return await save({
+		item: {externalReferenceCode, listTypeEntries, name_i18n},
+		url: `/o/headless-admin-list-type/v1.0/list-type-definitions/${id}`,
+	});
+}
+
+export async function putListTypeEntry({
+	externalReferenceCode,
+	id,
+	name_i18n,
+}: Partial<ListTypeEntry>) {
+	return await save({
+		item: {externalReferenceCode, name_i18n},
+		url: `/o/headless-admin-list-type/v1.0/list-type-entries/${id}`,
+	});
+}
+
+export async function putObjectRelationship({
+	id,
+	...others
+}: ObjectRelationship) {
+	return await save({
+		item: others,
+		url: `/o/object-admin/v1.0/object-relationships/${id}`,
+	});
+}
+
+export async function save<T>({
 	item,
 	method = 'PUT',
 	returnValue = false,
@@ -453,6 +486,6 @@ export async function save({
 	}
 
 	if (returnValue) {
-		return response.json();
+		return (await response.json()) as T;
 	}
 }

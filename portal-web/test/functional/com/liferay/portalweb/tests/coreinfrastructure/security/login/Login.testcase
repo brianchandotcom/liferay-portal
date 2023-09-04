@@ -6,6 +6,62 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Login";
 
+	@description = "This is a test for LPS-179689. TC-8: Verify if users cannot edit their password on the My Account page if the change password option is disabled by default policy and Facebook SSO is enabled. Blocked by LPS-173860."
+	@ignore = "true"
+	@priority = 5
+	test CannotChangePasswordWhenLoginViaFacebookSSOWithDisablePasswordChangeable {
+		property portal.ssl.enabled = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		var facebookApplicationId = PropsUtil.get("facebook.application.id");
+		var facebookApplicationSecret = PropsUtil.get("facebook.application.secret");
+		var facebookEmail = PropsUtil.get("facebook.email");
+		var facebookPassword = PropsUtil.get("facebook.password");
+
+		task ("Given: Go to edit default password policy to disable password changeable and enabled Facebook SSO") {
+			User.firstLoginPG();
+
+			var siteName = TestCase.getSiteName(siteName = ${siteName});
+
+			PasswordPolicies.openPasswordPoliciesAdmin();
+
+			PasswordPolicies.disableChangeable(
+				passwordPolicyName = "Default Password Policy",
+				passwordPolicyPanel = "Password Changes");
+
+			PortalSettings.gotoConfiguration(
+				baseURL = "http://localhost:8080",
+				configurationCategory = "SSO",
+				configurationName = "Facebook Connect",
+				configurationScope = "Virtual Instance Scope");
+
+			PortalSettings.editConfigurationAuthenticationFacebook(
+				facebookApplicationId = ${facebookApplicationId},
+				facebookApplicationSecret = ${facebookApplicationSecret});
+
+			User.logoutPG();
+		}
+
+		task ("When: Login portal using the Facebook login option and navigate to Account Settings") {
+			User.loginUserWithFacebookSSOEnabledPG(
+				baseURL = "https://localhost:8443",
+				facebookEmail = ${facebookEmail},
+				facebookPassword = ${facebookPassword},
+				siteName = ${siteName});
+
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+			UserNavigator.gotoGeneral();
+		}
+
+		task ("Then: Assert there is no Password menu item at the General tab") {
+			AssertElementNotPresent(
+				key_navNested = "Password",
+				locator1 = "NavNested#NAV_NESTED_LINK");
+		}
+	}
+
 	@description = "This is a use case for LPS-39744 and LPS-78508. Default landing page could be set by property and user is redirected to the changed landing page."
 	@priority = 5
 	test DefaultPortalLandingPageSetByProperty {

@@ -500,6 +500,48 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-179689. TC-7: Verify if users cannot edit their password on the My Account page if the change password option is disabled by default policy and LDAP is enabled."
+	@priority = 5
+	test LDAPUsersCannotChangePasswordAfterDisablingPasswordChangeable {
+		property apacheds.enabled = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Go to edit default password policy to disable password changeable") {
+			PasswordPolicies.openPasswordPoliciesAdmin();
+
+			PasswordPolicies.disableChangeable(
+				passwordPolicyName = "Default Password Policy",
+				passwordPolicyPanel = "Password Changes");
+		}
+
+		task ("And: Add LDAP server and configure settings") {
+			var enableSettingList = "enabled,ldapImportEnabled,ldapExportEnabled";
+
+			LDAP.addLDAPServerAndTestConnection();
+
+			LDAP.enableLDAPSettings(enableSettingList = ${enableSettingList});
+
+			LDAP.installLDAPCommandUtil();
+
+			LDAP.importLDIFOnLDAPAndTriggerSync(ldifName = "addUser");
+		}
+
+		task ("When: Login as LDAP user and navigate to Account Settings") {
+			User.logoutAndLoginPG(userLoginEmailAddress = "testUser2@liferay.com");
+
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+			UserNavigator.gotoGeneral();
+		}
+
+		task ("Then: Assert there is no Password menu item at the General tab") {
+			AssertElementNotPresent(
+				key_navNested = "Password",
+				locator1 = "NavNested#NAV_NESTED_LINK");
+		}
+	}
+
 	@description = "This is a use case for LRQA-42764. Changes in the User informations will be exported into the LDAP database."
 	@priority = 3
 	test UserChangesCanBeExportedToLDAP {

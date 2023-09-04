@@ -1578,6 +1578,95 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-179689. TC-5: Verify if users cannot edit their password on the My Account page if the change password option is disabled by default policy and SAML SSO is enabled."
+	@priority = 5
+	test CannotChangePasswordWhenLoginViaSAMLSSOWithDisablePasswordChangeable {
+		property app.server.bundles.size = "0";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Disable password changeable in default password policy in SP") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			PasswordPolicies.openPasswordPoliciesAdmin(baseURL = "http://www.able.com:8080");
+
+			PasswordPolicies.disableChangeable(
+				passwordPolicyName = "Default Password Policy",
+				passwordPolicyPanel = "Password Changes");
+		}
+
+		task ("And: Create user and setup a SAML link between localhost and able.com") {
+			SAML.configureLiferaySAMLAsIdP(samlEntityId = "samlidp");
+
+			JSONUser.addUser(
+				userEmailAddress = "usera@liferay.com",
+				userFirstName = "user",
+				userLastName = "a",
+				userScreenName = "usera");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "usera@liferay.com");
+
+			SAML.setupSP(
+				samlEntityId = "samlsp",
+				spURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			SAML.connectSPAndIdP(
+				idpAttributeMapping = "UUID,screenName,firstName,lastName,emailAddress",
+				idpEntityId = "samlidp",
+				idpURL = "http://localhost:8080",
+				keepSPLogin = "true",
+				spAttributes = '''emailAddress
+					firstName
+					lastName
+					screenName
+					uuid''',
+				spEntityId = "samlsp",
+				spURL = "http://www.able.com:8080",
+				sPUserEmailAddress = "test@www.able.com",
+				userResolution = "dynamic");
+
+			User.logoutPG(specificURL = "http://localhost:8080");
+
+			User.viewLoggedOutPG();
+
+			User.logoutPG(specificURL = "http://www.able.com:8080");
+
+			User.viewLoggedOutPG();
+		}
+
+		task ("When: Login via SAML SSO and navigate to Account Settings") {
+			User.firstLoginUI(
+				idpName = "samlidp",
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "usera@liferay.com");
+
+			OpenIDConnect.acceptConditions();
+
+			UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+			UserNavigator.gotoGeneral();
+		}
+
+		task ("Then: Assert there is no Password menu item at the General tab") {
+			AssertElementNotPresent(
+				key_navNested = "Password",
+				locator1 = "NavNested#NAV_NESTED_LINK");
+		}
+	}
+
 	@description = "LPS-128600 TC-3. User can't log in with invalid custom field mapping on SP. Blocked by LPS-142222."
 	@priority = 4
 	test CannotLoginWithInvalidCustomFieldMappingInSAML {

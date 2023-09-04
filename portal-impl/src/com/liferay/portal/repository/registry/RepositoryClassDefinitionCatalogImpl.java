@@ -6,20 +6,12 @@
 package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.repository.external.LegacyExternalRepositoryDefiner;
-import com.liferay.portal.repository.util.ExternalRepositoryFactory;
-import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
-import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,17 +37,6 @@ public class RepositoryClassDefinitionCatalogImpl
 			new RepositoryDefinerServiceTrackerCustomizer());
 
 		_serviceTracker.open();
-
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-		for (String className : PropsValues.DL_REPOSITORY_IMPL) {
-			ExternalRepositoryFactory externalRepositoryFactory =
-				new ExternalRepositoryFactoryImpl(className, classLoader);
-
-			registerLegacyExternalRepositoryFactory(
-				className, externalRepositoryFactory,
-				LanguageUtil.getResourceBundleLoader());
-		}
 	}
 
 	public void destroy() {
@@ -142,57 +123,6 @@ public class RepositoryClassDefinitionCatalogImpl
 		}
 	}
 
-	@Override
-	public void registerLegacyExternalRepositoryFactory(
-		String className, ExternalRepositoryFactory externalRepositoryFactory,
-		ResourceBundleLoader resourceBundleLoader) {
-
-		ExternalRepositoryFactoryUtil.registerExternalRepositoryFactory(
-			className, externalRepositoryFactory);
-
-		RepositoryDefiner repositoryDefiner =
-			new LegacyExternalRepositoryDefiner(
-				className, _legacyExternalRepositoryFactory,
-				resourceBundleLoader);
-
-		ServiceRegistration<RepositoryDefiner> serviceRegistration =
-			registerRepositoryDefiner(repositoryDefiner);
-
-		_serviceRegistrations.put(className, serviceRegistration);
-	}
-
-	public void setLegacyExternalRepositoryFactory(
-		RepositoryFactory legacyExternalRepositoryFactory) {
-
-		_legacyExternalRepositoryFactory = legacyExternalRepositoryFactory;
-	}
-
-	@Override
-	public void unregisterLegacyExternalRepositoryFactory(String className) {
-		ExternalRepositoryFactoryUtil.unregisterExternalRepositoryFactory(
-			className);
-
-		ServiceRegistration<?> serviceRegistration =
-			_serviceRegistrations.remove(className);
-
-		serviceRegistration.unregister();
-
-		unregisterRepositoryDefiner(className);
-	}
-
-	protected ServiceRegistration<RepositoryDefiner> registerRepositoryDefiner(
-		RepositoryDefiner repositoryDefiner) {
-
-		return _bundleContext.registerService(
-			RepositoryDefiner.class, repositoryDefiner, null);
-	}
-
-	protected void unregisterRepositoryDefiner(String className) {
-		_externalRepositoryClassDefinitions.remove(className);
-
-		_repositoryClassDefinitions.remove(className);
-	}
-
 	private <T> Collection<T> _getSystemExternalRepositoryData(
 		Function<Map<String, RepositoryClassDefinition>, Collection<T>>
 			function) {
@@ -228,11 +158,8 @@ public class RepositoryClassDefinitionCatalogImpl
 		SystemBundleUtil.getBundleContext();
 	private final Map<Long, Map<String, RepositoryClassDefinition>>
 		_externalRepositoryClassDefinitions = new ConcurrentHashMap<>();
-	private RepositoryFactory _legacyExternalRepositoryFactory;
 	private final Map<Long, Map<String, RepositoryClassDefinition>>
 		_repositoryClassDefinitions = new ConcurrentHashMap<>();
-	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
-		new ConcurrentHashMap<>();
 	private ServiceTracker
 		<RepositoryDefiner, ServiceRegistration<RepositoryFactory>>
 			_serviceTracker;

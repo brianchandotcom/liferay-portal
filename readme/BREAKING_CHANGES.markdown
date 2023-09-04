@@ -1738,3 +1738,25 @@ Register `MessageListener` as OSGi service, with the property `destination.name`
 ### Why was this change made?
 
 Liferay decided to not support these API methods to simplify the message bus infrastructure and usage.
+
+---------------------------------------
+
+## Removal of repository registration support from the `com.liferay.portal.deploy.hot.HookHotDeployListener`.
+- **Date:** 2023-September-4
+- **JIRA Ticket:** [LPS-194350](https://liferay.atlassian.net/browse/LPS-194350)
+
+### What changed?
+
+The support for deploying a external repository via hook has been removed from the `com.liferay.portal.deploy.hot.HookHotDeployListener`.
+
+### Who is affected?
+
+This affects anyone providing its own repository implementation via hook.
+
+### How should I update my code?
+
+If you are providing your own repository implementation via a hook, convert it to an OSGi service.
+
+### Why was this change made?
+
+External repositories deployed via hook don't support the same feature set as OSGi ones.

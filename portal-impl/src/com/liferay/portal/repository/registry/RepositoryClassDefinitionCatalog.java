@@ -5,9 +5,6 @@
 
 package com.liferay.portal.repository.registry;
 
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.repository.util.ExternalRepositoryFactory;
-
 import java.util.Collection;
 
 /**
@@ -22,11 +19,5 @@ public interface RepositoryClassDefinitionCatalog {
 
 	public RepositoryClassDefinition getRepositoryClassDefinition(
 		long companyId, String className);
-
-	public void registerLegacyExternalRepositoryFactory(
-		String className, ExternalRepositoryFactory externalRepositoryFactory,
-		ResourceBundleLoader resourceBundleLoader);
-
-	public void unregisterLegacyExternalRepositoryFactory(String className);
 
 }

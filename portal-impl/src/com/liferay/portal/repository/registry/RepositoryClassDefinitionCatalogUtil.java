@@ -5,9 +5,6 @@
 
 package com.liferay.portal.repository.registry;
 
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.repository.util.ExternalRepositoryFactory;
-
 import java.util.Collection;
 
 /**
@@ -34,28 +31,6 @@ public class RepositoryClassDefinitionCatalogUtil {
 
 		return _repositoryClassDefinitionCatalog.getRepositoryClassDefinition(
 			companyId, repositoryTypeKey);
-	}
-
-	public static RepositoryClassDefinitionCatalog
-		getRepositoryClassDefinitionCatalog() {
-
-		return _repositoryClassDefinitionCatalog;
-	}
-
-	public static void registerLegacyExternalRepositoryFactory(
-		String className, ExternalRepositoryFactory externalRepositoryFactory,
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_repositoryClassDefinitionCatalog.
-			registerLegacyExternalRepositoryFactory(
-				className, externalRepositoryFactory, resourceBundleLoader);
-	}
-
-	public static void unregisterLegacyExternalRepositoryFactory(
-		String className) {
-
-		_repositoryClassDefinitionCatalog.
-			unregisterLegacyExternalRepositoryFactory(className);
 	}
 
 	public void setRepositoryClassDefinitionCatalog(

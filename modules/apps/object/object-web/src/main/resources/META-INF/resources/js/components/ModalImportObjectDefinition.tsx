@@ -152,6 +152,10 @@ export default function ModalImportObjectDefinition({
 						title={`${Liferay.Language.get('info')}:`}
 					>
 						{Liferay.Language.get(
+							'the-object-definition-will-be-imported-to-the-uncategorized-folder'
+						)}
+						&nbsp;
+						{Liferay.Language.get(
 							'the-import-process-will-run-in-the-background-and-may-take-a-few-minutes'
 						)}
 					</ClayAlert>

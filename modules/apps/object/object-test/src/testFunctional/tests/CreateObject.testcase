@@ -2047,7 +2047,7 @@ definition {
 			type = "One to Many");
 
 		AssertElementPresent(
-			key_fieldLabel = "Object",
+			key_fieldLabel = "Many Records Of",
 			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 

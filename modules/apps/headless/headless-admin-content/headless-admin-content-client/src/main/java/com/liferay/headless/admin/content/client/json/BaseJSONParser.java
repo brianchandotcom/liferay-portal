@@ -5,6 +5,8 @@
 
 package com.liferay.headless.admin.content.client.json;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -180,6 +182,16 @@ public abstract class BaseJSONParser<T> {
 
 	protected abstract void setField(
 		T dto, String jsonParserFieldName, Object jsonParserFieldValue);
+
+	protected BigDecimal[] toBigDecimals(Object[] objects) {
+		BigDecimal[] bigdecimals = new BigDecimal[objects.length];
+
+		for (int i = 0; i < bigdecimals.length; i++) {
+			bigdecimals[i] = new BigDecimal(objects[i].toString());
+		}
+
+		return bigdecimals;
+	}
 
 	protected Date toDate(String string) {
 		try {

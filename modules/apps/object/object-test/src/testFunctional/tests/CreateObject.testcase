@@ -2065,9 +2065,7 @@ definition {
 
 		ObjectAdmin.gotoRelationshipsTab();
 
-		ObjectAdmin.addObjectRelationshipViaUI(
-			label = "Relationship",
-			object = "Custom Object 51");
+		ObjectAdmin.addObjectRelationshipViaUI(label = "Relationship");
 
 		AssertElementPresent(
 			key_fieldLabel = "Type",

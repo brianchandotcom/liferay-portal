@@ -5,5 +5,5 @@
 
 /// <reference types="react" />
 
-declare const Actions: () => JSX.Element;
+declare const Actions: ({spritemap}: {spritemap: string}) => JSX.Element;
 export default Actions;

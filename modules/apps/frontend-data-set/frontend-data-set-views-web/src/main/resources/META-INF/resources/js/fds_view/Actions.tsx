@@ -11,9 +11,11 @@ import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import ClayTabs from '@clayui/tabs';
 import {InputLocalized} from 'frontend-js-components-web';
-import React, {useState} from 'react';
+import {fetch} from 'frontend-js-web';
+import React, {useEffect, useState} from 'react';
 
 import OrderableTable from '../components/OrderableTable';
+import RequiredMark from '../components/RequiredMark';
 
 const MESSAGE_TYPES = [
 	{
@@ -68,9 +70,12 @@ const TYPES = [
 
 const noop = () => {};
 
-const Actions = () => {
+const Actions = ({spritemap}: {spritemap: string}) => {
 	const [activeSection, setActiveSection] = useState(SECTIONS.ACTIONS);
 	const [activeTab, setActiveTab] = useState(0);
+	const [availableIconSymbols, setAvailableIconSymbols] = useState<
+		Array<{label: string; value: string}>
+	>([]);
 	const [
 		confirmationMessageTranslations,
 		setConfirmationMessageTranslations,
@@ -78,9 +83,40 @@ const Actions = () => {
 	const [iconSymbol, setIconSymbol] = useState('bolt');
 	const [labelTranslations, setLabelTranslations] = useState({});
 
+	useEffect(() => {
+		const getIcons = async () => {
+			const response = await fetch(spritemap);
+
+			const responseText = await response.text();
+
+			if (responseText.length) {
+				const XMLString = await new window.DOMParser().parseFromString(
+					responseText,
+					'text/xml'
+				);
+
+				const availableIconSymbolElements = XMLString.querySelectorAll(
+					'symbol'
+				);
+
+				const iconSymbols = Array.from(
+					availableIconSymbolElements!
+				).map((element) => ({
+					label: element.id,
+					value: element.id,
+				}));
+
+				setAvailableIconSymbols(iconSymbols);
+			}
+		};
+
+		getIcons();
+	}, [spritemap]);
+
 	return (
 		<ClayLayout.ContainerFluid>
 			<ClayBreadcrumb
+				className="my-2"
 				items={[
 					{
 						active: activeSection === SECTIONS.ACTIONS,
@@ -203,37 +239,34 @@ const Actions = () => {
 											placeholder={Liferay.Language.get(
 												'action-name'
 											)}
+											required
 											translations={labelTranslations}
 										/>
 									</ClayLayout.Col>
 
 									<ClayLayout.Col
 										className="align-items-center d-flex justify-content-center"
-										size={1}
+										size={4}
 									>
 										<ClayIcon
-											className="w-50"
+											className="mr-4"
 											symbol={iconSymbol}
 										/>
-									</ClayLayout.Col>
 
-									<ClayLayout.Col size={3}>
 										<ClayForm.Group>
 											<label htmlFor="iconInput">
 												{Liferay.Language.get('icon')}
 											</label>
 
-											<ClayInput
+											<ClaySelectWithOption
+												defaultValue="bolt"
 												id="iconInput"
 												onChange={(event) =>
 													setIconSymbol(
-														event?.target.value
+														event.target.value
 													)
 												}
-												placeholder={Liferay.Language.get(
-													'please-select-an-option'
-												)}
-												value={iconSymbol}
+												options={availableIconSymbols}
 											/>
 										</ClayForm.Group>
 									</ClayLayout.Col>
@@ -254,6 +287,8 @@ const Actions = () => {
 										<ClayForm.Group>
 											<label htmlFor="actionTypeSelect">
 												{Liferay.Language.get('type')}
+
+												<RequiredMark />
 											</label>
 
 											<ClaySelectWithOption
@@ -261,7 +296,7 @@ const Actions = () => {
 												id="actionTypeSelect"
 												options={TYPES}
 												placeholder={Liferay.Language.get(
-													'select-an-option'
+													'please-select-an-option'
 												)}
 											/>
 										</ClayForm.Group>
@@ -273,6 +308,8 @@ const Actions = () => {
 										<ClayForm.Group>
 											<label htmlFor="urlInput">
 												{Liferay.Language.get('url')}
+
+												<RequiredMark />
 											</label>
 
 											<ClayInput

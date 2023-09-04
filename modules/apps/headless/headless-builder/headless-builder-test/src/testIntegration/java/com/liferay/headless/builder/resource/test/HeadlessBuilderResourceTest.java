@@ -187,6 +187,13 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
 			Http.Method.GET);
 
+		Assert.assertTrue(
+			HTTPTestUtil.invokeToJSONObject(
+				null, "openapi", Http.Method.GET
+			).has(
+				"/c/" + _BASE_URL_1
+			));
+
 		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"domain", "able.com"
@@ -204,11 +211,19 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		).withCredentials(
 			"test@able.com", "test"
 		).apply(
-			() -> Assert.assertEquals(
-				404,
-				HTTPTestUtil.invokeToHttpCode(
-					null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
-					Http.Method.GET))
+			() -> {
+				Assert.assertEquals(
+					404,
+					HTTPTestUtil.invokeToHttpCode(
+						null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
+						Http.Method.GET));
+				Assert.assertFalse(
+					HTTPTestUtil.invokeToJSONObject(
+						null, "openapi", Http.Method.GET
+					).has(
+						"/c/" + _BASE_URL_1
+					));
+			}
 		);
 	}
 

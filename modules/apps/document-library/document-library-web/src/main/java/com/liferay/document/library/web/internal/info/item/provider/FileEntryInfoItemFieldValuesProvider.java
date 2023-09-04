@@ -169,7 +169,7 @@ public class FileEntryInfoItemFieldValuesProvider
 				new InfoItemReference(
 					FileEntry.class.getName(), fileEntry.getFileEntryId()),
 				String.valueOf(dlFileEntry.getFileEntryTypeId()),
-				_getThemeDisplay());
+				FileEntry.class.getSimpleName(), _getThemeDisplay());
 		}
 
 		return Collections.emptyList();

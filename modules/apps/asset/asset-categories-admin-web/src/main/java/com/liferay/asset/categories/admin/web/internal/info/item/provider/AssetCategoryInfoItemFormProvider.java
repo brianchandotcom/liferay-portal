@@ -58,7 +58,7 @@ public class AssetCategoryInfoItemFormProvider
 					unsafeConsumer.accept(
 						_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 							AssetCategory.class.getName(), StringPool.BLANK,
-							groupId));
+							AssetCategory.class.getSimpleName(), groupId));
 				}
 			}
 		).infoFieldSetEntry(

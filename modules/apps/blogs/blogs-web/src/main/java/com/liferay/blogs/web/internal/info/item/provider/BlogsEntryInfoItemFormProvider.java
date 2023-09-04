@@ -43,7 +43,8 @@ public class BlogsEntryInfoItemFormProvider
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 				BlogsEntry.class.getName()),
 			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-				BlogsEntry.class.getName(), StringPool.BLANK, 0));
+				BlogsEntry.class.getName(), StringPool.BLANK,
+				BlogsEntry.class.getSimpleName(), 0));
 	}
 
 	@Override
@@ -54,7 +55,8 @@ public class BlogsEntryInfoItemFormProvider
 					_assetEntryLocalService.getEntry(
 						BlogsEntry.class.getName(), blogsEntry.getEntryId())),
 				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-					BlogsEntry.class.getName(), StringPool.BLANK, 0));
+					BlogsEntry.class.getName(), StringPool.BLANK,
+					BlogsEntry.class.getSimpleName(), 0));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(
@@ -70,7 +72,8 @@ public class BlogsEntryInfoItemFormProvider
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 				BlogsEntry.class.getName(), 0, groupId),
 			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-				BlogsEntry.class.getName(), StringPool.BLANK, groupId));
+				BlogsEntry.class.getName(), StringPool.BLANK,
+				BlogsEntry.class.getSimpleName(), groupId));
 	}
 
 	private InfoFieldSet _getBasicInformationInfoFieldSet() {

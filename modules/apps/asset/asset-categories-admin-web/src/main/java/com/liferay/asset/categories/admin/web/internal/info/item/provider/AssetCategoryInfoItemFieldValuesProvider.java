@@ -58,7 +58,8 @@ public class AssetCategoryInfoItemFieldValuesProvider
 					new InfoItemReference(
 						AssetCategory.class.getName(),
 						assetCategory.getCategoryId()),
-					StringPool.BLANK, _getThemeDisplay())
+					StringPool.BLANK, AssetCategory.class.getSimpleName(),
+					_getThemeDisplay())
 			).infoFieldValues(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
 					AssetCategory.class.getName(), assetCategory)

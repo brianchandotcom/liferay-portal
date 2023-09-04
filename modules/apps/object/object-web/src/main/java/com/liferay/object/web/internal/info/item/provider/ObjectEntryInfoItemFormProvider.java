@@ -125,7 +125,8 @@ public class ObjectEntryInfoItemFormProvider
 			return _getInfoForm(
 				0,
 				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-					_getModelClassName(0), StringPool.BLANK, 0));
+					_getModelClassName(0), StringPool.BLANK,
+					ObjectEntry.class.getSimpleName(), 0));
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
 			throw new RuntimeException(noSuchFormVariationException);
@@ -141,7 +142,7 @@ public class ObjectEntryInfoItemFormProvider
 				objectDefinitionId,
 				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 					_getModelClassName(objectDefinitionId), StringPool.BLANK,
-					0));
+					ObjectEntry.class.getSimpleName(), 0));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(
@@ -166,7 +167,7 @@ public class ObjectEntryInfoItemFormProvider
 			objectDefinitionId,
 			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 				_getModelClassName(objectDefinitionId), StringPool.BLANK,
-				groupId));
+				ObjectEntry.class.getSimpleName(), groupId));
 	}
 
 	private InfoField<?> _addAttributes(

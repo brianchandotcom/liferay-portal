@@ -47,7 +47,8 @@ public class CPDefinitionInfoItemFormProvider
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 				CPDefinition.class.getName()),
 			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-				CPDefinition.class.getName(), StringPool.BLANK, 0));
+				CPDefinition.class.getName(), StringPool.BLANK,
+				CPDefinition.class.getSimpleName(), 0));
 	}
 
 	@Override
@@ -59,7 +60,8 @@ public class CPDefinitionInfoItemFormProvider
 						CPDefinition.class.getName(),
 						cpDefinition.getCPDefinitionId())),
 				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-					CPDefinition.class.getName(), StringPool.BLANK, 0));
+					CPDefinition.class.getName(), StringPool.BLANK,
+					CPDefinition.class.getSimpleName(), 0));
 		}
 		catch (PortalException portalException) {
 			_log.error(
@@ -76,7 +78,8 @@ public class CPDefinitionInfoItemFormProvider
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 				CPDefinition.class.getName(), 0, groupId),
 			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-				CPDefinition.class.getName(), StringPool.BLANK, groupId));
+				CPDefinition.class.getName(), StringPool.BLANK,
+				CPDefinition.class.getSimpleName(), groupId));
 	}
 
 	private InfoFieldSet _getBasicInformationInfoFieldSet() {

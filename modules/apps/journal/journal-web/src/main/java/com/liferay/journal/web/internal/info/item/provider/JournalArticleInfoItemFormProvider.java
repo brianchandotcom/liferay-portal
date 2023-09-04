@@ -60,7 +60,8 @@ public class JournalArticleInfoItemFormProvider
 				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName()),
 				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-					JournalArticle.class.getName(), StringPool.BLANK, 0));
+					JournalArticle.class.getName(), StringPool.BLANK,
+					JournalArticle.class.getSimpleName(), 0));
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
 			throw new RuntimeException(noSuchFormVariationException);
@@ -82,7 +83,8 @@ public class JournalArticleInfoItemFormProvider
 						article.getResourcePrimKey())),
 				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 					JournalArticle.class.getName(),
-					String.valueOf(ddmStructureId), 0));
+					String.valueOf(ddmStructureId),
+					JournalArticle.class.getSimpleName(), 0));
 		}
 		catch (NoSuchClassTypeException noSuchClassTypeException) {
 			throw new RuntimeException(
@@ -108,7 +110,8 @@ public class JournalArticleInfoItemFormProvider
 				JournalArticle.class.getName(),
 				GetterUtil.getLong(formVariationKey), groupId),
 			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-				JournalArticle.class.getName(), formVariationKey, groupId));
+				JournalArticle.class.getName(), formVariationKey,
+				JournalArticle.class.getSimpleName(), groupId));
 	}
 
 	private InfoFieldSet _getBasicInformationInfoFieldSet() {

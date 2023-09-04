@@ -9,10 +9,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutUtilityPageEntryActionDropdownItemsProvider;
 import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
 import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRendererRegistryUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -66,14 +69,16 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 	@Override
 	public String getHref() {
 		try {
-			String layoutFullURL = PortalUtil.getLayoutFullURL(
-				_draftLayout, themeDisplay);
+			String backURLTitle =
+				JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
+					LayoutAdminPortletKeys.GROUP_PAGES;
 
-			layoutFullURL = HttpComponentsUtil.setParameter(
-				layoutFullURL, "p_l_mode", Constants.EDIT);
-
-			return HttpComponentsUtil.setParameter(
-				layoutFullURL, "p_l_back_url", themeDisplay.getURLCurrent());
+			return HttpComponentsUtil.addParameters(
+				PortalUtil.getLayoutFullURL(_draftLayout, themeDisplay),
+				"p_l_back_url", themeDisplay.getURLCurrent(),
+				"p_l_back_url_title",
+				LanguageUtil.get(themeDisplay.getLocale(), backURLTitle),
+				"p_l_mode", Constants.EDIT);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

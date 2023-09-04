@@ -66,10 +66,25 @@ public class CPInstanceUnitOfMeasureServiceUtil {
 	}
 
 	public static CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
+			long cpInstanceUnitOfMeasureId)
+		throws PortalException {
+
+		return getService().fetchCPInstanceUnitOfMeasure(
+			cpInstanceUnitOfMeasureId);
+	}
+
+	public static CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
 			long cpInstanceId, String key)
 		throws PortalException {
 
 		return getService().fetchCPInstanceUnitOfMeasure(cpInstanceId, key);
+	}
+
+	public static CPInstanceUnitOfMeasure fetchPrimaryCPInstanceUnitOfMeasure(
+			long cpInstanceId)
+		throws PortalException {
+
+		return getService().fetchPrimaryCPInstanceUnitOfMeasure(cpInstanceId);
 	}
 
 	public static List<CPInstanceUnitOfMeasure>

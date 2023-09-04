@@ -197,8 +197,10 @@ export default function PageContent({
 		});
 	};
 
+	const isInlineText = !!editableId;
+
 	const onClickEditInlineText = () => {
-		if (isBeingEdited || !editableId) {
+		if (isBeingEdited || !isInlineText) {
 			return;
 		}
 
@@ -208,7 +210,7 @@ export default function PageContent({
 	};
 
 	const onClickSelectInlineText = () => {
-		if (isBeingEdited || !editableId) {
+		if (isBeingEdited || !isInlineText) {
 			return;
 		}
 
@@ -219,6 +221,22 @@ export default function PageContent({
 			origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 		});
 	};
+
+	const extraProps = isInlineText
+		? {
+				'aria-label': `${Liferay.Language.get('select')} ${title}`,
+				'onClick': () => onClickSelectInlineText(),
+				'onKeyDown': (event) => {
+					if (event.key === 'Enter') {
+						onClickSelectInlineText();
+					}
+				},
+				'role': 'button',
+				'tabIndex': '0',
+		  }
+		: {
+				'aria-label': title,
+		  };
 
 	return (
 		<li
@@ -245,20 +263,12 @@ export default function PageContent({
 				</div>
 			) : (
 				<ClayLayout.ContentRow
-					aria-label={`${Liferay.Language.get('select')} ${title}`}
-					className={classNames({
+					className={classNames('c-mr-1', {
 						'align-items-center': !subtype,
-						'editable-hovered': !!editableId,
+						'btn btn-unstyled editable-hovered': isInlineText,
 					})}
-					onClick={onClickSelectInlineText}
-					onKeyDown={(event) => {
-						if (event.key === 'Enter') {
-							onClickSelectInlineText();
-						}
-					}}
 					padded
-					role="button"
-					tabIndex="0"
+					{...extraProps}
 				>
 					<ClayLayout.ContentCol>
 						<ClayIcon

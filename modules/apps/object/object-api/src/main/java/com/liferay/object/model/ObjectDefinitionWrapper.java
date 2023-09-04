@@ -911,11 +911,6 @@ public class ObjectDefinitionWrapper
 	}
 
 	@Override
-	public boolean isChildNode() {
-		return model.isChildNode();
-	}
-
-	@Override
 	public boolean isDefaultStorageType() {
 		return model.isDefaultStorageType();
 	}
@@ -983,6 +978,11 @@ public class ObjectDefinitionWrapper
 	@Override
 	public boolean isPortlet() {
 		return model.isPortlet();
+	}
+
+	@Override
+	public boolean isRootDescendantNode() {
+		return model.isRootDescendantNode();
 	}
 
 	@Override

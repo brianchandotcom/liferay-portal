@@ -1025,7 +1025,7 @@ public class ObjectDefinitionLocalServiceImpl
 				"Object definition " + objectDefinition);
 		}
 
-		if (objectDefinition.isChildNode()) {
+		if (objectDefinition.isRootDescendantNode()) {
 			String errorMessage =
 				"cannot be changed when the object definition is a child node";
 

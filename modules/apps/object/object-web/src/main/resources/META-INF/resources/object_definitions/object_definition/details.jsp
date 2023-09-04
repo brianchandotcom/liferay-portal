@@ -38,7 +38,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 			).put(
 				"isApproved", objectDefinition.isApproved()
 			).put(
-				"isChildNode", objectDefinition.isChildNode()
+				"isRootDescendantNode", objectDefinition.isRootDescendantNode()
 			).put(
 				"label", LocalizationUtil.getLocalizationMap(objectDefinition.getLabel())
 			).put(

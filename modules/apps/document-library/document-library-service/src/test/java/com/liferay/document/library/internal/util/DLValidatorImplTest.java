@@ -10,6 +10,7 @@ import com.liferay.document.library.internal.configuration.admin.service.DLSizeL
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -41,9 +42,6 @@ public class DLValidatorImplTest {
 		_dlSizeLimitManagedServiceFactory = Mockito.mock(
 			DLSizeLimitManagedServiceFactory.class);
 
-		dlValidatorImpl.setDLSizeLimitManagedServiceFactory(
-			_dlSizeLimitManagedServiceFactory);
-
 		_groupLocalService = Mockito.mock(GroupLocalService.class);
 
 		dlValidatorImpl.setGroupLocalService(_groupLocalService);
@@ -55,6 +53,10 @@ public class DLValidatorImplTest {
 			_uploadServletRequestConfigurationProvider);
 
 		_dlValidator = dlValidatorImpl;
+
+		ReflectionTestUtil.setFieldValue(
+			dlValidatorImpl, "_dlSizeLimitManagedServiceFactory",
+			_dlSizeLimitManagedServiceFactory);
 	}
 
 	@Test

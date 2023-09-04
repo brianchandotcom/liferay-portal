@@ -12,7 +12,6 @@
 		"@clayui/panel": "3.104.0",
 		"@clayui/popover": "3.104.0",
 		"@liferay/frontend-js-react-web": "*",
-		"@liferay/layout-content-page-editor-web": "*",
 		"@liferay/layout-js-components-web": "*",
 		"classnames": "2.3.1",
 		"frontend-js-components-web": "*",

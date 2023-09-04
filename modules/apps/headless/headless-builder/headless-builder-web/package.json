@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"@clayui/autocomplete": "3.104.0",
 		"@clayui/breadcrumb": "3.104.0",
 		"@clayui/button": "3.100.0",
 		"@clayui/card": "3.104.0",

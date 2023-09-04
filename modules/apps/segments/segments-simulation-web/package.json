@@ -1,14 +1,9 @@
 {
 	"dependencies": {
 		"@clayui/alert": "3.93.0",
-		"@clayui/button": "3.100.0",
 		"@clayui/core": "3.104.0",
-		"@clayui/drop-down": "3.104.0",
 		"@clayui/form": "3.104.0",
-		"@clayui/label": "3.88.0",
-		"@clayui/layout": "3.93.0",
 		"@clayui/link": "3.88.0",
-		"@liferay/frontend-js-react-web": "*",
 		"@liferay/layout-js-components-web": "*",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",

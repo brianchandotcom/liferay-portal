@@ -5,7 +5,6 @@
 		"@clayui/icon": "3.56.0",
 		"@clayui/modal": "3.104.0",
 		"@liferay/frontend-icons-web": "*",
-		"@liferay/frontend-js-react-web": "*",
 		"@liferay/layout-js-components-web": "*",
 		"classnames": "2.3.1",
 		"frontend-js-web": "*",

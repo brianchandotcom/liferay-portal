@@ -57,19 +57,19 @@ public class EditDisplayPageMenuDisplayContext {
 				_themeDisplay.getPermissionChecker(), _themeDisplay.getLayout(),
 				ActionKeys.UPDATE),
 			dropdownItem -> {
-				String editLayoutURL = PortalUtil.getLayoutFullURL(
-					LayoutLocalServiceUtil.fetchDraftLayout(
-						_themeDisplay.getPlid()),
-					_themeDisplay);
-
-				editLayoutURL = HttpComponentsUtil.setParameter(
-					editLayoutURL, "p_l_back_url",
-					_themeDisplay.getURLCurrent());
-
-				editLayoutURL = HttpComponentsUtil.setParameter(
-					editLayoutURL, "p_l_mode", Constants.EDIT);
-
-				dropdownItem.setHref(editLayoutURL);
+				dropdownItem.setHref(
+					HttpComponentsUtil.addParameters(
+						PortalUtil.getLayoutFullURL(
+							LayoutLocalServiceUtil.fetchDraftLayout(
+								_themeDisplay.getPlid()),
+							_themeDisplay),
+						"p_l_back_url", _themeDisplay.getURLCurrent(),
+						"p_l_back_url_title",
+						LanguageUtil.get(
+							_themeDisplay.getLocale(),
+							_layoutDisplayPageObjectProvider.getTitle(
+								_themeDisplay.getLocale())),
+						"p_l_mode", Constants.EDIT));
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(

@@ -498,6 +498,14 @@ public class LayoutPageTemplateCollectionLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public String getUniqueLayoutPageTemplateCollectionName(
+		long groupId, String name) {
+
+		return _layoutPageTemplateCollectionLocalService.
+			getUniqueLayoutPageTemplateCollectionName(groupId, name);
+	}
+
 	/**
 	 * Updates the layout page template collection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

@@ -547,6 +547,13 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static String getUniqueLayoutPageTemplateEntryName(
+		long groupId, String name, int type) {
+
+		return getService().getUniqueLayoutPageTemplateEntryName(
+			groupId, name, type);
+	}
+
 	/**
 	 * Updates the layout page template entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

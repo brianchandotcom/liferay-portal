@@ -173,7 +173,7 @@ definition {
 	@description = "This is a test for LPS-190586. Even with the option to be redirected to a DPT, if there are validation errors on the object entry the page creator will remain on the same page and get a validation error message."
 	@priority = 4
 	test CannotRedirectToAssociatedDisplayPageTemplateWhenValidationFailed {
-		property timeout.explicit.wait = "20";
+		property custom.properties = "feature.flag.LPS-183727=true";
 
 		task ("Given a page creator has a Form Container with redirection option to a DPT") {
 			ObjectAdmin.addObjectFieldViaAPI(
@@ -206,7 +206,25 @@ definition {
 
 			ObjectCustomValidation.addErrorMessage(errorMessage = "The Age should be an integer.");
 
-			PortletEntry.save();
+			Button.clickSave();
+
+			WaitForElementNotPresent(locator1 = "ObjectAdmin#SIDE_PANEL");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = "Purchase Order",
+				displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order (Default)");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

@@ -20,6 +20,7 @@ module.exports = {
 	...config,
 	rules: {
 		...config.rules,
+		'liferay/no-block-comments': false,
 		'selector-type-no-unknown': [
 			true,
 			{

@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ServerDisplayContext serverDisplayContext = new ServerDisplayContext(request, renderResponse);
+ServerDisplayContext serverDisplayContext = new ServerDisplayContext(renderRequest, renderResponse);
 %>
 
 <clay:navigation-bar
@@ -16,6 +16,21 @@ ServerDisplayContext serverDisplayContext = new ServerDisplayContext(request, re
 />
 
 <div class="<%= (tabs1.equals("log-levels") || tabs1.equals("properties")) ? StringPool.BLANK : "container-fluid container-fluid-max-xl mt-3" %>">
+
+	<%
+	String key = serverDisplayContext.getSessionMessagesKey();
+	%>
+
+	<c:if test="<%= Validator.isNotNull(key) %>">
+		<aui:script>
+			Liferay.Util.openToast({
+				autoClose: 10000,
+				message: '<liferay-ui:message key="<%= key %>" />',
+				type: 'success',
+			});
+		</aui:script>
+	</c:if>
+
 	<c:choose>
 		<c:when test='<%= tabs1.equals("data-migration") %>'>
 			<liferay-util:include page="/data_migration.jsp" servletContext="<%= application %>" />

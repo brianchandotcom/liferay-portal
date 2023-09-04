@@ -230,12 +230,15 @@ long usedMemory = totalMemory - runtime.freeMemory();
 								</p>
 							</div>
 
-							<div class="autofit-col">
-
-								<%
+							<%
 								List<BackgroundTask> audioPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.preview.audio.internal.background.task.AudioPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
-								%>
+							%>
 
+							<div class="autofit-col">
+								<span class="<%= (audioPreviewBackgroundTasks.size() > 0) ? StringPool.BLANK : "hide" %> loading-animation loading-animation-sm"></span>
+							</div>
+
+							<div class="autofit-col">
 								<aui:button cssClass="save-server-button" data-cmd="dlGenerateAudioPreviews" disabled="<%= (audioPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
 							</div>
 						</li>
@@ -255,12 +258,15 @@ long usedMemory = totalMemory - runtime.freeMemory();
 								</p>
 							</div>
 
-							<div class="autofit-col">
-
-								<%
+							<%
 								List<BackgroundTask> openOfficeConversionPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.document.conversion.internal.background.task.OpenOfficeConversionPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
-								%>
+							%>
 
+							<div class="autofit-col">
+								<span class="<%= (openOfficeConversionPreviewBackgroundTasks.size() > 0) ? StringPool.BLANK : "hide" %> loading-animation loading-animation-sm"></span>
+							</div>
+
+							<div class="autofit-col">
 								<aui:button cssClass="save-server-button" data-cmd="dlGenerateOpenOfficePreviews" disabled="<%= (openOfficeConversionPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
 							</div>
 						</li>
@@ -279,12 +285,15 @@ long usedMemory = totalMemory - runtime.freeMemory();
 							</p>
 						</div>
 
-						<div class="autofit-col">
-
-							<%
+						<%
 							List<BackgroundTask> pdfPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.preview.pdf.internal.background.task.PDFPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
-							%>
+						%>
 
+						<div class="autofit-col">
+							<span class="<%= (pdfPreviewBackgroundTasks.size() > 0) ? StringPool.BLANK : "hide" %> loading-animation loading-animation-sm"></span>
+						</div>
+
+						<div class="autofit-col">
 							<aui:button cssClass="save-server-button" data-cmd="dlGeneratePDFPreviews" disabled="<%= (pdfPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
 						</div>
 					</li>
@@ -303,12 +312,15 @@ long usedMemory = totalMemory - runtime.freeMemory();
 								</p>
 							</div>
 
-							<div class="autofit-col">
-
-								<%
+							<%
 								List<BackgroundTask> videoPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.preview.video.internal.background.task.VideoPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
-								%>
+							%>
 
+							<div class="autofit-col">
+								<span class="<%= (videoPreviewBackgroundTasks.size() > 0) ? StringPool.BLANK : "hide" %> loading-animation loading-animation-sm"></span>
+							</div>
+
+							<div class="autofit-col">
 								<aui:button cssClass="save-server-button" data-cmd="dlGenerateVideoPreviews" disabled="<%= (videoPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
 							</div>
 						</li>

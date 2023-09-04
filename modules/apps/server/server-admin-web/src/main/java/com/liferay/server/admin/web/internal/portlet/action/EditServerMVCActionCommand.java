@@ -209,15 +209,31 @@ public class EditServerMVCActionCommand
 		}
 		else if (cmd.equals("dlGenerateAudioPreviews")) {
 			_audioProcessor.generatePreviews();
+
+			hideDefaultSuccessMessage(actionRequest);
+
+			SessionMessages.add(actionRequest, "dlGenerateAudioPreviews");
 		}
 		else if (cmd.equals("dlGenerateOpenOfficePreviews")) {
 			_documentConversion.generatePreviews();
+
+			hideDefaultSuccessMessage(actionRequest);
+
+			SessionMessages.add(actionRequest, "dlGenerateOpenOfficePreviews");
 		}
 		else if (cmd.equals("dlGeneratePDFPreviews")) {
 			_pdfProcessor.generatePreviews();
+
+			hideDefaultSuccessMessage(actionRequest);
+
+			SessionMessages.add(actionRequest, "dlGeneratePDFPreviews");
 		}
 		else if (cmd.equals("dlGenerateVideoPreviews")) {
 			_videoProcessor.generatePreviews();
+
+			hideDefaultSuccessMessage(actionRequest);
+
+			SessionMessages.add(actionRequest, "dlGenerateVideoPreviews");
 		}
 		else if (cmd.equals("gc")) {
 			_gc();

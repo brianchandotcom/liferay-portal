@@ -25,7 +25,7 @@ public class OpenAPIUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetCollectionOperationId() {
+	public void testGetOperationIdWithCollection() {
 		Assert.assertEquals(
 			"getCamelSchemasPage",
 			OpenAPIUtil.getOperationId(
@@ -71,7 +71,7 @@ public class OpenAPIUtilTest {
 	}
 
 	@Test
-	public void testGetIndividualOperationIdByExternalReferenceCode() {
+	public void testGetOperationIdWithIndividualByExternalReferenceCode() {
 		Assert.assertEquals(
 			"getSchemaByExternalReferenceCodeSchemaERC",
 			OpenAPIUtil.getOperationId(
@@ -108,7 +108,7 @@ public class OpenAPIUtilTest {
 	}
 
 	@Test
-	public void testGetIndividualOperationIdById() {
+	public void testGetOperationIdWithIndividualById() {
 		Assert.assertEquals(
 			"getCamelSchema",
 			OpenAPIUtil.getOperationId(
@@ -144,7 +144,7 @@ public class OpenAPIUtilTest {
 	}
 
 	@Test
-	public void testGetScopedIndividualOperationIdByExternalReferenceCode() {
+	public void testGetOperationIdWithScopedIndividualByExternalReferenceCode() {
 		Assert.assertEquals(
 			"getScopeScopeKeyByExternalReferenceCodeSchemaERC",
 			OpenAPIUtil.getOperationId(

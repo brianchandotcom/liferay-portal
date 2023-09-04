@@ -1,5 +1,5 @@
 {
-	"@generated": "02e5ccfb52bf8477b9708219c4d0c3cd3d326345",
+	"@generated": "19ea7c6da62cd889d1ab17f0e4b6fba209093d69",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -16,8 +16,14 @@
 			"@liferay/frontend-js-react-web": [
 				"../../frontend-js/frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
+			"@liferay/layout-content-page-editor-web": [
+				"../../layout/layout-content-page-editor-web/src/main/resources/META-INF/resources/js/index.d.ts"
+			],
 			"@liferay/layout-js-components-web": [
 				"../../layout/layout-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"frontend-js-components-web": [
+				"../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
 			],
 			"frontend-js-web": [
 				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
@@ -45,7 +51,13 @@
 			"path": "../../frontend-js/frontend-js-react-web"
 		},
 		{
+			"path": "../../layout/layout-content-page-editor-web"
+		},
+		{
 			"path": "../../layout/layout-js-components-web"
+		},
+		{
+			"path": "../../frontend-js/frontend-js-components-web"
 		},
 		{
 			"path": "../../frontend-js/frontend-js-web"

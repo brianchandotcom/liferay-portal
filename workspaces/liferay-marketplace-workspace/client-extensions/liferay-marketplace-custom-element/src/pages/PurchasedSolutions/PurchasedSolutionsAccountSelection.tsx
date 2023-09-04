@@ -36,9 +36,12 @@ const productCustomFields = [
 	'Site Initializer',
 ];
 
-const PurchasedSolutionsAccountSelection: React.FC<
-	PurchasedSolutionsccountSelectionProps
-> = ({accounts, currentUserAccount, orderInfo, setStep}) => {
+const PurchasedSolutionsAccountSelection: React.FC<PurchasedSolutionsccountSelectionProps> = ({
+	accounts,
+	currentUserAccount,
+	orderInfo,
+	setStep,
+}) => {
 	const [radio, setRadio] = useState<RadioOption>();
 	const [orderType, setOrderType] = useState<OrderType>();
 	const [disabledButton, setDisabledButton] = useState<boolean>(false);

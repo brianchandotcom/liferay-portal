@@ -1,6 +1,8 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*"
+		"@clayui/form": "3.104.0",
+		"frontend-js-web": "*",
+		"react": "16.12.0"
 	},
 	"name": "@liferay/feature-flag-web",
 	"private": true,

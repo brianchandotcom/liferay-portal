@@ -6,9 +6,9 @@
 import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, getByText, render} from '@testing-library/react';
 import Select from 'dynamic-data-mapping-form-field-type/Select/Select.es';
-import {RuleEditor} from 'dynamic-data-mapping-form-web/admin/js/pages/RuleEditor.es';
 import React from 'react';
 
+import {RuleEditor} from '../../../src/main/resources/META-INF/resources/admin/js/pages/RuleEditor.es';
 import {FIELDS, FIELDS_TYPES, OPERATORS_BY_TYPE} from '../__mock__/fields.es';
 
 global.fetch.enableFetchMocks();

@@ -4,11 +4,12 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {ExperienceSelector} from '@liferay/layout-js-components-web';
 import {fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
+
+import {ExperienceSelector} from '../../../src/main/resources/META-INF/resources/js/index';
 
 const mockSegments = {
 	segmentsExperiences: [

@@ -32,6 +32,7 @@ function walk(dir, callback) {
 beforeEach(() => {
 	jest.resetModules();
 
+	// eslint-disable-next-line @liferay/no-extraneous-dependencies
 	const {YUI} = require('alloy-ui/build/aui/aui');
 
 	const _YUI = YUI();

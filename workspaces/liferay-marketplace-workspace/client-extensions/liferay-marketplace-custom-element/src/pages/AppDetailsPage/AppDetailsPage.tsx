@@ -38,8 +38,9 @@ export function AppDetailsPage({
 	setSelectedApp,
 }: AppDetailsPageProps) {
 	const [appVersion, setAppVersion] = useState('0');
-	const [navigationBarActive, setNavigationBarActive] =
-		useState('App Details');
+	const [navigationBarActive, setNavigationBarActive] = useState(
+		'App Details'
+	);
 
 	const [_, dispatch] = useAppContext();
 	const thumbnail = getThumbnailByProductAttachment(selectedApp.attachments);

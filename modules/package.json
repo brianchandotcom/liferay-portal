@@ -29,7 +29,6 @@
 		"cacheClean": "liferay-npm-scripts cache --clean",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
-		"lint": "liferay-npm-scripts lint",
 		"types": "liferay-npm-scripts types"
 	},
 	"workspaces": {

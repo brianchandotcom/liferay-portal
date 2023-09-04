@@ -1,6 +1,10 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*"
+		"@clayui/alert": "3.93.0",
+		"@clayui/form": "3.104.0",
+		"frontend-js-web": "*",
+		"prop-types": "15.7.2",
+		"react": "16.12.0"
 	},
 	"name": "site-admin-web",
 	"scripts": {

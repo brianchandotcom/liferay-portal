@@ -1,5 +1,5 @@
 {
-	"@generated": "d8040a45557ab265b8f60f4099e72408f21f87e4",
+	"@generated": "ef1cd2c35d9ff2d6f173ecd8973f049606ee42cd",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -13,6 +13,9 @@
 		"moduleResolution": "node",
 		"outDir": "./types",
 		"paths": {
+			"frontend-js-web": [
+				"../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
+			]
 		},
 		"sourceMap": false,
 		"strict": true,
@@ -32,5 +35,8 @@
 		"../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../frontend-js/frontend-js-web"
+		}
 	]
 }

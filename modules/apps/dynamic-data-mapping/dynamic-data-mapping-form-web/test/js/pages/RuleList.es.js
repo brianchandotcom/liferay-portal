@@ -4,8 +4,9 @@
  */
 
 import {cleanup, render} from '@testing-library/react';
-import {RuleList} from 'dynamic-data-mapping-form-web/admin/js/pages/RuleList.es';
 import React from 'react';
+
+import {RuleList} from '../../../src/main/resources/META-INF/resources/admin/js/pages/RuleList.es';
 
 const DEFAULT_ACTIONS = {
 	action: 'enable',

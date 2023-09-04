@@ -1,6 +1,12 @@
 {
 	"dependencies": {
+		"@clayui/icon": "3.56.0",
+		"@clayui/layout": "3.93.0",
+		"@clayui/popover": "3.104.0",
+		"@clayui/sticker": "3.65.0",
+		"classnames": "2.3.1",
 		"frontend-js-web": "*",
+		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},
 	"name": "@liferay/comment-taglib",

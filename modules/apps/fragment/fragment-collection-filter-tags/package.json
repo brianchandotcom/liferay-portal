@@ -1,5 +1,8 @@
 {
 	"dependencies": {
+		"@liferay/fragment-renderer-collection-filter-impl": "*",
+		"asset-taglib": "*",
+		"react": "16.12.0"
 	},
 	"main": "js/SelectTags.tsx",
 	"name": "@liferay/fragment-collection-filter-tags",

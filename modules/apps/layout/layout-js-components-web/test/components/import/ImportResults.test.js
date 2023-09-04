@@ -4,9 +4,10 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {ImportResults} from '@liferay/layout-js-components-web';
 import {render} from '@testing-library/react';
 import React from 'react';
+
+import {ImportResults} from '../../../src/main/resources/META-INF/resources/js/index';
 
 const SUCCESS_RESULT = {
 	success: [

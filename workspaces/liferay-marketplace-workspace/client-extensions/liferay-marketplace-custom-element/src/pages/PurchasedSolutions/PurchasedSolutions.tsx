@@ -143,10 +143,9 @@ const PurchasedSolutions: React.FC = () => {
 		(async () => {
 			setCurrentUserAccount(await getUserAccount());
 
-			const insdustriesListTypeEntries =
-				await getListTypeDefinitionByExternalReferenceCode(
-					externalReferenceCode
-				);
+			const insdustriesListTypeEntries = await getListTypeDefinitionByExternalReferenceCode(
+				externalReferenceCode
+			);
 
 			setIndustries(insdustriesListTypeEntries?.listTypeEntries);
 
@@ -470,16 +469,20 @@ const PurchasedSolutions: React.FC = () => {
 																onClick={() => {
 																	setCurrentPhonesFlags(
 																		{
-																			code: item.code,
-																			flag: item.flag,
+																			code:
+																				item.code,
+																			flag:
+																				item.flag,
 																		}
 																	);
 
 																	setValue(
 																		'phone',
 																		{
-																			code: item.code,
-																			flag: item.flag,
+																			code:
+																				item.code,
+																			flag:
+																				item.flag,
 																		}
 																	);
 																}}
@@ -559,8 +562,7 @@ const PurchasedSolutions: React.FC = () => {
 													<ClayButton
 														displayType="unstyled"
 														onClick={() => {
-															window.location.href =
-																origin;
+															window.location.href = origin;
 														}}
 													>
 														Cancel

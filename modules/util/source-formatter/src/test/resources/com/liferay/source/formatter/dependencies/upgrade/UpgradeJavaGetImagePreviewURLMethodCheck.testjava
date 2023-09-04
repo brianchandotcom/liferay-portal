@@ -5,11 +5,6 @@
 
 package com.liferay.source.formatter.dependencies.upgrade;
 
-import com.liferay.document.library.kernel.util.DLUtil;
-
-/**
- * @author Tamyris Bernardo
- */
 public class UpgradeJavaGetImagePreviewURLMethodCheck {
 
 	public void method() {

@@ -39,29 +39,27 @@ definition {
 	@description = "This is a test for LPS-145280. Verify if the widget's chat is hidden in the control panel if the user enable this option"
 	@priority = 4
 	test CanHideChatWidgetInControlPanel {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
+		task ("Given the user set JivoChat configuration") {
+			ClickToChatUtils.fillGoalsChat(
+				chatProviderId = "JivoChat",
+				siteSettingsStrategy = "Always Inherit");
 
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "JivoChat");
+			ClickToChatUtils.getPassword(chatProviderChoosen = "jivochat");
+		}
 
-		var clickToChatJivochatPassword = PropsUtil.get("click.to.chat.jivochat.password");
+		task ("And can see the JivoChat icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
+		}
 
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = ${clickToChatJivochatPassword});
+		task ("When the user clicks on Hide In Control Panel") {
+			FormFields.enableCheckbox(fieldName = "hideInControlPanel");
 
-		SystemSettings.saveConfiguration();
+			SystemSettings.saveConfiguration();
+		}
 
-		AssertElementPresent(locator1 = "Providers#CHAT_JIVOCHAT");
-
-		FormFields.enableCheckbox(fieldName = "hideInControlPanel");
-
-		SystemSettings.saveConfiguration();
-
-		AssertElementNotPresent(locator1 = "Providers#CHAT_JIVOCHAT");
+		task ("Then The user can not see the JivoChat icon") {
+			AssertElementNotPresent(locator1 = "Providers#CHAT_JIVOCHAT");
+		}
 	}
 
 	@description = "This is a test for LPS-137169. Verify if Hubspot can access required scopes"

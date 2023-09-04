@@ -317,8 +317,8 @@ public class RankingPortletDisplayBuilder {
 	private PortletURL _getPortletURL(String keywords) {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
-		).setMVCPath(
-			"/view.jsp"
+		).setMVCRenderCommandName(
+			"/"
 		).setKeywords(
 			() -> {
 				if (!Validator.isBlank(keywords)) {

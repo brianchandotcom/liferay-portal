@@ -2251,7 +2251,7 @@ definition {
 	macro logoutAndLoginPG {
 		Navigator.openURL();
 
-		UserBar.signOut();
+		UserBar.signOut(signOutLocalizationName = ${signOutLocalizationName});
 
 		User.loginPG(
 			authenticationMethod = ${authenticationMethod},

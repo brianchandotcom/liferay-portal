@@ -5,7 +5,6 @@
 
 package com.liferay.search.experiences.internal.info.collection.provider;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
@@ -14,87 +13,42 @@ import com.liferay.info.filter.CategoriesInfoFilter;
 import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.filter.KeywordsInfoFilter;
 import com.liferay.info.filter.TagsInfoFilter;
-import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
-import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.search.experiences.model.SXPBlueprint;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
 /**
- * @author Tibor Lipusz
- * @author Gustavo Lima
+ * @author Petteri Karttunen
  */
-public class SXPBlueprintInfoCollectionProvider
-	implements FilteredInfoCollectionProvider<AssetEntry>,
-			   SingleFormVariationInfoCollectionProvider<AssetEntry> {
+public abstract class SXPBlueprintInfoCollectionProvider<T>
+	implements FilteredInfoCollectionProvider<T>,
+			   SingleFormVariationInfoCollectionProvider<T> {
 
 	public SXPBlueprintInfoCollectionProvider(
 		AssetHelper assetHelper, Searcher searcher,
 		SearchRequestBuilderFactory searchRequestBuilderFactory,
 		SXPBlueprint sxpBlueprint) {
 
-		_assetHelper = assetHelper;
-		_searcher = searcher;
-		_searchRequestBuilderFactory = searchRequestBuilderFactory;
-		_sxpBlueprint = sxpBlueprint;
-	}
-
-	@Override
-	public InfoPage<AssetEntry> getCollectionInfoPage(
-		CollectionQuery collectionQuery) {
-
-		try {
-			Pagination pagination = collectionQuery.getPagination();
-
-			SearchRequestBuilder searchRequestBuilder =
-				_getSearchRequestBuilder(collectionQuery, pagination);
-
-			SearchResponse searchResponse = _searcher.search(
-				searchRequestBuilder.build());
-
-			return InfoPage.of(
-				_assetHelper.getAssetEntries(searchResponse.getSearchHits()),
-				collectionQuery.getPagination(), searchResponse.getTotalHits());
-		}
-		catch (Exception exception) {
-			_log.error("Unable to get asset entries", exception);
-		}
-
-		return InfoPage.of(
-			Collections.emptyList(), collectionQuery.getPagination(), 0);
-	}
-
-	@Override
-	public String getFormVariationKey() {
-		return _sxpBlueprint.getExternalReferenceCode();
-	}
-
-	@Override
-	public String getKey() {
-		return StringBundler.concat(
-			SingleFormVariationInfoCollectionProvider.super.getKey(), "_",
-			_sxpBlueprint.getCompanyId(), "_",
-			_sxpBlueprint.getExternalReferenceCode());
+		this.assetHelper = assetHelper;
+		this.searcher = searcher;
+		this.searchRequestBuilderFactory = searchRequestBuilderFactory;
+		this.sxpBlueprint = sxpBlueprint;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return _sxpBlueprint.getTitle(locale);
+		return sxpBlueprint.getTitle(locale);
 	}
 
 	@Override
@@ -109,15 +63,19 @@ public class SXPBlueprintInfoCollectionProvider
 		return FeatureFlagManagerUtil.isEnabled("LPS-129412");
 	}
 
-	private SearchRequestBuilder _getSearchRequestBuilder(
+	protected SearchRequestBuilder getSearchRequestBuilder(
 		CollectionQuery collectionQuery, Pagination pagination) {
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		return _searchRequestBuilderFactory.builder(
+		return searchRequestBuilderFactory.builder(
 		).companyId(
 			serviceContext.getCompanyId()
+		).fetchSource(
+			false
+		).fields(
+			new String[0]
 		).from(
 			pagination.getStart()
 		).emptySearchEnabled(
@@ -156,7 +114,7 @@ public class SXPBlueprintInfoCollectionProvider
 
 				searchContext.setAttribute(
 					"search.experiences.blueprint.external.reference.code",
-					_sxpBlueprint.getExternalReferenceCode());
+					sxpBlueprint.getExternalReferenceCode());
 				searchContext.setAttribute(
 					"search.experiences.ip.address",
 					serviceContext.getRemoteAddr());
@@ -181,12 +139,9 @@ public class SXPBlueprintInfoCollectionProvider
 		);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SXPBlueprintInfoCollectionProvider.class);
-
-	private final AssetHelper _assetHelper;
-	private final Searcher _searcher;
-	private final SearchRequestBuilderFactory _searchRequestBuilderFactory;
-	private final SXPBlueprint _sxpBlueprint;
+	protected final AssetHelper assetHelper;
+	protected final Searcher searcher;
+	protected final SearchRequestBuilderFactory searchRequestBuilderFactory;
+	protected final SXPBlueprint sxpBlueprint;
 
 }

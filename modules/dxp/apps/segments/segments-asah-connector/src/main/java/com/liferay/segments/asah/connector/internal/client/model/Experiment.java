@@ -132,6 +132,10 @@ public final class Experiment {
 		return _pageURL;
 	}
 
+	public Boolean getPublishable() {
+		return _publishable;
+	}
+
 	public String getPublishedDXPVariantId() {
 		return _publishedDXPVariantId;
 	}
@@ -240,6 +244,10 @@ public final class Experiment {
 		_pageURL = pageURL;
 	}
 
+	public void setPublishable(Boolean publishable) {
+		_publishable = publishable;
+	}
+
 	public void setPublishedDXPVariantId(String publishedDXPVariantId) {
 		_publishedDXPVariantId = publishedDXPVariantId;
 	}
@@ -272,6 +280,7 @@ public final class Experiment {
 	private String _pageRelativePath;
 	private String _pageTitle;
 	private String _pageURL;
+	private Boolean _publishable;
 	private String _publishedDXPVariantId;
 	private Date _startedDate;
 

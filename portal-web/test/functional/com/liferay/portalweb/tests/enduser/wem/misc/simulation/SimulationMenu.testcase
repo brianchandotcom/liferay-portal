@@ -296,12 +296,32 @@ definition {
 		MobileDevice.previewPG(deviceType = "custom");
 	}
 
+	@description = "This is a test for LPS-186155. Preview the custom size on Simulation panel."
 	@priority = 3
-	test PreviewCustomHeightWidth {
-		MobileDevice.previewPG(
-			deviceType = "custom",
-			height = 500,
-			width = 500);
+	test PreviewCustomSize {
+		property custom.properties = "feature.flag.LPS-186558=true";
+
+		task ("When the site administrator applies custom size on simulation panel") {
+			MobileDevice.previewPG(
+				applyCustomSize = "true",
+				deviceType = "custom",
+				height = 500,
+				width = 500);
+		}
+
+		task ("Then the site administrator sees the custom size applied to preview window") {
+			SelectFrameTop();
+
+			AssertCssValue(
+				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME",
+				locator2 = "height",
+				value1 = "500px");
+
+			AssertCssValue(
+				locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME",
+				locator2 = "width",
+				value1 = "500px");
+		}
 	}
 
 	@priority = 3

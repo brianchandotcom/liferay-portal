@@ -414,7 +414,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					).put(
 						"path", "/single-element-path/{singleElementPathId}"
 					).put(
-						"pathParameter", "ID"
+						"pathParameter", "id"
 					).put(
 						"retrieveType", "singleElement"
 					).put(

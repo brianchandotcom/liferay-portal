@@ -5,7 +5,6 @@
 
 package com.liferay.headless.builder.resource.test;
 
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
@@ -273,7 +272,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
 		ObjectEntry objectEntry = _addCustomObjectEntry(
-			1, null, _objectDefinition1, "value1");
+			1, null, _objectDefinition1, "value1",
+			RandomTestUtil.randomString());
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -296,13 +296,14 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, "ID", "singleElement",
+			_API_APPLICATION_PATH_1, "id", "singleElement",
 			APIApplication.Endpoint.Scope.COMPANY);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
 		ObjectEntry objectEntry = _addCustomObjectEntry(
-			1, null, _objectDefinition1, "value1");
+			1, null, _objectDefinition1, "value1",
+			RandomTestUtil.randomString());
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -313,6 +314,33 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				StringBundler.concat(
 					"c/", _BASE_URL_1, _API_APPLICATION_PATH_1,
 					StringPool.FORWARD_SLASH, objectEntry.getObjectEntryId()),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
+	public void testGetIndividualObjectEntryByUniqueField() throws Exception {
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_objectDefinition1.getExternalReferenceCode(),
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_API_APPLICATION_PATH_1, "textUniqueField", "singleElement",
+			APIApplication.Endpoint.Scope.COMPANY);
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		_addCustomObjectEntry(
+			1, null, _objectDefinition1, "value1", "valueUnique");
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"textUniqueProperty", "valueUnique"
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					"c/", _BASE_URL_1, _API_APPLICATION_PATH_1, "/valueUnique"),
 				Http.Method.GET
 			).toString(),
 			JSONCompareMode.LENIENT);
@@ -334,7 +362,9 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
 		for (int i = 0; i <= 25; i++) {
-			_addCustomObjectEntry(i, null, _objectDefinition1, "value" + i);
+			_addCustomObjectEntry(
+				i, null, _objectDefinition1, "value" + i,
+				RandomTestUtil.randomString());
 		}
 
 		JSONAssert.assertEquals(
@@ -395,9 +425,12 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
-		_addCustomObjectEntry(1, null, _objectDefinition1, "value1");
-		_addCustomObjectEntry(2, null, _objectDefinition1, "value2");
-		_addCustomObjectEntry(3, null, _objectDefinition1, "value3");
+		_addCustomObjectEntry(
+			1, null, _objectDefinition1, "value1", "uniqueValue1");
+		_addCustomObjectEntry(
+			2, null, _objectDefinition1, "value2", "uniqueValue2");
+		_addCustomObjectEntry(
+			3, null, _objectDefinition1, "value3", "uniqueValue3");
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
@@ -427,6 +460,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"relatedTextProperty2", Collections.emptyList()
 				).put(
 					"textProperty", "value1"
+				).put(
+					"textUniqueProperty", "uniqueValue1"
 				),
 				JSONUtil.put(
 					"integerProperty", 2
@@ -448,6 +483,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"relatedTextProperty2", Collections.emptyList()
 				).put(
 					"textProperty", "value2"
+				).put(
+					"textUniqueProperty", "uniqueValue2"
 				),
 				JSONUtil.put(
 					"integerProperty", 3
@@ -469,6 +506,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"relatedTextProperty2", Collections.emptyList()
 				).put(
 					"textProperty", "value3"
+				).put(
+					"textUniqueProperty", "uniqueValue3"
 				)
 			).toString(),
 			itemsJSONArray.toString(), JSONCompareMode.STRICT);
@@ -504,6 +543,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"relatedTextProperty2", Collections.emptyList()
 				).put(
 					"textProperty", "value3"
+				).put(
+					"textUniqueProperty", "uniqueValue3"
 				),
 				JSONUtil.put(
 					"integerProperty", 2
@@ -525,6 +566,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"relatedTextProperty2", Collections.emptyList()
 				).put(
 					"textProperty", "value2"
+				).put(
+					"textUniqueProperty", "uniqueValue2"
 				),
 				JSONUtil.put(
 					"integerProperty", 1
@@ -546,6 +589,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"relatedTextProperty2", Collections.emptyList()
 				).put(
 					"textProperty", "value1"
+				).put(
+					"textUniqueProperty", "uniqueValue1"
 				)
 			).toString(),
 			itemsJSONArray.toString(), JSONCompareMode.STRICT);
@@ -564,9 +609,12 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
-		_addCustomObjectEntry(1, null, _objectDefinition1, "value1");
-		_addCustomObjectEntry(2, null, _objectDefinition1, "value2");
-		_addCustomObjectEntry(3, null, _objectDefinition1, "value3");
+		_addCustomObjectEntry(
+			1, null, _objectDefinition1, "value1", "uniqueValue1");
+		_addCustomObjectEntry(
+			2, null, _objectDefinition1, "value2", "uniqueValue2");
+		_addCustomObjectEntry(
+			3, null, _objectDefinition1, "value3", "uniqueValue3");
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1,
@@ -596,6 +644,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"relatedTextProperty2", Collections.emptyList()
 				).put(
 					"textProperty", "value3"
+				).put(
+					"textUniqueProperty", "uniqueValue3"
 				),
 				JSONUtil.put(
 					"integerProperty", 2
@@ -617,6 +667,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"relatedTextProperty2", Collections.emptyList()
 				).put(
 					"textProperty", "value2"
+				).put(
+					"textUniqueProperty", "uniqueValue2"
 				),
 				JSONUtil.put(
 					"integerProperty", 1
@@ -638,6 +690,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"relatedTextProperty2", Collections.emptyList()
 				).put(
 					"textProperty", "value1"
+				).put(
+					"textUniqueProperty", "uniqueValue1"
 				)
 			).toString(),
 			itemsJSONArray.toString(), JSONCompareMode.STRICT);
@@ -673,6 +727,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"relatedTextProperty2", Collections.emptyList()
 				).put(
 					"textProperty", "value1"
+				).put(
+					"textUniqueProperty", "uniqueValue1"
 				),
 				JSONUtil.put(
 					"integerProperty", 2
@@ -694,6 +750,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"relatedTextProperty2", Collections.emptyList()
 				).put(
 					"textProperty", "value2"
+				).put(
+					"textUniqueProperty", "uniqueValue2"
 				),
 				JSONUtil.put(
 					"integerProperty", 3
@@ -715,6 +773,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					"relatedTextProperty2", Collections.emptyList()
 				).put(
 					"textProperty", "value3"
+				).put(
+					"textUniqueProperty", "uniqueValue3"
 				)
 			).toString(),
 			itemsJSONArray.toString(), JSONCompareMode.STRICT);
@@ -774,14 +834,17 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				Http.Method.GET));
 
 		ObjectEntry objectEntry1 = _addCustomObjectEntry(
-			1, null, _objectDefinition1, "value1");
+			1, null, _objectDefinition1, "value1",
+			RandomTestUtil.randomString());
 		ObjectEntry objectEntry2 = _addCustomObjectEntry(
-			2, null, _objectDefinition2, "value2");
+			2, null, _objectDefinition2, "value2",
+			RandomTestUtil.randomString());
 
 		_relateObjectEntries(objectEntry1, objectEntry2, _objectRelationship1);
 
 		ObjectEntry objectEntry3 = _addCustomObjectEntry(
-			3, null, _objectDefinition3, "value3");
+			3, null, _objectDefinition3, "value3",
+			RandomTestUtil.randomString());
 
 		_relateObjectEntries(objectEntry2, objectEntry3, _objectRelationship2);
 
@@ -867,7 +930,9 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
 		for (int i = 0; i <= 25; i++) {
-			_addCustomObjectEntry(i, null, _objectDefinition1, "value" + i);
+			_addCustomObjectEntry(
+				i, null, _objectDefinition1, "value" + i,
+				RandomTestUtil.randomString());
 		}
 
 		JSONAssert.assertEquals(
@@ -911,10 +976,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		ObjectEntry objectEntry1 = _addCustomObjectEntry(
 			1, Arrays.asList(ListTypeValue.VALUE1), _objectDefinition1,
-			"1value1");
+			"1value1", RandomTestUtil.randomString());
 		ObjectEntry objectEntry2 = _addCustomObjectEntry(
 			2, Arrays.asList(ListTypeValue.VALUE2, ListTypeValue.VALUE3),
-			_objectDefinition1, "2value2");
+			_objectDefinition1, "2value2", RandomTestUtil.randomString());
 
 		// Comparison operators
 
@@ -961,21 +1026,21 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		ObjectEntry level1RelatedObjectEntry1 = _addCustomObjectEntry(
 			3, Arrays.asList(ListTypeValue.VALUE2), _objectDefinition2,
-			"3value3");
+			"3value3", RandomTestUtil.randomString());
 
 		_relateObjectEntries(
 			objectEntry1, level1RelatedObjectEntry1, _objectRelationship1);
 
 		ObjectEntry level1RelatedObjectEntry2 = _addCustomObjectEntry(
 			4, Arrays.asList(ListTypeValue.VALUE1, ListTypeValue.VALUE3),
-			_objectDefinition2, "4value4");
+			_objectDefinition2, "4value4", RandomTestUtil.randomString());
 
 		_relateObjectEntries(
 			objectEntry2, level1RelatedObjectEntry2, _objectRelationship1);
 
 		ObjectEntry level2RelatedObjectEntry1 = _addCustomObjectEntry(
 			5, Arrays.asList(ListTypeValue.VALUE3), _objectDefinition3,
-			"5value5");
+			"5value5", RandomTestUtil.randomString());
 
 		_relateObjectEntries(
 			level1RelatedObjectEntry1, level2RelatedObjectEntry1,
@@ -983,7 +1048,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		ObjectEntry level2RelatedObjectEntry2 = _addCustomObjectEntry(
 			6, Arrays.asList(ListTypeValue.VALUE1, ListTypeValue.VALUE2),
-			_objectDefinition3, "6value6");
+			_objectDefinition3, "6value6", RandomTestUtil.randomString());
 
 		_relateObjectEntries(
 			level1RelatedObjectEntry2, level2RelatedObjectEntry2,
@@ -1113,17 +1178,17 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 		ObjectEntry objectEntry1 = _addCustomObjectEntry(
 			_group.getGroupId(), 1, null, _siteScopedObjectDefinition1,
-			"value1");
+			"value1", RandomTestUtil.randomString());
 		ObjectEntry objectEntry2 = _addCustomObjectEntry(
 			_group.getGroupId(), 2, null, _siteScopedObjectDefinition2,
-			"value2");
+			"value2", RandomTestUtil.randomString());
 
 		_relateObjectEntries(
 			objectEntry1, objectEntry2, _siteScopedObjectRelationship1);
 
 		ObjectEntry objectEntry3 = _addCustomObjectEntry(
 			_group.getGroupId(), 3, null, _siteScopedObjectDefinition3,
-			"value3");
+			"value3", RandomTestUtil.randomString());
 
 		_relateObjectEntries(
 			objectEntry2, objectEntry3, _siteScopedObjectRelationship2);
@@ -1176,6 +1241,76 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			HTTPTestUtil.invokeToHttpCode(
 				null, String.format(scopedEndpointPath, _group.getGroupId()),
 				Http.Method.GET));
+	}
+
+	@Test
+	public void testGetWithSiteScopedEndpointIndividualObjectEntryByExternalReferenceCode()
+		throws Exception {
+
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_siteScopedObjectDefinition1.getExternalReferenceCode(),
+			_siteScopedObjectRelationship1.getName(),
+			_siteScopedObjectRelationship2.getName(), _API_APPLICATION_PATH_1,
+			"externalReferenceCode", "singleElement",
+			APIApplication.Endpoint.Scope.GROUP);
+
+		String scopedEndpointPath = StringBundler.concat(
+			"c/", _BASE_URL_1, "/scopes/%s", _API_APPLICATION_PATH_1);
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		ObjectEntry objectEntry = _addCustomObjectEntry(
+			_group.getGroupId(), 1, null, _siteScopedObjectDefinition1,
+			"value1", RandomTestUtil.randomString());
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"textProperty", "value1"
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					String.format(scopedEndpointPath, _group.getGroupId()),
+					StringPool.FORWARD_SLASH,
+					objectEntry.getExternalReferenceCode()),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
+	public void testGetWithSiteScopedEndpointIndividualObjectEntryByUniqueField()
+		throws Exception {
+
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_siteScopedObjectDefinition1.getExternalReferenceCode(),
+			_siteScopedObjectRelationship1.getName(),
+			_siteScopedObjectRelationship2.getName(), _API_APPLICATION_PATH_1,
+			"textUniqueField", "singleElement",
+			APIApplication.Endpoint.Scope.GROUP);
+
+		String scopedEndpointPath = StringBundler.concat(
+			"c/", _BASE_URL_1, "/scopes/%s", _API_APPLICATION_PATH_1);
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		_addCustomObjectEntry(
+			_group.getGroupId(), 1, null, _siteScopedObjectDefinition1,
+			"value1", "uniqueValue");
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"textUniqueProperty", "uniqueValue"
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				String.format(scopedEndpointPath, _group.getGroupId()) +
+					"/uniqueValue",
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
 	}
 
 	private void _addAggregationObjectField(
@@ -1247,6 +1382,14 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"name", "textProperty"
 							).put(
 								"objectFieldERC", _API_SCHEMA_TEXT_FIELD_ERC + 1
+							),
+							JSONUtil.put(
+								"description", "description"
+							).put(
+								"name", "textUniqueProperty"
+							).put(
+								"objectFieldERC",
+								_API_SCHEMA_UNIQUE_TEXT_FIELD_ERC
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -1387,18 +1530,20 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	private ObjectEntry _addCustomObjectEntry(
 			int integerFieldValue,
 			List<ListTypeValue> multiselectPicklistFieldValue,
-			ObjectDefinition objectDefinition, String textFieldValue)
+			ObjectDefinition objectDefinition, String textFieldValue,
+			String textUniqueFieldValue)
 		throws Exception {
 
 		return _addCustomObjectEntry(
 			0L, integerFieldValue, multiselectPicklistFieldValue,
-			objectDefinition, textFieldValue);
+			objectDefinition, textFieldValue, textUniqueFieldValue);
 	}
 
 	private ObjectEntry _addCustomObjectEntry(
 			long groupId, int integerFieldValue,
 			List<ListTypeValue> multiselectPicklistFieldValue,
-			ObjectDefinition objectDefinition, String textFieldValue)
+			ObjectDefinition objectDefinition, String textFieldValue,
+			String textUniqueFieldValue)
 		throws Exception {
 
 		ListTypeValue listTypeValue = RandomTestUtil.randomEnum(
@@ -1457,6 +1602,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"richTextField", RandomTestUtil.randomString()
 			).put(
 				"textField", textFieldValue
+			).put(
+				"textUniqueField", textUniqueFieldValue
 			).build());
 	}
 
@@ -1598,6 +1745,20 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 						RandomTestUtil.randomString())
 				).name(
 					"textField"
+				).build(),
+				new TextObjectFieldBuilder(
+				).externalReferenceCode(
+					_API_SCHEMA_UNIQUE_TEXT_FIELD_ERC
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textUniqueField"
+				).objectFieldSettings(
+					Collections.singletonList(
+						_createObjectFieldSetting(
+							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
+							Boolean.TRUE.toString()))
 				).build()),
 			scope);
 	}
@@ -1777,6 +1938,9 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	private static final String _API_SCHEMA_TEXT_FIELD_ERC =
 		RandomTestUtil.randomString();
 
+	private static final String _API_SCHEMA_UNIQUE_TEXT_FIELD_ERC =
+		RandomTestUtil.randomString();
+
 	private static final String _BASE_URL_1 = StringUtil.toLowerCase(
 		RandomTestUtil.randomString());
 
@@ -1785,9 +1949,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	private static DateFormat _dateFormat;
 	private static DateFormat _dateTimeFormat;
-
-	@Inject
-	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	private DocumentResource _documentResource;
 	private Group _group;

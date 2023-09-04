@@ -11,8 +11,8 @@ import {createRoot} from 'react-dom/client';
 import {SWRConfig} from 'swr';
 import './common/styles/global.scss';
 
-import {OktaStatusPortal} from './OktaStatus';
 import SWRCacheProvider from './SWRCacheProvider';
+import OktaStatus from './common/components/OktaSession';
 import {AppPropertiesContext} from './common/contexts/AppPropertiesContext';
 import useApollo from './common/hooks/useApollo';
 import useGlobalNetworkIndicator from './common/hooks/useGlobalNetworkIndicator';
@@ -82,7 +82,7 @@ const CustomerPortalApp: React.FC<CustomerPortalAppProps> = ({
 				}
 			>
 				{properties.featureFlags?.includes('LPS-192494') && (
-					<OktaStatusPortal />
+					<OktaStatus />
 				)}
 
 				<AppRouteComponent />

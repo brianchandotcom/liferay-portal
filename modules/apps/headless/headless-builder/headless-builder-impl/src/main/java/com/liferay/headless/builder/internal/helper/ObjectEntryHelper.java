@@ -56,13 +56,13 @@ public class ObjectEntryHelper {
 
 	public List<ObjectEntry> getObjectEntries(
 			long companyId, String filterString, List<String> nestedFields,
-			String objectDefinitionExternalReferenceCode)
+			String objectDefinitionExternalReferenceCode, String scopeKey)
 		throws Exception {
 
 		Page<ObjectEntry> objectEntriesPage = getObjectEntriesPage(
 			companyId, filterString, nestedFields,
 			Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			objectDefinitionExternalReferenceCode);
+			objectDefinitionExternalReferenceCode, scopeKey);
 
 		return new ArrayList<>(objectEntriesPage.getItems());
 	}
@@ -74,7 +74,7 @@ public class ObjectEntryHelper {
 
 		return getObjectEntries(
 			companyId, filterString, Collections.emptyList(),
-			objectDefinitionExternalReferenceCode);
+			objectDefinitionExternalReferenceCode, null);
 	}
 
 	public Page<ObjectEntry> getObjectEntriesPage(
@@ -113,7 +113,8 @@ public class ObjectEntryHelper {
 
 	public Page<ObjectEntry> getObjectEntriesPage(
 			long companyId, String filterString, List<String> nestedFields,
-			Pagination pagination, String objectDefinitionExternalReferenceCode)
+			Pagination pagination, String objectDefinitionExternalReferenceCode,
+			String scopeKey)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -129,7 +130,7 @@ public class ObjectEntryHelper {
 			companyId,
 			_objectDefinitionFilterParser.parse(filterString, objectDefinition),
 			nestedFields, pagination, objectDefinitionExternalReferenceCode,
-			null, null);
+			scopeKey, null);
 	}
 
 	public ObjectEntry getObjectEntry(
@@ -239,7 +240,7 @@ public class ObjectEntryHelper {
 		return TransformUtil.transform(
 			_objectFieldLocalService.getObjectFields(
 				objectDefinition.getObjectDefinitionId()),
-			objectField -> _getUniqueFieldName(objectField));
+			this::_getUniqueFieldName);
 	}
 
 	public boolean isValidObjectEntry(

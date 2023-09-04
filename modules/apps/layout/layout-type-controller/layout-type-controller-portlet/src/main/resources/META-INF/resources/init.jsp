@@ -9,8 +9,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/layout" prefix="liferay-layout" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.layout.type.controller.portlet.internal.constants.PortletLayoutTypeControllerWebKeys" %><%@
 page import="com.liferay.layout.type.controller.portlet.internal.display.context.PortletLayoutDisplayContext" %><%@

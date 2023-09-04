@@ -19,7 +19,7 @@ if (selLayout != null) {
 }
 %>
 
-<liferay-ui:layout-templates-list
+<liferay-layout:layout-templates-list
 	layoutTemplateId="<%= (selLayoutTypePortlet != null) ? selLayoutTypePortlet.getLayoutTemplateId() : StringPool.BLANK %>"
 	layoutTemplates="<%= LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId()) %>"
 />

@@ -228,9 +228,9 @@ public class ObjectEntryLocalServiceTest {
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
 					"Email Address Domain", "emailAddressDomain", false),
 				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					0, ObjectFieldConstants.BUSINESS_TYPE_TEXT, null,
 					ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-					"First Name", "firstName", false),
+					"First Name", "firstName", false, true),
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_DECIMAL,
 					ObjectFieldConstants.DB_TYPE_DOUBLE, true, false, null,

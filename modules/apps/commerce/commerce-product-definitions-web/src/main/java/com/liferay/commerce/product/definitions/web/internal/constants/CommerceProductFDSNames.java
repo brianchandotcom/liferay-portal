@@ -58,4 +58,7 @@ public class CommerceProductFDSNames {
 	public static final String PRODUCT_PRICING_CLASSES =
 		CPPortletKeys.CP_DEFINITIONS + "-productPricingClasses";
 
+	public static final String PRODUCT_UNITS_OF_MEASURE =
+		CPPortletKeys.CP_DEFINITIONS + "-unitsOfMeasure";
+
 }

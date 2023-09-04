@@ -53,16 +53,16 @@ export function ModalAddObjectRelationship({
 		...others
 	}: ObjectRelationship) => {
 		try {
-			await API.save(
-				`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectDefinitionExternalReferenceCode1}/object-relationships`,
-				{
+			await API.save({
+				item: {
 					objectDefinitionExternalReferenceCode1,
 					...others,
 					label,
 					name: name ?? toCamelCase(label[defaultLanguageId]!, true),
 				},
-				'POST'
-			);
+				method: 'POST',
+				url: `/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectDefinitionExternalReferenceCode1}/object-relationships`,
+			});
 
 			onClose();
 			window.location.reload();

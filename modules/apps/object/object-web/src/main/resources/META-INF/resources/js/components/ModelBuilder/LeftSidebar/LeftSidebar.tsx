@@ -108,11 +108,12 @@ export default function LeftSidebar({
 		};
 
 		try {
-			const newObjectDefinition = await API.save(
-				`/o/object-admin/v1.0/object-definitions/${objectDefinition?.id}`,
-				movedObjectDefinition,
-				'PATCH'
-			);
+			const newObjectDefinition = (await API.save({
+				item: movedObjectDefinition,
+				method: 'PATCH',
+				returnValue: true,
+				url: `/o/object-admin/v1.0/object-definitions/${objectDefinition?.id}`,
+			})) as ObjectDefinition;
 
 			dispatch({
 				payload: {

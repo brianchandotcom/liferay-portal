@@ -45,7 +45,11 @@ export function ModalBasicWithFieldName({
 
 	const onSubmit = async ({name}: TInitialValues) => {
 		try {
-			await API.save(apiURL, {name: {[defaultLanguageId]: name}}, 'POST');
+			await API.save({
+				item: {name: {[defaultLanguageId]: name}},
+				method: 'POST',
+				url: apiURL,
+			});
 
 			onClose();
 			window.location.reload();

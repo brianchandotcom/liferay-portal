@@ -115,11 +115,12 @@ export function ModalAddObjectDefinition({
 			objectDefinition.storageType = storage.value;
 		}
 		try {
-			const newObjectDefinition = ((await API.save(
-				apiURL,
-				objectDefinition,
-				'POST'
-			)) as unknown) as ObjectDefinition;
+			const newObjectDefinition = ((await API.save({
+				item: objectDefinition,
+				method: 'POST',
+				returnValue: true,
+				url: apiURL,
+			})) as unknown) as ObjectDefinition;
 
 			onClose();
 

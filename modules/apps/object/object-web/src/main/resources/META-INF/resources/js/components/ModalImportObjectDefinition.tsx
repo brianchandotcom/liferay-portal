@@ -69,7 +69,11 @@ export default function ModalImportObjectDefinition({
 
 	const handleImport = async (formData: FormData) => {
 		try {
-			await API.save(importObjectDefinitionURL, formData, 'POST');
+			await API.save({
+				item: formData,
+				method: 'POST',
+				url: importObjectDefinitionURL,
+			});
 
 			window.location.reload();
 		}

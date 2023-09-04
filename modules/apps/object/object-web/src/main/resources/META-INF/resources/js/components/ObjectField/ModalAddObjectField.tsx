@@ -77,7 +77,7 @@ export function ModalAddObjectField({
 			delete field.listTypeDefinitionId;
 
 			try {
-				await API.save(apiURL, field, 'POST');
+				await API.save({item: field, method: 'POST', url: apiURL});
 
 				onClose();
 				window.location.reload();

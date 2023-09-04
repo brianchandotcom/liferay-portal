@@ -122,6 +122,13 @@ interface PickList {
 	name_i18n: LocalizedValue<string>;
 }
 
+interface saveProps {
+	item: unknown;
+	method?: 'PATCH' | 'POST' | 'PUT';
+	returnValue?: boolean;
+	url: string;
+}
+
 const headers = new Headers({
 	'Accept': 'application/json',
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
@@ -352,11 +359,12 @@ export async function putObjectDefinitionByExternalReferenceCode(
 	);
 }
 
-export async function save(
-	url: string,
-	item: unknown,
-	method: 'PATCH' | 'POST' | 'PUT' = 'PUT'
-) {
+export async function save({
+	item,
+	method = 'PUT',
+	returnValue = false,
+	url,
+}: saveProps) {
 	const isFormData = item instanceof FormData;
 
 	const response = await fetch(url, {
@@ -394,7 +402,9 @@ export async function save(
 		throw ErrorDetails();
 	}
 
-	return response.json();
+	if (returnValue) {
+		return response.json();
+	}
 }
 
 export async function addPickListItem({
@@ -402,11 +412,11 @@ export async function addPickListItem({
 	key,
 	name_i18n,
 }: Partial<PickListItem>) {
-	return await save(
-		`/o/headless-admin-list-type/v1.0/list-type-definitions/${id}/list-type-entries`,
-		{key, name_i18n},
-		'POST'
-	);
+	return await save({
+		item: {key, name_i18n},
+		method: 'POST',
+		url: `/o/headless-admin-list-type/v1.0/list-type-definitions/${id}/list-type-entries`,
+	});
 }
 
 export async function updatePickList({
@@ -415,11 +425,11 @@ export async function updatePickList({
 	listTypeEntries,
 	name_i18n,
 }: Partial<PickList>) {
-	return await save(
-		`/o/headless-admin-list-type/v1.0/list-type-definitions/${id}`,
-		{externalReferenceCode, listTypeEntries, name_i18n},
-		'PUT'
-	);
+	return await save({
+		item: {externalReferenceCode, listTypeEntries, name_i18n},
+		method: 'PUT',
+		url: `/o/headless-admin-list-type/v1.0/list-type-definitions/${id}`,
+	});
 }
 
 export async function updatePickListItem({
@@ -427,19 +437,19 @@ export async function updatePickListItem({
 	id,
 	name_i18n,
 }: Partial<PickListItem>) {
-	return await save(
-		`/o/headless-admin-list-type/v1.0/list-type-entries/${id}`,
-		{externalReferenceCode, name_i18n},
-		'PUT'
-	);
+	return await save({
+		item: {externalReferenceCode, name_i18n},
+		method: 'PUT',
+		url: `/o/headless-admin-list-type/v1.0/list-type-entries/${id}`,
+	});
 }
 
 export async function updateRelationship({
 	objectRelationshipId,
 	...others
 }: ObjectRelationship) {
-	return await save(
-		`/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`,
-		others
-	);
+	return await save({
+		item: others,
+		url: `/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`,
+	});
 }

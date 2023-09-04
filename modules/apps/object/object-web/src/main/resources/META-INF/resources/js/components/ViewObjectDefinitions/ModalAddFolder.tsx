@@ -51,11 +51,11 @@ export function ModalAddFolder({handleOnClose}: ModalAddFolderProps) {
 		};
 
 		try {
-			await API.save(
-				'/o/object-admin/v1.0/object-folders',
-				folder,
-				'POST'
-			);
+			await API.save({
+				item: folder,
+				method: 'POST',
+				url: '/o/object-admin/v1.0/object-folders',
+			});
 
 			onClose();
 

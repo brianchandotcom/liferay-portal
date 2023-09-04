@@ -64,11 +64,11 @@ export function ModalEditFolder({
 		const folder: Partial<ObjectFolder> = values;
 
 		try {
-			await API.save(
-				`/o/object-admin/v1.0/object-folders/${folderID}`,
-				folder,
-				'PATCH'
-			);
+			await API.save({
+				item: folder,
+				method: 'PATCH',
+				url: `/o/object-admin/v1.0/object-folders/${folderID}`,
+			});
 
 			onClose();
 

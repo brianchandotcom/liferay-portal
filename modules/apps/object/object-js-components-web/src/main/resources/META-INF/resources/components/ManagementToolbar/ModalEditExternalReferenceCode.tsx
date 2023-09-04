@@ -54,9 +54,12 @@ export function ModalEditExternalReferenceCode({
 		try {
 			const entity = await onGetEntity();
 
-			await save(`${saveURL}`, {
-				...entity,
-				externalReferenceCode,
+			await save({
+				item: {
+					...entity,
+					externalReferenceCode,
+				},
+				url: `${saveURL}`,
 			});
 
 			setExternalReferenceCode(externalReferenceCode);

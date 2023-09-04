@@ -100,6 +100,12 @@ interface PickList {
 	name: string;
 	name_i18n: LocalizedValue<string>;
 }
+interface saveProps {
+	item: unknown;
+	method?: 'PATCH' | 'POST' | 'PUT';
+	returnValue?: boolean;
+	url: string;
+}
 export declare function deleteFolder(id: number): Promise<void>;
 export declare function deleteObjectDefinitions(id: number): Promise<void>;
 export declare function deleteObjectField(id: number): Promise<void>;
@@ -167,11 +173,12 @@ export declare function publishObjectDefinitionById(
 export declare function putObjectDefinitionByExternalReferenceCode(
 	values: Partial<ObjectDefinition>
 ): Promise<Response>;
-export declare function save(
-	url: string,
-	item: unknown,
-	method?: 'PATCH' | 'POST' | 'PUT'
-): Promise<any>;
+export declare function save({
+	item,
+	method,
+	returnValue,
+	url,
+}: saveProps): Promise<any>;
 export declare function addPickListItem({
 	id,
 	key,

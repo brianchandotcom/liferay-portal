@@ -71,11 +71,11 @@ export function ModalMoveObjectDefinition({
 		};
 
 		try {
-			await API.save(
-				`/o/object-admin/v1.0/object-definitions/${objectDefinition.id}`,
-				movedObjectDefinition,
-				'PATCH'
-			);
+			await API.save({
+				item: movedObjectDefinition,
+				method: 'PATCH',
+				url: `/o/object-admin/v1.0/object-definitions/${objectDefinition.id}`,
+			});
 
 			onClose();
 

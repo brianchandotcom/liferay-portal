@@ -322,6 +322,26 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		}
 	}
 
+	private LayoutPageTemplateEntry _addLayoutPageTemplateEntry(
+			long classNameId, long classTypeId, long groupId,
+			long layoutPageTemplateCollectionId, String name,
+			int layoutPageTemplateEntryType)
+		throws PortalException {
+
+		if (classNameId == 0) {
+			return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+				groupId, layoutPageTemplateCollectionId, name,
+				layoutPageTemplateEntryType, 0,
+				WorkflowConstants.STATUS_APPROVED,
+				ServiceContextThreadLocal.getServiceContext());
+		}
+
+		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+			groupId, layoutPageTemplateCollectionId, classNameId, classTypeId,
+			name, 0, WorkflowConstants.STATUS_APPROVED,
+			ServiceContextThreadLocal.getServiceContext());
+	}
+
 	private void _deleteExistingPortletPreferences(long plid) {
 		List<PortletPreferences> portletPreferencesList =
 			_portletPreferencesLocalService.getPortletPreferences(
@@ -545,7 +565,19 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		}
 
 		if (Objects.equals(
-				LayoutsImportStrategy.OVERWRITE, layoutsImportStrategy)) {
+				LayoutsImportStrategy.KEEP_BOTH, layoutsImportStrategy)) {
+
+			return _layoutPageTemplateCollectionService.
+				addLayoutPageTemplateCollection(
+					groupId,
+					_layoutPageTemplateCollectionLocalService.
+						getUniqueLayoutPageTemplateCollectionName(
+							groupId, pageTemplateCollection.getName()),
+					pageTemplateCollection.getDescription(),
+					ServiceContextThreadLocal.getServiceContext());
+		}
+		else if (Objects.equals(
+					LayoutsImportStrategy.OVERWRITE, layoutsImportStrategy)) {
 
 			return _layoutPageTemplateCollectionService.
 				updateLayoutPageTemplateCollection(
@@ -1177,25 +1209,23 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			boolean added = false;
 
 			if (layoutPageTemplateEntry == null) {
-				if (classNameId == 0) {
-					layoutPageTemplateEntry =
-						_layoutPageTemplateEntryService.
-							addLayoutPageTemplateEntry(
-								groupId, layoutPageTemplateCollectionId, name,
-								layoutPageTemplateEntryType, 0,
-								WorkflowConstants.STATUS_APPROVED,
-								ServiceContextThreadLocal.getServiceContext());
-				}
-				else {
-					layoutPageTemplateEntry =
-						_layoutPageTemplateEntryService.
-							addLayoutPageTemplateEntry(
-								groupId, layoutPageTemplateCollectionId,
-								classNameId, classTypeId, name, 0,
-								WorkflowConstants.STATUS_APPROVED,
-								ServiceContextThreadLocal.getServiceContext());
-				}
+				layoutPageTemplateEntry = _addLayoutPageTemplateEntry(
+					classNameId, classTypeId, groupId,
+					layoutPageTemplateCollectionId, name,
+					layoutPageTemplateEntryType);
+				added = true;
+			}
+			else if (Objects.equals(
+						LayoutsImportStrategy.KEEP_BOTH,
+						layoutsImportStrategy)) {
 
+				layoutPageTemplateEntry = _addLayoutPageTemplateEntry(
+					classNameId, classTypeId, groupId,
+					layoutPageTemplateCollectionId,
+					_layoutPageTemplateEntryLocalService.
+						getUniqueLayoutPageTemplateEntryName(
+							groupId, name, layoutPageTemplateEntryType),
+					layoutPageTemplateEntryType);
 				added = true;
 			}
 			else if (Objects.equals(

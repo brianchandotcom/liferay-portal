@@ -494,7 +494,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
-		_deleteObjectDefinitionHierarchy(_objectDefinitionLocalService);
+		_deleteObjectDefinitionHierarchy();
 	}
 
 	@Test
@@ -1251,7 +1251,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_treeFactory.create(objectDefinitionA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
-		_deleteObjectDefinitionHierarchy(_objectDefinitionLocalService);
+		_deleteObjectDefinitionHierarchy();
 	}
 
 	@Test
@@ -1611,7 +1611,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		Assert.assertEquals(0, objectDefinition.getRootObjectDefinitionId());
 
-		_deleteObjectDefinitionHierarchy(_objectDefinitionLocalService);
+		_deleteObjectDefinitionHierarchy();
 	}
 
 	@Test
@@ -2172,15 +2172,12 @@ public class ObjectDefinitionLocalServiceTest {
 		return objectAction;
 	}
 
-	private void _deleteObjectDefinitionHierarchy(
-			ObjectDefinitionLocalService objectDefinitionLocalService)
-		throws Exception {
-
+	private void _deleteObjectDefinitionHierarchy() throws Exception {
 		for (String objectDefinitionName :
 				new String[] {"C_A", "C_AA", "C_AAA", "C_AAB", "C_AB"}) {
 
 			ObjectDefinition objectDefinition =
-				objectDefinitionLocalService.fetchObjectDefinition(
+				_objectDefinitionLocalService.fetchObjectDefinition(
 					TestPropsValues.getCompanyId(), objectDefinitionName);
 
 			if (objectDefinition == null) {
@@ -2189,10 +2186,10 @@ public class ObjectDefinitionLocalServiceTest {
 
 			if (objectDefinition.getRootObjectDefinitionId() != 0) {
 				TreeTestUtil.unbind(
-					objectDefinitionLocalService, objectDefinitionName);
+					_objectDefinitionLocalService, objectDefinitionName);
 			}
 
-			objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinition.getObjectDefinitionId());
 		}
 	}

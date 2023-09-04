@@ -81,7 +81,7 @@ function FragmentDetail({fragment}) {
 				/>
 
 				<TextSection
-					labelType="primary"
+					labelType="secondary"
 					text={
 						cached
 							? Liferay.Language.get('cached')

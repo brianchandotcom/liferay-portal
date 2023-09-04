@@ -69,11 +69,29 @@ public class CPInstanceUnitOfMeasureServiceWrapper
 
 	@Override
 	public CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
+			long cpInstanceUnitOfMeasureId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceUnitOfMeasureService.fetchCPInstanceUnitOfMeasure(
+			cpInstanceUnitOfMeasureId);
+	}
+
+	@Override
+	public CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
 			long cpInstanceId, String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpInstanceUnitOfMeasureService.fetchCPInstanceUnitOfMeasure(
 			cpInstanceId, key);
+	}
+
+	@Override
+	public CPInstanceUnitOfMeasure fetchPrimaryCPInstanceUnitOfMeasure(
+			long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpInstanceUnitOfMeasureService.
+			fetchPrimaryCPInstanceUnitOfMeasure(cpInstanceId);
 	}
 
 	@Override

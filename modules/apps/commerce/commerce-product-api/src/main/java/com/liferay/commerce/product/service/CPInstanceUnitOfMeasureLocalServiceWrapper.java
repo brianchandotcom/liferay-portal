@@ -302,6 +302,14 @@ public class CPInstanceUnitOfMeasureLocalServiceWrapper
 	}
 
 	@Override
+	public CPInstanceUnitOfMeasure fetchPrimaryCPInstanceUnitOfMeasure(
+		long cpInstanceId) {
+
+		return _cpInstanceUnitOfMeasureLocalService.
+			fetchPrimaryCPInstanceUnitOfMeasure(cpInstanceId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

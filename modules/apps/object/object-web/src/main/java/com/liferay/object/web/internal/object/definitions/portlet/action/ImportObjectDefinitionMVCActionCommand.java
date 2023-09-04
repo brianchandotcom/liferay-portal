@@ -155,8 +155,11 @@ public class ImportObjectDefinitionMVCActionCommand
 		}
 
 		objectDefinition.setName(ParamUtil.getString(actionRequest, "name"));
-		objectDefinition.setObjectFolderExternalReferenceCode(
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_UNCATEGORIZED);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
+			objectDefinition.setObjectFolderExternalReferenceCode(
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_UNCATEGORIZED);
+		}
 
 		ObjectDefinition putObjectDefinition =
 			objectDefinitionResource.putObjectDefinitionByExternalReferenceCode(

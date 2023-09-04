@@ -13,6 +13,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
@@ -21,6 +22,7 @@ import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.service.CPInstanceService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -416,6 +418,36 @@ public class ActionHelperImpl implements ActionHelper {
 	}
 
 	@Override
+	public CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
+			PortletRequest portletRequest)
+		throws PortalException {
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			(CPInstanceUnitOfMeasure)portletRequest.getAttribute(
+				CPWebKeys.CP_INSTANCE_UNIT_OF_MEASURE);
+
+		if (cpInstanceUnitOfMeasure != null) {
+			return cpInstanceUnitOfMeasure;
+		}
+
+		long cpInstanceUnitOfMeasureId = ParamUtil.getLong(
+			portletRequest, "cpInstanceUnitOfMeasureId");
+
+		if (cpInstanceUnitOfMeasureId > 0) {
+			cpInstanceUnitOfMeasure =
+				_cpInstanceUnitOfMeasureService.getCPInstanceUnitOfMeasure(
+					cpInstanceUnitOfMeasureId);
+		}
+
+		if (cpInstanceUnitOfMeasure != null) {
+			portletRequest.setAttribute(
+				CPWebKeys.CP_INSTANCE_UNIT_OF_MEASURE, cpInstanceUnitOfMeasure);
+		}
+
+		return cpInstanceUnitOfMeasure;
+	}
+
+	@Override
 	public CPType getCPType(String name) {
 		return _cpTypeRegistry.getCPType(name);
 	}
@@ -472,6 +504,9 @@ public class ActionHelperImpl implements ActionHelper {
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureService _cpInstanceUnitOfMeasureService;
 
 	@Reference
 	private CPTypeRegistry _cpTypeRegistry;

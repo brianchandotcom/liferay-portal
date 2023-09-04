@@ -53,7 +53,8 @@ public class ImportObjectDefinitionPortletConfigurationIcon
 
 	@Override
 	public String getMessage(PortletRequest portletRequest) {
-		return _language.get(getLocale(portletRequest), "import");
+		return _language.get(
+			getLocale(portletRequest), "import-object-definition");
 	}
 
 	@Override

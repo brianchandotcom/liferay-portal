@@ -135,7 +135,7 @@ export default function ModalImportObjectDefinition({
 	return visible ? (
 		<ClayModal center observer={observer}>
 			<ClayModal.Header>
-				{Liferay.Language.get('import-object')}
+				{Liferay.Language.get('import-object-definition')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>

@@ -12,9 +12,10 @@ import {
 	waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {Modal} from 'dynamic-data-mapping-form-web/admin/js/components/share-form/openShareFormModal.es';
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import {Modal} from '../../../src/main/resources/META-INF/resources/admin/js/components/share-form/openShareFormModal.es';
 
 import '@testing-library/jest-dom/extend-expect';
 

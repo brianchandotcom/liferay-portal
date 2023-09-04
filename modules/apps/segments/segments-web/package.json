@@ -1,11 +1,28 @@
 {
 	"dependencies": {
-		"@liferay/frontend-js-react-web": "*",
+		"@clayui/alert": "3.93.0",
+		"@clayui/badge": "3.100.0",
+		"@clayui/button": "3.100.0",
+		"@clayui/date-picker": "3.104.0",
+		"@clayui/drop-down": "3.104.0",
+		"@clayui/empty-state": "3.101.0",
+		"@clayui/form": "3.104.0",
+		"@clayui/icon": "3.56.0",
+		"@clayui/label": "3.88.0",
+		"@clayui/layout": "3.93.0",
+		"@clayui/link": "3.88.0",
+		"@clayui/loading-indicator": "3.60.0",
+		"@clayui/panel": "3.104.0",
 		"@liferay/layout-js-components-web": "*",
+		"classnames": "2.3.1",
 		"date-fns": "2.29.3",
+		"formik": "2.1.4",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
-		"react": "16.12.0"
+		"react": "16.12.0",
+		"react-dnd": "11.1.1",
+		"react-dnd-html5-backend": "11.1.1",
+		"react-dnd-test-utils": "11.1.1"
 	},
 	"description": "",
 	"jest": {

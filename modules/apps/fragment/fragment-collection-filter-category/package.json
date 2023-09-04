@@ -1,5 +1,11 @@
 {
 	"dependencies": {
+		"@clayui/button": "3.100.0",
+		"@clayui/drop-down": "3.104.0",
+		"@liferay/fragment-renderer-collection-filter-impl": "*",
+		"frontend-js-web": "*",
+		"prop-types": "15.7.2",
+		"react": "16.12.0"
 	},
 	"main": "js/MultiSelectCategory.es.js",
 	"name": "@liferay/fragment-collection-filter-category",

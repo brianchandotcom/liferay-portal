@@ -1,7 +1,24 @@
 {
 	"dependencies": {
+		"@clayui/breadcrumb": "3.104.0",
+		"@clayui/button": "3.100.0",
+		"@clayui/card": "3.104.0",
+		"@clayui/core": "3.104.0",
+		"@clayui/drop-down": "3.104.0",
+		"@clayui/form": "3.104.0",
+		"@clayui/icon": "3.56.0",
+		"@clayui/label": "3.88.0",
+		"@clayui/layout": "3.93.0",
+		"@clayui/link": "3.88.0",
+		"@clayui/management-toolbar": "3.93.0",
+		"@clayui/modal": "3.104.0",
+		"@clayui/navigation-bar": "3.104.0",
+		"@clayui/tabs": "3.104.0",
+		"@clayui/tooltip": "3.104.0",
 		"@liferay/frontend-data-set-web": "*",
-		"frontend-js-web": "*"
+		"classnames": "2.3.1",
+		"frontend-js-web": "*",
+		"react": "16.12.0"
 	},
 	"name": "@liferay/headless-builder-web",
 	"private": true,

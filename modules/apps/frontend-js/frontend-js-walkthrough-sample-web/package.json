@@ -1,5 +1,8 @@
 {
 	"dependencies": {
+		"@clayui/button": "3.100.0",
+		"@clayui/form": "3.104.0",
+		"react": "16.12.0"
 	},
 	"main": "js/App.es",
 	"name": "@liferay/frontend-js-walkthrough-sample-web",

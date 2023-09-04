@@ -1,5 +1,5 @@
 {
-	"@generated": "859b416a75b89fa32854f0908117663fcdc94962",
+	"@generated": "b08be50778f0f0b3c64a79dc219e98e99173c1c8",
 	"@overrides": {
 	},
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT OUTSIDE @overrides **",
@@ -13,9 +13,6 @@
 		"moduleResolution": "node",
 		"outDir": "./types",
 		"paths": {
-			"@liferay/layout-content-page-editor-web": [
-				"../../layout/layout-content-page-editor-web/src/main/resources/META-INF/resources/js/index.d.ts"
-			],
 			"frontend-js-components-web": [
 				"../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
 			],
@@ -41,9 +38,6 @@
 		"../../../global.d.ts"
 	],
 	"references": [
-		{
-			"path": "../../layout/layout-content-page-editor-web"
-		},
 		{
 			"path": "../../frontend-js/frontend-js-components-web"
 		},

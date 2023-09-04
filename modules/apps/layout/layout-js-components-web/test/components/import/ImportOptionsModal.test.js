@@ -4,9 +4,10 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {ImportOptionsModal} from '@liferay/layout-js-components-web';
 import {act, fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
+
+import {ImportOptionsModal} from '../../../src/main/resources/META-INF/resources/js';
 
 const renderComponent = async ({
 	onCloseModal = () => null,

@@ -1,14 +1,16 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*"
+		"@clayui/charts": "3.65.0",
+		"@liferay/frontend-js-react-web": "*",
+		"frontend-js-web": "*",
+		"react": "16.12.0"
 	},
 	"name": "commerce-dashboard-web",
 	"private": true,
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix",
-		"watch": "liferay-npm-scripts webpack --watch"
+		"format": "liferay-npm-scripts fix"
 	},
 	"sideEffects": false,
 	"version": "4.0.40"

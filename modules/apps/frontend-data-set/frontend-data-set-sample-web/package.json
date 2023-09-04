@@ -1,6 +1,11 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*"
+		"@clayui/button": "3.100.0",
+		"@clayui/icon": "3.56.0",
+		"@clayui/link": "3.88.0",
+		"@liferay/frontend-data-set-web": "*",
+		"frontend-js-web": "*",
+		"react": "16.12.0"
 	},
 	"main": "index.js",
 	"name": "@liferay/frontend-data-set-sample-web",

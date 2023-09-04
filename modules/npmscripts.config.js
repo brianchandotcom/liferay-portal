@@ -142,6 +142,9 @@ module.exports = {
 					'@liferay/object-js-components-web': {
 						'/': '*',
 					},
+					'@liferay/portal-workflow-instance-tracker-web': {
+						'/': '*',
+					},
 					'@liferay/template-web': {
 						'/': '*',
 					},
@@ -149,6 +152,9 @@ module.exports = {
 						'/': '*',
 					},
 					'commerce-frontend-js': {
+						'/': '*',
+					},
+					'commerce-organization-web': {
 						'/': '*',
 					},
 					'data-engine-js-components-web': {
@@ -241,6 +247,43 @@ module.exports = {
 					},
 					'frontend-js-web': {
 						'/': '*',
+					},
+					'frontend-taglib-chart': {
+						'/': '*',
+						'billboard.js': '*',
+						'clay-charts': '*',
+						'd3': '*',
+						'd3-array': '*',
+						'd3-axis': '*',
+						'd3-brush': '*',
+						'd3-chord': '*',
+						'd3-collection': '*',
+						'd3-color': '*',
+						'd3-contour': '*',
+						'd3-dispatch': '*',
+						'd3-drag': '*',
+						'd3-dsv': '*',
+						'd3-ease': '*',
+						'd3-fetch': '*',
+						'd3-force': '*',
+						'd3-format': '*',
+						'd3-geo': '*',
+						'd3-hierarchy': '*',
+						'd3-interpolate': '*',
+						'd3-path': '*',
+						'd3-polygon': '*',
+						'd3-quadtree': '*',
+						'd3-random': '*',
+						'd3-scale': '*',
+						'd3-scale-chromatic': '*',
+						'd3-selection': '*',
+						'd3-shape': '*',
+						'd3-time': '*',
+						'd3-time-format': '*',
+						'd3-timer': '*',
+						'd3-transition': '*',
+						'd3-voronoi': '*',
+						'd3-zoom': '*',
 					},
 					'frontend-taglib-clay': {
 						'/': '*',
@@ -899,6 +942,17 @@ module.exports = {
 			'youtube-web',
 		],
 		'allowed-non-global-dependencies': [
+			'history',
+			'jest-fetch-mock',
+			'fetch-mock',
+			'gulp',
+			'liferay-theme-tasks',
+			'ckeditor4',
+			'alloy-ui',
+			'resize-observer-polyfill',
+			'webpack',
+			'react-dnd-test-utils',
+			'fs',
 
 			// Dependencies not expected to be shared
 
@@ -931,6 +985,19 @@ module.exports = {
 			'browser-tabs-lock',
 			'hash.js',
 			'core-js',
+
+			'jest-fetch-mock',
+			'fetch-mock',
+			'gulp',
+			'liferay-theme-tasks',
+			'history',
+			'resize-observer-polyfill',
+			'ckeditor4',
+			'fetch-mock',
+			'@liferay/npm-scripts',
+			'webpack',
+			'alloy-ui',
+			'react-dnd-test-utils',
 		],
 	},
 };

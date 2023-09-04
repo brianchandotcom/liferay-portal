@@ -4,11 +4,12 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {Import} from '@liferay/layout-js-components-web';
 import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {navigate} from 'frontend-js-web';
 import React from 'react';
+
+import {Import} from '../../../src/main/resources/META-INF/resources/js';
 
 jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),

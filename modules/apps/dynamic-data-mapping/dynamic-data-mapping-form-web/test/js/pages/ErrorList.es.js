@@ -5,8 +5,9 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {cleanup, getByText, render} from '@testing-library/react';
-import ErrorList from 'dynamic-data-mapping-form-web/admin/js/pages/ErrorList.tsx';
 import React from 'react';
+
+import ErrorList from '../../../src/main/resources/META-INF/resources/admin/js/pages/ErrorList';
 
 describe('Error List', () => {
 	afterEach(cleanup);

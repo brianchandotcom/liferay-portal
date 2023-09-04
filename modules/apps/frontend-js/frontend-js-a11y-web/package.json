@@ -1,7 +1,19 @@
 {
 	"dependencies": {
+		"@clayui/badge": "3.100.0",
+		"@clayui/button": "3.100.0",
+		"@clayui/drop-down": "3.104.0",
+		"@clayui/empty-state": "3.101.0",
+		"@clayui/icon": "3.56.0",
+		"@clayui/label": "3.88.0",
+		"@clayui/layout": "3.93.0",
+		"@clayui/link": "3.88.0",
+		"@clayui/list": "3.104.0",
+		"@clayui/panel": "3.104.0",
+		"@clayui/popover": "3.104.0",
 		"@liferay/frontend-js-react-web": "*",
-		"axe-core": "4.2.0"
+		"axe-core": "4.2.0",
+		"react": "16.12.0"
 	},
 	"main": "index.js",
 	"name": "@liferay/frontend-js-a11y-web",

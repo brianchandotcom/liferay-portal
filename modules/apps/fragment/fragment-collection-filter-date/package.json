@@ -1,5 +1,8 @@
 {
 	"dependencies": {
+		"@clayui/date-picker": "3.104.0",
+		"@liferay/fragment-renderer-collection-filter-impl": "*",
+		"react": "16.12.0"
 	},
 	"name": "@liferay/fragment-collection-filter-date",
 	"scripts": {

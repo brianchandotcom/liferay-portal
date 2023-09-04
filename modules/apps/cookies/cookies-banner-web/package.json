@@ -1,7 +1,6 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*",
-		"react-transition-group": "4.4.1"
+		"frontend-js-web": "*"
 	},
 	"main": "js/index.js",
 	"name": "@liferay/cookies-banner-web",

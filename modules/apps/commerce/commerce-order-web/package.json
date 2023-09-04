@@ -1,7 +1,9 @@
 {
 	"dependencies": {
 		"commerce-frontend-js": "*",
-		"frontend-js-web": "*"
+		"frontend-js-web": "*",
+		"prop-types": "15.7.2",
+		"react": "16.12.0"
 	},
 	"name": "@liferay/commerce-order-web",
 	"scripts": {

@@ -43,6 +43,7 @@
 		"@clayui/toolbar": "3.104.0",
 		"@clayui/tooltip": "3.104.0",
 		"@clayui/upper-toolbar": "3.104.0",
+		"classnames": "2.3.1",
 		"clay-alert": "2.24.1",
 		"clay-autocomplete": "2.24.1",
 		"clay-badge": "2.24.1",
@@ -69,6 +70,9 @@
 		"clay-select": "2.24.1",
 		"clay-table": "2.24.1",
 		"clay-tooltip": "2.24.1",
+		"frontend-js-components-web": "*",
+		"frontend-js-web": "*",
+		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},
 	"main": "index.js",

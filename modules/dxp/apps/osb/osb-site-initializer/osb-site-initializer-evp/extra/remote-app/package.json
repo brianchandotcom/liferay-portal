@@ -1,9 +1,15 @@
 {
 	"dependencies": {
+		"@clayui/button": "*",
 		"@clayui/css": "^3.78.0",
 		"@clayui/date-picker": "^3.81.0",
 		"@clayui/form": "^3.80.0",
+		"@clayui/icon": "*",
+		"@clayui/label": "*",
+		"@clayui/loading-indicator": "*",
+		"@clayui/management-toolbar": "*",
 		"@hookform/resolvers": "^2.9.10",
+		"classnames": "2.3.1",
 		"dayjs": "^1.11.7",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",

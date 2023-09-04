@@ -1,9 +1,12 @@
 {
 	"dependencies": {
-		"@liferay/eslint-plugin": "1.4.0",
-		"@liferay/npm-scripts": "48.1.0"
+		"@liferay/eslint-plugin": "1.5.0",
+		"@liferay/npm-scripts": "48.1.2"
 	},
 	"private": true,
+	"resolutions": {
+		"prettier": "2.1.2"
+	},
 	"scripts": {
 		"checkFormat": "liferay-npm-scripts lint && liferay-npm-scripts format:check",
 		"format": "liferay-npm-scripts lint:fix && liferay-npm-scripts format"

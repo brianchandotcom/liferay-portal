@@ -2,6 +2,7 @@
 	"dependencies": {
 		"@apollo/client": "^3.6.10",
 		"@clayui/alert": "^3.40.0",
+		"@clayui/button": "*",
 		"@clayui/card": "^3.93.0",
 		"@clayui/core": "3.58.1",
 		"@clayui/css": "^3.59.0",
@@ -12,6 +13,7 @@
 		"@clayui/label": "^3.32.0",
 		"@clayui/layout": "^3.65.1",
 		"@clayui/loading-indicator": "^3.56.0",
+		"@clayui/modal": "*",
 		"@clayui/multi-select": "^3.103.1",
 		"@clayui/nav": "^3.71.0",
 		"@clayui/pagination-bar": "^3.41.0",
@@ -42,6 +44,7 @@
 		"@types/react-dom": "^18.0.6",
 		"@vitejs/plugin-react-swc": "^3.3.1",
 		"c8": "^7.13.0",
+		"cross-fetch": "3.1.5",
 		"typescript": "^4.7.4",
 		"vite": "^4.3.3",
 		"vitest": "^0.30.1"

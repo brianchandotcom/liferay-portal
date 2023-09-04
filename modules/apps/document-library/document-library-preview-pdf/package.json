@@ -1,4 +1,10 @@
 {
+	"dependencies": {
+		"@clayui/form": "3.104.0",
+		"frontend-js-web": "*",
+		"prop-types": "15.7.2",
+		"react": "16.12.0"
+	},
 	"name": "@liferay/document-library-preview-pdf",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

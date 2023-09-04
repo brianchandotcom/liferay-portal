@@ -176,7 +176,7 @@ definition {
 		}
 
 		task ("Then I can see error message") {
-			Alert.viewErrorMessage(errorMessage = "Path must start with the \"/\" character.");
+			Alert.viewErrorMessage(errorMessage = "Path must start with the '/' character.");
 		}
 
 		task ("And Then the endpoint is not being created") {

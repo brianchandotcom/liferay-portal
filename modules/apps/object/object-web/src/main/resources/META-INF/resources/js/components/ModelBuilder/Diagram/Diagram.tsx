@@ -6,6 +6,7 @@
 import ReactFlow, {
 	Background,
 	Connection,
+	ConnectionLineType,
 	ConnectionMode,
 	Controls,
 	Edge,
@@ -89,6 +90,18 @@ function DiagramBuilder({
 				(node) => isNode(node) && node.id === connection.target
 			) as Node<ObjectDefinitionNodeData>;
 
+			if (
+				(sourceNode.data?.modifiable === false &&
+					targetNode.data?.modifiable === false) ||
+				(sourceNode.data?.system && targetNode.data?.system) ||
+				sourceNode.data?.storageType === 'salesforce' ||
+				targetNode.data?.storageType === 'salesforce' ||
+				targetNode.data?.name === 'Address' ||
+				sourceNode.data?.linkedObjectDefinition
+			) {
+				return;
+			}
+
 			setShowAddModal(true);
 			setNodesProps({
 				parameterRequired: sourceNode?.data?.parameterRequired!,
@@ -165,6 +178,8 @@ function DiagramBuilder({
 			)}
 
 			<ReactFlow
+				connectionLineStyle={{stroke: '#0B5FFF'}}
+				connectionLineType={ConnectionLineType.SmoothStep}
 				connectionMode={ConnectionMode.Loose}
 				edgeTypes={EDGE_TYPES}
 				elements={

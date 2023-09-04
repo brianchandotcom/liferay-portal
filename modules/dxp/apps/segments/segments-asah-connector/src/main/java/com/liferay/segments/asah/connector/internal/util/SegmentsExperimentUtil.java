@@ -141,6 +141,32 @@ public class SegmentsExperimentUtil {
 		);
 	}
 
+	public static JSONObject toSegmentsExperimentRelJSONObject(
+			Locale locale, SegmentsExperimentRel segmentsExperimentRel)
+		throws PortalException {
+
+		if (segmentsExperimentRel == null) {
+			return null;
+		}
+
+		return JSONUtil.put(
+			"control", segmentsExperimentRel.isControl()
+		).put(
+			"name", segmentsExperimentRel.getName(locale)
+		).put(
+			"segmentsExperienceId",
+			String.valueOf(segmentsExperimentRel.getSegmentsExperienceId())
+		).put(
+			"segmentsExperimentId",
+			String.valueOf(segmentsExperimentRel.getSegmentsExperimentId())
+		).put(
+			"segmentsExperimentRelId",
+			String.valueOf(segmentsExperimentRel.getSegmentsExperimentRelId())
+		).put(
+			"split", segmentsExperimentRel.getSplit()
+		);
+	}
+
 	public static JSONObject toStatusJSONObject(Locale locale, int status) {
 		SegmentsExperimentConstants.Status segmentsExperimentConstantsStatus =
 			SegmentsExperimentConstants.Status.parse(status);

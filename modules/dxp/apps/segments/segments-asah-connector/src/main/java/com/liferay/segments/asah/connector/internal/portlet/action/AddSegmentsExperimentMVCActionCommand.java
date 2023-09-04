@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.segments.experiment.web.internal.portlet.action;
+package com.liferay.segments.asah.connector.internal.portlet.action;
 
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -14,24 +15,36 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClient;
+import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientImpl;
+import com.liferay.segments.asah.connector.internal.client.model.Experiment;
+import com.liferay.segments.asah.connector.internal.client.model.util.ExperimentUtil;
+import com.liferay.segments.asah.connector.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.exception.DuplicateSegmentsExperimentException;
-import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
+import com.liferay.segments.service.SegmentsEntryLocalService;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelService;
 import com.liferay.segments.service.SegmentsExperimentService;
 
+import java.util.Map;
 import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
@@ -39,7 +52,9 @@ import javax.portlet.ActionResponse;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -54,6 +69,17 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AddSegmentsExperimentMVCActionCommand
 	extends BaseMVCActionCommand {
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_asahFaroBackendClient = new AsahFaroBackendClientImpl(
+			_analyticsSettingsManager, _http);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_asahFaroBackendClient = null;
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -98,6 +124,10 @@ public class AddSegmentsExperimentMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(
+				serviceContext.getCompanyId());
+
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
 		long plid = ParamUtil.getLong(actionRequest, "plid");
@@ -109,6 +139,19 @@ public class AddSegmentsExperimentMVCActionCommand
 		if (segmentsExperiment != null) {
 			if (segmentsExperiment.getStatus() ==
 					SegmentsExperimentConstants.STATUS_TERMINATED) {
+
+				Experiment experiment = ExperimentUtil.toExperiment(
+					_companyLocalService,
+					analyticsConfiguration.liferayAnalyticsDataSourceId(),
+					_groupLocalService, _layoutLocalService,
+					LocaleUtil.getSiteDefault(), _portal,
+					_segmentsEntryLocalService, _segmentsExperienceLocalService,
+					segmentsExperiment);
+
+				experiment.setPublishable(false);
+
+				_asahFaroBackendClient.updateExperiment(
+					segmentsExperiment.getCompanyId(), experiment);
 
 				segmentsExperiment.setStatus(
 					SegmentsExperimentConstants.STATUS_DELETED_ON_DXP_ONLY);
@@ -139,9 +182,8 @@ public class AddSegmentsExperimentMVCActionCommand
 		return JSONUtil.put(
 			"segmentsExperiment",
 			SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
-				_analyticsSettingsManager.getAnalyticsConfiguration(
-					segmentsExperiment.getCompanyId()),
-				themeDisplay.getLocale(), segmentsExperiment)
+				analyticsConfiguration, themeDisplay.getLocale(),
+				segmentsExperiment)
 		).put(
 			"segmentsExperimentRel",
 			SegmentsExperimentUtil.toSegmentsExperimentRelJSONObject(
@@ -159,11 +201,31 @@ public class AddSegmentsExperimentMVCActionCommand
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
 
+	private AsahFaroBackendClient _asahFaroBackendClient;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Http _http;
+
 	@Reference
 	private Language _language;
 
 	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsEntryLocalService _segmentsEntryLocalService;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
 	private SegmentsExperimentRelService _segmentsExperimentRelService;

@@ -563,6 +563,34 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	}
 
 	@Override
+	public String getUniqueLayoutPageTemplateEntryName(
+		long groupId, String name, int type) {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryPersistence.fetchByG_N_T(
+				groupId, name, type);
+
+		if (layoutPageTemplateEntry == null) {
+			return name;
+		}
+
+		int count = 1;
+
+		while (true) {
+			String newName = StringUtil.appendParentheticalSuffix(
+				name, count++);
+
+			layoutPageTemplateEntry =
+				layoutPageTemplateEntryPersistence.fetchByG_N_T(
+					groupId, newName, type);
+
+			if (layoutPageTemplateEntry == null) {
+				return newName;
+			}
+		}
+	}
+
+	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 		long layoutPageTemplateEntryId, boolean defaultTemplate) {
 

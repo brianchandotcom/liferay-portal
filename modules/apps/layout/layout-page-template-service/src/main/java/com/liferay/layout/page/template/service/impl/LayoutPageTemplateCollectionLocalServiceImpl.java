@@ -227,6 +227,33 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	}
 
 	@Override
+	public String getUniqueLayoutPageTemplateCollectionName(
+		long groupId, String name) {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			layoutPageTemplateCollectionPersistence.fetchByG_N(groupId, name);
+
+		if (layoutPageTemplateCollection == null) {
+			return name;
+		}
+
+		int count = 1;
+
+		while (true) {
+			String newName = StringUtil.appendParentheticalSuffix(
+				name, count++);
+
+			layoutPageTemplateCollection =
+				layoutPageTemplateCollectionPersistence.fetchByG_N(
+					groupId, newName);
+
+			if (layoutPageTemplateCollection == null) {
+				return newName;
+			}
+		}
+	}
+
+	@Override
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name,
 			String description)

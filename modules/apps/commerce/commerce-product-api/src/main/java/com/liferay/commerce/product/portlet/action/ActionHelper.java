@@ -12,6 +12,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -83,6 +84,10 @@ public interface ActionHelper {
 		throws PortalException;
 
 	public List<CPInstance> getCPInstances(PortletRequest portletRequest)
+		throws PortalException;
+
+	public CPInstanceUnitOfMeasure getCPInstanceUnitOfMeasure(
+			PortletRequest portletRequest)
 		throws PortalException;
 
 	public CPType getCPType(String name);

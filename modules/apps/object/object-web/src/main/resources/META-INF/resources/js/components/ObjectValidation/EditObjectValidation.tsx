@@ -23,7 +23,7 @@ import {
 
 interface EditObjectValidationProps {
 	creationLanguageId: Liferay.Language.Locale;
-	learnResources: object;
+	learnResources: ObjectWebLearnResources;
 	objectDefinitionId: number;
 	objectValidationRuleElements: SidebarCategory[];
 	objectValidationRuleId: number;

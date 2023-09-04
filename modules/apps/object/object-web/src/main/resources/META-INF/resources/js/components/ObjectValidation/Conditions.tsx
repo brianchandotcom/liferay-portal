@@ -27,7 +27,7 @@ import {TabProps} from './useObjectValidationForm';
 
 interface ConditionsProps extends TabProps {
 	creationLanguageId: Liferay.Language.Locale;
-	learnResources: object;
+	learnResources: ObjectWebLearnResources;
 	objectFields: ObjectField[];
 	objectValidationRuleElements: SidebarCategory[];
 }

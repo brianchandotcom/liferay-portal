@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PANEL_HELP_TEXT</td>
+	<td>//div[contains(@class,'panel')][.//*[normalize-space()='${key_panel}'][contains(@class,'collapse')][not(contains(@data-qa-id,'app'))]]//p</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PANEL_BY_INDEX</td>
 	<td>xpath=(//*[contains(@class,'panel')]//*[contains(@class,'collapse')][@aria-expanded][not(contains(@data-qa-id,'app'))])[${index}]//*[normalize-space()='${key_panel}']</td>
 	<td></td>

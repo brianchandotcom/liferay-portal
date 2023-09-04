@@ -70,11 +70,11 @@ public interface ObjectDefinition
 
 	public boolean isApproved();
 
-	public boolean isChildNode();
-
 	public boolean isDefaultStorageType();
 
 	public boolean isLinkedToObjectFolder(long objectFolderId);
+
+	public boolean isRootDescendantNode();
 
 	public boolean isRootNode();
 

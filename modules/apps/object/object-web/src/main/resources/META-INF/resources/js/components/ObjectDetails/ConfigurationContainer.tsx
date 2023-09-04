@@ -9,14 +9,14 @@ import React from 'react';
 
 interface ConfigurationContainerProps {
 	hasUpdateObjectDefinitionPermission: boolean;
-	isChildNode: boolean;
+	isRootDescendantNode: boolean;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
 
 export function ConfigurationContainer({
 	hasUpdateObjectDefinitionPermission,
-	isChildNode,
+	isRootDescendantNode,
 	setValues,
 	values,
 }: ConfigurationContainerProps) {
@@ -30,7 +30,7 @@ export function ConfigurationContainer({
 				disabled={
 					isReadOnly ||
 					!hasUpdateObjectDefinitionPermission ||
-					isChildNode
+					isRootDescendantNode
 				}
 				label={sub(
 					Liferay.Language.get('show-widget-in-x'),

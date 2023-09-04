@@ -18,7 +18,7 @@ interface EditObjectDetailsProps {
 	hasPublishObjectPermission: boolean;
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
-	isChildNode: boolean;
+	isRootDescendantNode: boolean;
 	label: LocalizedValue<string>;
 	nonRelationshipObjectFieldsInfo: {
 		label: LocalizedValue<string>;
@@ -39,7 +39,7 @@ export default function EditObjectDetails({
 	hasPublishObjectPermission,
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
-	isChildNode,
+	isRootDescendantNode,
 	label,
 	nonRelationshipObjectFieldsInfo,
 	objectDefinitionId,

@@ -10,6 +10,7 @@ import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTem
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -131,8 +133,14 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 			String backURL = ParamUtil.getString(actionRequest, "backURL");
 
 			if (Validator.isNotNull(backURL)) {
-				redirectURL = HttpComponentsUtil.setParameter(
-					redirectURL, "p_l_back_url", backURL);
+				String backURLTitle =
+					JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
+						LayoutPageTemplateAdminPortletKeys.
+							LAYOUT_PAGE_TEMPLATES;
+
+				redirectURL = HttpComponentsUtil.addParameters(
+					redirectURL, "p_l_back_url", backURL, "p_l_back_url_title",
+					_language.get(themeDisplay.getLocale(), backURLTitle));
 			}
 
 			JSONPortletResponseUtil.writeJSON(

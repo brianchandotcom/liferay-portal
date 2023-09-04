@@ -7,7 +7,7 @@
 
 import {SidebarCategory} from '@liferay/object-js-components-web';
 import './EditObjectField.scss';
-interface EditObjectFieldProps {
+export interface EditObjectFieldProps {
 	creationLanguageId: Liferay.Language.Locale;
 	filterOperators: TFilterOperators;
 	forbiddenChars: string[];
@@ -17,7 +17,6 @@ interface EditObjectFieldProps {
 	isDefaultStorageType: boolean;
 	learnResources: object;
 	objectDefinitionExternalReferenceCode: string;
-	objectField: ObjectField;
 	objectFieldId: number;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
@@ -47,4 +46,3 @@ export default function EditObjectField({
 	sidebarElements,
 	workflowStatusJSONArray,
 }: EditObjectFieldProps): JSX.Element;
-export {};

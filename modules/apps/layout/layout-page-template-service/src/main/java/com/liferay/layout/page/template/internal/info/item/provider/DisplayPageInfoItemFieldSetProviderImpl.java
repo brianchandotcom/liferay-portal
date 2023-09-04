@@ -19,6 +19,7 @@ import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -38,10 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -113,24 +111,8 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 				layoutPageTemplateEntries) {
 
-			Map<Locale, String> urls = new HashMap<>();
-
 			Layout layout = _layoutLocalService.fetchLayout(
 				layoutPageTemplateEntry.getPlid());
-
-			Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
-
-			for (Map.Entry<Locale, String> entry : friendlyURLMap.entrySet()) {
-				Locale locale = entry.getKey();
-
-				urls.put(
-					locale,
-					StringBundler.concat(
-						url, entry.getValue(), StringPool.SLASH,
-						_portal.getClassNameId(
-							infoItemReference.getClassName()),
-						StringPool.SLASH, _getClassPK(infoItemReference)));
-			}
 
 			infoFieldValues.add(
 				new InfoFieldValue<>(
@@ -147,10 +129,14 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 						InfoLocalizedValue.singleValue(
 							layoutPageTemplateEntry.getName())
 					).build(),
-					InfoLocalizedValue.<String>builder(
-					).values(
-						urls
-					).build()));
+					new FunctionInfoLocalizedValue<>(
+						locale -> StringBundler.concat(
+							url, layout.getFriendlyURL(locale),
+							StringPool.SLASH,
+							_portal.getClassNameId(
+								infoItemReference.getClassName()),
+							StringPool.SLASH,
+							_getClassPK(infoItemReference)))));
 		}
 
 		return infoFieldValues;

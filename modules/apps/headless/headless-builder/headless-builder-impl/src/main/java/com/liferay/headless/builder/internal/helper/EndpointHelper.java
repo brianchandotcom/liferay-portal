@@ -7,6 +7,7 @@ package com.liferay.headless.builder.internal.helper;
 
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -22,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
+import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,25 +44,43 @@ public class EndpointHelper {
 
 		Set<String> relationshipsNames = new HashSet<>();
 
+		ObjectEntry objectEntry = null;
+
 		for (APIApplication.Property property : schema.getProperties()) {
 			relationshipsNames.addAll(property.getObjectRelationshipNames());
 		}
 
 		if (Objects.equals(pathParameter, "id")) {
-			return _getResponseEntityMap(
+			objectEntry = _objectEntryHelper.getObjectEntry(
+				companyId, ListUtil.fromCollection(relationshipsNames),
+				GetterUtil.getLong(pathParameterValue),
+				schema.getMainObjectDefinitionExternalReferenceCode());
+		}
+		else if (Objects.equals(pathParameter, "externalReferenceCode")) {
+			objectEntry =
 				_objectEntryHelper.getObjectEntry(
 					companyId, ListUtil.fromCollection(relationshipsNames),
-					GetterUtil.getLong(pathParameterValue),
-					schema.getMainObjectDefinitionExternalReferenceCode()),
-				schema);
+					schema.getMainObjectDefinitionExternalReferenceCode(),
+					pathParameterValue, scopeKey);
+		}
+		else {
+			List<ObjectEntry> objectEntries =
+				_objectEntryHelper.getObjectEntries(
+					companyId,
+					StringBundler.concat(
+						pathParameter, " eq '", pathParameterValue, "'"),
+					ListUtil.fromCollection(relationshipsNames),
+					schema.getMainObjectDefinitionExternalReferenceCode(),
+					scopeKey);
+
+			if (objectEntries.isEmpty()) {
+				throw new NotFoundException();
+			}
+
+			objectEntry = objectEntries.get(0);
 		}
 
-		return _getResponseEntityMap(
-			_objectEntryHelper.getObjectEntry(
-				companyId, ListUtil.fromCollection(relationshipsNames),
-				schema.getMainObjectDefinitionExternalReferenceCode(),
-				pathParameterValue, scopeKey),
-			schema);
+		return _getResponseEntityMap(objectEntry, schema);
 	}
 
 	public Page<Map<String, Object>> getResponseEntityMapsPage(

@@ -500,10 +500,11 @@ public class ObjectDefinitionResourceTest
 
 	@Override
 	protected ObjectDefinition
-			testPostObjectDefinitionPublish_addObjectDefinition()
+			testPostObjectDefinitionPublish_addObjectDefinition(
+				ObjectDefinition objectDefinition)
 		throws Exception {
 
-		return _addObjectDefinition(randomObjectDefinition());
+		return _addObjectDefinition(objectDefinition);
 	}
 
 	@Override

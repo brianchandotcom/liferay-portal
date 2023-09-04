@@ -33,6 +33,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.helper.LayoutCopyHelper;
+import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.internal.importer.exception.DropzoneLayoutStructureItemException;
@@ -136,33 +137,34 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 	@Override
 	public void importFile(
-			long userId, long groupId, File file, boolean overwrite)
+			long userId, long groupId, File file,
+			LayoutsImportStrategy layoutsImportStrategy)
 		throws Exception {
 
-		importFile(userId, groupId, 0, file, overwrite);
+		importFile(userId, groupId, 0, file, layoutsImportStrategy);
 	}
 
 	@Override
 	public List<LayoutsImporterResultEntry> importFile(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			File file, boolean overwrite)
+			File file, LayoutsImportStrategy layoutsImportStrategy)
 		throws Exception {
 
 		_layoutsImporterResultEntries = new ArrayList<>();
 
 		try (ZipFile zipFile = new ZipFile(file)) {
 			_processMasterLayoutPageTemplateEntries(
-				groupId, overwrite, userId, zipFile);
+				groupId, layoutsImportStrategy, userId, zipFile);
 
 			_processLayoutUtilityPageEntries(
-				groupId, overwrite, userId, zipFile);
+				groupId, layoutsImportStrategy, userId, zipFile);
 
 			_processDisplayPageTemplatePageTemplateEntries(
-				groupId, overwrite, userId, zipFile);
+				groupId, layoutsImportStrategy, userId, zipFile);
 
 			_processBasicLayoutPageTemplateEntries(
-				groupId, layoutPageTemplateCollectionId, overwrite, userId,
-				zipFile);
+				groupId, layoutPageTemplateCollectionId, layoutsImportStrategy,
+				userId, zipFile);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
@@ -495,8 +497,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 	private LayoutPageTemplateCollection _getLayoutPageTemplateCollection(
 			long groupId, long layoutPageTemplateCollectionId,
-			PageTemplateCollectionEntry pageTemplateCollectionEntry,
-			boolean overwrite)
+			LayoutsImportStrategy layoutsImportStrategy,
+			PageTemplateCollectionEntry pageTemplateCollectionEntry)
 		throws Exception {
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection = null;
@@ -542,7 +544,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			}
 		}
 
-		if (overwrite) {
+		if (Objects.equals(
+				LayoutsImportStrategy.OVERWRITE, layoutsImportStrategy)) {
+
 			return _layoutPageTemplateCollectionService.
 				updateLayoutPageTemplateCollection(
 					layoutPageTemplateCollection.
@@ -1079,7 +1083,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 	private void _processBasicLayoutPageTemplateEntries(
 			long groupId, long layoutPageTemplateCollectionId,
-			boolean overwrite, long userId, ZipFile zipFile)
+			LayoutsImportStrategy layoutsImportStrategy, long userId,
+			ZipFile zipFile)
 		throws Exception {
 
 		Map<String, PageTemplateCollectionEntry>
@@ -1102,16 +1107,17 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			LayoutPageTemplateCollection layoutPageTemplateCollection =
 				_getLayoutPageTemplateCollection(
 					groupId, layoutPageTemplateCollectionId,
-					pageTemplateCollectionEntry, overwrite);
+					layoutsImportStrategy, pageTemplateCollectionEntry);
 
 			_processPageTemplateEntries(
-				groupId, layoutPageTemplateCollection, pageTemplatesEntries,
-				overwrite, userId, zipFile);
+				groupId, layoutPageTemplateCollection, layoutsImportStrategy,
+				pageTemplatesEntries, userId, zipFile);
 		}
 	}
 
 	private void _processDisplayPageTemplatePageTemplateEntries(
-			long groupId, boolean overwrite, long userId, ZipFile zipFile)
+			long groupId, LayoutsImportStrategy layoutsImportStrategy,
+			long userId, ZipFile zipFile)
 		throws Exception {
 
 		List<DisplayPageTemplateEntry> displayPageTemplateEntries =
@@ -1121,7 +1127,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				displayPageTemplateEntries) {
 
 			Callable<Void> callable = new DisplayPagesImporterCallable(
-				groupId, displayPageTemplateEntry, overwrite, userId, zipFile);
+				groupId, displayPageTemplateEntry, layoutsImportStrategy,
+				userId, zipFile);
 
 			try {
 				TransactionInvokerUtil.invoke(_transactionConfig, callable);
@@ -1151,10 +1158,11 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	private LayoutPageTemplateEntry _processLayoutPageTemplateEntry(
 			long classNameId, long classTypeId, long groupId,
 			long layoutPageTemplateCollectionId,
-			LayoutPageTemplateEntry layoutPageTemplateEntry, String name,
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			LayoutsImportStrategy layoutsImportStrategy, String name,
 			PageDefinition pageDefinition, int layoutPageTemplateEntryType,
-			boolean overwrite, long userId, ZipEntry thumbnailZipEntry,
-			String zipPath, ZipFile zipFile)
+			long userId, ZipEntry thumbnailZipEntry, String zipPath,
+			ZipFile zipFile)
 		throws Exception {
 
 		try {
@@ -1182,7 +1190,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 				added = true;
 			}
-			else if (overwrite) {
+			else if (Objects.equals(
+						LayoutsImportStrategy.OVERWRITE,
+						layoutsImportStrategy)) {
+
 				_deleteExistingPortletPreferences(
 					layoutPageTemplateEntry.getPlid());
 
@@ -1265,7 +1276,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private void _processLayoutUtilityPageEntries(
-			long groupId, boolean overwrite, long userId, ZipFile zipFile)
+			long groupId, LayoutsImportStrategy layoutsImportStrategy,
+			long userId, ZipFile zipFile)
 		throws Exception {
 
 		List<UtilityPageTemplateEntry> utilityPageTemplateEntries =
@@ -1275,7 +1287,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				utilityPageTemplateEntries) {
 
 			Callable<Void> callable = new UtilityPageImporterCallable(
-				groupId, utilityPageTemplateEntry, overwrite, userId, zipFile);
+				groupId, layoutsImportStrategy, utilityPageTemplateEntry,
+				userId, zipFile);
 
 			try {
 				TransactionInvokerUtil.invoke(_transactionConfig, callable);
@@ -1303,10 +1316,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 	private void _processLayoutUtilityPageTemplateEntry(
 			String externalReferenceCode, long groupId,
+			LayoutsImportStrategy layoutsImportStrategy,
 			LayoutUtilityPageEntry layoutUtilityPageEntry, String name,
-			PageDefinition pageDefinition, String type, boolean overwrite,
-			long userId, ZipEntry thumbnailZipEntry, String zipPath,
-			ZipFile zipFile)
+			PageDefinition pageDefinition, String type, long userId,
+			ZipEntry thumbnailZipEntry, String zipPath, ZipFile zipFile)
 		throws Exception {
 
 		try {
@@ -1320,7 +1333,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 				added = true;
 			}
-			else if (overwrite) {
+			else if (Objects.equals(
+						LayoutsImportStrategy.OVERWRITE,
+						layoutsImportStrategy)) {
+
 				_deleteExistingPortletPreferences(
 					layoutUtilityPageEntry.getPlid());
 
@@ -1388,7 +1404,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private void _processMasterLayoutPageTemplateEntries(
-			long groupId, boolean overwrite, long userId, ZipFile zipFile)
+			long groupId, LayoutsImportStrategy layoutsImportStrategy,
+			long userId, ZipFile zipFile)
 		throws Exception {
 
 		List<MasterPageEntry> masterPageEntries = _getMasterPageEntries(
@@ -1396,7 +1413,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		for (MasterPageEntry masterPageEntry : masterPageEntries) {
 			Callable<Void> callable = new MasterLayoutTemplatesImporterCallable(
-				groupId, masterPageEntry, overwrite, userId, zipFile);
+				groupId, layoutsImportStrategy, masterPageEntry, userId,
+				zipFile);
 
 			try {
 				TransactionInvokerUtil.invoke(_transactionConfig, callable);
@@ -1539,8 +1557,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	private void _processPageTemplateEntries(
 			long groupId,
 			LayoutPageTemplateCollection layoutPageTemplateCollection,
-			Map<String, PageTemplateEntry> pageTemplateEntryMap,
-			boolean overwrite, long userId, ZipFile zipFile)
+			LayoutsImportStrategy layoutsImportStrategy,
+			Map<String, PageTemplateEntry> pageTemplateEntryMap, long userId,
+			ZipFile zipFile)
 		throws Exception {
 
 		for (Map.Entry<String, PageTemplateEntry> entry :
@@ -1556,8 +1575,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				groupId,
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				layoutPageTemplateEntry, overwrite, userId, pageTemplateEntry,
-				zipFile);
+				layoutPageTemplateEntry, layoutsImportStrategy, userId,
+				pageTemplateEntry, zipFile);
 
 			try {
 				TransactionInvokerUtil.invoke(_transactionConfig, callable);
@@ -2113,10 +2132,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 			_processLayoutPageTemplateEntry(
 				0, 0, _groupId, _layoutPageTemplateCollectionId,
-				_layoutPageTemplateEntry, pageTemplate.getName(),
-				_pageTemplateEntry.getPageDefinition(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, _overwrite,
-				_userId, _pageTemplateEntry.getThumbnailZipEntry(),
+				_layoutPageTemplateEntry, _layoutsImportStrategy,
+				pageTemplate.getName(), _pageTemplateEntry.getPageDefinition(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, _userId,
+				_pageTemplateEntry.getThumbnailZipEntry(),
 				_pageTemplateEntry.getZipPath(), _zipFile);
 
 			return null;
@@ -2124,13 +2143,14 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		private BasicLayoutsImporterCallable(
 			long groupId, long layoutPageTemplateCollectionId,
-			LayoutPageTemplateEntry layoutPageTemplateEntry, boolean overwrite,
-			long userId, PageTemplateEntry pageTemplateEntry, ZipFile zipFile) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			LayoutsImportStrategy layoutsImportStrategy, long userId,
+			PageTemplateEntry pageTemplateEntry, ZipFile zipFile) {
 
 			_groupId = groupId;
 			_layoutPageTemplateCollectionId = layoutPageTemplateCollectionId;
 			_layoutPageTemplateEntry = layoutPageTemplateEntry;
-			_overwrite = overwrite;
+			_layoutsImportStrategy = layoutsImportStrategy;
 			_userId = userId;
 			_pageTemplateEntry = pageTemplateEntry;
 			_zipFile = zipFile;
@@ -2139,7 +2159,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		private final long _groupId;
 		private final long _layoutPageTemplateCollectionId;
 		private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
-		private final boolean _overwrite;
+		private final LayoutsImportStrategy _layoutsImportStrategy;
 		private final PageTemplateEntry _pageTemplateEntry;
 		private final long _userId;
 		private final ZipFile _zipFile;
@@ -2168,10 +2188,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 			layoutPageTemplateEntry = _processLayoutPageTemplateEntry(
 				classNameId, classTypeId, _groupId, 0, layoutPageTemplateEntry,
-				displayPageTemplate.getName(),
+				_layoutsImportStrategy, displayPageTemplate.getName(),
 				_displayPageTemplateEntry.getPageDefinition(),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
-				_overwrite, _userId,
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE, _userId,
 				_displayPageTemplateEntry.getThumbnailZipEntry(),
 				_displayPageTemplateEntry.getZipPath(), _zipFile);
 
@@ -2190,11 +2209,12 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		private DisplayPagesImporterCallable(
 			long groupId, DisplayPageTemplateEntry displayPageTemplateEntry,
-			boolean overwrite, long userId, ZipFile zipFile) {
+			LayoutsImportStrategy layoutsImportStrategy, long userId,
+			ZipFile zipFile) {
 
 			_groupId = groupId;
 			_displayPageTemplateEntry = displayPageTemplateEntry;
-			_overwrite = overwrite;
+			_layoutsImportStrategy = layoutsImportStrategy;
 			_userId = userId;
 			_zipFile = zipFile;
 		}
@@ -2243,7 +2263,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		private final DisplayPageTemplateEntry _displayPageTemplateEntry;
 		private final long _groupId;
-		private final boolean _overwrite;
+		private final LayoutsImportStrategy _layoutsImportStrategy;
 		private final long _userId;
 		private final ZipFile _zipFile;
 
@@ -2263,28 +2283,29 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 			_processLayoutPageTemplateEntry(
 				0, 0, _groupId, 0, layoutPageTemplateEntry,
-				masterPage.getName(), _masterPageEntry.getPageDefinition(),
+				_layoutsImportStrategy, masterPage.getName(),
+				_masterPageEntry.getPageDefinition(),
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
-				_overwrite, _userId, _masterPageEntry.getThumbnailZipEntry(),
+				_userId, _masterPageEntry.getThumbnailZipEntry(),
 				_masterPageEntry.getZipPath(), _zipFile);
 
 			return null;
 		}
 
 		private MasterLayoutTemplatesImporterCallable(
-			long groupId, MasterPageEntry masterPageEntry, boolean overwrite,
-			long userId, ZipFile zipFile) {
+			long groupId, LayoutsImportStrategy layoutsImportStrategy,
+			MasterPageEntry masterPageEntry, long userId, ZipFile zipFile) {
 
 			_groupId = groupId;
+			_layoutsImportStrategy = layoutsImportStrategy;
 			_masterPageEntry = masterPageEntry;
-			_overwrite = overwrite;
 			_userId = userId;
 			_zipFile = zipFile;
 		}
 
 		private final long _groupId;
+		private final LayoutsImportStrategy _layoutsImportStrategy;
 		private final MasterPageEntry _masterPageEntry;
-		private final boolean _overwrite;
 		private final long _userId;
 		private final ZipFile _zipFile;
 
@@ -2374,30 +2395,31 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 			_processLayoutUtilityPageTemplateEntry(
 				utilityPageTemplate.getExternalReferenceCode(), _groupId,
-				layoutUtilityPageEntry, utilityPageTemplate.getName(),
+				_layoutsImportStrategy, layoutUtilityPageEntry,
+				utilityPageTemplate.getName(),
 				_utilityPageTemplateEntry.getPageDefinition(),
 				LayoutUtilityPageEntryTypeConverter.convertToInternalValue(
 					utilityPageTemplate.getTypeAsString()),
-				_overwrite, _userId,
-				_utilityPageTemplateEntry.getThumbnailZipEntry(),
+				_userId, _utilityPageTemplateEntry.getThumbnailZipEntry(),
 				_utilityPageTemplateEntry.getZipPath(), _zipFile);
 
 			return null;
 		}
 
 		private UtilityPageImporterCallable(
-			long groupId, UtilityPageTemplateEntry utilityPageTemplateEntry,
-			boolean overwrite, long userId, ZipFile zipFile) {
+			long groupId, LayoutsImportStrategy layoutsImportStrategy,
+			UtilityPageTemplateEntry utilityPageTemplateEntry, long userId,
+			ZipFile zipFile) {
 
 			_groupId = groupId;
+			_layoutsImportStrategy = layoutsImportStrategy;
 			_utilityPageTemplateEntry = utilityPageTemplateEntry;
-			_overwrite = overwrite;
 			_userId = userId;
 			_zipFile = zipFile;
 		}
 
 		private final long _groupId;
-		private final boolean _overwrite;
+		private final LayoutsImportStrategy _layoutsImportStrategy;
 		private final long _userId;
 		private final UtilityPageTemplateEntry _utilityPageTemplateEntry;
 		private final ZipFile _zipFile;

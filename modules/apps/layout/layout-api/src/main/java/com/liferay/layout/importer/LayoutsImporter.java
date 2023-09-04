@@ -19,12 +19,13 @@ import java.util.List;
 public interface LayoutsImporter {
 
 	public void importFile(
-			long userId, long groupId, File file, boolean overwrite)
+			long userId, long groupId, File file,
+			LayoutsImportStrategy layoutsImportStrategy)
 		throws Exception;
 
 	public List<LayoutsImporterResultEntry> importFile(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			File file, boolean overwrite)
+			File file, LayoutsImportStrategy layoutsImportStrategy)
 		throws Exception;
 
 	public Layout importLayoutSettings(

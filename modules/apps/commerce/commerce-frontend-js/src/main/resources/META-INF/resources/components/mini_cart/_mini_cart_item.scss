@@ -27,6 +27,17 @@
 		z-index: 10;
 	}
 
+	.mini-cart-item-alignment {
+		align-items: center;
+		display: flex;
+		min-height: 86px;
+	}
+
+	.mini-cart-item-actions {
+		font-size: 1rem;
+		padding-right: 0.3rem;
+	}
+
 	.mini-cart-item-thumbnail {
 		align-self: flex-start;
 		background-position: center center;
@@ -130,12 +141,6 @@
 				margin: 0 !important;
 			}
 		}
-	}
-
-	.mini-cart-item-delete {
-		font-size: 1rem;
-		grid-area: delete;
-		padding-right: 1rem;
 	}
 
 	&.is-removed {

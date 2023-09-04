@@ -7,13 +7,13 @@
 
 interface IProps {
 	error?: string;
-	objectDefinitionExternalReferenceCode: string;
+	objectDefinitionExternalReferenceCode1: string;
 	onChange: (objectFieldName: string) => void;
 	value?: string;
 }
 export default function SelectRelationship({
 	error,
-	objectDefinitionExternalReferenceCode,
+	objectDefinitionExternalReferenceCode1,
 	onChange,
 	value,
 	...otherProps

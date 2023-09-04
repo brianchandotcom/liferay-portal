@@ -293,7 +293,7 @@ export function RightSidebarObjectRelationshipDetails({
 
 							<SelectObjectRelationship
 								error={errors.parameterObjectFieldName}
-								objectDefinitionExternalReferenceCode={
+								objectDefinitionExternalReferenceCode1={
 									values.objectDefinitionExternalReferenceCode2 as string
 								}
 								onChange={(parameterObjectFieldName) =>

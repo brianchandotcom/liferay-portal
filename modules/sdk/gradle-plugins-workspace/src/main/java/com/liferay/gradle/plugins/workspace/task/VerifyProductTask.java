@@ -29,7 +29,7 @@ public class VerifyProductTask extends DefaultTask {
 
 	@Input
 	@Optional
-	public String getProcut() {
+	public String getProduct() {
 		return _product;
 	}
 

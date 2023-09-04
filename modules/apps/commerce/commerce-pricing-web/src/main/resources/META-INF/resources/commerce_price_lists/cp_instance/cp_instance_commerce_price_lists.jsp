@@ -20,6 +20,7 @@ long cpInstanceId = cpInstanceCommercePriceEntryDisplayContext.getCPInstanceId()
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpInstanceId" type="hidden" value="<%= cpInstanceId %>" />
+	<aui:input name="unitOfMeasureKey" type="hidden" value="" />
 	<aui:input name="commercePriceListIds" type="hidden" value="" />
 </aui:form>
 
@@ -50,8 +51,18 @@ long cpInstanceId = cpInstanceCommercePriceEntryDisplayContext.getCPInstanceId()
 </div>
 
 <aui:script sandbox="<%= true %>">
-	Liferay.on('<portlet:namespace />addCommercePriceEntry', () => {
+	const eventHandlers = [];
+
+	const openSelectionModal = (key, title, url) => {
 		const openerWindow = Liferay.Util.getOpener();
+
+		const unitOfMeasureKeyInput = document.getElementById(
+			'<portlet:namespace />unitOfMeasureKey'
+		);
+
+		if (key && unitOfMeasureKeyInput) {
+			unitOfMeasureKeyInput.value = key;
+		}
 
 		openerWindow.Liferay.Util.openSelectionModal({
 			multiple: true,
@@ -77,10 +88,55 @@ long cpInstanceId = cpInstanceCommercePriceEntryDisplayContext.getCPInstanceId()
 				}
 			},
 			selectEventName: 'priceListsSelectItem',
-			title:
-				'<liferay-ui:message arguments="<%= HtmlUtil.escape(cpInstance.getSku()) %>" key="add-x-to-price-list" />',
-			url:
-				'<%= cpInstanceCommercePriceEntryDisplayContext.getItemSelectorUrl() %>',
+			title,
+			url,
+		});
+	};
+
+	<%
+	List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures = cpInstanceCommercePriceEntryDisplayContext.getCPInstanceUnitOfMeasures();
+
+	if (cpInstanceUnitOfMeasures.isEmpty()) {
+	%>
+
+		eventHandlers.push(
+			Liferay.on('<portlet:namespace />addCommercePriceEntry', () => {
+				openSelectionModal(
+					null,
+					'<liferay-ui:message arguments="<%= HtmlUtil.escape(cpInstance.getSku()) %>" key="add-x-to-price-list" />',
+					'<%= cpInstanceCommercePriceEntryDisplayContext.getItemSelectorUrl(null) %>'
+				);
+			})
+		);
+
+		<%
+		}
+		else {
+			for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure : cpInstanceUnitOfMeasures) {
+				String key = cpInstanceUnitOfMeasure.getKey();
+		%>
+
+			eventHandlers.push(
+				Liferay.on(
+					'<portlet:namespace />addCommercePriceEntry<%= HtmlUtil.escapeJS(key) %>',
+					() => {
+						openSelectionModal(
+							'<%= HtmlUtil.escapeJS(key) %>',
+							'<liferay-ui:message arguments='<%= HtmlUtil.escape(cpInstance.getSku() + " " + key) %>' key="add-x-to-price-list" />',
+							'<%= cpInstanceCommercePriceEntryDisplayContext.getItemSelectorUrl(key) %>'
+						);
+					}
+				)
+			);
+
+	<%
+		}
+	}
+	%>
+
+	Liferay.on('destroyPortlet', () => {
+		eventHandlers.forEach((eventHandler) => {
+			eventHandler.detach();
 		});
 	});
 </aui:script>

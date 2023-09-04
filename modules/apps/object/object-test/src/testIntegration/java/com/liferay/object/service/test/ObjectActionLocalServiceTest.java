@@ -27,6 +27,7 @@ import com.liferay.object.exception.ObjectActionErrorMessageException;
 import com.liferay.object.exception.ObjectActionLabelException;
 import com.liferay.object.exception.ObjectActionNameException;
 import com.liferay.object.exception.ObjectActionParametersException;
+import com.liferay.object.exception.ObjectActionTriggerKeyException;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -34,13 +35,17 @@ import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.scripting.executor.ObjectScriptingExecutor;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.service.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.service.test.util.TreeTestUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
@@ -65,6 +70,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -288,6 +294,15 @@ public class ObjectActionLocalServiceTest {
 				"Duplicate name " + name,
 				objectActionNameException.getMessage());
 		}
+
+		AssertUtils.assertFailure(
+			ObjectActionTriggerKeyException.class,
+			"The object action trigger key onAfterRootUpdate can only be " +
+				"used by a root object definition",
+			() -> _addObjectAction(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE));
 
 		ObjectAction objectAction2 = _addObjectAction(
 			RandomTestUtil.randomString(),
@@ -522,6 +537,121 @@ public class ObjectActionLocalServiceTest {
 			_assertWebhookObjectAction(
 				"Peter", ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 				"John", WorkflowConstants.STATUS_DRAFT);
+
+			// Create root context
+
+			ObjectDefinition objectDefinitionA =
+				ObjectDefinitionTestUtil.addCustomObjectDefinition(
+					false, _objectDefinitionLocalService,
+					Collections.singletonList(
+						ObjectFieldUtil.createObjectField(
+							ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+							ObjectFieldConstants.DB_TYPE_STRING, "First Name",
+							"firstName")));
+
+			ObjectDefinition objectDefinitionAA =
+				ObjectDefinitionTestUtil.addCustomObjectDefinition(
+					"A" + RandomTestUtil.randomString(),
+					_objectDefinitionLocalService);
+
+			ObjectRelationship objectRelationshipA_AA =
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_objectRelationshipLocalService, objectDefinitionA,
+					objectDefinitionAA);
+
+			ObjectDefinition objectDefinitionAAA =
+				ObjectDefinitionTestUtil.addCustomObjectDefinition(
+					"A" + RandomTestUtil.randomString(),
+					_objectDefinitionLocalService);
+
+			ObjectRelationship objectRelationshipAA_AAA =
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_objectRelationshipLocalService, objectDefinitionAA,
+					objectDefinitionAAA);
+
+			TreeTestUtil.bind(
+				_objectDefinitionLocalService,
+				Arrays.asList(
+					objectRelationshipAA_AAA, objectRelationshipA_AA));
+
+			_objectActionLocalService.addObjectAction(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				objectDefinitionA.getObjectDefinitionId(), true,
+				StringPool.BLANK, RandomTestUtil.randomString(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				RandomTestUtil.randomString(),
+				ObjectActionExecutorConstants.KEY_WEBHOOK,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
+				UnicodePropertiesBuilder.put(
+					"secret", "onafterrootupdate"
+				).put(
+					"url", "https://onafterrootupdate.com"
+				).build(), false);
+
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinitionA.getObjectDefinitionId());
+
+			objectEntry = _objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0,
+				objectDefinitionA.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", "John"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			// Add object entry in child node
+
+			ObjectField objectField = _objectFieldLocalService.getObjectField(
+				objectRelationshipA_AA.getObjectFieldId2());
+
+			objectEntry = _objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0,
+				objectDefinitionAA.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"able", RandomTestUtil.randomString()
+				).put(
+					objectField.getName(), objectEntry.getObjectEntryId()
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			// On after root context update
+
+			_assertWebhookObjectAction(
+				"John", ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
+				objectDefinitionA, null, WorkflowConstants.STATUS_APPROVED);
+
+			// Add object entry in grandchild node
+
+			objectField = _objectFieldLocalService.getObjectField(
+				objectRelationshipAA_AAA.getObjectFieldId2());
+
+			_objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0,
+				objectDefinitionAAA.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"able", RandomTestUtil.randomString()
+				).put(
+					objectField.getName(), objectEntry.getObjectEntryId()
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			// On after root context update
+
+			_assertWebhookObjectAction(
+				"John", ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
+				objectDefinitionA, null, WorkflowConstants.STATUS_APPROVED);
+
+			_objectDefinitionLocalService.unbindObjectDefinition(
+				objectDefinitionA.getObjectDefinitionId());
+
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinitionA);
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinitionAA);
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinitionAAA);
 		}
 		finally {
 			PrincipalThreadLocal.setName(originalName);
@@ -535,6 +665,7 @@ public class ObjectActionLocalServiceTest {
 		_objectActionLocalService.deleteObjectAction(objectAction2);
 		_objectActionLocalService.deleteObjectAction(objectAction3);
 		_objectActionLocalService.deleteObjectAction(objectAction4);
+		_objectActionLocalService.deleteObjectAction(objectAction5);
 	}
 
 	@Test
@@ -1434,7 +1565,8 @@ public class ObjectActionLocalServiceTest {
 
 	private void _assertWebhookObjectAction(
 			String firstName, String objectActionTriggerKey,
-			String originalFirstName, int status)
+			ObjectDefinition objectDefinition, String originalFirstName,
+			int status)
 		throws Exception {
 
 		Assert.assertEquals(1, _argumentsList.size());
@@ -1476,7 +1608,7 @@ public class ObjectActionLocalServiceTest {
 			firstName,
 			JSONUtil.getValue(
 				payloadJSONObject,
-				"JSONObject/objectEntryDTO" + _objectDefinition.getShortName(),
+				"JSONObject/objectEntryDTO" + objectDefinition.getShortName(),
 				"JSONObject/properties", "Object/firstName"));
 
 		if (StringUtil.equals(
@@ -1497,6 +1629,16 @@ public class ObjectActionLocalServiceTest {
 				JSONUtil.getValue(
 					payloadJSONObject, "JSONObject/originalObjectEntry"));
 		}
+	}
+
+	private void _assertWebhookObjectAction(
+			String firstName, String objectActionTriggerKey,
+			String originalFirstName, int status)
+		throws Exception {
+
+		_assertWebhookObjectAction(
+			firstName, objectActionTriggerKey, _objectDefinition,
+			originalFirstName, status);
 	}
 
 	private Object _getAndSetFieldValue(
@@ -1620,6 +1762,9 @@ public class ObjectActionLocalServiceTest {
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;

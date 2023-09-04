@@ -17,6 +17,7 @@ ViewListTypeDefinitionsDisplayContext viewListTypeDefinitionsDisplayContext = (V
 	fdsActionDropdownItems="<%= viewListTypeDefinitionsDisplayContext.getFDSActionDropdownItems() %>"
 	formName="fm"
 	id="<%= ListTypeFDSNames.LIST_TYPE_DEFINITIONS %>"
+	propsTransformer="js/components/FDSPropsTransformer/MultiselectPicklistFDSPropsTransformer"
 	style="fluid"
 />
 

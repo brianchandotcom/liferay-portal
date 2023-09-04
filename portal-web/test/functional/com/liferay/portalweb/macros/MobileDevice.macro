@@ -139,21 +139,23 @@ definition {
 			takeScreenshot();
 
 			if (isSet(height)) {
-				Type(
+				TripleClick(locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_HEIGHT_FIELD");
+
+				Type.sendKeys(
 					locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_HEIGHT_FIELD",
 					value1 = ${height});
 			}
-			else {
-				var height = 400;
-			}
 
 			if (isSet(width)) {
-				Type(
+				TripleClick(locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_WIDTH_FIELD");
+
+				Type.sendKeys(
 					locator1 = "ControlMenuPreviewPanel#PREVIEW_CUSTOM_WIDTH_FIELD",
 					value1 = ${width});
 			}
-			else {
-				var width = 400;
+
+			if (${applyCustomSize} == "true") {
+				Button.click(button = "Apply Custom Size");
 			}
 
 			takeScreenshot();

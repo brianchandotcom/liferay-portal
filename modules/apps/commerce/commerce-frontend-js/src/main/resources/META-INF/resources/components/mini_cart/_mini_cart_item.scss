@@ -64,6 +64,25 @@
 			.item-info-extra {
 				align-self: flex-end;
 			}
+
+			.item-info-collapse {
+				border: 0;
+				position: relative;
+				z-index: 10;
+
+				.panel-header {
+					padding-left: 0;
+
+					.panel-title {
+						font-size: 0.75rem;
+						text-transform: initial;
+					}
+				}
+
+				.panel-body {
+					padding: 4px 0 0;
+				}
+			}
 		}
 
 		.child-items {
@@ -135,7 +154,7 @@
 		position: absolute;
 		right: 0;
 		top: 0;
-		z-index: 2;
+		z-index: 10;
 
 		.mini-cart-item-is-removing {
 			align-items: center;

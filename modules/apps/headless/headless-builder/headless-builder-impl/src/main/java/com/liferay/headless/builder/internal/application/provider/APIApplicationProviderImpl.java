@@ -100,22 +100,8 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 					}
 
 					@Override
-					public PathParameter getPathParameter() {
-						ListEntry listEntry = (ListEntry)properties.get(
-							"pathParameter");
-
-						if (listEntry == null) {
-							return PathParameter.NONE;
-						}
-
-						if (Objects.equals(
-								listEntry.getKey(), "externalReferenceCode")) {
-
-							return PathParameter.EXTERNAL_REFERENCE_CODE;
-						}
-
-						return PathParameter.valueOf(
-							StringUtil.toUpperCase(listEntry.getKey()));
+					public String getPathParameter() {
+						return (String)properties.get("pathParameter");
 					}
 
 					@Override

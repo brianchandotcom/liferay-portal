@@ -368,7 +368,7 @@ export function ObjectDefinitionNode({
 							})
 						);
 					}}
-					objectDefinitionExternalReferenceCode={
+					objectDefinitionExternalReferenceCode1={
 						selectedObjectDefinitionNode?.data
 							?.externalReferenceCode as string
 					}

@@ -24,14 +24,16 @@ import './ModalAddObjectRelationship.scss';
 interface ModalAddObjectRelationshipProps {
 	baseResourceURL: string;
 	handleOnClose: () => void;
-	objectDefinitionExternalReferenceCode: string;
+	objectDefinitionExternalReferenceCode1: string;
+	objectDefinitionExternalReferenceCode2?: string;
 	objectRelationshipParameterRequired: boolean;
 }
 
 export function ModalAddObjectRelationship({
 	baseResourceURL,
 	handleOnClose,
-	objectDefinitionExternalReferenceCode,
+	objectDefinitionExternalReferenceCode1,
+	objectDefinitionExternalReferenceCode2,
 	objectRelationshipParameterRequired,
 }: ModalAddObjectRelationshipProps) {
 	const {observer, onClose} = useModal({
@@ -43,7 +45,8 @@ export function ModalAddObjectRelationship({
 	const [error, setError] = useState<string>('');
 
 	const initialValues: Partial<ObjectRelationship> = {
-		objectDefinitionExternalReferenceCode1: objectDefinitionExternalReferenceCode,
+		objectDefinitionExternalReferenceCode1,
+		objectDefinitionExternalReferenceCode2,
 	};
 
 	const onSubmit = async ({
@@ -113,8 +116,11 @@ export function ModalAddObjectRelationship({
 							baseResourceURL={baseResourceURL}
 							errors={errors}
 							handleChange={handleChange}
-							objectDefinitionExternalReferenceCode={
-								objectDefinitionExternalReferenceCode
+							objectDefinitionExternalReferenceCode1={
+								objectDefinitionExternalReferenceCode1
+							}
+							objectDefinitionExternalReferenceCode2={
+								objectDefinitionExternalReferenceCode2
 							}
 							setValues={setValues}
 							values={{
@@ -133,7 +139,7 @@ export function ModalAddObjectRelationship({
 								ObjectRelationshipType.ONE_TO_MANY && (
 								<SelectObjectRelationship
 									error={errors.parameterObjectFieldName}
-									objectDefinitionExternalReferenceCode={
+									objectDefinitionExternalReferenceCode1={
 										values.objectDefinitionExternalReferenceCode2 as string
 									}
 									onChange={(parameterObjectFieldName) =>

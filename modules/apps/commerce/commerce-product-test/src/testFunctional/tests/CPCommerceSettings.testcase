@@ -188,6 +188,8 @@ definition {
 		}
 
 		task ("When the admin creates a region with XSS") {
+			CommerceNavigator.searchEntry(entryName = ${countryName});
+
 			Click(
 				locator1 = "CommerceEntry#WISH_LIST_NAME",
 				wishListName = ${countryName});

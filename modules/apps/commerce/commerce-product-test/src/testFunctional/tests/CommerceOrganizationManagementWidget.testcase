@@ -206,6 +206,10 @@ definition {
 		}
 
 		task ("And given the account belongs to Organization 2") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 			Account.assignOrganizations(
 				accountName = "Commerce Account",
 				assigneeName = "Organization 2");

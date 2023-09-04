@@ -693,6 +693,10 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			Account.addAddress(
@@ -796,6 +800,10 @@ definition {
 					userRole = "Buyer",
 					userScreenName = "buyeruser${num}",
 					userSiteMembership = "Minium ${num}");
+
+				Account.openAccountsAdmin();
+
+				LexiconEntry.gotoEntry(rowEntry = "Test Account ${num}");
 
 				Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
@@ -1149,6 +1157,10 @@ definition {
 		property portal.acceptance = "false";
 
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
@@ -1466,6 +1478,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
@@ -1616,6 +1632,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
@@ -1686,6 +1706,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given 2 Minium sites and a buyer user is associated with both sites, and 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
@@ -1889,6 +1913,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {
@@ -2210,6 +2238,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Given 3 addresses: one billing, one shipping and one shipping and billing for the account") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 			Account.gotoAssigneeTab(assigneeTab = "Addresses");
 
 			for (var typeList : list "Billing,Shipping,Billing and Shipping") {

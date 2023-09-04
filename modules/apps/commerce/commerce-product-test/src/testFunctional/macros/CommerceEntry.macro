@@ -65,7 +65,7 @@ definition {
 			JSONAccountRole.associateUser(
 				accountEntryName = ${accountName},
 				accountRole = ${userRole},
-				userEmailAddress = ${userEmail});
+				userEmailAddress = ${userEmailAddress});
 		}
 	}
 

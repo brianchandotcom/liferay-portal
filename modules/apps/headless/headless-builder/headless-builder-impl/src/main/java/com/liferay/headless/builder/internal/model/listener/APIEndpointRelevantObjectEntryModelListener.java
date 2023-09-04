@@ -127,7 +127,16 @@ public class APIEndpointRelevantObjectEntryModelListener
 				originalValues.get(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"),
 				values.get(
-					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"))) {
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId")) &&
+			Objects.equals(
+				originalValues.get(
+					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId"),
+				values.get("r_requestAPISchemaToAPIEndpoints_c_apiSchemaId")) &&
+			Objects.equals(
+				originalValues.get(
+					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId"),
+				values.get(
+					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId"))) {
 
 			return false;
 		}

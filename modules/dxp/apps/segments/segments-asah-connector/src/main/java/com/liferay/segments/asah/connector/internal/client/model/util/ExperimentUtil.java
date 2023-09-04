@@ -122,6 +122,8 @@ public class ExperimentUtil {
 				segmentsExperiment.getWinnerSegmentsExperienceKey());
 		}
 
+		experiment.setPublishable(true);
+
 		SegmentsExperience segmentsExperience =
 			segmentsExperienceLocalService.getSegmentsExperience(
 				segmentsExperiment.getSegmentsExperienceId());

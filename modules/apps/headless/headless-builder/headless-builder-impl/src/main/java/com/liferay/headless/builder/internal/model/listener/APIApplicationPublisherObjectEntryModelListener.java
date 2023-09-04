@@ -240,10 +240,6 @@ public class APIApplicationPublisherObjectEntryModelListener
 							return null;
 						}
 
-						_apiApplicationPublisher.unpublish(
-							apiApplication.getBaseURL(),
-							apiApplication.getCompanyId());
-
 						_apiApplicationPublisher.publish(apiApplication);
 					}
 				}

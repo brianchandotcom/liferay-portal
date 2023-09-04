@@ -291,6 +291,95 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-186155. View content in segment under Simulation panel in widget page."
+	@priority = 4
+	test PreviewContentOnWidgetPageBySegment {
+		property asset.publisher.selection.style = "asset-list";
+		property custom.properties = "feature.flag.LPS-186558=true";
+
+		task ("Given a site administrator displays manual collection with variation on a widget page") {
+			var roleId = JSONPermissionSetter.setRoleId(roleTitle = "Owner");
+
+			JSONSegmentsentry.addSegment(
+				fieldName = "Regular Role",
+				groupName = ${randomSiteName},
+				operator = "equals",
+				segmentName = "New Segment",
+				text = ${roleId});
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title 1");
+
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title 2");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
+
+			AssetListsAdmin.selectAsset(
+				assetType = "Basic Web Content",
+				entryList = "Web Content Title 1,Web Content Title 2");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "New Segment");
+
+			AssetListsAdmin.selectAsset(
+				assetName = "Web Content Title 2",
+				assetType = "Basic Web Content");
+
+			AssetListsAdmin.prioritizeVariation(variationTitle = "New Segment");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			AssetPublisherPortlet.gotoSelectCollection();
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Manual Collection");
+
+			IFrame.closeFrame();
+		}
+
+		task ("When the site administrator accesses to the simulation menu") {
+			Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
+		}
+
+		task ("Then the site administrator could preview content by segment") {
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
+
+			for (var title : list "Web Content Title 2,Web Content Title 1") {
+				AssetPublisherPortlet.viewAssetPG(assetTitle = ${title});
+			}
+
+			SelectFrameTop();
+
+			MobileDevice.previewBy(segment = "New Segment");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
+
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "Web Content Title 2");
+
+			AssertElementNotPresent(
+				key_assetTitle = "Web Content Title 1",
+				locator1 = "AP#ASSET_ABSTRACT_TITLE");
+		}
+	}
+
 	@priority = 3
 	test PreviewCustomDefault {
 		MobileDevice.previewPG(deviceType = "custom");

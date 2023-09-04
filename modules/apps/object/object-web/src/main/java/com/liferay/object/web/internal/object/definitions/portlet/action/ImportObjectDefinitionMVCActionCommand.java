@@ -7,6 +7,7 @@ package com.liferay.object.web.internal.object.definitions.portlet.action;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.exception.ObjectDefinitionNameException;
 import com.liferay.object.exception.ObjectViewColumnFieldNameException;
@@ -154,6 +155,8 @@ public class ImportObjectDefinitionMVCActionCommand
 		}
 
 		objectDefinition.setName(ParamUtil.getString(actionRequest, "name"));
+		objectDefinition.setObjectFolderExternalReferenceCode(
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_UNCATEGORIZED);
 
 		ObjectDefinition putObjectDefinition =
 			objectDefinitionResource.putObjectDefinitionByExternalReferenceCode(

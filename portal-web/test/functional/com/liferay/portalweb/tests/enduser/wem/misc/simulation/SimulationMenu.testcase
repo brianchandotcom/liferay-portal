@@ -74,6 +74,75 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-186155. View content in experience under Simulation panel in content page."
+	@priority = 4
+	test PreviewContentOnContentPageByExperience {
+		property custom.properties = "feature.flag.LPS-186558=true";
+
+		task ("Given a site administrator has a content page with experience based on new segment") {
+			JSONSegmentsentry.addSegment(
+				fieldName = "Email Address",
+				groupName = ${randomSiteName},
+				operator = "contains",
+				segmentName = "Email Address Segment",
+				text = "liferay");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Email Address Segment");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Button",
+				id = "link",
+				text = "Contact Sales");
+
+			PageEditor.publish();
+		}
+
+		task ("When the site administrator accesses to the simulation panel on content page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
+		}
+
+		task ("Then the site administrator could preview content by experience") {
+			MobileDevice.previewBy(previewBy = "Experiences");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Go Somewhere");
+
+			SelectFrameTop();
+
+			MobileDevice.previewBy(experience = "New Experience");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "ControlMenuPreviewPanel#PREVIEW_DEVICE_GENERAL_IFRAME");
+
+			ContentPages.viewFragmentText(
+				fragmentName = "button",
+				id = "link",
+				text = "Contact Sales");
+		}
+	}
+
 	@priority = 3
 	test PreviewCustomDefault {
 		MobileDevice.previewPG(deviceType = "custom");

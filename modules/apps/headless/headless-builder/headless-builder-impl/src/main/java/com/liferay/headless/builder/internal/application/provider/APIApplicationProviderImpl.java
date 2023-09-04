@@ -74,7 +74,7 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 					apiApplicationExternalReferenceCode + "'",
 				Arrays.asList(
 					"apiEndpointToAPIFilters", "apiEndpointToAPISorts"),
-				"L_API_ENDPOINT"),
+				"L_API_ENDPOINT", null),
 			objectEntry -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
@@ -295,7 +295,8 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 				companyId,
 				"apiApplicationToAPISchemas/externalReferenceCode eq '" +
 					apiApplicationObjectEntry.getExternalReferenceCode() + "'",
-				Arrays.asList("apiSchemaToAPIProperties"), "L_API_SCHEMA"),
+				Arrays.asList("apiSchemaToAPIProperties"), "L_API_SCHEMA",
+				null),
 			objectEntry -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 

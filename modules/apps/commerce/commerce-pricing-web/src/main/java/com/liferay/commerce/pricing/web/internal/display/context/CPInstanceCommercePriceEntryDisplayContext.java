@@ -11,12 +11,13 @@ import com.liferay.commerce.price.list.portlet.action.CommercePriceListActionHel
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -26,10 +27,12 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -94,24 +97,63 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		return cpInstanceId;
 	}
 
-	public CreationMenu getCreationMenu() throws PortalException {
-		return CreationMenuBuilder.addDropdownItem(
-			dropdownItem -> {
-				CPInstance cpInstance = getCPInstance();
+	public List<CPInstanceUnitOfMeasure> getCPInstanceUnitOfMeasures()
+		throws PortalException {
 
-				dropdownItem.setHref(
-					liferayPortletResponse.getNamespace() +
-						"addCommercePriceEntry");
-				dropdownItem.setLabel(
-					LanguageUtil.format(
-						httpServletRequest, "add-x-to-price-list",
-						HtmlUtil.escape(cpInstance.getSku()), false));
-				dropdownItem.setTarget("event");
-			}
-		).build();
+		CPInstance cpInstance = getCPInstance();
+
+		return cpInstance.getCPInstanceUnitOfMeasures(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
-	public String getItemSelectorUrl() throws PortalException {
+	public CreationMenu getCreationMenu() throws PortalException {
+		CreationMenu creationMenu = new CreationMenu();
+
+		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+			getCPInstanceUnitOfMeasures();
+
+		if (cpInstanceUnitOfMeasures.isEmpty()) {
+			CPInstance cpInstance = getCPInstance();
+
+			return creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(
+						liferayPortletResponse.getNamespace() +
+							"addCommercePriceEntry");
+					dropdownItem.setLabel(
+						LanguageUtil.format(
+							httpServletRequest, "add-x-to-price-list",
+							HtmlUtil.escape(cpInstance.getSku()), false));
+					dropdownItem.setTarget("event");
+				});
+		}
+
+		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
+				cpInstanceUnitOfMeasures) {
+
+			creationMenu.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(
+						StringBundler.concat(
+							liferayPortletResponse.getNamespace(),
+							"addCommercePriceEntry",
+							HtmlUtil.escapeJS(
+								cpInstanceUnitOfMeasure.getKey())));
+					dropdownItem.setLabel(
+						LanguageUtil.format(
+							httpServletRequest, "add-x-to-price-list",
+							HtmlUtil.escape(cpInstanceUnitOfMeasure.getKey()),
+							false));
+					dropdownItem.setTarget("event");
+				});
+		}
+
+		return creationMenu;
+	}
+
+	public String getItemSelectorUrl(String unitOfMeasureKey)
+		throws PortalException {
+
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
 
@@ -130,7 +172,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 				commercePriceListItemSelectorCriterion)
 		).setParameter(
 			"checkedCommercePriceListIds",
-			StringUtil.merge(_getCheckedCommercePriceListIds())
+			StringUtil.merge(_getCheckedCommercePriceListIds(unitOfMeasureKey))
 		).buildString();
 	}
 
@@ -154,13 +196,25 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		return "price-lists";
 	}
 
-	private long[] _getCheckedCommercePriceListIds() throws PortalException {
+	private long[] _getCheckedCommercePriceListIds(String unitOfMeasureKey)
+		throws PortalException {
+
 		List<Long> commercePriceListIds = new ArrayList<>();
 
 		List<CommercePriceEntry> commercePriceEntries =
-			_getCommercePriceEntries();
+			_commercePriceEntryService.getInstanceCommercePriceEntries(
+				getCPInstanceId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (CommercePriceEntry commercePriceEntry : commercePriceEntries) {
+			if (Validator.isNotNull(commercePriceEntry.getUnitOfMeasureKey()) &&
+				Validator.isNotNull(unitOfMeasureKey) &&
+				!Objects.equals(
+					unitOfMeasureKey,
+					commercePriceEntry.getUnitOfMeasureKey())) {
+
+				continue;
+			}
+
 			commercePriceListIds.add(
 				commercePriceEntry.getCommercePriceListId());
 		}
@@ -170,13 +224,6 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		}
 
 		return new long[0];
-	}
-
-	private List<CommercePriceEntry> _getCommercePriceEntries()
-		throws PortalException {
-
-		return _commercePriceEntryService.getInstanceCommercePriceEntries(
-			getCPInstanceId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	private final CommercePriceEntryService _commercePriceEntryService;

@@ -35,6 +35,8 @@ public class ListTypeDefinitionsTableFDSView extends BaseTableFDSView {
 			"name", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink")
+		).add(
+			"system", "source"
 		).build();
 	}
 

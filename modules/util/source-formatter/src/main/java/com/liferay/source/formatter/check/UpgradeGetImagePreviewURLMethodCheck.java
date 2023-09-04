@@ -6,6 +6,7 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.regex.Matcher;
@@ -14,8 +15,7 @@ import java.util.regex.Pattern;
 /**
  * @author Tamyris Bernardo
  */
-public class UpgradeGetImagePreviewURLMethodCheck
-	extends BaseUpgradeMatcherReplacementCheck {
+public class UpgradeGetImagePreviewURLMethodCheck extends BaseUpgradeCheck {
 
 	@Override
 	protected String afterFormat(
@@ -28,19 +28,42 @@ public class UpgradeGetImagePreviewURLMethodCheck
 				newContent, CharPool.CLOSE_CURLY_BRACE,
 				"\t@Reference\n\tprivate DLURLHelper _dlURLHelper;\n\n}");
 		}
+		else {
+			newContent = StringBundler.concat(
+				newContent,
+				"\n\n<%@ page import=\"com.liferay.document.library.util.",
+				"DLURLHelperUtil\" %>");
+		}
 
 		return newContent;
 	}
 
 	@Override
-	protected String formatMatcherIteration(
-		String content, String newContent, Matcher matcher) {
+	protected String format(
+			String fileName, String absolutePath, String content)
+		throws Exception {
 
-		String methodCall = matcher.group();
+		String newContent = content;
 
-		return StringUtil.replace(
-			newContent, methodCall,
-			StringUtil.replace(methodCall, "DLUtil", "_dlURLHelper"));
+		Matcher matcher = _getImagePreviewPattern.matcher(content);
+
+		while (matcher.find()) {
+			String methodCall = matcher.group();
+
+			if (fileName.endsWith(".java")) {
+				newContent = StringUtil.replace(
+					newContent, methodCall,
+					StringUtil.replace(methodCall, "DLUtil", "_dlURLHelper"));
+			}
+			else {
+				newContent = StringUtil.replace(
+					newContent, methodCall,
+					StringUtil.replace(
+						methodCall, "DLUtil", "DLURLHelperUtil"));
+			}
+		}
+
+		return newContent;
 	}
 
 	@Override
@@ -49,13 +72,11 @@ public class UpgradeGetImagePreviewURLMethodCheck
 	}
 
 	@Override
-	protected Pattern getPattern() {
-		return Pattern.compile("DLUtil\\.\\s*getImagePreviewURL\\(");
-	}
-
-	@Override
 	protected String[] getValidExtensions() {
 		return new String[] {"java", "jsp"};
 	}
+
+	private static final Pattern _getImagePreviewPattern = Pattern.compile(
+		"DLUtil\\.\\s*getImagePreviewURL\\(");
 
 }

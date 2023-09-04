@@ -48,7 +48,7 @@ public class ListTypeEntryLocalServiceImpl
 			long listTypeDefinitionId, String key, Map<Locale, String> nameMap)
 		throws PortalException {
 
-		_validateInvokerBundle(listTypeDefinitionId);
+		_validateInvokerBundle("create", listTypeDefinitionId);
 
 		User user = _userLocalService.getUser(userId);
 
@@ -78,7 +78,8 @@ public class ListTypeEntryLocalServiceImpl
 	public ListTypeEntry deleteListTypeEntry(ListTypeEntry listTypeEntry)
 		throws PortalException {
 
-		_validateInvokerBundle(listTypeEntry.getListTypeDefinitionId());
+		_validateInvokerBundle(
+			"delete", listTypeEntry.getListTypeDefinitionId());
 
 		return listTypeEntryPersistence.remove(listTypeEntry);
 	}
@@ -214,7 +215,8 @@ public class ListTypeEntryLocalServiceImpl
 		}
 	}
 
-	private void _validateInvokerBundle(long listTypeDefinitionId)
+	private void _validateInvokerBundle(
+			String action, long listTypeDefinitionId)
 		throws PortalException {
 
 		ListTypeDefinition listTypeDefinition =
@@ -225,7 +227,8 @@ public class ListTypeEntryLocalServiceImpl
 			!ObjectDefinitionUtil.isInvokerBundleAllowed()) {
 
 			throw new ListTypeDefinitionSystemException(
-				"Only allowed bundles can manage system picklists entries");
+				"Only allowed bundles can " + action +
+					" system picklists entries");
 		}
 	}
 

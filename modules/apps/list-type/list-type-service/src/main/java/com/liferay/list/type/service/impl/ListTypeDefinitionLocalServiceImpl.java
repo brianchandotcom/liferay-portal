@@ -73,7 +73,7 @@ public class ListTypeDefinitionLocalServiceImpl
 			List<ListTypeEntry> listTypeEntries)
 		throws PortalException {
 
-		_validateInvokerBundle(system);
+		_validateInvokerBundle("create", system);
 		_validateName(nameMap, LocaleUtil.getSiteDefault());
 
 		ListTypeDefinition listTypeDefinition =
@@ -97,7 +97,7 @@ public class ListTypeDefinitionLocalServiceImpl
 			ListTypeDefinition listTypeDefinition)
 		throws PortalException {
 
-		_validateInvokerBundle(listTypeDefinition.isSystem());
+		_validateInvokerBundle("delete", listTypeDefinition.isSystem());
 
 		int count =
 			_objectFieldLocalService.getObjectFieldsCountByListTypeDefinitionId(
@@ -243,10 +243,12 @@ public class ListTypeDefinitionLocalServiceImpl
 		}
 	}
 
-	private void _validateInvokerBundle(boolean system) throws PortalException {
+	private void _validateInvokerBundle(String action, boolean system)
+		throws PortalException {
+
 		if (system && !ObjectDefinitionUtil.isInvokerBundleAllowed()) {
 			throw new ListTypeDefinitionSystemException(
-				"Only allowed bundles can manage system picklists");
+				"Only allowed bundles can " + action + " system picklists");
 		}
 	}
 

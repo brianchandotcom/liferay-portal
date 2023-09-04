@@ -36,7 +36,7 @@ public interface APIApplication {
 
 		public String getPath();
 
-		public PathParameter getPathParameter();
+		public String getPathParameter();
 
 		public Schema getRequestSchema();
 
@@ -47,12 +47,6 @@ public interface APIApplication {
 		public Scope getScope();
 
 		public Sort getSort();
-
-		public enum PathParameter {
-
-			EXTERNAL_REFERENCE_CODE, ID, NONE
-
-		}
 
 		public enum RetrieveType {
 

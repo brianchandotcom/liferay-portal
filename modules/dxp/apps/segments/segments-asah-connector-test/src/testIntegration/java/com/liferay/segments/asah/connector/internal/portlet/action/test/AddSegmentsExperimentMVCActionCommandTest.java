@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.segments.experiment.web.internal.portlet.action.test;
+package com.liferay.segments.asah.connector.internal.portlet.action.test;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.MockHttp;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -39,6 +40,8 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
+
+import java.util.Collections;
 
 import javax.portlet.ActionRequest;
 
@@ -128,6 +131,9 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 						TestPropsValues.getCompanyId(),
 						AnalyticsConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
+							"liferayAnalyticsFaroBackendURL",
+							"http://localhost:8086"
+						).put(
 							"liferayAnalyticsURL", liferayAnalyticsURL
 						).build())) {
 
@@ -229,8 +235,24 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 						TestPropsValues.getCompanyId(),
 						AnalyticsConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
+							"liferayAnalyticsFaroBackendURL",
+							"http://localhost:8086"
+						).put(
 							"liferayAnalyticsURL", "http://localhost:8080/"
 						).build())) {
+
+			Object asahFaroBackendClient = ReflectionTestUtil.getFieldValue(
+				_mvcActionCommand, "_asahFaroBackendClient");
+
+			ReflectionTestUtil.setFieldValue(
+				asahFaroBackendClient, "_http",
+				new MockHttp(
+					Collections.singletonMap(
+						"/api/1.0/experiments/" +
+							segmentsExperiment.getSegmentsExperimentKey(),
+						() -> JSONUtil.put(
+							"id", "123456"
+						).toString())));
 
 			ReflectionTestUtil.invoke(
 				_mvcActionCommand, "_addSegmentsExperiment",

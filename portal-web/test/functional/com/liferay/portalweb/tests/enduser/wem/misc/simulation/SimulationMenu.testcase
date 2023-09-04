@@ -319,6 +319,76 @@ definition {
 		MobileDevice.previewPG(deviceType = "tablet");
 	}
 
+	@description = "This is a test for LPS-186155. View no experience selector in the header when simulation is opened and view info for no available experiences and available segments in content page."
+	@priority = 3
+	test ViewEmptyMessage {
+		property custom.properties = "feature.flag.LPS-186558=true";
+
+		task ("Given a site administrator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditor.publish();
+		}
+
+		task ("When the site administrator accesses to the simulation panel on content page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
+		}
+
+		task ("Then the site administrator sees empty message on page content section") {
+			AssertTextEquals(
+				key_panel = "Page Content",
+				locator1 = "Panel#PANEL_HELP_TEXT",
+				value1 = "No segments have been added yet. To add a new segment go to Product Menu > People > Segments.");
+
+			MobileDevice.previewBy(previewBy = "Experiences");
+
+			AssertTextEquals(
+				key_panel = "Page Content",
+				locator1 = "Panel#PANEL_HELP_TEXT",
+				value1 = "No experiences have been added yet.");
+		}
+
+		task ("When the site administrator adds an experience on content page") {
+			Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
+
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+
+			PageEditor.editFragmentText(
+				fragmentName = "Button",
+				id = "link",
+				text = "Contact Sales");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the site administrator cannot see the experience selector on control menu after opening the simulation menu") {
+			Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
+
+			AssertElementNotPresent(
+				ariaLabel = "Experience Selector",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
+		}
+	}
+
 	@description = "This is a test for LPS-187159. View info alert message under Simulation panel in content page."
 	@priority = 4
 	test ViewInfoMessageWhenPreviewContentPage {

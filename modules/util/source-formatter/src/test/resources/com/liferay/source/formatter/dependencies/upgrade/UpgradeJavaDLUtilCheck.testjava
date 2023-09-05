@@ -6,13 +6,14 @@
 package com.liferay.source.formatter.dependencies.upgrade;
 
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 /**
  * @author Michael Cavalcanti
  */
 public class UpgradeJavaDLUtilCheck {
 
-	public long[] getGroupIds() {
+	public long[] getGroupIds(ThemeDisplay themeDisplay) {
 		return DLUtil.getGroupIds(themeDisplay);
 	}
 

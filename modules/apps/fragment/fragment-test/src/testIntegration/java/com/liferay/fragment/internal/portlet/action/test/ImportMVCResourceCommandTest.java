@@ -82,6 +82,25 @@ public class ImportMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testImportFragmentEntriesWithDoNotImportStrategyAndWithExistingFragmentEntry()
+		throws Exception {
+
+		FragmentEntry expectedFragmentEntry = _addFragmentEntry(
+			"fragment", "Fragment", "<h1>Test html</h1>");
+
+		_assertImportResultsJSONObject(
+			2, 3, 2,
+			_importFragmentEntries(FragmentsImportStrategy.DO_NOT_IMPORT));
+
+		FragmentEntry actualFragmentEntry =
+			_fragmentEntryLocalService.getFragmentEntry(
+				expectedFragmentEntry.getFragmentEntryId());
+
+		Assert.assertEquals(
+			expectedFragmentEntry.getHtml(), actualFragmentEntry.getHtml());
+	}
+
+	@Test
 	public void testImportFragmentEntriesWithDoNotOverwriteStrategy()
 		throws Exception {
 

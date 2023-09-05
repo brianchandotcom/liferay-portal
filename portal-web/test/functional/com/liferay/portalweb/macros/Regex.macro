@@ -11,7 +11,7 @@ definition {
 	macro removePortNumber {
 		Variables.assertDefined(parameterList = ${url});
 
-		var url = StringUtil.regexReplaceFirst(${url}, "(.*?):[0-9]{4,}", "$1");
+		var url = StringUtil.regexReplaceFirst(${url}, "(.*?):[0-9]{4,}.+", "$1");
 
 		return ${url};
 	}

@@ -7,8 +7,10 @@ package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.RenderResponse;
@@ -58,13 +61,19 @@ public class DLCopyEntryDisplayContext {
 			_liferayPortletResponse
 		).setActionName(
 			actionName
-		).setMVCRenderCommandName(
-			actionName
+		).buildString();
+	}
+
+	public String getCopyEntriesActionURL() {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/document_library/bulk_copy_entries"
 		).buildString();
 	}
 
 	public long getFileEntryId() {
-		if (_fileEntryId < 0) {
+		if (_fileEntryId == null) {
 			_fileEntryId = ParamUtil.getLong(
 				_httpServletRequest, "fileEntryId");
 		}
@@ -95,7 +104,7 @@ public class DLCopyEntryDisplayContext {
 	}
 
 	public long getFileShortcutId() {
-		if (_fileShortcutId < 0) {
+		if (_fileShortcutId == null) {
 			_fileShortcutId = ParamUtil.getLong(
 				_httpServletRequest, "fileShortcutId");
 		}
@@ -113,6 +122,15 @@ public class DLCopyEntryDisplayContext {
 		return _redirect;
 	}
 
+	public long[] getSelectedEntries() {
+		if (ArrayUtil.isEmpty(_selectedEntries)) {
+			_selectedEntries = ParamUtil.getLongValues(
+				_httpServletRequest, "selectedEntries");
+		}
+
+		return _selectedEntries;
+	}
+
 	public String getSelectFolderURL() throws PortalException {
 		ItemSelector itemSelector =
 			(ItemSelector)_httpServletRequest.getAttribute(
@@ -125,6 +143,24 @@ public class DLCopyEntryDisplayContext {
 				_themeDisplay.getScopeGroupId(), _getItemSelectedEventName(),
 				_getFolderItemSelectorCriterion(
 					_getSourceFolderId(), getSourceRepositoryId())));
+	}
+
+	public String getSourceFolderName() {
+		if (_sourceFolderName != null) {
+			return _sourceFolderName;
+		}
+
+		DLFolder dlFolder = DLFolderLocalServiceUtil.fetchFolder(
+			ParamUtil.getLong(_httpServletRequest, "sourceFolderId"));
+
+		if (dlFolder == null) {
+			_sourceFolderName = LanguageUtil.get(_httpServletRequest, "home");
+		}
+		else {
+			_sourceFolderName = dlFolder.getName();
+		}
+
+		return _sourceFolderName;
 	}
 
 	public long getSourceRepositoryId() throws PortalException {
@@ -193,35 +229,45 @@ public class DLCopyEntryDisplayContext {
 
 			return fileShortcut.getFolderId();
 		}
+		else if (getFileEntryId() > 0) {
+			FileEntry fileEntry = repository.getFileEntry(getFileEntryId());
 
-		FileEntry fileEntry = repository.getFileEntry(getFileEntryId());
+			return fileEntry.getFolderId();
+		}
 
-		return fileEntry.getFolderId();
+		return ParamUtil.getLong(_httpServletRequest, "sourceFolderId");
 	}
 
 	private Repository _getSourceRepository() throws PortalException {
-		if (_sourceRepository == null) {
-			if (getFileShortcutId() > 0) {
-				_sourceRepository =
-					RepositoryProviderUtil.getFileShortcutRepository(
-						getFileShortcutId());
-			}
-			else {
-				_sourceRepository =
-					RepositoryProviderUtil.getFileEntryRepository(
-						getFileEntryId());
-			}
+		if (_sourceRepository != null) {
+			return _sourceRepository;
+		}
+
+		if (getFileShortcutId() > 0) {
+			_sourceRepository =
+				RepositoryProviderUtil.getFileShortcutRepository(
+					getFileShortcutId());
+		}
+		else if (getFileEntryId() > 0) {
+			_sourceRepository = RepositoryProviderUtil.getFileEntryRepository(
+				getFileEntryId());
+		}
+		else {
+			_sourceRepository = RepositoryProviderUtil.getRepository(
+				ParamUtil.getLong(_httpServletRequest, "sourceRepositoryId"));
 		}
 
 		return _sourceRepository;
 	}
 
-	private long _fileEntryId = -1;
+	private Long _fileEntryId;
 	private String _fileName;
-	private long _fileShortcutId = -1;
+	private Long _fileShortcutId;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
+	private long[] _selectedEntries;
+	private String _sourceFolderName;
 	private Repository _sourceRepository;
 	private final ThemeDisplay _themeDisplay;
 

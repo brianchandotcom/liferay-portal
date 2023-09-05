@@ -22,6 +22,7 @@ const DLFolderSelector = ({
 	itemType,
 	portletNamespace,
 	redirect,
+	selectedEntries,
 	selectionModalURL,
 	sourceFileEntryId,
 	sourceFileName,
@@ -96,6 +97,7 @@ const DLFolderSelector = ({
 						[`${portletNamespace}destinationRepositoryId`]: destinationRepositoryId,
 				  }
 				: {
+						[`${portletNamespace}selectedEntries`]: selectedEntries,
 						[`${portletNamespace}fileEntryId`]: sourceFileEntryId,
 						[`${portletNamespace}fileShortcutId`]: fileShortcutId,
 						[`${portletNamespace}destinationFolderId`]: destinationParentFolderId,

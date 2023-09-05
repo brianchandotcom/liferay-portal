@@ -788,6 +788,10 @@ public class DefaultObjectEntryManagerImpl
 			existingObjectEntry.setProperties(properties);
 		}
 
+		if (objectEntry.getStatus() != null) {
+			existingObjectEntry.setStatus(objectEntry.getStatus());
+		}
+
 		if (objectEntry.getTaxonomyCategoryIds() != null) {
 			existingObjectEntry.setTaxonomyCategoryIds(
 				objectEntry.getTaxonomyCategoryIds());

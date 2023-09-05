@@ -6,6 +6,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.portal.kernel.language.Language;
@@ -72,12 +73,20 @@ public class ImportLayoutUtilityPageEntriesMVCActionCommand
 		boolean overwrite = ParamUtil.getBoolean(
 			actionRequest, "overwrite", true);
 
+		LayoutsImportStrategy layoutsImportStrategy =
+			LayoutsImportStrategy.OVERWRITE;
+
+		if (!overwrite) {
+			layoutsImportStrategy = LayoutsImportStrategy.DO_NOT_OVERWRITE;
+		}
+
 		try {
 			List<LayoutsImporterResultEntry>
 				layoutUtilityPageImporterResultEntries =
 					_layoutsImporter.importFile(
 						themeDisplay.getUserId(),
-						themeDisplay.getScopeGroupId(), 0L, file, overwrite);
+						themeDisplay.getScopeGroupId(), 0L, file,
+						layoutsImportStrategy);
 
 			if (ListUtil.isEmpty(layoutUtilityPageImporterResultEntries)) {
 				return;

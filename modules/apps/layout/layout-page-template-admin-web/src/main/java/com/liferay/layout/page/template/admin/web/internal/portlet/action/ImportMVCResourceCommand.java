@@ -5,6 +5,7 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
+import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
@@ -79,11 +80,20 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		if (validFile) {
+			boolean overwrite = ParamUtil.getBoolean(
+				resourceRequest, "overwrite", true);
+
+			LayoutsImportStrategy layoutsImportStrategy =
+				LayoutsImportStrategy.OVERWRITE;
+
+			if (!overwrite) {
+				layoutsImportStrategy = LayoutsImportStrategy.DO_NOT_OVERWRITE;
+			}
+
 			jsonObject = _importFile(
 				file, themeDisplay.getScopeGroupId(),
-				layoutPageTemplateCollectionId, themeDisplay.getLocale(),
-				ParamUtil.getBoolean(resourceRequest, "overwrite", true),
-				themeDisplay.getUserId());
+				layoutPageTemplateCollectionId, layoutsImportStrategy,
+				themeDisplay.getLocale(), themeDisplay.getUserId());
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse, jsonObject);
@@ -120,7 +130,8 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private JSONObject _importFile(
 		File file, long groupId, long layoutPageTemplateCollectionId,
-		Locale locale, boolean overwrite, long userId) {
+		LayoutsImportStrategy layoutsImportStrategy, Locale locale,
+		long userId) {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -128,7 +139,7 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
 				_layoutsImporter.importFile(
 					userId, groupId, layoutPageTemplateCollectionId, file,
-					overwrite);
+					layoutsImportStrategy);
 
 			JSONObject importResultsJSONObject =
 				_jsonFactory.createJSONObject();

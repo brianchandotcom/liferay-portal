@@ -130,7 +130,15 @@ public class AdminAccountGroupResourceImpl
 	}
 
 	@Override
-	public Page<AdminAccountGroup> getAccountGroupsPage(
+	public Page<AdminAccountGroup> getAccountIdAccountGroupsPage(
+			Long id, Pagination pagination)
+		throws Exception {
+
+		return _getAdminAccountGroups(id, pagination);
+	}
+
+	@Override
+	public Page<AdminAccountGroup> getAdminAccountGroupsPage(
 			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -146,14 +154,6 @@ public class AdminAccountGroupResourceImpl
 			document -> _toAccountGroup(
 				_accountGroupService.getAccountGroup(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
-	}
-
-	@Override
-	public Page<AdminAccountGroup> getAccountIdAccountGroupsPage(
-			Long id, Pagination pagination)
-		throws Exception {
-
-		return _getAdminAccountGroups(id, pagination);
 	}
 
 	@Override

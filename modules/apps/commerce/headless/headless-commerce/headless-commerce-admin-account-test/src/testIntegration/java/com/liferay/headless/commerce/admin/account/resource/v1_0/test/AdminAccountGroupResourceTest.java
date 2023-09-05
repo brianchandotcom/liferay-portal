@@ -287,19 +287,20 @@ public class AdminAccountGroupResourceTest
 	}
 
 	@Override
-	protected AdminAccountGroup testGetAccountGroupsPage_addAdminAccountGroup(
-			AdminAccountGroup adminAccountGroup)
-		throws Exception {
-
-		return _postAccountGroup(adminAccountGroup);
-	}
-
-	@Override
 	protected Long testGetAccountIdAccountGroupsPage_getId() throws Exception {
 		AdminAccountGroup adminAccountGroup = _postAccountGroup(
 			randomAdminAccountGroup());
 
 		return adminAccountGroup.getId();
+	}
+
+	@Override
+	protected AdminAccountGroup
+			testGetAdminAccountGroupsPage_addAdminAccountGroup(
+				AdminAccountGroup adminAccountGroup)
+		throws Exception {
+
+		return _postAccountGroup(adminAccountGroup);
 	}
 
 	@Override

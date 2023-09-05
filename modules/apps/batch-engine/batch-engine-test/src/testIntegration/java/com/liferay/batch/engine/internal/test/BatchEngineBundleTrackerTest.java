@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.BooleanWrapper;
 import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
@@ -107,7 +108,11 @@ public class BatchEngineBundleTrackerTest {
 				BatchEngineUnitProcessor.class,
 				batchEngineUnits -> {
 					for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
-						if (batchEngineUnit.isValid()) {
+						if (batchEngineUnit.isValid() &&
+							StringUtil.startsWith(
+								batchEngineUnit.getDataFileName(),
+								"/" + dirName)) {
+
 							actualCount.increment();
 						}
 					}

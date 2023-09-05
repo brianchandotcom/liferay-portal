@@ -630,6 +630,10 @@ definition {
 			locator1 = "FormsAdmin#FORMS_TABLE_NAME");
 
 		FormsAdmin.deleteForm(formName = "Form 1");
+
+		Alert.viewSuccessMessage();
+
+		FormsAdmin.viewNoFormEntries();
 	}
 
 	@description = "Verify that a Form can be duplicated"

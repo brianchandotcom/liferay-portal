@@ -5,6 +5,7 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
+import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
@@ -80,32 +81,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 			if (!Objects.equals(map1.get(parameter), map2.get(parameter))) {
 				return false;
 			}
-		}
-
-		return true;
-	}
-
-	private boolean _isAPIApplication(long apiApplicationId) throws Exception {
-		if (apiApplicationId == 0) {
-			return false;
-		}
-
-		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-			apiApplicationId);
-
-		if (objectEntry == null) {
-			return false;
-		}
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		if (!Objects.equals(
-				objectDefinition.getExternalReferenceCode(),
-				"L_API_APPLICATION")) {
-
-			return false;
 		}
 
 		return true;
@@ -192,7 +167,9 @@ public class APIEndpointRelevantObjectEntryModelListener
 			long apiApplicationId = (long)values.get(
 				"r_apiApplicationToAPIEndpoints_c_apiApplicationId");
 
-			if (!_isAPIApplication(apiApplicationId)) {
+			if (!_objectEntryHelper.isValidObjectEntry(
+					apiApplicationId, "L_API_APPLICATION")) {
+
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null,
 					"An API endpoint must be related to an API application",
@@ -315,6 +292,9 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryHelper _objectEntryHelper;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

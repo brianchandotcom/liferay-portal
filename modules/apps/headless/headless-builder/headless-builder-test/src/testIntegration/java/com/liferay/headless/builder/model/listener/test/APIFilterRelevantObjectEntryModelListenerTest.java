@@ -165,6 +165,27 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 				"headless-builder/filters", Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"The API endpoint specified already has an API filter " +
+					"associated"
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"objectFieldERC", RandomTestUtil.randomString()
+				).put(
+					"oDataFilter", "test ne 1"
+				).put(
+					"r_apiEndpointToAPIFilters_c_apiEndpointERC",
+					_API_ENDPOINT_ERC
+				).toString(),
+				"headless-builder/filters", Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
 	}
 
 	private void _addAPIApplication(

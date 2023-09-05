@@ -626,6 +626,10 @@ definition {
 		task ("Launch AC and Connect new data source") {
 			ACUtils.launchAC();
 
+			if (IsElementNotPresent(locator1 = "ACSettings#SETTINGS_PAGE")) {
+				ACNavigation.goToSettings();
+			}
+
 			ACSettings.goToDataSources();
 
 			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");

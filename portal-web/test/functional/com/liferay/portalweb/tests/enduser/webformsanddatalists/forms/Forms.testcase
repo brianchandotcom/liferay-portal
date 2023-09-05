@@ -607,7 +607,7 @@ definition {
 	@description = "Verify that a Form can be deleted"
 	@priority = 5
 	test CanBeDeleted {
-		FormsAdmin.addForm();
+		FormsAdminNavigator.gotoNewForm();
 
 		Form.editName(formName = "Form 1");
 

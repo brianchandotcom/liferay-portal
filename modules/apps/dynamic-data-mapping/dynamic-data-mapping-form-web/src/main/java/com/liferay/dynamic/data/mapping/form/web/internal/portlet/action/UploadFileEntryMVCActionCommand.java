@@ -9,9 +9,12 @@ import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.InvalidFileException;
+import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.form.web.internal.upload.DDMFormUploadFileEntryHandler;
+import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormInstancePermission;
 import com.liferay.dynamic.data.mapping.form.web.internal.upload.DDMFormUploadValidator;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
@@ -24,14 +27,26 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.upload.UploadFileEntryHandler;
 import com.liferay.upload.UploadHandler;
 import com.liferay.upload.UploadResponseHandler;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -66,8 +81,10 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private DDMFormUploadFileEntryHandler _ddmFormUploadFileEntryHandler;
+	private CompanyLocalService _companyLocalService;
 
+	private final DDMFormUploadFileEntryHandler _ddmFormUploadFileEntryHandler =
+		new DDMFormUploadFileEntryHandler();
 	private final DDMFormUploadResponseHandler _ddmFormUploadResponseHandler =
 		new DDMFormUploadResponseHandler();
 
@@ -82,6 +99,110 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private UploadHandler _uploadHandler;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+	private class DDMFormUploadFileEntryHandler
+		implements UploadFileEntryHandler {
+
+		@Override
+		public FileEntry upload(UploadPortletRequest uploadPortletRequest)
+			throws IOException, PortalException {
+
+			File file = null;
+
+			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+					"file")) {
+
+				long formInstanceId = ParamUtil.getLong(
+					uploadPortletRequest, "formInstanceId");
+				long groupId = ParamUtil.getLong(
+					uploadPortletRequest, "groupId");
+				long folderId = ParamUtil.getLong(
+					uploadPortletRequest, "folderId");
+
+				file = FileUtil.createTempFile(inputStream);
+
+				String fileName = uploadPortletRequest.getFileName("file");
+
+				DDMFormUploadValidator.validateFileSize(file, fileName);
+
+				long objectFieldId = ParamUtil.getLong(
+					uploadPortletRequest, "objectFieldId");
+
+				if (objectFieldId > 0) {
+					_validateAttachmentObjectField(fileName, objectFieldId);
+				}
+
+				DDMFormUploadValidator.validateFileExtension(fileName);
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)uploadPortletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return addFileEntry(
+					formInstanceId, groupId, folderId, file, fileName,
+					MimeTypesUtil.getContentType(file, fileName), themeDisplay);
+			}
+			finally {
+				FileUtil.delete(file);
+			}
+		}
+
+		protected FileEntry addFileEntry(
+				long formInstanceId, long groupId, long folderId, File file,
+				String fileName, String mimeType, ThemeDisplay themeDisplay)
+			throws PortalException {
+
+			if (!DDMFormInstancePermission.contains(
+					themeDisplay.getPermissionChecker(), formInstanceId,
+					DDMActionKeys.ADD_FORM_INSTANCE_RECORD)) {
+
+				throw new PrincipalException.MustHavePermission(
+					themeDisplay.getPermissionChecker(),
+					DDMFormInstance.class.getName(), formInstanceId,
+					DDMActionKeys.ADD_FORM_INSTANCE_RECORD);
+			}
+
+			long userId = _getDDMFormDefaultUserId(themeDisplay.getCompanyId());
+
+			String uniqueFileName = PortletFileRepositoryUtil.getUniqueFileName(
+				groupId, folderId, fileName);
+
+			return PortletFileRepositoryUtil.addPortletFileEntry(
+				null, groupId, userId, DDMFormInstance.class.getName(), 0,
+				DDMFormConstants.SERVICE_NAME, folderId, file, uniqueFileName,
+				mimeType, true);
+		}
+
+		private long _getDDMFormDefaultUserId(long companyId)
+			throws PortalException {
+
+			return _userLocalService.getUserIdByScreenName(
+				companyId, DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME);
+		}
+
+		private void _validateAttachmentObjectField(
+				String fileName, long objectFieldId)
+			throws PortalException {
+
+			ObjectFieldSetting objectFieldSetting =
+				_objectFieldSettingLocalService.fetchObjectFieldSetting(
+					objectFieldId, "acceptedFileExtensions");
+
+			String value = objectFieldSetting.getValue();
+
+			if (!ArrayUtil.contains(
+					value.split("\\s*,\\s*"), FileUtil.getExtension(fileName),
+					true)) {
+
+				throw new ObjectEntryValuesException.InvalidFileExtension(
+					FileUtil.getExtension(fileName), fileName);
+			}
+		}
+
+	}
 
 	private class DDMFormUploadResponseHandler
 		implements UploadResponseHandler {

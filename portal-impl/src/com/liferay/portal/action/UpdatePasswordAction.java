@@ -308,6 +308,12 @@ public class UpdatePasswordAction implements Action {
 			}
 		}
 
+		if (GetterUtil.getBoolean(
+				httpSession.getAttribute(WebKeys.MFA_ENABLED))) {
+
+			return;
+		}
+
 		String login = null;
 
 		String authType = company.getAuthType();
@@ -322,13 +328,9 @@ public class UpdatePasswordAction implements Action {
 			login = String.valueOf(userId);
 		}
 
-		if (!GetterUtil.getBoolean(
-				httpSession.getAttribute(WebKeys.MFA_ENABLED)) {
-
-			AuthenticatedSessionManagerUtil.login(
-				httpServletRequest, httpServletResponse, login, password1,
-				false, null);
-		}
+		AuthenticatedSessionManagerUtil.login(
+			httpServletRequest, httpServletResponse, login, password1, false,
+			null);
 	}
 
 	private boolean _isUserDefaultAdmin(User user) {

@@ -97,6 +97,19 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	@Override
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
 			long userId, long groupId, String name, String description,
+			int type, ServiceContext serviceContext)
+		throws PortalException {
+
+		return addLayoutPageTemplateCollection(
+			userId, groupId,
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			name, description, type, serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
+			long userId, long groupId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
 

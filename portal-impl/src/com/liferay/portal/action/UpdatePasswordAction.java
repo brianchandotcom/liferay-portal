@@ -244,9 +244,9 @@ public class UpdatePasswordAction implements Action {
 		AuthTokenUtil.checkCSRFToken(
 			httpServletRequest, UpdatePasswordAction.class.getName());
 
-		long userId = 0;
-
 		HttpSession httpSession = httpServletRequest.getSession();
+
+		long userId = 0;
 
 		if (ticket != null) {
 			userId = ticket.getClassPK();

@@ -68,8 +68,8 @@ const TeamMembersTableHeader = ({
 							<>
 								<PopoverIconButton
 									alignPosition="top"
-									articleAccountSupport={{
-										text: i18n.translate(
+									popoverLink={{
+										textLink: i18n.translate(
 											'learn-more-about-customer-portal-roles'
 										),
 										url: articleAccountSupportURL,

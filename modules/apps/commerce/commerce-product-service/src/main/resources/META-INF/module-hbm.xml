@@ -249,7 +249,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="skuContributor" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="key_" name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="priceType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.commerce.product.model.impl.CPDefinitionOptionValueRelImpl" table="CPDefinitionOptionValueRel">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="CPDefinitionOptionValueRelId" type="long">

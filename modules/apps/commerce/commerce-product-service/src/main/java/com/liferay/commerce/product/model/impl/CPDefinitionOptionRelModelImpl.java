@@ -84,7 +84,7 @@ public class CPDefinitionOptionRelModelImpl
 		{"definedExternally", Types.BOOLEAN}, {"facetable", Types.BOOLEAN},
 		{"required", Types.BOOLEAN}, {"skuContributor", Types.BOOLEAN},
 		{"key_", Types.VARCHAR}, {"priceType", Types.VARCHAR},
-		{"typeSettings", Types.VARCHAR}
+		{"typeSettings", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -114,11 +114,11 @@ public class CPDefinitionOptionRelModelImpl
 		TABLE_COLUMNS_MAP.put("skuContributor", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("key_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priceType", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("typeSettings", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPDefinitionOptionRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionOptionRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPOptionId LONG,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,infoItemServiceKey VARCHAR(255) null,priority DOUBLE,definedExternally BOOLEAN,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN,key_ VARCHAR(75) null,priceType VARCHAR(75) null,typeSettings VARCHAR(75) null,primary key (CPDefinitionOptionRelId, ctCollectionId))";
+		"create table CPDefinitionOptionRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,CPDefinitionOptionRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,CPOptionId LONG,name STRING null,description STRING null,DDMFormFieldTypeName VARCHAR(75) null,infoItemServiceKey VARCHAR(255) null,priority DOUBLE,definedExternally BOOLEAN,facetable BOOLEAN,required BOOLEAN,skuContributor BOOLEAN,key_ VARCHAR(75) null,priceType VARCHAR(75) null,typeSettings TEXT null,primary key (CPDefinitionOptionRelId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPDefinitionOptionRel";

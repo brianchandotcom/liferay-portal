@@ -370,7 +370,7 @@ public class CPDefinitionOptionRelPersistenceTest {
 			"DDMFormFieldTypeName", true, "infoItemServiceKey", true,
 			"priority", true, "definedExternally", true, "facetable", true,
 			"required", true, "skuContributor", true, "key", true, "priceType",
-			true, "typeSettings", true);
+			true);
 	}
 
 	@Test

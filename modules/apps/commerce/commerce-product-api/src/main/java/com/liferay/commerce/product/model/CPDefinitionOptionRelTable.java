@@ -8,6 +8,7 @@ package com.liferay.commerce.product.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -94,9 +95,9 @@ public class CPDefinitionOptionRelTable
 	public final Column<CPDefinitionOptionRelTable, String> priceType =
 		createColumn(
 			"priceType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionOptionRelTable, String> typeSettings =
+	public final Column<CPDefinitionOptionRelTable, Clob> typeSettings =
 		createColumn(
-			"typeSettings", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+			"typeSettings", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private CPDefinitionOptionRelTable() {
 		super("CPDefinitionOptionRel", CPDefinitionOptionRelTable::new);

@@ -231,7 +231,9 @@ public class CPDefinitionOptionRelCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
@@ -267,7 +269,7 @@ public class CPDefinitionOptionRelCacheModel
 		skuContributor = objectInput.readBoolean();
 		key = objectInput.readUTF();
 		priceType = objectInput.readUTF();
-		typeSettings = objectInput.readUTF();
+		typeSettings = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -358,10 +360,10 @@ public class CPDefinitionOptionRelCacheModel
 		}
 
 		if (typeSettings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(typeSettings);
+			objectOutput.writeObject(typeSettings);
 		}
 	}
 

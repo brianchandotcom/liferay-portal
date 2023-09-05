@@ -281,7 +281,7 @@
 </tr>
 <tr>
 	<td>PROPERTIES_ADD_USER_BUTTON</td>
-	<td>//button[contains(@class,'button-root btn btn-primary nav-btn px-3') and text()='Add User']</td>
+	<td>//button[contains(@class,'btn-primary') and text()='Add User']</td>
 	<td></td>
 </tr>
 <tr>

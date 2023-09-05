@@ -5,7 +5,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import {ClayRadio, ClayRadioGroup} from '@clayui/form';
+import ClayForm, {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
@@ -248,13 +248,17 @@ const EditCategoriesModal = ({
 	]);
 
 	return (
-		<ClayModal observer={observer} size="md">
+		<ClayModal
+			className="portlet-document-library-edit-categories"
+			observer={observer}
+			size="md"
+		>
 			<ClayModal.Header>
 				{Liferay.Language.get('edit-categories')}
 			</ClayModal.Header>
 
-			<form onSubmit={handleSubmit}>
-				<ClayModal.Body>
+			<ClayForm id={`${namespace}form`} onSubmit={handleSubmit}>
+				<ClayModal.Body scrollable>
 					{loading && <ClayLoadingIndicator />}
 
 					{selectAll && (
@@ -332,7 +336,7 @@ const EditCategoriesModal = ({
 						</ClayButton.Group>
 					}
 				></ClayModal.Footer>
-			</form>
+			</ClayForm>
 		</ClayModal>
 	);
 };

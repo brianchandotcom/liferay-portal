@@ -276,20 +276,6 @@ $productMenuWidth: 320px;
 		}
 	}
 
-	.modal .edit-categories {
-		.modal-content {
-			height: 445px;
-		}
-
-		&.modal-dialog-expanded .modal-content {
-			height: 575px;
-
-			.modal-body.inline-scroller {
-				max-height: 445px;
-			}
-		}
-	}
-
 	.move-list {
 		.move-file,
 		.move-folder {
@@ -816,5 +802,23 @@ html#{$cadmin-selector} .cadmin {
 	.overlaymask-content {
 		background-color: #fff;
 		border-radius: 5px;
+	}
+}
+
+.modal.portlet-document-library-edit-categories {
+	.modal-content {
+		height: 500px;
+
+		.modal-body.inline-scroller {
+			max-height: 360px;
+		}
+	}
+
+	&.modal-dialog-expanded .modal-content {
+		height: 575px;
+
+		.modal-body.inline-scroller {
+			max-height: 445px;
+		}
 	}
 }

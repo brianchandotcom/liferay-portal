@@ -572,4 +572,58 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LRQA-78055. Liferay Admin user, for the virtual instance, should also be able to login after the 'Required' box in LDAP configurations is turned on, just like the main instance."
+	@priority = 4
+	test VerifyVirtualInstanceLoginWorksWithRequiredBoxTurnedOn {
+		property apacheds.enabled = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: The main instance and a virtual instance is connected to the same LDAP Server") {
+			var enableSettingList = "enabled,required";
+
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
+
+			PortalInstances.addCP(
+				mailDomain = "www.able.com",
+				virtualHost = "www.able.com",
+				webId = "www.able.com");
+
+			LDAP.addLDAPServerAndTestConnection(ldapServerName = "ApacheDS Server");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			LDAP.addLDAPServerAndTestConnection(
+				baseURL = "http://www.able.com:8080",
+				ldapServerName = "ApacheDS Server");
+		}
+
+		task ("When: 'Enabled' and 'Required' settings are turned on in LDAP settings for both main and virtual instances") {
+			LDAP.enableLDAPSettings(enableSettingList = ${enableSettingList});
+
+			LDAP.enableLDAPSettings(
+				baseURL = "http://www.able.com:8080",
+				enableSettingList = ${enableSettingList});
+		}
+
+		task ("Then: The User can still sign in to the main instance, as well as to the virtual instance") {
+			User.logoutPG();
+
+			User.loginPG();
+
+			User.logoutPG(specificURL = "http://www.able.com:8080");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+		}
+	}
+
 }

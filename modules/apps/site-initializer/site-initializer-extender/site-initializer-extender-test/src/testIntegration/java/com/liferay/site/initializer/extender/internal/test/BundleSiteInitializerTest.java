@@ -3109,7 +3109,7 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(_group.isManualMembership());
 	}
 
-	private void _assertSiteNavigationMenu() {
+	private void _assertSiteNavigationMenu1() {
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.fetchSiteNavigationMenuByName(
 				_group.getGroupId(), "Test Site Navigation Menu");
@@ -3146,6 +3146,8 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			SiteNavigationMenuItemTypeConstants.NODE,
 			siteNavigationMenuItem3.getType());
+		Assert.assertEquals(
+			"name=Other Links\n", siteNavigationMenuItem3.getTypeSettings());
 
 		SiteNavigationMenuItem siteNavigationMenuItem4 =
 			siteNavigationMenuItems.get(3);
@@ -3172,6 +3174,81 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertTrue(
 			type.startsWith("com.liferay.object.model.ObjectDefinition#"));
+	}
+
+	private void _assertSiteNavigationMenu2() {
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.fetchSiteNavigationMenuByName(
+				_group.getGroupId(), "Test Site Navigation Menu");
+
+		Assert.assertNotNull(siteNavigationMenu);
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems =
+			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
+				siteNavigationMenu.getSiteNavigationMenuId(), 0);
+
+		Assert.assertEquals(
+			siteNavigationMenuItems.toString(), 8,
+			siteNavigationMenuItems.size());
+
+		SiteNavigationMenuItem siteNavigationMenuItem1 =
+			siteNavigationMenuItems.get(0);
+
+		Assert.assertEquals(
+			SiteNavigationMenuItemTypeConstants.LAYOUT,
+			siteNavigationMenuItem1.getType());
+
+		SiteNavigationMenuItem siteNavigationMenuItem2 =
+			siteNavigationMenuItems.get(1);
+
+		Assert.assertEquals("Test URL", siteNavigationMenuItem2.getName());
+		Assert.assertEquals(
+			SiteNavigationMenuItemTypeConstants.URL,
+			siteNavigationMenuItem2.getType());
+
+		SiteNavigationMenuItem siteNavigationMenuItem3 =
+			siteNavigationMenuItems.get(2);
+
+		Assert.assertEquals("Other Links", siteNavigationMenuItem3.getName());
+		Assert.assertEquals(
+			SiteNavigationMenuItemTypeConstants.NODE,
+			siteNavigationMenuItem3.getType());
+		Assert.assertEquals(
+			"name=Other Links Update\n",
+			siteNavigationMenuItem3.getTypeSettings());
+
+		SiteNavigationMenuItem siteNavigationMenuItem4 =
+			siteNavigationMenuItems.get(3);
+
+		Assert.assertEquals(
+			AssetCategory.class.getName(), siteNavigationMenuItem4.getType());
+
+		SiteNavigationMenuItem siteNavigationMenuItem5 =
+			siteNavigationMenuItems.get(4);
+
+		Assert.assertEquals(
+			JournalArticle.class.getName(), siteNavigationMenuItem5.getType());
+
+		SiteNavigationMenuItem siteNavigationMenuItem6 =
+			siteNavigationMenuItems.get(5);
+
+		Assert.assertEquals(
+			FileEntry.class.getName(), siteNavigationMenuItem6.getType());
+
+		SiteNavigationMenuItem siteNavigationMenuItem7 =
+			siteNavigationMenuItems.get(6);
+
+		String type = siteNavigationMenuItem7.getType();
+
+		Assert.assertTrue(
+			type.startsWith("com.liferay.object.model.ObjectDefinition#"));
+
+		SiteNavigationMenuItem siteNavigationMenuItem8 =
+			siteNavigationMenuItems.get(7);
+
+		Assert.assertEquals(
+			SiteNavigationMenuItemTypeConstants.LAYOUT,
+			siteNavigationMenuItem8.getType());
 	}
 
 	private void _assertSiteSettings() throws Exception {
@@ -3634,7 +3711,7 @@ public class BundleSiteInitializerTest {
 		_assertSegmentsEntries();
 		_assertSiteConfiguration();
 		_assertSiteSettings();
-		_assertSiteNavigationMenu();
+		_assertSiteNavigationMenu1();
 		_assertStyleBookEntry();
 		_assertSXPBlueprint1();
 		_assertUserAccounts1();
@@ -3662,6 +3739,7 @@ public class BundleSiteInitializerTest {
 		_assertOrganizations2();
 		_assertPLOEntries2();
 		_assertResourcePermission2();
+		_assertSiteNavigationMenu2();
 		_assertSXPBlueprint2();
 		_assertUserAccounts2();
 	}

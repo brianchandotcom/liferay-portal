@@ -135,7 +135,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				objectDefinition.getRESTContextPath(), objectDefinitions);
 		}
 
-		_excludeScopedMethods(objectDefinition, objectScopeProvider);
+		_excludeMethods(objectDefinition, objectScopeProvider);
 
 		_initCustomObjectDefinition(objectDefinition);
 
@@ -213,7 +213,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		}
 	}
 
-	private void _excludeScopedMethods(
+	private void _excludeMethods(
 		ObjectDefinition objectDefinition,
 		ObjectScopeProvider objectScopeProvider) {
 
@@ -244,7 +244,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 				if ((!groupAware && hasScope) ||
 					(groupAware && !hasScope &&
-					 !value.startsWith("/{objectEntryId}"))) {
+					 !value.startsWith("/{objectEntryId}")) ||
+					(objectDefinition.isRootDescendantNode() &&
+					 value.endsWith("/permissions"))) {
 
 					excludedOperationIds.add(method.getName());
 				}

@@ -220,19 +220,19 @@ public class CPDefinitionInventoryLocalServiceImpl
 			   CPDefinitionInventoryMinOrderQuantityException,
 			   CPDefinitionInventoryMultipleOrderQuantityException {
 
-		if (BigDecimalUtil.lt(minOrderQuantity, BigDecimal.ONE)) {
+		if (BigDecimalUtil.lte(minOrderQuantity, BigDecimal.ZERO)) {
 			throw new CPDefinitionInventoryMinOrderQuantityException(
-				"Minimum order quantity must be greater than or equal to 1");
+				"Minimum order quantity must be greater than 0");
 		}
 
-		if (BigDecimalUtil.lt(maxOrderQuantity, BigDecimal.ONE)) {
+		if (BigDecimalUtil.lte(maxOrderQuantity, BigDecimal.ZERO)) {
 			throw new CPDefinitionInventoryMaxOrderQuantityException(
-				"Maximum order quantity must be greater than or equal to 1");
+				"Maximum order quantity must be greater than 0");
 		}
 
-		if (BigDecimalUtil.lt(multipleOrderQuantity, BigDecimal.ONE)) {
+		if (BigDecimalUtil.lte(multipleOrderQuantity, BigDecimal.ZERO)) {
 			throw new CPDefinitionInventoryMultipleOrderQuantityException(
-				"Multiple order quantity must be greater than or equal to 1");
+				"Multiple order quantity must be greater than 0");
 		}
 	}
 

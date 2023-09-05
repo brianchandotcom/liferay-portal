@@ -68,7 +68,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 @FeatureFlags("LPS-187284")
 @RunWith(Arquillian.class)
-public class GetLayoutReportsRenderTimesDataStrutsActionTest {
+public class GetLayoutReportsLayoutItemDataStrutsActionTest {
 
 	@ClassRule
 	@Rule
@@ -429,7 +429,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.layout.reports.web.internal.struts.GetLayoutReportsRenderTimesDataStrutsAction"
+		filter = "component.name=com.liferay.layout.reports.web.internal.struts.GetLayoutReportsLayoutItemDataStrutsAction"
 	)
 	private StrutsAction _getLayoutReportsRenderTimesDataStrutsAction;
 

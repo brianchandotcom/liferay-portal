@@ -709,8 +709,8 @@ definition {
 	@description = "Feature ID: LRAC-6280 | Automation ID: LRAC-10562 | Test Summary: Pagination for analysis report"
 	@priority = 4
 	test CanPaginationAnalysisReportList {
-		var eventAnalysisNameList1 = "Save Analysis 0,Save Analysis 1,Save Analysis 2,Save Analysis 3,Save Analysis 4";
-		var eventAnalysisNameList2 = "Save Analysis 5,Save Analysis 6,Save Analysis 7,Save Analysis 8,Save Analysis 9";
+		var eventAnalysisNameList1 = "Save Analysis 0,Save Analysis 1,Save Analysis 2,Save Analysis 3";
+		var eventAnalysisNameList2 = "Save Analysis 4,Save Analysis 5,Save Analysis 6,Save Analysis 7";
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();

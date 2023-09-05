@@ -4,6 +4,7 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classnames from 'classnames';
@@ -309,14 +310,45 @@ function CartItem({
 			</div>
 
 			<div className={getClassName('mini-cart-item-actions')}>
-				<ClayButtonWithIcon
-					aria-label={sub(Liferay.Language.get('delete-x'), name)}
-					className="d-inline-flex"
-					displayType="unstyled"
-					onClick={removeItem}
-					symbol="times-circle-full"
-					title={sub(Liferay.Language.get('delete-x'), name)}
-				/>
+				{Liferay.FeatureFlags['COMMERCE-8715'] && hasChildItems ? (
+					<ClayDropDown
+						closeOnClick
+						trigger={
+							<ClayButtonWithIcon
+								aria-label={sub(
+									Liferay.Language.get('actions-for-x'),
+									name
+								)}
+								className="d-inline-flex"
+								displayType="unstyled"
+								symbol="ellipsis-v"
+								title={sub(
+									Liferay.Language.get('actions-for-x'),
+									name
+								)}
+							/>
+						}
+					>
+						<ClayDropDown.ItemList>
+							<ClayDropDown.Item>
+								{Liferay.Language.get('edit')}
+							</ClayDropDown.Item>
+
+							<ClayDropDown.Item onClick={removeItem}>
+								{Liferay.Language.get('delete')}
+							</ClayDropDown.Item>
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
+				) : (
+					<ClayButtonWithIcon
+						aria-label={sub(Liferay.Language.get('delete-x'), name)}
+						className="d-inline-flex"
+						displayType="unstyled"
+						onClick={removeItem}
+						symbol="times-circle-full"
+						title={sub(Liferay.Language.get('delete-x'), name)}
+					/>
+				)}
 			</div>
 
 			{!!errorMessages.length && (

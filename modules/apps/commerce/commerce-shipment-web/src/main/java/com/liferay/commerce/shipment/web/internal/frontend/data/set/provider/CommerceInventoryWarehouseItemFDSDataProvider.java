@@ -14,13 +14,16 @@ import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemServ
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceShipmentItemLocalService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.shipment.web.internal.model.Warehouse;
 import com.liferay.commerce.shipment.web.internal.model.WarehouseItem;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -146,13 +149,28 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 					maxShippableQuantity = quantity;
 				}
 
+				CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+					_cpInstanceUnitOfMeasureLocalService.
+						fetchCPInstanceUnitOfMeasure(
+							commerceInventoryWarehouseItem.getCompanyId(),
+							commerceInventoryWarehouseItem.
+								getUnitOfMeasureKey(),
+							commerceInventoryWarehouseItem.getSku());
+
 				warehouses.add(
 					new Warehouse(
 						commerceInventoryWarehouseId,
 						new WarehouseItem(
-							inputName, maxShippableQuantity.intValue(), 0,
-							shipmentItemWarehouseItemQuantity.intValue()),
-						quantity.intValue(), StringPool.BLANK,
+							inputName,
+							_commerceQuantityFormatter.format(
+								cpInstanceUnitOfMeasure, maxShippableQuantity),
+							BigDecimal.ZERO,
+							_commerceQuantityFormatter.format(
+								cpInstanceUnitOfMeasure,
+								shipmentItemWarehouseItemQuantity)),
+						_commerceQuantityFormatter.format(
+							cpInstanceUnitOfMeasure, quantity),
+						StringPool.BLANK,
 						commerceInventoryWarehouse.getName(
 							_portal.getLocale(httpServletRequest))));
 			}
@@ -161,10 +179,9 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 					new Warehouse(
 						commerceInventoryWarehouseId,
 						new WarehouseItem(
-							inputName,
-							shipmentItemWarehouseItemQuantity.intValue(), 0,
-							shipmentItemWarehouseItemQuantity.intValue()),
-						0, StringPool.BLANK,
+							inputName, shipmentItemWarehouseItemQuantity,
+							BigDecimal.ZERO, shipmentItemWarehouseItemQuantity),
+						BigDecimal.ZERO, StringPool.BLANK,
 						commerceInventoryWarehouse.getName(
 							_portal.getLocale(httpServletRequest))));
 			}
@@ -229,10 +246,17 @@ public class CommerceInventoryWarehouseItemFDSDataProvider
 	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
+
+	@Reference
 	private CommerceShipmentItemLocalService _commerceShipmentItemLocalService;
 
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private Portal _portal;

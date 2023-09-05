@@ -12,6 +12,7 @@ import com.liferay.commerce.inventory.web.internal.model.BookedQuantity;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -96,7 +97,12 @@ public class CommerceInventoryBookedFDSDataProvider
 					_getExpirationDate(
 						commerceInventoryBookedQuantity.getExpirationDate(),
 						httpServletRequest),
-					bookedQuantity));
+					_commerceQuantityFormatter.format(
+						commerceInventoryBookedQuantity.getCompanyId(),
+						bookedQuantity,
+						commerceInventoryBookedQuantity.getSku(),
+						commerceInventoryBookedQuantity.getUnitOfMeasureKey()),
+					commerceInventoryBookedQuantity.getUnitOfMeasureKey()));
 		}
 
 		return bookedQuantities;
@@ -161,6 +167,9 @@ public class CommerceInventoryBookedFDSDataProvider
 
 	@Reference
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
 
 	@Reference
 	private Language _language;

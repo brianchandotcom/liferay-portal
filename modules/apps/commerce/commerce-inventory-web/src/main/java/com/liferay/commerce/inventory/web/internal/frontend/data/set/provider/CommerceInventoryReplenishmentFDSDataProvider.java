@@ -10,6 +10,7 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
 import com.liferay.commerce.inventory.web.internal.constants.CommerceInventoryFDSNames;
 import com.liferay.commerce.inventory.web.internal.model.Replenishment;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -99,7 +100,12 @@ public class CommerceInventoryReplenishmentFDSDataProvider
 					dateTimeFormat.format(
 						commerceInventoryReplenishmentItem.
 							getAvailabilityDate()),
-					quantity));
+					_commerceQuantityFormatter.format(
+						commerceInventoryReplenishmentItem.getCompanyId(),
+						quantity, commerceInventoryReplenishmentItem.getSku(),
+						commerceInventoryReplenishmentItem.
+							getUnitOfMeasureKey()),
+					commerceInventoryReplenishmentItem.getUnitOfMeasureKey()));
 		}
 
 		return replenishments;
@@ -123,6 +129,9 @@ public class CommerceInventoryReplenishmentFDSDataProvider
 	@Reference
 	private CommerceInventoryReplenishmentItemService
 		_commerceInventoryReplenishmentItemService;
+
+	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
 
 	@Reference
 	private Portal _portal;

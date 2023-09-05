@@ -18,6 +18,7 @@ import com.liferay.commerce.price.CommerceOrderItemPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPSubscriptionInfo;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
@@ -42,6 +43,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -239,7 +242,12 @@ public class PendingCommerceOrderItemFDSDataProvider
 					_getCommerceOrderErrorMessages(
 						commerceOrderItem, commerceOrderValidatorResultsMap),
 					_commerceOrderItemQuantityFormatter.format(
-						commerceOrderItem, locale),
+						commerceOrderItem,
+						_cpInstanceUnitOfMeasureLocalService.
+							fetchCPInstanceUnitOfMeasure(
+								commerceOrderItem.getCPInstanceId(),
+								commerceOrderItem.getUnitOfMeasureKey()),
+						locale),
 					_formatSubscriptionPeriod(commerceOrderItem, locale),
 					commerceOrderItem.getName(locale),
 					CommerceOrderItemUtil.getOptions(
@@ -252,14 +260,15 @@ public class PendingCommerceOrderItemFDSDataProvider
 						commerceOrderItemPrice, _language, locale),
 					CommerceOrderItemUtil.formatPromoPrice(
 						commerceOrderItemPrice, locale),
-					0, commerceOrderItem.getSku(),
+					BigDecimal.ZERO, commerceOrderItem.getSku(),
 					_cpInstanceHelper.getCPInstanceThumbnailSrc(
 						CommerceUtil.getCommerceAccountId(
 							(CommerceContext)httpServletRequest.getAttribute(
 								CommerceWebKeys.COMMERCE_CONTEXT)),
 						commerceOrderItem.getCPInstanceId()),
 					CommerceOrderItemUtil.formatTotalPrice(
-						commerceOrderItemPrice, locale));
+						commerceOrderItemPrice, locale),
+					commerceOrderItem.getUnitOfMeasureKey());
 			});
 	}
 
@@ -284,6 +293,10 @@ public class PendingCommerceOrderItemFDSDataProvider
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;

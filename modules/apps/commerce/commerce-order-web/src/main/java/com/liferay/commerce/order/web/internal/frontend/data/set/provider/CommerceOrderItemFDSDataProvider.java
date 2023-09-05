@@ -18,6 +18,7 @@ import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPSubscriptionInfo;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
@@ -204,7 +205,12 @@ public class CommerceOrderItemFDSDataProvider
 					commerceOrderItem.getDeliveryGroup(),
 					_getDiscount(commerceOrderItemPrice, locale),
 					_commerceOrderItemQuantityFormatter.format(
-						commerceOrderItem, locale),
+						commerceOrderItem,
+						_cpInstanceUnitOfMeasureLocalService.
+							fetchCPInstanceUnitOfMeasure(
+								commerceOrderItem.getCPInstanceId(),
+								commerceOrderItem.getUnitOfMeasureKey()),
+						locale),
 					new ImageField(
 						name, "rounded", "lg", _getImage(commerceOrderItem)),
 					name, stringJoiner.toString(),
@@ -446,6 +452,10 @@ public class CommerceOrderItemFDSDataProvider
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;

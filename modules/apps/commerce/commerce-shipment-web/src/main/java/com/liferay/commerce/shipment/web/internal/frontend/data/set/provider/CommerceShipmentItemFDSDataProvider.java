@@ -11,8 +11,11 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -90,6 +93,12 @@ public class CommerceShipmentItemFDSDataProvider
 				}
 			}
 
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+				_cpInstanceUnitOfMeasureLocalService.
+					fetchCPInstanceUnitOfMeasure(
+						commerceOrderItem.getCPInstanceId(),
+						commerceOrderItem.getUnitOfMeasureKey());
+
 			BigDecimal quantity = commerceOrderItem.getQuantity();
 			BigDecimal shipmentItemQuantity =
 				commerceShipmentItem.getQuantity();
@@ -99,10 +108,16 @@ public class CommerceShipmentItemFDSDataProvider
 				new ShipmentItem(
 					commerceShipmentItem.getExternalReferenceCode(),
 					commerceOrderItem.getCommerceOrderId(),
-					quantity.intValue() - shippedQuantity.intValue(),
+					_commerceQuantityFormatter.format(
+						cpInstanceUnitOfMeasure,
+						quantity.subtract(shippedQuantity)),
 					commerceShipmentItem.getCommerceShipmentItemId(),
-					shippedQuantity.intValue(), commerceOrderItem.getSku(),
-					shipmentItemQuantity.intValue(),
+					_commerceQuantityFormatter.format(
+						cpInstanceUnitOfMeasure, shippedQuantity),
+					commerceOrderItem.getSku(),
+					_commerceQuantityFormatter.format(
+						cpInstanceUnitOfMeasure, shipmentItemQuantity),
+					commerceOrderItem.getUnitOfMeasureKey(),
 					commerceInventoryWarehouseName));
 		}
 
@@ -132,7 +147,14 @@ public class CommerceShipmentItemFDSDataProvider
 	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
+
+	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private Portal _portal;

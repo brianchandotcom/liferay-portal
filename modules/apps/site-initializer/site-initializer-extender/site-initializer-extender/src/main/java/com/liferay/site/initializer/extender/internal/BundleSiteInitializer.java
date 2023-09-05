@@ -948,151 +948,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			stringUtilReplaceValues);
 	}
 
-	private void _addOrUpdateLayoutContent(
-			Layout layout, String resourcePath, long segmentsExperienceId,
-			ServiceContext serviceContext,
-			Map<String, String> stringUtilReplaceValues)
-		throws Exception {
-
-		JSONObject pageJSONObject = _jsonFactory.createJSONObject(
-			SiteInitializerUtil.read(
-				resourcePath + "page.json", _servletContext));
-
-		String type = StringUtil.toLowerCase(pageJSONObject.getString("type"));
-
-		if (Objects.equals(type, "url")) {
-			return;
-		}
-		else if (Objects.equals(type, "widget")) {
-			type = LayoutConstants.TYPE_PORTLET;
-		}
-
-		String json = SiteInitializerUtil.read(
-			resourcePath + "page-definition.json", _servletContext);
-
-		if (json == null) {
-			return;
-		}
-
-		json = _replace(
-			_replace(json, serviceContext), stringUtilReplaceValues);
-
-		JSONObject pageDefinitionJSONObject = _jsonFactory.createJSONObject(
-			json);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
-			Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
-
-			JSONObject pageElementJSONObject =
-				pageDefinitionJSONObject.getJSONObject("pageElement");
-
-			if ((pageElementJSONObject != null) &&
-				Objects.equals(
-					pageElementJSONObject.getString("type"), "Root")) {
-
-				JSONArray jsonArray = pageElementJSONObject.getJSONArray(
-					"pageElements");
-
-				if (!JSONUtil.isEmpty(jsonArray)) {
-					LayoutPageTemplateStructure layoutPageTemplateStructure =
-						_layoutPageTemplateStructureLocalService.
-							fetchLayoutPageTemplateStructure(
-								draftLayout.getGroupId(),
-								draftLayout.getPlid());
-
-					LayoutStructure layoutStructure = new LayoutStructure();
-
-					layoutStructure.addRootLayoutStructureItem();
-
-					if (segmentsExperienceId == 0) {
-						segmentsExperienceId =
-							_segmentsExperienceLocalService.
-								fetchDefaultSegmentsExperienceId(
-									draftLayout.getPlid());
-					}
-
-					if (Validator.isNull(
-							layoutPageTemplateStructure.getData(
-								segmentsExperienceId))) {
-
-						_layoutPageTemplateStructureRelLocalService.
-							addLayoutPageTemplateStructureRel(
-								serviceContext.getUserId(),
-								serviceContext.getScopeGroupId(),
-								layoutPageTemplateStructure.
-									getLayoutPageTemplateStructureId(),
-								segmentsExperienceId,
-								layoutStructure.toString(), serviceContext);
-					}
-					else {
-						_layoutPageTemplateStructureRelLocalService.
-							updateLayoutPageTemplateStructureRel(
-								layoutPageTemplateStructure.
-									getLayoutPageTemplateStructureId(),
-								segmentsExperienceId,
-								layoutStructure.toString());
-						_portletPreferencesLocalService.
-							deletePortletPreferences(
-								0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-								draftLayout.getPlid());
-					}
-
-					for (int i = 0; i < jsonArray.length(); i++) {
-						_layoutsImporter.importPageElement(
-							draftLayout, layoutStructure,
-							layoutStructure.getMainItemId(),
-							jsonArray.getString(i), i, segmentsExperienceId);
-					}
-				}
-			}
-		}
-
-		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION)) {
-			UnicodeProperties unicodeProperties =
-				draftLayout.getTypeSettingsProperties();
-
-			Object[] typeSettings = JSONUtil.toObjectArray(
-				pageJSONObject.getJSONArray("typeSettings"));
-
-			for (Object typeSetting : typeSettings) {
-				JSONObject typeSettingJSONObject = (JSONObject)typeSetting;
-
-				String key = typeSettingJSONObject.getString("key");
-				String value = typeSettingJSONObject.getString("value");
-
-				unicodeProperties.put(
-					key, _replace(value, stringUtilReplaceValues));
-			}
-
-			draftLayout = _layoutLocalService.updateLayout(
-				serviceContext.getScopeGroupId(), draftLayout.isPrivateLayout(),
-				draftLayout.getLayoutId(), unicodeProperties.toString());
-		}
-
-		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
-			Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
-
-			JSONObject settingsJSONObject =
-				pageDefinitionJSONObject.getJSONObject("settings");
-
-			if (settingsJSONObject != null) {
-				draftLayout = _updateDraftLayout(
-					draftLayout, settingsJSONObject);
-			}
-
-			layout = _layoutCopyHelper.copyLayoutContent(draftLayout, layout);
-
-			_layoutLocalService.updateStatus(
-				layout.getUserId(), draftLayout.getPlid(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
-			_layoutLocalService.updateStatus(
-				layout.getUserId(), layout.getPlid(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
-		}
-	}
-
 	private void _addLayoutPageTemplates(
 			ServiceContext serviceContext,
 			Map<String, String> stringUtilReplaceValues)
@@ -1161,24 +1016,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_layoutsImporter.importFile(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			zipWriter.getFile(), true);
-	}
-
-	private void _addOrUpdateLayoutsContent(
-			Map<String, Layout> layouts, ServiceContext serviceContext,
-			Map<String, SiteNavigationMenuItemSetting>
-				siteNavigationMenuItemSettings,
-			Map<String, String> stringUtilReplaceValues)
-		throws Exception {
-
-		for (Map.Entry<String, Layout> entry : layouts.entrySet()) {
-			_addOrUpdateLayoutContent(
-				entry.getValue(), entry.getKey(), 0, serviceContext,
-				stringUtilReplaceValues);
-		}
-
-		_addOrUpdateSiteNavigationMenus(
-			serviceContext, siteNavigationMenuItemSettings,
-			stringUtilReplaceValues);
 	}
 
 	private void _addLayoutUtilityPageEntries(
@@ -2590,6 +2427,151 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return layoutsMap;
 	}
 
+	private void _addOrUpdateLayoutContent(
+			Layout layout, String resourcePath, long segmentsExperienceId,
+			ServiceContext serviceContext,
+			Map<String, String> stringUtilReplaceValues)
+		throws Exception {
+
+		JSONObject pageJSONObject = _jsonFactory.createJSONObject(
+			SiteInitializerUtil.read(
+				resourcePath + "page.json", _servletContext));
+
+		String type = StringUtil.toLowerCase(pageJSONObject.getString("type"));
+
+		if (Objects.equals(type, "url")) {
+			return;
+		}
+		else if (Objects.equals(type, "widget")) {
+			type = LayoutConstants.TYPE_PORTLET;
+		}
+
+		String json = SiteInitializerUtil.read(
+			resourcePath + "page-definition.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		json = _replace(
+			_replace(json, serviceContext), stringUtilReplaceValues);
+
+		JSONObject pageDefinitionJSONObject = _jsonFactory.createJSONObject(
+			json);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
+			Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
+
+			JSONObject pageElementJSONObject =
+				pageDefinitionJSONObject.getJSONObject("pageElement");
+
+			if ((pageElementJSONObject != null) &&
+				Objects.equals(
+					pageElementJSONObject.getString("type"), "Root")) {
+
+				JSONArray jsonArray = pageElementJSONObject.getJSONArray(
+					"pageElements");
+
+				if (!JSONUtil.isEmpty(jsonArray)) {
+					LayoutPageTemplateStructure layoutPageTemplateStructure =
+						_layoutPageTemplateStructureLocalService.
+							fetchLayoutPageTemplateStructure(
+								draftLayout.getGroupId(),
+								draftLayout.getPlid());
+
+					LayoutStructure layoutStructure = new LayoutStructure();
+
+					layoutStructure.addRootLayoutStructureItem();
+
+					if (segmentsExperienceId == 0) {
+						segmentsExperienceId =
+							_segmentsExperienceLocalService.
+								fetchDefaultSegmentsExperienceId(
+									draftLayout.getPlid());
+					}
+
+					if (Validator.isNull(
+							layoutPageTemplateStructure.getData(
+								segmentsExperienceId))) {
+
+						_layoutPageTemplateStructureRelLocalService.
+							addLayoutPageTemplateStructureRel(
+								serviceContext.getUserId(),
+								serviceContext.getScopeGroupId(),
+								layoutPageTemplateStructure.
+									getLayoutPageTemplateStructureId(),
+								segmentsExperienceId,
+								layoutStructure.toString(), serviceContext);
+					}
+					else {
+						_layoutPageTemplateStructureRelLocalService.
+							updateLayoutPageTemplateStructureRel(
+								layoutPageTemplateStructure.
+									getLayoutPageTemplateStructureId(),
+								segmentsExperienceId,
+								layoutStructure.toString());
+						_portletPreferencesLocalService.
+							deletePortletPreferences(
+								0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+								draftLayout.getPlid());
+					}
+
+					for (int i = 0; i < jsonArray.length(); i++) {
+						_layoutsImporter.importPageElement(
+							draftLayout, layoutStructure,
+							layoutStructure.getMainItemId(),
+							jsonArray.getString(i), i, segmentsExperienceId);
+					}
+				}
+			}
+		}
+
+		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION)) {
+			UnicodeProperties unicodeProperties =
+				draftLayout.getTypeSettingsProperties();
+
+			Object[] typeSettings = JSONUtil.toObjectArray(
+				pageJSONObject.getJSONArray("typeSettings"));
+
+			for (Object typeSetting : typeSettings) {
+				JSONObject typeSettingJSONObject = (JSONObject)typeSetting;
+
+				String key = typeSettingJSONObject.getString("key");
+				String value = typeSettingJSONObject.getString("value");
+
+				unicodeProperties.put(
+					key, _replace(value, stringUtilReplaceValues));
+			}
+
+			draftLayout = _layoutLocalService.updateLayout(
+				serviceContext.getScopeGroupId(), draftLayout.isPrivateLayout(),
+				draftLayout.getLayoutId(), unicodeProperties.toString());
+		}
+
+		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
+			Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
+
+			JSONObject settingsJSONObject =
+				pageDefinitionJSONObject.getJSONObject("settings");
+
+			if (settingsJSONObject != null) {
+				draftLayout = _updateDraftLayout(
+					draftLayout, settingsJSONObject);
+			}
+
+			layout = _layoutCopyHelper.copyLayoutContent(draftLayout, layout);
+
+			_layoutLocalService.updateStatus(
+				layout.getUserId(), draftLayout.getPlid(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+			_layoutLocalService.updateStatus(
+				layout.getUserId(), layout.getPlid(),
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+		}
+	}
+
 	private Map<String, Layout> _addOrUpdateLayouts(
 			ServiceContext serviceContext,
 			Map<String, String> stringUtilReplaceValues)
@@ -2631,6 +2613,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return layoutsMap;
+	}
+
+	private void _addOrUpdateLayoutsContent(
+			Map<String, Layout> layouts, ServiceContext serviceContext,
+			Map<String, SiteNavigationMenuItemSetting>
+				siteNavigationMenuItemSettings,
+			Map<String, String> stringUtilReplaceValues)
+		throws Exception {
+
+		for (Map.Entry<String, Layout> entry : layouts.entrySet()) {
+			_addOrUpdateLayoutContent(
+				entry.getValue(), entry.getKey(), 0, serviceContext,
+				stringUtilReplaceValues);
+		}
+
+		_addOrUpdateSiteNavigationMenus(
+			serviceContext, siteNavigationMenuItemSettings,
+			stringUtilReplaceValues);
 	}
 
 	private void _addOrUpdateListTypeDefinitions(
@@ -3432,6 +3432,176 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addOrUpdateSiteNavigationMenu(
+			JSONObject jsonObject, ServiceContext serviceContext,
+			Map<String, SiteNavigationMenuItemSetting>
+				siteNavigationMenuItemSettings,
+			Map<String, String> stringUtilReplaceValues)
+		throws Exception {
+
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.fetchSiteNavigationMenuByName(
+				serviceContext.getScopeGroupId(), jsonObject.getString("name"));
+
+		if (siteNavigationMenu == null) {
+			siteNavigationMenu =
+				_siteNavigationMenuLocalService.addSiteNavigationMenu(
+					serviceContext.getUserId(),
+					serviceContext.getScopeGroupId(),
+					jsonObject.getString("name"), jsonObject.getInt("typeSite"),
+					serviceContext);
+		}
+		else {
+			_siteNavigationMenuLocalService.updateSiteNavigationMenu(
+				serviceContext.getUserId(),
+				siteNavigationMenu.getSiteNavigationMenuId(),
+				jsonObject.getInt("typeSite"), jsonObject.getBoolean("auto"),
+				serviceContext);
+		}
+
+		_addOrUpdateSiteNavigationMenuItems(
+			jsonObject, siteNavigationMenu, 0, serviceContext,
+			siteNavigationMenuItemSettings, stringUtilReplaceValues);
+	}
+
+	private void _addOrUpdateSiteNavigationMenuItems(
+			JSONObject jsonObject, SiteNavigationMenu siteNavigationMenu,
+			long parentSiteNavigationMenuItemId, ServiceContext serviceContext,
+			Map<String, SiteNavigationMenuItemSetting>
+				siteNavigationMenuItemSettings,
+			Map<String, String> stringUtilReplaceValues)
+		throws Exception {
+
+		for (Object object :
+				JSONUtil.toObjectArray(jsonObject.getJSONArray("menuItems"))) {
+
+			JSONObject menuItemJSONObject = (JSONObject)object;
+
+			String type = menuItemJSONObject.getString("type");
+
+			String typeSettings = null;
+
+			if (type.equals(SiteNavigationMenuItemTypeConstants.LAYOUT)) {
+				boolean privateLayout = menuItemJSONObject.getBoolean(
+					"privateLayout");
+				String friendlyURL = menuItemJSONObject.getString(
+					"friendlyURL");
+
+				Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+					serviceContext.getScopeGroupId(), privateLayout,
+					friendlyURL);
+
+				if (layout == null) {
+					return;
+				}
+
+				SiteNavigationMenuItemType siteNavigationMenuItemType =
+					_siteNavigationMenuItemTypeRegistry.
+						getSiteNavigationMenuItemType(
+							SiteNavigationMenuItemTypeConstants.LAYOUT);
+
+				typeSettings =
+					siteNavigationMenuItemType.getTypeSettingsFromLayout(
+						layout);
+			}
+			else if (type.equals(SiteNavigationMenuItemTypeConstants.NODE)) {
+				typeSettings = UnicodePropertiesBuilder.put(
+					"name", menuItemJSONObject.getString("name")
+				).buildString();
+			}
+			else if (type.equals(SiteNavigationMenuItemTypeConstants.URL)) {
+				typeSettings = UnicodePropertiesBuilder.put(
+					"name", menuItemJSONObject.getString("name")
+				).put(
+					"url", menuItemJSONObject.getString("url")
+				).put(
+					"useNewTab", menuItemJSONObject.getString("useNewTab")
+				).buildString();
+			}
+			else if (type.equals("display-page")) {
+				String key = menuItemJSONObject.getString("key");
+
+				if (Validator.isNull(key)) {
+					continue;
+				}
+
+				SiteNavigationMenuItemSetting siteNavigationMenuItemSetting =
+					siteNavigationMenuItemSettings.get(key);
+
+				if (siteNavigationMenuItemSetting == null) {
+					continue;
+				}
+
+				type = siteNavigationMenuItemSetting.className;
+
+				typeSettings = UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"className", siteNavigationMenuItemSetting.className
+				).put(
+					"classNameId",
+					String.valueOf(
+						_portal.getClassNameId(
+							siteNavigationMenuItemSetting.className))
+				).put(
+					"classPK",
+					String.valueOf(siteNavigationMenuItemSetting.classPK)
+				).put(
+					"classTypeId", siteNavigationMenuItemSetting.classTypeId
+				).put(
+					"title", siteNavigationMenuItemSetting.title
+				).put(
+					"type", siteNavigationMenuItemSetting.type
+				).buildString();
+			}
+
+			SiteNavigationMenuItem siteNavigationMenuItem =
+				_siteNavigationMenuItemLocalService.
+					addOrUpdateSiteNavigationMenuItem(
+						menuItemJSONObject.getString("externalReferenceCode"),
+						serviceContext.getUserId(),
+						serviceContext.getScopeGroupId(),
+						siteNavigationMenu.getSiteNavigationMenuId(),
+						parentSiteNavigationMenuItemId, type, typeSettings,
+						serviceContext);
+
+			stringUtilReplaceValues.put(
+				"SITE_NAVIGATION_MENU_ITEM_ID:" +
+					siteNavigationMenuItem.getExternalReferenceCode(),
+				String.valueOf(
+					siteNavigationMenuItem.getSiteNavigationMenuItemId()));
+
+			_addOrUpdateSiteNavigationMenuItems(
+				menuItemJSONObject, siteNavigationMenu,
+				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+				serviceContext, siteNavigationMenuItemSettings,
+				stringUtilReplaceValues);
+		}
+	}
+
+	private void _addOrUpdateSiteNavigationMenus(
+			ServiceContext serviceContext,
+			Map<String, SiteNavigationMenuItemSetting>
+				siteNavigationMenuItemSettings,
+			Map<String, String> stringUtilReplaceValues)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(
+			"/site-initializer/site-navigation-menus.json", _servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			_addOrUpdateSiteNavigationMenu(
+				jsonArray.getJSONObject(i), serviceContext,
+				siteNavigationMenuItemSettings, stringUtilReplaceValues);
+		}
+	}
+
 	private Long _addOrUpdateStructuredContentFolders(
 			Long documentFolderId, String parentResourcePath,
 			ServiceContext serviceContext)
@@ -3901,176 +4071,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 			jsonObject.getInt("membershipRestriction"));
 
 		_groupLocalService.updateGroup(group);
-	}
-
-	private void _addOrUpdateSiteNavigationMenu(
-			JSONObject jsonObject, ServiceContext serviceContext,
-			Map<String, SiteNavigationMenuItemSetting>
-				siteNavigationMenuItemSettings,
-			Map<String, String> stringUtilReplaceValues)
-		throws Exception {
-
-		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuLocalService.fetchSiteNavigationMenuByName(
-				serviceContext.getScopeGroupId(), jsonObject.getString("name"));
-
-		if (siteNavigationMenu == null) {
-			siteNavigationMenu =
-				_siteNavigationMenuLocalService.addSiteNavigationMenu(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(),
-					jsonObject.getString("name"), jsonObject.getInt("typeSite"),
-					serviceContext);
-		}
-		else {
-			_siteNavigationMenuLocalService.updateSiteNavigationMenu(
-				serviceContext.getUserId(),
-				siteNavigationMenu.getSiteNavigationMenuId(),
-				jsonObject.getInt("typeSite"), jsonObject.getBoolean("auto"),
-				serviceContext);
-		}
-
-		_addOrUpdateSiteNavigationMenuItems(
-			jsonObject, siteNavigationMenu, 0, serviceContext,
-			siteNavigationMenuItemSettings, stringUtilReplaceValues);
-	}
-
-	private void _addOrUpdateSiteNavigationMenuItems(
-			JSONObject jsonObject, SiteNavigationMenu siteNavigationMenu,
-			long parentSiteNavigationMenuItemId, ServiceContext serviceContext,
-			Map<String, SiteNavigationMenuItemSetting>
-				siteNavigationMenuItemSettings,
-			Map<String, String> stringUtilReplaceValues)
-		throws Exception {
-
-		for (Object object :
-				JSONUtil.toObjectArray(jsonObject.getJSONArray("menuItems"))) {
-
-			JSONObject menuItemJSONObject = (JSONObject)object;
-
-			String type = menuItemJSONObject.getString("type");
-
-			String typeSettings = null;
-
-			if (type.equals(SiteNavigationMenuItemTypeConstants.LAYOUT)) {
-				boolean privateLayout = menuItemJSONObject.getBoolean(
-					"privateLayout");
-				String friendlyURL = menuItemJSONObject.getString(
-					"friendlyURL");
-
-				Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-					serviceContext.getScopeGroupId(), privateLayout,
-					friendlyURL);
-
-				if (layout == null) {
-					return;
-				}
-
-				SiteNavigationMenuItemType siteNavigationMenuItemType =
-					_siteNavigationMenuItemTypeRegistry.
-						getSiteNavigationMenuItemType(
-							SiteNavigationMenuItemTypeConstants.LAYOUT);
-
-				typeSettings =
-					siteNavigationMenuItemType.getTypeSettingsFromLayout(
-						layout);
-			}
-			else if (type.equals(SiteNavigationMenuItemTypeConstants.NODE)) {
-				typeSettings = UnicodePropertiesBuilder.put(
-					"name", menuItemJSONObject.getString("name")
-				).buildString();
-			}
-			else if (type.equals(SiteNavigationMenuItemTypeConstants.URL)) {
-				typeSettings = UnicodePropertiesBuilder.put(
-					"name", menuItemJSONObject.getString("name")
-				).put(
-					"url", menuItemJSONObject.getString("url")
-				).put(
-					"useNewTab", menuItemJSONObject.getString("useNewTab")
-				).buildString();
-			}
-			else if (type.equals("display-page")) {
-				String key = menuItemJSONObject.getString("key");
-
-				if (Validator.isNull(key)) {
-					continue;
-				}
-
-				SiteNavigationMenuItemSetting siteNavigationMenuItemSetting =
-					siteNavigationMenuItemSettings.get(key);
-
-				if (siteNavigationMenuItemSetting == null) {
-					continue;
-				}
-
-				type = siteNavigationMenuItemSetting.className;
-
-				typeSettings = UnicodePropertiesBuilder.create(
-					true
-				).put(
-					"className", siteNavigationMenuItemSetting.className
-				).put(
-					"classNameId",
-					String.valueOf(
-						_portal.getClassNameId(
-							siteNavigationMenuItemSetting.className))
-				).put(
-					"classPK",
-					String.valueOf(siteNavigationMenuItemSetting.classPK)
-				).put(
-					"classTypeId", siteNavigationMenuItemSetting.classTypeId
-				).put(
-					"title", siteNavigationMenuItemSetting.title
-				).put(
-					"type", siteNavigationMenuItemSetting.type
-				).buildString();
-			}
-
-			SiteNavigationMenuItem siteNavigationMenuItem =
-				_siteNavigationMenuItemLocalService.
-					addOrUpdateSiteNavigationMenuItem(
-						menuItemJSONObject.getString("externalReferenceCode"),
-						serviceContext.getUserId(),
-						serviceContext.getScopeGroupId(),
-						siteNavigationMenu.getSiteNavigationMenuId(),
-						parentSiteNavigationMenuItemId, type, typeSettings,
-						serviceContext);
-
-			stringUtilReplaceValues.put(
-				"SITE_NAVIGATION_MENU_ITEM_ID:" +
-					siteNavigationMenuItem.getExternalReferenceCode(),
-				String.valueOf(
-					siteNavigationMenuItem.getSiteNavigationMenuItemId()));
-
-			_addOrUpdateSiteNavigationMenuItems(
-				menuItemJSONObject, siteNavigationMenu,
-				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
-				serviceContext, siteNavigationMenuItemSettings,
-				stringUtilReplaceValues);
-		}
-	}
-
-	private void _addOrUpdateSiteNavigationMenus(
-			ServiceContext serviceContext,
-			Map<String, SiteNavigationMenuItemSetting>
-				siteNavigationMenuItemSettings,
-			Map<String, String> stringUtilReplaceValues)
-		throws Exception {
-
-		String json = SiteInitializerUtil.read(
-			"/site-initializer/site-navigation-menus.json", _servletContext);
-
-		if (json == null) {
-			return;
-		}
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			_addOrUpdateSiteNavigationMenu(
-				jsonArray.getJSONObject(i), serviceContext,
-				siteNavigationMenuItemSettings, stringUtilReplaceValues);
-		}
 	}
 
 	private void _addSiteSettings(ServiceContext serviceContext)

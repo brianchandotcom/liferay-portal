@@ -9,8 +9,10 @@ import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -51,14 +53,32 @@ public class APIFilterRelevantObjectEntryModelListener
 		try {
 			Map<String, Serializable> values = objectEntry.getValues();
 
+			long apiEndpointId = (long)values.get(
+				"r_apiEndpointToAPIFilters_c_apiEndpointId");
+
 			if (!_objectEntryHelper.isValidObjectEntry(
-					(long)values.get(
-						"r_apiEndpointToAPIFilters_c_apiEndpointId"),
-					"L_API_ENDPOINT")) {
+					apiEndpointId, "L_API_ENDPOINT")) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null, "An API filter must be related to an API endpoint",
 					"an-api-filter-must-be-related-to-an-api-endpoint");
+			}
+
+			if (Validator.isNotNull(
+					_objectEntryHelper.getObjectEntry(
+						objectEntry.getCompanyId(),
+						StringBundler.concat(
+							"id ne '", objectEntry.getObjectEntryId(),
+							"' and r_apiEndpointToAPIFilters_c_apiEndpointId ",
+							"eq '", apiEndpointId, "'"),
+						getObjectDefinitionExternalReferenceCode()))) {
+
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					null,
+					"The API endpoint specified already has an API filter " +
+						"associated",
+					"the-api-endpoint-specified-already-has-an-api-filter-" +
+						"associated");
 			}
 		}
 		catch (Exception exception) {

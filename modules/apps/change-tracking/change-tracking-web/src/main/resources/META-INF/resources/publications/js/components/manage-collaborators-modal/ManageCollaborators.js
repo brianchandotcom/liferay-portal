@@ -12,6 +12,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
+import ClayTabs from '@clayui/tabs';
 import {
 	fetch,
 	getOpener,
@@ -22,6 +23,11 @@ import {
 import React, {useCallback, useRef, useState} from 'react';
 
 import CollaboratorRow from './CollaboratorRow';
+
+const TABS = {
+	collaborators: 0,
+	link: 1,
+};
 
 const ManageCollaborators = ({
 	autocompleteUserURL,
@@ -36,6 +42,7 @@ const ManageCollaborators = ({
 	setCollaboratorData,
 	setShowModal,
 	showModal,
+	showShareLink,
 	spritemap,
 	trigger,
 	verifyEmailAddressURL,
@@ -47,6 +54,7 @@ const ManageCollaborators = ({
 	const [multiSelectValue, setMultiSelectValue] = useState('');
 	const [selectedItems, setSelectedItems] = useState({});
 	const [selectedUserData, setSelectedUserData] = useState({});
+	const [tab, setTab] = useState(TABS.collaborators);
 	const [updatedRoles, setUpdatedRoles] = useState({});
 
 	let defaultRole = roles[0];
@@ -770,6 +778,10 @@ const ManageCollaborators = ({
 	};
 
 	const renderForm = () => {
+		if (tab === TABS.link) {
+			return 'Share Link';
+		}
+
 		return (
 			<ClayForm onSubmit={handleSubmit}>
 				{renderSelect()}
@@ -823,6 +835,33 @@ const ManageCollaborators = ({
 			return '';
 		}
 
+		if (showShareLink) {
+			return (
+				<ClayModal
+					className="publications-invite-users-modal"
+					observer={observer}
+					size="lg"
+					spritemap={spritemap}
+				>
+					<ClayModal.Header>
+						<div className="autofit-row">
+							<div className="autofit-col">
+								<div className="modal-title">
+									{Liferay.Language.get('share-access')}
+								</div>
+							</div>
+						</div>
+					</ClayModal.Header>
+
+					{renderTabs()}
+
+					<div className="inline-scroller modal-body publications-invite-users-modal-body">
+						{renderForm()}
+					</div>
+				</ClayModal>
+			);
+		}
+
 		return (
 			<ClayModal
 				className="publications-invite-users-modal"
@@ -856,6 +895,38 @@ const ManageCollaborators = ({
 					{renderForm()}
 				</div>
 			</ClayModal>
+		);
+	};
+
+	const renderTabs = () => {
+		if (!showShareLink) {
+			return '';
+		}
+
+		return (
+			<ClayTabs>
+				<ClayTabs.Item
+					active={tab === TABS.collaborators}
+					innerProps={{
+						'aria-controls': 'invite-collaborators',
+					}}
+					onClick={() => setTab(TABS.collaborators)}
+				>
+					{readOnly
+						? Liferay.Language.get('view-collaborators')
+						: Liferay.Language.get('invite-users')}
+				</ClayTabs.Item>
+
+				<ClayTabs.Item
+					active={tab === TABS.link}
+					innerProps={{
+						'aria-controls': 'share-link',
+					}}
+					onClick={() => setTab(TABS.link)}
+				>
+					{Liferay.Language.get('share-link')}
+				</ClayTabs.Item>
+			</ClayTabs>
 		);
 	};
 

@@ -84,6 +84,7 @@ import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -98,6 +99,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.staging.StagingGroupHelper;
+import com.liferay.staging.StagingGroupHelperUtil;
 import com.liferay.trash.TrashHelper;
 
 import java.io.Serializable;
@@ -285,6 +288,34 @@ public class JournalDisplayContext {
 			(article.getStatus() == WorkflowConstants.STATUS_APPROVED)) {
 
 			availableActions.add("expireEntries");
+		}
+
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
+		long scopeGroupId = _themeDisplay.getScopeGroupId();
+
+		StagingGroupHelper stagingGroupHelper =
+			StagingGroupHelperUtil.getStagingGroupHelper();
+
+		try {
+			if (GroupPermissionUtil.contains(
+					permissionChecker, scopeGroupId,
+					ActionKeys.EXPORT_IMPORT_PORTLET_INFO) &&
+				stagingGroupHelper.isStagingGroup(scopeGroupId) &&
+				stagingGroupHelper.isStagedPortlet(
+					scopeGroupId, JournalPortletKeys.JOURNAL)) {
+
+				availableActions.add("publishEntriesToLive");
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"An exception occured when checking if the publish " +
+						"action should be displayed",
+					portalException);
+			}
 		}
 
 		if (JournalArticlePermission.contains(

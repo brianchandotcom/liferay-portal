@@ -53,6 +53,10 @@
 			<finder-column name="groupId" />
 			<finder-column comparator="LIKE" name="name" />
 		</finder>
+		<finder name="G_T" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="type" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="LayoutPageTemplateEntry" remote-service="true" uuid="true">
 

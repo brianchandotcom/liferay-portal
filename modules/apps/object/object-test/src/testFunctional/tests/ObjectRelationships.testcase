@@ -1748,7 +1748,7 @@ definition {
 				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS_DISABLED_NAME_OR_TYPE");
 
 			AssertElementPresent(
-				key_relationObject = "CustomObjectLPS163655",
+				key_relationObject = "Custom Object LPS163655",
 				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS_DISABLED_OBJECT");
 		}
 	}

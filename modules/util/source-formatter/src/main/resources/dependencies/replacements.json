@@ -1,0 +1,129 @@
+[
+	{
+		"LPS": "LPS-193462",
+		"classNames": [
+			"AddressLocalService",
+			"AddressService",
+			"AddressLocalServiceUtil",
+			"AddressServiceUtil"
+		],
+		"from": "addAddress(long, String, long, String, String, String, String, String, long, long, long, boolean, boolean)",
+		"newImports": [
+			"com.liferay.portal.kernel.service.ServiceContextThreadLocal"
+		],
+		"to": "addAddress(null, param#0#, param#1#, param#2#, null, null, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, null, ServiceContextThreadLocal.getServiceContext())"
+	},
+	{
+		"LPS": "LPS-193462",
+		"classNames": [
+			"AddressLocalService",
+			"AddressService",
+			"AddressLocalServiceUtil",
+			"AddressServiceUtil"
+		],
+		"from": "addAddress(long, String, long, String, String, String, String, String, long, long, long, boolean, boolean, ServiceContext)",
+		"to": "addAddress(null, param#0#, param#1#, param#2#, null, null, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, null, param#13#)"
+	},
+	{
+		"LPS": "LPS-192320",
+		"classNames": [
+			"AssetCategoryLocalService",
+			"AssetCategoryLocalServiceUtil"
+		],
+		"from": "addCategory(long, long, long, Map<Locale, String>, Map<Locale, String>, long, String[], ServiceContext)",
+		"to": "addCategory(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#)"
+	},
+	{
+		"LPS": "LPS-159702",
+		"classNames": [
+			"JournalFolderService",
+			"JournalFolderServiceUtil"
+		],
+		"from": "addFolder(long, long, String, String, ServiceContext)",
+		"to": "addFolder(null, param#0#, param#1#, param#2#, param#3#, param#4#)"
+	},
+	{
+		"LPS": "LPS-159702",
+		"classNames": [
+			"JournalFolderLocalService",
+			"JournalFolderLocalServiceUtil"
+		],
+		"from": "addFolder(long, long, long, String, String, ServiceContext)",
+		"to": "addFolder(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#)"
+	},
+	{
+		"from": "DLUtil.getGroupIds(ThemeDisplay)",
+		"newImports": [
+			"com.liferay.portal.kernel.util.PortalUtil"
+		],
+		"to": "PortalUtil.getCurrentAndAncestorSiteGroupIds(param#0#.getScopeGroupId())",
+		"validExtensions": [
+			"java",
+			"jsp"
+		]
+	},
+	{
+		"from": "DLUtil.getImagePreviewURL",
+		"newImports": [
+			"com.liferay.document.library.util.DLURLHelper"
+		],
+		"newReference": "DLURLHelper _dlURLHelper",
+		"to": "_dlURLHelper.getImagePreviewURL",
+		"validExtensions": [
+			"java",
+			"jsp"
+		]
+	},
+	{
+		"classNames": [
+			"CountryService"
+		],
+		"from": "fetchCommerceCountry",
+		"to": "fetchCountryByA2"
+	},
+	{
+		"classNames": [
+			"Indexer"
+		],
+		"from": "getClassNames",
+		"to": "getSearchClassNames",
+		"validExtensions": [
+			"java",
+			"jspf"
+		]
+	},
+	{
+		"classNames": [
+			"CommerceAddress"
+		],
+		"from": "getCode",
+		"to": "getRegionCode"
+	},
+	{
+		"classNames": [
+			"Region"
+		],
+		"from": "getCode",
+		"to": "getRegionCode"
+	},
+	{
+		"from": "HtmlUtil.extractText",
+		"newImports": [
+			"com.liferay.portal.kernel.util.HtmlParser"
+		],
+		"newReference": "HtmlParser _htmlParser",
+		"to": "_htmlParser.extractText"
+	},
+	{
+		"LPS": "LPS-189866",
+		"classNames": [
+			"AssetVocabularyService",
+			"AssetVocabularyLocalService"
+		],
+		"from": "searchVocabularies(long, long, String, int, int)",
+		"newImports": [
+			"com.liferay.portal.kernel.search.Sort"
+		],
+		"to": "searchVocabularies(param#0#, new long[]{param#1#}, param#2#, new int[]{}, param#3#, param#4#, new Sort())"
+	}
+]

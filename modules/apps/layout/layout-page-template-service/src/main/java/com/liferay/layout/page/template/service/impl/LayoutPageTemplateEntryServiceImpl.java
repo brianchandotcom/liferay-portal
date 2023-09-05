@@ -895,6 +895,8 @@ public class LayoutPageTemplateEntryServiceImpl
 
 						return null;
 					}
+				).and(
+					LayoutPageTemplateCollectionTable.INSTANCE.type.eq(type)
 				)
 			)
 		).as(

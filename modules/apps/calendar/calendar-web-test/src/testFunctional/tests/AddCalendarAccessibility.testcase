@@ -102,7 +102,7 @@ definition {
 				value1 = "\ENTER");
 		}
 
-		task ("Then the focus indicator goes back to what triggered it") {
+		task ("Then the focus indicator goes the trigger action that opened the modal") {
 			AssertElementFocused(locator1 = "Button#SELECT_CATEGORIES");
 		}
 	}

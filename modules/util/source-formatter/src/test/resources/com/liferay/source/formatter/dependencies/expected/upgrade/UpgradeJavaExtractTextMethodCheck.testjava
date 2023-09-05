@@ -45,4 +45,5 @@ public class UpgradeJavaExtractTextMethodCheck {
 
 	@Reference
 	private HtmlParser _htmlParser;
+
 }

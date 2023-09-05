@@ -1019,7 +1019,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Go to Content > Forms and add a Data Provider") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 			Navigator.gotoNavItem(navItem = "Data Providers");
 
@@ -1127,7 +1127,7 @@ definition {
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 		Navigator.gotoNavItem(navItem = "Data Providers");
 

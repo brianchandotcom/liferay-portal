@@ -953,11 +953,11 @@ definition {
 		}
 
 		task ("Export blank Forms lar from the default site and add a form entry") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 			LAR.exportPortlet(larFileName = "Forms_blank_portlet.lar");
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
 
 			FormsAdminNavigator.gotoAddForm();
 
@@ -1012,7 +1012,7 @@ definition {
 				cancelImport = "true",
 				larFileName = "Blogs_blank_portlet.lar");
 
-			FormsAdmin.openFormsAdmin(
+			FormsAdminNavigator.openFormsAdmin(
 				baseURL = "http://localhost:9080",
 				siteURLKey = "remote-site");
 
@@ -1038,7 +1038,7 @@ definition {
 
 			Blogs.viewNoEntryCP();
 
-			FormsAdmin.openFormsAdmin(
+			FormsAdminNavigator.openFormsAdmin(
 				baseURL = "http://localhost:9080",
 				siteURLKey = "remote-site");
 
@@ -1077,11 +1077,11 @@ definition {
 		}
 
 		task ("Export blank Forms lar from the default site and add a form entry") {
-			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 			LAR.exportPortlet(larFileName = "Forms_blank_portlet.lar");
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
 
 			FormsAdminNavigator.gotoAddForm();
 
@@ -1113,7 +1113,7 @@ definition {
 				cancelImport = "true",
 				larFileName = "Blogs_blank_portlet.lar");
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
 
 			LAR.importPortletWithDeleteApplicationData(
 				cancelImport = "true",
@@ -1133,7 +1133,7 @@ definition {
 
 			Blogs.viewNoEntryCP();
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
 
 			LAR.importPortletWithDeleteApplicationData(larFileName = "Forms_blank_portlet.lar");
 

@@ -1976,7 +1976,7 @@ definition {
 
 			PortletEntry.publish();
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name-staging");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name-staging");
 
 			FormsAdminNavigator.gotoAddForm();
 
@@ -2078,7 +2078,7 @@ definition {
 
 			WebContentAdmin.viewEntryNotPresent(entry = "Web Content Title");
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
 
 			AssertElementNotPresent(
 				key_formName = "Test Form",
@@ -2134,7 +2134,7 @@ definition {
 
 			LexiconList.viewListEntryPresent(listEntry = "Web Content Title");
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "site-name");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
 
 			FormsAdmin.viewForm(
 				formDescription = "Test description",

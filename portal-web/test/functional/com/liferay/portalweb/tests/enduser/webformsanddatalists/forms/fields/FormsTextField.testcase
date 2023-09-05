@@ -43,7 +43,7 @@ definition {
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 		Navigator.gotoNavItem(navItem = "Data Providers");
 
@@ -1320,7 +1320,7 @@ definition {
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 		FormsAdminNavigator.gotoViewEntries();
 
@@ -1376,7 +1376,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 		FormsAdminNavigator.gotoViewEntries();
 

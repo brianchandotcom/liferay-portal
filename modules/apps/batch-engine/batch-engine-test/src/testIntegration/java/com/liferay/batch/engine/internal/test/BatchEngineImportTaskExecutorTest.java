@@ -470,16 +470,16 @@ public class BatchEngineImportTaskExecutorTest
 
 		Account account1 = new Account() {
 			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-				setName(RandomTestUtil.randomString());
-				setType(Account.Type.PERSON);
+				externalReferenceCode = RandomTestUtil.randomString();
+				name = RandomTestUtil.randomString();
+				type = Account.Type.PERSON;
 			}
 		};
 		Account account2 = new Account() {
 			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-				setName(RandomTestUtil.randomString());
-				setType(Account.Type.PERSON);
+				externalReferenceCode = RandomTestUtil.randomString();
+				name = RandomTestUtil.randomString();
+				type = Account.Type.PERSON;
 			}
 		};
 		int integerFieldValue1 = RandomTestUtil.randomInt();
@@ -553,9 +553,9 @@ public class BatchEngineImportTaskExecutorTest
 
 		account1 = new Account() {
 			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-				setName(RandomTestUtil.randomString());
-				setType(Account.Type.PERSON);
+				externalReferenceCode = RandomTestUtil.randomString();
+				name = RandomTestUtil.randomString();
+				type = Account.Type.PERSON;
 			}
 		};
 

@@ -1,5 +1,14 @@
 definition {
 
+	macro addRecipient {
+		for (var list : list ${addList}) {
+			AssertClick(
+				key_text = "Add Recipient",
+				locator1 = "Button#ANY_WITH_SPAN",
+				value1 = "Add Recipient");
+		}
+	}
+
 	macro assertAlertMessage {
 		AssertElementPresent(
 			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_MODAL_ALERT",
@@ -10,6 +19,30 @@ definition {
 		AssertElementPresent(
 			key_title = ${assertPage},
 			locator1 = "Header#H1_TITLE");
+	}
+
+	macro canNotSeeUnsupportedFiles {
+		Click(locator1 = "Button#CONTINUE");
+
+		SelectFrameTop();
+
+		AssertElementNotPresent(
+			fileTitle = ${fileName},
+			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_ENVELOPE_ADDED_FILE");
+	}
+
+	macro canNotViewAddRecipient {
+		AssertElementNotPresent(
+			key_text = "Add Recipient",
+			locator1 = "Button#ANY_WITH_SPAN");
+	}
+
+	macro canViewRequiredFields {
+		for (var fieldName : list ${fieldList}) {
+			AssertElementPresent(
+				fieldLabel = ${fieldName},
+				locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
+		}
 	}
 
 	macro createEnvelope {
@@ -31,27 +64,27 @@ definition {
 		Type(
 			key_text = "Envelope Name",
 			locator1 = "TextInput#ANY",
-			value1 = ${envelopeName});
+			value1 = ${addName});
 
 		Type(
 			key_text = "Recipient Full Name",
 			locator1 = "TextInput#ANY",
-			value1 = ${recipientFullName});
+			value1 = ${addFullName});
 
 		Type(
 			key_text = "Email Subject",
 			locator1 = "TextInput#ANY",
-			value1 = ${emailSubject});
+			value1 = ${addSubject});
 
 		Type(
 			key_text = "Recipient Email",
 			locator1 = "TextInput#ANY",
-			value1 = ${recipientEmail});
+			value1 = ${addEmail});
 
 		Type(
 			key_text = "emailMessage",
 			locator1 = "TextArea#ANY",
-			value1 = ${emailMessage});
+			value1 = ${addMessage});
 
 		Click(
 			key_text = "Add Document",
@@ -84,27 +117,27 @@ definition {
 		Type(
 			key_text = "Envelope Name",
 			locator1 = "TextInput#ANY",
-			value1 = ${envelopeName});
+			value1 = ${addName});
 
 		Type(
 			key_text = "Recipient Full Name",
 			locator1 = "TextInput#ANY",
-			value1 = ${recipientFullName});
+			value1 = ${addFullName});
 
 		Type(
 			key_text = "Email Subject",
 			locator1 = "TextInput#ANY",
-			value1 = ${emailSubject});
+			value1 = ${addSubject});
 
 		Type(
 			key_text = "Recipient Email",
 			locator1 = "TextInput#ANY",
-			value1 = ${recipientEmail});
+			value1 = ${addEmail});
 
 		Type(
 			key_text = "emailMessage",
 			locator1 = "TextArea#ANY",
-			value1 = ${emailMessage});
+			value1 = ${addMessage});
 
 		Click(
 			key_text = "Add Document",
@@ -120,6 +153,8 @@ definition {
 			dmDocumentTitle = "Document_2",
 			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_SELECT_DOCUMENT_MODAL");
 
+		SelectFrameTop();
+
 		Click(
 			key_text = "Add Document",
 			locator1 = "Button#ANY_WITH_SPAN");
@@ -133,6 +168,8 @@ definition {
 		Click(
 			dmDocumentTitle = "Document_3",
 			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_SELECT_DOCUMENT_MODAL");
+
+		SelectFrameTop();
 	}
 
 	macro deleteCreatedDM {
@@ -228,10 +265,36 @@ definition {
 			locator1 = "ListGroupItem#ITEM_TEXT");
 	}
 
+	macro removeRecipient {
+		Click(locator1 = "Button#REMOVE_IMAGE_LAST");
+
+		AssertElementPresent(locator1 = "Button#TRASH_DISABLED");
+	}
+
 	macro selectDMFolder {
 		Click.javaScriptClick(
 			key_fieldName = ${checkboxDM},
 			locator1 = "Checkbox#CHECKBOX_NAME");
+	}
+
+	macro verifyUnsupportedFileError {
+		AssertElementPresent(locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_UNSUPPORTED_FILE");
+
+		AssertElementPresent(
+			key_value = ${disabledButton},
+			locator1 = "DigitalSignatureEnvelopeSettings#ANY_DISABLED_BUTTON");
+	}
+
+	macro viewNotSupportedExtensionsError {
+		SelectFrame(locator1 = "Modal#MODAL");
+
+		AssertElementPresent(
+			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_MODAL_TITLE",
+			modalTitle = ${modalLabel});
+
+		AssertElementPresent(
+			fileTitle = ${documentTitle},
+			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_MODAL_UNSUPPORTED_FILE");
 	}
 
 }

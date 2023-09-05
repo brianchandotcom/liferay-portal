@@ -7,10 +7,6 @@ package com.liferay.portal.kernel.messaging;
 
 import com.liferay.petra.string.StringPool;
 
-import java.util.Collections;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
  * @author Michael C. Han
  * @author Shuyang Zhou
@@ -28,20 +24,8 @@ public abstract class BaseDestination implements Destination {
 	}
 
 	@Override
-	public void copyMessageListeners(Destination destination) {
-		BaseDestination baseDestination = (BaseDestination)destination;
-
-		Set<MessageListener> targetMessageListeners =
-			baseDestination.messageListeners;
-
-		targetMessageListeners.addAll(messageListeners);
-	}
-
-	@Override
 	public void destroy() {
 		close(true);
-
-		messageListeners.clear();
 	}
 
 	@Override
@@ -55,34 +39,12 @@ public abstract class BaseDestination implements Destination {
 	}
 
 	@Override
-	public int getMessageListenerCount() {
-		return messageListeners.size();
-	}
-
-	@Override
 	public String getName() {
 		return name;
 	}
 
 	@Override
-	public boolean isRegistered() {
-		if (getMessageListenerCount() > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public void open() {
-	}
-
-	@Override
-	public boolean register(MessageListener messageListener) {
-		InvokerMessageListener invokerMessageListener =
-			new InvokerMessageListener(messageListener);
-
-		return registerMessageListener(invokerMessageListener);
 	}
 
 	@Override
@@ -104,29 +66,7 @@ public abstract class BaseDestination implements Destination {
 		this.name = name;
 	}
 
-	@Override
-	public boolean unregister(MessageListener messageListener) {
-		InvokerMessageListener invokerMessageListener =
-			new InvokerMessageListener(messageListener);
-
-		return unregisterMessageListener(invokerMessageListener);
-	}
-
-	protected boolean registerMessageListener(
-		InvokerMessageListener invokerMessageListener) {
-
-		return messageListeners.add(invokerMessageListener);
-	}
-
-	protected boolean unregisterMessageListener(
-		InvokerMessageListener invokerMessageListener) {
-
-		return messageListeners.remove(invokerMessageListener);
-	}
-
 	protected MessageListenerRegistry messageListenerRegistry;
-	protected Set<MessageListener> messageListeners = Collections.newSetFromMap(
-		new ConcurrentHashMap<>());
 	protected String name = StringPool.BLANK;
 
 	private String _destinationType;

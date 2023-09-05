@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
@@ -86,10 +87,11 @@ public class ImportMVCResourceCommandTest {
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_importFile",
 			new Class<?>[] {
-				File.class, long.class, long.class, Locale.class, boolean.class,
-				long.class
+				File.class, long.class, long.class, LayoutsImportStrategy.class,
+				Locale.class, long.class
 			},
-			_getFile(), _group.getGroupId(), 0, LocaleUtil.US, false,
+			_getFile(), _group.getGroupId(), 0,
+			LayoutsImportStrategy.DO_NOT_OVERWRITE, LocaleUtil.US,
 			TestPropsValues.getUserId());
 
 		JSONObject importResultsJSONObject = jsonObject.getJSONObject(

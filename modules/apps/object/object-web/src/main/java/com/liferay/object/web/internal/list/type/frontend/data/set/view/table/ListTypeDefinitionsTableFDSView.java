@@ -11,6 +11,7 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.object.web.internal.list.type.constants.ListTypeFDSNames;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.util.Locale;
 
@@ -31,15 +32,19 @@ public class ListTypeDefinitionsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		return fdsTableSchemaBuilder.add(
+		fdsTableSchemaBuilder = fdsTableSchemaBuilder.add(
 			"name", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"actionLink")
-		).add(
-			"system", "source",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"sourceDataRenderer")
-		).build();
+				"actionLink"));
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-193355")) {
+			fdsTableSchemaBuilder = fdsTableSchemaBuilder.add(
+				"system", "source",
+				fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+					"sourceDataRenderer"));
+		}
+
+		return fdsTableSchemaBuilder.build();
 	}
 
 	@Reference

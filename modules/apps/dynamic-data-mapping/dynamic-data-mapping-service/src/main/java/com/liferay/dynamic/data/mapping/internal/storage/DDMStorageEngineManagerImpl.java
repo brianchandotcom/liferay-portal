@@ -98,7 +98,12 @@ public class DDMStorageEngineManagerImpl implements DDMStorageEngineManager {
 					classPK, ddmForm
 				).build());
 
-		return ddmStorageAdapterGetResponse.getDDMFormValues();
+		DDMFormValues ddmFormValues =
+			ddmStorageAdapterGetResponse.getDDMFormValues();
+
+		ddmFormValues.setDefaultLocale(ddmForm.getDefaultLocale());
+
+		return ddmFormValues;
 	}
 
 	@Override

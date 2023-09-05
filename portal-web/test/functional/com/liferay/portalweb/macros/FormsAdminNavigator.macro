@@ -50,10 +50,6 @@ definition {
 		LexiconEntry.gotoAdd();
 	}
 
-	macro gotoAddForm {
-		LexiconEntry.gotoAdd();
-	}
-
 	macro gotoBack {
 		Navigator.gotoBack();
 
@@ -148,7 +144,7 @@ definition {
 	macro gotoNewForm {
 		FormsAdminNavigator.openFormsAdmin(siteURLKey = ${siteURLKey});
 
-		LexiconEntry.gotoAdd();	
+		LexiconEntry.gotoAdd();
 	}
 
 	macro gotoPermissions {

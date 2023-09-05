@@ -311,7 +311,7 @@ definition {
 
 		FormsAdmin.viewNoForms();
 
-		FormsAdminNavigator.gotoAddForm();
+		LexiconEntry.gotoAdd();
 
 		Form.editName();
 

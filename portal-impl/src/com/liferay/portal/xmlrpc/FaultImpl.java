@@ -8,6 +8,7 @@ package com.liferay.portal.xmlrpc;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.xmlrpc.Fault;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcException;
+import com.liferay.portal.kernel.xmlrpc.XmlRpcParser;
 
 /**
  * @author Alexander Chow

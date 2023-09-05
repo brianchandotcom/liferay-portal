@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.xmlrpc.Response;
 import com.liferay.portal.kernel.xmlrpc.Success;
 import com.liferay.portal.kernel.xmlrpc.XmlRpc;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcException;
+import com.liferay.portal.kernel.xmlrpc.XmlRpcParser;
 import com.liferay.portal.util.PropsValues;
 
 /**

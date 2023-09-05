@@ -194,22 +194,22 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGetAccountGroupsPage() throws Exception {
+	public void testGetAdminAccountGroupsPage() throws Exception {
 		Page<AdminAccountGroup> page =
-			adminAccountGroupResource.getAccountGroupsPage(
+			adminAccountGroupResource.getAdminAccountGroupsPage(
 				null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
 		AdminAccountGroup adminAccountGroup1 =
-			testGetAccountGroupsPage_addAdminAccountGroup(
+			testGetAdminAccountGroupsPage_addAdminAccountGroup(
 				randomAdminAccountGroup());
 
 		AdminAccountGroup adminAccountGroup2 =
-			testGetAccountGroupsPage_addAdminAccountGroup(
+			testGetAdminAccountGroupsPage_addAdminAccountGroup(
 				randomAdminAccountGroup());
 
-		page = adminAccountGroupResource.getAccountGroupsPage(
+		page = adminAccountGroupResource.getAdminAccountGroupsPage(
 			null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
@@ -218,11 +218,11 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 			adminAccountGroup1, (List<AdminAccountGroup>)page.getItems());
 		assertContains(
 			adminAccountGroup2, (List<AdminAccountGroup>)page.getItems());
-		assertValid(page, testGetAccountGroupsPage_getExpectedActions());
+		assertValid(page, testGetAdminAccountGroupsPage_getExpectedActions());
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetAccountGroupsPage_getExpectedActions()
+			testGetAdminAccountGroupsPage_getExpectedActions()
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
@@ -231,7 +231,7 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGetAccountGroupsPageWithFilterDateTimeEquals()
+	public void testGetAdminAccountGroupsPageWithFilterDateTimeEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -243,12 +243,12 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 
 		AdminAccountGroup adminAccountGroup1 = randomAdminAccountGroup();
 
-		adminAccountGroup1 = testGetAccountGroupsPage_addAdminAccountGroup(
+		adminAccountGroup1 = testGetAdminAccountGroupsPage_addAdminAccountGroup(
 			adminAccountGroup1);
 
 		for (EntityField entityField : entityFields) {
 			Page<AdminAccountGroup> page =
-				adminAccountGroupResource.getAccountGroupsPage(
+				adminAccountGroupResource.getAdminAccountGroupsPage(
 					null,
 					getFilterString(entityField, "between", adminAccountGroup1),
 					Pagination.of(1, 2), null);
@@ -260,35 +260,36 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGetAccountGroupsPageWithFilterDoubleEquals()
+	public void testGetAdminAccountGroupsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		testGetAccountGroupsPageWithFilter("eq", EntityField.Type.DOUBLE);
+		testGetAdminAccountGroupsPageWithFilter("eq", EntityField.Type.DOUBLE);
 	}
 
 	@Test
-	public void testGetAccountGroupsPageWithFilterStringContains()
+	public void testGetAdminAccountGroupsPageWithFilterStringContains()
 		throws Exception {
 
-		testGetAccountGroupsPageWithFilter("contains", EntityField.Type.STRING);
+		testGetAdminAccountGroupsPageWithFilter(
+			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
-	public void testGetAccountGroupsPageWithFilterStringEquals()
+	public void testGetAdminAccountGroupsPageWithFilterStringEquals()
 		throws Exception {
 
-		testGetAccountGroupsPageWithFilter("eq", EntityField.Type.STRING);
+		testGetAdminAccountGroupsPageWithFilter("eq", EntityField.Type.STRING);
 	}
 
 	@Test
-	public void testGetAccountGroupsPageWithFilterStringStartsWith()
+	public void testGetAdminAccountGroupsPageWithFilterStringStartsWith()
 		throws Exception {
 
-		testGetAccountGroupsPageWithFilter(
+		testGetAdminAccountGroupsPageWithFilter(
 			"startswith", EntityField.Type.STRING);
 	}
 
-	protected void testGetAccountGroupsPageWithFilter(
+	protected void testGetAdminAccountGroupsPageWithFilter(
 			String operator, EntityField.Type type)
 		throws Exception {
 
@@ -299,17 +300,17 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 		}
 
 		AdminAccountGroup adminAccountGroup1 =
-			testGetAccountGroupsPage_addAdminAccountGroup(
+			testGetAdminAccountGroupsPage_addAdminAccountGroup(
 				randomAdminAccountGroup());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AdminAccountGroup adminAccountGroup2 =
-			testGetAccountGroupsPage_addAdminAccountGroup(
+			testGetAdminAccountGroupsPage_addAdminAccountGroup(
 				randomAdminAccountGroup());
 
 		for (EntityField entityField : entityFields) {
 			Page<AdminAccountGroup> page =
-				adminAccountGroupResource.getAccountGroupsPage(
+				adminAccountGroupResource.getAdminAccountGroupsPage(
 					null,
 					getFilterString(entityField, operator, adminAccountGroup1),
 					Pagination.of(1, 2), null);
@@ -321,27 +322,27 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGetAccountGroupsPageWithPagination() throws Exception {
+	public void testGetAdminAccountGroupsPageWithPagination() throws Exception {
 		Page<AdminAccountGroup> totalPage =
-			adminAccountGroupResource.getAccountGroupsPage(
+			adminAccountGroupResource.getAdminAccountGroupsPage(
 				null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
 
 		AdminAccountGroup adminAccountGroup1 =
-			testGetAccountGroupsPage_addAdminAccountGroup(
+			testGetAdminAccountGroupsPage_addAdminAccountGroup(
 				randomAdminAccountGroup());
 
 		AdminAccountGroup adminAccountGroup2 =
-			testGetAccountGroupsPage_addAdminAccountGroup(
+			testGetAdminAccountGroupsPage_addAdminAccountGroup(
 				randomAdminAccountGroup());
 
 		AdminAccountGroup adminAccountGroup3 =
-			testGetAccountGroupsPage_addAdminAccountGroup(
+			testGetAdminAccountGroupsPage_addAdminAccountGroup(
 				randomAdminAccountGroup());
 
 		Page<AdminAccountGroup> page1 =
-			adminAccountGroupResource.getAccountGroupsPage(
+			adminAccountGroupResource.getAdminAccountGroupsPage(
 				null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<AdminAccountGroup> adminAccountGroups1 =
@@ -352,7 +353,7 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 			adminAccountGroups1.size());
 
 		Page<AdminAccountGroup> page2 =
-			adminAccountGroupResource.getAccountGroupsPage(
+			adminAccountGroupResource.getAdminAccountGroupsPage(
 				null, null, Pagination.of(2, totalCount + 2), null);
 
 		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
@@ -364,7 +365,7 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 			adminAccountGroups2.toString(), 1, adminAccountGroups2.size());
 
 		Page<AdminAccountGroup> page3 =
-			adminAccountGroupResource.getAccountGroupsPage(
+			adminAccountGroupResource.getAdminAccountGroupsPage(
 				null, null, Pagination.of(1, totalCount + 3), null);
 
 		assertContains(
@@ -376,8 +377,10 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGetAccountGroupsPageWithSortDateTime() throws Exception {
-		testGetAccountGroupsPageWithSort(
+	public void testGetAdminAccountGroupsPageWithSortDateTime()
+		throws Exception {
+
+		testGetAdminAccountGroupsPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, adminAccountGroup1, adminAccountGroup2) -> {
 				BeanTestUtil.setProperty(
@@ -387,8 +390,8 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGetAccountGroupsPageWithSortDouble() throws Exception {
-		testGetAccountGroupsPageWithSort(
+	public void testGetAdminAccountGroupsPageWithSortDouble() throws Exception {
+		testGetAdminAccountGroupsPageWithSort(
 			EntityField.Type.DOUBLE,
 			(entityField, adminAccountGroup1, adminAccountGroup2) -> {
 				BeanTestUtil.setProperty(
@@ -399,8 +402,10 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGetAccountGroupsPageWithSortInteger() throws Exception {
-		testGetAccountGroupsPageWithSort(
+	public void testGetAdminAccountGroupsPageWithSortInteger()
+		throws Exception {
+
+		testGetAdminAccountGroupsPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, adminAccountGroup1, adminAccountGroup2) -> {
 				BeanTestUtil.setProperty(
@@ -411,8 +416,8 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 	}
 
 	@Test
-	public void testGetAccountGroupsPageWithSortString() throws Exception {
-		testGetAccountGroupsPageWithSort(
+	public void testGetAdminAccountGroupsPageWithSortString() throws Exception {
+		testGetAdminAccountGroupsPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, adminAccountGroup1, adminAccountGroup2) -> {
 				Class<?> clazz = adminAccountGroup1.getClass();
@@ -461,7 +466,7 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 			});
 	}
 
-	protected void testGetAccountGroupsPageWithSort(
+	protected void testGetAdminAccountGroupsPageWithSort(
 			EntityField.Type type,
 			UnsafeTriConsumer
 				<EntityField, AdminAccountGroup, AdminAccountGroup, Exception>
@@ -482,15 +487,15 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 				entityField, adminAccountGroup1, adminAccountGroup2);
 		}
 
-		adminAccountGroup1 = testGetAccountGroupsPage_addAdminAccountGroup(
+		adminAccountGroup1 = testGetAdminAccountGroupsPage_addAdminAccountGroup(
 			adminAccountGroup1);
 
-		adminAccountGroup2 = testGetAccountGroupsPage_addAdminAccountGroup(
+		adminAccountGroup2 = testGetAdminAccountGroupsPage_addAdminAccountGroup(
 			adminAccountGroup2);
 
 		for (EntityField entityField : entityFields) {
 			Page<AdminAccountGroup> ascPage =
-				adminAccountGroupResource.getAccountGroupsPage(
+				adminAccountGroupResource.getAdminAccountGroupsPage(
 					null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
@@ -499,7 +504,7 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 				(List<AdminAccountGroup>)ascPage.getItems());
 
 			Page<AdminAccountGroup> descPage =
-				adminAccountGroupResource.getAccountGroupsPage(
+				adminAccountGroupResource.getAdminAccountGroupsPage(
 					null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
@@ -509,12 +514,63 @@ public abstract class BaseAdminAccountGroupResourceTestCase {
 		}
 	}
 
-	protected AdminAccountGroup testGetAccountGroupsPage_addAdminAccountGroup(
-			AdminAccountGroup adminAccountGroup)
+	protected AdminAccountGroup
+			testGetAdminAccountGroupsPage_addAdminAccountGroup(
+				AdminAccountGroup adminAccountGroup)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetAdminAccountGroupsPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"adminAccountGroups",
+			new HashMap<String, Object>() {
+				{
+					put("page", 1);
+					put("pageSize", 10);
+				}
+			},
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject adminAccountGroupsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/adminAccountGroups");
+
+		long totalCount = adminAccountGroupsJSONObject.getLong("totalCount");
+
+		AdminAccountGroup adminAccountGroup1 =
+			testGraphQLGetAdminAccountGroupsPage_addAdminAccountGroup();
+		AdminAccountGroup adminAccountGroup2 =
+			testGraphQLGetAdminAccountGroupsPage_addAdminAccountGroup();
+
+		adminAccountGroupsJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/adminAccountGroups");
+
+		Assert.assertEquals(
+			totalCount + 2, adminAccountGroupsJSONObject.getLong("totalCount"));
+
+		assertContains(
+			adminAccountGroup1,
+			Arrays.asList(
+				AdminAccountGroupSerDes.toDTOs(
+					adminAccountGroupsJSONObject.getString("items"))));
+		assertContains(
+			adminAccountGroup2,
+			Arrays.asList(
+				AdminAccountGroupSerDes.toDTOs(
+					adminAccountGroupsJSONObject.getString("items"))));
+	}
+
+	protected AdminAccountGroup
+			testGraphQLGetAdminAccountGroupsPage_addAdminAccountGroup()
+		throws Exception {
+
+		return testGraphQLAdminAccountGroup_addAdminAccountGroup();
 	}
 
 	@Test

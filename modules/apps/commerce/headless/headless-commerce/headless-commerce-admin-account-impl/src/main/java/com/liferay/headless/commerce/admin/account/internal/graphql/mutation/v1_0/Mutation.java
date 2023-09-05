@@ -1257,6 +1257,29 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createAdminAccountGroupsPageExportBatch(
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_adminAccountGroupResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			adminAccountGroupResource ->
+				adminAccountGroupResource.postAdminAccountGroupsPageExportBatch(
+					search,
+					_filterBiFunction.apply(
+						adminAccountGroupResource, filterString),
+					_sortsBiFunction.apply(
+						adminAccountGroupResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public AdminAccountGroup createAccountGroup(
 			@GraphQLName("adminAccountGroup") AdminAccountGroup
 				adminAccountGroup)

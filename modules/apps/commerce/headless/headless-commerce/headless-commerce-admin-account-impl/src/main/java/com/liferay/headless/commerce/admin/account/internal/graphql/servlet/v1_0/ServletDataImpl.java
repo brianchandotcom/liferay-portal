@@ -490,6 +490,11 @@ public class ServletDataImpl implements ServletData {
 							AccountOrganizationResourceImpl.class,
 							"deleteAccountIdAccountOrganization"));
 					put(
+						"mutation#createAdminAccountGroupsPageExportBatch",
+						new ObjectValuePair<>(
+							AdminAccountGroupResourceImpl.class,
+							"postAdminAccountGroupsPageExportBatch"));
+					put(
 						"mutation#createAccountGroup",
 						new ObjectValuePair<>(
 							AdminAccountGroupResourceImpl.class,
@@ -744,10 +749,10 @@ public class ServletDataImpl implements ServletData {
 							AccountOrganizationResourceImpl.class,
 							"getAccountIdAccountOrganization"));
 					put(
-						"query#accountGroups",
+						"query#adminAccountGroups",
 						new ObjectValuePair<>(
 							AdminAccountGroupResourceImpl.class,
-							"getAccountGroupsPage"));
+							"getAdminAccountGroupsPage"));
 					put(
 						"query#accountGroupByExternalReferenceCode",
 						new ObjectValuePair<>(

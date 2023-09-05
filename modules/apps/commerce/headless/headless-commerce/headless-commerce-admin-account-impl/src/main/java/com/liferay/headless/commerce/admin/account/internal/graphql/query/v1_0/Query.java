@@ -1011,10 +1011,10 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {accountGroups(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {adminAccountGroups(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public AdminAccountGroupPage accountGroups(
+	public AdminAccountGroupPage adminAccountGroups(
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -1026,7 +1026,7 @@ public class Query {
 			_adminAccountGroupResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			adminAccountGroupResource -> new AdminAccountGroupPage(
-				adminAccountGroupResource.getAccountGroupsPage(
+				adminAccountGroupResource.getAdminAccountGroupsPage(
 					search,
 					_filterBiFunction.apply(
 						adminAccountGroupResource, filterString),

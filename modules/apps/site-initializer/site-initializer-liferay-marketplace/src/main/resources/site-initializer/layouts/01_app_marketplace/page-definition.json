@@ -608,6 +608,11 @@
 															},
 															"widgetInstance": {
 																"widgetConfig": {
+																	"displayStyle": "ddmTemplate_MARKETPLACE-PRICE-MODEL",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
+																	"frequenciesVisible": "true",
+																	"frequencyThreshold": "1",
+																	"maxTerms": "10"
 																},
 																"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet",
 																"widgetPermissions": [

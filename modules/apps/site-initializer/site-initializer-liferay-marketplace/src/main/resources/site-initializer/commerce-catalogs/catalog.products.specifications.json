@@ -113,11 +113,11 @@
 	},
 	{
 		"categoryKey": "pricing-licensing-terms",
-		"cpDefinitionExternalReferenceCode": "MKT-PRICE-MODEL",
+		"cpDefinitionExternalReferenceCode": "MKT-PRICE",
 		"description": "Whether the app is Free, Paid or Bundled",
 		"facetable": true,
-		"key": "price-model",
-		"title": "Price Model"
+		"key": "price",
+		"title": "Price"
 	},
 	{
 		"categoryKey": "app-support-and-help",

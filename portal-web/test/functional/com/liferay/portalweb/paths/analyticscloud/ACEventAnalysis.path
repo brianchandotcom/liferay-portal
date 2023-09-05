@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>DISABLED_ADD_EVENT_BUTTON</td>
-	<td>//*[contains(@class,'link-disabled')]</td>
+	<td>//*[@disabled]</td>
 	<td></td>
 </tr>
 <tr>

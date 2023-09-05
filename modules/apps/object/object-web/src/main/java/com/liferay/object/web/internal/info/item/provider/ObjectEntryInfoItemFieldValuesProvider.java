@@ -433,29 +433,41 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	}
 
 	private com.liferay.object.rest.dto.v1_0.ObjectEntry _getObjectEntry(
-			String externalReferenceCode, ObjectDefinition objectDefinition,
-			ThemeDisplay themeDisplay)
-		throws Exception {
+		String externalReferenceCode, ObjectDefinition objectDefinition,
+		ThemeDisplay themeDisplay) {
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				objectDefinition.getStorageType());
 
-		return objectEntryManager.getObjectEntry(
-			themeDisplay.getCompanyId(),
-			new DefaultDTOConverterContext(
-				false, null, null, null, null, themeDisplay.getLocale(), null,
-				themeDisplay.getUser()),
-			externalReferenceCode, objectDefinition,
-			ObjectEntryUtil.getScopeKey(
-				themeDisplay.getScopeGroupId(), objectDefinition,
-				_objectScopeProviderRegistry));
+		try {
+			return objectEntryManager.getObjectEntry(
+				themeDisplay.getCompanyId(),
+				new DefaultDTOConverterContext(
+					false, null, null, null, null, themeDisplay.getLocale(),
+					null, themeDisplay.getUser()),
+				externalReferenceCode, objectDefinition,
+				ObjectEntryUtil.getScopeKey(
+					themeDisplay.getScopeGroupId(), objectDefinition,
+					_objectScopeProviderRegistry));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return null;
+		}
 	}
 
 	private List<InfoFieldValue<Object>> _getObjectFieldsInfoFieldValues(
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry,
 			List<ObjectField> objectFields, ThemeDisplay themeDisplay)
 		throws Exception {
+
+		if (objectEntry == null) {
+			return Collections.emptyList();
+		}
 
 		List<InfoFieldValue<Object>> objectFieldsInfoFieldValues =
 			new ArrayList<>();
@@ -504,17 +516,27 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			return Collections.emptyList();
 		}
 
-		ObjectEntry relatedObjectEntry =
+		ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.fetchObjectEntry(
 				GetterUtil.getLong(values.get(objectField.getName())));
 
-		if (relatedObjectEntry == null) {
+		if (serviceBuilderObjectEntry == null) {
 			return Collections.emptyList();
 		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
-				relatedObjectEntry.getObjectDefinitionId());
+				serviceBuilderObjectEntry.getObjectDefinitionId());
+
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+			_getObjectEntry(
+				serviceBuilderObjectEntry.getExternalReferenceCode(),
+				objectDefinition, themeDisplay);
+
+		if (objectEntry == null) {
+			return Collections.emptyList();
+		}
+
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.
 				fetchObjectRelationshipByObjectFieldId2(
@@ -522,7 +544,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 		return TransformUtil.transform(
 			_objectFieldLocalService.getObjectFields(
-				relatedObjectEntry.getObjectDefinitionId(), false),
+				serviceBuilderObjectEntry.getObjectDefinitionId(), false),
 			relatedObjectField -> new InfoFieldValue<>(
 				InfoField.builder(
 				).infoFieldType(
@@ -543,11 +565,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 						relatedObjectField.getLabelMap()
 					).build()
 				).build(),
-				_getValue(
-					_getObjectEntry(
-						relatedObjectEntry.getExternalReferenceCode(),
-						objectDefinition, themeDisplay),
-					relatedObjectField, themeDisplay)));
+				_getValue(objectEntry, relatedObjectField, themeDisplay)));
 	}
 
 	private ThemeDisplay _getThemeDisplay() {

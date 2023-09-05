@@ -76,7 +76,7 @@ public class ImportMVCResourceCommandTest {
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void testImportFileWithDoNotOverwriteStrategy() throws Exception {
 		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), 0,
 			"Existing Master Page",

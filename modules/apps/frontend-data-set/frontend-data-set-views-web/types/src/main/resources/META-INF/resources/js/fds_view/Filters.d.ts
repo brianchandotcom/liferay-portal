@@ -6,6 +6,7 @@
 /// <reference types="react" />
 
 import {FDSViewType} from '../FDSViews';
+import '../../css/Filters.scss';
 interface IProps {
 	fdsView: FDSViewType;
 	fdsViewsURL: string;

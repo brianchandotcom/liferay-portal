@@ -6,6 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayDatePicker from '@clayui/date-picker';
+import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {
 	ClayInput,
 	ClayRadio,
@@ -13,6 +14,7 @@ import ClayForm, {
 	ClaySelectWithOption,
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
@@ -28,6 +30,8 @@ import CheckboxMultiSelect from '../components/CheckboxMultiSelect';
 import OrderableTable from '../components/OrderableTable';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
+
+import '../../css/Filters.scss';
 
 enum filterTypes {
 	DATE_RANGE = 'DATE_RANGE',
@@ -73,6 +77,7 @@ interface IPropsAddFDSFilterModalContent {
 	fdsView: FDSViewType;
 	fields: IField[];
 	filter?: IDateFilter | ISelectionFilter;
+	fieldNames?: string[];
 	filterType?: filterTypes;
 	namespace: string;
 	onSave: (newFilter: IFilter) => void;
@@ -98,6 +103,7 @@ function AddFDSFilterModalContent({
 	fdsView,
 	fields,
 	filter,
+	fieldNames,
 	filterType,
 	namespace,
 	onSave,
@@ -245,6 +251,59 @@ function AddFDSFilterModalContent({
 		closeModal();
 	};
 
+	const CellRendererDropdown = ({
+		cellRenderers,
+		namespace,
+		onItemClick,
+	}: {
+		cellRenderers: IField[];
+		namespace: string;
+		onItemClick: Function;
+	}) => {
+		const inUseFields = fields.map((item) =>
+			fieldNames?.includes(item.name) ? item.name : undefined
+		);
+
+		return (
+			<ClayDropDown
+				closeOnClick
+				trigger={
+					<ClayInput
+						className="filter-by-cell-renderers-dropdown-menu"
+						aria-labelledby={`${namespace}cellRenderersLabel`}
+						placeholder={
+							selectedField
+								? selectedField.label
+								: Liferay.Language.get('select')
+						}
+					/>
+				}
+			>
+				<ClayDropDown.ItemList items={cellRenderers} role="listbox">
+					{cellRenderers.map((cellRenderer) => (
+						<ClayDropDown.Item
+							key={cellRenderer.name}
+							roleItem="option"
+							disabled={
+								!!filter ||
+								(filterType === filterTypes.SELECTION &&
+									picklists.length == 0)
+							}
+							onClick={() => onItemClick(cellRenderer)}
+						>
+							{cellRenderer.label}
+							{inUseFields.includes(cellRenderer.name) && (
+								<ClayLabel displayType="info">
+									{Liferay.Language.get('in-use')}
+								</ClayLabel>
+							)}
+						</ClayDropDown.Item>
+					))}
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
+		);
+	};
+
 	const isValidSingleMode =
 		multiple || (!multiple && !(preselectedValues.length > 1));
 
@@ -303,36 +362,18 @@ function AddFDSFilterModalContent({
 						{Liferay.Language.get('filter-by')}
 					</label>
 
-					<ClaySelectWithOption
-						aria-label={Liferay.Language.get('filter-by')}
-						disabled={
-							!!filter ||
-							(filterType === filterTypes.SELECTION &&
-								picklists.length == 0)
-						}
-						onChange={(event) => {
-							const newVal = fields.find(
-								(item) => item.name === event.target.value
-							);
+					<CellRendererDropdown
+						cellRenderers={fields}
+						namespace={namespace}
+						onItemClick={(item: IField) => {
+							const newVal = fields.find((field) => {
+								return field.name === item.label;
+							});
 
 							if (newVal) {
 								setSelectedField(newVal);
 							}
 						}}
-						options={[
-							{
-								disabled: true,
-								label: Liferay.Language.get('select'),
-								selected: true,
-								value: '',
-							},
-							...fields.map((item) => ({
-								label: item.label,
-								value: item.name,
-							})),
-						]}
-						title={Liferay.Language.get('filter-by')}
-						value={selectedField?.name}
 					/>
 				</ClayForm.Group>
 
@@ -770,6 +811,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 					<AddFDSFilterModalContent
 						closeModal={closeModal}
 						fdsView={fdsView}
+						fieldNames={filters.map((filter) => filter.fieldName)}
 						fields={availableFields}
 						filterType={filterType}
 						namespace={namespace}
@@ -790,6 +832,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 				<AddFDSFilterModalContent
 					closeModal={closeModal}
 					fdsView={fdsView}
+					fieldNames={filters.map((filter) => filter.fieldName)}
 					fields={fields}
 					filter={item}
 					namespace={namespace}

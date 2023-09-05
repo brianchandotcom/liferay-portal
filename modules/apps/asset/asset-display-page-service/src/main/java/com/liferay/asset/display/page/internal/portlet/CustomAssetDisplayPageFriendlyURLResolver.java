@@ -87,7 +87,7 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 		}
 
 		return layoutLocalService.fetchLayoutByFriendlyURL(
-			groupId, false, parts[1]);
+			groupId, false, StringPool.SLASH + parts[1]);
 	}
 
 	@Override

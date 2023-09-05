@@ -110,6 +110,28 @@ public class ImportMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testImportFragmentEntriesWithKeepBothStrategyAndWithExistingFragmentEntry()
+		throws Exception {
+
+		FragmentEntry expectedFragmentEntry = _addFragmentEntry(
+			"fragment", "Fragment", "<h1>Test html</h1>");
+
+		_assertImportResultsJSONObject(
+			2, 4, 2, _importFragmentEntries(FragmentsImportStrategy.KEEP_BOTH));
+
+		FragmentEntry actualFragmentEntry =
+			_fragmentEntryLocalService.getFragmentEntry(
+				expectedFragmentEntry.getFragmentEntryId());
+
+		Assert.assertEquals(
+			expectedFragmentEntry.getHtml(), actualFragmentEntry.getHtml());
+
+		Assert.assertNotNull(
+			_fragmentEntryLocalService.getUniqueFragmentEntryName(
+				_group.getGroupId(), 0, "fragment-0"));
+	}
+
+	@Test
 	public void testImportFragmentEntriesWithOverwriteStrategy()
 		throws Exception {
 

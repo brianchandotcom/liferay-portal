@@ -614,6 +614,8 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 				file="${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}-sorted.sql"
 				tofile="${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}.sql"
 			/>
+
+			<delete failonerror="false" file="${project.dir}/export_database_mysql_compact_export.sh" />
 		</sequential>
 	</macrodef>
 
@@ -8295,6 +8297,8 @@ diff -y -B -W250 ${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql 
 					<echo file="${selenium.output.dir.name}/@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt">Database schemas match</echo>
 				</else>
 			</if>
+
+			<delete failonerror="false" file="${project.dir}/validate_db_upgrade_schemas.sh" />
 		</sequential>
 	</macrodef>
 

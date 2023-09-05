@@ -6,12 +6,18 @@
 package com.liferay.fragment.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.importer.FragmentsImportStrategy;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -20,6 +26,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
@@ -63,8 +70,10 @@ public class ImportMVCResourceCommandTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
 	@After
@@ -87,6 +96,41 @@ public class ImportMVCResourceCommandTest {
 
 		_assertImportResultsJSONObject(
 			2, 4, 2, _importFragmentEntries(FragmentsImportStrategy.OVERWRITE));
+	}
+
+	@Test
+	public void testImportFragmentEntriesWithOverwriteStrategyAndWithExistingFragmentEntry()
+		throws Exception {
+
+		FragmentEntry expectedFragmentEntry = _addFragmentEntry(
+			"fragment", "Fragment", "<h1>Test html</h1>");
+
+		_assertImportResultsJSONObject(
+			2, 4, 2, _importFragmentEntries(FragmentsImportStrategy.OVERWRITE));
+
+		FragmentEntry actualFragmentEntry =
+			_fragmentEntryLocalService.getFragmentEntry(
+				expectedFragmentEntry.getFragmentEntryId());
+
+		Assert.assertNotEquals(
+			expectedFragmentEntry.getHtml(), actualFragmentEntry.getHtml());
+	}
+
+	private FragmentEntry _addFragmentEntry(
+			String key, String name, String html)
+		throws Exception {
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				"Resources Collection", StringPool.BLANK, _serviceContext);
+
+		return _fragmentEntryLocalService.addFragmentEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			fragmentCollection.getFragmentCollectionId(), key, name,
+			StringPool.BLANK, html, StringPool.BLANK, false, StringPool.BLANK,
+			null, 0, FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 
 	private void _assertImportResultsJSONObject(
@@ -148,7 +192,7 @@ public class ImportMVCResourceCommandTest {
 				File.class, long.class, long.class,
 				FragmentsImportStrategy.class, Locale.class, long.class
 			},
-			_getFile(), _group.getGroupId(), 0, fragmentsImportStrategy,
+			_getFile(), 0, _group.getGroupId(), fragmentsImportStrategy,
 			LocaleUtil.US, TestPropsValues.getUserId());
 	}
 
@@ -157,10 +201,19 @@ public class ImportMVCResourceCommandTest {
 			"/fragment-collection";
 
 	private Bundle _bundle;
+
+	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
 	private Group _group;
 
 	@Inject(filter = "mvc.command.name=/fragment/import")
 	private MVCResourceCommand _mvcResourceCommand;
+
+	private ServiceContext _serviceContext;
 
 	@Inject
 	private ZipWriterFactory _zipWriterFactory;

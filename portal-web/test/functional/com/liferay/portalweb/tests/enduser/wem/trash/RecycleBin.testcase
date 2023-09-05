@@ -610,6 +610,76 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-190757. The Home folder of web content should be visible on Warning modal."
+	@priority = 4
+	test RestoreWebContentToExistingFolder {
+		task ("Given a site administrator has folders with web contents") {
+			for (var i : list "1,2") {
+				JSONWebcontent.addFolder(
+					folderName = "WC Folder Name ${i}",
+					groupName = "Site Name");
+			}
+
+			for (var i : list "1,2,3") {
+				HeadlessWebcontent.addBasicWebContent(
+					content = "Web Content Content ${i}",
+					folderName = "WC Folder Name 1",
+					groupName = "Site Name",
+					title = "Web Content Title ${i}");
+			}
+		}
+
+		task ("When the site administrator moves a folder with web contents into the Recycle Bin") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentFolder.moveToRecycleBinCP(
+				assetType = "Web Content Folder",
+				folderName = "WC Folder Name 1");
+		}
+
+		task ("Then the site administrator could restore web contents to existing folders") {
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+			RecycleBin.restoreContentFromFolderCP(
+				assetName = "WC Folder Name 1",
+				assetRestoreLocation = "Home",
+				assetType = "Web Content Folder",
+				assetType2 = "Web Content Article",
+				breadcrumbName = "Home",
+				documentName = "Web Content Title 1");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 1");
+
+			WebContent.viewCP(
+				webContentContent = "Web Content Content 1",
+				webContentTitle = "Web Content Title 1");
+
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+			RecycleBin.restoreContentFromFolderCP(
+				assetName = "WC Folder Name 1",
+				assetRestoreLocation = "WC Folder Name 2",
+				assetType = "Web Content Folder",
+				assetType2 = "Web Content Article",
+				breadcrumbName = "Home",
+				documentName = "Web Content Title 2");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
+
+			WebContentFolder.gotoCP(
+				folderName = "WC Folder Name 2",
+				webContentTitle = "WC Folder Name 2");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title 2");
+
+			WebContent.viewCP(
+				webContentContent = "Web Content Content 2",
+				webContentTitle = "Web Content Title 2");
+		}
+	}
+
 	@description = "This is a test for LPS-44099. The blogs entry moved to the recycle bin shouldn't be searchable by its comments."
 	@priority = 4
 	test SearchBlogsEntryByComments {

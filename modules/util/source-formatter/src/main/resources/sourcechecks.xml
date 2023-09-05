@@ -1648,6 +1648,10 @@
 			<description name="Replace method addFDSTableSchemaFieldCheck by add" />
 			<weight>1</weight>
 		</check>
+		<check name="UpgradeJavaAddFileEntryParameterCheck">
+			<category name="Upgrade" />
+			<description name="Fill the new parameter of the method 'addFileEntry' of 'DLAppLocalServiceUtil' and 'DLAppLocalService'" />
+		</check>
 		<check name="UpgradeJavaAddFolderParameterCheck">
 			<category name="Upgrade" />
 			<description name="Fill the new parameter of the method `addFolder` of `JournalFolderService`, `JournalFolderLocalService`, and `JournalFolderLocalServiceUtil` classes" />

@@ -328,7 +328,7 @@ public class AddFragmentCompositionMVCActionCommandTest {
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				_group.getGroupId(), _layout.getPlid(),
-				defaultSegmentsExperienceId, layoutStructure.toString());
+				defaultSegmentsExperienceId, layoutStructure.toString(), true);
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();

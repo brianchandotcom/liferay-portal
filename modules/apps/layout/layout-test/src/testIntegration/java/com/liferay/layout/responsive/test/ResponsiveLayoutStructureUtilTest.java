@@ -156,7 +156,7 @@ public class ResponsiveLayoutStructureUtilTest {
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				_layout.getGroupId(), _layout.getPlid(),
-				_defaultSegmentsExperienceId, layoutStructure.toString());
+				_defaultSegmentsExperienceId, layoutStructure.toString(), true);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();

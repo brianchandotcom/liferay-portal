@@ -249,7 +249,7 @@ public class ContentLayoutTestUtil {
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructureData(
 				layout.getGroupId(), layout.getPlid(), segmentsExperienceId,
-				layoutStructure.toString());
+				layoutStructure.toString(), true);
 
 		return fragmentEntryLink;
 	}

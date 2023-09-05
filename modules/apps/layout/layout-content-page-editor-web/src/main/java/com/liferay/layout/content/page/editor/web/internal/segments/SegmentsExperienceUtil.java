@@ -196,7 +196,7 @@ public class SegmentsExperienceUtil {
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructureData(
 				groupId, layout.getPlid(), targetSegmentsExperienceId,
-				dataJSONObject.toString());
+				dataJSONObject.toString(), true);
 	}
 
 	private static void _copyPortletPreferences(

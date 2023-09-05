@@ -119,7 +119,7 @@ public class PublishLayoutPageTemplateEntryMVCActionCommandTest {
 				_group.getGroupId(), draftLayout.getPlid(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
-				layoutStructure.toString());
+				layoutStructure.toString(), true);
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_publishLayoutPageTemplateEntry",

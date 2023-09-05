@@ -125,7 +125,7 @@ public class ExportImportDisplayPagesTest {
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(
 						layoutPageTemplateEntry1.getPlid()),
-				_read("export_import_display_page_layout_data.json"));
+				_read("export_import_display_page_layout_data.json"), true);
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			_group1.getGroupId(), RandomTestUtil.randomString(),

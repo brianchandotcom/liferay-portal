@@ -46,7 +46,7 @@ public class LayoutPageTemplateStructureServiceImpl
 
 			return layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
-					groupId, plid, segmentsExperienceId, data);
+					groupId, plid, segmentsExperienceId, data, true);
 		}
 
 		throw new PrincipalException.MustHavePermission(

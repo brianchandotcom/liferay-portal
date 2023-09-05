@@ -249,7 +249,7 @@ public class LayoutPublishedSearchTest {
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				_group.getGroupId(), draftLayout.getPlid(),
-				defaultSegmentsExperienceId, layoutStructure.toString());
+				defaultSegmentsExperienceId, layoutStructure.toString(), true);
 	}
 
 	@Inject

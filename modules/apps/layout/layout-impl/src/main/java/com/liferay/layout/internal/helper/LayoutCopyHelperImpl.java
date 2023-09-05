@@ -298,7 +298,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
 					targetLayout.getGroupId(), targetLayout.getPlid(),
-					entry.getValue(), dataJSONObject.toString());
+					entry.getValue(), dataJSONObject.toString(), true);
 		}
 	}
 
@@ -347,7 +347,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				targetLayout.getGroupId(), targetLayout.getPlid(),
-				targetSegmentsExperienceId, dataJSONObject.toString());
+				targetSegmentsExperienceId, dataJSONObject.toString(), true);
 	}
 
 	private void _copyLayoutSEOEntry(Layout sourceLayout, Layout targetLayout)

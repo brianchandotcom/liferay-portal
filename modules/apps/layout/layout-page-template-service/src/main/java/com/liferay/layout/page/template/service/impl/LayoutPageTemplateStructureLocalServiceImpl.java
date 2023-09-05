@@ -220,7 +220,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 
 		return layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				groupId, plid, defaultSegmentsExperienceId, data);
+				groupId, plid, defaultSegmentsExperienceId, data, true);
 	}
 
 	private void _checkUnlockedLayout(long plid) throws PortalException {

@@ -89,7 +89,7 @@ public class ExportMasterLayoutsMVCResourceCommandTest {
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(
 						layoutPageTemplateEntry.getPlid()),
-				_read("layout_data.json"));
+				_read("layout_data.json"), true);
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			_group.getGroupId(), RandomTestUtil.randomString(),

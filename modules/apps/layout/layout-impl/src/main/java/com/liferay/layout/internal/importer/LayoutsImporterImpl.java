@@ -224,7 +224,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					updateLayoutPageTemplateStructureData(
 						layout.getGroupId(), layout.getPlid(),
 						segmentsExperienceId,
-						processedLayoutStructure.toString());
+						processedLayoutStructure.toString(), true);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

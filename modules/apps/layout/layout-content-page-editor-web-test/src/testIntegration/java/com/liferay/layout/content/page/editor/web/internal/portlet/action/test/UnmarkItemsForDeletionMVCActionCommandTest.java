@@ -101,7 +101,7 @@ public class UnmarkItemsForDeletionMVCActionCommandTest {
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
 					_group.getGroupId(), _layout.getPlid(),
-					_segmentsExperienceId, layoutStructure.toString());
+					_segmentsExperienceId, layoutStructure.toString(), true);
 
 		layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());

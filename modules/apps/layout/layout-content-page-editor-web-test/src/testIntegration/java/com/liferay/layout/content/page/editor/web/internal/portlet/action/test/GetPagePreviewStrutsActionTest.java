@@ -171,7 +171,7 @@ public class GetPagePreviewStrutsActionTest {
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				_group.getGroupId(), layout.getPlid(),
-				defaultSegmentsExperienceId, layoutStructure.toString());
+				defaultSegmentsExperienceId, layoutStructure.toString(), true);
 
 		_themeDisplay.setLayout(layout);
 		_themeDisplay.setLayoutSet(layout.getLayoutSet());

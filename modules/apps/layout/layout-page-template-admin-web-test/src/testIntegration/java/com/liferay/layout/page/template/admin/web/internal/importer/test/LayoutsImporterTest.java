@@ -144,7 +144,8 @@ public class LayoutsImporterTest {
 						"FRAGMENT_ENTRY_LINK1_ID",
 						String.valueOf(
 							fragmentEntryLink.getFragmentEntryLinkId())
-					).build()));
+					).build()),
+				true);
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			_group1.getGroupId(), RandomTestUtil.randomString(),

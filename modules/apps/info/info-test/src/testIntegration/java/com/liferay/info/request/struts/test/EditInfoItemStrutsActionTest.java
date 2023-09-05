@@ -593,7 +593,7 @@ public class EditInfoItemStrutsActionTest {
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				_group.getGroupId(), layout.getPlid(),
-				_defaultSegmentsExperienceId, layoutStructure.toString());
+				_defaultSegmentsExperienceId, layoutStructure.toString(), true);
 
 		return layout;
 	}

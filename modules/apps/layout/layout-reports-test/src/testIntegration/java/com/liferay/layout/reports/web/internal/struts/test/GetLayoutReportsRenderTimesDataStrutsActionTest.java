@@ -108,7 +108,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 				_layout.getGroupId(), _layout.getPlid(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
-				layoutStructure.toString());
+				layoutStructure.toString(), true);
 
 		JSONArray jsonArray = _serveResource();
 
@@ -156,7 +156,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(
 						masterLayoutPageTemplateEntry.getPlid()),
-				layoutStructure.toString());
+				layoutStructure.toString(), true);
 
 		_layout.setMasterLayoutPlid(masterLayoutPageTemplateEntry.getPlid());
 
@@ -249,7 +249,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 				_layout.getGroupId(), _layout.getPlid(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
-				layoutStructure.toString());
+				layoutStructure.toString(), true);
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(true);
 
@@ -362,7 +362,7 @@ public class GetLayoutReportsRenderTimesDataStrutsActionTest {
 				_layout.getGroupId(), _layout.getPlid(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
-				layoutStructure.toString());
+				layoutStructure.toString(), true);
 	}
 
 	private LayoutStructure _getLayoutStructure() {

@@ -175,7 +175,7 @@ public class LayoutCopyHelperTest {
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				sourceLayout.getGroupId(), sourceLayout.getPlid(),
-				defaultSegmentsExperienceId, layoutStructure.toString());
+				defaultSegmentsExperienceId, layoutStructure.toString(), true);
 
 		Layout targetLayout = LayoutTestUtil.addTypeContentLayout(_group);
 

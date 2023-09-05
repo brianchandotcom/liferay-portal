@@ -409,7 +409,7 @@ public class ExportImportPerformanceTest {
 			updateLayoutPageTemplateStructureData(
 				_group.getGroupId(), draftLayout.getPlid(),
 				defaultSegmentsExperienceId,
-				_generateContentLayoutStructureJSONObject(draftLayout));
+				_generateContentLayoutStructureJSONObject(draftLayout), true);
 
 		_layoutCopyHelper.copyLayoutContent(draftLayout, layout);
 	}

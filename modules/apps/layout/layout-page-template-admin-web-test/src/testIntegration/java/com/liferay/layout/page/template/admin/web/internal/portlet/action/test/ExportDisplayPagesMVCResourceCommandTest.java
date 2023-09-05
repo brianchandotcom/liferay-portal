@@ -99,7 +99,7 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(
 						layoutPageTemplateEntry.getPlid()),
-				_read("layout_data.json"));
+				_read("layout_data.json"), true);
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			_group.getGroupId(), RandomTestUtil.randomString(),
@@ -175,7 +175,7 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(
 						layoutPageTemplateEntry1.getPlid()),
-				_read("layout_data.json"));
+				_read("layout_data.json"), true);
 
 		String name2 = "Display Page Template Two";
 
@@ -189,7 +189,7 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(
 						layoutPageTemplateEntry2.getPlid()),
-				_read("layout_data.json"));
+				_read("layout_data.json"), true);
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			_group.getGroupId(), RandomTestUtil.randomString(),

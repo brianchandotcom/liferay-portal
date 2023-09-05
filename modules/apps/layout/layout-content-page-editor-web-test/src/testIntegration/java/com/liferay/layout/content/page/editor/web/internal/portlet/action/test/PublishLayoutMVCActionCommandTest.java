@@ -108,7 +108,7 @@ public class PublishLayoutMVCActionCommandTest {
 				_group.getGroupId(), draftLayout.getPlid(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
-				layoutStructure.toString());
+				layoutStructure.toString(), true);
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
@@ -150,7 +150,7 @@ public class PublishLayoutMVCActionCommandTest {
 				_group.getGroupId(), draftLayout.getPlid(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
-				layoutStructure.toString());
+				layoutStructure.toString(), true);
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 

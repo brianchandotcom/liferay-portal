@@ -61,7 +61,7 @@ public class LayoutStructureUtil {
 				updateLayoutPageTemplateStructureData(
 					groupId, plid,
 					layoutPageTemplateStructureRel.getSegmentsExperienceId(),
-					layoutStructure.toString());
+					layoutStructure.toString(), true);
 		}
 	}
 

@@ -2695,6 +2695,100 @@ definition {
 			searchAssetType = "Custom Object");
 	}
 
+	@description = "This is a use case for LPS-193198."
+	@priority = 3
+	test ViewSearchBarVisibility {
+		task ("Configure the embedded search bar to be invisible") {
+			Search.openSearchPage();
+
+			SearchPortlets.configureEmbeddedSearchBar(invisible = "true");
+		}
+
+		task ("Assert that the search bar is visible on the search page") {
+			AssertVisible(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+		}
+
+		task ("Assert that the search bar is not present on the view mode of a content page") {
+			Navigator.openURL();
+
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+		}
+
+		task ("Assert that the search bar is visible in the edit mode of a content page") {
+			Click(locator1 = "Icon#CUSTOM_EDIT");
+
+			AssertVisible(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+		}
+
+		task ("Sign out") {
+			SignOut.signOut();
+		}
+
+		task ("Assert that the search bar is not present on the home page as a guest") {
+			Navigator.openURL();
+
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+		}
+
+		task ("Assert that the search bar is not present on the search page as a guest") {
+			Search.openSearchPage();
+
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+		}
+
+		task ("Sign in and configure the search bar to be visible with the destination page set as '/nowhere'") {
+			SignIn.signIn();
+
+			Search.openSearchPage();
+
+			SearchPortlets.configureEmbeddedSearchBar(
+				destinationPage = "/nowhere",
+				invisible = "false");
+		}
+
+		task ("Assert that the search bar is replaced with an alert message on the search page") {
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+
+			AssertVisible(
+				key_infoMessage = "This search bar is not visible to users yet.",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+
+		task ("Assert that the both the search bar and the alert message are not present on the home page") {
+			Navigator.openURL();
+
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+
+			AssertElementNotPresent(
+				key_infoMessage = "This search bar is not visible to users yet.",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+
+		task ("Assert that the search bar is replaced with an alert message on the edit mode of a content page") {
+			Click(locator1 = "Icon#CUSTOM_EDIT");
+
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+
+			AssertVisible(
+				key_infoMessage = "This search bar is not visible to users yet.",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+
+		task ("Sign out") {
+			SignOut.signOut();
+		}
+
+		task ("Assert that both the search bar and alert message are not present on the search page as a guest") {
+			Search.openSearchPage();
+
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+
+			AssertElementNotPresent(
+				key_infoMessage = "This search bar is not visible to users yet.",
+				locator1 = "Message#INFO_SPECIFIC");
+		}
+	}
+
 	@priority = 5
 	test ViewSearchResultDetails {
 		property app.server.types = "tomcat";

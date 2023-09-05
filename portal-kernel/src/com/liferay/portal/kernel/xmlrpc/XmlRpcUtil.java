@@ -36,58 +36,50 @@ public class XmlRpcUtil {
 		throws XmlRpcException {
 
 		try {
-			return _executeMethod(url, methodName, arguments);
+			if (_log.isDebugEnabled()) {
+				StringBundler sb = new StringBundler();
+
+				sb.append("XML-RPC invoking ");
+				sb.append(methodName);
+				sb.append(" ");
+
+				if (arguments != null) {
+					for (int i = 0; i < arguments.length; i++) {
+						sb.append(arguments[i]);
+
+						if (i < (arguments.length - 1)) {
+							sb.append(", ");
+						}
+					}
+				}
+
+				_log.debug(sb.toString());
+			}
+
+			String requestXML = XmlRpcParser.buildMethod(methodName, arguments);
+
+			Http.Options options = new Http.Options();
+
+			if (_HTTP_HEADER_VERSION_VERBOSITY_DEFAULT) {
+			}
+			else if (_HTTP_HEADER_VERSION_VERBOSITY_PARTIAL) {
+				options.addHeader(
+					HttpHeaders.USER_AGENT, ReleaseInfo.getName());
+			}
+			else {
+				options.addHeader(
+					HttpHeaders.USER_AGENT, ReleaseInfo.getServerInfo());
+			}
+
+			options.setBody(requestXML, ContentTypes.TEXT_XML, StringPool.UTF8);
+			options.setLocation(url);
+			options.setPost(true);
+
+			return XmlRpcParser.parseResponse(HttpUtil.URLtoString(options));
 		}
 		catch (Exception exception) {
 			throw new XmlRpcException(exception);
 		}
-	}
-
-	private static Response _executeMethod(
-			String url, String methodName, Object[] arguments)
-		throws Exception {
-
-		if (_log.isDebugEnabled()) {
-			StringBundler sb = new StringBundler();
-
-			sb.append("XML-RPC invoking ");
-			sb.append(methodName);
-			sb.append(" ");
-
-			if (arguments != null) {
-				for (int i = 0; i < arguments.length; i++) {
-					sb.append(arguments[i]);
-
-					if (i < (arguments.length - 1)) {
-						sb.append(", ");
-					}
-				}
-			}
-
-			_log.debug(sb.toString());
-		}
-
-		String requestXML = XmlRpcParser.buildMethod(methodName, arguments);
-
-		Http.Options options = new Http.Options();
-
-		if (_HTTP_HEADER_VERSION_VERBOSITY_DEFAULT) {
-		}
-		else if (_HTTP_HEADER_VERSION_VERBOSITY_PARTIAL) {
-			options.addHeader(HttpHeaders.USER_AGENT, ReleaseInfo.getName());
-		}
-		else {
-			options.addHeader(
-				HttpHeaders.USER_AGENT, ReleaseInfo.getServerInfo());
-		}
-
-		options.setBody(requestXML, ContentTypes.TEXT_XML, StringPool.UTF8);
-		options.setLocation(url);
-		options.setPost(true);
-
-		String responseXML = HttpUtil.URLtoString(options);
-
-		return XmlRpcParser.parseResponse(responseXML);
 	}
 
 	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_DEFAULT =

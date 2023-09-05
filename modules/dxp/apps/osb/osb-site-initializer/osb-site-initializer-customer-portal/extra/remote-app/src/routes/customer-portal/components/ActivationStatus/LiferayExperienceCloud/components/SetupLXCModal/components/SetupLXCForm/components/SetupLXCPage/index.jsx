@@ -27,6 +27,7 @@ const SetupLiferayExperienceCloudPage = ({
 	handleOnLeftButtonClick,
 	leftButton,
 	project,
+	setFieldValue,
 	setFormAlreadySubmitted,
 	subscriptionGroupLxcId,
 	touched,
@@ -91,6 +92,12 @@ const SetupLiferayExperienceCloudPage = ({
 	};
 
 	const primaryRegionList = useGetPrimaryRegionList();
+
+	useEffect(() => {
+		if (primaryRegionList.length) {
+			setFieldValue('lxc.primaryRegion', primaryRegionList[0].value);
+		}
+	}, [primaryRegionList, setFieldValue]);
 
 	useEffect(() => {
 		const hasTouched = !Object.keys(touched).length;

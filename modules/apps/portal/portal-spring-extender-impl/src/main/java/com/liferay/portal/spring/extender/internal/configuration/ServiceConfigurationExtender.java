@@ -63,6 +63,8 @@ public class ServiceConfigurationExtender
 			"Liferay-Require-SchemaVersion");
 
 		if (requireSchemaVersion == null) {
+			_log.error("Liferay-Require-SchemaVersion is required");
+
 			return null;
 		}
 

@@ -145,6 +145,12 @@ definition {
 			value1 = "Form");
 	}
 
+	macro gotoNewForm {
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = ${siteURLKey});
+
+		LexiconEntry.gotoAdd();	
+	}
+
 	macro gotoPermissions {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",

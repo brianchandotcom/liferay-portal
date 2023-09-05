@@ -18,6 +18,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -72,6 +73,14 @@ public class ObjectEntryRowInfoItemRenderer
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_servletContext = servletContext;
+	}
+
+	@Override
+	public String getKey() {
+		return StringBundler.concat(
+			ObjectEntryRowInfoItemRenderer.class.getName(),
+			StringPool.UNDERLINE, _objectDefinition.getCompanyId(),
+			StringPool.UNDERLINE, _objectDefinition.getName());
 	}
 
 	@Override

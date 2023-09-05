@@ -348,7 +348,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				InfoListRenderer.class,
 				new ObjectEntryTableInfoListRenderer(
-					_infoItemRendererRegistry, _objectFieldLocalService),
+					_infoItemRendererRegistry, objectDefinition,
+					_objectFieldLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()
 				).put(

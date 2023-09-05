@@ -1095,7 +1095,7 @@ definition {
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 		FormsAdminNavigator.gotoViewEntries();
 
@@ -1159,7 +1159,7 @@ definition {
 
 		FormPortlet.submitSuccessfullyAndViewSuccessPage();
 
-		FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 		FormsAdminNavigator.gotoViewEntries();
 

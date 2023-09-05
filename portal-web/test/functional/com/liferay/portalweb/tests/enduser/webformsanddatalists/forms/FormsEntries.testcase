@@ -149,7 +149,7 @@ definition {
 				userLoginEmailAddress = "test@liferay.com",
 				userScreenName = "Test Test");
 
-			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
 
 			FormsAdminNavigator.gotoViewEntries();
 

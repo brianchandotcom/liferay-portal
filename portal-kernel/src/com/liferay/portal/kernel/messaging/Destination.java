@@ -18,26 +18,16 @@ public interface Destination {
 
 	public void close(boolean force);
 
-	public void copyMessageListeners(Destination destination);
-
 	public void destroy();
 
 	public DestinationStatistics getDestinationStatistics();
 
 	public String getDestinationType();
 
-	public int getMessageListenerCount();
-
 	public String getName();
-
-	public boolean isRegistered();
 
 	public void open();
 
-	public boolean register(MessageListener messageListener);
-
 	public void send(Message message);
-
-	public boolean unregister(MessageListener messageListener);
 
 }

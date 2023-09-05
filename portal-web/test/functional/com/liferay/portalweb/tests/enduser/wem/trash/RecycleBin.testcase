@@ -544,49 +544,69 @@ definition {
 		}
 	}
 
-	@description = "Restore DM document in DM folder in recycle bin."
+	@description = "This is a test for LPS-190757. The Home folder of document should be visible on Warning modal."
 	@priority = 5
-	test RestoreDMDocumentFromFolderCP {
+	test RestoreDocumentToExistingFolder {
 		property portal.acceptance = "true";
-		property portal.upstream = "true";
 
-		task ("Add a DM folder and 3 documents to the folder") {
-			JSONFolder.addFolder(
-				dmFolderName = "DM Folder Name",
-				groupName = "Site Name");
+		task ("Given a site administrator has folders with documents") {
+			for (var i : list "1,2") {
+				JSONFolder.addFolder(
+					dmFolderName = "DM Folder Name ${i}",
+					groupName = "Site Name");
+			}
 
 			for (var i : list "1,2,3") {
 				JSONDocument.addFile(
 					dmDocumentDescription = "DM Document Description ${i}",
 					dmDocumentTitle = "DM Document Title ${i}",
-					folderName = "DM Folder Name",
+					folderName = "DM Folder Name 1",
 					groupName = "Site Name");
 			}
 		}
 
-		task ("Move document to recycle bin and restore") {
+		task ("When the site administrator moves a folder with documents into the Recycle Bin") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 			DMFolder.moveToRecycleBinCP(
 				assetType = "Documents Folder",
-				dmFolderName = "DM Folder Name");
+				dmFolderName = "DM Folder Name 1");
+		}
 
+		task ("Then the site administrator could restore documents to existing folders") {
 			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
 
 			RecycleBin.restoreContentFromFolderCP(
-				assetName = "DM Folder Name",
+				assetName = "DM Folder Name 1",
 				assetRestoreLocation = "Home",
 				assetType = "Documents Folder",
 				assetType2 = "Document",
+				breadcrumbName = "Home",
 				documentName = "DM Document Title 2");
-		}
 
-		task ("View document is restored") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
 			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 2");
 
 			DMDocument.viewCP(dmDocumentTitle = "DM Document Title 2");
+
+			RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
+
+			RecycleBin.restoreContentFromFolderCP(
+				assetName = "DM Folder Name 1",
+				assetRestoreLocation = "DM Folder Name 2",
+				assetType = "Documents Folder",
+				assetType2 = "Document",
+				breadcrumbName = "Home",
+				documentName = "DM Document Title 3");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			DMNavigator.gotoFolder(dmFolderName = "DM Folder Name 2");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title 3");
+
+			DMDocument.viewCP(dmDocumentTitle = "DM Document Title 3");
 		}
 	}
 

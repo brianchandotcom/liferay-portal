@@ -399,7 +399,7 @@ definition {
 
 		WaitForSPARefresh();
 
-		FormsAdminNavigator.gotoNewForm(siteURLKey = "guest");
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 
@@ -470,7 +470,7 @@ definition {
 
 		PortletEntry.save();
 
-		FormsAdminNavigator.gotoNewForm(siteURLKey = "guest");
+		FormsAdmin.addForm();
 
 		Form.editName(formName = "Form 1");
 

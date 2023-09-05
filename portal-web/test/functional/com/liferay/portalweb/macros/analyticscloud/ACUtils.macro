@@ -546,7 +546,7 @@ definition {
 			layoutName = ${layoutName},
 			widgetName = "Form");
 
-		FormsAdminNavigator.gotoNewForm(siteURLKey = "site-name");
+		FormsAdmin.addForm(groupName = "Site Name");
 
 		Form.editName(formTitle = ${formAcTitle});
 

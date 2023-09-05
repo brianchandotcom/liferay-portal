@@ -783,7 +783,7 @@ definition {
 		}
 
 		task ("Go to Forms and add") {
-			FormsAdminNavigator.gotoNewForm(siteURLKey = "guest");
+			FormsAdmin.addForm();
 
 			Form.editName(formName = "Form 1");
 		}

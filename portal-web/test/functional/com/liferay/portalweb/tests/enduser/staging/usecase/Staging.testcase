@@ -1976,7 +1976,7 @@ definition {
 
 			PortletEntry.publish();
 
-			FormsAdminNavigator.gotoNewForm(siteURLKey = "site-name-staging");
+			FormsAdmin.addForm(groupName = "Site Name Staging");
 
 			Form.editName(formName = "Test Form");
 

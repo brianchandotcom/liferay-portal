@@ -219,7 +219,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		FormsAdminNavigator.gotoNewForm(siteURLKey = "form-site");
+		FormsAdmin.addForm(groupName = "Form Site");
 
 		Form.editName();
 

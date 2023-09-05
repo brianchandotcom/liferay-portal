@@ -64,7 +64,7 @@ definition {
 
 		FormsAdmin.saveDataProvider();
 
-		FormsAdminNavigator.gotoNewForm(siteURLKey = "site-name");
+		FormsAdmin.addForm(groupName = "Site Name");
 
 		Form.editName();
 
@@ -200,7 +200,7 @@ definition {
 			changeType = "Modified",
 			changeUser = "Test Test");
 
-		FormsAdminNavigator.gotoNewForm(siteURLKey = "site-name");
+		FormsAdmin.addForm(groupName = "Site Name");
 
 		Form.editName();
 
@@ -218,7 +218,7 @@ definition {
 	test ResolveConflictingPublicationsByDiscarding {
 		HeadlessSite.addSite(siteName = "Site Name");
 
-		FormsAdminNavigator.gotoNewForm(siteURLKey = "site-name");
+		FormsAdmin.addForm(groupName = "Site Name");
 
 		Form.editName();
 
@@ -316,7 +316,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		FormsAdminNavigator.gotoNewForm(siteURLKey = "site-name");
+		FormsAdmin.addForm(groupName = "Site Name");
 
 		Form.editName();
 
@@ -510,7 +510,7 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
-		FormsAdminNavigator.gotoNewForm(siteURLKey = "site-name");
+		FormsAdmin.addForm(groupName = "Site Name");
 
 		Form.editName();
 

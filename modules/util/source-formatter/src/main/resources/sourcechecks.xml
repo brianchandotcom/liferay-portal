@@ -1605,18 +1605,6 @@
 			<description name="Checks if the property value `-includeresource` or `Include-Resource` exists and removes it" />
 			<weight>1</weight>
 		</check>
-		<check name="UpgradeDLUtilCheck">
-			<category name="Upgrade" />
-			<description name="Replace the getGroupIds method of class `DLUtil` by getCurrentAndAncestorSiteGroupIds of class `PortalUtil`." />
-		</check>
-		<check name="UpgradeGetClassNamesMethodCheck">
-			<category name="Upgrade" />
-			<description name="Run code migration of method from 'getClassNames' to 'getSearchClassNames'" />
-		</check>
-		<check name="UpgradeGetImagePreviewURLMethodCheck">
-			<category name="Upgrade" />
-			<description name="Replaces the references of the method 'DLUtil.getImagePreviewURL' with the method 'getImagePreviewURL' of 'DLURLHelper' class" />
-		</check>
 		<check name="UpgradeGetPortletGroupIdMethodCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration of the method 'getPortletGroupId' to 'getScopeGroupId'" />
@@ -1626,14 +1614,6 @@
 			<description name="Replaces with `compileInclude` the configuration attribute for dependencies in `build.gradle` that are listed at `Include-Resource` property at `bnd.bnd` associated file." />
 			<weight>2</weight>
 		</check>
-		<check name="UpgradeJavaAddAddressMethodCheck">
-			<category name="Upgrade" />
-			<description name="Fill the new parameter of the method 'addAddress' of AddressLocalService, AddressLocalServiceUtil, AddressService and AddressServiceUtil" />
-		</check>
-		<check name="UpgradeJavaAddCategoryParameterCheck">
-			<category name="Upgrade" />
-			<description name="Fill the new parameter of the method 'addCategory' of 'AssetCategoryLocalService' and 'AssetCategoryLocalServiceUtil' classes" />
-		</check>
 		<check name="UpgradeJavaAddFDSTableSchemaFieldCheck">
 			<category name="Upgrade" />
 			<description name="Replace method addFDSTableSchemaFieldCheck by add" />
@@ -1642,10 +1622,6 @@
 		<check name="UpgradeJavaAddFileEntryParameterCheck">
 			<category name="Upgrade" />
 			<description name="Fill the new parameter of the method 'addFileEntry' of 'DLAppLocalServiceUtil' and 'DLAppLocalService'" />
-		</check>
-		<check name="UpgradeJavaAddFolderParameterCheck">
-			<category name="Upgrade" />
-			<description name="Fill the new parameter of the method `addFolder` of `JournalFolderService`, `JournalFolderLocalService`, and `JournalFolderLocalServiceUtil` classes" />
 		</check>
 		<check name="UpgradeJavaAssetEntryAssetCategoriesCheck">
 			<category name="Upgrade" />
@@ -1665,16 +1641,6 @@
 			<description name="Replaces the old methods of class `CommerceCountry` with the new equivalents in the `Country` class." />
 			<weight>1</weight>
 		</check>
-		<check name="UpgradeJavaCommerceCountryServiceCheck">
-			<category name="Upgrade" />
-			<description name="Replaces the old methods of class `CommerceCountryService` with the new equivalents in the `CountryService` class." />
-			<weight>1</weight>
-		</check>
-		<check name="UpgradeJavaCommerceRegionCheck">
-			<category name="Upgrade" />
-			<description name="Replaces the old methods of class `CommerceRegion` with the new equivalents in the `Region` class." />
-			<weight>1</weight>
-		</check>
 		<check name="UpgradeJavaCookieKeysCheck">
 			<category name="Upgrade" />
 			<description name="CookieKeys class was replaced by CookiesManagerUtil and CookieConstants" />
@@ -1686,10 +1652,6 @@
 		<check name="UpgradeJavaDLFolderMethodCheck">
 			<category name="Upgrade" />
 			<description name="Fill the new parameter of the method addFolder of DLFolderLocalService, DLFolderLocalServiceUtil, DLFolderService and DLFolderServiceUtil" />
-		</check>
-		<check name="UpgradeJavaExtractTextMethodCheck">
-			<category name="Upgrade" />
-			<description name="Replaces the references of the method `HtmlUtil.extractText(` with the method `extractText(` of `HtmlParser` class" />
 		</check>
 		<check name="UpgradeJavaFacetedSearcherCheck">
 			<category name="Upgrade" />
@@ -1750,10 +1712,6 @@
 		<check name="UpgradeJavaSchedulerEntryImplConstructorCheck">
 			<category name="Upgrade" />
 			<description name="Replace constructors that use the empty constructor of the SchedulerEntryImpl class." />
-		</check>
-		<check name="UpgradeJavaSearchVocabulariesMethodCheck">
-			<category name="Upgrade" />
-			<description name="Fill in the new parameters of the method `searchVocabularies` of 'AssetVocabularyService' and 'AssetVocabularyLocalService'" />
 		</check>
 		<check name="UpgradeJavaServiceReferenceAnnotationCheck">
 			<category name="Upgrade" />

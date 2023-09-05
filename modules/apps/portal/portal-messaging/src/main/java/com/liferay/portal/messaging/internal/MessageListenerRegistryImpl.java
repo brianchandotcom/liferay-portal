@@ -68,14 +68,14 @@ public class MessageListenerRegistryImpl implements MessageListenerRegistry {
 						bundleContext.ungetService(serviceReference);
 					}
 
-				}
-				);
+				});
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_messageListenerServiceTrackerMap.close();
 	}
+
 	private ServiceTrackerMap<String, List<MessageListener>>
 		_messageListenerServiceTrackerMap;
 

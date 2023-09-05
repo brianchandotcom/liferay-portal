@@ -7,7 +7,9 @@ package com.liferay.object.model.impl;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.internal.definition.util.ObjectDefinitionUtil;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFolderLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -125,8 +127,22 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 				getModifiableSystemObjectDefinitionRESTContextPath(getName());
 		}
 
-		return "/c/" +
-			TextFormatter.formatPlural(StringUtil.toLowerCase(getShortName()));
+		String shortName = TextFormatter.formatPlural(
+			StringUtil.toLowerCase(getShortName()));
+
+		if (!isRootDescendantNode()) {
+			return "/c/" + shortName;
+		}
+
+		ObjectDefinition rootObjectDefinition =
+			ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+				getRootObjectDefinitionId());
+
+		return StringBundler.concat(
+			"/c/",
+			TextFormatter.formatPlural(
+				StringUtil.toLowerCase(rootObjectDefinition.getShortName())),
+			StringPool.SLASH, shortName);
 	}
 
 	@Override

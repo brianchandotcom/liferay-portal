@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
+import java.io.IOException;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -70,6 +72,10 @@ public class ButtonTag extends BaseContainerTag {
 		return _icon;
 	}
 
+	public boolean getIconRight() {
+		return _iconRight;
+	}
+
 	public String getLabel() {
 		return _label;
 	}
@@ -106,6 +112,10 @@ public class ButtonTag extends BaseContainerTag {
 		_icon = icon;
 	}
 
+	public void setIconRight(boolean iconRight) {
+		_iconRight = iconRight;
+	}
+
 	public void setLabel(String label) {
 		_label = label;
 	}
@@ -131,6 +141,7 @@ public class ButtonTag extends BaseContainerTag {
 		_borderless = false;
 		_displayType = "primary";
 		_icon = null;
+		_iconRight = false;
 		_label = null;
 		_monospaced = false;
 		_outline = false;
@@ -152,6 +163,7 @@ public class ButtonTag extends BaseContainerTag {
 		props.put("borderless", _borderless);
 		props.put("displayType", _displayType);
 		props.put("icon", _icon);
+		props.put("iconRight", _iconRight);
 
 		if (Validator.isNotNull(_label)) {
 			props.put(
@@ -213,42 +225,63 @@ public class ButtonTag extends BaseContainerTag {
 		if (Validator.isNotNull(_icon) || Validator.isNotNull(_label)) {
 			JspWriter jspWriter = pageContext.getOut();
 
-			if (Validator.isNotNull(_icon)) {
+			if (Validator.isNotNull(_label)) {
+				if (Validator.isNotNull(_icon)) {
+					if (_iconRight) {
+						writeLabel(jspWriter);
+
+						jspWriter.write("<span class=\"inline-item");
+						jspWriter.write(" inline-item-after");
+
+						writeIcon(jspWriter);
+					}
+					else {
+						jspWriter.write("<span class=\"inline-item");
+						jspWriter.write(" inline-item-before");
+
+						writeIcon(jspWriter);
+						writeLabel(jspWriter);
+					}
+				}
+				else {
+					writeLabel(jspWriter);
+				}
+			}
+			else {
 				jspWriter.write("<span class=\"inline-item");
 
-				if (Validator.isNotNull(_label)) {
-					jspWriter.write(" inline-item-before");
-				}
-
-				jspWriter.write("\"><svg class=\"lexicon-icon lexicon-icon-");
-				jspWriter.write(_icon);
-				jspWriter.write("\" role=\"presentation\" viewBox=\"0 0 512 ");
-				jspWriter.write("512\"><use xlink:href=\"");
-
-				HttpServletRequest httpServletRequest = getRequest();
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				jspWriter.write(themeDisplay.getPathThemeSpritemap());
-
-				jspWriter.write("#");
-				jspWriter.write(_icon);
-				jspWriter.write("\" /></svg></span>");
-			}
-
-			if (Validator.isNotNull(_label)) {
-				jspWriter.write(
-					LanguageUtil.get(
-						TagResourceBundleUtil.getResourceBundle(pageContext),
-						_label));
+				writeIcon(jspWriter);
 			}
 
 			return SKIP_BODY;
 		}
 
 		return EVAL_BODY_INCLUDE;
+	}
+
+	protected void writeIcon(JspWriter jspWriter) throws IOException {
+		jspWriter.write("\"><svg class=\"lexicon-icon lexicon-icon-");
+		jspWriter.write(_icon);
+		jspWriter.write("\" role=\"presentation\" viewBox=\"0 0 512 ");
+		jspWriter.write("512\"><use xlink:href=\"");
+
+		HttpServletRequest httpServletRequest = getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		jspWriter.write(themeDisplay.getPathThemeSpritemap());
+
+		jspWriter.write("#");
+		jspWriter.write(_icon);
+		jspWriter.write("\" /></svg></span>");
+	}
+
+	protected void writeLabel(JspWriter jspWriter) throws IOException {
+		jspWriter.write(
+			LanguageUtil.get(
+				TagResourceBundleUtil.getResourceBundle(pageContext), _label));
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:button:";
@@ -258,6 +291,7 @@ public class ButtonTag extends BaseContainerTag {
 	private boolean _borderless;
 	private String _displayType = "primary";
 	private String _icon;
+	private boolean _iconRight;
 	private String _label;
 	private boolean _monospaced;
 	private boolean _outline;

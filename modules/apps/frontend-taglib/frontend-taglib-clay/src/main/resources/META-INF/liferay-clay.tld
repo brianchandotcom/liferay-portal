@@ -150,6 +150,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>iconRight</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -574,6 +580,12 @@
 		<attribute>
 			<description></description>
 			<name>icon</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>iconRight</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

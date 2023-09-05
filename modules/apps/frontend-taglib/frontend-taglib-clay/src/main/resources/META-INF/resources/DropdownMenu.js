@@ -18,6 +18,7 @@ export default function DropdownMenu({
 	componentId: _componentId,
 	cssClass,
 	icon,
+	iconRight,
 	items,
 	label,
 	locale: _locale,
@@ -41,17 +42,33 @@ export default function DropdownMenu({
 						})}
 						{...otherProps}
 					>
-						{icon && (
-							<span
-								className={classNames('inline-item', {
-									'inline-item-before': label,
-								})}
-							>
-								<ClayIcon symbol={icon} />
-							</span>
-						)}
+						{icon ? (
+							iconRight ? (
+								<span
+									className={classNames('inline-item', {
+										'inline-item-after': label,
+									})}
+								>
+									{label}
 
-						{label}
+									<ClayIcon symbol={icon} />
+								</span>
+							) : (
+								<span>
+									<span
+										className={classNames('inline-item', {
+											'inline-item-before': label,
+										})}
+									>
+										<ClayIcon symbol={icon} />
+									</span>
+
+									{label}
+								</span>
+							)
+						) : (
+							label
+						)}
 					</ClayButton>
 				}
 			/>

@@ -46,10 +46,13 @@ import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItem
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.deployer.ObjectDefinitionPortletResourcePermissionRegistryUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.context.path.RESTContextPathResolverRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
@@ -94,7 +97,6 @@ import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectE
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryMVCRenderCommand;
 import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectEntryRelatedModelMVCActionCommand;
 import com.liferay.object.web.internal.object.entries.portlet.action.UploadAttachmentMVCActionCommand;
-import com.liferay.object.web.internal.object.entries.upload.AttachmentUploadFileEntryHandler;
 import com.liferay.object.web.internal.object.entries.upload.util.AttachmentValidator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -102,6 +104,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -114,9 +117,11 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -124,11 +129,17 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
+import com.liferay.upload.UploadFileEntryHandler;
 import com.liferay.upload.UploadHandler;
 import com.liferay.upload.UploadResponseHandler;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletRequest;
@@ -557,9 +568,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
-	@Reference
-	private AttachmentUploadFileEntryHandler _attachmentUploadFileEntryHandler;
-
+	private final AttachmentUploadFileEntryHandler
+		_attachmentUploadFileEntryHandler =
+			new AttachmentUploadFileEntryHandler();
 	private final AttachmentUploadResponseHandler
 		_attachmentUploadResponseHandler =
 			new AttachmentUploadResponseHandler();
@@ -617,6 +628,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Reference
+	private MimeTypes _mimeTypes;
 
 	@Reference
 	private ObjectActionLocalService _objectActionLocalService;
@@ -690,6 +704,90 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private class AttachmentUploadFileEntryHandler
+		implements UploadFileEntryHandler {
+
+		@Override
+		public FileEntry upload(UploadPortletRequest uploadPortletRequest)
+			throws IOException, PortalException {
+
+			long objectFieldId = ParamUtil.getLong(
+				uploadPortletRequest, "objectFieldId");
+
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				objectFieldId);
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectField.getObjectDefinitionId());
+
+			PortletResourcePermission portletResourcePermission =
+				ObjectDefinitionPortletResourcePermissionRegistryUtil.
+					getService(objectDefinition.getResourceName());
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)uploadPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			long groupId = _getGroupId(objectDefinition, themeDisplay);
+
+			portletResourcePermission.check(
+				themeDisplay.getPermissionChecker(), groupId,
+				ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+			String fileName = uploadPortletRequest.getFileName("file");
+
+			_attachmentValidator.validateFileExtension(fileName, objectFieldId);
+
+			File file = null;
+
+			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+					"file")) {
+
+				file = FileUtil.createTempFile(inputStream);
+
+				if (file == null) {
+					throw new InvalidFileException(
+						"File is null for " + fileName);
+				}
+
+				_attachmentValidator.validateFileSize(
+					fileName, file.length(), objectFieldId,
+					themeDisplay.isSignedIn());
+
+				return TempFileEntryUtil.addTempFileEntry(
+					groupId, themeDisplay.getUserId(),
+					objectDefinition.getPortletId(),
+					TempFileEntryUtil.getTempFileName(fileName), file,
+					_mimeTypes.getContentType(file, fileName));
+			}
+			finally {
+				if (file != null) {
+					FileUtil.delete(file);
+				}
+			}
+		}
+
+		private long _getGroupId(
+				ObjectDefinition objectDefinition, ThemeDisplay themeDisplay)
+			throws PortalException {
+
+			long groupId = themeDisplay.getScopeGroupId();
+
+			if (Objects.equals(
+					ObjectDefinitionConstants.SCOPE_COMPANY,
+					objectDefinition.getScope())) {
+
+				Company company = themeDisplay.getCompany();
+
+				groupId = company.getGroupId();
+			}
+
+			return groupId;
+		}
+
+	}
 
 	private class AttachmentUploadResponseHandler
 		implements UploadResponseHandler {

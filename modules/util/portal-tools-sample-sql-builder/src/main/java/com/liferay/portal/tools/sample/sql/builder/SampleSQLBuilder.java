@@ -409,7 +409,6 @@ public class SampleSQLBuilder {
 	private static final List<String> _createSQLTemplateFileNames =
 		Arrays.asList(
 			"com/liferay/portal/tools/sql/dependencies/portal-tables.sql",
-			"com/liferay/portal/tools/sql/dependencies/portal-data-common.sql",
 			"com/liferay/portal/tools/sql/dependencies/portal-data-counter.sql",
 			"com/liferay/portal/tools/sql/dependencies/indexes.sql",
 			"META-INF/sql/tables.sql", "META-INF/sql/indexes.sql");

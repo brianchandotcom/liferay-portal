@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.xmlrpc;
+package com.liferay.portal.kernel.xmlrpc;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -14,9 +14,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.xml.StAXReaderUtil;
-import com.liferay.portal.kernel.xmlrpc.Response;
-import com.liferay.portal.kernel.xmlrpc.XmlRpcException;
-import com.liferay.portal.kernel.xmlrpc.XmlRpcUtil;
 
 import java.io.IOException;
 

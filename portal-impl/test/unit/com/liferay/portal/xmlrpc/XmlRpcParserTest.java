@@ -50,7 +50,7 @@ public class XmlRpcParserTest {
 
 	@Test
 	public void testFaultResponseGenerator() throws Exception {
-		Fault fault = new FaultImpl(1234, "Fault");
+		Fault fault = new Fault(1234, "Fault");
 
 		Response response = XmlRpcParser.parseResponse(fault.toXml());
 
@@ -126,7 +126,7 @@ public class XmlRpcParserTest {
 
 	@Test
 	public void testSuccessResponseGenerator() throws Exception {
-		Success success = new SuccessImpl("Success");
+		Success success = new Success("Success");
 
 		Response response = XmlRpcParser.parseResponse(success.toXml());
 

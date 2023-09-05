@@ -31,12 +31,12 @@ public class XmlRpcImpl implements XmlRpc {
 
 	@Override
 	public Fault createFault(int code, String description) {
-		return new FaultImpl(code, description);
+		return new Fault(code, description);
 	}
 
 	@Override
 	public Success createSuccess(String description) {
-		return new SuccessImpl(description);
+		return new Success(description);
 	}
 
 	@Override

@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>EDIT_PENCIL</td>
-	<td>//div[contains(@class,'overlay')]//button</td>
+	<td>//div[contains(@class,'filter-info-root')]//button</td>
 	<td></td>
 </tr>
 <tr>

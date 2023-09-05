@@ -265,6 +265,8 @@ public class InstanceInitializerCheck extends BaseCheck {
 				continue;
 			}
 
+			int startLineNumber = getStartLineNumber(firstChildDetailAST);
+
 			String methodName = getMethodName(firstChildDetailAST);
 
 			if (!methodName.matches("set[A-Z]\\w*")) {
@@ -297,7 +299,7 @@ public class InstanceInitializerCheck extends BaseCheck {
 
 				if (matcher.find()) {
 					log(
-						firstChildDetailAST, _MSG_USE_ASSIGN_INSTEAD,
+						startLineNumber, _MSG_USE_ASSIGN_INSTEAD,
 						javaTerm.getName(), methodName);
 
 					break;

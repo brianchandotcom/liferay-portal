@@ -6,6 +6,7 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.delivery.client.dto.v1_0.MessageBoardSection;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -23,7 +24,7 @@ public class MessageBoardSectionResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"friendlyUrlPath", "title"};
+		return new String[] {"title"};
 	}
 
 	@Override
@@ -46,6 +47,15 @@ public class MessageBoardSectionResourceTest
 			RandomTestUtil.randomString(), serviceContext);
 
 		return mbCategory.getCategoryId();
+	}
+
+	@Override
+	protected MessageBoardSection
+			testGraphQLMessageBoardSection_addMessageBoardSection()
+		throws Exception {
+
+		return messageBoardSectionResource.postSiteMessageBoardSection(
+			testGroup.getGroupId(), randomMessageBoardSection());
 	}
 
 }

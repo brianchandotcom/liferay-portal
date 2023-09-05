@@ -2720,11 +2720,9 @@ definition {
 			AssertVisible(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
 		}
 
-		task ("Sign out") {
+		task ("Sign out and assert that the search bar is not present on the home page as a guest") {
 			SignOut.signOut();
-		}
 
-		task ("Assert that the search bar is not present on the home page as a guest") {
 			Navigator.openURL();
 
 			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
@@ -2754,7 +2752,7 @@ definition {
 				locator1 = "Message#INFO_SPECIFIC");
 		}
 
-		task ("Assert that the both the search bar and the alert message are not present on the home page") {
+		task ("Assert that both the search bar and the alert message are not present on the home page") {
 			Navigator.openURL();
 
 			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
@@ -2774,11 +2772,9 @@ definition {
 				locator1 = "Message#INFO_SPECIFIC");
 		}
 
-		task ("Sign out") {
+		task ("Sign out and assert that both the search bar and alert message are not present on the search page as a guest") {
 			SignOut.signOut();
-		}
 
-		task ("Assert that both the search bar and alert message are not present on the search page as a guest") {
 			Search.openSearchPage();
 
 			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");

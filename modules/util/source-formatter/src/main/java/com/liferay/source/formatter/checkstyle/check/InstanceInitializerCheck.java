@@ -149,7 +149,7 @@ public class InstanceInitializerCheck extends BaseCheck {
 						0)) {
 
 					log(
-						exprDetailAST, _MSG_ASSIGN_ORDER_INCORRECT,
+						exprDetailAST, _MSG_INCORRECT_ASSIGN_ORDER,
 						variableName, previousVariableName,
 						childDetailAST.getLineNo());
 				}
@@ -175,7 +175,7 @@ public class InstanceInitializerCheck extends BaseCheck {
 					(previousMethodName.compareToIgnoreCase(methodName) > 0)) {
 
 					log(
-						exprDetailAST, _MSG_METHOD_CALL_ORDER_INCORRECT,
+						exprDetailAST, _MSG_INCORRECT_METHOD_CALL_ORDER,
 						methodName, previousMethodName,
 						childDetailAST.getLineNo());
 				}
@@ -321,10 +321,10 @@ public class InstanceInitializerCheck extends BaseCheck {
 		return _rootDirName;
 	}
 
-	private static final String _MSG_ASSIGN_ORDER_INCORRECT =
+	private static final String _MSG_INCORRECT_ASSIGN_ORDER =
 		"assign.incorrect.order";
 
-	private static final String _MSG_METHOD_CALL_ORDER_INCORRECT =
+	private static final String _MSG_INCORRECT_METHOD_CALL_ORDER =
 		"method.call.incorrect.order";
 
 	private static final String _MSG_MOVE_ASSIGN_BEFORE_METHOD_CALL =

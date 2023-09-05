@@ -84,52 +84,19 @@ public class ImportMVCResourceCommandTest {
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "_importFile",
-			new Class<?>[] {
-				File.class, long.class, long.class, LayoutsImportStrategy.class,
-				Locale.class, long.class
-			},
-			_getFile(), _group.getGroupId(), 0,
-			LayoutsImportStrategy.DO_NOT_OVERWRITE, LocaleUtil.US,
-			TestPropsValues.getUserId());
-
-		JSONObject importResultsJSONObject = jsonObject.getJSONObject(
-			"importResults");
-
-		JSONArray invalidJSONArray = importResultsJSONObject.getJSONArray(
-			"error");
-
-		Assert.assertEquals(1, invalidJSONArray.length());
-
-		JSONArray importedJSONArray = importResultsJSONObject.getJSONArray(
-			"success");
-
-		Assert.assertEquals(2, importedJSONArray.length());
-
-		JSONArray ignoredJSONArray = importResultsJSONObject.getJSONArray(
-			"warning");
-
-		Assert.assertEquals(1, ignoredJSONArray.length());
+		_assertImportResultsJSONObject(
+			1, 2, 1, _importFile(LayoutsImportStrategy.DO_NOT_OVERWRITE));
 	}
 
 	@Test
 	public void testImportFileWithOverwriteStrategy() throws Exception {
-		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0,
-			"Existing Master Page",
-			LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_assertImportResultsJSONObject(
+			1, 3, _importFile(LayoutsImportStrategy.OVERWRITE));
+	}
 
-		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "_importFile",
-			new Class<?>[] {
-				File.class, long.class, long.class, LayoutsImportStrategy.class,
-				Locale.class, long.class
-			},
-			_getFile(), _group.getGroupId(), 0, LayoutsImportStrategy.OVERWRITE,
-			LocaleUtil.US, TestPropsValues.getUserId());
+	private void _assertImportResultsJSONObject(
+		long expectedInvalidJSONArrayLength,
+		long expectedImportedJSONArrayLength, JSONObject jsonObject) {
 
 		JSONObject importResultsJSONObject = jsonObject.getJSONObject(
 			"importResults");
@@ -137,12 +104,41 @@ public class ImportMVCResourceCommandTest {
 		JSONArray invalidJSONArray = importResultsJSONObject.getJSONArray(
 			"error");
 
-		Assert.assertEquals(1, invalidJSONArray.length());
+		Assert.assertEquals(
+			expectedInvalidJSONArrayLength, invalidJSONArray.length());
 
 		JSONArray importedJSONArray = importResultsJSONObject.getJSONArray(
 			"success");
 
-		Assert.assertEquals(3, importedJSONArray.length());
+		Assert.assertEquals(
+			expectedImportedJSONArrayLength, importedJSONArray.length());
+	}
+
+	private void _assertImportResultsJSONObject(
+		long expectedInvalidJSONArrayLength,
+		long expectedImportedJSONArrayLength,
+		long expectedIgnoredJSONArrayLength, JSONObject jsonObject) {
+
+		JSONObject importResultsJSONObject = jsonObject.getJSONObject(
+			"importResults");
+
+		JSONArray invalidJSONArray = importResultsJSONObject.getJSONArray(
+			"error");
+
+		Assert.assertEquals(
+			expectedInvalidJSONArrayLength, invalidJSONArray.length());
+
+		JSONArray importedJSONArray = importResultsJSONObject.getJSONArray(
+			"success");
+
+		Assert.assertEquals(
+			expectedImportedJSONArrayLength, importedJSONArray.length());
+
+		JSONArray ignoredJSONArray = importResultsJSONObject.getJSONArray(
+			"warning");
+
+		Assert.assertEquals(
+			expectedIgnoredJSONArrayLength, ignoredJSONArray.length());
 	}
 
 	private File _getFile() throws Exception {
@@ -164,6 +160,19 @@ public class ImportMVCResourceCommandTest {
 		}
 
 		return zipWriter.getFile();
+	}
+
+	private JSONObject _importFile(LayoutsImportStrategy layoutsImportStrategy)
+		throws Exception {
+
+		return ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_importFile",
+			new Class<?>[] {
+				File.class, long.class, long.class, LayoutsImportStrategy.class,
+				Locale.class, long.class
+			},
+			_getFile(), _group.getGroupId(), 0, layoutsImportStrategy,
+			LocaleUtil.US, TestPropsValues.getUserId());
 	}
 
 	private static final String _RESOURCES_PATH =

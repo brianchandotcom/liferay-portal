@@ -137,6 +137,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -160,6 +161,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -284,6 +286,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		OrganizationLocalService organizationLocalService,
 		OrganizationResource.Factory organizationResourceFactory,
 		PLOEntryLocalService ploEntryLocalService, Portal portal,
+		PortletPreferencesLocalService portletPreferencesLocalService,
 		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService,
@@ -368,6 +371,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_organizationResourceFactory = organizationResourceFactory;
 		_ploEntryLocalService = ploEntryLocalService;
 		_portal = portal;
+		_portletPreferencesLocalService = portletPreferencesLocalService;
 		_resourceActionLocalService = resourceActionLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
@@ -998,22 +1002,41 @@ public class BundleSiteInitializer implements SiteInitializer {
 								draftLayout.getGroupId(),
 								draftLayout.getPlid());
 
-					LayoutStructure layoutStructure = null;
+					LayoutStructure layoutStructure = new LayoutStructure();
+
+					layoutStructure.addRootLayoutStructureItem();
 
 					if (segmentsExperienceId == 0) {
-						layoutStructure = LayoutStructure.of(
-							layoutPageTemplateStructure.
-								getDefaultSegmentsExperienceData());
-
 						segmentsExperienceId =
 							_segmentsExperienceLocalService.
 								fetchDefaultSegmentsExperienceId(
 									draftLayout.getPlid());
 					}
-					else {
-						layoutStructure = LayoutStructure.of(
+
+					if (Validator.isNull(
 							layoutPageTemplateStructure.getData(
-								segmentsExperienceId));
+								segmentsExperienceId))) {
+
+						_layoutPageTemplateStructureRelLocalService.
+							addLayoutPageTemplateStructureRel(
+								serviceContext.getUserId(),
+								serviceContext.getScopeGroupId(),
+								layoutPageTemplateStructure.
+									getLayoutPageTemplateStructureId(),
+								segmentsExperienceId,
+								layoutStructure.toString(), serviceContext);
+					}
+					else {
+						_layoutPageTemplateStructureRelLocalService.
+							updateLayoutPageTemplateStructureRel(
+								layoutPageTemplateStructure.
+									getLayoutPageTemplateStructureId(),
+								segmentsExperienceId,
+								layoutStructure.toString());
+						_portletPreferencesLocalService.
+							deletePortletPreferences(
+								0, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+								draftLayout.getPlid());
 					}
 
 					for (int i = 0; i < jsonArray.length(); i++) {
@@ -2475,22 +2498,43 @@ public class BundleSiteInitializer implements SiteInitializer {
 			pageJSONObject.getString("friendlyURL"));
 
 		if (layout != null) {
-			_layoutLocalService.deleteLayout(layout);
+			_layoutLocalService.updateLayout(
+				serviceContext.getScopeGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), parentLayoutId, nameMap,
+				SiteInitializerUtil.toMap(
+					pageJSONObject.getString("title_i18n")),
+				SiteInitializerUtil.toMap(
+					pageJSONObject.getString("description_i18n")),
+				SiteInitializerUtil.toMap(
+					pageJSONObject.getString("keywords_i18n")),
+				SiteInitializerUtil.toMap(
+					pageJSONObject.getString("robots_i18n")),
+				type, pageJSONObject.getBoolean("hidden"),
+				layout.getFriendlyURLMap(), layout.getIconImage(), null,
+				layout.getStyleBookEntryId(),
+				pageJSONObject.getLong("faviconFileEntryId"),
+				layout.getMasterLayoutPlid(), serviceContext);
+			_layoutLocalService.updateLayout(
+				serviceContext.getScopeGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), unicodeProperties.toString());
 		}
-
-		layout = _layoutLocalService.addLayout(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			pageJSONObject.getBoolean("private"), parentLayoutId, nameMap,
-			SiteInitializerUtil.toMap(pageJSONObject.getString("title_i18n")),
-			SiteInitializerUtil.toMap(
-				pageJSONObject.getString("description_i18n")),
-			SiteInitializerUtil.toMap(
-				pageJSONObject.getString("keywords_i18n")),
-			SiteInitializerUtil.toMap(pageJSONObject.getString("robots_i18n")),
-			type, unicodeProperties.toString(),
-			pageJSONObject.getBoolean("hidden"),
-			pageJSONObject.getBoolean("system"), friendlyURLMap,
-			serviceContext);
+		else {
+			layout = _layoutLocalService.addLayout(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				pageJSONObject.getBoolean("private"), parentLayoutId, nameMap,
+				SiteInitializerUtil.toMap(
+					pageJSONObject.getString("title_i18n")),
+				SiteInitializerUtil.toMap(
+					pageJSONObject.getString("description_i18n")),
+				SiteInitializerUtil.toMap(
+					pageJSONObject.getString("keywords_i18n")),
+				SiteInitializerUtil.toMap(
+					pageJSONObject.getString("robots_i18n")),
+				type, unicodeProperties.toString(),
+				pageJSONObject.getBoolean("hidden"),
+				pageJSONObject.getBoolean("system"), friendlyURLMap,
+				serviceContext);
+		}
 
 		_setResourcePermissions(
 			layout.getCompanyId(), layout.getModelClassName(),
@@ -3821,24 +3865,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					jsonObject.getBoolean("active", true), unicodeProperties,
 					serviceContext);
 
-			LayoutStructure layoutStructure = new LayoutStructure();
-
-			layoutStructure.addRootLayoutStructureItem();
-
-			LayoutPageTemplateStructure layoutPageTemplateStructure =
-				_layoutPageTemplateStructureLocalService.
-					fetchLayoutPageTemplateStructure(
-						draftLayout.getGroupId(), draftLayout.getPlid());
-
-			_layoutPageTemplateStructureRelLocalService.
-				addLayoutPageTemplateStructureRel(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(),
-					layoutPageTemplateStructure.
-						getLayoutPageTemplateStructureId(),
-					segmentsExperience.getSegmentsExperienceId(),
-					layoutStructure.toString(), serviceContext);
-
 			Set<String> resourcePaths = _servletContext.getResourcePaths(
 				parentResourcePath);
 
@@ -5047,6 +5073,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private OSBSiteInitializer _osbSiteInitializer;
 	private final PLOEntryLocalService _ploEntryLocalService;
 	private final Portal _portal;
+	private final PortletPreferencesLocalService
+		_portletPreferencesLocalService;
 	private final Map<String, String> _releaseInfoStringUtilReplaceValues;
 	private final ResourceActionLocalService _resourceActionLocalService;
 	private final ResourcePermissionLocalService

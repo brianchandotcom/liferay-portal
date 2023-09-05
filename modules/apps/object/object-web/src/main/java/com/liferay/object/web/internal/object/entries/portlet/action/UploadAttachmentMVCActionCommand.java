@@ -6,9 +6,9 @@
 package com.liferay.object.web.internal.object.entries.portlet.action;
 
 import com.liferay.object.web.internal.object.entries.upload.AttachmentUploadFileEntryHandler;
-import com.liferay.object.web.internal.object.entries.upload.AttachmentUploadResponseHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.upload.UploadHandler;
+import com.liferay.upload.UploadResponseHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -20,11 +20,11 @@ public class UploadAttachmentMVCActionCommand extends BaseMVCActionCommand {
 
 	public UploadAttachmentMVCActionCommand(
 		AttachmentUploadFileEntryHandler attachmentUploadFileEntryHandler,
-		AttachmentUploadResponseHandler attachmentUploadResponseHandler,
+		UploadResponseHandler uploadResponseHandler,
 		UploadHandler uploadHandler) {
 
 		_attachmentUploadFileEntryHandler = attachmentUploadFileEntryHandler;
-		_attachmentUploadResponseHandler = attachmentUploadResponseHandler;
+		_uploadResponseHandler = uploadResponseHandler;
 		_uploadHandler = uploadHandler;
 	}
 
@@ -34,7 +34,7 @@ public class UploadAttachmentMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		_uploadHandler.upload(
-			_attachmentUploadFileEntryHandler, _attachmentUploadResponseHandler,
+			_attachmentUploadFileEntryHandler, _uploadResponseHandler,
 			actionRequest, actionResponse);
 
 		hideDefaultSuccessMessage(actionRequest);
@@ -42,8 +42,7 @@ public class UploadAttachmentMVCActionCommand extends BaseMVCActionCommand {
 
 	private final AttachmentUploadFileEntryHandler
 		_attachmentUploadFileEntryHandler;
-	private final AttachmentUploadResponseHandler
-		_attachmentUploadResponseHandler;
 	private final UploadHandler _uploadHandler;
+	private final UploadResponseHandler _uploadResponseHandler;
 
 }

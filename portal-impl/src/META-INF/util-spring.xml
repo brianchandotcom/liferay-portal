@@ -202,10 +202,6 @@
 	<bean class="com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil" id="com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil">
 		<property name="workflowPermission" ref="com.liferay.portal.kernel.workflow.permission.WorkflowPermission" />
 	</bean>
-	<bean class="com.liferay.portal.xmlrpc.XmlRpcImpl" id="com.liferay.portal.kernel.xmlrpc.XmlRpc" />
-	<bean class="com.liferay.portal.kernel.xmlrpc.XmlRpcUtil" id="com.liferay.portal.kernel.xmlrpc.XmlRpcUtil">
-		<property name="xmlRpc" ref="com.liferay.portal.kernel.xmlrpc.XmlRpc" />
-	</bean>
 	<bean class="com.liferay.portal.zip.ZipReaderFactoryImpl" id="com.liferay.portal.kernel.zip.ZipReaderFactory" />
 	<bean class="com.liferay.portal.zip.ZipWriterFactoryImpl" id="com.liferay.portal.kernel.zip.ZipWriterFactory" />
 	<bean class="com.liferay.portal.language.LanguageResources" id="com.liferay.portal.language.LanguageResources" />

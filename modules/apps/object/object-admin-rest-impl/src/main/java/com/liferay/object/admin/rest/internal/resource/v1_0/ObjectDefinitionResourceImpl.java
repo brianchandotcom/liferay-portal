@@ -565,6 +565,9 @@ public class ObjectDefinitionResourceImpl
 				_objectValidationRuleLocalService.getObjectValidationRules(
 					objectDefinitionId));
 
+		List<ObjectRelationship> objectRelationships = ListUtil.fromArray(
+			objectDefinition.getObjectRelationships());
+
 		if (serviceBuilderObjectDefinition.isModifiable() &&
 			serviceBuilderObjectDefinition.isSystem() &&
 			ObjectDefinitionUtil.isInvokerBundleAllowed()) {
@@ -582,6 +585,10 @@ public class ObjectDefinitionResourceImpl
 			serviceBuilderObjectValidationRules.removeIf(
 				serviceBuilderObjectValidationRule ->
 					!serviceBuilderObjectValidationRule.isSystem());
+
+			objectRelationships.removeIf(
+				objectRelationship -> !GetterUtil.getBoolean(
+					objectRelationship.getSystem()));
 		}
 		else {
 			objectFields.removeIf(
@@ -593,6 +600,10 @@ public class ObjectDefinitionResourceImpl
 			serviceBuilderObjectFields.removeIf(ObjectFieldModel::isSystem);
 			serviceBuilderObjectValidationRules.removeIf(
 				ObjectValidationRuleModel::isSystem);
+
+			objectRelationships.removeIf(
+				objectRelationship -> GetterUtil.getBoolean(
+					objectRelationship.getSystem()));
 		}
 
 		for (ObjectField objectField : objectFields) {
@@ -652,12 +663,10 @@ public class ObjectDefinitionResourceImpl
 			_objectLayoutLocalService.deleteObjectLayouts(objectDefinitionId);
 		}
 
-		ObjectRelationship[] objectRelationships =
-			objectDefinition.getObjectRelationships();
-
 		Set<String> accountEntryRestrictedObjectRelationshipsNames =
 			_getAccountEntryRestrictedObjectRelationshipsNames(
-				serviceBuilderObjectDefinition, objectRelationships);
+				serviceBuilderObjectDefinition,
+				objectRelationships.toArray(new ObjectRelationship[0]));
 
 		Set<String> deleteObjectValidationRulesERCs =
 			SetUtil.asymmetricDifference(
@@ -685,7 +694,8 @@ public class ObjectDefinitionResourceImpl
 
 		_addObjectDefinitionResources(
 			accountEntryRestrictedObjectRelationshipsNames, objectActions,
-			objectDefinitionId, objectLayouts, objectRelationships,
+			objectDefinitionId, objectLayouts,
+			objectRelationships.toArray(new ObjectRelationship[0]),
 			objectValidationRules.toArray(new ObjectValidationRule[0]),
 			objectViews);
 

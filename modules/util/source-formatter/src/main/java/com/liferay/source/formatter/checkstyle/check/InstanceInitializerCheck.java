@@ -105,7 +105,7 @@ public class InstanceInitializerCheck extends BaseCheck {
 		if (javaClass == null) {
 			return;
 		}
-		//
+
 		List<DetailAST> literalIfDetailASTList = getAllChildTokens(
 			childDetailAST, false, TokenTypes.LITERAL_IF);
 
@@ -187,6 +187,12 @@ public class InstanceInitializerCheck extends BaseCheck {
 
 	private void _checkIfStatement(
 		DetailAST literalIfDetailAST, JavaClass javaClass) {
+
+		DetailAST lastChildDetailAST = literalIfDetailAST.getLastChild();
+
+		if (lastChildDetailAST.getType() == TokenTypes.LITERAL_ELSE) {
+			return;
+		}
 
 		DetailAST slistDetailAST = literalIfDetailAST.findFirstToken(
 			TokenTypes.SLIST);

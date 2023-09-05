@@ -144,6 +144,14 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
+		long groupId, int type) {
+
+		return layoutPageTemplateCollectionPersistence.filterFindByG_T(
+			groupId, type);
+	}
+
+	@Override
+	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId, int start, int end) {
 
 		return layoutPageTemplateCollectionPersistence.filterFindByGroupId(

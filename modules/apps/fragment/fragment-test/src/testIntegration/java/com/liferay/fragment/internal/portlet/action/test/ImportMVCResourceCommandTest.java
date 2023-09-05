@@ -13,6 +13,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -38,6 +39,7 @@ import java.io.File;
 import java.net.URL;
 
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 
 import org.junit.After;
@@ -107,6 +109,26 @@ public class ImportMVCResourceCommandTest {
 		_assertImportResultsJSONObject(
 			2, 4, 2,
 			_importFragmentEntries(FragmentsImportStrategy.DO_NOT_OVERWRITE));
+	}
+
+	@Test
+	public void testImportFragmentEntriesWithKeepBothStrategyAndWithExistingFragmentCollection()
+		throws Exception {
+
+		_fragmentCollectionLocalService.addFragmentCollection(
+			TestPropsValues.getUserId(), _group.getGroupId(), "collection",
+			"Resources Collection", StringPool.BLANK, _serviceContext);
+
+		_assertImportResultsJSONObject(
+			2, 4, 2, _importFragmentEntries(FragmentsImportStrategy.KEEP_BOTH));
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionLocalService.getFragmentCollections(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertNotNull(fragmentCollections);
+		Assert.assertEquals(
+			fragmentCollections.toString(), 2, fragmentCollections.size());
 	}
 
 	@Test

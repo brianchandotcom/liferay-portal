@@ -13,7 +13,6 @@ import com.liferay.data.engine.rest.internal.odata.entity.v2_0.DataRecordEntityM
 import com.liferay.data.engine.rest.internal.security.permission.resource.DataRecordCollectionModelResourcePermission;
 import com.liferay.data.engine.rest.internal.security.permission.resource.DataRecordModelResourcePermission;
 import com.liferay.data.engine.rest.internal.storage.DataRecordExporter;
-import com.liferay.data.engine.rest.internal.storage.DataStorageRegistry;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
 import com.liferay.data.engine.storage.DataStorage;
@@ -30,6 +29,8 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.spi.converter.SPIDDMFormRuleConverter;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTAware;
@@ -73,7 +74,10 @@ import javax.validation.ValidationException;
 
 import javax.ws.rs.core.MultivaluedMap;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
@@ -364,6 +368,17 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		return dataRecord;
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DataStorage.class, "data.storage.type");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
 	@Override
 	protected void preparePatch(
 		DataRecord dataRecord, DataRecord existingDataRecord) {
@@ -443,7 +458,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			throw new ValidationException("Data storage type is null");
 		}
 
-		DataStorage dataStorage = _dataStorageRegistry.getDataStorage(
+		DataStorage dataStorage = _serviceTrackerMap.getService(
 			dataStorageType);
 
 		if (dataStorage == null) {
@@ -527,9 +542,6 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		_dataRecordModelResourcePermission;
 
 	@Reference
-	private DataStorageRegistry _dataStorageRegistry;
-
-	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;
 
 	@Reference
@@ -564,6 +576,8 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	private ServiceTrackerMap<String, DataStorage> _serviceTrackerMap;
 
 	@Reference
 	private SPIDDMFormRuleConverter _spiDDMFormRuleConverter;

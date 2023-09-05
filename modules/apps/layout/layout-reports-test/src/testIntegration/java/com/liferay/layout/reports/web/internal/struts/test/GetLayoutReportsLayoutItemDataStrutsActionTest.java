@@ -6,6 +6,9 @@
 package com.liferay.layout.reports.web.internal.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -13,12 +16,15 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
@@ -43,6 +49,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -100,8 +107,32 @@ public class GetLayoutReportsLayoutItemDataStrutsActionTest {
 
 		LayoutStructure layoutStructure = _getLayoutStructure();
 
-		layoutStructure.addCollectionStyledLayoutStructureItem(
-			layoutStructure.getMainItemId(), 0);
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				(CollectionStyledLayoutStructureItem)
+					layoutStructure.addCollectionStyledLayoutStructureItem(
+						layoutStructure.getMainItemId(), 0);
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
+
+		collectionStyledLayoutStructureItem.setCollectionJSONObject(
+			JSONUtil.put(
+				"classNameId", _portal.getClassNameId(AssetListEntry.class)
+			).put(
+				"classPK", assetListEntry.getAssetListEntryId()
+			).put(
+				"itemType", JournalArticle.class.getName()
+			).put(
+				"type", InfoListItemSelectorReturnType.class.getName()
+			));
+
+		collectionStyledLayoutStructureItem.setListStyle(
+			"com.liferay.journal.web.internal.info.list.renderer." +
+				"BulletedJournalArticleBasicInfoListRenderer");
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
@@ -146,8 +177,32 @@ public class GetLayoutReportsLayoutItemDataStrutsActionTest {
 			masterLayoutPageTemplateEntry.getGroupId(),
 			masterLayoutPageTemplateEntry.getPlid());
 
-		layoutStructure.addCollectionStyledLayoutStructureItem(
-			layoutStructure.getMainItemId(), 0);
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				(CollectionStyledLayoutStructureItem)
+					layoutStructure.addCollectionStyledLayoutStructureItem(
+						layoutStructure.getMainItemId(), 0);
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, _serviceContext);
+
+		collectionStyledLayoutStructureItem.setCollectionJSONObject(
+			JSONUtil.put(
+				"classNameId", _portal.getClassNameId(AssetListEntry.class)
+			).put(
+				"classPK", assetListEntry.getAssetListEntryId()
+			).put(
+				"itemType", JournalArticle.class.getName()
+			).put(
+				"type", InfoListItemSelectorReturnType.class.getName()
+			));
+
+		collectionStyledLayoutStructureItem.setListStyle(
+			"com.liferay.journal.web.internal.info.list.renderer." +
+				"BulletedJournalArticleBasicInfoListRenderer");
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
@@ -417,6 +472,9 @@ public class GetLayoutReportsLayoutItemDataStrutsActionTest {
 	}
 
 	@Inject
+	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
@@ -448,6 +506,9 @@ public class GetLayoutReportsLayoutItemDataStrutsActionTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

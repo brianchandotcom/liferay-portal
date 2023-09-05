@@ -61,7 +61,7 @@
 
 <tr>
 	<td>HIDE_EVENT_ICON</td>
-	<td>//*[text()='${key_nameList}']/ancestor::tr//td//*[contains(@class,'secondary-color')]</td>
+	<td>//*[text()='${key_nameList}']/ancestor::tr//td//*[contains(@class,'secondary')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -71,7 +71,9 @@ public class RankingIndexPortalInstanceLifecycleListenerTest {
 
 		Mockito.verify(
 			_singleIndexToMultipleIndexImporter, Mockito.times(1)
-		).importRankings();
+		).importRankings(
+			Mockito.anyLong()
+		);
 	}
 
 	@Test

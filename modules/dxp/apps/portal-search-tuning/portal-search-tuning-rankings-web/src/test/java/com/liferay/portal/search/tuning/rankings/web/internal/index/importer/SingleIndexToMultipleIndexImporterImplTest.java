@@ -6,13 +6,14 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.index.importer;
 
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexCreator;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
@@ -45,16 +46,13 @@ public class SingleIndexToMultipleIndexImporterImplTest
 			new SingleIndexToMultipleIndexImporterImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			_singleIndexToMultipleIndexImporterImpl, "_companyService",
-			_companyService);
+			_singleIndexToMultipleIndexImporterImpl, "_indexNameBuilder",
+			_indexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
 			_singleIndexToMultipleIndexImporterImpl, "_queries", queries);
 		ReflectionTestUtil.setFieldValue(
 			_singleIndexToMultipleIndexImporterImpl, "_rankingIndexCreator",
 			_rankingIndexCreator);
-		ReflectionTestUtil.setFieldValue(
-			_singleIndexToMultipleIndexImporterImpl, "_rankingIndexNameBuilder",
-			rankingIndexNameBuilder);
 		ReflectionTestUtil.setFieldValue(
 			_singleIndexToMultipleIndexImporterImpl, "_rankingIndexReader",
 			_rankingIndexReader);
@@ -67,32 +65,34 @@ public class SingleIndexToMultipleIndexImporterImplTest
 	public void testImportRankings() throws Exception {
 		Company company = Mockito.mock(Company.class);
 
+		long companyId = RandomTestUtil.randomLong();
+
 		Mockito.doReturn(
-			111L
+			companyId
 		).when(
 			company
 		).getCompanyId();
 
 		Mockito.doReturn(
-			Arrays.asList(company)
+			RandomTestUtil.randomString()
 		).when(
-			_companyService
-		).getCompanies();
-
-		setUpRankingIndexNameBuilder();
-
-		Mockito.doReturn(
-			true
-		).when(
-			_rankingIndexReader
-		).isExists(
-			Mockito.any()
+			_indexNameBuilder
+		).getIndexName(
+			Mockito.anyLong()
 		);
 
 		Mockito.doNothing(
 		).when(
 			_rankingIndexCreator
 		).create(
+			Mockito.any()
+		);
+
+		Mockito.doReturn(
+			true
+		).when(
+			_rankingIndexReader
+		).isExists(
 			Mockito.any()
 		);
 
@@ -109,7 +109,7 @@ public class SingleIndexToMultipleIndexImporterImplTest
 		);
 
 		Mockito.doReturn(
-			document
+			document, null
 		).when(
 			searchHit
 		).getDocument();
@@ -141,7 +141,7 @@ public class SingleIndexToMultipleIndexImporterImplTest
 			(BulkDocumentRequest)Mockito.any()
 		);
 
-		_singleIndexToMultipleIndexImporterImpl.importRankings();
+		_singleIndexToMultipleIndexImporterImpl.importRankings(companyId);
 
 		Mockito.verify(
 			searchEngineAdapter, Mockito.times(1)
@@ -166,14 +166,6 @@ public class SingleIndexToMultipleIndexImporterImplTest
 		).getCompanyId();
 
 		Mockito.doReturn(
-			Arrays.asList(company)
-		).when(
-			_companyService
-		).getCompanies();
-
-		setUpRankingIndexNameBuilder();
-
-		Mockito.doReturn(
 			true
 		).when(
 			_rankingIndexReader
@@ -184,8 +176,8 @@ public class SingleIndexToMultipleIndexImporterImplTest
 		Assert.assertTrue(_singleIndexToMultipleIndexImporterImpl.needImport());
 	}
 
-	private final CompanyService _companyService = Mockito.mock(
-		CompanyService.class);
+	private final IndexNameBuilder _indexNameBuilder = Mockito.mock(
+		IndexNameBuilder.class);
 	private final RankingIndexCreator _rankingIndexCreator = Mockito.mock(
 		RankingIndexCreator.class);
 	private final RankingIndexReader _rankingIndexReader = Mockito.mock(

@@ -105,6 +105,39 @@ public class ImportMVCResourceCommandTest {
 		Assert.assertEquals(2, importedDraftJSONArray.length());
 	}
 
+	@Test
+	public void testImportFragmentEntriesWithOverwriteStrategy()
+		throws Exception {
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_importFragmentEntries",
+			new Class<?>[] {
+				File.class, long.class, long.class,
+				FragmentsImportStrategy.class, Locale.class, long.class
+			},
+			_getFile(), _group.getGroupId(), 0,
+			FragmentsImportStrategy.OVERWRITE, LocaleUtil.US,
+			TestPropsValues.getUserId());
+
+		JSONObject importResultsJSONObject = jsonObject.getJSONObject(
+			"importResults");
+
+		JSONArray invalidJSONArray = importResultsJSONObject.getJSONArray(
+			"error");
+
+		Assert.assertEquals(2, invalidJSONArray.length());
+
+		JSONArray importedJSONArray = importResultsJSONObject.getJSONArray(
+			"success");
+
+		Assert.assertEquals(4, importedJSONArray.length());
+
+		JSONArray importedDraftJSONArray = importResultsJSONObject.getJSONArray(
+			"warning");
+
+		Assert.assertEquals(2, importedDraftJSONArray.length());
+	}
+
 	private File _getFile() throws Exception {
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			_RESOURCES_PATH, "*", true);

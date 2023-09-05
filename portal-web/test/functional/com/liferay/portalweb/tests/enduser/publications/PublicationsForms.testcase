@@ -64,13 +64,7 @@ definition {
 
 		FormsAdmin.saveDataProvider();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoNewForm(siteURLKey = "site-name");
 
 		Form.editName();
 
@@ -206,13 +200,7 @@ definition {
 			changeType = "Modified",
 			changeUser = "Test Test");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoNewForm(siteURLKey = "site-name");
 
 		Form.editName();
 
@@ -230,13 +218,7 @@ definition {
 	test ResolveConflictingPublicationsByDiscarding {
 		HeadlessSite.addSite(siteName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoNewForm(siteURLKey = "site-name");
 
 		Form.editName();
 
@@ -334,13 +316,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoNewForm(siteURLKey = "site-name");
 
 		Form.editName();
 
@@ -534,13 +510,7 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoNewForm(siteURLKey = "site-name");
 
 		Form.editName();
 

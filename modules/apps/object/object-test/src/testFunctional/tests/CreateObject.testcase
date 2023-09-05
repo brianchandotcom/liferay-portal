@@ -2312,9 +2312,7 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject59");
 
-		PopulateObjectFormsConfiguration.openForm();
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoNewForm(siteURLKey = "guest");
 
 		Form.editName(formName = "Form 1");
 
@@ -3551,9 +3549,7 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject85");
 
-		PopulateObjectFormsConfiguration.openForm();
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoNewForm(siteURLKey = "guest");
 
 		Form.editName(formName = "Form 1");
 
@@ -6611,9 +6607,7 @@ definition {
 
 		CreateObject.saveObject();
 
-		PopulateObjectFormsConfiguration.openForm();
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoNewForm(siteURLKey = "guest");
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
@@ -7606,9 +7600,7 @@ definition {
 
 		CreateObject.saveObject();
 
-		PopulateObjectFormsConfiguration.openForm();
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoNewForm(siteURLKey = "guest");
 
 		PopulateObjectFormsConfiguration.openFormSettings();
 
@@ -9201,9 +9193,7 @@ definition {
 
 		Navigator.openURL();
 
-		PopulateObjectFormsConfiguration.openForm();
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoNewForm(siteURLKey = "guest");
 
 		Form.editName(formName = "Form Object");
 

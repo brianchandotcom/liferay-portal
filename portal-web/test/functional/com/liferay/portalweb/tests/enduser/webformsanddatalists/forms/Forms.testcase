@@ -219,13 +219,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		Navigator.openSiteURL(siteName = "Form Site");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Forms");
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoNewForm(siteURLKey = "form-site");
 
 		Form.editName();
 

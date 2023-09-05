@@ -399,11 +399,7 @@ definition {
 
 		WaitForSPARefresh();
 
-		Navigator.openURL();
-
-		PopulateObjectFormsConfiguration.openForm();
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoNewForm(siteURLKey = "guest");
 
 		Form.editName(formName = "Form 1");
 
@@ -474,11 +470,7 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.openURL();
-
-		PopulateObjectFormsConfiguration.openForm();
-
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoNewForm(siteURLKey = "guest");
 
 		Form.editName(formName = "Form 1");
 

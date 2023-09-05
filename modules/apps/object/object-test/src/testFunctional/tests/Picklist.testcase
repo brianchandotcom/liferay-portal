@@ -783,9 +783,7 @@ definition {
 		}
 
 		task ("Go to Forms and add") {
-			PopulateObjectFormsConfiguration.openForm();
-
-			FormsAdminNavigator.gotoAddForm();
+			FormsAdminNavigator.gotoNewForm(siteURLKey = "guest");
 
 			Form.editName(formName = "Form 1");
 		}

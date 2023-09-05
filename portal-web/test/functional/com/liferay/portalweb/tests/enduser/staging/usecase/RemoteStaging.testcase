@@ -957,9 +957,7 @@ definition {
 
 			LAR.exportPortlet(larFileName = "Forms_blank_portlet.lar");
 
-			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
-
-			FormsAdminNavigator.gotoAddForm();
+			FormsAdminNavigator.gotoNewForm(siteURLKey = "site-name");
 
 			Form.editName(formName = "Test Form");
 
@@ -1081,9 +1079,7 @@ definition {
 
 			LAR.exportPortlet(larFileName = "Forms_blank_portlet.lar");
 
-			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name");
-
-			FormsAdminNavigator.gotoAddForm();
+			FormsAdminNavigator.gotoNewForm(siteURLKey = "site-name");
 
 			Form.editName(formName = "Test Form");
 

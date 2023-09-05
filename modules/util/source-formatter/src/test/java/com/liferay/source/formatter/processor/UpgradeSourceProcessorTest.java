@@ -366,6 +366,39 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeReplacementsCheck() throws Exception {
+		test("upgrade/UpgradeJavaAddFolderParameterCheck.testjava");
+		test("upgrade/UpgradeJavaCommerceCountryServiceCheck.testjava");
+		test("upgrade/UpgradeJavaCommerceRegionCheck.testjava");
+		test("upgrade/UpgradeJavaDLUtilCheck.testjava");
+		test("upgrade/UpgradeJavaExtractTextMethodCheck.testjava");
+		test("upgrade/UpgradeJavaGetClassNamesMethodCheck.testjava");
+		test("upgrade/UpgradeJavaGetImagePreviewURLMethodCheck.testjava");
+		test("upgrade/UpgradeJavaIndexerCheck.testjava");
+		test("upgrade/UpgradeJSPDLUtilCheck.testjsp");
+		test("upgrade/UpgradeJSPFGetClassNamesMethodCheck.testjspf");
+		test("upgrade/UpgradeJSPGetImagePreviewURLMethodCheck.testjsp");
+		test(
+			"upgrade/UpgradeJavaAddAddressMethodCheck.testjava",
+			StringBundler.concat(
+				"Unable to format addAddress method from AddressLocalService, ",
+				"AddressService, AddressLocalServiceUtil, AddressServiceUtil. ",
+				"Fill the new parameters manually, see LPS-193462"));
+		test(
+			"upgrade/UpgradeJavaAddCategoryParameterCheck.testjava",
+			StringBundler.concat(
+				"Unable to format addCategory method from ",
+				"AssetCategoryLocalService, AssetCategoryLocalServiceUtil. ",
+				"Fill the new parameters manually, see LPS-192320"));
+		test(
+			"upgrade/UpgradeJavaSearchVocabulariesMethodCheck.testjava",
+			StringBundler.concat(
+				"Unable to format searchVocabularies method from ",
+				"AssetVocabularyService, AssetVocabularyLocalService. Fill ",
+				"the new parameters manually, see LPS-189866"));
+	}
+
+	@Test
 	public void testUpgradeSCSSImportsCheck() throws Exception {
 		test("upgrade/UpgradeSCSSImportsCheck.testscss");
 	}

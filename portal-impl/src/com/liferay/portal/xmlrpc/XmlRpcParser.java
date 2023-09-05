@@ -13,10 +13,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.xml.StAXReaderUtil;
 import com.liferay.portal.kernel.xmlrpc.Response;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcException;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcUtil;
-import com.liferay.portal.xml.StAXReaderUtil;
 
 import java.io.IOException;
 

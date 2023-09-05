@@ -53,8 +53,7 @@ public class CommerceOptionValueHelperImpl
 
 		if (!cpDefinitionOptionValueRelMap.isEmpty()) {
 			_filterCPDefinitionOptionValueRelMap(
-				_getCPDefinitionOptionValueRelMap(cpDefinitionId),
-				commerceOptionValues, json);
+				cpDefinitionOptionValueRelMap, commerceOptionValues, json);
 		}
 
 		Map<Long, List<Long>>

@@ -509,6 +509,15 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 
 		<sequential>
 			<if>
+				<not>
+					<available file="${selenium.output.dir.name}" type="dir" />
+				</not>
+				<then>
+					<mkdir dir="${selenium.output.dir.name}" />
+				</then>
+			</if>
+
+			<if>
 				<or>
 					<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 					<isset property="database.${database.type}.docker.image" />
@@ -518,7 +527,7 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 
 					<property location="export_database_mysql_compact_export.sh" name="export.database.mysql.compact.file.path" />
 					<property name="docker.src.file.path" value="/tmp/export.sql" />
-					<property name="export.dmp.file.path" value="${basedir}/@{database.file.prefix}-@{database.schema.name}.sql" />
+					<property name="export.dmp.file.path" value="${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}.sql" />
 
 					<echo file="${export.database.mysql.compact.file.path}">
 						<![CDATA[
@@ -557,7 +566,7 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 					</execute>
 				</then>
 				<else>
-					<exec executable="mysqldump" output="@{database.file.prefix}-@{database.schema.name}.sql">
+					<exec executable="mysqldump" output="${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}.sql">
 						<arg value="--compact" />
 						<arg value="--no-data" />
 						<arg value="--order-by-primary" />
@@ -569,7 +578,7 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 					</exec>
 
 					<replaceregexp
-						file="@{database.file.prefix}-@{database.schema.name}.sql"
+						file="${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}.sql"
 						match=".*Using a password on the command line interface can be insecure.*\n"
 						replace=""
 					/>
@@ -595,15 +604,15 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 			</echo>
 
 			<execute>
-				export_database_mysql_compact_sort_sql.sh @{database.file.prefix}-@{database.schema.name}.sql > @{database.file.prefix}-@{database.schema.name}-sorted.sql
+				export_database_mysql_compact_sort_sql.sh ${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}.sql > ${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}-sorted.sql
 			</execute>
 
-			<delete file="@{database.file.prefix}-@{database.schema.name}.sql" />
+			<delete file="${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}.sql" />
 			<delete file="export_database_mysql_compact_sort_sql.sh" />
 
 			<move
-				file="@{database.file.prefix}-@{database.schema.name}-sorted.sql"
-				tofile="@{database.file.prefix}-@{database.schema.name}.sql"
+				file="${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}-sorted.sql"
+				tofile="${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}.sql"
 			/>
 		</sequential>
 	</macrodef>
@@ -8240,8 +8249,17 @@ war.path=${app.server.portal.dir}/</echo>
 		<attribute default="fresh" name="fresh.db.schema" />
 
 		<sequential>
+			<if>
+				<not>
+					<available file="${selenium.output.dir.name}" type="dir" />
+				</not>
+				<then>
+					<mkdir dir="${selenium.output.dir.name}" />
+				</then>
+			</if>
+
 			<echo file="validate_db_upgrade_schemas.sh">
-diff -B --new-line-format='%L' --old-line-format= --unchanged-line-format= upgraded-@{upgraded.db.schema}.sql fresh-@{fresh.db.schema}.sql || true
+diff -B --new-line-format='%L' --old-line-format= --unchanged-line-format= ${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql ${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql || true
 			</echo>
 
 			<chmod
@@ -8256,14 +8274,14 @@ diff -B --new-line-format='%L' --old-line-format= --unchanged-line-format= upgra
 					<equals arg1="${database.changes.master}" arg2="" />
 				</not>
 				<then>
-					<echo file="@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt">
+					<echo file="${selenium.output.dir.name}/@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt">
 Upgraded database is missing the following elements from a fresh database: ${line.separator}${database.changes.master}
 
-diff:${line.separator}upgraded-@{upgraded.db.schema}.sql > fresh-@{fresh.db.schema}.sql
+diff:${line.separator}${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql > ${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql
 					</echo>
 
 					<echo file="validate_db_upgrade_schemas.sh">
-diff -y -B -W250 upgraded-@{upgraded.db.schema}.sql fresh-@{fresh.db.schema}.sql | expand | grep -E -C40 '^.{123} [|>]( |$)'
+diff -y -B -W250 ${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql ${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql | expand | grep -E -C40 '^.{123} [|>]( |$)'
 					</echo>
 
 					<chmod
@@ -8271,10 +8289,10 @@ diff -y -B -W250 upgraded-@{upgraded.db.schema}.sql fresh-@{fresh.db.schema}.sql
 						perm="a+x"
 					/>
 
-					<exec append="true" executable="./validate_db_upgrade_schemas.sh" output="@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt" />
+					<exec append="true" executable="./validate_db_upgrade_schemas.sh" output="${selenium.output.dir.name}/@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt" />
 				</then>
 				<else>
-					<echo file="@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt">Database schemas match</echo>
+					<echo file="${selenium.output.dir.name}/@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt">Database schemas match</echo>
 				</else>
 			</if>
 		</sequential>

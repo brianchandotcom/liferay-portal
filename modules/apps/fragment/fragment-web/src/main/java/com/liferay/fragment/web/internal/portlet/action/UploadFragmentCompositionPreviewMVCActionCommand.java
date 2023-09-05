@@ -5,11 +5,20 @@
 
 package com.liferay.fragment.web.internal.portlet.action;
 
+import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.web.internal.upload.FragmentEntryPreviewImageEditorUploadFileEntryHandler;
 import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.upload.BaseImageEditorUploadFileEntryHandler;
+import com.liferay.upload.UniqueFileNameProvider;
 import com.liferay.upload.UploadHandler;
 
 import javax.portlet.ActionRequest;
@@ -36,20 +45,67 @@ public class UploadFragmentCompositionPreviewMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_uploadHandler.upload(
-			_fragmentEntryPreviewImageEditorUploadFileEntryHandler,
-			_itemSelectorUploadResponseHandler, actionRequest, actionResponse);
+		uploadHandler.upload(
+			fragmentEntryPreviewImageEditorUploadFileEntryHandler,
+			itemSelectorUploadResponseHandler, actionRequest, actionResponse);
 	}
 
 	@Reference
-	private FragmentEntryPreviewImageEditorUploadFileEntryHandler
-		_fragmentEntryPreviewImageEditorUploadFileEntryHandler;
+	protected DLAppService dlAppService;
+
+	protected FragmentEntryPreviewImageEditorUploadFileEntryHandler
+		fragmentEntryPreviewImageEditorUploadFileEntryHandler =
+			new FragmentEntryPreviewImageEditorUploadFileEntryHandler();
 
 	@Reference
-	private ItemSelectorUploadResponseHandler
-		_itemSelectorUploadResponseHandler;
+	protected ItemSelectorUploadResponseHandler
+		itemSelectorUploadResponseHandler;
+
+	@Reference(
+		target = "(resource.name=" + FragmentConstants.RESOURCE_NAME + ")"
+	)
+	protected PortletResourcePermission portletResourcePermission;
 
 	@Reference
-	private UploadHandler _uploadHandler;
+	protected UniqueFileNameProvider uniqueFileNameProvider;
+
+	@Reference
+	protected UploadHandler uploadHandler;
+
+	private class FragmentEntryPreviewImageEditorUploadFileEntryHandler
+		extends BaseImageEditorUploadFileEntryHandler {
+
+		@Override
+		protected void checkPermissions(
+				UploadPortletRequest uploadPortletRequest)
+			throws PrincipalException {
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)uploadPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			portletResourcePermission.check(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroup(),
+				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+		}
+
+		@Override
+		protected DLAppService getDLAppService() {
+			return dlAppService;
+		}
+
+		@Override
+		protected String getFolderName() {
+			return FragmentEntryPreviewImageEditorUploadFileEntryHandler.class.
+				getName();
+		}
+
+		@Override
+		protected UniqueFileNameProvider getUniqueFileNameProvider() {
+			return uniqueFileNameProvider;
+		}
+
+	}
 
 }

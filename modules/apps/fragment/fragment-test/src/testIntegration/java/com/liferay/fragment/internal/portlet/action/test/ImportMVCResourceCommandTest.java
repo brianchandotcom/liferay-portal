@@ -76,48 +76,23 @@ public class ImportMVCResourceCommandTest {
 	public void testImportFragmentEntriesWithDoNotOverwriteStrategy()
 		throws Exception {
 
-		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "_importFragmentEntries",
-			new Class<?>[] {
-				File.class, long.class, long.class,
-				FragmentsImportStrategy.class, Locale.class, long.class
-			},
-			_getFile(), _group.getGroupId(), 0,
-			FragmentsImportStrategy.DO_NOT_OVERWRITE, LocaleUtil.US,
-			TestPropsValues.getUserId());
-
-		JSONObject importResultsJSONObject = jsonObject.getJSONObject(
-			"importResults");
-
-		JSONArray invalidJSONArray = importResultsJSONObject.getJSONArray(
-			"error");
-
-		Assert.assertEquals(2, invalidJSONArray.length());
-
-		JSONArray importedJSONArray = importResultsJSONObject.getJSONArray(
-			"success");
-
-		Assert.assertEquals(4, importedJSONArray.length());
-
-		JSONArray importedDraftJSONArray = importResultsJSONObject.getJSONArray(
-			"warning");
-
-		Assert.assertEquals(2, importedDraftJSONArray.length());
+		_assertImportResultsJSONObject(
+			2, 4, 2,
+			_importFragmentEntries(FragmentsImportStrategy.DO_NOT_OVERWRITE));
 	}
 
 	@Test
 	public void testImportFragmentEntriesWithOverwriteStrategy()
 		throws Exception {
 
-		JSONObject jsonObject = ReflectionTestUtil.invoke(
-			_mvcResourceCommand, "_importFragmentEntries",
-			new Class<?>[] {
-				File.class, long.class, long.class,
-				FragmentsImportStrategy.class, Locale.class, long.class
-			},
-			_getFile(), _group.getGroupId(), 0,
-			FragmentsImportStrategy.OVERWRITE, LocaleUtil.US,
-			TestPropsValues.getUserId());
+		_assertImportResultsJSONObject(
+			2, 4, 2, _importFragmentEntries(FragmentsImportStrategy.OVERWRITE));
+	}
+
+	private void _assertImportResultsJSONObject(
+		long expectedImportedDraftJSONArrayLength,
+		long expectedImportedJSONArrayLength,
+		long expectedInvalidJSONArrayLength, JSONObject jsonObject) {
 
 		JSONObject importResultsJSONObject = jsonObject.getJSONObject(
 			"importResults");
@@ -125,17 +100,21 @@ public class ImportMVCResourceCommandTest {
 		JSONArray invalidJSONArray = importResultsJSONObject.getJSONArray(
 			"error");
 
-		Assert.assertEquals(2, invalidJSONArray.length());
+		Assert.assertEquals(
+			expectedInvalidJSONArrayLength, invalidJSONArray.length());
 
 		JSONArray importedJSONArray = importResultsJSONObject.getJSONArray(
 			"success");
 
-		Assert.assertEquals(4, importedJSONArray.length());
+		Assert.assertEquals(
+			expectedImportedJSONArrayLength, importedJSONArray.length());
 
 		JSONArray importedDraftJSONArray = importResultsJSONObject.getJSONArray(
 			"warning");
 
-		Assert.assertEquals(2, importedDraftJSONArray.length());
+		Assert.assertEquals(
+			expectedImportedDraftJSONArrayLength,
+			importedDraftJSONArray.length());
 	}
 
 	private File _getFile() throws Exception {
@@ -157,6 +136,20 @@ public class ImportMVCResourceCommandTest {
 		}
 
 		return zipWriter.getFile();
+	}
+
+	private JSONObject _importFragmentEntries(
+			FragmentsImportStrategy fragmentsImportStrategy)
+		throws Exception {
+
+		return ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_importFragmentEntries",
+			new Class<?>[] {
+				File.class, long.class, long.class,
+				FragmentsImportStrategy.class, Locale.class, long.class
+			},
+			_getFile(), _group.getGroupId(), 0, fragmentsImportStrategy,
+			LocaleUtil.US, TestPropsValues.getUserId());
 	}
 
 	private static final String _RESOURCES_PATH =

@@ -108,6 +108,9 @@ public class CommerceOrderContentConfigurationAction
 			PortletPreferences preferences = actionRequest.getPreferences();
 
 			preferences.setValue(
+				"displayStyle", getParameter(actionRequest, "displayStyle"));
+
+			preferences.setValue(
 				"showCommerceOrderCreateTime",
 				getParameter(actionRequest, "showCommerceOrderCreateTime"));
 

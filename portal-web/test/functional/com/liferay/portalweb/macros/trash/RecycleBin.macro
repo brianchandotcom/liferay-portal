@@ -121,13 +121,29 @@ definition {
 			locator1 = "RecycleBin#RECYCLE_BIN_WARNING_SELECT_RESTORE_FOLDER",
 			value1 = "The original Folder of this file does not exist anymore. Choose a different Folder to restore ${documentName}.");
 
-		Button.click(button = "Select Home");
+		Breadcrumb.viewActiveEntry(breadcrumbName = ${breadcrumbName});
 
-		SelectFrameTop(value1 = "relative=top");
+		if (${assetRestoreLocation} == "Home") {
+			Button.click(button = "Select Home");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#RECYCLE_BIN_RESTORE_SUCCESS",
-			value1 = "The ${assetType2} ${documentName} was restored to ${assetRestoreLocation}.");
+			SelectFrameTop(value1 = "relative=top");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#RECYCLE_BIN_RESTORE_SUCCESS",
+				value1 = "The ${assetType2} ${documentName} was restored to Home.");
+		}
+		else {
+			Click(
+				key_tableEntry = ${assetRestoreLocation},
+				key_text = "Select",
+				locator1 = "LexiconTable#TABLE_ENTRY_BUTTON");
+
+			SelectFrameTop(value1 = "relative=top");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#RECYCLE_BIN_RESTORE_SUCCESS",
+				value1 = "The ${assetType2} ${documentName} was restored to Home » ${assetRestoreLocation}.");
+		}
 	}
 
 	macro restoreContentWithoutOriginalFolder {

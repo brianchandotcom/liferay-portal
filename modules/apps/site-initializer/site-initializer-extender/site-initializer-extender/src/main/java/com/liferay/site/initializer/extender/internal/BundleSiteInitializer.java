@@ -582,7 +582,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext, stringUtilReplaceValues));
 
 			_invoke(
-				() -> _addLayoutsContent(
+				() -> _addOrUpdateLayoutsContent(
 					layoutsMap, serviceContext,
 					siteNavigationMenuItemSettingsBuilder.build(),
 					stringUtilReplaceValues));
@@ -948,7 +948,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			stringUtilReplaceValues);
 	}
 
-	private void _addLayoutContent(
+	private void _addOrUpdateLayoutContent(
 			Layout layout, String resourcePath, long segmentsExperienceId,
 			ServiceContext serviceContext,
 			Map<String, String> stringUtilReplaceValues)
@@ -1163,7 +1163,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			zipWriter.getFile(), true);
 	}
 
-	private void _addLayoutsContent(
+	private void _addOrUpdateLayoutsContent(
 			Map<String, Layout> layouts, ServiceContext serviceContext,
 			Map<String, SiteNavigationMenuItemSetting>
 				siteNavigationMenuItemSettings,
@@ -1171,12 +1171,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		throws Exception {
 
 		for (Map.Entry<String, Layout> entry : layouts.entrySet()) {
-			_addLayoutContent(
+			_addOrUpdateLayoutContent(
 				entry.getValue(), entry.getKey(), 0, serviceContext,
 				stringUtilReplaceValues);
 		}
 
-		_addSiteNavigationMenus(
+		_addOrUpdateSiteNavigationMenus(
 			serviceContext, siteNavigationMenuItemSettings,
 			stringUtilReplaceValues);
 	}
@@ -3870,7 +3870,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 			for (String resourcePath : resourcePaths) {
 				if (resourcePath.endsWith("/")) {
-					_addLayoutContent(
+					_addOrUpdateLayoutContent(
 						layout, resourcePath,
 						segmentsExperience.getSegmentsExperienceId(),
 						serviceContext, stringUtilReplaceValues);
@@ -3903,7 +3903,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_groupLocalService.updateGroup(group);
 	}
 
-	private void _addSiteNavigationMenu(
+	private void _addOrUpdateSiteNavigationMenu(
 			JSONObject jsonObject, ServiceContext serviceContext,
 			Map<String, SiteNavigationMenuItemSetting>
 				siteNavigationMenuItemSettings,
@@ -3930,12 +3930,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext);
 		}
 
-		_addSiteNavigationMenuItems(
+		_addOrUpdateSiteNavigationMenuItems(
 			jsonObject, siteNavigationMenu, 0, serviceContext,
 			siteNavigationMenuItemSettings, stringUtilReplaceValues);
 	}
 
-	private void _addSiteNavigationMenuItems(
+	private void _addOrUpdateSiteNavigationMenuItems(
 			JSONObject jsonObject, SiteNavigationMenu siteNavigationMenu,
 			long parentSiteNavigationMenuItemId, ServiceContext serviceContext,
 			Map<String, SiteNavigationMenuItemSetting>
@@ -4042,7 +4042,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String.valueOf(
 					siteNavigationMenuItem.getSiteNavigationMenuItemId()));
 
-			_addSiteNavigationMenuItems(
+			_addOrUpdateSiteNavigationMenuItems(
 				menuItemJSONObject, siteNavigationMenu,
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				serviceContext, siteNavigationMenuItemSettings,
@@ -4050,7 +4050,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addSiteNavigationMenus(
+	private void _addOrUpdateSiteNavigationMenus(
 			ServiceContext serviceContext,
 			Map<String, SiteNavigationMenuItemSetting>
 				siteNavigationMenuItemSettings,
@@ -4067,7 +4067,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			_addSiteNavigationMenu(
+			_addOrUpdateSiteNavigationMenu(
 				jsonArray.getJSONObject(i), serviceContext,
 				siteNavigationMenuItemSettings, stringUtilReplaceValues);
 		}

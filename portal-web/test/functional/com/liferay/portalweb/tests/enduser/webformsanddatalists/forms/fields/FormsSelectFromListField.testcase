@@ -471,11 +471,7 @@ definition {
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
-		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
-
-		Navigator.gotoNavItem(navItem = "Data Providers");
-
-		FormsAdminNavigator.gotoAddDataProvider();
+		FormsAdminNavigator.gotoRESTDataProvider();
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -563,11 +559,7 @@ definition {
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
-		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
-
-		Navigator.gotoNavItem(navItem = "Data Providers");
-
-		FormsAdminNavigator.gotoAddDataProvider();
+		FormsAdminNavigator.gotoRESTDataProvider();
 
 		FormsAdmin.editDataProvider(
 			name = "Liferay Countries",
@@ -803,11 +795,7 @@ definition {
 		}
 
 		task ("and Given a REST data provider") {
-			FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
-
-			Navigator.gotoNavItem(navItem = "Data Providers");
-
-			FormsAdminNavigator.gotoAddDataProvider();
+			FormsAdminNavigator.gotoRESTDataProvider();
 
 			var portalURL = PropsUtil.get("portal.url");
 

@@ -1019,11 +1019,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Go to Content > Forms and add a Data Provider") {
-			FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
-
-			Navigator.gotoNavItem(navItem = "Data Providers");
-
-			FormsAdminNavigator.gotoAddDataProvider();
+			FormsAdminNavigator.gotoRESTDataProvider();
 
 			FormsAdmin.editDataProvider(
 				inputParameterLabel = "zipcode",
@@ -1127,11 +1123,7 @@ definition {
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
-		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
-
-		Navigator.gotoNavItem(navItem = "Data Providers");
-
-		FormsAdminNavigator.gotoAddDataProvider();
+		FormsAdminNavigator.gotoRESTDataProvider();
 
 		FormsAdmin.editDataProvider(
 			name = "Liferay Countries",

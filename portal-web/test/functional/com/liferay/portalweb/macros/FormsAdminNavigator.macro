@@ -42,10 +42,6 @@ definition {
 		}
 	}
 
-	macro gotoAddDataProvider {
-		LexiconEntry.gotoAdd();
-	}
-
 	macro gotoAddElementSet {
 		LexiconEntry.gotoAdd();
 	}
@@ -181,6 +177,18 @@ definition {
 		var publishedFormPublicURL = Form.getPublishedFormPublicURL(publishedFormPublicURL = ${publishedFormPublicURL});
 
 		Navigator.openSpecificURL(url = ${publishedFormPublicURL});
+	}
+
+	macro gotoRESTDataProvider {
+		if (!(isSet(siteURLKey))) {
+			var siteURLKey = "guest";
+		}
+
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = ${siteURLKey});
+
+		Navigator.gotoNavItem(navItem = "Data Providers");
+
+		LexiconEntry.gotoAdd();
 	}
 
 	macro gotoRules {

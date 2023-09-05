@@ -1217,11 +1217,7 @@ definition {
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
-		FormsAdminNavigator.openFormsAdmin(siteURLKey = "guest");
-
-		Navigator.gotoNavItem(navItem = "Data Providers");
-
-		FormsAdminNavigator.gotoAddDataProvider();
+		FormsAdminNavigator.gotoRESTDataProvider();
 
 		FormsAdmin.editDataProvider(
 			name = "Liferay Countries",

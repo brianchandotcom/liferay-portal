@@ -142,6 +142,10 @@ definition {
 	}
 
 	macro gotoNewForm {
+		if (!(isSet(siteURLKey))) {
+			var siteURLKey = "guest";
+		}
+
 		FormsAdminNavigator.openFormsAdmin(siteURLKey = ${siteURLKey});
 
 		LexiconEntry.gotoAdd();

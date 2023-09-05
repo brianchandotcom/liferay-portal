@@ -34,11 +34,12 @@ public class ObjectDefinitionExternalReferenceCodeException
 			String externalReferenceCode) {
 
 			super(
+				Collections.singletonList(externalReferenceCode),
 				StringBundler.concat(
 					"Forbidden unmodifiable system object definition external ",
 					"reference code ", externalReferenceCode),
-				"forbidden-unmodifiable-system-object-definition-external-" +
-					"reference-code");
+				"the-external-reference-code-x-is-not-allowed-for-system-" +
+					"object-definitions");
 		}
 
 	}

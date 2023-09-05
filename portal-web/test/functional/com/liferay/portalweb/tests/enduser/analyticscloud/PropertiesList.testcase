@@ -44,14 +44,14 @@ definition {
 			}
 		}
 
-		task ("Change the pagination to 5") {
+		task ("Change the pagination to 4") {
 			ACSettings.goToProperties();
 
 			ACUtils.changePagination(itemsPerPage = 4);
 		}
 
 		task ("Check first 4 properties appear on first page") {
-			var propertyList1 = "Property Name 2,Property Name 3,Property Name 4,Property Name 5";
+			var propertyList1 = "Property Name 6,Property Name 5,Property Name 4,Property Name 3";
 
 			ACUtils.assertItemsName(itemList = ${propertyList1});
 		}
@@ -61,7 +61,9 @@ definition {
 		}
 
 		task ("Check last property appear on second page") {
-			ACUtils.assertItemsName(itemList = "Property Name 1");
+			var propertyList2 = "Property Name 2,Property Name 1";
+
+			ACUtils.assertItemsName(itemList = ${propertyList2});
 		}
 	}
 

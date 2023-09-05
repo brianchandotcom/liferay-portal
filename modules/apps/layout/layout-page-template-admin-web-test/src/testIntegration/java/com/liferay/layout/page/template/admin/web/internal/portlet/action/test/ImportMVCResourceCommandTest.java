@@ -113,6 +113,38 @@ public class ImportMVCResourceCommandTest {
 		Assert.assertEquals(1, ignoredJSONArray.length());
 	}
 
+	@Test
+	public void testImportFileWithOverwriteStrategy() throws Exception {
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			"Existing Master Page",
+			LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_importFile",
+			new Class<?>[] {
+				File.class, long.class, long.class, LayoutsImportStrategy.class,
+				Locale.class, long.class
+			},
+			_getFile(), _group.getGroupId(), 0, LayoutsImportStrategy.OVERWRITE,
+			LocaleUtil.US, TestPropsValues.getUserId());
+
+		JSONObject importResultsJSONObject = jsonObject.getJSONObject(
+			"importResults");
+
+		JSONArray invalidJSONArray = importResultsJSONObject.getJSONArray(
+			"error");
+
+		Assert.assertEquals(1, invalidJSONArray.length());
+
+		JSONArray importedJSONArray = importResultsJSONObject.getJSONArray(
+			"success");
+
+		Assert.assertEquals(3, importedJSONArray.length());
+	}
+
 	private File _getFile() throws Exception {
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			_RESOURCES_PATH, "*", true);

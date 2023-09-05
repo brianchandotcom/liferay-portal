@@ -18,6 +18,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -25,12 +26,14 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -174,6 +177,55 @@ public class CPInstanceCommercePriceEntryDisplayContext
 			"checkedCommercePriceListIds",
 			StringUtil.merge(_getCheckedCommercePriceListIds(unitOfMeasureKey))
 		).buildString();
+	}
+
+	public HashMap<String, Object> getJSContext() throws PortalException {
+		CPInstance cpInstance = getCPInstance();
+
+		List<String> eventNames = new ArrayList<>();
+		List<String> keys = new ArrayList<>();
+		List<String> titles = new ArrayList<>();
+		List<String> urls = new ArrayList<>();
+
+		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+			getCPInstanceUnitOfMeasures();
+
+		if (cpInstanceUnitOfMeasures.isEmpty()) {
+			eventNames.add("addCommercePriceEntry");
+			keys.add(StringPool.BLANK);
+			titles.add(
+				LanguageUtil.format(
+					httpServletRequest, "add-x-to-price-list",
+					HtmlUtil.escape(cpInstance.getSku()), false));
+			urls.add(getItemSelectorUrl(null));
+		}
+		else {
+			for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
+					cpInstanceUnitOfMeasures) {
+
+				String key = cpInstanceUnitOfMeasure.getKey();
+
+				eventNames.add(
+					"addCommercePriceEntry" + HtmlUtil.escapeJS(key));
+				keys.add(key);
+				titles.add(
+					LanguageUtil.format(
+						httpServletRequest, "add-x-to-price-list",
+						HtmlUtil.escape(cpInstance.getSku() + " " + key),
+						false));
+				urls.add(getItemSelectorUrl(key));
+			}
+		}
+
+		return HashMapBuilder.<String, Object>put(
+			"eventNames", eventNames.toArray(new String[0])
+		).put(
+			"keys", keys.toArray(new String[0])
+		).put(
+			"titles", titles.toArray(new String[0])
+		).put(
+			"urls", urls.toArray(new String[0])
+		).build();
 	}
 
 	@Override

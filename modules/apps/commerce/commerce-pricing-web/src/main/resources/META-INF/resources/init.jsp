@@ -76,7 +76,6 @@ page import="com.liferay.commerce.product.exception.DuplicateCommerceChannelAcco
 page import="com.liferay.commerce.product.exception.NoSuchCatalogException" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPInstance" %><%@
-page import="com.liferay.commerce.product.model.CPInstanceUnitOfMeasure" %><%@
 page import="com.liferay.commerce.product.model.CProduct" %><%@
 page import="com.liferay.commerce.product.model.CommerceCatalog" %><%@
 page import="com.liferay.commerce.product.model.CommerceChannel" %><%@

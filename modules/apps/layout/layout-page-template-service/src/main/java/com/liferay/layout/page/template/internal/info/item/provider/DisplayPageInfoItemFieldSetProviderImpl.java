@@ -17,6 +17,8 @@ import com.liferay.info.field.type.DisplayPageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
@@ -138,24 +140,10 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 							_portal.getClassNameId(
 								infoItemReference.getClassName()),
 							StringPool.SLASH,
-							_getClassPK(infoItemReference)))));
+							_getInfoItemIdentifier(infoItemReference)))));
 		}
 
 		return infoFieldValues;
-	}
-
-	private long _getClassPK(InfoItemReference infoItemReference) {
-		if (infoItemReference.getInfoItemIdentifier() instanceof
-				ClassPKInfoItemIdentifier) {
-
-			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-				(ClassPKInfoItemIdentifier)
-					infoItemReference.getInfoItemIdentifier();
-
-			return classPKInfoItemIdentifier.getClassPK();
-		}
-
-		return 0;
 	}
 
 	private String _getDefaultDisplayPageURL(
@@ -172,9 +160,18 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		}
 
 		try {
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(
-					_getClassPK(infoItemReference));
+			AssetRenderer<?> assetRenderer = null;
+
+			if (infoItemReference.getInfoItemIdentifier() instanceof
+					ClassPKInfoItemIdentifier) {
+
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					(ClassPKInfoItemIdentifier)
+						infoItemReference.getInfoItemIdentifier();
+
+				assetRenderer = assetRendererFactory.getAssetRenderer(
+					classPKInfoItemIdentifier.getClassPK());
+			}
 
 			if (assetRenderer == null) {
 				return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
@@ -249,6 +246,27 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		}
 
 		return infoFieldSetEntries;
+	}
+
+	private String _getInfoItemIdentifier(InfoItemReference infoItemReference) {
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
+			return String.valueOf(classPKInfoItemIdentifier.getClassPK());
+		}
+
+		if (infoItemIdentifier instanceof ERCInfoItemIdentifier) {
+			ERCInfoItemIdentifier ercInfoItemIdentifier =
+				(ERCInfoItemIdentifier)infoItemIdentifier;
+
+			return ercInfoItemIdentifier.getExternalReferenceCode();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private String _getUniqueId(String layoutPageTemplateEntryKey) {

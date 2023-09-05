@@ -7,6 +7,8 @@ package com.liferay.asset.display.page.internal.portlet;
 
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
@@ -17,6 +19,7 @@ import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -51,13 +54,20 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 			return null;
 		}
 
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			new ClassPKInfoItemIdentifier(GetterUtil.getLong(parts[3]));
+		InfoItemIdentifier infoItemIdentifier = null;
+
+		if (Validator.isNumber(parts[3])) {
+			infoItemIdentifier = new ClassPKInfoItemIdentifier(
+				GetterUtil.getLong(parts[3]));
+		}
+		else {
+			infoItemIdentifier = new ERCInfoItemIdentifier(parts[3]);
+		}
 
 		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 			new InfoItemReference(
 				_portal.getClassName(GetterUtil.getLong(parts[2])),
-				classPKInfoItemIdentifier));
+				infoItemIdentifier));
 	}
 
 	@Override

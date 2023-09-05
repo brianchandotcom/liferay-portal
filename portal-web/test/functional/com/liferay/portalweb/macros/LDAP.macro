@@ -2,9 +2,13 @@ definition {
 
 	@description = "Add Apache DS server and test the connection between it and Liferay DXP"
 	macro addLDAPServerAndTestConnection {
-		PortalSettings.addLDAPServer(ldapServerName = ${ldapServerName});
+		PortalSettings.addLDAPServer(
+			baseURL = ${baseURL},
+			ldapServerName = ${ldapServerName});
 
-		PortalSettings.editLDAPServer(ldapServerName = ${ldapServerName});
+		PortalSettings.editLDAPServer(
+			baseURL = ${baseURL},
+			ldapServerName = ${ldapServerName});
 
 		PortalSettings.testLDAPConnection();
 	}
@@ -43,9 +47,13 @@ definition {
 
 	@description = "Enable various LDAP related settings"
 	macro enableLDAPSettings {
-		PortalSettings.configureLDAPSetting(enableSettingList = ${enableSettingList});
+		PortalSettings.configureLDAPSetting(
+			baseURL = ${baseURL},
+			enableSettingList = ${enableSettingList});
 
-		PortalSettings.viewEnabledLDAPSetting(enableSettingList = ${enableSettingList});
+		PortalSettings.viewEnabledLDAPSetting(
+			baseURL = ${baseURL},
+			enableSettingList = ${enableSettingList});
 	}
 
 	@description = "Import an LDIF file on LDAP then trigger the import manually with a groovy script"

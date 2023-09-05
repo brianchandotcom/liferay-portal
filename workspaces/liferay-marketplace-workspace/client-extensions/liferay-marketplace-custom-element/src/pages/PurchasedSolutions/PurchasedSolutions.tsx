@@ -3,50 +3,53 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
-import DropDown from '@clayui/drop-down';
-import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
-import ClayLink from '@clayui/link';
-import {InputHTMLAttributes, useEffect, useMemo, useState} from 'react';
-import {useForm} from 'react-hook-form';
-import {z} from 'zod';
+import ClayButton from "@clayui/button";
+import DropDown from "@clayui/drop-down";
+import ClayForm, { ClayCheckbox, ClayInput } from "@clayui/form";
+import ClayIcon from "@clayui/icon";
+import ClayLink from "@clayui/link";
+import { InputHTMLAttributes, useEffect, useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-import {Header} from '../../components/Header/Header';
-import BaseWrapper from '../../components/Input/base/BaseWrapper';
-import zodSchema, {zodResolver} from '../../schema/zod';
+import { Header } from "../../components/Header/Header";
+import BaseWrapper from "../../components/Input/base/BaseWrapper";
+import zodSchema, { zodResolver } from "../../schema/zod";
 import {
 	getAccountInfo,
 	getListTypeDefinitionByExternalReferenceCode,
 	getProductById,
 	getProductSKU,
+	getProductSpecifications,
 	getUserAccount,
 	postAccountByERCUserAccountByERC,
-} from '../../utils/api';
+} from "../../utils/api";
 
-import './PurchasedSolutions.scss';
+import "./PurchasedSolutions.scss";
 
-import ClayAlert, {DisplayType} from '@clayui/alert';
-import ClaySticker from '@clayui/sticker';
+import ClayAlert, { DisplayType } from "@clayui/alert";
+import ClaySticker from "@clayui/sticker";
 
-import emptyPictureIcon from '../../assets/icons/avatar.svg';
-import Select from '../../components/Select/Select';
-import fetcher from '../../services/fetcher';
-import CreatedProjectCard from './CreatedProjectCard';
-import PurchasedSolutionsAccountSelection from './PurchasedSolutionsAccountSelection';
-import {getPhones} from './PurchasedSolutionsUtil';
+import emptyPictureIcon from "../../assets/icons/avatar.svg";
+import { getSiteURL } from "../../components/InviteMemberModal/services";
+import Select from "../../components/Select/Select";
+import { Liferay } from "../../liferay/liferay";
+import fetcher from "../../services/fetcher";
+import CreatedProjectCard from "./CreatedProjectCard";
+import PurchasedSolutionsAccountSelection from "./PurchasedSolutionsAccountSelection";
+import { getPhones } from "./PurchasedSolutionsUtil";
 
 type Steps = {
 	page:
-		| 'accountCreation'
-		| 'accountSelection'
-		| 'initialStep'
-		| 'projectCreated';
+		| "accountCreation"
+		| "accountSelection"
+		| "initialStep"
+		| "projectCreated";
 };
 
 const accountTypes = {
-	BUSINESS: 'business',
-	PERSON: 'person',
+	BUSINESS: "business",
+	PERSON: "person",
 };
 
 export type UserForm = z.infer<typeof zodSchema.accountCreator>;
@@ -60,14 +63,13 @@ type InputProps = {
 	id?: string;
 	label?: string;
 	name: string;
-	options?: {label: string; value: string} | [];
+	options?: { label: string; value: string } | [];
 	register?: any;
 	required?: boolean;
 	type?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const {origin} = window.location;
-const externalReferenceCode = 'INDUSTRIES';
+const externalReferenceCode = "INDUSTRIES";
 
 const Input: React.FC<InputProps> = ({
 	boldLabel,
@@ -97,14 +99,14 @@ const Input: React.FC<InputProps> = ({
 		>
 			<ClayInput
 				className={`rounded-xs ${className}`}
-				component={type === 'textarea' ? 'textarea' : 'input'}
+				component={type === "textarea" ? "textarea" : "input"}
 				disabled={disabled}
 				id={id}
 				name={name}
 				type={type}
 				value={value}
 				{...otherProps}
-				{...register(name, {onBlur, required})}
+				{...register(name, { onBlur, required })}
 			/>
 		</BaseWrapper>
 	);
@@ -115,15 +117,14 @@ const PurchasedSolutions: React.FC = () => {
 
 	const urlParams = new URLSearchParams(queryString);
 
-	const productId = Number(urlParams.get('productId')) + 1;
+	const productId = Number(urlParams.get("productId")) + 1;
 
-	const [step, setStep] = useState<Steps>({page: 'initialStep'});
+	const [step, setStep] = useState<Steps>({ page: "initialStep" });
 	const [phonesFlags, setPhonesFlags] = useState<PhonesFlags[]>();
 	const [currentPhonesFlags, setCurrentPhonesFlags] = useState({
-		code: '+1',
-		flag: 'en-us',
+		code: "+1",
+		flag: "en-us",
 	});
-
 	const [product, setProduct] = useState<Product>();
 	const [sku, setSku] = useState<number>();
 	const [currentUserAccount, setCurrentUserAccount] = useState<UserAccount>();
@@ -132,20 +133,23 @@ const PurchasedSolutions: React.FC = () => {
 	const [order, setOrder] = useState<OrderInfo>();
 	const [disabledButton, setDisabledButton] = useState<boolean>(false);
 	const [toastItems, setToastItems] = useState<
-		{message: string; title?: string; type: DisplayType}[]
+		{ message: string; title?: string; type: DisplayType }[]
 	>([]);
+	const [specifications, setSpecifications] =
+		useState<ProductSpecification[]>();
 
 	const renderToast = (message: string, title: string, type: DisplayType) => {
-		setToastItems([...toastItems, {message, title, type}]);
+		setToastItems([...toastItems, { message, title, type }]);
 	};
 
 	useEffect(() => {
 		(async () => {
 			setCurrentUserAccount(await getUserAccount());
 
-			const insdustriesListTypeEntries = await getListTypeDefinitionByExternalReferenceCode(
-				externalReferenceCode
-			);
+			const insdustriesListTypeEntries =
+				await getListTypeDefinitionByExternalReferenceCode(
+					externalReferenceCode,
+				);
 
 			setIndustries(insdustriesListTypeEntries?.listTypeEntries);
 
@@ -153,15 +157,20 @@ const PurchasedSolutions: React.FC = () => {
 				appProductId: Number(productId),
 			});
 
+			const specifications = await getProductSpecifications({
+				appProductId: productId,
+			});
+
+			setSpecifications(specifications);
+
 			if (!skuProduct.items[0] || productId === 1 || productId === null) {
 				setDisabledButton(true);
 				renderToast(
 					`We are unable to start your trial. Please contact our sales team via email - sales@liferay.com`,
-					'',
-					'danger'
+					"",
+					"danger",
 				);
-			}
-			else {
+			} else {
 				const productById = await getProductById(Number(productId));
 				setSku(skuProduct.items[0].id);
 				setProduct(productById);
@@ -176,7 +185,7 @@ const PurchasedSolutions: React.FC = () => {
 
 	const accountBriefs = useMemo(
 		() => currentUserAccount?.accountBriefs || [],
-		[currentUserAccount?.accountBriefs]
+		[currentUserAccount?.accountBriefs],
 	);
 
 	useEffect(() => {
@@ -199,14 +208,14 @@ const PurchasedSolutions: React.FC = () => {
 			setAccounts(accounts);
 
 			const hasPersonAccount = accounts.some(
-				(account) => account.type === accountTypes.PERSON
+				(account) => account.type === accountTypes.PERSON,
 			);
 
 			const getAccountInfo = () => {
 				let accountInfo;
 
 				for (const account of accounts) {
-					if (account.type === 'person') {
+					if (account.type === "person") {
 						accountInfo = account;
 					}
 				}
@@ -215,17 +224,17 @@ const PurchasedSolutions: React.FC = () => {
 			};
 
 			const account = getAccountInfo();
-			setOrder({account, product, sku});
+			setOrder({ account, product, sku, specifications });
 
 			const pageDefault = hasPersonAccount
-				? 'accountSelection'
-				: 'accountCreation';
-			setStep({page: pageDefault});
+				? "accountSelection"
+				: "accountCreation";
+			setStep({ page: pageDefault });
 		})();
-	}, [accountBriefs, product, sku]);
+	}, [accountBriefs, product, sku, specifications]);
 
 	const {
-		formState: {errors},
+		formState: { errors },
 		handleSubmit,
 		register,
 		setValue,
@@ -233,13 +242,13 @@ const PurchasedSolutions: React.FC = () => {
 	} = useForm<UserForm>({
 		defaultValues: {
 			agreeToTermsAndConditions: false,
-			companyName: '',
-			emailAddress: '',
-			extension: '',
-			familyName: '',
-			givenName: '',
-			industry: '',
-			phone: {code: '+1', flag: 'en-us'},
+			companyName: "",
+			emailAddress: "",
+			extension: "",
+			familyName: "",
+			givenName: "",
+			industry: "",
+			phone: { code: "+1", flag: "en-us" },
 			phoneNumber: undefined,
 		},
 		resolver: zodResolver(zodSchema.accountCreator),
@@ -247,10 +256,10 @@ const PurchasedSolutions: React.FC = () => {
 
 	useEffect(() => {
 		if (currentUserAccount) {
-			const {emailAddress, familyName, givenName} = currentUserAccount;
-			setValue('emailAddress', emailAddress || '');
-			setValue('givenName', givenName || '');
-			setValue('familyName', familyName || '');
+			const { emailAddress, familyName, givenName } = currentUserAccount;
+			setValue("emailAddress", emailAddress || "");
+			setValue("givenName", givenName || "");
+			setValue("familyName", familyName || "");
 		}
 	}, [currentUserAccount, setValue]);
 
@@ -258,11 +267,11 @@ const PurchasedSolutions: React.FC = () => {
 		if (currentUserAccount) {
 			await postAccountByERCUserAccountByERC(
 				data?.externalReferenceCode,
-				currentUserAccount.externalReferenceCode
+				currentUserAccount.externalReferenceCode,
 			);
 
 			setCurrentUserAccount(await getUserAccount());
-			setStep({page: 'accountSelection'});
+			setStep({ page: "accountSelection" });
 		}
 	};
 
@@ -275,26 +284,26 @@ const PurchasedSolutions: React.FC = () => {
 						customValue: {
 							data: form.industry,
 						},
-						name: 'Industry',
+						name: "Industry",
 					},
 					{
 						customValue: {
 							data: `${form.phone.code} ${form.phoneNumber} ${form.extension}`,
 						},
-						name: 'Contact Phone',
+						name: "Contact Phone",
 					},
 					{
 						customValue: {
 							data: `${form.emailAddress}`,
 						},
-						name: 'Contact Email',
+						name: "Contact Email",
 					},
 				],
 				externalReferenceCode: `ACCOUNT${form.givenName}${form.familyName}`,
 				name: `${form.givenName} ${form.familyName}`,
 				type: accountTypes.PERSON,
 			}),
-			method: 'POST',
+			method: "POST",
 		})
 			.then(async (response) => {
 				return response;
@@ -304,7 +313,7 @@ const PurchasedSolutions: React.FC = () => {
 
 		await addUserAccountInAccount(response);
 
-		setOrder({account: form, product, sku});
+		setOrder({ account: form, product, sku, specifications });
 	};
 
 	const inputProps = {
@@ -313,12 +322,12 @@ const PurchasedSolutions: React.FC = () => {
 		required: true,
 	};
 
-	const agreeToTermsAndConditions = watch('agreeToTermsAndConditions');
+	const agreeToTermsAndConditions = watch("agreeToTermsAndConditions");
 
 	return (
 		<>
 			<div className="align-items-center d-flex flex-column justify-content-center purchased-solutions">
-				{step.page !== 'projectCreated' && (
+				{step.page !== "projectCreated" && (
 					<div className="product-card">
 						<div className="mr-5">
 							{!product ? (
@@ -337,22 +346,17 @@ const PurchasedSolutions: React.FC = () => {
 							<span className="mr-2">{product?.name?.en_US}</span>
 
 							<span>
-								<ClayLink className="font-weight-bold">
-									Trial
-								</ClayLink>
+								<ClayLink className="font-weight-bold">Trial</ClayLink>
 							</span>
 						</h2>
 					</div>
 				)}
 
 				<div>
-					{step?.page === 'accountCreation' && (
+					{step?.page === "accountCreation" && (
 						<div className="align-items-center d-flex flex-column justify-content-center purchased-solutions-container">
 							<div className="border p-8 purchased-solutions-body rounded">
-								<Header
-									description
-									title="Marketplace Account Creation"
-								/>
+								<Header description title="Marketplace Account Creation" />
 
 								<ClayForm>
 									<div className="align-items-baseline d-flex">
@@ -437,10 +441,7 @@ const PurchasedSolutions: React.FC = () => {
 												/>
 											</div>
 
-											<label
-												className="required"
-												htmlFor="phone"
-											>
+											<label className="required" htmlFor="phone">
 												Phone
 											</label>
 
@@ -448,61 +449,49 @@ const PurchasedSolutions: React.FC = () => {
 												<div className="col-3 pl-0">
 													<DropDown
 														closeOnClick
-														items={phonesFlags}
 														trigger={
 															<div className="align-items-center custom-select d-flex form-control p-2 rounded-xs">
 																<ClayIcon
 																	className="mr-2"
-																	symbol={
-																		currentPhonesFlags.flag
-																	}
+																	symbol={currentPhonesFlags.flag}
 																/>
 
-																{
-																	currentPhonesFlags.code
-																}
+																{currentPhonesFlags.code}
 															</div>
 														}
 													>
-														{(item) => (
-															<DropDown.Item
-																onClick={() => {
-																	setCurrentPhonesFlags(
-																		{
-																			code:
-																				item.code,
-																			flag:
-																				item.flag,
-																		}
-																	);
+														<DropDown.ItemList items={phonesFlags}>
+															{(item) => {
+																const itemList = item as PhonesFlags;
 
-																	setValue(
-																		'phone',
-																		{
-																			code:
-																				item.code,
-																			flag:
-																				item.flag,
-																		}
-																	);
-																}}
-															>
-																<ClayIcon
-																	className="mr-2"
-																	symbol={
-																		item.flag
-																	}
-																/>
+																return (
+																	<DropDown.Item
+																		onClick={() => {
+																			setCurrentPhonesFlags({
+																				code: itemList.code,
+																				flag: itemList.flag,
+																			});
 
-																{item.code}
-															</DropDown.Item>
-														)}
+																			setValue("phone", {
+																				code: itemList.code,
+																				flag: itemList.flag,
+																			});
+																		}}
+																	>
+																		<ClayIcon
+																			className="mr-2"
+																			symbol={itemList.flag}
+																		/>
+
+																		{itemList.code}
+																	</DropDown.Item>
+																);
+															}}
+														</DropDown.ItemList>
 													</DropDown>
 
 													<div className="form-feedback-group">
-														<div className="form-text">
-															Intl. code
-														</div>
+														<div className="form-text">Intl. code</div>
 													</div>
 												</div>
 
@@ -541,15 +530,13 @@ const PurchasedSolutions: React.FC = () => {
 												</label>
 
 												<ClayCheckbox
-													checked={
-														agreeToTermsAndConditions
-													}
+													checked={agreeToTermsAndConditions}
 													className="danger"
 													id="newsSubscription"
 													onChange={() =>
 														setValue(
-															'agreeToTermsAndConditions',
-															!agreeToTermsAndConditions
+															"agreeToTermsAndConditions",
+															!agreeToTermsAndConditions,
 														)
 													}
 												/>
@@ -562,7 +549,7 @@ const PurchasedSolutions: React.FC = () => {
 													<ClayButton
 														displayType="unstyled"
 														onClick={() => {
-															window.location.href = origin;
+															window.location.href = `${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/solutions-marketplace`;
 														}}
 													>
 														Cancel
@@ -571,12 +558,9 @@ const PurchasedSolutions: React.FC = () => {
 
 												<ClayButton
 													disabled={
-														!agreeToTermsAndConditions ||
-														disabledButton
+														!agreeToTermsAndConditions || disabledButton
 													}
-													onClick={handleSubmit(
-														_submit
-													)}
+													onClick={handleSubmit(_submit)}
 												>
 													Continue
 												</ClayButton>
@@ -588,7 +572,7 @@ const PurchasedSolutions: React.FC = () => {
 						</div>
 					)}
 
-					{step?.page === 'accountSelection' && (
+					{step?.page === "accountSelection" && (
 						<PurchasedSolutionsAccountSelection
 							accounts={accounts}
 							currentUserAccount={currentUserAccount}
@@ -597,7 +581,7 @@ const PurchasedSolutions: React.FC = () => {
 						/>
 					)}
 
-					{step?.page === 'projectCreated' && (
+					{step?.page === "projectCreated" && (
 						<CreatedProjectCard product={product} />
 					)}
 				</div>
@@ -610,7 +594,7 @@ const PurchasedSolutions: React.FC = () => {
 						key={index}
 						onClose={() => {
 							setToastItems((prevItems) =>
-								prevItems.filter((item) => item !== alert)
+								prevItems.filter((item) => item !== alert),
 							);
 						}}
 						title={alert.title}

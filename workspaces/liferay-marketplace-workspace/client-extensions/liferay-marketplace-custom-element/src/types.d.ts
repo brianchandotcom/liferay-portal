@@ -454,6 +454,7 @@ type OrderInfo = {
 	account: Account | UserForm;
 	product?: Product;
 	sku?: number;
+	specifications?: ProductSpecification[];
 };
 
 type RadioOption = {

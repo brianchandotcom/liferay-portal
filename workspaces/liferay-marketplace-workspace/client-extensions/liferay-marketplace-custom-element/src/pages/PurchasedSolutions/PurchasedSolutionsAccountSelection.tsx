@@ -63,6 +63,13 @@ const PurchasedSolutionsAccountSelection: React.FC<PurchasedSolutionsccountSelec
 		type: '',
 	});
 
+	const trialLenght =
+		orderInfo?.specifications &&
+		orderInfo?.specifications?.find(
+			(specification) =>
+				specification?.specificationKey === 'trial-length'
+		);
+
 	const renderToastMessage = () => {
 		renderToast(
 			'We are unable to start your trial. Please contact our sales team via email - sales@liferay.com',
@@ -77,10 +84,11 @@ const PurchasedSolutionsAccountSelection: React.FC<PurchasedSolutionsccountSelec
 
 	const findOrderTypeByName = (
 		orderTypes: OrderType[],
-		nameOrderType: string
+		nameOrderType = 'SOLUTIONS7'
 	) => {
 		return orderTypes.find(
-			({name}: OrderType) => name['en_US'] === nameOrderType
+			({externalReferenceCode}: OrderType) =>
+				externalReferenceCode === nameOrderType
 		);
 	};
 
@@ -88,7 +96,7 @@ const PurchasedSolutionsAccountSelection: React.FC<PurchasedSolutionsccountSelec
 		const channels = await getChannels();
 		const orderTypes = await getOrderTypes();
 
-		if (!channels.length || !orderTypes.length || !orderInfo?.sku) {
+		if (!channels.length || !orderTypes.length) {
 			setDisabledButton(true);
 
 			renderToastMessage();
@@ -102,7 +110,7 @@ const PurchasedSolutionsAccountSelection: React.FC<PurchasedSolutionsccountSelec
 
 		const projectOrderType = findOrderTypeByName(
 			orderTypes,
-			'Solutions - 30 day trial'
+			trialLenght?.value?.en_US as string
 		);
 
 		setOrderType(projectOrderType);
@@ -111,7 +119,7 @@ const PurchasedSolutionsAccountSelection: React.FC<PurchasedSolutionsccountSelec
 	useEffect(() => {
 		fetchDataAndSetState();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [trialLenght]);
 
 	const customFields =
 		orderInfo?.product?.customFields?.filter((item) =>
@@ -156,6 +164,7 @@ const PurchasedSolutionsAccountSelection: React.FC<PurchasedSolutionsccountSelec
 				},
 			],
 			orderStatus: 1,
+			orderTypeExternalReferenceCode: orderType?.externalReferenceCode,
 			orderTypeId: Number(orderType?.id),
 			shippingAmount: 0,
 			shippingWithTaxAmount: 0,
@@ -271,7 +280,9 @@ const PurchasedSolutionsAccountSelection: React.FC<PurchasedSolutionsccountSelec
 
 									<ClayButton
 										disabled={
-											!radio?.value || disabledButton
+											!radio?.value ||
+											disabledButton ||
+											!orderInfo?.sku
 										}
 										onClick={() =>
 											orderInfo?.sku && onsubmit()

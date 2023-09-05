@@ -73,7 +73,9 @@ public class ImportMVCResourceCommandTest {
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void testImportFragmentEntriesWithDoNotOverwriteStrategy()
+		throws Exception {
+
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_importFragmentEntries",
 			new Class<?>[] {

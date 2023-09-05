@@ -137,10 +137,20 @@ function DetailPanel({badge, children, title}) {
 						{badge ? (
 							<ClayLayout.ContentCol>
 								<ClayBadge
+									aria-hidden={true}
 									displayType={badge.type}
 									label={badge.label}
 									title={badge.title}
 								/>
+
+								<span className="sr-only">
+									{sub(
+										Liferay.Language.get(
+											'number-of-warnings-x'
+										),
+										badge.label
+									)}
+								</span>
 							</ClayLayout.ContentCol>
 						) : null}
 					</ClayLayout.ContentRow>

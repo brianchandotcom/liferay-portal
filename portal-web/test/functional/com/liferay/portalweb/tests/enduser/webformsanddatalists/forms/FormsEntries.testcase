@@ -227,7 +227,7 @@ definition {
 				fieldLabel = "Text",
 				fieldValue = "Test Text");
 
-			FormsAdmin.deleteFormEntry(formEntryValue = "Text");
+			FormsAdmin.deleteForm(formName = "Text");
 		}
 
 		task ("Then the entry no longer exists") {

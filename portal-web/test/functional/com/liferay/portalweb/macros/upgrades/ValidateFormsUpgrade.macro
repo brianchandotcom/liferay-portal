@@ -320,7 +320,7 @@ definition {
 
 		FormsAdminNavigator.gotoViewEntries();
 
-		FormsAdmin.deleteFormEntry(formEntryValue = "Option 1");
+		FormsAdmin.deleteForm(formName = "Option 1");
 
 		FormsAdmin.viewNoFormEntries();
 	}

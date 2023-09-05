@@ -6,17 +6,9 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.web.internal.upload.FragmentEntryPreviewImageEditorUploadFileEntryHandler;
-import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.upload.UploadHandler;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -29,27 +21,5 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class UploadFragmentEntryPreviewMVCActionCommand
-	extends BaseMVCActionCommand {
-
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		_uploadHandler.upload(
-			_fragmentEntryPreviewImageEditorUploadFileEntryHandler,
-			_itemSelectorUploadResponseHandler, actionRequest, actionResponse);
-	}
-
-	@Reference
-	private FragmentEntryPreviewImageEditorUploadFileEntryHandler
-		_fragmentEntryPreviewImageEditorUploadFileEntryHandler;
-
-	@Reference
-	private ItemSelectorUploadResponseHandler
-		_itemSelectorUploadResponseHandler;
-
-	@Reference
-	private UploadHandler _uploadHandler;
-
+	extends UploadFragmentCompositionPreviewMVCActionCommand {
 }

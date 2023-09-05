@@ -758,7 +758,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldNameException.MustNotBeDuplicate.class,
 			"Duplicate name able",
 			() -> _objectFieldLocalService.addSystemObjectField(
-				TestPropsValues.getUserId(),
+				TestPropsValues.getUserId(), 0,
 				objectDefinition.getObjectDefinitionId(),
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),

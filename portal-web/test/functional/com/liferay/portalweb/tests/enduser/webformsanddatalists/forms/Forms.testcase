@@ -627,7 +627,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		FormsAdmin.viewNoFormEntries();
+		FormsAdmin.viewNoForms();
 	}
 
 	@description = "Verify that a Form can be duplicated"

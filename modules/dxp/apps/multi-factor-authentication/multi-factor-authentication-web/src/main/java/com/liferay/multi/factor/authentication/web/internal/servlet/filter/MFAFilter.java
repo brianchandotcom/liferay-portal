@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"after-filter=MFA Servlet Filter", "dispatcher=FORWARD",
+		"dispatcher=FORWARD",
 		"dispatcher=REQUEST", "servlet-context-name=",
 		"servlet-filter-name=MFA Filter",
 		"url-pattern=/c/portal/update_password*"

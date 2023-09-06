@@ -8,6 +8,7 @@ import Summary from '../../summary/Summary';
 import CartItem from '../CartItem';
 import CartItemsList from '../CartItemsList';
 import CartItemsListActions from '../CartItemsListActions';
+import EditItem from '../EditItem';
 import Header from '../Header';
 import Opener from '../Opener';
 import OrderButton from '../OrderButton';
@@ -15,6 +16,7 @@ import RequestQuoteButton from '../RequestQuoteButton';
 import Wrapper from '../Wrapper';
 import {
 	CART,
+	EDIT_ITEM,
 	HEADER,
 	ITEM,
 	ITEMS_LIST,
@@ -27,6 +29,7 @@ import {
 
 export const DEFAULT_VIEWS = {
 	[CART]: {component: Wrapper},
+	[EDIT_ITEM]: {component: EditItem},
 	[HEADER]: {component: Header},
 	[ITEM]: {component: CartItem},
 	[ITEMS_LIST]: {component: CartItemsList},

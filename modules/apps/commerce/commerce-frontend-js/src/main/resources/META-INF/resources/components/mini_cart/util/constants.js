@@ -48,6 +48,7 @@ export const REMOVAL_CANCELING_TIMEOUT = 700;
  * Cart component types keys constants
  */
 export const CART = 'Cart';
+export const EDIT_ITEM = 'EditItem';
 export const HEADER = 'Header';
 export const ITEM = 'Item';
 export const ITEMS_LIST = 'ItemsList';

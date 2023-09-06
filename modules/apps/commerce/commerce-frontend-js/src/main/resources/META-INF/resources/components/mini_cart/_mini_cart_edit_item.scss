@@ -1,0 +1,17 @@
+$border: 1px solid rgba(180, 187, 201, 0.2);
+
+.mini-cart-edit-item {
+	background-color: $white;
+
+	.mini-cart {
+		&-header {
+			border-bottom: $border;
+			height: 60px;
+		}
+
+		&-footer {
+			border-top: $border;
+			height: 54px;
+		}
+	}
+}

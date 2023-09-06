@@ -8,6 +8,8 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.StatsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.StatsIndexResponse;
@@ -38,7 +40,13 @@ public class StatsIndexRequestExecutorImpl
 
 		RestClient restClient = restHighLevelClient.getLowLevelClient();
 
-		String endpoint = "/liferay-20096/_stats";
+		String indexes = "_all";
+
+		if (ArrayUtil.isNotEmpty(statsIndexRequest.getIndexNames())) {
+			indexes = StringUtil.merge(statsIndexRequest.getIndexNames());
+		}
+
+		String endpoint = "/" + indexes + "/_stats";
 
 		Request request = new Request("GET", endpoint);
 

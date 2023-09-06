@@ -30,6 +30,11 @@
 	<td>//*[contains(@class, 'header-container')]//*[contains(text(), '${key_header}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>INVITED_MEMBER</td>
+	<td>//span[text()='${key_name}']/following::span[text()='Invited']</td>
+	<td></td>
+</tr>
 
 </tbody>
 </table>

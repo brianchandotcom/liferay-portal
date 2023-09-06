@@ -77,3 +77,28 @@ definition {
 				locator1 = "MP2Dashboards#HEADER");
 		}
 	}
+
+	@description = "LPS-174844 | After inviting a member, the Administrator is able to see the new member listed in the user list, greyed out and with an “Invited” tag."
+	@priority = 3
+	test AssertNewMemberListedAndGreyedOut {
+		task ("Given that the user goes to the Customer Dashboard page") {
+			MP2Navigator.openSitePage(pageName = "Customer Dashboard");
+		}
+
+		task ("When the user invites a new member") {
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "Account Administrator",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+		}
+
+		task ("Then the admin user should be able to see the new member listed in the user list, greyed out and with an “Invited” tag.") {
+			AssertElementPresent(
+				key_name = "Test QA",
+				locator1 = "MP2Dashboards#INVITED_MEMBER");
+		}
+	}

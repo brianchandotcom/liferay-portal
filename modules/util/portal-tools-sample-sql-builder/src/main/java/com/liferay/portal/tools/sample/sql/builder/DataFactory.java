@@ -6649,6 +6649,7 @@ public class DataFactory {
 		mbCategoryModel.setName("Test Category " + index);
 		mbCategoryModel.setDisplayStyle(
 			MBCategoryConstants.DEFAULT_DISPLAY_STYLE);
+		mbCategoryModel.setFriendlyURL("test-category-" + index);
 		mbCategoryModel.setLastPublishDate(new Date());
 		mbCategoryModel.setStatusDate(new Date());
 

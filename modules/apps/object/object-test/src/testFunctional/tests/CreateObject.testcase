@@ -8350,6 +8350,10 @@ definition {
 		AssertElementNotPresent(
 			key_entryName = "Entry A",
 			locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
+
+		AssertElementPresent(
+			key_entryName = "Entry B",
+			locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
 	}
 
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed to be selected for a Page fragment when the parent object is inactivated"

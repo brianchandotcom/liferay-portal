@@ -377,7 +377,7 @@ definition {
 			objectName = "CustomObject213",
 			value = "Entry Test");
 
-		FormsAdminNavigator.enableLocalNetworkDataProvider();
+		FormsAdmin.enableLocalNetworkDataProvider();
 
 		FormsAdminNavigator.gotoRESTDataProvider();
 
@@ -446,7 +446,7 @@ definition {
 			objectName = "CustomObject214",
 			value = "Entry Test");
 
-		FormsAdminNavigator.enableLocalNetworkDataProvider();
+		FormsAdmin.enableLocalNetworkDataProvider();
 
 		FormsAdminNavigator.gotoRESTDataProvider();
 

@@ -1215,7 +1215,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		FormsAdminNavigator.enableLocalNetworkDataProvider();
+		FormsAdmin.enableLocalNetworkDataProvider();
 
 		FormsAdminNavigator.gotoRESTDataProvider();
 

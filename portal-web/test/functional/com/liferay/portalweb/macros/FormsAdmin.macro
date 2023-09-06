@@ -191,7 +191,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro enableLocalNetworkDataProvider {		
+	macro enableLocalNetworkDataProvider {
 		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.dynamic.data.mapping.data.provider.configuration.DDMDataProviderConfiguration");
 
 		WaitForElementPresent(

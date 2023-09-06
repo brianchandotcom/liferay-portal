@@ -37,7 +37,7 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
-		FormsAdminNavigator.enableLocalNetworkDataProvider();
+		FormsAdmin.enableLocalNetworkDataProvider();
 
 		FormsAdminNavigator.gotoRESTDataProvider(groupName = "Site Name");
 

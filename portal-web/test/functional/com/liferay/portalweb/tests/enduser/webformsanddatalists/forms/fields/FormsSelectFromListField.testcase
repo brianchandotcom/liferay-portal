@@ -469,7 +469,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		FormsAdminNavigator.enableLocalNetworkDataProvider();
+		FormsAdmin.enableLocalNetworkDataProvider();
 
 		FormsAdminNavigator.gotoRESTDataProvider();
 
@@ -557,7 +557,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		FormsAdminNavigator.enableLocalNetworkDataProvider();
+		FormsAdmin.enableLocalNetworkDataProvider();
 
 		FormsAdminNavigator.gotoRESTDataProvider();
 
@@ -785,7 +785,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given that Access Local Network and Trust Self Signed Certificates is enabled") {
-			FormsAdminNavigator.enableLocalNetworkDataProvider();
+			FormsAdmin.enableLocalNetworkDataProvider();
 
 			Click(
 				key_checkboxOption = "Trust Self Signed Certificates",

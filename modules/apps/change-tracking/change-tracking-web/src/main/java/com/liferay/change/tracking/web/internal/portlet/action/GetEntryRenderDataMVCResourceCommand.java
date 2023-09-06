@@ -53,10 +53,13 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.model.SegmentsExperienceModel;
 import com.liferay.segments.model.SegmentsExperienceTable;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -686,12 +689,34 @@ public class GetEntryRenderDataMVCResourceCommand
 			JSONArray segmentsExperienceJSONArray =
 				_jsonFactory.createJSONArray();
 
+			List<SegmentsExperience> modifiableSegmentsExperienceList =
+				new ArrayList<>(segmentsExperienceList);
+
+			modifiableSegmentsExperienceList.sort(
+				Comparator.comparingInt(SegmentsExperienceModel::getPriority));
+
+			SegmentsExperience highestPrioritySegmentsExperience =
+				modifiableSegmentsExperienceList.get(
+					modifiableSegmentsExperienceList.size() - 1);
+
+			long highestPrioritySegmentsExperienceId =
+				highestPrioritySegmentsExperience.getSegmentsExperienceId();
+
 			for (SegmentsExperience segmentsExperience :
-					segmentsExperienceList) {
+					modifiableSegmentsExperienceList) {
 
 				segmentsExperienceJSONArray.put(
 					JSONUtil.put(
-						"active", segmentsExperience.getActive()
+						"active",
+						() -> {
+							if (segmentsExperience.getSegmentsExperienceId() ==
+									highestPrioritySegmentsExperienceId) {
+
+								return true;
+							}
+
+							return false;
+						}
 					).put(
 						"id", segmentsExperience.getSegmentsExperienceId()
 					).put(
@@ -720,6 +745,15 @@ public class GetEntryRenderDataMVCResourceCommand
 								httpServletRequest.getLocale());
 						}
 					));
+
+				if (segmentsExperience.getSegmentsExperienceId() ==
+						highestPrioritySegmentsExperienceId) {
+
+					jsonObject.put(
+						"activeSegmentsExperience",
+						segmentsExperienceJSONArray.get(
+							segmentsExperienceJSONArray.length() - 1));
+				}
 			}
 
 			jsonObject.put("userExperiences", segmentsExperienceJSONArray);

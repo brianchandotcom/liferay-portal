@@ -15,8 +15,8 @@ interface EditRelationshipProps {
 	hasUpdateObjectDefinitionPermission: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	objectRelationship: ObjectRelationship;
-	parameterEndpoint: string;
 	parameterRequired: boolean;
+	restContextPath: string;
 }
 export default function EditRelationship({
 	baseResourceURL,
@@ -24,7 +24,7 @@ export default function EditRelationship({
 	hasUpdateObjectDefinitionPermission,
 	objectDefinitionExternalReferenceCode,
 	objectRelationship: initialValues,
-	parameterEndpoint,
 	parameterRequired,
+	restContextPath,
 }: EditRelationshipProps): JSX.Element;
 export {};

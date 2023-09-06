@@ -29,9 +29,9 @@ ObjectRelationship objectRelationship = (ObjectRelationship)request.getAttribute
 		).put(
 			"objectRelationship", objectDefinitionsRelationshipsDisplayContext.getObjectRelationshipJSONObject(objectRelationship)
 		).put(
-			"parameterEndpoint", objectDefinitionsRelationshipsDisplayContext.getRESTContextPath(objectDefinition)
-		).put(
 			"parameterRequired", objectDefinitionsRelationshipsDisplayContext.isParameterRequired(objectDefinition)
+		).put(
+			"restContextPath", objectDefinitionsRelationshipsDisplayContext.getRESTContextPath(objectDefinition)
 		).build()
 	%>'
 />

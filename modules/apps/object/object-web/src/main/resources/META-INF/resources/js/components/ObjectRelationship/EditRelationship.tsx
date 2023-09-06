@@ -34,8 +34,8 @@ interface EditRelationshipProps {
 	hasUpdateObjectDefinitionPermission: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	objectRelationship: ObjectRelationship;
-	parameterEndpoint: string;
 	parameterRequired: boolean;
+	restContextPath: string;
 }
 
 export default function EditRelationship({
@@ -44,8 +44,8 @@ export default function EditRelationship({
 	hasUpdateObjectDefinitionPermission,
 	objectDefinitionExternalReferenceCode,
 	objectRelationship: initialValues,
-	parameterEndpoint,
 	parameterRequired,
+	restContextPath,
 }: EditRelationshipProps) {
 	const onSubmit = async (objectRelationship: ObjectRelationship) => {
 		try {
@@ -143,7 +143,7 @@ export default function EditRelationship({
 						<Input
 							label={Liferay.Language.get('api-endpoint')}
 							readOnly
-							value={parameterEndpoint}
+							value={restContextPath}
 						/>
 
 						<SelectRelationship

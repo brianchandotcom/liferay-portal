@@ -694,16 +694,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				{
 					settings = new Settings() {
 						{
-							setGlobalJSClientExtensions(
-								new ClientExtension[] {
-									new ClientExtension() {
-										{
-											externalReferenceCode =
-												globalCSSClientExtensionEntry.
-													getExternalReferenceCode();
-										}
+							globalJSClientExtensions = new ClientExtension[] {
+								new ClientExtension() {
+									{
+										externalReferenceCode =
+											globalCSSClientExtensionEntry.
+												getExternalReferenceCode();
 									}
-								});
+								}
+							};
 						}
 					};
 				}
@@ -1011,26 +1010,24 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				{
 					settings = new Settings() {
 						{
-							setGlobalCSSClientExtensions(
-								new ClientExtension[] {
-									new ClientExtension() {
-										{
-											externalReferenceCode =
-												globalCSSClientExtensionEntry.
-													getExternalReferenceCode();
-										}
+							globalCSSClientExtensions = new ClientExtension[] {
+								new ClientExtension() {
+									{
+										externalReferenceCode =
+											globalCSSClientExtensionEntry.
+												getExternalReferenceCode();
 									}
-								});
-							setGlobalJSClientExtensions(
-								new ClientExtension[] {
-									new ClientExtension() {
-										{
-											externalReferenceCode =
-												globalJSClientExtensionEntry.
-													getExternalReferenceCode();
-										}
+								}
+							};
+							globalJSClientExtensions = new ClientExtension[] {
+								new ClientExtension() {
+									{
+										externalReferenceCode =
+											globalJSClientExtensionEntry.
+												getExternalReferenceCode();
 									}
-								});
+								}
+							};
 						}
 					};
 				}
@@ -1080,11 +1077,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				{
 					settings = new Settings() {
 						{
-							setFavIcon(
-								JSONUtil.put(
-									"externalReferenceCode",
-									clientExtensionEntry.
-										getExternalReferenceCode()));
+							favIcon = JSONUtil.put(
+								"externalReferenceCode",
+								clientExtensionEntry.
+									getExternalReferenceCode());
 						}
 					};
 				}
@@ -1125,12 +1121,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				{
 					settings = new Settings() {
 						{
-							setFavIcon(
-								JSONUtil.put(
-									"contentType", "Document"
-								).put(
-									"id", dlFileEntry.getFileEntryId()
-								));
+							favIcon = JSONUtil.put(
+								"contentType", "Document"
+							).put(
+								"id", dlFileEntry.getFileEntryId()
+							);
 						}
 					};
 				}
@@ -1625,7 +1620,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		randomSitePage.setParentSitePage(
 			new ParentSitePage() {
 				{
-					setFriendlyUrlPath(parentPostSitePage.getFriendlyUrlPath());
+					friendlyUrlPath = parentPostSitePage.getFriendlyUrlPath();
 				}
 			});
 
@@ -1658,9 +1653,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		randomSitePage.setParentSitePage(
 			new ParentSitePage() {
 				{
-					setFriendlyUrlPath(
+					friendlyUrlPath =
 						StringPool.FORWARD_SLASH +
-							RandomTestUtil.randomString());
+							RandomTestUtil.randomString();
 				}
 			});
 

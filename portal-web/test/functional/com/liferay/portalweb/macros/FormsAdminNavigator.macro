@@ -138,11 +138,13 @@ definition {
 	}
 
 	macro gotoNewForm {
-		if (!(isSet(siteURLKey))) {
-			var siteURLKey = "guest";
+		if (!(isSet(groupName))) {
+			var groupName = "Guest";
 		}
 
-		FormsAdminNavigator.openFormsAdmin(siteURLKey = ${siteURLKey});
+		var lowerCaseGroupName = StringUtil.lowerCase(${groupName});
+
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = ${lowerCaseGroupName});
 
 		LexiconEntry.gotoAdd();
 	}
@@ -180,11 +182,13 @@ definition {
 	}
 
 	macro gotoRESTDataProvider {
-		if (!(isSet(siteURLKey))) {
-			var siteURLKey = "guest";
+		if (!(isSet(groupName))) {
+			var groupName = "Guest";
 		}
 
-		FormsAdminNavigator.openFormsAdmin(siteURLKey = ${siteURLKey});
+		var lowerCaseGroupName = StringUtil.lowerCase(${groupName});
+
+		FormsAdminNavigator.openFormsAdmin(siteURLKey = ${lowerCaseGroupName});
 
 		Navigator.gotoNavItem(navItem = "Data Providers");
 

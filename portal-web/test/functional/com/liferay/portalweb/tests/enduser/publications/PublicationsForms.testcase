@@ -39,7 +39,7 @@ definition {
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
-		FormsAdminNavigator.gotoRESTDataProvider(siteURLKey = "Site Name");
+		FormsAdminNavigator.gotoRESTDataProvider(groupName = "Site Name");
 
 		var portalURL = PropsUtil.get("portal.url");
 

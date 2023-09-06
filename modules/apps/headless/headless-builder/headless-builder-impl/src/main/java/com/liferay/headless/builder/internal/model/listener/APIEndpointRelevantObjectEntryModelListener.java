@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -239,7 +240,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 			ObjectEntry objectEntry, String pathParameter, String pathString)
 		throws Exception {
 
-		if ((pathParameter == null) || Objects.equals(pathParameter, "")) {
+		if (Validator.isNull(pathParameter)) {
 			throw new ObjectEntryValuesException.InvalidObjectField(
 				null,
 				"Path parameter cannot be null in a single element endpoint",

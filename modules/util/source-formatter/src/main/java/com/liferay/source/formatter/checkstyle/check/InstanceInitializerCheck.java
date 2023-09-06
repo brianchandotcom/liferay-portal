@@ -118,11 +118,9 @@ public class InstanceInitializerCheck extends BaseCheck {
 
 		_checkSetCall(exprDetailASTList, javaClass);
 
-		if (exprDetailASTList.size() < 2) {
-			return;
+		if (exprDetailASTList.size() >= 2) {
+			_checkAttributeOrder(exprDetailASTList);
 		}
-
-		_checkAttributeOrder(exprDetailASTList);
 	}
 
 	private void _checkAttributeOrder(List<DetailAST> exprDetailASTList) {

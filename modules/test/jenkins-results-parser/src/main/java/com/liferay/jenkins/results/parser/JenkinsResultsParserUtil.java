@@ -5045,7 +5045,32 @@ public class JenkinsResultsParserUtil {
 			String.valueOf(buildNumber), "); build.description = \"",
 			buildDescription, "\";");
 
-		executeJenkinsScript(masterHostname, jenkinsScript);
+		int maxRetries = 3;
+		int retries = 0;
+
+		while (retries < maxRetries) {
+			try {
+				retries++;
+
+				executeJenkinsScript(masterHostname, jenkinsScript);
+
+				break;
+			}
+			catch (Exception exception) {
+				if (retries == maxRetries) {
+					throw new RuntimeException(
+						"Unable to update build description to " +
+							buildDescription + ".\n" + exception);
+				}
+
+				System.out.println(
+					"Unable to update build description, retrying... ");
+
+				exception.printStackTrace();
+
+				sleep(3000);
+			}
+		}
 	}
 
 	public static void updateBuildResult(

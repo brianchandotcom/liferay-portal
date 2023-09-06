@@ -13,6 +13,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.definition.tree.Tree;
+import com.liferay.object.definition.tree.TreeFactory;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -22,6 +24,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.service.test.util.TreeTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -46,6 +49,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -68,6 +72,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Marco Leo
  */
+@FeatureFlags("LPS-187142")
 @RunWith(Arquillian.class)
 public class ObjectEntryServiceTest {
 
@@ -122,13 +127,48 @@ public class ObjectEntryServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _adminUser.getUserId())));
 
+		Tree tree = TreeTestUtil.createTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			_treeFactory);
+
+		ObjectDefinition rootObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
+
+		rootObjectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				_adminUser.getUserId(),
+				rootObjectDefinition.getObjectDefinitionId());
+
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
+			objectDefinition -> Assert.assertNotNull(
+				_objectEntryService.addObjectEntry(
+					0, objectDefinition.getObjectDefinitionId(),
+					HashMapBuilder.<String, Serializable>put(
+						"able", RandomStringUtils.randomAlphabetic(5)
+					).build(),
+					ServiceContextTestUtil.getServiceContext(
+						TestPropsValues.getGroupId(),
+						_adminUser.getUserId()))));
+
 		_setUser(_guestUser);
 
 		_assertPrincipalException(ObjectActionKeys.ADD_OBJECT_ENTRY, null);
 
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
+			objectDefinition -> _assertPrincipalException(
+				ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, null));
+
 		_setUser(_user);
 
 		_assertPrincipalException(ObjectActionKeys.ADD_OBJECT_ENTRY, null);
+
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
+			objectDefinition -> _assertPrincipalException(
+				ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, null));
 
 		_setUser(_guestUser);
 
@@ -150,6 +190,43 @@ public class ObjectEntryServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
+			objectDefinition -> {
+				if (objectDefinition.isRootDescendantNode()) {
+					_resourcePermissionLocalService.addResourcePermission(
+						TestPropsValues.getCompanyId(),
+						objectDefinition.getResourceName(),
+						ResourceConstants.SCOPE_COMPANY,
+						String.valueOf(TestPropsValues.getCompanyId()),
+						guestRole.getRoleId(),
+						ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+					_assertPrincipalException(
+						ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition,
+						null);
+				}
+			});
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(),
+			rootObjectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
+			objectDefinition -> Assert.assertNotNull(
+				_objectEntryService.addObjectEntry(
+					0, objectDefinition.getObjectDefinitionId(),
+					HashMapBuilder.<String, Serializable>put(
+						"able", RandomStringUtils.randomAlphabetic(5)
+					).build(),
+					ServiceContextTestUtil.getServiceContext(
+						TestPropsValues.getGroupId(),
+						_guestUser.getUserId()))));
+
 		_setUser(_user);
 
 		Assert.assertNotNull(
@@ -160,6 +237,21 @@ public class ObjectEntryServiceTest {
 				).build(),
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _guestUser.getUserId())));
+
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
+			objectDefinition -> Assert.assertNotNull(
+				_objectEntryService.addObjectEntry(
+					0, objectDefinition.getObjectDefinitionId(),
+					HashMapBuilder.<String, Serializable>put(
+						"able", RandomStringUtils.randomAlphabetic(5)
+					).build(),
+					ServiceContextTestUtil.getServiceContext(
+						TestPropsValues.getGroupId(),
+						_guestUser.getUserId()))));
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService);
 	}
 
 	@Test
@@ -326,7 +418,8 @@ public class ObjectEntryServiceTest {
 	}
 
 	private void _assertPrincipalException(
-			String action, ObjectEntry objectEntry)
+			String action, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
 		throws Exception {
 
 		PermissionChecker permissionChecker =
@@ -339,7 +432,7 @@ public class ObjectEntryServiceTest {
 			}
 			else {
 				_objectEntryService.addObjectEntry(
-					0, _objectDefinition.getObjectDefinitionId(),
+					0, objectDefinition.getObjectDefinitionId(),
 					HashMapBuilder.<String, Serializable>put(
 						"firstName", RandomStringUtils.randomAlphabetic(5)
 					).build(),
@@ -359,6 +452,13 @@ public class ObjectEntryServiceTest {
 						"User ", permissionChecker.getUserId(), " must have ",
 						action, " permission for")));
 		}
+	}
+
+	private void _assertPrincipalException(
+			String action, ObjectEntry objectEntry)
+		throws Exception {
+
+		_assertPrincipalException(action, _objectDefinition, objectEntry);
 	}
 
 	private void _setUser(User user) throws Exception {
@@ -420,6 +520,9 @@ public class ObjectEntryServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private TreeFactory _treeFactory;
 
 	private User _user;
 

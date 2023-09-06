@@ -12,7 +12,6 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
-import com.liferay.object.definition.tree.Node;
 import com.liferay.object.definition.tree.Tree;
 import com.liferay.object.definition.tree.TreeFactory;
 import com.liferay.object.exception.NoSuchObjectFieldException;
@@ -52,7 +51,6 @@ import com.liferay.object.service.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.test.util.TreeTestUtil;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.string.StringBundler;
@@ -91,7 +89,6 @@ import java.sql.Connection;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
@@ -302,8 +299,8 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			_treeFactory);
 
-		_assertNodeObjectDefinitions(
-			tree,
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
 			nodeObjectDefinition -> {
 				Assert.assertFalse(
 					_hasTable(nodeObjectDefinition.getDBTableName()));
@@ -333,8 +330,8 @@ public class ObjectDefinitionLocalServiceTest {
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(objectDefinition.getObjectDefinitionId())));
 
-		_assertNodeObjectDefinitions(
-			tree,
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
 			nodeObjectDefinition -> {
 				Assert.assertEquals(
 					0,
@@ -363,8 +360,8 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, objectDefinition.getStatus());
 
-		_assertNodeObjectDefinitions(
-			tree,
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
 			nodeObjectDefinition -> Assert.assertEquals(
 				WorkflowConstants.STATUS_DRAFT,
 				nodeObjectDefinition.getStatus()));
@@ -390,8 +387,8 @@ public class ObjectDefinitionLocalServiceTest {
 				true
 			).build());
 
-		_assertNodeObjectDefinitions(
-			tree,
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
 			nodeObjectDefinition -> {
 				if (nodeObjectDefinition.isRootDescendantNode()) {
 					AssertUtils.assertFailure(
@@ -437,8 +434,8 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertTrue(
 			_hasTable(objectDefinition.getExtensionDBTableName()));
 
-		_assertNodeObjectDefinitions(
-			tree,
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
 			nodeObjectDefinition -> {
 				Assert.assertFalse(
 					_hasColumn(nodeObjectDefinition.getDBTableName(), "able"));
@@ -468,8 +465,8 @@ public class ObjectDefinitionLocalServiceTest {
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(objectDefinition.getObjectDefinitionId())));
 
-		_assertNodeObjectDefinitions(
-			tree,
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
 			nodeObjectDefinition -> {
 				Assert.assertEquals(
 					4,
@@ -498,15 +495,16 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, objectDefinition.getStatus());
 
-		_assertNodeObjectDefinitions(
-			tree,
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
 			nodeObjectDefinition -> Assert.assertEquals(
 				WorkflowConstants.STATUS_APPROVED,
 				nodeObjectDefinition.getStatus()));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
-		_deleteObjectDefinitionHierarchy();
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService);
 	}
 
 	@Test
@@ -1314,7 +1312,8 @@ public class ObjectDefinitionLocalServiceTest {
 			_treeFactory.create(objectDefinitionA.getObjectDefinitionId()),
 			_objectDefinitionLocalService);
 
-		_deleteObjectDefinitionHierarchy();
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService);
 	}
 
 	@Test
@@ -1674,7 +1673,8 @@ public class ObjectDefinitionLocalServiceTest {
 
 		Assert.assertEquals(0, objectDefinition.getRootObjectDefinitionId());
 
-		_deleteObjectDefinitionHierarchy();
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService);
 	}
 
 	@Test
@@ -2197,22 +2197,6 @@ public class ObjectDefinitionLocalServiceTest {
 				).build()));
 	}
 
-	private void _assertNodeObjectDefinitions(
-			Tree tree,
-			UnsafeConsumer<ObjectDefinition, Exception> unsafeConsumer)
-		throws Exception {
-
-		Iterator<Node> iterator = tree.iterator();
-
-		while (iterator.hasNext()) {
-			Node node = iterator.next();
-
-			unsafeConsumer.accept(
-				_objectDefinitionLocalService.getObjectDefinition(
-					node.getObjectDefinitionId()));
-		}
-	}
-
 	private void _assertObjectField(
 			ObjectDefinition objectDefinition, String dbColumnName,
 			String dbType, String name, boolean required)
@@ -2292,28 +2276,6 @@ public class ObjectDefinitionLocalServiceTest {
 			).buildString());
 
 		return objectAction;
-	}
-
-	private void _deleteObjectDefinitionHierarchy() throws Exception {
-		for (String objectDefinitionName :
-				new String[] {"C_A", "C_AA", "C_AAA", "C_AAB", "C_AB"}) {
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
-					TestPropsValues.getCompanyId(), objectDefinitionName);
-
-			if (objectDefinition == null) {
-				continue;
-			}
-
-			if (objectDefinition.getRootObjectDefinitionId() != 0) {
-				TreeTestUtil.unbind(
-					_objectDefinitionLocalService, objectDefinitionName);
-			}
-
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition.getObjectDefinitionId());
-		}
 	}
 
 	private boolean _hasColumn(String tableName, String columnName)

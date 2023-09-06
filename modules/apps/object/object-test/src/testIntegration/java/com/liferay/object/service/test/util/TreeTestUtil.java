@@ -13,6 +13,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -100,6 +101,30 @@ public class TreeTestUtil {
 		return treeFactory.create(objectDefinitionA.getObjectDefinitionId());
 	}
 
+	public static void deleteObjectDefinitionHierarchy(
+			ObjectDefinitionLocalService objectDefinitionLocalService)
+		throws Exception {
+
+		for (String objectDefinitionName :
+				new String[] {"C_A", "C_AA", "C_AAA", "C_AAB", "C_AB"}) {
+
+			ObjectDefinition objectDefinition =
+				objectDefinitionLocalService.fetchObjectDefinition(
+					TestPropsValues.getCompanyId(), objectDefinitionName);
+
+			if (objectDefinition == null) {
+				continue;
+			}
+
+			if (objectDefinition.getRootObjectDefinitionId() != 0) {
+				unbind(objectDefinitionLocalService, objectDefinitionName);
+			}
+
+			objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition.getObjectDefinitionId());
+		}
+	}
+
 	public static ObjectRelationship getEdgeObjectRelationship(
 			ObjectDefinition objectDefinition,
 			ObjectRelationshipLocalService objectRelationshipLocalService,
@@ -112,6 +137,23 @@ public class TreeTestUtil {
 
 		return objectRelationshipLocalService.getObjectRelationship(
 			edge.getObjectRelationshipId());
+	}
+
+	public static void iterateNodeObjectDefinitions(
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			Tree tree,
+			UnsafeConsumer<ObjectDefinition, Exception> unsafeConsumer)
+		throws Exception {
+
+		Iterator<Node> iterator = tree.iterator();
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			unsafeConsumer.accept(
+				objectDefinitionLocalService.getObjectDefinition(
+					node.getObjectDefinitionId()));
+		}
 	}
 
 	public static void unbind(

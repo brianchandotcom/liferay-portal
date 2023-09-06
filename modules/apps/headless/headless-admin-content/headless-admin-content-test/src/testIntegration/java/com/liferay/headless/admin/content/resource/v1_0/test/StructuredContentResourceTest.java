@@ -901,11 +901,11 @@ public class StructuredContentResourceTest
 					StructuredContent() {
 
 					{
-						setContentStructureId(
-							structuredContent.getContentStructureId());
-						setPriority(structuredContent.getPriority());
-						setSiteId(structuredContent.getSiteId());
-						setTitle(structuredContent.getTitle());
+						contentStructureId =
+							structuredContent.getContentStructureId();
+						priority = structuredContent.getPriority();
+						siteId = structuredContent.getSiteId();
+						title = structuredContent.getTitle();
 					}
 				}));
 	}
@@ -1027,10 +1027,9 @@ public class StructuredContentResourceTest
 			StructuredContent() {
 
 			{
-				setContentStructureId(
-					structuredContent.getContentStructureId());
-				setSiteId(structuredContent.getSiteId());
-				setTitle(structuredContent.getTitle());
+				contentStructureId = structuredContent.getContentStructureId();
+				siteId = structuredContent.getSiteId();
+				title = structuredContent.getTitle();
 			}
 		};
 	}
@@ -1041,14 +1040,13 @@ public class StructuredContentResourceTest
 
 		return new StructuredContent() {
 			{
-				setContentStructureId(
-					structuredContent.getContentStructureId());
-				setDateCreated(structuredContent.getDateCreated());
-				setDateModified(structuredContent.getDateModified());
-				setId(structuredContent.getId());
-				setPriority(structuredContent.getPriority());
-				setSiteId(structuredContent.getSiteId());
-				setTitle(structuredContent.getTitle());
+				contentStructureId = structuredContent.getContentStructureId();
+				dateCreated = structuredContent.getDateCreated();
+				dateModified = structuredContent.getDateModified();
+				id = structuredContent.getId();
+				priority = structuredContent.getPriority();
+				siteId = structuredContent.getSiteId();
+				title = structuredContent.getTitle();
 			}
 		};
 	}

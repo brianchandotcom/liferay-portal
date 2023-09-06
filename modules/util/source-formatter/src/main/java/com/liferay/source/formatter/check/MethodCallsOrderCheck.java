@@ -360,6 +360,8 @@ public class MethodCallsOrderCheck extends BaseFileCheck {
 			content, "setGlobalParameter", 2, "PortletURLBuilder");
 		content = _sortChainedMethodCalls(
 			content, "setParameter", 2, "PortletURLBuilder");
+		content = _sortChainedMethodCalls(
+			content, "setProperty", 2, "UnicodePropertiesBuilder");
 
 		content = _sortMethodCallsByMethodName(
 			content, "DDMFormFieldRenderingContext", "DropdownItem",

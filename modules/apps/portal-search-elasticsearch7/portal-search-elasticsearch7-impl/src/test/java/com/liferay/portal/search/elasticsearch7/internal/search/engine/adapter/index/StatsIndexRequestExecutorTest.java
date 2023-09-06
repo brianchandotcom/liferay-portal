@@ -60,7 +60,7 @@ public class StatsIndexRequestExecutorTest {
 
 		Assert.assertNotNull(statsIndexResponse);
 
-		Assert.assertNotNull(statsIndexResponse.getTotalSpace());
+		Assert.assertNotNull(statsIndexResponse.getIndexSize());
 	}
 
 	private static final String _INDEX_NAME = "liferay";

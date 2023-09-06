@@ -108,7 +108,7 @@ definition {
 		}
 
 		task ("Logout, restart server and login") {
-			User.logoutPG();
+			User.logoutPG(signOutLocalizationName = "Salir");
 
 			Portlet.shutdownServer();
 

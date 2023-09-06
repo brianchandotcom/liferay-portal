@@ -77,7 +77,7 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727") ||
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-195205") ||
 			(themeDisplay == null)) {
 
 			return Collections.emptyList();

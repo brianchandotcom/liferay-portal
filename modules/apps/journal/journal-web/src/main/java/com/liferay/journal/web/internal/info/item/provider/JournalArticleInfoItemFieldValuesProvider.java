@@ -300,7 +300,7 @@ public class JournalArticleInfoItemFieldValuesProvider
 					journalArticle.getDisplayDate()));
 
 			if ((themeDisplay != null) &&
-				!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+				!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 
 				journalArticleFieldValues.add(
 					new InfoFieldValue<>(

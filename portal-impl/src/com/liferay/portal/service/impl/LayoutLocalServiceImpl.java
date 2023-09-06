@@ -236,7 +236,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		if (system &&
 			((Objects.equals(type, LayoutConstants.TYPE_ASSET_DISPLAY) &&
-			  !FeatureFlagManagerUtil.isEnabled("LPS-183727")) ||
+			  !FeatureFlagManagerUtil.isEnabled("LPS-195205")) ||
 			 Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
 			 Objects.equals(type, LayoutConstants.TYPE_CONTENT))) {
 

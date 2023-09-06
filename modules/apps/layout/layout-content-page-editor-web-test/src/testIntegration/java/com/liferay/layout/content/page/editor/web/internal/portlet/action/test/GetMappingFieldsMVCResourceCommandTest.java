@@ -43,7 +43,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Víctor Galán
  */
-@FeatureFlags("LPS-183727")
+@FeatureFlags("LPS-195205")
 @RunWith(Arquillian.class)
 public class GetMappingFieldsMVCResourceCommandTest {
 

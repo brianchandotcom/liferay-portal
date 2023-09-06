@@ -16,7 +16,7 @@ LayoutType selLayoutType = selLayout.getLayoutType();
 
 String friendlyURLBase = StringPool.BLANK;
 
-if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && (!selLayout.isSystem() || (selLayout.isTypeAssetDisplay() && FeatureFlagManagerUtil.isEnabled("LPS-183727")))) {
+if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && (!selLayout.isSystem() || (selLayout.isTypeAssetDisplay() && FeatureFlagManagerUtil.isEnabled("LPS-195205")))) {
 	friendlyURLBase = layoutsAdminDisplayContext.getFriendlyURLBase();
 }
 %>

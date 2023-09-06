@@ -44,7 +44,7 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
 			long groupId, String friendlyURL, Map<String, String[]> params) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 			return null;
 		}
 
@@ -76,7 +76,7 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 			return null;
 		}
 
@@ -94,7 +94,7 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 	protected LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
 		String friendlyURL) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 			return null;
 		}
 

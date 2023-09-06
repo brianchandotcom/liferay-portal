@@ -136,7 +136,7 @@ public class AssetCategoryInfoItemFieldValuesProvider
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		if ((themeDisplay != null) &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+			!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 
 			assetCategoryInfoFieldValues.add(
 				new InfoFieldValue<>(

@@ -336,7 +336,7 @@ public class CPDefinitionInfoItemFieldValuesProvider
 					cpDefinition.isIncomplete()));
 
 			if ((themeDisplay != null) &&
-				!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+				!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 
 				cpDefinitionInfoFieldValues.add(
 					new InfoFieldValue<>(

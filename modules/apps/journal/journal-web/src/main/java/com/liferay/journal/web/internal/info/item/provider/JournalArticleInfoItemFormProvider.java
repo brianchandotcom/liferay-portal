@@ -190,13 +190,13 @@ public class JournalArticleInfoItemFormProvider
 					JournalArticle.class.getName(), formVariationKey)
 			).infoFieldSetEntry(
 				unsafeConsumer -> {
-					if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+					if (!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 						unsafeConsumer.accept(_getDisplayPageInfoFieldSet());
 					}
 				}
 			).infoFieldSetEntry(
 				unsafeConsumer -> {
-					if (FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+					if (FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 						unsafeConsumer.accept(displayPageInfoFieldSet);
 					}
 				}

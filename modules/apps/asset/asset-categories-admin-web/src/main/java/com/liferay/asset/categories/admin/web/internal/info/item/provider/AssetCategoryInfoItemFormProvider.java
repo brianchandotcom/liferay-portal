@@ -48,13 +48,13 @@ public class AssetCategoryInfoItemFormProvider
 				AssetCategory.class.getName())
 		).infoFieldSetEntry(
 			unsafeConsumer -> {
-				if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 					unsafeConsumer.accept(_getDisplayPageInfoFieldSet());
 				}
 			}
 		).infoFieldSetEntry(
 			unsafeConsumer -> {
-				if (FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+				if (FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 					unsafeConsumer.accept(
 						_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 							AssetCategory.class.getName(), StringPool.BLANK,

@@ -56,6 +56,7 @@ UpgradePortletFTLCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf, .scss or .vm |
 UpgradeRejectedExecutionHandlerCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf, .scss or .vm | Replace Liferay's RejectedExecutionHandler with Java's RejectedExecutionHandler |
 UpgradeRemovedAPICheck | .java | Finds cases where calls are made to removed API after an upgrade. |
 UpgradeSCSSImportsCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf, .scss or .vm | Replace compat/mixins by clay/cadmin-variables |
+UpgradeSCSSNodeSassPatternsCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf, .scss or .vm | Run code migration of Dart Sass deprecated patterns (e.g., the division operation using the '/' character, the interpolation syntax, etc.) |
 UpgradeSetResultsSetTotalMethodCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf, .scss or .vm | Run code migration of method searchContainer.setResults to the searchContainer.setResultsAndTotal and delete searchContainer.setTotal |
 UpgradeVelocityCommentMigrationCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf, .scss or .vm | Run code migration of comments from a Velocity file to a Freemarker file with the syntax replacements |
 UpgradeVelocityFileImportMigrationCheck | .bnd, .ftl, .gradle, .java, .jsp, .jspf, .scss or .vm | Run code migration of file import from a Velocity file to a Freemarker file with the syntax replacements |

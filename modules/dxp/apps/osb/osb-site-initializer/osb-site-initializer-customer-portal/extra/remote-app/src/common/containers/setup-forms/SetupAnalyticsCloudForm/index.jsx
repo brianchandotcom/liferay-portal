@@ -131,6 +131,8 @@ const SetupAnalyticsCloudPage = ({
 	}, [touched, errors]);
 
 	const handleSubmit = async () => {
+		setIsLoadingSubmitButton(true);
+
 		const analyticsCloud = values?.activations;
 
 		const getAnalyticsCloudSubmittedStatus = async (accountKey) => {
@@ -159,53 +161,9 @@ const SetupAnalyticsCloudPage = ({
 		}
 
 		if (!alreadySubmitted) {
-			const {data} = await client.mutate({
-				context: {
-					displaySuccess: false,
-					type: 'liferay-rest',
-				},
-				mutation: addAnalyticsCloudWorkspace,
-				variables: {
-					analyticsCloudWorkspace: {
-						accountKey: project.accountKey,
-						allowedEmailDomains: analyticsCloud.allowedEmailDomains,
-						dataCenterLocation: analyticsCloud.dataCenterLocation,
-						ownerEmailAddress: analyticsCloud.ownerEmailAddress,
-						r_accountEntryToAnalyticsCloudWorkspace_accountEntryId:
-							project?.id,
-						timeZone: analyticsCloud.timeZone,
-						workspaceFriendlyUrl:
-							analyticsCloud.workspaceFriendlyUrl,
-						workspaceName: analyticsCloud.workspaceName,
-					},
-				},
-			});
-
-			if (data) {
+			try {
 				setIsLoadingSubmitButton(true);
 
-				await client.mutate({
-					context: {
-						displaySuccess: false,
-						type: 'liferay-rest',
-					},
-					mutation: updateAccountSubscriptionGroups,
-					variables: {
-						accountSubscriptionGroup: {
-							accountKey: project.accountKey,
-							activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
-							r_accountEntryToAccountSubscriptionGroup_accountEntryId:
-								project?.id,
-						},
-						id: subscriptionGroupId,
-					},
-				});
-
-				await Promise.all(
-					removeHighPriorityContactList?.map((item) => {
-						return removeHighPriorityContactsList(client, item);
-					})
-				);
 				await Promise.all(
 					removeHighPriorityContactList?.map(async (item) => {
 						removeContactRole(
@@ -226,48 +184,109 @@ const SetupAnalyticsCloudPage = ({
 						);
 					})
 				);
-				await Promise.all(
-					addHighPriorityContactList?.map((item) => {
-						return addHighPriorityContactsList(client, item);
-					})
-				);
-
-				if (featureFlags.includes('LPS-181031')) {
-					const emailIncidentReportContact = analyticsCloud?.incidentReportContact
-						?.map(({email}) => email)
-						.join(', ');
-
-					const notificationTemplateService = new NotificationQueueService(
-						client
-					);
-
-					await notificationTemplateService.send(
-						'SETUP-ANALYTICS-CLOUD-ENVIRONMENT-NOTIFICATION-TEMPLATE',
-						{
-							'[%AC_DATA_CENTER_LOCATION]':
+				const {data} = await client.mutate({
+					context: {
+						displaySuccess: false,
+						type: 'liferay-rest',
+					},
+					mutation: addAnalyticsCloudWorkspace,
+					variables: {
+						analyticsCloudWorkspace: {
+							accountKey: project.accountKey,
+							allowedEmailDomains:
+								analyticsCloud.allowedEmailDomains,
+							dataCenterLocation:
 								analyticsCloud.dataCenterLocation,
-							'[%AC_DATA_TIME]': new Date().toUTCString(),
-							'[%AC_EMAIL_DOMAINS]':
-								analyticsCloud.allowedEmailDomains ||
-								BLANK_TEXT,
-							'[%AC_INCIDENT_REPORT_CONTACT]': emailIncidentReportContact,
-							'[%AC_OWNER_EMAIL]':
-								analyticsCloud.ownerEmailAddress,
-							'[%AC_TIME_ZONE]':
-								analyticsCloud.timeZone || BLANK_TEXT,
-							'[%AC_WORKSPACE_FRIENDLY_URL]':
-								analyticsCloud.workspaceFriendlyUrl ||
-								BLANK_TEXT,
-							'[%AC_WORKSPACE_NAME]':
-								analyticsCloud.workspaceName,
-							'[%PROJECT_ID]': project?.code,
-						}
+							ownerEmailAddress: analyticsCloud.ownerEmailAddress,
+							r_accountEntryToAnalyticsCloudWorkspace_accountEntryId:
+								project?.id,
+							timeZone: analyticsCloud.timeZone,
+							workspaceFriendlyUrl:
+								analyticsCloud.workspaceFriendlyUrl,
+							workspaceName: analyticsCloud.workspaceName,
+						},
+					},
+				});
+
+				if (data) {
+					await client.mutate({
+						context: {
+							displaySuccess: false,
+							type: 'liferay-rest',
+						},
+						mutation: updateAccountSubscriptionGroups,
+						variables: {
+							accountSubscriptionGroup: {
+								accountKey: project.accountKey,
+								activationStatus:
+									STATUS_TAG_TYPE_NAMES.inProgress,
+								r_accountEntryToAccountSubscriptionGroup_accountEntryId:
+									project?.id,
+							},
+							id: subscriptionGroupId,
+						},
+					});
+
+					await Promise.all(
+						removeHighPriorityContactList?.map((item) => {
+							return removeHighPriorityContactsList(
+								client,
+								item,
+								project
+							);
+						})
 					);
+
+					await Promise.all(
+						addHighPriorityContactList?.map((item) => {
+							return addHighPriorityContactsList(
+								client,
+								item,
+								project
+							);
+						})
+					);
+
+					if (featureFlags.includes('LPS-181031')) {
+						const emailIncidentReportContact = analyticsCloud?.incidentReportContact
+							?.map(({email}) => email)
+							.join(', ');
+
+						const notificationTemplateService = new NotificationQueueService(
+							client
+						);
+
+						await notificationTemplateService.send(
+							'SETUP-ANALYTICS-CLOUD-ENVIRONMENT-NOTIFICATION-TEMPLATE',
+							{
+								'[%AC_DATA_CENTER_LOCATION]':
+									analyticsCloud.dataCenterLocation,
+								'[%AC_DATA_TIME]': new Date().toUTCString(),
+								'[%AC_EMAIL_DOMAINS]':
+									analyticsCloud.allowedEmailDomains ||
+									BLANK_TEXT,
+
+								'[%AC_INCIDENT_REPORT_CONTACT]': emailIncidentReportContact,
+								'[%AC_OWNER_EMAIL]':
+									analyticsCloud.ownerEmailAddress,
+								'[%AC_TIME_ZONE]':
+									analyticsCloud.timeZone || BLANK_TEXT,
+								'[%AC_WORKSPACE_FRIENDLY_URL]':
+									analyticsCloud.workspaceFriendlyUrl ||
+									BLANK_TEXT,
+								'[%AC_WORKSPACE_NAME]':
+									analyticsCloud.workspaceName,
+								'[%PROJECT_ID]': project?.code,
+							}
+						);
+					}
 				}
 				setIsLoadingSubmitButton(false);
-			}
 
-			handlePage(true);
+				handlePage(true);
+			} catch {
+				setIsLoadingSubmitButton(false);
+			}
 		}
 	};
 

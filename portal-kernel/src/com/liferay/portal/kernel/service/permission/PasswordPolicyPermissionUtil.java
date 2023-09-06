@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.service.permission;
 
+import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
@@ -18,28 +19,19 @@ public class PasswordPolicyPermissionUtil {
 			String actionId)
 		throws PrincipalException {
 
-		_passwordPolicyPermission.check(
-			permissionChecker, passwordPolicyId, actionId);
+		if (!contains(permissionChecker, passwordPolicyId, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, PasswordPolicy.class.getName(),
+				passwordPolicyId, actionId);
+		}
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long passwordPolicyId,
 		String actionId) {
 
-		return _passwordPolicyPermission.contains(
-			permissionChecker, passwordPolicyId, actionId);
+		return permissionChecker.hasPermission(
+			null, PasswordPolicy.class.getName(), passwordPolicyId, actionId);
 	}
-
-	public static PasswordPolicyPermission getPasswordPolicyPermission() {
-		return _passwordPolicyPermission;
-	}
-
-	public void setPasswordPolicyPermission(
-		PasswordPolicyPermission passwordPolicyPermission) {
-
-		_passwordPolicyPermission = passwordPolicyPermission;
-	}
-
-	private static PasswordPolicyPermission _passwordPolicyPermission;
 
 }

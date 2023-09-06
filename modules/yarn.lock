@@ -906,7 +906,7 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/button@*", "@clayui/button@3.100.0", "@clayui/button@^3.100.0":
+"@clayui/button@3.100.0", "@clayui/button@^3.100.0":
   version "3.100.0"
   resolved "https://registry.yarnpkg.com/@clayui/button/-/button-3.100.0.tgz#2cfba900159950729809d63dff49eb364d16ab00"
   integrity sha512-w7pN6vzJvuG56XE49WNYWvr7vmh7SfatEcF8sUBrZR5tcSxXiz0KbOBIEk9izczx3/Si+MP6iDOV+ULSqMP0Fw==
@@ -1004,7 +1004,7 @@
     classnames "^2.2.6"
     date-fns "^2.14.0"
 
-"@clayui/drop-down@*", "@clayui/drop-down@3.104.0", "@clayui/drop-down@^3.104.0":
+"@clayui/drop-down@3.104.0", "@clayui/drop-down@^3.104.0":
   version "3.104.0"
   resolved "https://registry.yarnpkg.com/@clayui/drop-down/-/drop-down-3.104.0.tgz#c6c67dbaef999b1161c660f22d2a3aef08dd2c68"
   integrity sha512-fyJxSf4RtntDpdWWHChxKHFGEkfKYwCE1zcnW4Y3QFHu6NVPhqdBXopAQy9lTkLua60qeI+7ZrktnlIJK0aoKg==
@@ -1026,7 +1026,7 @@
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/form@*", "@clayui/form@3.104.0", "@clayui/form@^3.104.0":
+"@clayui/form@3.104.0", "@clayui/form@^3.104.0":
   version "3.104.0"
   resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.104.0.tgz#4bce10e4aecf2e1ef833f814b5faf0d49eb61e26"
   integrity sha512-iLkJjOwWyLGV7QXdJfNsbe3FUL3STEk/n/HQ9BvHmA+1sf03sGf0GG7kw1NjGAP3RpSWs4rIq8zrISQ6TcilJw==

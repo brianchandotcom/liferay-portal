@@ -1,5 +1,5 @@
 {
-	"@generated": "dcff54b9321df26b2984647f17500ae2d6735bf7",
+	"@generated": "21acebcda04f927f34b8ebc92fe94e8c1f64d57d",
 	"@overrides": {
 		"compilerOptions": {
 			"lib": [
@@ -15,10 +15,6 @@
 		"baseUrl": ".",
 		"composite": true,
 		"jsx": "react",
-		"lib": [
-			"DOM",
-			"es2019"
-		],
 		"module": "es6",
 		"moduleResolution": "node",
 		"outDir": "./types",
@@ -49,6 +45,10 @@
 		"typeRoots": [
 			"../../../node_modules/@types",
 			"./node_modules/@types"
+		],
+		"lib": [
+			"DOM",
+			"es2019"
 		]
 	},
 	"exclude": [

@@ -75,6 +75,7 @@ public class ContainerLayoutStructureItemMapper
 						indexed =
 							containerStyledLayoutStructureItem.isIndexed();
 						layout = _toLayout(containerStyledLayoutStructureItem);
+						name = containerStyledLayoutStructureItem.getName();
 
 						setContentVisibility(
 							() -> {
@@ -107,7 +108,6 @@ public class ContainerLayoutStructureItemMapper
 						setHtmlProperties(
 							() -> _toHtmlProperties(
 								containerStyledLayoutStructureItem));
-						setName(containerStyledLayoutStructureItem::getName);
 					}
 				};
 				type = Type.SECTION;

@@ -80,6 +80,7 @@ public class FormLayoutStructureItemMapper
 						};
 						indexed = formStyledLayoutStructureItem.isIndexed();
 						layout = _toLayout(formStyledLayoutStructureItem);
+						name = formStyledLayoutStructureItem.getName();
 
 						setFragmentStyle(
 							() -> {
@@ -96,7 +97,6 @@ public class FormLayoutStructureItemMapper
 							() -> getFragmentViewPorts(
 								formStyledLayoutStructureItem.
 									getItemConfigJSONObject()));
-						setName(formStyledLayoutStructureItem::getName);
 					}
 				};
 				type = Type.FORM;

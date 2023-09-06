@@ -6,7 +6,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayMultiSelect from '@clayui/multi-select';
@@ -18,6 +18,7 @@ import {
 	getOpener,
 	objectToFormData,
 	openConfirmModal,
+	openToast,
 	sub,
 } from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
@@ -55,6 +56,10 @@ const ManageCollaborators = ({
 	const [networkStatus, setNetworkStatus] = useState(4);
 	const [selectedItems, setSelectedItems] = useState({});
 	const [selectedUserData, setSelectedUserData] = useState({});
+	const [
+		sharePublicationLinkVisible,
+		setSharePublicationLinkVisible,
+	] = useState(false);
 	const [tab, setTab] = useState(TABS.collaborators);
 	const [updatedRoles, setUpdatedRoles] = useState({});
 
@@ -117,6 +122,23 @@ const ManageCollaborators = ({
 	const autocompleteUsers = autocompleteResource;
 	const collaborators = collaboratorsResource;
 	const emailValidationInProgressRef = useRef(false);
+
+	const copyToClipboard = async () => {
+		try {
+			await navigator.clipboard.writeText('');
+
+			openToast({
+				message: Liferay.Language.get('copied-link-to-the-clipboard'),
+			});
+		}
+		catch (error) {
+			openToast({
+				message: error,
+				title: Liferay.Language.get('an-error-occurred'),
+				type: 'warning',
+			});
+		}
+	};
 
 	const handleChange = useCallback((value) => {
 		if (!emailValidationInProgressRef.current) {
@@ -405,7 +427,41 @@ const ManageCollaborators = ({
 
 	const renderForm = () => {
 		if (tab === TABS.link) {
-			return 'Share Link';
+			return (
+				<ClayForm>
+					<ClayForm.Group>
+						<span className="text-secondary toggle-switch-text-left">
+							{Liferay.Language.get(
+								'allow-anyone-with-the-link-to-view-this-publication'
+							)}
+						</span>
+
+						<ClayToggle
+							onToggle={setSharePublicationLinkVisible}
+							toggled={sharePublicationLinkVisible}
+						/>
+					</ClayForm.Group>
+
+					{!sharePublicationLinkVisible || (
+						<ClayForm.Group>
+							<ClayInput.Group>
+								<ClayInput.GroupItem>
+									<ClayInput readOnly type="text" />
+								</ClayInput.GroupItem>
+
+								<ClayInput.GroupItem shrink>
+									<ClayButton
+										displayType="secondary"
+										onClick={copyToClipboard}
+									>
+										{Liferay.Language.get('copy')}
+									</ClayButton>
+								</ClayInput.GroupItem>
+							</ClayInput.Group>
+						</ClayForm.Group>
+					)}
+				</ClayForm>
+			);
 		}
 
 		return (

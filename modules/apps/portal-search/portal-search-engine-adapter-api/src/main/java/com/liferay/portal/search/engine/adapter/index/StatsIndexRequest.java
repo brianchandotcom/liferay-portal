@@ -13,8 +13,8 @@ import com.liferay.portal.search.engine.adapter.ccr.CrossClusterRequest;
 public class StatsIndexRequest
 	extends CrossClusterRequest implements IndexRequest<StatsIndexResponse> {
 
-	public StatsIndexRequest(String indexName) {
-		_indexName = indexName;
+	public StatsIndexRequest(String... indexNames) {
+		_indexNames = indexNames;
 
 		setPreferLocalCluster(true);
 	}
@@ -28,9 +28,9 @@ public class StatsIndexRequest
 
 	@Override
 	public String[] getIndexNames() {
-		return new String[] {_indexName};
+		return _indexNames;
 	}
 
-	private final String _indexName;
+	private final String[] _indexNames;
 
 }

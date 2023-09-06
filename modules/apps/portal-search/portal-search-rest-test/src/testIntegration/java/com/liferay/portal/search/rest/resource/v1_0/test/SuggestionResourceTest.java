@@ -43,8 +43,8 @@ public class SuggestionResourceTest extends BaseSuggestionResourceTestCase {
 				new SuggestionsContributorConfiguration[] {
 					new SuggestionsContributorConfiguration() {
 						{
-							setContributorName("basic");
-							setDisplayGroupName("Suggestions");
+							contributorName = "basic";
+							displayGroupName = "Suggestions";
 						}
 					}
 				});

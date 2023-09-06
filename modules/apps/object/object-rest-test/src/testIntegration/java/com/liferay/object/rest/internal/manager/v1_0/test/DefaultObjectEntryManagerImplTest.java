@@ -2869,7 +2869,7 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition2, objectEntryId),
 			new ObjectEntry() {
 				{
-					setProperties(expectedLocalizedValues);
+					properties = expectedLocalizedValues;
 				}
 			});
 	}

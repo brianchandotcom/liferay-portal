@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -17,6 +18,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -69,8 +71,10 @@ public class ImportMVCResourceCommandTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
 	@After
@@ -104,6 +108,24 @@ public class ImportMVCResourceCommandTest {
 
 		_assertImportResultsJSONObject(
 			1, 2, 1, _importFile(LayoutsImportStrategy.DO_NOT_OVERWRITE));
+	}
+
+	@Test
+	public void testImportFileWithKeepBothStrategyAndWithExistingLayoutPageTemplateCollection()
+		throws Exception {
+
+		_layoutPageTemplateCollectionLocalService.
+			addLayoutPageTemplateCollection(
+				TestPropsValues.getUserId(), _group.getGroupId(), "imported",
+				StringPool.BLANK, _serviceContext);
+
+		_assertImportResultsJSONObject(
+			1, 3, _importFile(LayoutsImportStrategy.KEEP_BOTH));
+
+		Assert.assertNotNull(
+			_layoutPageTemplateCollectionLocalService.
+				fetchLayoutPageTemplateCollection(
+					_group.getGroupId(), "imported-(1)"));
 	}
 
 	@Test
@@ -259,11 +281,17 @@ public class ImportMVCResourceCommandTest {
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
+
+	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 
 	@Inject(filter = "mvc.command.name=/layout_page_template_admin/import")
 	private MVCResourceCommand _mvcResourceCommand;
+
+	private ServiceContext _serviceContext;
 
 	@Inject
 	private ZipWriterFactory _zipWriterFactory;

@@ -642,6 +642,40 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			return newModelBuilderState;
 		}
 
+		case TYPES.DELETE_OBJECT_FIELD: {
+			const {edges, nodes, selectedField, selectedNode} = action.payload;
+
+			const newSelectedNodeFields = selectedNode.data?.objectFields.filter(
+				(objectField) =>
+					objectField.externalReferenceCode !==
+					selectedField.externalReferenceCode
+			);
+
+			const newNodes = nodes.map((node) => {
+				if (
+					node.data?.externalReferenceCode ===
+					selectedNode.data?.externalReferenceCode
+				) {
+					return {
+						...selectedNode,
+						data: {
+							...selectedNode.data,
+							nodeSelected: false,
+							objectFields: newSelectedNodeFields,
+						},
+					} as Node<ObjectDefinitionNodeData>;
+				}
+
+				return node;
+			});
+
+			return {
+				...state,
+				elements: [...edges, ...newNodes],
+				rightSidebarType: 'empty',
+			};
+		}
+
 		case TYPES.SET_ELEMENTS: {
 			const {newElements} = action.payload;
 

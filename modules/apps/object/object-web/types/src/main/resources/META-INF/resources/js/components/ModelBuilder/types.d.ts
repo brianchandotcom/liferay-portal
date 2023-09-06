@@ -70,9 +70,23 @@ export declare type TAction =
 	  }
 	| {
 			payload: {
-				newElements: Elements<
-					ObjectDefinitionNodeData | ObjectRelationshipEdgeData
-				>;
+				currentObjectFolderName: string;
+				deletedObjectDefinitionName: string;
+			};
+			type: TYPES.DELETE_OBJECT_DEFINITION;
+	  }
+	| {
+			payload: {
+				edges: Edge<ObjectRelationshipEdgeData>[];
+				nodes: Node<ObjectDefinitionNodeData>[];
+				selectedField: ObjectFieldNode;
+				selectedNode: Node<ObjectDefinitionNodeData>;
+			};
+			type: TYPES.DELETE_OBJECT_FIELD;
+	  }
+	| {
+			payload: {
+				newElements: any;
 			};
 			type: TYPES.SET_ELEMENTS;
 	  }

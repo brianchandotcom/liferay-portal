@@ -81,6 +81,15 @@ export type TAction =
 	  }
 	| {
 			payload: {
+				edges: Edge<ObjectRelationshipEdgeData>[];
+				nodes: Node<ObjectDefinitionNodeData>[];
+				selectedField: ObjectFieldNode;
+				selectedNode: Node<ObjectDefinitionNodeData>;
+			};
+			type: TYPES.DELETE_OBJECT_FIELD;
+	  }
+	| {
+			payload: {
 				newElements: Elements<
 					ObjectDefinitionNodeData | ObjectRelationshipEdgeData
 				>;

@@ -11,11 +11,13 @@ import {
 	getLocalizableLabel,
 	openToast,
 } from '@liferay/object-js-components-web';
+import {createResourceURL} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {Node, isNode, useStore} from 'react-flow-renderer';
 
 import {objectFieldInitialValues} from '../../ObjectField/EditObjectField';
 import {EditObjectFieldContent} from '../../ObjectField/EditObjectFieldContent';
+import {ModalDeleteObjectField} from '../../ObjectField/ModalDeleteObjectField';
 import {useObjectFieldForm} from '../../ObjectField/useObjectFieldForm';
 import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
@@ -23,8 +25,15 @@ import {TYPES} from '../ModelBuilderContext/typesEnum';
 import './RightSidebarObjectFieldDetails.scss';
 
 export function RightSidebarObjectFieldDetails() {
+	const [{baseResourceURL}] = useFolderContext();
+	const [showDeletionModal, setShowDeletionModal] = useState(false);
+	const [
+		showDeletionNotAllowedModal,
+		setShowDeletionNotAllowedModal,
+	] = useState<boolean>(false);
 	const [loading, setLoading] = useState(false);
 	const store = useStore();
+	const {edges, nodes} = store.getState();
 
 	const [
 		{
@@ -64,13 +73,30 @@ export function RightSidebarObjectFieldDetails() {
 		onSubmit: () => {},
 	});
 
+	const handleTriggerDeleteObjectFieldModal = async () => {
+		const url = createResourceURL(baseResourceURL, {
+			objectFieldId: values.id,
+			p_p_resource_id: '/object_definitions/get_object_field_delete_info',
+		}).href;
+
+		const showModalResponse = await API.fetchJSON<{
+			showDeletionModal: boolean;
+			showDeletionNotAllowedModal: boolean;
+		}>(url);
+
+		setShowDeletionModal(true);
+
+		setShowDeletionNotAllowedModal(
+			showModalResponse.showDeletionNotAllowedModal
+		);
+	};
+
 	const onSubmit = async () => {
 		const validationErrors = handleValidate();
 
 		if (!Object.keys(validationErrors).length) {
 			setLoading(true);
 			const {id, ...objectField} = values;
-			const {edges, nodes} = store.getState();
 
 			delete objectField.defaultValue;
 			delete objectField.listTypeDefinitionId;
@@ -133,7 +159,7 @@ export function RightSidebarObjectFieldDetails() {
 			{loading ? (
 				<ClayLoadingIndicator displayType="secondary" size="sm" />
 			) : (
-				<div onBlur={onSubmit}>
+				<>
 					<div className="lfr-objects__model-builder-right-sidebar-definition-node-title">
 						<span>
 							{getLocalizableLabel(
@@ -144,51 +170,86 @@ export function RightSidebarObjectFieldDetails() {
 							)}
 						</span>
 
-						<ClayButtonWithIcon
-							aria-label="Trash"
-							displayType="secondary"
-							symbol="trash"
-							title="Trash"
-						/>
+						{!values.system &&
+							values.businessType !== 'Relationship' && (
+								<ClayButtonWithIcon
+									aria-label="Trash"
+									displayType="secondary"
+									onBlur={(event) => event.preventDefault()}
+									onClick={() =>
+										handleTriggerDeleteObjectFieldModal()
+									}
+									symbol="trash"
+									title="Trash"
+								/>
+							)}
 					</div>
 
-					<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
-						<EditObjectFieldContent
-							containerWrapper={ClayPanel}
-							creationLanguageId={
-								selectedNode.data?.defaultLanguageId ?? 'en_US'
-							}
-							errors={errors}
-							filterOperators={filterOperators}
-							handleChange={handleChange}
-							isApproved={
-								selectedNode.data?.status.label === 'approved'
-							}
-							isDefaultStorageType={
-								selectedNode.data?.storageType === 'default' ??
-								true
-							}
-							learnResources={objectWebLearnResources}
-							modelBuilder
-							objectDefinitionExternalReferenceCode={
-								selectedNode.data?.externalReferenceCode ?? ''
-							}
-							objectFieldTypes={[]}
-							objectName={selectedNode.data?.name as string}
-							objectRelationshipId={0}
-							readOnly={
-								!selectedNode.data
-									?.hasObjectDefinitionUpdateResourcePermission ??
-								false
-							}
-							readOnlySidebarElements={[]}
-							setValues={setValues}
-							sidebarElements={[]}
-							values={values}
-							workflowStatusJSONArray={workflowStatusJSONArray}
-						/>
+					<div onBlur={onSubmit}>
+						<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
+							<EditObjectFieldContent
+								containerWrapper={ClayPanel}
+								creationLanguageId={
+									selectedNode.data?.defaultLanguageId ??
+									'en_US'
+								}
+								errors={errors}
+								filterOperators={filterOperators}
+								handleChange={handleChange}
+								isApproved={
+									selectedNode.data?.status.label ===
+									'approved'
+								}
+								isDefaultStorageType={
+									selectedNode.data?.storageType ===
+										'default' ?? true
+								}
+								learnResources={objectWebLearnResources}
+								modelBuilder
+								objectDefinitionExternalReferenceCode={
+									selectedNode.data?.externalReferenceCode ??
+									''
+								}
+								objectFieldTypes={[]}
+								objectName={selectedNode.data?.name as string}
+								objectRelationshipId={0}
+								readOnly={
+									!selectedNode.data
+										?.hasObjectDefinitionUpdateResourcePermission ??
+									false
+								}
+								readOnlySidebarElements={[]}
+								setValues={setValues}
+								sidebarElements={[]}
+								values={values}
+								workflowStatusJSONArray={
+									workflowStatusJSONArray
+								}
+							/>
+						</div>
 					</div>
-				</div>
+				</>
+			)}
+
+			{showDeletionModal && (
+				<ModalDeleteObjectField
+					objectField={values as ObjectField}
+					onAfterSubmit={() => {
+						if (selectedField) {
+							dispatch({
+								payload: {
+									edges,
+									nodes,
+									selectedField,
+									selectedNode,
+								},
+								type: TYPES.DELETE_OBJECT_FIELD,
+							});
+						}
+					}}
+					setModalVisibility={setShowDeletionModal}
+					showDeletionNotAllowedModal={showDeletionNotAllowedModal}
+				/>
 			)}
 		</>
 	);

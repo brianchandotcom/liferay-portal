@@ -58,6 +58,10 @@ public class GetObjectRelationshipInfoMVCResourceCommand
 				"parameterRequired",
 				ObjectRelationshipUtil.isParameterRequired(
 					objectDefinition, _systemObjectDefinitionManagerRegistry)
+			).put(
+				"restContextPath",
+				ObjectRelationshipUtil.getRESTContextPath(
+					objectDefinition, _systemObjectDefinitionManagerRegistry)
 			));
 	}
 

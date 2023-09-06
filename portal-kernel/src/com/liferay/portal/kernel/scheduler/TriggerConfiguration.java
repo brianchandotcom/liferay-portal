@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.scheduler;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 
 /**
@@ -59,8 +61,9 @@ public class TriggerConfiguration {
 	}
 
 	private TriggerConfiguration(String cronExpression) {
-		if (cronExpression == null) {
-			throw new IllegalArgumentException("Cron expression is null");
+		if (Validator.isNull(cronExpression)) {
+			throw new IllegalArgumentException(
+				"Cron expression is null or empty");
 		}
 
 		_cronExpression = cronExpression;

@@ -148,48 +148,21 @@ export default function EditKBArticle({
 		}
 	};
 
-	const eventHandlers = [];
+	const eventHandlers = [
+		attachListener(publishButton, 'click', publishButtonOnClick),
+		attachListener(
+			contextualSidebarButton,
+			'click',
+			contextualSidebarButtonOnClick
+		),
+		attachListener(form, 'submit', () => {
+			beforeSubmit();
+		}),
+	];
 
 	if (Liferay.FeatureFlags['LPS-188060']) {
 		eventHandlers.push(
-			attachListener(publishButton, 'click', publishButtonOnClick)
-		);
-
-		eventHandlers.push(
 			attachListener(scheduleItem, 'click', scheduleItemOnClick)
-		);
-
-		eventHandlers.push(
-			attachListener(
-				contextualSidebarButton,
-				'click',
-				contextualSidebarButtonOnClick
-			)
-		);
-
-		eventHandlers.push(
-			attachListener(form, 'submit', () => {
-				beforeSubmit();
-			})
-		);
-	}
-	else {
-		eventHandlers.push(
-			attachListener(publishButton, 'click', publishButtonOnClick)
-		);
-
-		eventHandlers.push(
-			attachListener(
-				contextualSidebarButton,
-				'click',
-				contextualSidebarButtonOnClick
-			)
-		);
-
-		eventHandlers.push(
-			attachListener(form, 'submit', () => {
-				beforeSubmit();
-			})
 		);
 	}
 

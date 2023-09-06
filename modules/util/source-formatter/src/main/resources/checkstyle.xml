@@ -416,11 +416,12 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.InstanceInitializerCheck">
 			<property name="category" value="Styling" />
 			<property name="description" value="Checks the order of variable assignments and set* calls in the instance initializer." />
-			<message key="assign.incorrect.order" value="The variable assignment for ''{0}'' should come before the variable assignment for ''{1}''" />
 			<message key="assign.move.before.method.call" value="The variable assignment for ''{0}'' should come before the method calling ''{1}''" />
+			<message key="assign.order.incorrect" value="The variable assignment for ''{0}'' should come before the variable assignment for ''{1}''" />
 			<message key="assign.use.instead" value="Directly assign value to ''{0}'' instead of calling ''{1}''" />
-			<message key="lambda.use.instead" value="Use ''{0}({1})'' with passed if-statement as parameter instead" />
-			<message key="method.call.incorrect.order" value="The method calling ''{0}'' should come before the method calling ''{1}''" />
+			<message key="if.statement.inline" value="Inline if-statement inside ''{0}''" />
+			<message key="method.call.order.incorrect" value="The method calling ''{0}'' should come before the method calling ''{1}''" />
+			<message key="set.method.use.instead" value="Use ''{0}({1})'' with inlined if-statement instead" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.InstanceofOrderCheck">
 			<property name="category" value="Styling" />

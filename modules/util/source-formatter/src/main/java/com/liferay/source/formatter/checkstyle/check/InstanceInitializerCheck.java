@@ -184,9 +184,14 @@ public class InstanceInitializerCheck extends BaseCheck {
 			String parameterType = javaParameter.getParameterType();
 
 			if (parameterType.startsWith("UnsafeSupplier")) {
-				log(
-					detailAST, _MSG_USE_LAMBDA_INSTEAD, methodName,
-					parameterType);
+				if (detailAST.getType() == TokenTypes.METHOD_CALL) {
+					log(detailAST, _MSG_INLINE_IF_STATEMENT, methodName);
+				}
+				else {
+					log(
+						detailAST, _MSG_USE_SET_METHOD_INSTEAD, methodName,
+						parameterType);
+				}
 
 				return;
 			}
@@ -369,17 +374,21 @@ public class InstanceInitializerCheck extends BaseCheck {
 	}
 
 	private static final String _MSG_INCORRECT_ASSIGN_ORDER =
-		"assign.incorrect.order";
+		"assign.order.incorrect";
 
 	private static final String _MSG_INCORRECT_METHOD_CALL_ORDER =
-		"method.call.incorrect.order";
+		"method.call.order.incorrect";
+
+	private static final String _MSG_INLINE_IF_STATEMENT =
+		"if.statement.inline";
 
 	private static final String _MSG_MOVE_ASSIGN_BEFORE_METHOD_CALL =
 		"assign.move.before.method.call";
 
 	private static final String _MSG_USE_ASSIGN_INSTEAD = "assign.use.instead";
 
-	private static final String _MSG_USE_LAMBDA_INSTEAD = "lambda.use.instead";
+	private static final String _MSG_USE_SET_METHOD_INSTEAD =
+		"set.method.use.instead";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		InstanceInitializerCheck.class);

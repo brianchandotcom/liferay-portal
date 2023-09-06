@@ -261,10 +261,6 @@ public class ObjectFieldUtil {
 		}
 
 		for (Map.Entry<String, Object> entry : values.entrySet()) {
-			if (Objects.equals(entry.getKey(), "status")) {
-				continue;
-			}
-
 			ObjectField objectField = objectFieldsMap.get(entry.getKey());
 
 			if ((objectField == null) || objectField.isMetadata() ||

@@ -43,6 +43,7 @@ import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.RequiredObjectDefinitionException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.internal.deployer.InactiveObjectDefinitionDeployerImpl;
@@ -127,7 +128,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalRunMode;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -297,8 +297,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		for (ObjectField oldObjectField : oldObjectFields) {
 			if (oldObjectField.isSystem() &&
-				!_defaultSystemObjectFieldNames.contains(
-					oldObjectField.getName()) &&
+				!ObjectFieldUtil.isMetadata(oldObjectField.getName()) &&
 				!_hasObjectField(newObjectFields, oldObjectField)) {
 
 				_objectFieldPersistence.remove(oldObjectField);
@@ -2313,13 +2312,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private CurrentConnection _currentConnection;
-
-	private final Set<String> _defaultSystemObjectFieldNames =
-		SetUtil.fromArray(
-			new String[] {
-				"creator", "createDate", "externalReferenceCode", "id",
-				"modifiedDate", "status"
-			});
 
 	@Reference
 	private DynamicQueryBatchIndexingActionableFactory

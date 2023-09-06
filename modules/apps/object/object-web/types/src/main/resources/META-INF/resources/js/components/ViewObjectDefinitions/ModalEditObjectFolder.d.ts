@@ -7,16 +7,16 @@
 
 interface ModalEditFolderProps {
 	externalReferenceCode: string;
-	folderID: number;
 	handleOnClose: () => void;
 	initialLabel?: LocalizedValue<string>;
 	name?: string;
+	objectFolderID: number;
 }
-export declare function ModalEditFolder({
+export declare function ModalEditObjectFolder({
 	externalReferenceCode,
-	folderID,
 	handleOnClose,
 	initialLabel,
 	name,
+	objectFolderID,
 }: ModalEditFolderProps): JSX.Element;
 export {};

@@ -28,9 +28,9 @@ import FoldersListSideBar from './FoldersListSidebar';
 import {ModalAddFolder} from './ModalAddFolder';
 import {ModalAddObjectDefinition} from './ModalAddObjectDefinition';
 import {ModalBindToRootObjectDefinition} from './ModalBindToRootObjectDefinition';
-import {ModalDeleteFolder} from './ModalDeleteFolder';
 import {ModalDeleteObjectDefinition} from './ModalDeleteObjectDefinition';
-import {ModalEditFolder} from './ModalEditFolder';
+import {ModalDeleteObjectFolder} from './ModalDeleteObjectFolder';
+import {ModalEditObjectFolder} from './ModalEditObjectFolder';
 import {ModalMoveObjectDefinition} from './ModalMoveObjectDefinition';
 import {ModalUnbindObjectDefinition} from './ModalUnbindObjectDefinition';
 import {deleteObjectDefinition, getFolderActions} from './objectDefinitionUtil';
@@ -81,19 +81,19 @@ export default function ViewObjectDefinitions({
 		objectFolderItems: [],
 	};
 	const [showModal, setShowModal] = useState<ViewObjectDefinitionsModals>({
-		addFolder: false,
 		addObjectDefinition: false,
+		addObjectFolder: false,
 		bindToRootObjectDefinition: false,
-		deleteFolder: false,
 		deleteObjectDefinition: false,
+		deleteObjectFolder: false,
 		deletionNotAllowed: false,
-		editFolder: false,
+		editObjectFolder: false,
 		moveObjectDefinition: false,
 		unbindFromRootObjectDefinition: false,
 	});
-	const [selectedFolder, setSelectedFolder] = useState<Partial<ObjectFolder>>(
-		initialValues
-	);
+	const [selectedObjectFolder, setSelectedObjectFolder] = useState<
+		Partial<ObjectFolder>
+	>(initialValues);
 	const [foldersList, setFoldersList] = useState<Partial<ObjectFolder>[]>([
 		initialValues,
 	]);
@@ -142,9 +142,9 @@ export default function ViewObjectDefinitions({
 	const getURL = () => {
 		let url: string = '';
 
-		if (selectedFolder.externalReferenceCode) {
+		if (selectedObjectFolder.externalReferenceCode) {
 			url = `/o/object-admin/v1.0/object-definitions?${stringToURLParameterFormat(
-				`filter=objectFolderExternalReferenceCode eq '${selectedFolder.externalReferenceCode}'`
+				`filter=objectFolderExternalReferenceCode eq '${selectedObjectFolder.externalReferenceCode}'`
 			)}`;
 		}
 
@@ -290,7 +290,7 @@ export default function ViewObjectDefinitions({
 			const makeFetch = async () => {
 				API.getAllObjectFolders().then((response) => {
 					setFoldersList(response);
-					setSelectedFolder(response[0]);
+					setSelectedObjectFolder(response[0]);
 					setLoading(false);
 				});
 			};
@@ -322,8 +322,12 @@ export default function ViewObjectDefinitions({
 						<>
 							<FoldersListSideBar
 								foldersList={foldersList as ObjectFolder[]}
-								selectedFolder={selectedFolder as ObjectFolder}
-								setSelectedFolder={setSelectedFolder}
+								selectedObjectFolder={
+									selectedObjectFolder as ObjectFolder
+								}
+								setSelectedObjectFolder={
+									setSelectedObjectFolder
+								}
 								setShowModal={setShowModal}
 							/>
 							<Card
@@ -331,19 +335,19 @@ export default function ViewObjectDefinitions({
 								customHeader={
 									<CardHeader
 										externalReferenceCode={
-											selectedFolder.externalReferenceCode
+											selectedObjectFolder.externalReferenceCode
 										}
 										items={
 											getFolderActions(
-												selectedFolder.id ?? 0,
+												selectedObjectFolder.id ?? 0,
 												objectFolderPermissionsURL,
 												setShowModal,
-												selectedFolder.actions
+												selectedObjectFolder.actions
 											) as IItem[]
 										}
-										label={selectedFolder.label}
+										label={selectedObjectFolder.label}
 										modelBuilderURL={modelBuilderURL}
-										name={selectedFolder.name}
+										name={selectedObjectFolder.name}
 									/>
 								}
 								viewMode="no-header-border"
@@ -369,7 +373,7 @@ export default function ViewObjectDefinitions({
 						);
 					}}
 					objectFolderExternalReferenceCode={
-						selectedFolder.externalReferenceCode
+						selectedObjectFolder.externalReferenceCode
 					}
 					storages={storages}
 				/>
@@ -414,49 +418,49 @@ export default function ViewObjectDefinitions({
 					/>
 				)}
 
-			{showModal.addFolder && (
+			{showModal.addObjectFolder && (
 				<ModalAddFolder
 					handleOnClose={() => {
 						setShowModal(
 							(previousState: ViewObjectDefinitionsModals) => ({
 								...previousState,
-								addFolder: false,
+								addObjectFolder: false,
 							})
 						);
 					}}
 				/>
 			)}
 
-			{showModal.editFolder && (
-				<ModalEditFolder
+			{showModal.deleteObjectFolder && (
+				<ModalDeleteObjectFolder
+					folder={selectedObjectFolder as ObjectFolder}
+					handleOnClose={() => {
+						setShowModal(
+							(previousState: ViewObjectDefinitionsModals) => ({
+								...previousState,
+								deleteObjectFolder: false,
+							})
+						);
+					}}
+				/>
+			)}
+
+			{showModal.editObjectFolder && (
+				<ModalEditObjectFolder
 					externalReferenceCode={
-						selectedFolder.externalReferenceCode as string
+						selectedObjectFolder.externalReferenceCode as string
 					}
-					folderID={selectedFolder.id as number}
 					handleOnClose={() => {
 						setShowModal(
 							(previousState: ViewObjectDefinitionsModals) => ({
 								...previousState,
-								editFolder: false,
+								editObjectFolder: false,
 							})
 						);
 					}}
-					initialLabel={selectedFolder.label}
-					name={selectedFolder.name}
-				/>
-			)}
-
-			{showModal.deleteFolder && (
-				<ModalDeleteFolder
-					folder={selectedFolder as ObjectFolder}
-					handleOnClose={() => {
-						setShowModal(
-							(previousState: ViewObjectDefinitionsModals) => ({
-								...previousState,
-								deleteFolder: false,
-							})
-						);
-					}}
+					initialLabel={selectedObjectFolder.label}
+					name={selectedObjectFolder.name}
+					objectFolderID={selectedObjectFolder.id as number}
 				/>
 			)}
 
@@ -472,7 +476,7 @@ export default function ViewObjectDefinitions({
 						);
 					}}
 					objectDefinition={moveObjectDefinition as ObjectDefinition}
-					selectedFolder={selectedFolder}
+					selectedObjectFolder={selectedObjectFolder}
 					setMoveObjectDefinition={setMoveObjectDefinition}
 				/>
 			)}

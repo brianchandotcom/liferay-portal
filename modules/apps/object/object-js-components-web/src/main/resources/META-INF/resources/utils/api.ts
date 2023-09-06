@@ -178,10 +178,6 @@ export async function fetchJSON<T>(input: RequestInfo, init?: RequestInit) {
 	return (await result.json()) as T;
 }
 
-export async function getAllFolders() {
-	return await getList<ObjectFolder>('/o/object-admin/v1.0/object-folders');
-}
-
 export async function getAllObjectDefinitions() {
 	return await getList<ObjectDefinition>(
 		'/o/object-admin/v1.0/object-definitions?page=-1'
@@ -192,17 +188,6 @@ export async function getAllObjectFolders() {
 	return await getList<ObjectFolder>(
 		'/o/object-admin/v1.0/object-folders?pageSize=-1'
 	);
-}
-
-export async function getFolderByERC(folderERC: string) {
-	const folderResponse = await fetch(
-		`/o/object-admin/v1.0/object-folders/by-external-reference-code/${folderERC}`,
-		{method: 'GET'}
-	);
-
-	const folder = (await folderResponse.json()) as ObjectFolder;
-
-	return folder;
 }
 
 export async function getList<T>(url: string) {
@@ -279,6 +264,17 @@ export async function getObjectFieldsById(objectDefinitionId: number) {
 	return await getList<ObjectField>(
 		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields?pageSize=-1`
 	);
+}
+
+export async function getObjectFolderByERC(folderERC: string) {
+	const folderResponse = await fetch(
+		`/o/object-admin/v1.0/object-folders/by-external-reference-code/${folderERC}`,
+		{method: 'GET'}
+	);
+
+	const folder = (await folderResponse.json()) as ObjectFolder;
+
+	return folder;
 }
 
 export async function getObjectRelationshipsByExternalReferenceCode(

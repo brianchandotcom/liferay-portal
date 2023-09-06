@@ -13,30 +13,30 @@ import './Header.scss';
 
 import {sub} from 'frontend-js-web';
 
-import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 
 interface Header {
-	folder: ObjectFolder;
 	hasDraftObjectDefinitions: boolean;
+	objectFolder: ObjectFolder;
 	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
 }
 
 export default function ({
-	folder,
 	hasDraftObjectDefinitions,
+	objectFolder,
 	setShowModal,
 }: Header) {
-	const [{showChangesSaved}] = useFolderContext();
+	const [{showChangesSaved}] = useObjectFolderContext();
 
 	return (
 		<div className="lfr-objects__model-builder-header">
 			<div className="lfr-objects__model-builder-header-container">
-				<div className="lfr-objects__model-builder-header-folder-info">
+				<div className="lfr-objects__model-builder-header-object-folder-info">
 					<div
 						className={classNames(
-							'lfr-objects__model-builder-header-folder-info-name',
+							'lfr-objects__model-builder-header-object-folder-info-name',
 							{
-								'lfr-objects__model-builder-header-folder-info-name-changes-saved': showChangesSaved,
+								'lfr-objects__model-builder-header-object-folder-info-name-changes-saved': showChangesSaved,
 							}
 						)}
 					>
@@ -44,32 +44,34 @@ export default function ({
 							<span
 								title={
 									Liferay.Language.get('folder-name') +
-									`: ${folder.name}`
+									`: ${objectFolder.name}`
 								}
 							>
-								{folder.name}
+								{objectFolder.name}
 							</span>
 						</ClayTooltipProvider>
 					</div>
 
-					<span className="lfr-objects__model-builder-header-folder-info-erc-title">
+					<span className="lfr-objects__model-builder-header-object-folder-info-erc-title">
 						{Liferay.Language.get('erc')}:
 					</span>
 
 					<ClayTooltipProvider>
 						<span
 							className={classNames(
-								'lfr-objects__model-builder-header-folder-info-erc-content',
+								'lfr-objects__model-builder-header-object-folder-info-erc-content',
 								{
-									'lfr-objects__model-builder-header-folder-info-erc-content-changes-saved': showChangesSaved,
+									'lfr-objects__model-builder-header-object-folder-info-erc-content-changes-saved': showChangesSaved,
 								}
 							)}
 							title={
 								Liferay.Language.get('erc') +
-								`: ${folder.externalReferenceCode}`
+								`: ${objectFolder.externalReferenceCode}`
 							}
 						>
-							<strong>{folder.externalReferenceCode}</strong>
+							<strong>
+								{objectFolder.externalReferenceCode}
+							</strong>
 						</span>
 					</ClayTooltipProvider>
 
@@ -83,8 +85,8 @@ export default function ({
 						</span>
 					</ClayTooltipProvider>
 
-					{folder.externalReferenceCode !== 'uncategorized' &&
-						folder.actions?.update && (
+					{objectFolder.externalReferenceCode !== 'uncategorized' &&
+						objectFolder.actions?.update && (
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get(
 									'edit-label-and-erc'
@@ -96,7 +98,7 @@ export default function ({
 											previousState: ModelBuilderModals
 										) => ({
 											...previousState,
-											editFolder: true,
+											editObjectFolder: true,
 										})
 									)
 								}

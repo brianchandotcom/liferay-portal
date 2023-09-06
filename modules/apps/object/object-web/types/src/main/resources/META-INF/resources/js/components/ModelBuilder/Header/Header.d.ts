@@ -6,13 +6,13 @@
 import React from 'react';
 import './Header.scss';
 interface Header {
-	folder: ObjectFolder;
 	hasDraftObjectDefinitions: boolean;
+	objectFolder: ObjectFolder;
 	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
 }
 export default function ({
-	folder,
 	hasDraftObjectDefinitions,
+	objectFolder,
 	setShowModal,
 }: Header): JSX.Element;
 export {};

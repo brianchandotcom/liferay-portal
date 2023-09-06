@@ -9,16 +9,16 @@ import React from 'react';
 
 interface ConfigurationContainerProps {
 	hasUpdateObjectDefinitionPermission: boolean;
+	isLinkedObjectDefinition?: boolean;
 	isRootDescendantNode: boolean;
-	linkedDefinition?: boolean;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
 
 export function ConfigurationContainer({
 	hasUpdateObjectDefinitionPermission,
+	isLinkedObjectDefinition,
 	isRootDescendantNode,
-	linkedDefinition,
 	setValues,
 	values,
 }: ConfigurationContainerProps) {
@@ -27,7 +27,9 @@ export function ConfigurationContainer({
 		: values.system;
 
 	const disabled =
-		isReadOnly || !hasUpdateObjectDefinitionPermission || linkedDefinition;
+		!hasUpdateObjectDefinitionPermission ||
+		isLinkedObjectDefinition ||
+		isReadOnly;
 
 	return (
 		<div className="lfr-objects__object-definition-details-configuration">
@@ -73,7 +75,7 @@ export function ConfigurationContainer({
 			/>
 
 			<Toggle
-				disabled={isReadOnly || linkedDefinition}
+				disabled={isLinkedObjectDefinition || isReadOnly}
 				label={sub(
 					Liferay.Language.get('enable-x'),
 					Liferay.Language.get('entry-history-in-audit-framework')

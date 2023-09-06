@@ -241,7 +241,7 @@ export function getFolderActions(
 			onClick: () =>
 				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
 					...previousState,
-					editFolder: true,
+					editObjectFolder: true,
 				})),
 			symbolLeft: 'pencil',
 			value: 'editFolder',
@@ -269,7 +269,7 @@ export function getFolderActions(
 			onClick: () =>
 				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
 					...previousState,
-					deleteFolder: true,
+					deleteObjectFolder: true,
 				})),
 			symbolLeft: 'trash',
 			value: 'deleteFolder',

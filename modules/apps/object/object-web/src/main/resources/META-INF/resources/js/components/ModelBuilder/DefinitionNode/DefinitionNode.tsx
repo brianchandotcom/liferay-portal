@@ -26,7 +26,7 @@ import {formatActionURL} from '../../../utils/fds';
 import {ModalDeleteObjectDefinition} from '../../ViewObjectDefinitions/ModalDeleteObjectDefinition';
 import {DeletedObjectDefinition} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
 import {getDefinitionNodeActions} from '../../ViewObjectDefinitions/objectDefinitionUtil';
-import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 import NodeFields from './NodeFields';
 import NodeFooter from './NodeFooter';
@@ -48,7 +48,7 @@ export function DefinitionNode({
 		hasSelfRelationships,
 		id,
 		label,
-		linkedDefinition,
+		linked,
 		name,
 		nodeSelected,
 		objectFields,
@@ -58,14 +58,19 @@ export function DefinitionNode({
 }: NodeProps<ObjectDefinitionNodeData>) {
 	const [showAllFields, setShowAllFields] = useState<boolean>(false);
 	const [
-		{editObjectDefinitionURL, elements, objectDefinitionPermissionsURL},
+		{
+			baseResourceURL,
+			editObjectDefinitionURL,
+			elements,
+			objectDefinitionPermissionsURL,
+		},
 		dispatch,
-	] = useFolderContext();
+	] = useObjectFolderContext();
 	const store = useStore();
 
 	const [showModal, setShowModal] = useState<Partial<ModelBuilderModals>>({
 		deleteObjectDefinition: false,
-		editERC: false,
+		editObjectDefinitionERC: false,
 	});
 	const [
 		deletedObjectDefinition,
@@ -76,8 +81,6 @@ export function DefinitionNode({
 		externalReferenceCode
 	);
 
-	const [{baseResourceURL}] = useFolderContext();
-
 	const handleShowDeleteModal = () => {
 		setShowModal({
 			deleteObjectDefinition: true,
@@ -86,7 +89,7 @@ export function DefinitionNode({
 
 	const handleShowEditERCModal = () => {
 		setShowModal({
-			editERC: true,
+			editObjectDefinitionERC: true,
 		});
 	};
 
@@ -104,7 +107,7 @@ export function DefinitionNode({
 				className={classNames(
 					'lfr-objects__model-builder-node-container',
 					{
-						'lfr-objects__model-builder-node-container--link': linkedDefinition,
+						'lfr-objects__model-builder-node-container--link': linked,
 						'lfr-objects__model-builder-node-container--selected': nodeSelected,
 					}
 				)}
@@ -135,7 +138,7 @@ export function DefinitionNode({
 						setDeletedObjectDefinition,
 						status,
 					})}
-					isLinkedNode={linkedDefinition}
+					isLinkedObjectDefinition={linked}
 					objectDefinitionLabel={getLocalizableLabel(
 						defaultLanguageId,
 						label,
@@ -152,7 +155,7 @@ export function DefinitionNode({
 				/>
 
 				<NodeFooter
-					isLinkedNode={linkedDefinition}
+					isLinkedObjectDefinition={linked}
 					setShowAllFields={setShowAllFields}
 					showAllFields={showAllFields}
 				/>
@@ -214,14 +217,14 @@ export function DefinitionNode({
 				/>
 			)}
 
-			{showModal.editERC && (
+			{showModal.editObjectDefinitionERC && (
 				<ModalEditExternalReferenceCode
 					externalReferenceCode={newExternalReferenceCode as string}
 					handleOnClose={() => {
 						setShowModal(
 							(previousState: Partial<ModelBuilderModals>) => ({
 								...previousState,
-								editERC: false,
+								editObjectDefinitionERC: false,
 							})
 						);
 					}}

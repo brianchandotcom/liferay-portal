@@ -36,39 +36,39 @@ export type TAction =
 	| {
 			payload: {
 				newObjectDefinition: ObjectDefinition;
-				selectedFolderName: string;
+				selectedObjectFolderName: string;
 			};
-			type: TYPES.ADD_NEW_NODE_TO_FOLDER;
+			type: TYPES.ADD_NEW_NODE_TO_OBJECT_FOLDER;
 	  }
 	| {
 			payload: {
-				hiddenFolderNodes: boolean;
+				hiddenObjectFolderNodes: boolean;
 				leftSidebarItem: LeftSidebarItemType;
 			};
 			type: TYPES.BULK_CHANGE_NODE_VIEW;
 	  }
 	| {
 			payload: {
-				definitionId: number;
-				definitionName: string;
 				hiddenNode: boolean;
 				leftSidebarItem: LeftSidebarItemType;
+				objectDefinitionId: number;
+				objectDefinitionName: string;
 			};
 			type: TYPES.CHANGE_NODE_VIEW;
 	  }
 	| {
 			payload: {
 				objectFolders: ObjectFolder[];
-				selectedFolder: ObjectFolder;
+				selectedObjectFolder: ObjectFolder;
 			};
 			type: TYPES.CREATE_MODEL_BUILDER_STRUCTURE;
 	  }
 	| {
 			payload: {
-				currentFolderName: string;
+				currentObjectFolderName: string;
 				deletedNodeName: string;
 			};
-			type: TYPES.DELETE_FOLDER_NODE;
+			type: TYPES.DELETE_OBJECT_FOLDER_NODE;
 	  }
 	| {
 			payload: {
@@ -100,10 +100,10 @@ export type TAction =
 	  }
 	| {
 			payload: {
-				currentFolderName: string;
+				currentObjectFolderName: string;
 				updatedNode: Partial<ObjectDefinition>;
 			};
-			type: TYPES.UPDATE_FOLDER_NODE;
+			type: TYPES.UPDATE_OBJECT_FOLDER_NODE;
 	  };
 
 export type TState = {
@@ -115,8 +115,8 @@ export type TState = {
 	objectDefinitions: ObjectDefinition[];
 	objectFolders: ObjectFolder[];
 	rightSidebarType: RightSidebarType;
-	selectedDefinitionNode: Node<ObjectDefinitionNodeData>;
-	selectedFolder: ObjectFolder;
+	selectedObjectDefinitionNode: Node<ObjectDefinitionNodeData>;
+	selectedObjectFolder: ObjectFolder;
 	selectedObjectRelationship: ObjectRelationship;
 	showChangesSaved: boolean;
 	storages: LabelValueObject[];
@@ -124,17 +124,17 @@ export type TState = {
 };
 
 export type LeftSidebarItemType = {
-	folderName: string;
-	hiddenFolderNodes: boolean;
+	hiddenObjectFolderNodes: boolean;
 	name: string;
-	objectDefinitions?: LeftSidebarDefinitionItemType[];
+	objectDefinitions?: LeftSidebarObjectDefinitionItemType[];
+	objectFolderName: string;
 	type: 'objectFolder' | 'objectDefinition';
 };
 
-export type LeftSidebarDefinitionItemType = {
-	definitionId: number;
-	definitionName: string;
+export type LeftSidebarObjectDefinitionItemType = {
 	hiddenNode: boolean;
+	id: number;
+	label: string;
 	linked?: boolean;
 	name: string;
 	selected: boolean;

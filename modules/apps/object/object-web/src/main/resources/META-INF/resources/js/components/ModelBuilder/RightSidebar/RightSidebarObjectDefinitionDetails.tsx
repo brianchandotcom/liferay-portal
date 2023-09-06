@@ -22,7 +22,7 @@ import {nonRelationshipObjectFieldsInfo} from '../types';
 
 import './RightSidebarObjectDefinitionDetails.scss';
 import {useObjectDetailsForm} from '../../ObjectDetails/useObjectDetailsForm';
-import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 interface RightSidebarObjectDefinitionDetailsProps {
 	companyKeyValuePair: KeyValuePair[];
@@ -55,7 +55,10 @@ export function RightSidebarObjectDefinitionDetails({
 	companyKeyValuePair,
 	siteKeyValuePair,
 }: RightSidebarObjectDefinitionDetailsProps) {
-	const [{elements, selectedFolder}, dispatch] = useFolderContext();
+	const [
+		{elements, selectedObjectFolder},
+		dispatch,
+	] = useObjectFolderContext();
 
 	const selectedNode = elements.find((element) => {
 		if (isNode(element)) {
@@ -187,10 +190,10 @@ export function RightSidebarObjectDefinitionDetails({
 
 			dispatch({
 				payload: {
-					currentFolderName: selectedFolder.name,
+					currentObjectFolderName: selectedObjectFolder.name,
 					updatedNode: newObjectDefinition,
 				},
-				type: TYPES.UPDATE_FOLDER_NODE,
+				type: TYPES.UPDATE_OBJECT_FOLDER_NODE,
 			});
 
 			openToast({
@@ -204,7 +207,7 @@ export function RightSidebarObjectDefinitionDetails({
 
 	return (
 		<div onBlur={onSubmit}>
-			<div className="lfr-objects__model-builder-right-sidebar-definition-node-title">
+			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-title">
 				<span>
 					{sub(
 						Liferay.Language.get('x-details'),
@@ -217,7 +220,7 @@ export function RightSidebarObjectDefinitionDetails({
 				</span>
 			</div>
 
-			<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
+			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 				<ObjectDataContainer
 					dbTableName=""
 					errors={errors}
@@ -226,16 +229,16 @@ export function RightSidebarObjectDefinitionDetails({
 						!!values.actions?.update
 					}
 					isApproved={values.status?.label === 'approved'}
-					linkedDefinition={selectedNode.data!.linkedDefinition}
+					isLinkedObjectDefinition={selectedNode.data!.linked}
 					setValues={setValues}
 					values={values as ObjectDefinition}
 				/>
 			</div>
 
-			<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
+			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 				<EntryDisplayContainer
 					errors={errors}
-					linkedDefinition={selectedNode.data!.linkedDefinition}
+					isLinkedObjectDefinition={selectedNode.data!.linked}
 					nonRelationshipObjectFieldsInfo={
 						nonRelationshipObjectFieldsInfo ?? []
 					}
@@ -249,8 +252,8 @@ export function RightSidebarObjectDefinitionDetails({
 					errors={errors}
 					hasUpdateObjectDefinitionPermission={true}
 					isApproved={values.status?.label === 'approved'}
+					isLinkedObjectDefinition={selectedNode.data!.linked}
 					isRootDescendantNode={false}
-					linkedDefinition={selectedNode.data!.linkedDefinition}
 					setValues={setValues}
 					siteKeyValuePair={siteKeyValuePair}
 					values={values as ObjectDefinition}
@@ -260,12 +263,12 @@ export function RightSidebarObjectDefinitionDetails({
 			{(Liferay.FeatureFlags['LPS-167253']
 				? values?.modifiable
 				: !values?.system) && (
-				<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
+				<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 					<AccountRestrictionContainer
 						errors={errors}
 						isApproved={values?.status?.label === 'approved'}
+						isLinkedObjectDefinition={selectedNode.data!.linked}
 						isRootDescendantNode={false}
-						linkedDefinition={selectedNode.data!.linkedDefinition}
 						objectFields={
 							(values?.objectFields as ObjectField[]) ?? []
 						}
@@ -275,13 +278,13 @@ export function RightSidebarObjectDefinitionDetails({
 				</div>
 			)}
 
-			<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
+			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
 				<ConfigurationContainer
 					hasUpdateObjectDefinitionPermission={
 						!!values.actions?.update
 					}
+					isLinkedObjectDefinition={selectedNode.data!.linked}
 					isRootDescendantNode={false}
-					linkedDefinition={selectedNode.data!.linkedDefinition}
 					setValues={setValues}
 					values={values as ObjectDefinition}
 				/>

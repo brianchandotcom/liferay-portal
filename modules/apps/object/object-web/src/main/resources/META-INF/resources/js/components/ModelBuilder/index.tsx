@@ -9,8 +9,9 @@ import {ReactFlowProvider} from 'react-flow-renderer';
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
 import {TDeletionType} from '../ObjectRelationship/EditRelationship';
 import EditObjectFolder from './EditObjectFolder';
-import {FolderContextProvider} from './ModelBuilderContext/objectFolderContext';
-interface ICustomFolderWrapperProps extends React.HTMLAttributes<HTMLElement> {
+import {ObjectFolderContextProvider} from './ModelBuilderContext/objectFolderContext';
+interface CustomObjectFolderWrapperProps
+	extends React.HTMLAttributes<HTMLElement> {
 	baseResourceURL: string;
 	companyKeyValuePair: KeyValuePair[];
 	deletionTypes: TDeletionType[];
@@ -21,7 +22,7 @@ interface ICustomFolderWrapperProps extends React.HTMLAttributes<HTMLElement> {
 	viewApiURL: string;
 }
 
-const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps> = ({
+const CustomObjectFolderWrapper: React.FC<CustomObjectFolderWrapperProps> = ({
 	baseResourceURL,
 	companyKeyValuePair,
 	deletionTypes,
@@ -32,11 +33,11 @@ const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps> = ({
 	viewApiURL,
 }) => {
 	const urlParams = new URLSearchParams(window.location.search);
-	const folderName = urlParams.get('folderName');
+	const objectFolderName = urlParams.get('objectFolderName');
 
 	return (
 		<ReactFlowProvider>
-			<FolderContextProvider
+			<ObjectFolderContextProvider
 				value={{
 					baseResourceURL,
 					editObjectDefinitionURL,
@@ -48,12 +49,12 @@ const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps> = ({
 				<EditObjectFolder
 					companyKeyValuePair={companyKeyValuePair}
 					deletionTypes={deletionTypes}
-					folderName={folderName ?? ''}
+					objectFolderName={objectFolderName ?? ''}
 					siteKeyValuePair={siteKeyValuePair}
 				/>
-			</FolderContextProvider>
+			</ObjectFolderContextProvider>
 		</ReactFlowProvider>
 	);
 };
 
-export default CustomFolderWrapper;
+export default CustomObjectFolderWrapper;

@@ -9,92 +9,92 @@ import React, {useEffect, useState} from 'react';
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
 import {TDeletionType} from '../ObjectRelationship/EditRelationship';
 import {ModalAddObjectDefinition} from '../ViewObjectDefinitions/ModalAddObjectDefinition';
-import {ModalEditFolder} from '../ViewObjectDefinitions/ModalEditFolder';
+import {ModalEditObjectFolder} from '../ViewObjectDefinitions/ModalEditObjectFolder';
 import Diagram from './Diagram/Diagram';
 import Header from './Header/Header';
 import LeftSidebar from './LeftSidebar/LeftSidebar';
-import {useFolderContext} from './ModelBuilderContext/objectFolderContext';
+import {useObjectFolderContext} from './ModelBuilderContext/objectFolderContext';
 import {TYPES} from './ModelBuilderContext/typesEnum';
 import {RightSideBar} from './RightSidebar/index';
 
 interface EditObjectFolder {
 	companyKeyValuePair: KeyValuePair[];
 	deletionTypes: TDeletionType[];
-	folderName: string;
+	objectFolderName: string;
 	siteKeyValuePair: KeyValuePair[];
 }
 export default function EditObjectFolder({
 	companyKeyValuePair,
 	deletionTypes,
-	folderName,
+	objectFolderName,
 	siteKeyValuePair,
 }: EditObjectFolder) {
 	const [
-		{rightSidebarType, selectedFolder, storages, viewApiURL},
+		{rightSidebarType, selectedObjectFolder, storages, viewApiURL},
 		dispatch,
-	] = useFolderContext();
+	] = useObjectFolderContext();
 
 	const [showModal, setShowModal] = useState<ModelBuilderModals>({
-		addFolder: false,
 		addObjectDefinition: false,
-		addRelationship: false,
-		deleteFolder: false,
+		addObjectFolder: false,
+		addObjectRelationship: false,
 		deleteObjectDefinition: false,
-		editERC: false,
-		editFolder: false,
+		deleteObjectFolder: false,
+		editObjectDefinitionERC: false,
+		editObjectFolder: false,
 		moveObjectDefinition: false,
 		redirectEditObjectDefinition: false,
 	});
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const folderResponse = await API.getAllFolders();
+			const objectFolderResponse = await API.getAllObjectFolders();
 
-			const currentFolder = folderResponse.find(
-				(folder) => folder.name === folderName
+			const currentObjectFolder = objectFolderResponse.find(
+				(objectFolder) => objectFolder.name === objectFolderName
 			) as ObjectFolder;
 
-			const objectFoldersWithDefinitions: ObjectFolder[] = await Promise.all(
-				folderResponse.map(async (folder) => {
-					const folderDefinitions: ObjectDefinitionNodeData[] = [];
+			const objectFoldersWithObjectDefinitions: ObjectFolder[] = await Promise.all(
+				objectFolderResponse.map(async (objectFolder) => {
+					const objectFolderWithObjectDefinitions: ObjectDefinitionNodeData[] = [];
 
-					const folderDefinitionsResponse = await API.getObjectDefinitions(
-						`filter=objectFolderExternalReferenceCode eq '${folder.externalReferenceCode}'`
+					const objectDefinitionsFilteredByObjectFolder = await API.getObjectDefinitions(
+						`filter=objectFolderExternalReferenceCode eq '${objectFolder.externalReferenceCode}'`
 					);
 
 					const linkedObjectDefinitions: ObjectDefinition[] = [];
 
 					await Promise.all(
-						folder.objectFolderItems
+						objectFolder.objectFolderItems
 							.filter(
-								(folderItem) =>
-									folderItem.linkedObjectDefinition
+								(objectFolderItem) =>
+									objectFolderItem.linkedObjectDefinition
 							)
-							.map(async (folderItem) => {
+							.map(async (objectFolderItem) => {
 								const response = await API.getObjectDefinitionByExternalReferenceCode(
-									folderItem.objectDefinitionExternalReferenceCode
+									objectFolderItem.objectDefinitionExternalReferenceCode
 								);
 
 								linkedObjectDefinitions.push(response);
 							})
 					);
 
-					const updateFoldersLinkedDefinitions = ({
-						isLinked,
+					const updateObjectFoldersLinkedObjectDefinition = ({
+						linked,
 						objectDefinitions,
 					}: {
-						isLinked: boolean;
+						linked: boolean;
 						objectDefinitions: ObjectDefinition[];
 					}) => {
 						objectDefinitions.forEach((objectDefinition) => {
-							const folderItem = folder.objectFolderItems.find(
-								(folderItem) =>
-									folderItem.objectDefinitionExternalReferenceCode ===
+							const objectFolderItem = objectFolder.objectFolderItems.find(
+								(objectFolderItem) =>
+									objectFolderItem.objectDefinitionExternalReferenceCode ===
 									objectDefinition.externalReferenceCode
 							);
 
-							if (folderItem) {
-								folderDefinitions.push({
+							if (objectFolderItem) {
+								objectFolderWithObjectDefinitions.push({
 									...objectDefinition,
 									hasObjectDefinitionDeleteResourcePermission: !!objectDefinition
 										.actions.delete,
@@ -105,7 +105,7 @@ export default function EditObjectFolder({
 									hasObjectDefinitionViewResourcePermission: !!objectDefinition
 										.actions.get,
 									hasSelfRelationships: false,
-									linkedDefinition: isLinked,
+									linked,
 									nodeSelected: false,
 									objectFields: objectDefinition.objectFields.map(
 										(field) =>
@@ -130,27 +130,27 @@ export default function EditObjectFolder({
 						});
 					};
 
-					updateFoldersLinkedDefinitions({
-						isLinked: false,
-						objectDefinitions: folderDefinitionsResponse,
+					updateObjectFoldersLinkedObjectDefinition({
+						linked: false,
+						objectDefinitions: objectDefinitionsFilteredByObjectFolder,
 					});
 
-					updateFoldersLinkedDefinitions({
-						isLinked: true,
+					updateObjectFoldersLinkedObjectDefinition({
+						linked: true,
 						objectDefinitions: linkedObjectDefinitions,
 					});
 
 					return {
-						...folder,
-						definitions: folderDefinitions,
+						...objectFolder,
+						objectDefinitions: objectFolderWithObjectDefinitions,
 					};
 				})
 			);
 
 			dispatch({
 				payload: {
-					objectFolders: objectFoldersWithDefinitions,
-					selectedFolder: currentFolder,
+					objectFolders: objectFoldersWithObjectDefinitions,
+					selectedObjectFolder: currentObjectFolder,
 				},
 				type: TYPES.CREATE_MODEL_BUILDER_STRUCTURE,
 			});
@@ -173,15 +173,16 @@ export default function EditObjectFolder({
 						}))
 					}
 					objectFolderExternalReferenceCode={
-						selectedFolder.externalReferenceCode
+						selectedObjectFolder.externalReferenceCode
 					}
 					onAfterSubmit={(newObjectDefinition) => {
 						dispatch({
 							payload: {
 								newObjectDefinition,
-								selectedFolderName: selectedFolder.name,
+								selectedObjectFolderName:
+									selectedObjectFolder.name,
 							},
-							type: TYPES.ADD_NEW_NODE_TO_FOLDER,
+							type: TYPES.ADD_NEW_NODE_TO_OBJECT_FOLDER,
 						});
 					}}
 					reload={false}
@@ -189,29 +190,31 @@ export default function EditObjectFolder({
 				/>
 			)}
 
-			{showModal.editFolder && (
-				<ModalEditFolder
-					externalReferenceCode={selectedFolder.externalReferenceCode}
-					folderID={selectedFolder.id}
+			{showModal.editObjectFolder && (
+				<ModalEditObjectFolder
+					externalReferenceCode={
+						selectedObjectFolder.externalReferenceCode
+					}
 					handleOnClose={() => {
 						setShowModal((previousState: ModelBuilderModals) => ({
 							...previousState,
 							editFolder: false,
 						}));
 					}}
-					initialLabel={selectedFolder.label}
-					name={selectedFolder.name}
+					initialLabel={selectedObjectFolder.label}
+					name={selectedObjectFolder.name}
+					objectFolderID={selectedObjectFolder.id}
 				/>
 			)}
 
 			<Header
-				folder={selectedFolder}
 				hasDraftObjectDefinitions={false}
+				objectFolder={selectedObjectFolder}
 				setShowModal={setShowModal}
 			/>
 			<div className="lfr-objects__model-builder-diagram-container">
 				<LeftSidebar
-					selectedFolderName={selectedFolder.name}
+					selectedObjectFolderName={selectedObjectFolder.name}
 					setShowModal={setShowModal}
 				/>
 

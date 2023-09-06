@@ -16,7 +16,7 @@ export declare function DefinitionNode({
 		hasSelfRelationships,
 		id,
 		label,
-		linkedDefinition,
+		linked,
 		name,
 		nodeSelected,
 		objectFields,

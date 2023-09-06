@@ -6,7 +6,8 @@
 import React from 'react';
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
 import {TDeletionType} from '../ObjectRelationship/EditRelationship';
-interface ICustomFolderWrapperProps extends React.HTMLAttributes<HTMLElement> {
+interface CustomObjectFolderWrapperProps
+	extends React.HTMLAttributes<HTMLElement> {
 	baseResourceURL: string;
 	companyKeyValuePair: KeyValuePair[];
 	deletionTypes: TDeletionType[];
@@ -16,5 +17,5 @@ interface ICustomFolderWrapperProps extends React.HTMLAttributes<HTMLElement> {
 	storages: LabelValueObject[];
 	viewApiURL: string;
 }
-declare const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps>;
-export default CustomFolderWrapper;
+declare const CustomObjectFolderWrapper: React.FC<CustomObjectFolderWrapperProps>;
+export default CustomObjectFolderWrapper;

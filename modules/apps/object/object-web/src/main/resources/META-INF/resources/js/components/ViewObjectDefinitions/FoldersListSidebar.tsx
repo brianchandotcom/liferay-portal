@@ -13,15 +13,17 @@ import {defaultLanguageId} from '../../utils/constants';
 
 interface FoldersListSidebarProps {
 	foldersList: ObjectFolder[];
-	selectedFolder: ObjectFolder;
-	setSelectedFolder: (value: SetStateAction<Partial<ObjectFolder>>) => void;
+	selectedObjectFolder: ObjectFolder;
+	setSelectedObjectFolder: (
+		value: SetStateAction<Partial<ObjectFolder>>
+	) => void;
 	setShowModal: (value: SetStateAction<ViewObjectDefinitionsModals>) => void;
 }
 
 export default function FoldersListSideBar({
 	foldersList,
-	selectedFolder,
-	setSelectedFolder,
+	selectedObjectFolder,
+	setSelectedObjectFolder,
 	setShowModal,
 }: FoldersListSidebarProps) {
 	return (
@@ -43,7 +45,7 @@ export default function FoldersListSideBar({
 									previousState: ViewObjectDefinitionsModals
 								) => ({
 									...previousState,
-									addFolder: true,
+									addObjectFolder: true,
 								})
 							)
 						}
@@ -58,14 +60,14 @@ export default function FoldersListSideBar({
 					<ClayList.Item
 						action
 						active={
-							selectedFolder.externalReferenceCode ===
+							selectedObjectFolder.externalReferenceCode ===
 							currentFolder.externalReferenceCode
 						}
 						className="cursor-pointer lfr__object-web-view-object-definitions-folder-list-item"
 						flex
 						key={currentFolder.name}
 						onClick={() => {
-							setSelectedFolder(currentFolder);
+							setSelectedObjectFolder(currentFolder);
 						}}
 					>
 						<span className="lfr__object-web-view-object-definitions-folder-list-item-label">

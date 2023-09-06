@@ -25,10 +25,10 @@ import {defaultLanguageId} from '../../utils/constants';
 
 interface ModalEditFolderProps {
 	externalReferenceCode: string;
-	folderID: number;
 	handleOnClose: () => void;
 	initialLabel?: LocalizedValue<string>;
 	name?: string;
+	objectFolderID: number;
 }
 
 type TInitialValues = {
@@ -37,12 +37,12 @@ type TInitialValues = {
 	name?: string;
 };
 
-export function ModalEditFolder({
+export function ModalEditObjectFolder({
 	externalReferenceCode,
-	folderID,
 	handleOnClose,
 	initialLabel,
 	name,
+	objectFolderID,
 }: ModalEditFolderProps) {
 	const [error, setError] = useState<string>('');
 
@@ -67,7 +67,7 @@ export function ModalEditFolder({
 			await API.save({
 				item: folder,
 				method: 'PATCH',
-				url: `/o/object-admin/v1.0/object-folders/${folderID}`,
+				url: `/o/object-admin/v1.0/object-folders/${objectFolderID}`,
 			});
 
 			onClose();

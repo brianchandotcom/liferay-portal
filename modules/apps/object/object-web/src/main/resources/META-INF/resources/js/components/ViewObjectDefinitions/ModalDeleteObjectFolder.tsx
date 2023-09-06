@@ -15,7 +15,7 @@ interface ModalDeleteFolderProps {
 	handleOnClose: () => void;
 }
 
-export function ModalDeleteFolder({
+export function ModalDeleteObjectFolder({
 	folder,
 	handleOnClose,
 }: ModalDeleteFolderProps) {

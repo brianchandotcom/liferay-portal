@@ -12,7 +12,7 @@ import {
 	useStoreState,
 } from 'react-flow-renderer';
 
-import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 import {ObjectRelationshipEdgeData} from '../types';
 import {getEdgeParams} from '../utils';
@@ -53,7 +53,7 @@ export default function DefaultEdge({
 		targetY: currentTargetY,
 	} = data!;
 
-	const [_, dispatch] = useFolderContext();
+	const [_, dispatch] = useObjectFolderContext();
 	const [edgeStyle, setEdgeStyle] = useState({
 		...style,
 		...getInitialEdgeStyle(edgeSelected),

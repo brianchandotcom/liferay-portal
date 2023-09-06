@@ -44,8 +44,8 @@ describe('The FoldersListSidebar component should', () => {
 		render(
 			<FoldersListSideBar
 				foldersList={[uncategorizedFolder, ticketFolder]}
-				selectedFolder={uncategorizedFolder}
-				setSelectedFolder={() => {}}
+				selectedObjectFolder={uncategorizedFolder}
+				setSelectedObjectFolder={() => {}}
 				setShowModal={() => {}}
 			></FoldersListSideBar>
 		);

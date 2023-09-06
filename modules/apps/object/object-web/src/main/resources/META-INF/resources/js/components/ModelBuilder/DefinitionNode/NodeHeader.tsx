@@ -14,7 +14,7 @@ import {DropDownItems} from '../types';
 
 interface NodeHeaderProps {
 	dropDownItems: DropDownItems[];
-	isLinkedNode: boolean;
+	isLinkedObjectDefinition: boolean;
 	objectDefinitionLabel: string;
 	status: {
 		code: number;
@@ -26,7 +26,7 @@ interface NodeHeaderProps {
 
 export default function NodeHeader({
 	dropDownItems,
-	isLinkedNode,
+	isLinkedObjectDefinition,
 	objectDefinitionLabel,
 	status,
 	system,
@@ -36,7 +36,7 @@ export default function NodeHeader({
 			<div className="lfr-objects__model-builder-node-header-container">
 				<div className="lfr-objects__model-builder-node-header-label-container">
 					<div className="lfr-objects__model-builder-node-header-label-title">
-						{isLinkedNode && (
+						{isLinkedObjectDefinition && (
 							<ClayIcon className="c-pt-1 text-4" symbol="link" />
 						)}
 

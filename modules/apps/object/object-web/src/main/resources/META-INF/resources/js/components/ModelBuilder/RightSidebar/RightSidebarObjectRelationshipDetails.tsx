@@ -16,7 +16,7 @@ import {InputLocalized} from 'frontend-js-components-web';
 import {firstLetterUppercase} from '../../../utils/string';
 import {TDeletionType} from '../../ObjectRelationship/EditRelationship';
 import {useObjectRelationshipForm} from '../../ObjectRelationship/ObjectRelationshipFormBase';
-import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {ObjectRelationshipEdgeData} from '../types';
 
 interface RightSidebarObjectRelationshipDetailsProps {
@@ -26,7 +26,7 @@ interface RightSidebarObjectRelationshipDetailsProps {
 export function RightSidebarObjectRelationshipDetails({
 	deletionTypes,
 }: RightSidebarObjectRelationshipDetailsProps) {
-	const [{elements}] = useFolderContext();
+	const [{elements}] = useObjectFolderContext();
 	const [readOnly, setReadOnly] = useState(true);
 
 	const selectedEdge = elements.find((element) => {

@@ -9,7 +9,7 @@ interface ModalDeleteFolderProps {
 	folder: ObjectFolder;
 	handleOnClose: () => void;
 }
-export declare function ModalDeleteFolder({
+export declare function ModalDeleteObjectFolder({
 	folder,
 	handleOnClose,
 }: ModalDeleteFolderProps): JSX.Element;

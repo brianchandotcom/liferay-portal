@@ -27,7 +27,7 @@ interface ModalMoveObjectDefinitionProps {
 	foldersList: ObjectFolder[];
 	handleOnClose: () => void;
 	objectDefinition: ObjectDefinition;
-	selectedFolder: Partial<ObjectFolder>;
+	selectedObjectFolder: Partial<ObjectFolder>;
 	setMoveObjectDefinition: (value: ObjectDefinition | null) => void;
 }
 
@@ -35,11 +35,13 @@ export function ModalMoveObjectDefinition({
 	foldersList,
 	handleOnClose,
 	objectDefinition,
-	selectedFolder,
+	selectedObjectFolder,
 	setMoveObjectDefinition,
 }: ModalMoveObjectDefinitionProps) {
 	const [query, setQuery] = useState('');
-	const [selectedFolderERC, setSelectedFolderERC] = useState<string>('');
+	const [selectedObjectFolderERC, setSelectedObjectFolderERC] = useState<
+		string
+	>('');
 	const [error, setError] = useState<string>('');
 
 	const {observer, onClose} = useModal({
@@ -51,7 +53,8 @@ export function ModalMoveObjectDefinition({
 
 	const filteredFoldersList = foldersList.filter(
 		(item) =>
-			item.externalReferenceCode !== selectedFolder.externalReferenceCode
+			item.externalReferenceCode !==
+			selectedObjectFolder.externalReferenceCode
 	);
 
 	const modalItems = useMemo(() => {
@@ -67,7 +70,7 @@ export function ModalMoveObjectDefinition({
 	const handleMoveObject = async () => {
 		const movedObjectDefinition: ObjectDefinition = {
 			...objectDefinition,
-			objectFolderExternalReferenceCode: selectedFolderERC,
+			objectFolderExternalReferenceCode: selectedObjectFolderERC,
 		};
 
 		try {
@@ -152,14 +155,14 @@ export function ModalMoveObjectDefinition({
 											<ClayList.Item
 												action
 												active={
-													selectedFolderERC ===
+													selectedObjectFolderERC ===
 													externalReferenceCode
 												}
 												className="cursor-pointer lfr-object__object-web-view-modal-move-object-definition-list-item"
 												flex
 												key={name}
 												onClick={() => {
-													setSelectedFolderERC(
+													setSelectedObjectFolderERC(
 														externalReferenceCode
 													);
 												}}

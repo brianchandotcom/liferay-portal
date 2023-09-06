@@ -107,12 +107,8 @@ export declare function fetchJSON<T>(
 	input: RequestInfo,
 	init?: RequestInit
 ): Promise<T>;
-export declare function getAllFolders(): Promise<ObjectFolder[]>;
 export declare function getAllObjectDefinitions(): Promise<ObjectDefinition[]>;
 export declare function getAllObjectFolders(): Promise<ObjectFolder[]>;
-export declare function getFolderByERC(
-	folderERC: string
-): Promise<ObjectFolder>;
 export declare function getList<T>(url: string): Promise<T[]>;
 export declare function getNotificationTemplateByExternalReferenceCode(
 	notificationTemplateExternalReferenceCode: string
@@ -141,6 +137,9 @@ export declare function getObjectFieldsByExternalReferenceCode(
 export declare function getObjectFieldsById(
 	objectDefinitionId: number
 ): Promise<ObjectField[]>;
+export declare function getObjectFolderByERC(
+	folderERC: string
+): Promise<ObjectFolder>;
 export declare function getObjectRelationshipsByExternalReferenceCode(
 	externalReferenceCode: string
 ): Promise<ObjectRelationship[]>;

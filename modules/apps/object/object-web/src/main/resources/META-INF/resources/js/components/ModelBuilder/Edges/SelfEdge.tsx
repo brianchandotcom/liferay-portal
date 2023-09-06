@@ -14,7 +14,7 @@ import {
 	useStoreState,
 } from 'react-flow-renderer';
 
-import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 import {ObjectRelationshipEdgeData} from '../types';
 import {getInitialEdgeStyle, getInitialLabelBgStyle} from './DefaultEdge';
@@ -48,7 +48,7 @@ export default function SelfEdge({
 		selfRelationships,
 	} = data!;
 
-	const [_, dispatch] = useFolderContext();
+	const [_, dispatch] = useObjectFolderContext();
 	const [activePopover, setActivePopover] = useState(false);
 	const [edgeStyle, setEdgeStyle] = useState({
 		...style,

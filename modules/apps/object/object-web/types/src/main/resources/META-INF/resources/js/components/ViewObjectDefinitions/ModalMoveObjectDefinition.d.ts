@@ -10,14 +10,14 @@ interface ModalMoveObjectDefinitionProps {
 	foldersList: ObjectFolder[];
 	handleOnClose: () => void;
 	objectDefinition: ObjectDefinition;
-	selectedFolder: Partial<ObjectFolder>;
+	selectedObjectFolder: Partial<ObjectFolder>;
 	setMoveObjectDefinition: (value: ObjectDefinition | null) => void;
 }
 export declare function ModalMoveObjectDefinition({
 	foldersList,
 	handleOnClose,
 	objectDefinition,
-	selectedFolder,
+	selectedObjectFolder,
 	setMoveObjectDefinition,
 }: ModalMoveObjectDefinitionProps): JSX.Element;
 export {};

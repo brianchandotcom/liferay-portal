@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfig
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
-import com.liferay.portal.kernel.service.permission.PasswordPolicyPermission;
+import com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -77,7 +77,7 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 			_passwordPolicyLocalService.fetchPasswordPolicy(passwordPolicyId);
 
 		if ((passwordPolicy != null) && !passwordPolicy.isDefaultPolicy() &&
-			_passwordPolicyPermission.contains(
+			PasswordPolicyPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), passwordPolicyId,
 				ActionKeys.DELETE)) {
 
@@ -102,9 +102,6 @@ public class DeletePasswordPolicyPortletConfigurationIcon
 
 	@Reference
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
-
-	@Reference
-	private PasswordPolicyPermission _passwordPolicyPermission;
 
 	@Reference
 	private Portal _portal;

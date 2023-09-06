@@ -12,20 +12,20 @@ import React from 'react';
 import './NodeFooter.scss';
 
 interface NodeFooterProps {
-	isLinkedNode: boolean;
+	isLinkedObjectDefinition: boolean;
 	setShowAllFields: (value: boolean) => void;
 	showAllFields: boolean;
 }
 
 export default function NodeFooter({
-	isLinkedNode,
+	isLinkedObjectDefinition,
 	setShowAllFields,
 	showAllFields,
 }: NodeFooterProps) {
 	return (
 		<>
 			<div className="lfr-objects__model-builder-node-button-container">
-				{!isLinkedNode && (
+				{!isLinkedObjectDefinition && (
 					<DropDown
 						alignmentPosition={4}
 						trigger={

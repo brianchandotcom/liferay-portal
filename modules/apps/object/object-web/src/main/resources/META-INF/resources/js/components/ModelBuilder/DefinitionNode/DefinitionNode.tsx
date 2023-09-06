@@ -48,7 +48,7 @@ export function DefinitionNode({
 		hasSelfRelationships,
 		id,
 		label,
-		linkedDefinition,
+		linked,
 		name,
 		nodeSelected,
 		objectFields,
@@ -104,7 +104,7 @@ export function DefinitionNode({
 				className={classNames(
 					'lfr-objects__model-builder-node-container',
 					{
-						'lfr-objects__model-builder-node-container--link': linkedDefinition,
+						'lfr-objects__model-builder-node-container--link': linked,
 						'lfr-objects__model-builder-node-container--selected': nodeSelected,
 					}
 				)}
@@ -135,7 +135,7 @@ export function DefinitionNode({
 						setDeletedObjectDefinition,
 						status,
 					})}
-					isLinkedNode={linkedDefinition}
+					isLinkedObjectDefinition={linked}
 					objectDefinitionLabel={getLocalizableLabel(
 						defaultLanguageId,
 						label,
@@ -152,7 +152,7 @@ export function DefinitionNode({
 				/>
 
 				<NodeFooter
-					isLinkedNode={linkedDefinition}
+					isLinkedObjectDefinition={linked}
 					setShowAllFields={setShowAllFields}
 					showAllFields={showAllFields}
 				/>

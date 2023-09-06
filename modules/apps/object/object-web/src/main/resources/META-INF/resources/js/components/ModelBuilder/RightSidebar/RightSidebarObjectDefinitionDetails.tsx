@@ -226,7 +226,7 @@ export function RightSidebarObjectDefinitionDetails({
 						!!values.actions?.update
 					}
 					isApproved={values.status?.label === 'approved'}
-					linkedDefinition={selectedNode.data!.linkedDefinition}
+					isLinkedObjectDefinition={selectedNode.data!.linked}
 					setValues={setValues}
 					values={values as ObjectDefinition}
 				/>
@@ -235,7 +235,7 @@ export function RightSidebarObjectDefinitionDetails({
 			<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
 				<EntryDisplayContainer
 					errors={errors}
-					linkedDefinition={selectedNode.data!.linkedDefinition}
+					isLinkedObjectDefinition={selectedNode.data!.linked}
 					nonRelationshipObjectFieldsInfo={
 						nonRelationshipObjectFieldsInfo ?? []
 					}
@@ -249,8 +249,8 @@ export function RightSidebarObjectDefinitionDetails({
 					errors={errors}
 					hasUpdateObjectDefinitionPermission={true}
 					isApproved={values.status?.label === 'approved'}
+					isLinkedObjectDefinition={selectedNode.data!.linked}
 					isRootDescendantNode={false}
-					linkedDefinition={selectedNode.data!.linkedDefinition}
 					setValues={setValues}
 					siteKeyValuePair={siteKeyValuePair}
 					values={values as ObjectDefinition}
@@ -264,8 +264,8 @@ export function RightSidebarObjectDefinitionDetails({
 					<AccountRestrictionContainer
 						errors={errors}
 						isApproved={values?.status?.label === 'approved'}
+						isLinkedObjectDefinition={selectedNode.data!.linked}
 						isRootDescendantNode={false}
-						linkedDefinition={selectedNode.data!.linkedDefinition}
 						objectFields={
 							(values?.objectFields as ObjectField[]) ?? []
 						}
@@ -280,8 +280,8 @@ export function RightSidebarObjectDefinitionDetails({
 					hasUpdateObjectDefinitionPermission={
 						!!values.actions?.update
 					}
+					isLinkedObjectDefinition={selectedNode.data!.linked}
 					isRootDescendantNode={false}
-					linkedDefinition={selectedNode.data!.linkedDefinition}
 					setValues={setValues}
 					values={values as ObjectDefinition}
 				/>

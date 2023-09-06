@@ -123,7 +123,7 @@ export default function LeftSidebar({
 					type: TYPES.ADD_NEW_NODE_TO_FOLDER,
 				});
 
-				if (!objectDefinition.linkedDefinition) {
+				if (!objectDefinition.linked) {
 					dispatch({
 						payload: {
 							currentFolderName: currentFolder!.name,
@@ -157,18 +157,18 @@ export default function LeftSidebar({
 			(item) => item.folderName === selectedFolderName
 		) as LeftSidebarItemType;
 
-		const linkedDefinitions = selectedFolder.objectDefinitions?.filter(
+		const linkedObjectDefinitions = selectedFolder.objectDefinitions?.filter(
 			(definition) => definition.type === 'objectLink'
 		);
 
 		const newOtherFolders = otherFolders.map((folder) => {
 			const definitions = folder.objectDefinitions?.map((definition) => {
-				const objectLinked = linkedDefinitions?.find(
-					(linkedDefinition) =>
-						linkedDefinition.definitionId ===
+				const linkedObjectDefinition = linkedObjectDefinitions?.find(
+					(linkedObjectDefinition) =>
+						linkedObjectDefinition.definitionId ===
 						definition.definitionId
 				);
-				if (objectLinked) {
+				if (linkedObjectDefinition) {
 					return {
 						...definition,
 						linked: true,

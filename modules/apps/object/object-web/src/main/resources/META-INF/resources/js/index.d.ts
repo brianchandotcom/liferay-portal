@@ -388,7 +388,7 @@ interface ObjectDefinitionNodeData
 	hasObjectDefinitionUpdateResourcePermission: boolean;
 	hasObjectDefinitionViewResourcePermission: boolean;
 	hasSelfRelationships: boolean;
-	linkedDefinition: boolean;
+	linked: boolean;
 	nodeSelected: boolean;
 	objectFields: ObjectFieldNode[];
 }

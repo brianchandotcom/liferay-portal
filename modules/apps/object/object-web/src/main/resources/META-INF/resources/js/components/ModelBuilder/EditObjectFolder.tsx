@@ -79,11 +79,11 @@ export default function EditObjectFolder({
 							})
 					);
 
-					const updateFoldersLinkedDefinitions = ({
-						isLinked,
+					const updateFoldersLinkedObjectDefinition = ({
+						linked,
 						objectDefinitions,
 					}: {
-						isLinked: boolean;
+						linked: boolean;
 						objectDefinitions: ObjectDefinition[];
 					}) => {
 						objectDefinitions.forEach((objectDefinition) => {
@@ -105,7 +105,7 @@ export default function EditObjectFolder({
 									hasObjectDefinitionViewResourcePermission: !!objectDefinition
 										.actions.get,
 									hasSelfRelationships: false,
-									linkedDefinition: isLinked,
+									linked,
 									nodeSelected: false,
 									objectFields: objectDefinition.objectFields.map(
 										(field) =>
@@ -130,13 +130,13 @@ export default function EditObjectFolder({
 						});
 					};
 
-					updateFoldersLinkedDefinitions({
-						isLinked: false,
+					updateFoldersLinkedObjectDefinition({
+						linked: false,
 						objectDefinitions: folderDefinitionsResponse,
 					});
 
-					updateFoldersLinkedDefinitions({
-						isLinked: true,
+					updateFoldersLinkedObjectDefinition({
+						linked: true,
 						objectDefinitions: linkedObjectDefinitions,
 					});
 

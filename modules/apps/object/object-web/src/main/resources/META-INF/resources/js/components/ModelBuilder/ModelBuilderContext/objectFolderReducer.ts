@@ -54,20 +54,20 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 				};
 			}
 
-			let definitionIsLinked = false;
+			let linkedObjectDefinition = false;
 
 			const newLeftSidebarItems = leftSidebarItems.map((item) => {
 				let newDefinition;
 
 				if (item.folderName === selectedFolderName) {
-					definitionIsLinked =
+					linkedObjectDefinition =
 						item.objectDefinitions?.find(
 							(objectDefinition) =>
 								objectDefinition.definitionId ===
 								newObjectDefinition.id
 						)?.type === 'objectLink';
 
-					if (!definitionIsLinked) {
+					if (!linkedObjectDefinition) {
 						newDefinition = {
 							definitionId: newObjectDefinition.id,
 							definitionName: newObjectDefinition.name,
@@ -84,7 +84,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 					const updatedObjectDefinitions = item.objectDefinitions?.map(
 						(objectDefinition) => {
 							if (
-								definitionIsLinked &&
+								linkedObjectDefinition &&
 								objectDefinition.definitionId ===
 									newObjectDefinition.id
 							) {
@@ -146,7 +146,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 
 			let newNode = {} as Node<ObjectDefinitionNodeData>;
 
-			if (definitionIsLinked) {
+			if (linkedObjectDefinition) {
 				const definitionNodes = updatedObjectDefinitionsNodes.map(
 					(node) => {
 						if (node.id === newObjectDefinition.id.toString()) {
@@ -154,7 +154,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 								...node,
 								data: {
 									...node.data,
-									linkedDefinition: false,
+									linked: false,
 									nodeSelected: true,
 								},
 							} as Node<ObjectDefinitionNodeData>;
@@ -185,7 +185,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 							newObjectDefinition.label,
 							newObjectDefinition.name
 						),
-						linkedDefinition: false,
+						linked: false,
 						nodeSelected: true,
 						objectFields: fieldsCustomSort(objectFields),
 					},
@@ -363,7 +363,7 @@ export function ObjectFolderReducer(state: TState, action: TAction) {
 								definition.name
 							),
 							selected: false,
-							type: definition.linkedDefinition
+							type: definition.linked
 								? 'objectLink'
 								: 'objectDefinition',
 						};

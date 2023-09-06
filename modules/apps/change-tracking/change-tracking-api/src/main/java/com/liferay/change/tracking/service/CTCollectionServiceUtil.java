@@ -122,15 +122,6 @@ public class CTCollectionServiceUtil {
 			userId, ctCollectionId, name, description);
 	}
 
-	public static CTCollection updateCTCollectionByExternalReferenceCode(
-			String externalReferenceCode, long userId, String name,
-			String description)
-		throws PortalException {
-
-		return getService().updateCTCollectionByExternalReferenceCode(
-			externalReferenceCode, userId, name, description);
-	}
-
 	public static CTCollectionService getService() {
 		return _service;
 	}

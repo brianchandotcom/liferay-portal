@@ -222,22 +222,6 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 			userId, ctCollectionId, name, description);
 	}
 
-	public CTCollection updateCTCollectionByExternalReferenceCode(
-			String externalReferenceCode, long userId, String name,
-			String description)
-		throws PortalException {
-
-		CTCollection ctCollection =
-			ctCollectionLocalService.fetchCTCollectionByExternalReferenceCode(
-				externalReferenceCode, CompanyThreadLocal.getCompanyId());
-
-		_ctCollectionModelResourcePermission.check(
-			getPermissionChecker(), ctCollection, ActionKeys.UPDATE);
-
-		return ctCollectionLocalService.updateCTCollection(
-			userId, ctCollection.getCtCollectionId(), name, description);
-	}
-
 	private Predicate _getPredicate(
 		long companyId, int[] statuses, String keywords) {
 

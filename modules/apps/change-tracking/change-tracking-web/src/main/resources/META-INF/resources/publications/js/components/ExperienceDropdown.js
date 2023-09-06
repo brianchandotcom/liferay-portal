@@ -3,120 +3,114 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Option, Picker} from '@clayui/core';
+import {Option, Picker, Text} from '@clayui/core';
+import Form from '@clayui/form';
 import ClayLabel from '@clayui/label';
-import ClayLayout from '@clayui/layout';
+import Layout from '@clayui/layout';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 const ExperienceDropdown = (props) => {
-	const experiences = props.userExperiences;
+	const [selectedKey, setSelectedKey] = useState(
+		props.activeSegmentsExperience.id
+	);
 
-	const [selectedKey, setSelectedKey] = useState('');
+	const handleSelectionChange = (key) => {
+		setSelectedKey(key);
 
-	const handleSelectionChange = (value) => {
-		setSelectedKey(value);
-
-		props.updatePreviewRender();
+		props.updatePreviewRender(key);
 	};
 
 	return (
-		!!experiences.length && (
-			<div className="ml-3 mr-2">
-				<Picker
-					aria-labelledby="picker-label"
-					id="picker"
-					items={experiences}
-					onSelectionChange={(value) => handleSelectionChange(value)}
-					placeholder="Select a User Experience"
-					selectedKey={selectedKey}
-				>
-					{(experience) => (
-						<ExperienceItem
-							active={experience.active}
-							id={experience.id}
-							name={experience.name}
-							segmentName={experience.segmentName}
-						/>
-					)}
-				</Picker>
+		!!props.segmentsExperiences.length && (
+			<div className="mr-2">
+				<Form.Group className="mb-2">
+					<Picker
+						aria-label={Liferay.Language.get('experience-selector')}
+						id="picker"
+						items={props.segmentsExperiences}
+						onSelectionChange={handleSelectionChange}
+						selectedKey={selectedKey}
+						selecteditem={props.activeSegmentsExperience}
+					>
+						{(experience) => (
+							<Option
+								key={experience.id}
+								textValue={experience.name}
+							>
+								<Layout.ContentRow>
+									<Layout.ContentCol
+										className="c-pl-0"
+										expand
+									>
+										<Text size={3} weight="semi-bold">
+											{experience.name}
+										</Text>
+
+										<Text
+											aria-hidden
+											className="mr-1"
+											color="secondary"
+											size={2}
+										>
+											{Liferay.Language.get('segment') +
+												': '}
+
+											<Text size={2}>
+												{experience.segmentName}
+											</Text>
+										</Text>
+									</Layout.ContentCol>
+
+									<Layout.ContentCol>
+										<ExperienceStatusLabel
+											active={experience.active}
+										/>
+									</Layout.ContentCol>
+								</Layout.ContentRow>
+							</Option>
+						)}
+					</Picker>
+				</Form.Group>
 			</div>
 		)
 	);
 };
 
 ExperienceDropdown.propTypes = {
-	status: PropTypes.string,
-	updatePreviewRender: PropTypes.func,
-	userExperiences: PropTypes.arrayOf(
+	activeSegmentsExperience: PropTypes.shape({
+		active: PropTypes.bool,
+		id: PropTypes.string,
+		name: PropTypes.string,
+		segmentName: PropTypes.string,
+	}),
+	segmentsExperiences: PropTypes.arrayOf(
 		PropTypes.shape({
-			active: PropTypes.number,
-			id: PropTypes.number,
+			active: PropTypes.bool,
+			id: PropTypes.string,
 			name: PropTypes.string,
 			segmentName: PropTypes.string,
 		})
 	),
-};
-
-const ExperienceItem = (props) => {
-
-	return (
-		<Option key={props.id}>
-			<ClayLayout.ContentRow verticalAlign="center">
-				<ClayLayout.ContentCol style={{flexShrink: 1, minWidth: 0}}>
-					<ClayLayout.ContentSection>
-						<span className="text-truncate-inline">
-							<span
-								className="font-weight-semi-bold text-truncate"
-								data-tooltip-align="top"
-								title={props.name}
-							>
-								{props.name}
-							</span>
-
-							<ExperienceStatusLabel active={props.active} />
-						</span>
-
-						<span className="text-truncate">
-							<span className="mr-1 text-secondary">
-								{Liferay.Language.get('segment') + ': '}
-							</span>
-
-							{props.segmentName}
-						</span>
-					</ClayLayout.ContentSection>
-				</ClayLayout.ContentCol>
-			</ClayLayout.ContentRow>
-		</Option>
-	);
-};
-
-ExperienceItem.propTypes = {
-	active: PropTypes.number,
-	id: PropTypes.number,
-	name: PropTypes.string,
-	segmentName: PropTypes.string,
+	updatePreviewRender: PropTypes.func,
 };
 
 const ExperienceStatusLabel = (props) => {
-	const ACTIVE = 1;
-	const INACTIVE = 0;
-
 	let displayType = null;
 	let label = null;
 
-	if (props.active === ACTIVE) {
+	if (props.active) {
 		displayType = 'success';
 		label = Liferay.Language.get('active');
 	}
-	else if (props.active === INACTIVE) {
+	else if (!props.active) {
 		displayType = 'secondary';
 		label = Liferay.Language.get('inactive');
 	}
 
 	return (
 		<ClayLabel
-			className="flex-shrink-0 inline-item-after justify-content-end"
+			className="flex-shrink-0 inline-item-after"
 			displayType={displayType}
 		>
 			{label}
@@ -125,7 +119,7 @@ const ExperienceStatusLabel = (props) => {
 };
 
 ExperienceStatusLabel.propTypes = {
-	active: PropTypes.number,
+	active: PropTypes.bool,
 };
 
 export default ExperienceDropdown;

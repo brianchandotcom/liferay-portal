@@ -210,7 +210,7 @@ export default function ChangeTrackingRelatedEntriesView({
 
 				<div className="publications-modal-body">
 					<ChangeTrackingRenderView
-						dataURL={viewEntry.dataURL}
+						initialDataURL={viewEntry.dataURL}
 						showHeader={false}
 						spritemap={spritemap}
 					/>

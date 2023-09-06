@@ -2707,7 +2707,6 @@ export default function ChangeTrackingChangesView({
 							<ChangeTrackingRenderView
 								childEntries={renderState.children}
 								ctEntry={!!renderState.node.ctEntryId}
-								dataURL={getDataURL(renderState.node)}
 								defaultLocale={defaultLocale}
 								description={
 									renderState.node.description
@@ -2726,9 +2725,11 @@ export default function ChangeTrackingChangesView({
 									navigate(nodeId, true)
 								}
 								handleShowHideable={handleShowHideableToggle}
-								moveChangesURL={getMoveChangesURL(
-									renderState.node
-								)}
+								initialDataURL={getDataURL(renderState.node)}
+                moveChangesURL={getMoveChangesURL(
+                    renderState.node
+                )}
+								namespace={namespace}
 								parentEntries={renderState.parents}
 								showDropdown={renderState.node.modelClassNameId}
 								showHideable={renderState.showHideable}

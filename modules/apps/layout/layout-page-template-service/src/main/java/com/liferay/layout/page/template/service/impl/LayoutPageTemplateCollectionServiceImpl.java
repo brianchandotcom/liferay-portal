@@ -7,6 +7,7 @@ package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateCollectionServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -66,7 +67,8 @@ public class LayoutPageTemplateCollectionServiceImpl
 		return layoutPageTemplateCollectionLocalService.
 			addLayoutPageTemplateCollection(
 				getUserId(), groupId, parentLayoutPageTemplateCollection, name,
-				description, serviceContext);
+				description, LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				serviceContext);
 	}
 
 	@Override

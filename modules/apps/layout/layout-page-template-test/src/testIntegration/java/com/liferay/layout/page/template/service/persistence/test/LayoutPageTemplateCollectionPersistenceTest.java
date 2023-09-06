@@ -257,37 +257,41 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
+	public void testCountByG_T() throws Exception {
+		_persistence.countByG_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
-		_persistence.countByGroupId(0L);
+		_persistence.countByG_T(0L, 0);
 	}
 
 	@Test
-	public void testCountByG_LPTCK() throws Exception {
-		_persistence.countByG_LPTCK(RandomTestUtil.nextLong(), "");
+	public void testCountByG_LPTCK_T() throws Exception {
+		_persistence.countByG_LPTCK_T(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
 
-		_persistence.countByG_LPTCK(0L, "null");
+		_persistence.countByG_LPTCK_T(0L, "null", 0);
 
-		_persistence.countByG_LPTCK(0L, (String)null);
+		_persistence.countByG_LPTCK_T(0L, (String)null, 0);
 	}
 
 	@Test
-	public void testCountByG_N() throws Exception {
-		_persistence.countByG_N(RandomTestUtil.nextLong(), "");
+	public void testCountByG_N_T() throws Exception {
+		_persistence.countByG_N_T(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
 
-		_persistence.countByG_N(0L, "null");
+		_persistence.countByG_N_T(0L, "null", 0);
 
-		_persistence.countByG_N(0L, (String)null);
+		_persistence.countByG_N_T(0L, (String)null, 0);
 	}
 
 	@Test
-	public void testCountByG_LikeN() throws Exception {
-		_persistence.countByG_LikeN(RandomTestUtil.nextLong(), "");
+	public void testCountByG_LikeN_T() throws Exception {
+		_persistence.countByG_LikeN_T(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
 
-		_persistence.countByG_LikeN(0L, "null");
+		_persistence.countByG_LikeN_T(0L, "null", 0);
 
-		_persistence.countByG_LikeN(0L, (String)null);
+		_persistence.countByG_LikeN_T(0L, (String)null, 0);
 	}
 
 	@Test
@@ -315,12 +319,6 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 	public void testFindAll() throws Exception {
 		_persistence.findAll(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
-	}
-
-	@Test
-	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(
-			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<LayoutPageTemplateCollection>
@@ -662,6 +660,11 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 			ReflectionTestUtil.invoke(
 				layoutPageTemplateCollection, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "lptCollectionKey"));
+		Assert.assertEquals(
+			Integer.valueOf(layoutPageTemplateCollection.getType()),
+			ReflectionTestUtil.<Integer>invoke(
+				layoutPageTemplateCollection, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "type_"));
 
 		Assert.assertEquals(
 			Long.valueOf(layoutPageTemplateCollection.getGroupId()),
@@ -673,6 +676,11 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 			ReflectionTestUtil.invoke(
 				layoutPageTemplateCollection, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "name"));
+		Assert.assertEquals(
+			Integer.valueOf(layoutPageTemplateCollection.getType()),
+			ReflectionTestUtil.<Integer>invoke(
+				layoutPageTemplateCollection, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "type_"));
 	}
 
 	protected LayoutPageTemplateCollection addLayoutPageTemplateCollection()

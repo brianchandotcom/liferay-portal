@@ -7,7 +7,7 @@ package com.liferay.portal.vulcan.internal.jaxrs.exception.mapper;
 
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
-import com.liferay.portal.vulcan.pagination.InvalidPaginationException;
+import com.liferay.portal.vulcan.pagination.exception.InvalidPaginationException;
 
 /**
  * @author Alberto Javier Moreno Lage

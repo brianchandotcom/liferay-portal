@@ -102,3 +102,24 @@ definition {
 				locator1 = "MP2Dashboards#INVITED_MEMBER");
 		}
 	}
+
+	@description = "LPS-174844 | When the user have an Account Buyer role, it should not be able to invite new members."
+	@priority = 5
+	test CannotInviteNewMembers {
+		task ("Given that the user goes to the Customer Dashboard page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "testqa@buyer.com",
+				userLoginFullName = "Test QA");
+
+			MP2Navigator.openSitePage(pageName = "Customer Dashboard");
+		}
+
+		task ("When the user tries to invite a new member") {
+			MP2Navigator.gotoNavItem(navItem = "Members");
+		}
+
+		task ("Then the user has an Account Buyer role, it should not be able to invite new members.") {
+			MP2Dashboards.viewNewMemberButtonNotPresent();
+		}
+	}
+

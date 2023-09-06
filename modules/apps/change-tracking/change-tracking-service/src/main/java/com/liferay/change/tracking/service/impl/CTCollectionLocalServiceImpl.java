@@ -137,8 +137,10 @@ public class CTCollectionLocalServiceImpl
 		CTCollection ctCollection = ctCollectionPersistence.create(
 			ctCollectionId);
 
+		ctCollection.setExternalReferenceCode(externalReferenceCode);
 		ctCollection.setCompanyId(companyId);
 		ctCollection.setUserId(userId);
+		ctCollection.setCtRemoteId(ctRemoteId);
 
 		CTSchemaVersion latestCTSchemaVersion =
 			_ctSchemaVersionLocalService.getLatestCTSchemaVersion(companyId);
@@ -146,8 +148,6 @@ public class CTCollectionLocalServiceImpl
 		ctCollection.setSchemaVersionId(
 			latestCTSchemaVersion.getSchemaVersionId());
 
-		ctCollection.setExternalReferenceCode(externalReferenceCode);
-		ctCollection.setCtRemoteId(ctRemoteId);
 		ctCollection.setName(name);
 		ctCollection.setDescription(description);
 		ctCollection.setShareable(false);

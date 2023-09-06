@@ -185,6 +185,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					fragmentRendererContext, httpServletRequest));
 		}
 		catch (Exception exception) {
+			_log.error("Unable to render frontend data set view", exception);
+
 			throw new IOException(exception);
 		}
 	}

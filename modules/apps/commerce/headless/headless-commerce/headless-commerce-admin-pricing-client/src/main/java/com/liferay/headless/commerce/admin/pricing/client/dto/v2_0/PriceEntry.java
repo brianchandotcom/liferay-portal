@@ -498,6 +498,27 @@ public class PriceEntry implements Cloneable, Serializable {
 
 	protected Product product;
 
+	public BigDecimal getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(BigDecimal quantity) {
+		this.quantity = quantity;
+	}
+
+	public void setQuantity(
+		UnsafeSupplier<BigDecimal, Exception> quantityUnsafeSupplier) {
+
+		try {
+			quantity = quantityUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected BigDecimal quantity;
+
 	public Sku getSku() {
 		return sku;
 	}

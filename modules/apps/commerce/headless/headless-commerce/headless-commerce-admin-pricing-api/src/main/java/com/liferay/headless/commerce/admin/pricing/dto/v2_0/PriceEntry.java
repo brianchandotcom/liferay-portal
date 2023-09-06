@@ -696,6 +696,35 @@ public class PriceEntry implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Product product;
 
+	@Schema(example = "10.1")
+	@Valid
+	public BigDecimal getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(BigDecimal quantity) {
+		this.quantity = quantity;
+	}
+
+	@JsonIgnore
+	public void setQuantity(
+		UnsafeSupplier<BigDecimal, Exception> quantityUnsafeSupplier) {
+
+		try {
+			quantity = quantityUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected BigDecimal quantity;
+
 	@Schema
 	@Valid
 	public Sku getSku() {
@@ -1110,6 +1139,16 @@ public class PriceEntry implements Serializable {
 			sb.append("\"product\": ");
 
 			sb.append(String.valueOf(product));
+		}
+
+		if (quantity != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"quantity\": ");
+
+			sb.append(quantity);
 		}
 
 		if (sku != null) {

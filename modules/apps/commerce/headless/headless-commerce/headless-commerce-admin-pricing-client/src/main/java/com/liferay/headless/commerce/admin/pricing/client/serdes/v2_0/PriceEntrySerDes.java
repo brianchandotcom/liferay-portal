@@ -299,6 +299,16 @@ public class PriceEntrySerDes {
 			sb.append(String.valueOf(priceEntry.getProduct()));
 		}
 
+		if (priceEntry.getQuantity() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"quantity\": ");
+
+			sb.append(priceEntry.getQuantity());
+		}
+
 		if (priceEntry.getSku() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -569,6 +579,13 @@ public class PriceEntrySerDes {
 			map.put("product", String.valueOf(priceEntry.getProduct()));
 		}
 
+		if (priceEntry.getQuantity() == null) {
+			map.put("quantity", null);
+		}
+		else {
+			map.put("quantity", String.valueOf(priceEntry.getQuantity()));
+		}
+
 		if (priceEntry.getSku() == null) {
 			map.put("sku", null);
 		}
@@ -765,6 +782,12 @@ public class PriceEntrySerDes {
 				if (jsonParserFieldValue != null) {
 					priceEntry.setProduct(
 						ProductSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "quantity")) {
+				if (jsonParserFieldValue != null) {
+					priceEntry.setQuantity(
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "sku")) {

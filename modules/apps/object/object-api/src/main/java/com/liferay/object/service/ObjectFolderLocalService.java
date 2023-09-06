@@ -293,6 +293,10 @@ public interface ObjectFolderLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectFoldersCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectFolder getOrAddUncategorizedObjectFolder(long companyId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

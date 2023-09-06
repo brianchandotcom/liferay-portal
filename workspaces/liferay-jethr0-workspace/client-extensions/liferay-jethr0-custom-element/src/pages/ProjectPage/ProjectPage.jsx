@@ -48,9 +48,9 @@ function ProjectPage() {
 	}
 
 	const breadcrumbs = [
-		{ active: false, link: '/', name: 'Home' },
-		{ active: false, link: '/projects', name: 'Projects' },
-		{ active: true, link: '/projects/{id}', name: projectName },
+		{active: false, link: '/', name: 'Home'},
+		{active: false, link: '/projects', name: 'Projects'},
+		{active: true, link: '/projects/{id}', name: projectName},
 	];
 
 	return (

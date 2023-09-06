@@ -14,7 +14,7 @@ import ProjectQueue from '../../components/ProjectQueue/ProjectQueue';
 
 function Home() {
 	const breadcrumbs = [
-		{ active:true, link: '/', name: 'Home' },
+		{active:true, link: '/', name: 'Home'},
 	];
 
 	return (

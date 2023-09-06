@@ -38,7 +38,7 @@ definition {
 	@priority = 5
 	test CheckStrategyAlwaysInheritPersistence {
 		property solutions.acceptance = "true";
-		
+
 		task ("Given the user set 'Always Inherit' configuration") {
 			ClickToChatUtils.fillGoalsChat(
 				chatProviderId = "Zendesk Web Widget Classic",
@@ -57,9 +57,9 @@ definition {
 
 		task ("Then the user can see that the data is present after choosing the strategy 'Always Inherit' in Instance Settings") {
 			ClickToChatUtils.viewTheFieldsPresent(
-				siteSettingsStrategy ="Always Inherit",
+				chatProviderId = ${passwordZendesk},
 				chatProviderOption = "Zendesk Web Widget Classic",
-				chatProviderId = ${passwordZendesk});
+				siteSettingsStrategy = "Always Inherit");
 		}
 	}
 
@@ -78,7 +78,7 @@ definition {
 			ClickToChatUtils.navigateToComponent(nameComponent = "Click to Chat");
 		}
 
-		task ("And set Zendesk Web Widget Classic configuration and Key configuration"){
+		task ("And set Zendesk Web Widget Classic configuration and Key configuration") {
 			ClickToChatUtils.fillGoalsChat(chatProviderId = "Zendesk Web Widget Classic");
 
 			var passwordZendesk = ClickToChatUtils.getPassword(chatProviderChoosen = "zendesk");
@@ -90,9 +90,9 @@ definition {
 
 		task ("Then the user can see that the data is present after choosing the strategy 'Always Override' in Instance Settings") {
 			ClickToChatUtils.viewTheFieldsPresent(
-				siteSettingsStrategy ="Always Override",
+				chatProviderId = ${passwordZendesk},
 				chatProviderOption = "Zendesk Web Widget Classic",
-				chatProviderId = ${passwordZendesk});
+				siteSettingsStrategy = "Always Override");
 		}
 	}
 
@@ -119,9 +119,10 @@ definition {
 
 		task ("Then the user can see that the data is present after choosing the strategy 'Inherit or Override' in Instance Settings") {
 			ClickToChatUtils.viewTheFieldsPresent(
-				siteSettingsStrategy ="Inherit or Override",
+				chatProviderId = ${passwordZendesk},
 				chatProviderOption = "Zendesk Web Widget Classic",
-				chatProviderId = ${passwordZendesk});
+				siteSettingsStrategy = "Inherit or Override");
 		}
 	}
+
 }

@@ -1,13 +1,13 @@
 definition {
 
 	macro fillGoalsChat {
-
-		if(isSet(siteSettingsStrategy)){
+		if (isSet(siteSettingsStrategy)) {
 			Select(
 				locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
 				value1 = ${siteSettingsStrategy});
 		}
-		if(isSet(chatProviderId)){	
+
+		if (isSet(chatProviderId)) {
 			Select(
 				locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
 				value1 = ${chatProviderId});
@@ -30,16 +30,6 @@ definition {
 		return ${clickToChatPassword};
 	}
 
-	macro typePassword {
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = ${key_password});
-
-		SystemSettings.saveConfiguration();
-
-		Refresh();
-	}
-
 	macro navigateToComponent {
 		Navigator.openURL();
 
@@ -52,22 +42,32 @@ definition {
 			locator1 = "ListGroupItem#ITEM_TEXT");
 	}
 
+	macro typePassword {
+		Type(
+			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
+			value1 = ${key_password});
+
+		SystemSettings.saveConfiguration();
+
+		Refresh();
+	}
+
 	macro viewTheFieldsPresent {
-		if(isSet(siteSettingsStrategy)){	
+		if (isSet(siteSettingsStrategy)) {
 			AssertElementPresent(
-				siteSettingsStrategy = ${siteSettingsStrategy},
-				locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN");
+				locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",
+				siteSettingsStrategy = ${siteSettingsStrategy});
 		}
 
 		AssertElementPresent(locator1 = "ClickToChatConfiguration#CHECK_INPUT_ENABLED");
-		
-		if(isSet(chatProviderOption)){
+
+		if (isSet(chatProviderOption)) {
 			AssertElementPresent(
 				chatProviderOption = ${chatProviderOption},
 				locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_OPTION");
 		}
 
-		if(isSet(chatProviderId)){
+		if (isSet(chatProviderId)) {
 			AssertElementPresent(
 				chatProviderId = ${chatProviderId},
 				locator1 = "ClickToChatConfiguration#CHECK_CHAT_PROVIDER_ID");

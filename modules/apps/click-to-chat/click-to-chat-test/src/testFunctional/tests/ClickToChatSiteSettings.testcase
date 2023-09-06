@@ -38,54 +38,29 @@ definition {
 	@priority = 5
 	test CheckStrategyAlwaysInheritPersistence {
 		property solutions.acceptance = "true";
+		
+		task ("Given the user set 'Always Inherit' configuration") {
+			ClickToChatUtils.fillGoalsChat(
+				chatProviderId = "Zendesk Web Widget Classic",
+				siteSettingsStrategy = "Always Inherit");
 
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Always Inherit");
+			var passwordZendesk = ClickToChatUtils.getPassword(chatProviderChoosen = "zendesk");
+		}
 
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Zendesk");
+		task ("And can see the Zendesk Web Widget Classic icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
+		}
 
-		var clickToChatZendeskPassword = PropsUtil.get("click.to.chat.zendesk.password");
+		task ("When the user navigate to Click to Chat") {
+			ClickToChatUtils.navigateToComponent(nameComponent = "Click to Chat");
+		}
 
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = ${clickToChatZendeskPassword});
-
-		SystemSettings.saveConfiguration();
-
-		Refresh();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
-
-		Click(
-			key_itemName = "Click to Chat",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		var siteSettingsStrategy = "Always Inherit";
-		var chatProvider = "zendesk";
-		var chatProviderId = ${clickToChatZendeskPassword};
-
-		AssertElementPresent(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",
-			siteSettingsStrategy = ${siteSettingsStrategy});
-
-		AssertElementPresent(locator1 = "ClickToChatConfiguration#CHECK_INPUT_ENABLED");
-
-		AssertElementPresent(
-			chatProvider = ${chatProvider},
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN");
-
-		AssertElementPresent(
-			chatProviderId = ${chatProviderId},
-			locator1 = "ClickToChatConfiguration#CHECK_CHAT_PROVIDER_ID");
+		task ("Then the user can see that the data is present after choosing the strategy 'Always Inherit' in Instance Settings") {
+			ClickToChatUtils.viewTheFieldsPresent(
+				siteSettingsStrategy ="Always Inherit",
+				chatProviderOption = "Zendesk Web Widget Classic",
+				chatProviderId = ${passwordZendesk});
+		}
 	}
 
 	@description = "This is a test for LPS-132716. Verify if the data persists in Site Settings after choosing the strategy 'Always Override' in Instance Settings"

@@ -58,6 +58,7 @@ public class RowLayoutStructureItemMapper
 						indexed = rowStyledLayoutStructureItem.isIndexed();
 						modulesPerRow =
 							rowStyledLayoutStructureItem.getModulesPerRow();
+						name = rowStyledLayoutStructureItem.getName();
 						numberOfColumns =
 							rowStyledLayoutStructureItem.getNumberOfColumns();
 						reverseOrder =
@@ -80,7 +81,6 @@ public class RowLayoutStructureItemMapper
 							() -> getFragmentViewPorts(
 								rowStyledLayoutStructureItem.
 									getItemConfigJSONObject()));
-						setName(rowStyledLayoutStructureItem::getName);
 						setRowViewports(
 							() -> {
 								Map<String, JSONObject>

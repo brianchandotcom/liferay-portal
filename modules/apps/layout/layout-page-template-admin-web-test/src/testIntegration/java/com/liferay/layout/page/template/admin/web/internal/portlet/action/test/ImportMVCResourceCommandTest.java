@@ -8,12 +8,15 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -76,13 +79,28 @@ public class ImportMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testImportFileWithDoNotImportStrategyAndWithExistingLayoutPageTemplateEntry()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_creatLayoutPageTemplateEntry();
+
+		Layout expectedLayout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		_assertImportResultsJSONObject(
+			1, 2, _importFile(LayoutsImportStrategy.DO_NOT_IMPORT));
+
+		Layout actualLayout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Assert.assertEquals(
+			expectedLayout.getTypeSettings(), actualLayout.getTypeSettings());
+	}
+
+	@Test
 	public void testImportFileWithDoNotOverwriteStrategy() throws Exception {
-		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0,
-			"Existing Master Page",
-			LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_creatLayoutPageTemplateEntry();
 
 		_assertImportResultsJSONObject(
 			1, 2, 1, _importFile(LayoutsImportStrategy.DO_NOT_OVERWRITE));
@@ -141,6 +159,17 @@ public class ImportMVCResourceCommandTest {
 			expectedIgnoredJSONArrayLength, ignoredJSONArray.length());
 	}
 
+	private LayoutPageTemplateEntry _creatLayoutPageTemplateEntry()
+		throws Exception {
+
+		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			"Existing Master Page",
+			LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
 	private File _getFile() throws Exception {
 		Enumeration<URL> enumeration = _bundle.findEntries(
 			_RESOURCES_PATH, "*", true);
@@ -181,6 +210,9 @@ public class ImportMVCResourceCommandTest {
 
 	private Bundle _bundle;
 	private Group _group;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private LayoutPageTemplateEntryLocalService

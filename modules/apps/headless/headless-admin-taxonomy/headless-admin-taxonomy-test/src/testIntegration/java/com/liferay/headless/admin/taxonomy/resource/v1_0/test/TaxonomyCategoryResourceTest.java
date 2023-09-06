@@ -738,9 +738,8 @@ public class TaxonomyCategoryResourceTest
 					{
 						parentTaxonomyCategory = new ParentTaxonomyCategory() {
 							{
-								setId(
-									Long.valueOf(
-										patchParentTaxonomyCategory.getId()));
+								id = Long.valueOf(
+									patchParentTaxonomyCategory.getId());
 							}
 						};
 					}
@@ -772,9 +771,8 @@ public class TaxonomyCategoryResourceTest
 					{
 						parentTaxonomyCategory = new ParentTaxonomyCategory() {
 							{
-								setId(
-									Long.valueOf(
-										randomTaxonomyCategory.getId()));
+								id = Long.valueOf(
+									randomTaxonomyCategory.getId());
 							}
 						};
 					}

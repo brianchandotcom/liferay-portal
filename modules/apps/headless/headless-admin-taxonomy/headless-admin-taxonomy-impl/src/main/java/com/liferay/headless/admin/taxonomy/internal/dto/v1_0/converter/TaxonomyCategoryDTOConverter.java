@@ -129,6 +129,38 @@ public class TaxonomyCategoryDTOConverter
 					assetCategoryProperties -> _toTaxonomyCategoryProperty(
 						assetCategoryProperties),
 					TaxonomyCategoryProperty.class);
+				taxonomyCategoryUsageCount =
+					NestedFieldsSupplier.<Integer>supply(
+						"taxonomyCategoryUsageCount",
+						fieldName -> {
+							UriInfo uriInfo = dtoConverterContext.getUriInfo();
+
+							if (uriInfo != null) {
+								MultivaluedMap<String, String> queryParameters =
+									uriInfo.getQueryParameters();
+
+								if (StringUtil.contains(
+										queryParameters.getFirst(
+											"restrictFields"),
+										"taxonomyCategoryUsageCount")) {
+
+									return null;
+								}
+							}
+
+							return (int)_assetEntryLocalService.searchCount(
+								assetCategory.getCompanyId(),
+								new long[] {assetCategory.getGroupId()},
+								assetCategory.getUserId(), null, -1, null,
+								String.valueOf(assetCategory.getCategoryId()),
+								null, false, false,
+								new int[] {
+									WorkflowConstants.STATUS_APPROVED,
+									WorkflowConstants.STATUS_PENDING,
+									WorkflowConstants.STATUS_SCHEDULED
+								},
+								false);
+						});
 				taxonomyVocabularyId = assetCategory.getVocabularyId();
 
 				setParentTaxonomyCategory(
@@ -163,38 +195,6 @@ public class TaxonomyCategoryDTOConverter
 							}
 						};
 					});
-				setTaxonomyCategoryUsageCount(
-					NestedFieldsSupplier.<Integer>supply(
-						"taxonomyCategoryUsageCount",
-						fieldName -> {
-							UriInfo uriInfo = dtoConverterContext.getUriInfo();
-
-							if (uriInfo != null) {
-								MultivaluedMap<String, String> queryParameters =
-									uriInfo.getQueryParameters();
-
-								if (StringUtil.contains(
-										queryParameters.getFirst(
-											"restrictFields"),
-										"taxonomyCategoryUsageCount")) {
-
-									return null;
-								}
-							}
-
-							return (int)_assetEntryLocalService.searchCount(
-								assetCategory.getCompanyId(),
-								new long[] {assetCategory.getGroupId()},
-								assetCategory.getUserId(), null, -1, null,
-								String.valueOf(assetCategory.getCategoryId()),
-								null, false, false,
-								new int[] {
-									WorkflowConstants.STATUS_APPROVED,
-									WorkflowConstants.STATUS_PENDING,
-									WorkflowConstants.STATUS_SCHEDULED
-								},
-								false);
-						}));
 			}
 		};
 	}

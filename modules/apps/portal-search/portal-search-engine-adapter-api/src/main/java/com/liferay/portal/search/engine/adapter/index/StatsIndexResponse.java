@@ -5,19 +5,21 @@
 
 package com.liferay.portal.search.engine.adapter.index;
 
+import java.util.Map;
+
 /**
  * @author Felipe Lorenz
  */
 public class StatsIndexResponse implements IndexResponse {
 
-	public StatsIndexResponse(Long totalSpace) {
-		_totalSpace = totalSpace;
+	public StatsIndexResponse(Map<String, Long> indexSizes) {
+		_indexSizes = indexSizes;
 	}
 
-	public Long getTotalSpace() {
-		return _totalSpace;
+	public long getTotalSpace(String indexName) {
+		return _indexSizes.get(indexName);
 	}
 
-	private final Long _totalSpace;
+	private final Map<String, Long> _indexSizes;
 
 }

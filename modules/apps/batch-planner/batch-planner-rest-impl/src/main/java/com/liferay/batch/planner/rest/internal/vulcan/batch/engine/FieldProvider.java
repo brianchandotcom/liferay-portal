@@ -13,12 +13,12 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.util.OpenAPIUtil;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -64,12 +64,11 @@ public class FieldProvider {
 			OpenAPIYAML openAPIYAML = _openAPIYAMLProvider.getOpenAPIYAML(
 				companyId, internalClassName);
 
-			Map<String, Field> dtoEntityFields = OpenAPIUtil.getDTOEntityFields(
-				internalClassName.substring(
-					internalClassName.lastIndexOf(StringPool.PERIOD) + 1),
-				openAPIYAML);
-
-			return new ArrayList<>(dtoEntityFields.values());
+			return ListUtil.fromMapValues(
+				OpenAPIUtil.getDTOEntityFields(
+					StringUtil.extractLast(
+						internalClassName, StringPool.PERIOD),
+					openAPIYAML));
 		}
 
 		ObjectDefinition objectDefinition =

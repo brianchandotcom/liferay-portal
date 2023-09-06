@@ -208,7 +208,8 @@ export default function useSubmitLXCEnvironment(
 				}
 				handleLoadingSubmitButton(false);
 				handleChangeForm(true);
-			} catch {
+			}
+			catch {
 				handleLoadingSubmitButton(false);
 			}
 		}

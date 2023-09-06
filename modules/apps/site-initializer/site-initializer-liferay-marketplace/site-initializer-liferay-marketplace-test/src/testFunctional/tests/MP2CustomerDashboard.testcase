@@ -123,3 +123,31 @@ definition {
 		}
 	}
 
+	@description = "LPS-174844 | As a customer, after inviting a member, verify if when clicking on the invited member, listed on 'members', the admin is able to see its details."
+	@priority = 3
+	test CanSeeMemberDetails {
+		task ("Given that the user goes to the Customer Dashboard page") {
+			MP2Navigator.openSitePage(pageName = "Customer Dashboard");
+		}
+
+		task ("When the admin user invites a new member") {
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "Account Administrator",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+		}
+
+		task ("Then after inviting a member, verify if when clicking on the invited member, listed on 'members', the admin is able to see its details.") {
+			var cardDetailsList = "Profile,Roles,Account";
+
+			MP2Dashboards.clickOnTheInvitedUser(text = "Invited Member");
+
+			MP2Utils.assertDetailsUser(detailsList = ${cardDetailsList});
+		}
+	}
+
+}

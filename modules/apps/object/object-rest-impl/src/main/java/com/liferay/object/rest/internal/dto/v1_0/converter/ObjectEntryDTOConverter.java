@@ -528,15 +528,6 @@ public class ObjectEntryDTOConverter
 				dateModified = objectEntry.getModifiedDate();
 				externalReferenceCode = objectEntry.getExternalReferenceCode();
 				id = objectEntry.getObjectEntryId();
-
-				if (objectDefinition.isEnableCategorization()) {
-					keywords = ListUtil.toArray(
-						_assetTagLocalService.getTags(
-							objectDefinition.getClassName(),
-							objectEntry.getObjectEntryId()),
-						AssetTag.NAME_ACCESSOR);
-				}
-
 				properties = _toProperties(
 					dtoConverterContext, objectDefinition, objectEntry);
 				scopeKey = _getScopeKey(objectDefinition, objectEntry);
@@ -553,6 +544,18 @@ public class ObjectEntryDTOConverter
 					}
 				};
 
+				setKeywords(
+					() -> {
+						if (!objectDefinition.isEnableCategorization()) {
+							return null;
+						}
+
+						return ListUtil.toArray(
+							_assetTagLocalService.getTags(
+								objectDefinition.getClassName(),
+								objectEntry.getObjectEntryId()),
+							AssetTag.NAME_ACCESSOR);
+					});
 				setTaxonomyCategoryBriefs(
 					() -> {
 						if (!objectDefinition.isEnableCategorization()) {

@@ -113,6 +113,11 @@ public class CIForwardProcessor {
 
 						_pullRequest.close();
 
+						NotificationUtil.sendSlackNotification(
+							"Pull Request URL: " + _pullRequest.getURL(),
+							"#ci-notifications",
+							"Pull Request Successfully Forwarded.");
+
 						return pullRequestURL;
 					}
 					catch (Exception exception) {

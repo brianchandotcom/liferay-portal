@@ -36,6 +36,10 @@ public class StatsClusterResponse implements ClusterResponse {
 		return _totalSpace;
 	}
 
+	public long getUsedSpace() {
+		return _totalSpace - _availableSpace;
+	}
+
 	private final Long _availableSpace;
 	private final ClusterHealthStatus _clusterHealthStatus;
 	private final String _statsMessage;

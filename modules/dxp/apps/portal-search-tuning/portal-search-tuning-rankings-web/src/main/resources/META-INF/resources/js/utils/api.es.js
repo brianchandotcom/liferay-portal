@@ -16,9 +16,20 @@ import {isNull} from './util.es';
 export function fetchResponse(url, params) {
 	const fetchUrl = new URL(url);
 
-	Object.keys(params).forEach((property) => {
-		if (!isNull(params[property])) {
-			fetchUrl.searchParams.set(property, params[property]);
+	Object.entries(params).forEach(([property, value]) => {
+		if (!isNull(value)) {
+
+			// If the value is an array, append each item inside array
+			// separately to prevent ambiguity from a comma-separated string.
+
+			if (Array.isArray(value)) {
+				value.forEach((item) =>
+					fetchUrl.searchParams.append(property, item)
+				);
+			}
+			else {
+				fetchUrl.searchParams.append(property, value);
+			}
 		}
 	});
 

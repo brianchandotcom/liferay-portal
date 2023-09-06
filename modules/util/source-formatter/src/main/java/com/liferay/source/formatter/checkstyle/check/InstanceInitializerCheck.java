@@ -203,53 +203,99 @@ public class InstanceInitializerCheck extends BaseCheck {
 		for (DetailAST exprDetailAST : exprDetailASTList) {
 			DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
 
-			if ((firstChildDetailAST == null) ||
-				(firstChildDetailAST.getType() != TokenTypes.ASSIGN)) {
-
+			if (firstChildDetailAST == null) {
 				continue;
 			}
 
-			firstChildDetailAST = firstChildDetailAST.getFirstChild();
+			if (firstChildDetailAST.getType() == TokenTypes.ASSIGN) {
+				firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-			if (firstChildDetailAST.getType() != TokenTypes.IDENT) {
-				continue;
+				if (firstChildDetailAST.getType() != TokenTypes.IDENT) {
+					continue;
+				}
+
+				String variableName = firstChildDetailAST.getText();
+
+				for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+					if (!javaTerm.isJavaMethod() || javaTerm.isPrivate()) {
+						continue;
+					}
+
+					String methodName = javaTerm.getName();
+
+					if (!StringUtil.equals(
+							"set" +
+								StringUtil.upperCaseFirstLetter(variableName),
+							methodName)) {
+
+						continue;
+					}
+
+					JavaMethod javaMethod = (JavaMethod)javaTerm;
+
+					JavaSignature javaSignature = javaMethod.getSignature();
+
+					List<JavaParameter> javaParameters =
+						javaSignature.getParameters();
+
+					if (javaParameters.size() != 1) {
+						continue;
+					}
+
+					JavaParameter javaParameter = javaParameters.get(0);
+
+					String parameterType = javaParameter.getParameterType();
+
+					if (parameterType.startsWith("UnsafeSupplier")) {
+						log(
+							firstChildDetailAST, _MSG_USE_LAMBDA_INSTEAD,
+							javaMethod.getName(), parameterType);
+					}
+				}
 			}
+			else if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
+				DetailAST dotDetailAST = firstChildDetailAST.findFirstToken(
+					TokenTypes.DOT);
 
-			String variableName = firstChildDetailAST.getText();
-
-			for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-				if (!javaTerm.isJavaMethod() || javaTerm.isPrivate()) {
+				if (dotDetailAST != null) {
 					continue;
 				}
 
-				String methodName = javaTerm.getName();
+				String methodName = getMethodName(firstChildDetailAST);
 
-				if (!StringUtil.equals(
-						"set" + StringUtil.upperCaseFirstLetter(variableName),
-						methodName)) {
-
+				if (!methodName.startsWith("set")) {
 					continue;
 				}
 
-				JavaMethod javaMethod = (JavaMethod)javaTerm;
+				for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+					if (!javaTerm.isJavaMethod() || javaTerm.isPrivate()) {
+						continue;
+					}
 
-				JavaSignature javaSignature = javaMethod.getSignature();
+					JavaMethod javaMethod = (JavaMethod)javaTerm;
 
-				List<JavaParameter> javaParameters =
-					javaSignature.getParameters();
+					if (!StringUtil.equals(methodName, javaMethod.getName())) {
+						continue;
+					}
 
-				if (javaParameters.size() != 1) {
-					continue;
-				}
+					JavaSignature javaSignature = javaMethod.getSignature();
 
-				JavaParameter javaParameter = javaParameters.get(0);
+					List<JavaParameter> javaParameters =
+						javaSignature.getParameters();
 
-				String parameterType = javaParameter.getParameterType();
+					if (javaParameters.size() != 1) {
+						continue;
+					}
 
-				if (parameterType.startsWith("UnsafeSupplier")) {
-					log(
-						firstChildDetailAST, _MSG_USE_LAMBDA_INSTEAD,
-						javaMethod.getName(), parameterType);
+					JavaParameter javaParameter = javaParameters.get(0);
+
+					String parameterType = javaParameter.getParameterType();
+
+					if (parameterType.startsWith("UnsafeSupplier")) {
+						log(
+							firstChildDetailAST, _MSG_USE_LAMBDA_INSTEAD,
+							methodName, parameterType);
+					}
 				}
 			}
 		}

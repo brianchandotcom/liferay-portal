@@ -7,6 +7,7 @@
 
 import {FDSViewType} from '../FDSViews';
 import '../../css/Filters.scss';
+import '../../css/FDSEntries.scss';
 interface IProps {
 	fdsView: FDSViewType;
 	fdsViewsURL: string;

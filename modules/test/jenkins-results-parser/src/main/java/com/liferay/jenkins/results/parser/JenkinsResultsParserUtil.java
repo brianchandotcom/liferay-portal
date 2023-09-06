@@ -5068,8 +5068,10 @@ public class JenkinsResultsParserUtil {
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(
-				"Unable to update build description to " + buildDescription +
-					".\n" + exception);
+				combine(
+					"Unable to update build description to \"",
+					buildDescription, "\""),
+				exception);
 		}
 	}
 

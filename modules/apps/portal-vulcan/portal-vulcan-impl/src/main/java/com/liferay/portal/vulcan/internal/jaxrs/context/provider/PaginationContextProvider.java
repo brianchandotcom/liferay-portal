@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration;
-import com.liferay.portal.vulcan.pagination.InvalidPaginationException;
+import com.liferay.portal.vulcan.pagination.exception.InvalidPaginationException;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import javax.servlet.http.HttpServletRequest;

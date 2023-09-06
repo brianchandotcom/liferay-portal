@@ -16,7 +16,7 @@ public class StatsIndexResponse implements IndexResponse {
 		_indexSizes = indexSizes;
 	}
 
-	public long getTotalSpace(String indexName) {
+	public long getIndexSize(String indexName) {
 		return _indexSizes.get(indexName);
 	}
 

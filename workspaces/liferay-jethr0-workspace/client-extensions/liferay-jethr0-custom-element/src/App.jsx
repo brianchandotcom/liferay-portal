@@ -7,7 +7,7 @@ import HomePage from './pages/HomePage/HomePage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import ProjectPage from './pages/ProjectPage/ProjectPage';
 
-import {HashRouter, Route, Routes} from "react-router-dom";
+import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import './App.css';
 

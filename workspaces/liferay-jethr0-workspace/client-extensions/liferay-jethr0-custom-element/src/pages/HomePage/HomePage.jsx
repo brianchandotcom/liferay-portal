@@ -7,21 +7,21 @@ import ClayCard from '@clayui/card';
 import ClayLayout from '@clayui/layout';
 import {Heading} from '@clayui/core';
 
-import "./HomePage.css";
+import './HomePage.css';
 
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import ProjectQueue from '../../components/ProjectQueue/ProjectQueue';
 
 function Home() {
 	const breadcrumbs = [
-		{ active:true, link: "/", name: "Home" },
+		{ active:true, link: '/', name: 'Home' },
 	];
 
 	return (
 		<ClayLayout.Container>
-			<ClayCard className='jethr0-card'>
+			<ClayCard className="jethr0-card">
 				<Breadcrumbs breadcrumbs={breadcrumbs} />
-				<Heading level={3} weight='lighter'>Project Queue</Heading>
+				<Heading level={3} weight="lighter">Project Queue</Heading>
 				<ProjectQueue />
 			</ClayCard>
 		</ClayLayout.Container>

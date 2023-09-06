@@ -30,7 +30,7 @@ function ProjectPage() {
 
 	useEffect(() => {
 		oAuth2Client
-			?.fetch("/projects/" + id)
+			?.fetch('/projects/' + id)
 			.then((response) => response.text())
 			.then((project) => {
 				setProject(JSON.parse(project));
@@ -40,7 +40,7 @@ function ProjectPage() {
 	}, []);
 
 	let projectBuilds = [];
-	let projectName = "Project #" + id;
+	let projectName = 'Project #' + id;
 
 	if (project) {
 		projectBuilds = project.builds;
@@ -48,14 +48,14 @@ function ProjectPage() {
 	}
 
 	const breadcrumbs = [
-		{ active: false, link: "/", name: "Home" },
-		{ active: false, link: "/projects", name: "Projects" },
-		{ active: true, link: "/projects/{id}", name: projectName },
+		{ active: false, link: '/', name: 'Home' },
+		{ active: false, link: '/projects', name: 'Projects' },
+		{ active: true, link: '/projects/{id}', name: projectName },
 	];
 
 	return (
 		<ClayLayout.Container>
-			<ClayCard className='jethr0-card'>
+			<ClayCard className="jethr0-card">
 				<Breadcrumbs breadcrumbs={breadcrumbs} />
 				<Heading level={3} weight="lighter">{projectName}</Heading>
 				<ProjectInformation project={project} />

@@ -65,7 +65,7 @@ function ProjectQueue() {
 						<ClayTable.Cell headingCell>
 							<Link
 								title={project.id}
-								to={"/projects/" + project.id}
+								to={'/projects/' + project.id}
 							>
 								{project.id}
 							</Link>

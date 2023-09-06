@@ -1,34 +1,41 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.analytics.reports.web.internal.info.item.provider;
+package com.liferay.analytics.reports.web.internal.info.item.provider.util;
 
 import com.liferay.analytics.reports.info.item.provider.AnalyticsReportsInfoItemObjectProvider;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Cristina González
  */
-@Component(service = AnalyticsReportsInfoItemObjectProviderRegistry.class)
-public class AnalyticsReportsInfoItemObjectProviderRegistry {
+public class AnalyticsReportsInfoItemObjectProviderRegistryUtil {
 
-	public AnalyticsReportsInfoItemObjectProvider<?>
+	public static AnalyticsReportsInfoItemObjectProvider<?>
 		getAnalyticsReportsInfoItemObjectProvider(String className) {
 
 		return _analyticsReportsInfoItemObjectProviderServiceTrackerMap.
 			getService(className);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
+	private static final ServiceTrackerMap
+		<String, AnalyticsReportsInfoItemObjectProvider<?>>
+			_analyticsReportsInfoItemObjectProviderServiceTrackerMap;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			AnalyticsReportsInfoItemObjectProviderRegistryUtil.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
 		_analyticsReportsInfoItemObjectProviderServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext,
@@ -51,8 +58,5 @@ public class AnalyticsReportsInfoItemObjectProviderRegistry {
 				},
 				new PropertyServiceReferenceComparator<>("service.ranking"));
 	}
-
-	private ServiceTrackerMap<String, AnalyticsReportsInfoItemObjectProvider<?>>
-		_analyticsReportsInfoItemObjectProviderServiceTrackerMap;
 
 }

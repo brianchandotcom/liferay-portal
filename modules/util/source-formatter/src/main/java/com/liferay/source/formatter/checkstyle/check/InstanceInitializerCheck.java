@@ -18,6 +18,7 @@ import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaParameter;
 import com.liferay.source.formatter.parser.JavaSignature;
 import com.liferay.source.formatter.parser.JavaTerm;
+import com.liferay.source.formatter.parser.ParseException;
 import com.liferay.source.formatter.util.FileUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -25,6 +26,7 @@ import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
@@ -61,65 +63,37 @@ public class InstanceInitializerCheck extends BaseCheck {
 			return;
 		}
 
-		String fullyQualifiedTypeName = null;
+		List<DetailAST> exprDetailASTList = getAllChildTokens(
+			childDetailAST, false, TokenTypes.EXPR);
 
-		DetailAST firstChildDetailAST = parentDetailAST.getFirstChild();
-
-		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
-			fullyQualifiedTypeName = getFullyQualifiedTypeName(
-				firstChildDetailAST.getText(), detailAST, false);
-		}
-		else if (firstChildDetailAST.getType() == TokenTypes.DOT) {
-			FullIdent fullIdent = FullIdent.createFullIdent(
-				firstChildDetailAST);
-
-			fullyQualifiedTypeName = fullIdent.getText();
-		}
-
-		if (fullyQualifiedTypeName == null) {
-			return;
-		}
-
-		String absolutePath = getAbsolutePath();
-
-		File javaFile = JavaSourceUtil.getJavaFile(
-			fullyQualifiedTypeName, _getRootDirName(absolutePath),
-			_getBundleSymbolicNamesMap(absolutePath));
-
-		if (javaFile == null) {
-			return;
+		if (exprDetailASTList.size() >= 2) {
+			_checkAttributeOrder(exprDetailASTList);
 		}
 
 		JavaClass javaClass = null;
 
 		try {
-			javaClass = JavaClassParser.parseJavaClass(
-				SourceUtil.getAbsolutePath(javaFile), FileUtil.read(javaFile));
+			javaClass = _getJavaClass(detailAST, parentDetailAST);
 		}
-		catch (Exception exception) {
+		catch (IOException | ParseException exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
+
+			return;
 		}
 
 		if (javaClass == null) {
 			return;
 		}
 
-		List<DetailAST> literalIfDetailASTList = getAllChildTokens(
-			childDetailAST, false, TokenTypes.LITERAL_IF);
-
-		for (DetailAST literalIfDetailAST : literalIfDetailASTList) {
-			_checkIfStatement(literalIfDetailAST, javaClass);
-		}
-
-		List<DetailAST> exprDetailASTList = getAllChildTokens(
-			childDetailAST, false, TokenTypes.EXPR);
-
 		_checkSetCall(exprDetailASTList, javaClass);
 
-		if (exprDetailASTList.size() >= 2) {
-			_checkAttributeOrder(exprDetailASTList);
+		for (DetailAST literalIfDetailAST :
+				getAllChildTokens(
+					childDetailAST, false, TokenTypes.LITERAL_IF)) {
+
+			_checkIfStatement(literalIfDetailAST, javaClass);
 		}
 	}
 
@@ -345,6 +319,43 @@ public class InstanceInitializerCheck extends BaseCheck {
 		}
 
 		return _bundleSymbolicNamesMap;
+	}
+
+	private JavaClass _getJavaClass(
+			DetailAST detailAST, DetailAST parentDetailAST)
+		throws IOException, ParseException {
+
+		String fullyQualifiedTypeName = null;
+
+		DetailAST firstChildDetailAST = parentDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+			fullyQualifiedTypeName = getFullyQualifiedTypeName(
+				firstChildDetailAST.getText(), detailAST, false);
+		}
+		else if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+			FullIdent fullIdent = FullIdent.createFullIdent(
+				firstChildDetailAST);
+
+			fullyQualifiedTypeName = fullIdent.getText();
+		}
+
+		if (fullyQualifiedTypeName == null) {
+			return null;
+		}
+
+		String absolutePath = getAbsolutePath();
+
+		File javaFile = JavaSourceUtil.getJavaFile(
+			fullyQualifiedTypeName, _getRootDirName(absolutePath),
+			_getBundleSymbolicNamesMap(absolutePath));
+
+		if (javaFile == null) {
+			return null;
+		}
+
+		return JavaClassParser.parseJavaClass(
+			SourceUtil.getAbsolutePath(javaFile), FileUtil.read(javaFile));
 	}
 
 	private synchronized String _getRootDirName(String absolutePath) {

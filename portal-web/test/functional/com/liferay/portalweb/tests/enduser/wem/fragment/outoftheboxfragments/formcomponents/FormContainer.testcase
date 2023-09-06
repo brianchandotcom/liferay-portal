@@ -216,12 +216,6 @@ definition {
 				contentType = "Purchase Order",
 				displayPageName = "Display Page Name");
 
-			PageEditor.addFragment(
-				collectionName = "Form Components",
-				fragmentName = "Form Container");
-
-			PageEditor.mapFormContainerToObject(contentType = "Purchase Order (Default)");
-
 			PageEditor.publish();
 
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");

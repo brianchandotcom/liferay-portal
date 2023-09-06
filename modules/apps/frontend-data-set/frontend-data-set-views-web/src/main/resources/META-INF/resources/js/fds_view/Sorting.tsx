@@ -376,14 +376,12 @@ const Sorting = ({
 	useEffect(() => {
 		const getFDSSort = async () => {
 			const response = await fetch(
-				`${API_URL.FDS_VIEWS}/${fdsView.id}?nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_SORT}`
+				`${API_URL.FDS_SORTS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_SORT_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_SORT}&sort=dateCreated:desc`
 			);
 
 			const responseJSON = await response.json();
 
-			const storedFDSSorts = responseJSON[
-				OBJECT_RELATIONSHIP.FDS_VIEW_FDS_SORT
-			] as IFDSSort[];
+			const storedFDSSorts: IFDSSort[] = responseJSON.items;
 
 			let ordered = storedFDSSorts;
 			let notOrdered: IFDSSort[] = [];
@@ -401,15 +399,12 @@ const Sorting = ({
 					)
 					.filter(Boolean) as IFDSSort[];
 
-				if (storedFDSSorts.length > fdsSortsOrderArray.length) {
-					notOrdered = storedFDSSorts.filter(
-						(filter) =>
-							!fdsSortsOrderArray.includes(String(filter.id))
-					);
-				}
+				notOrdered = storedFDSSorts.filter(
+					(filter) => !fdsSortsOrderArray.includes(String(filter.id))
+				);
 			}
 
-			setFDSSorts([...ordered, ...notOrdered]);
+			setFDSSorts([...notOrdered, ...ordered]);
 
 			setLoading(false);
 		};

@@ -652,11 +652,9 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 
 				let notOrdered: FilterCollection = [];
 
-				if (filtersOrdered.length > order.length) {
-					notOrdered = filtersOrdered.filter(
-						(filter) => !order.includes(String(filter.id))
-					);
-				}
+				notOrdered = filtersOrdered.filter(
+					(filter) => !order.includes(String(filter.id))
+				);
 
 				filtersOrdered = fdsView.fdsFiltersOrder
 					.split(',')
@@ -667,7 +665,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 					)
 					.filter(Boolean) as FilterCollection;
 
-				filtersOrdered = [...filtersOrdered, ...notOrdered];
+				filtersOrdered = [...notOrdered, ...filtersOrdered];
 			}
 
 			setFilters(filtersOrdered);

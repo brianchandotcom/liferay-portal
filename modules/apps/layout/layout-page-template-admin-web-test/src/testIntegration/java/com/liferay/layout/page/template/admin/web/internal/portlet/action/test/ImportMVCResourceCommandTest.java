@@ -112,6 +112,26 @@ public class ImportMVCResourceCommandTest {
 			1, 3, _importFile(LayoutsImportStrategy.OVERWRITE));
 	}
 
+	@Test
+	public void testImportFileWithOverwriteStrategyAndWithExistingLayoutPageTemplateEntry()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_creatLayoutPageTemplateEntry();
+
+		Layout expectedLayout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		_assertImportResultsJSONObject(
+			1, 3, _importFile(LayoutsImportStrategy.OVERWRITE));
+
+		Layout actualLayout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Assert.assertNotEquals(
+			expectedLayout.getTypeSettings(), actualLayout.getTypeSettings());
+	}
+
 	private void _assertImportResultsJSONObject(
 		long expectedInvalidJSONArrayLength,
 		long expectedImportedJSONArrayLength, JSONObject jsonObject) {

@@ -84,3 +84,8 @@
 .open-graph-settings.disabled {
 	opacity: 0.4;
 }
+
+.section-disabled .control-label {
+	color: $gray-500;
+	cursor: not-allowed;
+}

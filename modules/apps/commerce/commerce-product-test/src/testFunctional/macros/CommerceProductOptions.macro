@@ -160,6 +160,8 @@ definition {
 					key_selectFieldLabel = "Collection Provider",
 					locator1 = "CommerceEntry#ANY_SELECT",
 					value1 = ${collectionProvider});
+
+				Button.clickSave();
 			}
 			else {
 				Uncheck.uncheckNotVisible(

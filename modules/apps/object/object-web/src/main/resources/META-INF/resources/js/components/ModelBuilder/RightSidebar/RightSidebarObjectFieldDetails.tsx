@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayPanel from '@clayui/panel';
 import {
 	API,
@@ -31,7 +30,6 @@ export function RightSidebarObjectFieldDetails() {
 		showDeletionNotAllowedModal,
 		setShowDeletionNotAllowedModal,
 	] = useState<boolean>(false);
-	const [loading, setLoading] = useState(false);
 	const store = useStore();
 	const {edges, nodes} = store.getState();
 
@@ -95,7 +93,6 @@ export function RightSidebarObjectFieldDetails() {
 		const validationErrors = handleValidate();
 
 		if (!Object.keys(validationErrors).length) {
-			setLoading(true);
 			const {id, ...objectField} = values;
 
 			delete objectField.defaultValue;
@@ -123,8 +120,6 @@ export function RightSidebarObjectFieldDetails() {
 						'the-object-field-was-updated-successfully'
 					),
 				});
-
-				setTimeout(() => setLoading(false), 500);
 			}
 			catch (error) {
 				openToast({
@@ -147,89 +142,84 @@ export function RightSidebarObjectFieldDetails() {
 		};
 
 		makeFetch();
-
-		return () => {
-			setValues({});
-		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedField]);
 
 	return (
 		<>
-			{loading ? (
-				<ClayLoadingIndicator displayType="secondary" size="sm" />
-			) : (
-				<>
-					<div className="lfr-objects__model-builder-right-sidebar-definition-node-title">
-						<span>
-							{getLocalizableLabel(
-								selectedNode.data
-									?.defaultLanguageId as Liferay.Language.Locale,
-								selectedField?.label,
-								selectedField?.name
-							)}
-						</span>
+			<div className="lfr-objects__model-builder-right-sidebar-definition-node-title">
+				<span>
+					{getLocalizableLabel(
+						selectedNode.data
+							?.defaultLanguageId as Liferay.Language.Locale,
+						selectedField?.label,
+						selectedField?.name
+					)}
+				</span>
 
-						{!values.system &&
-							values.businessType !== 'Relationship' && (
-								<ClayButtonWithIcon
-									aria-label="Trash"
-									displayType="secondary"
-									onBlur={(event) => event.preventDefault()}
-									onClick={() =>
-										handleTriggerDeleteObjectFieldModal()
-									}
-									symbol="trash"
-									title="Trash"
-								/>
-							)}
-					</div>
+				<div className="lfr-objects__model-builder-right-sidebar-definition-node-title-buttons-container">
+					<ClayButton
+						aria-label="Save"
+						className="lfr-objects__model-builder-right-sidebar-definition-node-title-save-button"
+						displayType="primary"
+						onClick={() => onSubmit()}
+					>
+						{Liferay.Language.get('save')}
+					</ClayButton>
 
-					<div onBlur={onSubmit}>
-						<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
-							<EditObjectFieldContent
-								containerWrapper={ClayPanel}
-								creationLanguageId={
-									selectedNode.data?.defaultLanguageId ??
-									'en_US'
+					{!values.system &&
+						values.businessType !== 'Relationship' && (
+							<ClayButtonWithIcon
+								aria-label="Delete"
+								className="lfr-objects__model-builder-right-sidebar-definition-node-title-delete-button"
+								displayType="secondary"
+								onClick={() =>
+									handleTriggerDeleteObjectFieldModal()
 								}
-								errors={errors}
-								filterOperators={filterOperators}
-								handleChange={handleChange}
-								isApproved={
-									selectedNode.data?.status.label ===
-									'approved'
-								}
-								isDefaultStorageType={
-									selectedNode.data?.storageType ===
-										'default' ?? true
-								}
-								learnResources={objectWebLearnResources}
-								modelBuilder
-								objectDefinitionExternalReferenceCode={
-									selectedNode.data?.externalReferenceCode ??
-									''
-								}
-								objectFieldTypes={[]}
-								objectName={selectedNode.data?.name as string}
-								objectRelationshipId={0}
-								readOnly={
-									!selectedNode.data
-										?.hasObjectDefinitionUpdateResourcePermission ??
-									false
-								}
-								readOnlySidebarElements={[]}
-								setValues={setValues}
-								sidebarElements={[]}
-								values={values}
-								workflowStatusJSONArray={
-									workflowStatusJSONArray
-								}
+								symbol="trash"
+								title="Delete"
 							/>
-						</div>
-					</div>
-				</>
-			)}
+						)}
+				</div>
+			</div>
+
+			<div>
+				<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
+					<EditObjectFieldContent
+						containerWrapper={ClayPanel}
+						creationLanguageId={
+							selectedNode.data?.defaultLanguageId ?? 'en_US'
+						}
+						errors={errors}
+						filterOperators={filterOperators}
+						handleChange={handleChange}
+						isApproved={
+							selectedNode.data?.status.label === 'approved'
+						}
+						isDefaultStorageType={
+							selectedNode.data?.storageType === 'default' ?? true
+						}
+						learnResources={objectWebLearnResources}
+						modelBuilder
+						objectDefinitionExternalReferenceCode={
+							selectedNode.data?.externalReferenceCode ?? ''
+						}
+						objectFieldTypes={[]}
+						objectName={selectedNode.data?.name as string}
+						objectRelationshipId={0}
+						readOnly={
+							!selectedNode.data
+								?.hasObjectDefinitionUpdateResourcePermission ??
+							false
+						}
+						readOnlySidebarElements={[]}
+						setValues={setValues}
+						sidebarElements={[]}
+						values={values}
+						workflowStatusJSONArray={workflowStatusJSONArray}
+					/>
+				</div>
+			</div>
 
 			{showDeletionModal && (
 				<ModalDeleteObjectField

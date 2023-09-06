@@ -5,6 +5,7 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.exception.ObjectFolderLabelException;
 import com.liferay.object.exception.ObjectFolderNameException;
 import com.liferay.object.model.ObjectFolder;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -135,6 +137,25 @@ public class ObjectFolderLocalServiceImpl
 		throws PortalException {
 
 		return objectFolderPersistence.findByC_N(companyId, name);
+	}
+
+	@Override
+	public ObjectFolder getOrAddUncategorizedObjectFolder(long companyId)
+		throws PortalException {
+
+		ObjectFolder objectFolder = fetchObjectFolder(
+			companyId, ObjectFolderConstants.NAME_UNCATEGORIZED);
+
+		if (objectFolder != null) {
+			return objectFolder;
+		}
+
+		return objectFolderLocalService.addObjectFolder(
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_UNCATEGORIZED,
+			_userLocalService.getGuestUserId(companyId),
+			LocalizedMapUtil.getLocalizedMap(
+				ObjectFolderConstants.NAME_UNCATEGORIZED),
+			ObjectFolderConstants.NAME_UNCATEGORIZED);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

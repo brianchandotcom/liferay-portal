@@ -52,4 +52,26 @@ definition {
 			locator1 = "ListGroupItem#ITEM_TEXT");
 	}
 
+	macro viewTheFieldsPresent {
+		if(isSet(siteSettingsStrategy)){	
+			AssertElementPresent(
+				siteSettingsStrategy = ${siteSettingsStrategy},
+				locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN");
+		}
+
+		AssertElementPresent(locator1 = "ClickToChatConfiguration#CHECK_INPUT_ENABLED");
+		
+		if(isSet(chatProviderOption)){
+			AssertElementPresent(
+				chatProviderOption = ${chatProviderOption},
+				locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_OPTION");
+		}
+
+		if(isSet(chatProviderId)){
+			AssertElementPresent(
+				chatProviderId = ${chatProviderId},
+				locator1 = "ClickToChatConfiguration#CHECK_CHAT_PROVIDER_ID");
+		}
+	}
+
 }

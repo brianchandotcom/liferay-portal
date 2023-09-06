@@ -24,6 +24,10 @@ definition {
 		SystemSettings.saveConfiguration();
 
 		Refresh();
+
+		echo("Password: ${clickToChatPassword}");
+
+		return ${clickToChatPassword};
 	}
 
 	macro typePassword {

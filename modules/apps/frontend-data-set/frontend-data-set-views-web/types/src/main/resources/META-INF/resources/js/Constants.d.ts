@@ -4,6 +4,7 @@
  */
 
 declare const API_URL: {
+	FDS_ACTIONS: string;
 	FDS_DATE_FILTERS: string;
 	FDS_DYNAMIC_FILTERS: string;
 	FDS_ENTRIES: string;
@@ -18,6 +19,8 @@ declare const FUZZY_OPTIONS: {
 declare const OBJECT_RELATIONSHIP: {
 	readonly FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship';
 	readonly FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId';
+	readonly FDS_VIEW_FDS_ACTION: 'fdsViewFDSActionRelationship';
+	readonly FDS_VIEW_FDS_ACTION_ID: 'r_fdsViewFDSActionRelationship_c_fdsViewId';
 	readonly FDS_VIEW_FDS_DATE_FILTER: 'fdsViewFDSDateFilterRelationship';
 	readonly FDS_VIEW_FDS_DATE_FILTER_ID: 'r_fdsViewFDSDateFilterRelationship_c_fdsViewId';
 	readonly FDS_VIEW_FDS_DYNAMIC_FILTER: 'fdsViewFDSDynamicFilterRelationship';

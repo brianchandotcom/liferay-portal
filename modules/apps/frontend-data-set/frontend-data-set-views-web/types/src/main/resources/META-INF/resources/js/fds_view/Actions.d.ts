@@ -5,5 +5,10 @@
 
 /// <reference types="react" />
 
-declare const Actions: ({spritemap}: {spritemap: string}) => JSX.Element;
+import {IFDSViewSectionInterface} from '../FDSView';
+declare const Actions: ({
+	fdsView,
+	namespace,
+	spritemap,
+}: IFDSViewSectionInterface) => JSX.Element;
 export default Actions;

@@ -128,6 +128,7 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		return ctCollectionResource.postCTCollection(randomCTCollection());
 	}
 
+	@Override
 	protected CTCollection
 			testDeleteCTCollectionByExternalReferenceCode_addCTCollection()
 		throws Exception {
@@ -142,6 +143,7 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		return ctCollectionResource.postCTCollection(randomCTCollection());
 	}
 
+	@Override
 	protected CTCollection
 			testGetCTCollectionByExternalReferenceCode_addCTCollection()
 		throws Exception {
@@ -188,6 +190,7 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		return ctCollectionResource.postCTCollection(randomCTCollection());
 	}
 
+	@Override
 	protected CTCollection
 			testPatchCTCollectionByExternalReferenceCode_addCTCollection()
 		throws Exception {

@@ -54,27 +54,27 @@ public class FieldProvider {
 			});
 	}
 
-	public List<Field> getFields(long companyId, String internalClassName)
-		throws Exception {
-
-		OpenAPIYAML openAPIYAML = _openAPIYAMLProvider.getOpenAPIYAML(
-			companyId, internalClassName);
-
-		Map<String, Field> dtoEntityFields = OpenAPIUtil.getDTOEntityFields(
-			internalClassName.substring(
-				internalClassName.lastIndexOf(StringPool.PERIOD) + 1),
-			openAPIYAML);
-
-		return new ArrayList<>(dtoEntityFields.values());
-	}
-
 	public List<Field> getFields(
-			long companyId, String objectDefinitionName, UriInfo uriInfo)
+			long companyId, String internalClassName, UriInfo uriInfo)
 		throws Exception {
+
+		int idx = internalClassName.indexOf(StringPool.POUND);
+
+		if (idx < 0) {
+			OpenAPIYAML openAPIYAML = _openAPIYAMLProvider.getOpenAPIYAML(
+				companyId, internalClassName);
+
+			Map<String, Field> dtoEntityFields = OpenAPIUtil.getDTOEntityFields(
+				internalClassName.substring(
+					internalClassName.lastIndexOf(StringPool.PERIOD) + 1),
+				openAPIYAML);
+
+			return new ArrayList<>(dtoEntityFields.values());
+		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				companyId, objectDefinitionName);
+				companyId, internalClassName.substring(idx + 1));
 
 		ObjectEntryOpenAPIResource objectEntryOpenAPIResource =
 			_objectEntryOpenAPIResourceProvider.getObjectEntryOpenAPIResource(

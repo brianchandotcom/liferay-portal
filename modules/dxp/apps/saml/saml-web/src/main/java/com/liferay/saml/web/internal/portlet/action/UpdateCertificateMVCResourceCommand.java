@@ -7,6 +7,7 @@ package com.liferay.saml.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -25,15 +26,21 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saml.constants.SamlPortletKeys;
-import com.liferay.saml.web.internal.upload.CertificateUploadFileEntryHandler;
 import com.liferay.saml.web.internal.util.SamlTempFileEntryUtil;
+import com.liferay.upload.UploadFileEntryHandler;
 import com.liferay.upload.UploadHandler;
 import com.liferay.upload.UploadResponseHandler;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.security.KeyStore;
 import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 
 import java.util.ResourceBundle;
@@ -167,10 +174,9 @@ public class UpdateCertificateMVCResourceCommand
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpdateCertificateMVCResourceCommand.class);
 
-	@Reference
-	private CertificateUploadFileEntryHandler
-		_certificateUploadFileEntryHandler;
-
+	private final CertificateUploadFileEntryHandler
+		_certificateUploadFileEntryHandler =
+			new CertificateUploadFileEntryHandler();
 	private final CertificateUploadResponseHandler
 		_certificateUploadResponseHandler =
 			new CertificateUploadResponseHandler();
@@ -183,6 +189,75 @@ public class UpdateCertificateMVCResourceCommand
 
 	@Reference
 	private UploadHandler _uploadHandler;
+
+	private class CertificateUploadFileEntryHandler
+		implements UploadFileEntryHandler {
+
+		@Override
+		public FileEntry upload(UploadPortletRequest uploadPortletRequest)
+			throws IOException, PortalException {
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)uploadPortletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			PermissionChecker permissionChecker =
+				themeDisplay.getPermissionChecker();
+
+			if (!permissionChecker.isCompanyAdmin()) {
+				throw new PrincipalException();
+			}
+
+			FileEntry fileEntry = null;
+
+			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+					"file")) {
+
+				fileEntry = SamlTempFileEntryUtil.addTempFileEntry(
+					permissionChecker.getUser(),
+					uploadPortletRequest.getFileName("file"), inputStream,
+					uploadPortletRequest.getContentType("file"));
+			}
+			catch (PortalException portalException) {
+				throw new IOException(portalException);
+			}
+
+			try {
+				_validateFile(fileEntry);
+
+				return fileEntry;
+			}
+			catch (Exception exception) {
+				TempFileEntryUtil.deleteTempFileEntry(
+					fileEntry.getFileEntryId());
+
+				if (exception instanceof RuntimeException) {
+					throw (RuntimeException)exception;
+				}
+
+				throw new PortalException(exception);
+			}
+		}
+
+		private void _validateFile(FileEntry fileEntry)
+			throws CertificateException, KeyStoreException {
+
+			try (InputStream inputStream = fileEntry.getContentStream()) {
+				KeyStore keyStore = KeyStore.getInstance("PKCS12");
+
+				keyStore.load(inputStream, null);
+			}
+			catch (IOException ioException) {
+				throw new KeyStoreException(ioException);
+			}
+			catch (KeyStoreException | NoSuchAlgorithmException |
+				   PortalException exception) {
+
+				throw new SystemException(exception);
+			}
+		}
+
+	}
 
 	private class CertificateUploadResponseHandler
 		implements UploadResponseHandler {

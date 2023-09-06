@@ -475,6 +475,119 @@ public class ObjectEntryServiceTest {
 		Assert.assertNotNull(
 			_objectEntryService.getObjectEntry(
 				adminObjectEntry.getObjectEntryId()));
+
+		Tree tree = TreeTestUtil.createTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			_treeFactory);
+
+		ObjectDefinition rootObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
+
+		rootObjectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				_adminUser.getUserId(),
+				rootObjectDefinition.getObjectDefinitionId());
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.USER);
+
+		_setUser(_user);
+
+		Map<String, ObjectEntry> objectEntries1 = _createBoundedObjectEntries(
+			tree);
+
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
+			objectDefinition -> {
+				ObjectEntry objectEntry = objectEntries1.get(
+					objectDefinition.getName());
+
+				if (objectDefinition.isRootDescendantNode()) {
+					_resourcePermissionLocalService.addModelResourcePermissions(
+						TestPropsValues.getCompanyId(),
+						TestPropsValues.getGroupId(), _user.getUserId(),
+						objectDefinition.getClassName(),
+						String.valueOf(objectEntry.getObjectEntryId()),
+						ModelPermissionsFactory.create(
+							HashMapBuilder.put(
+								RoleConstants.USER,
+								new String[] {ActionKeys.VIEW}
+							).build(),
+							objectDefinition.getClassName()));
+				}
+
+				_assertPrincipalException(ActionKeys.VIEW, null, objectEntry);
+			});
+
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
+			objectDefinition -> {
+				if (objectDefinition.isRootDescendantNode()) {
+					_resourcePermissionLocalService.addResourcePermission(
+						TestPropsValues.getCompanyId(),
+						objectDefinition.getClassName(),
+						ResourceConstants.SCOPE_COMPANY,
+						String.valueOf(TestPropsValues.getCompanyId()),
+						role.getRoleId(), ActionKeys.VIEW);
+				}
+
+				ObjectEntry objectEntry = objectEntries1.get(
+					objectDefinition.getName());
+
+				_assertPrincipalException(ActionKeys.VIEW, null, objectEntry);
+			});
+
+		ObjectEntry rootObjectEntry = objectEntries1.get(
+			rootObjectDefinition.getName());
+
+		_resourcePermissionLocalService.addModelResourcePermissions(
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			_user.getUserId(), rootObjectDefinition.getClassName(),
+			String.valueOf(rootObjectEntry.getObjectEntryId()),
+			ModelPermissionsFactory.create(
+				HashMapBuilder.put(
+					RoleConstants.USER, new String[] {ActionKeys.VIEW}
+				).build(),
+				rootObjectDefinition.getClassName()));
+
+		Map<String, ObjectEntry> objectEntries2 = _createBoundedObjectEntries(
+			tree);
+
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
+			objectDefinition -> {
+				ObjectEntry objectEntry = objectEntries1.get(
+					objectDefinition.getName());
+
+				Assert.assertNotNull(
+					_objectEntryService.getObjectEntry(
+						objectEntry.getObjectEntryId()));
+
+				objectEntry = objectEntries2.get(objectDefinition.getName());
+
+				_assertPrincipalException(ActionKeys.VIEW, null, objectEntry);
+			});
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), rootObjectDefinition.getClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			ActionKeys.VIEW);
+
+		TreeTestUtil.iterateNodeObjectDefinitions(
+			_objectDefinitionLocalService, tree,
+			objectDefinition -> {
+				ObjectEntry objectEntry = objectEntries2.get(
+					objectDefinition.getName());
+
+				Assert.assertNotNull(
+					_objectEntryService.getObjectEntry(
+						objectEntry.getObjectEntryId()));
+			});
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService);
 	}
 
 	@Test

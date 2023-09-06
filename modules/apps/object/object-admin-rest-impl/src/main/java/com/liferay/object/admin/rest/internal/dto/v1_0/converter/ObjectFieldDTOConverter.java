@@ -68,11 +68,6 @@ public class ObjectFieldDTOConverter
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectField.getLabelMap());
 				listTypeDefinitionId = objectField.getListTypeDefinitionId();
-
-				if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
-					localized = objectField.getLocalized();
-				}
-
 				name = objectField.getName();
 				objectFieldSettings = TransformUtil.transformToArray(
 					objectField.getObjectFieldSettings(),
@@ -102,6 +97,14 @@ public class ObjectFieldDTOConverter
 									objectField.getListTypeDefinitionId());
 
 						return listTypeDefinition.getExternalReferenceCode();
+					});
+				setLocalized(
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
+							return null;
+						}
+
+						return objectField.getLocalized();
 					});
 			}
 		};

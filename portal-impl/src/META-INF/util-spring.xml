@@ -94,10 +94,6 @@
 	<bean class="com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil" id="com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil">
 		<property name="organizationPermission" ref="com.liferay.portal.kernel.service.permission.OrganizationPermission" />
 	</bean>
-	<bean class="com.liferay.portal.service.permission.PasswordPolicyPermissionImpl" id="com.liferay.portal.kernel.service.permission.PasswordPolicyPermission" />
-	<bean class="com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil" id="com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil">
-		<property name="passwordPolicyPermission" ref="com.liferay.portal.kernel.service.permission.PasswordPolicyPermission" />
-	</bean>
 	<bean class="com.liferay.portal.service.permission.PortalPermissionImpl" id="com.liferay.portal.kernel.service.permission.PortalPermission" />
 	<bean class="com.liferay.portal.kernel.service.permission.PortalPermissionUtil" id="com.liferay.portal.kernel.service.permission.PortalPermissionUtil">
 		<property name="portalPermission" ref="com.liferay.portal.kernel.service.permission.PortalPermission" />

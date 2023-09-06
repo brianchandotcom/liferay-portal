@@ -11,8 +11,8 @@ package com.liferay.portal.search.engine.adapter.cluster;
 public class StatsClusterResponse implements ClusterResponse {
 
 	public StatsClusterResponse(
-		Long availableSpace, ClusterHealthStatus clusterHealthStatus,
-		String statsMessage, Long totalSpace) {
+		long availableSpace, ClusterHealthStatus clusterHealthStatus,
+		String statsMessage, long totalSpace) {
 
 		_availableSpace = availableSpace;
 		_clusterHealthStatus = clusterHealthStatus;
@@ -20,7 +20,7 @@ public class StatsClusterResponse implements ClusterResponse {
 		_totalSpace = totalSpace;
 	}
 
-	public Long getAvailableSpace() {
+	public long getAvailableSpace() {
 		return _availableSpace;
 	}
 
@@ -32,7 +32,7 @@ public class StatsClusterResponse implements ClusterResponse {
 		return _statsMessage;
 	}
 
-	public Long getTotalSpace() {
+	public long getTotalSpace() {
 		return _totalSpace;
 	}
 
@@ -40,9 +40,9 @@ public class StatsClusterResponse implements ClusterResponse {
 		return _totalSpace - _availableSpace;
 	}
 
-	private final Long _availableSpace;
+	private final long _availableSpace;
 	private final ClusterHealthStatus _clusterHealthStatus;
 	private final String _statsMessage;
-	private final Long _totalSpace;
+	private final long _totalSpace;
 
 }

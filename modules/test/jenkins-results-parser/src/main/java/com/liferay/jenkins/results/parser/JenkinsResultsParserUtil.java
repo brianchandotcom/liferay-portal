@@ -4677,7 +4677,9 @@ public class JenkinsResultsParserUtil {
 						}
 					}
 
-					if (retryPeriodOverride > _SECONDS_RETRY_PERIOD_MAX) {
+					if (((maxRetries >= 0) && (retryCount >= maxRetries)) ||
+						(retryPeriodOverride > _SECONDS_RETRY_PERIOD_MAX)) {
+
 						throw new GitHubSecondaryRateLimitRuntimeException(
 							url, retryPeriodOverride, ioException);
 					}
@@ -4691,16 +4693,16 @@ public class JenkinsResultsParserUtil {
 					retryPeriodMillis = 1000 * retryPeriodOverride;
 				}
 
+				if ((maxRetries >= 0) && (retryCount >= maxRetries)) {
+					throw ioException;
+				}
+
 				System.out.println(
 					combine(
 						"Retrying ", url, " in ",
 						toDurationString(retryPeriodMillis)));
 
 				retryCount++;
-
-				if ((maxRetries >= 0) && (retryCount >= maxRetries)) {
-					throw ioException;
-				}
 
 				sleep(retryPeriodMillis);
 			}

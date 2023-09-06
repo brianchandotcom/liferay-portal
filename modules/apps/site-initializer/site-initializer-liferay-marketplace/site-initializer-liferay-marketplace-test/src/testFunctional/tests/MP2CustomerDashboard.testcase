@@ -1,0 +1,79 @@
+@component-name = "portal-liferay-online"
+definition {
+
+	property osgi.modules.includes = "site-initializer-liferay-marketplace";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property test.liferay.virtual.instance = "true";
+	property testray.main.component.name = "Site Initializer Liferay Marketplace";
+
+	var testSiteName = "Marketplace Site";
+	var testSiteURL = "marketplace-site";
+
+	setUp {
+		task ("Set up instance and create a new Marketplace Site") {
+			MP2Configuration.marketplaceSetUp();
+		}
+
+		task ("Create a New Account and assign a user") {
+			JSONMP2.addAccount();
+
+			MP2Configuration.addUserAndSetAccount(
+				accountEntryName = "QA Development",
+				accountRole = "Account Administrator",
+				regularRole = "Account Administrator (Regular)",
+				roleTitle = "Site Owner",
+				userEmailAddress = "taqa@acme.com",
+				userFirstName = "Test Account",
+				userLastName = "QA",
+				userScreenName = "taqa");
+
+			MP2Configuration.addUserAndSetAccount(
+				accountEntryName = "QA Development",
+				accountRole = "Account Buyer",
+				regularRole = "Power User",
+				roleTitle = "Site Owner",
+				userEmailAddress = "testqa@buyer.com",
+				userFirstName = "Test",
+				userLastName = "QA",
+				userScreenName = "testqa");
+		}
+
+		task ("Login with the created user and go to Marketplace") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "taqa@acme.com",
+				userLoginFullName = "Test Account QA");
+
+			MP2Navigator.gotoMP2();
+		}
+	}
+
+	tearDown {
+		MP2Configuration.marketplaceInitializersTearDown(doLogout = "true");
+	}
+
+	@description = "LPS-174844 | Verify that after inviting a member, as a Customer, the admin is taken back to the members section of the Dashboard."
+	@priority = 5
+	test AssertCustomerIsTakenBackDashboard {
+		task ("Given that the user goes to the Customer Dashboard page") {
+			MP2Navigator.openSitePage(pageName = "Customer Dashboard");
+		}
+
+		task ("When the admin user invites a new member") {
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "Account Administrator",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+		}
+
+		task ("Then after inviting a member, as a Customer, the admin is taken back to the members section of the Dashboard.") {
+			AssertElementPresent(
+				key_header = "Members",
+				locator1 = "MP2Dashboards#HEADER");
+		}
+	}

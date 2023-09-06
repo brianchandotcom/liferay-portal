@@ -25,6 +25,11 @@
 	<td>//label[contains(@class, 'control-label')]/parent::div//input[@id='${key_field}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>HEADER</td>
+	<td>//*[contains(@class, 'header-container')]//*[contains(text(), '${key_header}')]</td>
+	<td></td>
+</tr>
 
 </tbody>
 </table>

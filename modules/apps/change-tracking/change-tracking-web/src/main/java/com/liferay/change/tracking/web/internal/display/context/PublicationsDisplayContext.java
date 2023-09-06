@@ -302,6 +302,8 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 			() -> _publicationHelper.getShareURL(
 				ctCollectionId, _renderResponse)
 		).put(
+			"showShareLinkTab", FeatureFlagManagerUtil.isEnabled("LPS-187436")
+		).put(
 			"spritemap", _themeDisplay.getPathThemeSpritemap()
 		).put(
 			"verifyEmailAddressURL",

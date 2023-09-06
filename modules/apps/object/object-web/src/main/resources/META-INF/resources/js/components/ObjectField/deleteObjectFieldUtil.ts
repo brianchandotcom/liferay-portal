@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {API} from '@liferay/object-js-components-web';
+import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 
 export async function deleteObjectField(
@@ -17,7 +17,11 @@ export async function deleteObjectField(
 		Liferay.Util.openToast({
 			message: sub(
 				Liferay.Language.get('x-was-deleted-successfully'),
-				`<strong>${objectField?.label[defaultLanguageId]}</strong>`
+				`<strong>${getLocalizableLabel(
+					defaultLanguageId,
+					objectField.label,
+					objectField.name
+				)}</strong>`
 			),
 		});
 	}

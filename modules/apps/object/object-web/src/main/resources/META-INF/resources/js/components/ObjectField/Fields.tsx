@@ -243,6 +243,9 @@ export default function Fields({
 			{showDeletionModal && (
 				<ModalDeleteObjectField
 					objectField={deletedObjectField as ObjectField}
+					onAfterSubmit={() => {
+						setTimeout(() => window.location.reload(), 1500);
+					}}
 					setModalVisibility={setShowDeletionModal}
 					setObjectField={setDeletedObjectField}
 					showDeletionNotAllowedModal={showDeletionNotAllowedModal}

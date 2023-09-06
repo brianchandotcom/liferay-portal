@@ -1,41 +1,19 @@
-/**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
- * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
- */
-
 package com.liferay.source.formatter.dependencies.upgrade;
 
-import com.liferay.bookmarks.service.BookmarksFolderLocalService;
-import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.journal.service.JournalFolderService;
-
-import org.osgi.service.component.annotations.Reference;
-
-/**
- * @author Nícolas Moura
- */
-@Component(service = UpgradeJavaAddFolderParameterCheck.class)
 public class UpgradeJavaAddFolderParameterCheck {
 
 	public void method(
 		long userId, long groupId, long parentFolderId, String name,
 		String description, ServiceContext serviceContext) {
 
-		// Method of a class that does not need to add the parameter
-
 		_bookmarksFolderLocalService.addFolder(
 			userId, parentFolderId, name, description, serviceContext);
-
-		// Test local service classes
 
 		_journalFolderLocalService.addFolder(
 			userId, groupId, parentFolderId, name, description, serviceContext);
 
 		JournalFolderLocalServiceUtil.addFolder(
 			userId, groupId, parentFolderId, name, description, serviceContext);
-
-		// Test service classes
 
 		_journalFolderService.addFolder(
 			groupId, parentFolderId, name, description, serviceContext);

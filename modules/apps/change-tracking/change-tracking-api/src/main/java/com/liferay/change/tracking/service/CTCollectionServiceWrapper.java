@@ -137,17 +137,6 @@ public class CTCollectionServiceWrapper
 	}
 
 	@Override
-	public com.liferay.change.tracking.model.CTCollection
-			updateCTCollectionByExternalReferenceCode(
-				String externalReferenceCode, long userId, String name,
-				String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _ctCollectionService.updateCTCollectionByExternalReferenceCode(
-			externalReferenceCode, userId, name, description);
-	}
-
-	@Override
 	public CTCollectionService getWrappedService() {
 		return _ctCollectionService;
 	}

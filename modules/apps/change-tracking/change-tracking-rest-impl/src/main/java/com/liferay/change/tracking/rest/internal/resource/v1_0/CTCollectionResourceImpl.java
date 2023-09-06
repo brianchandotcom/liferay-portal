@@ -132,9 +132,13 @@ public class CTCollectionResourceImpl extends BaseCTCollectionResourceImpl {
 			String externalReferenceCode, CTCollection ctCollection)
 		throws Exception {
 
+		com.liferay.change.tracking.model.CTCollection ctCollectionModel =
+			_ctCollectionLocalService.fetchCTCollectionByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
 		return _toCTCollection(
-			_ctCollectionService.updateCTCollectionByExternalReferenceCode(
-				externalReferenceCode, contextUser.getUserId(),
+			_ctCollectionService.updateCTCollection(
+				contextUser.getUserId(), ctCollectionModel.getCtCollectionId(),
 				ctCollection.getName(), ctCollection.getDescription()));
 	}
 

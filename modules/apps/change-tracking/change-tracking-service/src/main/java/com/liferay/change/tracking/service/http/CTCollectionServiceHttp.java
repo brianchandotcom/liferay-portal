@@ -471,49 +471,6 @@ public class CTCollectionServiceHttp {
 		}
 	}
 
-	public static com.liferay.change.tracking.model.CTCollection
-			updateCTCollectionByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long userId, String name, String description)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				CTCollectionServiceUtil.class,
-				"updateCTCollectionByExternalReferenceCode",
-				_updateCTCollectionByExternalReferenceCodeParameterTypes11);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, userId, name, description);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.change.tracking.model.CTCollection)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		CTCollectionServiceHttp.class);
 
@@ -548,8 +505,5 @@ public class CTCollectionServiceHttp {
 		new Class[] {long.class, long.class, String.class, String.class};
 	private static final Class<?>[] _updateCTCollectionParameterTypes10 =
 		new Class[] {long.class, long.class, String.class, String.class};
-	private static final Class<?>[]
-		_updateCTCollectionByExternalReferenceCodeParameterTypes11 =
-			new Class[] {String.class, long.class, String.class, String.class};
 
 }

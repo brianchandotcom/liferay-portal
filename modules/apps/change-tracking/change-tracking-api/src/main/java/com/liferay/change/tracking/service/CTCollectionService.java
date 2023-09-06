@@ -95,9 +95,4 @@ public interface CTCollectionService extends BaseService {
 			long userId, long ctCollectionId, String name, String description)
 		throws PortalException;
 
-	public CTCollection updateCTCollectionByExternalReferenceCode(
-			String externalReferenceCode, long userId, String name,
-			String description)
-		throws PortalException;
-
 }

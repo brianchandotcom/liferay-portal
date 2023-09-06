@@ -5031,7 +5031,7 @@ public class JenkinsResultsParserUtil {
 
 	public static void updateBuildDescription(
 		String buildDescription, int buildNumber, String jobName,
-		String masterHostname) {
+		final String masterHostname) {
 
 		buildDescription = buildDescription.replaceAll("\"", "\\\\\"");
 		buildDescription = buildDescription.replaceAll("\'", "\\\\\'");
@@ -5039,37 +5039,37 @@ public class JenkinsResultsParserUtil {
 		jobName = jobName.replace("%28", "(");
 		jobName = jobName.replace("%29", ")");
 
-		String jenkinsScript = combine(
+		final String jenkinsScript = combine(
 			"def job = Jenkins.instance.getItemByFullName(\"", jobName,
 			"\"); def build = job.getBuildByNumber(",
 			String.valueOf(buildNumber), "); build.description = \"",
 			buildDescription, "\";");
 
-		int maxRetries = 3;
-		int retries = 0;
+		Retryable<Object> retryable = new Retryable<Object>(true, 3, 3, true) {
 
-		while (retries < maxRetries) {
-			try {
-				retries++;
-
+			@Override
+			public Object execute() {
 				executeJenkinsScript(masterHostname, jenkinsScript);
 
-				break;
+				return null;
 			}
-			catch (Exception exception) {
-				if (retries == maxRetries) {
-					throw new RuntimeException(
-						"Unable to update build description to " +
-							buildDescription + ".\n" + exception);
-				}
 
-				System.out.println(
-					"Unable to update build description, retrying... ");
-
-				exception.printStackTrace();
-
-				sleep(3000);
+			@Override
+			protected String getRetryMessage(int retryCount) {
+				return combine(
+					"Unable to update build description.",
+					super.getRetryMessage(retryCount));
 			}
+
+		};
+
+		try {
+			retryable.executeWithRetries();
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Unable to update build description to " + buildDescription +
+					".\n" + exception);
 		}
 	}
 

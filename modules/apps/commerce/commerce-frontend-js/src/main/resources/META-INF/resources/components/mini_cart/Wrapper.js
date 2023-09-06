@@ -9,9 +9,13 @@ import MiniCartContext from './MiniCartContext';
 import {hasPriceOnApplication} from './util/index';
 
 function Wrapper() {
-	const {CartViews, cartState, isOpen, requestQuoteEnabled} = useContext(
-		MiniCartContext
-	);
+	const {
+		CartViews,
+		cartState,
+		editedItem,
+		isOpen,
+		requestQuoteEnabled,
+	} = useContext(MiniCartContext);
 	const {cartItems = []} = cartState;
 	const cartHasPriceOnApplicationItems = hasPriceOnApplication(cartItems);
 
@@ -19,22 +23,32 @@ function Wrapper() {
 		<div className="mini-cart-wrapper">
 			<CartViews.Header />
 
-			<div className="mini-cart-wrapper-items">
-				{isOpen && (
-					<CartViews.ItemsList
-						showPriceOnApplicationInfo={
-							cartHasPriceOnApplicationItems
+			{Liferay.FeatureFlags['COMMERCE-8715'] && editedItem ? (
+				<CartViews.EditItem />
+			) : (
+				<>
+					<div className="mini-cart-wrapper-items">
+						{isOpen && (
+							<>
+								<CartViews.ItemsList
+									showPriceOnApplicationInfo={
+										cartHasPriceOnApplicationItems
+									}
+								/>
+							</>
+						)}
+					</div>
+
+					<CartViews.OrderButton
+						disabled={
+							!cartItems.length || cartHasPriceOnApplicationItems
 						}
 					/>
-				)}
-			</div>
 
-			<CartViews.OrderButton
-				disabled={!cartItems.length || cartHasPriceOnApplicationItems}
-			/>
-
-			{(requestQuoteEnabled || cartHasPriceOnApplicationItems) &&
-				!!cartItems.length && <CartViews.RequestQuoteButton />}
+					{(requestQuoteEnabled || cartHasPriceOnApplicationItems) &&
+						!!cartItems.length && <CartViews.RequestQuoteButton />}
+				</>
+			)}
 		</div>
 	);
 }

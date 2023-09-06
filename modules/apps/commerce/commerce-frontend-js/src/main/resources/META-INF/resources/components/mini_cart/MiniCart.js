@@ -55,6 +55,7 @@ function MiniCart({
 }) {
 	const [isOpen, setIsOpen] = useState(!toggleable);
 	const [isUpdating, setIsUpdating] = useState(false);
+	const [editedItem, setEditedItem] = useState(null);
 	const [actionURLs, setActionURLs] = useState(cartActionURLs);
 	const [CartViews, setCartViews] = useState({});
 	const [cartState, setCartState] = useState({
@@ -64,7 +65,13 @@ function MiniCart({
 		summary: {itemsQuantity},
 	});
 
-	const closeCart = () => setIsOpen(false);
+	const closeCart = () => {
+		setIsOpen(false);
+
+		if (editedItem) {
+			setEditedItem(null);
+		}
+	};
 	const openCart = () => setIsOpen(true);
 
 	const [replacementSKUList, setReplacementSKUList] = useState([]);
@@ -171,6 +178,7 @@ function MiniCart({
 				closeCart,
 				displayDiscountLevels,
 				displayTotalItemsQuantity,
+				editedItem,
 				isOpen,
 				isUpdating,
 				labels: {...DEFAULT_LABELS, ...labels},
@@ -179,6 +187,7 @@ function MiniCart({
 				replacementSKUList,
 				requestQuoteEnabled,
 				setCartState,
+				setEditedItem,
 				setIsUpdating,
 				setReplacementSKUList,
 				summaryDataMapper,

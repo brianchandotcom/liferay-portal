@@ -5,8 +5,8 @@
 
 package com.liferay.frontend.editor.test;
 
-import com.liferay.portal.editor.configuration.EditorConfigProvider;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigProvider;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 

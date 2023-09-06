@@ -13,6 +13,10 @@ import {
 import openDeletePageTemplateModal from '../modal/openDeletePageTemplateModal';
 
 const ACTIONS = {
+	copyDisplayPage({copyDisplayPageURL}) {
+		send(copyDisplayPageURL);
+	},
+
 	deleteDisplayPage({deleteDisplayPageMessage, deleteDisplayPageURL}) {
 		openDeletePageTemplateModal({
 			message: deleteDisplayPageMessage,

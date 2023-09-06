@@ -242,7 +242,7 @@ definition {
 		task ("Change the pagination to 5") {
 			ACUtils.changePagination(itemsPerPage = 5);
 
-			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 34 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 1 to 5 of 48 entries.");
 		}
 
 		task ("Check that 5 attributes for products appear on the first page") {
@@ -254,9 +254,9 @@ definition {
 		}
 
 		task ("Click to navigate for the last page") {
-			ACUtils.checkAnyPage(pageNumber = 7);
+			ACUtils.checkAnyPage(pageNumber = 10);
 
-			ACUtils.viewResultsMessage(results = "Showing 31 to 34 of 34 entries.");
+			ACUtils.viewResultsMessage(results = "Showing 46 to 48 of 48 entries.");
 		}
 
 		task ("Check that 2 attributes for products appear on the last page") {

@@ -11,10 +11,7 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -84,23 +81,37 @@ public class CTEntryModelDocumentContributor
 		return locales.toArray(new Locale[0]);
 	}
 
-	private <T extends BaseModel<T>> Map<Locale, String> _getTitleMap(
-		Locale[] locales, T model, long modelClassNameId) {
+	private Map<Locale, String> _getChangeTypeLabeleMap(
+		Locale[] locales, long changeType) {
 
-		CTDisplayRenderer ctDisplayRenderer =
-			_ctDisplayRendererRegistry.getCTDisplayRenderer(modelClassNameId);
+		Map<Locale, String> map = new HashMap<>();
+
+		String changeTypeLabel = "modified";
+
+		if (changeType == CTConstants.CT_CHANGE_TYPE_ADDITION) {
+			changeTypeLabel = "added";
+		}
+		else if (changeType == CTConstants.CT_CHANGE_TYPE_DELETION) {
+			changeTypeLabel = "deleted";
+		}
+
+		for (Locale locale : locales) {
+			map.put(locale, _language.get(locale, changeTypeLabel));
+		}
+
+		return map;
+	}
+
+	private <T extends BaseModel<T>> Map<Locale, String> _getTitleMap(
+		CTEntry ctEntry, Locale[] locales) {
 
 		Map<Locale, String> map = new HashMap<>();
 
 		for (Locale locale : locales) {
-			try {
-				map.put(locale, ctDisplayRenderer.getTitle(locale, model));
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
-			}
+			map.put(
+				locale,
+				_ctDisplayRendererRegistry.getTitle(
+					ctEntry.getCtCollectionId(), ctEntry, locale));
 		}
 
 		return map;
@@ -143,6 +154,10 @@ public class CTEntryModelDocumentContributor
 			"typeName", _getTypeNameMap(locales, ctEntry.getModelClassNameId()),
 			true);
 
+		document.addLocalizedText(
+			"changeTypeLabel",
+			_getChangeTypeLabeleMap(locales, ctEntry.getChangeType()), true);
+
 		if (model == null) {
 			return;
 		}
@@ -155,16 +170,14 @@ public class CTEntryModelDocumentContributor
 
 			if (group != null) {
 				document.addKeyword(Field.GROUP_ID, group.getGroupId());
-				document.addLocalizedKeyword("groupName", group.getNameMap());
+				document.addLocalizedKeyword(
+					Field.getSortableFieldName("groupName"), group.getNameMap(),
+					true, true);
 			}
 		}
 
-		document.addLocalizedKeyword(
-			Field.getSortableFieldName(Field.TITLE),
-			_getTitleMap(locales, model, ctEntry.getModelClassNameId()));
 		document.addLocalizedText(
-			Field.TITLE,
-			_getTitleMap(locales, model, ctEntry.getModelClassNameId()), true);
+			Field.TITLE, _getTitleMap(ctEntry, locales), true);
 
 		document.addKeyword(
 			"hideable",
@@ -178,9 +191,6 @@ public class CTEntryModelDocumentContributor
 				"workflowStatus", (Integer)modelAttributes.get("status"));
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CTEntryModelDocumentContributor.class);
 
 	@Reference
 	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;

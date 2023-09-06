@@ -60,6 +60,80 @@ definition {
 		}
 	}
 
+	@description = "LPS-188818 Test to check and cover bug in pagination administration page"
+	@priority = 3
+	test AssertNewPaginationValues {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/data-set-manager/entries");
+
+			Refresh();
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToViews(dataSetName = "Data Set Test");
+		}
+
+		task ("And adding a dataset view") {
+			DataSetAdmin.createDataSetView(
+				description = "Description",
+				key_name = "View Fields Test");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Fields Test");
+		}
+
+		task ("And the user accesses the Details tab, edit the description to "description 2" and save.") {
+			DataSetAdmin.goToTab(tabName = "Details");
+
+			Type(
+				labelTitle = "Description",
+				locator1 = "Masterclass#SIGN_IN_FORM",
+				value1 = "Description 2");
+
+			Button.clickSave();
+		}
+
+		task ("And go to the Pagination tab, edit the value of the “items per page list” to (4, 8, 20, 40, 50), and the “default items per page”, and save.") {
+			DataSetAdmin.goToTab(tabName = "Pagination");
+
+			Type(
+				key_label = "List of Items per Page",
+				locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_FIELD",
+				value1 = "4, 8, 20, 40, 50");
+
+			Type(
+				key_type = "Default Items per Page",
+				locator1 = "DataSet#EDIT_DATA_SET_VIEW",
+				value1 = 4);
+
+			Button.clickSave();
+		}
+
+		task ("And the user accesses the Details tab, edit the description to "description 23" and save.") {
+			DataSetAdmin.goToTab(tabName = "Details");
+
+			Type(
+				labelTitle = "Description",
+				locator1 = "Masterclass#SIGN_IN_FORM",
+				value1 = "Description 23");
+
+			Button.clickSave();
+		}
+
+		task ("Then go to the Pagination and Details tab are in accordance with your change") {
+			DataSetAdmin.goToTab(tabName = "Pagination");
+
+			AssertElementPresent(
+				key_label = "4, 8, 20, 40, 50",
+				locator1 = "TextArea#ANY_LABELED");
+		}
+	}
+
 	@description = "LPS-181546 Confirm that the data set information is created and displayed correctly"
 	@priority = 5
 	test AssertTheInformationsInDataSet {

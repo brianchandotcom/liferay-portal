@@ -341,7 +341,7 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 					"mincount",
 					() -> {
 						int minCount = dataJSONObject.getInt(
-							"frequencyThreshold");
+							"frequencyThreshold", -1);
 
 						if (minCount >= 0) {
 							return minCount;

@@ -19,7 +19,8 @@ public class OrderItem {
 		ImageField image, String name, String options, long orderId,
 		long orderItemId, List<OrderItem> orderItems, long parentOrderItemId,
 		String price, String requestedDeliveryDate, String sku,
-		String subscriptionDuration, String subscriptionPeriod, String total) {
+		String subscriptionDuration, String subscriptionPeriod, String total,
+		String unitOfMeasureKey) {
 
 		_deliveryGroup = deliveryGroup;
 		_discount = discount;
@@ -37,6 +38,7 @@ public class OrderItem {
 		_subscriptionDuration = subscriptionDuration;
 		_subscriptionPeriod = subscriptionPeriod;
 		_total = total;
+		_unitOfMeasureKey = unitOfMeasureKey;
 	}
 
 	public String getDeliveryGroup() {
@@ -103,6 +105,10 @@ public class OrderItem {
 		return _total;
 	}
 
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
+	}
+
 	private final String _deliveryGroup;
 	private final String _discount;
 	private final String _formattedQuantity;
@@ -119,5 +125,6 @@ public class OrderItem {
 	private final String _subscriptionDuration;
 	private final String _subscriptionPeriod;
 	private final String _total;
+	private final String _unitOfMeasureKey;
 
 }

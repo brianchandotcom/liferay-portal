@@ -101,53 +101,27 @@ definition {
 	test CheckStrategyInheritOrOverridePersistence {
 		property solutions.acceptance = "true";
 
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = "Inherit or Override");
+		task ("Given the user set 'Inherit or Override' configuration") {
+			ClickToChatUtils.fillGoalsChat(
+				chatProviderId = "Zendesk Web Widget Classic",
+				siteSettingsStrategy = "Inherit or Override");
 
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = "Zendesk");
+			var passwordZendesk = ClickToChatUtils.getPassword(chatProviderChoosen = "zendesk");
+		}
 
-		var clickToChatZendeskPassword = PropsUtil.get("click.to.chat.zendesk.password");
+		task ("And can see the Zendesk Web Widget Classic icon") {
+			AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
+		}
 
-		Type(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
-			value1 = ${clickToChatZendeskPassword});
+		task ("When the user navigate to Click to Chat") {
+			ClickToChatUtils.navigateToComponent(nameComponent = "Click to Chat");
+		}
 
-		SystemSettings.saveConfiguration();
-
-		Refresh();
-
-		AssertElementPresent(locator1 = "Providers#CHAT_ZENDESK");
-
-		Navigator.openURL();
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			portlet = "Site Settings");
-
-		Click(
-			key_itemName = "Click to Chat",
-			locator1 = "ListGroupItem#ITEM_TEXT");
-
-		var siteSettingsStrategy = "Inherit or Override";
-		var chatProvider = "zendesk";
-		var chatProviderId = ${clickToChatZendeskPassword};
-
-		AssertElementPresent(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",
-			siteSettingsStrategy = ${siteSettingsStrategy});
-
-		AssertElementPresent(locator1 = "ClickToChatConfiguration#CHECK_INPUT_ENABLED");
-
-		AssertElementPresent(
-			chatProvider = ${chatProvider},
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN");
-
-		AssertElementPresent(
-			chatProviderId = ${chatProviderId},
-			locator1 = "ClickToChatConfiguration#CHECK_CHAT_PROVIDER_ID");
+		task ("Then the user can see that the data is present after choosing the strategy 'Inherit or Override' in Instance Settings") {
+			ClickToChatUtils.viewTheFieldsPresent(
+				siteSettingsStrategy ="Inherit or Override",
+				chatProviderOption = "Zendesk Web Widget Classic",
+				chatProviderId = ${passwordZendesk});
+		}
 	}
-
 }

@@ -23,11 +23,18 @@
 		"react-router-dom": "^6.15.0",
 		"react-scripts": "5.0.1"
 	},
+	"eslintConfig": {
+		"globals": {
+			"Liferay": true
+		}
+	},
 	"name": "liferay-jethr0-custom-element",
 	"private": true,
 	"scripts": {
 		"build": "react-scripts build",
 		"eject": "react-scripts eject",
+		"format": "liferay-npm-scripts format --experimental-standalone 'src/**'",
+		"lint": "liferay-npm-scripts lint:fix --experimental-standalone 'src/**'",
 		"start": "react-scripts start",
 		"test": "react-scripts test --passWithNoTests --watchAll=false"
 	},

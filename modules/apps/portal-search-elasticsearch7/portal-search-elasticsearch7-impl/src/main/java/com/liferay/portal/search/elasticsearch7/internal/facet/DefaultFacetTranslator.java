@@ -208,7 +208,8 @@ public class DefaultFacetTranslator implements FacetTranslator {
 						new IncludeExclude(include, null));
 				}
 
-				int minDocCount = dataJSONObject.getInt("frequencyThreshold");
+				int minDocCount = dataJSONObject.getInt(
+					"frequencyThreshold", -1);
 
 				if (minDocCount >= 0) {
 					termsAggregationBuilder.minDocCount(minDocCount);

@@ -10,8 +10,10 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.util.OpenAPIUtil;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
@@ -19,6 +21,7 @@ import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -80,7 +83,18 @@ public class FieldProvider {
 		Map<String, Field> fields = objectEntryOpenAPIResource.getFields(
 			uriInfo);
 
-		return new ArrayList<>(fields.values());
+		return TransformUtil.transform(
+			fields.values(),
+			field -> {
+				if ((Objects.equals(field.getType(), "array") ||
+					 Objects.equals(field.getType(), "object")) &&
+					!Validator.isBlank(field.getRef())) {
+
+					return null;
+				}
+
+				return field;
+			});
 	}
 
 	@Reference

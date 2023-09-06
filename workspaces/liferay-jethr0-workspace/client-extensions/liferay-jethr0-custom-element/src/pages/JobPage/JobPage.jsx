@@ -5,7 +5,7 @@
 
 import ClayCard from '@clayui/card';
 import ClayLayout from '@clayui/layout';
-import ClayPanel from "@clayui/panel";
+import ClayPanel from '@clayui/panel';
 import {Heading} from '@clayui/core';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';

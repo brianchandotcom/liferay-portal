@@ -21,7 +21,7 @@ function Home() {
 		<ClayLayout.Container>
 			<ClayCard className="jethr0-card">
 				<Breadcrumbs breadcrumbs={breadcrumbs} />
-				<Heading level={3} weight='lighter'>Job Queue</Heading>
+				<Heading level={3} weight="lighter">Job Queue</Heading>
 				<JobQueue />
 			</ClayCard>
 		</ClayLayout.Container>

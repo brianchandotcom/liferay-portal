@@ -20,6 +20,23 @@
 				"pageElements": [
 					{
 						"definition": {
+							"fragment": {
+								"key": "welcome-banner"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
+							"fragmentStyle": {
+								"paddingBottom": "2.5rem",
+								"textColor": "#3E3F4A"
+							},
+							"indexed": true
+						},
+						"type": "Fragment"
+					},
+					{
+						"definition": {
 							"fragmentStyle": {
 								"minHeight": "52.5vh"
 							},

@@ -28,19 +28,6 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {
-								"key": "side-bar"
-							},
-							"fragmentConfig": {
-							},
-							"fragmentFields": [
-							],
-							"indexed": true
-						},
-						"type": "Fragment"
-					},
-					{
-						"definition": {
 							"fragmentStyle": {
 								"borderColor": "colorBrandPrimaryLighten6",
 								"borderRadius": "",
@@ -53,17 +40,7 @@
 							"indexed": true,
 							"layout": {
 								"borderColor": "colorBrandPrimaryLighten6",
-								"borderWidth": 0,
-								"marginBottom": 8,
-								"marginLeft": 0,
-								"marginRight": 0,
-								"marginTop": 0,
-								"opacity": 100,
-								"paddingBottom": 0,
-								"paddingLeft": 0,
-								"paddingRight": 0,
-								"paddingTop": 0,
-								"widthType": "Fluid"
+								"marginBottom": 8
 							}
 						},
 						"pageElements": [
@@ -81,40 +58,12 @@
 									},
 									"indexed": true,
 									"layout": {
-										"borderWidth": 0,
-										"marginBottom": 0,
 										"marginLeft": 4,
-										"marginRight": 0,
 										"marginTop": 2,
-										"opacity": 100,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 1,
-										"widthType": "Fluid"
+										"paddingTop": 1
 									}
 								},
 								"pageElements": [
-									{
-										"definition": {
-											"fragment": {
-												"key": "welcome-banner"
-											},
-											"fragmentConfig": {
-											},
-											"fragmentFields": [
-											],
-											"fragmentStyle": {
-												"borderRadius": "",
-												"marginBottom": "4",
-												"paddingBottom": "3",
-												"shadow": "",
-												"textAlign": ""
-											},
-											"indexed": true
-										},
-										"type": "Fragment"
-									},
 									{
 										"definition": {
 											"fragmentSettings": {
@@ -148,17 +97,7 @@
 										"borderColor": "colorNeutral2",
 										"borderWidth": 1,
 										"contentDisplay": "FlexRow",
-										"justify": "SpaceBetween",
-										"marginBottom": 0,
-										"marginLeft": 0,
-										"marginRight": 0,
-										"marginTop": 0,
-										"opacity": 100,
-										"paddingBottom": 0,
-										"paddingLeft": 0,
-										"paddingRight": 0,
-										"paddingTop": 0,
-										"widthType": "Fluid"
+										"justify": "SpaceBetween"
 									}
 								},
 								"pageElements": [
@@ -174,18 +113,7 @@
 											"indexed": true,
 											"layout": {
 												"align": "Center",
-												"borderWidth": 0,
-												"contentDisplay": "FlexRow",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 0,
-												"marginTop": 0,
-												"opacity": 100,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
+												"contentDisplay": "FlexRow"
 											}
 										},
 										"pageElements": [
@@ -201,17 +129,8 @@
 													},
 													"indexed": true,
 													"layout": {
-														"borderWidth": 0,
 														"marginBottom": 2,
-														"marginLeft": 4,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
+														"marginLeft": 4
 													}
 												},
 												"pageElements": [
@@ -281,18 +200,9 @@
 													},
 													"indexed": true,
 													"layout": {
-														"borderWidth": 0,
 														"contentDisplay": "FlexColumn",
 														"marginBottom": 2,
-														"marginLeft": 0,
-														"marginRight": 0,
-														"marginTop": 2,
-														"opacity": 100,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
+														"marginTop": 2
 													}
 												},
 												"pageElements": [
@@ -302,7 +212,8 @@
 																"key": "custom-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h6"
+																"textType": "h6",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -352,17 +263,7 @@
 													},
 													"indexed": true,
 													"layout": {
-														"borderWidth": 0,
-														"marginBottom": 0,
-														"marginLeft": 1,
-														"marginRight": 0,
-														"marginTop": 0,
-														"opacity": 100,
-														"paddingBottom": 0,
-														"paddingLeft": 0,
-														"paddingRight": 0,
-														"paddingTop": 0,
-														"widthType": "Fluid"
+														"marginLeft": 1
 													}
 												},
 												"pageElements": [
@@ -372,7 +273,8 @@
 																"key": "custom-dialect-text"
 															},
 															"fragmentConfig": {
-																"textType": "h6"
+																"textType": "h6",
+																"truncateText": false
 															},
 															"fragmentFields": [
 																{
@@ -434,19 +336,9 @@
 											"indexed": true,
 											"layout": {
 												"align": "Center",
-												"borderWidth": 0,
 												"contentDisplay": "FlexRow",
 												"flexWrap": "Wrap",
-												"marginBottom": 0,
-												"marginLeft": 0,
-												"marginRight": 6,
-												"marginTop": 0,
-												"opacity": 100,
-												"paddingBottom": 0,
-												"paddingLeft": 0,
-												"paddingRight": 0,
-												"paddingTop": 0,
-												"widthType": "Fluid"
+												"marginRight": 6
 											}
 										},
 										"pageElements": [

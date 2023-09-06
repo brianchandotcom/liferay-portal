@@ -476,7 +476,9 @@ public class EditRankingMVCActionCommand extends BaseMVCActionCommand {
 				editRankingMVCActionRequest.getRedirect());
 		}
 		catch (Exception exception) {
-			if (exception instanceof DuplicateAliasStringException) {
+			if (exception instanceof DuplicateAliasStringException ||
+				exception instanceof DuplicateQueryStringException) {
+
 				SessionErrors.add(actionRequest, Exception.class);
 
 				actionResponse.setRenderParameter(

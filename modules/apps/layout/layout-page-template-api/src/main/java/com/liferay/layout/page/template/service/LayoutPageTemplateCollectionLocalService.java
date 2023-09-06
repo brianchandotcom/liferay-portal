@@ -80,7 +80,13 @@ public interface LayoutPageTemplateCollectionLocalService
 
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
 			long userId, long groupId, long parentLayoutPageTemplateCollection,
-			String name, String description, ServiceContext serviceContext)
+			String name, String description, int type,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
+			long userId, long groupId, String name, String description,
+			int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
@@ -222,11 +228,11 @@ public interface LayoutPageTemplateCollectionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
-		long groupId, String layoutPageTemplateCollectionKey);
+		long groupId, String layoutPageTemplateCollectionKey, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollectionByName(
-		long groupId, String name);
+		long groupId, String name, int type);
 
 	/**
 	 * Returns the layout page template collection matching the UUID and group.
@@ -293,17 +299,19 @@ public interface LayoutPageTemplateCollectionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, int start, int end);
+		long groupId, int start, int end, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator);
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
+		int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId, String name, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator);
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
+		int type);
 
 	/**
 	 * Returns all the layout page template collections matching the UUID and company.
@@ -342,10 +350,11 @@ public interface LayoutPageTemplateCollectionLocalService
 	public int getLayoutPageTemplateCollectionsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutPageTemplateCollectionsCount(long groupId);
+	public int getLayoutPageTemplateCollectionsCount(long groupId, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLayoutPageTemplateCollectionsCount(long groupId, String name);
+	public int getLayoutPageTemplateCollectionsCount(
+		long groupId, String name, int type);
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -364,7 +373,7 @@ public interface LayoutPageTemplateCollectionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getUniqueLayoutPageTemplateCollectionName(
-		long groupId, String name);
+		long groupId, String name, int type);
 
 	/**
 	 * Updates the layout page template collection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -382,7 +391,7 @@ public interface LayoutPageTemplateCollectionLocalService
 
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name,
-			String description)
+			String description, int type)
 		throws PortalException;
 
 	@Override

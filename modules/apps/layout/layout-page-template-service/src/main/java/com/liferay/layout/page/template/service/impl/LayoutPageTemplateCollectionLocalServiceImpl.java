@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -117,7 +118,8 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			userId, groupId,
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-			name, description, serviceContext);
+			name, description, LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+			serviceContext);
 	}
 
 	@Override

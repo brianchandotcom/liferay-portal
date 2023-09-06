@@ -107,6 +107,30 @@ public class ImportMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testImportFileWithKeepBothStrategyAndWithExistingLayoutPageTemplateEntry()
+		throws Exception {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_creatLayoutPageTemplateEntry();
+
+		Layout expectedLayout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		_assertImportResultsJSONObject(
+			1, 3, _importFile(LayoutsImportStrategy.KEEP_BOTH));
+
+		Layout actualLayout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Assert.assertEquals(
+			expectedLayout.getTypeSettings(), actualLayout.getTypeSettings());
+
+		Assert.assertNotNull(
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				_group.getGroupId(), "existing-master-page-(1)"));
+	}
+
+	@Test
 	public void testImportFileWithOverwriteStrategy() throws Exception {
 		_assertImportResultsJSONObject(
 			1, 3, _importFile(LayoutsImportStrategy.OVERWRITE));

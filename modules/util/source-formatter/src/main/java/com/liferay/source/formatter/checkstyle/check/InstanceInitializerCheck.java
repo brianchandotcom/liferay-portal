@@ -185,6 +185,42 @@ public class InstanceInitializerCheck extends BaseCheck {
 		}
 	}
 
+	private void _checkHasReplacableMethodSignature(
+		DetailAST detailAST, String methodName, JavaClass javaClass) {
+
+		for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
+			if (!javaTerm.isJavaMethod() || javaTerm.isPrivate()) {
+				continue;
+			}
+
+			JavaMethod javaMethod = (JavaMethod)javaTerm;
+
+			if (!StringUtil.equals(methodName, javaMethod.getName())) {
+				continue;
+			}
+
+			JavaSignature javaSignature = javaMethod.getSignature();
+
+			List<JavaParameter> javaParameters = javaSignature.getParameters();
+
+			if (javaParameters.size() != 1) {
+				continue;
+			}
+
+			JavaParameter javaParameter = javaParameters.get(0);
+
+			String parameterType = javaParameter.getParameterType();
+
+			if (parameterType.startsWith("UnsafeSupplier")) {
+				log(
+					detailAST, _MSG_USE_LAMBDA_INSTEAD, methodName,
+					parameterType);
+
+				return;
+			}
+		}
+	}
+
 	private void _checkIfStatement(
 		DetailAST literalIfDetailAST, JavaClass javaClass) {
 
@@ -216,42 +252,11 @@ public class InstanceInitializerCheck extends BaseCheck {
 
 				String variableName = firstChildDetailAST.getText();
 
-				for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-					if (!javaTerm.isJavaMethod() || javaTerm.isPrivate()) {
-						continue;
-					}
+				String methodName =
+					"set" + StringUtil.upperCaseFirstLetter(variableName);
 
-					String methodName = javaTerm.getName();
-
-					if (!StringUtil.equals(
-							"set" +
-								StringUtil.upperCaseFirstLetter(variableName),
-							methodName)) {
-
-						continue;
-					}
-
-					JavaMethod javaMethod = (JavaMethod)javaTerm;
-
-					JavaSignature javaSignature = javaMethod.getSignature();
-
-					List<JavaParameter> javaParameters =
-						javaSignature.getParameters();
-
-					if (javaParameters.size() != 1) {
-						continue;
-					}
-
-					JavaParameter javaParameter = javaParameters.get(0);
-
-					String parameterType = javaParameter.getParameterType();
-
-					if (parameterType.startsWith("UnsafeSupplier")) {
-						log(
-							firstChildDetailAST, _MSG_USE_LAMBDA_INSTEAD,
-							javaMethod.getName(), parameterType);
-					}
-				}
+				_checkHasReplacableMethodSignature(
+					firstChildDetailAST, methodName, javaClass);
 			}
 			else if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
 				DetailAST dotDetailAST = firstChildDetailAST.findFirstToken(
@@ -267,36 +272,8 @@ public class InstanceInitializerCheck extends BaseCheck {
 					continue;
 				}
 
-				for (JavaTerm javaTerm : javaClass.getChildJavaTerms()) {
-					if (!javaTerm.isJavaMethod() || javaTerm.isPrivate()) {
-						continue;
-					}
-
-					JavaMethod javaMethod = (JavaMethod)javaTerm;
-
-					if (!StringUtil.equals(methodName, javaMethod.getName())) {
-						continue;
-					}
-
-					JavaSignature javaSignature = javaMethod.getSignature();
-
-					List<JavaParameter> javaParameters =
-						javaSignature.getParameters();
-
-					if (javaParameters.size() != 1) {
-						continue;
-					}
-
-					JavaParameter javaParameter = javaParameters.get(0);
-
-					String parameterType = javaParameter.getParameterType();
-
-					if (parameterType.startsWith("UnsafeSupplier")) {
-						log(
-							firstChildDetailAST, _MSG_USE_LAMBDA_INSTEAD,
-							methodName, parameterType);
-					}
-				}
+				_checkHasReplacableMethodSignature(
+					firstChildDetailAST, methodName, javaClass);
 			}
 		}
 	}

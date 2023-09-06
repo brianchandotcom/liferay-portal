@@ -47,24 +47,14 @@ public class EditorConfigurationFactoryUtil {
 		return new EditorConfigurationImpl(configJSONObject, editorOptions);
 	}
 
-	public void setEditorConfigProvider(
-		EditorConfigProvider editorConfigProvider) {
-
-		_editorConfigProvider = editorConfigProvider;
-	}
-
-	public void setEditorOptionsProvider(
-		EditorOptionsProvider editorOptionsProvider) {
-
-		_editorOptionsProvider = editorOptionsProvider;
-	}
-
-	private static EditorConfigProvider _editorConfigProvider;
+	private static final EditorConfigProvider _editorConfigProvider =
+		new EditorConfigProvider();
 	private static final ServiceTrackerMap<String, EditorConfigTransformer>
 		_editorConfigTransformerServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				SystemBundleUtil.getBundleContext(),
 				EditorConfigTransformer.class, "editor.name");
-	private static EditorOptionsProvider _editorOptionsProvider;
+	private static final EditorOptionsProvider _editorOptionsProvider =
+		new EditorOptionsProvider();
 
 }

@@ -231,8 +231,8 @@ public class IndexerClausesChangeTrackingTest {
 
 	protected CTCollection addCTCollection() throws PortalException {
 		return ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(),
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(),
 			IndexerClausesChangeTrackingTest.class.getName());
 	}
 

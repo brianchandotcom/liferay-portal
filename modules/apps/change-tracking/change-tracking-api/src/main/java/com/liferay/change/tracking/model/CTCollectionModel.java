@@ -189,6 +189,20 @@ public interface CTCollectionModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the ct remote ID of this ct collection.
+	 *
+	 * @return the ct remote ID of this ct collection
+	 */
+	public long getCtRemoteId();
+
+	/**
+	 * Sets the ct remote ID of this ct collection.
+	 *
+	 * @param ctRemoteId the ct remote ID of this ct collection
+	 */
+	public void setCtRemoteId(long ctRemoteId);
+
+	/**
 	 * Returns the schema version ID of this ct collection.
 	 *
 	 * @return the schema version ID of this ct collection

@@ -40,6 +40,8 @@ public class CTRemoteDTOConverter
 		return new CTRemote() {
 			{
 				actions = dtoConverterContext.getActions();
+				clientId = ctRemote.getClientId();
+				clientSecret = ctRemote.getClientSecret();
 				dateCreated = ctRemote.getCreateDate();
 				dateModified = ctRemote.getModifiedDate();
 				description = ctRemote.getDescription();

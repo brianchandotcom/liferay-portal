@@ -67,7 +67,8 @@ public class CTRemoteModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"url", Types.VARCHAR}
+		{"url", Types.VARCHAR}, {"clientId", Types.VARCHAR},
+		{"clientSecret", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -83,10 +84,12 @@ public class CTRemoteModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("url", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("clientId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("clientSecret", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTRemote (mvccVersion LONG default 0 not null,ctRemoteId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,url VARCHAR(75) null)";
+		"create table CTRemote (mvccVersion LONG default 0 not null,ctRemoteId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,url VARCHAR(75) null,clientId VARCHAR(75) null,clientSecret VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CTRemote";
 
@@ -234,6 +237,9 @@ public class CTRemoteModelImpl
 			attributeGetterFunctions.put(
 				"description", CTRemote::getDescription);
 			attributeGetterFunctions.put("url", CTRemote::getUrl);
+			attributeGetterFunctions.put("clientId", CTRemote::getClientId);
+			attributeGetterFunctions.put(
+				"clientSecret", CTRemote::getClientSecret);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -274,6 +280,12 @@ public class CTRemoteModelImpl
 				(BiConsumer<CTRemote, String>)CTRemote::setDescription);
 			attributeSetterBiConsumers.put(
 				"url", (BiConsumer<CTRemote, String>)CTRemote::setUrl);
+			attributeSetterBiConsumers.put(
+				"clientId",
+				(BiConsumer<CTRemote, String>)CTRemote::setClientId);
+			attributeSetterBiConsumers.put(
+				"clientSecret",
+				(BiConsumer<CTRemote, String>)CTRemote::setClientSecret);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -463,6 +475,46 @@ public class CTRemoteModelImpl
 		_url = url;
 	}
 
+	@JSON
+	@Override
+	public String getClientId() {
+		if (_clientId == null) {
+			return "";
+		}
+		else {
+			return _clientId;
+		}
+	}
+
+	@Override
+	public void setClientId(String clientId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_clientId = clientId;
+	}
+
+	@JSON
+	@Override
+	public String getClientSecret() {
+		if (_clientSecret == null) {
+			return "";
+		}
+		else {
+			return _clientSecret;
+		}
+	}
+
+	@Override
+	public void setClientSecret(String clientSecret) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_clientSecret = clientSecret;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -528,6 +580,8 @@ public class CTRemoteModelImpl
 		ctRemoteImpl.setName(getName());
 		ctRemoteImpl.setDescription(getDescription());
 		ctRemoteImpl.setUrl(getUrl());
+		ctRemoteImpl.setClientId(getClientId());
+		ctRemoteImpl.setClientSecret(getClientSecret());
 
 		ctRemoteImpl.resetOriginalValues();
 
@@ -553,6 +607,10 @@ public class CTRemoteModelImpl
 		ctRemoteImpl.setDescription(
 			this.<String>getColumnOriginalValue("description"));
 		ctRemoteImpl.setUrl(this.<String>getColumnOriginalValue("url"));
+		ctRemoteImpl.setClientId(
+			this.<String>getColumnOriginalValue("clientId"));
+		ctRemoteImpl.setClientSecret(
+			this.<String>getColumnOriginalValue("clientSecret"));
 
 		return ctRemoteImpl;
 	}
@@ -678,6 +736,22 @@ public class CTRemoteModelImpl
 			ctRemoteCacheModel.url = null;
 		}
 
+		ctRemoteCacheModel.clientId = getClientId();
+
+		String clientId = ctRemoteCacheModel.clientId;
+
+		if ((clientId != null) && (clientId.length() == 0)) {
+			ctRemoteCacheModel.clientId = null;
+		}
+
+		ctRemoteCacheModel.clientSecret = getClientSecret();
+
+		String clientSecret = ctRemoteCacheModel.clientSecret;
+
+		if ((clientSecret != null) && (clientSecret.length() == 0)) {
+			ctRemoteCacheModel.clientSecret = null;
+		}
+
 		return ctRemoteCacheModel;
 	}
 
@@ -749,6 +823,8 @@ public class CTRemoteModelImpl
 	private String _name;
 	private String _description;
 	private String _url;
+	private String _clientId;
+	private String _clientSecret;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<CTRemote, Object> function =
@@ -787,6 +863,8 @@ public class CTRemoteModelImpl
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("url", _url);
+		_columnOriginalValues.put("clientId", _clientId);
+		_columnOriginalValues.put("clientSecret", _clientSecret);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -817,6 +895,10 @@ public class CTRemoteModelImpl
 		columnBitmasks.put("description", 128L);
 
 		columnBitmasks.put("url", 256L);
+
+		columnBitmasks.put("clientId", 512L);
+
+		columnBitmasks.put("clientSecret", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

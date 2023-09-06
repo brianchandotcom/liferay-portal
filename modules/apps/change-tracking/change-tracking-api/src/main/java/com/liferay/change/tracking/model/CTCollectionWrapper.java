@@ -42,6 +42,7 @@ public class CTCollectionWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("ctRemoteId", getCtRemoteId());
 		attributes.put("schemaVersionId", getSchemaVersionId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
@@ -103,6 +104,12 @@ public class CTCollectionWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long ctRemoteId = (Long)attributes.get("ctRemoteId");
+
+		if (ctRemoteId != null) {
+			setCtRemoteId(ctRemoteId);
 		}
 
 		Long schemaVersionId = (Long)attributes.get("schemaVersionId");
@@ -187,6 +194,16 @@ public class CTCollectionWrapper
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
+	}
+
+	/**
+	 * Returns the ct remote ID of this ct collection.
+	 *
+	 * @return the ct remote ID of this ct collection
+	 */
+	@Override
+	public long getCtRemoteId() {
+		return model.getCtRemoteId();
 	}
 
 	/**
@@ -412,6 +429,16 @@ public class CTCollectionWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Sets the ct remote ID of this ct collection.
+	 *
+	 * @param ctRemoteId the ct remote ID of this ct collection
+	 */
+	@Override
+	public void setCtRemoteId(long ctRemoteId) {
+		model.setCtRemoteId(ctRemoteId);
 	}
 
 	/**

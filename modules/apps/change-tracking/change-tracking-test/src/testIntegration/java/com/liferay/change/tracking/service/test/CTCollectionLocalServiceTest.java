@@ -68,8 +68,8 @@ public class CTCollectionLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_ctCollection1 = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			CTCollectionLocalServiceTest.class.getSimpleName(), null);
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, CTCollectionLocalServiceTest.class.getSimpleName(), null);
 		_group = GroupTestUtil.addGroup();
 		_journalArticleClassNameId = _classNameLocalService.getClassNameId(
 			JournalArticle.class);
@@ -373,8 +373,8 @@ public class CTCollectionLocalServiceTest {
 			layout2, _layoutLocalService.getLayout(layout2.getPlid()));
 
 		_ctCollection2 = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			StringUtil.randomString(), StringUtil.randomString());
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, StringUtil.randomString(), StringUtil.randomString());
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(

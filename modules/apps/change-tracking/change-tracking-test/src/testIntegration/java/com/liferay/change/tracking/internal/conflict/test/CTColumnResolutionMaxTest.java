@@ -53,8 +53,8 @@ public class CTColumnResolutionMaxTest {
 	@Before
 	public void setUp() throws Exception {
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			CTColumnResolutionMaxTest.class.getSimpleName(), null);
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, CTColumnResolutionMaxTest.class.getSimpleName(), null);
 
 		_group = GroupTestUtil.addGroup();
 	}

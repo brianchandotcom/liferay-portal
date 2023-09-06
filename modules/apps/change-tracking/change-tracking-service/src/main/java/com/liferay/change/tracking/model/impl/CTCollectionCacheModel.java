@@ -68,7 +68,7 @@ public class CTCollectionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -86,6 +86,8 @@ public class CTCollectionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", ctRemoteId=");
+		sb.append(ctRemoteId);
 		sb.append(", schemaVersionId=");
 		sb.append(schemaVersionId);
 		sb.append(", name=");
@@ -145,6 +147,7 @@ public class CTCollectionCacheModel
 			ctCollectionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		ctCollectionImpl.setCtRemoteId(ctRemoteId);
 		ctCollectionImpl.setSchemaVersionId(schemaVersionId);
 
 		if (name == null) {
@@ -192,6 +195,8 @@ public class CTCollectionCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
+		ctRemoteId = objectInput.readLong();
+
 		schemaVersionId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
@@ -232,6 +237,8 @@ public class CTCollectionCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(ctRemoteId);
+
 		objectOutput.writeLong(schemaVersionId);
 
 		if (name == null) {
@@ -266,6 +273,7 @@ public class CTCollectionCacheModel
 	public long userId;
 	public long createDate;
 	public long modifiedDate;
+	public long ctRemoteId;
 	public long schemaVersionId;
 	public String name;
 	public String description;

@@ -38,6 +38,9 @@ public class CTRemotesFDSTableView extends BaseTableFDSView {
 		).add(
 			"description", "description"
 		).add(
+			"url", "url",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+		).add(
 			"dateModified", "last-modified",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"dateTime"
@@ -51,9 +54,6 @@ public class CTRemotesFDSTableView extends BaseTableFDSView {
 			).setSortable(
 				true
 			)
-		).add(
-			"url", "url",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
 			"ownerName", "owner",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)

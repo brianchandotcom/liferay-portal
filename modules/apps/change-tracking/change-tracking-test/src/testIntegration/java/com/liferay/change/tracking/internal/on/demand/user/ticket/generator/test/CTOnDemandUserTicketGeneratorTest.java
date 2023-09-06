@@ -53,8 +53,8 @@ public class CTOnDemandUserTicketGeneratorTest {
 	@Test
 	public void testGenerateWithNonshareableCTCollection() throws Exception {
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		Assert.assertFalse(ctCollection.isShareable());
 		Assert.assertNull(
@@ -65,8 +65,8 @@ public class CTOnDemandUserTicketGeneratorTest {
 	@Test
 	public void testGenerateWithShareableCTCollection() throws Exception {
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		ctCollection.setShareable(true);
 

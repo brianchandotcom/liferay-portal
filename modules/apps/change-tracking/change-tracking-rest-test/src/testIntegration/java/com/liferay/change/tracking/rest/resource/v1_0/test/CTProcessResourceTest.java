@@ -91,8 +91,8 @@ public class CTProcessResourceTest extends BaseCTProcessResourceTestCase {
 		throws Exception {
 
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), name,
-			description);
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, name, description);
 
 		com.liferay.change.tracking.model.CTProcess serviceBuilderCTProcess =
 			_ctProcessLocalService.addCTProcess(

@@ -176,6 +176,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 		CTCollection ctCollection = randomCTCollection();
 
 		ctCollection.setDescription(regex);
+		ctCollection.setExternalReferenceCode(regex);
 		ctCollection.setName(regex);
 		ctCollection.setOwnerName(regex);
 
@@ -186,6 +187,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 		ctCollection = CTCollectionSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, ctCollection.getDescription());
+		Assert.assertEquals(regex, ctCollection.getExternalReferenceCode());
 		Assert.assertEquals(regex, ctCollection.getName());
 		Assert.assertEquals(regex, ctCollection.getOwnerName());
 	}
@@ -422,6 +424,160 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 	protected CTCollection testPostCTCollection_addCTCollection(
 			CTCollection ctCollection)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteCTCollectionByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CTCollection ctCollection =
+			testDeleteCTCollectionByExternalReferenceCode_addCTCollection();
+
+		assertHttpResponseStatusCode(
+			204,
+			ctCollectionResource.
+				deleteCTCollectionByExternalReferenceCodeHttpResponse(
+					ctCollection.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			ctCollectionResource.
+				getCTCollectionByExternalReferenceCodeHttpResponse(
+					ctCollection.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			ctCollectionResource.
+				getCTCollectionByExternalReferenceCodeHttpResponse(
+					ctCollection.getExternalReferenceCode()));
+	}
+
+	protected CTCollection
+			testDeleteCTCollectionByExternalReferenceCode_addCTCollection()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetCTCollectionByExternalReferenceCode() throws Exception {
+		CTCollection postCTCollection =
+			testGetCTCollectionByExternalReferenceCode_addCTCollection();
+
+		CTCollection getCTCollection =
+			ctCollectionResource.getCTCollectionByExternalReferenceCode(
+				postCTCollection.getExternalReferenceCode());
+
+		assertEquals(postCTCollection, getCTCollection);
+		assertValid(getCTCollection);
+	}
+
+	protected CTCollection
+			testGetCTCollectionByExternalReferenceCode_addCTCollection()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetCTCollectionByExternalReferenceCode()
+		throws Exception {
+
+		CTCollection ctCollection =
+			testGraphQLGetCTCollectionByExternalReferenceCode_addCTCollection();
+
+		Assert.assertTrue(
+			equals(
+				ctCollection,
+				CTCollectionSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"cTCollectionByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												ctCollection.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/cTCollectionByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetCTCollectionByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"cTCollectionByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected CTCollection
+			testGraphQLGetCTCollectionByExternalReferenceCode_addCTCollection()
+		throws Exception {
+
+		return testGraphQLCTCollection_addCTCollection();
+	}
+
+	@Test
+	public void testPatchCTCollectionByExternalReferenceCode()
+		throws Exception {
+
+		CTCollection postCTCollection =
+			testPatchCTCollectionByExternalReferenceCode_addCTCollection();
+
+		CTCollection randomPatchCTCollection = randomPatchCTCollection();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CTCollection patchCTCollection =
+			ctCollectionResource.patchCTCollectionByExternalReferenceCode(
+				postCTCollection.getExternalReferenceCode(),
+				randomPatchCTCollection);
+
+		CTCollection expectedPatchCTCollection = postCTCollection.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchCTCollection, expectedPatchCTCollection);
+
+		CTCollection getCTCollection =
+			ctCollectionResource.getCTCollectionByExternalReferenceCode(
+				patchCTCollection.getExternalReferenceCode());
+
+		assertEquals(expectedPatchCTCollection, getCTCollection);
+		assertValid(getCTCollection);
+	}
+
+	protected CTCollection
+			testPatchCTCollectionByExternalReferenceCode_addCTCollection()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -799,6 +955,16 @@ public abstract class BaseCTCollectionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (ctCollection.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (ctCollection.getName() == null) {
 					valid = false;
@@ -990,6 +1156,19 @@ public abstract class BaseCTCollectionResourceTestCase {
 				if (!Objects.deepEquals(
 						ctCollection1.getDescription(),
 						ctCollection2.getDescription())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						ctCollection1.getExternalReferenceCode(),
+						ctCollection2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1291,6 +1470,52 @@ public abstract class BaseCTCollectionResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = ctCollection.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1441,6 +1666,8 @@ public abstract class BaseCTCollectionResourceTestCase {
 				dateModified = RandomTestUtil.nextDate();
 				dateScheduled = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());

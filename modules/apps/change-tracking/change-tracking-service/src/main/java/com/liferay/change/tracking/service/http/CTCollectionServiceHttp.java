@@ -43,8 +43,9 @@ public class CTCollectionServiceHttp {
 
 	public static com.liferay.change.tracking.model.CTCollection
 			addCTCollection(
-				HttpPrincipal httpPrincipal, long companyId, long userId,
-				String name, String description)
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId, long userId, long ctRemoteId, String name,
+				String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -53,7 +54,8 @@ public class CTCollectionServiceHttp {
 				_addCTCollectionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, userId, name, description);
+				methodKey, externalReferenceCode, companyId, userId, ctRemoteId,
+				name, description);
 
 			Object returnObj = null;
 
@@ -473,7 +475,10 @@ public class CTCollectionServiceHttp {
 		CTCollectionServiceHttp.class);
 
 	private static final Class<?>[] _addCTCollectionParameterTypes0 =
-		new Class[] {long.class, long.class, String.class, String.class};
+		new Class[] {
+			String.class, long.class, long.class, long.class, String.class,
+			String.class
+		};
 	private static final Class<?>[] _deleteCTAutoResolutionInfoParameterTypes1 =
 		new Class[] {long.class};
 	private static final Class<?>[] _deleteCTCollectionParameterTypes2 =

@@ -125,7 +125,8 @@ public class CTCollectionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CTCollection addCTCollection(
-			long companyId, long userId, String name, String description)
+			String externalReferenceCode, long companyId, long userId,
+			long ctRemoteId, String name, String description)
 		throws PortalException {
 
 		_validate(name, description);
@@ -136,8 +137,10 @@ public class CTCollectionLocalServiceImpl
 		CTCollection ctCollection = ctCollectionPersistence.create(
 			ctCollectionId);
 
+		ctCollection.setExternalReferenceCode(externalReferenceCode);
 		ctCollection.setCompanyId(companyId);
 		ctCollection.setUserId(userId);
+		ctCollection.setCtRemoteId(ctRemoteId);
 
 		CTSchemaVersion latestCTSchemaVersion =
 			_ctSchemaVersionLocalService.getLatestCTSchemaVersion(companyId);
@@ -778,7 +781,8 @@ public class CTCollectionLocalServiceImpl
 		}
 
 		CTCollection newCTCollection = addCTCollection(
-			undoCTCollection.getCompanyId(), userId, name, description);
+			null, undoCTCollection.getCompanyId(), userId,
+			undoCTCollection.getCtRemoteId(), name, description);
 
 		CTPreferences ctPreferences =
 			_ctPreferencesLocalService.getCTPreferences(

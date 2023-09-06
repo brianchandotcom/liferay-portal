@@ -69,11 +69,11 @@ public class CTCollectionModelImpl
 		{"externalReferenceCode", Types.VARCHAR},
 		{"ctCollectionId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"schemaVersionId", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"onDemandUserId", Types.BIGINT}, {"shareable", Types.BOOLEAN},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusDate", Types.TIMESTAMP}
+		{"modifiedDate", Types.TIMESTAMP}, {"ctRemoteId", Types.BIGINT},
+		{"schemaVersionId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"onDemandUserId", Types.BIGINT},
+		{"shareable", Types.BOOLEAN}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -88,6 +88,7 @@ public class CTCollectionModelImpl
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("ctRemoteId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("schemaVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
@@ -99,7 +100,7 @@ public class CTCollectionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CTCollection (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,ctCollectionId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,schemaVersionId LONG,name VARCHAR(75) null,description VARCHAR(200) null,onDemandUserId LONG,shareable BOOLEAN,status INTEGER,statusByUserId LONG,statusDate DATE null)";
+		"create table CTCollection (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,ctCollectionId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,ctRemoteId LONG,schemaVersionId LONG,name VARCHAR(75) null,description VARCHAR(200) null,onDemandUserId LONG,shareable BOOLEAN,status INTEGER,statusByUserId LONG,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CTCollection";
 
@@ -277,6 +278,8 @@ public class CTCollectionModelImpl
 			attributeGetterFunctions.put(
 				"modifiedDate", CTCollection::getModifiedDate);
 			attributeGetterFunctions.put(
+				"ctRemoteId", CTCollection::getCtRemoteId);
+			attributeGetterFunctions.put(
 				"schemaVersionId", CTCollection::getSchemaVersionId);
 			attributeGetterFunctions.put("name", CTCollection::getName);
 			attributeGetterFunctions.put(
@@ -333,6 +336,9 @@ public class CTCollectionModelImpl
 			attributeSetterBiConsumers.put(
 				"modifiedDate",
 				(BiConsumer<CTCollection, Date>)CTCollection::setModifiedDate);
+			attributeSetterBiConsumers.put(
+				"ctRemoteId",
+				(BiConsumer<CTCollection, Long>)CTCollection::setCtRemoteId);
 			attributeSetterBiConsumers.put(
 				"schemaVersionId",
 				(BiConsumer<CTCollection, Long>)
@@ -545,6 +551,21 @@ public class CTCollectionModelImpl
 		}
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public long getCtRemoteId() {
+		return _ctRemoteId;
+	}
+
+	@Override
+	public void setCtRemoteId(long ctRemoteId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_ctRemoteId = ctRemoteId;
 	}
 
 	@JSON
@@ -805,6 +826,7 @@ public class CTCollectionModelImpl
 		ctCollectionImpl.setUserId(getUserId());
 		ctCollectionImpl.setCreateDate(getCreateDate());
 		ctCollectionImpl.setModifiedDate(getModifiedDate());
+		ctCollectionImpl.setCtRemoteId(getCtRemoteId());
 		ctCollectionImpl.setSchemaVersionId(getSchemaVersionId());
 		ctCollectionImpl.setName(getName());
 		ctCollectionImpl.setDescription(getDescription());
@@ -837,6 +859,8 @@ public class CTCollectionModelImpl
 			this.<Date>getColumnOriginalValue("createDate"));
 		ctCollectionImpl.setModifiedDate(
 			this.<Date>getColumnOriginalValue("modifiedDate"));
+		ctCollectionImpl.setCtRemoteId(
+			this.<Long>getColumnOriginalValue("ctRemoteId"));
 		ctCollectionImpl.setSchemaVersionId(
 			this.<Long>getColumnOriginalValue("schemaVersionId"));
 		ctCollectionImpl.setName(this.<String>getColumnOriginalValue("name"));
@@ -975,6 +999,8 @@ public class CTCollectionModelImpl
 			ctCollectionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		ctCollectionCacheModel.ctRemoteId = getCtRemoteId();
+
 		ctCollectionCacheModel.schemaVersionId = getSchemaVersionId();
 
 		ctCollectionCacheModel.name = getName();
@@ -1080,6 +1106,7 @@ public class CTCollectionModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _ctRemoteId;
 	private long _schemaVersionId;
 	private String _name;
 	private String _description;
@@ -1128,6 +1155,7 @@ public class CTCollectionModelImpl
 		_columnOriginalValues.put("userId", _userId);
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
+		_columnOriginalValues.put("ctRemoteId", _ctRemoteId);
 		_columnOriginalValues.put("schemaVersionId", _schemaVersionId);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("description", _description);
@@ -1175,21 +1203,23 @@ public class CTCollectionModelImpl
 
 		columnBitmasks.put("modifiedDate", 128L);
 
-		columnBitmasks.put("schemaVersionId", 256L);
+		columnBitmasks.put("ctRemoteId", 256L);
 
-		columnBitmasks.put("name", 512L);
+		columnBitmasks.put("schemaVersionId", 512L);
 
-		columnBitmasks.put("description", 1024L);
+		columnBitmasks.put("name", 1024L);
 
-		columnBitmasks.put("onDemandUserId", 2048L);
+		columnBitmasks.put("description", 2048L);
 
-		columnBitmasks.put("shareable", 4096L);
+		columnBitmasks.put("onDemandUserId", 4096L);
 
-		columnBitmasks.put("status", 8192L);
+		columnBitmasks.put("shareable", 8192L);
 
-		columnBitmasks.put("statusByUserId", 16384L);
+		columnBitmasks.put("status", 16384L);
 
-		columnBitmasks.put("statusDate", 32768L);
+		columnBitmasks.put("statusByUserId", 32768L);
+
+		columnBitmasks.put("statusDate", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

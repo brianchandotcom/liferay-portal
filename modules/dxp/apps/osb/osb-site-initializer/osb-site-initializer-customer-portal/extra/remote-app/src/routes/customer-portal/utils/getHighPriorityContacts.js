@@ -64,7 +64,7 @@ const removeHighPriorityContactsList = async (client, item) => {
 	});
 };
 
-const addHighPriorityContactsList = async (client, item) => {
+const addHighPriorityContactsList = async (client, item, project) => {
 	return client.mutate({
 		context: {
 			displaySuccess: false,
@@ -77,6 +77,8 @@ const addHighPriorityContactsList = async (client, item) => {
 					key: item.category.key,
 					name: item.category.name,
 				},
+				r_accountEntryToHighPriorityContacts_accountEntryERC:
+					project.accountKey,
 				r_userToHighPriorityContacts_userId: item.id,
 			},
 		},

@@ -90,12 +90,12 @@ function TableHeadCell({
 		</ClayLink>
 	) : (
 		<ClayButton
-			className="inline-item text-nowrap text-truncate-inline"
+			className="btn-sorting inline-item text-nowrap text-truncate-inline"
 			displayType="unstyled"
 			onClick={handleSortingCellClick}
 			size="sm"
 		>
-			{!hideColumnLabel && <span className="text-truncate">label</span>}
+			{!hideColumnLabel && label}
 
 			<span className="inline-item inline-item-after sorting-icons-wrapper">
 				<ClayIcon

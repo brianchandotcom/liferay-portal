@@ -382,6 +382,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-172222 - Verify if it is possible to save a form when Javascript SPA is disabled"
+	@priority = 5
+	test CanPublishFormWhenJavascriptSPADisabled {
+		task ("Given Javascript SPA is turned off") {
+			property custom.properties = "javascript.single.page.application.enabled=false";
+		}
+
+		task ("When a user adds a Form entry") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form 1");
+
+			Form.addTextField(fieldPositionNumber = 0);
+
+			Form.save();
+
+			FormsAdminNavigator.gotoBack();
+		}
+
+		task ("Then the entry is saved") {
+			FormsAdmin.viewForm(
+				formDescription = "",
+				formName = "Form 1");
+		}
+	}
+
 	@description = "Verify that Entries Previews display the correct information"
 	@priority = 5
 	test CanViewEntriesInFormEntriesPage {

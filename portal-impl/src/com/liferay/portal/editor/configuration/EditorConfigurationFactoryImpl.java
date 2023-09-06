@@ -7,10 +7,13 @@ package com.liferay.portal.editor.configuration;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigProvider;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigTransformer;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationImpl;
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
+import com.liferay.portal.kernel.editor.configuration.EditorOptionsProvider;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;

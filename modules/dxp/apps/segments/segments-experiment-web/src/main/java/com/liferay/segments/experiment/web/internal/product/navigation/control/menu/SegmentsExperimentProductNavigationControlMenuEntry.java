@@ -324,6 +324,13 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 		).setBackURL(
 			layoutURL
 		).setParameter(
+			"backURLTitle",
+			() -> {
+				Layout layout = themeDisplay.getLayout();
+
+				return layout.getName(themeDisplay.getLocale());
+			}
+		).setParameter(
 			"plid", themeDisplay.getPlid()
 		).setParameter(
 			"segmentsExperienceId",

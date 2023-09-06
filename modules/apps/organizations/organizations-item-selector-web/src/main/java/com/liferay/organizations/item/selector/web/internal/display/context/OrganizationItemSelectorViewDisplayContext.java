@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
@@ -34,8 +33,8 @@ public class OrganizationItemSelectorViewDisplayContext {
 	public OrganizationItemSelectorViewDisplayContext(
 		OrganizationItemSelectorCriterion organizationItemSelectorCriterion,
 		OrganizationLocalService organizationLocalService,
-		OrganizationService organizationService, UsersAdmin usersAdmin,
-		HttpServletRequest httpServletRequest, PortletURL portletURL) {
+		UsersAdmin usersAdmin, HttpServletRequest httpServletRequest,
+		PortletURL portletURL) {
 
 		_organizationItemSelectorCriterion = organizationItemSelectorCriterion;
 		_organizationLocalService = organizationLocalService;

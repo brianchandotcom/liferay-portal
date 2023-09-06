@@ -241,16 +241,16 @@ renderResponse.setTitle(categoryDisplayName);
 							</c:choose>
 
 							<aui:button cssClass="ml-3" href="<%= redirect %>" name="cancel" type="cancel" />
-
-							<c:if test="<%= Validator.isNotNull(configurationModel.getLiferayLearnMessageKey()) && Validator.isNotNull(configurationModel.getLiferayLearnMessageResource()) %>">
-								<div class="btn float-right">
-									<liferay-learn:message
-										key="<%= configurationModel.getLiferayLearnMessageKey() %>"
-										resource="<%= configurationModel.getLiferayLearnMessageResource() %>"
-									/>
-								</div>
-							</c:if>
 						</aui:button-row>
+
+						<c:if test="<%= Validator.isNotNull(configurationModel.getLiferayLearnMessageKey()) && Validator.isNotNull(configurationModel.getLiferayLearnMessageResource()) %>">
+							<div class="float-right">
+								<liferay-learn:message
+									key="<%= configurationModel.getLiferayLearnMessageKey() %>"
+									resource="<%= configurationModel.getLiferayLearnMessageResource() %>"
+								/>
+							</div>
+						</c:if>
 					</c:if>
 				</aui:form>
 			</clay:sheet>

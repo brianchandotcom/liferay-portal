@@ -1,13 +1,17 @@
 definition {
 
 	macro fillGoalsChat {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = ${siteSettingsStrategy});
 
-		Select(
-			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
-			value1 = ${chatProviderId});
+		if(isSet(siteSettingsStrategy)){
+			Select(
+				locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+				value1 = ${siteSettingsStrategy});
+		}
+		if(isSet(chatProviderId)){	
+			Select(
+				locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ID",
+				value1 = ${chatProviderId});
+		}
 	}
 
 	macro getPassword {

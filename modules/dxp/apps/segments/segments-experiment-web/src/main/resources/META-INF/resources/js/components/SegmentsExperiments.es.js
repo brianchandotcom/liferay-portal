@@ -168,6 +168,7 @@ function Experiments({
 							experiment.status.value !== STATUS_RUNNING && (
 								<ClayButton
 									className="text-secondary"
+									data-testid="delete-variant"
 									displayType={null}
 									monospaced
 									onClick={onDeleteSegmentsExperiment}

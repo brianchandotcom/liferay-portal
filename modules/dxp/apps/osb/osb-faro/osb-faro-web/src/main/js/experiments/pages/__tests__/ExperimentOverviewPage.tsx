@@ -44,7 +44,7 @@ const WrappedComponent = ({status}) => (
 );
 
 describe('ExperimentOverviewPage', () => {
-	it('renders review and delete button to experiment to status DRAFT', async () => {
+	it('renders review and delete button in the DRAFT status', async () => {
 		const {container, getByRole} = render(
 			<WrappedComponent status='DRAFT' />
 		);
@@ -66,6 +66,23 @@ describe('ExperimentOverviewPage', () => {
 		expect(deleteButton).toBeInTheDocument();
 		expect(deleteButton.href).toEqual(
 			'https://www.beryl.com/experiment-test?segmentsExperimentKey=123&segmentsExperimentAction=delete'
+		);
+	});
+
+	it('renders terminate button in the RUNNING status', async () => {
+		const {container, getByRole} = render(
+			<WrappedComponent status='RUNNING' />
+		);
+
+		await waitForLoadingToBeRemoved(container);
+
+		const terminateButton = getByRole('link', {
+			name: /terminate/i
+		}) as HTMLAnchorElement;
+
+		expect(terminateButton).toBeInTheDocument();
+		expect(terminateButton.href).toEqual(
+			'https://www.beryl.com/experiment-test?segmentsExperimentKey=123&segmentsExperimentAction=terminate'
 		);
 	});
 });

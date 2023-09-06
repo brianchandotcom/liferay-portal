@@ -683,7 +683,7 @@ describe('Winner declared', () => {
 
 describe('Terminated', () => {
 	it('check if it is possible to create new test in a terminated status', async () => {
-		const {findByRole, getByText} = renderApp({
+		const {findByRole, getByTestId, getByText} = renderApp({
 			initialSegmentsExperiment: {
 				...segmentsExperiment,
 				editable: false,
@@ -702,6 +702,18 @@ describe('Terminated', () => {
 		expect(createNewTestButton).toBeInTheDocument();
 
 		userEvent.click(createNewTestButton);
+
+		/**
+		 * Checks for button to delete terminated test
+		 */
+
+		expect(getByTestId('delete-variant')).toBeInTheDocument();
+
+		/**
+		 * Checks for button to view data in Analytics Cloud
+		 */
+
+		expect(getByText('view-data-in-analytics-cloud')).toBeInTheDocument();
 
 		/**
 		 * Checks for modal to create a new test

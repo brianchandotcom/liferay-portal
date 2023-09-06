@@ -48,7 +48,7 @@ public class RepositoryClassDefinitionCatalogImpl
 		getExternalRepositoryClassDefinitions(long companyId) {
 
 		Collection<RepositoryClassDefinition>
-			systemExternalRepositoryClassDefinitions =
+			externalRepositoryClassDefinitions =
 				_getSystemExternalRepositoryData(Map::values);
 
 		Map<String, RepositoryClassDefinition>
@@ -56,16 +56,16 @@ public class RepositoryClassDefinitionCatalogImpl
 				_externalRepositoryClassDefinitions.get(companyId);
 
 		if (companyRepositoryClassDefinitions != null) {
-			systemExternalRepositoryClassDefinitions.addAll(
+			externalRepositoryClassDefinitions.addAll(
 				companyRepositoryClassDefinitions.values());
 		}
 
-		return systemExternalRepositoryClassDefinitions;
+		return externalRepositoryClassDefinitions;
 	}
 
 	@Override
 	public Collection<String> getExternalRepositoryClassNames(long companyId) {
-		Collection<String> systemExternalRepositoryClassNames =
+		Collection<String> externalRepositoryClassNames =
 			_getSystemExternalRepositoryData(Map::keySet);
 
 		Map<String, RepositoryClassDefinition>
@@ -73,11 +73,11 @@ public class RepositoryClassDefinitionCatalogImpl
 				_externalRepositoryClassDefinitions.get(companyId);
 
 		if (companyRepositoryClassDefinitions != null) {
-			systemExternalRepositoryClassNames.addAll(
+			externalRepositoryClassNames.addAll(
 				companyRepositoryClassDefinitions.keySet());
 		}
 
-		return systemExternalRepositoryClassNames;
+		return externalRepositoryClassNames;
 	}
 
 	@Override

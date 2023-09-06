@@ -701,6 +701,62 @@ java -jar ${app.server.weblogic.dir}/${app.server.weblogic.jar.name} -ignoreSysP
 		<echo file="prepare-generated-files.tstamp">${prepare-generated-files.tstamp}</echo>
 	</target>
 
+	<target name="unzip-glowroot">
+		<delete dir="${app.server.parent.dir}/glowroot" />
+
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/${glowroot.zip.name}" />
+			</not>
+			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
+				<mirrors-get
+					dest="${app.server.parent.dir}/${glowroot.zip.name}"
+					src="${glowroot.zip.url}"
+					verbose="true"
+				/>
+			</then>
+		</if>
+
+		<unzip
+			dest="${app.server.parent.dir}"
+			src="${app.server.parent.dir}/${glowroot.zip.name}"
+		/>
+
+		<var name="glowroot.agent" value="-javaagent:${app.server.parent.dir}/glowroot/glowroot.jar" />
+
+		<if>
+			<not>
+				<resourcecontains
+					resource="${app.server.tomcat.dir}/bin/setenv.sh"
+					substring="${glowroot.agent}"
+				/>
+			</not>
+			<then>
+				<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
+					<![CDATA[
+if [ "$1" = "glowroot" ]
+then
+	GLOWROOT_OPTS="${glowroot.agent}"
+
+	CATALINA_OPTS="${CATALINA_OPTS} ${GLOWROOT_OPTS}"
+
+	shift
+fi
+
+if [ "$GLOWROOT_ENABLED" ]
+then
+	GLOWROOT_OPTS="${glowroot.agent}"
+
+	CATALINA_OPTS="${CATALINA_OPTS} ${GLOWROOT_OPTS}"
+fi
+					]]>
+				</echo>
+			</then>
+		</if>
+	</target>
+
 	<target name="unzip-jboss">
 		<delete dir="${app.server.jboss.dir}" />
 
@@ -1117,6 +1173,8 @@ org.apache.level=WARNING]]>
 				<include name="*.sh" />
 			</fileset>
 		</chmod>
+
+		<antcall target="unzip-glowroot" />
 	</target>
 
 	<target name="unzip-weblogic">

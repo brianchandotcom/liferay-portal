@@ -2705,19 +2705,19 @@ definition {
 		}
 
 		task ("Assert that the search bar is visible on the search page") {
-			AssertVisible(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+			AssertVisible(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 		}
 
 		task ("Assert that the search bar is not present on the view mode of a content page") {
 			Navigator.openURL();
 
-			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 		}
 
 		task ("Assert that the search bar is visible in the edit mode of a content page") {
 			Click(locator1 = "Icon#CUSTOM_EDIT");
 
-			AssertVisible(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+			AssertVisible(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 		}
 
 		task ("Sign out and assert that the search bar is not present on the home page as a guest") {
@@ -2725,13 +2725,13 @@ definition {
 
 			Navigator.openURL();
 
-			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 		}
 
 		task ("Assert that the search bar is not present on the search page as a guest") {
 			Search.openSearchPage();
 
-			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 		}
 
 		task ("Sign in and configure the search bar to be visible with the destination page set as '/nowhere'") {
@@ -2745,7 +2745,7 @@ definition {
 		}
 
 		task ("Assert that the search bar is replaced with an alert message on the search page") {
-			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 
 			AssertVisible(
 				key_infoMessage = "This search bar is not visible to users yet.",
@@ -2755,7 +2755,7 @@ definition {
 		task ("Assert that both the search bar and the alert message are not present on the home page") {
 			Navigator.openURL();
 
-			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 
 			AssertElementNotPresent(
 				key_infoMessage = "This search bar is not visible to users yet.",
@@ -2765,7 +2765,7 @@ definition {
 		task ("Assert that the search bar is replaced with an alert message on the edit mode of a content page") {
 			Click(locator1 = "Icon#CUSTOM_EDIT");
 
-			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 
 			AssertVisible(
 				key_infoMessage = "This search bar is not visible to users yet.",
@@ -2777,7 +2777,7 @@ definition {
 
 			Search.openSearchPage();
 
-			AssertElementNotPresent(locator1 = "Search#EMBEDDED_HEADER_SEARCH_BAR");
+			AssertElementNotPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 
 			AssertElementNotPresent(
 				key_infoMessage = "This search bar is not visible to users yet.",

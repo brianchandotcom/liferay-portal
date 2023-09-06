@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Search Elasticsearch 7 SPI
-Bundle-SymbolicName: com.liferay.portal.search.elasticsearch7.spi
-Bundle-Version: 7.0.2
-Export-Package: com.liferay.portal.search.elasticsearch7.spi.index

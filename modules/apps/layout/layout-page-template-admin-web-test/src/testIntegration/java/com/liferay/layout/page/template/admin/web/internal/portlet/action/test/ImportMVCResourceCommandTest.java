@@ -83,6 +83,24 @@ public class ImportMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testImportFileWithDoNotImportStrategyAndWithExistingLayoutPageTemplateCollection()
+		throws Exception {
+
+		_layoutPageTemplateCollectionLocalService.
+			addLayoutPageTemplateCollection(
+				TestPropsValues.getUserId(), _group.getGroupId(), "imported",
+				StringPool.BLANK, _serviceContext);
+
+		_assertImportResultsJSONObject(
+			1, 3, _importFile(LayoutsImportStrategy.DO_NOT_IMPORT));
+
+		Assert.assertNull(
+			_layoutPageTemplateCollectionLocalService.
+				fetchLayoutPageTemplateCollection(
+					_group.getGroupId(), "imported-(1)"));
+	}
+
+	@Test
 	public void testImportFileWithDoNotImportStrategyAndWithExistingLayoutPageTemplateEntry()
 		throws Exception {
 

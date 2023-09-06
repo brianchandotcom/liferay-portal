@@ -14,6 +14,9 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.engine.adapter.index.StatsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.StatsIndexResponse;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.http.util.EntityUtils;
 
 import org.elasticsearch.client.Request;
@@ -61,16 +64,24 @@ public class StatsIndexRequestExecutorImpl
 			JSONObject indicesJSONObject = responseJSONObject.getJSONObject(
 				"indices");
 
-			JSONObject indexJSONObject = indicesJSONObject.getJSONObject(
-				"liferay-20096");
+			Map<String, Long> indexSizes = new HashMap<>();
 
-			JSONObject totalJSONObject = indexJSONObject.getJSONObject("total");
+			for (String indexName : statsIndexRequest.getIndexNames()) {
+				JSONObject indexJSONObject = indicesJSONObject.getJSONObject(
+					indexName);
 
-			JSONObject storeJSONObject = totalJSONObject.getJSONObject("store");
+				JSONObject totalJSONObject = indexJSONObject.getJSONObject(
+					"total");
 
-			Long size = storeJSONObject.getLong("size_in_bytes");
+				JSONObject storeJSONObject = totalJSONObject.getJSONObject(
+					"store");
 
-			return new StatsIndexResponse(size);
+				long size = storeJSONObject.getLong("size_in_bytes");
+
+				indexSizes.put(indexName, size);
+			}
+
+			return new StatsIndexResponse(indexSizes);
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);

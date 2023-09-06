@@ -9,11 +9,11 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.security.SecureRandom;
-import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.content.security.policy.internal.CSPNonceManager;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
@@ -84,52 +84,50 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 			return;
 		}
 
-		PrintWriter printWriter = httpServletResponse.getWriter();
+		String nonce = _cspNonceManager.ensureNonce(httpServletRequest);
 
-		ContentSecurityPolicyHttpServletResponse
-			contentSecurityPolicyHttpServletResponse =
-				new ContentSecurityPolicyHttpServletResponse(
-					httpServletResponse);
+		try {
+			_cspNonceManager.setTLSNonce(nonce);
 
-		filterChain.doFilter(
-			httpServletRequest, contentSecurityPolicyHttpServletResponse);
+			PrintWriter printWriter = httpServletResponse.getWriter();
 
-		String content = contentSecurityPolicyHttpServletResponse.getContent();
+			ContentSecurityPolicyHttpServletResponse
+				contentSecurityPolicyHttpServletResponse =
+					new ContentSecurityPolicyHttpServletResponse(
+						httpServletResponse);
 
-		String nonce = _generateNonce();
+			filterChain.doFilter(
+				httpServletRequest, contentSecurityPolicyHttpServletResponse);
 
-		content = content.replaceAll(
-			"<(?i)link ", "<link nonce=\"" + nonce + "\" ");
-		content = content.replaceAll(
-			"<(?i)link>", "<link nonce=\"" + nonce + "\">");
-		content = content.replaceAll(
-			"<(?i)script ", "<script nonce=\"" + nonce + "\" ");
-		content = content.replaceAll(
-			"<(?i)script>", "<script nonce=\"" + nonce + "\">");
-		content = content.replaceAll(
-			"<(?i)style ", "<style nonce=\"" + nonce + "\" ");
-		content = content.replaceAll(
-			"<(?i)style>", "<style nonce=\"" + nonce + "\">");
+			String content =
+				contentSecurityPolicyHttpServletResponse.getContent();
 
-		printWriter.write(content);
+			content = content.replaceAll(
+				"<(?i)link ", "<link nonce=\"" + nonce + "\" ");
+			content = content.replaceAll(
+				"<(?i)link>", "<link nonce=\"" + nonce + "\">");
+			content = content.replaceAll(
+				"<(?i)script ", "<script nonce=\"" + nonce + "\" ");
+			content = content.replaceAll(
+				"<(?i)script>", "<script nonce=\"" + nonce + "\">");
+			content = content.replaceAll(
+				"<(?i)style ", "<style nonce=\"" + nonce + "\" ");
+			content = content.replaceAll(
+				"<(?i)style>", "<style nonce=\"" + nonce + "\">");
 
-		printWriter.close();
+			printWriter.write(content);
 
-		httpServletResponse.setContentLength(content.length());
+			printWriter.close();
 
-		policy = StringUtil.replace(policy, "[$NONCE$]", "nonce-" + nonce);
+			httpServletResponse.setContentLength(content.length());
 
-		httpServletResponse.setHeader("Content-Security-Policy", policy);
-	}
+			policy = StringUtil.replace(policy, "[$NONCE$]", "nonce-" + nonce);
 
-	private String _generateNonce() {
-		SecureRandom secureRandom = new SecureRandom();
-
-		byte[] bytes = new byte[16];
-
-		secureRandom.nextBytes(bytes);
-
-		return Base64.encode(bytes);
+			httpServletResponse.setHeader("Content-Security-Policy", policy);
+		}
+		finally {
+			_cspNonceManager.removeTLSNonce();
+		}
 	}
 
 	private ContentSecurityPolicyConfiguration
@@ -193,6 +191,9 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CSPNonceManager _cspNonceManager;
 
 	@Reference
 	private Portal _portal;

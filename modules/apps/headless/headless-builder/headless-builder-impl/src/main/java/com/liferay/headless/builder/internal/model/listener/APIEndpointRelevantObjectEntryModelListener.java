@@ -87,6 +87,26 @@ public class APIEndpointRelevantObjectEntryModelListener
 		return true;
 	}
 
+	private boolean _isValidPathParameterString(String pathParameterString) {
+		int openCurlyBraceIndex = StringUtil.count(
+			pathParameterString, StringPool.OPEN_CURLY_BRACE);
+
+		int closeCurlyBraceIndex = StringUtil.count(
+			pathParameterString, StringPool.CLOSE_CURLY_BRACE);
+
+		if ((openCurlyBraceIndex != 1) || (closeCurlyBraceIndex != 1) ||
+			(pathParameterString.length() <= 2) ||
+			!StringUtil.startsWith(
+				pathParameterString, StringPool.OPEN_CURLY_BRACE) ||
+			!StringUtil.endsWith(
+				pathParameterString, StringPool.CLOSE_CURLY_BRACE)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private void _validate(ObjectEntry objectEntry) {
 		try {
 			Map<String, Serializable> values = objectEntry.getValues();
@@ -271,32 +291,12 @@ public class APIEndpointRelevantObjectEntryModelListener
 				"x-can-have-a-maximum-of-255-alphanumeric-characters");
 		}
 
-		if (!_validPathParameterStructure(pathParameterString)) {
+		if (!_isValidPathParameterString(pathParameterString)) {
 			throw new ObjectEntryValuesException.InvalidObjectField(
 				Arrays.asList(objectField.getLabel(user.getLocale())),
-				"%s must contain a path parameter between curly brace",
-				"x-must-contain-a-path-parameter-between-curly-brace");
+				"%s must contain a path parameter between curly braces",
+				"x-must-contain-a-path-parameter-between-curly-braces");
 		}
-	}
-
-	private boolean _validPathParameterStructure(String pathParameterString) {
-		int openCurlyBraceOcurrence = StringUtil.count(
-			pathParameterString, StringPool.OPEN_CURLY_BRACE);
-
-		int closeCurlyBraceOcurrence = StringUtil.count(
-			pathParameterString, StringPool.CLOSE_CURLY_BRACE);
-
-		if ((openCurlyBraceOcurrence != 1) || (closeCurlyBraceOcurrence != 1) ||
-			(pathParameterString.length() <= 2) ||
-			!StringUtil.startsWith(
-				pathParameterString, StringPool.OPEN_CURLY_BRACE) ||
-			!StringUtil.endsWith(
-				pathParameterString, StringPool.CLOSE_CURLY_BRACE)) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private static final Pattern _individualPathPattern = Pattern.compile(

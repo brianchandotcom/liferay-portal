@@ -255,9 +255,9 @@ public class ContentFieldUtil {
 
 				return new ContentFieldValue() {
 					{
-						setData(
-							JSONUtil.toString(localizedSelectedDataJSONObject));
-						setValue(JSONUtil.toString(selectedValuesJSONObject));
+						data = JSONUtil.toString(
+							localizedSelectedDataJSONObject);
+						value = JSONUtil.toString(selectedValuesJSONObject);
 					}
 				};
 			}
@@ -426,12 +426,10 @@ public class ContentFieldUtil {
 
 				return new ContentFieldValue() {
 					{
-						setData(
-							selectedOptionLabelLocalizedValue.getString(
-								locale));
-						setValue(
-							ddmFormFieldOptions.getOptionReference(
-								valueString));
+						data = selectedOptionLabelLocalizedValue.getString(
+							locale);
+						value = ddmFormFieldOptions.getOptionReference(
+							valueString);
 					}
 				};
 			}

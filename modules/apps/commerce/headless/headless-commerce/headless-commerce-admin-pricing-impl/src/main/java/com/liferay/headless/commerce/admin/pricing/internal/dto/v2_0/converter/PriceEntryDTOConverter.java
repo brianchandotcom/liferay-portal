@@ -84,6 +84,7 @@ public class PriceEntryDTOConverter
 					priceEntryPrice, commerceCurrency, locale);
 				priceListId = commercePriceEntry.getCommercePriceListId();
 				priceOnApplication = commercePriceEntry.isPriceOnApplication();
+				quantity = commercePriceEntry.getQuantity();
 				skuExternalReferenceCode =
 					cpInstance.getExternalReferenceCode();
 				skuId = cpInstance.getCPInstanceId();

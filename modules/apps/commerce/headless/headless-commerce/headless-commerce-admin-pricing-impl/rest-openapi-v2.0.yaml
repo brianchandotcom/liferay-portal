@@ -750,6 +750,10 @@ components:
                 product:
                     $ref: "#/components/schemas/Product"
                     readOnly: true
+                quantity:
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 sku:
                     $ref: "#/components/schemas/Sku"
                     readOnly: true

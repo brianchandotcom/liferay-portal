@@ -90,21 +90,21 @@ const Actions = ({spritemap}: {spritemap: string}) => {
 			const responseText = await response.text();
 
 			if (responseText.length) {
-				const XMLString = await new window.DOMParser().parseFromString(
+				const spritemapDocument = new DOMParser().parseFromString(
 					responseText,
 					'text/xml'
 				);
 
-				const availableIconSymbolElements = XMLString.querySelectorAll(
+				const symbolElements = spritemapDocument.querySelectorAll(
 					'symbol'
 				);
 
-				const iconSymbols = Array.from(
-					availableIconSymbolElements!
-				).map((element) => ({
-					label: element.id,
-					value: element.id,
-				}));
+				const iconSymbols = Array.from(symbolElements!).map(
+					(element) => ({
+						label: element.id,
+						value: element.id,
+					})
+				);
 
 				setAvailableIconSymbols(iconSymbols);
 			}

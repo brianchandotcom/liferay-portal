@@ -27,3 +27,11 @@ export const PRODUCT_DISPLAY_EXCEPTION = {
 	nonBlankProducts: ['Contact', 'Mobile Device'],
 	purchasedProduct: ['Extended Premium Support'],
 } as const;
+
+export const PRODUCT_DISPLAY_EXCEPTION_INSTANCE_SIZE = {
+	purchasedProductInstanceSize: [
+		'Extended Premium Support - Liferay DXP 7.1',
+		'Extended Premium Support - DXP 7.0',
+		'Extended Premium Support',
+	],
+} as const;

@@ -20,6 +20,7 @@ import {
 } from '../../../../../../../../../../../common/utils/constants';
 import {
 	PRODUCT_DISPLAY_EXCEPTION,
+	PRODUCT_DISPLAY_EXCEPTION_INSTANCE_SIZE,
 	SUBSCRIPTION_TYPES,
 } from '../../../../../../../../../../../common/utils/constants/subscriptionCardsCount';
 import getDateCustomFormat from '../../../../../../../../../../../common/utils/getDateCustomFormat';
@@ -31,8 +32,6 @@ const AccountSubscriptionCard = ({
 	selectedAccountSubscriptionGroup,
 	...accountSubscription
 }) => {
-	const instanceSize = Number(accountSubscription.instanceSize ?? 0);
-
 	const {theOverviewPageURL} = useAppPropertiesContext();
 
 	const {data: accountSubscriptionUsageData} = useGetAccountSubscriptionUsage(
@@ -61,7 +60,7 @@ const AccountSubscriptionCard = ({
 		PurchasedAndProvisioned: (
 			<p className="d-flex justify-content-start m-0">
 				{currentConsumption !== undefined
-					? `${currentConsumption} ${i18n.translate('of')}  ${
+					? `${currentConsumption} ${i18n.translate('of')} ${
 							accountSubscription?.quantity
 					  }`
 					: `0 ${i18n.translate('of')} ${
@@ -88,9 +87,15 @@ const AccountSubscriptionCard = ({
 		}
 
 		if (isPurchased) {
-			return PRODUCT_DISPLAY_EXCEPTION.blankProducts.includes(productName)
-				? DisplayOnCard.Blank
-				: DisplayOnCard.Purchased;
+			if (subscriptionType === 'Liferay Experience Cloud') {
+				return PRODUCT_DISPLAY_EXCEPTION.blankProducts.includes(
+					productName
+				)
+					? DisplayOnCard.Blank
+					: DisplayOnCard.Purchased;
+			}
+
+			return DisplayOnCard.Purchased;
 		}
 
 		return PRODUCT_DISPLAY_EXCEPTION.nonBlankProducts.includes(productName)
@@ -99,6 +104,34 @@ const AccountSubscriptionCard = ({
 	};
 
 	const keysProvisionedContent = displayQuantityOnCard(
+		selectedAccountSubscriptionGroup?.name,
+		accountSubscription?.name
+	);
+
+	const DisplayOnCardInstanceSize = {
+		Blank: null,
+		PurchasedAndProvisioned: accountSubscription.instanceSize > 0 && (
+			<span className="align-items-center d-flex justify-content-start m-0">
+				{accountSubscription.instanceSize}
+			</span>
+		),
+	};
+
+	const displayInstanceSizeOnCard = (subscriptionType, productName) => {
+		const isPurchasedAndProvisioned = SUBSCRIPTION_TYPES.PurchasedAndProvisioned.includes(
+			subscriptionType
+		);
+
+		if (isPurchasedAndProvisioned) {
+			return PRODUCT_DISPLAY_EXCEPTION_INSTANCE_SIZE.purchasedProductInstanceSize.includes(
+				productName
+			)
+				? DisplayOnCardInstanceSize.Blank
+				: DisplayOnCardInstanceSize.PurchasedAndProvisioned;
+		}
+	};
+
+	const keysProvisionedContentInstanceSize = displayInstanceSizeOnCard(
 		selectedAccountSubscriptionGroup?.name,
 		accountSubscription?.name
 	);
@@ -170,18 +203,18 @@ const AccountSubscriptionCard = ({
 					</div>
 				</div>
 
-				<div className="cp-account-subscription-card-info d-flex mt-3 mw-100">
+				<div className="cp-account-subscription-card-info d-flex margin-left-container margin-right-container mt-3 mw-100">
 					{loading ? (
 						<Skeleton className="mb-1" height={13} width={80} />
 					) : (
-						instanceSize > 0 && (
-							<p className="cp-account-subscription-card-info-bottom instance-size-container mb-0">
+						keysProvisionedContentInstanceSize && (
+							<p className="cp-account-subscription-card-info-bottom mb-0">
 								<p className="title-info-bottom">{`${i18n.translate(
 									'instance-size'
-								)} `}</p>
+								)}`}</p>
 
 								<p className="description-info-bottom">
-									{accountSubscription.instanceSize}
+									{keysProvisionedContentInstanceSize}
 								</p>
 							</p>
 						)
@@ -191,7 +224,7 @@ const AccountSubscriptionCard = ({
 						<div className="cp-account-subscription-card-info-bottom mb-0">
 							<p className="title-info-bottom">{`${i18n.translate(
 								'keys-provisioned'
-							)} `}</p>
+							)}`}</p>
 
 							<p className="description-info-bottom">
 								{keysProvisionedContent}
@@ -206,7 +239,7 @@ const AccountSubscriptionCard = ({
 							<p className="cp-account-subscription-card-info-bottom mb-0">
 								<p className="title-info-bottom">{`${i18n.translate(
 									'start-date'
-								)} `}</p>
+								)}`}</p>
 
 								<p className="description-info-bottom">
 									{getDateCustomFormat(
@@ -222,10 +255,10 @@ const AccountSubscriptionCard = ({
 						<Skeleton className="mb-3" height={24} width={160} />
 					) : (
 						accountSubscription.endDate && (
-							<p className="cp-account-subscription-card-info-bottom expiration-date-container mb-0">
+							<p className="cp-account-subscription-card-info-bottom mb-0">
 								<p className="title-info-bottom">{`${i18n.translate(
 									'expiration-date'
-								)} `}</p>
+								)}`}</p>
 
 								<p className="description-info-bottom">
 									{getDateCustomFormat(

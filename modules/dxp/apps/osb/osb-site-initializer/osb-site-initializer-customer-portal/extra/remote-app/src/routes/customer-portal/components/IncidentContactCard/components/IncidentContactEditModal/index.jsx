@@ -63,12 +63,6 @@ const IncidentContactEditModal = ({
 			setIsLoadingSaveButton(true);
 
 			await Promise.all(
-				addHighPriorityContactList?.map((item) => {
-					return addHighPriorityContactsList(client, item);
-				})
-			);
-
-			await Promise.all(
 				addHighPriorityContactList?.map(async (item) => {
 					return associateContactRole(
 						item,
@@ -80,11 +74,6 @@ const IncidentContactEditModal = ({
 			);
 
 			await Promise.all(
-				removeHighPriorityContactList?.map((item) => {
-					return removeHighPriorityContactsList(client, item);
-				})
-			);
-			await Promise.all(
 				removeHighPriorityContactList?.map(async (item) => {
 					return removeContactRole(
 						item,
@@ -92,6 +81,18 @@ const IncidentContactEditModal = ({
 						sessionId,
 						provisioningServerAPI
 					);
+				})
+			);
+
+			await Promise.all(
+				addHighPriorityContactList?.map((item) => {
+					return addHighPriorityContactsList(client, item, project);
+				})
+			);
+
+			await Promise.all(
+				removeHighPriorityContactList?.map((item) => {
+					return removeHighPriorityContactsList(client, item);
 				})
 			);
 

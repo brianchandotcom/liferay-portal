@@ -265,6 +265,13 @@ public class InstanceInitializerCheck extends BaseCheck {
 				continue;
 			}
 
+			DetailAST dotDetailAST = firstChildDetailAST.findFirstToken(
+				TokenTypes.DOT);
+
+			if (dotDetailAST != null) {
+				continue;
+			}
+
 			int startLineNumber = getStartLineNumber(firstChildDetailAST);
 
 			String methodName = getMethodName(firstChildDetailAST);

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -233,14 +235,22 @@ public class DLSelectFolderDisplayContext {
 				return getFolderName();
 			}
 		).put(
-			"repositoryid", _getRepositoryId(folder)
+			"repositoryid", _repositoryId
 		).put(
 			"repositoryname",
 			() -> {
-				Group group = GroupServiceUtil.getGroup(
-					_getRepositoryId(folder));
+				if ((folder == null) ||
+					(_repositoryId == folder.getGroupId())) {
 
-				return group.getDescriptiveName(_themeDisplay.getLocale());
+					Group group = GroupServiceUtil.getGroup(_repositoryId);
+
+					return group.getDescriptiveName(_themeDisplay.getLocale());
+				}
+
+				Repository repository =
+					RepositoryLocalServiceUtil.fetchRepository(_repositoryId);
+
+				return repository.getName();
 			}
 		).build();
 	}
@@ -302,14 +312,6 @@ public class DLSelectFolderDisplayContext {
 		).setParameter(
 			"showMountFolder", _isMountFolderVisible()
 		).buildRenderURL();
-	}
-
-	private long _getRepositoryId(Folder folder) {
-		if (folder != null) {
-			return folder.getRepositoryId();
-		}
-
-		return getRepositoryId();
 	}
 
 	private boolean _isAddFolderButtonVisible() {

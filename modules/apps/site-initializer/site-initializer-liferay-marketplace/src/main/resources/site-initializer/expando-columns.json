@@ -1,10 +1,7 @@
 [
 	{
 		"dataType": 16,
-		"defaultValue": [
-			"No",
-			"Yes"
-		],
+		"defaultValue": ["No", "Yes"],
 		"modelResource": "com.liferay.commerce.product.model.CPAttachmentFileEntry",
 		"name": "App Icon",
 		"properties": {
@@ -921,10 +918,7 @@
 	},
 	{
 		"dataType": 16,
-		"defaultValue": [
-			"No",
-			"Yes"
-		],
+		"defaultValue": ["No", "Yes"],
 		"modelResource": "com.liferay.commerce.product.model.CPAttachmentFileEntry",
 		"name": "Source Files",
 		"properties": {
@@ -1072,6 +1066,484 @@
 		"name": "Version Notes",
 		"properties": {
 			"height": 150,
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "clientId"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "hsContactCache"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "hsGuestCache"
+	},
+	{
+		"dataType": 4,
+		"modelResource": "com.liferay.portal.kernel.model.Company",
+		"name": "synchronizeDates"
+	},
+	{
+		"dataType": 1,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "osbAgreedToContactSales"
+	},
+	{
+		"dataType": 1,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "osbAgreedToContactEvents"
+	},
+	{
+		"dataType": 1,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "osbAgreedToContactTrainings"
+	},
+	{
+		"dataType": 1,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "osbAgreedToContactTrialLicenses"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.UserGroup",
+		"name": "link",
+		"properties": {
+			"hidden": false,
+			"indexType": 0,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.portal.kernel.model.UserGroup",
+		"name": "label"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.UserGroup",
+		"name": "included_user_group_ids",
+		"properties": {
+			"hidden": false,
+			"indexType": 0,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.journal.model.JournalArticle",
+		"name": "seo_title",
+		"properties": {
+			"hidden": false,
+			"indexType": 0,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.journal.model.JournalArticle",
+		"name": "seo_description",
+		"properties": {
+			"hidden": false,
+			"indexType": 0,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.journal.model.JournalArticle",
+		"name": "seo_title",
+		"properties": {
+			"hidden": false,
+			"indexType": 0,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.journal.model.JournalArticle",
+		"name": "open_graph_images",
+		"properties": {
+			"hidden": false,
+			"indexType": 0,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.document.library.kernel.model.DLFileEntry",
+		"name": "seo_title",
+		"properties": {
+			"hidden": false,
+			"indexType": 0,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.document.library.kernel.model.DLFileEntry",
+		"name": "seo_description",
+		"properties": {
+			"hidden": false,
+			"indexType": 0,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.document.library.kernel.model.DLFileEntry",
+		"name": "open_graph_images",
+		"properties": {
+			"hidden": false,
+			"indexType": 0,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.portal.kernel.model.Layout",
+		"name": "campaign_id"
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.journal.model.JournalArticle",
+		"name": "campaign_id"
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.document.library.kernel.model.DLFileEntry",
+		"name": "campaign_id"
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.document.library.kernel.model.DLFileEntry",
+		"name": "campaign_id"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.blogs.model.BlogsEntry",
+		"name": "display-title"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.blogs.model.BlogsEntry",
+		"name": "display-title"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "accessSecret"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "accessToken"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "requestSecret"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "requestToken"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.saml.persistence.model.SamlIdpSpConnection",
+		"name": "keepAliveURL"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.saml.persistence.model.SamlSpIdpConnection",
+		"name": "keepAliveURL"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "googleAccessToken"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.portal.kernel.model.User",
+		"name": "googleRefreshToken"
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.portal.kernel.model.Layout",
+		"name": "article_section"
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.portal.kernel.model.Layout",
+		"name": "cta_text"
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.portal.kernel.model.Layout",
+		"name": "short_description"
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.portal.kernel.model.Layout",
+		"name": "short_title"
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.portal.kernel.model.Layout",
+		"name": "small_image"
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.journal.model.JournalArticle",
+		"name": "cta_text"
+	},
+
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.journal.model.JournalArticle",
+		"name": "short_description",
+		"properties": {
+			"height": 150
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.journal.model.JournalArticle",
+		"name": "short_title"
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.journal.model.JournalArticle",
+		"name": "short_title"
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.journal.model.JournalArticle",
+		"name": "small_image"
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.document.library.kernel.model.DLFileEntry",
+		"name": "cta_text"
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.document.library.kernel.model.DLFileEntry",
+		"name": "short_description",
+		"properties": {
+			"height": 150
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.document.library.kernel.model.DLFileEntry",
+		"name": "short_title"
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.document.library.kernel.model.DLFileEntry",
+		"name": "small_image"
+	},
+	{
+		"dataType": 16,
+		"modelResource": "com.liferay.portal.kernel.model.Layout",
+		"name": "color_scheme",
+		"properties": {
+			"display-type": "selection-list",
+			"hidden": false,
+			"indexType": 2,
+			"secret": false,
+			"visibleWithUpdatePermission": false
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Menu Item Description",
+		"properties": {
+			"height": 150,
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Menu Item Image URL",
+		"properties": {
+			"height": 150,
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Menu Item Preheader",
+		"properties": {
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 20,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Menu Item Type",
+		"properties": {
+			"hidden": false,
+			"indexType": 2,
+			"localizeField": true,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false
+		}
+	},
+	{
+		"dataType": 16,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Submenu Background",
+		"properties": {
+			"display-type": "selection-list",
+			"hidden": false,
+			"indexType": 2,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false
+		}
+	},
+	{
+		"dataType": 16,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Submenu Column Span",
+		"properties": {
+			"display-type": "selection-list",
+			"hidden": false,
+			"indexType": 2,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false
+		}
+	},
+	{
+		"dataType": 16,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Submenu Child Columns",
+		"properties": {
+			"display-type": "selection-list",
+			"hidden": false,
+			"indexType": 2,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.blogs.model.BlogsEntry",
+		"name": "display-author",
+		"properties": {
+			"hidden": false,
+			"indexType": 1,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.blogs.model.BlogsEntry",
+		"name": "display-author-image-url",
+		"properties": {
+			"hidden": false,
+			"indexType": 1,
+			"localizeField": false,
+			"localizeFieldName": true,
+			"secret": false,
+			"visibleWithUpdatePermission": false
+		}
+	},
+	{
+		"dataType": 1,
+		"modelResource": "com.liferay.blogs.model.BlogsEntry",
+		"name": "show-author-info",
+		"properties": {
+			"display-type": "boolean",
+			"hidden": false,
+			"indexType": 0,
+			"localizeFieldName": true,
+			"visibleWithUpdatePermission": false
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.dispatch.model.DispatchTrigger",
+		"name": "fileName"
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
+		"name": "version",
+		"properties": {
 			"hidden": false,
 			"indexType": 2,
 			"localizeField": false,

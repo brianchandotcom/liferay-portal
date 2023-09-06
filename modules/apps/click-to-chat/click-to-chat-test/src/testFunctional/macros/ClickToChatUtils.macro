@@ -40,4 +40,16 @@ definition {
 		Refresh();
 	}
 
+	macro navigateToComponent {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
+
+		Click(
+			key_itemName = ${nameComponent},
+			locator1 = "ListGroupItem#ITEM_TEXT");
+	}
+
 }

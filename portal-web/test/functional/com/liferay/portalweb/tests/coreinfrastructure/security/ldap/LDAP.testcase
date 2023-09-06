@@ -48,6 +48,76 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-188257. Verify user is able to edit user info after enabling Use LDAP Password Policy."
+	@priority = 4
+	test CanEditUserAfterEnablingUseLDAPPasswordPolicy {
+		property apacheds.enabled = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Go to enable Use LDAP Password Policy") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "LDAP",
+				configurationName = "General",
+				configurationScope = "Virtual Instance Scope");
+
+			FormFields.enableCheckbox(fieldName = "InstanceSettingsPortlet_passwordPolicyEnabled");
+
+			PortletEntry.save();
+		}
+
+		task ("And: Add LDAP server and configure settings") {
+			var enableSettingList = "enabled,ldapImportEnabled,ldapExportEnabled";
+
+			LDAP.addLDAPServerAndTestConnection();
+
+			LDAP.enableLDAPSettings(enableSettingList = ${enableSettingList});
+		}
+
+		task ("When: Add a new user and edit user info") {
+			JSONUser.addUser(
+				userEmailAddress = "usera@liferay.com",
+				userFirstName = "firstName",
+				userLastName = "lastName",
+				userScreenName = "usera");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "usera@liferay.com");
+
+			User.openUsersAdmin();
+
+			UserNavigator.gotoUser(userScreenName = "usera");
+
+			User.editUserInformation(
+				userEmailAddressEdit = "testadmin@liferay.com",
+				userFirstNameEdit = "testfirstName",
+				userLastNameEdit = "testlastName",
+				userScreenNameEdit = "testscreen");
+
+			User.viewUserInformation(
+				userEmailAddress = "testadmin@liferay.com",
+				userFirstName = "testfirstName",
+				userLastName = "testlastName",
+				userScreenName = "testscreen");
+
+			User.logoutAndLoginPG();
+		}
+
+		task ("Then: Assert that user info changed successfully") {
+			User.openUsersAdmin();
+
+			UserNavigator.gotoUser(userScreenName = "testscreen");
+
+			User.viewUserInformation(
+				userEmailAddress = "testadmin@liferay.com",
+				userFirstName = "testfirstName",
+				userLastName = "testlastName",
+				userScreenName = "testscreen");
+		}
+	}
+
 	@description = "This is a use case for LPS-65498. LDAP user can be imported with blank password."
 	@priority = 5
 	test CanImportLDAPUserWithBlankPassword {

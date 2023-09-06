@@ -43,20 +43,20 @@ definition {
 	@description = "Story ID: LPS-152316 | Test Summary: Verify if the User can edit a comment."
 	@priority = 5
 	test CanEditComment {
-		task ("Given that Create a Topic") {
+		task ("Given that there is a Topic and a Question created") {
 			JSONMBMessage.addCategory(
 				categoryDescription = "Description",
 				categoryName = "Questions Test Category",
 				userEmailAddress = "test@liferay.com");
-		}
 
-		task ("And Create a Question with answer") {
 			JSONQuestions.addQuestion(
 				bodyField = "Body AddQuestion",
 				categoryName = "Questions Test Category",
 				groupName = "Guest",
 				titleField = "Questions AddQuestion");
+		}
 
+		task ("And the user adds a comment in an answer") {
 			JSONQuestions.addAnswer(
 				categoryName = "Questions Test Category",
 				groupName = "Guest",
@@ -69,17 +69,15 @@ definition {
 				questionsTitle = "questions-addquestion",
 				siteURLKey = "guest",
 				topicName = "questions-test-category");
-		}
 
-		task ("And create a comment") {
 			Questions.replyToComment(commentReply = "This is my reply text");
 		}
 
-		task ("When edit a comment") {
+		task ("When the user edits a comment") {
 			Questions.editComment(contentField = "This is my edited comment");
 		}
 
-		task ("Then can view the comment edited") {
+		task ("Then he can view that the comment was edited") {
 			AssertElementPresent(
 				key_commentBodyContent = "This is my edited comment",
 				locator1 = "Questions#COMMENT_BODY");

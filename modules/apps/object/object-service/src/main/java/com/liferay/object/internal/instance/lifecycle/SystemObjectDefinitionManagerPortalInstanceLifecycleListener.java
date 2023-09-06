@@ -11,7 +11,6 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
-import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.internal.item.selector.SystemObjectEntryItemSelectorView;
 import com.liferay.object.internal.notification.handler.ObjectDefinitionNotificationHandler;
 import com.liferay.object.internal.notification.term.contributor.ObjectDefinitionNotificationTermEvaluator;
@@ -52,7 +51,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -171,18 +169,8 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 					systemObjectDefinitionManager.getVersion())) {
 
 				ObjectFolder objectFolder =
-					_objectFolderLocalService.fetchObjectFolder(
-						companyId, ObjectFolderConstants.NAME_UNCATEGORIZED);
-
-				if (objectFolder == null) {
-					objectFolder = _objectFolderLocalService.addObjectFolder(
-						ObjectFolderConstants.
-							EXTERNAL_REFERENCE_CODE_UNCATEGORIZED,
-						_userLocalService.getGuestUserId(companyId),
-						LocalizedMapUtil.getLocalizedMap(
-							ObjectFolderConstants.NAME_UNCATEGORIZED),
-						ObjectFolderConstants.NAME_UNCATEGORIZED);
-				}
+					_objectFolderLocalService.getOrAddUncategorizedObjectFolder(
+						companyId);
 
 				objectDefinition =
 					_objectDefinitionLocalService.

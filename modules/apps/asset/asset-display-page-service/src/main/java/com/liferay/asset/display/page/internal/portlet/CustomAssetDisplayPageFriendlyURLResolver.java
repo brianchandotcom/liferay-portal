@@ -12,15 +12,18 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,23 +53,23 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 
 		String[] parts = _getPathParts(friendlyURL);
 
-		if (parts.length < 4) {
+		if (parts.length < 3) {
 			return null;
 		}
 
 		InfoItemIdentifier infoItemIdentifier = null;
 
-		if (Validator.isNumber(parts[3])) {
+		if (Validator.isNumber(parts[2])) {
 			infoItemIdentifier = new ClassPKInfoItemIdentifier(
-				GetterUtil.getLong(parts[3]));
+				GetterUtil.getLong(parts[2]));
 		}
 		else {
-			infoItemIdentifier = new ERCInfoItemIdentifier(parts[3]);
+			infoItemIdentifier = new ERCInfoItemIdentifier(parts[2]);
 		}
 
 		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 			new InfoItemReference(
-				_portal.getClassName(GetterUtil.getLong(parts[2])),
+				_portal.getClassName(GetterUtil.getLong(parts[1])),
 				infoItemIdentifier));
 	}
 
@@ -82,12 +85,12 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 
 		String[] parts = _getPathParts(friendlyURL);
 
-		if (parts.length < 4) {
+		if (parts.length < 3) {
 			return null;
 		}
 
 		return layoutLocalService.fetchLayoutByFriendlyURL(
-			groupId, false, StringPool.SLASH + parts[1]);
+			groupId, false, StringPool.SLASH + parts[0]);
 	}
 
 	@Override
@@ -100,13 +103,13 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 
 		String[] parts = _getPathParts(friendlyURL);
 
-		if (parts.length < 4) {
+		if (parts.length < 3) {
 			return null;
 		}
 
 		return layoutDisplayPageProviderRegistry.
 			getLayoutDisplayPageProviderByClassName(
-				_portal.getClassName(GetterUtil.getLong(parts[2])));
+				_portal.getClassName(GetterUtil.getLong(parts[1])));
 	}
 
 	@Override
@@ -120,7 +123,15 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 		String urlInfo = path.substring(
 			path.indexOf(urlSeparator) + urlSeparator.length() - 1);
 
-		return StringUtil.split(urlInfo, StringPool.SLASH);
+		List<String> parts = StringUtil.split(urlInfo, CharPool.SLASH);
+
+		String classNameId = parts.get(parts.size() - 2);
+		String identifier = parts.get(parts.size() - 1);
+		String friendlyURL = ListUtil.toString(
+			ListUtil.subList(parts, 0, parts.size() - 2), StringPool.BLANK,
+			StringPool.SLASH);
+
+		return new String[] {friendlyURL, classNameId, identifier};
 	}
 
 	@Reference

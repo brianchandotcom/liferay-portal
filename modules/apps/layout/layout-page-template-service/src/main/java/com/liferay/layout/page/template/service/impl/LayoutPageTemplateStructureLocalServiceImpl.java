@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
@@ -150,16 +151,11 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			long groupId, long plid, long segmentsExperienceId, String data)
 		throws PortalException {
 
-		return layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructureData(
-				groupId, plid, segmentsExperienceId, data, true);
-	}
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-	@Override
-	public LayoutPageTemplateStructure updateLayoutPageTemplateStructureData(
-			long groupId, long plid, long segmentsExperienceId, String data,
-			boolean checkUnlockedLayout)
-		throws PortalException {
+		boolean checkUnlockedLayout = GetterUtil.getBoolean(
+			serviceContext.getAttribute("checkUnlockedLayout"), true);
 
 		if (checkUnlockedLayout) {
 			_checkUnlockedLayout(plid);
@@ -191,8 +187,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 					PrincipalThreadLocal.getUserId(), groupId,
 					layoutPageTemplateStructure.
 						getLayoutPageTemplateStructureId(),
-					segmentsExperienceId, data,
-					ServiceContextThreadLocal.getServiceContext());
+					segmentsExperienceId, data, serviceContext);
 		}
 		else {
 			_layoutPageTemplateStructureRelLocalService.

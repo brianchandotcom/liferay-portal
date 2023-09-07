@@ -107,6 +107,10 @@ public class WorkspacePreferences {
 		_individualSegmentPreferences.remove(individualSegmentId);
 	}
 
+	public void removeEmailReportPreference(String channelId) {
+		_emailReportPreferences.remove(channelId);
+	}
+
 	public void setDefaultChannelId(String defaultChannelId) {
 		_defaultChannelId = defaultChannelId;
 	}

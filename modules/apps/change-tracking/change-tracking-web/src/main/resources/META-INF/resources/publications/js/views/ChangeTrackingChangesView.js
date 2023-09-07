@@ -97,6 +97,7 @@ export default function ChangeTrackingChangesView({
 	expired,
 	keywordsFromURL,
 	modelData,
+	moveChangesURL,
 	namespace,
 	navigationFromURL,
 	orderByTypeFromURL,
@@ -1653,6 +1654,23 @@ export default function ChangeTrackingChangesView({
 		[discardURL, setParameter]
 	);
 
+	const getMoveChangesURL = useCallback(
+		(node) => {
+			if (!Liferay.FeatureFlags['LPS-171364'] || node.hideable) {
+				return null;
+			}
+
+			const url = setParameter(
+				moveChangesURL,
+				'modelClassNameId',
+				node.modelClassNameId
+			);
+
+			return setParameter(url, 'modelClassPK', node.modelClassPK);
+		},
+		[moveChangesURL, setParameter]
+	);
+
 	const getTableRows = (nodes) => {
 		const rows = [];
 
@@ -2708,6 +2726,9 @@ export default function ChangeTrackingChangesView({
 									navigate(nodeId, true)
 								}
 								handleShowHideable={handleShowHideableToggle}
+								moveChangesURL={getMoveChangesURL(
+									renderState.node
+								)}
 								parentEntries={renderState.parents}
 								showDropdown={renderState.node.modelClassNameId}
 								showHideable={renderState.showHideable}

@@ -216,11 +216,10 @@ public class LayoutIndexerIndexedFieldsTest {
 		for (Locale locale :
 				LanguageUtil.getAvailableLocales(layout.getGroupId())) {
 
-			map.put(
-				"localized_" +
-					LocalizationUtil.getLocalizedName(
-						Field.TITLE, LocaleUtil.toLanguageId(locale)),
-				layout.getName(locale));
+			String key = LocalizationUtil.getLocalizedName(
+				Field.TITLE, LocaleUtil.toLanguageId(locale));
+
+			map.put("localized_" + key, layout.getName(locale));
 		}
 	}
 

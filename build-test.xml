@@ -16528,9 +16528,16 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 	</target>
 
 	<target name="start-app-server-tomcat-simple">
+		<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
+
+		<get-java-jdk-bundle-type test.batch.name="${test.batch.name}" />
+
+		<get-java-jdk-home type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
+
 		<trycatch property="startup.error">
 			<try>
 				<exec executable="${app.server.tomcat.bin.dir}/catalina.sh" failonerror="true" timeout="600000">
+					<env key="JAVA_HOME" value="${java.jdk.home}" />
 					<arg line="run" />
 				</exec>
 			</try>

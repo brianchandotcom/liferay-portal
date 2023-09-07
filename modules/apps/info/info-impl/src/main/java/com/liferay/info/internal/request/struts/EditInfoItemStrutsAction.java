@@ -293,6 +293,9 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 					infoFormValidationException);
 			}
 
+			boolean hasInfoFormValidationExceptionCustomValidationErrors =
+				false;
+
 			if (infoFormValidationException instanceof
 					InfoFormValidationException.RuleValidation) {
 
@@ -315,8 +318,19 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 							infoFormValidationExceptionCustomValidation.
 								getInfoFieldUniqueId(),
 							infoFormValidationExceptionCustomValidation);
+
+						hasInfoFormValidationExceptionCustomValidationErrors =
+							true;
 					}
 				}
+			}
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-182728") ||
+				!hasInfoFormValidationExceptionCustomValidationErrors) {
+
+				SessionErrors.add(
+					httpServletRequest, formItemId,
+					infoFormValidationException);
 			}
 
 			if (Validator.isNotNull(

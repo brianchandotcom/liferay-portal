@@ -415,7 +415,7 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.InstanceInitializerCheck">
 			<property name="category" value="Styling" />
-			<property name="description" value="Checks the order of variable assignments and set* calls in the instance initializer." />
+			<property name="description" value="Performs several checks on class instance initializer." />
 			<message key="assign.move.before.method.call" value="The variable assignment for ''{0}'' should come before the method calling ''{1}''" />
 			<message key="assign.order.incorrect" value="The variable assignment for ''{0}'' should come before the variable assignment for ''{1}''" />
 			<message key="assign.use.instead" value="Directly assign value to ''{0}'' instead of calling ''{1}''" />

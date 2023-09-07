@@ -3,18 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayPanel from "@clayui/panel";
+import ClayPanel from '@clayui/panel';
 
 function JobInformation({job}) {
 	if (!job) {
-		return (<ClayPanel
-			collapsable
-			defaultExpanded
-			displayTitle="Job Information"
-			displayType="secondary"
-		>
-			<ClayPanel.Body>Loading...</ClayPanel.Body>
-		</ClayPanel>);
+		return (
+			<ClayPanel
+				collapsable
+				defaultExpanded
+				displayTitle="Job Information"
+				displayType="secondary"
+			>
+				<ClayPanel.Body>Loading...</ClayPanel.Body>
+			</ClayPanel>
+		);
 	}
 
 	return (

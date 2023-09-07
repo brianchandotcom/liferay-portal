@@ -3,18 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayPanel from "@clayui/panel";
-import { useState } from "react";
+import ClayPanel from '@clayui/panel';
+import {useState} from 'react';
 
-import setSpringBootData from '../../services/setSpringBootData';
+import useSpringBootData from '../../services/useSpringBootData';
 
 function JobBuilds({jobId}) {
-	let [jobBuilds, setJobBuilds] = useState(null);
+	const [jobBuilds, setJobBuilds] = useState(null);
 
-	setSpringBootData({
+	useSpringBootData({
 		setData: setJobBuilds,
 		timeout: 2500,
-		urlPath: '/jobs/builds/' + jobId
+		urlPath: '/jobs/builds/' + jobId,
 	});
 
 	if (!jobBuilds) {
@@ -30,7 +30,7 @@ function JobBuilds({jobId}) {
 			showCollapseIcon={true}
 		>
 			<ClayPanel.Body>
-				<table class="table table-bordered table-hover table-sm">
+				<table className="table table-bordered table-hover table-sm">
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -41,17 +41,35 @@ function JobBuilds({jobId}) {
 						</tr>
 					</thead>
 					<tbody>
-						{jobBuilds && jobBuilds.map((jobBuild) => {
-							return (
-								<tr>
-									<th class="font-weight-semi-bold" title={jobBuild.id}>{jobBuild.id}</th>
-									<td>{jobBuild.name}</td>
-									<td>{jobBuild.dateCreated}</td>
-									<td>{jobBuild.state.name}</td>
-									<td>{jobBuild.latestJenkinsBuildURL ? <a href={jobBuild.latestJenkinsBuildURL}>Latest Jenkins Build</a> : <div>-</div>}</td>
-								</tr>
-							);
-						})}
+						{jobBuilds &&
+							jobBuilds.map((jobBuild) => {
+								return (
+									<tr key={jobBuild.id}>
+										<th
+											className="font-weight-semi-bold"
+											title={jobBuild.id}
+										>
+											{jobBuild.id}
+										</th>
+										<td>{jobBuild.name}</td>
+										<td>{jobBuild.dateCreated}</td>
+										<td>{jobBuild.state.name}</td>
+										<td>
+											{jobBuild.latestJenkinsBuildURL ? (
+												<a
+													href={
+														jobBuild.latestJenkinsBuildURL
+													}
+												>
+													Latest Jenkins Build
+												</a>
+											) : (
+												<div>-</div>
+											)}
+										</td>
+									</tr>
+								);
+							})}
 					</tbody>
 				</table>
 			</ClayPanel.Body>

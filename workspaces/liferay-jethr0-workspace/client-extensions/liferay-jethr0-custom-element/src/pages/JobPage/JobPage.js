@@ -4,23 +4,23 @@
  */
 
 import ClayCard from '@clayui/card';
-import ClayLayout from '@clayui/layout';
 import {Heading} from '@clayui/core';
+import ClayLayout from '@clayui/layout';
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import JobBuilds from '../../components/JobBuilds/JobBuilds';
 import JobInformation from '../../components/JobInformation/JobInformation';
-import setSpringBootData from '../../services/setSpringBootData';
+import useSpringBootData from '../../services/useSpringBootData';
 
 function JobPage() {
 	const {id} = useParams();
-	let [job, setJob] = useState(null);
+	const [job, setJob] = useState(null);
 
-	setSpringBootData({
+	useSpringBootData({
 		setData: setJob,
-		urlPath: '/jobs/' + id
+		urlPath: '/jobs/' + id,
 	});
 
 	let jobName = 'Job #' + id;
@@ -39,7 +39,9 @@ function JobPage() {
 		<ClayLayout.Container>
 			<ClayCard className="jethr0-card">
 				<Breadcrumbs breadcrumbs={breadcrumbs} />
-				<Heading level={3} weight="lighter">{jobName}</Heading>
+				<Heading level={3} weight="lighter">
+					{jobName}
+				</Heading>
 				<JobInformation job={job} />
 				<JobBuilds jobId={id} />
 			</ClayCard>

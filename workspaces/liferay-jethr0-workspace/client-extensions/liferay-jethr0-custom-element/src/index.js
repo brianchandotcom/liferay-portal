@@ -12,9 +12,7 @@ class WebComponent extends HTMLElement {
 		if (!this.root) {
 			this.root = createRoot(this);
 
-			this.root.render(
-				<App />
-			);
+			this.root.render(<App />);
 		}
 	}
 }

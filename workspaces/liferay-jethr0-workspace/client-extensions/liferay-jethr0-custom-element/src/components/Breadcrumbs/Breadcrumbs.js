@@ -7,12 +7,15 @@ import {Link} from 'react-router-dom';
 
 function Breadcrumbs({breadcrumbs}) {
 	return (
-		<ol class="breadcrumb">
-			{breadcrumbs && breadcrumbs.map(
-				(breadcrumb) => {
+		<ol className="breadcrumb">
+			{breadcrumbs &&
+				breadcrumbs.map((breadcrumb) => {
 					if (breadcrumb.active) {
 						return (
-							<li className="breadcrumb-item">
+							<li
+								className="breadcrumb-item"
+								key={breadcrumb.name}
+							>
 								<span className="breadcrumb-text-truncate">
 									{breadcrumb.name}
 								</span>
@@ -21,7 +24,7 @@ function Breadcrumbs({breadcrumbs}) {
 					}
 
 					return (
-						<li className="breadcrumb-item">
+						<li className="breadcrumb-item" key={breadcrumb.name}>
 							<Link
 								className="breadcrumb-link"
 								title={breadcrumb.name}
@@ -33,8 +36,7 @@ function Breadcrumbs({breadcrumbs}) {
 							</Link>
 						</li>
 					);
-				}
-			)}
+				})}
 		</ol>
 	);
 }

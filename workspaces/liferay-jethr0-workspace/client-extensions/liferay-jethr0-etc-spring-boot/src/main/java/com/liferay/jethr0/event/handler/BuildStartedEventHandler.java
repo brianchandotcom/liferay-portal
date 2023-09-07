@@ -26,7 +26,7 @@ public class BuildStartedEventHandler extends BaseJenkinsEventHandler {
 	public String process() throws Exception {
 		BuildRunEntity buildRunEntity = getBuildRun();
 
-		buildRunEntity.setBuildURL(getBuildURL());
+		buildRunEntity.setJenkinsBuildURL(getJenkinsBuildURL());
 		buildRunEntity.setState(BuildRunEntity.State.RUNNING);
 
 		BuildEntity buildEntity = buildRunEntity.getBuildEntity();

@@ -301,7 +301,7 @@ const OrderableTable = ({
 
 	return (
 		<ClayLayout.Sheet
-			className={classNames('mt-3 orderable-table-sheet', className)}
+			className={classNames('orderable-table-sheet', className)}
 		>
 			{title && (
 				<ClayLayout.SheetHeader>

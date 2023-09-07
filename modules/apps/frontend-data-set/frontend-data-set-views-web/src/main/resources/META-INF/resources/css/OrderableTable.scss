@@ -1,6 +1,8 @@
 @import 'atlas-variables';
 
 .orderable-table-sheet {
+	margin-top: 1rem;
+
 	.c-empty-state {
 		text-align: center;
 	}
@@ -29,4 +31,10 @@
 		border-bottom: 1px solid $gray-200;
 		margin-bottom: 0;
 	}
+}
+
+.tab-pane .orderable-table-sheet {
+	border-width: 0;
+	margin-top: 0;
+	padding: 0;
 }

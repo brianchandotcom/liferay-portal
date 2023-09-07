@@ -375,7 +375,6 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 								)}
 							>
 								<OrderableTable
-									className="mt-0 p-1"
 									creationMenuItems={[
 										{
 											label: Liferay.Language.get(

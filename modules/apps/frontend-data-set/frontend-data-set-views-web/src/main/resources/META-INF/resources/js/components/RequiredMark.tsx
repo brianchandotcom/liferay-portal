@@ -8,7 +8,7 @@ import React from 'react';
 
 const RequiredMark = () => (
 	<>
-		<span className="inline-item-after reference-mark text-warning">
+		<span className="inline-item-after ml-1 reference-mark text-warning">
 			<ClayIcon symbol="asterisk" />
 		</span>
 

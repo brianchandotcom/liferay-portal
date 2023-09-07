@@ -65,7 +65,7 @@ function refresh_liferay_sample_workspace {
 	mv gradle.properties.tmp gradle.properties
 
 	sed -i 's/name: "biz.aQute.bnd", version: ".*"/name: "biz.aQute.bnd.gradle", version: "5.2.0"/' settings.gradle
-	sed -i 's/name: "com.liferay.gradle.plugins.workspace", version: ".*"/name: "com.liferay.gradle.plugins.workspace", version: "8.0.8"/' settings.gradle
+	sed -i 's/name: "com.liferay.gradle.plugins.workspace", version: ".*"/name: "com.liferay.gradle.plugins.workspace", version: "8.1.0"/' settings.gradle
 
 	echo -en "\ninclude \"poshi\"" >> settings.gradle
 

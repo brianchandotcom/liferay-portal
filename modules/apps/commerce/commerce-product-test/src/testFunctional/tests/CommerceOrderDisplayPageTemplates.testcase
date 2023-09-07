@@ -495,4 +495,77 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12266 | Verify that is possible to change and save the display template in Placed Order widget"
+	@priority = 5
+	test CanUseDifferentDisplayTemplateForPlacedOrderWidget {
+		property portal.acceptance = "true";
+
+		task ("Given a Placed Order Template") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Templates");
+
+			Navigator.gotoNavTab(navTab = "Widget Templates");
+
+			LexiconEntry.gotoAdd();
+
+			Button.clickMore();
+
+			ScrollWebElementIntoView(
+				key_menuItem = "Placed Orders Template",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+
+			MenuItem.click(menuItem = "Placed Orders Template");
+
+			SiteAdmin.viewPortletTitle(portletTitle = "Add Placed Orders Template");
+
+			PortletEntry.inputName(name = "Placed Orders Test ADT");
+
+			PortletEntry.save();
+
+			AssertTextEquals(
+				key_rowEntry = "Placed Orders Test ADT",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+				value1 = "Placed Orders Test ADT");
+		}
+
+		task ("When the admin open the configure section for the Placed Order widget") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Placed Orders");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Placed Orders",
+				portletOption = "Configuration");
+		}
+
+		task ("And use the template created before instead of the Default one") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Select(
+				locator1 = "Select#DISPLAY_TEMPLATE",
+				value1 = "Placed Orders Test ADT");
+
+			PortletEntry.save();
+		}
+
+		task ("Then after saving the Placed order configurations the changes are maintained") {
+			Alert.viewSuccessMessage();
+
+			IFrame.closeFrame();
+
+			Portlet.gotoPortletOptions(
+				portletName = "Placed Orders",
+				portletOption = "Configuration");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			AssertSelectedLabel(
+				locator1 = "Select#DISPLAY_TEMPLATE",
+				value1 = "Placed Orders Test ADT");
+		}
+	}
+
 }

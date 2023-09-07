@@ -759,7 +759,7 @@ public class GetEntryRenderDataMVCResourceCommand
 				}
 			}
 
-			jsonObject.put("userExperiences", segmentsExperienceJSONArray);
+			jsonObject.put("segmentsExperiences", segmentsExperienceJSONArray);
 		}
 
 		return jsonObject;

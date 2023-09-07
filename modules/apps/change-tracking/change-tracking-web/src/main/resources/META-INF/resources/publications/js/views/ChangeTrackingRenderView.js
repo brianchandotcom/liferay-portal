@@ -1508,17 +1508,17 @@ export default function ChangeTrackingRenderView({
 						<div className="align-items-baseline autofit-row mb-3">
 							<h2 className="mr-3">{currentTitle}</h2>
 
-							{state.renderData.userExperiences &&
-								!!state.renderData.userExperiences.length && (
+							{state.renderData.segmentsExperiences &&
+								!!state.renderData.segmentsExperiences.length && (
 									<ExperienceDropdown
 										activeSegmentsExperience={
-											state.renderData.userExperiences.filter(
+											state.renderData.segmentsExperiences.filter(
 												(experience) =>
 													experience.active
 											)[0]
 										}
 										segmentsExperiences={
-											state.renderData.userExperiences
+											state.renderData.segmentsExperiences
 										}
 										updatePreviewRender={
 											updatePreviewRender

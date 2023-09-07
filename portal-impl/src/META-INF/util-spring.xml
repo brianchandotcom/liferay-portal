@@ -45,17 +45,6 @@
 			<bean class="com.liferay.portal.deploy.hot.HotDeployImpl" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil" id="com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory">
-		<property name="editorConfigurationFactory" ref="com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryImpl" />
-	</bean>
-	<bean class="com.liferay.portal.editor.configuration.EditorConfigurationFactoryImpl" id="com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryImpl">
-		<property name="editorConfigProvider">
-			<bean class="com.liferay.portal.editor.configuration.EditorConfigProvider" />
-		</property>
-		<property name="editorOptionsProvider">
-			<bean class="com.liferay.portal.editor.configuration.EditorOptionsProvider" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.image.ImageToolUtil" id="com.liferay.portal.kernel.image.ImageToolUtil">
 		<property name="imageTool" ref="com.liferay.portal.image.ImageToolImpl" />
 	</bean>

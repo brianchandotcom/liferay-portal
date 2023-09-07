@@ -58,7 +58,7 @@ public class LayoutPageTemplateEntryTableReferenceDefinitionTest
 	protected CTModel<?> addCTModel() throws Exception {
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
-			_layoutPageTemplateCollection.getCtCollectionId(),
+			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
 			WorkflowConstants.STATUS_APPROVED,

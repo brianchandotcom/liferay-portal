@@ -6,6 +6,7 @@
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
+import com.liferay.commerce.product.exception.NoSuchCPAttachmentFileEntryException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -60,6 +61,38 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 @CTAware
 public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
+
+	@Override
+	public void deleteAttachment(Long id) throws Exception {
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			_cpAttachmentFileEntryService.fetchCPAttachmentFileEntry(id);
+
+		if (cpAttachmentFileEntry == null) {
+			throw new NoSuchCPAttachmentFileEntryException(
+				"Unable to find cpAttachmentFileEntry with ID: " + id);
+		}
+
+		_cpAttachmentFileEntryService.deleteCPAttachmentFileEntry(id);
+	}
+
+	@Override
+	public void deleteAttachmentByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CPAttachmentFileEntry cpAttachmentFileEntry =
+			_cpAttachmentFileEntryService.fetchByExternalReferenceCode(
+				externalReferenceCode, contextCompany.getCompanyId());
+
+		if (cpAttachmentFileEntry == null) {
+			throw new NoSuchCPAttachmentFileEntryException(
+				"Unable to find cpAttachmentFileEntry with external " +
+					"reference code " + externalReferenceCode);
+		}
+
+		_cpAttachmentFileEntryService.deleteCPAttachmentFileEntry(
+			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+	}
 
 	@Override
 	public Page<Attachment> getProductByExternalReferenceCodeAttachmentsPage(

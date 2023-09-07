@@ -75,8 +75,8 @@ public interface DLConfiguration {
 	public String[] spreadSheetFileMimeTypes();
 
 	/**
-	 * Set the interval in hours on how often
-	 * TemporaryFileEntriesMessageListener will run to check for expired
+	 * Set the interval, greater than 0, in hours on how often
+	 * TempFileEntriesSchedulerJobConfiguration will run to check for expired
 	 * temporary file entries.
 	 */
 	@Meta.AD(

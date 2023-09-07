@@ -20,9 +20,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface MBConfiguration {
 
 	/**
-	 * Enter time in minutes on how often this job is run. If a user's ban is
-	 * set to expire at 12:05 PM and the job runs at 2 PM, the expire will occur
-	 * during the 2 PM run.
+	 * Enter time , greater than 0, in minutes on how often this job is run. If
+	 * a user's ban is set to expire at 12:05 PM and the job runs at 2 PM, the
+	 * expire will occur during the 2 PM run.
 	 */
 	@Meta.AD(
 		deflt = "120", min = "1", name = "expire-ban-job-interval",

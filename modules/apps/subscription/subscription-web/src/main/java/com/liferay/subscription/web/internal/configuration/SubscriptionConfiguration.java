@@ -20,8 +20,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface SubscriptionConfiguration {
 
 	/**
-	 * Set the interval in hours on how often to check for expired tickets and
-	 * delete them.
+	 * Set the interval, greater than 0, in hours on how often to check for
+	 * expired tickets and delete them.
 	 */
 	@Meta.AD(
 		deflt = "24", min = "1", name = "delete-expired-tickets-interval",

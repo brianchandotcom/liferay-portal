@@ -183,6 +183,7 @@ export function ERCModal({
 
 export default function EditERCModal({
 	children,
+	disabled = false,
 	externalReferenceCode,
 	onSubmit,
 }) {
@@ -207,14 +208,18 @@ export default function EditERCModal({
 				/>
 			)}
 
-			<ClayButton
-				aria-label={Liferay.Language.get('edit')}
-				className="shadow-none"
-				displayType="unstyled"
-				onClick={_handleOpen}
-			>
-				{children}
-			</ClayButton>
+			{disabled ? (
+				children
+			) : (
+				<ClayButton
+					aria-label={Liferay.Language.get('edit')}
+					className="shadow-none"
+					displayType="unstyled"
+					onClick={_handleOpen}
+				>
+					{children}
+				</ClayButton>
+			)}
 		</>
 	);
 }

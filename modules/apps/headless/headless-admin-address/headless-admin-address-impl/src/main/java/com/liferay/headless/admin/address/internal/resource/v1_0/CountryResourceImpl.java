@@ -118,6 +118,9 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 				ServiceContextFactory.getInstance(
 					Country.class.getName(), contextHttpServletRequest));
 
+		_countryLocalService.updateCountryLocalizations(
+			serviceBuilderCountry, country.getTitle_i18n());
+
 		return _toCountry(
 			_countryLocalService.updateGroupFilterEnabled(
 				serviceBuilderCountry.getCountryId(),
@@ -137,6 +140,9 @@ public class CountryResourceImpl extends BaseCountryResourceImpl {
 				GetterUtil.getDouble(country.getPosition()),
 				GetterUtil.getBoolean(country.getShippingAllowed(), true),
 				GetterUtil.getBoolean(country.getSubjectToVAT()));
+
+		_countryLocalService.updateCountryLocalizations(
+			serviceBuilderCountry, country.getTitle_i18n());
 
 		return _toCountry(
 			_countryService.updateGroupFilterEnabled(

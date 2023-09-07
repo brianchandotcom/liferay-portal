@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.UploadPortletRequestImpl;
@@ -75,7 +74,6 @@ import org.springframework.mock.web.MockMultipartHttpServletRequest;
 /**
  * @author Rubén Pulido
  */
-@FeatureFlags("LPS-169992")
 @RunWith(Arquillian.class)
 public class ExecuteInfoItemActionStrutsActionTest {
 

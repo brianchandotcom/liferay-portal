@@ -328,36 +328,34 @@ public class ObjectEntryInfoItemFieldValuesProvider
 					themeDisplay));
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-169992")) {
-			objectEntryFieldValues.addAll(
-				TransformUtil.transform(
-					_objectActionLocalService.getObjectActions(
-						_objectDefinition.getObjectDefinitionId(),
-						ObjectActionTriggerConstants.KEY_STANDALONE),
-					objectAction -> {
-						InfoLocalizedValue<String> actionLabelLocalizedValue =
-							InfoLocalizedValue.<String>builder(
-							).defaultLocale(
-								LocaleUtil.fromLanguageId(
-									objectAction.getDefaultLanguageId())
-							).values(
-								objectAction.getLabelMap()
-							).build();
+		objectEntryFieldValues.addAll(
+			TransformUtil.transform(
+				_objectActionLocalService.getObjectActions(
+					_objectDefinition.getObjectDefinitionId(),
+					ObjectActionTriggerConstants.KEY_STANDALONE),
+				objectAction -> {
+					InfoLocalizedValue<String> actionLabelLocalizedValue =
+						InfoLocalizedValue.<String>builder(
+						).defaultLocale(
+							LocaleUtil.fromLanguageId(
+								objectAction.getDefaultLanguageId())
+						).values(
+							objectAction.getLabelMap()
+						).build();
 
-						return new InfoFieldValue<>(
-							InfoField.builder(
-							).infoFieldType(
-								ActionInfoFieldType.INSTANCE
-							).namespace(
-								ObjectAction.class.getSimpleName()
-							).name(
-								objectAction.getName()
-							).labelInfoLocalizedValue(
-								actionLabelLocalizedValue
-							).build(),
-							actionLabelLocalizedValue);
-					}));
-		}
+					return new InfoFieldValue<>(
+						InfoField.builder(
+						).infoFieldType(
+							ActionInfoFieldType.INSTANCE
+						).namespace(
+							ObjectAction.class.getSimpleName()
+						).name(
+							objectAction.getName()
+						).labelInfoLocalizedValue(
+							actionLabelLocalizedValue
+						).build(),
+						actionLabelLocalizedValue);
+				}));
 
 		return objectEntryFieldValues;
 	}

@@ -241,8 +241,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 	if (canUpdateEditables && activeItem.editableId) {
 		panelsIds = {
 			[PANEL_IDS.editableAction]:
-				activeItem.type === EDITABLE_TYPES.action &&
-				Liferay.FeatureFlags['LPS-169992'],
+				activeItem.type === EDITABLE_TYPES.action,
 			[PANEL_IDS.editableLink]:
 				[
 					EDITABLE_TYPES.text,

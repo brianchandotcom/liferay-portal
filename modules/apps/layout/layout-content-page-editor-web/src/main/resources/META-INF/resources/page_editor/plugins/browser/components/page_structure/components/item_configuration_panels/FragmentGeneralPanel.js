@@ -44,7 +44,7 @@ export function FragmentGeneralPanel({item}) {
 		(state) => state.fragmentEntryLinks
 	);
 
-	let fieldSets =
+	const fieldSets =
 		fragmentEntryLink.configuration?.fieldSets?.filter(
 			({configurationRole, label}) =>
 				!configurationRole &&
@@ -53,20 +53,6 @@ export function FragmentGeneralPanel({item}) {
 						FRAGMENT_ENTRY_TYPES.input && !label
 				)
 		) ?? [];
-
-	if (
-		!Liferay.FeatureFlags['LPS-169992'] &&
-		fragmentEntryLink.fragmentEntryKey === 'BASIC_COMPONENT-button'
-	) {
-		fieldSets = fieldSets.map((fieldSet) => {
-			return {
-				...fieldSet,
-				fields: fieldSet.fields.filter(
-					(field) => field.name !== 'type'
-				),
-			};
-		});
-	}
 
 	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 

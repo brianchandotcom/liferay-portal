@@ -245,8 +245,6 @@ definition {
 	@description = "This is a test for LPS-165556. The page designer should keep mapped standalone action from current object to Button fragment after import the display page template."
 	@priority = 4
 	test ExportImportDisplayPageTemplateWithMappedStandaloneActionFromCurrentObjectToFragment {
-		property custom.properties = "feature.flag.LPS-169992=true";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -381,8 +379,6 @@ definition {
 	@description = "This is a test for LPS-165556. The page designer should keep mapped standalone action from current object to Button fragment inside Collection Display after import the display page template."
 	@priority = 4
 	test ExportImportDisplayPageTemplateWithMappedStandaloneActionFromCurrentObjectToFragmentInsideCollectionDisplay {
-		property custom.properties = "feature.flag.LPS-169992=true";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -526,8 +522,6 @@ definition {
 	@description = "This is a test for LPS-165556. The page designer should keep mapped standalone action from a specific object entry to Button fragment after import the display page template."
 	@priority = 4
 	test ExportImportDisplayPageTemplateWithMappedStandaloneActionFromSpecificObjectEntryToFragment {
-		property custom.properties = "feature.flag.LPS-169992=true";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";

@@ -71,7 +71,6 @@ import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 import java.math.BigDecimal;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -611,10 +610,6 @@ public class ObjectEntryInfoItemFormProvider
 	}
 
 	private List<InfoFieldSetEntry> _getObjectActionInfoFieldSetEntries() {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-169992")) {
-			return Collections.emptyList();
-		}
-
 		InfoFieldSet.Builder infoFieldSetBuilder = InfoFieldSet.builder(
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(

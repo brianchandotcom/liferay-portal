@@ -5049,21 +5049,16 @@ public class JenkinsResultsParserUtil {
 
 			@Override
 			public Object execute() {
-				try {
-					String responseText = executeJenkinsScript(
-						masterHostname, jenkinsScript);
+				String responseText = executeJenkinsScript(
+					masterHostname, jenkinsScript);
 
-					if (responseText == null) {
-						throw new Exception(
-							"Unable to update build description. Response is " +
-								"null.");
-					}
+				if (responseText == null) {
+					throw new RuntimeException(
+						"Unable to update build description. Response is " +
+							"null.");
+				}
 
-					return responseText;
-				}
-				catch (Exception exception) {
-					throw new RuntimeException(exception);
-				}
+				return responseText;
 			}
 
 			@Override

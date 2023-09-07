@@ -41,6 +41,7 @@ if (CommercePriceListConstants.TYPE_PROMOTION.equals(commercePriceEntryDisplayCo
 						priceListId: id,
 						skuExternalReferenceCode: sku.externalReferenceCode,
 						skuId: sku.id,
+						unitOfMeasureKey: sku.unitOfMeasureKey,
 					};
 
 					return CommercePriceEntriesResource.addPriceEntry(id, priceEntryData)
@@ -62,13 +63,13 @@ if (CommercePriceListConstants.TYPE_PROMOTION.equals(commercePriceEntryDisplayCo
 
 				itemFinder.default('itemFinder', 'item-finder-root', {
 					apiUrl:
-						'/o/headless-commerce-admin-catalog/v1.0/skus?filter=catalogId eq <%= commercePriceEntryDisplayContext.getCommerceCatalogId() %>',
+						'/o/headless-commerce-admin-catalog/v1.0/unit-of-measure-skus?filter=catalogId eq <%= commercePriceEntryDisplayContext.getCommerceCatalogId() %>',
 					getSelectedItems: getSelectedItems,
 					inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-sku") %>',
 					itemSelectedMessage: '<%= LanguageUtil.get(request, "sku-selected") %>',
 					linkedDataSetsId: ['<%= dataSetId %>'],
 					itemCreation: false,
-					itemsKey: 'id',
+					itemsKey: 'unitOfMeasureSkuId',
 					onItemSelected: selectItem,
 					pageSize: 10,
 					panelHeaderLabel: '<%= LanguageUtil.get(request, "add-skus") %>',
@@ -76,6 +77,9 @@ if (CommercePriceListConstants.TYPE_PROMOTION.equals(commercePriceEntryDisplayCo
 					schema: [
 						{
 							fieldName: 'sku',
+						},
+						{
+							fieldName: 'unitOfMeasureKey',
 						},
 						{
 							fieldName: ['productName', 'LANG'],

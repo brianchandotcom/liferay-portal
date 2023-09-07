@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Iván Zaera Avellón
  */
-public interface CSPNonceProvider {
+public interface ContentSecurityPolicyNonceProvider {
 
 	/**
 	 * Get the nonce associated to a request.

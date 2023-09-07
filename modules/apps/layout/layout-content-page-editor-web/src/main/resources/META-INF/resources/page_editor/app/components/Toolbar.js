@@ -299,7 +299,6 @@ function ToolbarBody({className}) {
 				<li className="nav-item">
 					<form action={config.discardDraftURL} method="POST">
 						<ClayButton
-							className="btn btn-secondary"
 							disabled={!enableDiscard}
 							displayType="secondary"
 							onClick={handleDiscardDraft}

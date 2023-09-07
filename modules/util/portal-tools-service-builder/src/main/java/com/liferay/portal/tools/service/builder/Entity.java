@@ -401,6 +401,10 @@ public class Entity implements Comparable<Entity> {
 			interfaceNames.add("ContainerModel");
 		}
 
+		if (isExternalReferenceCodeModel()) {
+			interfaceNames.add("ExternalReferenceCodeModel");
+		}
+
 		if (isLocalizedModel()) {
 			interfaceNames.add("LocalizedModel");
 		}
@@ -491,6 +495,10 @@ public class Entity implements Comparable<Entity> {
 		if (isChangeTrackingEnabled()) {
 			overrideColumnName.add("ctCollectionId");
 			overrideColumnName.add("primaryKey");
+		}
+
+		if (isExternalReferenceCodeModel()) {
+			overrideColumnName.add("externalReferenceCode");
 		}
 
 		if (isGroupedModel()) {
@@ -1011,6 +1019,16 @@ public class Entity implements Comparable<Entity> {
 
 	public boolean isDynamicUpdateEnabled() {
 		return _dynamicUpdateEnabled;
+	}
+
+	public boolean isExternalReferenceCodeModel() {
+		if (_serviceBuilder.isVersionGTE_7_4_0() &&
+			hasEntityColumn("externalReferenceCode")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isGroupedModel() {

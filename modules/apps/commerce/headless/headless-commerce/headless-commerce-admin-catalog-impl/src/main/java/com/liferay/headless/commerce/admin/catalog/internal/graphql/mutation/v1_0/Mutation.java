@@ -310,6 +310,46 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteAttachmentByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource ->
+				attachmentResource.deleteAttachmentByExternalReferenceCode(
+					externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean deleteAttachment(@GraphQLName("id") Long id)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource -> attachmentResource.deleteAttachment(id));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteAttachmentBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_attachmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			attachmentResource -> attachmentResource.deleteAttachmentBatch(
+				callbackURL, object));
+	}
+
+	@GraphQLField
 	public Attachment createProductByExternalReferenceCodeAttachment(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("attachment") Attachment attachment)

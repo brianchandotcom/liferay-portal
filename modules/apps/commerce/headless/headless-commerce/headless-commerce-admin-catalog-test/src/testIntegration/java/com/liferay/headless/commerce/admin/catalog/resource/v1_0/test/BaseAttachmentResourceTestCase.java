@@ -192,6 +192,66 @@ public abstract class BaseAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAttachmentByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Attachment attachment =
+			testDeleteAttachmentByExternalReferenceCode_addAttachment();
+
+		assertHttpResponseStatusCode(
+			204,
+			attachmentResource.
+				deleteAttachmentByExternalReferenceCodeHttpResponse(
+					attachment.getExternalReferenceCode()));
+	}
+
+	protected Attachment
+			testDeleteAttachmentByExternalReferenceCode_addAttachment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteAttachment() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Attachment attachment = testDeleteAttachment_addAttachment();
+
+		assertHttpResponseStatusCode(
+			204,
+			attachmentResource.deleteAttachmentHttpResponse(
+				attachment.getId()));
+	}
+
+	protected Attachment testDeleteAttachment_addAttachment() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteAttachment() throws Exception {
+		Attachment attachment = testGraphQLDeleteAttachment_addAttachment();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteAttachment",
+						new HashMap<String, Object>() {
+							{
+								put("id", attachment.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteAttachment"));
+	}
+
+	protected Attachment testGraphQLDeleteAttachment_addAttachment()
+		throws Exception {
+
+		return testGraphQLAttachment_addAttachment();
+	}
+
+	@Test
 	public void testGetProductByExternalReferenceCodeAttachmentsPage()
 		throws Exception {
 
@@ -249,6 +309,10 @@ public abstract class BaseAttachmentResourceTestCase {
 			page,
 			testGetProductByExternalReferenceCodeAttachmentsPage_getExpectedActions(
 				externalReferenceCode));
+
+		attachmentResource.deleteAttachment(attachment1.getId());
+
+		attachmentResource.deleteAttachment(attachment2.getId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -456,6 +520,10 @@ public abstract class BaseAttachmentResourceTestCase {
 			page,
 			testGetProductByExternalReferenceCodeImagesPage_getExpectedActions(
 				externalReferenceCode));
+
+		attachmentResource.deleteAttachment(attachment1.getId());
+
+		attachmentResource.deleteAttachment(attachment2.getId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -650,6 +718,10 @@ public abstract class BaseAttachmentResourceTestCase {
 			(List<Attachment>)page.getItems());
 		assertValid(
 			page, testGetProductIdAttachmentsPage_getExpectedActions(id));
+
+		attachmentResource.deleteAttachment(attachment1.getId());
+
+		attachmentResource.deleteAttachment(attachment2.getId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -819,6 +891,10 @@ public abstract class BaseAttachmentResourceTestCase {
 			Arrays.asList(attachment1, attachment2),
 			(List<Attachment>)page.getItems());
 		assertValid(page, testGetProductIdImagesPage_getExpectedActions(id));
+
+		attachmentResource.deleteAttachment(attachment1.getId());
+
+		attachmentResource.deleteAttachment(attachment2.getId());
 	}
 
 	protected Map<String, Map<String, String>>

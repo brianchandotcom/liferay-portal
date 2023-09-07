@@ -50,6 +50,15 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AttachmentResource {
 
+	public void deleteAttachmentByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public void deleteAttachment(Long id) throws Exception;
+
+	public Response deleteAttachmentBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public Page<Attachment> getProductByExternalReferenceCodeAttachmentsPage(
 			String externalReferenceCode, Pagination pagination)
 		throws Exception;

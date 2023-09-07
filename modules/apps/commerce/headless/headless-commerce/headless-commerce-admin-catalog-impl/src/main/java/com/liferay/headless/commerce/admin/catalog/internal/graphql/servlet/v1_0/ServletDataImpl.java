@@ -250,6 +250,20 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#deleteAttachmentByExternalReferenceCode",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"deleteAttachmentByExternalReferenceCode"));
+					put(
+						"mutation#deleteAttachment",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class, "deleteAttachment"));
+					put(
+						"mutation#deleteAttachmentBatch",
+						new ObjectValuePair<>(
+							AttachmentResourceImpl.class,
+							"deleteAttachmentBatch"));
+					put(
 						"mutation#createProductByExternalReferenceCodeAttachment",
 						new ObjectValuePair<>(
 							AttachmentResourceImpl.class,

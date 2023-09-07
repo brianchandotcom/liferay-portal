@@ -76,7 +76,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.css-class-wrapper=portlet-staging-bar",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.header-portlet-javascript=/js/staging.js",
-		"com.liferay.portlet.header-portlet-javascript=/js/staging_branch.js",
 		"com.liferay.portlet.header-portlet-javascript=/js/staging_version.js",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",

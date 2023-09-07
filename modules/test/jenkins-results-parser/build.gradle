@@ -6,7 +6,7 @@ dependencies {
 	api group: "com.amazonaws", name: "aws-java-sdk-ec2", version: "1.12.262"
 	api group: "com.amazonaws", name: "aws-java-sdk-rds", version: "1.12.262"
 	api group: "com.atlassian.httpclient", name: "atlassian-httpclient-plugin", version: "2.1.1"
-	api group: "com.atlassian.jira", name: "jira-rest-java-client-app", version: "5.2.0"
+	api group: "com.atlassian.jira", name: "jira-rest-java-client-app", version: "5.2.4"
 	api group: "com.atlassian.sal", name: "sal-api", version: "4.4.0"
 	api group: "com.google.cloud", name: "google-cloud-storage", version: "1.113.16"
 	api group: "com.google.guava", name: "guava", version: "32.0.1-jre"

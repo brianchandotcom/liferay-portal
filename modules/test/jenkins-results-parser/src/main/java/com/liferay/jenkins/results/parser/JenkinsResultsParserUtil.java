@@ -5049,15 +5049,27 @@ public class JenkinsResultsParserUtil {
 
 			@Override
 			public Object execute() {
-				executeJenkinsScript(masterHostname, jenkinsScript);
+				try {
+					String responseText = executeJenkinsScript(
+						masterHostname, jenkinsScript);
 
-				return null;
+					if (responseText == null) {
+						throw new Exception(
+							"Unable to update build description. Response is " +
+								"null.");
+					}
+
+					return responseText;
+				}
+				catch (Exception exception) {
+					throw new RuntimeException(exception);
+				}
 			}
 
 			@Override
 			protected String getRetryMessage(int retryCount) {
 				return combine(
-					"Unable to update build description.",
+					"Unable to update build description. ",
 					super.getRetryMessage(retryCount));
 			}
 

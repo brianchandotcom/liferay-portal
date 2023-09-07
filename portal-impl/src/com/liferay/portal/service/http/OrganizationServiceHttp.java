@@ -1265,19 +1265,9 @@ public class OrganizationServiceHttp {
 	public static com.liferay.portal.kernel.model.Organization
 			updateOrganization(
 				HttpPrincipal httpPrincipal, long organizationId,
-				long parentOrganizationId, String externalReferenceCode,
-				String name, String type, long regionId, long countryId,
-				long statusListTypeId, String comments, boolean hasLogo,
-				byte[] logoBytes, boolean site,
-				java.util.List<com.liferay.portal.kernel.model.Address>
-					addresses,
-				java.util.List<com.liferay.portal.kernel.model.EmailAddress>
-					emailAddresses,
-				java.util.List<com.liferay.portal.kernel.model.OrgLabor>
-					orgLabors,
-				java.util.List<com.liferay.portal.kernel.model.Phone> phones,
-				java.util.List<com.liferay.portal.kernel.model.Website>
-					websites,
+				long parentOrganizationId, String name, String type,
+				long regionId, long countryId, long statusListTypeId,
+				String comments, boolean site,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1287,10 +1277,9 @@ public class OrganizationServiceHttp {
 				_updateOrganizationParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, organizationId, parentOrganizationId,
-				externalReferenceCode, name, type, regionId, countryId,
-				statusListTypeId, comments, hasLogo, logoBytes, site, addresses,
-				emailAddresses, orgLabors, phones, websites, serviceContext);
+				methodKey, organizationId, parentOrganizationId, name, type,
+				regionId, countryId, statusListTypeId, comments, site,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -1323,9 +1312,19 @@ public class OrganizationServiceHttp {
 	public static com.liferay.portal.kernel.model.Organization
 			updateOrganization(
 				HttpPrincipal httpPrincipal, long organizationId,
-				long parentOrganizationId, String name, String type,
-				long regionId, long countryId, long statusListTypeId,
-				String comments, boolean site,
+				long parentOrganizationId, String externalReferenceCode,
+				String name, String type, long regionId, long countryId,
+				long statusListTypeId, String comments, boolean hasLogo,
+				byte[] logoBytes, boolean site,
+				java.util.List<com.liferay.portal.kernel.model.Address>
+					addresses,
+				java.util.List<com.liferay.portal.kernel.model.EmailAddress>
+					emailAddresses,
+				java.util.List<com.liferay.portal.kernel.model.OrgLabor>
+					orgLabors,
+				java.util.List<com.liferay.portal.kernel.model.Phone> phones,
+				java.util.List<com.liferay.portal.kernel.model.Website>
+					websites,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1335,9 +1334,10 @@ public class OrganizationServiceHttp {
 				_updateOrganizationParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, organizationId, parentOrganizationId, name, type,
-				regionId, countryId, statusListTypeId, comments, site,
-				serviceContext);
+				methodKey, organizationId, parentOrganizationId,
+				externalReferenceCode, name, type, regionId, countryId,
+				statusListTypeId, comments, hasLogo, logoBytes, site, addresses,
+				emailAddresses, orgLabors, phones, websites, serviceContext);
 
 			Object returnObj = null;
 
@@ -1487,17 +1487,17 @@ public class OrganizationServiceHttp {
 		};
 	private static final Class<?>[] _updateOrganizationParameterTypes30 =
 		new Class[] {
+			long.class, long.class, String.class, String.class, long.class,
+			long.class, long.class, String.class, boolean.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateOrganizationParameterTypes31 =
+		new Class[] {
 			long.class, long.class, String.class, String.class, String.class,
 			long.class, long.class, long.class, String.class, boolean.class,
 			byte[].class, boolean.class, java.util.List.class,
 			java.util.List.class, java.util.List.class, java.util.List.class,
 			java.util.List.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _updateOrganizationParameterTypes31 =
-		new Class[] {
-			long.class, long.class, String.class, String.class, long.class,
-			long.class, long.class, String.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

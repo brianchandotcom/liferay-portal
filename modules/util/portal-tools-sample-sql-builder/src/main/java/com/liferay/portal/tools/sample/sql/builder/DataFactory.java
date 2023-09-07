@@ -6650,10 +6650,16 @@ public class DataFactory {
 
 		mbCategoryModel.setParentCategoryId(
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
-		mbCategoryModel.setName("Test Category " + index);
+
+		String name = "Test Category " + index;
+
+		mbCategoryModel.setName(name);
+
 		mbCategoryModel.setDisplayStyle(
 			MBCategoryConstants.DEFAULT_DISPLAY_STYLE);
-		mbCategoryModel.setFriendlyURL("test-category-" + index);
+
+		mbCategoryModel.setFriendlyURL(
+			StringUtil.replace(name, CharPool.SPACE, StringPool.DASH));
 		mbCategoryModel.setLastPublishDate(new Date());
 		mbCategoryModel.setStatusDate(new Date());
 

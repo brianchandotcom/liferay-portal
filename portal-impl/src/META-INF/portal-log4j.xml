@@ -63,7 +63,6 @@
 		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.PluginPackageHotDeployListener" />
 		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.ThemeHotDeployListener" />
 		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.ThemeLoaderHotDeployListener" />
-		<Logger level="ERROR" name="com.liferay.portal.editor" />
 		<Logger level="ERROR" name="com.liferay.portal.events.EventsProcessor" />
 		<Logger level="ERROR" name="com.liferay.portal.events.GarbageCollectorAction" />
 		<Logger level="ERROR" name="com.liferay.portal.events.GlobalStartupAction" />

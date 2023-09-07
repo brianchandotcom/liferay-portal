@@ -12,6 +12,7 @@ import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
 import com.liferay.commerce.product.service.CPDefinitionService;
@@ -34,9 +35,12 @@ import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.SkuVirtual
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -45,6 +49,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -53,12 +58,15 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.Serializable;
 
 import java.math.BigDecimal;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -148,7 +156,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 	@Override
 	public Sku getSku(Long id) throws Exception {
-		return _toSku(GetterUtil.getLong(id));
+		return _toSku(GetterUtil.getLong(id), null);
 	}
 
 	@Override
@@ -164,7 +172,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 					externalReferenceCode);
 		}
 
-		return _toSku(cpInstance.getCPInstanceId());
+		return _toSku(cpInstance.getCPInstanceId(), null);
 	}
 
 	@Override
@@ -175,7 +183,35 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 		return _skuHelper.getSkusPage(
 			contextCompany.getCompanyId(), search, filter, pagination, sorts,
 			document -> _toSku(
-				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)), null));
+	}
+
+	@Override
+	public Page<Sku> getUnitOfMeasureSkusPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		return _toUnitOfMeasureSkusPage(
+			SearchUtil.search(
+				null, booleanQuery -> booleanQuery.getPreBooleanFilter(),
+				filter, CPInstance.class.getName(), search, pagination,
+				queryConfig -> queryConfig.setSelectedFieldNames(
+					Field.ENTRY_CLASS_PK),
+				new UnsafeConsumer() {
+
+					public void accept(Object object) throws Exception {
+						SearchContext searchContext = (SearchContext)object;
+
+						searchContext.setAttribute(
+							Field.STATUS, WorkflowConstants.STATUS_ANY);
+						searchContext.setCompanyId(
+							contextCompany.getCompanyId());
+					}
+
+				},
+				sorts,
+				document -> GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	@Override
@@ -191,7 +227,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 		_updateSKU(cpInstance, sku);
 
-		return _toSku(id);
+		return _toSku(id, null);
 	}
 
 	@Override
@@ -273,7 +309,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 		_updateNestedResources(sku, cpInstance, serviceContext);
 
-		return _toSku(cpInstance.getCPInstanceId());
+		return _toSku(cpInstance.getCPInstanceId(), null);
 	}
 
 	private Map<String, Serializable> _getExpandoBridgeAttributes(Sku sku) {
@@ -282,13 +318,59 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			sku.getCustomFields(), contextAcceptLanguage.getPreferredLocale());
 	}
 
-	private Sku _toSku(Long cpInstanceId) throws Exception {
-		return _skuDTOConverter.toDTO(
+	private Sku _toSku(
+			Long cpInstanceId, CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure)
+		throws Exception {
+
+		DefaultDTOConverterContext defaultDTOConverterContext =
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(), null,
 				_dtoConverterRegistry, cpInstanceId,
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser));
+				contextUser);
+
+		defaultDTOConverterContext.setAttribute(
+			"cpInstanceUnitOfMeasure", cpInstanceUnitOfMeasure);
+
+		return _skuDTOConverter.toDTO(defaultDTOConverterContext);
+	}
+
+	private Page<Sku> _toUnitOfMeasureSkusPage(Page<Long> cpInstanceIdsPage)
+		throws Exception {
+
+		List<Sku> skus = new ArrayList<>();
+
+		for (Long cpInstanceId : cpInstanceIdsPage.getItems()) {
+			CPInstance cpInstance = _cpInstanceService.fetchCPInstance(
+				cpInstanceId);
+
+			if (cpInstance == null) {
+				continue;
+			}
+
+			List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+				cpInstance.getCPInstanceUnitOfMeasures(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			if (cpInstanceUnitOfMeasures.isEmpty()) {
+				skus.add(_toSku(cpInstanceId, null));
+
+				continue;
+			}
+
+			for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure :
+					cpInstanceUnitOfMeasures) {
+
+				skus.add(_toSku(cpInstanceId, cpInstanceUnitOfMeasure));
+			}
+		}
+
+		return Page.of(
+			cpInstanceIdsPage.getActions(), cpInstanceIdsPage.getFacets(), skus,
+			Pagination.of(
+				(int)cpInstanceIdsPage.getPage(),
+				(int)cpInstanceIdsPage.getPageSize()),
+			cpInstanceIdsPage.getTotalCount());
 	}
 
 	private CPInstance _updateNestedResources(
@@ -541,7 +623,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 		_updateNestedResources(sku, cpInstance, serviceContext);
 
-		return _toSku(cpInstance.getCPInstanceId());
+		return _toSku(cpInstance.getCPInstanceId(), null);
 	}
 
 	private static final EntityModel _entityModel = new SkuEntityModel();

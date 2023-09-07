@@ -87,26 +87,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 		return true;
 	}
 
-	private boolean _isValidPathParameterString(String pathParameterString) {
-		int openCurlyBraceIndex = StringUtil.count(
-			pathParameterString, StringPool.OPEN_CURLY_BRACE);
-
-		int closeCurlyBraceIndex = StringUtil.count(
-			pathParameterString, StringPool.CLOSE_CURLY_BRACE);
-
-		if ((openCurlyBraceIndex != 1) || (closeCurlyBraceIndex != 1) ||
-			(pathParameterString.length() <= 2) ||
-			!StringUtil.startsWith(
-				pathParameterString, StringPool.OPEN_CURLY_BRACE) ||
-			!StringUtil.endsWith(
-				pathParameterString, StringPool.CLOSE_CURLY_BRACE)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	private void _validate(ObjectEntry objectEntry) {
 		try {
 			Map<String, Serializable> values = objectEntry.getValues();
@@ -257,10 +237,11 @@ public class APIEndpointRelevantObjectEntryModelListener
 	}
 
 	private void _validateSingleElementPath(
-			ObjectEntry objectEntry, String pathParameter, String pathString)
+			ObjectEntry objectEntry, String pathParameterString,
+			String pathString)
 		throws Exception {
 
-		if (Validator.isNull(pathParameter)) {
+		if (Validator.isNull(pathParameterString)) {
 			throw new ObjectEntryValuesException.InvalidObjectField(
 				null,
 				"Path parameter cannot be null in a single element endpoint",
@@ -279,7 +260,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 				"x-must-start-with-the-x-character");
 		}
 
-		String pathParameterString = StringUtil.extractLast(
+		String pathInParameterString = StringUtil.extractLast(
 			pathString, StringPool.FORWARD_SLASH);
 
 		Matcher individualMatcher = _individualPathPattern.matcher(pathString);
@@ -291,7 +272,10 @@ public class APIEndpointRelevantObjectEntryModelListener
 				"x-can-have-a-maximum-of-255-alphanumeric-characters");
 		}
 
-		if (!_isValidPathParameterString(pathParameterString)) {
+		Matcher curlyBraceMatcher = _curlyBracePattern.matcher(
+			pathInParameterString);
+
+		if (!curlyBraceMatcher.matches()) {
 			throw new ObjectEntryValuesException.InvalidObjectField(
 				Arrays.asList(objectField.getLabel(user.getLocale())),
 				"%s must contain a path parameter between curly braces",
@@ -299,6 +283,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 		}
 	}
 
+	private static final Pattern _curlyBracePattern = Pattern.compile(
+		"^\\{[a-zA-Z0-9]+\\}$");
 	private static final Pattern _individualPathPattern = Pattern.compile(
 		"/[a-zA-Z0-9][a-zA-Z0-9-/-{\\-}]{1,253}");
 	private static final Pattern _pathPattern = Pattern.compile(

@@ -10,24 +10,17 @@ import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
-import BuildTable from '../../components/BuildTable/BuildTable';
+import JobBuilds from '../../components/JobBuilds/JobBuilds';
 import JobInformation from '../../components/JobInformation/JobInformation';
 import setSpringBootData from '../../services/setSpringBootData';
 
 function JobPage() {
 	const {id} = useParams();
 	let [job, setJob] = useState(null);
-	let [jobBuilds, setJobBuilds] = useState(null);
 
 	setSpringBootData({
 		setData: setJob,
 		urlPath: '/jobs/' + id
-	});
-
-	setSpringBootData({
-		setData: setJobBuilds,
-		timeout: 2500,
-		urlPath: '/jobs/builds/' + jobId
 	});
 
 	let jobName = 'Job #' + id;
@@ -48,7 +41,7 @@ function JobPage() {
 				<Breadcrumbs breadcrumbs={breadcrumbs} />
 				<Heading level={3} weight="lighter">{jobName}</Heading>
 				<JobInformation job={job} />
-				<BuildTable builds={jobBuilds} />
+				<JobBuilds jobId={id} />
 			</ClayCard>
 		</ClayLayout.Container>
 	);

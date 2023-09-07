@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -68,7 +69,8 @@ public class EditLayoutPageTemplateCollectionMVCActionCommand
 			layoutPageTemplateCollection =
 				_layoutPageTemplateCollectionService.
 					updateLayoutPageTemplateCollection(
-						layoutPageTemplateCollectionId, name, description);
+						layoutPageTemplateCollectionId, name, description,
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 		}
 
 		String redirect = getRedirectURL(

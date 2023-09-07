@@ -119,7 +119,9 @@ public class LayoutPageTemplateCollectionServiceTest {
 
 		int originalLayoutPageTemplateCollectionsCount =
 			_layoutPageTemplateCollectionService.
-				getLayoutPageTemplateCollectionsCount(_group.getGroupId());
+				getLayoutPageTemplateCollectionsCount(
+					_group.getGroupId(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
 			_group.getGroupId(), "Layout Page Template Collection 1",
@@ -131,7 +133,9 @@ public class LayoutPageTemplateCollectionServiceTest {
 
 		int actualLayoutPageTemplateCollectionsCount =
 			_layoutPageTemplateCollectionService.
-				getLayoutPageTemplateCollectionsCount(_group.getGroupId());
+				getLayoutPageTemplateCollectionsCount(
+					_group.getGroupId(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 
 		Assert.assertEquals(
 			originalLayoutPageTemplateCollectionsCount + 2,
@@ -218,7 +222,9 @@ public class LayoutPageTemplateCollectionServiceTest {
 
 		List<LayoutPageTemplateCollection> actualLayoutPageTemplateCollections =
 			_layoutPageTemplateCollectionService.
-				getLayoutPageTemplateCollections(_group.getGroupId());
+				getLayoutPageTemplateCollections(
+					_group.getGroupId(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 
 		Assert.assertTrue(
 			actualLayoutPageTemplateCollections.contains(
@@ -262,7 +268,8 @@ public class LayoutPageTemplateCollectionServiceTest {
 				_layoutPageTemplateCollectionService.
 					getLayoutPageTemplateCollections(
 						group.getGroupId(), QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, orderByComparator);
+						QueryUtil.ALL_POS, orderByComparator,
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 
 			LayoutPageTemplateCollection firstLayoutPageTemplateCollection =
 				layoutPageTemplateCollections.get(0);
@@ -278,7 +285,8 @@ public class LayoutPageTemplateCollectionServiceTest {
 				_layoutPageTemplateCollectionService.
 					getLayoutPageTemplateCollections(
 						group.getGroupId(), QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, orderByComparator);
+						QueryUtil.ALL_POS, orderByComparator,
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 
 			LayoutPageTemplateCollection lastLayoutPageTemplateCollection =
 				layoutPageTemplateCollections.get(
@@ -303,7 +311,8 @@ public class LayoutPageTemplateCollectionServiceTest {
 		int originalLayoutPageTemplateCollectionsCount =
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollectionsCount(
-					_group.getGroupId(), "Theme");
+					_group.getGroupId(), "Theme",
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 
 		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
 			_group.getGroupId(), "Fjord Theme collection", null,
@@ -316,7 +325,8 @@ public class LayoutPageTemplateCollectionServiceTest {
 		int actualLayoutPageTemplateCollectionsCount =
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollectionsCount(
-					_group.getGroupId(), "Theme");
+					_group.getGroupId(), "Theme",
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 
 		Assert.assertEquals(
 			originalLayoutPageTemplateCollectionsCount + 2,
@@ -357,7 +367,8 @@ public class LayoutPageTemplateCollectionServiceTest {
 				_layoutPageTemplateCollectionService.
 					getLayoutPageTemplateCollections(
 						group.getGroupId(), "Theme", QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, orderByComparator);
+						QueryUtil.ALL_POS, orderByComparator,
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 
 			LayoutPageTemplateCollection firstLayoutPageTemplateCollection =
 				layoutPageTemplateCollections.get(0);
@@ -373,7 +384,8 @@ public class LayoutPageTemplateCollectionServiceTest {
 				_layoutPageTemplateCollectionService.
 					getLayoutPageTemplateCollections(
 						group.getGroupId(), "Theme", QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS, orderByComparator);
+						QueryUtil.ALL_POS, orderByComparator,
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 
 			LayoutPageTemplateCollection lastLayoutPageTemplateCollection =
 				layoutPageTemplateCollections.get(
@@ -412,7 +424,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 				actualLayoutPageTemplateCollections =
 					_layoutPageTemplateCollectionService.
 						getLayoutPageTemplateCollections(
-							group.getGroupId(), 0, 2);
+							group.getGroupId(), 0, 2, 0);
 
 			Assert.assertTrue(
 				actualLayoutPageTemplateCollections.contains(
@@ -474,7 +486,8 @@ public class LayoutPageTemplateCollectionServiceTest {
 				updateLayoutPageTemplateCollection(
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
-					"Layout Page Template Collection New", "Description New");
+					"Layout Page Template Collection New", "Description New",
+					layoutPageTemplateCollection.getType());
 
 		Assert.assertEquals(
 			"layout-page-template-collection-new",

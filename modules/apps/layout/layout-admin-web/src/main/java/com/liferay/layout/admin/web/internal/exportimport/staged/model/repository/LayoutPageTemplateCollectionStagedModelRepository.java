@@ -144,7 +144,8 @@ public class LayoutPageTemplateCollectionStagedModelRepository
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				layoutPageTemplateCollection.getName(),
-				layoutPageTemplateCollection.getDescription());
+				layoutPageTemplateCollection.getDescription(),
+				layoutPageTemplateCollection.getType());
 	}
 
 	@Reference

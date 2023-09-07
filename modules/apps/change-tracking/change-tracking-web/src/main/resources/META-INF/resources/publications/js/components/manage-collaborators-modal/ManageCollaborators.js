@@ -33,6 +33,7 @@ const TABS = {
 const ManageCollaborators = ({
 	autocompleteUserURL,
 	getCollaboratorsURL,
+	getSharePublicationLinkURL,
 	getTemplateCollaboratorsURL,
 	inviteUsersURL,
 	isPublicationTemplate,
@@ -42,6 +43,7 @@ const ManageCollaborators = ({
 	roles,
 	setCollaboratorData,
 	setShowModal,
+	sharePublicationLink,
 	showModal,
 	showShareLinkTab,
 	spritemap,
@@ -52,6 +54,7 @@ const ManageCollaborators = ({
 	const [emailAddressErrorMessages, setEmailAddressErrorMessages] = useState(
 		[]
 	);
+	const [link, setLink] = useState(sharePublicationLink);
 	const [multiSelectValue, setMultiSelectValue] = useState('');
 	const [networkStatus, setNetworkStatus] = useState(4);
 	const [selectedItems, setSelectedItems] = useState({});
@@ -59,7 +62,7 @@ const ManageCollaborators = ({
 	const [
 		sharePublicationLinkVisible,
 		setSharePublicationLinkVisible,
-	] = useState(false);
+	] = useState(!!sharePublicationLink);
 	const [tab, setTab] = useState(TABS.collaborators);
 	const [updatedRoles, setUpdatedRoles] = useState({});
 
@@ -125,7 +128,7 @@ const ManageCollaborators = ({
 
 	const copyToClipboard = async () => {
 		try {
-			await navigator.clipboard.writeText('');
+			await navigator.clipboard.writeText(link);
 
 			openToast({
 				message: Liferay.Language.get('copied-link-to-the-clipboard'),
@@ -276,6 +279,29 @@ const ManageCollaborators = ({
 			verifyEmailAddressURL,
 		]
 	);
+
+	const handleShareLinkToggle = () => {
+		fetch(getSharePublicationLinkURL, {
+			body: objectToFormData({
+				[`${namespace}shareable`]: !sharePublicationLinkVisible,
+			}),
+			method: 'POST',
+		})
+			.then((response) => response.json())
+			.then((json) => {
+				if (json) {
+					setLink(json.sharePublicationLink);
+					setSharePublicationLinkVisible(json.shareable);
+				}
+			})
+			.catch((error) => {
+				openToast({
+					message: error,
+					title: Liferay.Language.get('an-error-occurred'),
+					type: 'warning',
+				});
+			});
+	};
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -437,7 +463,7 @@ const ManageCollaborators = ({
 						</span>
 
 						<ClayToggle
-							onToggle={setSharePublicationLinkVisible}
+							onToggle={handleShareLinkToggle}
 							toggled={sharePublicationLinkVisible}
 						/>
 					</ClayForm.Group>
@@ -446,7 +472,11 @@ const ManageCollaborators = ({
 						<ClayForm.Group>
 							<ClayInput.Group>
 								<ClayInput.GroupItem>
-									<ClayInput readOnly type="text" />
+									<ClayInput
+										readOnly
+										type="text"
+										value={link}
+									/>
 								</ClayInput.GroupItem>
 
 								<ClayInput.GroupItem shrink>

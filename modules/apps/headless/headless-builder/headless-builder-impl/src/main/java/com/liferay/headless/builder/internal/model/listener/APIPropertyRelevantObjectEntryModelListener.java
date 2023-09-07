@@ -16,12 +16,15 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,7 +46,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 	public void onBeforeCreate(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_validate(objectEntry);
+		_validate(objectEntry.getValues());
 	}
 
 	@Override
@@ -51,7 +54,46 @@ public class APIPropertyRelevantObjectEntryModelListener
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_validate(objectEntry);
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		long apiSchemaId = (long)values.get(
+			"r_apiSchemaToAPIProperties_c_apiSchemaId");
+
+		if (apiSchemaId != 0) {
+			_validate(values);
+		}
+
+		_scheduleAPIProperties(objectEntry.getObjectEntryId());
+	}
+
+	private void _scheduleAPIProperties(long apiPropertyId) {
+		_pendingAPIProperties.add(apiPropertyId);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				if (_pendingAPIProperties.remove(apiPropertyId)) {
+					ObjectEntry apiPropertyObjectEntry =
+						_objectEntryLocalService.fetchObjectEntry(
+							apiPropertyId);
+
+					if (apiPropertyObjectEntry == null) {
+						return null;
+					}
+
+					Map<String, Serializable> values =
+						apiPropertyObjectEntry.getValues();
+
+					long apiSchemaId = (long)values.get(
+						"r_apiSchemaToAPIProperties_c_apiSchemaId");
+
+					if (apiSchemaId == 0) {
+						_objectEntryLocalService.deleteObjectEntry(
+							apiPropertyId);
+					}
+				}
+
+				return null;
+			});
 	}
 
 	private boolean _validate(
@@ -97,11 +139,9 @@ public class APIPropertyRelevantObjectEntryModelListener
 		return true;
 	}
 
-	private void _validate(ObjectEntry objectEntry) {
+	private void _validate(Map<String, Serializable> objectEntryValues) {
 		try {
-			Map<String, Serializable> values = objectEntry.getValues();
-
-			long apiSchemaId = (long)values.get(
+			long apiSchemaId = (long)objectEntryValues.get(
 				"r_apiSchemaToAPIProperties_c_apiSchemaId");
 
 			if (!_objectEntryHelper.isValidObjectEntry(
@@ -113,8 +153,9 @@ public class APIPropertyRelevantObjectEntryModelListener
 			}
 
 			if (!_validate(
-					apiSchemaId, (String)values.get("objectFieldERC"),
-					(String)values.get("objectRelationshipNames"))) {
+					apiSchemaId,
+					(String)objectEntryValues.get("objectFieldERC"),
+					(String)objectEntryValues.get("objectRelationshipNames"))) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null,
@@ -140,5 +181,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	private final Set<Long> _pendingAPIProperties = new CopyOnWriteArraySet<>();
 
 }

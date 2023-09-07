@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.RenderResponse;
 
@@ -92,7 +93,9 @@ public class DDMFormAdminActionDropdownItemsProvider {
 					).add(
 						() ->
 							_formInstancePermissionCheckerHelper.
-								isShowExportIcon(_ddmFormInstance),
+								isShowExportIcon(_ddmFormInstance) &&
+							!Objects.equals(
+								_ddmFormInstance.getStorageType(), "object"),
 						_getExportActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);

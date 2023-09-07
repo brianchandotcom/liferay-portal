@@ -644,6 +644,40 @@ public abstract class BaseCheck extends AbstractCheck {
 		return startLineNumber;
 	}
 
+	protected DetailAST getTypeArgumentsDetailAST(DetailAST detailAST) {
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if ((parentDetailAST.getType() == TokenTypes.EXTENDS_CLAUSE) ||
+			(parentDetailAST.getType() == TokenTypes.IMPLEMENTS_CLAUSE)) {
+
+			if (detailAST.getType() == TokenTypes.DOT) {
+				return detailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS);
+			}
+
+			DetailAST nextSiblingDetailAST = detailAST.getNextSibling();
+
+			if ((nextSiblingDetailAST != null) &&
+				(nextSiblingDetailAST.getType() == TokenTypes.TYPE_ARGUMENTS)) {
+
+				return nextSiblingDetailAST;
+			}
+
+			return null;
+		}
+
+		DetailAST childDetailAST = detailAST.getFirstChild();
+
+		if (childDetailAST == null) {
+			return null;
+		}
+
+		if (childDetailAST.getType() == TokenTypes.DOT) {
+			return childDetailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS);
+		}
+
+		return detailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS);
+	}
+
 	protected String getTypeName(
 		DetailAST detailAST, boolean includeTypeArguments) {
 

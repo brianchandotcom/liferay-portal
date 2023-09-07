@@ -71,7 +71,7 @@ public class GenericTypeCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST typeArgumentsDetailAST = _getTypeArgumentsDetailAST(
+		DetailAST typeArgumentsDetailAST = getTypeArgumentsDetailAST(
 			childDetailAST);
 
 		if (typeArgumentsDetailAST != null) {
@@ -217,40 +217,6 @@ public class GenericTypeCheck extends BaseCheck {
 			_GENERIC_TYPE_NAMES_FILE_NAME, _GENERIC_TYPE_NAMES_CATEGORY);
 
 		return _genericTypeNamesTuple;
-	}
-
-	private DetailAST _getTypeArgumentsDetailAST(DetailAST detailAST) {
-		DetailAST parentDetailAST = detailAST.getParent();
-
-		if ((parentDetailAST.getType() == TokenTypes.EXTENDS_CLAUSE) ||
-			(parentDetailAST.getType() == TokenTypes.IMPLEMENTS_CLAUSE)) {
-
-			if (detailAST.getType() == TokenTypes.DOT) {
-				return detailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS);
-			}
-
-			DetailAST nextSiblingDetailAST = detailAST.getNextSibling();
-
-			if ((nextSiblingDetailAST != null) &&
-				(nextSiblingDetailAST.getType() == TokenTypes.TYPE_ARGUMENTS)) {
-
-				return nextSiblingDetailAST;
-			}
-
-			return null;
-		}
-
-		DetailAST childDetailAST = detailAST.getFirstChild();
-
-		if (childDetailAST == null) {
-			return null;
-		}
-
-		if (childDetailAST.getType() == TokenTypes.DOT) {
-			return childDetailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS);
-		}
-
-		return detailAST.findFirstToken(TokenTypes.TYPE_ARGUMENTS);
 	}
 
 	private String _getTypeName(DetailAST detailAST) {

@@ -178,11 +178,13 @@ public class DropZoneFragmentEntryLinkListener
 				}
 			}
 
+			serviceContext.setAttribute("checkUnlockedLayout", Boolean.FALSE);
+
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
 					fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
 					fragmentEntryLink.getSegmentsExperienceId(),
-					layoutStructure.toString(), false);
+					layoutStructure.toString());
 
 			return;
 		}
@@ -324,11 +326,13 @@ public class DropZoneFragmentEntryLinkListener
 		}
 
 		if (update) {
+			serviceContext.setAttribute("checkUnlockedLayout", Boolean.FALSE);
+
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
 					fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
 					fragmentEntryLink.getSegmentsExperienceId(),
-					layoutStructure.toString(), false);
+					layoutStructure.toString());
 		}
 	}
 

@@ -230,27 +230,27 @@ renderResponse.setTitle(categoryDisplayName);
 					<liferay-util:dynamic-include key='<%= "com.liferay.configuration.admin.web#/edit_configuration.jsp#" + configurationModel.getFactoryPid() + "#post" %>' />
 
 					<c:if test="<%= !configurationModel.isReadOnly() %>">
-						<aui:button-row>
-							<c:choose>
-								<c:when test="<%= configurationModel.hasScopeConfiguration(configurationScopeDisplayContext.getScope()) %>">
-									<aui:button name="update" type="submit" value="update" />
-								</c:when>
-								<c:otherwise>
-									<aui:button name="save" type="submit" value="save" />
-								</c:otherwise>
-							</c:choose>
+						<div class="align-items-center d-flex justify-content-between">
+							<aui:button-row>
+								<c:choose>
+									<c:when test="<%= configurationModel.hasScopeConfiguration(configurationScopeDisplayContext.getScope()) %>">
+										<aui:button name="update" type="submit" value="update" />
+									</c:when>
+									<c:otherwise>
+										<aui:button name="save" type="submit" value="save" />
+									</c:otherwise>
+								</c:choose>
 
-							<aui:button cssClass="ml-3" href="<%= redirect %>" name="cancel" type="cancel" />
-						</aui:button-row>
+								<aui:button cssClass="ml-3" href="<%= redirect %>" name="cancel" type="cancel" />
+							</aui:button-row>
 
-						<c:if test="<%= Validator.isNotNull(configurationModel.getLiferayLearnMessageKey()) && Validator.isNotNull(configurationModel.getLiferayLearnMessageResource()) %>">
-							<div class="float-right">
+							<c:if test="<%= Validator.isNotNull(configurationModel.getLiferayLearnMessageKey()) && Validator.isNotNull(configurationModel.getLiferayLearnMessageResource()) %>">
 								<liferay-learn:message
 									key="<%= configurationModel.getLiferayLearnMessageKey() %>"
 									resource="<%= configurationModel.getLiferayLearnMessageResource() %>"
 								/>
-							</div>
-						</c:if>
+							</c:if>
+						</div>
 					</c:if>
 				</aui:form>
 			</clay:sheet>

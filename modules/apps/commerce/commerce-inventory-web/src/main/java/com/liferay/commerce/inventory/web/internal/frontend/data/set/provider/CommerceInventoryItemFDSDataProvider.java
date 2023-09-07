@@ -58,7 +58,7 @@ public class CommerceInventoryItemFDSDataProvider
 			return TransformUtil.transform(
 				_commerceInventoryWarehouseItemLocalService.getItemsByCompanyId(
 					_portal.getCompanyId(httpServletRequest),
-					fdsKeywords.getKeywords(), StringPool.BLANK,
+					fdsKeywords.getKeywords(),
 					fdsPagination.getStartPosition(),
 					fdsPagination.getEndPosition()),
 				ciWarehouseItem -> new InventoryItem(

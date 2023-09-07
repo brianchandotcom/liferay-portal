@@ -19,7 +19,10 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 		contextParams='<%=
 			HashMapBuilder.<String, String>put(
 				"sku", commerceInventoryDisplayContext.getSku()
-			).build()
+			).put(
+				"unitOfMeasureKey",
+				commerceInventoryDisplayContext.getUnitOfMeasureKey())
+			.build()
 		%>'
 		creationMenu="<%= commerceInventoryDisplayContext.getWarehousesCreationMenu() %>"
 		dataProviderKey="<%= CommerceInventoryFDSNames.INVENTORY_WAREHOUSES %>"

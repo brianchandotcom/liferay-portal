@@ -213,10 +213,10 @@ public class CommerceCartResourceUtil {
 			commerceOrder.getCommerceOrderItems();
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			PriceModel prices = _getCommerceOrderItemPriceModel(
+			PriceModel priceModel = _getCommerceOrderItemPriceModel(
 				commerceOrderItem, commerceContext, locale);
 
-			ProductSettingsModel settings =
+			ProductSettingsModel productSettingsModel =
 				_productHelper.getProductSettingsModel(
 					commerceOrderItem.getCPDefinitionId());
 
@@ -225,14 +225,15 @@ public class CommerceCartResourceUtil {
 			Product product = new Product(
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceOrderItem.getParentCommerceOrderItemId(),
-				commerceOrderItem.getName(locale), commerceOrderItem.getSku(),
-				quantity.intValue(),
+				commerceOrderItem.getCPInstanceId(),
+				commerceOrderItem.getName(locale), priceModel,
+				productSettingsModel, quantity.intValue(),
+				commerceOrderItem.getSku(),
 				_cpInstanceHelper.getCPInstanceThumbnailSrc(
 					CommerceUtil.getCommerceAccountId(commerceContext),
 					commerceOrderItem.getCPInstanceId()),
-				commerceOrderItem.getUnitOfMeasureKey(), prices, settings,
-				_getErrorMessages(locale, commerceOrderItem),
-				commerceOrderItem.getCPInstanceId());
+				commerceOrderItem.getUnitOfMeasureKey(),
+				_getErrorMessages(locale, commerceOrderItem));
 
 			long commerceOptionValueCPDefinitionId =
 				commerceOrderItem.getCPDefinitionId();

@@ -17,22 +17,22 @@ import java.util.List;
 public class Product {
 
 	public Product(
-		long id, long parentProductId, String name, String sku, int quantity,
-		String thumbnail, String unitOfMeasureKey, PriceModel prices,
-		ProductSettingsModel settings, String[] errorMessages,
-		long cpInstanceId) {
+		long id, long parentProductId, long cpInstanceId, String name,
+		PriceModel priceModel, ProductSettingsModel productSettingsModel,
+		int quantity, String sku, String thumbnail, String unitOfMeasureKey,
+		String[] errorMessages) {
 
 		_id = id;
 		_parentProductId = parentProductId;
+		_cpInstanceId = cpInstanceId;
 		_name = name;
-		_sku = sku;
+		_priceModel = priceModel;
+		_productSettingsModel = productSettingsModel;
 		_quantity = quantity;
+		_sku = sku;
 		_thumbnail = thumbnail;
 		_unitOfMeasureKey = unitOfMeasureKey;
-		_prices = prices;
-		_settings = settings;
 		_errorMessages = errorMessages;
-		_cpInstanceId = cpInstanceId;
 	}
 
 	public List<Product> getChildItems() {
@@ -63,16 +63,16 @@ public class Product {
 		return _parentProductId;
 	}
 
-	public PriceModel getPrices() {
-		return _prices;
+	public PriceModel getPriceModel() {
+		return _priceModel;
+	}
+
+	public ProductSettingsModel getProductSettingsModel() {
+		return _productSettingsModel;
 	}
 
 	public int getQuantity() {
 		return _quantity;
-	}
-
-	public ProductSettingsModel getSettings() {
-		return _settings;
 	}
 
 	public String getSku() {
@@ -115,16 +115,18 @@ public class Product {
 		_parentProductId = parentProductId;
 	}
 
-	public void setPrices(PriceModel prices) {
-		_prices = prices;
+	public void setPriceModel(PriceModel priceModel) {
+		_priceModel = priceModel;
+	}
+
+	public void setProductSettingsModel(
+		ProductSettingsModel productSettingsModel) {
+
+		_productSettingsModel = productSettingsModel;
 	}
 
 	public void setQuantity(int quantity) {
 		_quantity = quantity;
-	}
-
-	public void setSettings(ProductSettingsModel settings) {
-		_settings = settings;
 	}
 
 	public void setSku(String sku) {
@@ -146,9 +148,9 @@ public class Product {
 	private String _name;
 	private List<KeyValuePair> _options;
 	private long _parentProductId;
-	private PriceModel _prices;
+	private PriceModel _priceModel;
+	private ProductSettingsModel _productSettingsModel;
 	private int _quantity;
-	private ProductSettingsModel _settings;
 	private String _sku;
 	private String _thumbnail;
 	private String _unitOfMeasureKey;

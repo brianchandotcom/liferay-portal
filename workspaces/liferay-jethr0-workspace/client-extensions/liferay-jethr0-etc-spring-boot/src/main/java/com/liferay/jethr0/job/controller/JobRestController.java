@@ -41,14 +41,6 @@ public class JobRestController {
 
 		JSONObject jobJSONObject = jobEntity.getJSONObject();
 
-		JSONArray buildsJSONArray = new JSONArray();
-
-		for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
-			buildsJSONArray.put(buildEntity.getJSONObject());
-		}
-
-		jobJSONObject.put("builds", buildsJSONArray);
-
 		return new ResponseEntity<>(jobJSONObject.toString(), HttpStatus.OK);
 	}
 

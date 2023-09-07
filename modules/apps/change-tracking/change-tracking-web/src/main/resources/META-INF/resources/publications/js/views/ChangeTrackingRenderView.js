@@ -1515,7 +1515,8 @@ export default function ChangeTrackingRenderView({
 							<h2 className="mr-3">{currentTitle}</h2>
 
 							{state.renderData.segmentsExperiences &&
-								!!state.renderData.segmentsExperiences.length && (
+								!!state.renderData.segmentsExperiences
+									.length && (
 									<ExperienceDropdown
 										activeSegmentsExperience={
 											state.renderData.segmentsExperiences.filter(

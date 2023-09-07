@@ -883,7 +883,7 @@ const ManageCollaborators = ({
 
 		if (!readOnly) {
 			columns.push(
-				<div className="autofit-col">
+				<div className="autofit-col" key="invite-users">
 					<ClaySticker
 						className="sticker-user-icon user-icon-color-0"
 						data-tooltip-align="top"
@@ -922,7 +922,7 @@ const ManageCollaborators = ({
 			const user = users[i];
 
 			columns.push(
-				<div className="autofit-col">
+				<div className="autofit-col" key={user.userId}>
 					<ClaySticker
 						className={`sticker-user-icon ${
 							user.portraitURL
@@ -950,7 +950,7 @@ const ManageCollaborators = ({
 
 		if (!users.length) {
 			columns.push(
-				<div className="autofit-col">
+				<div className="autofit-col" key="collaborators">
 					<ClaySticker
 						className="sticker-user-icon user-icon-color-0"
 						data-tooltip-align="top"
@@ -968,7 +968,7 @@ const ManageCollaborators = ({
 		}
 		else if (users.length > 3) {
 			columns.push(
-				<div className="autofit-col">
+				<div className="autofit-col" key="collaborators">
 					<ClaySticker
 						className="btn-secondary"
 						data-tooltip-align="top"

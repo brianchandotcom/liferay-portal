@@ -10,12 +10,16 @@ import com.liferay.change.tracking.constants.CTRoleConstants;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.on.demand.user.ticket.generator.CTOnDemandUserTicketGenerator;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -69,7 +73,22 @@ public class CTOnDemandUserTicketGeneratorImpl
 			return tickets.get(0);
 		}
 
-		User user = _getCTOnDemandUser(ctCollection);
+		User user = null;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			user = _getCTOnDemandUser(ctCollection);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		if (user == null) {
+			return null;
+		}
 
 		AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
 			CTOnDemandUserConstants.
@@ -157,6 +176,9 @@ public class CTOnDemandUserTicketGeneratorImpl
 
 		return user;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CTOnDemandUserTicketGeneratorImpl.class);
 
 	@Reference
 	private AuditRouter _auditRouter;

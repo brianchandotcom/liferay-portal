@@ -689,6 +689,17 @@ public class ViewChangesDisplayContext {
 		).put(
 			"showAllItemsEnabled", _ctConfiguration.showAllItemsEnabled()
 		).put(
+			"showDropdown",
+			() -> {
+				User user = _themeDisplay.getUser();
+
+				if (user.isOnDemandUser()) {
+					return false;
+				}
+
+				return true;
+			}
+		).put(
 			"showHideableFromURL", showHideable
 		).put(
 			"siteNames",

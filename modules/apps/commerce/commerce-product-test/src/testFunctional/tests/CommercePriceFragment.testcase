@@ -66,52 +66,40 @@ definition {
 				usePercentage = "false");
 		}
 
-		task ("And a new Display Page Template for Commerce Product is created") {
+		task ("And a new default Commerce Product type DPT with 'Price' and 'Option Selector' fragments deployed is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Commerce Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
-		}
 
-		task ("And the fragments are deployed") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "minium");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Test Commerce Product Display Page Template");
-
-			CommerceDisplayPageTemplates.addFragment(
+			DisplayPageTemplate.addFragment(
 				collectionName = "Product",
+				displayPageName = "Test Commerce Product Display Page Template",
 				fragmentName = "Price",
-				index = 1);
+				publish = "false",
+				siteURLKey = "minium");
 
 			CommerceDisplayPageTemplates.addFragment(
 				collectionName = "Product",
 				fragmentName = "Option Selector",
 				index = 2,
 				targetFragmentName = "Price");
-		}
 
-		task ("And the template is published and Marked as Default") {
 			Button.clickPublish();
 
 			Alert.viewSuccessMessage();
 
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Mark as Default",
-				rowEntry = "Test Commerce Product Display Page Template");
-
-			Alert.viewSuccessMessage();
+			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
+				groupName = "Minium",
+				layoutPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				type = "Display Page Template");
 		}
 
-		task ("When the buyer logs in") {
-			User.logoutPG();
+		task ("When the buyer navigates to the Hoses product details page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "buyer@liferay.com",
+				userLoginFullName = "Buyer User");
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And navigates to the Hoses product details page") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/hoses");
 		}
 
@@ -771,7 +759,7 @@ definition {
 			}
 		}
 
-		task ("Given a new Price Lists") {
+		task ("And a new Price Lists") {
 			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
 				catalogName = "Minium",
 				currencyCode = "USD",
@@ -779,90 +767,70 @@ definition {
 		}
 
 		task ("And a Price Modifier is created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = 100,
+				priceListName = "Test Price List 1",
+				productSKU = "MIN93022C");
+
 			CommercePriceLists.openPriceListsAdmin();
 
 			CommerceNavigator.gotoEntry(entryName = "Test Price List 1");
 
 			CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
-			CommerceRelations.assignSingleRelationToProductsEntry(
-				entryName = "MIN93022C",
-				title = "Add SKUs");
-
-			Refresh();
-
 			CommerceNavigator.gotoEntry(entryName = "MIN93022C");
 
-			CommercePriceLists.editPriceListEntryPrice(priceListEntryPrice = "100.00");
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			CommercePriceLists.setOverrideDiscount(overrideDiscounts = "L1-90");
 
-			Click(locator1 = "Icon#CLOSE");
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceModifier(
+				modifierAmount = "-50",
+				modifierType = "percentage",
+				priceListName = "Test Price List 1",
+				priceModifierTitle = "Price Modifier",
+				target = "products");
 
-			SelectFrameTop();
-
-			CommerceEntry.gotoMenuTab(menuTab = "Price Modifiers");
-
-			CommercePriceLists.addNewPriceModifier(
-				modifier = "Percentage",
-				name = "Price Modifier",
-				target = "Products");
-
-			CommercePriceLists.editPriceModifier(
-				active = "true",
-				amountValue = "-50",
-				entryName = "Hoses",
-				priceModifierName = "Price Modifier",
-				relation = "Add Product",
-				target = "Products");
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceModifierProduct(
+				priceListName = "Test Price List 1",
+				priceModifierTitle = "Price Modifier",
+				productName = "Hoses");
 		}
 
-		task ("And a new Display Page Template for Commerce Product is created") {
+		task ("And a new default Commerce Product type DPT with 'Price' and 'Option Selector' fragments deployed is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Commerce Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
-		}
 
-		task ("And the fragments are deployed") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "minium");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Test Commerce Product Display Page Template");
-
-			CommerceDisplayPageTemplates.addFragment(
+			DisplayPageTemplate.addFragment(
 				collectionName = "Product",
+				displayPageName = "Test Commerce Product Display Page Template",
 				fragmentName = "Price",
-				index = 1);
+				publish = "false",
+				siteURLKey = "minium");
 
 			CommerceDisplayPageTemplates.addFragment(
 				collectionName = "Product",
 				fragmentName = "Option Selector",
 				index = 2,
 				targetFragmentName = "Price");
-		}
 
-		task ("And the template is published and Marked as Default") {
 			Button.clickPublish();
 
 			Alert.viewSuccessMessage();
 
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Mark as Default",
-				rowEntry = "Test Commerce Product Display Page Template");
-
-			Alert.viewSuccessMessage();
+			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
+				groupName = "Minium",
+				layoutPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				type = "Display Page Template");
 		}
 
-		task ("When the buyer logs in") {
-			User.logoutPG();
+		task ("When the buyer navigates to the Hoses product details page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "buyer@liferay.com",
+				userLoginFullName = "Buyer User");
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And navigates to the Hoses product details page") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/hoses");
 		}
 
@@ -1619,7 +1587,7 @@ definition {
 			}
 		}
 
-		task ("Given a new Promotion is created") {
+		task ("And a new Promotion is created") {
 			CommerceJSONPriceListsAndPromotionsAPI._addPromotion(
 				catalogName = "Minium",
 				currencyCode = "USD",
@@ -1647,52 +1615,40 @@ definition {
 				target = "Products");
 		}
 
-		task ("And a new Display Page Template for Commerce Product is created") {
+		task ("And a new default Commerce Product type DPT with 'Price' and 'Option Selector' fragments deployed is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Commerce Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
-		}
 
-		task ("And the fragments are deployed") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "minium");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Test Commerce Product Display Page Template");
-
-			CommerceDisplayPageTemplates.addFragment(
+			DisplayPageTemplate.addFragment(
 				collectionName = "Product",
+				displayPageName = "Test Commerce Product Display Page Template",
 				fragmentName = "Price",
-				index = 1);
+				publish = "false",
+				siteURLKey = "minium");
 
 			CommerceDisplayPageTemplates.addFragment(
 				collectionName = "Product",
 				fragmentName = "Option Selector",
 				index = 2,
 				targetFragmentName = "Price");
-		}
 
-		task ("And the template is published and Marked as Default") {
 			Button.clickPublish();
 
 			Alert.viewSuccessMessage();
 
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Mark as Default",
-				rowEntry = "Test Commerce Product Display Page Template");
-
-			Alert.viewSuccessMessage();
+			JSONLayoutpagetemplate.setLayoutPageTemplateEntryAsDefault(
+				groupName = "Minium",
+				layoutPageTemplateEntryName = "Test Commerce Product Display Page Template",
+				type = "Display Page Template");
 		}
 
-		task ("When the buyer logs in") {
-			User.logoutPG();
+		task ("When the buyer navigates to the Hoses product details page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "buyer@liferay.com",
+				userLoginFullName = "Buyer User");
 
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("And navigates to the Hoses product details page") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/hoses");
 		}
 

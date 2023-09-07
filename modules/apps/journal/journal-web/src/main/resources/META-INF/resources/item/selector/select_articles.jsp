@@ -48,14 +48,11 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 			%>
 
 			<c:choose>
-				<c:when test="<%= curArticle != null %>">
+				<c:when test="<%= (curArticle != null) && !journalArticleItemSelectorViewDisplayContext.isRefererArticle(curArticle) %>">
 
 					<%
 					row.setCssClass("articles " + row.getCssClass());
-
-					if (!journalArticleItemSelectorViewDisplayContext.isRefererArticle(curArticle)) {
-						row.setCssClass("selector-button " + row.getCssClass());
-					}
+					row.setCssClass("selector-button " + row.getCssClass());
 
 					row.setData(
 						HashMapBuilder.<String, Object>put(
@@ -68,9 +65,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 						<c:when test='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "descriptive") %>'>
 
 							<%
-							if (!journalArticleItemSelectorViewDisplayContext.isRefererArticle(curArticle)) {
-								row.setCssClass("item-preview " + row.getCssClass());
-							}
+							row.setCssClass("item-preview " + row.getCssClass());
 							%>
 
 							<liferay-ui:search-container-column-text>
@@ -127,9 +122,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 						<c:otherwise>
 
 							<%
-							if (!journalArticleItemSelectorViewDisplayContext.isRefererArticle(curArticle)) {
-								row.setCssClass("item-preview " + row.getCssClass());
-							}
+							row.setCssClass("item-preview " + row.getCssClass());
 							%>
 
 							<c:if test="<%= journalArticleItemSelectorViewDisplayContext.showArticleId() %>">

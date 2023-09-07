@@ -12,6 +12,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -42,6 +44,10 @@ public class FaroPreferencesLocalServiceImpl
 
 	public FaroPreferences fetchFaroPreferences(long groupId, long ownerId) {
 		return faroPreferencesPersistence.fetchByG_O(groupId, ownerId);
+	}
+
+	public List<FaroPreferences> getFaroPreferencesByGroupId(long groupId) {
+		return faroPreferencesPersistence.findByGroupId(groupId);
 	}
 
 	public FaroPreferences savePreferences(

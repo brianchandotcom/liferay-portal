@@ -27,6 +27,16 @@ public class VerifyProductTask extends DefaultTask {
 		return _extension;
 	}
 
+	/**
+	 * @deprecated
+	 */
+	@Deprecated
+	@Input
+	@Optional
+	public String getProcut() {
+		return _product;
+	}
+
 	@Input
 	@Optional
 	public String getProduct() {

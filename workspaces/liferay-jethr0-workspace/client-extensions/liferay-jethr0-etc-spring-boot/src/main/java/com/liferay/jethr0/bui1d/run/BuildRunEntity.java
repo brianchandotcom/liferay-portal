@@ -25,11 +25,11 @@ public interface BuildRunEntity extends Entity {
 
 	public long getBuildEntityId();
 
-	public URL getBuildURL();
-
 	public long getDuration();
 
 	public JSONObject getInvokeJSONObject(JenkinsNodeEntity jenkinsNodeEntity);
+
+	public URL getJenkinsBuildURL();
 
 	public Result getResult();
 
@@ -39,9 +39,9 @@ public interface BuildRunEntity extends Entity {
 
 	public void setBuildEntity(BuildEntity buildEntity);
 
-	public void setBuildURL(URL buildURL);
-
 	public void setDuration(long duration);
+
+	public void setJenkinsBuildURL(URL jenkinsBuildURL);
 
 	public void setResult(Result result);
 

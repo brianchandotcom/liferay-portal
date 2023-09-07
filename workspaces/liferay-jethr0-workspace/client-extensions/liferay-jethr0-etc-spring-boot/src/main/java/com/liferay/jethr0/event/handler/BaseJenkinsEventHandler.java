@@ -104,12 +104,6 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		return BuildRunEntity.Result.FAILED;
 	}
 
-	protected URL getBuildURL() throws Exception {
-		return StringUtil.toURL(
-			StringUtil.combine(
-				getJenkinsURL(), "job/", getJobName(), "/", getBuildNumber()));
-	}
-
 	protected JSONObject getComputerJSONObject() throws Exception {
 		JSONObject messageJSONObject = getMessageJSONObject();
 
@@ -121,6 +115,12 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		}
 
 		return computerJSONObject;
+	}
+
+	protected URL getJenkinsBuildURL() throws Exception {
+		return StringUtil.toURL(
+			StringUtil.combine(
+				getJenkinsURL(), "job/", getJobName(), "/", getBuildNumber()));
 	}
 
 	protected JSONObject getJenkinsJSONObject() throws Exception {

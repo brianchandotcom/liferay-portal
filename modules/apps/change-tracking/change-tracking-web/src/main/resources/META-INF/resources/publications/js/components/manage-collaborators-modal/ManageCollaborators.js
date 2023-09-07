@@ -52,6 +52,7 @@ const ManageCollaborators = ({
 		[]
 	);
 	const [multiSelectValue, setMultiSelectValue] = useState('');
+	const [networkStatus, setNetworkStatus] = useState(4);
 	const [selectedItems, setSelectedItems] = useState({});
 	const [selectedUserData, setSelectedUserData] = useState({});
 	const [tab, setTab] = useState(TABS.collaborators);
@@ -69,11 +70,15 @@ const ManageCollaborators = ({
 
 	const [selectedRole, setSelectedRole] = useState(defaultRole);
 
-	const handleChange = useCallback((value) => {
-		if (!emailValidationInProgressRef.current) {
-			setMultiSelectValue(value);
-		}
-	}, []);
+	const {observer, onClose} = useModal({
+		onClose: () => {
+			setShowModal(false);
+
+			if (onlyForm) {
+				window.top.Liferay.fire('close-modal');
+			}
+		},
+	});
 
 	const {
 		refetch: collaboratorsRefetch,
@@ -93,7 +98,31 @@ const ManageCollaborators = ({
 				: getCollaboratorsURL,
 	});
 
+	const {resource: autocompleteResource} = useResource({
+		fetchOptions: {
+			credentials: 'include',
+			headers: new Headers({'x-csrf-token': Liferay.authToken}),
+			method: 'GET',
+		},
+		fetchRetry: {
+			attempts: 0,
+		},
+		link: autocompleteUserURL,
+		onNetworkStatusChange: setNetworkStatus,
+		variables: {
+			[`${namespace}keywords`]: multiSelectValue,
+		},
+	});
+
+	const autocompleteUsers = autocompleteResource;
 	const collaborators = collaboratorsResource;
+	const emailValidationInProgressRef = useRef(false);
+
+	const handleChange = useCallback((value) => {
+		if (!emailValidationInProgressRef.current) {
+			setMultiSelectValue(value);
+		}
+	}, []);
 
 	const handleItemsChange = useCallback(
 		(items) => {
@@ -226,73 +255,6 @@ const ManageCollaborators = ({
 		]
 	);
 
-	const {observer, onClose} = useModal({
-		onClose: () => {
-			setShowModal(false);
-
-			if (onlyForm) {
-				window.top.Liferay.fire('close-modal');
-			}
-		},
-	});
-
-	const [networkStatus, setNetworkStatus] = useState(4);
-	const {resource: autocompleteResource} = useResource({
-		fetchOptions: {
-			credentials: 'include',
-			headers: new Headers({'x-csrf-token': Liferay.authToken}),
-			method: 'GET',
-		},
-		fetchRetry: {
-			attempts: 0,
-		},
-		link: autocompleteUserURL,
-		onNetworkStatusChange: setNetworkStatus,
-		variables: {
-			[`${namespace}keywords`]: multiSelectValue,
-		},
-	});
-
-	const autocompleteUsers = autocompleteResource;
-
-	const emailValidationInProgressRef = useRef(false);
-
-	const isEmailAddressValid = (email) => {
-		const emailRegex = /.+@.+\..+/i;
-
-		return emailRegex.test(email);
-	};
-
-	const resetForm = () => {
-		setEmailAddressErrorMessages([]);
-		setMultiSelectValue('');
-		setSelectedItems({});
-		setSelectedRole(defaultRole);
-		setSelectedUserData({});
-		setUpdatedRoles({});
-
-		emailValidationInProgressRef.current = false;
-	};
-
-	const showNotification = (message, error, reset) => {
-		const parentOpenToast = getOpener().Liferay.Util.openToast;
-
-		const openToastParams = {message};
-
-		if (error) {
-			openToastParams.title = Liferay.Language.get('error');
-			openToastParams.type = 'danger';
-		}
-
-		collaboratorsRefetch();
-		onClose();
-		parentOpenToast(openToastParams);
-
-		if (reset) {
-			resetForm();
-		}
-	};
-
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
@@ -346,138 +308,10 @@ const ManageCollaborators = ({
 		}
 	};
 
-	const sendInvite = (publicationsUserRoleUserIds, roleValues, userIds) => {
-		const updatedRolesKeys = Object.keys(updatedRoles);
+	const isEmailAddressValid = (email) => {
+		const emailRegex = /.+@.+\..+/i;
 
-		if (
-			isPublicationTemplate &&
-			(!!userIds.length || !!collaborators.length)
-		) {
-			for (let i = 0; i < collaborators.length; i++) {
-				const collaboratorUserId = collaborators[i].userId;
-
-				if (updatedRoles[collaboratorUserId]) {
-					if (updatedRoles[collaboratorUserId].value === -1) {
-
-						// if updated to Remove collaborator
-
-						continue;
-					}
-
-					roleValues.push(updatedRoles[collaboratorUserId].value);
-				}
-				else {
-					roleValues.push(collaborators[i].roleValue);
-				}
-
-				publicationsUserRoleUserIds.push(collaboratorUserId);
-				userIds.push(collaboratorUserId);
-			}
-
-			setCollaboratorData({
-				[`publicationsUserRoleUserIds`]: publicationsUserRoleUserIds.join(
-					','
-				),
-				[`roleValues`]: roleValues.join(','),
-				[`userIds`]: userIds.join(','),
-			});
-
-			showNotification(
-				Liferay.Language.get(
-					'selected-users-have-been-associated-with-the-template'
-				),
-				false,
-				false
-			);
-		}
-		else {
-			for (let i = 0; i < updatedRolesKeys.length; i++) {
-				roleValues.push(updatedRoles[updatedRolesKeys[i]].value);
-				userIds.push(updatedRolesKeys[i]);
-			}
-
-			const formData = {
-				[`${namespace}publicationsUserRoleUserIds`]: publicationsUserRoleUserIds.join(
-					','
-				),
-				[`${namespace}roleValues`]: roleValues.join(','),
-				[`${namespace}userIds`]: userIds.join(','),
-			};
-
-			fetch(inviteUsersURL, {
-				body: objectToFormData(formData),
-				method: 'POST',
-			})
-				.then((response) => response.json())
-				.then(({errorMessage, successMessage}) => {
-					if (errorMessage) {
-						showNotification(errorMessage, true, true);
-
-						return;
-					}
-
-					showNotification(successMessage, false, true);
-				})
-				.catch((error) => {
-					showNotification(error.message, true, true);
-				});
-		}
-	};
-
-	const updateRole = (role, user) => {
-		if (user.new) {
-			const json = {};
-
-			const keys = Object.keys(selectedItems);
-
-			for (let i = 0; i < keys.length; i++) {
-				if (keys[i] !== user.userId.toString()) {
-					json[keys[i]] = selectedItems[keys[i]];
-				}
-			}
-
-			if (role.value >= 0) {
-				json[user.userId.toString()] = role;
-			}
-
-			setSelectedItems(json);
-
-			return;
-		}
-
-		const json = {};
-
-		const keys = Object.keys(updatedRoles);
-
-		for (let i = 0; i < keys.length; i++) {
-			if (keys[i] !== user.userId.toString()) {
-				json[keys[i]] = updatedRoles[keys[i]];
-			}
-		}
-
-		let savedRoleValue = null;
-
-		if (collaborators) {
-			for (let i = 0; i < collaborators.length; i++) {
-				if (collaborators[i].userId === user.userId) {
-					savedRoleValue = collaborators[i].roleValue;
-
-					break;
-				}
-			}
-		}
-
-		if (
-			savedRoleValue !== role.value ||
-			!Object.prototype.hasOwnProperty.call(
-				updatedRoles,
-				user.userId.toString()
-			)
-		) {
-			json[user.userId.toString()] = role;
-		}
-
-		setUpdatedRoles(json);
+		return emailRegex.test(email);
 	};
 
 	const renderCollaborators = () => {
@@ -566,6 +400,127 @@ const ManageCollaborators = ({
 					</ClayTable.Body>
 				</ClayTable>
 			</ClayForm.Group>
+		);
+	};
+
+	const renderForm = () => {
+		if (tab === TABS.link) {
+			return 'Share Link';
+		}
+
+		return (
+			<ClayForm onSubmit={handleSubmit}>
+				{renderSelect()}
+
+				{renderCollaborators()}
+
+				{readOnly || (
+					<ClayModal.Footer
+						last={
+							<ClayButton.Group spaced>
+								<ClayButton
+									aria-label={Liferay.Language.get('cancel')}
+									displayType="secondary"
+									onClick={() => {
+										if (
+											Object.keys(selectedItems) === 0 &&
+											Object.keys(updatedRoles) === 0
+										) {
+											onClose();
+											resetForm();
+										}
+										else {
+											openConfirmModal({
+												message: Liferay.Language.get(
+													'discard-unsaved-changes'
+												),
+												onConfirm: (isConfirmed) => {
+													if (isConfirmed) {
+														onClose();
+														resetForm();
+													}
+												},
+											});
+										}
+									}}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
+
+								{renderSubmit()}
+							</ClayButton.Group>
+						}
+					/>
+				)}
+			</ClayForm>
+		);
+	};
+
+	const renderModal = () => {
+		if (!showModal) {
+			return '';
+		}
+
+		if (showShareLink) {
+			return (
+				<ClayModal
+					className="publications-invite-users-modal"
+					observer={observer}
+					size="lg"
+					spritemap={spritemap}
+				>
+					<ClayModal.Header>
+						<div className="autofit-row">
+							<div className="autofit-col">
+								<div className="modal-title">
+									{Liferay.Language.get('share-access')}
+								</div>
+							</div>
+						</div>
+					</ClayModal.Header>
+
+					{renderTabs()}
+
+					<div className="inline-scroller modal-body publications-invite-users-modal-body">
+						{renderForm()}
+					</div>
+				</ClayModal>
+			);
+		}
+
+		return (
+			<ClayModal
+				className="publications-invite-users-modal"
+				observer={observer}
+				size="lg"
+				spritemap={spritemap}
+			>
+				<ClayModal.Header>
+					<div className="autofit-row">
+						<div className="autofit-col">
+							<ClaySticker
+								className="sticker-use-icon user-icon-color-0"
+								displayType="secondary"
+								shape="circle"
+							>
+								<ClayIcon symbol="users" />
+							</ClaySticker>
+						</div>
+
+						<div className="autofit-col">
+							<div className="modal-title">
+								{readOnly
+									? Liferay.Language.get('view-collaborators')
+									: Liferay.Language.get('invite-users')}
+							</div>
+						</div>
+					</div>
+				</ClayModal.Header>
+
+				<div className="inline-scroller modal-body publications-invite-users-modal-body">
+					{renderForm()}
+				</div>
+			</ClayModal>
 		);
 	};
 
@@ -777,127 +732,6 @@ const ManageCollaborators = ({
 		);
 	};
 
-	const renderForm = () => {
-		if (tab === TABS.link) {
-			return 'Share Link';
-		}
-
-		return (
-			<ClayForm onSubmit={handleSubmit}>
-				{renderSelect()}
-
-				{renderCollaborators()}
-
-				{readOnly || (
-					<ClayModal.Footer
-						last={
-							<ClayButton.Group spaced>
-								<ClayButton
-									aria-label={Liferay.Language.get('cancel')}
-									displayType="secondary"
-									onClick={() => {
-										if (
-											Object.keys(selectedItems) === 0 &&
-											Object.keys(updatedRoles) === 0
-										) {
-											onClose();
-											resetForm();
-										}
-										else {
-											openConfirmModal({
-												message: Liferay.Language.get(
-													'discard-unsaved-changes'
-												),
-												onConfirm: (isConfirmed) => {
-													if (isConfirmed) {
-														onClose();
-														resetForm();
-													}
-												},
-											});
-										}
-									}}
-								>
-									{Liferay.Language.get('cancel')}
-								</ClayButton>
-
-								{renderSubmit()}
-							</ClayButton.Group>
-						}
-					/>
-				)}
-			</ClayForm>
-		);
-	};
-
-	const renderModal = () => {
-		if (!showModal) {
-			return '';
-		}
-
-		if (showShareLink) {
-			return (
-				<ClayModal
-					className="publications-invite-users-modal"
-					observer={observer}
-					size="lg"
-					spritemap={spritemap}
-				>
-					<ClayModal.Header>
-						<div className="autofit-row">
-							<div className="autofit-col">
-								<div className="modal-title">
-									{Liferay.Language.get('share-access')}
-								</div>
-							</div>
-						</div>
-					</ClayModal.Header>
-
-					{renderTabs()}
-
-					<div className="inline-scroller modal-body publications-invite-users-modal-body">
-						{renderForm()}
-					</div>
-				</ClayModal>
-			);
-		}
-
-		return (
-			<ClayModal
-				className="publications-invite-users-modal"
-				observer={observer}
-				size="lg"
-				spritemap={spritemap}
-			>
-				<ClayModal.Header>
-					<div className="autofit-row">
-						<div className="autofit-col">
-							<ClaySticker
-								className="sticker-use-icon user-icon-color-0"
-								displayType="secondary"
-								shape="circle"
-							>
-								<ClayIcon symbol="users" />
-							</ClaySticker>
-						</div>
-
-						<div className="autofit-col">
-							<div className="modal-title">
-								{readOnly
-									? Liferay.Language.get('view-collaborators')
-									: Liferay.Language.get('invite-users')}
-							</div>
-						</div>
-					</div>
-				</ClayModal.Header>
-
-				<div className="inline-scroller modal-body publications-invite-users-modal-body">
-					{renderForm()}
-				</div>
-			</ClayModal>
-		);
-	};
-
 	const renderTabs = () => {
 		if (!showShareLink) {
 			return '';
@@ -1065,6 +899,170 @@ const ManageCollaborators = ({
 				<div className="autofit-row">{columns}</div>
 			</ClayButton>
 		);
+	};
+
+	const resetForm = () => {
+		setEmailAddressErrorMessages([]);
+		setMultiSelectValue('');
+		setSelectedItems({});
+		setSelectedRole(defaultRole);
+		setSelectedUserData({});
+		setUpdatedRoles({});
+
+		emailValidationInProgressRef.current = false;
+	};
+
+	const sendInvite = (publicationsUserRoleUserIds, roleValues, userIds) => {
+		const updatedRolesKeys = Object.keys(updatedRoles);
+
+		if (
+			isPublicationTemplate &&
+			(!!userIds.length || !!collaborators.length)
+		) {
+			for (let i = 0; i < collaborators.length; i++) {
+				const collaboratorUserId = collaborators[i].userId;
+
+				if (updatedRoles[collaboratorUserId]) {
+					if (updatedRoles[collaboratorUserId].value === -1) {
+
+						// if updated to Remove collaborator
+
+						continue;
+					}
+
+					roleValues.push(updatedRoles[collaboratorUserId].value);
+				}
+				else {
+					roleValues.push(collaborators[i].roleValue);
+				}
+
+				publicationsUserRoleUserIds.push(collaboratorUserId);
+				userIds.push(collaboratorUserId);
+			}
+
+			setCollaboratorData({
+				[`publicationsUserRoleUserIds`]: publicationsUserRoleUserIds.join(
+					','
+				),
+				[`roleValues`]: roleValues.join(','),
+				[`userIds`]: userIds.join(','),
+			});
+
+			showNotification(
+				Liferay.Language.get(
+					'selected-users-have-been-associated-with-the-template'
+				),
+				false,
+				false
+			);
+		}
+		else {
+			for (let i = 0; i < updatedRolesKeys.length; i++) {
+				roleValues.push(updatedRoles[updatedRolesKeys[i]].value);
+				userIds.push(updatedRolesKeys[i]);
+			}
+
+			const formData = {
+				[`${namespace}publicationsUserRoleUserIds`]: publicationsUserRoleUserIds.join(
+					','
+				),
+				[`${namespace}roleValues`]: roleValues.join(','),
+				[`${namespace}userIds`]: userIds.join(','),
+			};
+
+			fetch(inviteUsersURL, {
+				body: objectToFormData(formData),
+				method: 'POST',
+			})
+				.then((response) => response.json())
+				.then(({errorMessage, successMessage}) => {
+					if (errorMessage) {
+						showNotification(errorMessage, true, true);
+
+						return;
+					}
+
+					showNotification(successMessage, false, true);
+				})
+				.catch((error) => {
+					showNotification(error.message, true, true);
+				});
+		}
+	};
+
+	const showNotification = (message, error, reset) => {
+		const parentOpenToast = getOpener().Liferay.Util.openToast;
+
+		const openToastParams = {message};
+
+		if (error) {
+			openToastParams.title = Liferay.Language.get('error');
+			openToastParams.type = 'danger';
+		}
+
+		collaboratorsRefetch();
+		onClose();
+		parentOpenToast(openToastParams);
+
+		if (reset) {
+			resetForm();
+		}
+	};
+
+	const updateRole = (role, user) => {
+		if (user.new) {
+			const json = {};
+
+			const keys = Object.keys(selectedItems);
+
+			for (let i = 0; i < keys.length; i++) {
+				if (keys[i] !== user.userId.toString()) {
+					json[keys[i]] = selectedItems[keys[i]];
+				}
+			}
+
+			if (role.value >= 0) {
+				json[user.userId.toString()] = role;
+			}
+
+			setSelectedItems(json);
+
+			return;
+		}
+
+		const json = {};
+
+		const keys = Object.keys(updatedRoles);
+
+		for (let i = 0; i < keys.length; i++) {
+			if (keys[i] !== user.userId.toString()) {
+				json[keys[i]] = updatedRoles[keys[i]];
+			}
+		}
+
+		let savedRoleValue = null;
+
+		if (collaborators) {
+			for (let i = 0; i < collaborators.length; i++) {
+				if (collaborators[i].userId === user.userId) {
+					savedRoleValue = collaborators[i].roleValue;
+
+					break;
+				}
+			}
+		}
+
+		if (
+			savedRoleValue !== role.value ||
+			!Object.prototype.hasOwnProperty.call(
+				updatedRoles,
+				user.userId.toString()
+			)
+		) {
+			json[user.userId.toString()] = role;
+		}
+
+		setUpdatedRoles(json);
 	};
 
 	return onlyForm ? (

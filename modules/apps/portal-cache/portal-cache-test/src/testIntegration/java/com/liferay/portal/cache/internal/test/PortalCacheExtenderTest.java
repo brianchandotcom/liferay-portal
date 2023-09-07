@@ -70,18 +70,18 @@ public class PortalCacheExtenderTest {
 		for (int i = 10; i <= 12; i++) {
 			_multiVmXML = StringUtil.replace(
 				_multiVmXML, _CACHE_NAME_MULTI + i,
-				_CACHE_NAME_MULTI_FINDER + (i - 1));
+				_PREFIX_CACHE_NAME_FINDER + _CACHE_NAME_MULTI + (i - 1));
 		}
 
 		_multiVmXML = StringUtil.replaceFirst(
 			_multiVmXML, _CACHE_NAME_MULTI + "9",
-			_CACHE_NAME_MULTI_ENTITY + "9");
+			_PREFIX_CACHE_NAME_ENTITY + _CACHE_NAME_MULTI + "9");
 
 		_bundle = _installBundle(_BUNDLE_SYMBOLIC_NAME, _multiVmXML, null);
 
 		_assertCacheConfig(
 			PortalCacheManagerNames.MULTI_VM, 1001,
-			_CACHE_NAME_MULTI_FINDER + "9", 51L);
+			_PREFIX_CACHE_NAME_FINDER + _CACHE_NAME_MULTI + "9", 51L);
 
 		Bundle overridingBundle = null;
 
@@ -91,7 +91,7 @@ public class PortalCacheExtenderTest {
 
 			_assertCacheConfig(
 				PortalCacheManagerNames.MULTI_VM, 1001,
-				_CACHE_NAME_MULTI_FINDER + "9", 51L);
+				_PREFIX_CACHE_NAME_FINDER + _CACHE_NAME_MULTI + "9", 51L);
 		}
 		finally {
 			if ((overridingBundle != null) &&
@@ -306,12 +306,6 @@ public class PortalCacheExtenderTest {
 		"com.liferay.portal.cache.internal.test.PortalCacheTestModule";
 
 	private static final String _CACHE_NAME_MULTI = "test.cache.multi";
-
-	private static final String _CACHE_NAME_MULTI_ENTITY =
-		PortalCacheExtenderTest._PREFIX_CACHE_NAME_ENTITY + _CACHE_NAME_MULTI;
-
-	private static final String _CACHE_NAME_MULTI_FINDER =
-		PortalCacheExtenderTest._PREFIX_CACHE_NAME_FINDER + _CACHE_NAME_MULTI;
 
 	private static final String _CACHE_NAME_SINGLE = "test.cache.single";
 

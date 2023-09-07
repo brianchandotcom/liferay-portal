@@ -87,26 +87,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 		return true;
 	}
 
-	private boolean _isValidPathParameterString(String pathParameterString) {
-		int openCurlyBraceIndex = StringUtil.count(
-			pathParameterString, StringPool.OPEN_CURLY_BRACE);
-
-		int closeCurlyBraceIndex = StringUtil.count(
-			pathParameterString, StringPool.CLOSE_CURLY_BRACE);
-
-		if ((openCurlyBraceIndex != 1) || (closeCurlyBraceIndex != 1) ||
-			(pathParameterString.length() <= 2) ||
-			!StringUtil.startsWith(
-				pathParameterString, StringPool.OPEN_CURLY_BRACE) ||
-			!StringUtil.endsWith(
-				pathParameterString, StringPool.CLOSE_CURLY_BRACE)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	private void _validate(ObjectEntry objectEntry) {
 		try {
 			Map<String, Serializable> values = objectEntry.getValues();
@@ -291,7 +271,10 @@ public class APIEndpointRelevantObjectEntryModelListener
 				"x-can-have-a-maximum-of-255-alphanumeric-characters");
 		}
 
-		if (!_isValidPathParameterString(pathParameterString)) {
+		Matcher curlyBraceMatcher = _curlyBracePattern.matcher(
+			pathParameterString);
+
+		if (!curlyBraceMatcher.matches()) {
 			throw new ObjectEntryValuesException.InvalidObjectField(
 				Arrays.asList(objectField.getLabel(user.getLocale())),
 				"%s must contain a path parameter between curly braces",
@@ -299,6 +282,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 		}
 	}
 
+	private static final Pattern _curlyBracePattern = Pattern.compile(
+		"^\\{[a-zA-Z0-9]+\\}$");
 	private static final Pattern _individualPathPattern = Pattern.compile(
 		"/[a-zA-Z0-9][a-zA-Z0-9-/-{\\-}]{1,253}");
 	private static final Pattern _pathPattern = Pattern.compile(

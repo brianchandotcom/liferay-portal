@@ -5054,8 +5054,7 @@ public class JenkinsResultsParserUtil {
 
 				if (responseText == null) {
 					throw new RuntimeException(
-						"Unable to update build description. Response is " +
-							"null.");
+						"Unable to update build description");
 				}
 
 				return responseText;

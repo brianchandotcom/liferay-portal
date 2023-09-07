@@ -151,7 +151,7 @@ public class SessionKeysCheck extends BaseFileCheck {
 	}
 
 	private static final String[] _ALLOWED_SUFFIXES = {
-		"_requestProcessed", "_requestProcessedWarning"
+		"_requestProcessedWarning"
 	};
 
 }

@@ -9,7 +9,13 @@ import App from './App';
 
 class WebComponent extends HTMLElement {
 	connectedCallback() {
-		createRoot(this).render(<App />);
+		if (!this.root) {
+			this.root = createRoot(this);
+
+			this.root.render(
+				<App />
+			);
+		}
 	}
 }
 

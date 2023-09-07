@@ -12,6 +12,7 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.util.Locale;
 
@@ -32,7 +33,7 @@ public class CommercePromotionEntriesTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		return fdsTableSchemaBuilder.add(
+		fdsTableSchemaBuilder.add(
 			"product.thumbnail", StringPool.BLANK,
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"image")
@@ -42,11 +43,17 @@ public class CommercePromotionEntriesTableFDSView extends BaseTableFDSView {
 				"actionLink")
 		).add(
 			"product.name.LANG", "name"
-		).add(
-			"unitOfMeasureKey", "uom"
-		).add(
-			"quantity", "quantity"
-		).add(
+		);
+
+		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-11287")) {
+			fdsTableSchemaBuilder.add(
+				"unitOfMeasureKey", "uom"
+			).add(
+				"quantity", "quantity"
+			);
+		}
+
+		fdsTableSchemaBuilder.add(
 			"sku.basePromoPriceFormatted", "base-promotion-price"
 		).add(
 			"priceFormatted", "promotion-price"
@@ -60,7 +67,9 @@ public class CommercePromotionEntriesTableFDSView extends BaseTableFDSView {
 			"priceOnApplication", "price-on-application",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"boolean")
-		).build();
+		);
+
+		return fdsTableSchemaBuilder.build();
 	}
 
 	@Reference

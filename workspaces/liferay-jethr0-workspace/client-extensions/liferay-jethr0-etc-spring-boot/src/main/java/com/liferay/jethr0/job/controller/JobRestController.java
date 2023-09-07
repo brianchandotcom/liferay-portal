@@ -6,9 +6,12 @@
 package com.liferay.jethr0.job.controller;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
+
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -47,6 +50,35 @@ public class JobRestController {
 		jobJSONObject.put("builds", buildsJSONArray);
 
 		return new ResponseEntity<>(jobJSONObject.toString(), HttpStatus.OK);
+	}
+
+	@GetMapping("/builds/{id}")
+	public ResponseEntity<String> jobBuilds(
+		@AuthenticationPrincipal Jwt jwt, @PathVariable("id") int jobEntityId) {
+
+		JobEntity jobEntity = _jobEntityRepository.getById(jobEntityId);
+
+		JSONArray buildsJSONArray = new JSONArray();
+
+		for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
+			JSONObject buildJSONObject = buildEntity.getJSONObject();
+
+			List<BuildRunEntity> buildRunEntityHistory =
+				buildEntity.getBuildRunEntityHistory();
+
+			if (!buildRunEntityHistory.isEmpty()) {
+				BuildRunEntity latestBuildRunEntity = buildRunEntityHistory.get(
+					buildRunEntityHistory.size() - 1);
+
+				buildJSONObject.put(
+					"latestJenkinsBuildURL",
+					latestBuildRunEntity.getJenkinsBuildURL());
+			}
+
+			buildsJSONArray.put(buildJSONObject);
+		}
+
+		return new ResponseEntity<>(buildsJSONArray.toString(), HttpStatus.OK);
 	}
 
 	@GetMapping("/queue")

@@ -93,7 +93,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
 			userId, commerceInventoryAuditType.getType(),
 			commerceInventoryAuditType.getLog(context), quantity, sku,
-			StringPool.BLANK);
+			unitOfMeasureKey);
 
 		return commerceInventoryBookedQuantityPersistence.update(
 			commerceInventoryBookedQuantity);

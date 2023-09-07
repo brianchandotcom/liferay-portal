@@ -7,9 +7,12 @@ package com.liferay.portal.instances.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+
 /**
  * @author Raymond Augé
  */
+@ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
 	factory = true,
 	id = "com.liferay.portal.instances.internal.configuration.PortalInstancesConfiguration"

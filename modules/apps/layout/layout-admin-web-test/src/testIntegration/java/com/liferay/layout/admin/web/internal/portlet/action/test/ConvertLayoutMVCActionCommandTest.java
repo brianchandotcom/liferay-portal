@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -48,6 +49,7 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -133,6 +135,24 @@ public class ConvertLayoutMVCActionCommandTest {
 			new MockLiferayPortletActionResponse());
 
 		_validateLayoutConversion(originalLayout);
+	}
+
+	private void _assertTypeSettingsProperties(
+		Layout originalLayout, Layout persistedLayout) {
+
+		UnicodeProperties originalLayoutTypeSettingsUnicodeProperties =
+			originalLayout.getTypeSettingsProperties();
+		UnicodeProperties persistedLayoutTypeSettingsUnicodeProperties =
+			persistedLayout.getTypeSettingsProperties();
+
+		for (Map.Entry<String, String> entry :
+				originalLayoutTypeSettingsUnicodeProperties.entrySet()) {
+
+			Assert.assertEquals(
+				entry.getValue(),
+				persistedLayoutTypeSettingsUnicodeProperties.getProperty(
+					entry.getKey()));
+		}
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
@@ -303,9 +323,9 @@ public class ConvertLayoutMVCActionCommandTest {
 			persistedPublishedLayout.getRobotsMap());
 		Assert.assertEquals(
 			LayoutConstants.TYPE_CONTENT, persistedPublishedLayout.getType());
-		Assert.assertEquals(
-			originalLayout.getTypeSettings(),
-			persistedPublishedLayout.getTypeSettings());
+
+		_assertTypeSettingsProperties(originalLayout, persistedDraftLayout);
+
 		Assert.assertEquals(
 			originalLayout.isSystem(), persistedPublishedLayout.isSystem());
 		Assert.assertEquals(

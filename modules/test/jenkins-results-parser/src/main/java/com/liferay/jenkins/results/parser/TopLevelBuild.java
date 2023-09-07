@@ -99,12 +99,24 @@ public abstract class TopLevelBuild extends BaseBuild {
 	}
 
 	public String getAcceptanceUpstreamJobURL() {
+		String upstreamAcceptanceJenkinsMaster;
+
+		try {
+			upstreamAcceptanceJenkinsMaster =
+				JenkinsResultsParserUtil.getBuildProperty(
+					"upstream.acceptance.jenkins.master");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get upstream acceptance Jenkins master property");
+		}
+
 		String jobName = getJobName();
 
 		if (jobName.contains("pullrequest")) {
 			String acceptanceUpstreamJobURL = JenkinsResultsParserUtil.combine(
-				"https://test-1-1.liferay.com/job/",
-				getAcceptanceUpstreamJobName());
+				"https://", upstreamAcceptanceJenkinsMaster,
+				".liferay.com/job/", getAcceptanceUpstreamJobName());
 
 			try {
 				JenkinsResultsParserUtil.toString(

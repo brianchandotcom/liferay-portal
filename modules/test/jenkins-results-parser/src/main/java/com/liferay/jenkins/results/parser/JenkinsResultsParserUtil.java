@@ -6143,8 +6143,7 @@ public class JenkinsResultsParserUtil {
 	private static final String _DIST_PORTAL_BUNDLES_URL_DEFAULT =
 		"http://test-1-0/userContent/bundles/test-portal-acceptance-upstream";
 
-	private static final String _DIST_PORTAL_JOB_URL_DEFAULT =
-		"http://test-1-1/job/test-portal-acceptance-upstream";
+	private static final String _DIST_PORTAL_JOB_URL_DEFAULT;
 
 	private static final long _MILLIS_BASH_COMMAND_TIMEOUT_DEFAULT =
 		1000 * 60 * 60;
@@ -6244,6 +6243,17 @@ public class JenkinsResultsParserUtil {
 		System.getProperty("user.home"));
 
 	static {
+		try {
+			_DIST_PORTAL_JOB_URL_DEFAULT = combine(
+				"http://",
+				getBuildProperty("upstream.acceptance.jenkins.master"),
+				"/job/test-portal-acceptance-upstream");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to upstream acceptance Jenkins master property");
+		}
+
 		try {
 			_initializeRedactTokens();
 

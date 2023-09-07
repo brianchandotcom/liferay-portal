@@ -97,6 +97,15 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 					</li>
 				</ul>
 			</li>
+			<li class="nav-item">
+				<clay:button
+					disabled="<%= true %>"
+					displayType="secondary"
+					small="<%= true %>"
+				>
+					<liferay-ui:message key="discard-draft" />
+				</clay:button>
+			</li>
 
 			<c:if test="<%= contentPageEditorDisplayContext.isSingleSegmentsExperienceMode() %>">
 				<li class="nav-item">

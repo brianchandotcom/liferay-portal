@@ -85,8 +85,20 @@ public class JobRestController {
 	public ResponseEntity<String> jobQueue(@AuthenticationPrincipal Jwt jwt) {
 		JSONArray jobsJSONArray = new JSONArray();
 
-		for (JobEntity jobEntity : _jobQueue.getJobEntities()) {
+		List<JobEntity> jobEntities = _jobQueue.getJobEntities();
+
+		int position = 0;
+
+		for (JobEntity jobEntity : jobEntities) {
+			if (jobEntity.getState() == JobEntity.State.COMPLETED) {
+				continue;
+			}
+
+			position++;
+
 			JSONObject jobJSONObject = jobEntity.getJSONObject();
+
+			jobJSONObject.put("position", position);
 
 			int completedBuilds = 0;
 			int queuedBuilds = 0;

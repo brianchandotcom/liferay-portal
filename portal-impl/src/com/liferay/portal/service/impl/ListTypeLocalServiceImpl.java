@@ -44,11 +44,6 @@ public class ListTypeLocalServiceImpl extends ListTypeLocalServiceBaseImpl {
 	}
 
 	@Override
-	public ListType getListType(long listTypeId) throws PortalException {
-		return listTypePersistence.findByPrimaryKey(listTypeId);
-	}
-
-	@Override
 	public ListType getListType(String name, String type) {
 		return listTypePersistence.fetchByC_N_T(
 			CompanyThreadLocal.getCompanyId(), name, type);

@@ -64,7 +64,8 @@ public class CommerceInventoryItemFDSActionProvider
 
 				dropdownItem.setHref(
 					_getCommerceInventoryItemEditURL(
-						inventoryItem.getSku(), themeDisplay));
+						inventoryItem.getSku(),
+						inventoryItem.getUnitOfMeasureKey(), themeDisplay));
 
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, "edit"));
@@ -82,7 +83,7 @@ public class CommerceInventoryItemFDSActionProvider
 	}
 
 	private String _getCommerceInventoryItemEditURL(
-		String sku, ThemeDisplay themeDisplay) {
+		String sku, String unitOfMeasureKey, ThemeDisplay themeDisplay) {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
@@ -94,6 +95,8 @@ public class CommerceInventoryItemFDSActionProvider
 			"/commerce_inventory/edit_commerce_inventory_item"
 		).setParameter(
 			"sku", sku
+		).setParameter(
+			"unitOfMeasureKey", unitOfMeasureKey
 		).buildString();
 	}
 

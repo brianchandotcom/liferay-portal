@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -109,9 +110,12 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		User user = themeDisplay.getUser();
+
 		try {
 			if (!_ctSettingsConfigurationHelper.isEnabled(
 					themeDisplay.getCompanyId()) ||
+				user.isOnDemandUser() ||
 				!_portletPermission.contains(
 					themeDisplay.getPermissionChecker(),
 					CTPortletKeys.PUBLICATIONS, ActionKeys.VIEW)) {

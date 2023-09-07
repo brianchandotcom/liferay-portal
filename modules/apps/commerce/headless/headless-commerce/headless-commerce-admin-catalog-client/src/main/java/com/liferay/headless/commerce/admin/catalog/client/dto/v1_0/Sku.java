@@ -603,6 +603,70 @@ public class Sku implements Cloneable, Serializable {
 
 	protected SkuVirtualSettings skuVirtualSettings;
 
+	public String getUnitOfMeasureKey() {
+		return unitOfMeasureKey;
+	}
+
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		this.unitOfMeasureKey = unitOfMeasureKey;
+	}
+
+	public void setUnitOfMeasureKey(
+		UnsafeSupplier<String, Exception> unitOfMeasureKeyUnsafeSupplier) {
+
+		try {
+			unitOfMeasureKey = unitOfMeasureKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String unitOfMeasureKey;
+
+	public Map<String, String> getUnitOfMeasureName() {
+		return unitOfMeasureName;
+	}
+
+	public void setUnitOfMeasureName(Map<String, String> unitOfMeasureName) {
+		this.unitOfMeasureName = unitOfMeasureName;
+	}
+
+	public void setUnitOfMeasureName(
+		UnsafeSupplier<Map<String, String>, Exception>
+			unitOfMeasureNameUnsafeSupplier) {
+
+		try {
+			unitOfMeasureName = unitOfMeasureNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> unitOfMeasureName;
+
+	public String getUnitOfMeasureSkuId() {
+		return unitOfMeasureSkuId;
+	}
+
+	public void setUnitOfMeasureSkuId(String unitOfMeasureSkuId) {
+		this.unitOfMeasureSkuId = unitOfMeasureSkuId;
+	}
+
+	public void setUnitOfMeasureSkuId(
+		UnsafeSupplier<String, Exception> unitOfMeasureSkuIdUnsafeSupplier) {
+
+		try {
+			unitOfMeasureSkuId = unitOfMeasureSkuIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String unitOfMeasureSkuId;
+
 	public String getUnspsc() {
 		return unspsc;
 	}

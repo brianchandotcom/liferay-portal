@@ -388,6 +388,44 @@ public class SkuSerDes {
 			sb.append(String.valueOf(sku.getSkuVirtualSettings()));
 		}
 
+		if (sku.getUnitOfMeasureKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sku.getUnitOfMeasureKey()));
+
+			sb.append("\"");
+		}
+
+		if (sku.getUnitOfMeasureName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureName\": ");
+
+			sb.append(_toJSON(sku.getUnitOfMeasureName()));
+		}
+
+		if (sku.getUnitOfMeasureSkuId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureSkuId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(sku.getUnitOfMeasureSkuId()));
+
+			sb.append("\"");
+		}
+
 		if (sku.getUnspsc() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -651,6 +689,32 @@ public class SkuSerDes {
 				String.valueOf(sku.getSkuVirtualSettings()));
 		}
 
+		if (sku.getUnitOfMeasureKey() == null) {
+			map.put("unitOfMeasureKey", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasureKey", String.valueOf(sku.getUnitOfMeasureKey()));
+		}
+
+		if (sku.getUnitOfMeasureName() == null) {
+			map.put("unitOfMeasureName", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasureName",
+				String.valueOf(sku.getUnitOfMeasureName()));
+		}
+
+		if (sku.getUnitOfMeasureSkuId() == null) {
+			map.put("unitOfMeasureSkuId", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasureSkuId",
+				String.valueOf(sku.getUnitOfMeasureSkuId()));
+		}
+
 		if (sku.getUnspsc() == null) {
 			map.put("unspsc", null);
 		}
@@ -880,6 +944,24 @@ public class SkuSerDes {
 					sku.setSkuVirtualSettings(
 						SkuVirtualSettingsSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasureKey")) {
+				if (jsonParserFieldValue != null) {
+					sku.setUnitOfMeasureKey((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasureName")) {
+				if (jsonParserFieldValue != null) {
+					sku.setUnitOfMeasureName(
+						(Map)SkuSerDes.toMap((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "unitOfMeasureSkuId")) {
+
+				if (jsonParserFieldValue != null) {
+					sku.setUnitOfMeasureSkuId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "unspsc")) {

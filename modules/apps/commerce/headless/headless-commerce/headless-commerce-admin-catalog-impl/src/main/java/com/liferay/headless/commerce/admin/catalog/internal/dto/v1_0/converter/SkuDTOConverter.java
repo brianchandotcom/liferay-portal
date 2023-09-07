@@ -10,6 +10,7 @@ import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceService;
@@ -18,6 +19,8 @@ import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -51,6 +54,10 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 			_cpInstanceService.fetchCProductInstance(
 				cpInstance.getReplacementCProductId(),
 				cpInstance.getReplacementCPInstanceUuid());
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			(CPInstanceUnitOfMeasure)dtoConverterContext.getAttribute(
+				"cpInstanceUnitOfMeasure");
 
 		return new Sku() {
 			{
@@ -149,6 +156,34 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						}
 
 						return skuOptions.toArray(new SkuOption[0]);
+					});
+				setUnitOfMeasureKey(
+					() -> {
+						if (cpInstanceUnitOfMeasure != null) {
+							return cpInstanceUnitOfMeasure.getKey();
+						}
+
+						return null;
+					});
+				setUnitOfMeasureName(
+					() -> {
+						if (cpInstanceUnitOfMeasure != null) {
+							return LanguageUtils.getLanguageIdMap(
+								cpInstanceUnitOfMeasure.getNameMap());
+						}
+
+						return null;
+					});
+				setUnitOfMeasureSkuId(
+					() -> {
+						if (cpInstanceUnitOfMeasure != null) {
+							return StringBundler.concat(
+								cpInstance.getCPInstanceId(), StringPool.DASH,
+								cpInstanceUnitOfMeasure.
+									getCPInstanceUnitOfMeasureId());
+						}
+
+						return String.valueOf(cpInstance.getCPInstanceId());
 					});
 			}
 		};

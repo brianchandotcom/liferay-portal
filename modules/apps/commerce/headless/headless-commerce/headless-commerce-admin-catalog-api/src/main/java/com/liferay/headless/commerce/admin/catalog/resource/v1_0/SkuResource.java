@@ -93,6 +93,10 @@ public interface SkuResource {
 
 	public Sku patchSku(Long id, Sku sku) throws Exception;
 
+	public Page<Sku> getUnitOfMeasureSkusPage(
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

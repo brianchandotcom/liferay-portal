@@ -839,6 +839,92 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SkuVirtualSettings skuVirtualSettings;
 
+	@Schema(example = "pl")
+	public String getUnitOfMeasureKey() {
+		return unitOfMeasureKey;
+	}
+
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		this.unitOfMeasureKey = unitOfMeasureKey;
+	}
+
+	@JsonIgnore
+	public void setUnitOfMeasureKey(
+		UnsafeSupplier<String, Exception> unitOfMeasureKeyUnsafeSupplier) {
+
+		try {
+			unitOfMeasureKey = unitOfMeasureKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String unitOfMeasureKey;
+
+	@Schema(example = "{en_US=Pallet, hr_HR=Pallet HR, hu_HU=Pallet HU}")
+	@Valid
+	public Map<String, String> getUnitOfMeasureName() {
+		return unitOfMeasureName;
+	}
+
+	public void setUnitOfMeasureName(Map<String, String> unitOfMeasureName) {
+		this.unitOfMeasureName = unitOfMeasureName;
+	}
+
+	@JsonIgnore
+	public void setUnitOfMeasureName(
+		UnsafeSupplier<Map<String, String>, Exception>
+			unitOfMeasureNameUnsafeSupplier) {
+
+		try {
+			unitOfMeasureName = unitOfMeasureNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Map<String, String> unitOfMeasureName;
+
+	@Schema
+	public String getUnitOfMeasureSkuId() {
+		return unitOfMeasureSkuId;
+	}
+
+	public void setUnitOfMeasureSkuId(String unitOfMeasureSkuId) {
+		this.unitOfMeasureSkuId = unitOfMeasureSkuId;
+	}
+
+	@JsonIgnore
+	public void setUnitOfMeasureSkuId(
+		UnsafeSupplier<String, Exception> unitOfMeasureSkuIdUnsafeSupplier) {
+
+		try {
+			unitOfMeasureSkuId = unitOfMeasureSkuIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String unitOfMeasureSkuId;
+
 	@Schema(example = "1234567890")
 	public String getUnspsc() {
 		return unspsc;
@@ -1285,6 +1371,44 @@ public class Sku implements Serializable {
 			sb.append("\"skuVirtualSettings\": ");
 
 			sb.append(String.valueOf(skuVirtualSettings));
+		}
+
+		if (unitOfMeasureKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(unitOfMeasureKey));
+
+			sb.append("\"");
+		}
+
+		if (unitOfMeasureName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureName\": ");
+
+			sb.append(_toJSON(unitOfMeasureName));
+		}
+
+		if (unitOfMeasureSkuId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureSkuId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(unitOfMeasureSkuId));
+
+			sb.append("\"");
 		}
 
 		if (unspsc != null) {

@@ -155,7 +155,7 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 
 	@Override
 	public int countItemsByCompanyId(
-		long companyId, String sku, String unitOfMeasureKey) {
+		long companyId, String sku) {
 
 		return dslQueryCount(
 			DSLQueryFactoryUtil.countDistinct(
@@ -178,23 +178,8 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 								StringPool.PERCENT
 						);
 					}
-				).and(
-					() -> {
-						if (Validator.isNull(unitOfMeasureKey)) {
-							return null;
-						}
+				)));
 
-						return DSLFunctionFactoryUtil.lower(
-							CommerceInventoryWarehouseItemTable.INSTANCE.
-								unitOfMeasureKey
-						).like(
-							StringPool.PERCENT +
-								StringUtil.toLowerCase(unitOfMeasureKey) +
-									StringPool.PERCENT
-						);
-					}
-				)
-			));
 	}
 
 	@Override
@@ -402,12 +387,12 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 
 	@Override
 	public List<CIWarehouseItem> getItemsByCompanyId(
-		long companyId, String sku, String unitOfMeasureKey, int start,
-		int end) {
+		long companyId, String sku, int start, int end) {
 
 		List<Object[]> sumStocks = dslQuery(
 			DSLQueryFactoryUtil.select(
 				CommerceInventoryWarehouseItemTable.INSTANCE.sku,
+				CommerceInventoryWarehouseItemTable.INSTANCE.unitOfMeasureKey,
 				DSLFunctionFactoryUtil.sum(
 					CommerceInventoryWarehouseItemTable.INSTANCE.quantity
 				).as(
@@ -482,21 +467,6 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 								StringPool.PERCENT
 						);
 					}
-				).and(
-					() -> {
-						if (Validator.isNull(unitOfMeasureKey)) {
-							return null;
-						}
-
-						return DSLFunctionFactoryUtil.lower(
-							CommerceInventoryWarehouseItemTable.INSTANCE.
-								unitOfMeasureKey
-						).like(
-							StringPool.PERCENT +
-								StringUtil.toLowerCase(unitOfMeasureKey) +
-									StringPool.PERCENT
-						);
-					}
 				)
 			).groupBy(
 				CommerceInventoryWarehouseItemTable.INSTANCE.sku,
@@ -519,24 +489,30 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 					skuCode = (String)stock[0];
 				}
 
-				BigDecimal stockQuantity = BigDecimal.ZERO;
+				String unitOfMeasureKey = StringPool.BLANK;
 
 				if ((stock.length > 1) && (stock[1] != null)) {
-					stockQuantity = (BigDecimal)stock[1];
+					unitOfMeasureKey = (String)stock[1];
+				}
+
+				BigDecimal stockQuantity = BigDecimal.ZERO;
+
+				if ((stock.length > 2) && (stock[2] != null)) {
+					stockQuantity = (BigDecimal)stock[2];
 				}
 
 				BigDecimal bookedQuantity = BigDecimal.ZERO;
 
-				if ((stock.length > 2) && (stock[2] != null)) {
+				if ((stock.length > 3) && (stock[3] != null)) {
 					bookedQuantity = BigDecimalUtil.get(
-						stock[2], BigDecimal.ZERO);
+						stock[3], BigDecimal.ZERO);
 				}
 
 				BigDecimal replenishmentQuantity = BigDecimal.ZERO;
 
-				if ((stock.length > 3) && (stock[3] != null)) {
+				if ((stock.length > 4) && (stock[4] != null)) {
 					replenishmentQuantity = BigDecimalUtil.get(
-						stock[3], BigDecimal.ZERO);
+						stock[4], BigDecimal.ZERO);
 				}
 
 				ciWarehouseItems.add(

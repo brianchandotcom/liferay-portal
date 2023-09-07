@@ -10,7 +10,6 @@ import com.liferay.ai.creator.openai.web.internal.constants.AICreatorOpenAIPortl
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -48,8 +47,7 @@ public class AICreatorOpenAIEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-179483") ||
-			!_isAICreatorOpenAIGroupEnabled(
+		if (!_isAICreatorOpenAIGroupEnabled(
 				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())) {
 
 			return;

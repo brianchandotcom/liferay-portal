@@ -209,8 +209,6 @@ public class JobQueue {
 					continue;
 				}
 
-				System.out.println(jobEntity);
-
 				for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
 					if (buildEntity.getState() == BuildEntity.State.COMPLETED) {
 						continue;
@@ -234,8 +232,6 @@ public class JobQueue {
 
 						_buildEntityRepository.update(buildEntity);
 					}
-
-					System.out.println("> " + buildEntity);
 				}
 			}
 

@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface HeadlessAPICompanyConfiguration {
 
 	@Meta.AD(
-		deflt = "500", description = "page-size-values-description",
+		deflt = "500", description = "page-size-limit-description",
 		name = "page-size-limit", required = false
 	)
 	public int pageSizeLimit();

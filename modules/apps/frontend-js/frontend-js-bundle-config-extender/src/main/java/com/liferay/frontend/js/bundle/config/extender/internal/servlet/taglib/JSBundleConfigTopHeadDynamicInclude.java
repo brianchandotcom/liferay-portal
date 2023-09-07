@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.csp.CSPNonceProvider;
+import com.liferay.portal.kernel.security.csp.ContentSecurityPolicyNonceProvider;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -160,7 +160,8 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		if ((_jsBundleConfigRegistry.getLastModified() >
 				_objectValuePair.getKey()) ||
 			Validator.isNotNull(
-				_cspNonceProvider.getCSPNonce(httpServletRequest))) {
+				_contentSecurityPolicyNonceProvider.getCSPNonce(
+					httpServletRequest))) {
 
 			return true;
 		}
@@ -181,7 +182,8 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		JSBundleConfigTopHeadDynamicInclude.class);
 
 	@Reference
-	private CSPNonceProvider _cspNonceProvider;
+	private ContentSecurityPolicyNonceProvider
+		_contentSecurityPolicyNonceProvider;
 
 	@Reference
 	private JSBundleConfigRegistry _jsBundleConfigRegistry;

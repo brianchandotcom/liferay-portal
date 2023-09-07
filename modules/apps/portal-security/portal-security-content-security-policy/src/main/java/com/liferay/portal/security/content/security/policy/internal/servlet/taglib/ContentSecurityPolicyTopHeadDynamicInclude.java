@@ -6,7 +6,7 @@
 package com.liferay.portal.security.content.security.policy.internal.servlet.taglib;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.security.csp.CSPNonceProvider;
+import com.liferay.portal.kernel.security.csp.ContentSecurityPolicyNonceProvider;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -36,7 +36,8 @@ public class ContentSecurityPolicyTopHeadDynamicInclude
 
 		printWriter.print("<script data-senna-track=\"permanent\"");
 
-		String cspNonce = _cspNonceProvider.getCSPNonce(httpServletRequest);
+		String cspNonce = _contentSecurityPolicyNonceProvider.getCSPNonce(
+			httpServletRequest);
 
 		if (Validator.isNotNull(cspNonce)) {
 			printWriter.print(" nonce=\"");
@@ -57,6 +58,7 @@ public class ContentSecurityPolicyTopHeadDynamicInclude
 	}
 
 	@Reference
-	private CSPNonceProvider _cspNonceProvider;
+	private ContentSecurityPolicyNonceProvider
+		_contentSecurityPolicyNonceProvider;
 
 }

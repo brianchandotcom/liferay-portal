@@ -13,7 +13,7 @@ import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.web.internal.constants.NotificationWebKeys;
 import com.liferay.notification.web.internal.display.context.helper.NotificationRequestHelper;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -45,12 +45,10 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewNotificationTemplatesDisplayContext {
 
 	public ViewNotificationTemplatesDisplayContext(
-		EditorConfigurationFactory editorConfigurationFactory,
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<NotificationTemplate>
 			notificationTemplateModelResourcePermission) {
 
-		_editorConfigurationFactory = editorConfigurationFactory;
 		_notificationTemplateModelResourcePermission =
 			notificationTemplateModelResourcePermission;
 
@@ -88,7 +86,7 @@ public class ViewNotificationTemplatesDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		EditorConfiguration editorConfiguration =
-			_editorConfigurationFactory.getEditorConfiguration(
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				themeDisplay.getPpid(), "rich_text", "ckeditor_classic",
 				HashMapBuilder.<String, Object>put(
 					"liferay-ui:input-editor:allowBrowseDocuments", true
@@ -218,7 +216,6 @@ public class ViewNotificationTemplatesDisplayContext {
 			NotificationActionKeys.ADD_NOTIFICATION_TEMPLATE);
 	}
 
-	private final EditorConfigurationFactory _editorConfigurationFactory;
 	private final NotificationRequestHelper _notificationRequestHelper;
 	private final ModelResourcePermission<NotificationTemplate>
 		_notificationTemplateModelResourcePermission;

@@ -14,7 +14,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -112,7 +112,7 @@ public class RichTextDDMFormFieldTemplateContextContributor
 				WebKeys.THEME_DISPLAY);
 
 		EditorConfiguration editorConfiguration =
-			_editorConfigurationFactory.getEditorConfiguration(
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				themeDisplay.getPpid(), ddmFormFieldType, "ckeditor_classic",
 				HashMapBuilder.<String, Object>put(
 					"liferay-ui:input-editor:allowBrowseDocuments", true
@@ -184,9 +184,6 @@ public class RichTextDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private AICreatorOpenAIManager _aiCreatorOpenAIManager;
-
-	@Reference
-	private EditorConfigurationFactory _editorConfigurationFactory;
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -8,7 +8,7 @@ package com.liferay.frontend.editor.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -50,7 +50,6 @@ public class EditorConfigContributorTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_editorConfigProviderSwapper = new EditorConfigProviderSwapper(
-			_editorConfigurationFactory,
 			Arrays.asList(
 				EmoticonsEditorConfigContributor.class,
 				ImageEditorConfigContributor.class,
@@ -107,7 +106,7 @@ public class EditorConfigContributorTest {
 				).build());
 
 		EditorConfiguration editorConfiguration =
-			_editorConfigurationFactory.getEditorConfiguration(
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME, new HashMap<>(), null,
 				null);
 
@@ -149,7 +148,7 @@ public class EditorConfigContributorTest {
 				).build());
 
 		EditorConfiguration editorConfiguration =
-			_editorConfigurationFactory.getEditorConfiguration(
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME, new HashMap<>(), null,
 				null);
 
@@ -187,7 +186,7 @@ public class EditorConfigContributorTest {
 				).build());
 
 		EditorConfiguration editorConfiguration =
-			_editorConfigurationFactory.getEditorConfiguration(
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME, new HashMap<>(), null,
 				null);
 
@@ -229,7 +228,7 @@ public class EditorConfigContributorTest {
 				).build());
 
 		EditorConfiguration editorConfiguration =
-			_editorConfigurationFactory.getEditorConfiguration(
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME, new HashMap<>(), null,
 				null);
 
@@ -240,7 +239,7 @@ public class EditorConfigContributorTest {
 			configJSONObject.getString("className"));
 
 		editorConfiguration =
-			_editorConfigurationFactory.getEditorConfiguration(
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME_2, new HashMap<>(),
 				null, null);
 
@@ -274,7 +273,7 @@ public class EditorConfigContributorTest {
 				).build());
 
 		EditorConfiguration editorConfiguration =
-			_editorConfigurationFactory.getEditorConfiguration(
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME, new HashMap<>(), null,
 				null);
 
@@ -321,7 +320,7 @@ public class EditorConfigContributorTest {
 				).build());
 
 		EditorConfiguration editorConfiguration =
-			_editorConfigurationFactory.getEditorConfiguration(
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME, new HashMap<>(), null,
 				null);
 
@@ -367,7 +366,7 @@ public class EditorConfigContributorTest {
 				).build());
 
 		EditorConfiguration editorConfiguration =
-			_editorConfigurationFactory.getEditorConfiguration(
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME, new HashMap<>(), null,
 				null);
 
@@ -411,7 +410,7 @@ public class EditorConfigContributorTest {
 				).build());
 
 		EditorConfiguration editorConfiguration =
-			_editorConfigurationFactory.getEditorConfiguration(
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME, new HashMap<>(), null,
 				null);
 
@@ -453,7 +452,7 @@ public class EditorConfigContributorTest {
 				).build());
 
 		EditorConfiguration editorConfiguration =
-			_editorConfigurationFactory.getEditorConfiguration(
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
 				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME, new HashMap<>(), null,
 				null);
 
@@ -482,9 +481,6 @@ public class EditorConfigContributorTest {
 
 	private static BundleContext _bundleContext;
 	private static EditorConfigProviderSwapper _editorConfigProviderSwapper;
-
-	@Inject
-	private static EditorConfigurationFactory _editorConfigurationFactory;
 
 	@Inject
 	private static JSONFactory _jsonFactory;

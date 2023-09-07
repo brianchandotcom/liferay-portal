@@ -6,7 +6,6 @@
 package com.liferay.headless.builder.web.internal.display.context;
 
 import com.liferay.headless.builder.web.internal.display.context.helper.HeadlessBuilderWebRequestHelper;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -23,10 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 public class HeadlessBuilderWebDisplayContext {
 
 	public HeadlessBuilderWebDisplayContext(
-		EditorConfigurationFactory editorConfigurationFactory,
 		HttpServletRequest httpServletRequest) {
-
-		_editorConfigurationFactory = editorConfigurationFactory;
 
 		_headlessBuilderWebRequestHelper = new HeadlessBuilderWebRequestHelper(
 			httpServletRequest);
@@ -69,7 +65,6 @@ public class HeadlessBuilderWebDisplayContext {
 		return _headlessBuilderWebRequestHelper.getPortletId();
 	}
 
-	private final EditorConfigurationFactory _editorConfigurationFactory;
 	private final HeadlessBuilderWebRequestHelper
 		_headlessBuilderWebRequestHelper;
 

@@ -77,7 +77,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -844,7 +844,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			StringUtil.equals(ddmFormFieldType.getName(), "rich_text")) {
 
 			EditorConfiguration editorConfiguration =
-				_editorConfigurationFactory.getEditorConfiguration(
+				EditorConfigurationFactoryUtil.getEditorConfiguration(
 					StringPool.BLANK, ddmFormFieldType.getName(),
 					"ckeditor_classic", new HashMap<String, Object>(),
 					themeDisplay,
@@ -1749,9 +1749,6 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 	@Reference
 	private DEDataListViewLocalService _deDataListViewLocalService;
-
-	@Reference
-	private EditorConfigurationFactory _editorConfigurationFactory;
 
 	@Reference
 	private JSONFactory _jsonFactory;

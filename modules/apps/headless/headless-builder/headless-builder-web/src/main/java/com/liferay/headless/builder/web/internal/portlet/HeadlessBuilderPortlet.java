@@ -7,7 +7,6 @@ package com.liferay.headless.builder.web.internal.portlet;
 
 import com.liferay.headless.builder.web.internal.constants.HeadlessBuilderPortletKeys;
 import com.liferay.headless.builder.web.internal.display.context.HeadlessBuilderWebDisplayContext;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -61,14 +60,10 @@ public class HeadlessBuilderPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new HeadlessBuilderWebDisplayContext(
-				_editorConfigurationFactory,
 				_portal.getHttpServletRequest(renderRequest)));
 
 		super.render(renderRequest, renderResponse);
 	}
-
-	@Reference
-	private EditorConfigurationFactory _editorConfigurationFactory;
 
 	@Reference
 	private Portal _portal;

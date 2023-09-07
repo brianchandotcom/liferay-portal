@@ -8,7 +8,6 @@ package com.liferay.notification.web.internal.portlet;
 import com.liferay.notification.constants.NotificationPortletKeys;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.web.internal.display.context.ViewNotificationTemplatesDisplayContext;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
@@ -62,15 +61,11 @@ public class NotificationTemplatesPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ViewNotificationTemplatesDisplayContext(
-				_editorConfigurationFactory,
 				_portal.getHttpServletRequest(renderRequest),
 				_modelResourcePermission));
 
 		super.render(renderRequest, renderResponse);
 	}
-
-	@Reference
-	private EditorConfigurationFactory _editorConfigurationFactory;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.notification.model.NotificationTemplate)"

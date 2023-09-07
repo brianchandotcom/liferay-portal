@@ -77,16 +77,17 @@ public class CommerceInventoryWarehouseItemsDisplayContext {
 		).buildString();
 	}
 
-	public CommerceInventoryWarehouseItem getCommerceInventoryWarehouseItem(
-			CommerceInventoryWarehouse commerceInventoryWarehouse)
+	public List<CommerceInventoryWarehouseItem>
+			getCommerceInventoryWarehouseItem(
+				CommerceInventoryWarehouse commerceInventoryWarehouse)
 		throws PortalException {
 
 		CPInstance cpInstance = getCPInstance();
 
 		return _commerceInventoryWarehouseItemService.
-			fetchCommerceInventoryWarehouseItem(
+			findCommerceInventoryWarehouseItem(
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				cpInstance.getSku(), StringPool.BLANK);
+				cpInstance.getSku());
 	}
 
 	public List<CommerceInventoryWarehouse> getCommerceInventoryWarehouses()

@@ -29,7 +29,7 @@ else {
 	externalReferenceCodeEditUrl=""
 	model="<%= CommerceInventoryWarehouseItem.class %>"
 	thumbnailUrl='<%= PortalUtil.getPortalURL(request) + PortalUtil.getPathContext() + "/o/commerce-inventory-web/images/inventory-default-icon.svg" %>'
-	title="<%= commerceInventoryDisplayContext.getSku() %>"
+	title="<%= commerceInventoryDisplayContext.getTitle() %>"
 	transitionPortletURL="<%= commerceInventoryDisplayContext.getTransitionInventoryPortletURL() %>"
 	wrapperCssClasses="side-panel-top-anchor"
 />

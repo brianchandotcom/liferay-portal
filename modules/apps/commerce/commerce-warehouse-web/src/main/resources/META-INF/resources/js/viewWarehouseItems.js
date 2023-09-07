@@ -10,6 +10,7 @@ export default function ({ADD, CMD, UPDATE, namespace}) {
 		const {
 			commerceInventoryWarehouseId,
 			commerceInventoryWarehouseItemId,
+			commerceInventoryWarehouseItemUom,
 			index,
 			mvccVersion,
 		} = event.target.closest('tr').dataset;
@@ -23,6 +24,9 @@ export default function ({ADD, CMD, UPDATE, namespace}) {
 		form.querySelector(
 			`#${namespace}commerceInventoryWarehouseItemId`
 		).value = commerceInventoryWarehouseItemId;
+		form.querySelector(
+			`#${namespace}unitOfMeasureKey`
+		).value = commerceInventoryWarehouseItemUom;
 
 		const quantityInput = document.querySelector(
 			`#${namespace}commerceInventoryWarehouseItemQuantity${index}`

@@ -147,6 +147,7 @@ export default function ChangeTrackingChangesToolbar({
 							title={Liferay.Language.get('comments')}
 						>
 							<ClayButton
+								aria-label={Liferay.Language.get('comments')}
 								className={classNames(
 									'nav-link nav-link-monospaced',
 									{
@@ -170,6 +171,9 @@ export default function ChangeTrackingChangesToolbar({
 									spritemap={spritemap}
 									trigger={
 										<ClayButtonWithIcon
+											aria-label={Liferay.Language.get(
+												'more-actions'
+											)}
 											displayType="unstyled"
 											small
 											spritemap={spritemap}

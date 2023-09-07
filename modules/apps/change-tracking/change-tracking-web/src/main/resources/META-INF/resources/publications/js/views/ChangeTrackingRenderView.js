@@ -40,6 +40,7 @@ const LocalizationDropdown = ({
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton
+						aria-label="show-available-locales"
 						displayType="secondary"
 						monospaced
 						onClick={() => setActive(!active)}
@@ -893,6 +894,7 @@ export default function ChangeTrackingRenderView({
 					spritemap={spritemap}
 					trigger={
 						<ClayButtonWithIcon
+							aria-label="more-actions"
 							displayType="unstyled"
 							small
 							spritemap={spritemap}
@@ -1290,6 +1292,7 @@ export default function ChangeTrackingRenderView({
 		items.push(
 			<ClayNavigationBar.Item
 				active={state.contentType === CONTENT_TYPE_PREVIEW}
+				key="display"
 			>
 				<ClayLink
 					className={
@@ -1370,6 +1373,7 @@ export default function ChangeTrackingRenderView({
 		items.push(
 			<ClayNavigationBar.Item
 				active={state.contentType === CONTENT_TYPE_RENDER}
+				key="data"
 			>
 				<ClayLink onClick={() => setContentType(CONTENT_TYPE_RENDER)}>
 					{Liferay.Language.get('data')}
@@ -1382,7 +1386,7 @@ export default function ChangeTrackingRenderView({
 			(state.children && !!state.children.length)
 		) {
 			items.push(
-				<li className="autofit-col nav-item row-divider">
+				<li className="autofit-col nav-item row-divider" key="divider">
 					<div />
 				</li>
 			);
@@ -1390,6 +1394,7 @@ export default function ChangeTrackingRenderView({
 			items.push(
 				<ClayNavigationBar.Item
 					active={state.contentType === CONTENT_TYPE_PARENTS}
+					key="parents"
 				>
 					<ClayLink
 						className={
@@ -1415,6 +1420,7 @@ export default function ChangeTrackingRenderView({
 			items.push(
 				<ClayNavigationBar.Item
 					active={state.contentType === CONTENT_TYPE_CHILDREN}
+					key="children"
 				>
 					<ClayLink
 						className={
@@ -1505,7 +1511,7 @@ export default function ChangeTrackingRenderView({
 			{state.renderData && (
 				<div className="autofit-row sheet-title">
 					<div className="autofit-col autofit-col-expand">
-						<div className="align-items-baseline autofit-row mb-3">
+						<div className="align-items-baseline autofit-row mb-2">
 							<h2 className="mr-3">{currentTitle}</h2>
 
 							{state.renderData.segmentsExperiences &&

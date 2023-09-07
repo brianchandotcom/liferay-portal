@@ -29,6 +29,7 @@ export default function ChangeTrackingChangesToolbar({
 	rescheduleURL,
 	revertURL,
 	scheduleURL,
+	showActionItems,
 	spritemap,
 	statusLabel,
 	statusStyle,
@@ -79,6 +80,87 @@ export default function ChangeTrackingChangesToolbar({
 		);
 	};
 
+	const renderToolbarActionItems = () => {
+		return (
+			<>
+				<ClayToolbar.Item>
+					<ManageCollaborators {...collaboratorsData} />
+				</ClayToolbar.Item>
+
+				{renderToolbarAction(
+					'secondary',
+					Liferay.Language.get('schedule'),
+					'calendar',
+					scheduleURL
+				)}
+
+				{renderToolbarAction(
+					'primary',
+					Liferay.Language.get('publish'),
+					'change',
+					publishURL
+				)}
+
+				{renderToolbarAction(
+					'secondary',
+					Liferay.Language.get('unschedule'),
+					'times-circle',
+					unscheduleURL
+				)}
+
+				{renderToolbarAction(
+					'primary',
+					Liferay.Language.get('reschedule'),
+					'calendar',
+					rescheduleURL
+				)}
+
+				{renderToolbarAction(
+					'secondary',
+					Liferay.Language.get('revert'),
+					'undo',
+					revertURL
+				)}
+
+				<ClayToolbar.Item
+					data-tooltip-align="top"
+					title={Liferay.Language.get('comments')}
+				>
+					<ClayButton
+						aria-label={Liferay.Language.get('comments')}
+						className={classNames('nav-link nav-link-monospaced', {
+							active: showComments,
+						})}
+						displayType="unstyled"
+						onClick={() => setShowComments(!showComments)}
+					>
+						<ClayIcon spritemap={spritemap} symbol="comments" />
+					</ClayButton>
+				</ClayToolbar.Item>
+
+				{dropdownItems && !!dropdownItems.length && (
+					<ClayToolbar.Item>
+						<ClayDropDownWithItems
+							items={dropdownItems}
+							spritemap={spritemap}
+							trigger={
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'more-actions'
+									)}
+									displayType="unstyled"
+									small
+									spritemap={spritemap}
+									symbol="ellipsis-v"
+								/>
+							}
+						/>
+					</ClayToolbar.Item>
+				)}
+			</>
+		);
+	};
+
 	const renderPublicationsToolbar = () => {
 		return (
 			<ClayToolbar className="publications-tbar" light>
@@ -103,86 +185,7 @@ export default function ChangeTrackingChangesToolbar({
 							</ClayToolbar.Section>
 						</ClayToolbar.Item>
 
-						<ClayToolbar.Item>
-							<ManageCollaborators {...collaboratorsData} />
-						</ClayToolbar.Item>
-
-						{renderToolbarAction(
-							'secondary',
-							Liferay.Language.get('schedule'),
-							'calendar',
-							scheduleURL
-						)}
-
-						{renderToolbarAction(
-							'primary',
-							Liferay.Language.get('publish'),
-							'change',
-							publishURL
-						)}
-
-						{renderToolbarAction(
-							'secondary',
-							Liferay.Language.get('unschedule'),
-							'times-circle',
-							unscheduleURL
-						)}
-
-						{renderToolbarAction(
-							'primary',
-							Liferay.Language.get('reschedule'),
-							'calendar',
-							rescheduleURL
-						)}
-
-						{renderToolbarAction(
-							'secondary',
-							Liferay.Language.get('revert'),
-							'undo',
-							revertURL
-						)}
-
-						<ClayToolbar.Item
-							data-tooltip-align="top"
-							title={Liferay.Language.get('comments')}
-						>
-							<ClayButton
-								aria-label={Liferay.Language.get('comments')}
-								className={classNames(
-									'nav-link nav-link-monospaced',
-									{
-										active: showComments,
-									}
-								)}
-								displayType="unstyled"
-								onClick={() => setShowComments(!showComments)}
-							>
-								<ClayIcon
-									spritemap={spritemap}
-									symbol="comments"
-								/>
-							</ClayButton>
-						</ClayToolbar.Item>
-
-						{dropdownItems && !!dropdownItems.length && (
-							<ClayToolbar.Item>
-								<ClayDropDownWithItems
-									items={dropdownItems}
-									spritemap={spritemap}
-									trigger={
-										<ClayButtonWithIcon
-											aria-label={Liferay.Language.get(
-												'more-actions'
-											)}
-											displayType="unstyled"
-											small
-											spritemap={spritemap}
-											symbol="ellipsis-v"
-										/>
-									}
-								/>
-							</ClayToolbar.Item>
-						)}
+						{!showActionItems || renderToolbarActionItems()}
 					</ClayToolbar.Nav>
 				</div>
 			</ClayToolbar>

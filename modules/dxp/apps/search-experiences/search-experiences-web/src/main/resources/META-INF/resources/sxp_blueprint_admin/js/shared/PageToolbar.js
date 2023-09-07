@@ -111,7 +111,7 @@ export default function PageToolbar({
 			>
 				<ClayLayout.ContainerFluid>
 					<ClayToolbar.Nav>
-						<ClayToolbar.Item className="border-right c-mr-3 c-pr-3 text-left">
+						<ClayToolbar.Item className="border-right c-mr-3 c-pr-3 text-left title-description-toolbar-item">
 							{modalVisible && (
 								<EditTitleModal
 									disabled={disableTitleAndDescriptionModal}
@@ -128,13 +128,20 @@ export default function PageToolbar({
 							{readOnly ? (
 								<div>
 									<div className="entry-title text-truncate">
-										{title || (
-											<span className="entry-title-blank">
-												{Liferay.Language.get(
-													'untitled'
+										<ClayTooltipProvider>
+											<span
+												data-tooltip-align="bottom"
+												title={title}
+											>
+												{title || (
+													<span className="entry-title-blank">
+														{Liferay.Language.get(
+															'untitled'
+														)}
+													</span>
 												)}
 											</span>
-										)}
+										</ClayTooltipProvider>
 									</div>
 
 									<ClayTooltipProvider>
@@ -164,22 +171,37 @@ export default function PageToolbar({
 										monospaced={false}
 										onClick={_handleClickEdit('title')}
 									>
-										<div className="entry-title text-truncate">
-											{(!titleAndDescriptionEdited
-												? title
-												: titleI18n[displayLocale]) || (
-												<span className="entry-title-blank">
-													{Liferay.Language.get(
-														'untitled'
+										<ClayTooltipProvider>
+											<span
+												data-tooltip-align="bottom"
+												title={
+													!titleAndDescriptionEdited
+														? title
+														: titleI18n[
+																displayLocale
+														  ]
+												}
+											>
+												<div className="entry-title text-truncate">
+													{(!titleAndDescriptionEdited
+														? title
+														: titleI18n[
+																displayLocale
+														  ]) || (
+														<span className="entry-title-blank">
+															{Liferay.Language.get(
+																'untitled'
+															)}
+														</span>
 													)}
-												</span>
-											)}
 
-											<ClayIcon
-												className="entry-heading-edit-icon"
-												symbol="pencil"
-											/>
-										</div>
+													<ClayIcon
+														className="entry-heading-edit-icon"
+														symbol="pencil"
+													/>
+												</div>
+											</span>
+										</ClayTooltipProvider>
 									</ClayButton>
 
 									<ClayButton
@@ -228,9 +250,12 @@ export default function PageToolbar({
 							)}
 						</ClayToolbar.Item>
 
-						<ClayToolbar.Item className="text-3 text-left" expand>
-							<div>
-								<span className="c-mr-1">
+						<ClayToolbar.Item
+							className="text-3 text-left text-truncate-inline"
+							expand
+						>
+							<div className="text-truncate">
+								<span className="c-mr-1 text-secondary">
 									{Liferay.Language.get('id')}:
 								</span>
 
@@ -239,52 +264,59 @@ export default function PageToolbar({
 								</strong>
 							</div>
 
-							<div className="entry-heading-edit-button">
-								<span className="c-mr-1">
-									{Liferay.Language.get('erc')}:
-								</span>
-
-								<strong className="text-dark">
-									{externalReferenceCode}
-								</strong>
-
-								<ClayTooltipProvider>
-									<span
-										className="c-ml-2 text-secondary"
-										data-tooltip-align="bottom-left"
-										title={sub(
-											Liferay.Language.get(
-												'unique-key-for-referencing-the-x'
-											),
-											[
-												sxpType === 'sxpBlueprint'
-													? Liferay.Language.get(
-															'blueprint'
-													  )
-													: Liferay.Language.get(
-															'element'
-													  ),
-											]
-										)}
-									>
-										<ClayIcon symbol="question-circle" />
+							<EditERCModal
+								disabled={readOnly}
+								externalReferenceCode={externalReferenceCode}
+								onSubmit={onExternalReferenceCodeChange}
+							>
+								<div className="entry-heading-edit-button text-truncate">
+									<span className="c-mr-1 text-secondary">
+										{Liferay.Language.get('erc')}:
 									</span>
-								</ClayTooltipProvider>
 
-								{!readOnly && (
-									<EditERCModal
-										externalReferenceCode={
-											externalReferenceCode
-										}
-										onSubmit={onExternalReferenceCodeChange}
-									>
+									<ClayTooltipProvider>
+										<span
+											className="font-weight-semi-bold text-dark"
+											data-tooltip-align="bottom-left"
+											title={externalReferenceCode}
+										>
+											{externalReferenceCode}
+										</span>
+									</ClayTooltipProvider>
+
+									<ClayTooltipProvider>
+										<span
+											data-tooltip-align="bottom-left"
+											title={sub(
+												Liferay.Language.get(
+													'unique-key-for-referencing-the-x'
+												),
+												[
+													sxpType === 'sxpBlueprint'
+														? Liferay.Language.get(
+																'blueprint'
+														  )
+														: Liferay.Language.get(
+																'element'
+														  ),
+												]
+											)}
+										>
+											<ClayIcon
+												className="c-ml-2 text-secondary"
+												symbol="question-circle"
+											/>
+										</span>
+									</ClayTooltipProvider>
+
+									{!readOnly && (
 										<ClayIcon
 											className="c-ml-2 entry-heading-edit-icon text-secondary"
 											symbol="pencil"
 										/>
-									</EditERCModal>
-								)}
-							</div>
+									)}
+								</div>
+							</EditERCModal>
 						</ClayToolbar.Item>
 
 						{children}

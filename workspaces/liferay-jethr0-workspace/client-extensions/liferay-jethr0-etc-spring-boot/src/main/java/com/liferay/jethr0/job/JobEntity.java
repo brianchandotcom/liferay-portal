@@ -53,8 +53,6 @@ public interface JobEntity extends Entity {
 
 	public String getName();
 
-	public int getPosition();
-
 	public int getPriority();
 
 	public Date getStartDate();
@@ -90,8 +88,6 @@ public interface JobEntity extends Entity {
 	public void removeTestSuiteEntity(TestSuiteEntity testSuiteEntity);
 
 	public void setName(String name);
-
-	public void setPosition(int position);
 
 	public void setPriority(int priority);
 

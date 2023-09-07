@@ -852,16 +852,6 @@
 					"DBType": "Integer",
 					"businessType": "Integer",
 					"label": {
-						"en_US": "Position"
-					},
-					"name": "position",
-					"required": false,
-					"type": "Integer"
-				},
-				{
-					"DBType": "Integer",
-					"businessType": "Integer",
-					"label": {
 						"en_US": "Priority"
 					},
 					"name": "priority",

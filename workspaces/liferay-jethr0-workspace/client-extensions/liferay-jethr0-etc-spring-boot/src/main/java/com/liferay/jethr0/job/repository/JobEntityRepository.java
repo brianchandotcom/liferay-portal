@@ -27,15 +27,13 @@ import org.springframework.context.annotation.Configuration;
 public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 
 	public JobEntity add(
-		String name, int position, int priority, Date startDate,
-		JobEntity.State state, JobEntity.Type type) {
+		String name, int priority, Date startDate, JobEntity.State state,
+		JobEntity.Type type) {
 
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
 			"name", name
-		).put(
-			"position", position
 		).put(
 			"priority", priority
 		).put(

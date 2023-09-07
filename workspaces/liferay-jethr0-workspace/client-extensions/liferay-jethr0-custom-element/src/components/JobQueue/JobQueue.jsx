@@ -5,32 +5,18 @@
 
 import ClayTable from '@clayui/table';
 import {Link} from 'react-router-dom';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 
-let oAuth2Client;
-
-try {
-	oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-		'liferay-jethr0-etc-spring-boot-oauth-application-user-agent'
-	);
-}
-catch (error) {
-	console.error(error);
-}
+import setSpringBootData from '../../services/setSpringBootData';
 
 function JobQueue() {
-	const [jobQueue, setJobQueue] = useState(null);
+	let [jobQueue, setJobQueue] = useState(null);
 
-	useEffect(() => {
-		oAuth2Client
-			?.fetch('/jobs/queue')
-			.then((response) => response.text())
-			.then((jobQueue) => {
-				setJobQueue(JSON.parse(jobQueue));
-			})
-			// eslint-disable-next-line no-console
-			.catch((error) => console.log(error));
-	}, []);
+	setSpringBootData({
+		setData: setJobQueue,
+		timeout: 1000,
+		urlPath: '/jobs/queue'
+	});
 
 	if (!jobQueue) {
 		return (

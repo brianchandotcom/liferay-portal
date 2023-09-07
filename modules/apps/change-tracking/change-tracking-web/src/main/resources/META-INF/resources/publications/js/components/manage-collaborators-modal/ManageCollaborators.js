@@ -691,6 +691,9 @@ const ManageCollaborators = ({
 									spritemap={spritemap}
 									trigger={
 										<ClayButton
+											aria-label={
+												selectedRole.longDescription
+											}
 											data-tooltip-align="top"
 											displayType="secondary"
 											title={selectedRole.longDescription}
@@ -751,6 +754,7 @@ const ManageCollaborators = ({
 	const renderSubmit = () => {
 		return (
 			<ClayButton
+				aria-label={Liferay.Language.get('submit')}
 				disabled={
 					!Object.keys(selectedItems).length &&
 					!Object.keys(updatedRoles).length
@@ -777,6 +781,7 @@ const ManageCollaborators = ({
 						last={
 							<ClayButton.Group spaced>
 								<ClayButton
+									aria-label={Liferay.Language.get('cancel')}
 									displayType="secondary"
 									onClick={() => {
 										if (
@@ -862,6 +867,7 @@ const ManageCollaborators = ({
 		if (!collaborators || !collaborators.length) {
 			return (
 				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('invite-users')}
 					className="rounded-circle"
 					data-tooltip-align="top"
 					displayType="secondary"
@@ -981,6 +987,7 @@ const ManageCollaborators = ({
 
 		return (
 			<ClayButton
+				aria-label={Liferay.Language.get('view-collaborators')}
 				displayType="unstyled"
 				onClick={() => setShowModal(true)}
 			>

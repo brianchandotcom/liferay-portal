@@ -11,6 +11,7 @@ import {useParams} from 'react-router-dom';
 
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import BuildTable from '../../components/BuildTable/BuildTable';
+import JobInformation from '../../components/JobInformation/JobInformation';
 import setSpringBootData from '../../services/setSpringBootData';
 
 function JobPage() {
@@ -50,35 +51,6 @@ function JobPage() {
 				<BuildTable builds={jobBuilds} />
 			</ClayCard>
 		</ClayLayout.Container>
-	);
-}
-
-function JobInformation({job}) {
-	let jobInformation = (<div>Loading...</div>);
-
-	if (job) {
-		jobInformation = (<ClayPanel.Body>
-			Job ID: {job.id}
-			<br />
-			Create Date: {job.dateCreated}
-			<br />
-			Modified Date: {job.dateModified}
-			<br />
-			Job State: {job.state.name}
-			<br />
-			Job Type: {job.type.name}
-		</ClayPanel.Body>);
-	}
-
-	return (
-		<ClayPanel
-			collapsable
-			defaultExpanded
-			displayTitle="Job Information"
-			displayType="secondary"
-		>
-			{jobInformation}
-		</ClayPanel>
 	);
 }
 

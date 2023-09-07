@@ -1662,6 +1662,22 @@ components:
                     type: array
                 skuVirtualSettings:
                     $ref: "#/components/schemas/SkuVirtualSettings"
+                unitOfMeasureKey:
+                    example: pl
+                    readOnly: true
+                    type: string
+                unitOfMeasureName:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Pallet
+                        hr_HR: Pallet HR
+                        hu_HU: Pallet HU
+                    readOnly: true
+                    type: object
+                unitOfMeasureSkuId:
+                    readOnly: true
+                    type: string
                 unspsc:
                     example: "1234567890"
                     type: string
@@ -14778,6 +14794,90 @@ paths:
                       - HeadlessCommerceAdminCatalog.write
             summary: Updates a specification by ID.
             tags: ["Specification"]
+    "/unit-of-measure-skus":
+        get:
+            operationId: getUnitOfMeasureSkusPage
+            parameters:
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Sku"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Sku"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - HeadlessCommerceAdminCatalog.read
+            summary: Gets a list of skus with unit of measure.
+            tags: ["Sku"]
 servers:
     - description:
           SwaggerHub API Auto Mocking

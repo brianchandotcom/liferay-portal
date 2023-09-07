@@ -20,6 +20,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -83,7 +84,8 @@ public class SkuUnitOfMeasureDTOConverter
 						}
 
 						return incrementalOrderQuantity.setScale(
-							cpInstanceUnitOfMeasure.getPrecision());
+							cpInstanceUnitOfMeasure.getPrecision(),
+							RoundingMode.HALF_UP);
 					});
 				setRate(
 					() -> {
@@ -94,7 +96,8 @@ public class SkuUnitOfMeasureDTOConverter
 						}
 
 						return rate.setScale(
-							cpInstanceUnitOfMeasure.getPrecision());
+							cpInstanceUnitOfMeasure.getPrecision(),
+							RoundingMode.HALF_UP);
 					});
 			}
 		};

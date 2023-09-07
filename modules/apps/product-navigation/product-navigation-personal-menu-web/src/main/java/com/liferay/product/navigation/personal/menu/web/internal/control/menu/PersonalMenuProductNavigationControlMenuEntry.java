@@ -82,6 +82,12 @@ public class PersonalMenuProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		User user = themeDisplay.getUser();
+
+		if (user.isOnDemandUser()) {
+			return false;
+		}
+
 		PersonalMenuConfiguration personalMenuConfiguration =
 			_personalMenuConfigurationRegistry.
 				getCompanyPersonalMenuConfiguration(

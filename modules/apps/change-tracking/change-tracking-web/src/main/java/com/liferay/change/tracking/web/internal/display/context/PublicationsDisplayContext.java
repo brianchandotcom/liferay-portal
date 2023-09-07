@@ -18,6 +18,7 @@ import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTRemoteLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.constants.PublicationRoleConstants;
+import com.liferay.change.tracking.web.internal.helper.PublicationHelper;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionPermission;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
@@ -71,7 +72,8 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 		CTPreferencesLocalService ctPreferencesLocalService,
 		CTRemoteLocalService ctRemoteLocalService,
 		HttpServletRequest httpServletRequest, Language language,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		PublicationHelper publicationHelper, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		super(httpServletRequest);
 
@@ -82,6 +84,7 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 		_ctRemoteLocalService = ctRemoteLocalService;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
+		_publicationHelper = publicationHelper;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
@@ -143,6 +146,23 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 								ctCollectionId));
 
 				return getCollaboratorsURL.toString();
+			}
+		).put(
+			"getSharePublicationLinkURL",
+			() -> {
+				if (publicationTemplate) {
+					return null;
+				}
+
+				ResourceURL getSharePublicationLinkURL =
+					_renderResponse.createResourceURL();
+
+				getSharePublicationLinkURL.setResourceID(
+					"/change_tracking/get_share_publication_link");
+				getSharePublicationLinkURL.setParameter(
+					"ctCollectionId", String.valueOf(ctCollectionId));
+
+				return getSharePublicationLinkURL.toString();
 			}
 		).put(
 			"inviteUsersURL",
@@ -277,6 +297,10 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 				).put(
 					"value", PublicationRoleConstants.ROLE_ADMIN
 				))
+		).put(
+			"sharePublicationLink",
+			() -> _publicationHelper.getShareURL(
+				ctCollectionId, _renderResponse)
 		).put(
 			"spritemap", _themeDisplay.getPathThemeSpritemap()
 		).put(
@@ -722,6 +746,7 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 	private final CTRemoteLocalService _ctRemoteLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
+	private final PublicationHelper _publicationHelper;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<CTCollection> _searchContainer;

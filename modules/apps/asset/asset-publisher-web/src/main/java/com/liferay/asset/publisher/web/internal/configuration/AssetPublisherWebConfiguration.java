@@ -34,9 +34,9 @@ public interface AssetPublisherWebConfiguration {
 	public String checkCronExpression();
 
 	/**
-	 * Set the interval in hours on how often to check for new assets.
-	 * Users will be notified via email of new assets. This field is ignored if
-	 * {@link #checkCronExpression()} is set to a valid value.
+	 * Set the interval, greater than 0, in hours on how often to check for new
+	 * assets. Users will be notified via email of new assets. This field is
+	 * ignored if {@link #checkCronExpression()} is set to a valid value.
 	 *
 	 * @return interval in hours on how often to check for new assets.
 	 */

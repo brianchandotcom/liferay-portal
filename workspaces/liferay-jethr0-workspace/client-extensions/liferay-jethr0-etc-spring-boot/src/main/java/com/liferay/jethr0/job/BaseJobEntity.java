@@ -102,8 +102,6 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		jsonObject.put(
 			"name", getName()
 		).put(
-			"position", getPosition()
-		).put(
 			"priority", getPriority()
 		).put(
 			"startDate", StringUtil.toString(getStartDate())
@@ -119,11 +117,6 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	@Override
 	public String getName() {
 		return _name;
-	}
-
-	@Override
-	public int getPosition() {
-		return _position;
 	}
 
 	@Override
@@ -219,15 +212,6 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	}
 
 	@Override
-	public void setPosition(int position) {
-		if (position <= 0) {
-			position = Integer.MAX_VALUE;
-		}
-
-		_position = position;
-	}
-
-	@Override
 	public void setPriority(int priority) {
 		_priority = priority;
 	}
@@ -246,15 +230,6 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 		super(jsonObject);
 
 		_name = jsonObject.getString("name");
-
-		int position = jsonObject.optInt("position", Integer.MAX_VALUE);
-
-		if (position <= 0) {
-			position = Integer.MAX_VALUE;
-		}
-
-		_position = position;
-
 		_priority = jsonObject.optInt("priority");
 		_startDate = StringUtil.toDate(jsonObject.optString("startDate"));
 		_state = State.get(jsonObject.getJSONObject("state"));
@@ -262,7 +237,6 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	}
 
 	private String _name;
-	private int _position;
 	private int _priority;
 	private Date _startDate;
 	private State _state;

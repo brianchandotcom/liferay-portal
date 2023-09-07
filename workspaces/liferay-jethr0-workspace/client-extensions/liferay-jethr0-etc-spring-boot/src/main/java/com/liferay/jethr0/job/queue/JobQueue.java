@@ -195,14 +195,6 @@ public class JobQueue {
 				Comparator.comparingInt(JobComparatorEntity::getPosition));
 
 			_jobEntities.sort(new PrioritizedJobComparator());
-
-			for (int i = 0; i < _jobEntities.size(); i++) {
-				JobEntity jobEntity = _jobEntities.get(i);
-
-				jobEntity.setPosition(i + 1);
-
-				_jobEntityRepository.update(jobEntity);
-			}
 		}
 	}
 

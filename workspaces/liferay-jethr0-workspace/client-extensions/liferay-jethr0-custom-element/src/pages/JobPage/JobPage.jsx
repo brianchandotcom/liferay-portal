@@ -5,45 +5,33 @@
 
 import ClayCard from '@clayui/card';
 import ClayLayout from '@clayui/layout';
-import ClayPanel from '@clayui/panel';
 import {Heading} from '@clayui/core';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 
 import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
 import BuildTable from '../../components/BuildTable/BuildTable';
-
-let oAuth2Client;
-
-try {
-	oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-		'liferay-jethr0-etc-spring-boot-oauth-application-user-agent'
-	);
-}
-catch (error) {
-	console.error(error);
-}
+import setSpringBootData from '../../services/setSpringBootData';
 
 function JobPage() {
-	const [job, setJob] = useState(null);
 	const {id} = useParams();
+	let [job, setJob] = useState(null);
+	let [jobBuilds, setJobBuilds] = useState(null);
 
-	useEffect(() => {
-		oAuth2Client
-			?.fetch('/jobs/' + id)
-			.then((response) => response.text())
-			.then((job) => {
-				setJob(JSON.parse(job));
-			})
-			// eslint-disable-next-line no-console
-			.catch((error) => console.log(error));
-	}, []);
+	setSpringBootData({
+		setData: setJob,
+		urlPath: '/jobs/' + id
+	});
 
-	let jobBuilds = [];
+	setSpringBootData({
+		setData: setJobBuilds,
+		timeout: 2500,
+		urlPath: '/jobs/builds/' + jobId
+	});
+
 	let jobName = 'Job #' + id;
 
 	if (job) {
-		jobBuilds = job.builds;
 		jobName = job.name;
 	}
 

@@ -48,12 +48,15 @@ int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
 	<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= String.valueOf(delta) %>" />
 </portlet:renderURL>
 
-<aui:script use="liferay-admin">
-	new Liferay.Portlet.Admin({
-		form: document.<portlet:namespace />fm,
-		namespace: '<portlet:namespace />',
-		redirectUrl: '<%= redirectURL %>',
-		submitButton: '.save-server-button',
-		url: '<portlet:actionURL name="/server_admin/edit_server" />',
-	});
-</aui:script>
+<portlet:actionURL name="/server_admin/edit_server" var="url" />
+
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"redirectURL", redirectURL
+		).put(
+			"url", url
+		).build()
+	%>'
+	module="js/main"
+/>

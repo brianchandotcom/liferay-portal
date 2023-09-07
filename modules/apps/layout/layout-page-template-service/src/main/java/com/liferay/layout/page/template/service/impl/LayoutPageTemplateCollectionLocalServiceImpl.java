@@ -178,7 +178,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(
 		long groupId, String layoutPageTemplateCollectionKey, int type) {
 
-		return layoutPageTemplateCollectionPersistence.fetchByG_LPTCKT(
+		return layoutPageTemplateCollectionPersistence.fetchByG_LPTCK_T(
 			groupId, layoutPageTemplateCollectionKey, type);
 	}
 
@@ -186,7 +186,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	public LayoutPageTemplateCollection fetchLayoutPageTemplateCollectionByName(
 		long groupId, String name, int type) {
 
-		return layoutPageTemplateCollectionPersistence.fetchByG_NT(
+		return layoutPageTemplateCollectionPersistence.fetchByG_N_T(
 			groupId, name, type);
 	}
 
@@ -219,10 +219,9 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 				groupId, type, start, end, orderByComparator);
 		}
 
-		return layoutPageTemplateCollectionPersistence.findByG_T_LikeN(
-			groupId, type,
-			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], start,
-			end, orderByComparator);
+		return layoutPageTemplateCollectionPersistence.findByG_LikeN_T(
+			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+			type, start, end, orderByComparator);
 	}
 
 	@Override
@@ -240,17 +239,18 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 				groupId, type);
 		}
 
-		return layoutPageTemplateCollectionPersistence.countByG_T_LikeN(
-			groupId, type,
-			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
+		return layoutPageTemplateCollectionPersistence.countByG_LikeN_T(
+			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+			type);
 	}
 
 	@Override
 	public String getUniqueLayoutPageTemplateCollectionName(
-		long groupId, String name) {
+		long groupId, String name, int type) {
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			layoutPageTemplateCollectionPersistence.fetchByG_N(groupId, name);
+			layoutPageTemplateCollectionPersistence.fetchByG_N_T(
+				groupId, name, type);
 
 		if (layoutPageTemplateCollection == null) {
 			return name;
@@ -263,8 +263,8 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 				name, count++);
 
 			layoutPageTemplateCollection =
-				layoutPageTemplateCollectionPersistence.fetchByG_N(
-					groupId, newName);
+				layoutPageTemplateCollectionPersistence.fetchByG_N_T(
+					groupId, newName, type);
 
 			if (layoutPageTemplateCollection == null) {
 				return newName;
@@ -312,7 +312,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 		while (true) {
 			LayoutPageTemplateCollection layoutPageTemplateCollection =
-				layoutPageTemplateCollectionPersistence.fetchByG_LPTCKT(
+				layoutPageTemplateCollectionPersistence.fetchByG_LPTCK_T(
 					groupId, curLayoutPageTemplateCollectionKey, type);
 
 			if (layoutPageTemplateCollection == null) {
@@ -341,7 +341,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 		}
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			layoutPageTemplateCollectionPersistence.fetchByG_NT(
+			layoutPageTemplateCollectionPersistence.fetchByG_N_T(
 				groupId, name, type);
 
 		if (layoutPageTemplateCollection != null) {

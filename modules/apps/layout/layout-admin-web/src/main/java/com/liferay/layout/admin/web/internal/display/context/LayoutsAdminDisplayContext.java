@@ -1561,7 +1561,8 @@ public class LayoutsAdminDisplayContext {
 		for (LayoutPageTemplateCollection layoutPageTemplateCollection :
 				LayoutPageTemplateCollectionServiceUtil.
 					getLayoutPageTemplateCollections(
-						themeDisplay.getScopeGroupId())) {
+						themeDisplay.getScopeGroupId(),
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC)) {
 
 			int layoutPageTemplateEntriesCount =
 				LayoutPageTemplateEntryServiceUtil.

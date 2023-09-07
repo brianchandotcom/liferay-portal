@@ -56,6 +56,9 @@ public class NotificationUtil {
 		String recipientEmailAddress, String subject, String body,
 		String attachmentFileName) {
 
+		body = JenkinsResultsParserUtil.redact(body);
+		subject = JenkinsResultsParserUtil.redact(subject);
+
 		Properties sessionProperties = System.getProperties();
 
 		sessionProperties.put("mail.smtp.auth", "true");
@@ -136,6 +139,9 @@ public class NotificationUtil {
 	public static void sendSlackNotification(
 		String body, String channelName, String iconEmoji, String subject,
 		String username) {
+
+		body = JenkinsResultsParserUtil.redact(body);
+		subject = JenkinsResultsParserUtil.redact(subject);
 
 		String text = body;
 

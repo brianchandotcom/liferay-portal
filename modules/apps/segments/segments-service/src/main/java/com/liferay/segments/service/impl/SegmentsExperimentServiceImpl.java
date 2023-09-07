@@ -77,7 +77,7 @@ public class SegmentsExperimentServiceImpl
 			getPermissionChecker(), segmentsExperiment, ActionKeys.DELETE);
 
 		return segmentsExperimentLocalService.deleteSegmentsExperiment(
-			segmentsExperiment, false);
+			segmentsExperiment, force);
 	}
 
 	@Override

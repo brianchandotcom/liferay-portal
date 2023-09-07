@@ -104,6 +104,27 @@ import org.osgi.service.component.annotations.Reference;
 public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
+	protected void addSuccessMessage(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+		int workflowAction = ParamUtil.getInteger(
+			actionRequest, "workflowAction",
+			WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		if (Validator.isNotNull(portletResource) &&
+			(workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT)) {
+
+			MultiSessionMessages.add(
+				actionRequest, portletResource + "requestProcessed");
+		}
+		else {
+			super.addSuccessMessage(actionRequest, actionResponse);
+		}
+	}
+
+	@Override
 	protected void doProcessAction(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
@@ -180,21 +201,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				return;
 			}
 
-			String portletResource = ParamUtil.getString(
-				actionRequest, "portletResource");
 			int workflowAction = ParamUtil.getInteger(
 				actionRequest, "workflowAction",
 				WorkflowConstants.ACTION_SAVE_DRAFT);
-
-			if (Validator.isNotNull(portletResource) &&
-				(workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT) &&
-				!cmd.equals(Constants.ADD)) {
-
-				hideDefaultSuccessMessage(actionRequest);
-
-				MultiSessionMessages.add(
-					actionRequest, portletResource + "_requestProcessed");
-			}
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
@@ -209,28 +218,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					  (workflowAction ==
 						  WorkflowConstants.ACTION_SAVE_DRAFT))) {
 
-				if (Validator.isNotNull(portletResource) &&
-					!portletResource.equals(BlogsPortletKeys.BLOGS_ADMIN)) {
-
-					hideDefaultSuccessMessage(actionRequest);
-				}
-
-				MultiSessionMessages.add(
-					actionRequest, portletResource + "_requestProcessed");
-
 				_sendUpdateRedirect(actionRequest, actionResponse);
 			}
 			else if (Validator.isNotNull(redirect) &&
 					 cmd.equals(Constants.ADD) && (entry != null)) {
-
-				if (Validator.isNotNull(portletResource) &&
-					!portletResource.equals(BlogsPortletKeys.BLOGS_ADMIN)) {
-
-					hideDefaultSuccessMessage(actionRequest);
-				}
-
-				MultiSessionMessages.add(
-					actionRequest, portletResource + "_requestProcessed");
 
 				_sendAddRedirect(
 					actionRequest, actionResponse, entry.getEntryId());
@@ -623,14 +614,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		_assetDisplayPageEntryFormProcessor.process(
 			BlogsEntry.class.getName(), entry.getEntryId(), actionRequest);
-
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
-
-		if (Validator.isNotNull(portletResource)) {
-			MultiSessionMessages.add(
-				actionRequest, portletResource + "_requestProcessed");
-		}
 
 		return entry;
 	}

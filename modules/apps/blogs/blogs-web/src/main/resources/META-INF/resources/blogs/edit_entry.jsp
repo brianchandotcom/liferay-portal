@@ -26,6 +26,7 @@ renderResponse.setTitle(blogsEditEntryDisplayContext.getPageTitle(resourceBundle
 		<aui:input name="referringPortletResource" type="hidden" value="<%= blogsEditEntryDisplayContext.getReferringPortletResource() %>" />
 		<aui:input name="entryId" type="hidden" value="<%= blogsEditEntryDisplayContext.getEntryId() %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
+		<aui:input name="portletResource" type="hidden" value='<%= ParamUtil.getString(request, "portletResource") %>' />
 
 		<div class="lfr-form-content">
 			<liferay-ui:error exception="<%= DuplicateFriendlyURLEntryException.class %>" message="the-url-title-is-already-in-use-please-enter-a-unique-url-title" />

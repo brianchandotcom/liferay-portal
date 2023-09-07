@@ -7,6 +7,7 @@ package com.liferay.blogs.web.internal.display.context;
 
 import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
 import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
+import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.settings.BlogsGroupServiceSettings;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -132,16 +134,6 @@ public class BlogsEditEntryDisplayContext {
 	}
 
 	public String getEditEntryURL() {
-		if (Validator.isNull(_portletResource)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			_portletResource = portletDisplay.getPortletResource();
-		}
-
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
@@ -149,7 +141,23 @@ public class BlogsEditEntryDisplayContext {
 		).setRedirect(
 			getRedirect()
 		).setPortletResource(
-			_portletResource
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
+
+				if (Objects.equals(
+						portletDisplay.getPortletName(),
+						BlogsPortletKeys.BLOGS_ADMIN)) {
+
+					return null;
+				}
+
+				return portletDisplay.getPortletResource();
+			}
 		).buildString();
 	}
 
@@ -462,7 +470,6 @@ public class BlogsEditEntryDisplayContext {
 	private Long _entryId;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private String _portletResource;
 	private String _redirect;
 	private Long _smallImageFileEntryId;
 	private String _title;

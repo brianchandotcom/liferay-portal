@@ -15,8 +15,6 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = blogsViewD
 SearchContainer<?> searchContainer = blogsViewDisplayContext.getSearchContainer();
 %>
 
-<liferay-ui:success key='<%= portletDisplay.getId() + "requestProcessed" %>' message="your-request-completed-successfully" />
-
 <portlet:actionURL name="/blogs/edit_entry" var="restoreTrashEntriesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>

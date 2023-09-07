@@ -35,7 +35,7 @@ public class CTCollectionModelListener extends BaseModelListener<CTCollection> {
 		throws ModelListenerException {
 
 		if (ctCollection.isShareable() ||
-			(ctCollection.isShareable() !=
+			(ctCollection.isShareable() ==
 				originalCTCollection.isShareable())) {
 
 			return;

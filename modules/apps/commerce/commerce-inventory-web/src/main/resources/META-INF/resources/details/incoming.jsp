@@ -19,6 +19,10 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 		contextParams='<%=
 			HashMapBuilder.<String, String>put(
 				"sku", commerceInventoryDisplayContext.getSku()
+			)
+			.put(
+				"unitOfMeasureKey",
+				 commerceInventoryDisplayContext.getUnitOfMeasureKey()
 			).build()
 		%>'
 		creationMenu="<%= commerceInventoryDisplayContext.getReplenishmentCreationMenu() %>"

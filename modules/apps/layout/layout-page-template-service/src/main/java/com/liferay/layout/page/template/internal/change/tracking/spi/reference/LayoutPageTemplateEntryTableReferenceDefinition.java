@@ -55,6 +55,9 @@ public class LayoutPageTemplateEntryTableReferenceDefinition
 						LayoutPageTemplateEntry.class.getName())
 				)
 			)
+		).singleColumnReference(
+			LayoutPageTemplateEntryTable.INSTANCE.plid,
+			LayoutTable.INSTANCE.plid
 		).resourcePermissionReference(
 			LayoutPageTemplateEntryTable.INSTANCE.layoutPageTemplateEntryId,
 			LayoutPageTemplateEntry.class
@@ -79,9 +82,6 @@ public class LayoutPageTemplateEntryTableReferenceDefinition
 		).singleColumnReference(
 			LayoutPageTemplateEntryTable.INSTANCE.layoutPrototypeId,
 			LayoutPrototypeTable.INSTANCE.layoutPrototypeId
-		).singleColumnReference(
-			LayoutPageTemplateEntryTable.INSTANCE.plid,
-			LayoutTable.INSTANCE.plid
 		);
 	}
 

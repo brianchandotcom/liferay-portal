@@ -5,8 +5,8 @@
 
 package com.liferay.portal.security.content.security.policy.internal.security.csp;
 
-import com.liferay.portal.kernel.security.csp.CSPNonceProvider;
-import com.liferay.portal.security.content.security.policy.internal.CSPNonceManager;
+import com.liferay.portal.kernel.security.csp.ContentSecurityPolicyNonceProvider;
+import com.liferay.portal.security.content.security.policy.internal.ContentSecurityPolicyNonceManager;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,15 +16,18 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = CSPNonceProvider.class)
-public class CSPNonceProviderImpl implements CSPNonceProvider {
+@Component(service = ContentSecurityPolicyNonceProvider.class)
+public class ContentSecurityPolicyNonceProviderImpl
+	implements ContentSecurityPolicyNonceProvider {
 
 	@Override
 	public String getCSPNonce(HttpServletRequest httpServletRequest) {
-		return _cspNonceManager.getCSPNonce(httpServletRequest);
+		return _contentSecurityPolicyNonceManager.getCSPNonce(
+			httpServletRequest);
 	}
 
 	@Reference
-	private CSPNonceManager _cspNonceManager;
+	private ContentSecurityPolicyNonceManager
+		_contentSecurityPolicyNonceManager;
 
 }

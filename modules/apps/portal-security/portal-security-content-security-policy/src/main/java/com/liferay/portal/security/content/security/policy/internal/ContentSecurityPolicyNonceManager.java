@@ -19,8 +19,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera Avellón
  */
-@Component(service = CSPNonceManager.class)
-public class CSPNonceManager {
+@Component(service = ContentSecurityPolicyNonceManager.class)
+public class ContentSecurityPolicyNonceManager {
 
 	public String ensureNonce(HttpServletRequest httpServletRequest) {
 
@@ -92,7 +92,7 @@ public class CSPNonceManager {
 	}
 
 	private static final String _NONCE_ATTR =
-		CSPNonceManager.class.getName() + ":nonce";
+		ContentSecurityPolicyNonceManager.class.getName() + ":nonce";
 
 	@Reference
 	private Portal _portal;

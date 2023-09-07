@@ -9,11 +9,10 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.content.security.policy.internal.CSPNonceManager;
+import com.liferay.portal.security.content.security.policy.internal.ContentSecurityPolicyNonceManager;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
@@ -84,10 +83,11 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 			return;
 		}
 
-		String nonce = _cspNonceManager.ensureNonce(httpServletRequest);
+		String nonce = _contentSecurityPolicyNonceManager.ensureNonce(
+			httpServletRequest);
 
 		try {
-			_cspNonceManager.setTLSNonce(nonce);
+			_contentSecurityPolicyNonceManager.setTLSNonce(nonce);
 
 			policy = StringUtil.replace(policy, "[$NONCE$]", "nonce-" + nonce);
 
@@ -126,7 +126,7 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 			httpServletResponse.setContentLength(content.length());
 		}
 		finally {
-			_cspNonceManager.removeTLSNonce();
+			_contentSecurityPolicyNonceManager.removeTLSNonce();
 		}
 	}
 
@@ -193,7 +193,8 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private CSPNonceManager _cspNonceManager;
+	private ContentSecurityPolicyNonceManager
+		_contentSecurityPolicyNonceManager;
 
 	@Reference
 	private Portal _portal;

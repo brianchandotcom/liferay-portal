@@ -13,32 +13,26 @@ long exportImportConfigurationId = (Long)request.getAttribute(ExportImportWebKey
 ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(exportImportConfigurationId);
 %>
 
-<liferay-ui:panel-container
-	extended="<%= true %>"
-	id="exportImportConfigurationPanelContainer"
-	persistState="<%= false %>"
->
-	<liferay-ui:panel
-		collapsible="<%= false %>"
-		extended="<%= true %>"
-		title="template-type"
-	>
-		<liferay-ui:message key="<%= ExportImportConfigurationConstants.getTypeLabel(exportImportConfiguration.getType()) %>" />
-	</liferay-ui:panel>
+<clay:sheet-section>
+	<h2 class="sheet-title">
+		<liferay-ui:message key="template-type" />
+	</h2>
 
-	<liferay-ui:panel
-		collapsible="<%= false %>"
-		extended="<%= true %>"
-		title="created-by"
-	>
-		<liferay-ui:message key="<%= exportImportConfiguration.getUserName() %>" />
-	</liferay-ui:panel>
+	<liferay-ui:message key="<%= ExportImportConfigurationConstants.getTypeLabel(exportImportConfiguration.getType()) %>" />
+</clay:sheet-section>
 
-	<liferay-ui:panel
-		collapsible="<%= false %>"
-		extended="<%= true %>"
-		title="description"
-	>
-		<liferay-ui:message key="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>" />
-	</liferay-ui:panel>
-</liferay-ui:panel-container>
+<clay:sheet-section>
+	<h2 class="sheet-title">
+		<liferay-ui:message key="created-by" />
+	</h2>
+
+	<liferay-ui:message key="<%= exportImportConfiguration.getUserName() %>" />
+</clay:sheet-section>
+
+<clay:sheet-section>
+	<h2 class="sheet-title">
+		<liferay-ui:message key="description" />
+	</h2>
+
+	<liferay-ui:message key="<%= HtmlUtil.escape(exportImportConfiguration.getDescription()) %>" />
+</clay:sheet-section>

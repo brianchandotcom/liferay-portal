@@ -167,7 +167,7 @@ time interval. The unit of measure is based on the value of time-unit element.
 <!ELEMENT property-key (#PCDATA)>
 
 <!--
-The cron-trigger-value value should be a cron text.
+The cron-trigger-value value should be a non empty cron text.
 -->
 <!ELEMENT cron-trigger-value (#PCDATA)>
 
@@ -177,8 +177,8 @@ The simple element specifies an interval trigger for a scheduler.
 <!ELEMENT simple ((property-key | simple-trigger-value), time-unit)>
 
 <!--
-The simple-trigger-value value is a number that represents how often to trigger
-a scheduler.
+The simple-trigger-value value is a number, greater than 0, that represents how
+often to trigger a scheduler.
 -->
 <!ELEMENT simple-trigger-value (#PCDATA)>
 

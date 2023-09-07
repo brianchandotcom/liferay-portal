@@ -14,13 +14,14 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
+import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
+import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexCreator;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
@@ -68,10 +69,7 @@ public class SingleIndexToMultipleIndexImporterImpl
 		() -> "liferay-search-tuning-rankings";
 
 	private void _deleteSingleIndexIfEmpty() {
-		List<Document> documents = _getSingleIndexDocuments(
-			_queries.matchAll());
-
-		if (documents.isEmpty()) {
+		if (_getSingleIndexDocumentCount() == 0) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Deleting index " + SINGLE_INDEX_NAME.getIndexName());
 			}
@@ -84,11 +82,23 @@ public class SingleIndexToMultipleIndexImporterImpl
 		return companyIndexName + StringPool.DASH + RANKINGS_INDEX_NAME_SUFFIX;
 	}
 
-	private List<Document> _getSingleIndexDocuments(Query query) {
+	private long _getSingleIndexDocumentCount() {
+		CountSearchRequest countSearchRequest = new CountSearchRequest();
+
+		countSearchRequest.setIndexNames(SINGLE_INDEX_NAME.getIndexName());
+		countSearchRequest.setQuery(_queries.matchAll());
+
+		CountSearchResponse countSearchResponse = _searchEngineAdapter.execute(
+			countSearchRequest);
+
+		return countSearchResponse.getCount();
+	}
+
+	private List<Document> _getSingleIndexDocuments(String companyIndexName) {
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(SINGLE_INDEX_NAME.getIndexName());
-		searchSearchRequest.setQuery(query);
+		searchSearchRequest.setQuery(_queries.term("index", companyIndexName));
 		searchSearchRequest.setFetchSource(true);
 
 		SearchSearchResponse searchSearchResponse =
@@ -103,8 +113,7 @@ public class SingleIndexToMultipleIndexImporterImpl
 	private void _importCompanyDocumentsAndDeleteFromSingleIndex(
 		String companyIndexName) {
 
-		List<Document> documents = _getSingleIndexDocuments(
-			_queries.term("index", companyIndexName));
+		List<Document> documents = _getSingleIndexDocuments(companyIndexName);
 
 		if (documents.isEmpty()) {
 			return;

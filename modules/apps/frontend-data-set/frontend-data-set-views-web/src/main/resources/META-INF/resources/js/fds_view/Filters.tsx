@@ -16,7 +16,7 @@ import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {format, getYear, isBefore, isEqual} from 'date-fns';
-import {fetch, navigate, openModal, openToast, sub} from 'frontend-js-web';
+import {fetch, navigate, openModal, sub} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
@@ -25,6 +25,8 @@ import {FDSViewType} from '../FDSViews';
 import {IPickList, getAllPicklists, getFields} from '../api';
 import CheckboxMultiSelect from '../components/CheckboxMultiSelect';
 import OrderableTable from '../components/OrderableTable';
+import openDefaultFailureToast from '../utils/openDefaultFailureToast';
+import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 
 interface IField {
 	format: string;
@@ -54,20 +56,6 @@ interface IDynamicFilter extends IFilter {
 }
 
 type FilterCollection = Array<IDateFilter | IDynamicFilter>;
-
-function alertFailed() {
-	openToast({
-		message: Liferay.Language.get('your-request-failed-to-complete'),
-		type: 'danger',
-	});
-}
-
-function alertSuccess() {
-	openToast({
-		message: Liferay.Language.get('your-request-completed-successfully'),
-		type: 'success',
-	});
-}
 
 interface IPropsAddFDSFilterModalContent {
 	closeModal: Function;
@@ -154,7 +142,7 @@ function AddFDSFilterModalContent({
 		setSaveButtonDisabled(true);
 
 		if (!selectedField) {
-			alertFailed();
+			openDefaultFailureToast();
 
 			return null;
 		}
@@ -217,14 +205,15 @@ function AddFDSFilterModalContent({
 
 		if (!response.ok) {
 			setSaveButtonDisabled(false);
-			alertFailed();
+
+			openDefaultFailureToast();
 
 			return null;
 		}
 
 		const responseJSON = await response.json();
 
-		alertSuccess();
+		openDefaultSuccessToast();
 
 		onSave({...responseJSON, displayType});
 
@@ -696,7 +685,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 		);
 
 		if (!response.ok) {
-			alertFailed();
+			openDefaultFailureToast();
 
 			return null;
 		}
@@ -706,12 +695,12 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 		const fdsFiltersOrder = responseJSON?.fdsFiltersOrder;
 
 		if (fdsFiltersOrder && fdsFiltersOrder === newFiltersOrder) {
-			alertSuccess();
+			openDefaultSuccessToast();
 
 			setNewFiltersOrder('');
 		}
 		else {
-			alertFailed();
+			openDefaultFailureToast();
 		}
 	};
 
@@ -784,7 +773,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 							method: 'DELETE',
 						})
 							.then(() => {
-								alertSuccess();
+								openDefaultSuccessToast();
 
 								setFilters(
 									filters.filter(
@@ -793,9 +782,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 									)
 								);
 							})
-							.catch(() => {
-								alertFailed();
-							});
+							.catch(openDefaultFailureToast);
 					},
 				},
 			],

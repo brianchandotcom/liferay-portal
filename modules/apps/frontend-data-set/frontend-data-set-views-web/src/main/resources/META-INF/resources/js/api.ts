@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {fetch, openToast} from 'frontend-js-web';
+import {fetch} from 'frontend-js-web';
 
 import {OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
+import openDefaultFailureToast from './utils/openDefaultFailureToast';
 
 const LOCALIZABLE_PROPERTY_SUFFIX = '_i18n';
 
@@ -67,10 +68,7 @@ export async function getFields(fdsView: FDSViewType) {
 	const response = await fetch(`/o${restApplication}/openapi.json`);
 
 	if (!response.ok) {
-		openToast({
-			message: Liferay.Language.get('your-request-failed-to-complete'),
-			type: 'danger',
-		});
+		openDefaultFailureToast();
 
 		return [];
 	}
@@ -81,10 +79,7 @@ export async function getFields(fdsView: FDSViewType) {
 		responseJSON?.components?.schemas[restSchema]?.properties;
 
 	if (!properties) {
-		openToast({
-			message: Liferay.Language.get('your-request-failed-to-complete'),
-			type: 'danger',
-		});
+		openDefaultFailureToast();
 
 		return [];
 	}
@@ -123,10 +118,7 @@ export async function getAllPicklists(
 	);
 
 	if (!response.ok) {
-		openToast({
-			message: Liferay.Language.get('your-request-failed-to-complete'),
-			type: 'danger',
-		});
+		openDefaultFailureToast();
 
 		return [];
 	}

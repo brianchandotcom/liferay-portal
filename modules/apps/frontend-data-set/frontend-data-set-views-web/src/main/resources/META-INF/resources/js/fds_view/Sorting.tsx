@@ -9,7 +9,7 @@ import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
-import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
+import {fetch, navigate, openModal} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
@@ -19,6 +19,8 @@ import {FDSViewType} from '../FDSViews';
 import {getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
 import RequiredMark from '../components/RequiredMark';
+import openDefaultFailureToast from '../utils/openDefaultFailureToast';
+import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 
 interface IAddFDSSortModalContentInterface {
 	closeModal: Function;
@@ -61,20 +63,6 @@ const SORTING_OPTIONS = [
 	SORTING_DIRECTION.ASCENDING,
 	SORTING_DIRECTION.DESCENDING,
 ];
-
-function alertFailed() {
-	openToast({
-		message: Liferay.Language.get('your-request-failed-to-complete'),
-		type: 'danger',
-	});
-}
-
-function alertSuccess() {
-	openToast({
-		message: Liferay.Language.get('your-request-completed-successfully'),
-		type: 'success',
-	});
-}
 
 const sortingDirectionTextMatch = (item: IFDSSort) => {
 	return item.sortingDirection === SORTING_DIRECTION.ASCENDING.value
@@ -125,7 +113,7 @@ const AddFDSSortModalContent = ({
 		);
 
 		if (!field) {
-			alertFailed();
+			openDefaultFailureToast();
 
 			return;
 		}
@@ -146,14 +134,14 @@ const AddFDSSortModalContent = ({
 		if (!response.ok) {
 			setSaveButtonDisabled(false);
 
-			alertFailed();
+			openDefaultFailureToast();
 
 			return;
 		}
 
 		const responseJSON = await response.json();
 
-		alertSuccess();
+		openDefaultSuccessToast();
 
 		onSave(responseJSON);
 
@@ -277,7 +265,7 @@ const EditFDSSortModalContent = ({
 		if (!response.ok) {
 			setSaveButtonDisabled(false);
 
-			alertFailed();
+			openDefaultFailureToast();
 
 			return;
 		}
@@ -286,7 +274,7 @@ const EditFDSSortModalContent = ({
 
 		closeModal();
 
-		alertSuccess();
+		openDefaultSuccessToast();
 
 		onSave({editedFDSSort});
 	};
@@ -459,22 +447,12 @@ const Sorting = ({
 						});
 
 						if (!response.ok) {
-							openToast({
-								message: Liferay.Language.get(
-									'your-request-failed-to-complete'
-								),
-								type: 'danger',
-							});
+							openDefaultFailureToast();
 
 							return;
 						}
 
-						openToast({
-							message: Liferay.Language.get(
-								'your-request-completed-successfully'
-							),
-							type: 'success',
-						});
+						openDefaultSuccessToast();
 
 						setFDSSorts(
 							fdsSorts?.filter(
@@ -529,9 +507,9 @@ const Sorting = ({
 		);
 
 		if (!response.ok) {
-			alertFailed();
+			openDefaultFailureToast();
 
-			return null;
+			return;
 		}
 
 		const responseJSON = await response.json();
@@ -539,12 +517,12 @@ const Sorting = ({
 		const fdsSortsOrder = responseJSON?.fdsSortsOrder;
 
 		if (fdsSortsOrder && fdsSortsOrder === newFDSSortsOrder) {
-			alertSuccess();
+			openDefaultSuccessToast();
 
 			setNewFDSSortsOrder('');
 		}
 		else {
-			alertFailed();
+			openDefaultFailureToast();
 		}
 	};
 

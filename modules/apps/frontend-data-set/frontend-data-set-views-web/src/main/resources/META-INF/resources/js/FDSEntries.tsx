@@ -11,7 +11,7 @@ import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {fetch, navigate, openModal, openToast} from 'frontend-js-web';
+import {fetch, navigate, openModal} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useState} from 'react';
 
@@ -26,6 +26,8 @@ import {
 import {FDSViewType} from './FDSViews';
 import RequiredMark from './components/RequiredMark';
 import ValidationFeedback from './components/ValidationFeedback';
+import openDefaultFailureToast from './utils/openDefaultFailureToast';
+import openDefaultSuccessToast from './utils/openDefaultSuccessToast';
 
 const VIEWS_COUNT_TABLE_CELL_RENDERER_NAME = 'viewsCountTableCellRenderer';
 
@@ -358,28 +360,25 @@ const AddFDSEntryModalContent = ({
 			method: 'POST',
 		});
 
+		if (!response.ok) {
+			openDefaultFailureToast();
+
+			return;
+		}
+
 		const fdsEntry = await response.json();
 
-		if (response.ok && fdsEntry?.id) {
+		if (fdsEntry?.id) {
 			closeModal();
 
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-completed-successfully'
-				),
-				type: 'success',
-			});
+			openDefaultSuccessToast();
 
 			loadData();
 		}
 		else {
 			setSaveButtonDisabled(false);
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-failed-to-complete'
-				),
-				type: 'danger',
-			});
+
+			openDefaultFailureToast();
 		}
 	};
 
@@ -406,78 +405,70 @@ const AddFDSEntryModalContent = ({
 
 		const response = await fetch(`/o${restApplication}/openapi.json`);
 
+		if (!response.ok) {
+			openDefaultFailureToast();
+
+			return;
+		}
+
 		const responseJson = await response.json();
 
-		if (response.ok) {
-			const paths = Object.keys(responseJson.paths ?? []);
-			const schemaNames = Object.keys(
-				responseJson.components?.schemas ?? []
-			);
+		const paths = Object.keys(responseJson.paths ?? []);
+		const schemaNames = Object.keys(responseJson.components?.schemas ?? []);
 
-			const schemaEndpoints: Map<string, Array<string>> = new Map();
+		const schemaEndpoints: Map<string, Array<string>> = new Map();
 
-			schemaNames.forEach((schemaName) => {
-				paths.forEach((path: string) => {
-					if (!isPathValid(path, ALLOWED_ENDPOINTS_PARAMETERS)) {
-						return;
-					}
-
-					if (
-						responseJson.paths[
-							path
-						]?.get?.responses.default.content[
-							'application/json'
-						]?.schema?.$ref?.endsWith(`/Page${schemaName}`)
-					) {
-						const endpoints = schemaEndpoints.get(schemaName) ?? [];
-
-						endpoints.push(path);
-
-						if (endpoints.length === 1) {
-							schemaEndpoints.set(schemaName, endpoints);
-						}
-					}
-				});
-			});
-
-			if (schemaEndpoints.size === 0) {
-				setSelectedRESTSchema(null);
-
-				setSelectedRESTEndpoint(null);
-
-				setNoEnpointsRESTApplicationValidationError(true);
-			}
-			else if (schemaEndpoints.size === 1) {
-				const schema = schemaEndpoints.keys().next().value;
-
-				setSelectedRESTSchema(schema);
-
-				const paths = schemaEndpoints.get(schema);
-
-				if (paths?.length === 1) {
-					setSelectedRESTEndpoint(paths[0]);
+		schemaNames.forEach((schemaName) => {
+			paths.forEach((path: string) => {
+				if (!isPathValid(path, ALLOWED_ENDPOINTS_PARAMETERS)) {
+					return;
 				}
 
-				setNoEnpointsRESTApplicationValidationError(false);
+				if (
+					responseJson.paths[path]?.get?.responses.default.content[
+						'application/json'
+					]?.schema?.$ref?.endsWith(`/Page${schemaName}`)
+				) {
+					const endpoints = schemaEndpoints.get(schemaName) ?? [];
+
+					endpoints.push(path);
+
+					if (endpoints.length === 1) {
+						schemaEndpoints.set(schemaName, endpoints);
+					}
+				}
+			});
+		});
+
+		if (schemaEndpoints.size === 0) {
+			setSelectedRESTSchema(null);
+
+			setSelectedRESTEndpoint(null);
+
+			setNoEnpointsRESTApplicationValidationError(true);
+		}
+		else if (schemaEndpoints.size === 1) {
+			const schema = schemaEndpoints.keys().next().value;
+
+			setSelectedRESTSchema(schema);
+
+			const paths = schemaEndpoints.get(schema);
+
+			if (paths?.length === 1) {
+				setSelectedRESTEndpoint(paths[0]);
 			}
-			else {
-				setSelectedRESTSchema(null);
 
-				setSelectedRESTEndpoint(null);
-
-				setNoEnpointsRESTApplicationValidationError(false);
-			}
-
-			setRESTSchemaEndpoints(schemaEndpoints);
+			setNoEnpointsRESTApplicationValidationError(false);
 		}
 		else {
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-failed-to-complete'
-				),
-				type: 'danger',
-			});
+			setSelectedRESTSchema(null);
+
+			setSelectedRESTEndpoint(null);
+
+			setNoEnpointsRESTApplicationValidationError(false);
 		}
+
+		setRESTSchemaEndpoints(schemaEndpoints);
 	};
 
 	const validate = () => {
@@ -771,23 +762,11 @@ const RenameFDSEntryModalContent = ({
 			.then(() => {
 				closeModal();
 
-				openToast({
-					message: Liferay.Language.get(
-						'your-request-completed-successfully'
-					),
-					type: 'success',
-				});
+				openDefaultSuccessToast();
 
 				loadData();
 			})
-			.catch(() =>
-				openToast({
-					message: Liferay.Language.get(
-						'your-request-failed-to-complete'
-					),
-					type: 'danger',
-				})
-			);
+			.catch(openDefaultFailureToast);
 	}
 
 	return (
@@ -906,23 +885,11 @@ const FDSEntries = ({
 							method: itemData.actions.delete.method,
 						})
 							.then(() => {
-								openToast({
-									message: Liferay.Language.get(
-										'your-request-completed-successfully'
-									),
-									type: 'success',
-								});
+								openDefaultSuccessToast();
 
 								loadData();
 							})
-							.catch(() =>
-								openToast({
-									message: Liferay.Language.get(
-										'your-request-failed-to-complete'
-									),
-									type: 'danger',
-								})
-							);
+							.catch(openDefaultFailureToast);
 					},
 				},
 			],

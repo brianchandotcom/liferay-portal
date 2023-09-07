@@ -7,12 +7,14 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import classnames from 'classnames';
-import {fetch, navigate, openToast} from 'frontend-js-web';
+import {fetch, navigate} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 import {API_URL} from '../Constants';
 import {IFDSViewSectionInterface} from '../FDSView';
 import RequiredMark from '../components/RequiredMark';
+import openDefaultFailureToast from '../utils/openDefaultFailureToast';
+import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 
 function Pagination({
 	fdsView,
@@ -114,25 +116,21 @@ function Pagination({
 			}
 		);
 
+		if (!response.ok) {
+			openDefaultFailureToast();
+
+			return;
+		}
+
 		const responseJSON = await response.json();
 
-		if (response.ok && responseJSON?.id) {
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-completed-successfully'
-				),
-				type: 'success',
-			});
+		if (responseJSON?.id) {
+			openDefaultSuccessToast();
 
 			onFDSViewUpdate(responseJSON);
 		}
 		else {
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-failed-to-complete'
-				),
-				type: 'danger',
-			});
+			openDefaultFailureToast();
 		}
 	};
 

@@ -9,18 +9,14 @@ import ClayLink from '@clayui/link';
 import ClayModal from '@clayui/modal';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {
-	IInternalRenderer,
-	fetch,
-	navigate,
-	openModal,
-	openToast,
-} from 'frontend-js-web';
+import {IInternalRenderer, fetch, navigate, openModal} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 import {API_URL, FDS_DEFAULT_PROPS, OBJECT_RELATIONSHIP} from './Constants';
 import {FDSEntryType} from './FDSEntries';
 import RequiredMark from './components/RequiredMark';
+import openDefaultFailureToast from './utils/openDefaultFailureToast';
+import openDefaultSuccessToast from './utils/openDefaultSuccessToast';
 
 const LIST_OF_ITEMS_PER_PAGE = '4, 8, 20, 40, 60';
 const DEFAULT_ITEMS_PER_PAGE = 20;
@@ -75,28 +71,25 @@ const AddFDSViewModalContent = ({
 			method: 'POST',
 		});
 
+		if (!response.ok) {
+			openDefaultFailureToast();
+
+			return;
+		}
+
 		const fdsView = await response.json();
 
 		if (fdsView?.id) {
 			closeModal();
 
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-completed-successfully'
-				),
-				type: 'success',
-			});
+			openDefaultSuccessToast();
 
 			loadData();
 		}
 		else {
 			setSaveButtonDisabled(false);
-			openToast({
-				message: Liferay.Language.get(
-					'your-request-failed-to-complete'
-				),
-				type: 'danger',
-			});
+
+			openDefaultFailureToast();
 		}
 	};
 
@@ -250,23 +243,11 @@ const FDSViews = ({
 							method: 'DELETE',
 						})
 							.then(() => {
-								openToast({
-									message: Liferay.Language.get(
-										'your-request-completed-successfully'
-									),
-									type: 'success',
-								});
+								openDefaultSuccessToast();
 
 								loadData();
 							})
-							.catch(() =>
-								openToast({
-									message: Liferay.Language.get(
-										'your-request-failed-to-complete'
-									),
-									type: 'danger',
-								})
-							);
+							.catch(openDefaultFailureToast);
 					},
 				},
 			],

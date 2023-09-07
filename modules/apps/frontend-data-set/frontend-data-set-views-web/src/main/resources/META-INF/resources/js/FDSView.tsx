@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import {IClientExtensionRenderer, fetch, openToast} from 'frontend-js-web';
+import {IClientExtensionRenderer, fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from './Constants';
@@ -17,6 +17,7 @@ import Fields from './fds_view/Fields';
 import Filters from './fds_view/Filters';
 import Pagination from './fds_view/Pagination';
 import Sorting from './fds_view/Sorting';
+import openDefaultFailureToast from './utils/openDefaultFailureToast';
 
 let NAVIGATION_BAR_ITEMS = [
 	{
@@ -111,12 +112,7 @@ const FDSView = ({
 				setLoading(false);
 			}
 			else {
-				openToast({
-					message: Liferay.Language.get(
-						'your-request-failed-to-complete'
-					),
-					type: 'danger',
-				});
+				openDefaultFailureToast();
 			}
 		};
 

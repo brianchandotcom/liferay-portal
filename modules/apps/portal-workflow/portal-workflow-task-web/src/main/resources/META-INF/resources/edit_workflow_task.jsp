@@ -60,96 +60,94 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 
 		<liferay-ui:error exception="<%= WorkflowTaskDueDateException.class %>" message="please-enter-a-valid-due-date" />
 
-		<div class="sheet">
-			<div class="panel-group panel-group-flush">
-				<aui:fieldset>
+		<clay:sheet
+			size="full"
+		>
+			<clay:sheet-section>
 
-					<%
-					request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-					%>
+				<%
+				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+				%>
 
-					<liferay-util:include page="/workflow_task_action.jsp" servletContext="<%= application %>">
-						<liferay-util:param name="mvcPath" value="/edit_workflow_task.jsp" />
-					</liferay-util:include>
+				<liferay-util:include page="/workflow_task_action.jsp" servletContext="<%= application %>">
+					<liferay-util:param name="mvcPath" value="/edit_workflow_task.jsp" />
+				</liferay-util:include>
 
-					<clay:col
-						md="6"
-					>
-						<aui:field-wrapper label="assigned-to">
-							<aui:fieldset>
-								<div class="align-items-center card-row">
-									<c:choose>
-										<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
-											<div class="card-col-field mr-2">
-												<div class="list-group-card-icon">
-													<liferay-user:user-portrait
-														userId="<%= workflowTask.getAssigneeUserId() %>"
-													/>
-												</div>
-											</div>
-
-											<div class="card-col-content card-col-gutters">
-												<div class="lfr-asset-assigned">
-													<%= HtmlUtil.escape(workflowTaskDisplayContext.getWorkflowTaskAssigneeUserName(workflowTask)) %>
-												</div>
-											</div>
-										</c:when>
-										<c:otherwise>
-											<div class="card-col-content card-col-gutters lfr-asset-assigned">
-												<div class="lfr-asset-assigned">
-													<%= workflowTaskDisplayContext.getWorkflowTaskUnassignedUserName() %>
-												</div>
-											</div>
-										</c:otherwise>
-									</c:choose>
-								</div>
-							</aui:fieldset>
-						</aui:field-wrapper>
-
-						<aui:field-wrapper label="task-name">
-							<aui:fieldset>
-								<%= workflowTask.getLabel(workflowTaskDisplayContext.getTaskContentLocale()) %>
-							</aui:fieldset>
-						</aui:field-wrapper>
-					</clay:col>
-
-					<clay:col
-						md="6"
-					>
-						<aui:field-wrapper label="create-date">
-							<aui:fieldset>
-								<%= workflowTaskDisplayContext.getCreateDateString(workflowTask) %>
-							</aui:fieldset>
-						</aui:field-wrapper>
-
-						<aui:field-wrapper label="due-date">
-							<aui:fieldset>
-								<%= workflowTaskDisplayContext.getDueDateString(workflowTask) %>
-							</aui:fieldset>
-						</aui:field-wrapper>
-					</clay:col>
-
-					<c:if test="<%= Validator.isNotNull(workflowTask.getDescription()) %>">
-						<clay:col>
-							<aui:field-wrapper label="description">
-								<aui:fieldset>
-									<%= workflowTaskDisplayContext.getDescription(workflowTask) %>
-								</aui:fieldset>
-							</aui:field-wrapper>
-						</clay:col>
-					</c:if>
-				</aui:fieldset>
-
-				<liferay-ui:panel-container
-					cssClass="task-panel-container"
-					extended="<%= false %>"
+				<clay:col
+					md="6"
 				>
-					<c:if test="<%= assetRenderer != null %>">
-						<liferay-ui:panel
-							extended="<%= true %>"
-							markupView="lexicon"
-							title="<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>"
-						>
+					<aui:field-wrapper label="assigned-to">
+						<aui:fieldset>
+							<div class="align-items-center card-row">
+								<c:choose>
+									<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
+										<div class="card-col-field mr-2">
+											<div class="list-group-card-icon">
+												<liferay-user:user-portrait
+													userId="<%= workflowTask.getAssigneeUserId() %>"
+												/>
+											</div>
+										</div>
+
+										<div class="card-col-content card-col-gutters">
+											<div class="lfr-asset-assigned">
+												<%= HtmlUtil.escape(workflowTaskDisplayContext.getWorkflowTaskAssigneeUserName(workflowTask)) %>
+											</div>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="card-col-content card-col-gutters lfr-asset-assigned">
+											<div class="lfr-asset-assigned">
+												<%= workflowTaskDisplayContext.getWorkflowTaskUnassignedUserName() %>
+											</div>
+										</div>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</aui:fieldset>
+					</aui:field-wrapper>
+
+					<aui:field-wrapper label="task-name">
+						<aui:fieldset>
+							<%= workflowTask.getLabel(workflowTaskDisplayContext.getTaskContentLocale()) %>
+						</aui:fieldset>
+					</aui:field-wrapper>
+				</clay:col>
+
+				<clay:col
+					md="6"
+				>
+					<aui:field-wrapper label="create-date">
+						<aui:fieldset>
+							<%= workflowTaskDisplayContext.getCreateDateString(workflowTask) %>
+						</aui:fieldset>
+					</aui:field-wrapper>
+
+					<aui:field-wrapper label="due-date">
+						<aui:fieldset>
+							<%= workflowTaskDisplayContext.getDueDateString(workflowTask) %>
+						</aui:fieldset>
+					</aui:field-wrapper>
+				</clay:col>
+
+				<c:if test="<%= Validator.isNotNull(workflowTask.getDescription()) %>">
+					<clay:col>
+						<aui:field-wrapper label="description">
+							<aui:fieldset>
+								<%= workflowTaskDisplayContext.getDescription(workflowTask) %>
+							</aui:fieldset>
+						</aui:field-wrapper>
+					</clay:col>
+				</c:if>
+			</clay:sheet-section>
+
+			<clay:panel-group>
+				<c:if test="<%= assetRenderer != null %>">
+					<clay:panel
+						displayTitle="<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>"
+						expanded="<%= true %>"
+					>
+						<div class="panel-body">
 							<c:if test="<%= assetRenderer.isLocalizable() %>">
 								<div class="locale-actions">
 									<liferay-ui:language
@@ -277,19 +275,19 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 									metadataFields='<%= new String[] {"author", "categories", "tags"} %>'
 								/>
 							</c:if>
-						</liferay-ui:panel>
+						</div>
+					</clay:panel>
 
-						<c:if test="<%= (assetEntry != null) && workflowHandler.isCommentable() %>">
+					<c:if test="<%= (assetEntry != null) && workflowHandler.isCommentable() %>">
 
-							<%
-							long discussionClassPK = workflowHandler.getDiscussionClassPK(workflowTask.getOptionalAttributes());
-							%>
+						<%
+						long discussionClassPK = workflowHandler.getDiscussionClassPK(workflowTask.getOptionalAttributes());
+						%>
 
-							<liferay-ui:panel
-								extended="<%= true %>"
-								markupView="lexicon"
-								title="comments"
-							>
+						<clay:panel
+							displayTitle='<%= LanguageUtil.get(request, "comments") %>'
+						>
+							<div class="panel-body">
 								<liferay-comment:discussion
 									assetEntryVisible="<%= false %>"
 									className="<%= assetRenderer.getClassName() %>"
@@ -299,19 +297,20 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 									redirect="<%= currentURL %>"
 									userId="<%= user.getUserId() %>"
 								/>
-							</liferay-ui:panel>
-						</c:if>
+							</div>
+						</clay:panel>
 					</c:if>
+				</c:if>
 
-					<liferay-ui:panel
-						markupView="lexicon"
-						title="activities"
-					>
+				<clay:panel
+					displayTitle='<%= LanguageUtil.get(request, "activities") %>'
+				>
+					<div class="panel-body">
 						<%@ include file="/workflow_logs.jspf" %>
-					</liferay-ui:panel>
-				</liferay-ui:panel-container>
-			</div>
-		</div>
+					</div>
+				</clay:panel>
+			</clay:panel-group>
+		</clay:sheet>
 	</clay:col>
 </clay:container-fluid>
 

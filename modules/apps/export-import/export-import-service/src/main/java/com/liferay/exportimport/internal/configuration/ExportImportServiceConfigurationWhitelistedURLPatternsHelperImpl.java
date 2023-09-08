@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -140,6 +139,6 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 	private SettingsLocatorHelper _settingsLocatorHelper;
 
 	private final Map<Long, URLPatternMapper<Boolean>> _urlPatternMappers =
-		Collections.synchronizedMap(new LinkedHashMap<>());
+		Collections.synchronizedMap(new HashMap<>());
 
 }

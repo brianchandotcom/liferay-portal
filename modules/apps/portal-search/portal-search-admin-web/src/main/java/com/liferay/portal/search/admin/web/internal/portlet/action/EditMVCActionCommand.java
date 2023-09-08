@@ -8,6 +8,7 @@ package com.liferay.portal.search.admin.web.internal.portlet.action;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageListener;
@@ -216,9 +217,10 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		_backgroundTaskManager.addBackgroundTask(
 			themeDisplay.getUserId(), CompanyConstants.SYSTEM,
 			"reindexIndexReindexer",
-			"com.liferay.portal.search.internal.background.task." +
-				"ReindexIndexReindexerBackgroundTaskExecutor",
+			_CLASS_NAME_REINDEX_INDEX_REINDEXER_BACKGROUND_TASK_EXECUTOR,
 			HashMapBuilder.<String, Serializable>put(
+				BackgroundTaskContextMapConstants.DELETE_ON_SUCCESS, true
+			).put(
 				ReindexBackgroundTaskConstants.CLASS_NAME,
 				ParamUtil.getString(actionRequest, "className")
 			).put(
@@ -230,6 +232,11 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 			).build(),
 			new ServiceContext());
 	}
+
+	private static final String
+		_CLASS_NAME_REINDEX_INDEX_REINDEXER_BACKGROUND_TASK_EXECUTOR =
+			"com.liferay.portal.search.internal.background.task." +
+				"ReindexIndexReindexerBackgroundTaskExecutor";
 
 	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;

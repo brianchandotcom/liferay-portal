@@ -242,7 +242,7 @@ public class EditInfoItemStrutsActionTest {
 			"999.9999999999999", null, null, null, null, null, null);
 	}
 
-	@FeatureFlags({"LPS-183727", "LPS-187754"})
+	@FeatureFlags({"LPS-183727", "LPS-187754", "LPS-195205"})
 	@Test
 	public void testAddInfoItemWithDisplayPageSuccessMessage()
 		throws Exception {

@@ -82,8 +82,8 @@ public interface SXPBlueprintService extends BaseService {
 	public SXPBlueprint updateSXPBlueprint(
 			long sxpBlueprintId, String configurationJSON,
 			Map<Locale, String> descriptionMap, String elementInstancesJSON,
-			String schemaVersion, Map<Locale, String> titleMap,
-			ServiceContext serviceContext)
+			String externalReferenceCode, String schemaVersion,
+			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException;
 
 }

@@ -359,14 +359,16 @@ public class SXPElementLocalServiceUtil {
 	public static SXPElement updateSXPElement(
 			long userId, long sxpElementId,
 			Map<java.util.Locale, String> descriptionMap,
-			String elementDefinitionJSON, boolean hidden, String schemaVersion,
+			String elementDefinitionJSON, String externalReferenceCode,
+			boolean hidden, String schemaVersion,
 			Map<java.util.Locale, String> titleMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateSXPElement(
-			userId, sxpElementId, descriptionMap, elementDefinitionJSON, hidden,
-			schemaVersion, titleMap, serviceContext);
+			userId, sxpElementId, descriptionMap, elementDefinitionJSON,
+			externalReferenceCode, hidden, schemaVersion, titleMap,
+			serviceContext);
 	}
 
 	/**

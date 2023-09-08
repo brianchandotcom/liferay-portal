@@ -88,14 +88,16 @@ public class SXPElementServiceUtil {
 
 	public static SXPElement updateSXPElement(
 			long sxpElementId, Map<java.util.Locale, String> descriptionMap,
-			String elementDefinitionJSON, String schemaVersion, boolean hidden,
+			String elementDefinitionJSON, String externalReferenceCode,
+			String schemaVersion, boolean hidden,
 			Map<java.util.Locale, String> titleMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateSXPElement(
-			sxpElementId, descriptionMap, elementDefinitionJSON, schemaVersion,
-			hidden, titleMap, serviceContext);
+			sxpElementId, descriptionMap, elementDefinitionJSON,
+			externalReferenceCode, schemaVersion, hidden, titleMap,
+			serviceContext);
 	}
 
 	public static SXPElementService getService() {

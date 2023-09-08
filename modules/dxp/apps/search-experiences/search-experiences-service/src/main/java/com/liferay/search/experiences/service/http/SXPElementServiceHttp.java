@@ -298,8 +298,8 @@ public class SXPElementServiceHttp {
 			updateSXPElement(
 				HttpPrincipal httpPrincipal, long sxpElementId,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				String elementDefinitionJSON, String schemaVersion,
-				boolean hidden,
+				String elementDefinitionJSON, String externalReferenceCode,
+				String schemaVersion, boolean hidden,
 				java.util.Map<java.util.Locale, String> titleMap,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -311,7 +311,8 @@ public class SXPElementServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, sxpElementId, descriptionMap, elementDefinitionJSON,
-				schemaVersion, hidden, titleMap, serviceContext);
+				externalReferenceCode, schemaVersion, hidden, titleMap,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -367,7 +368,7 @@ public class SXPElementServiceHttp {
 	private static final Class<?>[] _updateSXPElementParameterTypes6 =
 		new Class[] {
 			long.class, java.util.Map.class, String.class, String.class,
-			boolean.class, java.util.Map.class,
+			String.class, boolean.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

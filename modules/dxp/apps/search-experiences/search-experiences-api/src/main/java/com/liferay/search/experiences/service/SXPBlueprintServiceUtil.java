@@ -88,14 +88,15 @@ public class SXPBlueprintServiceUtil {
 	public static SXPBlueprint updateSXPBlueprint(
 			long sxpBlueprintId, String configurationJSON,
 			Map<java.util.Locale, String> descriptionMap,
-			String elementInstancesJSON, String schemaVersion,
-			Map<java.util.Locale, String> titleMap,
+			String elementInstancesJSON, String externalReferenceCode,
+			String schemaVersion, Map<java.util.Locale, String> titleMap,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateSXPBlueprint(
 			sxpBlueprintId, configurationJSON, descriptionMap,
-			elementInstancesJSON, schemaVersion, titleMap, serviceContext);
+			elementInstancesJSON, externalReferenceCode, schemaVersion,
+			titleMap, serviceContext);
 	}
 
 	public static SXPBlueprintService getService() {

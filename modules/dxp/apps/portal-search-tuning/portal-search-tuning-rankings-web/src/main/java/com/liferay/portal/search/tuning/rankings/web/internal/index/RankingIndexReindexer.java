@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
@@ -95,8 +96,17 @@ public class RankingIndexReindexer implements IndexReindexer {
 			rankingIndexCreator.create(rankingIndexName);
 		}
 
-		for (long classPK : classPKs) {
-			rankingIndexWriter.create(rankingIndexName, _buildRanking(classPK));
+		int sendStatusInterval = Math.max(100, classPKs.size() / 20);
+
+		for (int i = 0; i < classPKs.size(); i++) {
+			rankingIndexWriter.create(
+				rankingIndexName, _buildRanking(classPKs.get(i)));
+
+			if ((i % sendStatusInterval) == 0) {
+				ReindexStatusMessageSenderUtil.sendStatusMessage(
+					RankingIndexReindexer.class.getName(), i + 1,
+					classPKs.size());
+			}
 		}
 
 		if (_isExecuteSyncReindex(executionMode)) {

@@ -463,7 +463,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					).put(
 						"osgi.jaxrs.name",
 						objectDefinition.getOSGiJaxRsName(
-							"ObjectEntryManagerHttpExceptionMapper")
+							"ObjectAssetCategoryExceptionMapper")
 					).build()),
 				_bundleContext.registerService(
 					ExceptionMapper.class,

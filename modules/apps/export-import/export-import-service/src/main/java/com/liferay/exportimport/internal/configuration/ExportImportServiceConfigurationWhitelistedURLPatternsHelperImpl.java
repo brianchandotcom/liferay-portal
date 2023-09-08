@@ -152,7 +152,7 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		rebuildURLPatternMappers();
+		removeURLPatternMappers();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

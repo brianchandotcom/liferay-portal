@@ -43,7 +43,7 @@ public class ExportImportServiceConfigurationModelListener
 					get();
 
 		exportImportServiceConfigurationWhitelistedURLPatternsHelper.
-			rebuildURLPatternMappers();
+			removeURLPatternMappers();
 	}
 
 	@Override
@@ -56,14 +56,9 @@ public class ExportImportServiceConfigurationModelListener
 					_exportImportServiceConfigurationWhitelistedURLPatternsHelperSnapshot.
 						get();
 
-			ExportImportServiceConfiguration exportImportServiceConfiguration =
-				ConfigurableUtil.createConfigurable(
-					ExportImportServiceConfiguration.class, properties);
-
 			exportImportServiceConfigurationWhitelistedURLPatternsHelper.
-				rebuildURLPatternMapper(
-					GetterUtil.getLong(properties.get("companyId")),
-					exportImportServiceConfiguration);
+				removeURLPatternMapper(
+					GetterUtil.getLong(properties.get("companyId")));
 		}
 		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(

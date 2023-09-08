@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Danny Situ
  */
 @Component(
-	property = "model.class.name=com.liferay.commerce.model.CommerceChannelAccountEntryRel",
+	property = "model.class.name=com.liferay.commerce.product.model.CommerceChannelAccountEntryRel",
 	service = ModelResourcePermission.class
 )
 public class CommerceChannelAccountEntryRelModelResourcePermission

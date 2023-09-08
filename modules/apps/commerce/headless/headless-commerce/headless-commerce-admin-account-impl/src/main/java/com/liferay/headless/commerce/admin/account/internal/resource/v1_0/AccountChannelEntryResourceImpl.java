@@ -1401,7 +1401,7 @@ public class AccountChannelEntryResourceImpl
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=com.liferay.commerce.model.CommerceChannelAccountEntryRel)"
+		target = "(model.class.name=com.liferay.commerce.product.model.CommerceChannelAccountEntryRel)"
 	)
 	private volatile ModelResourcePermission<CommerceChannelAccountEntryRel>
 		_commerceChannelAccountEntryRelModelResourcePermission;

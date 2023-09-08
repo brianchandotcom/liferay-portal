@@ -7,6 +7,7 @@ package com.liferay.portal.servlet;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -39,7 +40,7 @@ public class BrowserSnifferImplTest {
 		assertBrowser(
 			"Android",
 			mockHttpServletRequest -> Assert.assertTrue(
-				_browserSnifferImpl.isAndroid(mockHttpServletRequest)));
+				BrowserSnifferUtil.isAndroid(mockHttpServletRequest)));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -51,7 +52,7 @@ public class BrowserSnifferImplTest {
 					"mobile/10a5355d safari/8536.25");
 
 		Assert.assertFalse(
-			_browserSnifferImpl.isAndroid(mockHttpServletRequest));
+			BrowserSnifferUtil.isAndroid(mockHttpServletRequest));
 	}
 
 	@Test
@@ -60,15 +61,15 @@ public class BrowserSnifferImplTest {
 			"## Edge",
 			mockHttpServletRequest -> {
 				Assert.assertFalse(
-					_browserSnifferImpl.isChrome(mockHttpServletRequest));
+					BrowserSnifferUtil.isChrome(mockHttpServletRequest));
 				Assert.assertTrue(
-					_browserSnifferImpl.isEdge(mockHttpServletRequest));
+					BrowserSnifferUtil.isEdge(mockHttpServletRequest));
 				Assert.assertFalse(
-					_browserSnifferImpl.isGecko(mockHttpServletRequest));
+					BrowserSnifferUtil.isGecko(mockHttpServletRequest));
 				Assert.assertFalse(
-					_browserSnifferImpl.isMozilla(mockHttpServletRequest));
+					BrowserSnifferUtil.isMozilla(mockHttpServletRequest));
 				Assert.assertFalse(
-					_browserSnifferImpl.isWebKit(mockHttpServletRequest));
+					BrowserSnifferUtil.isWebKit(mockHttpServletRequest));
 			});
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -78,7 +79,7 @@ public class BrowserSnifferImplTest {
 			HttpHeaders.USER_AGENT,
 			"opera/9.80 (windows nt 6.0) presto/2.12.388 version/12.14");
 
-		Assert.assertFalse(_browserSnifferImpl.isEdge(mockHttpServletRequest));
+		Assert.assertFalse(BrowserSnifferUtil.isEdge(mockHttpServletRequest));
 	}
 
 	@Test
@@ -86,7 +87,7 @@ public class BrowserSnifferImplTest {
 		assertBrowser(
 			"## IE",
 			mockHttpServletRequest -> Assert.assertTrue(
-				_browserSnifferImpl.isIe(mockHttpServletRequest)));
+				BrowserSnifferUtil.isIe(mockHttpServletRequest)));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -96,7 +97,7 @@ public class BrowserSnifferImplTest {
 			"Opera 12 var1, 12.14, 9.80, opera/9.80 (windows nt 6.0) " +
 				"presto/2.12.388 version/12.14");
 
-		Assert.assertFalse(_browserSnifferImpl.isIe(mockHttpServletRequest));
+		Assert.assertFalse(BrowserSnifferUtil.isIe(mockHttpServletRequest));
 	}
 
 	@Test
@@ -104,7 +105,7 @@ public class BrowserSnifferImplTest {
 		assertBrowser(
 			"Mobile",
 			mockHttpServletRequest -> Assert.assertTrue(
-				_browserSnifferImpl.isMobile(mockHttpServletRequest)));
+				BrowserSnifferUtil.isMobile(mockHttpServletRequest)));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -114,8 +115,7 @@ public class BrowserSnifferImplTest {
 			"IE 6 var4, , 6.0, mozilla/5.0 (compatible; msie 6.0; windows nt " +
 				"5.1)");
 
-		Assert.assertFalse(
-			_browserSnifferImpl.isMobile(mockHttpServletRequest));
+		Assert.assertFalse(BrowserSnifferUtil.isMobile(mockHttpServletRequest));
 	}
 
 	@Test
@@ -146,15 +146,15 @@ public class BrowserSnifferImplTest {
 
 				Assert.assertEquals(
 					parts[0].trim() + " version", parts[1].trim(),
-					BrowserSnifferImpl.parseVersion(
-						userAgent, BrowserSnifferImpl.versionLeadings,
-						BrowserSnifferImpl.versionSeparators));
+					BrowserSnifferUtil.parseVersion(
+						userAgent, BrowserSnifferUtil.VERSION_LEADINGS,
+						BrowserSnifferUtil.VERSION_SEPARATORS));
 
 				Assert.assertEquals(
 					parts[0].trim() + " revision", parts[2].trim(),
-					BrowserSnifferImpl.parseVersion(
-						userAgent, BrowserSnifferImpl.revisionLeadings,
-						BrowserSnifferImpl.revisionSeparators));
+					BrowserSnifferUtil.parseVersion(
+						userAgent, BrowserSnifferUtil.REVISION_LEADINGS,
+						BrowserSnifferUtil.REVISION_SEPARATORS));
 			}
 		}
 	}
@@ -206,8 +206,5 @@ public class BrowserSnifferImplTest {
 			new InputStreamReader(
 				clazz.getResourceAsStream("dependencies/user_agents.csv")));
 	}
-
-	private final BrowserSnifferImpl _browserSnifferImpl =
-		new BrowserSnifferImpl();
 
 }

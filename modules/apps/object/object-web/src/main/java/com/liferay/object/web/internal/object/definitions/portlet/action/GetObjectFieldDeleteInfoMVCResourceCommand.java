@@ -62,7 +62,7 @@ public class GetObjectFieldDeleteInfoMVCResourceCommand
 				"showDeletionNotAllowedModal",
 				() -> {
 					if (!objectDefinition.isApproved() ||
-						objectDefinition.isUnmodifiableSystemObject()) {
+						objectDefinition.isSystem()) {
 
 						return false;
 					}

@@ -126,9 +126,10 @@ definition {
 				task ("Then the field value is shown for each order item") {
 					var fieldValuesList = ListUtil.get(${fieldsValuesList}, ${index});
 
-					var fieldValuesList = StringUtil.replace(${fieldValuesList}, ":", ",");
+					var fieldValue1 = StringUtil.extractFirst(${fieldValuesList}, ":");
+					var fieldValue2 = StringUtil.extractLast(${fieldValuesList}, ":");
 
-					CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = ${fieldValuesList});
+					CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "${fieldValue1},${fieldValue2}");
 
 					var index = ${index} + 1;
 				}

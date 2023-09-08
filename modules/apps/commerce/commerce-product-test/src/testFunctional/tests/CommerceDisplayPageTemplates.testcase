@@ -708,8 +708,6 @@ definition {
 		}
 
 		task ("And the buyer logs in") {
-			ApplicationsMenu.gotoSite(site = "Minium");
-
 			User.logoutPG();
 
 			CommerceLogin.miniumLogin(
@@ -725,7 +723,15 @@ definition {
 				key_productName = "ABS Sensor",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
 
-			CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "Category 1,Category 2,Topic Category,Brake System");
+			CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "Brake System,Topic Category");
+
+			for (var fragmentText : list "Category 1,Category 2") {
+				AssertElementPresent(
+					index = 3,
+					key_fragmentText = ${fragmentText},
+					key_id = "element-text",
+					locator1 = "CommerceEntry#ASSERT_FRAGMENTS_TEXT_IN_SF_N");
+			}
 		}
 	}
 

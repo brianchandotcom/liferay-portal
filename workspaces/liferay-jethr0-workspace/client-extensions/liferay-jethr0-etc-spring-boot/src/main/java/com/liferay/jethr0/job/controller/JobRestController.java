@@ -55,12 +55,13 @@ public class JobRestController {
 		for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
 			JSONObject buildJSONObject = buildEntity.getJSONObject();
 
-			List<BuildRunEntity> buildRunEntityHistory =
-				buildEntity.getBuildRunEntityHistory();
+			List<BuildRunEntity> historyBuildRunEntities =
+				buildEntity.getHistoryBuildRunEntities();
 
-			if (!buildRunEntityHistory.isEmpty()) {
-				BuildRunEntity latestBuildRunEntity = buildRunEntityHistory.get(
-					buildRunEntityHistory.size() - 1);
+			if (!historyBuildRunEntities.isEmpty()) {
+				BuildRunEntity latestBuildRunEntity =
+					historyBuildRunEntities.get(
+						historyBuildRunEntities.size() - 1);
 
 				buildJSONObject.put(
 					"latestJenkinsBuildURL",

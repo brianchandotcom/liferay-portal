@@ -100,18 +100,6 @@ public abstract class BaseBuildEntity
 	}
 
 	@Override
-	public List<BuildRunEntity> getBuildRunEntityHistory() {
-		List<BuildRunEntity> buildRunEntityHistory = new ArrayList<>(
-			getBuildRunEntities());
-
-		Collections.sort(
-			buildRunEntityHistory,
-			Comparator.comparing(BuildRunEntity::getCreatedDate));
-
-		return buildRunEntityHistory;
-	}
-
-	@Override
 	public Set<BuildEntity> getChildBuildEntities() {
 		return _childBuildEntities;
 	}
@@ -119,6 +107,18 @@ public abstract class BaseBuildEntity
 	@Override
 	public Set<EnvironmentEntity> getEnvironmentEntities() {
 		return getRelatedEntities(EnvironmentEntity.class);
+	}
+
+	@Override
+	public List<BuildRunEntity> getHistoryBuildRunEntities() {
+		List<BuildRunEntity> historyBuildRunEntities = new ArrayList<>(
+			getBuildRunEntities());
+
+		Collections.sort(
+			historyBuildRunEntities,
+			Comparator.comparing(BuildRunEntity::getCreatedDate));
+
+		return historyBuildRunEntities;
 	}
 
 	@Override

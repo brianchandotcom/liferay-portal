@@ -50,11 +50,11 @@ public interface BuildEntity extends Entity {
 
 	public Set<BuildRunEntity> getBuildRunEntities();
 
-	public List<BuildRunEntity> getBuildRunEntityHistory();
-
 	public Set<BuildEntity> getChildBuildEntities();
 
 	public Set<EnvironmentEntity> getEnvironmentEntities();
+
+	public List<BuildRunEntity> getHistoryBuildRunEntities();
 
 	public String getJenkinsJobName();
 

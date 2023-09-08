@@ -33,6 +33,7 @@ import '../../css/FDSEntries.scss';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
+type Locale = Liferay.Language.Locale;
 
 interface IFDSField {
 	externalReferenceCode: string;
@@ -428,6 +429,18 @@ const EditFDSFieldModalContent = ({
 		fdsFieldTranslations
 	);
 
+	const getValidI18nLabels = function(i18nFieldLabels: LocalizedValue<string>) {
+		let validI18nFieldLabels: {[key: string]: string} = {};
+
+		for (const lang in i18nFieldLabels) {
+			if (!i18nFieldLabels[lang as Locale]) {
+				validI18nFieldLabels[lang] = fdsField.name;
+			}
+		}
+
+		return {...i18nFieldLabels, ...validI18nFieldLabels};
+	}
+	
 	const editFDSField = async () => {
 		let body;
 		const bodyTmp = {
@@ -441,7 +454,7 @@ const EditFDSFieldModalContent = ({
 		};
 
 		if (Liferay.FeatureFlags['LPS-172017']) {
-			body = {...bodyTmp, label_i18n: i18nFieldLabels};
+			body = {...bodyTmp, label_i18n: getValidI18nLabels(i18nFieldLabels)};
 		}
 		else {
 			body = {...bodyTmp, label: fdsFieldLabelRef.current?.value};

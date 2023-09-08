@@ -88,12 +88,21 @@ public class ObjectFolderLocalServiceImpl
 			return objectFolder;
 		}
 
-		return objectFolderLocalService.addObjectFolder(
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_UNCATEGORIZED,
-			_userLocalService.getGuestUserId(companyId),
-			LocalizedMapUtil.getLocalizedMap(
-				ObjectFolderConstants.NAME_UNCATEGORIZED),
-			ObjectFolderConstants.NAME_UNCATEGORIZED);
+		synchronized (ObjectFolderConstants.NAME_UNCATEGORIZED) {
+			objectFolder = fetchObjectFolder(
+				companyId, ObjectFolderConstants.NAME_UNCATEGORIZED);
+
+			if (objectFolder != null) {
+				return objectFolder;
+			}
+
+			return objectFolderLocalService.addObjectFolder(
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_UNCATEGORIZED,
+				_userLocalService.getGuestUserId(companyId),
+				LocalizedMapUtil.getLocalizedMap(
+					ObjectFolderConstants.NAME_UNCATEGORIZED),
+				ObjectFolderConstants.NAME_UNCATEGORIZED);
+		}
 	}
 
 	@Override

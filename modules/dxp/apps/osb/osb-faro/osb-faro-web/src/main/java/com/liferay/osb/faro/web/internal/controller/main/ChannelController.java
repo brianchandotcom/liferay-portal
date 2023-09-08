@@ -11,9 +11,11 @@ import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.exception.NoSuchFaroUserException;
 import com.liferay.osb.faro.model.FaroChannel;
+import com.liferay.osb.faro.model.FaroPreferences;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
+import com.liferay.osb.faro.service.FaroPreferencesLocalService;
 import com.liferay.osb.faro.service.FaroUserLocalService;
 import com.liferay.osb.faro.web.internal.annotations.PATCH;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
@@ -23,8 +25,10 @@ import com.liferay.osb.faro.web.internal.exception.FaroValidationException;
 import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.asah.FaroChannelDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.FaroUserDisplay;
+import com.liferay.osb.faro.web.internal.model.preferences.WorkspacePreferences;
 import com.liferay.osb.faro.web.internal.param.FaroParam;
 import com.liferay.osb.faro.web.internal.util.FaroQueryUtil;
+import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.osb.faro.web.internal.util.comparator.FaroChannelComparator;
 import com.liferay.osb.faro.web.internal.util.comparator.FaroUserComparator;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -160,6 +164,21 @@ public class ChannelController extends BaseFaroController {
 
 		for (String id : idsFaroParam.getValue()) {
 			_faroChannelLocalService.deleteFaroChannel(id, groupId);
+
+			for (FaroPreferences faroPreferences :
+					_faroPreferencesLocalService.getFaroPreferencesByGroupId(
+						groupId)) {
+
+				WorkspacePreferences workspacePreferences = JSONUtil.readValue(
+					faroPreferences.getPreferences(),
+					WorkspacePreferences.class);
+
+				workspacePreferences.removeEmailReportPreference(id);
+
+				_faroPreferencesLocalService.savePreferences(
+					getUserId(), groupId, faroPreferences.getOwnerId(),
+					JSONUtil.writeValueAsString(workspacePreferences));
+			}
 		}
 	}
 
@@ -346,6 +365,9 @@ public class ChannelController extends BaseFaroController {
 
 	@Reference
 	private FaroChannelLocalService _faroChannelLocalService;
+
+	@Reference
+	private FaroPreferencesLocalService _faroPreferencesLocalService;
 
 	@Reference
 	private FaroUserLocalService _faroUserLocalService;

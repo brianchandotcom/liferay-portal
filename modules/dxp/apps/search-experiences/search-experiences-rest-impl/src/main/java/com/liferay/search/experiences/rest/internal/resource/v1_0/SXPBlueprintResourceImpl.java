@@ -347,7 +347,8 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser),
 			_sxpBlueprintService.updateSXPBlueprint(
-				sxpBlueprintId, _getConfigurationJSON(sxpBlueprint),
+				sxpBlueprint.getExternalReferenceCode(), sxpBlueprintId,
+				_getConfigurationJSON(sxpBlueprint),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpBlueprint.getDescription(),

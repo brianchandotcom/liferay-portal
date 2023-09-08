@@ -419,7 +419,7 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 				sxpElement.getId(), contextAcceptLanguage.getPreferredLocale(),
 				contextUriInfo, contextUser),
 			_sxpElementService.updateSXPElement(
-				sxpElementId,
+				sxpElement.getExternalReferenceCode(), sxpElementId,
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpElement.getDescription(),

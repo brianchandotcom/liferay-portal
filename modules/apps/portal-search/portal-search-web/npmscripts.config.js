@@ -12,7 +12,6 @@ module.exports = {
 				'**/facet_util.js',
 				'**/modified_facet_configuration.js',
 				'**/modified_facet.js',
-				'**/search_bar.js',
 				'**/sort_configuration.js',
 				'**/sort_util.js',
 			],

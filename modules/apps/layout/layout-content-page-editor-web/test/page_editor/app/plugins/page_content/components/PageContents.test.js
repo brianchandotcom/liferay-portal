@@ -104,7 +104,7 @@ describe('PageContent', () => {
 
 	it('filters content according to a type value', () => {
 		renderPageContents();
-		const dropdown = screen.getByRole('listbox', {hidden: true});
+		const dropdown = screen.getByRole('combobox');
 
 		userEvent.click(dropdown);
 

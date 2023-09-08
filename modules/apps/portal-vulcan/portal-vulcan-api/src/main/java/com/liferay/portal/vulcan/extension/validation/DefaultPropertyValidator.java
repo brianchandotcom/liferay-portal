@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -63,6 +64,21 @@ public class DefaultPropertyValidator implements PropertyValidator {
 				valid = true;
 
 				for (Object object : (Object[])propertyValue) {
+					if (!_isReadable(classes, object)) {
+						valid = false;
+
+						break;
+					}
+				}
+			}
+			else if ((classes != null) &&
+					 (propertyValue instanceof Collection)) {
+
+				valid = true;
+				Object[] propertyValueObject =
+					((Collection<?>)propertyValue).toArray();
+
+				for (Object object : propertyValueObject) {
 					if (!_isReadable(classes, object)) {
 						valid = false;
 

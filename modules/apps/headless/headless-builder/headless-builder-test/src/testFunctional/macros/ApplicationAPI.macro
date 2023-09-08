@@ -39,7 +39,7 @@ definition {
 		''';
 
 		if (isSet(relatedEndpoint)) {
-			if (!(isSet(ScopeKey))) {
+			if (!(isSet(scopeKey))) {
 				var scopeKey = "company";
 			}
 
@@ -48,7 +48,7 @@ definition {
 					"httpMethod": "get",
 					"name": "${endpointName}",
 					"path": "${endpointPath}",
-					"scope": {"name": "${scopeKey}"}
+					"scope": {"key": "${scopeKey}"}
 				}]
 			''';
 

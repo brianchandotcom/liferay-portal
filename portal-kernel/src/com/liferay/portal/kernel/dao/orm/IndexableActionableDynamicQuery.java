@@ -149,7 +149,7 @@ public class IndexableActionableDynamicQuery
 			modelClass.getName(), _count + documentIntervalCount, _total);
 	}
 
-	private static final long _STATUS_INTERVAL = 1000;
+	private static final long _STATUS_INTERVAL = 100;
 
 	private static volatile IndexWriterHelper _indexWriterHelperProxy =
 		ServiceProxyFactory.newServiceTrackedInstance(

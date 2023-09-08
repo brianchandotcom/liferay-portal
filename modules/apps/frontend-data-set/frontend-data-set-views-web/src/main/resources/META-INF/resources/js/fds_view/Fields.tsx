@@ -593,6 +593,7 @@ const EditFDSFieldModalContent = ({
 									...newFieldLabel,
 								});
 							}}
+							required
 							translations={i18nFieldLabels}
 						/>
 					</ClayForm.Group>

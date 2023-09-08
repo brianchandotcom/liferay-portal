@@ -1489,7 +1489,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-182493 TC-5: Verify user could log in via SAML (Portal to Portal) when password creation is disabled."
+	@description = "This is a use case for LPS-179688 TC-5: Verify user could log in via SAML (Portal to Portal) when password creation is disabled."
 	@priority = 3
 	test CanLoginViaSAMLWithDisablePasswordCreation {
 		property test.liferay.virtual.instance = "false";
@@ -1543,19 +1543,7 @@ definition {
 		task ("When Disable Allow Custom Password At Account Creation password in SP") {
 			SAML.goToSAMLAdmin(baseURL = "http://www.able.com:8080");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Users",
-				configurationName = "Fields",
-				configurationScope = "Virtual Instance Scope");
-
-			FormFields.disableCheckbox(fieldName = "login.create.account.allow.custom.password");
-
-			PortletEntry.save();
+			User.configureCustomPasswordField(baseURL = "http://www.able.com:8080");
 
 			User.logoutPG(specificURL = "http://www.able.com:8080");
 

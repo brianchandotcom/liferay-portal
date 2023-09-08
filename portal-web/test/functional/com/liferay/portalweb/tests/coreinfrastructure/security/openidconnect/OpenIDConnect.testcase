@@ -222,7 +222,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-182493 TC-6: Verify user could log in via OIDC when password creation is disabled."
+	@description = "This is a use case for LPS-179688 TC-6: Verify user could log in via OIDC when password creation is disabled."
 	@priority = 3
 	test CanLoginViaOIDCWithDisablePasswordCreation {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
@@ -234,21 +234,7 @@ definition {
 		var userPassword = PropsUtil.get("openid.provider.okta.test.account.password");
 
 		task ("Given Disable Allow Custom Password At Account Creation in Users add OAuth Client") {
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Users",
-				configurationName = "Fields",
-				configurationScope = "Virtual Instance Scope");
-
-			FormFields.disableCheckbox(fieldName = "login.create.account.allow.custom.password");
-
-			PortletEntry.save();
+			User.configureCustomPasswordField();
 
 			Navigator.openURL();
 

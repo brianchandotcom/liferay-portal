@@ -170,7 +170,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-182493 TC-7. Verify user could log in via LDAP when password creation is disabled."
+	@description = "This is a use case for LPS-179688 TC-7. Verify user could log in via LDAP when password creation is disabled."
 	@priority = 3
 	test CanLoginViaLDAPWithPasswordCreation {
 		property apacheds.blank.user.password.enabled = "true";
@@ -181,21 +181,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Given Disable Allow Custom Password At Account Creation in Users add LDAP server and test connection configure LDAP settings") {
-			Navigator.openURL();
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			PortalSettings.gotoConfiguration(
-				configurationCategory = "Users",
-				configurationName = "Fields",
-				configurationScope = "Virtual Instance Scope");
-
-			FormFields.disableCheckbox(fieldName = "login.create.account.allow.custom.password");
-
-			PortletEntry.save();
+			User.configureCustomPasswordField();
 
 			PortalSettings.addLDAPServer(ldapServerName = "ApacheDS Server");
 

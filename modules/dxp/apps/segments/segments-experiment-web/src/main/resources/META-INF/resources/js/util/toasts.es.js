@@ -12,8 +12,10 @@ export function openErrorToast() {
 	});
 }
 
-export function openSuccessToast() {
+export function openSuccessToast(
+	message = Liferay.Language.get('your-request-completed-successfully')
+) {
 	openToast({
-		message: Liferay.Language.get('your-request-completed-successfully'),
+		message,
 	});
 }

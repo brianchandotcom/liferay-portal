@@ -23,7 +23,7 @@ import {openErrorToast, openSuccessToast} from '../../util/toasts.es';
 import VariantForm from './internal/VariantForm.es';
 import VariantTable from './internal/VariantTable.es';
 
-function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
+function Variants({selectedSegmentsExperienceId}) {
 	const dispatch = useContext(DispatchContext);
 	const {errors, experiment, variants} = useContext(StateContext);
 	const {APIService, page} = useContext(SegmentsExperimentsContext);
@@ -103,7 +103,6 @@ function Variants({onVariantPublish, selectedSegmentsExperienceId}) {
 				experiment={experiment}
 				onVariantDeletion={_handleVariantDeletion}
 				onVariantEdition={_handleVariantEdition}
-				onVariantPublish={onVariantPublish}
 				selectedSegmentsExperienceId={selectedSegmentsExperienceId}
 				variants={variants}
 			/>

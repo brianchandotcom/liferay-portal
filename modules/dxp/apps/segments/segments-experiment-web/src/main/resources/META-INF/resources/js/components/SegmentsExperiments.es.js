@@ -8,7 +8,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import {openConfirmModal, sub} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
@@ -16,16 +16,13 @@ import SegmentsExperimentsContext from '../context.es';
 import {openDeletionModal} from '../state/actions.es';
 import {DispatchContext, StateContext} from '../state/context.es';
 import {NO_EXPERIMENT_ILLUSTRATION_FILE_NAME} from '../util/contants.es';
-import {navigateToExperience} from '../util/navigation.es';
 import {
-	STATUS_COMPLETED,
 	STATUS_DRAFT,
 	STATUS_FINISHED_WINNER,
 	STATUS_RUNNING,
 	STATUS_TERMINATED,
 	statusToLabelDisplayType,
 } from '../util/statuses.es';
-import {openErrorToast, openSuccessToast} from '../util/toasts.es';
 import ClickGoalPicker from './ClickGoalPicker/ClickGoalPicker.es';
 import SegmentsExperimentsActions from './SegmentsExperimentsActions.es';
 import SegmentsExperimentsDetails from './SegmentsExperimentsDetails.es';
@@ -75,41 +72,10 @@ function Experiments({
 }) {
 	const [dropdown, setDropdown] = useState(false);
 	const [dimissAlert, setDimissAlert] = useState(true);
-	const {APIService, imagesPath} = useContext(SegmentsExperimentsContext);
+	const {imagesPath} = useContext(SegmentsExperimentsContext);
 	const noExperimentIllustration = `${imagesPath}${NO_EXPERIMENT_ILLUSTRATION_FILE_NAME}`;
 	const {selectedExperienceId, variants} = useContext(StateContext);
 	const winnerVariant = variants.find((variant) => variant.winner === true);
-
-	function _handleEditExperiment() {
-		onEditSegmentsExperiment();
-	}
-
-	function _handlePublishVariant(experienceId) {
-		const body = {
-			segmentsExperimentId: experiment.segmentsExperimentId,
-			status: STATUS_COMPLETED,
-			winnerSegmentsExperienceId: experienceId,
-		};
-
-		openConfirmModal({
-			message: Liferay.Language.get(
-				'are-you-sure-you-want-to-publish-this-variant'
-			),
-			onConfirm: (isConfimed) => {
-				if (isConfimed) {
-					APIService.publishExperience(body)
-						.then(() => {
-							openSuccessToast();
-
-							navigateToExperience(experienceId);
-						})
-						.catch((_error) => {
-							openErrorToast();
-						});
-				}
-			},
-		});
-	}
 
 	return (
 		<>
@@ -140,7 +106,7 @@ function Experiments({
 							>
 								<ClayDropDown.ItemList>
 									<ClayDropDown.Item
-										onClick={_handleEditExperiment}
+										onClick={onEditSegmentsExperiment}
 									>
 										<ClayIcon
 											className="c-mr-3 text-4"
@@ -215,21 +181,6 @@ function Experiments({
 									),
 								}}
 							/>
-
-							<ClayAlert.Footer>
-								<ClayButton.Group>
-									<ClayButton
-										alert
-										onClick={() =>
-											_handlePublishVariant(
-												winnerVariant.segmentsExperienceId
-											)
-										}
-									>
-										{Liferay.Language.get('publish-winner')}
-									</ClayButton>
-								</ClayButton.Group>
-							</ClayAlert.Footer>
 						</ClayAlert>
 					)}
 
@@ -248,7 +199,6 @@ function Experiments({
 					)}
 
 					<Variants
-						onVariantPublish={_handlePublishVariant}
 						selectedSegmentsExperienceId={selectedExperienceId}
 					/>
 

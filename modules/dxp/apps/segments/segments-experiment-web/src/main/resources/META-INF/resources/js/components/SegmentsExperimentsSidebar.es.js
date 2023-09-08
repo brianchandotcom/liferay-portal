@@ -4,7 +4,7 @@
  */
 
 import ClayModal, {useModal} from '@clayui/modal';
-import {openToast} from 'frontend-js-web';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useReducer} from 'react';
 
@@ -15,6 +15,7 @@ import {
 	closeCreationModal,
 	closeDeletionModal,
 	closeEditionModal,
+	closePublishModal,
 	closeTerminateModal,
 	editSegmentsExperiment,
 	openCreationModal,
@@ -77,6 +78,7 @@ function SegmentsExperimentsSidebar({
 		deleteExperimentModal,
 		editExperimentModal,
 		experiment,
+		publishExperimentModal,
 		terminateExperimentModal,
 	} = state;
 
@@ -105,6 +107,13 @@ function SegmentsExperimentsSidebar({
 		onClose: () => dispatch(closeTerminateModal()),
 	});
 
+	const {
+		observer: publishModalObserver,
+		onClose: onPublishModalClose,
+	} = useModal({
+		onClose: () => dispatch(closePublishModal()),
+	});
+
 	useEffect(() => {
 		const segmentsExperimentAction = getSegmentsExperimentAction();
 
@@ -119,12 +128,14 @@ function SegmentsExperimentsSidebar({
 			) {
 				dispatch(openDeletionModal());
 			}
-		} else if (
+		}
+		else if (
 			segmentsExperimentAction === 'reviewAndRun' &&
 			experiment.status.value === STATUS_DRAFT
 		) {
 			dispatch(reviewAndRunExperiment());
-		} else if (
+		}
+		else if (
 			segmentsExperimentAction === 'terminate' &&
 			experiment.status.value === STATUS_RUNNING
 		) {
@@ -238,6 +249,26 @@ function SegmentsExperimentsSidebar({
 							</p>
 						</ConfirmModal>
 					)}
+
+					{publishExperimentModal.active && (
+						<ConfirmModal
+							modalObserver={publishModalObserver}
+							onCancel={onPublishModalClose}
+							onConfirm={() =>
+								_handlePublishSegmentExperiment(
+									publishExperimentModal.experience
+								)
+							}
+							submitTitle={Liferay.Language.get('publish')}
+							title={Liferay.Language.get('publish-variant')}
+						>
+							<p className="font-weight-bold text-secondary">
+								{Liferay.Language.get(
+									'are-you-sure-you-want-to-publish-this-variant'
+								)}
+							</p>
+						</ConfirmModal>
+					)}
 				</div>
 			</StateContext.Provider>
 		</DispatchContext.Provider>
@@ -245,7 +276,7 @@ function SegmentsExperimentsSidebar({
 		<UnsupportedSegmentsExperiments />
 	);
 
-	function _handleCreateSegmentsExperiment(_experienceId) {
+	function _handleCreateSegmentsExperiment() {
 		dispatch(openCreationModal());
 	}
 
@@ -433,6 +464,27 @@ function SegmentsExperimentsSidebar({
 						status: experimentData.status,
 					})
 				);
+			});
+	}
+
+	function _handlePublishSegmentExperiment({experienceId, experienceName}) {
+		APIService.publishExperience({
+			segmentsExperimentId: experiment.segmentsExperimentId,
+			status: experiment.status.value,
+			winnerSegmentsExperienceId: experienceId,
+		})
+			.then(() => {
+				openSuccessToast(
+					sub(
+						Liferay.Language.get('x-was-published-successfully'),
+						experienceName
+					)
+				);
+
+				navigateToExperience(experiment.segmentsExperienceId);
+			})
+			.catch((_error) => {
+				openErrorToast();
 			});
 	}
 

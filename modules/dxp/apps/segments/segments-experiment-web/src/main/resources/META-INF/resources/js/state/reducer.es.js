@@ -46,6 +46,12 @@ export function reducer(state, action) {
 				},
 			};
 
+		case 'PUBLISH_EXPERIMENT':
+			return {
+				...state,
+				publishExperimentModal: action.payload,
+			};
+
 		case 'TERMINATE_EXPERIMENT':
 			return {
 				...state,

@@ -1709,3 +1709,32 @@ The removal of this extension point has no direct replacement.
 ### Why was this change made?
 
 These listeners are not used in Liferay. Liferay decided to not support these extension points.
+
+---------------------------------------
+
+## Removed API to register/unregister `MessageListener` from `Destination`
+- **Date:** 2023-Sep-1
+- **JIRA Ticket:** [LPS-194337](https://liferay.atlassian.net/browse/LPS-194337)
+
+### What changed?
+
+The following API methods related to `MessageListener` registration have been removed from interface `Destination`:
+- `copyMessageListeners`
+- `getMessageListenerCount`
+- `isRegistered`
+- `register`
+- `unregister`
+
+A new interface `MessageListenerRegistry` is added with an API to get message listeners associated with provided destination name.
+
+### Who is affected?
+
+This affects anyone registering/unregistering such listeners directly on `Destination` interface.
+
+### How should I update my code?
+
+Register `MessageListener` as OSGi service, with the property `destination.name` mapped to the corresponding destination name.
+
+### Why was this change made?
+
+Liferay decided to not support these API methods to simplify the message bus infrastructure and usage.

@@ -481,6 +481,31 @@
 													},
 													{
 														"definition": {
+														  "widgetInstance": {
+															"widgetConfig": {
+															  "federatedSearchKey": "",
+															  "occur": "must",
+															  "invisible": "true",
+															  "parameterName": "",
+															  "displayStyleGroupId": "[$GROUP_ID$]",
+															  "filterField": "assetCategoryIds",
+															  "displayStyle": "default",
+															  "immutable": "true",
+															  "filterQueryType": "match",
+															  "filterValue": "[$TAXONOMY_CATEGORY_ID:App$]",
+															  "parentQueryName": "",
+															  "queryName": "",
+															  "disabled": "false",
+															  "customHeading": "",
+															  "boost": ""
+															},
+															"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
+														  }
+														},
+														"type": "Widget"
+													  },
+													{
+														"definition": {
 															"customCSS": ".breadcrumb-left-desktop {\ndisplay: flex;\nalign-items: center;\n}\n.breadcrumb-left-desktop svg {\nmargin-bottom: 6px;\n}",
 															"fragmentStyle": {
 																"textColor": "#54555F"
@@ -578,6 +603,7 @@
 													},
 													{
 														"definition": {
+															"fragmentStyle": { "backgroundColor": "whiteColor" },
 															"widgetInstance": {
 																"widgetConfig": {
 																},
@@ -660,6 +686,9 @@
 												"pageElements": [
 													{
 														"definition": {
+															"fragmentStyle": {
+																"hidden": true
+															},
 															"widgetInstance": {
 																"widgetConfig": {
 																	"cpContentListRendererKey": "list-default",
@@ -684,7 +713,29 @@
 															}
 														},
 														"type": "Widget"
-													}
+													},
+													{
+														"definition": {
+														  "widgetInstance": {
+															"widgetConfig": {
+															  "viewInContext": "true",
+															  "fieldsToDisplay": "",
+															  "federatedSearchKey": "",
+															  "displayStyle": "ddmTemplate_APPS-SEARCH-RESULTS",
+															  "displayInDocumentForm": "false",
+															  "paginationDelta": "20",
+															  "showEmptyResultMessage": "true",
+															  "paginationStartParameterName": "start",
+															  "showPagination": "true",
+															  "paginationDeltaParameterName": "delta",
+															  "displayStyleGroupId": "[$GROUP_ID$]",
+															  "highlightEnabled": "true"
+															},
+															"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+														  }
+														},
+														"type": "Widget"
+													  }
 												],
 												"type": "Column"
 											}

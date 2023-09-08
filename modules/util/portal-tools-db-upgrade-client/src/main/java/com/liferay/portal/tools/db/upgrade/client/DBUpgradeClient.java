@@ -66,20 +66,28 @@ public class DBUpgradeClient {
 				return;
 			}
 
-			String jvmOpts = null;
+			List<String> jvmOpts = new ArrayList<>();
 
 			if (commandLine.hasOption("jvm-opts")) {
-				jvmOpts = commandLine.getOptionValue("jvm-opts");
+				Collections.addAll(
+					jvmOpts,
+					commandLine.getOptionValue(
+						"jvm-opts"
+					).split(
+						" "
+					));
 			}
 			else {
-				jvmOpts =
-					"-Dfile.encoding=UTF8 -Duser.country=US " +
-						"-Duser.language=en -Duser.timezone=GMT -Xmx2048m";
+				jvmOpts.add("-Dfile.encoding=UTF8");
+				jvmOpts.add("-Duser.country=US");
+				jvmOpts.add("-Duser.language=en");
+				jvmOpts.add("-Duser.timezone=GMT");
+				jvmOpts.add("-Xmx2048m");
 			}
 
 			if (commandLine.hasOption("debug")) {
-				jvmOpts = jvmOpts.concat(
-					" -agentlib:jdwp=transport=dt_socket,address=8001,server=" +
+				jvmOpts.add(
+					"-agentlib:jdwp=transport=dt_socket,address=8001,server=" +
 						"y,suspend=y");
 			}
 
@@ -137,7 +145,7 @@ public class DBUpgradeClient {
 		}
 	}
 
-	public DBUpgradeClient(String jvmOpts, File logFile, boolean shell)
+	public DBUpgradeClient(List<String> jvmOpts, File logFile, boolean shell)
 		throws IOException {
 
 		_jvmOpts = jvmOpts;
@@ -182,16 +190,19 @@ public class DBUpgradeClient {
 		commands.add("-cp");
 		commands.add(_getBootstrapClassPath());
 
-		String jvmOptsCommands = _jvmOpts.concat(
-			" -Dexternal-properties=portal-upgrade.properties " +
-				"-Dserver.detector.server.id=" +
-					_appServer.getServerDetectorServerId() +
-						" -Dliferay.shielded.container.lib.portal.dir=" +
-							_appServer.getPortalShieldedContainerLibDir());
+		_jvmOpts.add("-Dexternal-properties=portal-upgrade.properties");
 
-		System.out.println("JVM arguments: " + jvmOptsCommands);
+		_jvmOpts.add(
+			"-Dserver.detector.server.id=" +
+				_appServer.getServerDetectorServerId());
 
-		Collections.addAll(commands, jvmOptsCommands.split(" "));
+		_jvmOpts.add(
+			"-Dliferay.shielded.container.lib.portal.dir=" +
+				_appServer.getPortalShieldedContainerLibDir());
+
+		System.out.println("JVM arguments: " + _jvmOpts.toString());
+
+		commands.addAll(_jvmOpts);
 
 		commands.add(DBUpgraderLauncher.class.getName());
 
@@ -798,7 +809,7 @@ public class DBUpgradeClient {
 	private final File _appServerPropertiesFile;
 	private final ConsoleReader _consoleReader = new ConsoleReader();
 	private final FileOutputStream _fileOutputStream;
-	private final String _jvmOpts;
+	private List<String> _jvmOpts = new ArrayList<>();
 	private final File _logFile;
 	private final Properties _portalUpgradeDatabaseProperties;
 	private final File _portalUpgradeDatabasePropertiesFile;

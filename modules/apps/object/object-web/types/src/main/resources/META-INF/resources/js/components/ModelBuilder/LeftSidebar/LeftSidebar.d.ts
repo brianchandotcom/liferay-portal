@@ -4,13 +4,10 @@
  */
 
 import React from 'react';
-import './LeftSidebar.scss';
 interface LeftSidebarProps {
-	selectedObjectFolderName: string;
 	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
 }
 export default function LeftSidebar({
-	selectedObjectFolderName,
 	setShowModal,
 }: LeftSidebarProps): JSX.Element;
 export {};

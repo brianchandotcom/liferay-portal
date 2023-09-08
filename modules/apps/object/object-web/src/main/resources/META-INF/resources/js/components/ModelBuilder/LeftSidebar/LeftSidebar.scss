@@ -6,12 +6,6 @@
 	padding: 1rem;
 	position: inherit;
 
-	&-btn-folder {
-		margin-left: auto;
-		position: relative;
-		visibility: hidden;
-	}
-
 	&-current-object-folder-container {
 		align-items: center;
 		display: flex;
@@ -26,7 +20,7 @@
 		width: 100%;
 
 		&:hover {
-			.lfr-objects__model-builder-left-sidebar-btn-folder {
+			.lfr-objects__model-builder-left-sidebar-go-to-folder-button {
 				visibility: visible;
 
 				button {
@@ -35,6 +29,12 @@
 				}
 			}
 		}
+	}
+
+	&-go-to-folder-button {
+		margin-left: auto;
+		position: relative;
+		visibility: hidden;
 	}
 
 	&-item-linked.treeview-link {
@@ -49,10 +49,11 @@
 		justify-content: center;
 	}
 
-	.navbar-form,
-	.container-fluid {
+	.container-fluid,
+	.navbar-form {
 		padding: 0 !important;
 	}
+
 	.navbar-form-autofit {
 		flex-basis: 75px;
 	}

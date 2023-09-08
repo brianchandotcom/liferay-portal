@@ -8,6 +8,7 @@ package com.liferay.list.type.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.exception.ListTypeDefinitionNameException;
+import com.liferay.list.type.exception.ListTypeDefinitionSystemException;
 import com.liferay.list.type.exception.RequiredListTypeDefinitionException;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -19,6 +20,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -80,6 +82,11 @@ public class ListTypeDefinitionLocalServiceTest {
 				"Name is null for locale " + LocaleUtil.US.getDisplayName(),
 				listTypeDefinitionNameException.getMessage());
 		}
+
+		AssertUtils.assertFailure(
+			ListTypeDefinitionSystemException.class, false,
+			"Only allowed bundles can add system list type definitions",
+			this::_addSystemListTypeDefinition);
 	}
 
 	@Test
@@ -181,6 +188,17 @@ public class ListTypeDefinitionLocalServiceTest {
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			false,
+			Collections.singletonList(
+				ListTypeEntryUtil.createListTypeEntry(
+					RandomTestUtil.randomString())));
+	}
+
+	private ListTypeDefinition _addSystemListTypeDefinition() throws Exception {
+		return _listTypeDefinitionLocalService.addListTypeDefinition(
+			null, TestPropsValues.getUserId(),
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			true,
 			Collections.singletonList(
 				ListTypeEntryUtil.createListTypeEntry(
 					RandomTestUtil.randomString())));

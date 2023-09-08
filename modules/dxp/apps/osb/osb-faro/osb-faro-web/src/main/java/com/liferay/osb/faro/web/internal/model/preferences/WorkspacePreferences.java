@@ -103,12 +103,19 @@ public class WorkspacePreferences {
 		distributionCardTabsPreferences.removeDistributionTab(id);
 	}
 
-	public void removeIndividualSegmentPreference(String individualSegmentId) {
-		_individualSegmentPreferences.remove(individualSegmentId);
+	public boolean removeEmailReportPreference(String channelId) {
+		EmailReportPreferences emailReportPreferences =
+			_emailReportPreferences.remove(channelId);
+
+		if (emailReportPreferences != null) {
+			return true;
+		}
+
+		return false;
 	}
 
-	public void removeEmailReportPreference(String channelId) {
-		_emailReportPreferences.remove(channelId);
+	public void removeIndividualSegmentPreference(String individualSegmentId) {
+		_individualSegmentPreferences.remove(individualSegmentId);
 	}
 
 	public void setDefaultChannelId(String defaultChannelId) {

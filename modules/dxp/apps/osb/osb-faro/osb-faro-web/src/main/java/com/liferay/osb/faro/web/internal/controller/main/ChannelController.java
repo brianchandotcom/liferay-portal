@@ -173,11 +173,11 @@ public class ChannelController extends BaseFaroController {
 					faroPreferences.getPreferences(),
 					WorkspacePreferences.class);
 
-				workspacePreferences.removeEmailReportPreference(id);
-
-				_faroPreferencesLocalService.savePreferences(
-					getUserId(), groupId, faroPreferences.getOwnerId(),
-					JSONUtil.writeValueAsString(workspacePreferences));
+				if (workspacePreferences.removeEmailReportPreference(id)) {
+					_faroPreferencesLocalService.savePreferences(
+						getUserId(), groupId, faroPreferences.getOwnerId(),
+						JSONUtil.writeValueAsString(workspacePreferences));
+				}
 			}
 		}
 	}

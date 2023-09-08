@@ -11,6 +11,7 @@
 		"@clayui/loading-indicator": "3.60.0",
 		"@clayui/modal": "3.104.0",
 		"@clayui/slider": "3.104.0",
+		"@clayui/table": "3.56.0",
 		"@clayui/tabs": "3.104.0",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/layout-content-page-editor-web": "*",

@@ -12,8 +12,12 @@ import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.InfoItemDetails;
+import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.pagination.InfoPage;
@@ -128,6 +132,9 @@ public class LayoutWarningMessageHelperImpl
 
 		try {
 			if (_showWarningMessage(
+					httpServletRequest, fragmentStyledLayoutStructureItem,
+					themeDisplay) ||
+				_showWarningMessage(
 					httpServletRequest, httpServletResponse, fragmentEntryLink,
 					themeDisplay)) {
 
@@ -148,6 +155,22 @@ public class LayoutWarningMessageHelperImpl
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private boolean _exceedsFileSize(long fileEntryId) throws Exception {
+		if (fileEntryId <= 0) {
+			return false;
+		}
+
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+
+		long size = fileEntry.getSize();
+
+		if (size < _MAX_SIZE) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private Map<String, String[]> _getConfiguration(
@@ -248,6 +271,38 @@ public class LayoutWarningMessageHelperImpl
 		return 0;
 	}
 
+	private long _getFileEntryId(
+			String fieldId, InfoItemDetails infoItemDetails,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (infoItemDetails == null) {
+			return 0;
+		}
+
+		InfoItemReference infoItemReference =
+			infoItemDetails.getInfoItemReference();
+
+		if (infoItemReference == null) {
+			return 0;
+		}
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+			return 0;
+		}
+
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
+		return _fragmentEntryProcessorHelper.getFileEntryId(
+			_portal.getClassNameId(infoItemReference.getClassName()),
+			classPKInfoItemIdentifier.getClassPK(), fieldId,
+			themeDisplay.getLocale());
+	}
+
 	private Object _getInfoItem(JSONObject layoutObjectReferenceJSONObject) {
 		long classNameId = layoutObjectReferenceJSONObject.getLong(
 			"classNameId");
@@ -332,6 +387,52 @@ public class LayoutWarningMessageHelperImpl
 
 	private boolean _showWarningMessage(
 			HttpServletRequest httpServletRequest,
+			FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		JSONObject backgroundImageJSONObject =
+			fragmentStyledLayoutStructureItem.getBackgroundImageJSONObject();
+
+		long fileEntryId = 0;
+
+		if (backgroundImageJSONObject.has("fileEntryId")) {
+			fileEntryId = backgroundImageJSONObject.getLong("fileEntryId");
+		}
+		else if (backgroundImageJSONObject.has("classNameId") &&
+				 backgroundImageJSONObject.has("classPK") &&
+				 backgroundImageJSONObject.has("fieldId")) {
+
+			fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
+				backgroundImageJSONObject.getLong("classNameId"),
+				backgroundImageJSONObject.getLong("classPK"),
+				backgroundImageJSONObject.getString("fieldId"),
+				themeDisplay.getLocale());
+		}
+		else if (backgroundImageJSONObject.has("collectionFieldId")) {
+			fileEntryId = _fragmentEntryProcessorHelper.getFileEntryId(
+				(InfoItemReference)httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_REFERENCE),
+				backgroundImageJSONObject.getString("collectionFieldId"),
+				themeDisplay.getLocale());
+		}
+		else if (backgroundImageJSONObject.has("mappedField")) {
+			fileEntryId = _getFileEntryId(
+				backgroundImageJSONObject.getString("mappedField"),
+				(InfoItemDetails)httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_DETAILS),
+				themeDisplay);
+		}
+
+		if (_exceedsFileSize(fileEntryId)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _showWarningMessage(
+			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse,
 			FragmentEntryLink fragmentEntryLink, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -364,20 +465,11 @@ public class LayoutWarningMessageHelperImpl
 					continue;
 				}
 
-				long fileEntryId = _getFileEntryId(
-					editableValueJSONObject, httpServletRequest,
-					httpServletResponse, themeDisplay.getLocale());
+				if (_exceedsFileSize(
+						_getFileEntryId(
+							editableValueJSONObject, httpServletRequest,
+							httpServletResponse, themeDisplay.getLocale()))) {
 
-				if (fileEntryId <= 0) {
-					continue;
-				}
-
-				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-					fileEntryId);
-
-				long size = fileEntry.getSize();
-
-				if (size > _MAX_SIZE) {
 					return true;
 				}
 			}

@@ -8,7 +8,7 @@ definition {
 		SearchFacetPortlet.checkFacet(facetValueName = ${facetValueName});
 
 		var searchURL = SearchFacetPortlet.generateFacetCheckedURL(
-			facetClass = ${facetClass},
+			facetName = ${facetName},
 			facetValue = ${facetValue},
 			facetValueName = ${facetValueName},
 			searchPage = ${searchPage},
@@ -22,10 +22,19 @@ definition {
 
 	macro clearAllFacetsAndViewURL {
 		while (IsElementPresent(locator1 = "SearchResults#FACET_PORTLET_CLEAR_GENERIC")) {
-			var facetClearClass = selenium.getText("SearchResults#FACET_PORTLET_CLEAR_PANEL_TITLE");
+			var facetNameBuilder = selenium.getText("SearchResults#FACET_PORTLET_WITH_CLEAR_BUTTON");
+
+			var facetNameBuilder = StringUtil.toLowerCase(${facetNameBuilder});
+
+			var firstWord = StringUtil.extractFirst(${facetNameBuilder}, " ");
+			var lastWord = StringUtil.extractLast(${facetNameBuilder}, " ");
+			var firstWord = StringUtil.upperCaseFirstLetter(${firstWord});
+			var lastWord = StringUtil.upperCaseFirstLetter(${lastWord});
+
+			var facetName = StringUtil.concat(${firstWord}, " ${lastWord}");
 
 			var searchURL = SearchFacetPortlet.clearFacetAndViewURL(
-				facetClass = ${facetClearClass},
+				facetName = ${facetName},
 				searchURL = ${searchURL});
 		}
 
@@ -33,13 +42,11 @@ definition {
 	}
 
 	macro clearFacet {
-		if (isSet(facetClass)) {
-			var facetClass = StringUtil.toLowerCase(${facetClass});
-
-			var key_facetClass = "${facetClass}_facet";
+		if (isSet(facetName)) {
+			var facetIDName = StringUtil.replace(${facetName}, " ", "");
 
 			AssertClick.assertPartialTextClickAt(
-				key_facetClass = ${key_facetClass},
+				key_facetIDName = ${facetIDName},
 				locator1 = "SearchResults#FACET_PORTLET_CLEAR_SPECIFIC",
 				value1 = "Clear");
 		}
@@ -51,11 +58,11 @@ definition {
 	}
 
 	macro clearFacetAndViewURL {
-		if (isSet(facetClass)) {
-			SearchFacetPortlet.clearFacet(facetClass = ${facetClass});
+		if (isSet(facetName)) {
+			SearchFacetPortlet.clearFacet(facetName = ${facetName});
 
 			var searchURL = SearchFacetPortlet.generateFacetClearedURL(
-				facetClass = ${facetClass},
+				facetName = ${facetName},
 				searchURL = ${searchURL});
 
 			AssertLocation(value1 = ${searchURL});
@@ -106,10 +113,10 @@ definition {
 				searchTerm = ${searchTerm});
 		}
 
-		if (${facetClass} == "type") {
+		if (${facetName} == "Type Facet") {
 			var facetValue = SearchFacetPortlet.getFacetTypeValue(facetTypeValueName = ${facetValueName});
 		}
-		else if (${facetClass} == "user") {
+		else if (${facetName} == "User Facet") {
 			var facetValue = SearchFacetPortlet.getUserFacetTermURLValue(userFacetTerm = ${facetValueName});
 		}
 		else if (!(isSet(facetValue))) {
@@ -118,40 +125,44 @@ definition {
 
 		var searchURLList = StringUtil.replace(${searchURL}, "&", ",");
 		var facetValue = StringUtil.replace(${facetValue}, " ", "%20");
+		var facetURLName = StringUtil.replace(${facetName}, " Facet", "");
 
+		var facetURLName = StringUtil.toLowerCase(${facetURLName});
 		var facetValueList = ${facetValue};
 
 		for (var facetKeyValuePair : list ${searchURLList}) {
-			if (contains(${facetKeyValuePair}, ${facetClass})) {
-				var facetKeyValue = StringUtil.stripBetween(${facetKeyValuePair}, ${facetClass}, "=");
+			if (contains(${facetKeyValuePair}, ${facetURLName})) {
+				var facetKeyValue = StringUtil.stripBetween(${facetKeyValuePair}, ${facetURLName}, "=");
 
 				var facetValueList = StringUtil.add(${facetValueList}, ${facetKeyValue});
-				var searchURL = StringUtil.stripBetween(${searchURL}, "&${facetClass}", ${facetKeyValue});
-				var facetClassFound = "true";
+				var searchURL = StringUtil.stripBetween(${searchURL}, "&${facetURLName}", ${facetKeyValue});
+				var facetURLNameFound = "true";
 			}
 		}
 
-		if (${facetClassFound} == "true") {
+		if (${facetURLNameFound} == "true") {
 			var facetValueList = RegexUtil.replace(${facetValueList}, "(.*),$", 1);
 
 			var facetValueList = ListUtil.sort(${facetValueList});
 
 			for (var facetValueListValue : list ${facetValueList}) {
-				var searchURL = "${searchURL}&${facetClass}=${facetValueListValue}";
+				var searchURL = "${searchURL}&${facetURLName}=${facetValueListValue}";
 			}
 		}
 		else {
-			var searchURL = "${searchURL}&${facetClass}=${facetValue}";
+			var searchURL = "${searchURL}&${facetURLName}=${facetValue}";
 		}
 
 		return ${searchURL};
 	}
 
 	macro generateFacetClearedURL {
-		var facetClass = StringUtil.toLowerCase(${facetClass});
+		var facetURLName = StringUtil.replace(${facetName}, " Facet", "");
 
-		var beforeFacetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", 1);
-		var afterFacetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", 3);
+		var facetURLName = StringUtil.toLowerCase(${facetURLName});
+
+		var beforeFacetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetURLName}[^&]+)+)(.*)", 1);
+		var afterFacetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetURLName}[^&]+)+)(.*)", 3);
 
 		var searchURL = "${beforeFacetGroup}${afterFacetGroup}";
 
@@ -159,19 +170,23 @@ definition {
 	}
 
 	macro generateFacetUncheckedURL {
-		if (${facetClass} == "type") {
+		if (${facetName} == "Type Facet") {
 			var facetValue = SearchFacetPortlet.getFacetTypeValue(facetTypeValueName = ${facetValueName});
 		}
-		else if (${facetClass} == "user") {
+		else if (${facetName} == "User Facet") {
 			var facetValue = SearchFacetPortlet.getUserFacetTermURLValue(userFacetTerm = ${facetValueName});
 		}
 		else if (!(isSet(facetValue))) {
 			var facetValue = ${facetValueName};
 		}
 
-		var beforeFacetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", 1);
-		var facetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", 2);
-		var afterFacetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetClass}[^&]+)+)(.*)", 3);
+		var facetURLName = StringUtil.replace(${facetName}, " Facet", "");
+
+		var facetURLName = StringUtil.toLowerCase(${facetURLName});
+
+		var beforeFacetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetURLName}[^&]+)+)(.*)", 1);
+		var facetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetURLName}[^&]+)+)(.*)", 2);
+		var afterFacetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetURLName}[^&]+)+)(.*)", 3);
 		var facetValue = StringUtil.replace(${facetValue}, " ", "%20");
 		var facetGroupList = ${facetGroup};
 
@@ -260,7 +275,7 @@ definition {
 		SearchFacetPortlet.uncheckFacet(facetValueName = ${facetValueName});
 
 		var searchURL = SearchFacetPortlet.generateFacetUncheckedURL(
-			facetClass = ${facetClass},
+			facetName = ${facetName},
 			facetValue = ${facetValue},
 			facetValueName = ${facetValueName},
 			searchURL = ${searchURL});

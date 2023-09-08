@@ -8,6 +8,7 @@ package com.liferay.list.type.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.list.type.exception.DuplicateListTypeEntryException;
 import com.liferay.list.type.exception.DuplicateListTypeEntryExternalReferenceCodeException;
+import com.liferay.list.type.exception.ListTypeDefinitionSystemException;
 import com.liferay.list.type.exception.ListTypeEntryKeyException;
 import com.liferay.list.type.exception.NoSuchListTypeDefinitionException;
 import com.liferay.list.type.exception.NoSuchListTypeEntryException;
@@ -15,6 +16,7 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -57,6 +59,18 @@ public class ListTypeEntryLocalServiceTest {
 		_listTypeEntry = _listTypeEntryLocalService.addListTypeEntry(
 			null, TestPropsValues.getUserId(),
 			_listTypeDefinition.getListTypeDefinitionId(), "able",
+			Collections.singletonMap(LocaleUtil.US, "Able"));
+
+		_systemListTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				null, TestPropsValues.getUserId(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()),
+				true, Collections.emptyList());
+
+		_systemListTypeEntry = _listTypeEntryLocalService.addListTypeEntry(
+			null, TestPropsValues.getUserId(),
+			_systemListTypeDefinition.getListTypeDefinitionId(), "able",
 			Collections.singletonMap(LocaleUtil.US, "Able"));
 	}
 
@@ -148,6 +162,14 @@ public class ListTypeEntryLocalServiceTest {
 				duplicateListTypeEntryExternalReferenceCodeException.
 					getMessage());
 		}
+
+		// System list type definition
+
+		AssertUtils.assertFailure(
+			ListTypeDefinitionSystemException.class, false,
+			"Only allowed bundles can add system list type entries",
+			() -> _testAddListTypeEntry(
+				_systemListTypeDefinition.getListTypeDefinitionId(), "baker"));
 
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.addListTypeEntry(
@@ -270,5 +292,8 @@ public class ListTypeEntryLocalServiceTest {
 
 	@Inject
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	private ListTypeDefinition _systemListTypeDefinition;
+	private ListTypeEntry _systemListTypeEntry;
 
 }

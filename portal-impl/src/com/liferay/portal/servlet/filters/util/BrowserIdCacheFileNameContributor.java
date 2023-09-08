@@ -5,7 +5,7 @@
 
 package com.liferay.portal.servlet.filters.util;
 
-import com.liferay.portal.kernel.servlet.BrowserSniffer;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -34,8 +34,9 @@ public class BrowserIdCacheFileNameContributor
 	}
 
 	private static final String[] _BROWSER_IDS = {
-		BrowserSniffer.BROWSER_ID_EDGE, BrowserSniffer.BROWSER_ID_FIREFOX,
-		BrowserSniffer.BROWSER_ID_IE, BrowserSniffer.BROWSER_ID_OTHER
+		BrowserSnifferUtil.BROWSER_ID_EDGE,
+		BrowserSnifferUtil.BROWSER_ID_FIREFOX, BrowserSnifferUtil.BROWSER_ID_IE,
+		BrowserSnifferUtil.BROWSER_ID_OTHER
 	};
 
 }

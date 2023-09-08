@@ -16,7 +16,7 @@ import com.liferay.portal.internal.minifier.MinifierThreadLocal;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.BrowserSniffer;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
@@ -595,7 +595,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 		String browserId = ParamUtil.getString(httpServletRequest, "browserId");
 
-		if (!browserId.equals(BrowserSniffer.BROWSER_ID_IE)) {
+		if (!browserId.equals(BrowserSnifferUtil.BROWSER_ID_IE)) {
 			Matcher matcher = _pattern.matcher(content);
 
 			content = matcher.replaceAll(StringPool.BLANK);

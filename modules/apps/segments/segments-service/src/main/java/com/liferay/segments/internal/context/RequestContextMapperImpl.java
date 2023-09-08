@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.mobile.device.Dimensions;
 import com.liferay.portal.kernel.mobile.device.UnknownDevice;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.servlet.BrowserSniffer;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -74,7 +74,8 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 		Context context = new Context();
 
 		context.put(
-			Context.BROWSER, _browserSniffer.getBrowserId(httpServletRequest));
+			Context.BROWSER,
+			BrowserSnifferUtil.getBrowserId(httpServletRequest));
 		context.put(Context.COOKIES, _getCookies(httpServletRequest));
 
 		Device device = DeviceDetectionUtil.detectDevice(httpServletRequest);
@@ -227,9 +228,6 @@ public class RequestContextMapperImpl implements RequestContextMapper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RequestContextMapperImpl.class);
-
-	@Reference
-	private BrowserSniffer _browserSniffer;
 
 	private final ContextEntityModel _contextEntityModel =
 		new ContextEntityModel(Collections.emptyList());

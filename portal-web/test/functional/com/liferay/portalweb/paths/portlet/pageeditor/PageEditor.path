@@ -286,7 +286,7 @@
 </tr>
 <tr>
 	<td>EDIT_MODE_SELECTOR</td>
-	<td>//button[contains(@class,'edit-mode-selector')]</td>
+	<td>//button[contains(@aria-label,'Page Edition Mode')]</td>
 	<td></td>
 </tr>
 <tr>

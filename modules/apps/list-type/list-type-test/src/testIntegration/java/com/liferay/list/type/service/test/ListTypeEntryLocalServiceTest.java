@@ -83,19 +83,40 @@ public class ListTypeEntryLocalServiceTest {
 	@Test
 	public void testAddListTypeEntry() throws Exception {
 
-		// No ListTypeDefinition exists with the primary key
+		// Duplicate key
 
 		try {
-			_testAddListTypeEntry(0, "able");
-
-			Assert.fail();
+			_testAddListTypeEntry(
+				_listTypeDefinition.getListTypeDefinitionId(), "able");
 		}
-		catch (NoSuchListTypeDefinitionException
-					noSuchListTypeDefinitionException) {
+		catch (DuplicateListTypeEntryException
+					duplicateListTypeEntryException) {
 
 			Assert.assertEquals(
-				"No ListTypeDefinition exists with the primary key 0",
-				noSuchListTypeDefinitionException.getMessage());
+				"Duplicate key able",
+				duplicateListTypeEntryException.getMessage());
+		}
+
+		// Duplicate ERC
+
+		String externalReferenceCode =
+			_listTypeEntry.getExternalReferenceCode();
+
+		try {
+			_listTypeEntryLocalService.addListTypeEntry(
+				externalReferenceCode, TestPropsValues.getUserId(),
+				_listTypeDefinition.getListTypeDefinitionId(),
+				RandomTestUtil.randomString(),
+				Collections.singletonMap(
+					LocaleUtil.US, RandomTestUtil.randomString()));
+		}
+		catch (DuplicateListTypeEntryExternalReferenceCodeException
+					duplicateListTypeEntryExternalReferenceCodeException) {
+
+			Assert.assertEquals(
+				"Duplicate external reference code " + externalReferenceCode,
+				duplicateListTypeEntryExternalReferenceCodeException.
+					getMessage());
 		}
 
 		// Key is null
@@ -129,38 +150,19 @@ public class ListTypeEntryLocalServiceTest {
 			_listTypeEntry.getUuid(),
 			_listTypeEntry.getExternalReferenceCode());
 
-		// Duplicate key
+		// No ListTypeDefinition exists with the primary key
 
 		try {
-			_testAddListTypeEntry(
-				_listTypeDefinition.getListTypeDefinitionId(), "able");
+			_testAddListTypeEntry(0, "able");
+
+			Assert.fail();
 		}
-		catch (DuplicateListTypeEntryException
-					duplicateListTypeEntryException) {
+		catch (NoSuchListTypeDefinitionException
+					noSuchListTypeDefinitionException) {
 
 			Assert.assertEquals(
-				"Duplicate key able",
-				duplicateListTypeEntryException.getMessage());
-		}
-
-		String externalReferenceCode =
-			_listTypeEntry.getExternalReferenceCode();
-
-		try {
-			_listTypeEntryLocalService.addListTypeEntry(
-				externalReferenceCode, TestPropsValues.getUserId(),
-				_listTypeDefinition.getListTypeDefinitionId(),
-				RandomTestUtil.randomString(),
-				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
-		}
-		catch (DuplicateListTypeEntryExternalReferenceCodeException
-					duplicateListTypeEntryExternalReferenceCodeException) {
-
-			Assert.assertEquals(
-				"Duplicate external reference code " + externalReferenceCode,
-				duplicateListTypeEntryExternalReferenceCodeException.
-					getMessage());
+				"No ListTypeDefinition exists with the primary key 0",
+				noSuchListTypeDefinitionException.getMessage());
 		}
 
 		// System list type definition

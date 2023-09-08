@@ -116,6 +116,16 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 			});
 	}
 
+	@Override
+	public void removeURLPatternMapper(long companyId) {
+		_urlPatternMappers.remove(companyId);
+	}
+
+	@Override
+	public void removeURLPatternMappers() {
+		_urlPatternMappers.clear();
+	}
+
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		rebuildURLPatternMappers();

@@ -21,4 +21,8 @@ public interface ExportImportServiceConfigurationWhitelistedURLPatternsHelper {
 
 	public void rebuildURLPatternMappers();
 
+	public void removeURLPatternMapper(long companyId);
+
+	public void removeURLPatternMappers();
+
 }

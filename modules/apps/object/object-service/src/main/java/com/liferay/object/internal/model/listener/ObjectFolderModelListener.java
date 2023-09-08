@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.util.PortalInstances;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,6 +28,10 @@ public class ObjectFolderModelListener extends BaseModelListener<ObjectFolder> {
 	@Override
 	public void onAfterRemove(ObjectFolder objectFolder)
 		throws ModelListenerException {
+
+		if (PortalInstances.isCurrentCompanyInDeletionProcess()) {
+			return;
+		}
 
 		try {
 			ObjectFolder uncategorizedObjectFolder =

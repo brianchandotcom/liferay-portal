@@ -10,6 +10,10 @@
 		src-file="com/liferay/portal/service/permission/PasswordPolicyPermissionUtil.java"
 	/>
 	<instance-wrapper
+		parent-dir="../portal-impl/src"
+		src-file="com/liferay/portal/service/permission/UserGroupPermissionUtil.java"
+	/>
+	<instance-wrapper
 		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/portlet/PortletModeFactory.java"
 	/>

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -313,45 +314,53 @@ public class ViewConflictsDisplayContext {
 			if (!conflictInfo.isResolved()) {
 				JSONArray actionsJSONArray = JSONFactoryUtil.createJSONArray();
 
-				String editURL = _ctDisplayRendererRegistry.getEditURL(
-					_httpServletRequest, ctEntry);
+				String conflictType = conflictInfo.getConflictDescription(
+					resourceBundle);
 
-				if (Validator.isNotNull(editURL)) {
-					actionsJSONArray.put(
-						_createEditActionJSONObject(
-							_language.format(
-								_httpServletRequest,
-								"you-are-currently-working-on-production.-" +
-									"work-on-x",
-								new Object[] {_ctCollection.getName()}, false),
-							_ctCollection.getCtCollectionId(), editURL,
-							_language.format(
-								_httpServletRequest, "edit-in-x",
-								new Object[] {_ctCollection.getName()},
-								false)));
+				if (!conflictType.equals(
+						LanguageUtil.get(
+							resourceBundle,
+							"deletion-modification-conflict"))) {
 
-					T productionModel = _ctDisplayRendererRegistry.fetchCTModel(
-						modelClassNameId, conflictInfo.getTargetPrimaryKey());
+					String editURL = _ctDisplayRendererRegistry.getEditURL(
+						_httpServletRequest, ctEntry);
 
-					if (productionModel != null) {
+					if (Validator.isNotNull(editURL)) {
 						actionsJSONArray.put(
 							_createEditActionJSONObject(
 								_language.format(
 									_httpServletRequest,
-									"you-are-currently-working-on-x.-work-on-" +
-										"production",
+									"you-are-currently-working-on-" +
+										"production.-work-on-x",
 									new Object[] {_ctCollection.getName()},
 									false),
-								CTConstants.CT_COLLECTION_ID_PRODUCTION,
-								_ctDisplayRendererRegistry.getEditURL(
-									CTConstants.CT_COLLECTION_ID_PRODUCTION,
-									CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
-									_httpServletRequest, productionModel,
-									modelClassNameId),
-								_language.get(
-									_httpServletRequest,
-									"edit-in-production")));
+								_ctCollection.getCtCollectionId(), editURL,
+								_language.format(
+									_httpServletRequest, "edit-in-x",
+									new Object[] {_ctCollection.getName()},
+									false)));
 					}
+				}
+
+				T productionModel = _ctDisplayRendererRegistry.fetchCTModel(
+					modelClassNameId, conflictInfo.getTargetPrimaryKey());
+
+				if (productionModel != null) {
+					actionsJSONArray.put(
+						_createEditActionJSONObject(
+							_language.format(
+								_httpServletRequest,
+								"you-are-currently-working-on-x.-work-on-" +
+									"production",
+								new Object[] {_ctCollection.getName()}, false),
+							CTConstants.CT_COLLECTION_ID_PRODUCTION,
+							_ctDisplayRendererRegistry.getEditURL(
+								CTConstants.CT_COLLECTION_ID_PRODUCTION,
+								CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
+								_httpServletRequest, productionModel,
+								modelClassNameId),
+							_language.get(
+								_httpServletRequest, "edit-in-production")));
 				}
 
 				actionsJSONArray.put(

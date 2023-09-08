@@ -13,7 +13,6 @@ import com.liferay.petra.url.pattern.mapper.URLPatternMapperFactory;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -42,11 +41,7 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 			companyId);
 
 		if (urlPatternMapper == null) {
-			urlPatternMapper = _urlPatternMappers.get(CompanyConstants.SYSTEM);
-
-			if (urlPatternMapper == null) {
-				return false;
-			}
+			return false;
 		}
 
 		Boolean result = urlPatternMapper.getValue(url);

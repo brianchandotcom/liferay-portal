@@ -160,7 +160,7 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		if ((_jsBundleConfigRegistry.getLastModified() >
 				_objectValuePair.getKey()) ||
 			Validator.isNotNull(
-				_contentSecurityPolicyNonceProvider.getCSPNonce(
+				_contentSecurityPolicyNonceProvider.getNonce(
 					httpServletRequest))) {
 
 			return true;

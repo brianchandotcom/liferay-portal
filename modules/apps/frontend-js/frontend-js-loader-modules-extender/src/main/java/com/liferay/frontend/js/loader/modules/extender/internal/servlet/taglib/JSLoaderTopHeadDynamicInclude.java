@@ -56,14 +56,14 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		String cspNonce = _contentSecurityPolicyNonceProvider.getCSPNonce(
+		String nonce = _contentSecurityPolicyNonceProvider.getNonce(
 			httpServletRequest);
 
 		printWriter.write("<script data-senna-track=\"temporary\"");
 
-		if (Validator.isNotNull(cspNonce)) {
+		if (Validator.isNotNull(nonce)) {
 			printWriter.write(" nonce=\"");
-			printWriter.write(cspNonce);
+			printWriter.write(nonce);
 			printWriter.write(StringPool.QUOTE);
 		}
 
@@ -88,7 +88,7 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 		printWriter.write("', moduleType: '");
 		printWriter.write(FrontendESMUtil.getScriptType());
 		printWriter.write("', namespace:'Liferay', nonce: '");
-		printWriter.write(cspNonce);
+		printWriter.write(nonce);
 		printWriter.write("', ");
 		printWriter.write(
 			"reportMismatchedAnonymousModules: 'warn', resolvePath: '");

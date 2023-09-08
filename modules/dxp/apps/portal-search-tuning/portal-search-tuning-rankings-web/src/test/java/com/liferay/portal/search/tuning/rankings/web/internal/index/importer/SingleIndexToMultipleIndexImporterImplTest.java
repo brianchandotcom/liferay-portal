@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.BulkDocumentResponse;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
@@ -76,50 +75,7 @@ public class SingleIndexToMultipleIndexImporterImplTest
 			companyId
 		);
 
-		SearchHit searchHit = Mockito.mock(SearchHit.class);
-
-		Document document = Mockito.mock(Document.class);
-
-		Mockito.doReturn(
-			"myIndex"
-		).when(
-			document
-		).getString(
-			Mockito.anyString()
-		);
-
-		Mockito.doReturn(
-			document
-		).when(
-			searchHit
-		).getDocument();
-
-		SearchHits searchHits = Mockito.mock(SearchHits.class);
-
-		Mockito.doReturn(
-			Arrays.asList(searchHit)
-		).when(
-			searchHits
-		).getSearchHits();
-
-		setUpSearchEngineAdapter(searchHits);
-
-		BulkDocumentResponse bulkDocumentResponse = Mockito.mock(
-			BulkDocumentResponse.class);
-
-		Mockito.doReturn(
-			false
-		).when(
-			bulkDocumentResponse
-		).hasErrors();
-
-		Mockito.doReturn(
-			bulkDocumentResponse
-		).when(
-			searchEngineAdapter
-		).execute(
-			(BulkDocumentRequest)Mockito.any()
-		);
+		setUpSearchEngineAdapter(_setupSearchHits());
 
 		_singleIndexToMultipleIndexImporterImpl.importRankings(companyId);
 
@@ -182,6 +138,36 @@ public class SingleIndexToMultipleIndexImporterImplTest
 		).execute(
 			(SearchSearchRequest)Mockito.any()
 		);
+
+		return searchHits;
+	}
+
+	private SearchHits _setupSearchHits() {
+		SearchHit searchHit = Mockito.mock(SearchHit.class);
+
+		Document document = Mockito.mock(Document.class);
+
+		Mockito.doReturn(
+			"myIndex"
+		).when(
+			document
+		).getString(
+			Mockito.anyString()
+		);
+
+		Mockito.doReturn(
+			document
+		).when(
+			searchHit
+		).getDocument();
+
+		SearchHits searchHits = Mockito.mock(SearchHits.class);
+
+		Mockito.doReturn(
+			Arrays.asList(searchHit)
+		).when(
+			searchHits
+		).getSearchHits();
 
 		return searchHits;
 	}

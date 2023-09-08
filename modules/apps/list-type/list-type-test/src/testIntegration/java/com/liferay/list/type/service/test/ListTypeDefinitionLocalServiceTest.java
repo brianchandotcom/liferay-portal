@@ -124,16 +124,8 @@ public class ListTypeDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
 
-		_listTypeDefinitionLocalService.deleteListTypeDefinition(
+		_testDeleteListTypeDefinition(
 			listTypeDefinition.getListTypeDefinitionId());
-
-		Assert.assertNull(
-			_listTypeDefinitionLocalService.fetchListTypeDefinition(
-				listTypeDefinition.getListTypeDefinitionId()));
-		Assert.assertEquals(
-			0,
-			_listTypeEntryLocalService.getListTypeEntriesCount(
-				listTypeDefinition.getListTypeDefinitionId()));
 
 		ListTypeDefinition systemListTypeDefinition =
 			_addSystemListTypeDefinition();
@@ -144,16 +136,8 @@ public class ListTypeDefinitionLocalServiceTest {
 			() -> _listTypeDefinitionLocalService.deleteListTypeDefinition(
 				systemListTypeDefinition.getListTypeDefinitionId()));
 
-		_listTypeDefinitionLocalService.deleteListTypeDefinition(
+		_testDeleteListTypeDefinition(
 			systemListTypeDefinition.getListTypeDefinitionId());
-
-		Assert.assertNull(
-			_listTypeDefinitionLocalService.fetchListTypeDefinition(
-				systemListTypeDefinition.getListTypeDefinitionId()));
-		Assert.assertEquals(
-			0,
-			_listTypeEntryLocalService.getListTypeEntriesCount(
-				systemListTypeDefinition.getListTypeDefinitionId()));
 	}
 
 	@Test
@@ -222,6 +206,21 @@ public class ListTypeDefinitionLocalServiceTest {
 			Collections.singletonList(
 				ListTypeEntryUtil.createListTypeEntry(
 					RandomTestUtil.randomString())));
+	}
+
+	private void _testDeleteListTypeDefinition(long listTypeDefinitionId)
+		throws Exception {
+
+		_listTypeDefinitionLocalService.deleteListTypeDefinition(
+			listTypeDefinitionId);
+
+		Assert.assertNull(
+			_listTypeDefinitionLocalService.fetchListTypeDefinition(
+				listTypeDefinitionId));
+		Assert.assertEquals(
+			0,
+			_listTypeEntryLocalService.getListTypeEntriesCount(
+				listTypeDefinitionId));
 	}
 
 	@Inject

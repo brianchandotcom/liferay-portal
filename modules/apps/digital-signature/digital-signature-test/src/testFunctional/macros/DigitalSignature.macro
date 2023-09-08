@@ -37,6 +37,41 @@ definition {
 			locator1 = "Button#ANY_WITH_SPAN");
 	}
 
+	macro canSeeDataPersistAfterEnabled {
+		var siteSettingsStrategy = ${siteStrategy};
+		var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
+		var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
+		var digitalSignatureAccountBaseUri = PropsUtil.get("digital.signature.account.base.uri");
+		var digitalSignatureIntegrationKey = PropsUtil.get("digital.signature.integration.key");
+		var digitalSignatureRsaPrivateKey = PropsUtil.get("digital.signature.rsa.private.key");
+
+		AssertElementPresent(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",
+			siteSettingsStrategy = ${siteSettingsStrategy});
+
+		AssertElementPresent(locator1 = "ClickToChatConfiguration#CHECK_INPUT_ENABLED");
+
+		AssertElementPresent(
+			digitalSignatureApiUsername = ${digitalSignatureApiUsername},
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_USER_ID");
+
+		AssertElementPresent(
+			digitalSignatureApiAccountId = ${digitalSignatureApiAccountId},
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_ACCOUNT_ID");
+
+		AssertElementPresent(
+			digitalSignatureAccountBaseUri = ${digitalSignatureAccountBaseUri},
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_BASE_URI");
+
+		AssertElementPresent(
+			digitalSignatureIntegrationKey = ${digitalSignatureIntegrationKey},
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_INTEGRATION_KEY");
+
+		AssertElementPresent(
+			digitalSignatureRsaPrivateKey = ${digitalSignatureRsaPrivateKey},
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_RSA_PRIVATE_KEY");
+	}
+
 	macro canViewRequiredFields {
 		for (var fieldName : list ${fieldList}) {
 			AssertElementPresent(
@@ -209,9 +244,11 @@ definition {
 	}
 
 	macro enableDigitalSignature {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = ${siteStrategy});
+		if (isSet(siteStrategy)) {
+			Select(
+				locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+				value1 = ${siteStrategy});
+		}
 
 		var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
 		var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
@@ -246,6 +283,18 @@ definition {
 		Click.javaScriptClick(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON");
 	}
 
+	macro goToDigitalSignatureByPortlet {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
+
+		Click(
+			key_itemName = ${nameComponent},
+			locator1 = "ListGroupItem#ITEM_TEXT");
+	}
+
 	macro goToDigitalSignatureEllipsis {
 		Click.waitForMenuToggleJSClick(
 			key_rowEntry = ${dmDocumentTitle},
@@ -277,12 +326,24 @@ definition {
 			locator1 = "Checkbox#CHECKBOX_NAME");
 	}
 
+	macro selectSiteStrategy {
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = ${siteStrategy});
+	}
+
 	macro verifyUnsupportedFileError {
 		AssertElementPresent(locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_UNSUPPORTED_FILE");
 
 		AssertElementPresent(
 			key_value = ${disabledButton},
 			locator1 = "DigitalSignatureEnvelopeSettings#ANY_DISABLED_BUTTON");
+	}
+
+	macro viewDigitalSignatureEnabled {
+		AssertElementPresent(
+			dsStatus = ${dsStatus},
+			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_STATUS");
 	}
 
 	macro viewNotSupportedExtensionsError {

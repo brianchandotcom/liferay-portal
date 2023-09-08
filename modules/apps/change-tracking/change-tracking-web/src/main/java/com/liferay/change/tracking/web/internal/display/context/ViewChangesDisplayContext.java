@@ -132,6 +132,8 @@ public class ViewChangesDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_user = _themeDisplay.getUser();
 	}
 
 	public String getBackURL() {
@@ -167,7 +169,9 @@ public class ViewChangesDisplayContext {
 			(ctEntriesCount <= _ctConfiguration.contextViewLimitCount())) {
 
 			try {
-				if (_ctConfiguration.contextViewIncludeProduction()) {
+				if (_ctConfiguration.contextViewIncludeProduction() &&
+					!_user.isOnDemandUser()) {
+
 					ctClosure = _ctClosureFactory.create(
 						_ctCollection.getCtCollectionId());
 				}
@@ -387,7 +391,7 @@ public class ViewChangesDisplayContext {
 				return ctMappingInfosJSONArray;
 			}
 		).put(
-			"currentUserId", _themeDisplay.getUserId()
+			"currentUserId", _user.getUserId()
 		).put(
 			"dataURL",
 			() -> {
@@ -676,29 +680,11 @@ public class ViewChangesDisplayContext {
 				).buildString();
 			}
 		).put(
-			"showActionItems",
-			() -> {
-				User user = _themeDisplay.getUser();
-
-				if (user.isOnDemandUser()) {
-					return false;
-				}
-
-				return true;
-			}
+			"showActionItems", !_user.isOnDemandUser()
 		).put(
 			"showAllItemsEnabled", _ctConfiguration.showAllItemsEnabled()
 		).put(
-			"showDropdown",
-			() -> {
-				User user = _themeDisplay.getUser();
-
-				if (user.isOnDemandUser()) {
-					return false;
-				}
-
-				return true;
-			}
+			"showDropdown", !_user.isOnDemandUser()
 		).put(
 			"showHideableFromURL", showHideable
 		).put(
@@ -1352,6 +1338,7 @@ public class ViewChangesDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
+	private final User _user;
 	private final UserLocalService _userLocalService;
 
 	private static class ModelInfo {

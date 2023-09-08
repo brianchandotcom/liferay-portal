@@ -19,6 +19,23 @@ definition {
 			groupName = "Guest",
 			layoutName = "Questions Page",
 			widgetName = "Questions");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.addRegularRole(roleTitle = "Test Regrole Name");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Test Regrole Name",
+			userEmailAddress = "userea@liferay.com");
 	}
 
 	tearDown {
@@ -75,162 +92,103 @@ definition {
 			value1 = "Title Anonymous User Ask questions");
 	}
 
-	@description = "Validate if the user can add root topic without permission."
+	@description = "LPS-118481 - Validate if the user can add root topic without permission."
 	@priority = 4
 	@refactordone
 	test CannotAddRootTopicWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Given that permissions is set on the created user ") {
+			Questions.definePermissionsToCreatedRole(roleTitle = "Test Regrole Name");
+		}
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+		task ("And a Question is created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		JSONRole.addRegularRole(roleTitle = "Test Regrole Name");
+		task ("When a user without permissions goes to Question page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Test Regrole Name",
-			userEmailAddress = "userea@liferay.com");
+			Navigator.gotoPage(pageName = "Questions Page");
+		}
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_message_boards_web_portlet_MBAdminPortlet",
-			roleTitle = "Test Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.message.boards",
-			roleTitle = "Test Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.message.boards.model.MBCategory",
-			roleTitle = "Test Regrole Name");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Questions.viewNoPermissionsAddTopic();
+		task ("Then he can not see the 'Add topic' button") {
+			Questions.viewNoPermissionsAddTopic();
+		}
 	}
 
-	@description = "Validate if the user can add subtopic without permission."
+	@description = "LPS-116516 - Validate if the user can add subtopic without permission."
 	@priority = 4
 	@refactordone
 	test CannotAddSubTopicWithoutPermission {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+		task ("Given that permissions is set on the created user ") {
+			Questions.definePermissionsToCreatedRole(roleTitle = "Test Regrole Name");
+		}
 
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
+		task ("And a Question is created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		JSONRole.addRegularRole(roleTitle = "Test Regrole Name");
+		task ("When a user without permissions goes to Question topic page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Test Regrole Name",
-			userEmailAddress = "userea@liferay.com");
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+		}
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_message_boards_web_portlet_MBAdminPortlet",
-			roleTitle = "Test Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.message.boards",
-			roleTitle = "Test Regrole Name");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW",
-			resourceName = "com.liferay.message.boards.model.MBCategory",
-			roleTitle = "Test Regrole Name");
-
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
-
-		Questions.viewNoPermissionsAddTopic();
+		task ("Then he can not Add a sub topic") {
+			Questions.viewNoPermissionsAddTopic();
+		}
 	}
 
-	@description = "Validate if the guest user cannot ask question, it also covers LPS-128823."
+	@description = "LPS-118481 - Validate if the guest user cannot ask question, it also covers LPS-128823."
 	@priority = 4
 	@refactordone
 	test CannotAskQuestionAsGuest {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		Navigator.openURL();
+		task ("Given thata topic is created") {
+			Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "View",
-			pageName = "Questions Page");
+			Questions.addRootTopic(
+				rootTopicDescription = "Questions Test Category Description",
+				rootTopicName = "Questions Test Category");
+		}
 
-		ScrollWebElementIntoView(
-			key_text = "New Topic",
-			locator1 = "Button#ANY");
+		task ("When a guest user is logged") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
 
-		Button.click(button = "New Topic");
+		task ("And goes to questions topic page") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
+		}
 
-		Questions.addRootTopic(
-			rootTopicDescription = "Questions Test Category Description",
-			rootTopicName = "Questions Test Category");
+		task ("Then he can see the 'This topic is empty' message and can not see the 'Ask Question' button") {
+			Questions.viewTopicDefault();
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
-
-		Questions.openToQuestionsTopic(
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
-
-		Questions.viewTopicDefault();
-
-		Questions.viewNoPermissionsAddQuestion();
+			Questions.viewNoPermissionsAddQuestion();
+		}
 	}
 
 }

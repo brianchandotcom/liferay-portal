@@ -213,6 +213,9 @@ public interface FaroPreferencesLocalService
 	public FaroPreferences getFaroPreferences(long faroPreferencesId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FaroPreferences> getFaroPreferencesByGroupId(long groupId);
+
 	/**
 	 * Returns a range of all the faro preferenceses.
 	 *

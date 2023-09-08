@@ -241,6 +241,12 @@ public class FaroPreferencesLocalServiceUtil {
 		return getService().getFaroPreferences(faroPreferencesId);
 	}
 
+	public static List<FaroPreferences> getFaroPreferencesByGroupId(
+		long groupId) {
+
+		return getService().getFaroPreferencesByGroupId(groupId);
+	}
+
 	/**
 	 * Returns a range of all the faro preferenceses.
 	 *

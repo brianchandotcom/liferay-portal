@@ -8,7 +8,8 @@ create table ListTypeDefinition (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	name STRING null
+	name STRING null,
+	system_ BOOLEAN
 );
 
 create table ListTypeEntry (

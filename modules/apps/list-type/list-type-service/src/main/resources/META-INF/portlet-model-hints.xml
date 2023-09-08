@@ -12,6 +12,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field localized="true" name="name" type="String" />
+		<field name="system" type="boolean" />
 	</model>
 	<model name="com.liferay.list.type.model.ListTypeEntry">
 		<field name="mvccVersion" type="long" />

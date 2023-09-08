@@ -32,11 +32,12 @@ public class ListTypeDefinitionServiceUtil {
 	 */
 	public static ListTypeDefinition addListTypeDefinition(
 			String externalReferenceCode, Map<java.util.Locale, String> nameMap,
+			boolean system,
 			List<com.liferay.list.type.model.ListTypeEntry> listTypeEntries)
 		throws PortalException {
 
 		return getService().addListTypeDefinition(
-			externalReferenceCode, nameMap, listTypeEntries);
+			externalReferenceCode, nameMap, system, listTypeEntries);
 	}
 
 	public static ListTypeDefinition deleteListTypeDefinition(

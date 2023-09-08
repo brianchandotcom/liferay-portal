@@ -31,13 +31,13 @@ public class ListTypeDefinitionServiceWrapper
 	@Override
 	public com.liferay.list.type.model.ListTypeDefinition addListTypeDefinition(
 			String externalReferenceCode,
-			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> nameMap, boolean system,
 			java.util.List<com.liferay.list.type.model.ListTypeEntry>
 				listTypeEntries)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _listTypeDefinitionService.addListTypeDefinition(
-			externalReferenceCode, nameMap, listTypeEntries);
+			externalReferenceCode, nameMap, system, listTypeEntries);
 	}
 
 	@Override

@@ -44,7 +44,7 @@ public class ListTypeDefinitionServiceHttp {
 	public static com.liferay.list.type.model.ListTypeDefinition
 			addListTypeDefinition(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> nameMap, boolean system,
 				java.util.List<com.liferay.list.type.model.ListTypeEntry>
 					listTypeEntries)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -55,7 +55,8 @@ public class ListTypeDefinitionServiceHttp {
 				_addListTypeDefinitionParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, nameMap, listTypeEntries);
+				methodKey, externalReferenceCode, nameMap, system,
+				listTypeEntries);
 
 			Object returnObj = null;
 
@@ -410,7 +411,10 @@ public class ListTypeDefinitionServiceHttp {
 		ListTypeDefinitionServiceHttp.class);
 
 	private static final Class<?>[] _addListTypeDefinitionParameterTypes0 =
-		new Class[] {String.class, java.util.Map.class, java.util.List.class};
+		new Class[] {
+			String.class, java.util.Map.class, boolean.class,
+			java.util.List.class
+		};
 	private static final Class<?>[] _deleteListTypeDefinitionParameterTypes1 =
 		new Class[] {com.liferay.list.type.model.ListTypeDefinition.class};
 	private static final Class<?>[] _deleteListTypeDefinitionParameterTypes2 =

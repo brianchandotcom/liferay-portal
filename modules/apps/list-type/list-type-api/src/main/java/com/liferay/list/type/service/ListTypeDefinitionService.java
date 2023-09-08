@@ -47,7 +47,7 @@ public interface ListTypeDefinitionService extends BaseService {
 	 */
 	public ListTypeDefinition addListTypeDefinition(
 			String externalReferenceCode, Map<Locale, String> nameMap,
-			List<ListTypeEntry> listTypeEntries)
+			boolean system, List<ListTypeEntry> listTypeEntries)
 		throws PortalException;
 
 	public ListTypeDefinition deleteListTypeDefinition(

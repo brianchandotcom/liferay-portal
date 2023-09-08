@@ -313,6 +313,27 @@ public interface ListTypeDefinitionModel
 	 */
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
+	/**
+	 * Returns the system of this list type definition.
+	 *
+	 * @return the system of this list type definition
+	 */
+	public boolean getSystem();
+
+	/**
+	 * Returns <code>true</code> if this list type definition is system.
+	 *
+	 * @return <code>true</code> if this list type definition is system; <code>false</code> otherwise
+	 */
+	public boolean isSystem();
+
+	/**
+	 * Sets whether this list type definition is system.
+	 *
+	 * @param system the system of this list type definition
+	 */
+	public void setSystem(boolean system);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

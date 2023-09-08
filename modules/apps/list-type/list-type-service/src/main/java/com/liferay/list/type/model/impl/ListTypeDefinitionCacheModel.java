@@ -69,7 +69,7 @@ public class ListTypeDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -91,6 +91,8 @@ public class ListTypeDefinitionCacheModel
 		sb.append(modifiedDate);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", system=");
+		sb.append(system);
 		sb.append("}");
 
 		return sb.toString();
@@ -150,6 +152,8 @@ public class ListTypeDefinitionCacheModel
 			listTypeDefinitionImpl.setName(name);
 		}
 
+		listTypeDefinitionImpl.setSystem(system);
+
 		listTypeDefinitionImpl.resetOriginalValues();
 
 		return listTypeDefinitionImpl;
@@ -170,6 +174,8 @@ public class ListTypeDefinitionCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
+
+		system = objectInput.readBoolean();
 	}
 
 	@Override
@@ -212,6 +218,8 @@ public class ListTypeDefinitionCacheModel
 		else {
 			objectOutput.writeUTF(name);
 		}
+
+		objectOutput.writeBoolean(system);
 	}
 
 	public long mvccVersion;
@@ -224,5 +232,6 @@ public class ListTypeDefinitionCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public String name;
+	public boolean system;
 
 }

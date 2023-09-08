@@ -44,6 +44,7 @@ public class ListTypeDefinitionWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
+		attributes.put("system", isSystem());
 
 		return attributes;
 	}
@@ -110,6 +111,12 @@ public class ListTypeDefinitionWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Boolean system = (Boolean)attributes.get("system");
+
+		if (system != null) {
+			setSystem(system);
 		}
 	}
 
@@ -275,6 +282,16 @@ public class ListTypeDefinitionWrapper
 	}
 
 	/**
+	 * Returns the system of this list type definition.
+	 *
+	 * @return the system of this list type definition
+	 */
+	@Override
+	public boolean getSystem() {
+		return model.getSystem();
+	}
+
+	/**
 	 * Returns the user ID of this list type definition.
 	 *
 	 * @return the user ID of this list type definition
@@ -312,6 +329,16 @@ public class ListTypeDefinitionWrapper
 	@Override
 	public String getUuid() {
 		return model.getUuid();
+	}
+
+	/**
+	 * Returns <code>true</code> if this list type definition is system.
+	 *
+	 * @return <code>true</code> if this list type definition is system; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isSystem() {
+		return model.isSystem();
 	}
 
 	@Override
@@ -465,6 +492,16 @@ public class ListTypeDefinitionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets whether this list type definition is system.
+	 *
+	 * @param system the system of this list type definition
+	 */
+	@Override
+	public void setSystem(boolean system) {
+		model.setSystem(system);
 	}
 
 	/**

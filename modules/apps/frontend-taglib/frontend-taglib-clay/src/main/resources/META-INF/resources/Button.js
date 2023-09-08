@@ -22,30 +22,26 @@ export default function Button({
 }) {
 	return (
 		<ClayButton className={cssClass} {...otherProps}>
-			{icon ? (
-				iconRight ? (
-					<span
-						className={classNames('inline-item', {
-							'inline-item-after': label,
-						})}
-					>
-						{label}
+			{icon && !iconRight && (
+				<span
+					className={classNames('inline-item', {
+						'inline-item-before': label,
+					})}
+				>
+					<ClayIcon symbol={icon} />
+				</span>
+			)}
 
-						<ClayIcon symbol={icon} />
-					</span>
-				) : (
-					<span
-						className={classNames('inline-item', {
-							'inline-item-before': label,
-						})}
-					>
-						<ClayIcon symbol={icon} />
+			{label}
 
-						{label}
-					</span>
-				)
-			) : (
-				label
+			{icon && iconRight && (
+				<span
+					className={classNames('inline-item', {
+						'inline-item-after': label,
+					})}
+				>
+					<ClayIcon symbol={icon} />
+				</span>
 			)}
 		</ClayButton>
 	);

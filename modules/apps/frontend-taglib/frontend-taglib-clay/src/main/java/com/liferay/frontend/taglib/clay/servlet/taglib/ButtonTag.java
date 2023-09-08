@@ -225,30 +225,26 @@ public class ButtonTag extends BaseContainerTag {
 		if (Validator.isNotNull(_icon) || Validator.isNotNull(_label)) {
 			JspWriter jspWriter = pageContext.getOut();
 
-			if (Validator.isNotNull(_label)) {
-				if (Validator.isNotNull(_icon)) {
-					if (_iconRight) {
-						writeLabel(jspWriter);
-
-						jspWriter.write("<span class=\"inline-item");
-						jspWriter.write(" inline-item-after");
-
-						writeIcon(jspWriter);
-					}
-					else {
-						jspWriter.write("<span class=\"inline-item");
-						jspWriter.write(" inline-item-before");
-
-						writeIcon(jspWriter);
-						writeLabel(jspWriter);
-					}
-				}
-				else {
-					writeLabel(jspWriter);
-				}
-			}
-			else {
+			if (Validator.isNotNull(_icon) && !_iconRight) {
 				jspWriter.write("<span class=\"inline-item");
+
+				if (Validator.isNotNull(_label)) {
+					jspWriter.write(" inline-item-before");
+				}
+
+				writeIcon(jspWriter);
+			}
+
+			if (Validator.isNotNull(_label)) {
+				writeLabel(jspWriter);
+			}
+
+			if (Validator.isNotNull(_icon) && _iconRight) {
+				jspWriter.write("<span class=\"inline-item");
+
+				if (Validator.isNotNull(_label)) {
+					jspWriter.write(" inline-item-after");
+				}
 
 				writeIcon(jspWriter);
 			}

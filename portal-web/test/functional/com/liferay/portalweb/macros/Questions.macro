@@ -927,6 +927,12 @@ definition {
 			value1 = ${results});
 	}
 
+	macro viewQuestionPage {
+		var baseURL = PropsUtil.get("portal.url");
+
+		AssertLocation(value1 = "${baseURL}/web/guest/questions-page/questions/${topicName}");
+	}
+
 	macro viewQuestionViaTag {
 		Click(
 			key_tagName = ${tagName},

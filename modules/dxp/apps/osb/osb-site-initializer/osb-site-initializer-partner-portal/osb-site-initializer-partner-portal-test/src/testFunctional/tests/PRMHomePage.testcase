@@ -78,7 +78,7 @@ definition {
 		task ("When I click on 'Deal Registration' button, on Quick Links section") {
 			PRMHomePage.gotoQuickLinksOption(
 				buttonLink = "deal-registrations",
-				buttonText = "Deals");
+				buttonText = "Deal Registration");
 		}
 
 		task ("Then I'm redirected to the 'Deal Registration Listing' page") {

@@ -5,8 +5,10 @@
 
 package com.liferay.portal.kernel.service.permission;
 
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -18,27 +20,30 @@ public class UserGroupPermissionUtil {
 			String actionId)
 		throws PrincipalException {
 
-		_userGroupPermission.check(permissionChecker, userGroupId, actionId);
+		if (!contains(permissionChecker, userGroupId, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, UserGroup.class.getName(), userGroupId,
+				actionId);
+		}
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long userGroupId,
 		String actionId) {
 
-		return _userGroupPermission.contains(
-			permissionChecker, userGroupId, actionId);
+		UserGroup userGroup = UserGroupLocalServiceUtil.fetchUserGroup(
+			userGroupId);
+
+		if ((userGroup != null) &&
+			permissionChecker.hasOwnerPermission(
+				permissionChecker.getCompanyId(), UserGroup.class.getName(),
+				userGroupId, userGroup.getUserId(), actionId)) {
+
+			return true;
+		}
+
+		return permissionChecker.hasPermission(
+			null, UserGroup.class.getName(), userGroupId, actionId);
 	}
-
-	public static UserGroupPermission getUserGroupPermission() {
-		return _userGroupPermission;
-	}
-
-	public void setUserGroupPermission(
-		UserGroupPermission userGroupPermission) {
-
-		_userGroupPermission = userGroupPermission;
-	}
-
-	private static UserGroupPermission _userGroupPermission;
 
 }

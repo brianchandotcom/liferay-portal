@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -51,7 +50,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -122,21 +120,14 @@ public class GetLayoutReportsLayoutItemDataStrutsAction
 			return null;
 		}
 
-		List<LayoutStructureRenderer.LayoutStructureItemRenderTime>
-			layoutStructureItemRenderTimes = ListUtil.sort(
-				layoutStructureRenderer.getLayoutStructureItemRenderTimes(),
-				Comparator.comparingLong(
-					LayoutStructureRenderer.LayoutStructureItemRenderTime::
-						getRenderTime
-				).reversed());
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		for (LayoutStructureRenderer.LayoutStructureItemRenderTime
 				layoutStructureItemRenderTime :
-					layoutStructureItemRenderTimes) {
+					layoutStructureRenderer.
+						getLayoutStructureItemRenderTimes()) {
 
 			LayoutStructureItem layoutStructureItem =
 				layoutStructureItemRenderTime.getLayoutStructureItem();

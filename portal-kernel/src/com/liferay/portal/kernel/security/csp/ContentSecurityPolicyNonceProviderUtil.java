@@ -26,9 +26,9 @@ public class ContentSecurityPolicyNonceProviderUtil {
 	}
 
 	/**
-	 * @see ContentSecurityPolicyNonceProvider#getCSPNonce(HttpServletRequest)
+	 * @see ContentSecurityPolicyNonceProvider#getNonce(HttpServletRequest)
 	 */
-	public static String getCSPNonce(HttpServletRequest httpServletRequest) {
+	public static String getNonce(HttpServletRequest httpServletRequest) {
 		ContentSecurityPolicyNonceProvider contentSecurityPolicyNonceProvider =
 			getContentSecurityPolicyNonceProvider();
 
@@ -38,8 +38,7 @@ public class ContentSecurityPolicyNonceProviderUtil {
 			return StringPool.BLANK;
 		}
 
-		return contentSecurityPolicyNonceProvider.getCSPNonce(
-			httpServletRequest);
+		return contentSecurityPolicyNonceProvider.getNonce(httpServletRequest);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -36,19 +36,19 @@ public class ContentSecurityPolicyTopHeadDynamicInclude
 
 		printWriter.print("<script data-senna-track=\"permanent\"");
 
-		String cspNonce = _contentSecurityPolicyNonceProvider.getCSPNonce(
+		String nonce = _contentSecurityPolicyNonceProvider.getNonce(
 			httpServletRequest);
 
-		if (Validator.isNotNull(cspNonce)) {
+		if (Validator.isNotNull(nonce)) {
 			printWriter.print(" nonce=\"");
-			printWriter.print(cspNonce);
+			printWriter.print(nonce);
 			printWriter.print(StringPool.QUOTE);
 		}
 
 		printWriter.print(
 			" type=\"text/javascript\">window.Liferay = window.Liferay || ");
 		printWriter.print("{};window.Liferay.CSP={nonce:'");
-		printWriter.print(cspNonce);
+		printWriter.print(nonce);
 		printWriter.println("'};</script>");
 	}
 

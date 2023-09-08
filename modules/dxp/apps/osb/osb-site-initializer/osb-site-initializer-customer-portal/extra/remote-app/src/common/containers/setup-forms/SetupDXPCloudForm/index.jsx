@@ -19,6 +19,7 @@ import {
 	removeContactRole,
 	removeHighPriorityContactsList,
 } from '~/routes/customer-portal/utils/getHighPriorityContacts';
+import {useOnboarding} from '~/routes/onboarding/context';
 import {
 	addAdminDXPCloud,
 	addDXPCloudEnvironment,
@@ -32,8 +33,8 @@ import {useCustomerPortal} from '../../../../routes/customer-portal/context';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/constants';
 import i18n from '../../../I18n';
 import {Button, Input, Select} from '../../../components';
-import SetupHighPriorityContactForm from '../../../components/HighPriorityContacts/SetupHighPriorityContact';
 
+import SetupHighPriorityContactForm from '../../../components/HighPriorityContacts/SetupHighPriorityContact';
 import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
 import getKebabCase from '../../../utils/getKebabCase';
 import Layout from '../Layout';
@@ -69,8 +70,14 @@ const SetupDXPCloudPage = ({
 		},
 	});
 	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
-	const [{sessionId}] = useCustomerPortal();
 
+	const customerPortalContext = useCustomerPortal();
+
+	const onboardingContext = useOnboarding();
+
+	const sessionId =
+		customerPortalContext?.[0].sessionId ||
+		onboardingContext?.[0].sessionId;
 	const [
 		addHighPriorityContactList,
 		setAddHighPriorityContactList,

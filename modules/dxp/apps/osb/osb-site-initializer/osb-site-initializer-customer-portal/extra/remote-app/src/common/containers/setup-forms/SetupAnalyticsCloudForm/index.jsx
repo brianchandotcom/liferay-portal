@@ -15,6 +15,7 @@ import {
 	removeHighPriorityContactsList,
 } from '~/routes/customer-portal/utils/getHighPriorityContacts';
 
+import {useOnboarding} from '~/routes/onboarding/context';
 import {
 	addAnalyticsCloudWorkspace,
 	getAnalyticsCloudPageInfo,
@@ -95,7 +96,13 @@ const SetupAnalyticsCloudPage = ({
 
 	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
 
-	const [{sessionId}] = useCustomerPortal();
+	const customerPortalContext = useCustomerPortal();
+
+	const onboardingContext = useOnboarding();
+
+	const sessionId =
+		customerPortalContext?.[0].sessionId ||
+		onboardingContext?.[0].sessionId;
 
 	const analyticsDataCenterLocations = useMemo(
 		() =>

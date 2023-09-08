@@ -11,6 +11,7 @@ import {
 	removeContactRole,
 	removeHighPriorityContactsList,
 } from '~/routes/customer-portal/utils/getHighPriorityContacts';
+import {useOnboarding} from '~/routes/onboarding/context';
 import NotificationQueueService from '../../../../../../../../../../../../../src/common/services/actions/notificationAction';
 import {useAppPropertiesContext} from '../../../../../../../../../../../../common/contexts/AppPropertiesContext';
 import {
@@ -38,7 +39,13 @@ export default function useSubmitLXCEnvironment(
 
 	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
 
-	const [{sessionId}] = useCustomerPortal();
+	const customerPortalContext = useCustomerPortal();
+
+	const onboardingContext = useOnboarding();
+
+	const sessionId =
+		customerPortalContext?.[0].sessionId ||
+		onboardingContext?.[0].sessionId;
 
 	const [
 		createLiferayExperienceCloudEnvironment,

@@ -48,16 +48,17 @@ const SetupHighPriorityContact = ({
 		return {
 			contactsCategory: {
 				key: _filter,
-				name: `${filter}`,
+				name: filter,
 				role: getContactRoleByFilter(filter),
 			},
-			filterRequest: `${SearchBuilder.eq(
-				'contactsCategory',
-				_filter
-			)} and ${SearchBuilder.eq(
-				'r_accountEntryToHighPriorityContacts_accountEntryERC',
-				project.accountKey
-			)}`,
+			filterRequest: new SearchBuilder()
+				.eq('contactsCategory', _filter)
+				.and()
+				.eq(
+					'r_accountEntryToHighPriorityContacts_accountEntryERC',
+					project.accountKey
+				)
+				.build(),
 		};
 	};
 

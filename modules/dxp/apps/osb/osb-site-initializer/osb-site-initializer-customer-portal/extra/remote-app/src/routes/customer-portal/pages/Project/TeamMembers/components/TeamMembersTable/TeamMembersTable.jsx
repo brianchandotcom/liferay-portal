@@ -118,13 +118,14 @@ const TeamMembersTable = ({
 				key: lowerCaseFirstLetter.replace(/\s/g, ''),
 				name: filter,
 			},
-			filterRequest: `${SearchBuilder.eq(
-				'contactsCategory',
-				lowerCaseFirstLetter.replace(/\s/g, '')
-			)} and ${SearchBuilder.eq(
-				'r_accountEntryToHighPriorityContacts_accountEntryERC',
-				koroneikiAccount.accountKey
-			)}`,
+			filterRequest: new SearchBuilder()
+				.eq('contactsCategory', lowerCaseFirstLetter.replace(/\s/g, ''))
+				.and()
+				.eq(
+					'r_accountEntryToHighPriorityContacts_accountEntryERC',
+					koroneikiAccount.accountKey
+				)
+				.build(),
 		};
 	};
 

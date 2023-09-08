@@ -28,7 +28,7 @@ const fetchHeadless = async ({resolveAsJson = true, url}) => {
 const getHighPriorityContacts = async (filter) => {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${HEADLESS_BASE_URL}${`c/highprioritycontactses/?nestedFields=userandaccountKey&filter=${filter}`}`,
+		`${HEADLESS_BASE_URL}${`c/highprioritycontactses/?nestedFields=user&filter=${filter}`}`,
 		{
 			headers: {
 				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),

@@ -73,13 +73,14 @@ const IncidentContactCard = ({
 				key: lowerCaseFirstLetter.replace(/\s/g, ''),
 				name: `${filter}`,
 			},
-			filterRequest: `${SearchBuilder.eq(
-				'contactsCategory',
-				lowerCaseFirstLetter.replace(/\s/g, '')
-			)} and ${SearchBuilder.eq(
-				'r_accountEntryToHighPriorityContacts_accountEntryERC',
-				project.accountKey
-			)}`,
+			filterRequest: new SearchBuilder()
+				.eq('contactsCategory', lowerCaseFirstLetter.replace(/\s/g, ''))
+				.and()
+				.eq(
+					'r_accountEntryToHighPriorityContacts_accountEntryERC',
+					project.accountKey
+				)
+				.build(),
 		};
 	};
 
@@ -263,17 +264,17 @@ const IncidentContactCard = ({
 												incidentContactStandard,
 										})}
 									>
-										{hasCriticalIncidentContact ? (
-											criticalIncidentContacts
-										) : hasAdministratorRole ? (
-											<IncidentContactsButton
-												onClick={() =>
-													handleOnClick(
-														HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncident
-													)
-												}
-											/>
-										) : null}
+										{hasCriticalIncidentContact
+											? criticalIncidentContacts
+											: hasAdministratorRole && (
+													<IncidentContactsButton
+														onClick={() =>
+															handleOnClick(
+																HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncident
+															)
+														}
+													/>
+											  )}
 									</div>
 								</div>
 
@@ -307,17 +308,17 @@ const IncidentContactCard = ({
 														incidentContactStandard,
 												})}
 											>
-												{hasSecurityBreachContact ? (
-													securityBreachContacts
-												) : hasAdministratorRole ? (
-													<IncidentContactsButton
-														onClick={() =>
-															handleOnClick(
-																HIGH_PRIORITY_CONTACT_CATEGORIES.securityBreach
-															)
-														}
-													/>
-												) : null}
+												{hasSecurityBreachContact
+													? securityBreachContacts
+													: hasAdministratorRole && (
+															<IncidentContactsButton
+																onClick={() =>
+																	handleOnClick(
+																		HIGH_PRIORITY_CONTACT_CATEGORIES.securityBreach
+																	)
+																}
+															/>
+													  )}
 											</div>
 										</div>
 
@@ -349,17 +350,17 @@ const IncidentContactCard = ({
 														incidentContactStandard,
 												})}
 											>
-												{hasPrivacyBreachContact ? (
-													privacyBreachContacts
-												) : hasAdministratorRole ? (
-													<IncidentContactsButton
-														onClick={() =>
-															handleOnClick(
-																HIGH_PRIORITY_CONTACT_CATEGORIES.privacyBreach
-															)
-														}
-													/>
-												) : null}
+												{hasPrivacyBreachContact
+													? privacyBreachContacts
+													: hasAdministratorRole && (
+															<IncidentContactsButton
+																onClick={() =>
+																	handleOnClick(
+																		HIGH_PRIORITY_CONTACT_CATEGORIES.privacyBreach
+																	)
+																}
+															/>
+													  )}
 											</div>
 										</div>
 

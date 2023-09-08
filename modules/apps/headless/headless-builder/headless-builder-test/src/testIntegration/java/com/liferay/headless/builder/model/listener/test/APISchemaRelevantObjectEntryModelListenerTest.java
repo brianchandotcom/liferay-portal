@@ -9,6 +9,8 @@ import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.headless.builder.util.ObjectDefinitionTestUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -18,7 +20,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,16 +37,114 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_objectField1 = ObjectFieldUtil.createObjectField(
+			"Text", "String", true, true, null, RandomTestUtil.randomString(),
+			"x" + RandomTestUtil.randomString(), false);
+
+		_objectField2 = ObjectFieldUtil.createObjectField(
+			"Text", "String", true, true, null, RandomTestUtil.randomString(),
+			"x" + RandomTestUtil.randomString(), false);
+
+		_objectField1.setExternalReferenceCode(RandomTestUtil.randomString());
+
+		_objectField2.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					"Text", "String", true, true, null,
-					RandomTestUtil.randomString(),
-					"x" + RandomTestUtil.randomString(), false)));
+			Arrays.asList(_objectField1, _objectField2));
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void testPatchSchemaWithRelatedProperties() throws Exception {
+		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"applicationStatus", "unpublished"
+			).put(
+				"baseURL", StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toString(),
+			"headless-builder/applications", Http.Method.POST);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"apiSchemaToAPIProperties",
+				JSONUtil.putAll(
+					JSONUtil.put(
+						"description", "description"
+					).put(
+						"name", "name"
+					).put(
+						"objectFieldERC",
+						_objectField1.getExternalReferenceCode()
+					),
+					JSONUtil.put(
+						"description", "description"
+					).put(
+						"name", "name"
+					).put(
+						"objectFieldERC",
+						_objectField2.getExternalReferenceCode()
+					))
+			).put(
+				"mainObjectDefinitionERC",
+				_objectDefinition.getExternalReferenceCode()
+			).put(
+				"name", _API_SCHEMA_NAME
+			).put(
+				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				apiApplicationJSONObject.getLong("id")
+			).toString(),
+			"headless-builder/schemas", Http.Method.POST);
+
+		long apiSchemaId = jsonObject.getLong("id");
+
+		Assert.assertEquals(
+			0,
+			jsonObject.getJSONObject(
+				"status"
+			).get(
+				"code"
+			));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"apiSchemaToAPIProperties",
+				JSONUtil.put(
+					JSONUtil.put(
+						"description", "description"
+					).put(
+						"name", "name"
+					).put(
+						"objectFieldERC",
+						_objectField1.getExternalReferenceCode()
+					))
+			).put(
+				"mainObjectDefinitionERC",
+				_objectDefinition.getExternalReferenceCode()
+			).put(
+				"name", _API_SCHEMA_NAME
+			).put(
+				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				apiApplicationJSONObject.getLong("id")
+			).toString(),
+			"headless-builder/schemas/" + apiSchemaId, Http.Method.PATCH);
+
+		Assert.assertEquals(
+			0,
+			jsonObject.getJSONObject(
+				"status"
+			).get(
+				"code"
+			));
+
+		JSONArray jsonArray = jsonObject.getJSONArray(
+			"apiSchemaToAPIProperties");
+
+		Assert.assertEquals(1, jsonArray.length());
+	}
+
+	@Test
+	public void testPostSchema() throws Exception {
 		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "unpublished"
@@ -159,5 +259,11 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
+
+	@DeleteAfterTestRun
+	private ObjectField _objectField1;
+
+	@DeleteAfterTestRun
+	private ObjectField _objectField2;
 
 }

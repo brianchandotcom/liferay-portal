@@ -131,7 +131,9 @@ public class DisplayPageActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> hasUpdatePermission,
+						() ->
+							FeatureFlagManagerUtil.isEnabled("LPS-195263") &&
+							hasUpdatePermission,
 						_getCopyDisplayPageActionUnsafeConsumer()
 					).add(
 						() ->

@@ -8,10 +8,12 @@ package com.liferay.osb.faro.web.internal.controller.main;
 import com.liferay.osb.faro.constants.FaroChannelConstants;
 import com.liferay.osb.faro.engine.client.model.Channel;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
+import com.liferay.osb.faro.exception.NoSuchFaroUserException;
 import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.service.FaroChannelLocalService;
+import com.liferay.osb.faro.service.FaroUserLocalService;
 import com.liferay.osb.faro.web.internal.annotations.PATCH;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.controller.FaroController;
@@ -25,11 +27,13 @@ import com.liferay.osb.faro.web.internal.util.FaroQueryUtil;
 import com.liferay.osb.faro.web.internal.util.comparator.FaroChannelComparator;
 import com.liferay.osb.faro.web.internal.util.comparator.FaroUserComparator;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -82,8 +86,20 @@ public class ChannelController extends BaseFaroController {
 			@FormParam("ids") FaroParam<List<String>> idsFaroParam)
 		throws Exception {
 
+		User user = getUser();
+
+		FaroUser faroUser = _faroUserLocalService.fetchFaroUser(
+			groupId, user.getEmailAddress());
+
+		if (faroUser == null) {
+			throw new NoSuchFaroUserException(
+				StringBundler.concat(
+					"No FaroUser exists with the key {groupId=", groupId,
+					", emailAddress=", user.getEmailAddress(), "}"));
+		}
+
 		contactsEngineClient.clearChannel(
-			faroProjectLocalService.getFaroProjectByGroupId(groupId),
+			faroProjectLocalService.getFaroProjectByGroupId(groupId), faroUser,
 			idsFaroParam.getValue());
 	}
 
@@ -122,8 +138,20 @@ public class ChannelController extends BaseFaroController {
 			@FormParam("ids") FaroParam<List<String>> idsFaroParam)
 		throws Exception {
 
+		User user = getUser();
+
+		FaroUser faroUser = _faroUserLocalService.fetchFaroUser(
+			groupId, user.getEmailAddress());
+
+		if (faroUser == null) {
+			throw new NoSuchFaroUserException(
+				StringBundler.concat(
+					"No FaroUser exists with the key {groupId=", groupId,
+					", emailAddress=", user.getEmailAddress(), "}"));
+		}
+
 		contactsEngineClient.deleteChannels(
-			faroProjectLocalService.getFaroProjectByGroupId(groupId),
+			faroProjectLocalService.getFaroProjectByGroupId(groupId), faroUser,
 			idsFaroParam.getValue());
 
 		for (String id : idsFaroParam.getValue()) {
@@ -285,5 +313,8 @@ public class ChannelController extends BaseFaroController {
 
 	@Reference
 	private FaroChannelLocalService _faroChannelLocalService;
+
+	@Reference
+	private FaroUserLocalService _faroUserLocalService;
 
 }

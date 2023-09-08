@@ -41,6 +41,7 @@ import com.liferay.osb.faro.engine.client.model.provider.LiferayProvider;
 import com.liferay.osb.faro.engine.client.util.FilterBuilder;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.osb.faro.model.FaroUser;
 
 import java.io.OutputStream;
 
@@ -107,12 +108,14 @@ public interface ContactsEngineClient {
 	public void assignChannelToIndividualSegment(
 		FaroProject faroProject, String individualSegmentId, String channelId);
 
-	public void clearChannel(FaroProject faroProject, List<String> ids);
+	public void clearChannel(
+		FaroProject faroProject, FaroUser faroUser, List<String> ids);
 
 	public void deleteBlockedKeywords(FaroProject faroProject, List<String> ids)
 		throws FaroEngineClientException;
 
-	public void deleteChannels(FaroProject faroProject, List<String> ids);
+	public void deleteChannels(
+		FaroProject faroProject, FaroUser faroUser, List<String> ids);
 
 	public void deleteData(
 		FaroProject faroProject, String weDeployDataServiceName,

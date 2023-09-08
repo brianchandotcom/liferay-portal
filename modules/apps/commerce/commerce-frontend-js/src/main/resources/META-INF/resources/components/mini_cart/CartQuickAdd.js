@@ -11,13 +11,11 @@ import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
 import React, {useContext, useRef, useState} from 'react';
 
+import {CHANNEL_RESOURCE_ENDPOINT} from '../../utilities/constants';
 import {addToCart} from '../add_to_cart/data';
 import InfiniteScroller from '../infinite_scroller/InfiniteScroller';
 import MiniCartContext from './MiniCartContext';
 import {getCorrectedQuantity} from './util/index';
-
-const CHANNEL_RESOURCE_ENDPOINT =
-	'/o/headless-commerce-delivery-catalog/v1.0/channels';
 
 const getSearchSKUsURL = (page, search, accountId, channelId) => {
 	const url = new URL(

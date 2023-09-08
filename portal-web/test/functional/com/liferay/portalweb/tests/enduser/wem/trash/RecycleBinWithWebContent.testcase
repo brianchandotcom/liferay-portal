@@ -445,6 +445,7 @@ definition {
 				assetRestoreLocation = "Home",
 				assetType = "Web Content Folder",
 				assetType2 = "Web Content Article",
+				breadcrumbName = "Home",
 				documentName = "Web Content Title");
 		}
 

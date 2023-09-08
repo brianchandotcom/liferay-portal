@@ -37,6 +37,30 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 
 	@Override
 	public boolean isWhitelistedURL(long companyId, String url) {
+		if (!_urlPatternMappers.containsKey(companyId)) {
+			try {
+				rebuildURLPatternMapper(companyId);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Unable to instantiate URL pattern mapper for ",
+							"company ", companyId),
+						exception);
+				}
+				else {
+					_log.error(
+						StringBundler.concat(
+							"Unable to instantiate URL pattern mapper for ",
+							"company ", companyId, ": ",
+							exception.getMessage()));
+				}
+
+				return false;
+			}
+		}
+
 		URLPatternMapper<Boolean> urlPatternMapper = _urlPatternMappers.get(
 			companyId);
 

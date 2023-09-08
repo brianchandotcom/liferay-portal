@@ -65,7 +65,7 @@ LockedLayoutsConfigurationDisplayContext lockedLayoutsConfigurationDisplayContex
 		>
 			<aui:input aria-describedby='<%= liferayPortletResponse.getNamespace() + "timeWithoutAutosaveHiddenDescription" %>' label="time-without-autosave" name="timeWithoutAutosave" required="<%= true %>" type="number" value="<%= lockedLayoutsConfigurationDisplayContext.getTimeWithoutAutosave() %>" wrapperCssClass="c-mb-1">
 				<aui:validator name="number" />
-				<aui:validator name="min">5</aui:validator>
+				<aui:validator name="min">1</aui:validator>
 				<aui:validator name="max">99999</aui:validator>
 			</aui:input>
 

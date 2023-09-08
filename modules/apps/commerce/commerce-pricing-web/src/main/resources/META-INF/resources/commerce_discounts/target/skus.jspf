@@ -25,6 +25,7 @@
 						discountId: id,
 						skuExternalReferenceCode: sku.externalReferenceCode,
 						skuId: sku.id,
+						unitOfMeasureKey: sku.unitOfMeasureKey,
 					};
 
 					return CommerceDiscountSkusResource.addDiscountSku(id, skuData)
@@ -43,12 +44,12 @@
 				}
 
 				itemFinder.default('itemFinder', 'item-finder-root', {
-					apiUrl: '/o/headless-commerce-admin-catalog/v1.0/skus?nestedFields=catalog',
+					apiUrl: '/o/headless-commerce-admin-catalog/v1.0/unit-of-measure-skus',
 					getSelectedItems: getSelectedItems,
 					inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-sku") %>',
 					itemCreation: false,
 					itemSelectedMessage: '<%= LanguageUtil.get(request, "sku-selected") %>',
-					itemsKey: 'id',
+					itemsKey: 'unitOfMeasureSkuId',
 					linkedDataSetsId: ['<%= CommercePricingFDSNames.DISCOUNT_SKUS %>'],
 					onItemSelected: selectItem,
 					pageSize: 10,
@@ -63,6 +64,9 @@
 						},
 						{
 							fieldName: 'sku',
+						},
+						{
+							fieldName: 'unitOfMeasureKey',
 						},
 					],
 					spritemap: '<%= themeDisplay.getPathThemeSpritemap() %>',

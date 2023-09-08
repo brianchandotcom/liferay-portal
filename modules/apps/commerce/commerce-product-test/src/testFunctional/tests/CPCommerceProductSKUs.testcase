@@ -158,6 +158,225 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12218. Admin can add tier price on a product's SKU details page"
+	@priority = 5
+	test CanAddTierPriceEntriesOnProductSKU {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a simple product with 'Minium' catalog is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Test Simple Product",
+				productType = "Simple",
+				sku = "SIMPLESKU");
+		}
+
+		task ("When admin adds a tier price on the product's SKU details page") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Simple");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "SIMPLESKU");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommercePriceLists.createTierPriceEntryDirectlyInsideProductSKU(
+				price = 10,
+				quantity = 1);
+		}
+
+		task ("Then the tier price is successfully added") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			AssertTextEquals.assertPartialText(
+				key_productName = "Test Simple Product",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = 10);
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12218. Admin can delete price lists on a product's SKU details page"
+	@priority = 5
+	test CanDeletePriceListsOnProductSKU {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a simple product with 'Minium' catalog is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Test Simple Product",
+				productType = "Simple",
+				sku = "SIMPLESKU");
+		}
+
+		task ("When admin delete a price list on the product's SKU details page") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Simple");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "SIMPLESKU");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Minium Base Price List",
+				menuItem = "Delete");
+
+			AssertElementNotPresent(
+				key_entryName = "Minium Base Price List",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+
+		task ("Then the price list is successfully deleted") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			AssertTextEquals.assertPartialText(
+				key_productName = "Test Simple Product",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = 00);
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12218. Admin can delete tier price on a product's SKU details page"
+	@priority = 5
+	test CanDeleteTierPriceEntriesOnProductSKU {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a simple product with 'Minium' catalog is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Test Simple Product",
+				productType = "Simple",
+				sku = "SIMPLESKU");
+		}
+
+		task ("When admin adds a tier price on the product's SKU details page") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Simple");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "SIMPLESKU");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommercePriceLists.createTierPriceEntryDirectlyInsideProductSKU(
+				price = 10,
+				quantity = 1);
+
+			SelectFrameTop();
+		}
+
+		task ("And the Tier Price is deleted") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "SIMPLESKU");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			SelectFrame.selectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Click(
+				key_panel = "Details",
+				locator1 = "Panel#PANEL_COLLAPSED");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Tier Price Entries");
+
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = 10,
+				menuItem = "Delete");
+		}
+
+		task ("Then the tier price is not applied anymore") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			AssertTextEquals.assertPartialText(
+				key_productName = "Test Simple Product",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = 00);
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12218. Admin can edit price lists on a product's SKU details page"
+	@priority = 5
+	test CanEditPriceListsOnProductSKU {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a simple product with 'Minium' catalog is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Test Simple Product",
+				productType = "Simple",
+				sku = "SIMPLESKU");
+		}
+
+		task ("When admin edit a price list on the product's SKU details page") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Simple");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "SIMPLESKU");
+
+			CommerceEntry.editPriceListsFromProductSKU(
+				price = "25.00",
+				priceList = "Minium Base Price List",
+				skuName = "SIMPLESKU");
+		}
+
+		task ("Then the price list is edited successfully") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			AssertTextEquals.assertPartialText(
+				key_productName = "Test Simple Product",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "25.00");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9891 UI to show External Reference code of SKU"
 	@priority = 3
 	test CanEditSKUERC {
@@ -234,6 +453,74 @@ definition {
 			AssertTextEquals(
 				locator1 = "CommerceEntry#SKU_ERC_FIELD",
 				value1 = "New ERC");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12218. Admin can edit tier price on a product's SKU details page"
+	@priority = 5
+	test CanEditTierPriceEntriesOnProductSKU {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a simple product with 'Minium' catalog is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Test Simple Product",
+				productType = "Simple",
+				sku = "SIMPLESKU");
+		}
+
+		task ("When admin adds a tier price on the product's SKU details page") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Simple");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "SIMPLESKU");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommercePriceLists.createTierPriceEntryDirectlyInsideProductSKU(
+				price = 10,
+				quantity = 1);
+
+			SelectFrameTop();
+		}
+
+		task ("And the Tier Price is edited") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "SIMPLESKU");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommercePriceLists.editTierPriceEntryDirectlyInsideProductSKU(
+				entryName = 10,
+				price = 20,
+				quantity = 1);
+		}
+
+		task ("Then the tier price is edited successfully") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			AssertTextEquals.assertPartialText(
+				key_productName = "Test Simple Product",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = 20);
 		}
 	}
 
@@ -381,6 +668,180 @@ definition {
 			AssertTextEquals(
 				locator1 = "CommerceEntry#SKU_ERC_FIELD",
 				value1 = "test");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12218. Admin can view channel currency matches catalog currency but doesn't change the price list on a product's SKU details page"
+	@priority = 5
+	test CanViewChannelCurrencyDoesntChangePriceListOnProductSKU {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a simple product with 'Minium' catalog is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Test Simple Product",
+				productType = "Simple",
+				sku = "SIMPLESKU");
+		}
+
+		task ("And the admin checks the currency of the product's SKU details page") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Simple");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "SIMPLESKU");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertElementPresent(
+				key_currency = "USD",
+				locator1 = "CommerceEntry#CHECK_PRICE_LIST_CURRENCY");
+		}
+
+		task ("When the admin changes the currency on the Channel Admin pages") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceEntry.viewChannelsEntry(
+				channelCurrency = "US Dollar",
+				channelName = "Minium Portal",
+				channelType = "Site");
+
+			CommerceEntry.gotoMenuTab(menuTab = "General");
+
+			Select(
+				key_fieldLabel = "Currency",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Euro");
+
+			Button.clickSave();
+		}
+
+		task ("Then the currency is not updated on the the price list inside the product's SKU details page ") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Simple");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "SIMPLESKU");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertElementPresent(
+				key_currency = "USD",
+				locator1 = "CommerceEntry#CHECK_PRICE_LIST_CURRENCY");
+		}
+
+		task ("And the currency on the catalogue is updated") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			AssertTextEquals.assertPartialText(
+				key_productName = "Test Simple Product",
+				locator1 = "CommerceEntry#PRODUCT_CARD_LIST_PRICE",
+				value1 = "€ 0.00");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12218. Admin can view Price List currency matches currency on a product's SKU details page"
+	@priority = 5
+	test CanViewPriceListCurrencyMatchesPriceListCurrencyOnProductSKU {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a simple product with 'Minium' catalog is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Test Simple Product",
+				productType = "Simple",
+				sku = "SIMPLESKU");
+		}
+
+		task ("And the admin checks the currency of the product's SKU details page") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Simple");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "SIMPLESKU");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertElementPresent(
+				key_currency = "USD",
+				locator1 = "CommerceEntry#CHECK_PRICE_LIST_CURRENCY");
+		}
+
+		task ("When the admin edits the Price List currency") {
+			CommerceNavigator.goToPriceListAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			Select(
+				key_fieldLabel = "Currency",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "EUR");
+
+			Button.clickPublish();
+		}
+
+		task ("Then the currency is updated inside the product's SKU details page ") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "Simple");
+
+			CommerceNavigator.gotoEntry(entryName = "Test Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "SIMPLESKU");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertElementPresent(
+				key_currency = "EUR",
+				locator1 = "CommerceEntry#CHECK_PRICE_LIST_CURRENCY");
 		}
 	}
 

@@ -700,13 +700,13 @@ definition {
 					key_buttonText = ${nurtureDripCampaign},
 					key_fieldName = "activities[${activityIndex}].activityDescription.nurtureDripCampaign",
 					locator1 = "PRMMDFRequest#INPUT_BUTTON");
-			}
 
-			if (${nurtureDripCampaign} == "Yes") {
-				Type(
-					key_fieldName = "activities[${activityIndex}].activityDescription.manySeries",
-					locator1 = "PRMMDFRequest#TEXT_FIELD",
-					value1 = "Many Series");
+				if (${nurtureDripCampaign} == "Yes") {
+					Type(
+						key_fieldName = "activities[${activityIndex}].activityDescription.manySeries",
+						locator1 = "PRMMDFRequest#TEXT_FIELD",
+						value1 = 200);
+				}
 			}
 
 			if (isSet(requireLiferay)) {
@@ -714,13 +714,13 @@ definition {
 					key_buttonText = ${requireLiferay},
 					key_fieldName = "activities[${activityIndex}].activityDescription.assetsLiferayRequired",
 					locator1 = "PRMMDFRequest#INPUT_BUTTON");
-			}
 
-			if (${requireLiferay} == "Yes") {
-				Type(
-					key_fieldName = "activities[${activityIndex}].activityDescription.assetsLiferayDescription",
-					locator1 = "PRMMDFRequest#TEXT_FIELD",
-					value1 = "Require Liferay");
+				if (${requireLiferay} == "Yes") {
+					Type(
+						key_fieldName = "activities[${activityIndex}].activityDescription.assetsLiferayDescription",
+						locator1 = "PRMMDFRequest#TEXT_FIELD",
+						value1 = "Require Liferay");
+				}
 			}
 
 			Click.clickAtNotVisible(

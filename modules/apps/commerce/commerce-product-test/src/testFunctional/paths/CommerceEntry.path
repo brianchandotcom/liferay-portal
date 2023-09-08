@@ -26,8 +26,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSERT_FRAGMENTS_TEXT_IN_SF</td>
-	<td>//h1[(contains(@class,"component-heading")) and (contains(@data-lfr-editable-id,"${key_id}"))][contains(text(),"${key_fragmentText}")] | //h1[(contains(@class,"component-heading")) and (contains(@data-lfr-editable-id,"${key_id}"))]/p[contains(text(),"${key_fragmentText}")]</td>
+	<td>ASSERT_FRAGMENTS_TEXT_IN_SF_N</td>
+	<td>xpath=(//h1[(contains(@class,"component-heading")) and (contains(@data-lfr-editable-id,"${key_id}"))])[${index}][contains(text(),"${key_fragmentText}")]</td>
 	<td></td>
 </tr>
 <tr>

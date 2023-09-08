@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
@@ -96,9 +97,17 @@ public class SynonymSetIndexReindexer implements IndexReindexer {
 			synonymSetIndexCreator.create(synonymSetIndexName);
 		}
 
-		for (long classPK : classPKs) {
+		int sendStatusInterval = Math.max(100, classPKs.size() / 20);
+
+		for (int i = 0; i < classPKs.size(); i++) {
 			synonymSetIndexWriter.create(
-				synonymSetIndexName, _buildSynonymSet(classPK));
+				synonymSetIndexName, _buildSynonymSet(classPKs.get(i)));
+
+			if ((i % sendStatusInterval) == 0) {
+				ReindexStatusMessageSenderUtil.sendStatusMessage(
+					SynonymSetIndexReindexer.class.getName(), i + 1,
+					classPKs.size());
+			}
 		}
 
 		if (_isExecuteSyncReindex(executionMode)) {

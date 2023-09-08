@@ -132,6 +132,7 @@ public class SXPBlueprintLocalServiceTest {
 			sxpBlueprint.getConfigurationJSON(),
 			sxpBlueprint.getDescriptionMap(),
 			sxpBlueprint.getElementInstancesJSON(),
+			sxpBlueprint.getExternalReferenceCode(),
 			sxpBlueprint.getSchemaVersion(), sxpBlueprint.getTitleMap(),
 			ServiceContextTestUtil.getServiceContext());
 

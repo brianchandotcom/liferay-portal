@@ -127,7 +127,8 @@ public class SXPElementLocalServiceTest {
 		sxpElement = _sxpElementLocalService.updateSXPElement(
 			sxpElement.getUserId(), sxpElement.getSXPElementId(),
 			sxpElement.getDescriptionMap(),
-			sxpElement.getElementDefinitionJSON(), sxpElement.isHidden(),
+			sxpElement.getElementDefinitionJSON(),
+			sxpElement.getExternalReferenceCode(), sxpElement.isHidden(),
 			sxpElement.getSchemaVersion(), sxpElement.getTitleMap(),
 			ServiceContextTestUtil.getServiceContext());
 

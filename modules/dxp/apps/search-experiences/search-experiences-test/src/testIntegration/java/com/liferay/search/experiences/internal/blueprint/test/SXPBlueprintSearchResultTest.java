@@ -2462,6 +2462,7 @@ public class SXPBlueprintSearchResultTest {
 			_sxpBlueprint.getConfigurationJSON(),
 			_sxpBlueprint.getDescriptionMap(),
 			_sxpBlueprint.getElementInstancesJSON(),
+			_sxpBlueprint.getExternalReferenceCode(),
 			_sxpBlueprint.getSchemaVersion(), _sxpBlueprint.getTitleMap(),
 			_serviceContext);
 	}

@@ -95,17 +95,20 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 				{
 					name = entry.getKey();
 
-					if (entry.getValue() instanceof Date) {
-						Date date = (Date)entry.getValue();
+					setValue(
+						() -> {
+							if (entry.getValue() instanceof Date) {
+								Date date = (Date)entry.getValue();
 
-						value = String.valueOf(date.getTime());
-					}
-					else if (Validator.isNotNull(entry.getValue())) {
-						value = String.valueOf(entry.getValue());
-					}
-					else {
-						value = StringPool.BLANK;
-					}
+								return String.valueOf(date.getTime());
+							}
+
+							if (Validator.isNull(entry.getValue())) {
+								return StringPool.BLANK;
+							}
+
+							return String.valueOf(entry.getValue());
+						});
 				}
 			};
 

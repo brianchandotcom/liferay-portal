@@ -46,17 +46,29 @@ public class EmbeddingProviderValidationResultResourceImpl
 
 			return new EmbeddingProviderValidationResult() {
 				{
-					if (!Validator.isBlank(
-							embeddingProviderStatus.getErrorMessage())) {
+					setErrorMessage(
+						() -> {
+							if (Validator.isBlank(
+									embeddingProviderStatus.
+										getErrorMessage())) {
 
-						errorMessage =
-							embeddingProviderStatus.getErrorMessage();
-					}
-					else {
-						expectedDimensions =
-							embeddingProviderStatus.
+								return null;
+							}
+
+							return embeddingProviderStatus.getErrorMessage();
+						});
+					setExpectedDimensions(
+						() -> {
+							if (!Validator.isBlank(
+									embeddingProviderStatus.
+										getErrorMessage())) {
+
+								return null;
+							}
+
+							return embeddingProviderStatus.
 								getEmbeddingVectorDimensions();
-					}
+						});
 				}
 			};
 		}

@@ -7,7 +7,10 @@ package com.liferay.fragment.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.validator.FragmentEntryValidator;
+import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.internal.servlet.taglib.util.BasicFragmentEntryActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -100,6 +103,39 @@ public class BasicFragmentEntryVerticalCard
 					WorkflowConstants.STATUS_APPROVED)
 			).add(
 				labelItem -> labelItem.setStatus(WorkflowConstants.STATUS_DRAFT)
+			).add(
+				fragmentEntry::isCacheable,
+				labelItem -> labelItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "cached"))
+			).build();
+		}
+
+		FragmentEntryValidator fragmentEntryValidator =
+			(FragmentEntryValidator)_httpServletRequest.getAttribute(
+				FragmentEntryValidator.class.getName());
+
+		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
+			(FragmentEntryProcessorRegistry)_httpServletRequest.getAttribute(
+				FragmentWebKeys.FRAGMENT_ENTRY_PROCESSOR_REGISTRY);
+
+		try {
+			fragmentEntryValidator.validateConfiguration(
+				fragmentEntry.getConfiguration());
+			fragmentEntryValidator.validateTypeOptions(
+				fragmentEntry.getType(), fragmentEntry.getTypeOptions());
+			fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
+				fragmentEntry.getHtml(), fragmentEntry.getConfiguration());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return LabelItemListBuilder.add(
+				labelItem -> labelItem.setStatus(fragmentEntry.getStatus())
+			).add(
+				labelItem -> labelItem.setStatus(
+					WorkflowConstants.STATUS_WARNING)
 			).add(
 				fragmentEntry::isCacheable,
 				labelItem -> labelItem.setLabel(

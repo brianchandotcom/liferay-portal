@@ -1,0 +1,84 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Object Entries REST APIs";
+
+	setUp {
+		TestCase.setUpPortalInstanceNoSelenium();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCPNoSelenium();
+		}
+	}
+
+	@disable-webdriver = "true"
+	@priority = 5
+	test CanCreateMultipleManyToManyRelationshipsBetweenTwoObjects {
+		property portal.acceptance = "true";
+
+		task ("Given Sample object definitions with a field 'sampleField' created") {
+			var objectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "sample",
+				en_US_plural_label = "samples",
+				name = "Sample",
+				requiredStringFieldName = "sampleField");
+		}
+
+		task ("And Given oneToMany relationship 'accountSamples' created ") {
+			var accountObjectId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "AccountEntry");
+
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "AccountSamples",
+				name = "accountSamples",
+				objectDefinitionId1 = ${accountObjectId},
+				objectDefinitionId2 = ${objectDefinitionId},
+				type = "oneToMany");
+		}
+
+		task ("When I request postAccountBatch in headless-commerce-admin-account api to create Account with Sample entry in accountSamples") {
+			var taskId = CommerceAdminAccountAPI.createAccounts(
+				accountName = "TEST",
+				fieldValue = "sample",
+				name = "TEST",
+				nestedField = "accountSamples",
+				numberOfAccounts = 1,
+				objectField = "sampleField");
+		}
+
+		task ("Then I receive executeStatus: completed") {
+			var executeStatus = ImportTask.getStatusOfImportTaskById(importTaskId = ${taskId});
+
+			TestUtils.assertEquals(
+				actual = ${executeStatus},
+				expected = "COMPLETED");
+		}
+
+		task ("And Then both new Account and Sample entry are created") {
+			CustomObjectAPI.assertCorrectObjectEntryValuesInResponse(
+				en_US_plural_label = "samples",
+				expectedValues = "sample1",
+				objectJsonPath = "$.items[*].sampleField");
+
+			var response = CommerceAdminAccountAPI.getAccounts();
+
+			var actualAccount = JSONUtil.getWithJSONPath(${response}, "$.items[*].name");
+
+			TestUtils.assertEquals(
+				actual = ${actualAccount},
+				expected = "TEST1");
+		}
+	}
+
+}

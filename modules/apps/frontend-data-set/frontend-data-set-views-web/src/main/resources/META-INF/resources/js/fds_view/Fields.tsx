@@ -903,22 +903,10 @@ const Fields = ({
 		});
 
 	const onEditFDSField = ({editedFDSField}: {editedFDSField: IFDSField}) => {
-		let updatedFDSField: IFDSField;
-
-		if (!editedFDSField.label) {
-			updatedFDSField = {
-				...editedFDSField,
-				label: editedFDSField.name,
-			};
-		}
-		else {
-			updatedFDSField = {...editedFDSField};
-		}
-
 		setFDSFields(
 			fdsFields?.map((fdsField) => {
-				if (fdsField.id === updatedFDSField.id) {
-					return updatedFDSField;
+				if (fdsField.id === editedFDSField.id) {
+					return editedFDSField;
 				}
 
 				return fdsField;

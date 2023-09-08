@@ -99,7 +99,7 @@ public class ExportImportServiceConfigurationWhitelistedURLPatternsHelperImpl
 				validateLayoutReferencesWhitelistedURLPatterns();
 
 		if (ArrayUtil.isEmpty(whitelistedURLPatterns)) {
-			_urlPatternMappers.remove(companyId);
+			_urlPatternMappers.put(companyId, null);
 
 			return;
 		}

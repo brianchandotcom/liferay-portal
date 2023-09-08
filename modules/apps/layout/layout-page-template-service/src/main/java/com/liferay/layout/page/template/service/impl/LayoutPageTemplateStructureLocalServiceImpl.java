@@ -154,10 +154,10 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		boolean checkUnlockedLayout = GetterUtil.getBoolean(
-			serviceContext.getAttribute("checkUnlockedLayout"), true);
+		if ((serviceContext == null) ||
+			GetterUtil.getBoolean(
+				serviceContext.getAttribute("checkUnlockedLayout"), true)) {
 
-		if (checkUnlockedLayout) {
 			_checkUnlockedLayout(plid);
 		}
 

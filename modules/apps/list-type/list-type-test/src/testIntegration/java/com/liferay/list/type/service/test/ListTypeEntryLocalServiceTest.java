@@ -190,6 +190,15 @@ public class ListTypeEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteListTypeEntry() throws Exception {
+		AssertUtils.assertFailure(
+			ListTypeDefinitionSystemException.class, false,
+			"Only allowed bundles can delete system list type entries",
+			() -> _listTypeEntryLocalService.deleteListTypeEntry(
+				_systemListTypeEntry.getListTypeEntryId()));
+	}
+
+	@Test
 	public void testFetchListTypeEntry() throws Exception {
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.fetchListTypeEntry(

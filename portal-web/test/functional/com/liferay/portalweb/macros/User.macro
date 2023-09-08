@@ -1230,6 +1230,28 @@ definition {
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_PROFILE_IMAGE");
 	}
 
+	macro configureCustomPasswordField {
+		PortalSettings.gotoConfiguration(
+			baseURL = ${baseURL},
+			configurationCategory = "Users",
+			configurationName = "Fields",
+			configurationScope = "Virtual Instance Scope");
+
+		if (${enableCustomPassword} == "true") {
+			FormFields.enableCheckbox(fieldName = "login.create.account.allow.custom.password");
+		}
+		else {
+			FormFields.disableCheckbox(fieldName = "login.create.account.allow.custom.password");
+		}
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+	}
+
 	macro confirmPassword {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIRM_PASSWORD");
 
@@ -2936,6 +2958,23 @@ definition {
 		}
 	}
 
+	macro viewNoPasswordSection {
+		if (isSet(specificURL)) {
+			Navigator.openSpecificURL(url = ${specificURL});
+		}
+		else {
+			Navigator.openURL();
+		}
+
+		UserBar.signOut();
+
+		SignInNavigator.gotoCreateAccount();
+
+		AssertElementNotPresent(locator1 = "TextInput#PASSWORD");
+
+		AssertElementNotPresent(locator1 = "TextInput#REENTER_PASSWORD");
+	}
+
 	macro viewNotPrimary {
 		if (isSet(primaryValue)) {
 			var key_primaryValue = ${primaryValue};
@@ -2955,6 +2994,23 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No users were found.");
+	}
+
+	macro viewPasswordSection {
+		if (isSet(specificURL)) {
+			Navigator.openSpecificURL(url = ${specificURL});
+		}
+		else {
+			Navigator.openURL();
+		}
+
+		UserBar.signOut();
+
+		SignInNavigator.gotoCreateAccount();
+
+		AssertElementPresent(locator1 = "TextInput#PASSWORD");
+
+		AssertElementPresent(locator1 = "TextInput#REENTER_PASSWORD");
 	}
 
 	macro viewSessionNotExpired {

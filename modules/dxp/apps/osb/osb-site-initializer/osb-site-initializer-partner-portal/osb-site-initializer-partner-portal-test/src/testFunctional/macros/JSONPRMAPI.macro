@@ -6,11 +6,11 @@ definition {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (${accountName} == "Company Name 1") {
-			var externalReferenceCode = "0017i00001MQSGdAAP";
+			var externalReferenceCode = "0010100001994ivAAA";
 		}
 
 		if (${accountName} == "Company Name 2") {
-			var externalReferenceCode = "0017i00001MQSAyAAP";
+			var externalReferenceCode = "0010100001994iwAAA";
 		}
 
 		if (!(isSet(password))) {
@@ -26,16 +26,12 @@ definition {
 					"name": "${accountName}",
 					"externalReferenceCode": "${externalReferenceCode}",
 					"partnerCountry": "US",
-					"claimPercent": 0.5,
 					"currency": "BRL",
-					"partnerLevel": "gold",
 					"marketingPlan": true,
 					"solutionDeliveryCertification": true,
-					"renewalARR": 0,
 					"newProjectExistingBusiness": 1,
-					"aRRAmount": 85000,
 					"marketingPerformance": 3,
-					"growthARR": 0
+					"r_prtLvlToAcc_c_partnerLevelERC": "GOLD-PRTLVL"
 				}'
 		''';
 

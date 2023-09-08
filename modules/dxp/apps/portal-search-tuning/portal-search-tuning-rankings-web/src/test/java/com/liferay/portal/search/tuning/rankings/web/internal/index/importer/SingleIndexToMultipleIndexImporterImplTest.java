@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index.importer;
 
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.document.Document;
@@ -93,14 +92,6 @@ public class SingleIndexToMultipleIndexImporterImplTest
 
 	@Test
 	public void testNeedImport() throws Exception {
-		Company company = Mockito.mock(Company.class);
-
-		Mockito.doReturn(
-			111L
-		).when(
-			company
-		).getCompanyId();
-
 		Mockito.doReturn(
 			true
 		).when(

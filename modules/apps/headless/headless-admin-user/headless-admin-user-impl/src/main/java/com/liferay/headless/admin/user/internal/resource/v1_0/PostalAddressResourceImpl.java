@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.AddressService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.service.permission.CommonPermission;
+import com.liferay.portal.kernel.service.permission.CommonPermissionUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -91,7 +91,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		User user = _userService.getUserById(userAccountId);
 
-		_commonPermission.check(
+		CommonPermissionUtil.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			user.getModelClassName(), user.getUserId(), ActionKeys.VIEW);
 
@@ -114,9 +114,6 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Reference
 	private AddressService _addressService;
-
-	@Reference
-	private CommonPermission _commonPermission;
 
 	@Reference(
 		target = DTOConverterConstants.ORGANIZATION_RESOURCE_DTO_CONVERTER

@@ -352,7 +352,8 @@ public class SXPBlueprintResourceImpl extends BaseSXPBlueprintResourceImpl {
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpBlueprint.getDescription(),
 					sxpBlueprint.getDescription_i18n()),
-				_getElementInstancesJSON(sxpBlueprint), _getSchemaVersion(),
+				_getElementInstancesJSON(sxpBlueprint),
+				sxpBlueprint.getExternalReferenceCode(), _getSchemaVersion(),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpBlueprint.getTitle(), sxpBlueprint.getTitle_i18n()),

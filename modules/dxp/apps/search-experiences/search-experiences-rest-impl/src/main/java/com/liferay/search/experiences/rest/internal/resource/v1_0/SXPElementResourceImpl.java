@@ -424,7 +424,8 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 					contextAcceptLanguage.getPreferredLocale(),
 					sxpElement.getDescription(),
 					sxpElement.getDescription_i18n()),
-				_getElementDefinitionJSON(sxpElement), _getSchemaVersion(),
+				_getElementDefinitionJSON(sxpElement),
+				sxpElement.getExternalReferenceCode(), _getSchemaVersion(),
 				GetterUtil.getBoolean(sxpElement.getHidden()),
 				LocalizedMapUtil.getLocalizedMap(
 					contextAcceptLanguage.getPreferredLocale(),

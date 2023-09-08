@@ -333,6 +333,27 @@ public class ObjectValidationRuleResourceImpl
 					return serviceBuilderObjectValidationRuleSetting;
 				}
 
+				if (StringUtil.equals(
+					objectValidationRuleSetting.getName(),
+					ObjectValidationRuleSettingConstants.
+						NAME_KEY_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE)) {
+
+					serviceBuilderObjectValidationRuleSetting.setName(
+						ObjectValidationRuleSettingConstants.
+							NAME_KEY_OBJECT_FIELD_ID);
+
+					ObjectField objectField =
+						objectFieldLocalService.getObjectField(
+							String.valueOf(
+								objectValidationRuleSetting.getValue()),
+							objectDefinitionId);
+
+					serviceBuilderObjectValidationRuleSetting.setValue(
+						String.valueOf(objectField.getObjectFieldId()));
+
+					return serviceBuilderObjectValidationRuleSetting;
+				}
+
 				serviceBuilderObjectValidationRuleSetting.setName(
 					objectValidationRuleSetting.getName());
 				serviceBuilderObjectValidationRuleSetting.setValue(

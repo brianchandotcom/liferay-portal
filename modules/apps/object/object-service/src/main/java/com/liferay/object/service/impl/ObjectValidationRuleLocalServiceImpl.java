@@ -538,13 +538,12 @@ public class ObjectValidationRuleLocalServiceImpl
 		for (ObjectValidationRuleSetting objectValidationRuleSetting :
 				objectValidationRuleSettings) {
 
-			if (StringUtil.equals(
-					outputType,
-					ObjectValidationRuleConstants.
-						OUTPUT_TYPE_FULL_VALIDATION) ||
-				!objectValidationRuleSetting.compareName(
+			if (!(objectValidationRuleSetting.compareName(
 					ObjectValidationRuleSettingConstants.
-						NAME_OUTPUT_OBJECT_FIELD_ID)) {
+						NAME_KEY_OBJECT_FIELD_ID) ||
+				objectValidationRuleSetting.compareName(
+					ObjectValidationRuleSettingConstants.
+						NAME_OUTPUT_OBJECT_FIELD_ID))) {
 
 				throw new ObjectValidationRuleSettingNameException.
 					NotAllowedName(objectValidationRuleSetting.getName());

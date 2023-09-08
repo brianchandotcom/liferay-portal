@@ -43,7 +43,6 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12141 | Test Summary: Request search keywords using all parameters"
 	@priority = 3
 	test RequestKeywordsUsingAllParameters {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var groupId = JSONGroupSetter.setGroupId(groupName = "Guest");
@@ -76,7 +75,6 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12143 | Test Summary: Fetch keywords with displayLanguageId parameter"
 	@priority = 3
 	test RequestKeywordsUsingDisplayLanguageId {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var parametersDisplay1 = "size=10\&displayLanguageId=${displayLanguageId1}\&page=0\&sort=counts,desc,lastModifiedDate,desc";
@@ -125,7 +123,6 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12144 | Test Summary: Request search keywords using groupID"
 	@priority = 3
 	test RequestKeywordsUsingGroupID {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		HeadlessSite.addSite(siteName = "Site Name");
@@ -176,7 +173,6 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12142 | Test Summary: Fetch keywords without optional parameters"
 	@priority = 3
 	test RequestKeywordsUsingNoParameters {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var keyword1 = "without optional parameters 1";
@@ -216,7 +212,6 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12145 | Test Summary: Fetch keywords with page parameter"
 	@priority = 3
 	test RequestKeywordsUsingPage {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var parametersFirstPage = "size=${size}\&page=${firstPage}\&sort=counts,desc,lastModifiedDate,desc";
@@ -287,7 +282,6 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12146 | Test Summary: Fetch keywords with size parameter "
 	@priority = 3
 	test RequestKeywordsUsingSize {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var keyword1 = "with size parameters 1";
@@ -336,7 +330,6 @@ definition {
 	@description = "Feature ID: LRAC-12058 | Automation ID: LRAC-12147 | Test Summary: Request search keywords using sort"
 	@priority = 3
 	test RequestKeywordsUsingSort {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var keyword1 = "first key word";

@@ -335,7 +335,6 @@ definition {
 		// AC Quarantine Reason: Test fix look into mockmock page
 		// AC Quarantine Ticket: LRAC-12253
 
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var reportDetailsNameList = "Workspace,Property";

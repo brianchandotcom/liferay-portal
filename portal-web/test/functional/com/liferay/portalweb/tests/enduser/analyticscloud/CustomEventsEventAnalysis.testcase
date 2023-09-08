@@ -831,7 +831,6 @@ definition {
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10306 | Test Summary: Remove Attribute"
 	@priority = 5
 	test RemoveAttribute {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
@@ -894,7 +893,6 @@ definition {
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10301 | Test Summary: Search Event Attribute from Event tab"
 	@priority = 3
 	test SearchEventAttributeInEventTab {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var defaultAttributeName = "pageTitle";
@@ -950,7 +948,6 @@ definition {
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10295 | Test Summary: Search for events in different tabs"
 	@priority = 3
 	test SearchEventsInDifferentTabs {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var defaultEventName = "pageViewed";
@@ -1025,7 +1022,6 @@ definition {
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10311 | Test Summary: Events are in alphabetical order and attributes are in alphabetical order"
 	@priority = 4
 	test ViewEventsAreListedInAlphabeticalOrder {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var attributeName = "assetId";

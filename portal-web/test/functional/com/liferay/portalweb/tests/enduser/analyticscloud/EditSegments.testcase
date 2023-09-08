@@ -40,7 +40,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8588 | Test Summary: Assert segment overview shows criteria"
 	@priority = 3
 	test AssertSegmentOverviewShowsCriteria {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Create Blog and Add to Page") {
@@ -109,7 +108,6 @@ definition {
 	@priority = 5
 	test CanEditDynamicSegmentCheckEditSaved {
 		property portal.upstream = "quarantine";
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		// AC Quarantine Reason: Segment membership takes long time to load
@@ -290,7 +288,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8136 | Test Summary: Rename Individuals Segment"
 	@priority = 5
 	test CanRenameIndividualsSegment {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		ACUtils.createBlogsAndAddToPage();
@@ -353,7 +350,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8585 | Test Summary: It is not possible to add a duplicate user to a static segment"
 	@priority = 4
 	test CantDuplicateUserToStaticSegment {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var usernameList = "ac,liferay";
@@ -404,7 +400,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8589 | Test Summary: Editor shows static segment label"
 	@priority = 3
 	test EditorShowsStaticSegmentLabel {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -453,7 +448,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8587 | Test Summary: Paginate list of members to be added to the segment"
 	@priority = 3
 	test PaginateListOfMembersToBeAddedToTheSegment {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var users = "ac1,ac2,ac3,ac4,ac5,ac6,ac7";
@@ -574,7 +568,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8598 | Test Summary: Segment List kebab menu contains Edit and Delete buttons"
 	@priority = 3
 	test SegmentListKebabMenuContainsEditAndDeleteButtons {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Create user and sincronize it") {
@@ -633,7 +626,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8586 | Test Summary: Sort the Segment 'Add Members' Modal"
 	@priority = 3
 	test SortSegmentAddMembersModal {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var users = "ac,liferay,dxp";

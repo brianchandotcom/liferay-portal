@@ -46,7 +46,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9018 | Test Summary: Search an Individual's Activities List with a query that won't return results"
 	@priority = 3
 	test AssertNoIndividualsActivitiesResults {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Add DM to AC Page") {
@@ -119,7 +118,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9020 | Test Summary: Search associated segment will not return results in the individual List"
 	@priority = 3
 	test AssertNoIndividualsAssociatedSegmentsResults {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Get site assigned property name") {

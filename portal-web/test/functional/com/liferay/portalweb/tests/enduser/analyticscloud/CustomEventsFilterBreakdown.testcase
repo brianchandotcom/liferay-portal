@@ -80,7 +80,6 @@ definition {
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10264 | Test Summary: Event Analysis creation with Attribute ad Filter Attribute"
 	@priority = 5
 	test AddAttributeAndAttributeFilterInEventsAnalysis {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
@@ -136,7 +135,6 @@ definition {
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10265 | Test Summary: Max of 3 breakdowns options are allowed"
 	@priority = 4
 	test AddMaxOf3AttributesToEvent {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var attributeNameList = "category,pageTitle,url";
@@ -183,7 +181,6 @@ definition {
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10269 | Test Summary: Attribute breakdowns are sorted by the highest event count"
 	@priority = 4
 	test AssertAttributeBreakdownsSortedByHighestEventCount {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
@@ -273,7 +270,6 @@ definition {
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10267 | Test Summary: Rearrange breakdown and assert data change and after rearrange to return to original state"
 	@priority = 4
 	test AssertDataChangeWhenRearrangeBreakdownAndReturnOriginalState {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var attributeNameList = "category,pageTitle,url";
@@ -394,7 +390,6 @@ definition {
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10266 | Test Summary: Event Analysis is reset when removing the event"
 	@priority = 4
 	test AssertRemovedEventIsNotPresent {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
@@ -462,7 +457,6 @@ definition {
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10270 | Test Summary: Sorting the analysis result ascending and descending"
 	@priority = 4
 	test AssertTheAnalysisResultIsSorted {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
@@ -575,7 +569,6 @@ definition {
 	@description = "Feature ID: LRAC-8171 | Automation ID: LRAC-10316 | Test Summary: Add a duplicate filter in Event Analysis"
 	@priority = 4
 	test CanAddDuplicateFilterInEventAnalysis {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
@@ -644,7 +637,6 @@ definition {
 	@description = "Feature ID: LRAC-9481 | Automation ID: LRAC-10696 | Test Summary: Event Analysis breakdown filter provide auto complete suggestions for all conditions"
 	@priority = 5
 	test CheckAutocompleteSuggestionsForAllConditions {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var attributeName = "city";
@@ -729,7 +721,6 @@ definition {
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10286 | Test Summary: Event Analysis creation with Filtered Attribute (Boolean) and (True/False) condition"
 	@priority = 3
 	test CreateEventAnalysisWithBooleanAttributeFilterTrueAndFalseCondition {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
@@ -828,7 +819,6 @@ definition {
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10280 | Test Summary: Event Analysis creation with Filtered Attribute (Date) and (Is/Is before/Is after/Is between) condition"
 	@priority = 3
 	test CreateEventAnalysisWithDateAttributeFilterAllCondition {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var attributeName = "pageTitle";
@@ -937,7 +927,6 @@ definition {
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10277 | Test Summary: Event Analysis creation with Filtered Attribute (Number) and (Is greater than/Is less than/Is between) condition"
 	@priority = 3
 	test CreateEventAnalysisWithNumberAttributeFilterAllCondition {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var attributeName = "pageTitle";

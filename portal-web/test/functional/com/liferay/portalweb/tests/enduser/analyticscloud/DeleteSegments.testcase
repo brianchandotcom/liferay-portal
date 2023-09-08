@@ -48,7 +48,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8595 | Test Summary: Delete a criteria"
 	@priority = 3
 	test CanDeleteCriteria {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Get site assigned property name") {
@@ -111,7 +110,6 @@ definition {
 	@description = "Delete a dynamic segment"
 	@priority = 5
 	test CanDeleteDynamicSegment {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		ACUtils.createBlogsAndAddToPage();
@@ -168,7 +166,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8597 | Test Summary: Delete a Segment via the Segment List"
 	@priority = 4
 	test CanDeleteSegmentViaSegmentList {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Get site assigned property name") {
@@ -231,7 +228,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8138 | Test Summary: Delete a static segment"
 	@priority = 5
 	test CanDeleteStaticSegment {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
@@ -284,7 +280,6 @@ definition {
 	@description = "Bug: LRAC-10247 | Automation ID: LRAC-10247 | Test Summary: Deleting a static segment does not remove user in known individuals"
 	@priority = 5
 	test CheckIfKnownIndividualsDontDisappearAfterDeleteStaticSegment {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Connect the DXP to AC") {
@@ -380,7 +375,6 @@ definition {
 		// AC Refactor: Data doesn't appear on time
 		// AC Refactor ticket: LRAC-14011
 
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Connect DXP to AC") {

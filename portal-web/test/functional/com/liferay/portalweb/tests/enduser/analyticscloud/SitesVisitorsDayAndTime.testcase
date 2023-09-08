@@ -71,7 +71,6 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test ShowsWhenIndividualsViewingSite {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		// AC Refactor: Data doesn't appear on time

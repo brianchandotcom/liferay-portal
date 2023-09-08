@@ -169,7 +169,6 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test CheckBlockedEventsNotShownOnSegments {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Fill fields and create custom event") {
@@ -224,7 +223,6 @@ definition {
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10150 | Test Summary: Block/Unblock custom events as non-admin"
 	@priority = 3
 	test CheckCannotBlockOrUnblockCustomEventsAsNonAdmin {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Fill fields and create custom event") {
@@ -351,7 +349,6 @@ definition {
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10151 | Test Summary: Blocked events are not processed"
 	@priority = 5
 	test CheckEventAnalysisNotUpdatedWhenEventIsBlocked {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("Fill fields and create custom event") {

@@ -122,7 +122,6 @@ definition {
 		// AC Quarantine Reason: The membership list takes a long time to update
 		// AC Refactor ticket: LRAC-10769
 
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
@@ -210,7 +209,6 @@ definition {
 	@description = "Create a segment with behavior of downloading a document"
 	@priority = 5
 	test CanCreateWebBehaviorSegmentDownloadingDocument {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		ACUtils.createDMAndAddToPage();
@@ -285,7 +283,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9222 | Test Summary: Create a Web Behavior since X days"
 	@priority = 4
 	test CanCreateWebBehaviorSegmentSinceXdays {
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
@@ -363,7 +360,6 @@ definition {
 		// AC Quarantine Reason: The membership list takes a long time to update
 		// AC Refactor ticket: LRAC-10769
 
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		ACUtils.createFormAndAddToPage();
@@ -446,7 +442,6 @@ definition {
 		// AC Quarantine Reason: The membership list takes a long time to update
 		// AC Refactor ticket: LRAC-10769
 
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
@@ -528,7 +523,6 @@ definition {
 		// AC Quarantine Reason: The membership list takes a long time to update
 		// AC Refactor ticket: LRAC-10769
 
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
@@ -610,7 +604,6 @@ definition {
 		// AC Refactor: Data doesn't appear on time
 		// AC Refactor ticket: LRAC-14011
 
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
@@ -697,7 +690,6 @@ definition {
 		// AC Refactor: Data doesn't appear on time
 		// AC Refactor ticket: LRAC-14011
 
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
@@ -770,7 +762,6 @@ definition {
 	@priority = 5
 	test CanCreateWebBehaviorSegmentUsingHasNot {
 		property portal.upstream = "quarantine";
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		// AC Quarantine Reason: Segment membership takes too long to update membership list
@@ -856,7 +847,6 @@ definition {
 		// AC Refactor: Data doesn't appear on time
 		// AC Refactor ticket: LRAC-14011
 
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();
@@ -939,7 +929,6 @@ definition {
 		// AC Refactor: Data doesn't appear on time
 		// AC Refactor ticket: LRAC-14011
 
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		ACUtils.createBlogsAndAddToPage();
@@ -1026,7 +1015,6 @@ definition {
 		// AC Refactor: Data doesn't appear on time
 		// AC Refactor ticket: LRAC-14011
 
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		ACUtils.createBlogsAndAddToPage();
@@ -1105,7 +1093,6 @@ definition {
 		// AC Refactor: Data doesn't appear on time
 		// AC Refactor ticket: LRAC-14011
 
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var username = "ac";
@@ -1187,7 +1174,6 @@ definition {
 		// AC Refactor: Data doesn't appear on time
 		// AC Refactor ticket: LRAC-14011
 
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var username = "ac";
@@ -1271,7 +1257,6 @@ definition {
 		// AC Refactor: Data doesn't appear on time
 		// AC Refactor ticket: LRAC-14011
 
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		var username = "ac";
@@ -1352,7 +1337,6 @@ definition {
 		// AC Refactor: Data doesn't appear on time
 		// AC Refactor ticket: LRAC-14011
 
-		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		ACUtils.createWCAndAddToPage();

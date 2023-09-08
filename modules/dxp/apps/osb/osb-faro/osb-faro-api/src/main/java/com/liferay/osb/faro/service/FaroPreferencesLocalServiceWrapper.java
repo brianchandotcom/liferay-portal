@@ -276,6 +276,14 @@ public class FaroPreferencesLocalServiceWrapper
 			faroPreferencesId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.osb.faro.model.FaroPreferences>
+		getFaroPreferencesByGroupId(long groupId) {
+
+		return _faroPreferencesLocalService.getFaroPreferencesByGroupId(
+			groupId);
+	}
+
 	/**
 	 * Returns a range of all the faro preferenceses.
 	 *

@@ -144,9 +144,10 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public SXPElement updateSXPElement(
-			long userId, long sxpElementId, Map<Locale, String> descriptionMap,
-			String elementDefinitionJSON, boolean hidden, String schemaVersion,
-			Map<Locale, String> titleMap, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long sxpElementId,
+			Map<Locale, String> descriptionMap, String elementDefinitionJSON,
+			boolean hidden, String schemaVersion, Map<Locale, String> titleMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		SXPElement sxpElement = getSXPElement(sxpElementId);
@@ -154,6 +155,7 @@ public class SXPElementLocalServiceImpl extends SXPElementLocalServiceBaseImpl {
 		_validate(titleMap, sxpElement.getType(), serviceContext);
 
 		sxpElement.setDescriptionMap(descriptionMap);
+		sxpElement.setExternalReferenceCode(externalReferenceCode);
 		sxpElement.setElementDefinitionJSON(elementDefinitionJSON);
 		sxpElement.setHidden(hidden);
 		sxpElement.setSchemaVersion(schemaVersion);

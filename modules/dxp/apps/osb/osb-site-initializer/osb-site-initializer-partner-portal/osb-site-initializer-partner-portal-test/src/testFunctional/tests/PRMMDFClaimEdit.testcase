@@ -144,8 +144,11 @@ definition {
 			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
 
 			PRMMDFClaim.createNewClaim(
+				allContents = "Document_2.jpg",
 				listLeads = "Document_1.xlsx",
 				reimbursementInvoice = "Document_1.png",
+				telemarketingMetrics = "Metrics Description",
+				telemarketingScript = "Document_2.png",
 				thirdInvoice = "Document_1.jpg");
 
 			task ("The Claim ID is saved in a variable") {

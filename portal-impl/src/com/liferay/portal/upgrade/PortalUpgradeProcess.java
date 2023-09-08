@@ -231,7 +231,8 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 			connection);
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update Release_ set schemaVersion = ? where releaseId = 1")) {
+				"update Release_ set schemaVersion = ? where releaseId = " +
+					ReleaseConstants.DEFAULT_ID)) {
 
 			preparedStatement.setString(1, newSchemaVersion.toString());
 
@@ -311,7 +312,8 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
 							"select schemaVersion, state_, testString from " +
-								"Release_ where releaseId = 1")) {
+								"Release_ where releaseId = " +
+									ReleaseConstants.DEFAULT_ID)) {
 
 					try (ResultSet resultSet =
 							preparedStatement.executeQuery()) {
@@ -349,8 +351,10 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 			connection);
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update Release_ set schemaVersion = ?, buildNumber = ? " +
-					"where releaseId = 1 and buildNumber < ?")) {
+				StringBundler.concat(
+					"update Release_ set schemaVersion = ?, buildNumber = ? ",
+					"where releaseId = ", ReleaseConstants.DEFAULT_ID,
+					" and buildNumber < ?"))) {
 
 			preparedStatement.setString(1, _initialSchemaVersion.toString());
 			preparedStatement.setInt(2, ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);

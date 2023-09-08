@@ -166,6 +166,16 @@ public class ListTypeDefinitionSerDes {
 			sb.append(_toJSON(listTypeDefinition.getName_i18n()));
 		}
 
+		if (listTypeDefinition.getSystem() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"system\": ");
+
+			sb.append(listTypeDefinition.getSystem());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -257,6 +267,13 @@ public class ListTypeDefinitionSerDes {
 				"name_i18n", String.valueOf(listTypeDefinition.getName_i18n()));
 		}
 
+		if (listTypeDefinition.getSystem() == null) {
+			map.put("system", null);
+		}
+		else {
+			map.put("system", String.valueOf(listTypeDefinition.getSystem()));
+		}
+
 		return map;
 	}
 
@@ -337,6 +354,11 @@ public class ListTypeDefinitionSerDes {
 					listTypeDefinition.setName_i18n(
 						(Map)ListTypeDefinitionSerDes.toMap(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "system")) {
+				if (jsonParserFieldValue != null) {
+					listTypeDefinition.setSystem((Boolean)jsonParserFieldValue);
 				}
 			}
 		}

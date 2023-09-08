@@ -93,7 +93,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeDefinitionByExternalReferenceCode(externalReferenceCode: ___){actions, dateCreated, dateModified, externalReferenceCode, id, listTypeEntries, name, name_i18n}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeDefinitionByExternalReferenceCode(externalReferenceCode: ___){actions, dateCreated, dateModified, externalReferenceCode, id, listTypeEntries, name, name_i18n, system}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ListTypeDefinition listTypeDefinitionByExternalReferenceCode(
@@ -112,7 +112,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeDefinition(listTypeDefinitionId: ___){actions, dateCreated, dateModified, externalReferenceCode, id, listTypeEntries, name, name_i18n}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {listTypeDefinition(listTypeDefinitionId: ___){actions, dateCreated, dateModified, externalReferenceCode, id, listTypeEntries, name, name_i18n, system}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public ListTypeDefinition listTypeDefinition(

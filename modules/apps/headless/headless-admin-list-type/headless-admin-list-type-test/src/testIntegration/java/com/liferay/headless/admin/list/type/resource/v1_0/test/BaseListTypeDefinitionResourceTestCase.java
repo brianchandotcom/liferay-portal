@@ -1128,6 +1128,14 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("system", additionalAssertFieldName)) {
+				if (listTypeDefinition.getSystem() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1332,6 +1340,17 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 				if (!equals(
 						(Map)listTypeDefinition1.getName_i18n(),
 						(Map)listTypeDefinition2.getName_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("system", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						listTypeDefinition1.getSystem(),
+						listTypeDefinition2.getSystem())) {
 
 					return false;
 				}
@@ -1623,6 +1642,11 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("system")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1673,6 +1697,7 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				system = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

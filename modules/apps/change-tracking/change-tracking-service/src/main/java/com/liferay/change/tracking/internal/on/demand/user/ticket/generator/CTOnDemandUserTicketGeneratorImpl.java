@@ -58,10 +58,10 @@ public class CTOnDemandUserTicketGeneratorImpl
 
 	@Override
 	public Ticket generate(long ctCollectionId) throws PortalException {
-		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
+		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctCollectionId);
 
-		if (!ctCollection.isShareable()) {
+		if ((ctCollection == null) || !ctCollection.isShareable()) {
 			return null;
 		}
 

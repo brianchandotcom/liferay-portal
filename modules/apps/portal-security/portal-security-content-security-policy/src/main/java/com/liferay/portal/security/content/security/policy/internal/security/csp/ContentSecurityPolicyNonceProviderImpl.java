@@ -21,9 +21,8 @@ public class ContentSecurityPolicyNonceProviderImpl
 	implements ContentSecurityPolicyNonceProvider {
 
 	@Override
-	public String getCSPNonce(HttpServletRequest httpServletRequest) {
-		return _contentSecurityPolicyNonceManager.getCSPNonce(
-			httpServletRequest);
+	public String getNonce(HttpServletRequest httpServletRequest) {
+		return _contentSecurityPolicyNonceManager.getNonce(httpServletRequest);
 	}
 
 	@Reference

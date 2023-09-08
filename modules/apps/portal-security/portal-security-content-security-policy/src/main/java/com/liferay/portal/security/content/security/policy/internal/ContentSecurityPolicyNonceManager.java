@@ -48,7 +48,7 @@ public class ContentSecurityPolicyNonceManager {
 		return nonce;
 	}
 
-	public String getCSPNonce(HttpServletRequest httpServletRequest) {
+	public String getNonce(HttpServletRequest httpServletRequest) {
 
 		// Unwrap request as some wrappers hide attributes from request/session
 

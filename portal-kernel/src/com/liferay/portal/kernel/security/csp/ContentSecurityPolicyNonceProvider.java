@@ -25,6 +25,6 @@ public interface ContentSecurityPolicyNonceProvider {
 	 * @return the nonce or "" if CSP is not active
 	 * @review
 	 */
-	public String getCSPNonce(HttpServletRequest httpServletRequest);
+	public String getNonce(HttpServletRequest httpServletRequest);
 
 }

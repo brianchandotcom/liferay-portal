@@ -48,13 +48,12 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 %>
 
 <c:if test="<%= !portletCategories.isEmpty() || !portlets.isEmpty() %>">
-	<liferay-ui:panel
-		collapsible="<%= true %>"
-		cssClass="panel-page-category"
-		extended="<%= true %>"
-		title="<%= Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(request, portletCategory.getName()) %>"
+	<clay:panel
+		collapseClassNames="panel-page-category"
+		displayTitle="<%= Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(request, portletCategory.getName()) %>"
+		expanded="<%= true %>"
 	>
-		<div class="list-group mb-0">
+		<div class="panel-body">
 
 			<%
 			for (PortletCategory curPortletCategory : portletCategories) {
@@ -92,5 +91,5 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 			%>
 
 		</div>
-	</liferay-ui:panel>
+	</clay:panel>
 </c:if>

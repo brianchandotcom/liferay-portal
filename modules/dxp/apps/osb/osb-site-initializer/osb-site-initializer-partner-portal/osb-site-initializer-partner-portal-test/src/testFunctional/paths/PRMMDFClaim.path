@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>ATTACHMENT_NAME</td>
-	<td>//button[contains(@data-target,'mdfClaimActivitiesPanel')]//*[text()='Activity Name']//following::div[contains(@id,'mdfClaimActivitiesPanel')]//table//*[text()='Budget Breakdown']//following::div/*[text()='${key_attachmentName}']</td>
+	<td>//button[contains(@data-target,'mdfClaimActivitiesPanel')]//*[text()='Activity Name']//following::div[contains(@id,'mdfClaimActivitiesPanel')]//table//*[text()='Budget Breakdown']//following::tbody//*[contains(text(),'${key_attachmentName}')]</td>
 	<td></td>
 </tr>
 <tr>

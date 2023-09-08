@@ -460,6 +460,32 @@ definition {
 		return ${mdfExternalReferenceCode};
 	}
 
+	macro approveActivity {
+		Variables.assertDefined(parameterList = ${activityId});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(emailAddress))) {
+			var emailAddress = "cmm@liferaytest.com";
+		}
+
+		if (!(isSet(password))) {
+			var password = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/c/activities/${activityId} \
+				-u test@liferay.com:${password} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"activityStatus": "approved"
+				}'
+		''';
+
+		var response = JSONCurlUtil.patch(${curl});
+	}
+
 	macro changeClaimStatus {
 		Variables.assertDefined(parameterList = ${claimId});
 
@@ -551,6 +577,33 @@ definition {
 		else {
 			return ${accountExternalReferenceCode};
 		}
+	}
+
+	macro getMDFRequestActivityId {
+		Variables.assertDefined(parameterList = ${requestId});
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(emailAddress))) {
+			var emailAddress = "cmm@liferaytest.com";
+		}
+
+		if (!(isSet(password))) {
+			var password = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/c/mdfrequests/${requestId}/mdfReqToActs?restrictFields=creator \
+				-u ${emailAddress}:${password} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+		''';
+
+		var activityListId = JSONCurlUtil.get(${curl}, "$..['id']");
+
+		echo(${activityListId});
+
+		return ${activityListId};
 	}
 
 	macro updateAccount {

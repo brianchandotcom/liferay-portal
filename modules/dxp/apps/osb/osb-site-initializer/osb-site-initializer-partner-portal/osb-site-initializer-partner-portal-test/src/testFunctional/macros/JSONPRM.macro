@@ -28,6 +28,14 @@ definition {
 			requestId = ${staticRequestId},
 			statusKey = ${statusKey},
 			userEmailAddress = ${userEmailAddress});
+
+		if (${mdfStatus} == "Approved") {
+			var activityListId = JSONPRMAPI.getMDFRequestActivityId(requestId = ${staticRequestId});
+
+			for (var activityId : list ${activityListId}) {
+				JSONPRMAPI.approveActivity(activityId = ${activityId});
+			}
+		}
 	}
 
 	macro createMDFRequest {

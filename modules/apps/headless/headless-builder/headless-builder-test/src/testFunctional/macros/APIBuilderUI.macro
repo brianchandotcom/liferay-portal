@@ -183,7 +183,7 @@ definition {
 	macro publishApplication {
 		APIBuilderUI.goToEditAPIApplicationPage(key_title = ${key_title});
 
-		Click(locator1 = "APIBuilder#PUBLISH_BUTTON");
+		Click.pauseClickAt(locator1 = "APIBuilder#PUBLISH_BUTTON");
 	}
 
 	macro searchItem {

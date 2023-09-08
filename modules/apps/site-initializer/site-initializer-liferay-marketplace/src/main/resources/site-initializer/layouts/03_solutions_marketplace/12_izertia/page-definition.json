@@ -2721,7 +2721,7 @@
 																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
-																"fontSize": "font-size-heading-f1",
+																"fontSize": "font-size-paragraph-base",
 																"smallCaps": false,
 																"tabletScreenCenter": false
 															},
@@ -2733,23 +2733,10 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "Contact Us"
+																				"en_US": "<h2 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Contact Us</h2>\n<br />\nFind out more about&nbsp;Portal Framework for Verticals &amp; Digital Workplaces"
 																			}
 																		}
 																	}
-																}
-															],
-															"fragmentStyle": {
-																"fontWeight": "fontWeightBolder",
-																"textColor": "brandColor4"
-															},
-															"fragmentViewports": [
-																{
-																	"fragmentViewportStyle": {
-																		"paddingLeft": "5",
-																		"paddingRight": "5"
-																	},
-																	"id": "tablet"
 																}
 															],
 															"indexed": true

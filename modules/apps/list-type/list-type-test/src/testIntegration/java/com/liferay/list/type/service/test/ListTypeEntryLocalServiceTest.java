@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -274,6 +275,28 @@ public class ListTypeEntryLocalServiceTest {
 			externalReferenceCode, listTypeEntry.getExternalReferenceCode());
 
 		Assert.assertEquals(nameMap, listTypeEntry.getNameMap());
+
+		externalReferenceCode = "externalReferenceCode2";
+
+		String liferayMode = SystemProperties.get("liferay.mode");
+
+		SystemProperties.clear("liferay.mode");
+
+		try {
+			_systemListTypeEntry =
+				_listTypeEntryLocalService.updateListTypeEntry(
+					externalReferenceCode,
+					_systemListTypeEntry.getListTypeEntryId(), nameMap);
+		}
+		finally {
+			SystemProperties.set("liferay.mode", liferayMode);
+		}
+
+		Assert.assertNotEquals(
+			externalReferenceCode,
+			_systemListTypeEntry.getExternalReferenceCode());
+
+		Assert.assertEquals(nameMap, _systemListTypeEntry.getNameMap());
 	}
 
 	private void _testAddListTypeEntry(long listTypeDefinitionId, String key)

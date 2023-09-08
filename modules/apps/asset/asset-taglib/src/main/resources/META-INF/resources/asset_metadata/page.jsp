@@ -8,7 +8,6 @@
 <%@ include file="/asset_metadata/init.jsp" %>
 
 <%
-AssetEntry assetEntry = (AssetEntry)request.getAttribute("liferay-asset:asset-metadata:assetEntry");
 String[] metadataFields = (String[])request.getAttribute("liferay-asset:asset-metadata:metadataFields");
 %>
 
@@ -52,17 +51,13 @@ String[] metadataFields = (String[])request.getAttribute("liferay-asset:asset-me
 			</liferay-util:buffer>
 
 			<c:if test="<%= Validator.isNotNull(metadataPanelContent) %>">
-				<liferay-ui:panel
-					collapsible="<%= true %>"
-					cssClass="asset-metadata-panel mb-0"
-					defaultState="closed"
-					extended="<%= false %>"
-					id='<%= "metadataPanel" + assetEntry.getEntryId() %>'
-					persistState="<%= false %>"
-					title="more-details"
+				<clay:panel
+					displayTitle='<%= LanguageUtil.get(request, "more-details") %>'
 				>
-					<%= metadataPanelContent %>
-				</liferay-ui:panel>
+					<div class="panel-body">
+						<%= metadataPanelContent %>
+					</div>
+				</clay:panel>
 			</c:if>
 		</c:otherwise>
 	</c:choose>

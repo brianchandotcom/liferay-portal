@@ -22,7 +22,7 @@ import {
 	ObjectRelationshipType,
 	useObjectRelationshipForm,
 } from './ObjectRelationshipFormBase';
-import SelectRelationship from './SelectRelationship';
+import SelectObjectRelationship from './SelectObjectRelationship';
 
 interface EditRelationshipProps {
 	baseResourceURL: string;
@@ -142,7 +142,7 @@ export default function EditRelationship({
 							value={restContextPath}
 						/>
 
-						<SelectRelationship
+						<SelectObjectRelationship
 							error={errors.parameterObjectFieldName}
 							objectDefinitionExternalReferenceCode={
 								values.objectDefinitionExternalReferenceCode2 as string

@@ -402,7 +402,7 @@ export async function putListTypeEntry({
 export async function putObjectRelationship({
 	id,
 	...others
-}: ObjectRelationship) {
+}: Partial<ObjectRelationship>) {
 	return await save({
 		item: others,
 		url: `/o/object-admin/v1.0/object-relationships/${id}`,

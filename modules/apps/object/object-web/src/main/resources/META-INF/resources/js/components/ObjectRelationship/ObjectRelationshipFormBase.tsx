@@ -121,13 +121,27 @@ export function useObjectRelationshipForm({
 		return errors;
 	};
 
-	const {errors, handleChange, handleSubmit, setValues, values} = useForm({
+	const {
+		errors,
+		handleChange,
+		handleSubmit,
+		handleValidate,
+		setValues,
+		values,
+	} = useForm({
 		initialValues,
 		onSubmit,
 		validate,
 	});
 
-	return {errors, handleChange, handleSubmit, setValues, values};
+	return {
+		errors,
+		handleChange,
+		handleSubmit,
+		handleValidate,
+		setValues,
+		values,
+	};
 }
 
 export function ObjectRelationshipFormBase({

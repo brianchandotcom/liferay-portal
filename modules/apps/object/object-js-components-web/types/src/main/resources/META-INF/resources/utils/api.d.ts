@@ -192,7 +192,7 @@ export declare function putListTypeEntry({
 export declare function putObjectRelationship({
 	id,
 	...others
-}: ObjectRelationship): Promise<any>;
+}: Partial<ObjectRelationship>): Promise<any>;
 export declare function save({
 	item,
 	method,

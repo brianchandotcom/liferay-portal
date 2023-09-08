@@ -17,7 +17,7 @@ import {
 	ObjectRelationshipType,
 	useObjectRelationshipForm,
 } from './ObjectRelationshipFormBase';
-import SelectRelationship from './SelectRelationship';
+import SelectObjectRelationship from './SelectObjectRelationship';
 
 import './ModalAddObjectRelationship.scss';
 
@@ -131,7 +131,7 @@ export function ModalAddObjectRelationship({
 						{objectRelationshipParameterRequired &&
 							values.type ===
 								ObjectRelationshipType.ONE_TO_MANY && (
-								<SelectRelationship
+								<SelectObjectRelationship
 									error={errors.parameterObjectFieldName}
 									objectDefinitionExternalReferenceCode={
 										values.objectDefinitionExternalReferenceCode2 as string

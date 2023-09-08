@@ -9,6 +9,13 @@
 		font-weight: 600;
 		line-height: 21px;
 
+		&-buttons-container {
+			align-items: center;
+			display: flex;
+			gap: 10px;
+			justify-content: center;
+		}
+
 		&-container {
 			align-items: center;
 			border-bottom: 1px solid #f1f2f5;
@@ -16,6 +23,19 @@
 			height: 4rem;
 			justify-content: space-between;
 			padding: 1rem;
+		}
+
+		&-delete-button {
+			height: 32px;
+			width: 32px;
+		}
+
+		&-save-button {
+			align-items: center;
+			display: flex;
+			height: 32px;
+			justify-content: center;
+			width: 57px;
 		}
 	}
 }

@@ -12,6 +12,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
@@ -168,10 +169,8 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 			</liferay-ddm:template-renderer>
 		</aui:form>
 
-		<aui:script use="aui-base,liferay-search-bar">
-			if (!A.one('#<portlet:namespace />reactSearchBar')) {
-				new Liferay.Search.SearchBar(A.one('#<portlet:namespace />fm'));
-			}
-		</aui:script>
+		<liferay-frontend:component
+			module="js/SearchBar"
+		/>
 	</c:otherwise>
 </c:choose>

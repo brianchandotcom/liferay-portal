@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -184,6 +185,36 @@ public class ListTypeDefinitionLocalServiceTest {
 			0,
 			_listTypeEntryLocalService.getListTypeEntriesCount(
 				listTypeDefinition.getListTypeDefinitionId()));
+
+		ListTypeDefinition systemListTypeDefinition =
+			_addSystemListTypeDefinition();
+
+		externalReferenceCode = RandomTestUtil.randomString();
+
+		String liferayMode = SystemProperties.get("liferay.mode");
+
+		SystemProperties.clear("liferay.mode");
+
+		try {
+			systemListTypeDefinition =
+				_listTypeDefinitionLocalService.updateListTypeDefinition(
+					externalReferenceCode,
+					systemListTypeDefinition.getListTypeDefinitionId(),
+					TestPropsValues.getUserId(),
+					Collections.singletonMap(LocaleUtil.getDefault(), name),
+					_listTypeEntryLocalService.getListTypeEntries(
+						systemListTypeDefinition.getListTypeDefinitionId()));
+		}
+		finally {
+			SystemProperties.set("liferay.mode", liferayMode);
+		}
+
+		Assert.assertNotEquals(
+			externalReferenceCode,
+			systemListTypeDefinition.getExternalReferenceCode());
+
+		Assert.assertEquals(
+			name, systemListTypeDefinition.getName(LocaleUtil.getDefault()));
 	}
 
 	private ListTypeDefinition _addListTypeDefinition() throws Exception {

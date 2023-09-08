@@ -907,13 +907,15 @@ public class DefaultObjectEntryManagerImpl
 					_objectEntryManagerRegistry.getObjectEntryManager(
 						relatedObjectDefinition.getStorageType());
 
+				boolean manyToOneObjectRelationship =
+					_isManyToOneObjectRelationship(
+						objectDefinition, objectRelationship,
+						relatedObjectDefinition);
+
 				for (Object item : nestedObjectEntries) {
 					ObjectEntry nestedObjectEntry = (ObjectEntry)item;
 
-					if (_isManyToOneObjectRelationship(
-							objectDefinition, objectRelationship,
-							relatedObjectDefinition)) {
-
+					if (manyToOneObjectRelationship) {
 						Map<String, Object> nestedObjectEntryProperties =
 							nestedObjectEntry.getProperties();
 
@@ -931,10 +933,7 @@ public class DefaultObjectEntryManagerImpl
 						relatedObjectDefinition, nestedObjectEntry,
 						relatedObjectDefinition.getScope());
 
-					if (!_isManyToOneObjectRelationship(
-							objectDefinition, objectRelationship,
-							relatedObjectDefinition)) {
-
+					if (!manyToOneObjectRelationship) {
 						_relateNestedObjectEntry(
 							objectDefinition, objectRelationship, primaryKey,
 							nestedObjectEntry.getId());

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
@@ -46,7 +47,11 @@ public class APIPropertyRelevantObjectEntryModelListener
 	public void onBeforeCreate(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_validate(objectEntry.getValues());
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		_validate(
+			(long)values.get("r_apiSchemaToAPIProperties_c_apiSchemaId"),
+			values);
 	}
 
 	@Override
@@ -56,47 +61,18 @@ public class APIPropertyRelevantObjectEntryModelListener
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
-		long apiSchemaId = (long)values.get(
-			"r_apiSchemaToAPIProperties_c_apiSchemaId");
+		long apiSchemaId = MapUtil.getLong(
+			values, "r_apiSchemaToAPIProperties_c_apiSchemaId");
 
 		if (apiSchemaId != 0) {
-			_validate(values);
+			_validate(apiSchemaId, values);
 		}
-
-		_scheduleAPIProperties(objectEntry.getObjectEntryId());
+		else {
+			_scheduleOrphanAPIPropertyDeletion(objectEntry.getObjectEntryId());
+		}
 	}
 
-	private void _scheduleAPIProperties(long apiPropertyId) {
-		_pendingAPIProperties.add(apiPropertyId);
-
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				if (_pendingAPIProperties.remove(apiPropertyId)) {
-					ObjectEntry apiPropertyObjectEntry =
-						_objectEntryLocalService.fetchObjectEntry(
-							apiPropertyId);
-
-					if (apiPropertyObjectEntry == null) {
-						return null;
-					}
-
-					Map<String, Serializable> values =
-						apiPropertyObjectEntry.getValues();
-
-					long apiSchemaId = (long)values.get(
-						"r_apiSchemaToAPIProperties_c_apiSchemaId");
-
-					if (apiSchemaId == 0) {
-						_objectEntryLocalService.deleteObjectEntry(
-							apiPropertyId);
-					}
-				}
-
-				return null;
-			});
-	}
-
-	private boolean _validate(
+	private boolean _isValidAPIPropertyFields(
 			long apiSchemaId, String objectFieldExternalReferenceCode,
 			String objectRelationshipName)
 		throws Exception {
@@ -139,11 +115,36 @@ public class APIPropertyRelevantObjectEntryModelListener
 		return true;
 	}
 
-	private void _validate(Map<String, Serializable> objectEntryValues) {
-		try {
-			long apiSchemaId = (long)objectEntryValues.get(
-				"r_apiSchemaToAPIProperties_c_apiSchemaId");
+	private void _scheduleOrphanAPIPropertyDeletion(long apiPropertyId) {
+		_pendingAPIProperties.add(apiPropertyId);
 
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				if (_pendingAPIProperties.remove(apiPropertyId)) {
+					ObjectEntry apiPropertyObjectEntry =
+						_objectEntryLocalService.fetchObjectEntry(
+							apiPropertyId);
+
+					if (apiPropertyObjectEntry == null) {
+						return null;
+					}
+
+					long apiSchemaId = MapUtil.getLong(
+						apiPropertyObjectEntry.getValues(),
+						"r_apiSchemaToAPIProperties_c_apiSchemaId");
+
+					if (apiSchemaId == 0) {
+						_objectEntryLocalService.deleteObjectEntry(
+							apiPropertyId);
+					}
+				}
+
+				return null;
+			});
+	}
+
+	private void _validate(long apiSchemaId, Map<String, Serializable> values) {
+		try {
 			if (!_objectEntryHelper.isValidObjectEntry(
 					apiSchemaId, "L_API_SCHEMA")) {
 
@@ -152,10 +153,9 @@ public class APIPropertyRelevantObjectEntryModelListener
 					"an-api-property-must-be-related-to-an-api-schema");
 			}
 
-			if (!_validate(
-					apiSchemaId,
-					(String)objectEntryValues.get("objectFieldERC"),
-					(String)objectEntryValues.get("objectRelationshipNames"))) {
+			if (!_isValidAPIPropertyFields(
+					apiSchemaId, (String)values.get("objectFieldERC"),
+					(String)values.get("objectRelationshipNames"))) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null,

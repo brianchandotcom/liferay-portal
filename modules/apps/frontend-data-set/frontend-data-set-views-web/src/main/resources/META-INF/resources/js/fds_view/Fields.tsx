@@ -685,13 +685,7 @@ const Fields = ({
 
 		const responseJSON = await response.json();
 
-		const storedFDSFields = responseJSON?.items.map((field: any) => {
-			if (!field.label) {
-				field.label = field.name;
-			}
-
-			return field;
-		});
+		const storedFDSFields = responseJSON?.items;
 
 		if (!storedFDSFields) {
 			openToast({

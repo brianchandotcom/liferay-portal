@@ -86,10 +86,6 @@
 	<bean class="com.liferay.portal.kernel.service.permission.PortletPermissionUtil" id="com.liferay.portal.kernel.service.permission.PortletPermissionUtil">
 		<property name="portletPermission" ref="com.liferay.portal.kernel.service.permission.PortletPermission" />
 	</bean>
-	<bean class="com.liferay.portal.service.permission.UserGroupPermissionImpl" id="com.liferay.portal.kernel.service.permission.UserGroupPermission" />
-	<bean class="com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil" id="com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil">
-		<property name="userGroupPermission" ref="com.liferay.portal.kernel.service.permission.UserGroupPermission" />
-	</bean>
 	<bean class="com.liferay.portal.servlet.BrowserSnifferImpl" id="com.liferay.portal.kernel.servlet.BrowserSniffer" />
 	<bean class="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" id="com.liferay.portal.kernel.servlet.BrowserSnifferUtil">
 		<property name="browserSniffer" ref="com.liferay.portal.kernel.servlet.BrowserSniffer" />

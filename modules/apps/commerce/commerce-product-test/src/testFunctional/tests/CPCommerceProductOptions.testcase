@@ -98,7 +98,7 @@ definition {
 
 		task ("And the buyer searches the product in the Catalog") {
 			Type(
-				locator1 = "Search#EMBEDDED_SEARCH_BAR",
+				locator1 = "Search#SEARCH_BAR_WIDGET",
 				value1 = "Simple T-Shirt");
 
 			Button.clickSubmitButton();

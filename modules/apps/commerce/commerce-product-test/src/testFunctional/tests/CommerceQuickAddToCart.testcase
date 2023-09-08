@@ -1768,15 +1768,15 @@ definition {
 
 		task ("When the buyer user adds a product 'U-Joint' to cart and copies its SKU 'MIN55861'") {
 			Type(
-				locator1 = "Search#EMBEDDED_SEARCH_BAR",
+				locator1 = "Search#SEARCH_BAR_WIDGET",
 				value1 = "MIN55861");
 
 			Type.sendKeys(
-				locator1 = "Search#EMBEDDED_SEARCH_BAR",
+				locator1 = "Search#SEARCH_BAR_WIDGET",
 				value1 = "keys=CONTROL,a");
 
 			Type.sendKeys(
-				locator1 = "Search#EMBEDDED_SEARCH_BAR",
+				locator1 = "Search#SEARCH_BAR_WIDGET",
 				value1 = "keys=CONTROL,c");
 
 			Button.clickSubmitButton();

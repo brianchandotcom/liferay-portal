@@ -1099,7 +1099,7 @@ definition {
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		Type(
-			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			locator1 = "Search#SEARCH_BAR_WIDGET",
 			value1 = "ABS Sensor");
 
 		Button.clickSubmitButton();

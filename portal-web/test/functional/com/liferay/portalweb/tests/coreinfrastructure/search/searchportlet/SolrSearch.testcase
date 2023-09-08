@@ -721,7 +721,7 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Site Name");
 
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+		SearchPortlets.searchWidget(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",

@@ -826,7 +826,7 @@ definition {
 			userEmailAddress = "buyer@liferay.com");
 
 		Type(
-			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			locator1 = "Search#SEARCH_BAR_WIDGET",
 			value1 = "Simple T-Shirt");
 
 		Button.clickSubmitButton();
@@ -865,7 +865,7 @@ definition {
 			userEmailAddress = "buyer@liferay.com");
 
 		Type(
-			locator1 = "Search#EMBEDDED_SEARCH_BAR",
+			locator1 = "Search#SEARCH_BAR_WIDGET",
 			value1 = "Simple T-Shirt");
 
 		Button.clickSubmitButton();

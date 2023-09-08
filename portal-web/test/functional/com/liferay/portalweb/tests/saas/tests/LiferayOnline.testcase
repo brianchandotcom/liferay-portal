@@ -369,11 +369,11 @@ definition {
 		}
 
 		task ("Assert the Search Bar presence") {
-			AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+			AssertElementPresent(locator1 = "TeamExtranet#EMBEDDED_SEARCH_BAR");
 		}
 
 		task ("Search for Careers in Search Bar to get results") {
-			SearchPortlets.searchEmbedded(searchTerm = "careers");
+			TeamExtranet.searchEmbedded(searchTerm = "careers");
 
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "Careers",
@@ -381,7 +381,7 @@ definition {
 		}
 
 		task ("Search for texs in Search Bar to not get results") {
-			SearchPortlets.searchEmbedded(searchTerm = "texs");
+			TeamExtranet.searchEmbedded(searchTerm = "texs");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",

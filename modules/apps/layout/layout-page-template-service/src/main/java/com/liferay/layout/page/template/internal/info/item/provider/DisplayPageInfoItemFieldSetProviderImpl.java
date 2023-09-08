@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -225,7 +226,8 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
 				scopeGroupId, _portal.getClassNameId(itemClassName),
 				GetterUtil.getLong(infoItemFormVariationKey),
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE,
+				WorkflowConstants.STATUS_APPROVED);
 
 		for (LayoutPageTemplateEntry layoutPageTemplateEntry :
 				layoutPageTemplateEntries) {

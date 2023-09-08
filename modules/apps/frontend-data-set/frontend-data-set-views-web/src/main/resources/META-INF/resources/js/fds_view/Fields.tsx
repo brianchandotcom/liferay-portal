@@ -429,16 +429,19 @@ const EditFDSFieldModalContent = ({
 		fdsFieldTranslations
 	);
 
-	const getValidI18nLabels = function(i18nFieldLabels: LocalizedValue<string>) {
-		let validI18nFieldLabels: {[key: string]: string} = {};
+	const [errorMessage, setErrorMessage] = useState('');
 
-		for (const lang in i18nFieldLabels) {
-			if (!i18nFieldLabels[lang as Locale]) {
-				validI18nFieldLabels[lang] = fdsField.name;
-			}
+	const validateFDSField = function () {
+		const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
+		if (!i18nFieldLabels[defaultLanguageId]) {
+			setErrorMessage(Liferay.Language.get('required'));
+			return;
 		}
 
-		return {...i18nFieldLabels, ...validI18nFieldLabels};
+		setErrorMessage('');
+
+		editFDSField();
 	}
 	
 	const editFDSField = async () => {
@@ -454,7 +457,7 @@ const EditFDSFieldModalContent = ({
 		};
 
 		if (Liferay.FeatureFlags['LPS-172017']) {
-			body = {...bodyTmp, label_i18n: getValidI18nLabels(i18nFieldLabels)};
+			body = {...bodyTmp, label_i18n: i18nFieldLabels};
 		}
 		else {
 			body = {...bodyTmp, label: fdsFieldLabelRef.current?.value};
@@ -597,6 +600,7 @@ const EditFDSFieldModalContent = ({
 				{Liferay.FeatureFlags['LPS-172017'] ? (
 					<ClayForm.Group>
 						<InputLocalized
+							error={errorMessage}
 							id={fdsFieldLabelInputId}
 							label={Liferay.Language.get('label')}
 							name="label"
@@ -653,7 +657,7 @@ const EditFDSFieldModalContent = ({
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton onClick={() => editFDSField()}>
+						<ClayButton onClick={() => validateFDSField()}>
 							{Liferay.Language.get('save')}
 						</ClayButton>
 

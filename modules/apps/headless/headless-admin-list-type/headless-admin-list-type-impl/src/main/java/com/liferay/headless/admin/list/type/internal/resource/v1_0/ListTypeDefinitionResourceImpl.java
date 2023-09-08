@@ -210,7 +210,9 @@ public class ListTypeDefinitionResourceImpl
 									serviceBuilderListTypeDefinition.
 										getListTypeDefinitionId());
 
-						if (count > 0) {
+						if ((count > 0) ||
+							serviceBuilderListTypeDefinition.isSystem()) {
+
 							return null;
 						}
 

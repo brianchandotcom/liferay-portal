@@ -189,10 +189,23 @@ public class ListTypeEntryResourceImpl extends BaseListTypeEntryResourceImpl {
 
 		return HashMapBuilder.<String, Map<String, String>>put(
 			"delete",
-			addAction(
-				ActionKeys.DELETE, "deleteListTypeEntry",
-				com.liferay.list.type.model.ListTypeDefinition.class.getName(),
-				serviceBuilderListTypeEntry.getListTypeDefinitionId())
+			() -> {
+				com.liferay.list.type.model.ListTypeDefinition
+					serviceBuilderlistTypeDefinition =
+						_listTypeDefinitionService.getListTypeDefinition(
+							serviceBuilderListTypeEntry.
+								getListTypeDefinitionId());
+
+				if (serviceBuilderlistTypeDefinition.isSystem()) {
+					return null;
+				}
+
+				return addAction(
+					ActionKeys.DELETE, "deleteListTypeEntry",
+					com.liferay.list.type.model.ListTypeDefinition.class.
+						getName(),
+					serviceBuilderListTypeEntry.getListTypeDefinitionId());
+			}
 		).put(
 			"get",
 			addAction(

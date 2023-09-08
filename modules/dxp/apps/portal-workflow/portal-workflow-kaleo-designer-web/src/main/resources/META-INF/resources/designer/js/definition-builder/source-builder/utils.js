@@ -163,23 +163,17 @@ export function parseReassignments(node) {
 export function parseNotifications(node) {
 	const notifications = {notificationTypes: [], recipients: []};
 
-	if (node.nodeName !== 'timer-notification') {
-		node.notifications.forEach((item) => {
-			notifications.executionType = parseProperty(
-				notifications,
-				item,
-				'execution-type'
-			);
-		});
-	}
-
 	node.notifications.forEach((item, index) => {
 		notifications.description = parseProperty(
 			notifications,
 			item,
 			'description'
 		);
-
+		notifications.executionType = parseProperty(
+			notifications,
+			item,
+			'execution-type'
+		);
 		notifications.name = parseProperty(notifications, item, 'name');
 
 		let notificationTypes = parseProperty(
@@ -386,7 +380,11 @@ export function parseNotifications(node) {
 			if (item.receptionType) {
 				notifications.recipients[index].push({
 					assignmentType: ['user'],
-					receptionType: [item.receptionType],
+					receptionType: [
+						item.receptionType[
+							notifications.recipients[index].length
+						],
+					],
 				});
 			}
 			else {
@@ -447,15 +445,7 @@ export function parseTimers(node) {
 				  })
 				: {}
 		);
-		taskTimers.timerNotifications.push(
-			node.taskTimers[index]['timer-notification']
-				? parseNotifications({
-						nodeName: 'timer-notification',
-						notifications:
-							node.taskTimers[index]['timer-notification'],
-				  })
-				: {}
-		);
+		taskTimers.timerNotifications.push({});
 		taskTimers.name = parseProperty(taskTimers, item, 'name');
 		taskTimers.description = parseProperty(taskTimers, item, 'description');
 		taskTimers.blocking = parseProperty(taskTimers, item, 'blocking');

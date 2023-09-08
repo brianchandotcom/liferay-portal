@@ -339,47 +339,58 @@ public class LayoutWarningMessageHelperImpl
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			fragmentEntryLink.getEditableValues());
 
-		JSONObject editableValuesJSONObject = jsonObject.getJSONObject(
-			FragmentEntryProcessorConstants.
-				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
+		for (String fragmentEntryProcessorKey :
+				_FRAGMENT_ENTRY_PROCESSOR_KEYS) {
 
-		if (editableValuesJSONObject == null) {
-			return false;
-		}
+			JSONObject editableValuesJSONObject = jsonObject.getJSONObject(
+				fragmentEntryProcessorKey);
 
-		Iterator<String> editableKeysIterator = editableValuesJSONObject.keys();
-
-		while (editableKeysIterator.hasNext()) {
-			JSONObject editableValueJSONObject =
-				editableValuesJSONObject.getJSONObject(
-					editableKeysIterator.next());
-
-			JSONObject configJSONObject = editableValueJSONObject.getJSONObject(
-				"config");
-
-			if (configJSONObject.getBoolean("lazyLoading")) {
+			if (editableValuesJSONObject == null) {
 				continue;
 			}
 
-			long fileEntryId = _getFileEntryId(
-				editableValueJSONObject, httpServletRequest,
-				httpServletResponse, themeDisplay.getLocale());
+			Iterator<String> editableKeysIterator =
+				editableValuesJSONObject.keys();
 
-			if (fileEntryId <= 0) {
-				continue;
-			}
+			while (editableKeysIterator.hasNext()) {
+				JSONObject editableValueJSONObject =
+					editableValuesJSONObject.getJSONObject(
+						editableKeysIterator.next());
 
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+				JSONObject configJSONObject =
+					editableValueJSONObject.getJSONObject("config");
 
-			long size = fileEntry.getSize();
+				if (configJSONObject.getBoolean("lazyLoading")) {
+					continue;
+				}
 
-			if (size > _MAX_SIZE) {
-				return true;
+				long fileEntryId = _getFileEntryId(
+					editableValueJSONObject, httpServletRequest,
+					httpServletResponse, themeDisplay.getLocale());
+
+				if (fileEntryId <= 0) {
+					continue;
+				}
+
+				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+					fileEntryId);
+
+				long size = fileEntry.getSize();
+
+				if (size > _MAX_SIZE) {
+					return true;
+				}
 			}
 		}
 
 		return false;
 	}
+
+	private static final String[] _FRAGMENT_ENTRY_PROCESSOR_KEYS = {
+		FragmentEntryProcessorConstants.
+			KEY_BACKGROUND_IMAGE_FRAGMENT_ENTRY_PROCESSOR,
+		FragmentEntryProcessorConstants.KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+	};
 
 	private static final int _MAX_SIZE = 500 * 1024;
 

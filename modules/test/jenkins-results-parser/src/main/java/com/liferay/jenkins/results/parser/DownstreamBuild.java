@@ -15,7 +15,6 @@ import com.liferay.jenkins.results.parser.failure.message.generator.JSUnitTestFa
 import com.liferay.jenkins.results.parser.failure.message.generator.LocalGitMirrorFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.ModulesCompilationFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.PMDFailureMessageGenerator;
-import com.liferay.jenkins.results.parser.failure.message.generator.PluginFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.PluginGitIDFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.SemanticVersioningFailureMessageGenerator;
 import com.liferay.jenkins.results.parser.failure.message.generator.ServiceBuilderFailureMessageGenerator;
@@ -952,7 +951,6 @@ public class DownstreamBuild extends BaseBuild {
 		new JSUnitTestFailureMessageGenerator(),
 		new LocalGitMirrorFailureMessageGenerator(),
 		new PMDFailureMessageGenerator(),
-		new PluginFailureMessageGenerator(),
 		new PluginGitIDFailureMessageGenerator(),
 		new SemanticVersioningFailureMessageGenerator(),
 		new ServiceBuilderFailureMessageGenerator(),

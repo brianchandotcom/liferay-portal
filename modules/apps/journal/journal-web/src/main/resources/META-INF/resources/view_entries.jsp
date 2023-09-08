@@ -464,7 +464,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 
 <portlet:actionURL var="editEntryURL" />
 
-<Liferay-frontend:component
+<liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
 			"editEntryURL", editEntryURL
@@ -475,4 +475,5 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 		).build()
 	%>'
 	module="js/Navigation"
+	servletContext="<%= application %>"
 />

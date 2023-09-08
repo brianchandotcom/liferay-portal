@@ -13,13 +13,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.servlet.BrowserSnifferImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.UnsupportedEncodingException;
@@ -52,10 +50,6 @@ public class OAuth2ControllerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws PortalException {
-		BrowserSnifferUtil browserSnifferUtil = new BrowserSnifferUtil();
-
-		browserSnifferUtil.setBrowserSniffer(new BrowserSnifferImpl());
-
 		_oAuth2Manager = Mockito.mock(OAuth2Manager.class);
 
 		Mockito.when(

@@ -70,7 +70,7 @@ public class DBInitUtil {
 
 	private static boolean _checkDefaultRelease(Connection connection) {
 		try {
-			if (!PortalUpgradeProcess.hasCurrentPortalReleaseDTO(connection)) {
+			if (!PortalUpgradeProcess.hasPortalRelease(connection)) {
 				PortalUpgradeProcess.createPortalRelease(connection);
 
 				_setDBNew();

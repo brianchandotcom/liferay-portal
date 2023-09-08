@@ -152,7 +152,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		return requiredSchemaVersion;
 	}
 
-	public static boolean hasCurrentPortalReleaseDTO(Connection connection)
+	public static boolean hasPortalRelease(Connection connection)
 		throws SQLException {
 
 		PortalReleaseDTO portalReleaseDTO = _getCurrentPortalReleaseDTO(

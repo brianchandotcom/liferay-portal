@@ -15,6 +15,10 @@
 		"baseUrl": ".",
 		"composite": true,
 		"jsx": "react",
+		"lib": [
+			"DOM",
+			"es2019"
+		],
 		"module": "es6",
 		"moduleResolution": "node",
 		"outDir": "./types",
@@ -45,10 +49,6 @@
 		"typeRoots": [
 			"../../../node_modules/@types",
 			"./node_modules/@types"
-		],
-		"lib": [
-			"DOM",
-			"es2019"
 		]
 	},
 	"exclude": [

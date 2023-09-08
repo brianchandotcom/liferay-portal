@@ -238,59 +238,15 @@ public class DefaultObjectEntryManagerImpl
 			ObjectDefinition relatedObjectDefinition, long userId)
 		throws Exception {
 
-		ObjectRelatedModelsProvider<?> objectRelatedModelsProvider = null;
+		long[] relatedPrimaryKeys = TransformUtil.transformToLongArray(
+			_getRelatedModels(
+				dtoConverterContext, objectDefinition, objectRelationship,
+				primaryKey, relatedObjectDefinition),
+			this::_getPrimaryKey);
 
-		if (_isManyToOneObjectRelationship(
-				relatedObjectDefinition, objectRelationship,
-				objectDefinition)) {
-
-			objectRelatedModelsProvider =
-				_objectRelatedModelsProviderRegistry.
-					getObjectRelatedModelsProvider(
-						objectDefinition.getClassName(),
-						objectDefinition.getCompanyId(),
-						objectRelationship.getType());
-
-			long relatedPrimaryKey = _getPrimaryKey(
-				_getManyToOneRelatedModel(
-					dtoConverterContext, objectDefinition, objectRelationship,
-					primaryKey, relatedObjectDefinition));
-
-			objectRelatedModelsProvider.disassociateRelatedModels(
-				userId, objectRelationship.getObjectRelationshipId(),
-				relatedPrimaryKey, primaryKey);
-		}
-		else {
-			objectRelatedModelsProvider =
-				_objectRelatedModelsProviderRegistry.
-					getObjectRelatedModelsProvider(
-						relatedObjectDefinition.getClassName(),
-						relatedObjectDefinition.getCompanyId(),
-						objectRelationship.getType());
-
-			if ((objectRelationship.getObjectDefinitionId1() !=
-					objectDefinition.getObjectDefinitionId()) &&
-				Objects.equals(
-					ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
-					objectRelationship.getType())) {
-
-				objectRelationship =
-					_objectRelationshipLocalService.getObjectRelationship(
-						objectDefinition.getObjectDefinitionId(),
-						objectRelationship.getName());
-			}
-
-			for (Object relatedModel :
-					objectRelatedModelsProvider.getRelatedModels(
-						GroupThreadLocal.getGroupId(),
-						objectRelationship.getObjectRelationshipId(),
-						primaryKey, null, -1, -1)) {
-
-				objectRelatedModelsProvider.disassociateRelatedModels(
-					userId, objectRelationship.getObjectRelationshipId(),
-					primaryKey, _getPrimaryKey(relatedModel));
-			}
-		}
+		_disassociateRelatedModels(
+			objectDefinition, objectRelationship, primaryKey,
+			relatedPrimaryKeys, relatedObjectDefinition, userId);
 	}
 
 	@Override
@@ -1059,6 +1015,58 @@ public class DefaultObjectEntryManagerImpl
 		return serviceContext;
 	}
 
+	private void _disassociateRelatedModels(
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship, long primaryKey1,
+			long[] primaryKeys2, ObjectDefinition relatedObjectDefinition,
+			long userId)
+		throws Exception {
+
+		ObjectRelatedModelsProvider<?> objectRelatedModelsProvider = null;
+
+		if (_isManyToOneObjectRelationship(
+				relatedObjectDefinition, objectRelationship,
+				objectDefinition)) {
+
+			objectRelatedModelsProvider =
+				_objectRelatedModelsProviderRegistry.
+					getObjectRelatedModelsProvider(
+						objectDefinition.getClassName(),
+						objectDefinition.getCompanyId(),
+						objectRelationship.getType());
+
+			objectRelatedModelsProvider.disassociateRelatedModels(
+				userId, objectRelationship.getObjectRelationshipId(),
+				primaryKeys2[0], primaryKey1);
+		}
+		else {
+			objectRelatedModelsProvider =
+				_objectRelatedModelsProviderRegistry.
+					getObjectRelatedModelsProvider(
+						relatedObjectDefinition.getClassName(),
+						relatedObjectDefinition.getCompanyId(),
+						objectRelationship.getType());
+
+			if ((objectRelationship.getObjectDefinitionId1() !=
+					objectDefinition.getObjectDefinitionId()) &&
+				Objects.equals(
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
+					objectRelationship.getType())) {
+
+				objectRelationship =
+					_objectRelationshipLocalService.getObjectRelationship(
+						objectDefinition.getObjectDefinitionId(),
+						objectRelationship.getName());
+			}
+
+			for (long primaryKey2 : primaryKeys2) {
+				objectRelatedModelsProvider.disassociateRelatedModels(
+					userId, objectRelationship.getObjectRelationshipId(),
+					primaryKey1, primaryKey2);
+			}
+		}
+	}
+
 	private void _executeObjectAction(
 			DTOConverterContext dtoConverterContext, String objectActionName,
 			ObjectDefinition objectDefinition,
@@ -1194,6 +1202,47 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		return 0;
+	}
+
+	private List<Object> _getRelatedModels(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition,
+			ObjectRelationship objectRelationship, long primaryKey,
+			ObjectDefinition relatedObjectDefinition)
+		throws Exception {
+
+		if (_isManyToOneObjectRelationship(
+				relatedObjectDefinition, objectRelationship,
+				objectDefinition)) {
+
+			return Collections.singletonList(
+				_getManyToOneRelatedModel(
+					dtoConverterContext, objectDefinition, objectRelationship,
+					primaryKey, relatedObjectDefinition));
+		}
+
+		ObjectRelatedModelsProvider<?> objectRelatedModelsProvider =
+			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
+				relatedObjectDefinition.getClassName(),
+				relatedObjectDefinition.getCompanyId(),
+				objectRelationship.getType());
+
+		if ((objectRelationship.getObjectDefinitionId1() !=
+				objectDefinition.getObjectDefinitionId()) &&
+			Objects.equals(
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY,
+				objectRelationship.getType())) {
+
+			objectRelationship =
+				_objectRelationshipLocalService.getObjectRelationship(
+					objectDefinition.getObjectDefinitionId(),
+					objectRelationship.getName());
+		}
+
+		return (List<Object>)objectRelatedModelsProvider.getRelatedModels(
+			GroupThreadLocal.getGroupId(),
+			objectRelationship.getObjectRelationshipId(), primaryKey, null, -1,
+			-1);
 	}
 
 	private ObjectDefinition _getRelatedObjectDefinition(

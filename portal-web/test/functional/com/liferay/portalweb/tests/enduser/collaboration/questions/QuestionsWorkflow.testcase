@@ -38,179 +38,211 @@ definition {
 		}
 	}
 
-	@description = "Validate if a user can answer a question that was posted before the workflow was enabled."
+	@description = "LPS-130705 - Validate if a user can answer a question that was posted before the workflow was enabled."
 	@priority = 4
 	test CanAddAnswerViaJSONAfterEnablingWorkflow {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("Given that there is a category and a question Created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "Body AddQuestion",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Title AddQuestion");
+			JSONQuestions.addQuestion(
+				bodyField = "Body AddQuestion",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Title AddQuestion");
+		}
 
-		Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
+		task ("When the user add an answer after the Message Board Moderation is enabled") {
+			Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
 
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Enable Message Boards Moderation");
+			SystemSettings.configureSystemSetting(
+				enableSetting = "true",
+				settingFieldName = "Enable Message Boards Moderation");
 
-		JSONQuestions.addAnswer(
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			replyBody = "This is my answer",
-			threadSubject = "Title AddQuestion",
-			titleField = "Title AddQuestion");
+			JSONQuestions.addAnswer(
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				replyBody = "This is my answer",
+				threadSubject = "Title AddQuestion",
+				titleField = "Title AddQuestion");
 
-		JSONQuestions.getAnswerTitle(
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			replyTitle = "Title AddQuestion",
-			titleField = "Title AddQuestion");
+			JSONQuestions.getAnswerTitle(
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				replyTitle = "Title AddQuestion",
+				titleField = "Title AddQuestion");
+		}
 
-		JSONQuestions.getApprovedStatus(
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Title AddQuestion");
+		task ("Then we can se 'This is a approved question' message on the terminal") {
+			JSONQuestions.getApprovedStatus(
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Title AddQuestion");
+		}
 	}
 
-	@description = "Validate if a question can be approved."
+	@description = "LPS-130115 - Validate if a question can be approved."
 	@priority = 4
 	test CanApproveQuestion {
 		property solutions.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Portal Content Reviewer",
-			userEmailAddress = "test@liferay.com");
+		task ("Given that the user has a role and the Message Boards Moderation is enabled") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Portal Content Reviewer",
+				userEmailAddress = "test@liferay.com");
 
-		Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
+			Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
 
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Enable Message Boards Moderation");
+			SystemSettings.configureSystemSetting(
+				enableSetting = "true",
+				settingFieldName = "Enable Message Boards Moderation");
+		}
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("And a category and question is created") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "Body AddQuestion",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Title AddQuestion");
+			JSONQuestions.addQuestion(
+				bodyField = "Body AddQuestion",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Title AddQuestion");
 
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			questionsTitle = "title-addquestion",
-			siteURLKey = "guest",
-			topicName = "questions-test-category");
+			Questions.openToQuestionDetails(
+				layoutName = "questions-page",
+				questionsTitle = "title-addquestion",
+				siteURLKey = "guest",
+				topicName = "questions-test-category");
 
-		Questions.viewStatus(status = "pending");
+			Questions.viewStatus(status = "pending");
+		}
 
-		Navigator.openURL();
+		task ("When the user assign a task to him") {
+			Navigator.openURL();
 
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Title AddQuestion",
-			workflowAssetType = "Message Boards Message",
-			workflowTask = "Review");
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Title AddQuestion",
+				workflowAssetType = "Message Boards Message",
+				workflowTask = "Review");
+		}
 
-		Workflow.approveTaskByActions(
-			workflowAssetTitle = "Title AddQuestion",
-			workflowAssetType = "Message Boards Message",
-			workflowTask = "Review");
+		task ("Then he can approve a question") {
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Title AddQuestion",
+				workflowAssetType = "Message Boards Message",
+				workflowTask = "Review");
+		}
 
-		JSONQuestions.addAnswer(
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			replyBody = "This is my answer",
-			threadSubject = "Title AddQuestion",
-			titleField = "Title AddQuestion");
+		task ("And he can add an answer") {
+			JSONQuestions.addAnswer(
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				replyBody = "This is my answer",
+				threadSubject = "Title AddQuestion",
+				titleField = "Title AddQuestion");
 
-		JSONQuestions.getAnswerTitle(
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			replyTitle = "Title AddQuestion",
-			titleField = "Title AddQuestion");
+			JSONQuestions.getAnswerTitle(
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				replyTitle = "Title AddQuestion",
+				titleField = "Title AddQuestion");
+		}
 	}
 
-	@description = "Validate if a user can view a question with history router when enabling MB Moderation."
+	@description = "LPS-131941 - Validate if a user can view a question with history router when enabling MB Moderation."
 	@priority = 3
 	test CanSetHistoryRouterWithWorkflow {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		Questions.openToConfigInSystemSettings(portlet = "Questions");
+		task ("Given the user set a router") {
+			Questions.openToConfigInSystemSettings(portlet = "Questions");
 
-		SystemSettings.editTextAreaSetting(
-			settingName = "Set Base Path for History Router",
-			settingValue = "/questions-page");
+			SystemSettings.editTextAreaSetting(
+				settingName = "Set Base Path for History Router",
+				settingValue = "/questions-page");
 
-		SystemSettings.saveConfiguration();
+			SystemSettings.saveConfiguration();
+		}
 
-		Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
+		task ("And enable the Message Boards moderation") {
+			Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
 
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Enable Message Boards Moderation");
+			SystemSettings.configureSystemSetting(
+				enableSetting = "true",
+				settingFieldName = "Enable Message Boards Moderation");
+		}
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("When the user create a category and a question") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "Body AddQuestion",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Title AddQuestion");
+			JSONQuestions.addQuestion(
+				bodyField = "Body AddQuestion",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Title AddQuestion");
+		}
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		task ("And he goes to see the question with history router") {
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoCategory(categoryName = "Questions Test Category");
+			Questions.gotoCategory(categoryName = "Questions Test Category");
+		}
 
-		Questions.viewStatus(status = "pending");
+		task ("Then he can see 'pending' status and the category page created") {
+			Questions.viewStatus(status = "pending");
 
-		AssertLocation(value1 = "http://localhost:8080/web/guest/questions-page/questions/questions-test-category");
+			Questions.viewQuestionPage(topicName = "questions-test-category");
+		}
 	}
 
-	@description = "Validate if the pending status can be returned through JSON once MB moderation Workflow is enabled."
+	@description = "Validate if the pending status can be returned through JSON once Message Boards moderation Workflow is enabled."
 	@priority = 4
 	test PendingStatusCanBeReturnedThroughJSON {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
+		task ("Given the user enable Message Boards Moderation") {
+			Questions.openToConfigInSystemSettings(portlet = "Message Boards Moderation Workflow");
 
-		SystemSettings.configureSystemSetting(
-			enableSetting = "true",
-			settingFieldName = "Enable Message Boards Moderation");
+			SystemSettings.configureSystemSetting(
+				enableSetting = "true",
+				settingFieldName = "Enable Message Boards Moderation");
+		}
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("When the user creates a category and a question") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "Body AddQuestion",
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Title AddQuestion");
+			JSONQuestions.addQuestion(
+				bodyField = "Body AddQuestion",
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Title AddQuestion");
+		}
 
-		JSONQuestions.getPendingStatus(
-			categoryName = "Questions Test Category",
-			groupName = "Guest",
-			titleField = "Title AddQuestion");
+		task ("Then he can see status pending on the terminalz") {
+			JSONQuestions.getPendingStatus(
+				categoryName = "Questions Test Category",
+				groupName = "Guest",
+				titleField = "Title AddQuestion");
+		}
 	}
 
 }

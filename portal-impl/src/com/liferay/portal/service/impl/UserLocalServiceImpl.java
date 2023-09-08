@@ -465,6 +465,39 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return true;
 	}
 
+	@Override
+	public User addDefaultServiceAccountUser(long companyId)
+		throws PortalException {
+
+		User defaultServiceAccountUser = userPersistence.fetchByC_T_First(
+			companyId, UserConstants.TYPE_DEFAULT_SERVICE_ACCOUNT, null);
+
+		if (defaultServiceAccountUser != null) {
+			return defaultServiceAccountUser;
+		}
+
+		Company company = _companyLocalService.getCompany(companyId);
+
+		Role adminRole = _roleLocalService.getRole(
+			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
+
+		String userName = "default-service-account";
+
+		defaultServiceAccountUser = addUser(
+			UserConstants.USER_ID_DEFAULT, company.getCompanyId(), true, null,
+			null, false, userName, userName + StringPool.AT + company.getMx(),
+			LocaleUtil.fromLanguageId(PropsValues.COMPANY_DEFAULT_LOCALE),
+			userName, StringPool.BLANK, userName, 0, 0, true, Calendar.JANUARY,
+			1, 1970, StringPool.BLANK,
+			UserConstants.TYPE_DEFAULT_SERVICE_ACCOUNT, null, null,
+			new long[] {adminRole.getRoleId()}, null, false,
+			new ServiceContext());
+
+		defaultServiceAccountUser.setEmailAddressVerified(true);
+
+		return userLocalService.updateUser(defaultServiceAccountUser);
+	}
+
 	/**
 	 * Adds the user to the default user groups, unless the user is already in
 	 * these user groups. The default user groups can be specified in

@@ -89,6 +89,12 @@ public class UserLocalServiceUtil {
 		return getService().addDefaultRoles(userId);
 	}
 
+	public static User addDefaultServiceAccountUser(long companyId)
+		throws PortalException {
+
+		return getService().addDefaultServiceAccountUser(companyId);
+	}
+
 	/**
 	 * Adds the user to the default user groups, unless the user is already in
 	 * these user groups. The default user groups can be specified in

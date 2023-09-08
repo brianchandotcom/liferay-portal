@@ -5,6 +5,24 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+AUI().applyConfig({
+	groups: {
+		'glide': {
+			async: true,
+			base: 'https://unpkg.com/@glidejs/glide@3.6.0/dist/',
+			modules: {
+				'glide': {
+					path: 'glide.min.js',
+					requires: ['glide-css']
+				},
+				'glide-css': {
+					path: 'css/glide.core.min.css'
+				}
+			}
+		},
+	},
+});
+
 AUI().use('glide', () => {
 	if (fragmentElement.id) {
 		const calcSlidePosition = function () {

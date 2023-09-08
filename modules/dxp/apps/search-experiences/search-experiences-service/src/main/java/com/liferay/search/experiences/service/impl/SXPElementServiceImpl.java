@@ -135,8 +135,9 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 	@Override
 	public SXPElement updateSXPElement(
 			long sxpElementId, Map<Locale, String> descriptionMap,
-			String elementDefinitionJSON, String schemaVersion, boolean hidden,
-			Map<Locale, String> titleMap, ServiceContext serviceContext)
+			String elementDefinitionJSON, String externalReferenceCode,
+			String schemaVersion, boolean hidden, Map<Locale, String> titleMap,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		SXPElement sxpElement = sxpElementPersistence.findByPrimaryKey(
@@ -154,7 +155,8 @@ public class SXPElementServiceImpl extends SXPElementServiceBaseImpl {
 
 		return sxpElementLocalService.updateSXPElement(
 			getUserId(), sxpElementId, descriptionMap, elementDefinitionJSON,
-			hidden, schemaVersion, titleMap, serviceContext);
+			externalReferenceCode, hidden, schemaVersion, titleMap,
+			serviceContext);
 	}
 
 	@Reference(target = "(resource.name=" + SXPConstants.RESOURCE_NAME + ")")

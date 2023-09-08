@@ -92,6 +92,8 @@ definition {
 		}
 
 		task ("Create a query using the revoked API token") {
+			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
 			var curl = '''
 				${analyticsCloudURL}/api/reports/${type} \
 					-H "Authorization: Bearer ${token}" -i

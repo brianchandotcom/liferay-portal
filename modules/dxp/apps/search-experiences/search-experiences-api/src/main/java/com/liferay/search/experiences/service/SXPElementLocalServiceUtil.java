@@ -357,7 +357,7 @@ public class SXPElementLocalServiceUtil {
 	}
 
 	public static SXPElement updateSXPElement(
-			long userId, long sxpElementId,
+			String externalReferenceCode, long userId, long sxpElementId,
 			Map<java.util.Locale, String> descriptionMap,
 			String elementDefinitionJSON, boolean hidden, String schemaVersion,
 			Map<java.util.Locale, String> titleMap,
@@ -365,8 +365,9 @@ public class SXPElementLocalServiceUtil {
 		throws PortalException {
 
 		return getService().updateSXPElement(
-			userId, sxpElementId, descriptionMap, elementDefinitionJSON, hidden,
-			schemaVersion, titleMap, serviceContext);
+			externalReferenceCode, userId, sxpElementId, descriptionMap,
+			elementDefinitionJSON, hidden, schemaVersion, titleMap,
+			serviceContext);
 	}
 
 	/**

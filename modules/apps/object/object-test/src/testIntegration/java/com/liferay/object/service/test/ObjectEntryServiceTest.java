@@ -133,18 +133,7 @@ public class ObjectEntryServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _adminUser.getUserId())));
 
-		Tree tree = TreeTestUtil.createTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			_treeFactory);
-
-		ObjectDefinition rootObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_A");
-
-		rootObjectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				_adminUser.getUserId(),
-				rootObjectDefinition.getObjectDefinitionId());
+		Tree tree = _createTreeAndPublishObjectDefinitions();
 
 		TreeTestUtil.iterateNodeObjectDefinitions(
 			_objectDefinitionLocalService, tree,
@@ -214,6 +203,10 @@ public class ObjectEntryServiceTest {
 				}
 			});
 
+		ObjectDefinition rootObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
+
 		_resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(),
 			rootObjectDefinition.getResourceName(),
@@ -279,18 +272,7 @@ public class ObjectEntryServiceTest {
 		_testDeleteObjectEntry(_adminUser, _adminUser);
 		_testDeleteObjectEntry(_user, _user);
 
-		Tree tree = TreeTestUtil.createTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			_treeFactory);
-
-		ObjectDefinition rootObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_A");
-
-		rootObjectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				_adminUser.getUserId(),
-				rootObjectDefinition.getObjectDefinitionId());
+		Tree tree = _createTreeAndPublishObjectDefinitions();
 
 		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
@@ -340,6 +322,10 @@ public class ObjectEntryServiceTest {
 
 				_assertPrincipalException(ActionKeys.DELETE, null, objectEntry);
 			});
+
+		ObjectDefinition rootObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
 
 		ObjectEntry rootObjectEntry = objectEntries1.get(
 			rootObjectDefinition.getName());
@@ -476,18 +462,7 @@ public class ObjectEntryServiceTest {
 			_objectEntryService.getObjectEntry(
 				adminObjectEntry.getObjectEntryId()));
 
-		Tree tree = TreeTestUtil.createTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			_treeFactory);
-
-		ObjectDefinition rootObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_A");
-
-		rootObjectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				_adminUser.getUserId(),
-				rootObjectDefinition.getObjectDefinitionId());
+		Tree tree = _createTreeAndPublishObjectDefinitions();
 
 		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
@@ -537,6 +512,10 @@ public class ObjectEntryServiceTest {
 
 				_assertPrincipalException(ActionKeys.VIEW, null, objectEntry);
 			});
+
+		ObjectDefinition rootObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
 
 		ObjectEntry rootObjectEntry = objectEntries1.get(
 			rootObjectDefinition.getName());
@@ -820,6 +799,22 @@ public class ObjectEntryServiceTest {
 		}
 
 		return objectEntries;
+	}
+
+	private Tree _createTreeAndPublishObjectDefinitions() throws Exception {
+		Tree tree = TreeTestUtil.createTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			_treeFactory);
+
+		ObjectDefinition rootObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			_adminUser.getUserId(),
+			rootObjectDefinition.getObjectDefinitionId());
+
+		return tree;
 	}
 
 	private void _setUser(User user) throws Exception {

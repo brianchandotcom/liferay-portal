@@ -612,6 +612,9 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                unitOfMeasureKey:
+                    example: m
+                    type: string
             required:
                 - skuId
             type: object

@@ -506,7 +506,7 @@ public class NaniteDemoCreatorService extends DemoCreatorService {
 
 	protected String getChannelId() {
 		Results results = contactsEngineClient.getChannels(
-			faroProject, 0, 1, null);
+			faroProject, 0, 1, null, null);
 
 		List<Channel> channels = results.getItems();
 

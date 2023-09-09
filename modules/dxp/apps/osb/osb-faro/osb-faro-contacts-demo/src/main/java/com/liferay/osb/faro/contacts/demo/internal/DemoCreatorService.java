@@ -93,7 +93,7 @@ public abstract class DemoCreatorService {
 
 	protected void createFaroChannels() throws Exception {
 		Results<Channel> results = contactsEngineClient.getChannels(
-			faroProject, 0, 10000, null);
+			faroProject, 0, 10000, null, null);
 
 		User user = userLocalService.getUserByEmailAddress(
 			portal.getDefaultCompanyId(), "test@liferay.com");

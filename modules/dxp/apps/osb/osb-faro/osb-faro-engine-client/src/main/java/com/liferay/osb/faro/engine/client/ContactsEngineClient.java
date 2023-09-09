@@ -213,7 +213,7 @@ public interface ContactsEngineClient {
 		throws FaroEngineClientException;
 
 	public Results<Channel> getChannels(
-		FaroProject faroProject, int cur, int delta,
+		FaroProject faroProject, int cur, int delta, List<String> ids,
 		List<OrderByField> orderByFields);
 
 	public Results<Individual> getCoworkerIndividuals(

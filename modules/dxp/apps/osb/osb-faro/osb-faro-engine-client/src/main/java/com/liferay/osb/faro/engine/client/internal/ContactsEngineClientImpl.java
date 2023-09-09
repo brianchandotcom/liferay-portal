@@ -970,14 +970,14 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public Results<Channel> getChannels(
-		FaroProject faroProject, int cur, int delta,
+		FaroProject faroProject, int cur, int delta, List<String> ids,
 		List<OrderByField> orderByFields) {
 
 		PagedModel<?, Channel> pagedModel = get(
 			faroProject, Rels.CHANNELS,
 			new ParameterizedTypeReference<EntityModelPagedModel<Channel>>() {
 			},
-			getUriVariables(faroProject, cur, delta, orderByFields));
+			getUriVariables(faroProject, cur, delta, ids, orderByFields));
 
 		return pagedModel.getResults();
 	}

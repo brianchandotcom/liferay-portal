@@ -13,6 +13,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountSku;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -63,8 +64,23 @@ public class DiscountSkuDTOConverter
 				skuExternalReferenceCode =
 					cpInstance.getExternalReferenceCode();
 				skuId = cpInstance.getCPInstanceId();
+				unitOfMeasureKey = _getUnitOfMeasureKey(
+					commerceDiscountRel.getTypeSettingsUnicodeProperties());
 			}
 		};
+	}
+
+	private String _getUnitOfMeasureKey(
+		UnicodeProperties typeSettingsUnicodeProperties) {
+
+		if ((typeSettingsUnicodeProperties != null) &&
+			typeSettingsUnicodeProperties.containsKey("unitOfMeasureKey")) {
+
+			return typeSettingsUnicodeProperties.getProperty(
+				"unitOfMeasureKey");
+		}
+
+		return null;
 	}
 
 	@Reference

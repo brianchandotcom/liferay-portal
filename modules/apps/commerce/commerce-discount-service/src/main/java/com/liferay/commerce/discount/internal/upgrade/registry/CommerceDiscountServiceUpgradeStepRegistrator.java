@@ -115,6 +115,12 @@ public class CommerceDiscountServiceUpgradeStepRegistrator
 
 		registry.register("2.8.0", "2.8.1", new DummyUpgradeStep());
 
+		registry.register(
+			"2.8.1", "2.9.0",
+			UpgradeProcessFactory.addColumns(
+				CommerceDiscountRelModelImpl.TABLE_NAME,
+				"typeSettings TEXT null"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce discount upgrade step registrator finished");
 		}

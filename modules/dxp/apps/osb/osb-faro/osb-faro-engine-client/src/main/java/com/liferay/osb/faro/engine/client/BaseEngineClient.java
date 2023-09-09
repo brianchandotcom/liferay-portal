@@ -499,11 +499,28 @@ public abstract class BaseEngineClient {
 		FaroProject faroProject, int cur, int delta,
 		List<OrderByField> orderByFields) {
 
-		return getUriVariables(faroProject, cur, delta, orderByFields, null);
+		return getUriVariables(
+			faroProject, cur, delta, null, orderByFields, null);
 	}
 
 	protected Map<String, Object> getUriVariables(
 		FaroProject faroProject, int cur, int delta,
+		List<OrderByField> orderByFields, String fieldNameContext) {
+
+		return getUriVariables(
+			faroProject, cur, delta, null, orderByFields, fieldNameContext);
+	}
+
+	protected Map<String, Object> getUriVariables(
+		FaroProject faroProject, int cur, int delta, List<String> ids,
+		List<OrderByField> orderByFields) {
+
+		return getUriVariables(
+			faroProject, cur, delta, ids, orderByFields, null);
+	}
+
+	protected Map<String, Object> getUriVariables(
+		FaroProject faroProject, int cur, int delta, List<String> ids,
 		List<OrderByField> orderByFields, String fieldNameContext) {
 
 		Map<String, Object> uriVariables = getUriVariables(faroProject);
@@ -518,27 +535,29 @@ public abstract class BaseEngineClient {
 
 		uriVariables.put("size", delta);
 
-		if (orderByFields == null) {
-			return uriVariables;
+		if (ids != null) {
+			uriVariables.put("ids", ids);
 		}
 
-		uriVariables.put(
-			"sort",
-			TransformUtil.transform(
-				orderByFields,
-				orderByField -> {
-					String fieldName = orderByField.getFieldName();
+		if (orderByFields != null) {
+			uriVariables.put(
+				"sort",
+				TransformUtil.transform(
+					orderByFields,
+					orderByField -> {
+						String fieldName = orderByField.getFieldName();
 
-					if (!orderByField.isSystem() &&
-						(fieldNameContext != null)) {
+						if (!orderByField.isSystem() &&
+							(fieldNameContext != null)) {
 
-						fieldName = StringUtil.replace(
-							fieldNameContext, CharPool.QUESTION, fieldName);
-					}
+							fieldName = StringUtil.replace(
+								fieldNameContext, CharPool.QUESTION, fieldName);
+						}
 
-					return fieldName + StringPool.COMMA +
-						orderByField.getOrderBy();
-				}));
+						return fieldName + StringPool.COMMA +
+							orderByField.getOrderBy();
+					}));
+		}
 
 		return uriVariables;
 	}

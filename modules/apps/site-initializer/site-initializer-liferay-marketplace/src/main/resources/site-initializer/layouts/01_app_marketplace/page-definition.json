@@ -481,29 +481,29 @@
 													},
 													{
 														"definition": {
-														  "widgetInstance": {
-															"widgetConfig": {
-															  "federatedSearchKey": "",
-															  "occur": "must",
-															  "invisible": "true",
-															  "parameterName": "",
-															  "displayStyleGroupId": "[$GROUP_ID$]",
-															  "filterField": "assetCategoryIds",
-															  "displayStyle": "default",
-															  "immutable": "true",
-															  "filterQueryType": "match",
-															  "filterValue": "[$TAXONOMY_CATEGORY_ID:App$]",
-															  "parentQueryName": "",
-															  "queryName": "",
-															  "disabled": "false",
-															  "customHeading": "",
-															  "boost": ""
-															},
-															"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
-														  }
+															"widgetInstance": {
+																"widgetConfig": {
+																	"boost": "",
+																	"customHeading": "",
+																	"disabled": "false",
+																	"displayStyle": "default",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
+																	"federatedSearchKey": "",
+																	"filterField": "assetCategoryIds",
+																	"filterQueryType": "match",
+																	"filterValue": "[$TAXONOMY_CATEGORY_ID:App$]",
+																	"immutable": "true",
+																	"invisible": "true",
+																	"occur": "must",
+																	"parameterName": "",
+																	"parentQueryName": "",
+																	"queryName": ""
+																},
+																"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
+															}
 														},
 														"type": "Widget"
-													  },
+													},
 													{
 														"definition": {
 															"customCSS": ".breadcrumb-left-desktop {\ndisplay: flex;\nalign-items: center;\n}\n.breadcrumb-left-desktop svg {\nmargin-bottom: 6px;\n}",
@@ -603,7 +603,9 @@
 													},
 													{
 														"definition": {
-															"fragmentStyle": { "backgroundColor": "whiteColor" },
+															"fragmentStyle": {
+																"backgroundColor": "whiteColor"
+															},
 															"widgetInstance": {
 																"widgetConfig": {
 																},
@@ -716,26 +718,26 @@
 													},
 													{
 														"definition": {
-														  "widgetInstance": {
-															"widgetConfig": {
-															  "viewInContext": "true",
-															  "fieldsToDisplay": "",
-															  "federatedSearchKey": "",
-															  "displayStyle": "ddmTemplate_APPS-SEARCH-RESULTS",
-															  "displayInDocumentForm": "false",
-															  "paginationDelta": "20",
-															  "showEmptyResultMessage": "true",
-															  "paginationStartParameterName": "start",
-															  "showPagination": "true",
-															  "paginationDeltaParameterName": "delta",
-															  "displayStyleGroupId": "[$GROUP_ID$]",
-															  "highlightEnabled": "true"
-															},
-															"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
-														  }
+															"widgetInstance": {
+																"widgetConfig": {
+																	"displayInDocumentForm": "false",
+																	"displayStyle": "ddmTemplate_APPS-SEARCH-RESULTS",
+																	"displayStyleGroupId": "[$GROUP_ID$]",
+																	"federatedSearchKey": "",
+																	"fieldsToDisplay": "",
+																	"highlightEnabled": "true",
+																	"paginationDelta": "20",
+																	"paginationDeltaParameterName": "delta",
+																	"paginationStartParameterName": "start",
+																	"showEmptyResultMessage": "true",
+																	"showPagination": "true",
+																	"viewInContext": "true"
+																},
+																"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+															}
 														},
 														"type": "Widget"
-													  }
+													}
 												],
 												"type": "Column"
 											}

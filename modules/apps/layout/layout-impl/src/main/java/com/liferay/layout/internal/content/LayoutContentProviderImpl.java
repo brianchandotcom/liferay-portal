@@ -95,7 +95,8 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 			httpServletRequest = DynamicServletRequest.addQueryString(
 				httpServletRequest,
 				StringBundler.concat(
-					"p_l_id=", layout.getPlid(), "&p_l_mode=", Constants.VIEW),
+					"p_l_id=", layout.getPlid(), "&p_l_mode=",
+					Constants.SEARCH),
 				false);
 
 			Layout originalRequestLayout =

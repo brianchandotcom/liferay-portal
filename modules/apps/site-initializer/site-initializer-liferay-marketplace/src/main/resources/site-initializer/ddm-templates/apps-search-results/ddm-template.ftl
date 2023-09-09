@@ -51,17 +51,17 @@
 		<#if entries?has_content>
 			<#list entries as entry>
 				<#if entry?has_content>
-					<#assign productId = entry.getClassPK() + 1 />
-					<#assign product = restClient.get("/headless-commerce-admin-catalog/v1.0/products/" + productId + "?nestedFields=productSpecifications,attachments") />
-					
 					<#assign
-							productAttachments = product.attachments![]
-							productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description.en_US!""), 150, "...")
-							productSpecifications = product.productSpecifications![]
-							portalURL = portalUtil.getLayoutURL(themeDisplay)
-							productURL = portalURL?replace("home", "p") + "/" + product.urls.en_US
-						/>
-					
+						productId = entry.getClassPK() + 1
+						product = restClient.get("/headless-commerce-admin-catalog/v1.0/products/" + productId + "?nestedFields=productSpecifications,attachments")
+
+						productAttachments = product.attachments![]
+						productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description.en_US!""), 150, "...")
+						productSpecifications = product.productSpecifications![]
+						portalURL = portalUtil.getLayoutURL(themeDisplay)
+						productURL = portalURL?replace("home", "p") + "/" + product.urls.en_US
+					/>
+
 					<a class="app-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 p-3 text-dark text-decoration-none" href=${productURL}>
 							<div class="align-items-center card-image-title-container d-flex pb-3">
 								<div class="image-container rounded">

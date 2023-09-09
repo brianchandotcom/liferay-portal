@@ -172,13 +172,11 @@
 											"rowViewports": [
 												{
 													"id": "landscapeMobile",
-													"rowViewportDefinition": {
-													}
+													"rowViewportDefinition": {}
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {
-													}
+													"rowViewportDefinition": {}
 												},
 												{
 													"id": "tablet",
@@ -195,13 +193,11 @@
 												"definition": {
 													"columnViewports": [
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "portraitMobile"
 														},
 														{
@@ -226,8 +222,7 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Liferay Solutions Marketplace"
@@ -248,14 +243,12 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {
-															},
+															"fragmentConfig": {},
 															"fragmentFields": [
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Business solutions from our partner ecosystem -- reducing your time to market, increasing productivity and offering you endless possibilities on Liferay’s portfolio."
@@ -278,13 +271,11 @@
 												"definition": {
 													"columnViewports": [
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {
-															},
+															"columnViewportDefinition": {},
 															"id": "portraitMobile"
 														},
 														{
@@ -312,8 +303,7 @@
 									"fragmentConfig": {
 										"height": "py-3"
 									},
-									"fragmentFields": [
-									],
+									"fragmentFields": [],
 									"fragmentStyle": {
 										"paddingBottom": "7"
 									},
@@ -337,13 +327,11 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
+											"rowViewportDefinition": {}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {
-											}
+											"rowViewportDefinition": {}
 										}
 									],
 									"verticalAlignment": "top"
@@ -359,13 +347,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -383,13 +369,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -432,13 +416,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -460,8 +442,7 @@
 							"fragmentConfig": {
 								"height": "py-3"
 							},
-							"fragmentFields": [
-							],
+							"fragmentFields": [],
 							"indexed": true
 						},
 						"type": "Fragment"
@@ -503,13 +484,11 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
+											"rowViewportDefinition": {}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {
-											}
+											"rowViewportDefinition": {}
 										}
 									],
 									"verticalAlignment": "top"
@@ -525,13 +504,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -560,8 +537,7 @@
 														"hidden": true
 													},
 													"widgetInstance": {
-														"widgetConfig": {
-														},
+														"widgetConfig": {},
 														"widgetName": "com_liferay_portal_search_web_internal_sort_portlet_SortPortlet"
 													}
 												},
@@ -569,9 +545,33 @@
 											},
 											{
 												"definition": {
+												  "widgetInstance": {
+													"widgetConfig": {
+													  "federatedSearchKey": "",
+													  "occur": "must",
+													  "invisible": "true",
+													  "parameterName": "",
+													  "displayStyleGroupId": "[$GROUP_ID$]",
+													  "filterField": "assetCategoryIds",
+													  "displayStyle": "default",
+													  "immutable": "true",
+													  "filterQueryType": "match",
+													  "filterValue": "[$TAXONOMY_CATEGORY_ID:Solution$]",
+													  "parentQueryName": "",
+													  "queryName": "",
+													  "disabled": "false",
+													  "customHeading": "",
+													  "boost": ""
+													},
+													"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
+												  }
+												},
+												"type": "Widget"
+											  },
+											{
+												"definition": {
 													"widgetInstance": {
-														"widgetConfig": {
-														},
+														"widgetConfig": {},
 														"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
 													}
 												},
@@ -638,13 +638,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -653,6 +651,7 @@
 										"pageElements": [
 											{
 												"definition": {
+													"fragmentStyle": { "hidden": true },
 													"widgetInstance": {
 														"widgetConfig": {
 															"cpContentListRendererKey": "list-default",
@@ -674,6 +673,28 @@
 															"virtual--cpTypeListEntryRendererKey": "list-entry-default"
 														},
 														"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"viewInContext": "true",
+															"fieldsToDisplay": "",
+															"federatedSearchKey": "",
+															"displayStyle": "ddmTemplate_SOLUTIONS-SEARCH-RESULTS",
+															"displayInDocumentForm": "false",
+															"paginationDelta": "20",
+															"showEmptyResultMessage": "true",
+															"paginationStartParameterName": "start",
+															"showPagination": "true",
+															"paginationDeltaParameterName": "delta",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"highlightEnabled": "true"
+														},
+														"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
 													}
 												},
 												"type": "Widget"

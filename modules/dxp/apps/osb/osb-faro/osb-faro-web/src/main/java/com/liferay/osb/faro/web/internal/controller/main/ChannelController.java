@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -304,8 +305,20 @@ public class ChannelController extends BaseFaroController {
 			groupId, query, startAndEnd[0], startAndEnd[1],
 			new FaroChannelComparator(orderByFields));
 
+		List<FaroChannelDisplay> faroChannelDisplays = new ArrayList<>();
+
+		for (FaroChannel faroChannel : faroChannels) {
+			faroChannelDisplays.add(
+				new FaroChannelDisplay(
+					contactsEngineClient.getChannel(
+						faroProjectLocalService.getFaroProjectByGroupId(
+							groupId),
+						faroChannel.getChannelId()),
+					faroChannel));
+		}
+
 		return new FaroResultsDisplay<>(
-			TransformUtil.transform(faroChannels, FaroChannelDisplay::new),
+			faroChannelDisplays,
 			_faroChannelLocalService.searchCount(groupId, query));
 	}
 

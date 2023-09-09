@@ -7,6 +7,7 @@ package com.liferay.osb.faro.web.internal.controller.main;
 
 import com.liferay.osb.faro.constants.FaroChannelConstants;
 import com.liferay.osb.faro.engine.client.model.Channel;
+import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.exception.NoSuchFaroUserException;
 import com.liferay.osb.faro.model.FaroChannel;
@@ -40,7 +41,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.security.RolesAllowed;
 
@@ -305,16 +308,25 @@ public class ChannelController extends BaseFaroController {
 			groupId, query, startAndEnd[0], startAndEnd[1],
 			new FaroChannelComparator(orderByFields));
 
+		Results<Channel> channelsResult = contactsEngineClient.getChannels(
+			faroProjectLocalService.getFaroProjectByGroupId(groupId),
+			ListUtil.toList(faroChannels, FaroChannel::getChannelId), cur,
+			delta, null);
+
+		List<Channel> channels = channelsResult.getItems();
+
+		Map<String, Channel> channelsById = new HashMap<>();
+
+		for (Channel channel : channels) {
+			channelsById.put(channel.getId(), channel);
+		}
+
 		List<FaroChannelDisplay> faroChannelDisplays = new ArrayList<>();
 
 		for (FaroChannel faroChannel : faroChannels) {
 			faroChannelDisplays.add(
 				new FaroChannelDisplay(
-					contactsEngineClient.getChannel(
-						faroProjectLocalService.getFaroProjectByGroupId(
-							groupId),
-						faroChannel.getChannelId()),
-					faroChannel));
+					channelsById.get(faroChannel.getChannelId()), faroChannel));
 		}
 
 		return new FaroResultsDisplay<>(

@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -60,6 +61,7 @@ public class CommerceDiscountRelLocalServiceImpl
 	@Override
 	public CommerceDiscountRel addCommerceDiscountRel(
 			long commerceDiscountId, String className, long classPK,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -78,6 +80,8 @@ public class CommerceDiscountRelLocalServiceImpl
 		commerceDiscountRel.setCommerceDiscountId(commerceDiscountId);
 		commerceDiscountRel.setClassName(className);
 		commerceDiscountRel.setClassPK(classPK);
+		commerceDiscountRel.setTypeSettingsUnicodeProperties(
+			typeSettingsUnicodeProperties);
 
 		commerceDiscountRel = commerceDiscountRelPersistence.update(
 			commerceDiscountRel);

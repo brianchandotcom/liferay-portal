@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class CommerceDiscountRelServiceImpl
 	@Override
 	public CommerceDiscountRel addCommerceDiscountRel(
 			long commerceDiscountId, String className, long classPK,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -44,7 +46,8 @@ public class CommerceDiscountRelServiceImpl
 			getPermissionChecker(), commerceDiscountId, ActionKeys.UPDATE);
 
 		return commerceDiscountRelLocalService.addCommerceDiscountRel(
-			commerceDiscountId, className, classPK, serviceContext);
+			commerceDiscountId, className, classPK,
+			typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Override

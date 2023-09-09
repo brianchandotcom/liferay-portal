@@ -57,7 +57,7 @@ public class DiscountProductUtil {
 		return commerceDiscountRelService.addCommerceDiscountRel(
 			commerceDiscount.getCommerceDiscountId(),
 			CPDefinition.class.getName(), cProduct.getPublishedCPDefinitionId(),
-			serviceContext);
+			null, serviceContext);
 	}
 
 }

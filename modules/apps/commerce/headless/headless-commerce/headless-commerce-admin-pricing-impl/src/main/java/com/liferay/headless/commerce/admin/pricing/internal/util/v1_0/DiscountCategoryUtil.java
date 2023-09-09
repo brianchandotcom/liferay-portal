@@ -52,7 +52,7 @@ public class DiscountCategoryUtil {
 
 		return commerceDiscountRelService.addCommerceDiscountRel(
 			commerceDiscount.getCommerceDiscountId(),
-			AssetCategory.class.getName(), assetCategory.getCategoryId(),
+			AssetCategory.class.getName(), assetCategory.getCategoryId(), null,
 			serviceContext);
 	}
 

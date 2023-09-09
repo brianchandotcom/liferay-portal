@@ -61,7 +61,8 @@ public class DiscountProductGroupUtil {
 		return commerceDiscountRelService.addCommerceDiscountRel(
 			commerceDiscount.getCommerceDiscountId(),
 			CommercePricingClass.class.getName(),
-			commercePricingClass.getCommercePricingClassId(), serviceContext);
+			commercePricingClass.getCommercePricingClassId(), null,
+			serviceContext);
 	}
 
 }

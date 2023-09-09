@@ -107,7 +107,8 @@ public class CommerceDiscountsImporter {
 						_commerceDiscountRelLocalService.addCommerceDiscountRel(
 							commerceDiscount.getCommerceDiscountId(),
 							AssetCategory.class.getName(),
-							assetCategory.getPrimaryKey(), serviceContext);
+							assetCategory.getPrimaryKey(), null,
+							serviceContext);
 					}
 				}
 			}

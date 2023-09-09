@@ -157,7 +157,7 @@ public class CommerceDiscountTestUtil {
 		for (long id : targetIds) {
 			CommerceDiscountRelLocalServiceUtil.addCommerceDiscountRel(
 				commerceDiscount.getCommerceDiscountId(),
-				AssetCategory.class.getName(), id, serviceContext);
+				AssetCategory.class.getName(), id, null, serviceContext);
 		}
 	}
 
@@ -171,7 +171,7 @@ public class CommerceDiscountTestUtil {
 		for (long id : targetIds) {
 			CommerceDiscountRelLocalServiceUtil.addCommerceDiscountRel(
 				commerceDiscount.getCommerceDiscountId(),
-				CPDefinition.class.getName(), id, serviceContext);
+				CPDefinition.class.getName(), id, null, serviceContext);
 		}
 	}
 

@@ -5,11 +5,12 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import {addParams, fetch} from 'frontend-js-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {SCOPE_TYPES} from '../../utils/constants.es';
 import {sub} from '../../utils/language.es';
@@ -27,16 +28,16 @@ import ScopeSelectModal from './ScopeSelectModal.es';
  */
 
 const ScopeSelect = ({
-	disabled,
+	disabled = false,
+	error,
 	fetchItemsUrl,
-	fetchItemByIdUrl,
-	hidden,
-	initialSelected,
+	selected,
 	locator = {
 		id: 'externalReferenceCode',
 		label: 'descriptiveName',
 	},
 	onSelect,
+	onBlur,
 	title,
 	touched = false,
 	type = SCOPE_TYPES.SITE,
@@ -45,7 +46,6 @@ const ScopeSelect = ({
 	const [displayName, setDisplayName] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [resourceItems, setResourceItems] = useState([]);
-	const [selected, setSelected] = useState(initialSelected || '');
 
 	const alignElementRef = useRef(null);
 	const menuElementRef = useRef(null);
@@ -97,59 +97,15 @@ const ScopeSelect = ({
 
 	const _handleSelect = (value, displayName) => {
 		setDisplayName(displayName);
-		setSelected(typeof value === 'string' ? value : value.toString());
+		onSelect(typeof value === 'string' ? value : value.toString());
 
 		setActiveDropdown(false);
 	};
 
-	useEffect(() => {
-		if (!hidden) {
-			onSelect({
-				value: selected,
-			});
-		}
-	}, [hidden, selected, onSelect]);
-
-	useEffect(() => {
-
-		// Fetch the display name of initially selected, if available.
-
-		if (initialSelected) {
-			fetch(
-				`${
-					window.location.origin
-				}${Liferay.ThemeDisplay.getPathContext()}
-				${fetchItemByIdUrl}${initialSelected}`,
-				{
-					credentials: 'include',
-					headers: new Headers({
-						'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-						'x-csrf-token': Liferay.authToken,
-					}),
-					method: 'GET',
-				}
-			)
-				.then((response) => {
-					if (response.ok) {
-						return response.json();
-					}
-
-					throw new Error();
-				})
-				.then((item) => {
-					setDisplayName(item[locator.label] || initialSelected);
-				})
-				.catch(() => {
-					setDisplayName(initialSelected);
-				});
-		}
-	}, []); //eslint-disable-line
-
 	return (
 		<div
 			className={getCN('c-mb-3 form-group', {
-				['has-error']: touched && !selected,
-				hide: hidden,
+				['has-error']: error && touched,
 			})}
 		>
 			<label className={getCN({disabled})} htmlFor={type}>
@@ -167,9 +123,9 @@ const ScopeSelect = ({
 				className={getCN('form-control form-control-select', {
 					'text-muted': disabled,
 				})}
-				disabled={disabled || hidden}
+				disabled={disabled}
 				id={type}
-				onBlur={() => onSelect({touched: true})}
+				onBlur={onBlur}
 				onClick={_handleActiveDropdownChange}
 				ref={alignElementRef}
 				style={disabled ? {backgroundImage: 'unset'} : {}}
@@ -262,6 +218,12 @@ const ScopeSelect = ({
 					)}
 				</ClayDropDown.ItemList>
 			</ClayDropDown.Menu>
+
+			{error && touched && (
+				<ClayForm.FeedbackGroup>
+					<ClayForm.FeedbackItem>{error}</ClayForm.FeedbackItem>
+				</ClayForm.FeedbackGroup>
+			)}
 		</div>
 	);
 };

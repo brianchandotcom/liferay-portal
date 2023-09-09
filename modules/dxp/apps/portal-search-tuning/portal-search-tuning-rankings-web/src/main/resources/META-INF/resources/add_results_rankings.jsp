@@ -11,12 +11,14 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.search.tuning.rankings.web.internal.exception.DuplicateQueryStringException" %>
 
@@ -31,6 +33,10 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String resultActionCmd = ParamUtil.getString(request, "resultActionCmd");
 String resultActionUid = ParamUtil.getString(request, "resultActionUid");
+
+String namespace = liferayPortletResponse.getNamespace();
+
+String formName = namespace + "addResultRankingsFm";
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -51,24 +57,29 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 
 <liferay-frontend:edit-form
 	action="<%= addResultsRankingEntryURL %>"
+	name="<%= formName %>"
 >
-	<liferay-frontend:edit-form-body>
-		<div class="sheet-text">
-			<liferay-ui:message key="customize-how-users-see-results-for-a-given-search-query" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+	<aui:input name="resultActionCmd" type="hidden" value="<%= resultActionCmd %>" />
+	<aui:input name="resultActionUid" type="hidden" value="<%= resultActionUid %>" />
+
+	<div>
+		<div class="loading-animation-container">
+			<span aria-hidden="true" class="loading-animation"></span>
 		</div>
 
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-		<aui:input name="resultActionCmd" type="hidden" value="<%= resultActionCmd %>" />
-		<aui:input name="resultActionUid" type="hidden" value="<%= resultActionUid %>" />
-
-		<aui:input label="search-query" name="keywords" required="<%= true %>" showRequiredLabel="<%= true %>" />
-	</liferay-frontend:edit-form-body>
-
-	<liferay-frontend:edit-form-footer>
-		<liferay-frontend:edit-form-buttons
-			redirect="<%= redirect %>"
-			submitLabel="customize-results"
+		<react:component
+			module="js/components/ResultRankingsAdd.es"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"cancelUrl", redirect
+				).put(
+					"formName", formName
+				).put(
+					"namespace", namespace
+				).build()
+			%>'
 		/>
-	</liferay-frontend:edit-form-footer>
+	</div>
 </liferay-frontend:edit-form>

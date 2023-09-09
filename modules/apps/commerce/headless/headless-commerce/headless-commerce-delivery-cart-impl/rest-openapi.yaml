@@ -306,7 +306,6 @@ components:
                     type: string
                 unitOfMeasureKey:
                     example: m
-                    readOnly: true
                     type: string
                 valid:
                     readOnly: true

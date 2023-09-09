@@ -760,6 +760,12 @@ components:
                     type: boolean
                 price:
                     $ref: "#/components/schemas/Price"
+                productId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
                 published:
                     example: true
                     type: boolean
@@ -2310,7 +2316,9 @@ paths:
                   schema:
                       description:
                           Quantity
-                      type: integer
+                      example: 10.1
+                      format: bigdecimal
+                      type: number
             requestBody:
                 content:
                     application/json:
@@ -2415,7 +2423,16 @@ paths:
                   schema:
                       description:
                           Quantity
-                      type: integer
+                      example: 10.1
+                      format: bigdecimal
+                      type: number
+                - in: query
+                  name: unitOfMeasureKey
+                  required: false
+                  schema:
+                      description:
+                          Unit Of Measure Key
+                      type: string
             requestBody:
                 content:
                     application/json:
@@ -2443,6 +2460,98 @@ paths:
                 400:
                     description:
                         Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["Sku"]
+    "/channels/{channelId}/products/{productId}/skus/{skuId}":
+        get:
+            description:
+                Retrieves a product from selected channel.
+            operationId: getChannelProductSku
+            parameters:
+                - in: path
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: path
+                  explode: false
+                  name: productId
+                  required: true
+                  schema:
+                      description:
+                          Product Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: path
+                  explode: false
+                  name: skuId
+                  required: true
+                  schema:
+                      description:
+                          Sku Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+                  style: simple
+                - in: query
+                  name: accountId
+                  required: false
+                  schema:
+                      description:
+                          Account Id
+                      example: 30130
+                      format: int64
+                      minimum: 0
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Sku"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Sku"
                 401:
                     content:
                         application/json:

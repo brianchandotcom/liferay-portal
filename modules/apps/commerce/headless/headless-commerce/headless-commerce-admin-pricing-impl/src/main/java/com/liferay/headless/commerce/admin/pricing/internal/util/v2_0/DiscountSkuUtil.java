@@ -10,9 +10,13 @@ import com.liferay.commerce.discount.model.CommerceDiscountRel;
 import com.liferay.commerce.discount.service.CommerceDiscountRelService;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountSku;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 /**
  * @author Alessio Antonio Rendina
@@ -20,18 +24,36 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DiscountSkuUtil {
 
 	public static CommerceDiscountRel addCommerceDiscountRel(
-			CPInstanceLocalService cpInstanceLocalService,
+			CommerceDiscount commerceDiscount,
 			CommerceDiscountRelService commerceDiscountRelService,
-			DiscountSku discountSku, CommerceDiscount commerceDiscount,
-			ServiceContextHelper serviceContextHelper)
+			CPInstanceLocalService cpInstanceLocalService,
+			CPInstanceUnitOfMeasureLocalService
+				cpInstanceUnitOfMeasureLocalService,
+			DiscountSku discountSku, ServiceContextHelper serviceContextHelper)
 		throws PortalException {
 
 		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
 			discountSku.getSkuId());
 
+		UnicodeProperties typeSettingsUnicodeProperties = null;
+		String unitOfMeasureKey = discountSku.getUnitOfMeasureKey();
+
+		if (unitOfMeasureKey != null) {
+			cpInstanceUnitOfMeasureLocalService.getCPInstanceUnitOfMeasure(
+				cpInstance.getCPInstanceId(), unitOfMeasureKey);
+
+			typeSettingsUnicodeProperties = UnicodePropertiesBuilder.create(
+				HashMapBuilder.put(
+					"unitOfMeasureKey", unitOfMeasureKey
+				).build(),
+				true
+			).build();
+		}
+
 		return commerceDiscountRelService.addCommerceDiscountRel(
 			commerceDiscount.getCommerceDiscountId(),
 			CPInstance.class.getName(), cpInstance.getCPInstanceId(),
+			typeSettingsUnicodeProperties,
 			serviceContextHelper.getServiceContext());
 	}
 

@@ -86,7 +86,8 @@ create table CommerceDiscountRel (
 	modifiedDate DATE null,
 	commerceDiscountId LONG,
 	classNameId LONG,
-	classPK LONG
+	classPK LONG,
+	typeSettings TEXT null
 );
 
 create table CommerceDiscountRule (

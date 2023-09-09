@@ -133,6 +133,8 @@ public class CommerceDiscountRelPersistenceTest {
 
 		newCommerceDiscountRel.setClassPK(RandomTestUtil.nextLong());
 
+		newCommerceDiscountRel.setTypeSettings(RandomTestUtil.randomString());
+
 		_commerceDiscountRels.add(_persistence.update(newCommerceDiscountRel));
 
 		CommerceDiscountRel existingCommerceDiscountRel =
@@ -170,6 +172,9 @@ public class CommerceDiscountRelPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceDiscountRel.getClassPK(),
 			newCommerceDiscountRel.getClassPK());
+		Assert.assertEquals(
+			existingCommerceDiscountRel.getTypeSettings(),
+			newCommerceDiscountRel.getTypeSettings());
 	}
 
 	@Test
@@ -475,6 +480,8 @@ public class CommerceDiscountRelPersistenceTest {
 		commerceDiscountRel.setClassNameId(RandomTestUtil.nextLong());
 
 		commerceDiscountRel.setClassPK(RandomTestUtil.nextLong());
+
+		commerceDiscountRel.setTypeSettings(RandomTestUtil.randomString());
 
 		_commerceDiscountRels.add(_persistence.update(commerceDiscountRel));
 

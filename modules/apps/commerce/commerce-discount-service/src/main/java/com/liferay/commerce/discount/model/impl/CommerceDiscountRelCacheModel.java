@@ -69,7 +69,7 @@ public class CommerceDiscountRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -91,6 +91,8 @@ public class CommerceDiscountRelCacheModel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
+		sb.append(", typeSettings=");
+		sb.append(typeSettings);
 		sb.append("}");
 
 		return sb.toString();
@@ -131,13 +133,22 @@ public class CommerceDiscountRelCacheModel
 		commerceDiscountRelImpl.setClassNameId(classNameId);
 		commerceDiscountRelImpl.setClassPK(classPK);
 
+		if (typeSettings == null) {
+			commerceDiscountRelImpl.setTypeSettings("");
+		}
+		else {
+			commerceDiscountRelImpl.setTypeSettings(typeSettings);
+		}
+
 		commerceDiscountRelImpl.resetOriginalValues();
 
 		return commerceDiscountRelImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		commerceDiscountRelId = objectInput.readLong();
@@ -154,6 +165,7 @@ public class CommerceDiscountRelCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
+		typeSettings = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -181,6 +193,13 @@ public class CommerceDiscountRelCacheModel
 		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
+
+		if (typeSettings == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(typeSettings);
+		}
 	}
 
 	public long mvccVersion;
@@ -193,5 +212,6 @@ public class CommerceDiscountRelCacheModel
 	public long commerceDiscountId;
 	public long classNameId;
 	public long classPK;
+	public String typeSettings;
 
 }

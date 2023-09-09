@@ -70,7 +70,8 @@ public class CommerceDiscountRelModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"commerceDiscountId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT}
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"typeSettings", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -87,10 +88,11 @@ public class CommerceDiscountRelModelImpl
 		TABLE_COLUMNS_MAP.put("commerceDiscountId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceDiscountRel (mvccVersion LONG default 0 not null,commerceDiscountRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceDiscountId LONG,classNameId LONG,classPK LONG)";
+		"create table CommerceDiscountRel (mvccVersion LONG default 0 not null,commerceDiscountRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceDiscountId LONG,classNameId LONG,classPK LONG,typeSettings TEXT null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CommerceDiscountRel";
@@ -264,6 +266,8 @@ public class CommerceDiscountRelModelImpl
 				"classNameId", CommerceDiscountRel::getClassNameId);
 			attributeGetterFunctions.put(
 				"classPK", CommerceDiscountRel::getClassPK);
+			attributeGetterFunctions.put(
+				"typeSettings", CommerceDiscountRel::getTypeSettings);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -323,6 +327,10 @@ public class CommerceDiscountRelModelImpl
 				"classPK",
 				(BiConsumer<CommerceDiscountRel, Long>)
 					CommerceDiscountRel::setClassPK);
+			attributeSetterBiConsumers.put(
+				"typeSettings",
+				(BiConsumer<CommerceDiscountRel, String>)
+					CommerceDiscountRel::setTypeSettings);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -556,6 +564,26 @@ public class CommerceDiscountRelModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
+	@JSON
+	@Override
+	public String getTypeSettings() {
+		if (_typeSettings == null) {
+			return "";
+		}
+		else {
+			return _typeSettings;
+		}
+	}
+
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_typeSettings = typeSettings;
+	}
+
 	public long getColumnBitmask() {
 		if (_columnBitmask > 0) {
 			return _columnBitmask;
@@ -625,6 +653,7 @@ public class CommerceDiscountRelModelImpl
 		commerceDiscountRelImpl.setCommerceDiscountId(getCommerceDiscountId());
 		commerceDiscountRelImpl.setClassNameId(getClassNameId());
 		commerceDiscountRelImpl.setClassPK(getClassPK());
+		commerceDiscountRelImpl.setTypeSettings(getTypeSettings());
 
 		commerceDiscountRelImpl.resetOriginalValues();
 
@@ -656,6 +685,8 @@ public class CommerceDiscountRelModelImpl
 			this.<Long>getColumnOriginalValue("classNameId"));
 		commerceDiscountRelImpl.setClassPK(
 			this.<Long>getColumnOriginalValue("classPK"));
+		commerceDiscountRelImpl.setTypeSettings(
+			this.<String>getColumnOriginalValue("typeSettings"));
 
 		return commerceDiscountRelImpl;
 	}
@@ -777,6 +808,14 @@ public class CommerceDiscountRelModelImpl
 
 		commerceDiscountRelCacheModel.classPK = getClassPK();
 
+		commerceDiscountRelCacheModel.typeSettings = getTypeSettings();
+
+		String typeSettings = commerceDiscountRelCacheModel.typeSettings;
+
+		if ((typeSettings != null) && (typeSettings.length() == 0)) {
+			commerceDiscountRelCacheModel.typeSettings = null;
+		}
+
 		return commerceDiscountRelCacheModel;
 	}
 
@@ -850,6 +889,7 @@ public class CommerceDiscountRelModelImpl
 	private long _commerceDiscountId;
 	private long _classNameId;
 	private long _classPK;
+	private String _typeSettings;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<CommerceDiscountRel, Object> function =
@@ -890,6 +930,7 @@ public class CommerceDiscountRelModelImpl
 		_columnOriginalValues.put("commerceDiscountId", _commerceDiscountId);
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
+		_columnOriginalValues.put("typeSettings", _typeSettings);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -922,6 +963,8 @@ public class CommerceDiscountRelModelImpl
 		columnBitmasks.put("classNameId", 256L);
 
 		columnBitmasks.put("classPK", 512L);
+
+		columnBitmasks.put("typeSettings", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

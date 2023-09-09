@@ -8,6 +8,7 @@ package com.liferay.commerce.discount.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -55,6 +56,9 @@ public class CommerceDiscountRelTable
 			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CommerceDiscountRelTable, Long> classPK = createColumn(
 		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CommerceDiscountRelTable, Clob> typeSettings =
+		createColumn(
+			"typeSettings", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private CommerceDiscountRelTable() {
 		super("CommerceDiscountRel", CommerceDiscountRelTable::new);

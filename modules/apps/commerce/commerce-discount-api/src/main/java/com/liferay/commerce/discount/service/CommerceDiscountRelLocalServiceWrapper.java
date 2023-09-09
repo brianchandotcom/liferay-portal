@@ -53,11 +53,14 @@ public class CommerceDiscountRelLocalServiceWrapper
 	public com.liferay.commerce.discount.model.CommerceDiscountRel
 			addCommerceDiscountRel(
 				long commerceDiscountId, String className, long classPK,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					typeSettingsUnicodeProperties,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceDiscountRelLocalService.addCommerceDiscountRel(
-			commerceDiscountId, className, classPK, serviceContext);
+			commerceDiscountId, className, classPK,
+			typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	/**

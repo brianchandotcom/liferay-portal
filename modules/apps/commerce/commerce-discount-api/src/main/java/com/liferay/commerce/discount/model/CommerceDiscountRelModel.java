@@ -235,6 +235,21 @@ public interface CommerceDiscountRelModel
 	@Override
 	public void setClassPK(long classPK);
 
+	/**
+	 * Returns the type settings of this commerce discount rel.
+	 *
+	 * @return the type settings of this commerce discount rel
+	 */
+	@AutoEscape
+	public String getTypeSettings();
+
+	/**
+	 * Sets the type settings of this commerce discount rel.
+	 *
+	 * @param typeSettings the type settings of this commerce discount rel
+	 */
+	public void setTypeSettings(String typeSettings);
+
 	@Override
 	public CommerceDiscountRel cloneWithOriginalValues();
 

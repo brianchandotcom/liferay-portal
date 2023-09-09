@@ -45,6 +45,8 @@ public class CommerceDiscountRelServiceHttp {
 			addCommerceDiscountRel(
 				HttpPrincipal httpPrincipal, long commerceDiscountId,
 				String className, long classPK,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					typeSettingsUnicodeProperties,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -55,7 +57,7 @@ public class CommerceDiscountRelServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceDiscountId, className, classPK,
-				serviceContext);
+				typeSettingsUnicodeProperties, serviceContext);
 
 			Object returnObj = null;
 
@@ -740,6 +742,7 @@ public class CommerceDiscountRelServiceHttp {
 	private static final Class<?>[] _addCommerceDiscountRelParameterTypes0 =
 		new Class[] {
 			long.class, String.class, long.class,
+			com.liferay.portal.kernel.util.UnicodeProperties.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceDiscountRelParameterTypes1 =

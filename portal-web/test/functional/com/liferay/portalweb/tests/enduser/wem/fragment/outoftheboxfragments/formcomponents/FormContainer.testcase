@@ -173,7 +173,7 @@ definition {
 	@description = "This is a test for LPS-190586. Even with the option to be redirected to a DPT, if there are validation errors on the object entry the page creator will remain on the same page and get a validation error message."
 	@priority = 4
 	test CannotRedirectToAssociatedDisplayPageTemplateWhenValidationFailed {
-		property custom.properties = "feature.flag.LPS-183727=true";
+		property custom.properties = "feature.flag.LPS-195205=true";
 
 		task ("Given a page creator has a Form Container with redirection option to a DPT") {
 			ObjectAdmin.addObjectFieldViaAPI(

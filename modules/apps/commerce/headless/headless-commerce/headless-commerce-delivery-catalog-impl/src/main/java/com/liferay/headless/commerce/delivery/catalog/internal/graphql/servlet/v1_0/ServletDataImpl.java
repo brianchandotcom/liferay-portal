@@ -248,6 +248,10 @@ public class ServletDataImpl implements ServletData {
 							SkuResourceImpl.class,
 							"getChannelProductSkusPage"));
 					put(
+						"query#channelProductSku",
+						new ObjectValuePair<>(
+							SkuResourceImpl.class, "getChannelProductSku"));
+					put(
 						"query#channelWishLists",
 						new ObjectValuePair<>(
 							WishListResourceImpl.class,

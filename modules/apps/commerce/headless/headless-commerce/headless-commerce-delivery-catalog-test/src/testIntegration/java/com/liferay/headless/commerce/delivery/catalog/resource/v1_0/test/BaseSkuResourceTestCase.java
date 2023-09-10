@@ -357,6 +357,106 @@ public abstract class BaseSkuResourceTestCase {
 			"This method needs to be implemented");
 	}
 
+	@Test
+	public void testGetChannelProductSku() throws Exception {
+		Sku postSku = testGetChannelProductSku_addSku();
+
+		Sku getSku = skuResource.getChannelProductSku(
+			testGetChannelProductSku_getChannelId(),
+			testGetChannelProductSku_getProductId(postSku), postSku.getId(),
+			null);
+
+		assertEquals(postSku, getSku);
+		assertValid(getSku);
+	}
+
+	protected Long testGetChannelProductSku_getChannelId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGetChannelProductSku_getProductId(Sku sku)
+		throws Exception {
+
+		return sku.getProductId();
+	}
+
+	protected Sku testGetChannelProductSku_addSku() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetChannelProductSku() throws Exception {
+		Sku sku = testGraphQLGetChannelProductSku_addSku();
+
+		Assert.assertTrue(
+			equals(
+				sku,
+				SkuSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"channelProductSku",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"channelId",
+											testGraphQLGetChannelProductSku_getChannelId());
+
+										put(
+											"productId",
+											testGraphQLGetChannelProductSku_getProductId(
+												sku));
+
+										put("skuId", sku.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/channelProductSku"))));
+	}
+
+	protected Long testGraphQLGetChannelProductSku_getChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testGraphQLGetChannelProductSku_getProductId(Sku sku)
+		throws Exception {
+
+		return sku.getProductId();
+	}
+
+	@Test
+	public void testGraphQLGetChannelProductSkuNotFound() throws Exception {
+		Long irrelevantChannelId = RandomTestUtil.randomLong();
+		Long irrelevantProductId = RandomTestUtil.randomLong();
+		Long irrelevantSkuId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"channelProductSku",
+						new HashMap<String, Object>() {
+							{
+								put("channelId", irrelevantChannelId);
+								put("productId", irrelevantProductId);
+								put("skuId", irrelevantSkuId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected Sku testGraphQLGetChannelProductSku_addSku() throws Exception {
+		return testGraphQLSku_addSku();
+	}
+
 	protected Sku testGraphQLSku_addSku() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
@@ -573,6 +673,14 @@ public abstract class BaseSkuResourceTestCase {
 
 			if (Objects.equals("price", additionalAssertFieldName)) {
 				if (sku.getPrice() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("productId", additionalAssertFieldName)) {
+				if (sku.getProductId() == null) {
 					valid = false;
 				}
 
@@ -970,6 +1078,16 @@ public abstract class BaseSkuResourceTestCase {
 
 			if (Objects.equals("price", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(sku1.getPrice(), sku2.getPrice())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("productId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sku1.getProductId(), sku2.getProductId())) {
+
 					return false;
 				}
 
@@ -1479,6 +1597,11 @@ public abstract class BaseSkuResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("productId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("published")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1672,6 +1795,7 @@ public abstract class BaseSkuResourceTestCase {
 				manufacturerPartNumber = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				neverExpire = RandomTestUtil.randomBoolean();
+				productId = RandomTestUtil.randomLong();
 				published = RandomTestUtil.randomBoolean();
 				purchasable = RandomTestUtil.randomBoolean();
 				replacementSkuExternalReferenceCode = StringUtil.toLowerCase(

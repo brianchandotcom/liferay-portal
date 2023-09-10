@@ -103,7 +103,7 @@ public class Mutation {
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
 			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("quantity") Integer quantity,
+			@GraphQLName("quantity") java.math.BigDecimal quantity,
 			@GraphQLName("ddmOptions") DDMOption[] ddmOptions)
 		throws Exception {
 
@@ -120,14 +120,16 @@ public class Mutation {
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
 			@GraphQLName("accountId") Long accountId,
-			@GraphQLName("quantity") Integer quantity,
+			@GraphQLName("quantity") java.math.BigDecimal quantity,
+			@GraphQLName("unitOfMeasureKey") String unitOfMeasureKey,
 			@GraphQLName("skuOptions") SkuOption[] skuOptions)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_skuResourceComponentServiceObjects, this::_populateResourceContext,
 			skuResource -> skuResource.postChannelProductSkuBySkuOption(
-				channelId, productId, accountId, quantity, skuOptions));
+				channelId, productId, accountId, quantity, unitOfMeasureKey,
+				skuOptions));
 	}
 
 	@GraphQLField

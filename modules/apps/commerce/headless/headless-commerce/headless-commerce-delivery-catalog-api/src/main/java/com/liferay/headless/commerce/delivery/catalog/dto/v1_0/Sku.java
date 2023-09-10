@@ -593,6 +593,35 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Price price;
 
+	@DecimalMin("0")
+	@Schema(example = "30130")
+	public Long getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Long productId) {
+		this.productId = productId;
+	}
+
+	@JsonIgnore
+	public void setProductId(
+		UnsafeSupplier<Long, Exception> productIdUnsafeSupplier) {
+
+		try {
+			productId = productIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long productId;
+
 	@Schema(example = "true")
 	public Boolean getPublished() {
 		return published;
@@ -1150,6 +1179,16 @@ public class Sku implements Serializable {
 			sb.append("\"price\": ");
 
 			sb.append(String.valueOf(price));
+		}
+
+		if (productId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"productId\": ");
+
+			sb.append(productId);
 		}
 
 		if (published != null) {

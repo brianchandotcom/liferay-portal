@@ -55,13 +55,18 @@ public interface SkuResource {
 		throws Exception;
 
 	public Sku postChannelProductSku(
-			Long channelId, Long productId, Long accountId, Integer quantity,
-			DDMOption[] ddmOptions)
+			Long channelId, Long productId, Long accountId,
+			java.math.BigDecimal quantity, DDMOption[] ddmOptions)
 		throws Exception;
 
 	public Sku postChannelProductSkuBySkuOption(
-			Long channelId, Long productId, Long accountId, Integer quantity,
+			Long channelId, Long productId, Long accountId,
+			java.math.BigDecimal quantity, String unitOfMeasureKey,
 			SkuOption[] skuOptions)
+		throws Exception;
+
+	public Sku getChannelProductSku(
+			Long channelId, Long productId, Long skuId, Long accountId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

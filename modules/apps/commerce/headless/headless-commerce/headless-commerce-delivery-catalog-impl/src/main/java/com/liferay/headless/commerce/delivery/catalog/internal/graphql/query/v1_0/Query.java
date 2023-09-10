@@ -510,6 +510,25 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductSku(accountId: ___, channelId: ___, productId: ___, skuId: ___){DDMOptions, allowedOrderQuantities, availability, backOrderAllowed, depth, discontinued, discontinuedDate, displayDate, displayDiscountLevels, expirationDate, gtin, height, id, incomingQuantityLabel, manufacturerPartNumber, maxOrderQuantity, minOrderQuantity, neverExpire, price, productId, published, purchasable, replacementSku, replacementSkuExternalReferenceCode, replacementSkuId, sku, skuOptions, skuUnitOfMeasures, weight, width}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves a product from selected channel.")
+	public Sku channelProductSku(
+			@GraphQLName("channelId") Long channelId,
+			@GraphQLName("productId") Long productId,
+			@GraphQLName("skuId") Long skuId,
+			@GraphQLName("accountId") Long accountId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_skuResourceComponentServiceObjects, this::_populateResourceContext,
+			skuResource -> skuResource.getChannelProductSku(
+				channelId, productId, skuId, accountId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelWishLists(accountId: ___, channelId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves wishlists for a given channel.")

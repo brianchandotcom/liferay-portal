@@ -253,7 +253,11 @@ public class CommerceOrderItemLocalServiceImpl
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
 			if ((commerceOrderItem.getParentCommerceOrderItemId() == 0) &&
-				_jsonMatches(json, commerceOrderItem.getJson())) {
+				_jsonMatches(json, commerceOrderItem.getJson()) &&
+				Objects.equals(
+					GetterUtil.getString(unitOfMeasureKey),
+					GetterUtil.getString(
+						commerceOrderItem.getUnitOfMeasureKey()))) {
 
 				return commerceOrderItemLocalService.updateCommerceOrderItem(
 					userId, commerceOrderItem.getCommerceOrderItemId(),

@@ -13,12 +13,15 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.converter.SkuDTOConverterContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+
+import java.math.BigDecimal;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,8 +57,8 @@ public class CPContentSkuOptionsHelperImpl
 			new SkuDTOConverterContext(
 				commerceContext, _portal.getCompanyId(httpServletRequest),
 				defaultCPInstance.getCPDefinition(),
-				_portal.getLocale(httpServletRequest), 1,
-				defaultCPInstance.getCPInstanceId(), null,
+				_portal.getLocale(httpServletRequest), BigDecimal.ONE,
+				defaultCPInstance.getCPInstanceId(), StringPool.BLANK, null,
 				_portal.getUser(httpServletRequest)));
 
 		SkuOption[] skuOptions = sku.getSkuOptions();

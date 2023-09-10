@@ -21,6 +21,7 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.converter.SkuDTOConverterContext;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -148,8 +149,8 @@ public class RadioCommerceOptionTypeImpl implements CommerceOptionType {
 					new SkuDTOConverterContext(
 						commerceContext,
 						_portal.getCompanyId(httpServletRequest), cpDefinition,
-						_portal.getLocale(httpServletRequest),
-						minQuantity.intValue(), defaultCPInstanceId, null,
+						_portal.getLocale(httpServletRequest), minQuantity,
+						defaultCPInstanceId, StringPool.BLANK, null,
 						_portal.getUser(httpServletRequest)));
 			}
 		}

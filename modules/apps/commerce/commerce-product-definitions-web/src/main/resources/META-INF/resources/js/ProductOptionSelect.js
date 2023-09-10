@@ -234,6 +234,7 @@ const ProductOptionSelect = ({
 			productId,
 			accountId,
 			minQuantity,
+			null,
 			currentSkuOptions
 		)
 			.then((cpInstance) => {

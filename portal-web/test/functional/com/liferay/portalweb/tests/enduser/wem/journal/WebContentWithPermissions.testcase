@@ -366,7 +366,6 @@ definition {
 	@priority = 4
 	test AddWebContentWithImageBasedOnStructureFromParentSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property timeout.explicit.wait = "20";
 
 		task ("Given a web content creator has web content structure with image field on parent site") {
 			task ("Add a child site") {

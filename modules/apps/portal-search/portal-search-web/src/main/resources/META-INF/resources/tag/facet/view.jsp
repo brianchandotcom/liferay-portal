@@ -15,6 +15,7 @@ taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -58,19 +59,11 @@ TagFacetPortletInstanceConfiguration tagFacetPortletInstanceConfiguration = asse
 				displayStyleGroupId="<%= assetTagsSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
 				entries="<%= assetTagsSearchFacetDisplayContext.getBucketDisplayContexts() %>"
 			>
-				<liferay-ui:panel-container
-					extended="<%= true %>"
-					id='<%= liferayPortletResponse.getNamespace() + "facetAssetTagsPanelContainer" %>'
-					markupView="lexicon"
-					persistState="<%= true %>"
-				>
-					<liferay-ui:panel
-						collapsible="<%= true %>"
-						cssClass="search-facet"
-						id='<%= liferayPortletResponse.getNamespace() + "facetAssetTagsPanel" %>'
-						markupView="lexicon"
-						persistState="<%= true %>"
-						title="tag"
+				<clay:panel-group>
+					<clay:panel
+						collapseClassNames="search-facet"
+						displayTitle='<%= LanguageUtil.get(request, "tag") %>'
+						expanded="<%= true %>"
 					>
 						<c:if test="<%= !assetTagsSearchFacetDisplayContext.isNothingSelected() %>">
 							<clay:button
@@ -134,8 +127,8 @@ TagFacetPortletInstanceConfiguration tagFacetPortletInstanceConfiguration = asse
 							%>
 
 						</ul>
-					</liferay-ui:panel>
-				</liferay-ui:panel-container>
+					</clay:panel>
+				</clay:panel-group>
 			</liferay-ddm:template-renderer>
 		</aui:form>
 	</c:otherwise>

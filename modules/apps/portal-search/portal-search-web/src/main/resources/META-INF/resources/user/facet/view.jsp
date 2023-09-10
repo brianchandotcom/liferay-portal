@@ -15,6 +15,7 @@ taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -58,19 +59,11 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 				displayStyleGroupId="<%= userSearchFacetDisplayContext.getDisplayStyleGroupId() %>"
 				entries="<%= userSearchFacetDisplayContext.getBucketDisplayContexts() %>"
 			>
-				<liferay-ui:panel-container
-					extended="<%= true %>"
-					id='<%= liferayPortletResponse.getNamespace() + "facetUserPanelContainer" %>'
-					markupView="lexicon"
-					persistState="<%= true %>"
-				>
-					<liferay-ui:panel
-						collapsible="<%= true %>"
-						cssClass="search-facet"
-						id='<%= liferayPortletResponse.getNamespace() + "facetUserPanel" %>'
-						markupView="lexicon"
-						persistState="<%= true %>"
-						title="user"
+				<clay:panel-group>
+					<clay:panel
+						collapseClassNames="search-facet"
+						displayTitle='<%= LanguageUtil.get(request, "user") %>'
+						expanded="<%= true %>"
 					>
 						<c:if test="<%= !userSearchFacetDisplayContext.isNothingSelected() %>">
 							<clay:button
@@ -133,8 +126,8 @@ UserFacetPortletInstanceConfiguration userFacetPortletInstanceConfiguration = us
 							%>
 
 						</ul>
-					</liferay-ui:panel>
-				</liferay-ui:panel-container>
+					</clay:panel>
+				</clay:panel-group>
 			</liferay-ddm:template-renderer>
 		</aui:form>
 	</c:otherwise>

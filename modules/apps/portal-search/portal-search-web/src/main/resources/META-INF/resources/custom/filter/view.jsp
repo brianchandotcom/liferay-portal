@@ -11,8 +11,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
-taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
@@ -47,19 +46,11 @@ CustomFilterPortletInstanceConfiguration customFilterPortletInstanceConfiguratio
 			displayStyleGroupId="<%= customFilterDisplayContext.getDisplayStyleGroupId() %>"
 			entries="<%= new ArrayList<CustomFilterDisplayContext>() %>"
 		>
-			<liferay-ui:panel-container
-				extended="<%= true %>"
-				id='<%= liferayPortletResponse.getNamespace() + "filterCustomPanelContainer" %>'
-				markupView="lexicon"
-				persistState="<%= true %>"
-			>
-				<liferay-ui:panel
-					collapsible="<%= true %>"
-					cssClass="search-facet"
-					id='<%= liferayPortletResponse.getNamespace() + "filterCustomPanel" %>'
-					markupView="lexicon"
-					persistState="<%= true %>"
-					title="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getHeading()) %>"
+			<clay:panel-group>
+				<clay:panel
+					collapseClassNames="search-facet"
+					displayTitle="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getHeading()) %>"
+					expanded="<%= true %>"
 				>
 					<aui:input cssClass="custom-filter-value-input" data-qa-id="customFilterValueInput" disabled="<%= customFilterDisplayContext.isImmutable() %>" id="<%= liferayPortletResponse.getNamespace() + StringUtil.randomId() %>" label="" name="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getParameterName()) %>" useNamespace="<%= false %>" value="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getFilterValue()) %>" />
 
@@ -72,8 +63,8 @@ CustomFilterPortletInstanceConfiguration customFilterPortletInstanceConfiguratio
 						small="<%= true %>"
 						type="submit"
 					/>
-				</liferay-ui:panel>
-			</liferay-ui:panel-container>
+				</clay:panel>
+			</clay:panel-group>
 		</liferay-ddm:template-renderer>
 	</aui:form>
 

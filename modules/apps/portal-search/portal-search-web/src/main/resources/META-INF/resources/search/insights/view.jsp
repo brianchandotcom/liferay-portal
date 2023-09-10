@@ -10,10 +10,10 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
-taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 
-<%@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
+<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
@@ -53,18 +53,10 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 				module="js/utils/initialize_clipboard"
 			/>
 
-			<liferay-ui:panel-container
-				extended="<%= true %>"
-				id='<%= liferayPortletResponse.getNamespace() + "insightsPanelContainer" %>'
-				markupView="lexicon"
-				persistState="<%= true %>"
-			>
-				<liferay-ui:panel
-					collapsible="<%= true %>"
-					id='<%= liferayPortletResponse.getNamespace() + "insightsRequestPanel" %>'
-					markupView="lexicon"
-					persistState="<%= true %>"
-					title="request-string"
+			<clay:panel-group>
+				<clay:panel
+					displayTitle='<%= LanguageUtil.get(request, "request-string") %>'
+					expanded="<%= true %>"
 				>
 					<clay:button
 						cssClass="search-insights-copy-to-clipboard"
@@ -87,14 +79,11 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 						%>'
 						module="js/components/CodeMirrorTextArea"
 					/>
-				</liferay-ui:panel>
+				</clay:panel>
 
-				<liferay-ui:panel
-					collapsible="<%= true %>"
-					id='<%= liferayPortletResponse.getNamespace() + "insightsResponsePanel" %>'
-					markupView="lexicon"
-					persistState="<%= true %>"
-					title="response-string"
+				<clay:panel
+					displayTitle='<%= LanguageUtil.get(request, "response-string") %>'
+					expanded="<%= true %>"
 				>
 					<clay:button
 						cssClass="search-insights-copy-to-clipboard"
@@ -117,8 +106,8 @@ String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsRes
 						%>'
 						module="js/components/CodeMirrorTextArea"
 					/>
-				</liferay-ui:panel>
-			</liferay-ui:panel-container>
+				</clay:panel>
+			</clay:panel-group>
 		</div>
 	</c:otherwise>
 </c:choose>

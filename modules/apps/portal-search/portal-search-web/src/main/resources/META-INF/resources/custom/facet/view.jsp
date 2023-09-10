@@ -54,19 +54,11 @@ CustomFacetPortletInstanceConfiguration customFacetPortletInstanceConfiguration 
 				displayStyleGroupId="<%= customFacetDisplayContext.getDisplayStyleGroupId() %>"
 				entries="<%= customFacetDisplayContext.getBucketDisplayContexts() %>"
 			>
-				<liferay-ui:panel-container
-					extended="<%= true %>"
-					id='<%= liferayPortletResponse.getNamespace() + "facetCustomPanelContainer" %>'
-					markupView="lexicon"
-					persistState="<%= true %>"
-				>
-					<liferay-ui:panel
-						collapsible="<%= true %>"
-						cssClass="search-facet"
-						id='<%= liferayPortletResponse.getNamespace() + "facetCustomPanel" %>'
-						markupView="lexicon"
-						persistState="<%= true %>"
-						title="<%= customFacetDisplayContext.getDisplayCaption() %>"
+				<clay:panel-group>
+					<clay:panel
+						collapseClassNames="search-facet"
+						displayTitle="<%= customFacetDisplayContext.getDisplayCaption() %>"
+						expanded="<%= true %>"
 					>
 						<c:if test="<%= !customFacetDisplayContext.isNothingSelected() %>">
 							<clay:button
@@ -120,8 +112,8 @@ CustomFacetPortletInstanceConfiguration customFacetPortletInstanceConfiguration 
 							%>
 
 						</ul>
-					</liferay-ui:panel>
-				</liferay-ui:panel-container>
+					</clay:panel>
+				</clay:panel-group>
 			</liferay-ddm:template-renderer>
 		</aui:form>
 	</c:otherwise>

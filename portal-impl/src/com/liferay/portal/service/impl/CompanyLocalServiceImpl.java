@@ -267,10 +267,27 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				_addDemoSettings(company);
 			}
 
-			company = _checkCompany(
-				company, mx, defaultAdminPassword, defaultAdminScreenName,
-				defaultAdminEmailAddress, defaultAdminFirstName,
-				defaultAdminMiddleName, defaultAdminLastName, guestUser);
+			company = _checkCompany(company);
+
+			_userLocalService.addDefaultAdminUser(
+				company.getCompanyId(),
+				GetterUtil.getString(
+					defaultAdminPassword, PropsValues.DEFAULT_ADMIN_PASSWORD),
+				GetterUtil.getString(
+					defaultAdminScreenName,
+					PropsValues.DEFAULT_ADMIN_SCREEN_NAME),
+				GetterUtil.getString(
+					defaultAdminEmailAddress,
+					PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" + mx),
+				guestUser.getLocale(),
+				GetterUtil.getString(
+					defaultAdminFirstName,
+					PropsValues.DEFAULT_ADMIN_FIRST_NAME),
+				GetterUtil.getString(
+					defaultAdminMiddleName,
+					PropsValues.DEFAULT_ADMIN_MIDDLE_NAME),
+				GetterUtil.getString(
+					defaultAdminLastName, PropsValues.DEFAULT_ADMIN_LAST_NAME));
 
 			// Guest user must have the Guest role
 
@@ -311,32 +328,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 */
 	@Override
 	public Company checkCompany(String webId) throws PortalException {
-		String mx = webId;
-
-		return checkCompany(webId, mx);
-	}
-
-	/**
-	 * Returns the company with the web domain and mail domain.
-	 *
-	 * The method goes through a series of checks to ensure that the company
-	 * contains default users, groups, etc.
-	 *
-	 * @param  webId the company's web domain
-	 * @param  mx the company's mail domain
-	 * @return the company with the web domain and mail domain
-	 */
-	@Override
-	public Company checkCompany(String webId, String mx)
-		throws PortalException {
-
 		Company company = getCompanyByWebId(webId);
 
-		User guestUser = _userPersistence.fetchByC_T_First(
-			company.getCompanyId(), UserConstants.TYPE_GUEST, null);
-
-		return _checkCompany(
-			company, mx, null, null, null, null, null, null, guestUser);
+		return _checkCompany(company);
 	}
 
 	/**
@@ -1925,13 +1919,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		return guestUser;
 	}
 
-	private Company _checkCompany(
-			Company company, String mx, String defaultAdminPassword,
-			String defaultAdminScreenName, String defaultAdminEmailAddress,
-			String defaultAdminFirstName, String defaultAdminMiddleName,
-			String defaultAdminLastName, User guestUser)
-		throws PortalException {
-
+	private Company _checkCompany(Company company) throws PortalException {
 		Locale localeThreadLocalDefaultLocale =
 			LocaleThreadLocal.getDefaultLocale();
 		Locale localeThreadSiteDefaultLocale =
@@ -1967,35 +1955,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			_passwordPolicyLocalService.checkDefaultPasswordPolicy(
 				company.getCompanyId());
-
-			// Default admin
-
-			if (_userPersistence.countByCompanyId(company.getCompanyId()) ==
-					0) {
-
-				_userLocalService.addDefaultAdminUser(
-					company.getCompanyId(),
-					GetterUtil.getString(
-						defaultAdminPassword,
-						PropsValues.DEFAULT_ADMIN_PASSWORD),
-					GetterUtil.getString(
-						defaultAdminScreenName,
-						PropsValues.DEFAULT_ADMIN_SCREEN_NAME),
-					GetterUtil.getString(
-						defaultAdminEmailAddress,
-						PropsValues.DEFAULT_ADMIN_EMAIL_ADDRESS_PREFIX + "@" +
-							mx),
-					guestUser.getLocale(),
-					GetterUtil.getString(
-						defaultAdminFirstName,
-						PropsValues.DEFAULT_ADMIN_FIRST_NAME),
-					GetterUtil.getString(
-						defaultAdminMiddleName,
-						PropsValues.DEFAULT_ADMIN_MIDDLE_NAME),
-					GetterUtil.getString(
-						defaultAdminLastName,
-						PropsValues.DEFAULT_ADMIN_LAST_NAME));
-			}
 
 			// Portlets
 

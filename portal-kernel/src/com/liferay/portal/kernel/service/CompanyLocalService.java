@@ -103,18 +103,6 @@ public interface CompanyLocalService
 	public Company checkCompany(String webId) throws PortalException;
 
 	/**
-	 * Returns the company with the web domain and mail domain.
-	 *
-	 * The method goes through a series of checks to ensure that the company
-	 * contains default users, groups, etc.
-	 *
-	 * @param webId the company's web domain
-	 * @param mx the company's mail domain
-	 * @return the company with the web domain and mail domain
-	 */
-	public Company checkCompany(String webId, String mx) throws PortalException;
-
-	/**
 	 * Checks if the company has an encryption key. It will create a key if one
 	 * does not exist.
 	 *

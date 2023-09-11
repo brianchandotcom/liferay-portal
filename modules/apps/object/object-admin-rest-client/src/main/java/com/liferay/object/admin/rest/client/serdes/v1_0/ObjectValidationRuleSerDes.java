@@ -250,6 +250,16 @@ public class ObjectValidationRuleSerDes {
 			sb.append("\"");
 		}
 
+		if (objectValidationRule.getSystem() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"system\": ");
+
+			sb.append(objectValidationRule.getSystem());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -396,6 +406,13 @@ public class ObjectValidationRuleSerDes {
 			map.put("script", String.valueOf(objectValidationRule.getScript()));
 		}
 
+		if (objectValidationRule.getSystem() == null) {
+			map.put("system", null);
+		}
+		else {
+			map.put("system", String.valueOf(objectValidationRule.getSystem()));
+		}
+
 		return map;
 	}
 
@@ -527,6 +544,12 @@ public class ObjectValidationRuleSerDes {
 				if (jsonParserFieldValue != null) {
 					objectValidationRule.setScript(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "system")) {
+				if (jsonParserFieldValue != null) {
+					objectValidationRule.setSystem(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 		}

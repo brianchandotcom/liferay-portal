@@ -1309,6 +1309,14 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("system", additionalAssertFieldName)) {
+				if (objectValidationRule.getSystem() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1588,6 +1596,17 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 				if (!Objects.deepEquals(
 						objectValidationRule1.getScript(),
 						objectValidationRule2.getScript())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("system", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectValidationRule1.getSystem(),
+						objectValidationRule2.getSystem())) {
 
 					return false;
 				}
@@ -1992,6 +2011,11 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("system")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -2049,6 +2073,7 @@ public abstract class BaseObjectValidationRuleResourceTestCase {
 					RandomTestUtil.randomString());
 				objectDefinitionId = RandomTestUtil.randomLong();
 				script = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				system = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

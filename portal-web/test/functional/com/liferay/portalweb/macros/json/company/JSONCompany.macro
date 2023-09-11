@@ -99,7 +99,10 @@ definition {
 			var portalURL = JSONCompany.getDefaultPortalURL();
 		}
 
-		var creatorEmailAddress = JSONUtil2.getSuperAdminUserEmail();
+		if (!(isSet(creatorEmailAddress))) {
+			var creatorEmailAddress = JSONUtil2.getSuperAdminUserEmail();
+		}
+
 		var creatorPassword = JSONUtil2.getSuperAdminUserPassword();
 
 		var curl = '''

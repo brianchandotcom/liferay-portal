@@ -19,6 +19,7 @@ const QuantitySelector = forwardRef(
 			max,
 			min,
 			name,
+			namespace,
 			onUpdate,
 			quantity,
 			size,
@@ -45,6 +46,7 @@ const QuantitySelector = forwardRef(
 				max={max}
 				min={min}
 				name={name}
+				namespace={namespace}
 				onUpdate={onUpdate}
 				quantity={quantity}
 				ref={providedRef || inputRef}
@@ -62,6 +64,7 @@ QuantitySelector.propTypes = {
 	alignment: PropTypes.oneOf(['top', 'bottom']),
 	disabled: PropTypes.bool,
 	name: PropTypes.string,
+	namespace: PropTypes.string,
 	onUpdate: PropTypes.func.isRequired,
 	quantity: PropTypes.number,
 	size: PropTypes.oneOf(['lg', 'md', 'sm']),

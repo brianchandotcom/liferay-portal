@@ -244,6 +244,7 @@ AddToCartButton.propTypes = {
 				PropTypes.string,
 				PropTypes.array,
 			]),
+			unitOfMeasureKey: PropTypes.string,
 		})
 	).isRequired,
 	disabled: PropTypes.bool,

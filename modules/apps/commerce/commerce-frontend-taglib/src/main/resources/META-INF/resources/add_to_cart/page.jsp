@@ -60,11 +60,13 @@ if (alignment.equals("full-width")) {
 			stockQuantity: <%= stockQuantity %>,
 		},
 		disabled: <%= disabled %>,
+		productId: <%= productId %>,
 		settings: {
 			alignment: '<%= alignment %>',
 			iconOnly: <%= iconOnly %>,
 			inline: <%= inline %>,
 			namespace: '<%= namespace %>',
+			showUnitOfMeasureSelector: <%= showUnitOfMeasureSelector %>,
 			size: '<%= size %>',
 		},
 		showOrderTypeModal: <%= showOrderTypeModal %>,

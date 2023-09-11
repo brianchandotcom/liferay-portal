@@ -21,7 +21,7 @@ public class CPInstanceUnitOfMeasurePriorityComparator
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
 	public CPInstanceUnitOfMeasurePriorityComparator() {
-		this(false);
+		this(true);
 	}
 
 	public CPInstanceUnitOfMeasurePriorityComparator(boolean ascending) {

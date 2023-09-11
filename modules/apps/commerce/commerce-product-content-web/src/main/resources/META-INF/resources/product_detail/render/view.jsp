@@ -188,12 +188,13 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 				</span>
 			</c:if>
 
-			<div class="align-items-center d-flex mt-3 product-detail-actions">
+			<div class="align-items-end d-flex mt-3 product-detail-actions">
 				<commerce-ui:add-to-cart
 					alignment="left"
 					CPCatalogEntry="<%= cpCatalogEntry %>"
 					inline="<%= true %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
+					showUnitOfMeasureSelector="<%= true %>"
 					size="lg"
 					skuOptions="<%= cpContentSkuOptionsHelper.getDefaultCPInstanceSkuOptions(cpCatalogEntry.getCPDefinitionId(), request) %>"
 				/>

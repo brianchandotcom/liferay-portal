@@ -98,6 +98,8 @@ public class AddToCartTag extends IncludeTag {
 			if (_cpCatalogEntry != null) {
 				cpSku = _cpContentHelper.getDefaultCPSku(_cpCatalogEntry);
 
+				_productId = _cpCatalogEntry.getCProductId();
+
 				_productSettingsModel = _productHelper.getProductSettingsModel(
 					_cpCatalogEntry.getCPDefinitionId());
 
@@ -250,6 +252,10 @@ public class AddToCartTag extends IncludeTag {
 		return _quantity;
 	}
 
+	public boolean getShowUnitOfMeasureSelector() {
+		return _showUnitOfMeasureSelector;
+	}
+
 	public String getSize() {
 		return _size;
 	}
@@ -289,6 +295,7 @@ public class AddToCartTag extends IncludeTag {
 		setNamespacedAttribute(httpServletRequest, "inCart", _inCart);
 		setNamespacedAttribute(httpServletRequest, "inline", _inline);
 		setNamespacedAttribute(httpServletRequest, "namespace", _namespace);
+		setNamespacedAttribute(httpServletRequest, "productId", _productId);
 		setNamespacedAttribute(
 			httpServletRequest, "productSettingsModel", _productSettingsModel);
 		setNamespacedAttribute(httpServletRequest, "size", _size);
@@ -297,6 +304,9 @@ public class AddToCartTag extends IncludeTag {
 		setNamespacedAttribute(
 			httpServletRequest, "showOrderTypeModalURL",
 			_showOrderTypeModalURL);
+		setNamespacedAttribute(
+			httpServletRequest, "showUnitOfMeasureSelector",
+			_showUnitOfMeasureSelector);
 		setNamespacedAttribute(httpServletRequest, "skuOptions", _skuOptions);
 		setNamespacedAttribute(
 			httpServletRequest, "stockQuantity", _stockQuantity);
@@ -353,6 +363,12 @@ public class AddToCartTag extends IncludeTag {
 		_quantity = quantity;
 	}
 
+	public void setShowUnitOfMeasureSelector(
+		boolean showUnitOfMeasureSelector) {
+
+		_showUnitOfMeasureSelector = showUnitOfMeasureSelector;
+	}
+
 	public void setSize(String size) {
 		_size = size;
 	}
@@ -392,10 +408,12 @@ public class AddToCartTag extends IncludeTag {
 		_inline = false;
 		_namespace = StringPool.BLANK;
 		_productHelper = null;
+		_productId = 0;
 		_productSettingsModel = null;
 		_quantity = BigDecimal.ZERO;
 		_showOrderTypeModal = false;
 		_showOrderTypeModalURL = null;
+		_showUnitOfMeasureSelector = false;
 		_size = "md";
 		_skuOptions = null;
 		_stockQuantity = 0;
@@ -459,10 +477,12 @@ public class AddToCartTag extends IncludeTag {
 	private boolean _inline;
 	private String _namespace = StringPool.BLANK;
 	private ProductHelper _productHelper;
+	private long _productId;
 	private ProductSettingsModel _productSettingsModel;
 	private BigDecimal _quantity = BigDecimal.ZERO;
 	private boolean _showOrderTypeModal;
 	private String _showOrderTypeModalURL;
+	private boolean _showUnitOfMeasureSelector;
 	private String _size = "md";
 	private String _skuOptions;
 	private int _stockQuantity;

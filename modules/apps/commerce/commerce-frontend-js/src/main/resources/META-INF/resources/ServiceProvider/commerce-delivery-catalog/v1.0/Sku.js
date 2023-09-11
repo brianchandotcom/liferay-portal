@@ -7,10 +7,17 @@ import AJAX from '../../../utilities/AJAX/index';
 
 const VERSION = 'v1.0';
 
-function resolveSkusPath(basePath, channelId, productId, accountId, quantity) {
+function resolveSkusPath(
+	basePath,
+	channelId,
+	productId,
+	accountId,
+	quantity,
+	unitOfMeasureKey
+) {
 	let path = `${basePath}${VERSION}/channels/${channelId}/products/${productId}/skus/by-sku-option`;
 
-	if (accountId || quantity) {
+	if (accountId || quantity || unitOfMeasureKey) {
 		path += `?`;
 
 		const params = new URLSearchParams();
@@ -23,6 +30,28 @@ function resolveSkusPath(basePath, channelId, productId, accountId, quantity) {
 			params.append('quantity', quantity);
 		}
 
+		if (unitOfMeasureKey) {
+			params.append('unitOfMeasureKey', unitOfMeasureKey);
+		}
+
+		path += params.toString();
+	}
+
+	return path;
+}
+
+function resolveSkuPath(basePath, channelId, productId, skuId, accountId) {
+	let path = `${basePath}${VERSION}/channels/${channelId}/products/${productId}/skus/${skuId}`;
+
+	if (accountId) {
+		path += `?`;
+
+		const params = new URLSearchParams();
+
+		if (accountId) {
+			params.append('accountId', accountId);
+		}
+
 		path += params.toString();
 	}
 
@@ -31,11 +60,16 @@ function resolveSkusPath(basePath, channelId, productId, accountId, quantity) {
 
 export default function Sku(basePath) {
 	return {
+		getChannelProductSku: (channelId, productId, skuId, accountId) =>
+			AJAX.GET(
+				resolveSkuPath(basePath, channelId, productId, skuId, accountId)
+			),
 		postChannelProductSkuBySkuOption: (
 			channelId,
 			productId,
 			accountId,
 			quantity,
+			unitOfMeasureKey,
 			...params
 		) =>
 			AJAX.POST(
@@ -44,7 +78,8 @@ export default function Sku(basePath) {
 					channelId,
 					productId,
 					accountId,
-					quantity
+					quantity,
+					unitOfMeasureKey
 				),
 				...params
 			),

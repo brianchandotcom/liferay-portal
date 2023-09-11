@@ -31,6 +31,7 @@ function formatCartItem(
 		quantity: cpInstance.quantity,
 		replacedSkuId: cpInstance.replacedSkuId ?? 0,
 		skuId: cpInstance.skuId,
+		unitOfMeasureKey: cpInstance.unitOfMeasureKey,
 	};
 }
 
@@ -72,7 +73,9 @@ export async function addToCart(
 		const includedCartItem = updatedCartItems.find((cartItem) => {
 			const optionsJSON = JSON.parse(cartItem.options);
 
-			let includedCartItem = cartItem.skuId === cpInstance.skuId;
+			let includedCartItem =
+				cartItem.skuId === cpInstance.skuId &&
+				cartItem.unitOfMeasureKey === cpInstance.unitOfMeasureKey;
 
 			if (includedCartItem) {
 				optionsJSON.forEach((optionJSON) => {

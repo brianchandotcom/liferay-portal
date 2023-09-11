@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -9,14 +9,21 @@ import classNames from 'classnames';
 import {debounce} from 'frontend-js-web';
 import React, {forwardRef, useEffect, useRef, useState} from 'react';
 
+import {CP_UNIT_OF_MEASURE_SELECTOR_CHANGED} from '../../utilities/eventsDefinitions';
 import {
 	getMinQuantity,
+	getNumberOfDecimals,
 	getProductMaxQuantity,
+	isMultiple,
 } from '../../utilities/quantities';
 import RulesPopover from './RulesPopover';
 
-const getErrors = (value, min, max, step) => {
+const getErrors = (value, min, max, step, precision = 0) => {
 	const errors = [];
+
+	if (getNumberOfDecimals(value) > getNumberOfDecimals(step)) {
+		errors.push('decimals');
+	}
 
 	if (!value || value < min) {
 		errors.push('min');
@@ -26,7 +33,7 @@ const getErrors = (value, min, max, step) => {
 		errors.push('max');
 	}
 
-	if (step > 1 && value % step) {
+	if (step > 0 && !isMultiple(value, step, precision)) {
 		errors.push('multiple');
 	}
 
@@ -42,15 +49,23 @@ const InputQuantitySelector = forwardRef(
 			max,
 			min,
 			name,
+			namespace,
 			onUpdate,
 			quantity,
 			step,
 		},
 		inputRef
 	) => {
+		const [inputProperties, setInputProperties] = useState({
+			currentUnitOfMeasure: null,
+			max: getProductMaxQuantity(Math.ceil(max), Math.ceil(step)),
+			min: getMinQuantity(Math.ceil(min), Math.ceil(step)),
+			quantity,
+			step: Math.ceil(step),
+		});
 		const [showPopover, setShowPopover] = useState(false);
 		const [visibleErrors, setVisibleErrors] = useState(() =>
-			getErrors(quantity, min, max, step)
+			getErrors(quantity, Math.ceil(min), Math.ceil(max), Math.ceil(step))
 		);
 		const isMounted = useIsMounted();
 		const debouncedSetVisibleErrorsRef = useRef(
@@ -61,14 +76,104 @@ const InputQuantitySelector = forwardRef(
 			}, 500)
 		);
 
-		useEffect(() => {
-			debouncedSetVisibleErrorsRef.current(() =>
-				getErrors(quantity, min, max, step)
-			);
-		}, [quantity, min, max, step]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		const handleUOMChanged = ({resetQuantity, unitOfMeasure}) => {
+			const setStateContext = ({
+				max,
+				min,
+				precision,
+				quantity,
+				step,
+				unitOfMeasure,
+			}) => {
+				setInputProperties((inputProperties) => ({
+					...inputProperties,
+					currentUnitOfMeasure: unitOfMeasure,
+					max: getProductMaxQuantity(max, step, precision),
+					min: getMinQuantity(min, step, precision),
+					step,
+				}));
 
-		const inputMax = getProductMaxQuantity(max, step);
-		const inputMin = getMinQuantity(min, step);
+				onUpdate({
+					errors: getErrors(quantity, min, max, step, precision),
+					value: quantity,
+				});
+			};
+
+			if (unitOfMeasure) {
+				let quantity = inputProperties.quantity;
+
+				if (resetQuantity) {
+					quantity = Number(
+						getMinQuantity(
+							min,
+							unitOfMeasure.incrementalOrderQuantity,
+							unitOfMeasure.precision
+						)
+					);
+
+					setInputProperties((inputProperties) => ({
+						...inputProperties,
+						quantity,
+					}));
+				}
+
+				setStateContext({
+					max,
+					min,
+					precision: unitOfMeasure.precision,
+					quantity,
+					step: unitOfMeasure.incrementalOrderQuantity,
+					unitOfMeasure,
+				});
+			}
+			else {
+				setStateContext({
+					max: Math.ceil(max),
+					min: Math.ceil(min),
+					precision: 0,
+					quantity,
+					step: Math.ceil(step),
+					unitOfMeasure: null,
+				});
+			}
+		};
+
+		useEffect(() => {
+			debouncedSetVisibleErrorsRef.current(() => {
+				if (inputProperties.currentUnitOfMeasure) {
+					return getErrors(
+						inputProperties.quantity,
+						min,
+						max,
+						inputProperties.step,
+						inputProperties.currentUnitOfMeasure.precision
+					);
+				}
+				else {
+					return getErrors(
+						inputProperties.quantity,
+						Math.ceil(min),
+						Math.ceil(max),
+						Math.ceil(inputProperties.step)
+					);
+				}
+			});
+		}, [inputProperties, max, min]);
+
+		useEffect(() => {
+			Liferay.on(
+				`${namespace}${CP_UNIT_OF_MEASURE_SELECTOR_CHANGED}`,
+				handleUOMChanged
+			);
+
+			return () => {
+				Liferay.detach(
+					`${namespace}${CP_UNIT_OF_MEASURE_SELECTOR_CHANGED}`,
+					handleUOMChanged
+				);
+			};
+		}, [handleUOMChanged, namespace]);
 
 		return (
 			<ClayForm.Group
@@ -80,8 +185,8 @@ const InputQuantitySelector = forwardRef(
 				<ClayInput
 					className={className}
 					disabled={disabled}
-					max={inputMax}
-					min={inputMin}
+					max={inputProperties.max}
+					min={inputProperties.min}
 					name={name}
 					onBlur={() => {
 						setShowPopover(false);
@@ -89,7 +194,18 @@ const InputQuantitySelector = forwardRef(
 					onChange={({target}) => {
 						const numValue = Number(target.value);
 
-						const errors = getErrors(numValue, min, max, step);
+						const errors = getErrors(
+							numValue,
+							min,
+							max,
+							inputProperties.step,
+							inputProperties.currentUnitOfMeasure?.precision
+						);
+
+						setInputProperties((inputProperties) => ({
+							...inputProperties,
+							quantity: numValue,
+						}));
 
 						onUpdate({
 							errors,
@@ -98,20 +214,22 @@ const InputQuantitySelector = forwardRef(
 					}}
 					onFocus={() => setShowPopover(true)}
 					ref={inputRef}
-					step={step > 1 ? step : ''}
+					step={inputProperties.step > 0 ? inputProperties.step : ''}
 					type="number"
-					value={String(quantity || '')}
+					value={String(inputProperties.quantity || '')}
 				/>
 
 				{showPopover &&
-					(step > 1 || min > 1 || visibleErrors.includes('max')) && (
+					(inputProperties.step > 0 ||
+						min > 0 ||
+						visibleErrors.includes('max')) && (
 						<RulesPopover
 							alignment={alignment}
 							errors={visibleErrors}
 							inputRef={inputRef}
 							max={max || ''}
 							min={min}
-							multiple={step}
+							multiple={inputProperties.step}
 						/>
 					)}
 			</ClayForm.Group>

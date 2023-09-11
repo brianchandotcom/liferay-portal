@@ -13,6 +13,8 @@ export const CLOSE_SIDE_PANEL = 'close-side-panel';
 export const CP_INSTANCE_CHANGED = 'product-instance-changed';
 export const CP_QUANTITY_SELECTOR_CHANGED =
 	'quantity-changed-from-quantity-selector';
+export const CP_UNIT_OF_MEASURE_SELECTOR_CHANGED =
+	'unit-of-measure-changed-from-unit-of-measure-selector';
 export const CURRENT_ACCOUNT_UPDATED = 'current-account-updated';
 export const CURRENT_ORDER_UPDATED = 'current-order-updated';
 export const CURRENT_PRODUCT_STATUS_CHANGED = 'current-product-status-changed';

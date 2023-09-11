@@ -9,6 +9,8 @@ import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useLayoutEffect, useRef, useState} from 'react';
 
+import {getNumberOfDecimals} from '../../utilities/quantities';
+
 export default function RulesPopover({
 	alignment,
 	errors,
@@ -72,7 +74,25 @@ export default function RulesPopover({
 			style={popoverPosition}
 		>
 			<ul className="list-group list-group-flush mb-0">
-				{min > 1 && (
+				{errors.includes('decimals') && (
+					<li className="list-group-item px-0 py-1 text-truncate">
+						<small
+							className={classNames({
+								'text-danger': true,
+							})}
+							dangerouslySetInnerHTML={{
+								__html: sub(
+									Liferay.Language.get(
+										'quantity-allows-for-x-decimal-places'
+									),
+									`<b>${getNumberOfDecimals(multiple)}</b>`
+								),
+							}}
+						/>
+					</li>
+				)}
+
+				{min > 0 && (
 					<li className="list-group-item px-0 py-1 text-truncate">
 						<small
 							className={classNames({
@@ -108,7 +128,7 @@ export default function RulesPopover({
 					</li>
 				)}
 
-				{multiple > 1 && (
+				{multiple > 0 && (
 					<li className="list-group-item px-0 py-1 text-truncate">
 						<small
 							className={classNames({

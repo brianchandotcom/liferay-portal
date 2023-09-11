@@ -19,6 +19,7 @@ export {default as Price} from './price/entry';
 export {default as QuantitySelector} from './quantity_selector/entry';
 export {default as StepTracker} from './step_tracker/entry';
 export {default as Summary} from './summary/entry';
+export {default as UnitOfMeasureSelector} from './unit_of_measure_selector/entry';
 
 /**
  * Components' contexts exposure to Liferay module dynamic load-up

@@ -12,6 +12,9 @@ public class URLInfoFieldType implements InfoFieldType {
 
 	public static final URLInfoFieldType INSTANCE = new URLInfoFieldType();
 
+	public static final Attribute<URLInfoFieldType, Boolean> NOFOLLOW =
+		new Attribute<>();
+
 	@Override
 	public String getName() {
 		return "url";

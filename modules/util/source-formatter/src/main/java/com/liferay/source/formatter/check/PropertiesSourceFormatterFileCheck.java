@@ -47,7 +47,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 			_checkCheckstyleGroupAndOrder(fileName, content, "checkstyle.");
 			_checkSourceCheckGroupAndOrder(fileName, content, "source.check.");
 
-			_sortByRootSourceFormatter(fileName, content);
+			_sortByRootSourceFormatter(fileName, absolutePath, content);
 
 			return _formatSourceFormatterProperties(fileName, content);
 		}
@@ -365,14 +365,15 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		return _hasPrivateAppsDir;
 	}
 
-	private void _sortByRootSourceFormatter(String fileName, String content)
+	private void _sortByRootSourceFormatter(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		String path = getPortalDir().getCanonicalPath();
+		int pos = absolutePath.lastIndexOf(CharPool.SLASH);
 
-		path = StringUtil.replace(path, CharPool.BACK_SLASH, CharPool.SLASH);
+		String fileLocation = fileName.substring(0, pos);
 
-		if (fileName.equals(path + "/source-formatter.properties")) {
+		if (fileLocation.equals(SourceUtil.getRootDirName(absolutePath))) {
 			return;
 		}
 

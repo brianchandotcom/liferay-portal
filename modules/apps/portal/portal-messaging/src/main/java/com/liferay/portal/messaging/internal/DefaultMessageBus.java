@@ -28,7 +28,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -79,7 +78,7 @@ public class DefaultMessageBus implements MessageBus {
 			Long[] companyIds = (Long[])message.get("companyIds");
 
 			if (companyIds != null) {
-				long orignalCompanyId = CompanyThreadLocal.getCompanyId();
+				long originalCompanyId = CompanyThreadLocal.getCompanyId();
 
 				try {
 					for (Long id : companyIds) {
@@ -91,7 +90,7 @@ public class DefaultMessageBus implements MessageBus {
 					}
 				}
 				finally {
-					CompanyThreadLocal.setCompanyId(orignalCompanyId);
+					CompanyThreadLocal.setCompanyId(originalCompanyId);
 				}
 
 				return;
@@ -215,8 +214,8 @@ public class DefaultMessageBus implements MessageBus {
 		}
 
 		@Override
-		public void updated(String factoryPid, Dictionary<String, ?> dictionary)
-			throws ConfigurationException {
+		public void updated(
+			String factoryPid, Dictionary<String, ?> dictionary) {
 
 			DestinationWorkerConfiguration destinationWorkerConfiguration =
 				ConfigurableUtil.createConfigurable(

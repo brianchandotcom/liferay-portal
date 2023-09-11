@@ -7,18 +7,18 @@
 
 AUI().applyConfig({
 	groups: {
-		'glide': {
+		glide: {
 			async: true,
 			base: 'https://unpkg.com/@glidejs/glide@3.6.0/dist/',
 			modules: {
 				'glide': {
 					path: 'glide.min.js',
-					requires: ['glide-css']
+					requires: ['glide-css'],
 				},
 				'glide-css': {
-					path: 'css/glide.core.min.css'
-				}
-			}
+					path: 'css/glide.core.min.css',
+				},
+			},
 		},
 	},
 });

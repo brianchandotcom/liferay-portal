@@ -47,8 +47,6 @@ import com.liferay.portal.verify.VerifyProperties;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
 
 import java.util.Collection;
 
@@ -282,10 +280,16 @@ public class DBUpgrader {
 
 				StartupHelperUtil.upgradeProcess(buildNumber);
 
-				_updateReleaseState(ReleaseConstants.STATE_GOOD);
+				try (Connection connection = DataAccess.getConnection()) {
+					PortalUpgradeProcess.updateState(
+						connection, ReleaseConstants.STATE_GOOD);
+				}
 			}
 			catch (Exception exception) {
-				_updateReleaseState(ReleaseConstants.STATE_UPGRADE_FAILURE);
+				try (Connection connection = DataAccess.getConnection()) {
+					PortalUpgradeProcess.updateState(
+						connection, ReleaseConstants.STATE_UPGRADE_FAILURE);
+				}
 
 				throw exception;
 			}
@@ -297,7 +301,9 @@ public class DBUpgrader {
 
 			IndexUpdaterUtil.updatePortalIndexes();
 
-			_updateReleaseBuildInfo();
+			try (Connection connection = DataAccess.getConnection()) {
+				PortalUpgradeProcess.updateBuildInfo(connection);
+			}
 
 			CustomSQLUtil.reloadCustomSQL();
 			SQLTransformer.reloadSQLTransformer();
@@ -401,38 +407,6 @@ public class DBUpgrader {
 		DB db = DBManagerUtil.getDB();
 
 		db.runSQL("update CompanyInfo set key_ = null");
-	}
-
-	private static void _updateReleaseBuildInfo() throws Exception {
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"update Release_ set buildNumber = ?, buildDate = ? where " +
-					"releaseId = ?")) {
-
-			preparedStatement.setInt(1, ReleaseInfo.getParentBuildNumber());
-
-			java.util.Date buildDate = ReleaseInfo.getBuildDate();
-
-			preparedStatement.setDate(2, new Date(buildDate.getTime()));
-
-			preparedStatement.setLong(3, ReleaseConstants.DEFAULT_ID);
-
-			preparedStatement.executeUpdate();
-		}
-	}
-
-	private static void _updateReleaseState(int state) throws Exception {
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"update Release_ set modifiedDate = ?, state_ = ? where " +
-					"releaseId = ?")) {
-
-			preparedStatement.setDate(1, new Date(System.currentTimeMillis()));
-			preparedStatement.setInt(2, state);
-			preparedStatement.setLong(3, ReleaseConstants.DEFAULT_ID);
-
-			preparedStatement.executeUpdate();
-		}
 	}
 
 	private static final boolean _UPGRADE_DATABASE_AUTO_RUN;

@@ -11,7 +11,6 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -75,20 +74,10 @@ public class CommerceOrderItemServiceImpl
 			CommerceContext commerceContext, ServiceContext serviceContext)
 		throws PortalException {
 
-		AccountEntry accountEntry = commerceContext.getAccountEntry();
-
 		_commerceOrderModelResourcePermission.check(
 			getPermissionChecker(),
 			_commerceOrderService.getCommerceOrder(commerceOrderId),
 			ActionKeys.UPDATE);
-
-		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
-			cpInstanceId);
-
-		commerceProductViewPermission.check(
-			getPermissionChecker(), accountEntry.getAccountEntryId(),
-			commerceContext.getCommerceChannelGroupId(),
-			cpInstance.getCPDefinitionId());
 
 		return commerceOrderItemLocalService.addOrUpdateCommerceOrderItem(
 			getUserId(), commerceOrderId, cpInstanceId, json, quantity,

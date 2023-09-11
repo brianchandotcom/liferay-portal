@@ -186,6 +186,12 @@ public class ObjectValidationRuleResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
+		boolean system = false;
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-193355")) {
+			system = GetterUtil.getBoolean(objectValidationRule.getSystem());
+		}
+
 		return _toObjectValidationRule(
 			_objectValidationRuleService.addObjectValidationRule(
 				objectDefinitionId,
@@ -198,8 +204,7 @@ public class ObjectValidationRuleResourceImpl
 				GetterUtil.getString(
 					objectValidationRule.getOutputTypeAsString(),
 					ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION),
-				objectValidationRule.getScript(),
-				GetterUtil.getBoolean(objectValidationRule.getSystem()),
+				objectValidationRule.getScript(), system,
 				_toObjectValidationRuleSettings(
 					objectDefinitionId, _objectFieldLocalService,
 					_objectValidationRuleSettingLocalService,

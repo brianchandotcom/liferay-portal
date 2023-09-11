@@ -93,7 +93,10 @@ public class ObjectValidationRuleDTOConverter
 				}
 
 				script = serviceBuilderObjectValidationRule.getScript();
-				system = serviceBuilderObjectValidationRule.getSystem();
+
+				if (FeatureFlagManagerUtil.isEnabled("LPS-193355")) {
+					system = serviceBuilderObjectValidationRule.getSystem();
+				}
 			}
 		};
 	}

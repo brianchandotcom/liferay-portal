@@ -92,6 +92,51 @@ export default function Validations({
 		return moment().format('MMMM D, YYYY, h:mm:ss A');
 	}
 
+	const fdsFields = [
+		{
+			contentRenderer: 'objectFieldLabelDataRenderer',
+			expand: false,
+			fieldName: 'name',
+			label: Liferay.Language.get('label'),
+			localizeLabel: true,
+			sortable: true,
+		},
+		{
+			expand: false,
+			fieldName: 'engineLabel',
+			label: Liferay.Language.get('type'),
+			localizeLabel: true,
+			sortable: false,
+		},
+		{
+			contentRenderer: 'objectFieldActiveDataRenderer',
+			expand: false,
+			fieldName: 'active',
+			label: Liferay.Language.get('active'),
+			localizeLabel: true,
+			sortable: false,
+		},
+		{
+			contentRenderer: 'objectFieldModifiedDateDataRenderer',
+			expand: false,
+			fieldName: 'dateModified',
+			label: Liferay.Language.get('modified-date'),
+			localizeLabel: true,
+			sortable: false,
+		},
+	];
+
+	if (Liferay.FeatureFlags['LPS-193355']) {
+		fdsFields.push({
+			contentRenderer: 'fdsSourceDataRenderer',
+			expand: false,
+			fieldName: 'system',
+			label: Liferay.Language.get('source'),
+			localizeLabel: true,
+			sortable: false,
+		});
+	}
+
 	const dataSetProps = {
 		...defaultDataSetProps,
 		apiURL,
@@ -117,49 +162,7 @@ export default function Validations({
 				label: 'Table',
 				name: 'table',
 				schema: {
-					fields: [
-						{
-							contentRenderer: 'objectFieldLabelDataRenderer',
-							expand: false,
-							fieldName: 'name',
-							label: Liferay.Language.get('label'),
-							localizeLabel: true,
-							sortable: true,
-						},
-						{
-							expand: false,
-							fieldName: 'engineLabel',
-							label: Liferay.Language.get('type'),
-							localizeLabel: true,
-							sortable: false,
-						},
-						{
-							contentRenderer: 'objectFieldActiveDataRenderer',
-							expand: false,
-							fieldName: 'active',
-							label: Liferay.Language.get('active'),
-							localizeLabel: true,
-							sortable: false,
-						},
-
-						{
-							contentRenderer:
-								'objectFieldModifiedDateDataRenderer',
-							expand: false,
-							fieldName: 'dateModified',
-							label: Liferay.Language.get('modified-date'),
-							localizeLabel: true,
-							sortable: false,
-						},
-						{
-							contentRenderer: 'fdsSourceDataRenderer',
-							expand: false,
-							fieldName: 'system',
-							label: Liferay.Language.get('source'),
-							localizeLabel: true,
-							sortable: false,
-						},
-					],
+					fields: fdsFields
 				},
 				thumbnail: 'table',
 			},

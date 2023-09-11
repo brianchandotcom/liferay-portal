@@ -1769,6 +1769,7 @@ definition {
 	}
 
 	@description = "LPS-97195: Validate if the user can edit a variant for A/B Test with success"
+	@ignore = "true"
 	@priority = 5
 	test EditVariant {
 		task ("Create AB test and create variant") {

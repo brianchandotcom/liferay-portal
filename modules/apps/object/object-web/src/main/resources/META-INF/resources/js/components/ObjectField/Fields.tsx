@@ -5,7 +5,6 @@
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
-import classNames from 'classnames';
 import {createResourceURL} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -16,6 +15,7 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
+import fdsSourceDataRenderer from '../../utils/fdsSourceDataRenderer';
 import {ModalAddObjectField} from './ModalAddObjectField';
 import {ModalDeleteObjectField} from './ModalDeleteObjectField';
 import {deleteObjectField} from './deleteObjectFieldUtil';
@@ -102,21 +102,6 @@ export default function Fields({
 		);
 	}
 
-	function objectFieldSourceDataRenderer({itemData}: {itemData: ItemData}) {
-		return (
-			<strong
-				className={classNames(
-					itemData.system ? 'label-info' : 'label-warning',
-					'label'
-				)}
-			>
-				{itemData.system
-					? Liferay.Language.get('system')
-					: Liferay.Language.get('custom')}
-			</strong>
-		);
-	}
-
 	function objectFieldMandatoryDataRenderer({
 		itemData,
 	}: {
@@ -132,9 +117,9 @@ export default function Fields({
 		apiURL,
 		creationMenu,
 		customDataRenderers: {
+			fdsSourceDataRenderer,
 			objectFieldLabelDataRenderer,
 			objectFieldMandatoryDataRenderer,
-			objectFieldSourceDataRenderer,
 		},
 		formName,
 		id,
@@ -223,7 +208,7 @@ export default function Fields({
 							sortable: false,
 						},
 						{
-							contentRenderer: 'objectFieldSourceDataRenderer',
+							contentRenderer: 'fdsSourceDataRenderer',
 							expand: false,
 							fieldName: 'source',
 							label: Liferay.Language.get('source'),

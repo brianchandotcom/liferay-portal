@@ -164,6 +164,8 @@ export default function EditObjectValidation({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinitionId, objectValidationRuleId]);
 
+	const disabled = readOnly || !!values?.system;
+
 	return (
 		<SidePanelForm
 			onSubmit={handleSubmit}
@@ -192,7 +194,7 @@ export default function EditObjectValidation({
 							<Component
 								componentLabel={label}
 								creationLanguageId={creationLanguageId}
-								disabled={readOnly}
+								disabled={disabled}
 								errors={
 									Object.keys(errors).length !== 0
 										? errors

@@ -405,6 +405,7 @@ interface ObjectValidation {
 	}[];
 	outputType?: string;
 	script: string;
+	system?: boolean;
 }
 
 type ObjectValidationType = {

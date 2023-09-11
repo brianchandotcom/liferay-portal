@@ -45,6 +45,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
+		boolean nofollow = false;
 		String href = null;
 
 		JSONObject hrefJSONObject = configJSONObject.getJSONObject("href");
@@ -55,10 +56,19 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			_fragmentEntryProcessorHelper.isMappedDisplayPage(
 				configJSONObject)) {
 
-			href = GetterUtil.getString(
-				_fragmentEntryProcessorHelper.getFieldValue(
-					configJSONObject, new HashMap<>(),
-					fragmentEntryProcessorContext));
+			Object fieldValue = _fragmentEntryProcessorHelper.getFieldValue(
+				configJSONObject, new HashMap<>(),
+				fragmentEntryProcessorContext);
+
+			if (fieldValue instanceof JSONObject) {
+				JSONObject jsonObject = (JSONObject)fieldValue;
+
+				nofollow = jsonObject.getBoolean("nofollow");
+				href = jsonObject.getString("url");
+			}
+			else {
+				href = GetterUtil.getString(fieldValue);
+			}
 		}
 		else if (_isMappedLayout(configJSONObject)) {
 			href = GetterUtil.getString(
@@ -91,6 +101,10 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 		}
 
 		Element linkElement = new Element("a");
+
+		if (nofollow) {
+			linkElement.attr("rel", "nofollow");
+		}
 
 		Elements elements = element.children();
 

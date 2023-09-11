@@ -47,7 +47,13 @@ public class SegmentsExperimentModelListener
 			if (AsahUtil.isSkipAsahEvent(
 					_analyticsSettingsManager,
 					segmentsExperiment.getCompanyId(),
-					segmentsExperiment.getGroupId())) {
+					segmentsExperiment.getGroupId()) ||
+				((originalSegmentsExperiment.getStatus() !=
+					segmentsExperiment.getStatus()) &&
+				 (segmentsExperiment.getStatus() ==
+					 SegmentsExperimentConstants.STATUS_FINISHED_NO_WINNER)) ||
+				(segmentsExperiment.getStatus() ==
+					SegmentsExperimentConstants.STATUS_FINISHED_WINNER)) {
 
 				return;
 			}

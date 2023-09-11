@@ -13,6 +13,10 @@ definition {
 	}
 
 	macro addRootTopic {
+		WaitForElementPresent(
+			key_text = "New Topic",
+			locator1 = "Button#ANY");
+
 		if (IsElementPresent(key_text = "New Topic", locator1 = "Button#ANY")) {
 			Click(
 				key_text = "New Topic",

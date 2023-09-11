@@ -10,6 +10,8 @@ package com.liferay.object.constants;
  */
 public class ObjectValidationRuleConstants {
 
+	public static final String ENGINE_TYPE_COMPOSITE_KEY = "compositeKey";
+
 	public static final String ENGINE_TYPE_DDM = "ddm";
 
 	public static final String ENGINE_TYPE_GROOVY = "groovy";

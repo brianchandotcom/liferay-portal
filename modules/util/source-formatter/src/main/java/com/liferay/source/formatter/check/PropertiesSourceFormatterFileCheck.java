@@ -87,7 +87,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 				continue;
 			}
 
-			String propertyKey = StringUtil.trim(trimmedLine.substring(0, pos));
+			String propertyKey = trimmedLine.substring(0, pos);
 
 			if (!StringUtil.startsWith(propertyKey, prefix)) {
 				addMessage(
@@ -343,8 +343,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 				continue;
 			}
 
-			_sourceFormatterProperties.add(
-				StringUtil.trim(trimmedLine.substring(0, pos)));
+			_sourceFormatterProperties.add(trimmedLine.substring(0, pos));
 		}
 
 		return _sourceFormatterProperties;
@@ -416,7 +415,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 
 			String property = trimmedLine.substring(0, pos);
 
-			pos = sourceFormatterProperties.indexOf(StringUtil.trim(property));
+			pos = sourceFormatterProperties.indexOf(property);
 
 			if (pos == -1) {
 				continue;

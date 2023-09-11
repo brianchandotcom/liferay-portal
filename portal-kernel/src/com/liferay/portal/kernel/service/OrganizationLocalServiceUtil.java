@@ -86,6 +86,20 @@ public class OrganizationLocalServiceUtil {
 	}
 
 	/**
+	 * Adds the organization to the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param organization the organization
+	 * @return the organization that was added
+	 */
+	public static Organization addOrganization(Organization organization) {
+		return getService().addOrganization(organization);
+	}
+
+	/**
 	 * Adds an organization.
 	 *
 	 * <p>
@@ -95,6 +109,7 @@ public class OrganizationLocalServiceUtil {
 	 * #addOrganizationResources(long, Organization)}.
 	 * </p>
 	 *
+	 * @param externalReferenceCode External Reference Code of the organization
 	 * @param userId the primary key of the creator/owner of the organization
 	 * @param parentOrganizationId the primary key of the organization's parent
 	 organization
@@ -112,28 +127,16 @@ public class OrganizationLocalServiceUtil {
 	 * @return the organization
 	 */
 	public static Organization addOrganization(
-			long userId, long parentOrganizationId, String name, String type,
-			long regionId, long countryId, long statusListTypeId,
-			String comments, boolean site, ServiceContext serviceContext)
+			String externalReferenceCode, long userId,
+			long parentOrganizationId, String name, String type, long regionId,
+			long countryId, long statusListTypeId, String comments,
+			boolean site, ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addOrganization(
-			userId, parentOrganizationId, name, type, regionId, countryId,
-			statusListTypeId, comments, site, serviceContext);
-	}
-
-	/**
-	 * Adds the organization to the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param organization the organization
-	 * @return the organization that was added
-	 */
-	public static Organization addOrganization(Organization organization) {
-		return getService().addOrganization(organization);
+			externalReferenceCode, userId, parentOrganizationId, name, type,
+			regionId, countryId, statusListTypeId, comments, site,
+			serviceContext);
 	}
 
 	/**
@@ -1588,8 +1591,23 @@ public class OrganizationLocalServiceUtil {
 	}
 
 	/**
+	 * Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param organization the organization
+	 * @return the organization that was updated
+	 */
+	public static Organization updateOrganization(Organization organization) {
+		return getService().updateOrganization(organization);
+	}
+
+	/**
 	 * Updates the organization.
 	 *
+	 * @param externalReferenceCode External Reference Code of the organization
 	 * @param companyId the primary key of the organization's company
 	 * @param organizationId the primary key of the organization
 	 * @param parentOrganizationId the primary key of organization's parent
@@ -1611,30 +1629,18 @@ public class OrganizationLocalServiceUtil {
 	 * @return the organization
 	 */
 	public static Organization updateOrganization(
-			long companyId, long organizationId, long parentOrganizationId,
-			String name, String type, long regionId, long countryId,
-			long statusListTypeId, String comments, boolean hasLogo,
-			byte[] logoBytes, boolean site, ServiceContext serviceContext)
+			String externalReferenceCode, long companyId, long organizationId,
+			long parentOrganizationId, String name, String type, long regionId,
+			long countryId, long statusListTypeId, String comments,
+			boolean hasLogo, byte[] logoBytes, boolean site,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateOrganization(
-			companyId, organizationId, parentOrganizationId, name, type,
-			regionId, countryId, statusListTypeId, comments, hasLogo, logoBytes,
-			site, serviceContext);
-	}
-
-	/**
-	 * Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param organization the organization
-	 * @return the organization that was updated
-	 */
-	public static Organization updateOrganization(Organization organization) {
-		return getService().updateOrganization(organization);
+			externalReferenceCode, companyId, organizationId,
+			parentOrganizationId, name, type, regionId, countryId,
+			statusListTypeId, comments, hasLogo, logoBytes, site,
+			serviceContext);
 	}
 
 	public static OrganizationLocalService getService() {

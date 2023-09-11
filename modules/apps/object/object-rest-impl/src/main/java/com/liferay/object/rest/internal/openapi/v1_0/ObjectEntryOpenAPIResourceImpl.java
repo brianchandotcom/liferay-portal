@@ -187,6 +187,20 @@ public class ObjectEntryOpenAPIResourceImpl
 				}
 			};
 		}
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_DATE) &&
+				 _fieldNameMappings.containsKey(objectField.getName())) {
+
+			return new DTOProperty(
+				null, _fieldNameMappings.get(objectField.getName()),
+				ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME) {
+
+				{
+					setRequired(objectField.isRequired());
+				}
+			};
+		}
 
 		if (objectField.getListTypeDefinitionId() != 0) {
 			DTOProperty dtoProperty = new DTOProperty(
@@ -419,6 +433,11 @@ public class ObjectEntryOpenAPIResourceImpl
 
 	private final BundleContext _bundleContext;
 	private final DTOConverterRegistry _dtoConverterRegistry;
+	private final Map<String, String> _fieldNameMappings = HashMapBuilder.put(
+		"createDate", "dateCreated"
+	).put(
+		"modifiedDate", "dateModified"
+	).build();
 	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;

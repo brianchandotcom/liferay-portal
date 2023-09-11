@@ -38,7 +38,7 @@ public class BetaClientExtensionProductNavigationControlMenuEntry
 
 	@Override
 	public String getIconJspPath() {
-		return "/admin/client_extension_beta_button.jsp";
+		return "/admin/beta_client_extension_button.jsp";
 	}
 
 	@Override

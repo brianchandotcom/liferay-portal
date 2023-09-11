@@ -79,11 +79,8 @@ public class AutoUpgradeProcessTest {
 	public void testNoninitializationWhenAutoUpgradeDisabledAndPortalNotUpgraded()
 		throws Exception {
 
-		Object upgradeStepRegistratorTracker = ReflectionTestUtil.getFieldValue(
-			_upgradeExecutor, "_upgradeStepRegistratorTracker");
-
 		boolean originalPortalUpgraded = ReflectionTestUtil.getAndSetFieldValue(
-			upgradeStepRegistratorTracker, "_portalUpgraded", false);
+			_upgradeExecutor, "_portalUpgraded", false);
 
 		try {
 			PropsUtil.set("upgrade.database.auto.run", "false");
@@ -92,8 +89,7 @@ public class AutoUpgradeProcessTest {
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
-				upgradeStepRegistratorTracker, "_portalUpgraded",
-				originalPortalUpgraded);
+				_upgradeExecutor, "_portalUpgraded", originalPortalUpgraded);
 		}
 	}
 

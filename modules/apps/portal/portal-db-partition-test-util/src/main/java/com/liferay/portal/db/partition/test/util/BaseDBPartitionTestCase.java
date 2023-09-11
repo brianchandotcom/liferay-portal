@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
@@ -237,27 +239,72 @@ public abstract class BaseDBPartitionTestCase {
 					CompanyThreadLocal.setWithSafeCloseable(companyId);
 				PreparedStatement preparedStatement1 =
 					connection.prepareStatement(
-						"insert into Company (companyId, webId) values (?, ?)");
-				PreparedStatement preparedStatement2 =
+						"insert into Company (companyId, mx, webId) values " +
+							"(?, ?, ?)");
+				 PreparedStatement preparedStatement2 =
+					 connection.prepareStatement(
+						 "insert into Group_ (mvccVersion, ctCollectionId, " +
+						 "companyId, groupId, classNameId, classPK) " +
+						 "values (?, ?, ?, ?, ?, ?)");
+				 PreparedStatement preparedStatement3 =
+					 connection.prepareStatement(
+						 "insert into PasswordPolicy (mvccVersion, " +
+						 "passwordPolicyId, companyId, defaultPolicy) " +
+						 "values (?, ?, ?, ?)")) {
+				 PreparedStatement preparedStatement4 =
+					 connection.prepareStatement(
+						 "insert into Role_ (mvccVersion, ctCollectionId, " +
+						 "roleId, companyId, name, type_) values (?, ?, " +
+						 "?, ?, ?, ?)");
+				PreparedStatement preparedStatement5 =
 					connection.prepareStatement(
 						"insert into User_ (userId, companyId, screenName, " +
 							"emailAddress, languageId, timeZoneId, type_) " +
-								"values (?, ?, ?, ?, ?, ?, ?)")) {
+								"values (?, ?, ?, ?, ?, ?, ?)");
 
 				preparedStatement1.setLong(1, companyId);
-				preparedStatement1.setString(2, "Test" + companyId);
+				preparedStatement1.setString(2, "liferay.com");
+				preparedStatement1.setString(3, "Test" + companyId);
 
 				preparedStatement1.executeUpdate();
 
-				preparedStatement2.setLong(1, 1);
-				preparedStatement2.setLong(2, companyId);
-				preparedStatement2.setString(3, "Test");
-				preparedStatement2.setString(4, "test@test.com");
-				preparedStatement2.setString(5, "en_US");
-				preparedStatement2.setString(6, "UTC");
-				preparedStatement2.setInt(7, UserConstants.TYPE_GUEST);
+				preparedStatement2.setLong(1, 0);
+				preparedStatement2.setLong(2, 0);
+				preparedStatement2.setLong(3, companyId);
+				preparedStatement2.setInt(4, 1);
+				preparedStatement2.setLong(
+					5, ClassNameLocalServiceUtil.getClassNameId(Company.class));
+				preparedStatement2.setLong(6, companyId);
 
 				preparedStatement2.executeUpdate();
+
+				preparedStatement3.setLong(1, 0);
+				preparedStatement3.setLong(2, 1);
+				preparedStatement3.setLong(3, companyId);
+				preparedStatement3.setInt(4, 1);
+
+				preparedStatement3.executeUpdate();
+
+				for (int i = 0; i < ROLES.length; i++) {
+					preparedStatement4.setLong(1, 0);
+					preparedStatement4.setLong(2, 0);
+					preparedStatement4.setLong(3, i + 1);
+					preparedStatement4.setLong(4, companyId);
+					preparedStatement4.setString(5, ROLES[i]);
+					preparedStatement4.setLong(6, 1);
+
+					preparedStatement4.executeUpdate();
+				}
+
+				preparedStatement5.setLong(1, 1);
+				preparedStatement5.setLong(2, companyId);
+				preparedStatement5.setString(3, "Test");
+				preparedStatement5.setString(4, "test@test.com");
+				preparedStatement5.setString(5, "en_US");
+				preparedStatement5.setString(6, "UTC");
+				preparedStatement5.setInt(7, UserConstants.TYPE_GUEST);
+
+				preparedStatement5.executeUpdate();
 			}
 		}
 	}
@@ -321,6 +368,8 @@ public abstract class BaseDBPartitionTestCase {
 	}
 
 	protected static final long[] COMPANY_IDS = {123456789L, 987654321L};
+
+	protected static final String[] ROLES = {"Administrator", "Owner", "User"};
 
 	protected static final String TEST_CONTROL_TABLE_NAME = "TestControlTable";
 

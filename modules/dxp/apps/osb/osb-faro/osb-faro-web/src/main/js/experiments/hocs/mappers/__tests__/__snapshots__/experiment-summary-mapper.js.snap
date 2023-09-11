@@ -374,50 +374,6 @@ Object {
   },
   "header": Object {
     "Description": [Function],
-    "modals": Array [
-      Object {
-        "Component": [Function],
-        "props": Object {
-          "experimentId": undefined,
-          "modalBody": <React.Fragment>
-            <div
-              className="mb-2 text-secondary"
-            >
-              Are you sure you want to complete this test?
-            </div>
-            <strong>
-              No more traffic will be directed to the test variants, and we will stop collecting test data.
-               
-              You will still have access to the data that has already been collected.
-            </strong>
-          </React.Fragment>,
-          "nextStatus": "COMPLETED",
-          "publishedDXPVariantId": "DEFAULT",
-          "submitMessage": "Complete Test",
-          "title": "Complete Test",
-        },
-        "title": "Complete Test",
-      },
-      Object {
-        "Component": [Function],
-        "props": Object {
-          "dxpVariants": Array [
-            Object {
-              "changes": 0,
-              "control": false,
-              "dxpVariantId": "4203992243",
-              "dxpVariantName": "Variant 01",
-              "trafficSplit": 50,
-              "uniqueVisitors": 1,
-            },
-          ],
-          "experimentId": undefined,
-          "pageURL": "http://localhost/web/guest/content-page",
-          "title": "Publish Variant",
-        },
-        "title": "Publish Variant",
-      },
-    ],
     "title": "No Clear Winner",
   },
   "sections": Array [
@@ -447,31 +403,6 @@ exports[`Summary Mapper for status in RUNNING should return formatted data for s
 Object {
   "header": Object {
     "Description": [Function],
-    "modals": Array [
-      Object {
-        "Component": [Function],
-        "props": Object {
-          "experimentId": undefined,
-          "modalBody": <React.Fragment>
-            <div
-              className="mb-2 text-secondary"
-            >
-              Are you sure you want to terminate this test?
-            </div>
-            <strong>
-              No more traffic will be directed to the test variants, and we will stop collecting test data.
-               
-              You will still have access to the data that has already been collected.
-            </strong>
-          </React.Fragment>,
-          "modalStatus": "warning",
-          "nextStatus": "TERMINATED",
-          "submitMessage": "Stop Test",
-          "title": "Terminate Test",
-        },
-        "title": "Terminate Test",
-      },
-    ],
     "title": "Test Is Running",
   },
   "sections": Array [

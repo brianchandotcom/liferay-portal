@@ -11,14 +11,11 @@ import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -117,28 +114,6 @@ public abstract class VerifyProcess extends BaseDBProcess {
 
 			throw new Exception(
 				"Verification error: " + clazz.getName(), throwable);
-		}
-	}
-
-	/**
-	 * @return the portal build number before {@link
-	 *         com.liferay.portal.tools.DBUpgrader} has a chance to update it to
-	 *         the value in {@link
-	 *         com.liferay.portal.kernel.util.ReleaseInfo#getBuildNumber}
-	 */
-	protected int getBuildNumber() throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select buildNumber from Release_ where servletContextName = " +
-					"?")) {
-
-			preparedStatement.setString(
-				1, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				resultSet.next();
-
-				return resultSet.getInt(1);
-			}
 		}
 	}
 

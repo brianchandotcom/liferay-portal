@@ -132,7 +132,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		List<String> sourceFormatterProperties =
 			_getSourceFormatterProperties();
 
-		if (sourceFormatterProperties.isEmpty()) {
+		if (ListUtil.isEmpty(sourceFormatterProperties)) {
 			return;
 		}
 

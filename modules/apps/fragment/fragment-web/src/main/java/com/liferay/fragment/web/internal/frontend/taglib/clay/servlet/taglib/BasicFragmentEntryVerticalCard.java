@@ -133,8 +133,11 @@ public class BasicFragmentEntryVerticalCard
 			return LabelItemListBuilder.add(
 				labelItem -> labelItem.setStatus(fragmentEntry.getStatus())
 			).add(
-				labelItem -> labelItem.setStatus(
-					WorkflowConstants.STATUS_WARNING)
+				labelItem -> {
+					labelItem.setDisplayType("warning");
+					labelItem.setLabel(
+						LanguageUtil.get(_httpServletRequest, "warnings"));
+				}
 			).add(
 				fragmentEntry::isCacheable,
 				labelItem -> labelItem.setLabel(

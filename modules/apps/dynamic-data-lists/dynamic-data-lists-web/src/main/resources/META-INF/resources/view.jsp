@@ -27,7 +27,7 @@ String displayStyle = ddlDisplayContext.getDisplayStyle();
 		<liferay-ui:search-container
 			id="ddlRecordSet"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			searchContainer="<%= ddlDisplayContext.getSearch() %>"
+			searchContainer="<%= ddlDisplayContext.getSearchContainer() %>"
 		>
 
 			<%

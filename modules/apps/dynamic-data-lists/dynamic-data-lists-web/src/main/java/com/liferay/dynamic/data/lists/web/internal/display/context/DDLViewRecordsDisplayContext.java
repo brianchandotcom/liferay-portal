@@ -340,7 +340,19 @@ public class DDLViewRecordsDisplayContext {
 		).buildPortletURL();
 	}
 
-	public SearchContainer<?> getSearch() throws PortalException {
+	public String getSearchActionURL() {
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
+		).setMVCPath(
+			_getMVCPath()
+		).setRedirect(
+			PortalUtil.getCurrentURL(_liferayPortletRequest)
+		).setParameter(
+			"recordSetId", _ddlRecordSet.getRecordSetId()
+		).buildString();
+	}
+
+	public SearchContainer<?> getSearchContainer() throws PortalException {
 		PortletURL portletURL = PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
@@ -420,18 +432,6 @@ public class DDLViewRecordsDisplayContext {
 		return recordSearchContainer;
 	}
 
-	public String getSearchActionURL() {
-		return PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setMVCPath(
-			_getMVCPath()
-		).setRedirect(
-			PortalUtil.getCurrentURL(_liferayPortletRequest)
-		).setParameter(
-			"recordSetId", _ddlRecordSet.getRecordSetId()
-		).buildString();
-	}
-
 	public String getSearchContainerId() {
 		return "ddlRecord";
 	}
@@ -455,7 +455,7 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	public int getTotalItems() throws PortalException {
-		SearchContainer<?> searchContainer = getSearch();
+		SearchContainer<?> searchContainer = getSearchContainer();
 
 		return searchContainer.getTotal();
 	}

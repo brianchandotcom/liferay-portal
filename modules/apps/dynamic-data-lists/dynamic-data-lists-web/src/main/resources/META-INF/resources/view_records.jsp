@@ -64,7 +64,7 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 		<liferay-ui:search-container
 			id="<%= ddlViewRecordsDisplayContext.getSearchContainerId() %>"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			searchContainer="<%= ddlViewRecordsDisplayContext.getSearch() %>"
+			searchContainer="<%= ddlViewRecordsDisplayContext.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.lists.model.DDLRecord"

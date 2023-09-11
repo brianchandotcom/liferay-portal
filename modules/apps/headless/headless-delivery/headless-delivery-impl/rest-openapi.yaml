@@ -2321,6 +2321,12 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
+                datePublished:
+                    # @review
+                    description:
+                        The article's scheduled publication date.
+                    format: date-time
+                    type: string
                 description:
                     description:
                         The article's description.

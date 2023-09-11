@@ -139,7 +139,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteVariant() {
+	macro deleteVariant(key_index = null) {
 		if (!(isSet(key_index))) {
 			var key_index = 1;
 		}

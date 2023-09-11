@@ -1141,8 +1141,18 @@ definition {
 				value1 = "Test Is in Draft Mode");
 		}
 
-		task ("Delete AB Test at AC") {
-			ABTest.deleteABTestInAC();
+		task ("Click on the delete button on the top") {
+			Button.clickDelete(button = "Delete");
+		}
+
+		task ("Get site assigned property name and get data source name") {
+			var dataSource = StringUtil.extractFirst(${assignedPropertyName}, " ");
+		}
+
+		task ("Click on the new tab open") {
+			SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
+
+			ABTest.deleteABTest();
 		}
 
 		task ("Go back to DXP") {

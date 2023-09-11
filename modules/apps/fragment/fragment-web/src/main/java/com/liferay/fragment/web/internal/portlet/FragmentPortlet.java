@@ -105,9 +105,10 @@ public class FragmentPortlet extends MVCPortlet {
 			FragmentCollectionContributorRegistry.class.getName(),
 			_fragmentCollectionContributorRegistry);
 		renderRequest.setAttribute(
-			FragmentWebKeys.FRAGMENT_COLLECTIONS,
-			_fragmentCollectionService.getFragmentCollections(
-				themeDisplay.getScopeGroupId()));
+			FragmentEntryProcessorRegistry.class.getName(),
+			_fragmentEntryProcessorRegistry);
+		renderRequest.setAttribute(
+			FragmentEntryValidator.class.getName(), _fragmentEntryValidator);
 		renderRequest.setAttribute(
 			FragmentPortletConfiguration.class.getName(),
 			fragmentPortletConfiguration);
@@ -115,19 +116,17 @@ public class FragmentPortlet extends MVCPortlet {
 			FragmentRendererController.class.getName(),
 			_fragmentRendererController);
 		renderRequest.setAttribute(
-			FragmentEntryProcessorRegistry.class.getName(),
-			_fragmentEntryProcessorRegistry);
+			FragmentWebKeys.FRAGMENT_COLLECTIONS,
+			_fragmentCollectionService.getFragmentCollections(
+				themeDisplay.getScopeGroupId()));
 		renderRequest.setAttribute(
 			FragmentWebKeys.INHERITED_FRAGMENT_COLLECTIONS,
 			_getInheritedFragmentCollections(themeDisplay));
-		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
 		renderRequest.setAttribute(
 			FragmentWebKeys.SYSTEM_FRAGMENT_COLLECTIONS,
 			_fragmentCollectionService.getFragmentCollections(
 				CompanyConstants.SYSTEM));
-
-		renderRequest.setAttribute(
-			FragmentEntryValidator.class.getName(), _fragmentEntryValidator);
+		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

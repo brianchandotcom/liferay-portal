@@ -10,18 +10,10 @@ package com.liferay.fragment.web.internal.constants;
  */
 public class FragmentWebKeys {
 
-	public static final String FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER =
-		"FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER";
-
 	public static final String FRAGMENT_COLLECTIONS = "FRAGMENT_COLLECTIONS";
-
-	public static final String FRAGMENT_ENTRY_PROCESSOR_REGISTRY =
-		"FRAGMENT_ENTRY_PROCESSOR_REGISTRY";
 
 	public static final String INHERITED_FRAGMENT_COLLECTIONS =
 		"INHERITED_FRAGMENT_COLLECTIONS";
-
-	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
 	public static final String SYSTEM_FRAGMENT_COLLECTIONS =
 		"SYSTEM_FRAGMENT_COLLECTIONS";

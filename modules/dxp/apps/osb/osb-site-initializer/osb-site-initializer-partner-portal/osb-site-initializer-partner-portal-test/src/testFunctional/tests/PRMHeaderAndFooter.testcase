@@ -49,7 +49,7 @@ definition {
 
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
-		for (var pageName : list "Home,Marketing,Sales,Enablement,Resources") {
+		for (var pageName : list "Home,Marketing,Sales,Technical,Enablement,Library") {
 			PRMNavigator.goToNavItem(navItem = ${pageName});
 
 			PRMNavigator.assertActiveBreadcrumb(activeItem = ${pageName});

@@ -8,6 +8,8 @@ definition {
 	property property.group = "analytics.cloud.profile";
 	property testray.main.component.name = "Analytics Cloud";
 
+	static var nameABTest = "AB Test";
+
 	setUp {
 		task ("Copy the token from AC") {
 			ACUtils.launchAC();
@@ -22,7 +24,27 @@ definition {
 		}
 
 		task ("Add a new site with a public widget page") {
+			ACUtils.addSiteAndPage(type = "content");
+		}
 
+		task ("Connect DXP to Analytics Cloud") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Go to Site Page") {
+			ACUtils.launchDXP();
+
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Create an AB Test") {
+			ABTest.createABTest(
+				goal = "Bounce Rate",
+				testTitle = ${nameABTest});
+
+			ABTest.createVariant(variantName = "Variant name");
 		}
 	}
 
@@ -57,10 +79,23 @@ definition {
 		}
 
 		task ("Click on the delete button on the top") {
+			Button.clickDelete();
 		}
 
+		task ("Get site assigned property name and get data source name") {
+			var dataSource = StringUtil.extractFirst(${assignedPropertyName}, " ");
+		}
+
+		task ("Click on the new tab open and delete the created AB test") {
 			SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
 
+			AssertTextEquals.assertPartialText(
+				locator1 = "Modal#MODAL_CONTENT",
+				value1 = "Are you sure you want to delete this? It will be deleted immediately. You will lose all data related to it. You will not be able to undo this operation.");
+
+			Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
+
+			Alert.viewSuccessMessageText(successMessage = "Success:Your request completed successfully.");
 		}
 
 		task ("Assert the empty state after the test is deleted") {
@@ -95,6 +130,10 @@ definition {
 
 		task ("Click on the review button on the top") {
 			Button.click(button = "Review");
+		}
+
+		task ("Get site assigned property name and get data source name") {
+			var dataSource = StringUtil.extractFirst(${assignedPropertyName}, " ");
 		}
 
 		task ("See the redirection to the review and run test modal in DXP") {

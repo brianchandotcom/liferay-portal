@@ -9,7 +9,6 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListener;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,12 +26,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -104,29 +105,42 @@ public class DefaultMessageBus implements MessageBus {
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, Destination.class, "destination.name",
-			new ServiceTrackerMapListener<String, Destination, Destination>() {
+			new ServiceTrackerCustomizer<Destination, Destination>() {
 
 				@Override
-				public void keyEmitted(
-					ServiceTrackerMap<String, Destination> serviceTrackerMap,
-					String key, Destination destination, Destination content) {
+				public Destination addingService(
+					ServiceReference<Destination> serviceReference) {
+
+					Destination destination = bundleContext.getService(
+						serviceReference);
 
 					destination.open();
 
 					DestinationWorkerConfiguration
 						destinationWorkerConfiguration =
-							_destinationWorkerConfigurations.get(key);
+							_destinationWorkerConfigurations.get(
+								destination.getName());
 
 					_updateDestination(
 						destination, destinationWorkerConfiguration);
+
+					return destination;
 				}
 
 				@Override
-				public void keyRemoved(
-					ServiceTrackerMap<String, Destination> serviceTrackerMap,
-					String key, Destination destination, Destination content) {
+				public void modifiedService(
+					ServiceReference<Destination> serviceReference,
+					Destination destination) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<Destination> serviceReference,
+					Destination destination) {
 
 					destination.destroy();
+
+					bundleContext.ungetService(serviceReference);
 				}
 
 			});

@@ -55,6 +55,8 @@ definition {
 
 		//ACUtils.tearDownAC();
 
+		ACUtils.tearDownABTest();
+
 		ACUtils.tearDownDXP();
 
 		if (${testLiferayVirtualInstance} == "true") {

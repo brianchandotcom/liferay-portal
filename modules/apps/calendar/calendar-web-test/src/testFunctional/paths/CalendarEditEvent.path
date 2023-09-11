@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>FORM_CONTENT</td>
-	<td>//div[@id='Content']</td>
+	<td>//div[contains(@class,'form-content')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1840,6 +1840,11 @@
   resolved "https://registry.yarnpkg.com/@liferay/js-api/-/js-api-0.3.0-pre.0.tgz#8bf4038878cc704eebc699617f63330b076f0aff"
   integrity sha512-OEjqmDyziskS0frCQDZmg5wlF83yhXda+4w6t/h88LQkzPcB6VwezTRdsRtPKk94BvfEPZoA/uFNs7/tJUbCYA==
 
+"@liferay/js-api@0.4.0-pre.0":
+  version "0.4.0-pre.0"
+  resolved "https://registry.yarnpkg.com/@liferay/js-api/-/js-api-0.4.0-pre.0.tgz#94eab0b54f7fc8f5518250d80d51d837376723a5"
+  integrity sha512-3aKkybbv/WWaFHmggtWx3ndQFwqQPQuHCHDzbGjWjemi9yB7dmb72NP8Sd53xlzlF1QrXI3mcEyLurT6H4ZPrQ==
+
 "@liferay/js-toolkit-core@3.0.1":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@liferay/js-toolkit-core/-/js-toolkit-core-3.0.1.tgz#1232febc41b17da00cd12f7de4eba7243df8c18d"
@@ -1880,10 +1885,10 @@
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-"@liferay/npm-scripts@48.1.2":
-  version "48.1.2"
-  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-48.1.2.tgz#d7424d35cb38d6d3efec4f4c318a2defc718cb76"
-  integrity sha512-3DyYB01VsfTrkIUo2aOha3rhUgohwpNYEexq6g2m6ws8i15Q7BwmaMG8y5XqAnrbOlTARuz6JHkVd60NuJL9AA==
+"@liferay/npm-scripts@48.1.4":
+  version "48.1.4"
+  resolved "https://registry.yarnpkg.com/@liferay/npm-scripts/-/npm-scripts-48.1.4.tgz#d9eaabab9a7c1216b981069b11416b5e82e8baea"
+  integrity sha512-k9YXqljLGzP8w7xhggWoYVNf19byrQZk7ZtnZXpesRKr77+jvDycMHO0vchrNeaB3z5Y0DEZDP2PbBHre0IrYQ==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"

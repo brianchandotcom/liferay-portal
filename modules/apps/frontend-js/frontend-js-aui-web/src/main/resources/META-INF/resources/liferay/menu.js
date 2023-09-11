@@ -250,7 +250,7 @@ AUI.add(
 					Liferay.once('beforeScreenFlip', () => {
 						overlay.destroy();
 
-						instance._overlay = null;
+						instance._overlayMap.clear();
 					});
 
 					instance._overlayMap.set(trigger.generateID(), overlay);

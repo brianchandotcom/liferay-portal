@@ -366,7 +366,25 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		return portletURL;
 	}
 
-	public SearchContainer<?> getSearch() {
+	public String getSearchActionURL() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		if (_ddmFormInstance == null) {
+			return portletURL.toString();
+		}
+
+		portletURL.setParameter(
+			"mvcPath", "/admin/view_form_instance_records.jsp");
+		portletURL.setParameter(
+			"redirect", ParamUtil.getString(_renderRequest, "redirect"));
+		portletURL.setParameter(
+			"formInstanceId",
+			String.valueOf(_ddmFormInstance.getFormInstanceId()));
+
+		return portletURL.toString();
+	}
+
+	public SearchContainer<?> getSearchContainer() {
 		PortletURL portletURL = PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
@@ -418,24 +436,6 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		return ddmFormInstanceRecordSearch;
 	}
 
-	public String getSearchActionURL() {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		if (_ddmFormInstance == null) {
-			return portletURL.toString();
-		}
-
-		portletURL.setParameter(
-			"mvcPath", "/admin/view_form_instance_records.jsp");
-		portletURL.setParameter(
-			"redirect", ParamUtil.getString(_renderRequest, "redirect"));
-		portletURL.setParameter(
-			"formInstanceId",
-			String.valueOf(_ddmFormInstance.getFormInstanceId()));
-
-		return portletURL.toString();
-	}
-
 	public String getSearchContainerId() {
 		return "ddmFormInstanceRecord";
 	}
@@ -459,7 +459,7 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 	}
 
 	public int getTotalItems() {
-		SearchContainer<?> searchContainer = getSearch();
+		SearchContainer<?> searchContainer = getSearchContainer();
 
 		return searchContainer.getTotal();
 	}

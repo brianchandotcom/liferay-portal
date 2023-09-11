@@ -59,7 +59,7 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 		<liferay-ui:search-container
 			id="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchContainerId() %>"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-			searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearch() %>"
+			searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord"
@@ -171,7 +171,7 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 				displayStyle="<%= ddmFormViewFormInstanceRecordsDisplayContext.getDisplayStyle() %>"
 				markupView="lexicon"
 				paginate="<%= false %>"
-				searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearch() %>"
+				searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchContainer() %>"
 			/>
 		</liferay-ui:search-container>
 	</aui:form>
@@ -180,7 +180,7 @@ PortletURL portletURL = ddmFormViewFormInstanceRecordsDisplayContext.getPortletU
 <clay:container-fluid>
 	<liferay-ui:search-paginator
 		markupView="lexicon"
-		searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearch() %>"
+		searchContainer="<%= ddmFormViewFormInstanceRecordsDisplayContext.getSearchContainer() %>"
 	/>
 </clay:container-fluid>
 

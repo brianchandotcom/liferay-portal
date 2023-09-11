@@ -627,7 +627,7 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public String getEmptyResultsMessage() {
-		SearchContainer<?> searchContainer = getSearch();
+		SearchContainer<?> searchContainer = getSearchContainer();
 
 		return LanguageUtil.get(
 			ddmFormAdminRequestHelper.getRequest(),
@@ -1078,7 +1078,19 @@ public class DDMFormAdminDisplayContext {
 		return ddmFormAdminRequestHelper.getScopeGroupId();
 	}
 
-	public SearchContainer<?> getSearch() {
+	public String getSearchActionURL() {
+		return PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCPath(
+			"/admin/view.jsp"
+		).setParameter(
+			"currentTab", "forms"
+		).setParameter(
+			"groupId", getScopeGroupId()
+		).buildString();
+	}
+
+	public SearchContainer<?> getSearchContainer() {
 		PortletURL portletURL = PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
@@ -1114,18 +1126,6 @@ public class DDMFormAdminDisplayContext {
 			new DDMFormInstanceRowChecker(renderResponse));
 
 		return ddmFormInstanceSearch;
-	}
-
-	public String getSearchActionURL() {
-		return PortletURLBuilder.createRenderURL(
-			renderResponse
-		).setMVCPath(
-			"/admin/view.jsp"
-		).setParameter(
-			"currentTab", "forms"
-		).setParameter(
-			"groupId", getScopeGroupId()
-		).buildString();
 	}
 
 	public String getSearchContainerId() {
@@ -1181,7 +1181,7 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public int getTotalItems() {
-		SearchContainer<?> searchContainer = getSearch();
+		SearchContainer<?> searchContainer = getSearchContainer();
 
 		return searchContainer.getTotal();
 	}

@@ -28,7 +28,7 @@ FieldSetPermissionCheckerHelper fieldSetPermissionCheckerHelper = ddmFormAdminDi
 			<c:when test="<%= ddmFormAdminDisplayContext.hasResults() %>">
 				<liferay-ui:search-container
 					id="structure"
-					searchContainer="<%= ddmFormAdminDisplayContext.getSearch() %>"
+					searchContainer="<%= ddmFormAdminDisplayContext.getSearchContainer() %>"
 				>
 					<liferay-ui:search-container-row
 						className="com.liferay.dynamic.data.mapping.model.DDMStructure"

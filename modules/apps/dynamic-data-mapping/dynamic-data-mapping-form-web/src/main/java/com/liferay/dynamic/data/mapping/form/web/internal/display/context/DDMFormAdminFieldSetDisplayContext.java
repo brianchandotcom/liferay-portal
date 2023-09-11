@@ -328,7 +328,20 @@ public class DDMFormAdminFieldSetDisplayContext
 	}
 
 	@Override
-	public SearchContainer<?> getSearch() {
+	public String getSearchActionURL() {
+		return PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCPath(
+			"/admin/view.jsp"
+		).setParameter(
+			"currentTab", "element-set"
+		).setParameter(
+			"groupId", getScopeGroupId()
+		).buildString();
+	}
+
+	@Override
+	public SearchContainer<?> getSearchContainer() {
 		PortletURL portletURL = PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
@@ -374,19 +387,6 @@ public class DDMFormAdminFieldSetDisplayContext
 		fieldSetSearch.setRowChecker(new FieldSetRowChecker(renderResponse));
 
 		return fieldSetSearch;
-	}
-
-	@Override
-	public String getSearchActionURL() {
-		return PortletURLBuilder.createRenderURL(
-			renderResponse
-		).setMVCPath(
-			"/admin/view.jsp"
-		).setParameter(
-			"currentTab", "element-set"
-		).setParameter(
-			"groupId", getScopeGroupId()
-		).buildString();
 	}
 
 	@Override

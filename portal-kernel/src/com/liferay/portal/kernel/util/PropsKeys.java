@@ -1583,9 +1583,6 @@ public interface PropsKeys {
 	public static final String MESSAGE_BOARDS_EXPIRE_BAN_INTERVAL =
 		"message.boards.expire.ban.interval";
 
-	public static final String MESSAGE_BOARDS_EXPIRE_BAN_JOB_INTERVAL =
-		"message.boards.expire.ban.job.interval";
-
 	public static final String MESSAGE_BOARDS_FLAGS_ENABLED =
 		"message.boards.flags.enabled";
 

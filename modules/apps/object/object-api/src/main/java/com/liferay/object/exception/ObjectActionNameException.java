@@ -7,7 +7,7 @@ package com.liferay.object.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,9 +28,9 @@ public class ObjectActionNameException extends PortalException {
 
 		public MustBeLessThan41Characters() {
 			super(
-				Collections.singletonList(41),
+				Arrays.asList(41, "name"),
 				"Name must be less than 41 characters",
-				"only-x-characters-are-allowed");
+				"only-x-characters-are-allowed-in-the-x-field");
 		}
 
 	}

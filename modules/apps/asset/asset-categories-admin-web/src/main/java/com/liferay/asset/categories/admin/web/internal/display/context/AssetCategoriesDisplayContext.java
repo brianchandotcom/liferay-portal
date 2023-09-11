@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -84,6 +85,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -648,6 +650,15 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public List<DropdownItem> getVocabulariesDropdownItems() {
+		LiferayPortletURL deleteVocabulariesURL =
+			_renderResponse.createActionURL();
+
+		deleteVocabulariesURL.setCopyCurrentRenderParameters(false);
+		deleteVocabulariesURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/asset_categories_admin/delete_asset_vocabulary");
+		deleteVocabulariesURL.setParameter("redirect", getDefaultRedirect());
+
 		ItemSelector itemSelector =
 			(ItemSelector)_httpServletRequest.getAttribute(
 				ItemSelector.class.getName());
@@ -662,6 +673,8 @@ public class AssetCategoriesDisplayContext {
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteVocabularies");
+				dropdownItem.putData(
+					"deleteVocabulariesURL", deleteVocabulariesURL.toString());
 				dropdownItem.putData(
 					"viewVocabulariesURL",
 					String.valueOf(

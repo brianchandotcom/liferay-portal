@@ -116,11 +116,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TAB</td>
-	<td>//*[contains(@class,'sidebar-body')]//*[@role="tablist"]//button[contains(text(),'${tabValue}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TARGET_ELEMENT</td>
 	<td>//div[contains(@class,"lfr-segments-experiment-click-goal-target-overlay-selected") and contains(@data-target-selector, "${key_idElement}")]</td>
 	<td></td>

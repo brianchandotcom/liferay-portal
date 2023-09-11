@@ -221,7 +221,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openTab(tabValue = null) {
+	macro openTab(tabValue) {
 		Click(
 			locator1 = "ABTest#TAB",
 			tabValue = ${tabValue});

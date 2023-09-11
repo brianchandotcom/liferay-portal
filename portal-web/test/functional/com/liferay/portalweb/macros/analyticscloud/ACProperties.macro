@@ -157,7 +157,7 @@ definition {
 
 		MenuItem.clickNoError(menuItem = "Delete");
 
-		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");
+		Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
 	}
 
 	@summary = "Default summary"

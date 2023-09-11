@@ -97,7 +97,7 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				"APIApplicationPublisher not available");
 		}
 
-		_endpointMatchersMap.remove(baseURL + companyId);
+		_endpointMatchersMap.remove(_getEndpointMatcherKey(baseURL, companyId));
 
 		Set<Long> companyIds = _getCompanyIds(baseURL);
 

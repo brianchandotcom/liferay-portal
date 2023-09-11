@@ -826,6 +826,35 @@ public class Sku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SkuUnitOfMeasure[] skuUnitOfMeasures;
 
+	@Schema
+	@Valid
+	public TierPrice[] getTierPrices() {
+		return tierPrices;
+	}
+
+	public void setTierPrices(TierPrice[] tierPrices) {
+		this.tierPrices = tierPrices;
+	}
+
+	@JsonIgnore
+	public void setTierPrices(
+		UnsafeSupplier<TierPrice[], Exception> tierPricesUnsafeSupplier) {
+
+		try {
+			tierPrices = tierPricesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected TierPrice[] tierPrices;
+
 	@DecimalMin("0")
 	@Schema(example = "1.1")
 	public Double getWeight() {
@@ -1253,6 +1282,26 @@ public class Sku implements Serializable {
 				sb.append(String.valueOf(skuUnitOfMeasures[i]));
 
 				if ((i + 1) < skuUnitOfMeasures.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (tierPrices != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"tierPrices\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < tierPrices.length; i++) {
+				sb.append(String.valueOf(tierPrices[i]));
+
+				if ((i + 1) < tierPrices.length) {
 					sb.append(", ");
 				}
 			}

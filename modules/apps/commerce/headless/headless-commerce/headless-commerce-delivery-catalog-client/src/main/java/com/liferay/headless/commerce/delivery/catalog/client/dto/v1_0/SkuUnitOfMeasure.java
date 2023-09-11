@@ -111,6 +111,25 @@ public class SkuUnitOfMeasure implements Cloneable, Serializable {
 
 	protected Integer precision;
 
+	public Price getPrice() {
+		return price;
+	}
+
+	public void setPrice(Price price) {
+		this.price = price;
+	}
+
+	public void setPrice(UnsafeSupplier<Price, Exception> priceUnsafeSupplier) {
+		try {
+			price = priceUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Price price;
+
 	public Boolean getPrimary() {
 		return primary;
 	}
@@ -173,6 +192,27 @@ public class SkuUnitOfMeasure implements Cloneable, Serializable {
 	}
 
 	protected BigDecimal rate;
+
+	public TierPrice[] getTierPrices() {
+		return tierPrices;
+	}
+
+	public void setTierPrices(TierPrice[] tierPrices) {
+		this.tierPrices = tierPrices;
+	}
+
+	public void setTierPrices(
+		UnsafeSupplier<TierPrice[], Exception> tierPricesUnsafeSupplier) {
+
+		try {
+			tierPrices = tierPricesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected TierPrice[] tierPrices;
 
 	@Override
 	public SkuUnitOfMeasure clone() throws CloneNotSupportedException {

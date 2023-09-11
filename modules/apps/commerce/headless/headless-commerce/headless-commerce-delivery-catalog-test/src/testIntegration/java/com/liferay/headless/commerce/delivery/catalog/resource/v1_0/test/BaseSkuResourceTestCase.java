@@ -648,6 +648,14 @@ public abstract class BaseSkuResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("tierPrices", additionalAssertFieldName)) {
+				if (sku.getTierPrices() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("weight", additionalAssertFieldName)) {
 				if (sku.getWeight() == null) {
 					valid = false;
@@ -1055,6 +1063,16 @@ public abstract class BaseSkuResourceTestCase {
 				if (!Objects.deepEquals(
 						sku1.getSkuUnitOfMeasures(),
 						sku2.getSkuUnitOfMeasures())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("tierPrices", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sku1.getTierPrices(), sku2.getTierPrices())) {
 
 					return false;
 				}
@@ -1597,6 +1615,11 @@ public abstract class BaseSkuResourceTestCase {
 		}
 
 		if (entityFieldName.equals("skuUnitOfMeasures")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("tierPrices")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

@@ -166,6 +166,33 @@ public class SkuUnitOfMeasure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer precision;
 
+	@Schema
+	@Valid
+	public Price getPrice() {
+		return price;
+	}
+
+	public void setPrice(Price price) {
+		this.price = price;
+	}
+
+	@JsonIgnore
+	public void setPrice(UnsafeSupplier<Price, Exception> priceUnsafeSupplier) {
+		try {
+			price = priceUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Price price;
+
 	@Schema(example = "true")
 	public Boolean getPrimary() {
 		return primary;
@@ -253,6 +280,35 @@ public class SkuUnitOfMeasure implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal rate;
 
+	@Schema
+	@Valid
+	public TierPrice[] getTierPrices() {
+		return tierPrices;
+	}
+
+	public void setTierPrices(TierPrice[] tierPrices) {
+		this.tierPrices = tierPrices;
+	}
+
+	@JsonIgnore
+	public void setTierPrices(
+		UnsafeSupplier<TierPrice[], Exception> tierPricesUnsafeSupplier) {
+
+		try {
+			tierPrices = tierPricesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected TierPrice[] tierPrices;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -328,6 +384,16 @@ public class SkuUnitOfMeasure implements Serializable {
 			sb.append(precision);
 		}
 
+		if (price != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"price\": ");
+
+			sb.append(String.valueOf(price));
+		}
+
 		if (primary != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -356,6 +422,26 @@ public class SkuUnitOfMeasure implements Serializable {
 			sb.append("\"rate\": ");
 
 			sb.append(rate);
+		}
+
+		if (tierPrices != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"tierPrices\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < tierPrices.length; i++) {
+				sb.append(String.valueOf(tierPrices[i]));
+
+				if ((i + 1) < tierPrices.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");

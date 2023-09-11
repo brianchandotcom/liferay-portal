@@ -9,6 +9,7 @@ import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.DDMOption;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.SkuUnitOfMeasure;
+import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.TierPrice;
 import com.liferay.headless.commerce.delivery.catalog.client.json.BaseJSONParser;
 
 import java.math.BigDecimal;
@@ -402,6 +403,26 @@ public class SkuSerDes {
 			sb.append("]");
 		}
 
+		if (sku.getTierPrices() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"tierPrices\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < sku.getTierPrices().length; i++) {
+				sb.append(String.valueOf(sku.getTierPrices()[i]));
+
+				if ((i + 1) < sku.getTierPrices().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (sku.getWeight() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -654,6 +675,13 @@ public class SkuSerDes {
 				String.valueOf(sku.getSkuUnitOfMeasures()));
 		}
 
+		if (sku.getTierPrices() == null) {
+			map.put("tierPrices", null);
+		}
+		else {
+			map.put("tierPrices", String.valueOf(sku.getTierPrices()));
+		}
+
 		if (sku.getWeight() == null) {
 			map.put("weight", null);
 		}
@@ -875,6 +903,22 @@ public class SkuSerDes {
 					}
 
 					sku.setSkuUnitOfMeasures(skuUnitOfMeasuresArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "tierPrices")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					TierPrice[] tierPricesArray =
+						new TierPrice[jsonParserFieldValues.length];
+
+					for (int i = 0; i < tierPricesArray.length; i++) {
+						tierPricesArray[i] = TierPriceSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					sku.setTierPrices(tierPricesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "weight")) {

@@ -41,18 +41,18 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (absolutePath.endsWith("/source-formatter.properties")) {
-			content = _fixCheckProperties(content);
-
-			_checkCheckstyleGroupAndOrder(fileName, content, "checkstyle.");
-			_checkSourceCheckGroupAndOrder(fileName, content, "source.check.");
-
-			_sortByRootSourceFormatter(fileName, absolutePath, content);
-
-			return _formatSourceFormatterProperties(fileName, content);
+		if (!absolutePath.endsWith("/source-formatter.properties")) {
+			return content;
 		}
 
-		return content;
+		content = _fixCheckProperties(content);
+
+		_checkCheckstyleGroupAndOrder(fileName, content, "checkstyle.");
+		_checkSourceCheckGroupAndOrder(fileName, content, "source.check.");
+
+		_sortByRootSourceFormatter(fileName, absolutePath, content);
+
+		return _formatSourceFormatterProperties(fileName, content);
 	}
 
 	private void _checkCheckstyleGroupAndOrder(

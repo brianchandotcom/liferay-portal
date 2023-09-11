@@ -24,7 +24,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesConstants" %><%@
 page import="com.liferay.asset.categories.admin.web.internal.display.context.AssetCategoriesDisplayContext" %><%@
 page import="com.liferay.asset.categories.admin.web.internal.display.context.AssetCategoriesManagementToolbarDisplayContext" %><%@
-page import="com.liferay.asset.categories.admin.web.internal.display.context.AssetVocabulariesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.asset.categories.admin.web.internal.servlet.taglib.util.AssetCategoryActionDropdownItemsProvider" %><%@
 page import="com.liferay.asset.categories.admin.web.internal.servlet.taglib.util.AssetVocabularyActionDropdownItemsProvider" %><%@
 page import="com.liferay.asset.categories.admin.web.internal.util.AssetCategoryUtil" %><%@

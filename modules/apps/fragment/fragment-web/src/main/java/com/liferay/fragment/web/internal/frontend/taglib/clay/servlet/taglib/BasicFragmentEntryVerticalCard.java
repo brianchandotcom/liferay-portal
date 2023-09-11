@@ -109,24 +109,15 @@ public class BasicFragmentEntryVerticalCard
 			).build();
 		}
 
-		if (_hasWarnings()) {
-			return LabelItemListBuilder.add(
-				labelItem -> labelItem.setStatus(fragmentEntry.getStatus())
-			).add(
-				labelItem -> {
-					labelItem.setDisplayType("warning");
-					labelItem.setLabel(
-						LanguageUtil.get(_httpServletRequest, "warnings"));
-				}
-			).add(
-				fragmentEntry::isCacheable,
-				labelItem -> labelItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "cached"))
-			).build();
-		}
-
 		return LabelItemListBuilder.add(
 			labelItem -> labelItem.setStatus(fragmentEntry.getStatus())
+		).add(
+			this::_hasWarnings,
+			labelItem -> {
+				labelItem.setDisplayType("warning");
+				labelItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "warnings"));
+			}
 		).add(
 			fragmentEntry::isCacheable,
 			labelItem -> labelItem.setLabel(

@@ -18,13 +18,12 @@ import {objectFieldInitialValues} from '../../ObjectField/EditObjectField';
 import {EditObjectFieldContent} from '../../ObjectField/EditObjectFieldContent';
 import {ModalDeleteObjectField} from '../../ObjectField/ModalDeleteObjectField';
 import {useObjectFieldForm} from '../../ObjectField/useObjectFieldForm';
-import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 
 import './RightSidebarObjectFieldDetails.scss';
 
 export function RightSidebarObjectFieldDetails() {
-	const [{baseResourceURL}] = useFolderContext();
 	const [showDeletionModal, setShowDeletionModal] = useState(false);
 	const [
 		showDeletionNotAllowedModal,
@@ -35,6 +34,7 @@ export function RightSidebarObjectFieldDetails() {
 
 	const [
 		{
+			baseResourceURL,
 			elements,
 			filterOperators,
 			forbiddenChars,
@@ -44,7 +44,7 @@ export function RightSidebarObjectFieldDetails() {
 			workflowStatusJSONArray,
 		},
 		dispatch,
-	] = useFolderContext();
+	] = useObjectFolderContext();
 
 	const selectedNode = elements.find((element) => {
 		if (isNode(element)) {
@@ -100,17 +100,18 @@ export function RightSidebarObjectFieldDetails() {
 			delete objectField.system;
 
 			try {
-				const updatedFieldResponse = await API.save<ObjectField>(
-					`/o/object-admin/v1.0/object-fields/${id}`,
-					objectField
-				);
+				const updatedFieldResponse = await API.save<ObjectField>({
+					item: objectField,
+					returnValue: true,
+					url: `/o/object-admin/v1.0/object-fields/${id}`,
+				});
 
 				dispatch({
 					payload: {
 						edges,
 						nodes,
 						selectedNode,
-						updatedField: updatedFieldResponse,
+						updatedField: updatedFieldResponse as ObjectField,
 					},
 					type: TYPES.UPDATE_OBJECT_FIELD,
 				});

@@ -183,7 +183,7 @@ export declare function save<T>({
 	method,
 	returnValue,
 	url,
-}: saveProps): Promise<T>;
+}: saveProps): Promise<T | undefined>;
 export declare function addPickListItem({
 	id,
 	key,

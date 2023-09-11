@@ -38,7 +38,7 @@ public class ObjectValidationRuleServiceImpl
 	public ObjectValidationRule addObjectValidationRule(
 			long objectDefinitionId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String outputType, String script,
+			String outputType, String script, boolean system,
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
@@ -47,7 +47,7 @@ public class ObjectValidationRuleServiceImpl
 
 		return objectValidationRuleLocalService.addObjectValidationRule(
 			getUserId(), objectDefinitionId, active, engine, errorLabelMap,
-			nameMap, outputType, script, objectValidationRuleSettings);
+			nameMap, outputType, script, system, objectValidationRuleSettings);
 	}
 
 	@Override

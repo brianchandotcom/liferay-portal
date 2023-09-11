@@ -81,7 +81,7 @@ public class ObjectValidationRuleLocalServiceImpl
 	public ObjectValidationRule addObjectValidationRule(
 			long userId, long objectDefinitionId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String outputType, String script,
+			String outputType, String script, boolean system,
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
@@ -106,6 +106,7 @@ public class ObjectValidationRuleLocalServiceImpl
 		objectValidationRule.setNameMap(nameMap);
 		objectValidationRule.setOutputType(outputType);
 		objectValidationRule.setScript(script);
+		objectValidationRule.setSystem(system);
 
 		objectValidationRule = objectValidationRulePersistence.update(
 			objectValidationRule);

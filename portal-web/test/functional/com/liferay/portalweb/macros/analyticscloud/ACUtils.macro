@@ -1041,6 +1041,23 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro tearDownABTest() {
+		ACUtils.launchDXP();
+
+		ACUtils.navigateToSitePage(
+			pageName = "AC Page",
+			siteName = "Site Name");
+
+		ABTest.openABTestPanel();
+
+		if (IsElementPresent(key_text = "Terminate Test", locator1 = "Button#ANY")) {
+			ABTest.terminateTest();
+		}
+
+		ABTest.deleteABTest();
+	}
+
+	@summary = "Default summary"
 	macro tearDownCommerce() {
 		JSONUser.tearDownNonAdminUsers();
 
@@ -1058,23 +1075,6 @@ definition {
 		ACUtils.launchDXP();
 
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
-	}
-
-	@summary = "Default summary"
-	macro tearDownABTest() {
-		ACUtils.launchDXP();
-
-		ACUtils.navigateToSitePage(
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ABTest.openABTestPanel();
-
-		if (IsElementPresent(key_text = "Terminate Test", locator1 = "Button#ANY")) {
-			ABTest.terminateTest();
-		}
-
-		ABTest.deleteABTest();
 	}
 
 	@summary = "Default summary"

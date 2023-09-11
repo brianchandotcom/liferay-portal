@@ -36,6 +36,12 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 
 	<liferay-ui:success key="displayPageTemplateDeleted" message='<%= GetterUtil.getString(MultiSessionMessages.get(renderRequest, "displayPageTemplateDeleted")) %>' />
 
+	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-189856") %>'>
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= displayPageDisplayContext.getLayoutPageTemplateBreadcrumbEntries(renderResponse) %>"
+		/>
+	</c:if>
+
 	<liferay-ui:search-container
 		id="displayPages"
 		searchContainer="<%= displayPageDisplayContext.getDisplayPagesSearchContainer() %>"

@@ -9,21 +9,29 @@ import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminP
 import com.liferay.layout.page.template.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -193,6 +201,63 @@ public class DisplayPageDisplayContext {
 		return _keywords;
 	}
 
+	public List<BreadcrumbEntry> getLayoutPageTemplateBreadcrumbEntries(
+		RenderResponse renderResponse) {
+
+		long curLayoutPageTemplateCollectionId =
+			_getLayoutPageTemplateCollectionId();
+
+		PortletURL portletURL = PortletURLBuilder.createRenderURL(
+			renderResponse
+		).setMVCPath(
+			"/view_display_pages.jsp"
+		).setNavigation(
+			() -> {
+				String navigation = ParamUtil.getString(
+					_httpServletRequest, "navigation");
+
+				if (Validator.isNotNull(navigation)) {
+					return navigation;
+				}
+
+				return null;
+			}
+		).setTabs1(
+			"display-page-templates"
+		).buildPortletURL();
+
+		if (curLayoutPageTemplateCollectionId ==
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT) {
+
+			return Collections.singletonList(
+				_getRootBreadcrumbEntry(_httpServletRequest, portletURL));
+		}
+
+		LayoutPageTemplateCollection currentLayoutPageTemplateCollection =
+			LayoutPageTemplateCollectionLocalServiceUtil.
+				fetchLayoutPageTemplateCollection(
+					curLayoutPageTemplateCollectionId);
+
+		List<LayoutPageTemplateCollection>
+			ancestorsLayoutPageTemplateCollectionList =
+				currentLayoutPageTemplateCollection.getAncestors();
+
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
+		TransformUtil.transform(
+			ancestorsLayoutPageTemplateCollectionList,
+			ancestor -> breadcrumbEntries.add(
+				_createBreadCrumbEntry(portletURL, ancestor)));
+
+		breadcrumbEntries.add(
+			_getRootBreadcrumbEntry(_httpServletRequest, portletURL));
+
+		Collections.reverse(breadcrumbEntries);
+
+		return breadcrumbEntries;
+	}
+
 	public long getLayoutPageTemplateEntryId() {
 		if (Validator.isNotNull(_layoutPageTemplateEntryId)) {
 			return _layoutPageTemplateEntryId;
@@ -282,6 +347,22 @@ public class DisplayPageDisplayContext {
 		return false;
 	}
 
+	private BreadcrumbEntry _createBreadCrumbEntry(
+		PortletURL portletURL, LayoutPageTemplateCollection ancestor) {
+
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		breadcrumbEntry.setTitle(ancestor.getName());
+
+		portletURL.setParameter(
+			"layoutPageTemplateCollectionId",
+			String.valueOf(ancestor.getLayoutPageTemplateCollectionId()));
+
+		breadcrumbEntry.setURL(portletURL.toString());
+
+		return breadcrumbEntry;
+	}
+
 	private long _getLayoutPageTemplateCollectionId() {
 		if (_layoutPageTemplateCollectionId != null) {
 			return _layoutPageTemplateCollectionId;
@@ -312,6 +393,22 @@ public class DisplayPageDisplayContext {
 		}
 
 		return null;
+	}
+
+	private BreadcrumbEntry _getRootBreadcrumbEntry(
+		HttpServletRequest httpServletRequest, PortletURL portletURL) {
+
+		BreadcrumbEntry homeBreadcrumbEntry = new BreadcrumbEntry();
+
+		homeBreadcrumbEntry.setTitle(
+			LanguageUtil.get(httpServletRequest, "home"));
+
+		portletURL.setParameter(
+			"layoutPageTemplateCollectionId", String.valueOf(0));
+
+		homeBreadcrumbEntry.setURL(portletURL.toString());
+
+		return homeBreadcrumbEntry;
 	}
 
 	private SearchContainer<?> _displayPagesSearchContainer;

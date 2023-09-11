@@ -100,7 +100,7 @@ public class AWSTranslator implements Translator {
 
 			@Override
 			public Map<String, Boolean> getHTMLMap() {
-				return null;
+				return translatorPacket.getHTMLMap();
 			}
 
 			@Override

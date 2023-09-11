@@ -119,7 +119,7 @@ public class AzureTranslator implements Translator {
 
 				@Override
 				public Map<String, Boolean> getHTMLMap() {
-					return null;
+					return translatorPacket.getHTMLMap();
 				}
 
 				@Override

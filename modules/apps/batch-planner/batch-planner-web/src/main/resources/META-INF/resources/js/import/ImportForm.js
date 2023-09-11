@@ -172,16 +172,25 @@ function ImportForm({
 			return;
 		}
 
+		if (!fileFields) {
+			openToast({
+				message: Liferay.Language.get('please-upload-a-file'),
+				type: 'danger',
+			});
+
+			return;
+		}
+
 		if (!formIsValid) {
 			openToast({
 				message: Liferay.Language.get(
-					'you-must-map-all-required-fields-before-continuing'
+					'you-must-map-at-least-one-field-and-all-required-fields-before-continuing'
 				),
 				title: Liferay.Language.get('error'),
 				type: 'danger',
 			});
 		}
-	}, [formIsValid, formIsVisible]);
+	}, [formIsValid, formIsVisible, fileFields]);
 
 	return (
 		<>

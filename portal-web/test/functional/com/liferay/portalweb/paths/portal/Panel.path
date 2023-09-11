@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>PANEL_TITLE</td>
-	<td>//div[contains(@class,'panel-page-category')]//span[contains(.,'${key_componentName}')]</td>
+	<td>//span[contains(@class,'panel-title')][normalize-space()='${key_componentName}']</td>
 	<td></td>
 </tr>
 <tr>

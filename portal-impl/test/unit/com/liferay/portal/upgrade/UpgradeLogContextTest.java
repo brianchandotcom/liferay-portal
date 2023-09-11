@@ -86,8 +86,8 @@ public class UpgradeLogContextTest {
 		Assert.assertEquals(
 			_defaultContext,
 			_logContext.getContext(
-				"com.liferay.portal.upgrade.internal.registry." +
-					"UpgradeStepRegistratorTracker"));
+				"com.liferay.portal.upgrade.internal.executor." +
+					"UpgradeExecutor"));
 		Assert.assertEquals(
 			_defaultContext,
 			_logContext.getContext(

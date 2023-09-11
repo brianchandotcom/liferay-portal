@@ -151,8 +151,7 @@ public class ReleasePublisherTest {
 
 	private void _registerUpgradeProcesses(boolean throwException) {
 		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.upgrade.internal.registry." +
-					"UpgradeStepRegistratorTracker",
+				"com.liferay.portal.upgrade.internal.executor.UpgradeExecutor",
 				LoggerTestUtil.OFF);
 			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.upgrade.internal.release." +

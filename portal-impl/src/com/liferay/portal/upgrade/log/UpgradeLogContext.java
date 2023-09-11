@@ -92,8 +92,7 @@ public class UpgradeLogContext implements LogContext {
 	private final Set<String> _upgradeClassNames = SetUtil.fromArray(
 		DBUpgrader.class.getName(), LoggingTimer.class.getName(),
 		VerifyProperties.class.getName(),
-		"com.liferay.portal.upgrade.internal.registry." +
-			"UpgradeStepRegistratorTracker",
+		"com.liferay.portal.upgrade.internal.executor.UpgradeExecutor",
 		"com.liferay.portal.upgrade.internal.release.ReleaseManagerImpl",
 		"com.liferay.portal.upgrade.internal.report.UpgradeReport",
 		"com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder");

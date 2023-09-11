@@ -264,8 +264,6 @@ definition {
 		}
 
 		task ("And creates two claims") {
-			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
-
 			PRMMDFClaim.createNewClaim(
 				listLeads = "Document_1.xlsx",
 				reimbursementInvoice = "Document_1.png",

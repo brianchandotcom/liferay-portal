@@ -773,6 +773,7 @@
 		<column localized="true" name="name" type="String" />
 		<column name="outputType" type="String" />
 		<column name="script" type="String" />
+		<column name="system" type="boolean" />
 
 		<!-- Finder methods -->
 

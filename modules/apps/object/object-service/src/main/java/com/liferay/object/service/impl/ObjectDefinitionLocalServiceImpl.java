@@ -769,6 +769,13 @@ public class ObjectDefinitionLocalServiceImpl
 		return objectDefinitionPersistence.findByObjectFolderId(objectFolderId);
 	}
 
+	public int getObjectFolderObjectDefinitionsCount(long objectFolderId)
+		throws PortalException {
+
+		return objectDefinitionPersistence.countByObjectFolderId(
+			objectFolderId);
+	}
+
 	@Override
 	public List<ObjectDefinition> getSystemObjectDefinitions() {
 		return objectDefinitionPersistence.findBySystem(true);

@@ -10,6 +10,7 @@ import Breadcrumbs from '../breadcrumbs/Breadcrumbs';
 import MillerColumns from '../miller_columns/MillerColumns';
 
 const Layout = ({
+	getItemActionsURL,
 	getItemChildrenURL,
 	initialBreadcrumbEntries,
 	initialLayoutColumns,
@@ -164,6 +165,7 @@ const Layout = ({
 			<Breadcrumbs entries={breadcrumbEntries} />
 
 			<MillerColumns
+				getItemActionsURL={getItemActionsURL}
 				initialColumns={layoutColumns}
 				isPrivateLayoutsEnabled={isPrivateLayoutsEnabled}
 				isSiteTemplate={isSiteTemplate}
@@ -182,6 +184,7 @@ export default function ({
 	context: {namespace},
 	props: {
 		breadcrumbEntries,
+		getItemActionsURL,
 		getItemChildrenURL,
 		isLayoutSetPrototype = false,
 		isPrivateLayoutsEnabled,
@@ -193,6 +196,7 @@ export default function ({
 }) {
 	return (
 		<Layout
+			getItemActionsURL={getItemActionsURL}
 			getItemChildrenURL={getItemChildrenURL}
 			initialBreadcrumbEntries={breadcrumbEntries}
 			initialLayoutColumns={layoutColumns}

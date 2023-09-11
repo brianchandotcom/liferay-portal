@@ -149,6 +149,13 @@ export default function Validations({
 							localizeLabel: true,
 							sortable: false,
 						},
+						{
+							expand: false,
+							fieldName: 'system',
+							label: Liferay.Language.get('source'),
+							localizeLabel: true,
+							sortable: false,
+						},
 					],
 				},
 				thumbnail: 'table',

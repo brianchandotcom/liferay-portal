@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -156,9 +155,7 @@ public class AssetCategoriesDisplayContext {
 		).buildString();
 	}
 
-	public String getAssetType(AssetVocabulary vocabulary)
-		throws PortalException {
-
+	public String getAssetType(AssetVocabulary vocabulary) {
 		long[] selectedClassNameIds = vocabulary.getSelectedClassNameIds();
 		long[] selectedClassTypePKs = vocabulary.getSelectedClassTypePKs();
 
@@ -186,12 +183,12 @@ public class AssetCategoriesDisplayContext {
 
 						name = classType.getName();
 					}
-					catch (NoSuchModelException noSuchModelException) {
+					catch (PortalException portalException) {
 						if (_log.isDebugEnabled()) {
 							_log.debug(
 								"Unable to get asset type for class type " +
 									"primary key " + classTypePK,
-								noSuchModelException);
+								portalException);
 						}
 
 						continue;

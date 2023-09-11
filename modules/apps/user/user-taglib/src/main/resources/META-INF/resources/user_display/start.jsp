@@ -7,45 +7,27 @@
 
 <%@ include file="/user_display/init.jsp" %>
 
-<liferay-util:buffer
-	var="html"
->
-	<liferay-user:user-portrait
-		user="<%= userDisplay %>"
-		userName="<%= (userDisplay != null) ? userDisplay.getFullName() : userName %>"
-	/>
-</liferay-util:buffer>
+<div class="profile-header">
+	<div class="nameplate">
+		<div class="nameplate-field">
+			<liferay-user:user-portrait
+				user="<%= userDisplay %>"
+			/>
+		</div>
 
-<c:choose>
-	<c:when test="<%= showUserDetails || showUserName %>">
-		<div class="profile-header">
-			<div class="nameplate">
-				<div class="nameplate-field">
-					<%= html %>
-				</div>
+		<div class="nameplate-content">
+			<div class="heading4">
 
-				<c:if test="<%= showUserName %>">
-					<div class="nameplate-content">
-						<div class="heading4">
+				<%
+				if (Validator.isNull(url) && (userDisplay != null)) {
+					url = userDisplay.getDisplayURL(themeDisplay);
+				}
+				%>
 
-							<%
-							if (Validator.isNull(url) && (userDisplay != null)) {
-								url = userDisplay.getDisplayURL(themeDisplay);
-							}
-							%>
+				<aui:a href="<%= url %>">
+					<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
+				</aui:a>
+			</div>
+		</div>
 
-							<aui:a href="<%= showLink ? url : null %>">
-								<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
-							</aui:a>
-						</div>
-					</div>
-				</c:if>
-
-				<c:if test="<%= showUserDetails %>">
-					<div class="nameplate-content">
-				</c:if>
-	</c:when>
-	<c:otherwise>
-		<%= html %>
-	</c:otherwise>
-</c:choose>
+		<div class="nameplate-content">

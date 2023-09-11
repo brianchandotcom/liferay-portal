@@ -7,10 +7,6 @@
 
 <%@ include file="/user_display/init.jsp" %>
 
-<c:if test="<%= showUserDetails || showUserName %>">
-			<c:if test="<%= showUserDetails %>">
-				</div>
-			</c:if>
 		</div>
 	</div>
-</c:if>
+</div>

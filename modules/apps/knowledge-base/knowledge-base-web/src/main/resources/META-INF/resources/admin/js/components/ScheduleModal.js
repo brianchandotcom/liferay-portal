@@ -14,10 +14,10 @@ import React, {useEffect, useState} from 'react';
 
 const SCHEDULE_EVENT_NAME = 'scheduleKBArticle';
 export default function ScheduleModal({
-	namespace,
-	scheduledDate: initialScheduleDate,
+	displayDate: initialDisplayDate,
+	portletNamespace,
 }) {
-	const [scheduledDate, setScheduledDate] = useState(initialScheduleDate);
+	const [displayDate, setDisplayDate] = useState(initialDisplayDate);
 	const [invalidDate, setInvalidDate] = useState(false);
 
 	const closeModal = () => {
@@ -30,22 +30,22 @@ export default function ScheduleModal({
 		const openerWindow = getOpener();
 
 		const displayDateInput = openerWindow.document.getElementById(
-			`${namespace}displayDate`
+			`${portletNamespace}displayDate`
 		);
-		displayDateInput.value = scheduledDate;
+		displayDateInput.value = displayDate;
 
-		getOpener().Liferay.fire(SCHEDULE_EVENT_NAME);
+		openerWindow.Liferay.fire(SCHEDULE_EVENT_NAME);
 		closeModal();
 	};
 
 	useEffect(() => {
 		setInvalidDate(
 			!(
-				isAfter(Date.parse(scheduledDate), Date.now()) ||
-				(Number.isNaN(Date.parse(scheduledDate)) && !scheduledDate)
+				isAfter(Date.parse(displayDate), Date.now()) ||
+				(Number.isNaN(Date.parse(displayDate)) && !displayDate)
 			)
 		);
-	}, [scheduledDate]);
+	}, [displayDate]);
 
 	return (
 		<div className="schedule-modal">
@@ -56,10 +56,10 @@ export default function ScheduleModal({
 
 				<div className={classnames({'has-error': invalidDate})}>
 					<ClayDatePicker
-						onChange={setScheduledDate}
+						onChange={setDisplayDate}
 						placeholder="YYYY-MM-DD HH:mm"
 						time
-						value={scheduledDate}
+						value={displayDate}
 					/>
 				</div>
 
@@ -87,7 +87,7 @@ export default function ScheduleModal({
 						</ClayButton>
 
 						<ClayButton
-							disabled={invalidDate || !scheduledDate}
+							disabled={invalidDate || !displayDate}
 							displayType="primary"
 							onClick={handleScheduleButtonClick}
 						>
@@ -101,6 +101,6 @@ export default function ScheduleModal({
 }
 
 ScheduleModal.propTypes = {
-	namespace: PropTypes.string.isRequired,
-	scheduledDate: PropTypes.string,
+	displayDate: PropTypes.string,
+	portletNamespace: PropTypes.string.isRequired,
 };

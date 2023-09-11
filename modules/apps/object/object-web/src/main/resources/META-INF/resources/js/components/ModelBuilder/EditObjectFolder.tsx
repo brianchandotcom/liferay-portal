@@ -171,7 +171,7 @@ export default function EditObjectFolder({
 					objectFolders: objectFoldersWithObjectDefinitions,
 					selectedObjectFolder: currentObjectFolder,
 				},
-				type: TYPES.CREATE_MODEL_BUILDER_STRUCTURE,
+				type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE,
 			});
 
 			dispatch({

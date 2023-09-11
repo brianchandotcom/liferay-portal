@@ -438,7 +438,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			};
 		}
 
-		case TYPES.CREATE_MODEL_BUILDER_STRUCTURE: {
+		case TYPES.UPDATE_MODEL_BUILDER_STRUCTURE: {
 			const {objectFolders, selectedObjectFolder} = action.payload;
 
 			const newLeftSidebarItems = objectFolders.map((objectFolder) => {

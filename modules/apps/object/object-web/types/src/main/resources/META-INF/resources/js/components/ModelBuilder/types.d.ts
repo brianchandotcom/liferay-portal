@@ -68,7 +68,7 @@ export declare type TAction =
 				objectFolders: ObjectFolder[];
 				selectedObjectFolder: ObjectFolder;
 			};
-			type: TYPES.CREATE_MODEL_BUILDER_STRUCTURE;
+			type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE;
 	  }
 	| {
 			payload: {

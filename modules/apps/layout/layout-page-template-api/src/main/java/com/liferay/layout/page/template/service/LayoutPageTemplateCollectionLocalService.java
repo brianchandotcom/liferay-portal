@@ -84,16 +84,6 @@ public interface LayoutPageTemplateCollectionLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long userId, long groupId, String name, String description,
-			int type, ServiceContext serviceContext)
-		throws PortalException;
-
-	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long userId, long groupId, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	/**
 	 * Creates a new layout page template collection with the primary key. Does not add the layout page template collection to the database.
 	 *
@@ -299,19 +289,21 @@ public interface LayoutPageTemplateCollectionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, int start, int end, int type);
+		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
-		int type);
+		long groupId, int type, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, String name, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
-		int type);
+		long groupId, int type, int start, int end,
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
+		long groupId, String name, int type, int start, int end,
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator);
 
 	/**
 	 * Returns all the layout page template collections matching the UUID and company.
@@ -391,7 +383,7 @@ public interface LayoutPageTemplateCollectionLocalService
 
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name,
-			String description, int type)
+			String description)
 		throws PortalException;
 
 	@Override

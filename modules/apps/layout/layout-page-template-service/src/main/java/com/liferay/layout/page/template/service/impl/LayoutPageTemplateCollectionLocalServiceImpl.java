@@ -261,13 +261,16 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 				layoutPageTemplateCollectionId);
 
 		if (!Objects.equals(layoutPageTemplateCollection.getName(), name)) {
-			_validate(layoutPageTemplateCollection.getGroupId(), name, layoutPageTemplateCollection.getType());
+			_validate(
+				layoutPageTemplateCollection.getGroupId(), name,
+				layoutPageTemplateCollection.getType());
 		}
 
 		layoutPageTemplateCollection.setModifiedDate(new Date());
 		layoutPageTemplateCollection.setLayoutPageTemplateCollectionKey(
 			_generateLayoutPageTemplateCollectionKey(
-				layoutPageTemplateCollection.getGroupId(), name, layoutPageTemplateCollection.getType()));
+				layoutPageTemplateCollection.getGroupId(), name,
+				layoutPageTemplateCollection.getType()));
 		layoutPageTemplateCollection.setName(name);
 		layoutPageTemplateCollection.setDescription(description);
 

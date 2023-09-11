@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -18,10 +18,13 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
+import com.liferay.user.taglib.internal.servlet.ServletContextUtil;
+
+import java.util.function.Supplier;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspWriter;
-import java.util.function.Supplier;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Eudaldo Alonso
@@ -150,6 +153,13 @@ public class UserPortraitTag extends IncludeTag {
 	public void setImageCssClass(String imageCssClass) {
 	}
 
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
+	}
+
 	public void setSize(String size) {
 		_size = size;
 	}
@@ -228,8 +238,7 @@ public class UserPortraitTag extends IncludeTag {
 		return "sticker-" + size;
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/user_portrait/page.jsp";
+	private static final String _PAGE = "/user_portrait/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserPortraitTag.class);

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -12,8 +12,10 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
+import com.liferay.user.taglib.internal.servlet.ServletContextUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Pei-Jung Lan
@@ -34,6 +36,13 @@ public class UserNameFieldsTag extends IncludeTag {
 
 	public void setContact(Contact contact) {
 		_contact = contact;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setUser(User user) {
@@ -74,15 +83,14 @@ public class UserNameFieldsTag extends IncludeTag {
 		}
 
 		httpServletRequest.setAttribute(
-			"liferay-ui:user-name-fields:bean", _bean);
+			"liferay-user:user-name-fields:bean", _bean);
 		httpServletRequest.setAttribute(
-			"liferay-ui:user-name-fields:contact", _contact);
+			"liferay-user:user-name-fields:contact", _contact);
 		httpServletRequest.setAttribute(
-			"liferay-ui:user-name-fields:user", getUser());
+			"liferay-user:user-name-fields:user", getUser());
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/user_name_fields/page.jsp";
+	private static final String _PAGE = "/user_name_fields/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserNameFieldsTag.class);

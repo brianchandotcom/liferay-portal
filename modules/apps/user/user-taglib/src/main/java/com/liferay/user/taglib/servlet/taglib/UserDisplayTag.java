@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -28,7 +28,7 @@ public class UserDisplayTag extends TagSupport {
 			HttpServletRequest httpServletRequest =
 				(HttpServletRequest)pageContext.getRequest();
 
-			httpServletRequest.removeAttribute("liferay-ui:user-display:url");
+			httpServletRequest.removeAttribute("liferay-user:user-display:url");
 
 			return EVAL_PAGE;
 		}
@@ -44,9 +44,9 @@ public class UserDisplayTag extends TagSupport {
 				(HttpServletRequest)pageContext.getRequest();
 
 			httpServletRequest.setAttribute(
-				"liferay-ui:user-display:author", String.valueOf(_author));
+				"liferay-user:user-display:author", String.valueOf(_author));
 			httpServletRequest.setAttribute(
-				"liferay-ui:user-display:displayStyle",
+				"liferay-user:user-display:displayStyle",
 				String.valueOf(_displayStyle));
 
 			if (Validator.isNull(_imageCssClass)) {
@@ -54,15 +54,16 @@ public class UserDisplayTag extends TagSupport {
 			}
 
 			httpServletRequest.setAttribute(
-				"liferay-ui:user-display:imageCssClass", _imageCssClass);
+				"liferay-user:user-display:imageCssClass", _imageCssClass);
 
 			httpServletRequest.setAttribute(
-				"liferay-ui:user-display:showLink", String.valueOf(_showLink));
+				"liferay-user:user-display:showLink",
+				String.valueOf(_showLink));
 			httpServletRequest.setAttribute(
-				"liferay-ui:user-display:showUserDetails",
+				"liferay-user:user-display:showUserDetails",
 				String.valueOf(_showUserDetails));
 			httpServletRequest.setAttribute(
-				"liferay-ui:user-display:showUserName",
+				"liferay-user:user-display:showUserName",
 				String.valueOf(_showUserName));
 
 			if (Validator.isNull(_userIconCssClass)) {
@@ -70,13 +71,13 @@ public class UserDisplayTag extends TagSupport {
 			}
 
 			httpServletRequest.setAttribute(
-				"liferay-ui:user-display:userIconCssClass",
+				"liferay-user:user-display:userIconCssClass",
 				String.valueOf(_userIconCssClass));
 
 			httpServletRequest.setAttribute(
-				"liferay-ui:user-display:userId", String.valueOf(_userId));
+				"liferay-user:user-display:userId", String.valueOf(_userId));
 			httpServletRequest.setAttribute(
-				"liferay-ui:user-display:userName", _userName);
+				"liferay-user:user-display:userName", _userName);
 
 			User user = UserLocalServiceUtil.fetchUserById(_userId);
 
@@ -86,19 +87,19 @@ public class UserDisplayTag extends TagSupport {
 				}
 
 				httpServletRequest.setAttribute(
-					"liferay-ui:user-display:user", user);
+					"liferay-user:user-display:user", user);
 
 				pageContext.setAttribute("userDisplay", user);
 			}
 			else {
 				httpServletRequest.removeAttribute(
-					"liferay-ui:user-display:user");
+					"liferay-user:user-display:user");
 
 				pageContext.removeAttribute("userDisplay");
 			}
 
 			httpServletRequest.setAttribute(
-				"liferay-ui:user-display:url", _url);
+				"liferay-user:user-display:url", _url);
 
 			PortalIncludeUtil.include(pageContext, getStartPage());
 
@@ -169,7 +170,7 @@ public class UserDisplayTag extends TagSupport {
 			return _endPage;
 		}
 
-		return "/html/taglib/ui/user_display/end.jsp";
+		return "/user_display/end.jsp";
 	}
 
 	protected String getStartPage() {
@@ -177,7 +178,7 @@ public class UserDisplayTag extends TagSupport {
 			return _startPage;
 		}
 
-		return "/html/taglib/ui/user_display/start.jsp";
+		return "/user_display/start.jsp";
 	}
 
 	private boolean _author;

@@ -1,4 +1,4 @@
-# Checks for .bnd, .ftl, .gradle, .java, .jsp, .jspf, .scss or .vm
+# Checks for .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm
 
 Check | Category | Description
 ----- | -------- | -----------
@@ -8,6 +8,7 @@ UpgradeGetClassNamesMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-chec
 UpgradeGetImagePreviewURLMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces the references of the method 'DLUtil.getImagePreviewURL' with the method 'getImagePreviewURL' of 'DLURLHelper' class |
 UpgradeGetPortletGroupIdMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code migration of the method 'getPortletGroupId' to 'getScopeGroupId' |
 UpgradeGradleIncludeResourceCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces with `compileInclude` the configuration attribute for dependencies in `build.gradle` that are listed at `Include-Resource` property at `bnd.bnd` associated file. |
+UpgradeJSONLiferayThemeCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace liferay theme version in package.json of themes |
 UpgradeJSPFieldSetGroupCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code to remove 'fieldset-group' tag |
 UpgradeJavaAddAddressMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Fill the new parameter of the method 'addAddress' of AddressLocalService, AddressLocalServiceUtil, AddressService and AddressServiceUtil |
 UpgradeJavaAddCategoryParameterCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Fill the new parameter of the method 'addCategory' of 'AssetCategoryLocalService' and 'AssetCategoryLocalServiceUtil' classes |

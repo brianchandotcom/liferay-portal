@@ -215,6 +215,15 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceInventoryWarehouseItem>
+		findCommerceInventoryWarehouseItem(
+			long commerceInventoryWarehouseId, String sku) {
+
+		return commerceInventoryWarehouseItemPersistence.findByCIWI_S(
+			commerceInventoryWarehouseId, sku);
+	}
+
+	@Override
 	public CommerceInventoryWarehouseItem getCommerceInventoryWarehouseItem(
 			long commerceInventoryWarehouseId, String sku,
 			String unitOfMeasureKey)

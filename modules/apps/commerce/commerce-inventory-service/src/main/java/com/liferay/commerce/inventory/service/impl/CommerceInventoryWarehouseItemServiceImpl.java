@@ -151,6 +151,21 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	}
 
 	@Override
+	public List<CommerceInventoryWarehouseItem>
+			findCommerceInventoryWarehouseItem(
+				long commerceInventoryWarehouseId, String sku)
+		throws PortalException {
+
+		_commerceInventoryWarehouseModelResourcePermission.check(
+			getPermissionChecker(), commerceInventoryWarehouseId,
+			ActionKeys.VIEW);
+
+		return commerceInventoryWarehouseItemLocalService.
+			findCommerceInventoryWarehouseItem(
+				commerceInventoryWarehouseId, sku);
+	}
+
+	@Override
 	public CommerceInventoryWarehouseItem getCommerceInventoryWarehouseItem(
 			long commerceInventoryWarehouseItemId)
 		throws PortalException {

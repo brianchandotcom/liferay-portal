@@ -33,11 +33,20 @@ public class MethodPropertyAccessor implements PropertyAccessStrategy {
 	public PropertyAccess buildPropertyAccess(
 		Class clazz, String propertyName) {
 
-		return _propertyAccesses.computeIfAbsent(
-			StringBundler.concat(
-				clazz.hashCode(), StringPool.POUND, clazz.getName(),
-				StringPool.POUND, propertyName),
-			key -> new MethodPropertyAccess(this, clazz, propertyName));
+		String key = StringBundler.concat(
+			clazz.hashCode(), StringPool.POUND, clazz.getName(),
+			StringPool.POUND, propertyName);
+
+		PropertyAccess propertyAccess = _propertyAccesses.get(key);
+
+		if (propertyAccess == null) {
+			propertyAccess = new MethodPropertyAccess(
+				this, clazz, propertyName);
+
+			_propertyAccesses.put(key, propertyAccess);
+		}
+
+		return propertyAccess;
 	}
 
 	private static final Map<String, PropertyAccess> _propertyAccesses =

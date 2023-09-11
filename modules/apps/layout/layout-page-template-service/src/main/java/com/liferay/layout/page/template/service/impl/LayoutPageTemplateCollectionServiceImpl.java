@@ -113,7 +113,7 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, int start, int end, int type) {
+		long groupId, int type, int start, int end) {
 
 		return layoutPageTemplateCollectionPersistence.filterFindByG_T(
 			groupId, start, end, type);
@@ -121,9 +121,8 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
-		int type) {
+		long groupId, int type, int start, int end,
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
 		return layoutPageTemplateCollectionPersistence.filterFindByG_T(
 			groupId, start, end, type, orderByComparator);
@@ -131,9 +130,8 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, String name, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
-		int type) {
+		long groupId, String name, int type, int start, int end,
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
 		return layoutPageTemplateCollectionPersistence.filterFindByG_LikeN_T(
 			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],

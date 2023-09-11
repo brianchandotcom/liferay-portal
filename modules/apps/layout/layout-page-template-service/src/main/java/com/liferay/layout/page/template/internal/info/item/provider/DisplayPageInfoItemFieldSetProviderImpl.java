@@ -22,6 +22,7 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
+import com.liferay.info.type.WebURL;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -130,18 +131,27 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 								getLayoutPageTemplateEntryKey())
 					).name(
 						layoutPageTemplateEntry.getName()
+					).attribute(
+						URLInfoFieldType.NOFOLLOW, Boolean.TRUE
 					).labelInfoLocalizedValue(
 						InfoLocalizedValue.singleValue(
 							layoutPageTemplateEntry.getName())
 					).build(),
 					new FunctionInfoLocalizedValue<>(
-						locale -> StringBundler.concat(
-							url, layout.getFriendlyURL(locale),
-							StringPool.SLASH,
-							_portal.getClassNameId(
-								infoItemReference.getClassName()),
-							StringPool.SLASH,
-							_getInfoItemIdentifier(infoItemReference)))));
+						locale -> {
+							WebURL displayPageURL = new WebURL(
+								StringBundler.concat(
+									url, layout.getFriendlyURL(locale),
+									StringPool.SLASH,
+									_portal.getClassNameId(
+										infoItemReference.getClassName()),
+									StringPool.SLASH,
+									_getInfoItemIdentifier(infoItemReference)));
+
+							displayPageURL.setNofollow(true);
+
+							return displayPageURL;
+						})));
 		}
 
 		return infoFieldValues;

@@ -672,4 +672,15 @@ public abstract class BaseFormResourceImpl
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseFormResourceImpl.class);
 
+	private class PostFormFormDocumentRequestBody {
+
+		@io.swagger.v3.oas.annotations.media.Schema(
+			description = "File", format = "binary", type = "string"
+		)
+		public String file;
+
+		public FormDocument formDocument;
+
+	}
+
 }

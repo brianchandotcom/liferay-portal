@@ -581,6 +581,13 @@ public class FreeMarkerTool {
 		return null;
 	}
 
+	public Map<String, Schema> getMultipartBodySchemas(
+		JavaMethodSignature javaMethodSignature) {
+
+		return ResourceOpenAPIParser.getMultipartBodySchemas(
+			javaMethodSignature);
+	}
+
 	public String getObjectFieldStringValue(String type, Object value) {
 		if (value instanceof Date) {
 			if (type.equals("Date")) {

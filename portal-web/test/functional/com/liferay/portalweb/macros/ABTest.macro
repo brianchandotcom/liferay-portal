@@ -325,13 +325,9 @@ definition {
 			Button.clickNoError(button = "Terminate Test");
 		}
 
-		AssertTextEquals(
-			locator1 = "Modal#BODY",
-			value1 = "Are you sure you want to terminate this test?");
+		WaitForElementPresent(locator1 = "Modal#MODAL_CONTENT");
 
-		Click(
-			key_text = "Terminate",
-			locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
 
 		Alert.viewSuccessMessage();
 	}

@@ -139,54 +139,7 @@ public class OpenAPIResourceTest {
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)),
 			ObjectDefinitionConstants.SCOPE_COMPANY, _user.getUserId());
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, "/openapi", Http.Method.GET);
-
-		JSONArray jsonArray = jsonObject.getJSONArray(
-			_objectDefinition1.getRESTContextPath());
-
-		Assert.assertEquals(1, jsonArray.length());
-		Assert.assertEquals(
-			"http://localhost:8080/o" +
-				_objectDefinition1.getRESTContextPath() + "/openapi.yaml",
-			jsonArray.get(0));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, _objectDefinition1.getRESTContextPath() + "/openapi.json",
-			Http.Method.GET);
-
-		Assert.assertNotNull(jsonObject.getString("openapi"));
-		Assert.assertNull(
-			jsonObject.getJSONArray(_objectDefinition2.getRESTContextPath()));
-
-		JSONObject schemasJSONObject = jsonObject.getJSONObject(
-			"components"
-		).getJSONObject(
-			"schemas"
-		);
-
-		Assert.assertNotNull(
-			schemasJSONObject.getJSONObject("TaxonomyCategoryBrief"));
-
-		JSONObject propertiesJSONObject = schemasJSONObject.getJSONObject(
-			_objectDefinition1.getShortName()
-		).getJSONObject(
-			"properties"
-		);
-
-		Assert.assertNull(propertiesJSONObject.getJSONObject("createDate"));
-		Assert.assertNotNull(propertiesJSONObject.getJSONObject("keywords"));
-		Assert.assertNull(propertiesJSONObject.getJSONObject("modifiedDate"));
-		Assert.assertNotNull(
-			propertiesJSONObject.getJSONObject("taxonomyCategoryBriefs"));
-		Assert.assertNotNull(
-			propertiesJSONObject.getJSONObject("taxonomyCategoryIds"));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, _objectDefinition2.getRESTContextPath() + "/openapi.json",
-			Http.Method.GET);
-
-		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
+		_testGetOpenAPI(_objectDefinition1, _objectDefinition2);
 	}
 
 	@Test
@@ -338,6 +291,61 @@ public class OpenAPIResourceTest {
 			_getNestedEntitySchema(
 				jsonObject, objectRelationship, _objectDefinition2),
 			_objectDefinition1.getShortName());
+	}
+
+	private void _testGetOpenAPI(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, "/openapi", Http.Method.GET);
+
+		JSONArray jsonArray = jsonObject.getJSONArray(
+			objectDefinition1.getRESTContextPath());
+
+		Assert.assertEquals(1, jsonArray.length());
+		Assert.assertEquals(
+			"http://localhost:8080/o" + objectDefinition1.getRESTContextPath() +
+				"/openapi.yaml",
+			jsonArray.get(0));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, objectDefinition1.getRESTContextPath() + "/openapi.json",
+			Http.Method.GET);
+
+		Assert.assertNotNull(jsonObject.getString("openapi"));
+		Assert.assertNull(
+			jsonObject.getJSONArray(objectDefinition2.getRESTContextPath()));
+
+		JSONObject schemasJSONObject = jsonObject.getJSONObject(
+			"components"
+		).getJSONObject(
+			"schemas"
+		);
+
+		Assert.assertNotNull(
+			schemasJSONObject.getJSONObject("TaxonomyCategoryBrief"));
+
+		JSONObject propertiesJSONObject = schemasJSONObject.getJSONObject(
+			objectDefinition1.getShortName()
+		).getJSONObject(
+			"properties"
+		);
+
+		Assert.assertNull(propertiesJSONObject.getJSONObject("createDate"));
+		Assert.assertNotNull(propertiesJSONObject.getJSONObject("keywords"));
+		Assert.assertNull(propertiesJSONObject.getJSONObject("modifiedDate"));
+		Assert.assertNotNull(
+			propertiesJSONObject.getJSONObject("taxonomyCategoryBriefs"));
+		Assert.assertNotNull(
+			propertiesJSONObject.getJSONObject("taxonomyCategoryIds"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, objectDefinition2.getRESTContextPath() + "/openapi.json",
+			Http.Method.GET);
+
+		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
 	}
 
 	private static final String _OBJECT_FIELD_NAME =

@@ -32,22 +32,29 @@ public class DBInfoUtil {
 			dataSource = delegatingDataSource.getTargetDataSource();
 		}
 
-		return _dbInfos.computeIfAbsent(
-			dataSource,
-			keyDataSource -> {
-				try (Connection connection = keyDataSource.getConnection()) {
-					DatabaseMetaData databaseMetaData =
-						connection.getMetaData();
+		DBInfo dbInfo = _dbInfos.get(dataSource);
 
-					return new DBInfo(
-						databaseMetaData.getDatabaseProductName(),
-						databaseMetaData.getDatabaseMajorVersion(),
-						databaseMetaData.getDatabaseMinorVersion());
-				}
-				catch (SQLException sqlException) {
-					return ReflectionUtil.throwException(sqlException);
-				}
-			});
+		if (dbInfo == null) {
+			dbInfo = _createDBInfo(dataSource);
+
+			_dbInfos.put(dataSource, dbInfo);
+		}
+
+		return dbInfo;
+	}
+
+	private static DBInfo _createDBInfo(DataSource dataSource) {
+		try (Connection connection = dataSource.getConnection()) {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			return new DBInfo(
+				databaseMetaData.getDatabaseProductName(),
+				databaseMetaData.getDatabaseMajorVersion(),
+				databaseMetaData.getDatabaseMinorVersion());
+		}
+		catch (SQLException sqlException) {
+			return ReflectionUtil.throwException(sqlException);
+		}
 	}
 
 	private static final ConcurrentMap<DataSource, DBInfo> _dbInfos =

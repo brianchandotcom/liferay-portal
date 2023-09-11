@@ -328,6 +328,7 @@
 		<field name="script" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="system" type="boolean" />
 	</model>
 	<model name="com.liferay.object.model.ObjectValidationRuleSetting">
 		<field name="mvccVersion" type="long" />

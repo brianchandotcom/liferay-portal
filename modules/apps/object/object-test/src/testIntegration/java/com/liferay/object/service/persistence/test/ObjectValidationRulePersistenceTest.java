@@ -145,6 +145,8 @@ public class ObjectValidationRulePersistenceTest {
 
 		newObjectValidationRule.setScript(RandomTestUtil.randomString());
 
+		newObjectValidationRule.setSystem(RandomTestUtil.randomBoolean());
+
 		_objectValidationRules.add(
 			_persistence.update(newObjectValidationRule));
 
@@ -199,6 +201,9 @@ public class ObjectValidationRulePersistenceTest {
 		Assert.assertEquals(
 			existingObjectValidationRule.getScript(),
 			newObjectValidationRule.getScript());
+		Assert.assertEquals(
+			existingObjectValidationRule.isSystem(),
+			newObjectValidationRule.isSystem());
 	}
 
 	@Test
@@ -275,7 +280,8 @@ public class ObjectValidationRulePersistenceTest {
 			"objectValidationRuleId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"objectDefinitionId", true, "active", true, "engine", true,
-			"errorLabel", true, "name", true, "outputType", true);
+			"errorLabel", true, "name", true, "outputType", true, "system",
+			true);
 	}
 
 	@Test
@@ -544,6 +550,8 @@ public class ObjectValidationRulePersistenceTest {
 		objectValidationRule.setOutputType(RandomTestUtil.randomString());
 
 		objectValidationRule.setScript(RandomTestUtil.randomString());
+
+		objectValidationRule.setSystem(RandomTestUtil.randomBoolean());
 
 		_objectValidationRules.add(_persistence.update(objectValidationRule));
 

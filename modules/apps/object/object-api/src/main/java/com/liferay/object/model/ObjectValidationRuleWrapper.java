@@ -51,6 +51,7 @@ public class ObjectValidationRuleWrapper
 		attributes.put("name", getName());
 		attributes.put("outputType", getOutputType());
 		attributes.put("script", getScript());
+		attributes.put("system", isSystem());
 
 		return attributes;
 	}
@@ -146,6 +147,12 @@ public class ObjectValidationRuleWrapper
 
 		if (script != null) {
 			setScript(script);
+		}
+
+		Boolean system = (Boolean)attributes.get("system");
+
+		if (system != null) {
+			setSystem(system);
 		}
 	}
 
@@ -439,6 +446,16 @@ public class ObjectValidationRuleWrapper
 	}
 
 	/**
+	 * Returns the system of this object validation rule.
+	 *
+	 * @return the system of this object validation rule
+	 */
+	@Override
+	public boolean getSystem() {
+		return model.getSystem();
+	}
+
+	/**
 	 * Returns the user ID of this object validation rule.
 	 *
 	 * @return the user ID of this object validation rule
@@ -486,6 +503,16 @@ public class ObjectValidationRuleWrapper
 	@Override
 	public boolean isActive() {
 		return model.isActive();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object validation rule is system.
+	 *
+	 * @return <code>true</code> if this object validation rule is system; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isSystem() {
+		return model.isSystem();
 	}
 
 	@Override
@@ -752,6 +779,16 @@ public class ObjectValidationRuleWrapper
 	@Override
 	public void setScript(String script) {
 		model.setScript(script);
+	}
+
+	/**
+	 * Sets whether this object validation rule is system.
+	 *
+	 * @param system the system of this object validation rule
+	 */
+	@Override
+	public void setSystem(boolean system) {
+		model.setSystem(system);
 	}
 
 	/**

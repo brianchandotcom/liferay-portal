@@ -479,6 +479,27 @@ public interface ObjectValidationRuleModel
 	 */
 	public void setScript(String script);
 
+	/**
+	 * Returns the system of this object validation rule.
+	 *
+	 * @return the system of this object validation rule
+	 */
+	public boolean getSystem();
+
+	/**
+	 * Returns <code>true</code> if this object validation rule is system.
+	 *
+	 * @return <code>true</code> if this object validation rule is system; <code>false</code> otherwise
+	 */
+	public boolean isSystem();
+
+	/**
+	 * Sets whether this object validation rule is system.
+	 *
+	 * @param system the system of this object validation rule
+	 */
+	public void setSystem(boolean system);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

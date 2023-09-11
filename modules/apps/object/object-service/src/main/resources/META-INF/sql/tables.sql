@@ -317,7 +317,8 @@ create table ObjectValidationRule (
 	errorLabel STRING null,
 	name STRING null,
 	outputType VARCHAR(75) null,
-	script TEXT null
+	script TEXT null,
+	system_ BOOLEAN
 );
 
 create table ObjectValidationRuleSetting (

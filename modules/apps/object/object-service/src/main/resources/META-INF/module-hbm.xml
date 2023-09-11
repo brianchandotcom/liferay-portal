@@ -364,6 +364,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="outputType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="script" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="system_" name="system" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.object.model.impl.ObjectValidationRuleSettingImpl" table="ObjectValidationRuleSetting">
 		<id access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="objectValidationRuleSettingId" type="long">

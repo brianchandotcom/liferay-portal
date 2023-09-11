@@ -465,6 +465,13 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().getObjectFolderObjectDefinitions(objectFolderId);
 	}
 
+	public static int getObjectFolderObjectDefinitionsCount(long objectFolderId)
+		throws PortalException {
+
+		return getService().getObjectFolderObjectDefinitionsCount(
+			objectFolderId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

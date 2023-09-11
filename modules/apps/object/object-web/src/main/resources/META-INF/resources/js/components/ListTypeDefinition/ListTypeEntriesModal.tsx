@@ -20,6 +20,7 @@ import {defaultLanguageId} from '../../utils/constants';
 import {specialCharactersInString, toCamelCase} from '../../utils/string';
 import {ObjectValidationErrors} from './ListTypeFormBase';
 import {fixLocaleKeys} from './utils';
+
 export interface IModalState extends Partial<PickListItem> {
 	header?: string;
 	itemExternalReferenceCode?: string;

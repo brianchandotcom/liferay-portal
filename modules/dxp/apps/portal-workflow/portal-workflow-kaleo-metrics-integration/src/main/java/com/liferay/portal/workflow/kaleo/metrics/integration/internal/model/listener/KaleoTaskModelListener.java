@@ -11,6 +11,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
 import com.liferay.portal.workflow.metrics.model.DeleteNodeRequest;
 import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndex;
 
 import java.util.Objects;
 
@@ -29,8 +30,7 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 			getKaleoDefinitionVersion(kaleoTask.getKaleoDefinitionVersionId());
 
 		if (Objects.isNull(kaleoDefinitionVersion) ||
-			!_indexerHelper.hasWorkflowMetricsIndices(
-				kaleoTask.getCompanyId())) {
+			!_taskWorkflowMetricsIndex.exists(kaleoTask.getCompanyId())) {
 
 			return;
 		}
@@ -42,9 +42,7 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 
 	@Override
 	public void onAfterRemove(KaleoTask kaleoTask) {
-		if (!_indexerHelper.hasWorkflowMetricsIndices(
-				kaleoTask.getCompanyId())) {
-
+		if (!_taskWorkflowMetricsIndex.exists(kaleoTask.getCompanyId())) {
 			return;
 		}
 
@@ -63,5 +61,8 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 
 	@Reference
 	private NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=task)")
+	private WorkflowMetricsIndex _taskWorkflowMetricsIndex;
 
 }

@@ -53,6 +53,17 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 	}
 
 	@Override
+	public boolean exists(long companyId) {
+		IndicesExistsIndexRequest indicesExistsIndexRequest =
+			new IndicesExistsIndexRequest(getIndexName(companyId));
+
+		IndicesExistsIndexResponse indicesExistsIndexResponse =
+			searchEngineAdapter.execute(indicesExistsIndexRequest);
+
+		return indicesExistsIndexResponse.isExists();
+	}
+
+	@Override
 	public boolean removeIndex(long companyId) throws PortalException {
 		if (!searchCapabilities.isWorkflowMetricsSupported() ||
 			!exists(companyId)) {
@@ -71,17 +82,6 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
-
-	@Override
-	public boolean exists(long companyId) {
-		IndicesExistsIndexRequest indicesExistsIndexRequest =
-			new IndicesExistsIndexRequest(getIndexName(companyId));
-
-		IndicesExistsIndexResponse indicesExistsIndexResponse =
-			searchEngineAdapter.execute(indicesExistsIndexRequest);
-
-		return indicesExistsIndexResponse.isExists();
-	}
 
 	private String _readJSON(String fileName) {
 		try {

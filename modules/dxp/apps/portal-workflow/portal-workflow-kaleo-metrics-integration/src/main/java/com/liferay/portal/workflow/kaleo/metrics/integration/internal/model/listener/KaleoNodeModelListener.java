@@ -12,6 +12,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.metrics.model.DeleteNodeRequest;
 import com.liferay.portal.workflow.metrics.search.index.NodeWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndex;
 
 import java.util.Objects;
 
@@ -31,8 +32,7 @@ public class KaleoNodeModelListener extends BaseKaleoModelListener<KaleoNode> {
 
 		if (!Objects.equals(kaleoNode.getType(), NodeType.STATE.name()) ||
 			Objects.isNull(kaleoDefinitionVersion) ||
-			!_indexerHelper.hasWorkflowMetricsIndices(
-				kaleoNode.getCompanyId())) {
+			!_nodeWorkflowMetricsIndex.exists(kaleoNode.getCompanyId())) {
 
 			return;
 		}
@@ -45,8 +45,7 @@ public class KaleoNodeModelListener extends BaseKaleoModelListener<KaleoNode> {
 	@Override
 	public void onAfterRemove(KaleoNode kaleoNode) {
 		if (!Objects.equals(kaleoNode.getType(), NodeType.STATE.name()) ||
-			!_indexerHelper.hasWorkflowMetricsIndices(
-				kaleoNode.getCompanyId())) {
+			!_nodeWorkflowMetricsIndex.exists(kaleoNode.getCompanyId())) {
 
 			return;
 		}
@@ -63,6 +62,9 @@ public class KaleoNodeModelListener extends BaseKaleoModelListener<KaleoNode> {
 
 	@Reference
 	private IndexerHelper _indexerHelper;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=node)")
+	private WorkflowMetricsIndex _nodeWorkflowMetricsIndex;
 
 	@Reference
 	private NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;

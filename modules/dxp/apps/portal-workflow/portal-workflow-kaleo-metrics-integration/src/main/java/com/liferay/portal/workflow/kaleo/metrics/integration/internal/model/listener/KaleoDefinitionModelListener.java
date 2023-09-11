@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.workflow.kaleo.metrics.integration.internal.helper.IndexerHelper;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.metrics.search.index.ProcessWorkflowMetricsIndexer;
+import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndex;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -26,7 +27,7 @@ public class KaleoDefinitionModelListener
 	public void onAfterCreate(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
-		if (!_indexerHelper.hasWorkflowMetricsIndices(
+		if (!_processWorkflowMetricsIndex.exists(
 				kaleoDefinition.getCompanyId())) {
 
 			return;
@@ -42,7 +43,7 @@ public class KaleoDefinitionModelListener
 			KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
-		if (!_indexerHelper.hasWorkflowMetricsIndices(
+		if (!_processWorkflowMetricsIndex.exists(
 				originalKaleoDefinition.getCompanyId())) {
 
 			return;
@@ -56,7 +57,7 @@ public class KaleoDefinitionModelListener
 	public void onBeforeRemove(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
-		if (!_indexerHelper.hasWorkflowMetricsIndices(
+		if (!_processWorkflowMetricsIndex.exists(
 				kaleoDefinition.getCompanyId())) {
 
 			return;
@@ -68,6 +69,9 @@ public class KaleoDefinitionModelListener
 
 	@Reference
 	private IndexerHelper _indexerHelper;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=process)")
+	private WorkflowMetricsIndex _processWorkflowMetricsIndex;
 
 	@Reference
 	private ProcessWorkflowMetricsIndexer _processWorkflowMetricsIndexer;

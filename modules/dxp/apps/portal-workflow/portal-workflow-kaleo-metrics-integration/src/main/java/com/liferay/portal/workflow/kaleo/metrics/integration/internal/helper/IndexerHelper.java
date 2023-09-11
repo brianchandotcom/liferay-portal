@@ -24,9 +24,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
-import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
-import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
@@ -50,7 +47,6 @@ import com.liferay.portal.workflow.metrics.model.DeleteTransitionRequest;
 import com.liferay.portal.workflow.metrics.model.RoleAssignment;
 import com.liferay.portal.workflow.metrics.model.UpdateProcessRequest;
 import com.liferay.portal.workflow.metrics.model.UserAssignment;
-import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndex;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -383,23 +379,6 @@ public class IndexerHelper {
 		).build();
 	}
 
-	public boolean hasWorkflowMetricsIndices(long companyId) {
-		IndicesExistsIndexRequest indicesExistsIndexRequest =
-			new IndicesExistsIndexRequest(
-				_instanceWorkflowMetricsIndex.getIndexName(companyId),
-				_nodeWorkflowMetricsIndex.getIndexName(companyId),
-				_processWorkflowMetricsIndex.getIndexName(companyId),
-				_slaInstanceResultWorkflowMetricsIndex.getIndexName(companyId),
-				_slaTaskResultWorkflowMetricsIndex.getIndexName(companyId),
-				_taskWorkflowMetricsIndex.getIndexName(companyId),
-				_transitionWorkflowMetricsIndex.getIndexName(companyId));
-
-		IndicesExistsIndexResponse indicesExistsIndexResponse =
-			_searchEngineAdapter.execute(indicesExistsIndexRequest);
-
-		return indicesExistsIndexResponse.isExists();
-	}
-
 	public List<Assignment> toAssignments(
 		List<KaleoTaskAssignmentInstance> kaleoTaskAssignmentInstances) {
 
@@ -480,9 +459,6 @@ public class IndexerHelper {
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
-	@Reference(target = "(workflow.metrics.index.entity.name=instance)")
-	private WorkflowMetricsIndex _instanceWorkflowMetricsIndex;
-
 	@Reference
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
@@ -502,29 +478,6 @@ public class IndexerHelper {
 
 	@Reference
 	private Localization _localization;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=node)")
-	private WorkflowMetricsIndex _nodeWorkflowMetricsIndex;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=process)")
-	private WorkflowMetricsIndex _processWorkflowMetricsIndex;
-
-	@Reference
-	private SearchEngineAdapter _searchEngineAdapter;
-
-	@Reference(
-		target = "(workflow.metrics.index.entity.name=sla-instance-result)"
-	)
-	private WorkflowMetricsIndex _slaInstanceResultWorkflowMetricsIndex;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=sla-task-result)")
-	private WorkflowMetricsIndex _slaTaskResultWorkflowMetricsIndex;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=task)")
-	private WorkflowMetricsIndex _taskWorkflowMetricsIndex;
-
-	@Reference(target = "(workflow.metrics.index.entity.name=transition)")
-	private WorkflowMetricsIndex _transitionWorkflowMetricsIndex;
 
 	@Reference
 	private UserLocalService _userLocalService;

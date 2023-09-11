@@ -452,7 +452,8 @@ public interface CommercePriceListLocalService
 	public CommercePriceList getCommercePriceListByLowestPrice(
 			long groupId, long commerceAccountId,
 			long[] commerceAccountGroupIds, long commerceChannelId,
-			long commerceOrderTypeId, String cPInstanceUuid, String type)
+			long commerceOrderTypeId, String cPInstanceUuid, String type,
+			String unitOfMeasureKey)
 		throws PortalException;
 
 	/**

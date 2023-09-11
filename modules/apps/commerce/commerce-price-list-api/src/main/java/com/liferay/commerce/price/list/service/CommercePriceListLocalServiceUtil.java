@@ -571,12 +571,14 @@ public class CommercePriceListLocalServiceUtil {
 	public static CommercePriceList getCommercePriceListByLowestPrice(
 			long groupId, long commerceAccountId,
 			long[] commerceAccountGroupIds, long commerceChannelId,
-			long commerceOrderTypeId, String cPInstanceUuid, String type)
+			long commerceOrderTypeId, String cPInstanceUuid, String type,
+			String unitOfMeasureKey)
 		throws PortalException {
 
 		return getService().getCommercePriceListByLowestPrice(
 			groupId, commerceAccountId, commerceAccountGroupIds,
-			commerceChannelId, commerceOrderTypeId, cPInstanceUuid, type);
+			commerceChannelId, commerceOrderTypeId, cPInstanceUuid, type,
+			unitOfMeasureKey);
 	}
 
 	/**

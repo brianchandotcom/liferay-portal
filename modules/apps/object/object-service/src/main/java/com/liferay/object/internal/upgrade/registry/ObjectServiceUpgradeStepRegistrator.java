@@ -340,6 +340,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"8.1.0", "8.2.0",
 			new com.liferay.object.internal.upgrade.v8_2_0.
 				ObjectValidationRuleSettingsUpgradeProcess());
+
+		registry.register(
+			"8.2.0", "8.3.0",
+			new com.liferay.object.internal.upgrade.v8_3_0.
+				ObjectValidationRuleUpgradeProcess());
 	}
 
 	@Reference

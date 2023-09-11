@@ -155,6 +155,22 @@ public class KnowledgeBaseArticleSerDes {
 			sb.append("\"");
 		}
 
+		if (knowledgeBaseArticle.getDatePublished() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"datePublished\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				liferayToJSONDateFormat.format(
+					knowledgeBaseArticle.getDatePublished()));
+
+			sb.append("\"");
+		}
+
 		if (knowledgeBaseArticle.getDescription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -513,6 +529,16 @@ public class KnowledgeBaseArticleSerDes {
 					knowledgeBaseArticle.getDateModified()));
 		}
 
+		if (knowledgeBaseArticle.getDatePublished() == null) {
+			map.put("datePublished", null);
+		}
+		else {
+			map.put(
+				"datePublished",
+				liferayToJSONDateFormat.format(
+					knowledgeBaseArticle.getDatePublished()));
+		}
+
 		if (knowledgeBaseArticle.getDescription() == null) {
 			map.put("description", null);
 		}
@@ -746,6 +772,12 @@ public class KnowledgeBaseArticleSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
 				if (jsonParserFieldValue != null) {
 					knowledgeBaseArticle.setDateModified(
+						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "datePublished")) {
+				if (jsonParserFieldValue != null) {
+					knowledgeBaseArticle.setDatePublished(
 						toDate((String)jsonParserFieldValue));
 				}
 			}

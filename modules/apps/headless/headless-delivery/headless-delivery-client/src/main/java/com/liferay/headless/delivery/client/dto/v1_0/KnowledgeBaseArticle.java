@@ -176,6 +176,27 @@ public class KnowledgeBaseArticle implements Cloneable, Serializable {
 
 	protected Date dateModified;
 
+	public Date getDatePublished() {
+		return datePublished;
+	}
+
+	public void setDatePublished(Date datePublished) {
+		this.datePublished = datePublished;
+	}
+
+	public void setDatePublished(
+		UnsafeSupplier<Date, Exception> datePublishedUnsafeSupplier) {
+
+		try {
+			datePublished = datePublishedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Date datePublished;
+
 	public String getDescription() {
 		return description;
 	}

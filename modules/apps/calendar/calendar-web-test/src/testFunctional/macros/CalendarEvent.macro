@@ -2,33 +2,6 @@ definition {
 
 	var siteName = "Liferay";
 
-	macro _expandPanel {
-		var panelNamePath = StringUtil.replace(${panelName}, " ", "_");
-
-		var panelNamePath = StringUtil.upperCase(${panelNamePath});
-
-		if (IsElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED")) {
-			ScrollWebElementIntoView(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED");
-
-			Click(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED");
-
-			WaitForElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED");
-		}
-		else if (IsElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED")) {
-			ScrollWebElementIntoView(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED");
-
-			Click(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED");
-
-			if (IsElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED")) {
-				ScrollWebElementIntoView(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED");
-
-				Click(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_COLLAPSED");
-
-				WaitForElementPresent(locator1 = "CalendarEditEvent#${panelNamePath}_PANEL_EXPANDED");
-			}
-		}
-	}
-
 	macro _options {
 		if (${optionSetValue} == "viewPermission") {
 			Select(

@@ -13,11 +13,7 @@ import {
 import openDeleteVocabularyModal from './openDeleteVocabularyModal';
 
 const ACTIONS = {
-	deleteVocabularies({
-		deleteVocabulariesURL,
-		portletNamespace,
-		viewVocabulariesURL,
-	}) {
+	deleteVocabularies(itemData, portletNamespace) {
 		openSelectionModal({
 			buttonAddLabel: Liferay.Language.get('delete'),
 			multiple: true,
@@ -26,10 +22,16 @@ const ACTIONS = {
 					openDeleteVocabularyModal({
 						multiple: true,
 						onDelete: () => {
-							fetch(deleteVocabulariesURL, {
+							fetch(itemData.deleteVocabulariesURL, {
 								body: objectToFormData({
 									[`${portletNamespace}rowIds`]: selectedItems
-										.map((item) => item.value)
+										.map((item) => {
+											const selectedValue = JSON.parse(
+												item.value
+											);
+
+											return selectedValue.vocabularyId;
+										})
 										.join(','),
 								}),
 								method: 'POST',
@@ -39,13 +41,12 @@ const ACTIONS = {
 				}
 			},
 			title: Liferay.Language.get('delete-vocabulary'),
-			url: viewVocabulariesURL,
+			url: itemData.viewVocabulariesURL,
 		});
 	},
 };
 
 export default function propsTransformer({
-	additionalProps: {deleteVocabulariesURL, viewVocabulariesURL},
 	items,
 	portletNamespace,
 	...otherProps
@@ -61,11 +62,7 @@ export default function propsTransformer({
 					if (action) {
 						event.preventDefault();
 
-						ACTIONS[action]({
-							deleteVocabulariesURL,
-							portletNamespace,
-							viewVocabulariesURL,
-						});
+						ACTIONS[action](item.data, portletNamespace);
 					}
 				},
 			};

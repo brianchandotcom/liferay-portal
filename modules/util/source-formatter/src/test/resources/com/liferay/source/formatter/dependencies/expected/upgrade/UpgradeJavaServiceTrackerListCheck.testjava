@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-
-/**
- * @author Michael Cavalcanti
- */
-@Component(service = CTServiceRegistry.class)
 public class UpgradeJavaServiceTrackerListCheck {
+
+	public void method() {
+		ServiceTrackerList 
+			<ServiceConnectionProvider> 
+				serviceTrackerList = ServiceTrackerListFactory.open(
+					_bundleContext, ServiceConnectionProvider.class);
+	}
 
     private ServiceTrackerList <CTEventListener> _serviceTrackerList1;
     private ServiceTrackerList

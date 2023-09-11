@@ -13,8 +13,12 @@ export default function resolveEditableConfig(
 ) {
 	return resolveEditableValue(editableConfig, languageId, getFieldValue).then(
 		(value) => {
-			if (value.href || typeof value === 'string') {
-				return {...editableConfig, href: value.href || value};
+			if (value.href || value.url || typeof value === 'string') {
+				return {
+					...editableConfig,
+					href: value.href || value.url || value,
+					rel: value.nofollow ? 'nofollow' : '',
+				};
 			}
 
 			return {...editableConfig};

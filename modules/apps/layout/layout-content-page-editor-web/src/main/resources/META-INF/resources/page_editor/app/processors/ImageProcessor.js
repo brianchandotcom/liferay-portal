@@ -65,6 +65,7 @@ function render(element, value, editableConfig = {}, languageId) {
 				anchorElement.href = `${editableConfig.prefix || ''}${
 					link.href
 				}`;
+				anchorElement.rel = link.rel;
 				anchorElement.target = link.target;
 
 				image.parentElement.replaceChild(anchorElement, image);

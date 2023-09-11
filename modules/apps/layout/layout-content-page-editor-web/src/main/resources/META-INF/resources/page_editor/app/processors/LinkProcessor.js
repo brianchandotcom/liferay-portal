@@ -26,6 +26,7 @@ export default getAlloyEditorProcessor(
 				: '#';
 
 			anchor.href = href;
+			anchor.rel = link.rel;
 			anchor.target = link.target;
 
 			if (!isNullOrUndefined(value)) {

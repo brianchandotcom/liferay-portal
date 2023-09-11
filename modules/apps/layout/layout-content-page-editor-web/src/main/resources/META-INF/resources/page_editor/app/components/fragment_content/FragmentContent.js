@@ -175,7 +175,7 @@ const FragmentContent = ({
 					]).then(([value, editableConfig]) => {
 						editable.processor.render(
 							editable.element,
-							value,
+							value?.url ?? value,
 							editableConfig,
 							languageId,
 							withinCollection

@@ -26,6 +26,7 @@ export default getAlloyEditorProcessor(
 			}
 
 			anchor.href = `${editableConfig.prefix || ''}${link.href}`;
+			anchor.rel = link.rel;
 			anchor.target = link.target || '';
 			anchor.innerHTML = value;
 

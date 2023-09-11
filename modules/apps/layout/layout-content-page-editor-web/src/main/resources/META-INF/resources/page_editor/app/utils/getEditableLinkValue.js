@@ -12,6 +12,7 @@ export function getEditableLinkValue(editableValue, languageId) {
 			: {}),
 
 		href: getEditableLocalizedValue(editableValue?.href, languageId),
+		rel: editableValue?.rel || '',
 		target: editableValue?.target || '',
 	};
 }

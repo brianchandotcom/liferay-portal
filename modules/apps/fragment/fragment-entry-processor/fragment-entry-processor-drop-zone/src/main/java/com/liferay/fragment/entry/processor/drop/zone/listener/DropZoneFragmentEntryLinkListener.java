@@ -12,10 +12,12 @@ import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.util.CheckUnlockedLayoutThreadLocal;
 import com.liferay.layout.util.structure.DeletedLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -178,11 +180,17 @@ public class DropZoneFragmentEntryLinkListener
 				}
 			}
 
-			_layoutPageTemplateStructureLocalService.
-				updateLayoutPageTemplateStructureData(
-					fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
-					fragmentEntryLink.getSegmentsExperienceId(),
-					layoutStructure.toString(), false);
+			try (SafeCloseable safeCloseable =
+					CheckUnlockedLayoutThreadLocal.setWithSafeCloseable(
+						false)) {
+
+				_layoutPageTemplateStructureLocalService.
+					updateLayoutPageTemplateStructureData(
+						fragmentEntryLink.getGroupId(),
+						fragmentEntryLink.getPlid(),
+						fragmentEntryLink.getSegmentsExperienceId(),
+						layoutStructure.toString());
+			}
 
 			return;
 		}
@@ -324,11 +332,17 @@ public class DropZoneFragmentEntryLinkListener
 		}
 
 		if (update) {
-			_layoutPageTemplateStructureLocalService.
-				updateLayoutPageTemplateStructureData(
-					fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
-					fragmentEntryLink.getSegmentsExperienceId(),
-					layoutStructure.toString(), false);
+			try (SafeCloseable safeCloseable =
+					CheckUnlockedLayoutThreadLocal.setWithSafeCloseable(
+						false)) {
+
+				_layoutPageTemplateStructureLocalService.
+					updateLayoutPageTemplateStructureData(
+						fragmentEntryLink.getGroupId(),
+						fragmentEntryLink.getPlid(),
+						fragmentEntryLink.getSegmentsExperienceId(),
+						layoutStructure.toString());
+			}
 		}
 	}
 

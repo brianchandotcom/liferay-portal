@@ -39,5 +39,6 @@ export const allContentsFieldsValidation = {
 					}
 				)
 		)
-		.min(1, 'Required'),
+		.min(1, 'All Contents must have at least 1 file')
+		.required('Required'),
 };

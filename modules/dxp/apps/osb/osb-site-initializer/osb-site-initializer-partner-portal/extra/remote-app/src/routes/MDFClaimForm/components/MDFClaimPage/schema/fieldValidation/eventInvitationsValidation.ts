@@ -45,5 +45,6 @@ export const eventInvitationsValidation = {
 					}
 				)
 		)
-		.min(1, 'Required'),
+		.min(1, 'Event Invitations must have at least 1 file')
+		.required('Required'),
 };

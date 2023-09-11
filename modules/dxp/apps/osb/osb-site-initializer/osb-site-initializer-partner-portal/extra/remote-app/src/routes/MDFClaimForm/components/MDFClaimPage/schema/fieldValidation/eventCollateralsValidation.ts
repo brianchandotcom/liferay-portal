@@ -45,5 +45,6 @@ export const eventCollateralsValidation = {
 					}
 				)
 		)
-		.min(1, 'Required'),
+		.min(1, 'Event Collaterals must have at least 1 file')
+		.required('Required'),
 };

@@ -318,10 +318,14 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 							infoFormValidationExceptionCustomValidation.
 								getInfoFieldUniqueId(),
 							infoFormValidationExceptionCustomValidation);
-
-						hasInfoFormValidationExceptionCustomValidationErrors =
-							true;
 					}
+					else {
+						SessionErrors.add(
+							httpServletRequest, formItemId,
+							infoFormValidationExceptionCustomValidation);
+					}
+
+					hasInfoFormValidationExceptionCustomValidationErrors = true;
 				}
 			}
 

@@ -7,7 +7,6 @@ package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateCollectionServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -52,38 +51,6 @@ public class LayoutPageTemplateCollectionServiceImpl
 			addLayoutPageTemplateCollection(
 				getUserId(), groupId, parentLayoutPageTemplateCollection, name,
 				description, type, serviceContext);
-	}
-
-	@Override
-	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long groupId, long parentLayoutPageTemplateCollection, String name,
-			String description, ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION);
-
-		return layoutPageTemplateCollectionLocalService.
-			addLayoutPageTemplateCollection(
-				getUserId(), groupId, parentLayoutPageTemplateCollection, name,
-				description, LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-				serviceContext);
-	}
-
-	@Override
-	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long groupId, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION);
-
-		return layoutPageTemplateCollectionLocalService.
-			addLayoutPageTemplateCollection(
-				getUserId(), groupId, name, description, serviceContext);
 	}
 
 	@Override

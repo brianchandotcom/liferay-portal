@@ -7,19 +7,36 @@
 }
 
 .hero-container__image {
-	background-image: url('[resources:bg_hero.svg]');
-	background-repeat: no-repeat;
-	background-size: 100% 95%;
-	border-radius: 0.75rem;
+	height: 217px;
+	width: 100%;
 }
 
 .hero-container__image-hero {
-	margin: 0px auto;
-	margin-top: 6rem;
-	width: 80%;
+	margin-top: 23px;
+	width: 312px;
 }
 
-picture {
-	display: flex;
-	justify-content: center;
+@media only screen and (min-width: 798px) {
+	.hero-container__image {
+		border-radius: 10px;
+		height: 436px;
+		width: 766px;
+	}
+
+	.hero-container__image-hero {
+		margin-top: 43px;
+		width: 620px;
+	}
+}
+
+@media only screen and (min-width: 1090px) {
+	.hero-container__image {
+		height: 727px;
+		width: 1280px;
+	}
+
+	.hero-container__image-hero {
+		margin-top: 63px;
+		width: 935px;
+	}
 }

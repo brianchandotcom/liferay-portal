@@ -33,7 +33,6 @@ import '../../css/FDSEntries.scss';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
-type Locale = Liferay.Language.Locale;
 
 interface IFDSField {
 	externalReferenceCode: string;
@@ -431,19 +430,6 @@ const EditFDSFieldModalContent = ({
 
 	const [errorMessage, setErrorMessage] = useState('');
 
-	const validateFDSField = function () {
-		const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-
-		if (!i18nFieldLabels[defaultLanguageId]) {
-			setErrorMessage(Liferay.Language.get('required'));
-			return;
-		}
-
-		setErrorMessage('');
-
-		editFDSField();
-	}
-	
 	const editFDSField = async () => {
 		let body;
 		const bodyTmp = {
@@ -496,6 +482,20 @@ const EditFDSFieldModalContent = ({
 		});
 
 		onSave({editedFDSField});
+	};
+
+	const validateFDSField = function () {
+		const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
+		if (!i18nFieldLabels[defaultLanguageId]) {
+			setErrorMessage(Liferay.Language.get('required'));
+
+			return;
+		}
+
+		setErrorMessage('');
+
+		editFDSField();
 	};
 
 	const fdsFieldNameInputId = `${namespace}fdsFieldNameInput`;

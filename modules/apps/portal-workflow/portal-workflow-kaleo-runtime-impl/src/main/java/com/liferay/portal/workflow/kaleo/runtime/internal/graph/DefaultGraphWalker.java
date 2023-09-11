@@ -16,7 +16,7 @@ import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.graph.GraphWalker;
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.internal.BaseKaleoBean;
-import com.liferay.portal.workflow.kaleo.runtime.internal.node.NodeExecutorRegistry;
+import com.liferay.portal.workflow.kaleo.runtime.internal.node.util.NodeExecutorRegistryUtil;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextHelper;
 
@@ -45,8 +45,9 @@ public class DefaultGraphWalker
 		throws PortalException {
 
 		if (sourceKaleoNode != null) {
-			NodeExecutor nodeExecutor = _nodeExecutorRegistry.getNodeExecutor(
-				sourceKaleoNode.getType());
+			NodeExecutor nodeExecutor =
+				NodeExecutorRegistryUtil.getNodeExecutor(
+					sourceKaleoNode.getType());
 
 			nodeExecutor.exit(
 				sourceKaleoNode, executionContext, remainingPathElements);
@@ -57,8 +58,9 @@ public class DefaultGraphWalker
 				executionContext.getKaleoInstanceToken(), sourceKaleoNode,
 				targetKaleoNode, executionContext.getServiceContext());
 
-			NodeExecutor nodeExecutor = _nodeExecutorRegistry.getNodeExecutor(
-				targetKaleoNode.getType());
+			NodeExecutor nodeExecutor =
+				NodeExecutorRegistryUtil.getNodeExecutor(
+					targetKaleoNode.getType());
 
 			boolean performExecute = nodeExecutor.enter(
 				targetKaleoNode, executionContext);
@@ -74,8 +76,5 @@ public class DefaultGraphWalker
 
 	@Reference
 	private ExecutionContextHelper _executionContextHelper;
-
-	@Reference
-	private NodeExecutorRegistry _nodeExecutorRegistry;
 
 }

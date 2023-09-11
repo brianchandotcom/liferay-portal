@@ -1,0 +1,10 @@
+apply plugin: "java-library"
+
+task runHelloWorld(type: JavaExec)
+
+runHelloWorld {
+	classpath = sourceSets.main.runtimeClasspath
+
+	mainClass = 'foo.bar.HelloWorld'
+
+}

@@ -11,6 +11,10 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
@@ -22,6 +26,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -235,7 +240,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			).put(
 				"filters",
 				_getFiltersJSONArray(
-					fdsViewObjectDefinition, fdsViewObjectEntry)
+					fdsViewObjectDefinition, fdsViewObjectEntry,
+					httpServletRequest)
 			).put(
 				"id", "FDS_" + fragmentRendererContext.getFragmentElementId()
 			).put(
@@ -364,7 +370,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 	private JSONArray _getFiltersJSONArray(
 			ObjectDefinition fdsViewObjectDefinition,
-			ObjectEntry fdsViewObjectEntry)
+			ObjectEntry fdsViewObjectEntry,
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		Set<ObjectEntry> fdsFilterObjectEntries = new TreeSet<>(
@@ -392,26 +399,93 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				Map<String, Object> properties =
 					fdsFilterObjectEntry.getProperties();
 
-				if (!Objects.equals(
-						MapUtil.getString(properties, "type"), "date")) {
+				String type = MapUtil.getString(properties, "type");
 
-					return null;
+				if (Objects.equals(type, "date")) {
+					return JSONUtil.put(
+						"entityFieldType", type
+					).put(
+						"id", properties.get("fieldName")
+					).put(
+						"label", properties.get("name")
+					).put(
+						"max", _getDateJSONObject(properties.get("to"))
+					).put(
+						"min", _getDateJSONObject(properties.get("from"))
+					).put(
+						"type", "dateRange"
+					);
 				}
 
-				return JSONUtil.put(
-					"entityFieldType", properties.get("type")
-				).put(
-					"id", properties.get("fieldName")
-				).put(
-					"label", properties.get("name")
-				).put(
-					"max", _getDateJSONObject(properties.get("to"))
-				).put(
-					"min", _getDateJSONObject(properties.get("from"))
-				).put(
-					"type", "dateRange"
-				);
+				String listTypeDefinitionId = MapUtil.getString(
+					properties, "listTypeDefinitionId");
+
+				if (Validator.isNotNull(listTypeDefinitionId)) {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					ListTypeDefinition listTypeDefinition =
+						_listTypeDefinitionLocalService.
+							getListTypeDefinitionByExternalReferenceCode(
+								listTypeDefinitionId,
+								themeDisplay.getCompanyId());
+
+					List<ListTypeEntry> listTypeEntries =
+						_listTypeEntryLocalService.getListTypeEntries(
+							listTypeDefinition.getListTypeDefinitionId());
+
+					Locale locale = themeDisplay.getLocale();
+
+					return JSONUtil.put(
+						"autocompleteEnabled", true
+					).put(
+						"entityFieldType", type
+					).put(
+						"id", properties.get("fieldName")
+					).put(
+						"items",
+						_getListTypeEntriesJSONArray(listTypeEntries, locale)
+					).put(
+						"label", _language.get(locale, "search")
+					).put(
+						"label", properties.get("name")
+					).put(
+						"multiple", properties.get("multiple")
+					).put(
+						"selectedData",
+						_getSelectedDataJSONObject(
+							listTypeEntries, locale,
+							MapUtil.getString(properties, "preselectedValues"))
+					).put(
+						"type", "selection"
+					);
+				}
+
+				return null;
 			});
+	}
+
+	private JSONArray _getListTypeEntriesJSONArray(
+		List<ListTypeEntry> listTypeEntries, Locale locale) {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		for (ListTypeEntry listTypeEntry : listTypeEntries) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+			jsonObject.put(
+				"key", listTypeEntry.getKey()
+			).put(
+				"label", listTypeEntry.getName(locale)
+			).put(
+				"value", listTypeEntry.getKey()
+			);
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray;
 	}
 
 	private ObjectEntry _getObjectEntry(
@@ -477,6 +551,47 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return relatedObjectEntriesPage.getItems();
 	}
 
+	private JSONObject _getSelectedDataJSONObject(
+			List<ListTypeEntry> listTypeEntries, Locale locale,
+			String preselectedValues)
+		throws JSONException {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		JSONArray preselectedValuesJSONArray = _jsonFactory.createJSONArray(
+			preselectedValues);
+
+		for (int i = 0; i < preselectedValuesJSONArray.length(); i++) {
+			String key = preselectedValuesJSONArray.getString(i);
+
+			for (ListTypeEntry listTypeEntry : listTypeEntries) {
+				if (Objects.equals(listTypeEntry.getKey(), key)) {
+					JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+					jsonObject.put(
+						"label", listTypeEntry.getName(locale)
+					).put(
+						"value", listTypeEntry.getKey()
+					);
+
+					jsonArray.put(jsonObject);
+
+					break;
+				}
+			}
+		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		jsonObject.put(
+			"exclude", false
+		).put(
+			"selectedItems", jsonArray
+		);
+
+		return jsonObject;
+	}
+
 	private String _interpolateURL(
 		String apiUrl, HttpServletRequest httpServletRequest) {
 
@@ -513,6 +628,12 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

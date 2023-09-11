@@ -42,8 +42,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.math.BigDecimal;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

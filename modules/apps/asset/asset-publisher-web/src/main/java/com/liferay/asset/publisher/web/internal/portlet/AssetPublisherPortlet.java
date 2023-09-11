@@ -16,7 +16,6 @@ import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
-import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.internal.helper.AssetPublisherWebHelper;
@@ -277,8 +276,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 			AssetPublisherDisplayContext assetPublisherDisplayContext =
 				new AssetPublisherDisplayContext(
-					assetEntryActionRegistry, assetHelper,
-					assetListAssetEntryProvider,
+					assetHelper, assetListAssetEntryProvider,
 					assetListEntrySegmentsEntryRelLocalService,
 					assetPublisherCustomizerRegistry.
 						getAssetPublisherCustomizer(rootPortletId),
@@ -397,8 +395,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 			AssetPublisherDisplayContext assetPublisherDisplayContext =
 				new AssetPublisherDisplayContext(
-					assetEntryActionRegistry, assetHelper,
-					assetListAssetEntryProvider,
+					assetHelper, assetListAssetEntryProvider,
 					assetListEntrySegmentsEntryRelLocalService,
 					assetPublisherCustomizerRegistry.
 						getAssetPublisherCustomizer(rootPortletId),
@@ -444,9 +441,6 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 		return false;
 	}
-
-	@Reference
-	protected AssetEntryActionRegistry assetEntryActionRegistry;
 
 	@Reference
 	protected AssetHelper assetHelper;

@@ -112,17 +112,21 @@ function SegmentsExperimentsSidebar({
 			return;
 		}
 
-		if (experiment.status.value === STATUS_DRAFT) {
-			if (segmentsExperimentAction === 'reviewAndRun') {
-				dispatch(reviewAndRunExperiment());
-			}
-			else if (segmentsExperimentAction === 'delete') {
+		if (segmentsExperimentAction === 'delete') {
+			if (
+				experiment.status.value === STATUS_DRAFT ||
+				experiment.status.value === STATUS_TERMINATED
+			) {
 				dispatch(openDeletionModal());
 			}
-		}
-		else if (
-			experiment.status.value === STATUS_RUNNING &&
-			segmentsExperimentAction === 'terminate'
+		} else if (
+			segmentsExperimentAction === 'reviewAndRun' &&
+			experiment.status.value === STATUS_DRAFT
+		) {
+			dispatch(reviewAndRunExperiment());
+		} else if (
+			segmentsExperimentAction === 'terminate' &&
+			experiment.status.value === STATUS_RUNNING
 		) {
 			dispatch(openTerminateModal());
 		}

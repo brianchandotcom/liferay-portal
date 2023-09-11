@@ -1708,7 +1708,7 @@ public class ObjectDefinitionLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectDefinitionExternalReferenceCodeException.
 				MustNotStartWithPrefix.class,
-			"The prefix L_ is reserved for Liferay",
+			"The prefix L_ is reserved",
 			() -> _updateObjectDefinition(
 				"L_INVALID_ERC_TEST", objectDefinitionId, 0, 0, false,
 				LocalizedMapUtil.getLocalizedMap("Able"), "Able",
@@ -1858,7 +1858,7 @@ public class ObjectDefinitionLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectDefinitionExternalReferenceCodeException.
 				MustNotStartWithPrefix.class,
-			"The prefix L_ is reserved for Liferay",
+			"The prefix L_ is reserved",
 			() -> _objectDefinitionLocalService.updateExternalReferenceCode(
 				customObjectDefinition.getObjectDefinitionId(),
 				"L_INVALID_ERC_TEST"));

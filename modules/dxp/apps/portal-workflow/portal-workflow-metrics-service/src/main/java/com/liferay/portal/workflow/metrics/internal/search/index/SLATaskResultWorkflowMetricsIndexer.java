@@ -8,6 +8,7 @@ package com.liferay.portal.workflow.metrics.internal.search.index;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLATaskResult;
+import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndex;
 import com.liferay.portal.workflow.metrics.sla.processor.WorkflowMetricsSLAStatus;
 
 import org.osgi.service.component.annotations.Component;

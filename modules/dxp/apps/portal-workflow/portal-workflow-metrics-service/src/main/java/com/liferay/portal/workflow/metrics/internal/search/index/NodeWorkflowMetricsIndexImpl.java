@@ -6,6 +6,7 @@
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndex;
 import com.liferay.portal.workflow.metrics.search.index.constants.WorkflowMetricsIndexNameConstants;
 
 import org.osgi.service.component.annotations.Component;

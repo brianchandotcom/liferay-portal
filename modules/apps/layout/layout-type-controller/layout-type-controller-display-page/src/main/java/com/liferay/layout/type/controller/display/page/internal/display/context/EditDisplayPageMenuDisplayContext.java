@@ -65,10 +65,8 @@ public class EditDisplayPageMenuDisplayContext {
 							_themeDisplay),
 						"p_l_back_url", _themeDisplay.getURLCurrent(),
 						"p_l_back_url_title",
-						LanguageUtil.get(
-							_themeDisplay.getLocale(),
-							_layoutDisplayPageObjectProvider.getTitle(
-								_themeDisplay.getLocale())),
+						_layoutDisplayPageObjectProvider.getTitle(
+							_themeDisplay.getLocale()),
 						"p_l_mode", Constants.EDIT));
 
 				dropdownItem.setLabel(

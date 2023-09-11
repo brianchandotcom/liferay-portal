@@ -165,6 +165,13 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
+		long groupId) {
+
+		return layoutPageTemplateCollectionPersistence.findByGroupId(groupId);
+	}
+
+	@Override
+	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
 		long groupId, int type, int start, int end) {
 
 		return layoutPageTemplateCollectionPersistence.findByG_T(

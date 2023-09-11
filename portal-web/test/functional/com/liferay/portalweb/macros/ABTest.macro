@@ -363,4 +363,11 @@ definition {
 			value1 = ${elementId});
 	}
 
+	macro viewABTestStatusInACList {
+		AssertTextEquals(
+			key_abTestTitle = ${abTestTitle},
+			locator1 = "ABTest#VIEW_TEST_STATUS_ANALYTICS_CLOUD",
+			value1 = ${status});
+	}
+
 }

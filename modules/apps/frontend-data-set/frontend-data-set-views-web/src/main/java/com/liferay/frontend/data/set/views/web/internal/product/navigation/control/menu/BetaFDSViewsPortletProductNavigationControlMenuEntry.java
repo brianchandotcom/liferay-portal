@@ -34,7 +34,7 @@ public class BetaFDSViewsPortletProductNavigationControlMenuEntry
 
 	@Override
 	public String getIconJspPath() {
-		return "/fds_views_widget_beta_button.jsp";
+		return "/beta_fds_views_widget_button.jsp";
 	}
 
 	@Override

@@ -311,30 +311,30 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		return sourceCheckCheckNames;
 	}
 
-	private synchronized List<String> _getSourceFormatterCategories()
+	private synchronized List<String> _getSourceFormatterProperties()
 		throws Exception {
 
-		if (_basePropertiesKeys != null) {
-			return _basePropertiesKeys;
+		if (_sourceFormatterProperties != null) {
+			return _sourceFormatterProperties;
 		}
 
-		_basePropertiesKeys = new ArrayList<>();
+		_sourceFormatterProperties = new ArrayList<>();
 
 		File file = new File(getPortalDir() + "/source-formatter.properties");
 
 		String content = FileUtil.read(file);
 
 		if (content == null) {
-			return _basePropertiesKeys;
+			return _sourceFormatterProperties;
 		}
 
 		Matcher matcher = _propertiesKeyPattern.matcher(content);
 
 		while (matcher.find()) {
-			_basePropertiesKeys.add(matcher.group(1));
+			_sourceFormatterProperties.add(matcher.group(1));
 		}
 
-		return _basePropertiesKeys;
+		return _sourceFormatterProperties;
 	}
 
 	private synchronized boolean _hasPrivateAppsDir() {
@@ -377,10 +377,10 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 			return;
 		}
 
-		List<String> sourceFormatterCategories =
-			_getSourceFormatterCategories();
+		List<String> sourceFormatterProperties =
+			_getSourceFormatterProperties();
 
-		if (sourceFormatterCategories.isEmpty()) {
+		if (sourceFormatterProperties.isEmpty()) {
 			return;
 		}
 
@@ -389,7 +389,7 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		int preIndex = -1;
 
 		while (matcher.find()) {
-			int index = sourceFormatterCategories.indexOf(
+			int index = sourceFormatterProperties.indexOf(
 				StringUtil.trim(matcher.group(1)));
 
 			if (index == -1) {
@@ -400,8 +400,8 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Property '", sourceFormatterCategories.get(preIndex),
-						"' and '", sourceFormatterCategories.get(index),
+						"Property '", sourceFormatterProperties.get(preIndex),
+						"' and '", sourceFormatterProperties.get(index),
 						"' should follow root source-formatter.properties ",
 						"sort"));
 
@@ -482,11 +482,11 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static List<String> _basePropertiesKeys;
 	private static final Pattern _checkPropertyPattern = Pattern.compile(
 		"\n\\s*#?(checkstyle|source\\.check)\\.(.*\\.check)\\.");
 	private static final Pattern _propertiesKeyPattern = Pattern.compile(
 		"(?<=\\A|\n) +([\\w.]+)=");
+	private static List<String> _sourceFormatterProperties;
 
 	private Boolean _hasPrivateAppsDir;
 

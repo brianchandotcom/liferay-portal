@@ -584,7 +584,7 @@ definition {
 	}
 
 	macro configureReminders {
-		CalendarEvent._expandPanel(panelName = "Reminders");
+		Panel.expandPanel(panel = "Reminders");
 
 		Check(locator1 = "CalendarEditEvent#REMINDERS_EMAIL_CHECKBOX_1");
 
@@ -1050,11 +1050,11 @@ definition {
 	}
 
 	macro gotoConfigureInvitations {
-		CalendarEvent._expandPanel(panelName = "Invitations");
+		Panel.expandPanel(panel = "Invitations");
 	}
 
 	macro gotoConfigureRelatedAssets {
-		CalendarEvent._expandPanel(panelName = "Related Assets");
+		Panel.expandPanel(panel = "Related Assets");
 	}
 
 	macro gotoRepeatConfiguration {
@@ -1074,7 +1074,7 @@ definition {
 	}
 
 	macro inviteResource {
-		CalendarEvent._expandPanel(panelName = "Invitations");
+		Panel.expandPanel(panel = "Invitations");
 
 		for (var resourceName : list ${resourceNameList}) {
 			Type(
@@ -1173,7 +1173,7 @@ definition {
 
 	macro selectCalendar {
 		if (isSet(calendarName)) {
-			CalendarEvent._expandPanel(panelName = "Details");
+			Panel.expandPanel(panel = "Details");
 
 			Select(
 				locator1 = "CalendarEditEvent#DETAILS_CALENDAR_SELECT",
@@ -1462,7 +1462,7 @@ definition {
 	}
 
 	macro tag {
-		CalendarEvent._expandPanel(panelName = "Categorization");
+		Panel.expandPanel(panel = "Categorization");
 
 		AssertElementPresent(locator1 = "CalendarEditEvent#CATEGORIZATION_TAG_FIELD");
 
@@ -1585,7 +1585,7 @@ definition {
 	}
 
 	macro viewAvailableCalendars {
-		CalendarEvent._expandPanel(panelName = "Details");
+		Panel.expandPanel(panel = "Details");
 
 		for (var availableCalendarName : list ${availableCalendarList}) {
 			var key_calendarName = ${availableCalendarName};
@@ -1798,7 +1798,7 @@ definition {
 	}
 
 	macro viewInvitationResourceNotPresent {
-		CalendarEvent._expandPanel(panelName = "Invitations");
+		Panel.expandPanel(panel = "Invitations");
 
 		for (var resourceName : list ${resourceNameList}) {
 			Type(
@@ -2167,7 +2167,7 @@ definition {
 	}
 
 	macro viewUnavailableCalendarsNotPresent {
-		CalendarEvent._expandPanel(panelName = "Details");
+		Panel.expandPanel(panel = "Details");
 
 		for (var unavailableCalendarName : list ${unavailableCalendarList}) {
 			var key_calendarName = ${unavailableCalendarName};

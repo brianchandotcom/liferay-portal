@@ -341,7 +341,7 @@ definition {
 			ProductMenu.gotoHomePage();
 		}
 
-		WaitForPageLoad();
+		WaitForElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED");
 
 		if (IsElementNotPresent(locator1 = "PagesFinder#INPUT_FIELD")) {
 			Click(

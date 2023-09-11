@@ -787,6 +787,10 @@ components:
                     items:
                         $ref: "#/components/schemas/SkuUnitOfMeasure"
                     type: array
+                tierPrices:
+                    items:
+                        $ref: "#/components/schemas/TierPrice"
+                    type: array
                 weight:
                     example: 1.1
                     format: double
@@ -854,6 +858,8 @@ components:
                 precision:
                     example: 3
                     type: integer
+                price:
+                    $ref: "#/components/schemas/Price"
                 primary:
                     example: true
                     type: boolean
@@ -866,6 +872,28 @@ components:
                     example: 202.1
                     format: bigdecimal
                     minimum: 0
+                    type: number
+                tierPrices:
+                    items:
+                        $ref: "#/components/schemas/TierPrice"
+                    type: array
+            type: object
+        TierPrice:
+            properties:
+                currency:
+                    type: string
+                price:
+                    format: double
+                    readOnly: true
+                    type: number
+                priceFormatted:
+                    readOnly: true
+                    type: string
+                quantity:
+                    example: 202.1
+                    format: bigdecimal
+                    minimum: 0
+                    readOnly: true
                     type: number
             type: object
         WishList:

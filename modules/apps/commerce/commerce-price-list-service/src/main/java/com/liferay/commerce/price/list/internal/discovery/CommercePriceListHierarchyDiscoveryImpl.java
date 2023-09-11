@@ -31,7 +31,8 @@ public class CommercePriceListHierarchyDiscoveryImpl
 	@Override
 	public CommercePriceList getCommercePriceList(
 			long groupId, long commerceAccountId, long commerceChannelId,
-			long commerceOrderTypeId, String cpInstanceUuid, String type)
+			long commerceOrderTypeId, String cpInstanceUuid, String type,
+			String unitOfMeasureKey)
 		throws PortalException {
 
 		CommercePriceList firstEligibleCommercePriceList = null;

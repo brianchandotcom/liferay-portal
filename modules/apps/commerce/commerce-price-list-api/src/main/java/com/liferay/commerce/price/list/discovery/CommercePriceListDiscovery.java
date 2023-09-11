@@ -18,7 +18,8 @@ public interface CommercePriceListDiscovery {
 
 	public CommercePriceList getCommercePriceList(
 			long groupId, long commerceAccountId, long commerceChannelId,
-			long commerceOrderTypeId, String cpInstanceUuid, String type)
+			long commerceOrderTypeId, String cpInstanceUuid, String type,
+			String unitOfMeasureKey)
 		throws PortalException;
 
 	public String getCommercePriceListDiscoveryKey();

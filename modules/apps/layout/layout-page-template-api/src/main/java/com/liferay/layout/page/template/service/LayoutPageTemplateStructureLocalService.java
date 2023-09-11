@@ -354,11 +354,6 @@ public interface LayoutPageTemplateStructureLocalService
 		throws PortalException;
 
 	public LayoutPageTemplateStructure updateLayoutPageTemplateStructureData(
-			long groupId, long plid, long segmentsExperienceId, String data,
-			boolean checkUnlockedLayout)
-		throws PortalException;
-
-	public LayoutPageTemplateStructure updateLayoutPageTemplateStructureData(
 			long groupId, long plid, String data)
 		throws PortalException;
 

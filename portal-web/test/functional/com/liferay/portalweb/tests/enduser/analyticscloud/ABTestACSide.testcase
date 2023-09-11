@@ -1,0 +1,140 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property analytics.cloud.release = "true";
+	property analytics.cloud.upstream = "true";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Copy the token from AC") {
+			ACUtils.launchAC();
+
+			ACSettings.takeTokenFromAnalyticsCloud();
+		}
+
+		task ("Set up instance and sign in DXP") {
+			TestCase.setUpPortalInstance();
+
+			ACUtils.launchDXP();
+		}
+
+		task ("Add a new site with a public widget page") {
+
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+
+		//ACUtils.tearDownAC();
+
+		ACUtils.tearDownDXP();
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@description = "Story: LRAC-14220 | Automation ID: LRAC-14444 | Test Summary: Draft AB test delete button redirects to DXP"
+	@priority = 3
+	test ABTestDraftDeleteButtonRedirectsToDXP {
+		task ("Go to AC > Tests > Open your test") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
+			ACNavigation.goToTests();
+
+			ACNavigation.openItem(itemName = ${nameABTest});
+		}
+
+		task ("Click on the delete button on the top") {
+		}
+
+			SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
+
+		}
+
+		task ("Assert the empty state after the test is deleted") {
+			ABTest.assertDXPABTestEmptyState();
+		}
+
+		task ("Go to AC > Tests > Assert the empty state") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
+			ACNavigation.goToTests();
+
+			ACUtils.viewGenericText(textValueList = "There are no tests found.");
+
+			ACUtils.viewGenericText(textValueList = "Create a new test from Liferay DXP by clicking on the , icon in the toolbar when viewing a page in DXP.");
+		}
+	}
+
+	@description = "Story: LRAC-14220 | Automation ID: LRAC-14445 | Test Summary: Draft AB test Review button redirects to DXP"
+	@priority = 3
+	test ABTestDraftReviewButtonRedirectsToDXP {
+		task ("Go to AC > Tests > Open your test") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
+			ACNavigation.goToTests();
+
+			ACNavigation.openItem(itemName = ${nameABTest});
+		}
+
+		task ("Click on the review button on the top") {
+			Button.click(button = "Review");
+		}
+
+		task ("See the redirection to the review and run test modal in DXP") {
+			task ("Go to the new tab open") {
+				SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
+			}
+
+			task ("Assert the review and run modal is open") {
+				AssertTextEquals.assertPartialText(
+					locator1 = "Modal#MODAL_CONTENT",
+					value1 = "Review and Run Test");
+			}
+		}
+	}
+
+			ABTest.runTest();
+		}
+
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
+			ACNavigation.goToTests();
+
+		}
+
+		}
+
+		}
+
+
+
+
+		}
+
+		}
+
+		}
+
+		}
+	}
+
+}

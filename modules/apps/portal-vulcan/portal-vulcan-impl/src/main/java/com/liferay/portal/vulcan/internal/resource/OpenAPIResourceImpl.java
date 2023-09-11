@@ -1146,7 +1146,8 @@ public class OpenAPIResourceImpl implements OpenAPIResource {
 					schema.setFormat("date-time");
 					schema.setType("string");
 
-					if (StringUtil.equals(
+					if ((dtoProperty.getExtensions() != null) &&
+						StringUtil.equals(
 							MapUtil.getString(
 								dtoProperty.getExtensions(), "x-timeStorage"),
 							"useInputAsEntered")) {

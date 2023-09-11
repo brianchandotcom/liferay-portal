@@ -338,20 +338,15 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					"sortable", (boolean)fdsFieldProperties.get("sortable")
 				);
 
-				if (fdsFieldProperties.get(
-						"label"
-					).equals(
-						""
-					)) {
+				String label = String.valueOf(fdsFieldProperties.get("label"));
 
+				if (Validator.isBlank(label)) {
 					jsonObject.put(
 						"label",
 						String.valueOf(fdsFieldProperties.get("name")));
 				}
 				else {
-					jsonObject.put(
-						"label",
-						String.valueOf(fdsFieldProperties.get("label")));
+					jsonObject.put("label", label);
 				}
 
 				String rendererType = String.valueOf(

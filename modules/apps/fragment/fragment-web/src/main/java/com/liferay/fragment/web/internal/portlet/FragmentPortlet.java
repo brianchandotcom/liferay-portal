@@ -17,9 +17,7 @@ import com.liferay.fragment.web.internal.configuration.FragmentPortletConfigurat
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -119,18 +117,9 @@ public class FragmentPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			FragmentEntryProcessorRegistry.class.getName(),
 			_fragmentEntryProcessorRegistry);
-
-		try {
-			renderRequest.setAttribute(
-				FragmentWebKeys.INHERITED_FRAGMENT_COLLECTIONS,
-				_getInheritedFragmentCollections(themeDisplay));
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
-
+		renderRequest.setAttribute(
+			FragmentWebKeys.INHERITED_FRAGMENT_COLLECTIONS,
+			_getInheritedFragmentCollections(themeDisplay));
 		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
 		renderRequest.setAttribute(
 			FragmentWebKeys.SYSTEM_FRAGMENT_COLLECTIONS,
@@ -144,8 +133,7 @@ public class FragmentPortlet extends MVCPortlet {
 	}
 
 	private Map<String, List<FragmentCollection>>
-			_getInheritedFragmentCollections(ThemeDisplay themeDisplay)
-		throws PortalException {
+		_getInheritedFragmentCollections(ThemeDisplay themeDisplay) {
 
 		if (themeDisplay.getScopeGroupId() ==
 				themeDisplay.getCompanyGroupId()) {
@@ -161,19 +149,13 @@ public class FragmentPortlet extends MVCPortlet {
 				themeDisplay.getCompanyGroupId());
 
 		if (ListUtil.isNotEmpty(fragmentCollections)) {
-			Group group = _groupLocalService.getGroup(
-				themeDisplay.getCompanyGroupId());
-
 			inheritedFragmentCollections.put(
-				group.getDescriptiveName(themeDisplay.getLocale()),
+				_language.get(themeDisplay.getLocale(), "global"),
 				fragmentCollections);
 		}
 
 		return inheritedFragmentCollections;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentPortlet.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
@@ -203,6 +185,9 @@ public class FragmentPortlet extends MVCPortlet {
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;

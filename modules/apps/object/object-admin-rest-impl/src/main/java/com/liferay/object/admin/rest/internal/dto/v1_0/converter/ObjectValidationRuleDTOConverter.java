@@ -93,6 +93,7 @@ public class ObjectValidationRuleDTOConverter
 				}
 
 				script = serviceBuilderObjectValidationRule.getScript();
+				system = serviceBuilderObjectValidationRule.getSystem();
 			}
 		};
 	}

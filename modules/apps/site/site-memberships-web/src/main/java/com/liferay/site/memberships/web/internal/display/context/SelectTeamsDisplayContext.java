@@ -194,7 +194,8 @@ public class SelectTeamsDisplayContext {
 				TeamLocalServiceUtil.search(
 					getGroupId(), getKeywords(), getKeywords(),
 					new LinkedHashMap<>(), teamSearchContainer.getStart(),
-					teamSearchContainer.getEnd(), teamSearchContainer.getOrderByComparator()),
+					teamSearchContainer.getEnd(),
+					teamSearchContainer.getOrderByComparator()),
 				team -> {
 					if (!TeamPermissionUtil.contains(
 							themeDisplay.getPermissionChecker(), team,

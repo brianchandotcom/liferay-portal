@@ -88,7 +88,7 @@ definition {
 		}
 
 		task ("And clicks any 'Select' button on 'CATEGORIZATION'") {
-			CalendarEvent._expandPanel(panelName = "Categorization");
+			Panel.expandPanel(panel = "Categorization");
 
 			ScrollWebElementIntoView(locator1 = "CalendarEditEvent#RELATED_ASSETS_PANEL_COLLAPSED");
 

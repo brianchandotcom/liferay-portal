@@ -4,4 +4,5 @@ Bundle-Version: 24.0.1
 Export-Package:\
 	com.liferay.commerce.test.util,\
 	com.liferay.commerce.test.util.context,\
-	com.liferay.commerce.test.util.order.status
+	com.liferay.commerce.test.util.order.status,\
+	com.liferay.commerce.test.util.price.list

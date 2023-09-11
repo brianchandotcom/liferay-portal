@@ -277,10 +277,10 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro statusABTestInAC(status = null) {
-		AssertTextEquals(
-			locator1 = "ACTests#SUMMARY_CARD_TEXT",
-			value1 = ${status});
+	macro statusABTestInDXP(status) {
+		AssertElementPresent(
+			key_status = ${status},
+			locator1 = "ImportExport#IMPORT_EXPORT_STATUS");
 	}
 
 	@summary = "Default summary"

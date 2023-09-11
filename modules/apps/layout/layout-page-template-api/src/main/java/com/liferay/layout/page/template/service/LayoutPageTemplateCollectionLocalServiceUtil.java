@@ -64,25 +64,6 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 			description, type, serviceContext);
 	}
 
-	public static LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long userId, long groupId, String name, String description,
-			int type,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addLayoutPageTemplateCollection(
-			userId, groupId, name, description, type, serviceContext);
-	}
-
-	public static LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long userId, long groupId, String name, String description,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addLayoutPageTemplateCollection(
-			userId, groupId, name, description, serviceContext);
-	}
-
 	/**
 	 * Creates a new layout page template collection with the primary key. Does not add the layout page template collection to the database.
 	 *
@@ -351,31 +332,35 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	}
 
 	public static List<LayoutPageTemplateCollection>
-		getLayoutPageTemplateCollections(
-			long groupId, int start, int end, int type) {
+		getLayoutPageTemplateCollections(long groupId) {
 
-		return getService().getLayoutPageTemplateCollections(
-			groupId, start, end, type);
+		return getService().getLayoutPageTemplateCollections(groupId);
 	}
 
 	public static List<LayoutPageTemplateCollection>
 		getLayoutPageTemplateCollections(
-			long groupId, int start, int end,
-			OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
-			int type) {
+			long groupId, int type, int start, int end) {
 
 		return getService().getLayoutPageTemplateCollections(
-			groupId, start, end, orderByComparator, type);
+			groupId, type, start, end);
 	}
 
 	public static List<LayoutPageTemplateCollection>
 		getLayoutPageTemplateCollections(
-			long groupId, String name, int start, int end,
-			OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
-			int type) {
+			long groupId, int type, int start, int end,
+			OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
 		return getService().getLayoutPageTemplateCollections(
-			groupId, name, start, end, orderByComparator, type);
+			groupId, type, start, end, orderByComparator);
+	}
+
+	public static List<LayoutPageTemplateCollection>
+		getLayoutPageTemplateCollections(
+			long groupId, String name, int type, int start, int end,
+			OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
+
+		return getService().getLayoutPageTemplateCollections(
+			groupId, name, type, start, end, orderByComparator);
 	}
 
 	/**
@@ -481,11 +466,11 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 	public static LayoutPageTemplateCollection
 			updateLayoutPageTemplateCollection(
 				long layoutPageTemplateCollectionId, String name,
-				String description, int type)
+				String description)
 		throws PortalException {
 
 		return getService().updateLayoutPageTemplateCollection(
-			layoutPageTemplateCollectionId, name, description, type);
+			layoutPageTemplateCollectionId, name, description);
 	}
 
 	public static LayoutPageTemplateCollectionLocalService getService() {

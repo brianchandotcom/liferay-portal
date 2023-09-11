@@ -257,6 +257,13 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupId() throws Exception {
+		_persistence.countByGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByGroupId(0L);
+	}
+
+	@Test
 	public void testCountByG_T() throws Exception {
 		_persistence.countByG_T(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
@@ -319,6 +326,12 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 	public void testFindAll() throws Exception {
 		_persistence.findAll(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+	}
+
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		_persistence.filterFindByGroupId(
+			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
 	protected OrderByComparator<LayoutPageTemplateCollection>

@@ -51,16 +51,6 @@ public interface LayoutPageTemplateCollectionService extends BaseService {
 			String description, int type, ServiceContext serviceContext)
 		throws PortalException;
 
-	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long groupId, long parentLayoutPageTemplateCollection, String name,
-			String description, ServiceContext serviceContext)
-		throws PortalException;
-
-	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long groupId, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException;
-
 	public LayoutPageTemplateCollection deleteLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId)
 		throws PortalException;
@@ -80,19 +70,17 @@ public interface LayoutPageTemplateCollectionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, int start, int end, int type);
+		long groupId, int type, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
-		int type);
+		long groupId, int type, int start, int end,
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, String name, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
-		int type);
+		long groupId, String name, int type, int start, int end,
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutPageTemplateCollectionsCount(long groupId, int type);
@@ -110,7 +98,7 @@ public interface LayoutPageTemplateCollectionService extends BaseService {
 
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name,
-			String description, int type)
+			String description)
 		throws PortalException;
 
 }

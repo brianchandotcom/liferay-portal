@@ -151,30 +151,55 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-14101 | Automation ID: LRAC-14542 | Test Summary: Terminate button in AC is redirecting to DXP"
+	@priority = 3
+	test CheckTerminateButtonRedirectingToDXP {
+		task ("Click on Review and Run test") {
 			ABTest.runTest();
 		}
 
+		task ("Go to AC > Tests > Open your test") {
 			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
 			ACNavigation.goToTests();
 
+			ACNavigation.openItem(itemName = ${nameABTest});
 		}
 
+		task ("Click on the terminate button on the top") {
+			Button.click(button = "Terminate");
 		}
 
+		task ("Get site assigned property name and get data source name") {
+			var dataSource = StringUtil.extractFirst(${assignedPropertyName}, " ");
 		}
 
+		task ("Click on the new tab open and terminate the created AB test") {
+			SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
 
+			AssertTextEquals.assertPartialText(
+				locator1 = "Modal#MODAL_CONTENT",
+				value1 = "Are you sure you want to terminate this test?");
 
+			Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
 
+			Alert.viewSuccessMessageText(successMessage = "Success:Your request completed successfully.");
 		}
 
+		task ("Check that the test status is terminated") {
+			ABTest.statusABTestInDXP(status = "Terminated");
 		}
 
+		task ("Check that the alert explaining that the AB test was terminated manually appears") {
+			Alert.viewWarningSpecific(warningMessage = "The test has not gathered sufficient data to confidently determine a winner. However, variants can still be published.");
 		}
 
+		task ("Check that the Create New Test button") {
+			AssertElementPresent(
+				key_text = "Create New Test",
+				locator1 = "Button#ANY");
 		}
 	}
 

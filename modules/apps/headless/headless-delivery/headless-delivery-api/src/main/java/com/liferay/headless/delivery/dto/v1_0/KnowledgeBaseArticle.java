@@ -279,6 +279,34 @@ public class KnowledgeBaseArticle implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date dateModified;
 
+	@Schema(description = "The article's scheduled publication date.")
+	public Date getDatePublished() {
+		return datePublished;
+	}
+
+	public void setDatePublished(Date datePublished) {
+		this.datePublished = datePublished;
+	}
+
+	@JsonIgnore
+	public void setDatePublished(
+		UnsafeSupplier<Date, Exception> datePublishedUnsafeSupplier) {
+
+		try {
+			datePublished = datePublishedUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The article's scheduled publication date.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Date datePublished;
+
 	@Schema(description = "The article's description.")
 	public String getDescription() {
 		return description;
@@ -956,6 +984,20 @@ public class KnowledgeBaseArticle implements Serializable {
 			sb.append("\"");
 
 			sb.append(liferayToJSONDateFormat.format(dateModified));
+
+			sb.append("\"");
+		}
+
+		if (datePublished != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"datePublished\": ");
+
+			sb.append("\"");
+
+			sb.append(liferayToJSONDateFormat.format(datePublished));
 
 			sb.append("\"");
 		}

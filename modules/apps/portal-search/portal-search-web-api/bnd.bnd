@@ -10,7 +10,8 @@ Export-Package:\
 	com.liferay.portal.search.web.layout.prototype,\
 	com.liferay.portal.search.web.portlet.shared.search,\
 	com.liferay.portal.search.web.portlet.shared.task,\
-	com.liferay.portal.search.web.search.request
+	com.liferay.portal.search.web.search.request,\
+	com.liferay.portal.search.web.util.comparator
 Import-Package:\
 	!com.liferay.util.xml,\
 	\

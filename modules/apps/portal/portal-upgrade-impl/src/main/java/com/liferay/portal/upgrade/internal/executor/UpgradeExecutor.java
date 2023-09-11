@@ -298,10 +298,6 @@ public class UpgradeExecutor {
 			UpgradeStepRegistrator upgradeStepRegistrator =
 				_bundleContext.getService(serviceReference);
 
-			if (upgradeStepRegistrator == null) {
-				return null;
-			}
-
 			Class<? extends UpgradeStepRegistrator> clazz =
 				upgradeStepRegistrator.getClass();
 

@@ -165,7 +165,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, int start, int end, int type) {
+		long groupId, int type, int start, int end) {
 
 		return layoutPageTemplateCollectionPersistence.findByG_T(
 			groupId, start, end, type);
@@ -173,9 +173,8 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
-		int type) {
+		long groupId, int type, int start, int end,
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
 		return layoutPageTemplateCollectionPersistence.findByG_T(
 			groupId, type, start, end, orderByComparator);
@@ -183,9 +182,8 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 	@Override
 	public List<LayoutPageTemplateCollection> getLayoutPageTemplateCollections(
-		long groupId, String name, int start, int end,
-		OrderByComparator<LayoutPageTemplateCollection> orderByComparator,
-		int type) {
+		long groupId, String name, int type, int start, int end,
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
 		if (Validator.isNull(name)) {
 			return layoutPageTemplateCollectionPersistence.findByG_T(

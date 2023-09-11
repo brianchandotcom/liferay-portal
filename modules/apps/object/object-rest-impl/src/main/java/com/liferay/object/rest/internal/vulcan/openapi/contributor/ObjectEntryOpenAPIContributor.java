@@ -95,9 +95,19 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		Map<ObjectRelationship, ObjectDefinition> relatedObjectDefinitionsMap =
 			_getRelatedObjectDefinitionsMap();
 
+		Components components = openAPI.getComponents();
+
+		Map<String, Schema> schemas = components.getSchemas();
+
+		Schema objectDefinitionSchema = schemas.get(
+			_objectDefinition.getShortName());
+
+		Map<String, Schema> objectDefinitionSchemaProperties =
+			objectDefinitionSchema.getProperties();
+
 		Paths paths = openAPI.getPaths();
 
-		for (String key : new ArrayList<>(paths.keySet())) {
+		for (String key : ListUtil.fromMapKeys(paths)) {
 			if (!key.contains("objectActionName") &&
 				!key.contains("objectRelationshipName")) {
 
@@ -144,26 +154,14 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 						_setSchemaDescription(
 							objectRelationship, openAPI, relatedSchemaName);
 
-						openAPI.getComponents(
-						).getSchemas(
-						).get(
-							_objectDefinition.getShortName()
-						).getProperties(
-						).put(
+						objectDefinitionSchemaProperties.put(
 							objectRelationship.getName(),
-							_getSchema(objectRelationship, relatedSchemaName)
-						);
+							_getSchema(objectRelationship, relatedSchemaName));
 					}
 					else {
-						openAPI.getComponents(
-						).getSchemas(
-						).get(
-							_objectDefinition.getShortName()
-						).getProperties(
-						).put(
+						objectDefinitionSchemaProperties.put(
 							objectRelationship.getName(),
-							_getSchema(objectRelationship, null)
-						);
+							_getSchema(objectRelationship, null));
 					}
 				}
 			}
@@ -172,19 +170,9 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		}
 
 		if (!_objectDefinition.isEnableCategorization()) {
-			Components components = openAPI.getComponents();
-
-			Map<String, Schema> schemas = components.getSchemas();
-
-			Schema objectDefinitionSchema = schemas.get(
-				_objectDefinition.getShortName());
-
-			Map<String, Schema> properties =
-				objectDefinitionSchema.getProperties();
-
-			properties.remove("keywords");
-			properties.remove("taxonomyCategoryBriefs");
-			properties.remove("taxonomyCategoryIds");
+			objectDefinitionSchemaProperties.remove("keywords");
+			objectDefinitionSchemaProperties.remove("taxonomyCategoryBriefs");
+			objectDefinitionSchemaProperties.remove("taxonomyCategoryIds");
 
 			schemas.remove("TaxonomyCategoryBrief");
 		}

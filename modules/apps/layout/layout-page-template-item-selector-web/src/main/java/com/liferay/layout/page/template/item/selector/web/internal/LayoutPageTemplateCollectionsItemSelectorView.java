@@ -10,6 +10,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptor;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.item.selector.criterion.LayoutPageTemplateCollectionItemSelectorCriterion;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
@@ -242,12 +243,14 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 						_layoutPageTemplateCollectionLocalService.
 							getLayoutPageTemplateCollections(
 								_themeDisplay.getScopeGroupId(),
+								LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 								searchContainer.getStart(),
 								searchContainer.getEnd(),
 								searchContainer.getOrderByComparator()),
 					_layoutPageTemplateCollectionLocalService.
 						getLayoutPageTemplateCollectionsCount(
-							_themeDisplay.getScopeGroupId()));
+							_themeDisplay.getScopeGroupId(),
+							LayoutPageTemplateEntryTypeConstants.TYPE_BASIC));
 			}
 			else {
 				searchContainer.setResultsAndTotal(
@@ -255,12 +258,14 @@ public class LayoutPageTemplateCollectionsItemSelectorView
 						_layoutPageTemplateCollectionLocalService.
 							getLayoutPageTemplateCollections(
 								_themeDisplay.getScopeGroupId(), keywords,
+								LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 								searchContainer.getStart(),
 								searchContainer.getEnd(),
 								searchContainer.getOrderByComparator()),
 					_layoutPageTemplateCollectionLocalService.
 						getLayoutPageTemplateCollectionsCount(
-							_themeDisplay.getScopeGroupId(), keywords));
+							_themeDisplay.getScopeGroupId(), keywords,
+							LayoutPageTemplateEntryTypeConstants.TYPE_BASIC));
 			}
 
 			return searchContainer;

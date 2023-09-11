@@ -44,6 +44,7 @@ import com.liferay.layout.internal.importer.validator.PageDefinitionValidator;
 import com.liferay.layout.internal.importer.validator.PageTemplateCollectionValidator;
 import com.liferay.layout.internal.importer.validator.PageTemplateValidator;
 import com.liferay.layout.internal.importer.validator.UtilityPageTemplateValidator;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -546,19 +547,25 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
-					groupId, layoutPageTemplateCollectionKey);
+					groupId, layoutPageTemplateCollectionKey,
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 
 		if (layoutPageTemplateCollection == null) {
 			layoutPageTemplateCollection =
 				_layoutPageTemplateCollectionLocalService.
 					fetchLayoutPageTemplateCollectionByName(
-						groupId, pageTemplateCollection.getName());
+						groupId, pageTemplateCollection.getName(),
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 
 			if (layoutPageTemplateCollection == null) {
 				return _layoutPageTemplateCollectionService.
 					addLayoutPageTemplateCollection(
-						groupId, pageTemplateCollection.getName(),
+						groupId,
+						LayoutPageTemplateConstants.
+							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+						pageTemplateCollection.getName(),
 						pageTemplateCollection.getDescription(),
+						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 						ServiceContextThreadLocal.getServiceContext());
 			}
 		}
@@ -569,10 +576,14 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			return _layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
 					groupId,
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					_layoutPageTemplateCollectionLocalService.
 						getUniqueLayoutPageTemplateCollectionName(
-							groupId, pageTemplateCollection.getName()),
+							groupId, pageTemplateCollection.getName(),
+							LayoutPageTemplateEntryTypeConstants.TYPE_BASIC),
 					pageTemplateCollection.getDescription(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 					ServiceContextThreadLocal.getServiceContext());
 		}
 		else if (Objects.equals(
@@ -1854,7 +1865,8 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				LayoutPageTemplateCollection layoutPageTemplateCollection =
 					_layoutPageTemplateCollectionLocalService.
 						fetchLayoutPageTemplateCollection(
-							groupId, pageTemplateCollectionEntry.getKey());
+							groupId, pageTemplateCollectionEntry.getKey(),
+							LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
 
 				if (layoutPageTemplateCollection != null) {
 					return false;

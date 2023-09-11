@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -86,7 +87,10 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
 					TestPropsValues.getUserId(), _group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Page Template Collection One", StringPool.BLANK,
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 					_serviceContext);
 
 		String name1 = "Page Template One";
@@ -150,7 +154,10 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
 					TestPropsValues.getUserId(), _group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Page Template Collection One", StringPool.BLANK,
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 					_serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -182,7 +189,10 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
 					TestPropsValues.getUserId(), _group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					"Page Template Collection One", StringPool.BLANK,
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 					_serviceContext);
 
 		String name = "Page Template One";
@@ -224,7 +234,10 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 			_layoutPageTemplateCollectionLocalService.
 				addLayoutPageTemplateCollection(
 					TestPropsValues.getUserId(), _group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 					RandomTestUtil.randomString(10), StringPool.BLANK,
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 					_serviceContext);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =

@@ -249,6 +249,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			company.setName(name);
 
+			company = companyPersistence.update(company);
+
 			// Company info
 
 			try {

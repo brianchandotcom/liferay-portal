@@ -5,9 +5,12 @@
 
 package com.liferay.portal.upgrade.v7_4_x;
 
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.GuestUnsupportedResourceActionsUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
@@ -322,6 +325,12 @@ public class PortalUpgradeProcessRegistryImpl
 			new UpgradePartitionedControlTable("ClassName_"),
 			UpgradeModulesFactory.create(
 				new String[] {"com.liferay.comment.web"}, null));
+
+		upgradeVersionTreeMap.put(
+			new Version(27, 0, 1),
+			new GuestUnsupportedResourceActionsUpgradeProcess(
+				Group.class.getName(), ActionKeys.CONFIGURE_PORTLETS,
+				ActionKeys.VIEW_SITE_ADMINISTRATION));
 	}
 
 }

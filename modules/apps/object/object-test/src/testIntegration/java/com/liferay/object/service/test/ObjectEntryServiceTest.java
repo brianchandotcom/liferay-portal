@@ -149,7 +149,8 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_guestUser);
 
-		_assertPrincipalException(ObjectActionKeys.ADD_OBJECT_ENTRY, null);
+		_assertPrincipalException(
+			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition, null);
 
 		TreeTestUtil.iterateNodeObjectDefinitions(
 			_objectDefinitionLocalService, tree,
@@ -158,7 +159,8 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_user);
 
-		_assertPrincipalException(ObjectActionKeys.ADD_OBJECT_ENTRY, null);
+		_assertPrincipalException(
+			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition, null);
 
 		TreeTestUtil.iterateNodeObjectDefinitions(
 			_objectDefinitionLocalService, tree,
@@ -370,9 +372,7 @@ public class ObjectEntryServiceTest {
 				).build(),
 				rootObjectDefinition.getClassName()));
 
-		_assertDeleteBoundedObjectEntriesByDepth(2, objectEntries2, tree);
-
-		_assertDeleteBoundedObjectEntriesByDepth(1, objectEntries2, tree);
+		_assertDeleteBoundedObjectEntries(objectEntries2, tree);
 
 		Assert.assertNotNull(
 			_objectEntryService.deleteObjectEntry(
@@ -407,9 +407,7 @@ public class ObjectEntryServiceTest {
 		Map<String, ObjectEntry> objectEntries4 = _createBoundedObjectEntries(
 			tree);
 
-		_assertDeleteBoundedObjectEntriesByDepth(2, objectEntries4, tree);
-
-		_assertDeleteBoundedObjectEntriesByDepth(1, objectEntries4, tree);
+		_assertDeleteBoundedObjectEntries(objectEntries4, tree);
 
 		rootObjectEntry = objectEntries4.get(rootObjectDefinition.getName());
 
@@ -439,15 +437,15 @@ public class ObjectEntryServiceTest {
 			_objectEntryService.getObjectEntry(
 				userObjectEntry.getObjectEntryId()));
 
-		_assertPrincipalException(ActionKeys.VIEW, adminObjectEntry);
+		_assertPrincipalException(ActionKeys.VIEW, null, adminObjectEntry);
 
 		_setUser(_guestUser);
 
-		_assertPrincipalException(ActionKeys.VIEW, adminObjectEntry);
+		_assertPrincipalException(ActionKeys.VIEW, null, adminObjectEntry);
 
 		ObjectEntry guestUserObjectEntry = _addObjectEntry(_guestUser);
 
-		_assertPrincipalException(ActionKeys.VIEW, guestUserObjectEntry);
+		_assertPrincipalException(ActionKeys.VIEW, null, guestUserObjectEntry);
 
 		Role guestRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
@@ -670,25 +668,29 @@ public class ObjectEntryServiceTest {
 				TestPropsValues.getGroupId(), user.getUserId()));
 	}
 
-	private void _assertDeleteBoundedObjectEntriesByDepth(
-			int depth, Map<String, ObjectEntry> objectEntries, Tree tree)
+	private void _assertDeleteBoundedObjectEntries(
+			Map<String, ObjectEntry> objectEntries, Tree tree)
 		throws Exception {
 
-		TreeTestUtil.iterateNodeObjectDefinitions(
-			_objectDefinitionLocalService, tree,
-			objectDefinition -> {
-				Node node = tree.getNode(
-					objectDefinition.getRootObjectDefinitionId());
+		for (int depth = 2; depth > 1; depth--) {
+			int finalDepth = depth;
 
-				if (node.getDepth() == depth) {
-					ObjectEntry objectEntry = objectEntries.get(
-						objectDefinition.getName());
+			TreeTestUtil.iterateNodeObjectDefinitions(
+				_objectDefinitionLocalService, tree,
+				objectDefinition -> {
+					Node node = tree.getNode(
+						objectDefinition.getRootObjectDefinitionId());
 
-					Assert.assertNotNull(
-						_objectEntryService.deleteObjectEntry(
-							objectEntry.getObjectEntryId()));
-				}
-			});
+					if (node.getDepth() == finalDepth) {
+						ObjectEntry objectEntry = objectEntries.get(
+							objectDefinition.getName());
+
+						Assert.assertNotNull(
+							_objectEntryService.deleteObjectEntry(
+								objectEntry.getObjectEntryId()));
+					}
+				});
+		}
 	}
 
 	private void _assertPrincipalException(
@@ -730,13 +732,6 @@ public class ObjectEntryServiceTest {
 						"User ", permissionChecker.getUserId(), " must have ",
 						action, " permission for")));
 		}
-	}
-
-	private void _assertPrincipalException(
-			String action, ObjectEntry objectEntry)
-		throws Exception {
-
-		_assertPrincipalException(action, _objectDefinition, objectEntry);
 	}
 
 	private Map<String, ObjectEntry> _createBoundedObjectEntries(Tree tree)

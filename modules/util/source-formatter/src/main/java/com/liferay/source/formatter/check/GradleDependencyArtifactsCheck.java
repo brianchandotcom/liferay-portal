@@ -37,7 +37,7 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		content = _renameDependencyNames(absolutePath, content);
+		content = _renameDependencyNames(fileName, absolutePath, content);
 
 		List<String> enforceVersionArtifacts = getAttributeValues(
 			_ENFORCE_VERSION_ARTIFACTS_KEY, absolutePath);
@@ -276,9 +276,13 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 		return true;
 	}
 
-	private String _renameDependencyNames(String absolutePath, String content) {
+	private String _renameDependencyNames(
+		String fileName, String absolutePath, String content) {
+
 		List<String> renameArtifacts = getAttributeValues(
 			_RENAME_ARTIFACTS_KEY, absolutePath);
+		List<String> allowUseForbiddenArtifactsFileNames = getAttributeValues(
+			_ALLOW_USE_FORBIDDEN_ARTIFACTS_FILE_NAMES_KEY, absolutePath);
 
 		for (String renameArtifact : renameArtifacts) {
 			String[] renameArtifactArray = StringUtil.split(
@@ -293,7 +297,11 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 			String oldArtifactString = _getArtifactString(
 				renameArtifactArray[0]);
 
-			if ((newArtifactString != null) && (oldArtifactString != null)) {
+			if ((newArtifactString != null) && (oldArtifactString != null) &&
+				!_useForbiddenArtifactsFile(
+					fileName, renameArtifactArray[0],
+					allowUseForbiddenArtifactsFileNames)) {
+
 				content = StringUtil.replace(
 					content, oldArtifactString, newArtifactString);
 			}
@@ -301,6 +309,33 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 
 		return content;
 	}
+
+	private boolean _useForbiddenArtifactsFile(
+		String fileName, String oldArtifact,
+		List<String> allowUseForbiddenArtifactsFileNames) {
+
+		for (String allowUseForbiddenArtifactsFileName :
+				allowUseForbiddenArtifactsFileNames) {
+
+			String[] fileNameArray = StringUtil.split(
+				allowUseForbiddenArtifactsFileName, "->");
+
+			if ((fileNameArray.length != 2) ||
+				!StringUtil.equals(oldArtifact, fileNameArray[0])) {
+
+				continue;
+			}
+
+			if (fileName.endsWith(fileNameArray[1])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static final String _ALLOW_USE_FORBIDDEN_ARTIFACTS_FILE_NAMES_KEY =
+		"allowUseForbiddenArtifactsFileNames";
 
 	private static final String _ENFORCE_VERSION_ARTIFACTS_KEY =
 		"enforceVersionArtifacts";

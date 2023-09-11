@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -43,7 +44,8 @@ public class ProductNavigationControlMenuManagerImpl
 				Constants.PREVIEW,
 				ParamUtil.getString(
 					httpServletRequest, "p_l_mode", Constants.VIEW)) ||
-			_isLockedLayoutView(httpServletRequest)) {
+			_isLockedLayoutView(httpServletRequest) ||
+			_isGuestUser(httpServletRequest)) {
 
 			return false;
 		}
@@ -97,6 +99,24 @@ public class ProductNavigationControlMenuManagerImpl
 		}
 
 		return true;
+	}
+
+	private boolean _isGuestUser(HttpServletRequest httpServletRequest) {
+		try {
+			User user = _portal.getUser(httpServletRequest);
+
+			if ((user == null) || user.isGuestUser()) {
+				return true;
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to determine if user is guest user", exception);
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isLockedLayoutView(HttpServletRequest httpServletRequest) {

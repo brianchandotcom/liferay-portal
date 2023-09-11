@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade;
 
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
@@ -30,6 +31,7 @@ import java.util.Iterator;
 import java.util.NavigableSet;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.function.Function;
 
 /**
  * @author Alberto Chaparro
@@ -240,83 +242,47 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 	public static void updateBuildInfo(Connection connection)
 		throws SQLException {
 
-		PortalReleaseDTO portalReleaseDTO = _getCurrentPortalReleaseDTO(
-			connection);
+		_updateRelease(
+			connection, "buildNumber = ?, buildDate = ?",
+			preparedStatement -> {
+				preparedStatement.setInt(1, ReleaseInfo.getParentBuildNumber());
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update Release_ set buildNumber = ?, buildDate = ? where " +
-					"releaseId = ?")) {
+				java.util.Date buildDate = ReleaseInfo.getBuildDate();
 
-			preparedStatement.setInt(1, ReleaseInfo.getParentBuildNumber());
-
-			java.util.Date buildDate = ReleaseInfo.getBuildDate();
-
-			preparedStatement.setDate(2, new Date(buildDate.getTime()));
-
-			preparedStatement.setLong(3, ReleaseConstants.DEFAULT_ID);
-
-			if (preparedStatement.executeUpdate() > 0) {
-				_currentPortalReleaseDTODCLSingleton.destroy(null);
-
-				_currentPortalReleaseDTODCLSingleton.getSingleton(
-					() -> new PortalReleaseDTO(
-						portalReleaseDTO._schemaVersion,
-						portalReleaseDTO._state,
-						ReleaseInfo.getParentBuildNumber(),
-						portalReleaseDTO._testString));
-			}
-		}
+				preparedStatement.setDate(2, new Date(buildDate.getTime()));
+			},
+			portalReleaseDTO -> new PortalReleaseDTO(
+				portalReleaseDTO._schemaVersion, portalReleaseDTO._state,
+				ReleaseInfo.getParentBuildNumber(),
+				portalReleaseDTO._testString));
 	}
 
 	public static void updateSchemaVersion(
 			Connection connection, Version newSchemaVersion)
 		throws SQLException {
 
-		PortalReleaseDTO portalReleaseDTO = _getCurrentPortalReleaseDTO(
-			connection);
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update Release_ set schemaVersion = ? where releaseId = " +
-					ReleaseConstants.DEFAULT_ID)) {
-
-			preparedStatement.setString(1, newSchemaVersion.toString());
-
-			if (preparedStatement.executeUpdate() > 0) {
-				_currentPortalReleaseDTODCLSingleton.destroy(null);
-
-				_currentPortalReleaseDTODCLSingleton.getSingleton(
-					() -> new PortalReleaseDTO(
-						newSchemaVersion, portalReleaseDTO._state,
-						portalReleaseDTO._buildNumber,
-						portalReleaseDTO._testString));
-			}
-		}
+		_updateRelease(
+			connection, "schemaVersion = ?",
+			preparedStatement -> preparedStatement.setString(
+				1, newSchemaVersion.toString()),
+			portalReleaseDTO -> new PortalReleaseDTO(
+				newSchemaVersion, portalReleaseDTO._state,
+				portalReleaseDTO._buildNumber, portalReleaseDTO._testString));
 	}
 
 	public static void updateState(Connection connection, int state)
 		throws SQLException {
 
-		PortalReleaseDTO portalReleaseDTO = _getCurrentPortalReleaseDTO(
-			connection);
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update Release_ set modifiedDate = ?, state_ = ? where " +
-					"releaseId = ?")) {
-
-			preparedStatement.setDate(1, new Date(System.currentTimeMillis()));
-			preparedStatement.setInt(2, state);
-			preparedStatement.setLong(3, ReleaseConstants.DEFAULT_ID);
-
-			if (preparedStatement.executeUpdate() > 0) {
-				_currentPortalReleaseDTODCLSingleton.destroy(null);
-
-				_currentPortalReleaseDTODCLSingleton.getSingleton(
-					() -> new PortalReleaseDTO(
-						portalReleaseDTO._schemaVersion, state,
-						portalReleaseDTO._buildNumber,
-						portalReleaseDTO._testString));
-			}
-		}
+		_updateRelease(
+			connection, "modifiedDate = ?, state_ = ?",
+			preparedStatement -> {
+				preparedStatement.setDate(
+					1, new Date(System.currentTimeMillis()));
+				preparedStatement.setInt(2, state);
+			},
+			portalReleaseDTO -> new PortalReleaseDTO(
+				portalReleaseDTO._schemaVersion, state,
+				portalReleaseDTO._buildNumber, portalReleaseDTO._testString));
 	}
 
 	@Override
@@ -416,6 +382,31 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 
 			portalUpgradeProcessRegistry.registerUpgradeProcesses(
 				_upgradeVersionTreeMap);
+		}
+	}
+
+	private static void _updateRelease(
+			Connection connection, String sqlSetClause,
+			UnsafeConsumer<PreparedStatement, SQLException> consumer,
+			Function<PortalReleaseDTO, PortalReleaseDTO> function)
+		throws SQLException {
+
+		PortalReleaseDTO portalReleaseDTO = _getCurrentPortalReleaseDTO(
+			connection);
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"update Release_ set ", sqlSetClause, " where releaseId = ",
+					ReleaseConstants.DEFAULT_ID))) {
+
+			consumer.accept(preparedStatement);
+
+			if (preparedStatement.executeUpdate() > 0) {
+				_currentPortalReleaseDTODCLSingleton.destroy(null);
+
+				_currentPortalReleaseDTODCLSingleton.getSingleton(
+					() -> function.apply(portalReleaseDTO));
+			}
 		}
 	}
 

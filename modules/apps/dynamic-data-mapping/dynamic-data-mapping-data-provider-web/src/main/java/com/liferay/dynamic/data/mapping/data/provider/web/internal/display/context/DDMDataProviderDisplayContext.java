@@ -260,7 +260,7 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	public String getEmptyResultsMessage() {
-		SearchContainer<?> searchContainer = getSearch();
+		SearchContainer<?> searchContainer = getSearchContainer();
 
 		return LanguageUtil.get(
 			_ddmDataProviderRequestHelper.getRequest(),
@@ -424,7 +424,7 @@ public class DDMDataProviderDisplayContext {
 		).buildPortletURL();
 	}
 
-	public SearchContainer<?> getSearch() {
+	public SearchContainer<?> getSearchContainer() {
 		PortletURL portletURL = PortletURLBuilder.create(
 			getPortletURL()
 		).setParameter(
@@ -491,7 +491,7 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	public int getTotalItems() {
-		SearchContainer<?> searchContainer = getSearch();
+		SearchContainer<?> searchContainer = getSearchContainer();
 
 		return searchContainer.getTotal();
 	}

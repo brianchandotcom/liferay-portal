@@ -42,7 +42,7 @@ renderResponse.setTitle(ddmDataProviderDisplayContext.getTitle());
 				<liferay-ui:search-container
 					id="<%= ddmDataProviderDisplayContext.getSearchContainerId() %>"
 					rowChecker="<%= new DDMDataProviderInstanceRowChecker(renderResponse) %>"
-					searchContainer="<%= ddmDataProviderDisplayContext.getSearch() %>"
+					searchContainer="<%= ddmDataProviderDisplayContext.getSearchContainer() %>"
 				>
 					<liferay-ui:search-container-row
 						className="com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance"

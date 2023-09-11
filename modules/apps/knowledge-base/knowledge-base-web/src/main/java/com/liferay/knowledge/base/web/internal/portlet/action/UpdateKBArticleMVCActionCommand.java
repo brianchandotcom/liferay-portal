@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -92,13 +93,15 @@ public class UpdateKBArticleMVCActionCommand
 		String content = ParamUtil.getString(actionRequest, "content");
 		String description = ParamUtil.getString(actionRequest, "description");
 		String sourceURL = ParamUtil.getString(actionRequest, "sourceURL");
+		Date displayDate = ParamUtil.getDate(
+			actionRequest, "displayDate",
+			DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm"));
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		User user = _userLocalService.getUser(themeDisplay.getUserId());
 
-		Date displayDate = new Date();
 		Date expirationDate = _getExpirationDate(
 			actionRequest, true, user.getTimeZone());
 		Date reviewDate = _getReviewDate(

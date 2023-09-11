@@ -386,10 +386,6 @@ public class AssetCategoriesDisplayContext {
 			(ItemSelector)_httpServletRequest.getAttribute(
 				ItemSelector.class.getName());
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(_renderRequest);
 
@@ -402,8 +398,8 @@ public class AssetCategoriesDisplayContext {
 
 		return PortletURLBuilder.create(
 			itemSelector.getItemSelectorURL(
-				requestBackedPortletURLFactory, themeDisplay.getScopeGroup(),
-				themeDisplay.getScopeGroupId(),
+				requestBackedPortletURLFactory, _themeDisplay.getScopeGroup(),
+				_themeDisplay.getScopeGroupId(),
 				_renderResponse.getNamespace() + "selectCategory",
 				itemSelectorCriterion)
 		).buildString();

@@ -47,15 +47,17 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 
 		content = _fixCheckProperties(content);
 
-		_checkCheckstyleGroupAndOrder(fileName, content, "checkstyle.");
-		_checkSourceCheckGroupAndOrder(fileName, content, "source.check.");
+		_checkCheckstylePropertiesGroupAndOrder(
+			fileName, content, "checkstyle.");
+		_checkSourceCheckPropertiesGroupAndOrder(
+			fileName, content, "source.check.");
 
-		_sortByRootSourceFormatter(fileName, absolutePath, content);
+		_checkPropertiesOrder(fileName, absolutePath, content);
 
 		return _formatSourceFormatterProperties(fileName, content);
 	}
 
-	private void _checkCheckstyleGroupAndOrder(
+	private void _checkCheckstylePropertiesGroupAndOrder(
 		String fileName, String content, String prefix) {
 
 		String properties = _getProperites(content, prefix);
@@ -115,7 +117,70 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		}
 	}
 
-	private void _checkSourceCheckGroupAndOrder(
+	private void _checkPropertiesOrder(
+			String fileName, String absolutePath, String content)
+		throws Exception {
+
+		int pos = absolutePath.lastIndexOf(CharPool.SLASH);
+
+		String fileLocation = fileName.substring(0, pos);
+
+		if (fileLocation.equals(SourceUtil.getRootDirName(absolutePath))) {
+			return;
+		}
+
+		List<String> sourceFormatterProperties =
+			_getSourceFormatterProperties();
+
+		if (sourceFormatterProperties.isEmpty()) {
+			return;
+		}
+
+		int previousPropertyPosition = -1;
+
+		for (String line : content.split("\n")) {
+			String trimmedLine = line.trim();
+
+			if (Validator.isNull(trimmedLine) ||
+				trimmedLine.startsWith(StringPool.POUND)) {
+
+				continue;
+			}
+
+			pos = trimmedLine.indexOf(CharPool.EQUAL);
+
+			if (pos == -1) {
+				continue;
+			}
+
+			String property = trimmedLine.substring(0, pos);
+
+			pos = sourceFormatterProperties.indexOf(property);
+
+			if (pos == -1) {
+				continue;
+			}
+
+			if ((previousPropertyPosition != -1) &&
+				(pos < previousPropertyPosition)) {
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Property '",
+						sourceFormatterProperties.get(previousPropertyPosition),
+						"' and '", sourceFormatterProperties.get(pos),
+						"' should follow root source-formatter.properties ",
+						"sort"));
+
+				return;
+			}
+
+			previousPropertyPosition = pos;
+		}
+	}
+
+	private void _checkSourceCheckPropertiesGroupAndOrder(
 		String fileName, String content, String prefix) {
 
 		String properties = _getProperites(content, prefix);
@@ -375,69 +440,6 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		}
 
 		return _hasPrivateAppsDir;
-	}
-
-	private void _sortByRootSourceFormatter(
-			String fileName, String absolutePath, String content)
-		throws Exception {
-
-		int pos = absolutePath.lastIndexOf(CharPool.SLASH);
-
-		String fileLocation = fileName.substring(0, pos);
-
-		if (fileLocation.equals(SourceUtil.getRootDirName(absolutePath))) {
-			return;
-		}
-
-		List<String> sourceFormatterProperties =
-			_getSourceFormatterProperties();
-
-		if (sourceFormatterProperties.isEmpty()) {
-			return;
-		}
-
-		int previousPropertyPosition = -1;
-
-		for (String line : content.split("\n")) {
-			String trimmedLine = line.trim();
-
-			if (Validator.isNull(trimmedLine) ||
-				trimmedLine.startsWith(StringPool.POUND)) {
-
-				continue;
-			}
-
-			pos = trimmedLine.indexOf(CharPool.EQUAL);
-
-			if (pos == -1) {
-				continue;
-			}
-
-			String property = trimmedLine.substring(0, pos);
-
-			pos = sourceFormatterProperties.indexOf(property);
-
-			if (pos == -1) {
-				continue;
-			}
-
-			if ((previousPropertyPosition != -1) &&
-				(pos < previousPropertyPosition)) {
-
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Property '",
-						sourceFormatterProperties.get(previousPropertyPosition),
-						"' and '", sourceFormatterProperties.get(pos),
-						"' should follow root source-formatter.properties ",
-						"sort"));
-
-				return;
-			}
-
-			previousPropertyPosition = pos;
-		}
 	}
 
 	private String _sortPropertyValues(

@@ -26,6 +26,7 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.info.type.Labeled;
 import com.liferay.info.type.WebImage;
+import com.liferay.info.type.WebURL;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.string.StringPool;
@@ -548,6 +549,12 @@ public class FragmentEntryProcessorHelperImpl
 			}
 
 			return valueJSONObject;
+		}
+
+		if (value instanceof WebURL) {
+			WebURL webURL = (WebURL)value;
+
+			return webURL.toJSONObject();
 		}
 
 		if (value instanceof Collection) {

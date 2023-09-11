@@ -8,6 +8,8 @@ definition {
 	property property.group = "analytics.cloud.profile";
 	property testray.main.component.name = "Analytics Cloud";
 
+	static var nameABTest = "AB Test";
+
 	setUp {
 		task ("Copy the token from AC") {
 			ACUtils.launchAC();
@@ -22,18 +24,35 @@ definition {
 		}
 
 		task ("Add a new site with a public widget page") {
-			HeadlessSite.addSite(siteName = "Site Name");
+			ACUtils.addSiteAndPage(type = "content");
+		}
 
-			ACUtils.addSiteAndPage(
-				groupName = "Site Name",
-				layoutName = "AC Page",
-				type = "content");
+		task ("Connect DXP to Analytics Cloud") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Go to Site Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Edit the Content page to add a button fragment") {
+			ContentPages.gotoPageEditor();
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			Button.clickPublish();
 		}
 	}
 
 	tearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
+		ACUtils.tearDownABTest();
+		
 		ACUtils.tearDownDXP();
 
 		if (${testLiferayVirtualInstance} == "true") {
@@ -53,18 +72,6 @@ definition {
 
 		// AC Quarantine Reason: Test fix sites created twice
 		// AC Quarantine Ticket: LRAC-13677
-
-		var nameABTest = "Create AB test";
-
-		task ("Connect DXP to Analytics Cloud") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Go to Site Page") {
-			ACUtils.launchDXP();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/ac-page");
-		}
 
 		task ("Start an AB test") {
 			ABTest.createABTest(
@@ -96,18 +103,6 @@ definition {
 
 		// AC Quarantine Reason: Test fix sites created twice
 		// AC Quarantine Ticket: LRAC-13677
-
-		var nameABTest = "Delete AB test";
-
-		task ("Connect DXP to Analytics Cloud") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Go to Site Page") {
-			ACUtils.launchDXP();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/ac-page");
-		}
 
 		task ("Start an AB test") {
 			ABTest.createABTest(

@@ -32,8 +32,6 @@ definition {
 		}
 
 		task ("Go to Site Page") {
-			ACUtils.launchDXP();
-
 			ACUtils.navigateToSitePage(
 				pageName = "AC Page",
 				siteName = "Site Name");

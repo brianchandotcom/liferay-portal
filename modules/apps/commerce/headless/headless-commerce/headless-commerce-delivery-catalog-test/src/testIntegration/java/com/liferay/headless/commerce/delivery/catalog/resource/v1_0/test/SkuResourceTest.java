@@ -6,17 +6,25 @@
 package com.liferay.headless.commerce.delivery.catalog.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
+import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.commerce.test.util.price.list.CommercePriceEntryTestUtil;
+import com.liferay.commerce.test.util.price.list.CommercePriceListTestUtil;
+import com.liferay.commerce.test.util.price.list.CommerceTierPriceEntryTestUtil;
+import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.SkuUnitOfMeasure;
+import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.TierPrice;
 import com.liferay.headless.commerce.delivery.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.delivery.catalog.client.pagination.Pagination;
 import com.liferay.portal.kernel.model.User;
@@ -25,6 +33,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -68,7 +77,8 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 			testGroup.getGroupId(), "simple", false, false);
 
 		_cpDefinitionOptionRel = CPTestUtil.addCPDefinitionOptionRel(
-			testGroup.getGroupId(), _cpDefinition.getCPDefinitionId(), true, 5);
+			testGroup.getGroupId(), _cpDefinition.getCPDefinitionId(), true,
+			10);
 	}
 
 	@Override
@@ -77,6 +87,7 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		super.testGetChannelProductSkusPage();
 
 		_testGetChannelProductSkusPageWithUnitOfMeasure();
+		_testGetChannelProductSkusPageWithUnitOfMeasurePrice();
 	}
 
 	@Ignore
@@ -222,6 +233,82 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 				Assert.assertEquals(
 					Arrays.toString(skuUnitOfMeasures), 0,
 					skuUnitOfMeasures.length);
+			}
+		}
+	}
+
+	private void _testGetChannelProductSkusPageWithUnitOfMeasurePrice()
+		throws Exception {
+
+		Long channelId = testGetChannelProductSkusPage_getChannelId();
+		Long productId = testGetChannelProductSkusPage_getProductId();
+
+		Sku sku1 = testGetChannelProductSkusPage_addSku(
+			channelId, productId, randomSku());
+
+		CommerceCatalog commerceCatalog = _cpDefinition.getCommerceCatalog();
+
+		CommercePriceList commercePriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				commerceCatalog.getGroupId(), false, "price-list",
+				RandomTestUtil.nextDouble());
+
+		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+			sku1.getId());
+
+		CommercePriceEntry commercePriceEntry =
+			CommercePriceEntryTestUtil.addCommercePriceEntry(
+				null, productId, cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(), BigDecimal.TEN);
+
+		CommerceTierPriceEntryTestUtil.addCommerceTierPriceEntry(
+			commercePriceEntry.getCommercePriceEntryId(), 10, 10, 1, null);
+		CommerceTierPriceEntryTestUtil.addCommerceTierPriceEntry(
+			commercePriceEntry.getCommercePriceEntryId(), 12, 12, 1, null);
+
+		_addCPInstanceUnitOfMeasure(sku1, true);
+
+		Sku sku2 = testGetChannelProductSkusPage_addSku(
+			channelId, productId, randomSku());
+
+		_addCPInstanceUnitOfMeasure(sku2, true);
+
+		Page<Sku> page = skuResource.getChannelProductSkusPage(
+			channelId, productId, null, Pagination.of(1, 10));
+
+		for (Sku sku : page.getItems()) {
+			SkuUnitOfMeasure[] skuUnitOfMeasures = sku.getSkuUnitOfMeasures();
+
+			if (Objects.equals(sku.getId(), sku1.getId())) {
+				Assert.assertEquals(
+					Arrays.toString(skuUnitOfMeasures), 1,
+					skuUnitOfMeasures.length);
+
+				SkuUnitOfMeasure skuUnitOfMeasure = skuUnitOfMeasures[0];
+
+				Price skuUnitOfMeasurePrice = skuUnitOfMeasure.getPrice();
+
+				Assert.assertNotNull(skuUnitOfMeasurePrice);
+				Assert.assertTrue(
+					BigDecimalUtil.eq(
+						commercePriceEntry.getPrice(),
+						BigDecimal.valueOf(skuUnitOfMeasurePrice.getPrice())));
+
+				TierPrice[] tierPrices = skuUnitOfMeasure.getTierPrices();
+
+				Assert.assertEquals(
+					Arrays.toString(tierPrices), 2, tierPrices.length);
+			}
+
+			if (Objects.equals(sku.getId(), sku2.getId())) {
+				Assert.assertEquals(
+					Arrays.toString(skuUnitOfMeasures), 1,
+					skuUnitOfMeasures.length);
+
+				SkuUnitOfMeasure skuUnitOfMeasure = skuUnitOfMeasures[0];
+
+				Assert.assertNull(skuUnitOfMeasure.getPrice());
+				Assert.assertNull(skuUnitOfMeasure.getTierPrices());
 			}
 		}
 	}

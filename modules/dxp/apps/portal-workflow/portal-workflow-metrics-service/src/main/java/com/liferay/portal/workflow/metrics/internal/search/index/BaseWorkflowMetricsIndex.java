@@ -30,7 +30,7 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 	@Override
 	public boolean createIndex(long companyId) throws PortalException {
 		if (!searchCapabilities.isWorkflowMetricsSupported() ||
-			_hasIndex(getIndexName(companyId))) {
+			exists(companyId)) {
 
 			return false;
 		}
@@ -55,7 +55,7 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 	@Override
 	public boolean removeIndex(long companyId) throws PortalException {
 		if (!searchCapabilities.isWorkflowMetricsSupported() ||
-			!_hasIndex(getIndexName(companyId))) {
+			!exists(companyId)) {
 
 			return false;
 		}
@@ -72,9 +72,10 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
 
-	private boolean _hasIndex(String indexName) {
+	@Override
+	public boolean exists(long companyId) {
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
-			new IndicesExistsIndexRequest(indexName);
+			new IndicesExistsIndexRequest(getIndexName(companyId));
 
 		IndicesExistsIndexResponse indicesExistsIndexResponse =
 			searchEngineAdapter.execute(indicesExistsIndexRequest);

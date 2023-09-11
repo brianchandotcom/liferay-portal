@@ -6,7 +6,6 @@
 package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
-import com.liferay.layout.admin.web.internal.servlet.taglib.util.LayoutActionDropdownItemsProvider;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalServiceUtil;
@@ -54,13 +54,11 @@ import javax.servlet.http.HttpServletRequest;
 public class MillerColumnsDisplayContext {
 
 	public MillerColumnsDisplayContext(
-		LayoutActionDropdownItemsProvider layoutActionDropdownItemsProvider,
 		LayoutSetPrototypeHelper layoutSetPrototypeHelper,
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_layoutActionDropdownItemsProvider = layoutActionDropdownItemsProvider;
 		_layoutSetPrototypeHelper = layoutSetPrototypeHelper;
 		_layoutsAdminDisplayContext = layoutsAdminDisplayContext;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -69,6 +67,14 @@ public class MillerColumnsDisplayContext {
 			liferayPortletRequest);
 		_themeDisplay = (ThemeDisplay)liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public String getLayoutActionsURL() {
+		return ResourceURLBuilder.createResourceURL(
+			_liferayPortletResponse
+		).setResourceID(
+			"/layout_admin/get_layout_actions"
+		).buildString();
 	}
 
 	public String getLayoutChildrenURL() {
@@ -136,6 +142,8 @@ public class MillerColumnsDisplayContext {
 			HashMapBuilder.<String, Object>put(
 				"breadcrumbEntries", _getBreadcrumbEntriesJSONArray()
 			).put(
+				"getItemActionsURL", getLayoutActionsURL()
+			).put(
 				"getItemChildrenURL", getLayoutChildrenURL()
 			).put(
 				"isLayoutSetPrototype",
@@ -189,10 +197,6 @@ public class MillerColumnsDisplayContext {
 					layout.getType());
 
 			JSONObject layoutJSONObject = JSONUtil.put(
-				"actions",
-				_layoutActionDropdownItemsProvider.getActionDropdownItems(
-					layout, false)
-			).put(
 				"active", _layoutsAdminDisplayContext.isActive(layout.getPlid())
 			).put(
 				"bulkActions",
@@ -624,8 +628,6 @@ public class MillerColumnsDisplayContext {
 
 	private List<Long> _duplicatedFriendlyURLPlids;
 	private final HttpServletRequest _httpServletRequest;
-	private final LayoutActionDropdownItemsProvider
-		_layoutActionDropdownItemsProvider;
 	private final LayoutsAdminDisplayContext _layoutsAdminDisplayContext;
 	private final LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 	private final LiferayPortletResponse _liferayPortletResponse;

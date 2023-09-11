@@ -346,6 +346,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 		com.liferay.portal.kernel.model.Organization
 			serviceBuilderOrganization = _organizationService.addOrganization(
+				organization.getExternalReferenceCode(),
 				_getDefaultParentOrganizationId(organization),
 				organization.getName(), OrganizationConstants.TYPE_ORGANIZATION,
 				_getRegionId(organization, countryId), countryId,
@@ -440,6 +441,7 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 		return _organizationResourceDTOConverter.toDTO(
 			_getDTOConverterContext(organizationId),
 			_organizationService.updateOrganization(
+				organization.getExternalReferenceCode(),
 				serviceBuilderOrganization.getOrganizationId(),
 				_getDefaultParentOrganizationId(organization),
 				organization.getName(), serviceBuilderOrganization.getType(),

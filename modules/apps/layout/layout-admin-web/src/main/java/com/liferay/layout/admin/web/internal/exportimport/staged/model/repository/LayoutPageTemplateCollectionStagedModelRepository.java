@@ -50,8 +50,11 @@ public class LayoutPageTemplateCollectionStagedModelRepository
 		return _layoutPageTemplateCollectionLocalService.
 			addLayoutPageTemplateCollection(
 				userId, serviceContext.getScopeGroupId(),
+				layoutPageTemplateCollection.
+					getParentLayoutPageTemplateCollectionId(),
 				layoutPageTemplateCollection.getName(),
-				layoutPageTemplateCollection.getDescription(), serviceContext);
+				layoutPageTemplateCollection.getDescription(),
+				layoutPageTemplateCollection.getType(), serviceContext);
 	}
 
 	@Override
@@ -144,8 +147,7 @@ public class LayoutPageTemplateCollectionStagedModelRepository
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				layoutPageTemplateCollection.getName(),
-				layoutPageTemplateCollection.getDescription(),
-				layoutPageTemplateCollection.getType());
+				layoutPageTemplateCollection.getDescription());
 	}
 
 	@Reference

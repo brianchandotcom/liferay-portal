@@ -89,10 +89,10 @@ public class LayoutPageTemplateCollectionsDisplayContext {
 					LayoutPageTemplateCollectionServiceUtil.
 						getLayoutPageTemplateCollections(
 							themeDisplay.getScopeGroupId(), _getKeywords(),
+							LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 							searchContainer.getStart(),
 							searchContainer.getEnd(),
-							searchContainer.getOrderByComparator(),
-							LayoutPageTemplateEntryTypeConstants.TYPE_BASIC),
+							searchContainer.getOrderByComparator()),
 				LayoutPageTemplateCollectionServiceUtil.
 					getLayoutPageTemplateCollectionsCount(
 						themeDisplay.getScopeGroupId(), _getKeywords(),
@@ -104,10 +104,10 @@ public class LayoutPageTemplateCollectionsDisplayContext {
 					LayoutPageTemplateCollectionServiceUtil.
 						getLayoutPageTemplateCollections(
 							themeDisplay.getScopeGroupId(),
+							LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 							searchContainer.getStart(),
 							searchContainer.getEnd(),
-							searchContainer.getOrderByComparator(),
-							LayoutPageTemplateEntryTypeConstants.TYPE_BASIC),
+							searchContainer.getOrderByComparator()),
 				LayoutPageTemplateCollectionServiceUtil.
 					getLayoutPageTemplateCollectionsCount(
 						themeDisplay.getScopeGroupId(),

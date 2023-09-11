@@ -150,6 +150,7 @@ interface IActionProps extends React.HTMLAttributes<HTMLDivElement> {
 	displayType: string;
 	label: string;
 	redirectURL: string;
+	onClick: () => void;
 }
 
 interface IActionsProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -177,17 +178,29 @@ const TitleSection: React.FC<ITitleSectionProps> = ({
 
 const Actions: React.FC<IActionsProps> = ({actions = []}) => (
 	<div className='header-actions'>
-		{actions.map(({displayType, label, redirectURL}, index) => (
-			<a
-				className={getCN(`btn btn-${displayType}`, 'ml-2')}
-				href={redirectURL}
-				key={index}
-				target='_blank'
-			>
-				<ClayIcon className='mr-2' symbol='shortcut' />
-				{label}
-			</a>
-		))}
+		{actions.map(({displayType, label, onClick, redirectURL}, index) =>
+			redirectURL ? (
+				<a
+					className={getCN(`btn btn-${displayType}`, 'ml-2')}
+					href={redirectURL}
+					key={index}
+					target='_blank'
+				>
+					<ClayIcon className='mr-2' symbol='shortcut' />
+
+					{label}
+				</a>
+			) : (
+				<ClayButton
+					className='ml-2'
+					displayType={displayType as any}
+					key={index}
+					onClick={onClick}
+				>
+					{label}
+				</ClayButton>
+			)
+		)}
 	</div>
 );
 

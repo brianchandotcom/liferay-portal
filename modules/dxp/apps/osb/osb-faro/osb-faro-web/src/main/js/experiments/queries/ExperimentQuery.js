@@ -158,6 +158,7 @@ export const EXPERIMENT_ROOT_QUERY = gql`
 			id
 			name
 			pageURL
+			publishable
 			status
 		}
 	}

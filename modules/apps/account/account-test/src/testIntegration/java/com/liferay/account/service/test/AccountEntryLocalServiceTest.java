@@ -191,7 +191,7 @@ public class AccountEntryLocalServiceTest {
 				StringBundler.concat(
 					"dependencies/", clazz.getSimpleName(), StringPool.PERIOD,
 					testName.getMethodName(), ".groovy")),
-			Collections.emptyList());
+			false, Collections.emptyList());
 
 		try {
 			AccountEntryTestUtil.addAccountEntry(

@@ -175,7 +175,7 @@ public class ObjectValidationRuleServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-			"isEmailAddress(textField)", Collections.emptyList());
+			"isEmailAddress(textField)", false, Collections.emptyList());
 	}
 
 	private void _setUser(User user) {
@@ -203,7 +203,8 @@ public class ObjectValidationRuleServiceTest {
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-					"isEmailAddress(textField)", Collections.emptyList());
+					"isEmailAddress(textField)", false,
+					Collections.emptyList());
 		}
 		finally {
 			if (objectValidationRule != null) {

@@ -368,7 +368,7 @@ public class ObjectValidationRuleLocalServiceTest {
 		return _objectValidationRuleLocalService.addObjectValidationRule(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true, engine,
-			errorLabelMap, nameLabelMap, outputType, script,
+			errorLabelMap, nameLabelMap, outputType, script, false,
 			objectValidationRuleSettings);
 	}
 

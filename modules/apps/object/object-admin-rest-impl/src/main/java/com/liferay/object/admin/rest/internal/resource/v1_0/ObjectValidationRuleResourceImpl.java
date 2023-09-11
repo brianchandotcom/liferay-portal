@@ -198,7 +198,7 @@ public class ObjectValidationRuleResourceImpl
 				GetterUtil.getString(
 					objectValidationRule.getOutputTypeAsString(),
 					ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION),
-				objectValidationRule.getScript(),
+				objectValidationRule.getScript(), false,
 				_toObjectValidationRuleSettings(
 					objectDefinitionId, _objectFieldLocalService,
 					_objectValidationRuleSettingLocalService,

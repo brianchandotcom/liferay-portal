@@ -731,7 +731,7 @@ public class OrganizationLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap("This name is invalid."),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
-			"name != 'Invalid Name'", Collections.emptyList());
+			"name != 'Invalid Name'", false, Collections.emptyList());
 
 		User user = TestPropsValues.getUser();
 

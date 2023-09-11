@@ -237,6 +237,37 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 		return false;
 	}
 
+	public static void updateBuildInfo(Connection connection)
+		throws SQLException {
+
+		PortalReleaseDTO portalReleaseDTO = _getCurrentPortalReleaseDTO(
+			connection);
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update Release_ set buildNumber = ?, buildDate = ? where " +
+					"releaseId = ?")) {
+
+			preparedStatement.setInt(1, ReleaseInfo.getParentBuildNumber());
+
+			java.util.Date buildDate = ReleaseInfo.getBuildDate();
+
+			preparedStatement.setDate(2, new Date(buildDate.getTime()));
+
+			preparedStatement.setLong(3, ReleaseConstants.DEFAULT_ID);
+
+			if (preparedStatement.executeUpdate() > 0) {
+				_currentPortalReleaseDTODCLSingleton.destroy(null);
+
+				_currentPortalReleaseDTODCLSingleton.getSingleton(
+					() -> new PortalReleaseDTO(
+						portalReleaseDTO._schemaVersion,
+						portalReleaseDTO._state,
+						ReleaseInfo.getParentBuildNumber(),
+						portalReleaseDTO._testString));
+			}
+		}
+	}
+
 	public static void updateSchemaVersion(
 			Connection connection, Version newSchemaVersion)
 		throws SQLException {
@@ -256,6 +287,32 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 				_currentPortalReleaseDTODCLSingleton.getSingleton(
 					() -> new PortalReleaseDTO(
 						newSchemaVersion, portalReleaseDTO._state,
+						portalReleaseDTO._buildNumber,
+						portalReleaseDTO._testString));
+			}
+		}
+	}
+
+	public static void updateState(Connection connection, int state)
+		throws SQLException {
+
+		PortalReleaseDTO portalReleaseDTO = _getCurrentPortalReleaseDTO(
+			connection);
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update Release_ set modifiedDate = ?, state_ = ? where " +
+					"releaseId = ?")) {
+
+			preparedStatement.setDate(1, new Date(System.currentTimeMillis()));
+			preparedStatement.setInt(2, state);
+			preparedStatement.setLong(3, ReleaseConstants.DEFAULT_ID);
+
+			if (preparedStatement.executeUpdate() > 0) {
+				_currentPortalReleaseDTODCLSingleton.destroy(null);
+
+				_currentPortalReleaseDTODCLSingleton.getSingleton(
+					() -> new PortalReleaseDTO(
+						portalReleaseDTO._schemaVersion, state,
 						portalReleaseDTO._buildNumber,
 						portalReleaseDTO._testString));
 			}

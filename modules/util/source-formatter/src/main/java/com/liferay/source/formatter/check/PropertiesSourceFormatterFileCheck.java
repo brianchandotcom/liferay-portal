@@ -397,31 +397,47 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 			return;
 		}
 
-		Matcher matcher = _propertiesKeyPattern.matcher(content);
+		int previousPropertyPosition = -1;
 
-		int preIndex = -1;
+		for (String line : content.split("\n")) {
+			String trimmedLine = line.trim();
 
-		while (matcher.find()) {
-			int index = sourceFormatterProperties.indexOf(
-				StringUtil.trim(matcher.group(1)));
+			if (Validator.isNull(trimmedLine) ||
+				trimmedLine.startsWith(StringPool.POUND)) {
 
-			if (index == -1) {
 				continue;
 			}
 
-			if ((preIndex != -1) && (index < preIndex)) {
+			pos = trimmedLine.indexOf(CharPool.EQUAL);
+
+			if (pos == -1) {
+				continue;
+			}
+
+			String property = trimmedLine.substring(0, pos);
+
+			pos = sourceFormatterProperties.indexOf(StringUtil.trim(property));
+
+			if (pos == -1) {
+				continue;
+			}
+
+			if ((previousPropertyPosition != -1) &&
+				(pos < previousPropertyPosition)) {
+
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Property '", sourceFormatterProperties.get(preIndex),
-						"' and '", sourceFormatterProperties.get(index),
+						"Property '",
+						sourceFormatterProperties.get(previousPropertyPosition),
+						"' and '", sourceFormatterProperties.get(pos),
 						"' should follow root source-formatter.properties ",
 						"sort"));
 
 				return;
 			}
 
-			preIndex = index;
+			previousPropertyPosition = pos;
 		}
 	}
 
@@ -497,8 +513,6 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 
 	private static final Pattern _checkPropertyPattern = Pattern.compile(
 		"\n\\s*#?(checkstyle|source\\.check)\\.(.*\\.check)\\.");
-	private static final Pattern _propertiesKeyPattern = Pattern.compile(
-		"(?<=\\A|\n) +([\\w.]+)=");
 	private static List<String> _sourceFormatterProperties;
 
 	private Boolean _hasPrivateAppsDir;

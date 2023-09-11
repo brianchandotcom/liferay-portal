@@ -46,7 +46,7 @@ if (ddmStructure != null) {
 
 	<liferay-ui:search-container
 		id="ddmTemplates"
-		searchContainer="<%= journalDDMTemplateDisplayContext.getDDMTemplateSearch() %>"
+		searchContainer="<%= journalDDMTemplateDisplayContext.getDDMTemplateSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMTemplate"

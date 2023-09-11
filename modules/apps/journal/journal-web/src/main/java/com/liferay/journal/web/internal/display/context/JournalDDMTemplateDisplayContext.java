@@ -98,7 +98,7 @@ public class JournalDDMTemplateDisplayContext {
 		return ddmTemplateActionDropdownItems.getActionDropdownItems();
 	}
 
-	public SearchContainer<DDMTemplate> getDDMTemplateSearch()
+	public SearchContainer<DDMTemplate> getDDMTemplateSearchContainer()
 		throws Exception {
 
 		if (_ddmTemplateSearchContainer != null) {

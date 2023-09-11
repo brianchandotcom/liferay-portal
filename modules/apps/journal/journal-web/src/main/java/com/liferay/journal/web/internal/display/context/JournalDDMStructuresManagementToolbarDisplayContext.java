@@ -50,7 +50,8 @@ public class JournalDDMStructuresManagementToolbarDisplayContext
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			journalDDMStructuresDisplayContext.getDDMStructureSearch());
+			journalDDMStructuresDisplayContext.
+				getDDMStructureSearchContainer());
 	}
 
 	@Override

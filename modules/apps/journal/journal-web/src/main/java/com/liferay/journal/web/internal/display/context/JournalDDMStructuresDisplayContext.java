@@ -57,7 +57,7 @@ public class JournalDDMStructuresDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public SearchContainer<DDMStructure> getDDMStructureSearch()
+	public SearchContainer<DDMStructure> getDDMStructureSearchContainer()
 		throws Exception {
 
 		if (_ddmStructureSearchContainer != null) {

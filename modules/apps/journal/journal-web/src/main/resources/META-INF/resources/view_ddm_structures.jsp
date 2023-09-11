@@ -117,7 +117,7 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 
 	<liferay-ui:search-container
 		id="ddmStructures"
-		searchContainer="<%= journalDDMStructuresDisplayContext.getDDMStructureSearch() %>"
+		searchContainer="<%= journalDDMStructuresDisplayContext.getDDMStructureSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.mapping.model.DDMStructure"

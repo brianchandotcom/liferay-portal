@@ -53,7 +53,7 @@ public class JournalDDMTemplateManagementToolbarDisplayContext
 
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
-			journalDDMTemplateDisplayContext.getDDMTemplateSearch());
+			journalDDMTemplateDisplayContext.getDDMTemplateSearchContainer());
 
 		_ddmWebConfiguration =
 			(DDMWebConfiguration)httpServletRequest.getAttribute(

@@ -85,4 +85,29 @@ describe('ExperimentOverviewPage', () => {
 			'https://www.beryl.com/experiment-test?segmentsExperimentKey=123&segmentsExperimentAction=terminate'
 		);
 	});
+
+	it('renders publish and delete button to experiment to status FINISHED_NO_WINNER', async () => {
+		const {container, getByRole} = render(
+			<WrappedComponent status='FINISHED_NO_WINNER' />
+		);
+
+		await waitForLoadingToBeRemoved(container);
+
+		const reviewButton = getByRole('link', {
+			name: /publish/i
+		}) as HTMLAnchorElement;
+		const deleteButton = getByRole('link', {
+			name: /delete/i
+		}) as HTMLAnchorElement;
+
+		expect(reviewButton).toBeInTheDocument();
+		expect(reviewButton.href).toEqual(
+			'https://www.beryl.com/experiment-test?segmentsExperimentKey=123&segmentsExperimentAction=publish'
+		);
+
+		expect(deleteButton).toBeInTheDocument();
+		expect(deleteButton.href).toEqual(
+			'https://www.beryl.com/experiment-test?segmentsExperimentKey=123&segmentsExperimentAction=delete'
+		);
+	});
 });

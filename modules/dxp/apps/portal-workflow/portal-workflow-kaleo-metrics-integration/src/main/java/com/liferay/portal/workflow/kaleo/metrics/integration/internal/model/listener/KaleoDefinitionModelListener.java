@@ -26,6 +26,12 @@ public class KaleoDefinitionModelListener
 	public void onAfterCreate(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
+		if (!_indexerHelper.hasWorkflowMetricsIndices(
+				kaleoDefinition.getCompanyId())) {
+
+			return;
+		}
+
 		_processWorkflowMetricsIndexer.addProcess(
 			_indexerHelper.createAddProcessRequest(0L, kaleoDefinition));
 	}
@@ -36,6 +42,12 @@ public class KaleoDefinitionModelListener
 			KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
 
+		if (!_indexerHelper.hasWorkflowMetricsIndices(
+				originalKaleoDefinition.getCompanyId())) {
+
+			return;
+		}
+
 		_processWorkflowMetricsIndexer.updateProcess(
 			_indexerHelper.createUpdateProcessRequest(kaleoDefinition));
 	}
@@ -43,6 +55,12 @@ public class KaleoDefinitionModelListener
 	@Override
 	public void onBeforeRemove(KaleoDefinition kaleoDefinition)
 		throws ModelListenerException {
+
+		if (!_indexerHelper.hasWorkflowMetricsIndices(
+				kaleoDefinition.getCompanyId())) {
+
+			return;
+		}
 
 		_processWorkflowMetricsIndexer.deleteProcess(
 			_indexerHelper.createDeleteProcessRequest(kaleoDefinition));

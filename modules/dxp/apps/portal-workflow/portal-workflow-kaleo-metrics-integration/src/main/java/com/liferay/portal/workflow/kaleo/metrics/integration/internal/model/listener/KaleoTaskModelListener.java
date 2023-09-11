@@ -28,7 +28,10 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			getKaleoDefinitionVersion(kaleoTask.getKaleoDefinitionVersionId());
 
-		if (Objects.isNull(kaleoDefinitionVersion)) {
+		if (Objects.isNull(kaleoDefinitionVersion) ||
+			!_indexerHelper.hasWorkflowMetricsIndices(
+				kaleoTask.getCompanyId())) {
+
 			return;
 		}
 
@@ -39,6 +42,12 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 
 	@Override
 	public void onAfterRemove(KaleoTask kaleoTask) {
+		if (!_indexerHelper.hasWorkflowMetricsIndices(
+				kaleoTask.getCompanyId())) {
+
+			return;
+		}
+
 		DeleteNodeRequest.Builder builder = new DeleteNodeRequest.Builder();
 
 		_nodeWorkflowMetricsIndexer.deleteNode(

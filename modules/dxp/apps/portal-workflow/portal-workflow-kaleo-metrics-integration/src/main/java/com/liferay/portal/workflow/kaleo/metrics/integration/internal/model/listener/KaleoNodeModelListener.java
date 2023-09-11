@@ -26,14 +26,14 @@ public class KaleoNodeModelListener extends BaseKaleoModelListener<KaleoNode> {
 
 	@Override
 	public void onAfterCreate(KaleoNode kaleoNode) {
-		if (!Objects.equals(kaleoNode.getType(), NodeType.STATE.name())) {
-			return;
-		}
-
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			getKaleoDefinitionVersion(kaleoNode.getKaleoDefinitionVersionId());
 
-		if (Objects.isNull(kaleoDefinitionVersion)) {
+		if (!Objects.equals(kaleoNode.getType(), NodeType.STATE.name()) ||
+			Objects.isNull(kaleoDefinitionVersion) ||
+			!_indexerHelper.hasWorkflowMetricsIndices(
+				kaleoNode.getCompanyId())) {
+
 			return;
 		}
 
@@ -44,7 +44,10 @@ public class KaleoNodeModelListener extends BaseKaleoModelListener<KaleoNode> {
 
 	@Override
 	public void onAfterRemove(KaleoNode kaleoNode) {
-		if (!Objects.equals(kaleoNode.getType(), NodeType.STATE.name())) {
+		if (!Objects.equals(kaleoNode.getType(), NodeType.STATE.name()) ||
+			!_indexerHelper.hasWorkflowMetricsIndices(
+				kaleoNode.getCompanyId())) {
+
 			return;
 		}
 

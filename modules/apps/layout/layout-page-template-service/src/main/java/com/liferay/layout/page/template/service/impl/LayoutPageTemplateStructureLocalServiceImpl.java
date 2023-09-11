@@ -11,6 +11,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateStructureLocalServiceBaseImpl;
+import com.liferay.layout.page.template.util.CheckUnlockedLayoutThreadLocal;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -150,18 +151,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			long groupId, long plid, long segmentsExperienceId, String data)
 		throws PortalException {
 
-		return layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructureData(
-				groupId, plid, segmentsExperienceId, data, true);
-	}
-
-	@Override
-	public LayoutPageTemplateStructure updateLayoutPageTemplateStructureData(
-			long groupId, long plid, long segmentsExperienceId, String data,
-			boolean checkUnlockedLayout)
-		throws PortalException {
-
-		if (checkUnlockedLayout) {
+		if (CheckUnlockedLayoutThreadLocal.isCheckUnlockedLayout()) {
 			_checkUnlockedLayout(plid);
 		}
 

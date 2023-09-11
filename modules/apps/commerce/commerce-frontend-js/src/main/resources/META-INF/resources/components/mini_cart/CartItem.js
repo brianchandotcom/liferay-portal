@@ -168,7 +168,11 @@ function CartItem({
 				'is-removed': isRemoved,
 			})}
 		>
-			<a className="mini-cart-item-anchor" href={productPageUrl}>
+			<a
+				className="mini-cart-item-anchor"
+				data-senna-off="true"
+				href={productPageUrl}
+			>
 				{!!adaptiveMediaImageHTMLTag && (
 					<div
 						className="mini-cart-item-thumbnail"

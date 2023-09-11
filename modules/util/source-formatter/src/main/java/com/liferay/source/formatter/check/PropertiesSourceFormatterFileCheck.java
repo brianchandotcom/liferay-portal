@@ -328,10 +328,23 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 			return _sourceFormatterProperties;
 		}
 
-		Matcher matcher = _propertiesKeyPattern.matcher(content);
+		for (String line : content.split("\n")) {
+			String trimmedLine = line.trim();
 
-		while (matcher.find()) {
-			_sourceFormatterProperties.add(matcher.group(1));
+			if (Validator.isNull(trimmedLine) ||
+				trimmedLine.startsWith(StringPool.POUND)) {
+
+				continue;
+			}
+
+			int pos = trimmedLine.indexOf(CharPool.EQUAL);
+
+			if (pos == -1) {
+				continue;
+			}
+
+			_sourceFormatterProperties.add(
+				StringUtil.trim(trimmedLine.substring(0, pos)));
 		}
 
 		return _sourceFormatterProperties;

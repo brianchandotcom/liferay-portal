@@ -118,6 +118,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 	<#assign
 		generateGetPermissionCheckerMethods = false
+		generateMultipartBodyClasses = []
 		generatePatchMethods = false
 		getParentBatchJavaMethodSignatures = []
 		postParentBatchJavaMethodSignatures = []
@@ -127,7 +128,11 @@ public abstract class Base${schemaName}ResourceImpl
 		<#assign
 			parentSchemaName = javaMethodSignature.parentSchemaName!
 		/>
-
+		<#if javaMethodSignature.requestBodyMediaTypes?seq_contains("multipart/form-data")>
+			<#if freeMarkerTool.getMultipartBodySchemas(javaMethodSignature)??>
+				<#assign generateMultipartBodyClasses = generateMultipartBodyClasses + [javaMethodSignature] />
+			</#if>
+		</#if>
 		<#if stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName)>
 			<#assign deleteBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "ByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaName + "ByExternalReferenceCode")>
@@ -1370,6 +1375,26 @@ public abstract class Base${schemaName}ResourceImpl
 	</#if>
 
 	private static final com.liferay.portal.kernel.log.Log _log = LogFactoryUtil.getLog(Base${schemaName}ResourceImpl.class);
+
+	<#if generateMultipartBodyClasses?has_content>
+		<#list generateMultipartBodyClasses as javaMethodSignatureWithMultipartBody>
+			private class ${stringUtil.upperCaseFirstLetter(javaMethodSignatureWithMultipartBody.methodName)}RequestBody{
+				<#assign requestBodyPropertySchemas = freeMarkerTool.getMultipartBodySchemas(javaMethodSignatureWithMultipartBody) />
+				<#list requestBodyPropertySchemas as schemaName, propertySchema>
+					<#if stringUtil.equals(propertySchema.type, "string") && stringUtil.equals(propertySchema.format, "binary")>
+						@io.swagger.v3.oas.annotations.media.Schema(
+							type = "string", format = "binary", description = "${stringUtil.upperCaseFirstLetter(schemaName)}"
+						)
+						public String ${schemaName};
+
+					<#else>
+						public ${stringUtil.upperCaseFirstLetter(schemaName)} ${schemaName};
+
+					</#if>
+				</#list>
+			}
+		</#list>
+	</#if>
 
 }
 

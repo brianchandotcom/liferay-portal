@@ -36,7 +36,7 @@ public class ObjectValidationRuleLocalServiceWrapper
 				String engine,
 				java.util.Map<java.util.Locale, String> errorLabelMap,
 				java.util.Map<java.util.Locale, String> nameMap,
-				String outputType, String script,
+				String outputType, String script, boolean system,
 				java.util.List
 					<com.liferay.object.model.ObjectValidationRuleSetting>
 						objectValidationRuleSettings)
@@ -44,7 +44,7 @@ public class ObjectValidationRuleLocalServiceWrapper
 
 		return _objectValidationRuleLocalService.addObjectValidationRule(
 			userId, objectDefinitionId, active, engine, errorLabelMap, nameMap,
-			outputType, script, objectValidationRuleSettings);
+			outputType, script, system, objectValidationRuleSettings);
 	}
 
 	/**

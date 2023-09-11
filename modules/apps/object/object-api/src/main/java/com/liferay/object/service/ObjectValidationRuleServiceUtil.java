@@ -34,14 +34,14 @@ public class ObjectValidationRuleServiceUtil {
 			long objectDefinitionId, boolean active, String engine,
 			Map<java.util.Locale, String> errorLabelMap,
 			Map<java.util.Locale, String> nameMap, String outputType,
-			String script,
+			String script, boolean system,
 			List<com.liferay.object.model.ObjectValidationRuleSetting>
 				objectValidationRuleSettings)
 		throws PortalException {
 
 		return getService().addObjectValidationRule(
 			objectDefinitionId, active, engine, errorLabelMap, nameMap,
-			outputType, script, objectValidationRuleSettings);
+			outputType, script, system, objectValidationRuleSettings);
 	}
 
 	public static ObjectValidationRule deleteObjectValidationRule(

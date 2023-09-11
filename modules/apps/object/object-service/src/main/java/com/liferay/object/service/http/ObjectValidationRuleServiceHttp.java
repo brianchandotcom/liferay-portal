@@ -47,7 +47,7 @@ public class ObjectValidationRuleServiceHttp {
 				boolean active, String engine,
 				java.util.Map<java.util.Locale, String> errorLabelMap,
 				java.util.Map<java.util.Locale, String> nameMap,
-				String outputType, String script,
+				String outputType, String script, boolean system,
 				java.util.List
 					<com.liferay.object.model.ObjectValidationRuleSetting>
 						objectValidationRuleSettings)
@@ -61,7 +61,8 @@ public class ObjectValidationRuleServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectDefinitionId, active, engine, errorLabelMap,
-				nameMap, outputType, script, objectValidationRuleSettings);
+				nameMap, outputType, script, system,
+				objectValidationRuleSettings);
 
 			Object returnObj = null;
 
@@ -232,7 +233,7 @@ public class ObjectValidationRuleServiceHttp {
 	private static final Class<?>[] _addObjectValidationRuleParameterTypes0 =
 		new Class[] {
 			long.class, boolean.class, String.class, java.util.Map.class,
-			java.util.Map.class, String.class, String.class,
+			java.util.Map.class, String.class, String.class, boolean.class,
 			java.util.List.class
 		};
 	private static final Class<?>[] _deleteObjectValidationRuleParameterTypes1 =

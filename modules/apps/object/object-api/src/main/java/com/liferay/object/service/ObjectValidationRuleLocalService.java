@@ -66,7 +66,7 @@ public interface ObjectValidationRuleLocalService
 	public ObjectValidationRule addObjectValidationRule(
 			long userId, long objectDefinitionId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String outputType, String script,
+			String outputType, String script, boolean system,
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException;
 

@@ -168,7 +168,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 		long groupId, int type, int start, int end) {
 
 		return layoutPageTemplateCollectionPersistence.findByG_T(
-			groupId, start, end, type);
+			groupId, type, start, end);
 	}
 
 	@Override

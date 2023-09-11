@@ -11,13 +11,17 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.workflow.kaleo.runtime.manager.PortalKaleoManager;
 
+import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(service = PortalInstanceLifecycleListener.class)
+@Component(
+	property = Constants.SERVICE_RANKING + ":Integer=100",
+	service = PortalInstanceLifecycleListener.class
+)
 public class KaleoPortalInstanceLifecycleListener
 	extends InitialRequestPortalInstanceLifecycleListener {
 

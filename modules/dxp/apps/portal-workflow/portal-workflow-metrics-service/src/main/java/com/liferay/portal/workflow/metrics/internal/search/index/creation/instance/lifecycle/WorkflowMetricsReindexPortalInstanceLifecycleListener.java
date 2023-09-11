@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -10,28 +10,19 @@ import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.workflow.metrics.internal.search.index.creation.helper.WorkflowMetricsIndexCreator;
 
-import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Rafael Praxedes
+ * @author Feliphe Marinho
  */
-@Component(
-	property = Constants.SERVICE_RANKING + ":Integer=200",
-	service = PortalInstanceLifecycleListener.class
-)
-public class WorkflowMetricsIndexPortalInstanceLifecycleListener
+@Component(service = PortalInstanceLifecycleListener.class)
+public class WorkflowMetricsReindexPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		_workflowMetricsIndexCreator.createIndex(company);
-	}
-
-	@Override
-	public void portalInstanceUnregistered(Company company) throws Exception {
-		_workflowMetricsIndexCreator.removeIndex(company);
+		_workflowMetricsIndexCreator.reindex(company);
 	}
 
 	@Reference

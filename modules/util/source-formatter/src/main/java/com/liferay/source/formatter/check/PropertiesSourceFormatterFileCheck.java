@@ -318,15 +318,15 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 			return _sourceFormatterProperties;
 		}
 
-		_sourceFormatterProperties = new ArrayList<>();
-
 		File file = new File(getPortalDir() + "/source-formatter.properties");
 
 		String content = FileUtil.read(file);
 
 		if (content == null) {
-			return _sourceFormatterProperties;
+			return Collections.emptyList();
 		}
+
+		_sourceFormatterProperties = new ArrayList<>();
 
 		for (String line : content.split("\n")) {
 			String trimmedLine = line.trim();

@@ -5,8 +5,9 @@
 
 package com.liferay.portal.upgrade.internal.executor;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.DBUpgrader;
@@ -39,22 +39,19 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Preston Crary
@@ -156,6 +153,14 @@ public class UpgradeExecutor {
 		}
 	}
 
+	public Set<String> getBundleSymbolicNames() {
+		return _serviceTrackerMap.keySet();
+	}
+
+	public List<UpgradeInfo> getUpgradeInfos(String bundleSymbolicName) {
+		return _serviceTrackerMap.getService(bundleSymbolicName);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
@@ -168,14 +173,19 @@ public class UpgradeExecutor {
 			throw new RuntimeException(sqlException);
 		}
 
-		_serviceTracker = ServiceTrackerFactory.open(
-			bundleContext, UpgradeStepRegistrator.class,
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, UpgradeStepRegistrator.class, null,
+			(serviceReference, emitter) -> {
+				Bundle bundle = serviceReference.getBundle();
+
+				emitter.emit(bundle.getSymbolicName());
+			},
 			new UpgradeStepRegistratorServiceTrackerCustomizer());
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTracker.close();
+		_serviceTrackerMap.close();
 	}
 
 	private void _executeUpgradeInfos(
@@ -284,15 +294,14 @@ public class UpgradeExecutor {
 	@Reference
 	private ReleasePublisher _releasePublisher;
 
-	private ServiceTracker<UpgradeStepRegistrator, SafeCloseable>
-		_serviceTracker;
+	private ServiceTrackerMap<String, List<UpgradeInfo>> _serviceTrackerMap;
 
 	private class UpgradeStepRegistratorServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<UpgradeStepRegistrator, SafeCloseable> {
+		implements EagerServiceTrackerCustomizer
+			<UpgradeStepRegistrator, List<UpgradeInfo>> {
 
 		@Override
-		public SafeCloseable addingService(
+		public List<UpgradeInfo> addingService(
 			ServiceReference<UpgradeStepRegistrator> serviceReference) {
 
 			int buildNumber = 0;
@@ -363,49 +372,19 @@ public class UpgradeExecutor {
 				}
 			}
 
-			List<ServiceRegistration<UpgradeStep>> serviceRegistrations =
-				new ArrayList<>(upgradeInfos.size());
-
-			for (UpgradeInfo upgradeInfo : upgradeInfos) {
-				ServiceRegistration<UpgradeStep> serviceRegistration =
-					_bundleContext.registerService(
-						UpgradeStep.class, upgradeInfo.getUpgradeStep(),
-						HashMapDictionaryBuilder.<String, Object>put(
-							"build.number", upgradeInfo.getBuildNumber()
-						).put(
-							"upgrade.bundle.symbolic.name", bundleSymbolicName
-						).put(
-							"upgrade.from.schema.version",
-							upgradeInfo.getFromSchemaVersionString()
-						).put(
-							"upgrade.to.schema.version",
-							upgradeInfo.getToSchemaVersionString()
-						).build());
-
-				serviceRegistrations.add(serviceRegistration);
-			}
-
-			return () -> {
-				for (ServiceRegistration<UpgradeStep> serviceRegistration :
-						serviceRegistrations) {
-
-					serviceRegistration.unregister();
-				}
-			};
+			return upgradeInfos;
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<UpgradeStepRegistrator> serviceReference,
-			SafeCloseable safeCloseable) {
+			List<UpgradeInfo> upgradeInfos) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<UpgradeStepRegistrator> serviceReference,
-			SafeCloseable safeCloseable) {
-
-			safeCloseable.close();
+			List<UpgradeInfo> upgradeInfos) {
 		}
 
 	}

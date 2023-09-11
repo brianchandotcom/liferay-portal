@@ -5,10 +5,6 @@
 
 package com.liferay.portal.upgrade.internal.release;
 
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -21,7 +17,6 @@ import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.osgi.debug.SystemChecker;
@@ -34,7 +29,6 @@ import com.liferay.portal.upgrade.release.SchemaCreator;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,10 +49,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(service = {ReleaseManager.class, ReleaseManagerImpl.class})
 public class ReleaseManagerImpl implements ReleaseManager {
-
-	public Set<String> getBundleSymbolicNames() {
-		return new HashSet<>(_serviceTrackerMap.keySet());
-	}
 
 	public String getSchemaVersionString(String bundleSymbolicName) {
 		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
@@ -142,17 +132,15 @@ public class ReleaseManagerImpl implements ReleaseManager {
 	public Set<String> getUpgradableBundleSymbolicNames() {
 		Set<String> upgradableBundleSymbolicNames = new HashSet<>();
 
-		for (String bundleSymbolicName : getBundleSymbolicNames()) {
+		for (String bundleSymbolicName :
+				_upgradeExecutor.getBundleSymbolicNames()) {
+
 			if (_isUpgradable(bundleSymbolicName)) {
 				upgradableBundleSymbolicNames.add(bundleSymbolicName);
 			}
 		}
 
 		return upgradableBundleSymbolicNames;
-	}
-
-	public List<UpgradeInfo> getUpgradeInfos(String bundleSymbolicName) {
-		return _serviceTrackerMap.getService(bundleSymbolicName);
 	}
 
 	@Override
@@ -175,35 +163,25 @@ public class ReleaseManagerImpl implements ReleaseManager {
 			new SchemaCreatorServiceTrackerCustomizer(bundleContext));
 
 		_schemaCreatorServiceTracker.open();
-
-		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
-			bundleContext, UpgradeStep.class, null,
-			new PropertyServiceReferenceMapper<>(
-				"upgrade.bundle.symbolic.name"),
-			new UpgradeServiceTrackerCustomizer(bundleContext),
-			Collections.reverseOrder(
-				new PropertyServiceReferenceComparator<>(
-					"upgrade.from.schema.version")));
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_schemaCreatorServiceTracker.close();
-
-		_serviceTrackerMap.close();
 	}
 
 	private String _checkModules(boolean showUpgradeSteps) {
 		StringBundler sb = new StringBundler();
 
-		Set<String> bundleSymbolicNames = getBundleSymbolicNames();
+		Set<String> bundleSymbolicNames =
+			_upgradeExecutor.getBundleSymbolicNames();
 
 		for (String bundleSymbolicName : bundleSymbolicNames) {
 			String schemaVersionString = getSchemaVersionString(
 				bundleSymbolicName);
 
 			ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-				getUpgradeInfos(bundleSymbolicName));
+				_upgradeExecutor.getUpgradeInfos(bundleSymbolicName));
 
 			List<List<UpgradeInfo>> upgradeInfosList =
 				releaseGraphManager.getUpgradeInfosList(schemaVersionString);
@@ -355,7 +333,9 @@ public class ReleaseManagerImpl implements ReleaseManager {
 	}
 
 	private boolean _isPendingModuleUpgrades() {
-		for (String bundleSymbolicName : getBundleSymbolicNames()) {
+		for (String bundleSymbolicName :
+				_upgradeExecutor.getBundleSymbolicNames()) {
+
 			if (_isUpgradable(bundleSymbolicName)) {
 				return true;
 			}
@@ -370,7 +350,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 
 		for (String bundleSymbolicName : upgradableBundleSymbolicNames) {
 			ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-				getUpgradeInfos(bundleSymbolicName));
+				_upgradeExecutor.getUpgradeInfos(bundleSymbolicName));
 
 			List<List<UpgradeInfo>> upgradeInfosList =
 				releaseGraphManager.getUpgradeInfosList(
@@ -395,7 +375,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 
 	private boolean _isUpgradable(String bundleSymbolicName) {
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			getUpgradeInfos(bundleSymbolicName));
+			_upgradeExecutor.getUpgradeInfos(bundleSymbolicName));
 
 		List<List<UpgradeInfo>> upgradeInfosList =
 			releaseGraphManager.getUpgradeInfosList(
@@ -418,7 +398,6 @@ public class ReleaseManagerImpl implements ReleaseManager {
 	private ReleasePublisher _releasePublisher;
 
 	private ServiceTracker<SchemaCreator, Release> _schemaCreatorServiceTracker;
-	private ServiceTrackerMap<String, List<UpgradeInfo>> _serviceTrackerMap;
 
 	@Reference(
 		target = "(component.name=com.liferay.portal.osgi.debug.declarative.service.internal.DeclarativeServiceUnsatisfiedComponentSystemChecker)"
@@ -427,48 +406,6 @@ public class ReleaseManagerImpl implements ReleaseManager {
 
 	@Reference
 	private UpgradeExecutor _upgradeExecutor;
-
-	private static class UpgradeServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<UpgradeStep, UpgradeInfo> {
-
-		@Override
-		public UpgradeInfo addingService(
-			ServiceReference<UpgradeStep> serviceReference) {
-
-			String fromSchemaVersionString =
-				(String)serviceReference.getProperty(
-					"upgrade.from.schema.version");
-			String toSchemaVersionString = (String)serviceReference.getProperty(
-				"upgrade.to.schema.version");
-			int buildNumber = GetterUtil.getInteger(
-				serviceReference.getProperty("build.number"));
-
-			return new UpgradeInfo(
-				fromSchemaVersionString, toSchemaVersionString, buildNumber,
-				_bundleContext.getService(serviceReference));
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<UpgradeStep> serviceReference,
-			UpgradeInfo upgradeInfo) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<UpgradeStep> serviceReference,
-			UpgradeInfo upgradeInfo) {
-
-			_bundleContext.ungetService(serviceReference);
-		}
-
-		private UpgradeServiceTrackerCustomizer(BundleContext bundleContext) {
-			_bundleContext = bundleContext;
-		}
-
-		private final BundleContext _bundleContext;
-
-	}
 
 	private class SchemaCreatorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<SchemaCreator, Release> {

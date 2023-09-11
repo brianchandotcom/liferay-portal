@@ -183,7 +183,8 @@
 						"en_US": "Valid URL"
 					},
 					"objectDefinitionExternalReferenceCode": "L_BOOKMARK",
-					"script": "isURL(url)"
+					"script": "isURL(url)",
+					"system": true
 				}
 			],
 			"objectViews": [

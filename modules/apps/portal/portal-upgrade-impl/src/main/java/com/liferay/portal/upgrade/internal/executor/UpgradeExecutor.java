@@ -46,9 +46,9 @@ import java.util.Properties;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -295,19 +295,13 @@ public class UpgradeExecutor {
 		public SafeCloseable addingService(
 			ServiceReference<UpgradeStepRegistrator> serviceReference) {
 
-			UpgradeStepRegistrator upgradeStepRegistrator =
-				_bundleContext.getService(serviceReference);
-
-			Class<? extends UpgradeStepRegistrator> clazz =
-				upgradeStepRegistrator.getClass();
-
-			Bundle bundle = FrameworkUtil.getBundle(clazz);
-
-			String bundleSymbolicName = bundle.getSymbolicName();
-
 			int buildNumber = 0;
 
-			ClassLoader classLoader = clazz.getClassLoader();
+			Bundle bundle = serviceReference.getBundle();
+
+			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
+
+			ClassLoader classLoader = bundleWiring.getClassLoader();
 
 			if (classLoader.getResource("service.properties") != null) {
 				Configuration configuration =
@@ -320,6 +314,9 @@ public class UpgradeExecutor {
 					properties.getProperty("build.number"));
 			}
 
+			UpgradeStepRegistrator upgradeStepRegistrator =
+				_bundleContext.getService(serviceReference);
+
 			UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(
 				buildNumber);
 
@@ -327,6 +324,8 @@ public class UpgradeExecutor {
 
 			List<UpgradeStep> releaseUpgradeSteps =
 				upgradeStepRegistry.getReleaseCreationUpgradeSteps();
+
+			String bundleSymbolicName = bundle.getSymbolicName();
 
 			Release release = _releaseLocalService.fetchRelease(
 				bundleSymbolicName);

@@ -11,10 +11,12 @@
 					{
 						"definition": {
 							"fragmentStyle": {
+								"marginBottom": "6",
 								"marginTop": "5"
 							},
 							"indexed": true,
 							"layout": {
+								"marginBottom": 6,
 								"marginTop": 4
 							}
 						},
@@ -154,6 +156,19 @@
 											},
 											"fragmentFields": [
 												{
+													"id": "image-editable-hero-bg",
+													"value": {
+														"fragmentImage": {
+															"url": {
+																"value_i18n": {
+																}
+															}
+														},
+														"fragmentLink": {
+														}
+													}
+												},
+												{
 													"id": "title-hero",
 													"value": {
 														"fragmentLink": {
@@ -168,9 +183,6 @@
 																"value_i18n": {
 																	"en_US": ""
 																}
-															},
-															"title": {
-																"value": "Customer Dashboard.png"
 															},
 															"url": {
 																"mapping": {
@@ -195,6 +207,7 @@
 												}
 											],
 											"fragmentStyle": {
+												"marginBottom": "6",
 												"paddingBottom": "4",
 												"paddingTop": "4",
 												"width": "100%"
@@ -208,6 +221,13 @@
 												},
 												{
 													"fragmentViewportStyle": {
+														"marginBottom": "4"
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"fragmentViewportStyle": {
+														"marginBottom": "6",
 														"textAlign": "center"
 													},
 													"id": "tablet"
@@ -368,12 +388,15 @@
 																						},
 																						"text": {
 																							"value_i18n": {
-																								"en_US": "Clarity Customer Portal is a sophisticated and intuitive solution designed to provide businesses with a powerful and user-friendly platform for managing customer interactions. With its clean and modern design, the Clarity Customer Portal template offers a seamless and professional experience for both customers and business owners alike.<br />\n<br />\nClarity ensures that customers can easily navigate through various features and access the information they need with minimal effort. The user interface is thoughtfully crafted, combining elegant aesthetics with a logical layout that prioritizes functionality."
+																								"en_US": "Clarity Customer Portal is a sophisticated and intuitive solution designed to provide businesses with a powerful and user-friendly platform for managing customer interactions. With its clean and modern design, the Clarity Customer Portal template offers a seamless and professional experience for both customers and business owners alike."
 																							}
 																						}
 																					}
 																				}
 																			],
+																			"fragmentStyle": {
+																				"marginBottom": "4"
+																			},
 																			"fragmentViewports": [
 																				{
 																					"fragmentViewportStyle": {
@@ -391,6 +414,48 @@
 																	}
 																],
 																"type": "Section"
+															},
+															{
+																"definition": {
+																	"fragment": {
+																		"key": "BASIC_COMPONENT-paragraph"
+																	},
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																		{
+																			"id": "element-text",
+																			"value": {
+																				"fragmentLink": {
+																				},
+																				"text": {
+																					"value_i18n": {
+																						"en_US": "Clarity ensures that customers can easily navigate through various features and access the information they need with minimal effort. The user interface is thoughtfully crafted, combining elegant aesthetics with a logical layout that prioritizes functionality."
+																					}
+																				}
+																			}
+																		}
+																	],
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"marginBottom": "5",
+																				"marginLeft": "10",
+																				"marginRight": "10",
+																				"textAlign": "center"
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"hidden": true
+																			},
+																			"id": "tablet"
+																		}
+																	],
+																	"indexed": true
+																},
+																"type": "Fragment"
 															}
 														],
 														"type": "Column"
@@ -422,8 +487,29 @@
 																"definition": {
 																	"fragmentStyle": {
 																		"borderWidth": "0",
-																		"height": "450px"
+																		"height": "450px",
+																		"overflow": "hidden"
 																	},
+																	"fragmentViewports": [
+																		{
+																			"fragmentViewportStyle": {
+																				"height": "450px"
+																			},
+																			"id": "landscapeMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"height": "253px"
+																			},
+																			"id": "portraitMobile"
+																		},
+																		{
+																			"fragmentViewportStyle": {
+																				"height": "253px"
+																			},
+																			"id": "tablet"
+																		}
+																	],
 																	"indexed": true,
 																	"layout": {
 																	}
@@ -440,7 +526,7 @@
 																			},
 																			"fragmentFields": [
 																				{
-																					"id": "01-01-image",
+																					"id": "03-01-image",
 																					"value": {
 																						"fragmentLink": {
 																							"value": {
@@ -486,29 +572,6 @@
 																					}
 																				},
 																				{
-																					"id": "03-01-image",
-																					"value": {
-																						"fragmentLink": {
-																							"value": {
-																								"href": {
-																									"value_i18n": {
-																										"en_US": ""
-																									}
-																								}
-																							}
-																						},
-																						"text": {
-																							"mapping": {
-																								"fieldKey": "FileEntry_previewImage",
-																								"itemReference": {
-																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/sign_in.png#]"
-																								}
-																							}
-																						}
-																					}
-																				},
-																				{
 																					"id": "02-03-subtitle",
 																					"value": {
 																						"fragmentLink": {
@@ -544,11 +607,54 @@
 																					}
 																				},
 																				{
+																					"id": "01-01-image",
+																					"value": {
+																						"fragmentLink": {
+																							"value": {
+																								"href": {
+																									"value_i18n": {
+																										"en_US": ""
+																									}
+																								}
+																							}
+																						},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "FileEntry_previewImage",
+																								"itemReference": {
+																									"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																									"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/sign_in.png#]"
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{
 																					"id": "03-02-title",
 																					"value": {
 																						"fragmentLink": {
 																						}
 																					}
+																				}
+																			],
+																			"fragmentStyle": {
+																				"overflow": "hidden"
+																			},
+																			"fragmentViewports": [
+																				{
+																					"fragmentViewportStyle": {
+																						"height": "",
+																						"maxHeight": ""
+																					},
+																					"id": "landscapeMobile"
+																				},
+																				{
+																					"fragmentViewportStyle": {
+																						"height": "",
+																						"maxHeight": "",
+																						"overflow": "hidden"
+																					},
+																					"id": "tablet"
 																				}
 																			],
 																			"indexed": true
@@ -711,6 +817,12 @@
 																			"fragmentViewports": [
 																				{
 																					"fragmentViewportStyle": {
+																						"marginBottom": "4"
+																					},
+																					"id": "portraitMobile"
+																				},
+																				{
+																					"fragmentViewportStyle": {
 																						"minHeight": "228px"
 																					},
 																					"id": "tablet"
@@ -818,9 +930,6 @@
 																																	"id": "image-square",
 																																	"value": {
 																																		"fragmentImage": {
-																																			"title": {
-																																				"value": "revenue-growth"
-																																			},
 																																			"url": {
 																																				"mapping": {
 																																					"fieldKey": "FileEntry_previewImage",
@@ -1074,6 +1183,12 @@
 																			"fragmentViewports": [
 																				{
 																					"fragmentViewportStyle": {
+																						"marginBottom": "4"
+																					},
+																					"id": "portraitMobile"
+																				},
+																				{
+																					"fragmentViewportStyle": {
 																						"minHeight": "228px"
 																					},
 																					"id": "tablet"
@@ -1181,9 +1296,6 @@
 																																	"id": "image-square",
 																																	"value": {
 																																		"fragmentImage": {
-																																			"title": {
-																																				"value": "sales-rep-support"
-																																			},
 																																			"url": {
 																																				"mapping": {
 																																					"fieldKey": "FileEntry_previewImage",
@@ -1437,6 +1549,12 @@
 																			"fragmentViewports": [
 																				{
 																					"fragmentViewportStyle": {
+																						"marginBottom": "4"
+																					},
+																					"id": "portraitMobile"
+																				},
+																				{
+																					"fragmentViewportStyle": {
 																						"minHeight": "228px"
 																					},
 																					"id": "tablet"
@@ -1552,9 +1670,6 @@
 																																	"id": "image-square",
 																																	"value": {
 																																		"fragmentImage": {
-																																			"title": {
-																																				"value": "fix-delivery-method"
-																																			},
 																																			"url": {
 																																				"mapping": {
 																																					"fieldKey": "FileEntry_previewImage",
@@ -1808,6 +1923,12 @@
 																			"fragmentViewports": [
 																				{
 																					"fragmentViewportStyle": {
+																						"marginBottom": "4"
+																					},
+																					"id": "portraitMobile"
+																				},
+																				{
+																					"fragmentViewportStyle": {
 																						"minHeight": "228px"
 																					},
 																					"id": "tablet"
@@ -1915,9 +2036,6 @@
 																																	"id": "image-square",
 																																	"value": {
 																																		"fragmentImage": {
-																																			"title": {
-																																				"value": "unify-commerce"
-																																			},
 																																			"url": {
 																																				"mapping": {
 																																					"fieldKey": "FileEntry_previewImage",
@@ -2171,6 +2289,12 @@
 																			"fragmentViewports": [
 																				{
 																					"fragmentViewportStyle": {
+																						"marginBottom": "4"
+																					},
+																					"id": "portraitMobile"
+																				},
+																				{
+																					"fragmentViewportStyle": {
 																						"minHeight": "228px"
 																					},
 																					"id": "tablet"
@@ -2278,9 +2402,6 @@
 																																	"id": "image-square",
 																																	"value": {
 																																		"fragmentImage": {
-																																			"title": {
-																																				"value": "future-prospects"
-																																			},
 																																			"url": {
 																																				"mapping": {
 																																					"fieldKey": "FileEntry_previewImage",
@@ -2641,15 +2762,12 @@
 																																	"id": "image-square",
 																																	"value": {
 																																		"fragmentImage": {
-																																			"title": {
-																																				"value": "Avatar"
-																																			},
 																																			"url": {
 																																				"mapping": {
 																																					"fieldKey": "FileEntry_previewImage",
 																																					"itemReference": {
 																																						"className": "com.liferay.portal.kernel.repository.model.FileEntry",
-																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/avatar.png#]"
+																																						"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Clarity Solution Assets/application_security.png#]"
 																																					}
 																																				}
 																																			}
@@ -2907,9 +3025,6 @@
 																			"id": "image-square",
 																			"value": {
 																				"fragmentImage": {
-																					"title": {
-																						"value": "Avatar"
-																					},
 																					"url": {
 																						"mapping": {
 																							"fieldKey": "FileEntry_previewImage",
@@ -3152,9 +3267,6 @@
 																							"id": "image-square",
 																							"value": {
 																								"fragmentImage": {
-																									"title": {
-																										"value": "web-cursor"
-																									},
 																									"url": {
 																										"mapping": {
 																											"fieldKey": "FileEntry_previewImage",
@@ -3327,9 +3439,6 @@
 																							"id": "image-square",
 																							"value": {
 																								"fragmentImage": {
-																									"title": {
-																										"value": "Mail"
-																									},
 																									"url": {
 																										"mapping": {
 																											"fieldKey": "FileEntry_previewImage",
@@ -3494,9 +3603,6 @@
 																							"id": "image-square",
 																							"value": {
 																								"fragmentImage": {
-																									"title": {
-																										"value": "mobile-banking"
-																									},
 																									"url": {
 																										"mapping": {
 																											"fieldKey": "FileEntry_previewImage",
@@ -3609,46 +3715,6 @@
 											}
 										],
 										"type": "Section"
-									},
-									{
-										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-separator"
-											},
-											"fragmentConfig": {
-												"bottomSpacing": "3",
-												"separatorColor": ""
-											},
-											"fragmentFields": [
-											],
-											"fragmentStyle": {
-												"marginBottom": "7",
-												"marginTop": "7",
-												"width": "100%"
-											},
-											"indexed": true
-										},
-										"type": "Fragment"
-									},
-									{
-										"definition": {
-											"fragment": {
-												"key": "BASIC_COMPONENT-separator"
-											},
-											"fragmentConfig": {
-												"bottomSpacing": "3",
-												"separatorColor": ""
-											},
-											"fragmentFields": [
-											],
-											"fragmentStyle": {
-												"marginBottom": "7",
-												"marginTop": "7",
-												"width": "100%"
-											},
-											"indexed": true
-										},
-										"type": "Fragment"
 									}
 								],
 								"type": "Section"

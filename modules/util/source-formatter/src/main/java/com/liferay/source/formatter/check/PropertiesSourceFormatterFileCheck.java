@@ -115,7 +115,9 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 
 		String fileLocation = fileName.substring(0, pos);
 
-		if (fileLocation.equals(SourceUtil.getRootDirName(absolutePath))) {
+		String rootDirName = SourceUtil.getRootDirName(absolutePath);
+
+		if (fileLocation.equals(rootDirName)) {
 			return;
 		}
 
@@ -127,9 +129,11 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		}
 
 		int previousPropertyPosition = -1;
+		String propertyKey = null;
+		String previousPropertyKey = null;
 
 		for (String line : content.split("\n")) {
-			String propertyKey = _getPropertyKey(line);
+			propertyKey = _getPropertyKey(line);
 
 			if (propertyKey == null) {
 				continue;
@@ -147,15 +151,15 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"Property '",
-						sourceFormatterProperties.get(previousPropertyPosition),
-						"' and '", sourceFormatterProperties.get(pos),
-						"' should follow root source-formatter.properties ",
-						"sort"));
+						"Incorrect order of properties: '", propertyKey,
+						"' should come before '", previousPropertyKey,
+						"', see the order in ", rootDirName,
+						"/source-formatter.properties"));
 
 				return;
 			}
 
+			previousPropertyKey = propertyKey;
 			previousPropertyPosition = pos;
 		}
 	}

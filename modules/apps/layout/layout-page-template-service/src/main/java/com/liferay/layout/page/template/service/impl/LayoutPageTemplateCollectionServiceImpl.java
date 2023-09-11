@@ -116,7 +116,7 @@ public class LayoutPageTemplateCollectionServiceImpl
 		long groupId, int type, int start, int end) {
 
 		return layoutPageTemplateCollectionPersistence.filterFindByG_T(
-			groupId, start, end, type);
+			groupId, type, start, end);
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class LayoutPageTemplateCollectionServiceImpl
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
 		return layoutPageTemplateCollectionPersistence.filterFindByG_T(
-			groupId, start, end, type, orderByComparator);
+			groupId, type, start, end, orderByComparator);
 	}
 
 	@Override

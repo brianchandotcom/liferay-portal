@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.price.CommerceProductPriceCalculation;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPInstanceUnitOfMeasureDisplayContext;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceUnitOfMeasureException;
@@ -47,6 +49,8 @@ public class EditCPInstanceUnitOfMeasureMVCRenderCommand
 					new CPInstanceUnitOfMeasureDisplayContext(
 						_actionHelper,
 						_portal.getHttpServletRequest(renderRequest),
+						_commerceCurrencyLocalService,
+						_commerceProductPriceCalculation,
 						_cpInstanceUnitOfMeasureService);
 
 			renderRequest.setAttribute(
@@ -70,6 +74,12 @@ public class EditCPInstanceUnitOfMeasureMVCRenderCommand
 
 	@Reference
 	private ActionHelper _actionHelper;
+
+	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Reference
+	private CommerceProductPriceCalculation _commerceProductPriceCalculation;
 
 	@Reference
 	private CPInstanceUnitOfMeasureService _cpInstanceUnitOfMeasureService;

@@ -14,6 +14,7 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.option.CommerceOptionTypeRegistry;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeRegistry;
@@ -95,6 +96,7 @@ public class CPDefinitionInstancesScreenNavigationEntry
 				_commerceCurrencyLocalService, _commerceOptionTypeRegistry,
 				_commercePriceEntryService, _commerceProductPriceCalculation,
 				_cpDefinitionOptionRelService, _cpInstanceHelper,
+				_cpInstanceUnitOfMeasureService,
 				_cpMeasurementUnitLocalService);
 
 		httpServletRequest.setAttribute(
@@ -134,6 +136,9 @@ public class CPDefinitionInstancesScreenNavigationEntry
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private CPInstanceUnitOfMeasureService _cpInstanceUnitOfMeasureService;
 
 	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;

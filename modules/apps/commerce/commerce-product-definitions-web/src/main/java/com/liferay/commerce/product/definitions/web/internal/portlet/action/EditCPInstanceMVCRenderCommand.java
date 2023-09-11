@@ -14,6 +14,7 @@ import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.option.CommerceOptionTypeRegistry;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -54,6 +55,7 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 					_commercePriceEntryService,
 					_commerceProductPriceCalculation,
 					_cpDefinitionOptionRelService, _cpInstanceHelper,
+					_cpInstanceUnitOfMeasureService,
 					_cpMeasurementUnitLocalService);
 
 			renderRequest.setAttribute(
@@ -94,6 +96,9 @@ public class EditCPInstanceMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private CPInstanceUnitOfMeasureService _cpInstanceUnitOfMeasureService;
 
 	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;

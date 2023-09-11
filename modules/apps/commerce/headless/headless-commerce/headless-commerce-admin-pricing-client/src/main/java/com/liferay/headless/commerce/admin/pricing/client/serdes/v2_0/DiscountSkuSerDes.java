@@ -144,6 +144,20 @@ public class DiscountSkuSerDes {
 			sb.append(discountSku.getSkuId());
 		}
 
+		if (discountSku.getUnitOfMeasureKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(discountSku.getUnitOfMeasureKey()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -233,6 +247,15 @@ public class DiscountSkuSerDes {
 			map.put("skuId", String.valueOf(discountSku.getSkuId()));
 		}
 
+		if (discountSku.getUnitOfMeasureKey() == null) {
+			map.put("unitOfMeasureKey", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasureKey",
+				String.valueOf(discountSku.getUnitOfMeasureKey()));
+		}
+
 		return map;
 	}
 
@@ -312,6 +335,12 @@ public class DiscountSkuSerDes {
 				if (jsonParserFieldValue != null) {
 					discountSku.setSkuId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasureKey")) {
+				if (jsonParserFieldValue != null) {
+					discountSku.setUnitOfMeasureKey(
+						(String)jsonParserFieldValue);
 				}
 			}
 		}

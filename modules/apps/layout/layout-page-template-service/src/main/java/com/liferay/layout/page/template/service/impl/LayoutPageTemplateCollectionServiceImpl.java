@@ -156,7 +156,7 @@ public class LayoutPageTemplateCollectionServiceImpl
 	@Override
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name,
-			String description, int type)
+			String description)
 		throws PortalException {
 
 		_layoutPageTemplateCollectionModelResourcePermission.check(
@@ -165,7 +165,7 @@ public class LayoutPageTemplateCollectionServiceImpl
 
 		return layoutPageTemplateCollectionLocalService.
 			updateLayoutPageTemplateCollection(
-				layoutPageTemplateCollectionId, name, description, type);
+				layoutPageTemplateCollectionId, name, description);
 	}
 
 	@Reference

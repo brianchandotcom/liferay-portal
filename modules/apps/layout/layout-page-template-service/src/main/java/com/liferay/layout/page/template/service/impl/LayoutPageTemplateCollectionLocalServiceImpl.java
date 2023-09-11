@@ -246,7 +246,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	@Override
 	public LayoutPageTemplateCollection updateLayoutPageTemplateCollection(
 			long layoutPageTemplateCollectionId, String name,
-			String description, int type)
+			String description)
 		throws PortalException {
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
@@ -254,13 +254,13 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 				layoutPageTemplateCollectionId);
 
 		if (!Objects.equals(layoutPageTemplateCollection.getName(), name)) {
-			_validate(layoutPageTemplateCollection.getGroupId(), name, type);
+			_validate(layoutPageTemplateCollection.getGroupId(), name, layoutPageTemplateCollection.getType());
 		}
 
 		layoutPageTemplateCollection.setModifiedDate(new Date());
 		layoutPageTemplateCollection.setLayoutPageTemplateCollectionKey(
 			_generateLayoutPageTemplateCollectionKey(
-				layoutPageTemplateCollection.getGroupId(), name, type));
+				layoutPageTemplateCollection.getGroupId(), name, layoutPageTemplateCollection.getType()));
 		layoutPageTemplateCollection.setName(name);
 		layoutPageTemplateCollection.setDescription(description);
 

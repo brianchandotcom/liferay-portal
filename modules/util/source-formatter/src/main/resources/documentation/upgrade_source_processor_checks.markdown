@@ -45,6 +45,7 @@ UpgradeJavaUserLocalServiceUtilCheck | [Upgrade](upgrade_checks.markdown#upgrade
 UpgradePortletFTLCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Include the CSS classes 'cadmin' and include for impression of 'right cadmin' in 'portlet.ftl' file |
 UpgradeRejectedExecutionHandlerCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace Liferay's RejectedExecutionHandler with Java's RejectedExecutionHandler |
 UpgradeSCSSImportsCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace compat/mixins by clay/cadmin-variables |
+UpgradeSCSSMixinsCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace outdated mixins (e.g. media-query, respond-to, etc.) |
 UpgradeSetResultsSetTotalMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code migration of method searchContainer.setResults to the searchContainer.setResultsAndTotal and delete searchContainer.setTotal |
 UpgradeVelocityCommentMigrationCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code migration of comments from a Velocity file to a Freemarker file with the syntax replacements |
 UpgradeVelocityFileImportMigrationCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code migration of file import from a Velocity file to a Freemarker file with the syntax replacements |

@@ -295,11 +295,17 @@ public class ObjectValidationRuleResourceImpl
 				false,
 				HashMapBuilder.put(
 					"delete",
-					addAction(
-						ActionKeys.DELETE, "deleteObjectValidationRule",
-						ObjectDefinition.class.getName(),
-						serviceBuilderObjectValidationRule.
-							getObjectDefinitionId())
+					() -> {
+						if (serviceBuilderObjectValidationRule.isSystem()) {
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.DELETE, "deleteObjectValidationRule",
+							ObjectDefinition.class.getName(),
+							serviceBuilderObjectValidationRule.
+								getObjectDefinitionId());
+					}
 				).put(
 					"get",
 					addAction(

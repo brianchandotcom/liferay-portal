@@ -5,6 +5,8 @@
 
 package com.liferay.saml.opensaml.integration.internal.servlet.profile;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -35,7 +37,7 @@ import com.liferay.saml.opensaml.integration.internal.resolver.AttributePublishe
 import com.liferay.saml.opensaml.integration.internal.resolver.AttributeResolverRegistry;
 import com.liferay.saml.opensaml.integration.internal.resolver.AttributeResolverSAMLContextImpl;
 import com.liferay.saml.opensaml.integration.internal.resolver.DecrypterContext;
-import com.liferay.saml.opensaml.integration.internal.resolver.NameIdResolverRegistry;
+import com.liferay.saml.opensaml.integration.internal.resolver.DefaultServiceReferenceMapper;
 import com.liferay.saml.opensaml.integration.internal.resolver.NameIdResolverSAMLContextImpl;
 import com.liferay.saml.opensaml.integration.internal.resolver.SubjectAssertionContext;
 import com.liferay.saml.opensaml.integration.internal.resolver.UserResolverSAMLContextImpl;
@@ -160,8 +162,10 @@ import org.opensaml.xmlsec.keyinfo.KeyInfoCredentialResolver;
 import org.opensaml.xmlsec.signature.Signature;
 import org.opensaml.xmlsec.signature.support.SignatureTrustEngine;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 
@@ -300,9 +304,21 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	}
 
 	@Activate
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_samlConfiguration = ConfigurableUtil.createConfigurable(
 			SamlConfiguration.class, properties);
+
+		_stringNameIdResolverServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, NameIdResolver.class, "(companyId=*)",
+				new DefaultServiceReferenceMapper(_log));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_stringNameIdResolverServiceTrackerMap.close();
 	}
 
 	protected SamlSsoRequestContext decodeAuthnRequest(
@@ -1273,6 +1289,27 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		return sb.toString();
 	}
 
+	private NameIdResolver _getNameIdResolver(String entityId) {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		NameIdResolver nameIdResolver =
+			_stringNameIdResolverServiceTrackerMap.getService(
+				companyId + "," + entityId);
+
+		if (nameIdResolver == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"No attribute resolver for company ID ", companyId,
+						" and entity ID ", entityId));
+			}
+
+			nameIdResolver = _defaultNameIdResolver;
+		}
+
+		return nameIdResolver;
+	}
+
 	private Assertion _getSuccessAssertion(
 		SamlSsoRequestContext samlSsoRequestContext,
 		AssertionConsumerService assertionConsumerService, NameID nameID) {
@@ -1400,9 +1437,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		SAMLPeerEntityContext samlPeerEntityContext =
 			messageContext.getSubcontext(SAMLPeerEntityContext.class);
 
-		NameIdResolver nameIdResolver =
-			_nameIdResolverRegistry.getNameIdResolver(
-				samlPeerEntityContext.getEntityId());
+		NameIdResolver nameIdResolver = _getNameIdResolver(
+			samlPeerEntityContext.getEntityId());
 
 		boolean allowCreate = false;
 
@@ -2113,11 +2149,13 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	private final DCLSingleton<Decrypter> _decrypterDCLSingleton =
 		new DCLSingleton<>();
 
-	@Reference
-	private MetadataManager _metadataManager;
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY, target = "(!(companyId=*))"
+	)
+	private NameIdResolver _defaultNameIdResolver;
 
 	@Reference
-	private NameIdResolverRegistry _nameIdResolverRegistry;
+	private MetadataManager _metadataManager;
 
 	@Reference
 	private RelayStateHelper _relayStateHelper;
@@ -2145,6 +2183,9 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	@Reference
 	private SamlSpMessageLocalService _samlSpMessageLocalService;
+
+	private ServiceTrackerMap<String, NameIdResolver>
+		_stringNameIdResolverServiceTrackerMap;
 
 	@Reference
 	private UserLocalService _userLocalService;

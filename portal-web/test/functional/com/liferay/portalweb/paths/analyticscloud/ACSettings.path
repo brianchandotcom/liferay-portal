@@ -238,7 +238,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DELETE_CONFIRMATION_BUTTON</td>
+	<td>CONFIRMATION_BUTTON</td>
 	<td>//button[contains(@class,'btn-warning')]</td>
 	<td></td>
 </tr>

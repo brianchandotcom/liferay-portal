@@ -268,71 +268,15 @@ long usedMemory = totalMemory - runtime.freeMemory();
 			</ul>
 		</aui:fieldset>
 
-		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-188027") %>'>
-			<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="regeneration-actions">
-				<ul class="list-group system-action-group">
-					<c:if test="<%= (audioConverter != null) && audioConverter.isEnabled() %>">
-						<li class="list-group-item list-group-item-flex">
-							<div class="autofit-col autofit-col-expand">
-								<p class="list-group-title text-truncate">
-									<liferay-ui:message key="regenerate-preview-of-audio-files-in-documents-and-media" />
-
-									<span aria-label="<%= LanguageUtil.get(request, "regenerate-preview-of-audio-files-in-documents-and-media-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "regenerate-preview-of-audio-files-in-documents-and-media-help") %>">
-										<clay:icon
-											symbol="question-circle-full"
-										/>
-									</span>
-								</p>
-							</div>
-
-							<%
-							List<BackgroundTask> audioPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.preview.audio.internal.background.task.AudioPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
-							%>
-
-							<div class="autofit-col">
-								<span class="<%= (audioPreviewBackgroundTasks.size() > 0) ? StringPool.BLANK : "hide" %> loading-animation loading-animation-sm"></span>
-							</div>
-
-							<div class="autofit-col">
-								<aui:button cssClass="save-server-button" data-cmd="dlGenerateAudioPreviews" disabled="<%= (audioPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
-							</div>
-						</li>
-					</c:if>
-
-					<c:if test="<%= DocumentConversionUtil.isEnabled() %>">
-						<li class="list-group-item list-group-item-flex">
-							<div class="autofit-col autofit-col-expand">
-								<p class="list-group-title text-truncate">
-									<liferay-ui:message key="regenerate-preview-and-thumbnail-of-openoffice-files-in-documents-and-media" />
-
-									<span aria-label="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-openoffice-files-in-documents-and-media-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-pdf-files-in-documents-and-media-help") %>">
-										<clay:icon
-											symbol="question-circle-full"
-										/>
-									</span>
-								</p>
-							</div>
-
-							<%
-							List<BackgroundTask> openOfficeConversionPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.document.conversion.internal.background.task.OpenOfficeConversionPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
-							%>
-
-							<div class="autofit-col">
-								<span class="<%= (openOfficeConversionPreviewBackgroundTasks.size() > 0) ? StringPool.BLANK : "hide" %> loading-animation loading-animation-sm"></span>
-							</div>
-
-							<div class="autofit-col">
-								<aui:button cssClass="save-server-button" data-cmd="dlGenerateOpenOfficePreviews" disabled="<%= (openOfficeConversionPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
-							</div>
-						</li>
-					</c:if>
-
+		<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="regeneration-actions">
+			<ul class="list-group system-action-group">
+				<c:if test="<%= (audioConverter != null) && audioConverter.isEnabled() %>">
 					<li class="list-group-item list-group-item-flex">
 						<div class="autofit-col autofit-col-expand">
 							<p class="list-group-title text-truncate">
-								<liferay-ui:message key="regenerate-preview-and-thumbnail-of-pdf-files-in-documents-and-media" />
+								<liferay-ui:message key="regenerate-preview-of-audio-files-in-documents-and-media" />
 
-								<span aria-label="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-pdf-files-in-documents-and-media-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-pdf-files-in-documents-and-media-help") %>">
+								<span aria-label="<%= LanguageUtil.get(request, "regenerate-preview-of-audio-files-in-documents-and-media-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "regenerate-preview-of-audio-files-in-documents-and-media-help") %>">
 									<clay:icon
 										symbol="question-circle-full"
 									/>
@@ -341,47 +285,101 @@ long usedMemory = totalMemory - runtime.freeMemory();
 						</div>
 
 						<%
-						List<BackgroundTask> pdfPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.preview.pdf.internal.background.task.PDFPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
+						List<BackgroundTask> audioPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.preview.audio.internal.background.task.AudioPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
 						%>
 
 						<div class="autofit-col">
-							<span class="<%= (pdfPreviewBackgroundTasks.size() > 0) ? StringPool.BLANK : "hide" %> loading-animation loading-animation-sm"></span>
+							<span class="<%= (audioPreviewBackgroundTasks.size() > 0) ? StringPool.BLANK : "hide" %> loading-animation loading-animation-sm"></span>
 						</div>
 
 						<div class="autofit-col">
-							<aui:button cssClass="save-server-button" data-cmd="dlGeneratePDFPreviews" disabled="<%= (pdfPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
+							<aui:button cssClass="save-server-button" data-cmd="dlGenerateAudioPreviews" disabled="<%= (audioPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
 						</div>
 					</li>
+				</c:if>
 
-					<c:if test="<%= (videoConverter != null) && videoConverter.isEnabled() %>">
-						<li class="list-group-item list-group-item-flex">
-							<div class="autofit-col autofit-col-expand">
-								<p class="list-group-title text-truncate">
-									<liferay-ui:message key="regenerate-preview-and-thumbnail-of-video-files-in-documents-and-media" />
+				<c:if test="<%= DocumentConversionUtil.isEnabled() %>">
+					<li class="list-group-item list-group-item-flex">
+						<div class="autofit-col autofit-col-expand">
+							<p class="list-group-title text-truncate">
+								<liferay-ui:message key="regenerate-preview-and-thumbnail-of-openoffice-files-in-documents-and-media" />
 
-									<span aria-label="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-video-files-in-documents-and-media-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-video-files-in-documents-and-media-help") %>">
-										<clay:icon
-											symbol="question-circle-full"
-										/>
-									</span>
-								</p>
-							</div>
+								<span aria-label="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-openoffice-files-in-documents-and-media-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-pdf-files-in-documents-and-media-help") %>">
+									<clay:icon
+										symbol="question-circle-full"
+									/>
+								</span>
+							</p>
+						</div>
 
-							<%
-							List<BackgroundTask> videoPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.preview.video.internal.background.task.VideoPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
-							%>
+						<%
+						List<BackgroundTask> openOfficeConversionPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.document.conversion.internal.background.task.OpenOfficeConversionPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
+						%>
 
-							<div class="autofit-col">
-								<span class="<%= (videoPreviewBackgroundTasks.size() > 0) ? StringPool.BLANK : "hide" %> loading-animation loading-animation-sm"></span>
-							</div>
+						<div class="autofit-col">
+							<span class="<%= (openOfficeConversionPreviewBackgroundTasks.size() > 0) ? StringPool.BLANK : "hide" %> loading-animation loading-animation-sm"></span>
+						</div>
 
-							<div class="autofit-col">
-								<aui:button cssClass="save-server-button" data-cmd="dlGenerateVideoPreviews" disabled="<%= (videoPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
-							</div>
-						</li>
-					</c:if>
-				</ul>
-			</aui:fieldset>
-		</c:if>
+						<div class="autofit-col">
+							<aui:button cssClass="save-server-button" data-cmd="dlGenerateOpenOfficePreviews" disabled="<%= (openOfficeConversionPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
+						</div>
+					</li>
+				</c:if>
+
+				<li class="list-group-item list-group-item-flex">
+					<div class="autofit-col autofit-col-expand">
+						<p class="list-group-title text-truncate">
+							<liferay-ui:message key="regenerate-preview-and-thumbnail-of-pdf-files-in-documents-and-media" />
+
+							<span aria-label="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-pdf-files-in-documents-and-media-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-pdf-files-in-documents-and-media-help") %>">
+								<clay:icon
+									symbol="question-circle-full"
+								/>
+							</span>
+						</p>
+					</div>
+
+					<%
+					List<BackgroundTask> pdfPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.preview.pdf.internal.background.task.PDFPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
+					%>
+
+					<div class="autofit-col">
+						<span class="<%= (pdfPreviewBackgroundTasks.size() > 0) ? StringPool.BLANK : "hide" %> loading-animation loading-animation-sm"></span>
+					</div>
+
+					<div class="autofit-col">
+						<aui:button cssClass="save-server-button" data-cmd="dlGeneratePDFPreviews" disabled="<%= (pdfPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
+					</div>
+				</li>
+
+				<c:if test="<%= (videoConverter != null) && videoConverter.isEnabled() %>">
+					<li class="list-group-item list-group-item-flex">
+						<div class="autofit-col autofit-col-expand">
+							<p class="list-group-title text-truncate">
+								<liferay-ui:message key="regenerate-preview-and-thumbnail-of-video-files-in-documents-and-media" />
+
+								<span aria-label="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-video-files-in-documents-and-media-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "regenerate-preview-and-thumbnail-of-video-files-in-documents-and-media-help") %>">
+									<clay:icon
+										symbol="question-circle-full"
+									/>
+								</span>
+							</p>
+						</div>
+
+						<%
+						List<BackgroundTask> videoPreviewBackgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(CompanyConstants.SYSTEM, "com.liferay.document.library.preview.video.internal.background.task.VideoPreviewBackgroundTaskExecutor", BackgroundTaskConstants.STATUS_IN_PROGRESS);
+						%>
+
+						<div class="autofit-col">
+							<span class="<%= (videoPreviewBackgroundTasks.size() > 0) ? StringPool.BLANK : "hide" %> loading-animation loading-animation-sm"></span>
+						</div>
+
+						<div class="autofit-col">
+							<aui:button cssClass="save-server-button" data-cmd="dlGenerateVideoPreviews" disabled="<%= (videoPreviewBackgroundTasks.size() > 0) ? true : false %>" value="execute" />
+						</div>
+					</li>
+				</c:if>
+			</ul>
+		</aui:fieldset>
 	</div>
 </div>

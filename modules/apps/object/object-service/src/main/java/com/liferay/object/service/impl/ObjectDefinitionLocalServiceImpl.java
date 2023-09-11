@@ -123,6 +123,7 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -1710,10 +1711,11 @@ public class ObjectDefinitionLocalServiceImpl
 			long userId, ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		int count = _objectFieldPersistence.countByODI_S(
-			objectDefinition.getObjectDefinitionId(), false);
+		if (!ListUtil.exists(
+				_objectFieldPersistence.findByObjectDefinitionId(
+					objectDefinition.getObjectDefinitionId()),
+				objectField -> !objectField.isMetadata())) {
 
-		if ((count == 0) && !objectDefinition.isSystem()) {
 			throw new RequiredObjectFieldException();
 		}
 

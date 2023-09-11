@@ -691,6 +691,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_ROW_NUMBER_DATASET</td>
+	<td>//table[@class='table table-autofit']/tbody/tr[${key_rowNumber}]/td[text()="${key_entry}"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_CONTENT_ROW_BY_NAME</td>
 	<td>//tr[contains(@data-qa-id,'row')]//a[contains(text(),'${key_entryName}')]</td>
 	<td></td>

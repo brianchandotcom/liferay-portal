@@ -81,6 +81,7 @@ public class KnowledgeBaseArticleDTOConverter
 					kbArticle.getCompanyId(), dtoConverterContext.getLocale());
 				dateCreated = kbArticle.getCreateDate();
 				dateModified = kbArticle.getModifiedDate();
+				datePublished = kbArticle.getDisplayDate();
 				description = kbArticle.getDescription();
 				encodingFormat = "text/html";
 				externalReferenceCode = kbArticle.getExternalReferenceCode();

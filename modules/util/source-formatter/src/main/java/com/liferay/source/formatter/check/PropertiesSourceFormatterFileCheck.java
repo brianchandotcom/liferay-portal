@@ -75,21 +75,11 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		String previousPropertyKey = StringPool.BLANK;
 
 		for (String line : content.split("\n")) {
-			String trimmedLine = line.trim();
+			String propertyKey = _getPropertyKey(line);
 
-			if (Validator.isNull(trimmedLine) ||
-				trimmedLine.startsWith(StringPool.POUND)) {
-
+			if (propertyKey == null) {
 				continue;
 			}
-
-			int pos = trimmedLine.indexOf(CharPool.EQUAL);
-
-			if (pos == -1) {
-				continue;
-			}
-
-			String propertyKey = trimmedLine.substring(0, pos);
 
 			if (!StringUtil.startsWith(propertyKey, prefix)) {
 				addMessage(
@@ -139,23 +129,13 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		int previousPropertyPosition = -1;
 
 		for (String line : content.split("\n")) {
-			String trimmedLine = line.trim();
+			String propertyKey = _getPropertyKey(line);
 
-			if (Validator.isNull(trimmedLine) ||
-				trimmedLine.startsWith(StringPool.POUND)) {
-
+			if (propertyKey == null) {
 				continue;
 			}
 
-			pos = trimmedLine.indexOf(CharPool.EQUAL);
-
-			if (pos == -1) {
-				continue;
-			}
-
-			String property = trimmedLine.substring(0, pos);
-
-			pos = sourceFormatterProperties.indexOf(property);
+			pos = sourceFormatterProperties.indexOf(propertyKey);
 
 			if (pos == -1) {
 				continue;
@@ -329,6 +309,24 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		return content.substring(x, y + 1);
 	}
 
+	private String _getPropertyKey(String line) {
+		String trimmedLine = line.trim();
+
+		if (Validator.isNull(trimmedLine) ||
+			trimmedLine.startsWith(StringPool.POUND)) {
+
+			return null;
+		}
+
+		int x = trimmedLine.indexOf(CharPool.EQUAL);
+
+		if (x == -1) {
+			return null;
+		}
+
+		return trimmedLine.substring(0, x);
+	}
+
 	private Element _getRootElement(String fileName) throws Exception {
 		ClassLoader classLoader =
 			PropertiesSourceFormatterFileCheck.class.getClassLoader();
@@ -394,21 +392,13 @@ public class PropertiesSourceFormatterFileCheck extends BaseFileCheck {
 		_sourceFormatterProperties = new ArrayList<>();
 
 		for (String line : content.split("\n")) {
-			String trimmedLine = line.trim();
+			String propertyKey = _getPropertyKey(line);
 
-			if (Validator.isNull(trimmedLine) ||
-				trimmedLine.startsWith(StringPool.POUND)) {
-
+			if (propertyKey == null) {
 				continue;
 			}
 
-			int pos = trimmedLine.indexOf(CharPool.EQUAL);
-
-			if (pos == -1) {
-				continue;
-			}
-
-			_sourceFormatterProperties.add(trimmedLine.substring(0, pos));
+			_sourceFormatterProperties.add(propertyKey);
 		}
 
 		return _sourceFormatterProperties;

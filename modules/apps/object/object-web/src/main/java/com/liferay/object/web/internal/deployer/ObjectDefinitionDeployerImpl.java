@@ -43,6 +43,7 @@ import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItem
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.definition.security.permission.resource.ObjectDefinitionPortletResourcePermissionRegistryUtil;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -92,8 +93,6 @@ import com.liferay.object.web.internal.object.entries.portlet.action.EditObjectE
 import com.liferay.object.web.internal.object.entries.portlet.action.UploadAttachmentMVCActionCommand;
 import com.liferay.object.web.internal.object.entries.upload.AttachmentUploadFileEntryHandler;
 import com.liferay.object.web.internal.object.entries.upload.AttachmentUploadResponseHandler;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
@@ -124,7 +123,6 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -511,21 +509,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
-
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, PortletResourcePermission.class, "resource.name");
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
 	}
 
 	private PortletResourcePermission _getPortletResourcePermission(
 		String resourceName) {
 
 		PortletResourcePermission portletResourcePermission =
-			_serviceTrackerMap.getService(resourceName);
+			ObjectDefinitionPortletResourcePermissionRegistryUtil.getService(
+				resourceName);
 
 		if (portletResourcePermission == null) {
 			throw new IllegalArgumentException(
@@ -655,9 +646,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private RESTContextPathResolverRegistry _restContextPathResolverRegistry;
-
-	private ServiceTrackerMap<String, PortletResourcePermission>
-		_serviceTrackerMap;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.object.web)")
 	private ServletContext _servletContext;

@@ -8,13 +8,12 @@ package com.liferay.object.web.internal.object.entries.upload;
 import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.definition.security.permission.resource.ObjectDefinitionPortletResourcePermissionRegistryUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.object.entries.upload.util.AttachmentValidator;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -34,10 +33,7 @@ import java.io.InputStream;
 
 import java.util.Objects;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -62,7 +58,8 @@ public class AttachmentUploadFileEntryHandler
 				objectField.getObjectDefinitionId());
 
 		PortletResourcePermission portletResourcePermission =
-			_serviceTrackerMap.getService(objectDefinition.getResourceName());
+			ObjectDefinitionPortletResourcePermissionRegistryUtil.getService(
+				objectDefinition.getResourceName());
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
@@ -106,20 +103,6 @@ public class AttachmentUploadFileEntryHandler
 		}
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, PortletResourcePermission.class,
-			"(&(com.liferay.object=true)(resource.name=*))",
-			(serviceReference, emitter) -> emitter.emit(
-				(String)serviceReference.getProperty("resource.name")));
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
 	private long _getGroupId(
 			ObjectDefinition objectDefinition, ThemeDisplay themeDisplay)
 		throws PortalException {
@@ -149,8 +132,5 @@ public class AttachmentUploadFileEntryHandler
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	private ServiceTrackerMap<String, PortletResourcePermission>
-		_serviceTrackerMap;
 
 }

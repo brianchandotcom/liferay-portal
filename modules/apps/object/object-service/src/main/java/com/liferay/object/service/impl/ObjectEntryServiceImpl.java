@@ -12,6 +12,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.definition.security.permission.resource.ObjectDefinitionPortletResourcePermissionRegistryUtil;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectEntryCountException;
@@ -21,8 +22,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.base.ObjectEntryServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
@@ -58,10 +57,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -395,22 +392,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Activate
 	@Modified
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
+	protected void activate(Map<String, Object> properties) {
 		_objectConfiguration = ConfigurableUtil.createConfigurable(
 			ObjectConfiguration.class, properties);
-		_portletResourcePermissionsServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, PortletResourcePermission.class,
-				"(&(com.liferay.object=true)(resource.name=*))",
-				(serviceReference, emitter) -> emitter.emit(
-					(String)serviceReference.getProperty("resource.name")));
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_portletResourcePermissionsServiceTrackerMap.close();
 	}
 
 	private void _checkPermission(String actionId, ObjectEntry objectEntry)
@@ -561,7 +545,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 				objectDefinition.getRootObjectDefinitionId());
 		}
 
-		return _portletResourcePermissionsServiceTrackerMap.getService(
+		return ObjectDefinitionPortletResourcePermissionRegistryUtil.getService(
 			objectDefinition.getResourceName());
 	}
 
@@ -608,9 +592,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Reference
 	private PermissionCheckerFactory _permissionCheckerFactory;
-
-	private volatile ServiceTrackerMap<String, PortletResourcePermission>
-		_portletResourcePermissionsServiceTrackerMap;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

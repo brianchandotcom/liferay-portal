@@ -52,7 +52,7 @@ List<DDMDisplayTabItem> ddmDisplayTabItems = ddmDisplay.getTabItems();
 		<liferay-ui:search-container
 			id="ddmStructures"
 			rowChecker="<%= new DDMStructureRowChecker(renderResponse) %>"
-			searchContainer="<%= ddmDisplayContext.getStructureSearch() %>"
+			searchContainer="<%= ddmDisplayContext.getDDMStructureSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMStructure"

@@ -11,7 +11,7 @@
 long classPK = ParamUtil.getLong(request, "classPK");
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
-SearchContainer<DDMStructure> structureSearchContainer = ddmDisplayContext.getStructureSearch();
+SearchContainer<DDMStructure> structureSearchContainer = ddmDisplayContext.getDDMStructureSearchContainer();
 %>
 
 <liferay-util:include page="/structure_navigation_bar.jsp" servletContext="<%= application %>" />

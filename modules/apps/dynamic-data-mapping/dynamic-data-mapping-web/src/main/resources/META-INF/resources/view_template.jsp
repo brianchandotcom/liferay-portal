@@ -71,7 +71,7 @@ if (layout != null) {
 		<liferay-ui:search-container
 			id="<%= ddmDisplayContext.getTemplateSearchContainerId() %>"
 			rowChecker="<%= new DDMTemplateRowChecker(renderResponse) %>"
-			searchContainer="<%= ddmDisplayContext.getTemplateSearch() %>"
+			searchContainer="<%= ddmDisplayContext.getDDMTemplateSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMTemplate"

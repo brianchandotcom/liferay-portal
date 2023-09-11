@@ -170,6 +170,133 @@ public class DDMDisplayContext {
 		return _ddmDisplayRegistry.getDDMDisplay(getRefererPortletName());
 	}
 
+	public SearchContainer<DDMStructure> getDDMStructureSearchContainer()
+		throws Exception {
+
+		StructureSearch structureSearch = new StructureSearch(
+			_renderRequest, _getPortletURL());
+
+		if (structureSearch.isSearch()) {
+			structureSearch.setEmptyResultsMessage(
+				LanguageUtil.format(
+					_ddmWebRequestHelper.getRequest(), "no-x-were-found",
+					getScopedStructureLabel(), false));
+		}
+		else {
+			structureSearch.setEmptyResultsMessage(
+				LanguageUtil.format(
+					_ddmWebRequestHelper.getRequest(), "there-are-no-x",
+					getScopedStructureLabel(), false));
+		}
+
+		structureSearch.setOrderByCol(getOrderByCol());
+		structureSearch.setOrderByComparator(
+			DDMUtil.getStructureOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		structureSearch.setOrderByType(getOrderByType());
+
+		StructureSearchTerms searchTerms =
+			(StructureSearchTerms)structureSearch.getSearchTerms();
+
+		if (searchTerms.isSearchRestriction()) {
+			structureSearch.setResultsAndTotal(
+				() -> _ddmStructureLinkLocalService.getStructureLinkStructures(
+					_getSearchRestrictionClassNameId(),
+					_getSearchRestrictionClassPK(), structureSearch.getStart(),
+					structureSearch.getEnd()),
+				_ddmStructureLinkLocalService.getStructureLinksCount(
+					_getSearchRestrictionClassNameId(),
+					_getSearchRestrictionClassPK()));
+		}
+		else {
+			long[] groupIds = {
+				PortalUtil.getScopeGroupId(
+					_ddmWebRequestHelper.getRequest(), getRefererPortletName(),
+					true)
+			};
+
+			if (_showAncestorScopes()) {
+				groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					groupIds);
+			}
+
+			Group group = null;
+
+			Layout layout = _ddmWebRequestHelper.getLayout();
+
+			if (layout != null) {
+				group = layout.getGroup();
+			}
+
+			if ((group != null) && !group.isStagingGroup()) {
+				groupIds = ArrayUtil.append(groupIds, group.getGroupId());
+			}
+
+			long[] allGroupIds = groupIds;
+
+			structureSearch.setResultsAndTotal(
+				() -> _ddmStructureService.getStructures(
+					_ddmWebRequestHelper.getCompanyId(), allGroupIds,
+					_getStructureClassNameId(), searchTerms.getKeywords(),
+					searchTerms.getStatus(), structureSearch.getStart(),
+					structureSearch.getEnd(),
+					structureSearch.getOrderByComparator()),
+				_ddmStructureService.getStructuresCount(
+					_ddmWebRequestHelper.getCompanyId(), allGroupIds,
+					_getStructureClassNameId(), searchTerms.getKeywords(),
+					searchTerms.getStatus()));
+		}
+
+		return structureSearch;
+	}
+
+	public SearchContainer<DDMTemplate> getDDMTemplateSearchContainer()
+		throws Exception {
+
+		TemplateSearch templateSearch = new TemplateSearch(
+			_renderRequest, _getPortletURL());
+
+		if (templateSearch.isSearch()) {
+			templateSearch.setEmptyResultsMessage("no-templates-were-found");
+		}
+		else {
+			templateSearch.setEmptyResultsMessage("there-are-no-templates");
+		}
+
+		templateSearch.setOrderByCol(getOrderByCol());
+		templateSearch.setOrderByComparator(
+			DDMUtil.getTemplateOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		templateSearch.setOrderByType(getOrderByType());
+
+		TemplateSearchTerms searchTerms =
+			(TemplateSearchTerms)templateSearch.getSearchTerms();
+		DDMDisplay ddmDisplay = getDDMDisplay();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long[] groupIds = ddmDisplay.getTemplateGroupIds(
+			themeDisplay, _showAncestorScopes());
+
+		templateSearch.setResultsAndTotal(
+			() -> _ddmTemplateService.search(
+				_ddmWebRequestHelper.getCompanyId(), groupIds,
+				_getTemplateClassNameIds(), _getDDMTemplateClassPKs(),
+				_getResourceClassNameId(), searchTerms.getKeywords(),
+				searchTerms.getType(), _getTemplateMode(),
+				searchTerms.getStatus(), templateSearch.getStart(),
+				templateSearch.getEnd(), templateSearch.getOrderByComparator()),
+			_ddmTemplateService.searchCount(
+				_ddmWebRequestHelper.getCompanyId(), groupIds,
+				_getTemplateClassNameIds(), _getDDMTemplateClassPKs(),
+				_getResourceClassNameId(), searchTerms.getKeywords(),
+				searchTerms.getType(), _getTemplateMode(),
+				searchTerms.getStatus()));
+
+		return templateSearch;
+	}
+
 	public List<DropdownItem> getFilterItemsDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
@@ -390,84 +517,6 @@ public class DDMDisplayContext {
 		).build();
 	}
 
-	public SearchContainer<DDMStructure> getStructureSearch() throws Exception {
-		StructureSearch structureSearch = new StructureSearch(
-			_renderRequest, _getPortletURL());
-
-		if (structureSearch.isSearch()) {
-			structureSearch.setEmptyResultsMessage(
-				LanguageUtil.format(
-					_ddmWebRequestHelper.getRequest(), "no-x-were-found",
-					getScopedStructureLabel(), false));
-		}
-		else {
-			structureSearch.setEmptyResultsMessage(
-				LanguageUtil.format(
-					_ddmWebRequestHelper.getRequest(), "there-are-no-x",
-					getScopedStructureLabel(), false));
-		}
-
-		structureSearch.setOrderByCol(getOrderByCol());
-		structureSearch.setOrderByComparator(
-			DDMUtil.getStructureOrderByComparator(
-				getOrderByCol(), getOrderByType()));
-		structureSearch.setOrderByType(getOrderByType());
-
-		StructureSearchTerms searchTerms =
-			(StructureSearchTerms)structureSearch.getSearchTerms();
-
-		if (searchTerms.isSearchRestriction()) {
-			structureSearch.setResultsAndTotal(
-				() -> _ddmStructureLinkLocalService.getStructureLinkStructures(
-					_getSearchRestrictionClassNameId(),
-					_getSearchRestrictionClassPK(), structureSearch.getStart(),
-					structureSearch.getEnd()),
-				_ddmStructureLinkLocalService.getStructureLinksCount(
-					_getSearchRestrictionClassNameId(),
-					_getSearchRestrictionClassPK()));
-		}
-		else {
-			long[] groupIds = {
-				PortalUtil.getScopeGroupId(
-					_ddmWebRequestHelper.getRequest(), getRefererPortletName(),
-					true)
-			};
-
-			if (_showAncestorScopes()) {
-				groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					groupIds);
-			}
-
-			Group group = null;
-
-			Layout layout = _ddmWebRequestHelper.getLayout();
-
-			if (layout != null) {
-				group = layout.getGroup();
-			}
-
-			if ((group != null) && !group.isStagingGroup()) {
-				groupIds = ArrayUtil.append(groupIds, group.getGroupId());
-			}
-
-			long[] allGroupIds = groupIds;
-
-			structureSearch.setResultsAndTotal(
-				() -> _ddmStructureService.getStructures(
-					_ddmWebRequestHelper.getCompanyId(), allGroupIds,
-					_getStructureClassNameId(), searchTerms.getKeywords(),
-					searchTerms.getStatus(), structureSearch.getStart(),
-					structureSearch.getEnd(),
-					structureSearch.getOrderByComparator()),
-				_ddmStructureService.getStructuresCount(
-					_ddmWebRequestHelper.getCompanyId(), allGroupIds,
-					_getStructureClassNameId(), searchTerms.getKeywords(),
-					searchTerms.getStatus()));
-		}
-
-		return structureSearch;
-	}
-
 	public String getStructureSearchActionURL() {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
@@ -589,51 +638,6 @@ public class DDMDisplayContext {
 		};
 	}
 
-	public SearchContainer<DDMTemplate> getTemplateSearch() throws Exception {
-		TemplateSearch templateSearch = new TemplateSearch(
-			_renderRequest, _getPortletURL());
-
-		if (templateSearch.isSearch()) {
-			templateSearch.setEmptyResultsMessage("no-templates-were-found");
-		}
-		else {
-			templateSearch.setEmptyResultsMessage("there-are-no-templates");
-		}
-
-		templateSearch.setOrderByCol(getOrderByCol());
-		templateSearch.setOrderByComparator(
-			DDMUtil.getTemplateOrderByComparator(
-				getOrderByCol(), getOrderByType()));
-		templateSearch.setOrderByType(getOrderByType());
-
-		TemplateSearchTerms searchTerms =
-			(TemplateSearchTerms)templateSearch.getSearchTerms();
-		DDMDisplay ddmDisplay = getDDMDisplay();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long[] groupIds = ddmDisplay.getTemplateGroupIds(
-			themeDisplay, _showAncestorScopes());
-
-		templateSearch.setResultsAndTotal(
-			() -> _ddmTemplateService.search(
-				_ddmWebRequestHelper.getCompanyId(), groupIds,
-				_getTemplateClassNameIds(), _getDDMTemplateClassPKs(),
-				_getResourceClassNameId(), searchTerms.getKeywords(),
-				searchTerms.getType(), _getTemplateMode(),
-				searchTerms.getStatus(), templateSearch.getStart(),
-				templateSearch.getEnd(), templateSearch.getOrderByComparator()),
-			_ddmTemplateService.searchCount(
-				_ddmWebRequestHelper.getCompanyId(), groupIds,
-				_getTemplateClassNameIds(), _getDDMTemplateClassPKs(),
-				_getResourceClassNameId(), searchTerms.getKeywords(),
-				searchTerms.getType(), _getTemplateMode(),
-				searchTerms.getStatus()));
-
-		return templateSearch;
-	}
-
 	public String getTemplateSearchActionURL() {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
@@ -667,10 +671,10 @@ public class DDMDisplayContext {
 		if (Objects.equals(
 				context, DDMWebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE)) {
 
-			searchContainer = getStructureSearch();
+			searchContainer = getDDMStructureSearchContainer();
 		}
 		else {
-			searchContainer = getTemplateSearch();
+			searchContainer = getDDMTemplateSearchContainer();
 		}
 
 		return searchContainer.getTotal();

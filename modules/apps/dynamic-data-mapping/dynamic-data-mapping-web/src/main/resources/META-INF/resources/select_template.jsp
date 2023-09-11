@@ -40,7 +40,7 @@ if ((classPK > 0) && (structureClassNameId == classNameId)) {
 <aui:form action="<%= ddmDisplayContext.getSelectTemplateSearchActionURL() %>" method="post" name="selectTemplateFm">
 	<clay:container-fluid>
 		<liferay-ui:search-container
-			searchContainer="<%= ddmDisplayContext.getTemplateSearch() %>"
+			searchContainer="<%= ddmDisplayContext.getDDMTemplateSearchContainer() %>"
 		>
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMTemplate"

@@ -1,0 +1,36 @@
+definition {
+
+    macro _addCommerceUOM {
+        Variables.assertDefined(parameterList = "${basePrice},${uomName},${uomKey},${productSKU}");
+
+        var baseURL = ${baseURL};
+
+        if (!(isSet(baseURL))) {
+            var baseURL = PropsUtil.get("portal.url");
+        }
+
+        if (!(isSet(priority))) {
+            var priority = 0;
+        }
+
+        var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
+        var userLoginInfo = JSONUtil2.formatJSONUser();
+
+        var curl = '''
+            ${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus/${skuId}/sku-unit-of-measures \
+                -u ${userLoginInfo} \
+                -H 'accept: application/json' \
+                -H 'Content-Type: application/json' \
+                -d '{
+                    "basePrice": ${basePrice},
+                    "key": "${uomKey}",
+                    "name": {
+                        "en_US": "${uomName}"
+                    },
+                    "priority": ${priority}
+                }'
+        ''';
+
+        JSONCurlUtil.post(${curl});
+    }
+}

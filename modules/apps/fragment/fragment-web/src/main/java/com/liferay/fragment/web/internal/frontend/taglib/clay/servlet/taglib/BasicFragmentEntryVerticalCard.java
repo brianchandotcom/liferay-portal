@@ -109,27 +109,7 @@ public class BasicFragmentEntryVerticalCard
 			).build();
 		}
 
-		FragmentEntryValidator fragmentEntryValidator =
-			(FragmentEntryValidator)_httpServletRequest.getAttribute(
-				FragmentEntryValidator.class.getName());
-
-		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
-			(FragmentEntryProcessorRegistry)_httpServletRequest.getAttribute(
-				FragmentEntryProcessorRegistry.class.getName());
-
-		try {
-			fragmentEntryValidator.validateConfiguration(
-				fragmentEntry.getConfiguration());
-			fragmentEntryValidator.validateTypeOptions(
-				fragmentEntry.getType(), fragmentEntry.getTypeOptions());
-			fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
-				fragmentEntry.getHtml(), fragmentEntry.getConfiguration());
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
+		if (_hasWarnings()) {
 			return LabelItemListBuilder.add(
 				labelItem -> labelItem.setStatus(fragmentEntry.getStatus())
 			).add(
@@ -170,6 +150,34 @@ public class BasicFragmentEntryVerticalCard
 		}
 
 		return super.isSelectable();
+	}
+
+	private boolean _hasWarnings() {
+		FragmentEntryValidator fragmentEntryValidator =
+			(FragmentEntryValidator)_httpServletRequest.getAttribute(
+				FragmentEntryValidator.class.getName());
+
+		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
+			(FragmentEntryProcessorRegistry)_httpServletRequest.getAttribute(
+				FragmentEntryProcessorRegistry.class.getName());
+
+		try {
+			fragmentEntryValidator.validateConfiguration(
+				fragmentEntry.getConfiguration());
+			fragmentEntryValidator.validateTypeOptions(
+				fragmentEntry.getType(), fragmentEntry.getTypeOptions());
+			fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
+				fragmentEntry.getHtml(), fragmentEntry.getConfiguration());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

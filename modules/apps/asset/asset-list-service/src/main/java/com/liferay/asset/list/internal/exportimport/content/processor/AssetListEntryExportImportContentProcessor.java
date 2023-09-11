@@ -144,6 +144,10 @@ public class AssetListEntryExportImportContentProcessor
 				String queryValues = unicodeProperties.getProperty(
 					"queryValues" + index);
 
+				if (Validator.isNull(queryValues)) {
+					continue;
+				}
+
 				long[] categoryIds = GetterUtil.getLongValues(
 					queryValues.split(","));
 

@@ -37,6 +37,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import java.lang.reflect.Method;
+
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -255,6 +257,8 @@ public class ClientExtensionProjectConfigurator
 		_addDockerTasks(
 			project, assembleClientExtensionTaskProvider,
 			createClientExtensionConfigTaskProvider, workspaceExtension);
+
+		_configureLiferayRoutes(project, workspaceExtension);
 	}
 
 	@Override
@@ -765,6 +769,60 @@ public class ClientExtensionProjectConfigurator
 			});
 	}
 
+	private void _configureLiferayRoutes(
+		Project project, WorkspaceExtension workspaceExtension) {
+
+		Map<String, String> environmentVariables = new HashMap<>();
+
+		String liferayVirtualInstanceId = GradleUtil.getProperty(
+			project.getRootProject(), "liferay.virtual.instance.id", "default");
+
+		environmentVariables.put(
+			_ENV_LIFERAY_ROUTES_CLIENT_EXTENSION,
+			String.format(
+				"%s/routes/%s/%s", workspaceExtension.getHomeDir(),
+				liferayVirtualInstanceId, project.getName()));
+		environmentVariables.put(
+			_ENV_LIFERAY_ROUTES_DXP,
+			String.format(
+				"%s/routes/%s/dxp", workspaceExtension.getHomeDir(),
+				liferayVirtualInstanceId));
+
+		project.afterEvaluate(
+			project1 -> {
+				for (Task task : project.getTasks()) {
+					Class<? extends Task> clazz = task.getClass();
+
+					try {
+						Method environment = clazz.getMethod(
+							"environment", Map.class);
+
+						environment.invoke(task, environmentVariables);
+
+						Logger logger = task.getLogger();
+
+						if (logger.isInfoEnabled()) {
+							logger.info(
+								StringBundler.concat(
+									"Injecting Liferay Routes configuration ",
+									"paths as environment variables into the ",
+									"process invoked by the task {}"),
+								task.getPath());
+
+							for (Map.Entry<String, String> entry :
+									environmentVariables.entrySet()) {
+
+								logger.info(
+									"{}: {}", entry.getKey(), entry.getValue());
+							}
+						}
+					}
+					catch (Exception exception) {
+					}
+				}
+			});
+	}
+
 	private void _configureRootTaskDistBundle(
 		Project project,
 		TaskProvider<Zip> buildClientExtensionZipTaskProvider) {
@@ -966,6 +1024,11 @@ public class ClientExtensionProjectConfigurator
 		"client-extension.yaml";
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
+
+	private static final String _ENV_LIFERAY_ROUTES_CLIENT_EXTENSION =
+		"LIFERAY_ROUTES_CLIENT_EXTENSION";
+
+	private static final String _ENV_LIFERAY_ROUTES_DXP = "LIFERAY_ROUTES_DXP";
 
 	private static final Pattern _overrideClientExtensionYamlPattern =
 		Pattern.compile("^client-extension\\.([a-z]+)\\.yaml$");

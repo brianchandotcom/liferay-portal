@@ -22,6 +22,7 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
+import fdsSourceDataRenderer from '../../utils/fdsSourceDataRenderer';
 
 interface ItemData {
 	active: boolean;
@@ -96,6 +97,7 @@ export default function Validations({
 		apiURL,
 		creationMenu,
 		customDataRenderers: {
+			fdsSourceDataRenderer,
 			objectFieldActiveDataRenderer,
 			objectFieldLabelDataRenderer,
 			objectFieldModifiedDateDataRenderer,
@@ -150,6 +152,7 @@ export default function Validations({
 							sortable: false,
 						},
 						{
+							contentRenderer: 'fdsSourceDataRenderer',
 							expand: false,
 							fieldName: 'system',
 							label: Liferay.Language.get('source'),

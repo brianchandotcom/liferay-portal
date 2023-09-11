@@ -2571,6 +2571,37 @@ definition {
 			searchAssetType = "Document");
 	}
 
+	@description = "This is a use case for LPS-178336 - Category facet vocabulary selection is limited to 20 elements."
+	@priority = 3
+	test ViewCategoryFacetVocabularySelectionIsNotLimited {
+		property osgi.module.configuration.file.names = "com.liferay.portal.search.configuration.CategoryFacetFieldConfiguration.config";
+		property osgi.module.configurations = "categoryFacetField=\"assetVocabularyCategoryIds\"";
+
+		task ("Create 21 vocabularies") {
+			var count = 1;
+
+			while ((${count} != 22) && (maxIterations = "21")) {
+				JSONCategory.addVocabulary(
+					groupName = "Guest",
+					title = "Vocabulary ${count}");
+
+				var count = ${count} + 1;
+			}
+		}
+
+		task ("Go to Search Page, select the 'Select Vocabularies' option in the category facet and assert vocabulary 21 can be selected") {
+			SearchPortlets.addWidgets(searchPortletList = "Category Facet");
+
+			Search.openSearchPage();
+
+			SearchPortlets.configureCategoryFacet(
+				groupName = "Guest",
+				index = 1,
+				vocabularyName = "Vocabulary 21",
+				vocabularyScope = "Select Vocabularies");
+		}
+	}
+
 	@description = "This is a use case for LPS-185631."
 	@priority = 4
 	test ViewDefaultEmptySearchResultsAndPaginationConfiguration {

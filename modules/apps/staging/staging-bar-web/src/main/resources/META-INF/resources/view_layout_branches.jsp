@@ -110,10 +110,3 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 		</liferay-ui:search-container>
 	</div>
 </clay:container-fluid>
-
-<aui:script position="inline" use="liferay-staging-branch">
-	Liferay.StagingBar.init({
-		namespace: '<portlet:namespace />',
-		portletId: '<%= portletDisplay.getId() %>',
-	});
-</aui:script>

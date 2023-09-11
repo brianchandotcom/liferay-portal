@@ -10,8 +10,8 @@ interface IErrorMessage {
 }
 export const ERRORS: IErrorMessage = {
 	'ObjectDefinitionNameException.MustBeLessThan41Characters': sub(
-		Liferay.Language.get('only-x-characters-are-allowed'),
-		'41'
+		Liferay.Language.get('only-x-characters-are-allowed-in-the-x-field'),
+		['41', 'name']
 	),
 	'ObjectDefinitionNameException.MustBeginWithUpperCaseLetter': Liferay.Language.get(
 		'the-first-character-of-a-name-must-be-an-upper-case-letter'
@@ -32,8 +32,8 @@ export const ERRORS: IErrorMessage = {
 		'custom-object-definition-names-must-start-with-c'
 	),
 	'ObjectFieldNameException.MustBeLessThan41Characters': sub(
-		Liferay.Language.get('only-x-characters-are-allowed'),
-		'41'
+		Liferay.Language.get('only-x-characters-are-allowed-in-the-x-field'),
+		['41', 'name']
 	),
 	'ObjectFieldNameException.MustBeginWithLowerCaseLetter': Liferay.Language.get(
 		'the-first-character-of-a-name-must-be-an-lower-case-letter'

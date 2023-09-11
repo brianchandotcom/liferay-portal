@@ -45,8 +45,10 @@ const getNameErrors = (
 
 	if (name.length > 41) {
 		errors.name = sub(
-			Liferay.Language.get('only-x-characters-are-allowed'),
-			'41'
+			Liferay.Language.get(
+				'only-x-characters-are-allowed-in-the-x-field'
+			),
+			['41', 'name']
 		);
 
 		return;

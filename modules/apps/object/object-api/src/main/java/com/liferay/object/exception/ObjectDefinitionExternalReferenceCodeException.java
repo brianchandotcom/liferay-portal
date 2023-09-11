@@ -9,6 +9,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -49,9 +50,9 @@ public class ObjectDefinitionExternalReferenceCodeException
 
 		public MustBeLessThan75Characters() {
 			super(
-				Collections.singletonList(75),
+				Arrays.asList(75, "external-reference-code"),
 				"External reference code must be less than 75 characters",
-				"only-x-characters-are-allowed");
+				"only-x-characters-are-allowed-in-the-x-field");
 		}
 
 	}

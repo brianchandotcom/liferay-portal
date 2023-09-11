@@ -185,20 +185,20 @@ public class ViewMembershipRequestsDisplayContext {
 	public SearchContainer<MembershipRequest>
 		getSiteMembershipSearchContainer() {
 
-		if (_siteMembershipSearch != null) {
-			return _siteMembershipSearch;
+		if (_siteMembershipSearchContainer != null) {
+			return _siteMembershipSearchContainer;
 		}
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		SearchContainer<MembershipRequest> siteMembershipSearch =
+		SearchContainer<MembershipRequest> siteMembershipSearchContainer =
 			new SearchContainer(
 				_renderRequest, getPortletURL(), null,
 				"no-requests-were-found");
 
-		siteMembershipSearch.setOrderByCol(getOrderByCol());
+		siteMembershipSearchContainer.setOrderByCol(getOrderByCol());
 
 		boolean orderByAsc = false;
 
@@ -206,20 +206,21 @@ public class ViewMembershipRequestsDisplayContext {
 			orderByAsc = true;
 		}
 
-		siteMembershipSearch.setOrderByComparator(
+		siteMembershipSearchContainer.setOrderByComparator(
 			new MembershipRequestCreateDateComparator(orderByAsc));
-		siteMembershipSearch.setOrderByType(getOrderByType());
-		siteMembershipSearch.setResultsAndTotal(
+		siteMembershipSearchContainer.setOrderByType(getOrderByType());
+		siteMembershipSearchContainer.setResultsAndTotal(
 			() -> MembershipRequestLocalServiceUtil.search(
 				themeDisplay.getSiteGroupIdOrLiveGroupId(), getStatusId(),
-				siteMembershipSearch.getStart(), siteMembershipSearch.getEnd(),
-				siteMembershipSearch.getOrderByComparator()),
+				siteMembershipSearchContainer.getStart(),
+				siteMembershipSearchContainer.getEnd(),
+				siteMembershipSearchContainer.getOrderByComparator()),
 			MembershipRequestLocalServiceUtil.searchCount(
 				themeDisplay.getSiteGroupIdOrLiveGroupId(), getStatusId()));
 
-		_siteMembershipSearch = siteMembershipSearch;
+		_siteMembershipSearchContainer = siteMembershipSearchContainer;
 
-		return _siteMembershipSearch;
+		return _siteMembershipSearchContainer;
 	}
 
 	public int getStatusId() {
@@ -249,7 +250,7 @@ public class ViewMembershipRequestsDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private SearchContainer<MembershipRequest> _siteMembershipSearch;
+	private SearchContainer<MembershipRequest> _siteMembershipSearchContainer;
 	private String _tabs1;
 
 }

@@ -107,17 +107,17 @@ public class DDMStructureItemSelectorViewDescriptor
 			emptyResultsMessage = "no-structures-were-found";
 		}
 
-		SearchContainer<DDMStructure> ddmStructureSearch =
+		SearchContainer<DDMStructure> ddmStructureSearchContainer =
 			new SearchContainer<>(
 				(PortletRequest)_httpServletRequest.getAttribute(
 					JavaConstants.JAVAX_PORTLET_REQUEST),
 				_portletURL, null, emptyResultsMessage);
 
-		ddmStructureSearch.setOrderByCol(getOrderByCol());
-		ddmStructureSearch.setOrderByComparator(
+		ddmStructureSearchContainer.setOrderByCol(getOrderByCol());
+		ddmStructureSearchContainer.setOrderByComparator(
 			DDMUtil.getStructureOrderByComparator(
 				getOrderByCol(), getOrderByType()));
-		ddmStructureSearch.setOrderByType(getOrderByType());
+		ddmStructureSearchContainer.setOrderByType(getOrderByType());
 
 		long[] groupIds =
 			SiteConnectedGroupGroupProviderUtil.
@@ -125,31 +125,33 @@ public class DDMStructureItemSelectorViewDescriptor
 					_themeDisplay.getScopeGroupId(), true);
 
 		if (Validator.isNotNull(_getKeywords())) {
-			ddmStructureSearch.setResultsAndTotal(
+			ddmStructureSearchContainer.setResultsAndTotal(
 				() -> DDMStructureServiceUtil.search(
 					_themeDisplay.getCompanyId(), groupIds,
 					_ddmStructureItemSelectorCriterion.getClassNameId(),
 					_getKeywords(), WorkflowConstants.STATUS_ANY,
-					ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
-					ddmStructureSearch.getOrderByComparator()),
+					ddmStructureSearchContainer.getStart(),
+					ddmStructureSearchContainer.getEnd(),
+					ddmStructureSearchContainer.getOrderByComparator()),
 				DDMStructureServiceUtil.searchCount(
 					_themeDisplay.getCompanyId(), groupIds,
 					_ddmStructureItemSelectorCriterion.getClassNameId(),
 					_getKeywords(), WorkflowConstants.STATUS_ANY));
 		}
 		else {
-			ddmStructureSearch.setResultsAndTotal(
+			ddmStructureSearchContainer.setResultsAndTotal(
 				() -> DDMStructureServiceUtil.getStructures(
 					_themeDisplay.getCompanyId(), groupIds,
 					_ddmStructureItemSelectorCriterion.getClassNameId(),
-					ddmStructureSearch.getStart(), ddmStructureSearch.getEnd(),
-					ddmStructureSearch.getOrderByComparator()),
+					ddmStructureSearchContainer.getStart(),
+					ddmStructureSearchContainer.getEnd(),
+					ddmStructureSearchContainer.getOrderByComparator()),
 				DDMStructureServiceUtil.getStructuresCount(
 					_themeDisplay.getCompanyId(), groupIds,
 					_ddmStructureItemSelectorCriterion.getClassNameId()));
 		}
 
-		return ddmStructureSearch;
+		return ddmStructureSearchContainer;
 	}
 
 	@Override

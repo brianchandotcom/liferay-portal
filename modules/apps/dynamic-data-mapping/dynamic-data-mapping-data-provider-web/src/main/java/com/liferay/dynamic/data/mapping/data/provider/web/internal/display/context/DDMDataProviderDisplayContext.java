@@ -260,11 +260,11 @@ public class DDMDataProviderDisplayContext {
 	}
 
 	public String getEmptyResultsMessage() {
-		SearchContainer<?> search = getSearch();
+		SearchContainer<?> searchContainer = getSearch();
 
 		return LanguageUtil.get(
 			_ddmDataProviderRequestHelper.getRequest(),
-			search.getEmptyResultsMessage());
+			searchContainer.getEmptyResultsMessage());
 	}
 
 	public List<DropdownItem> getFilterItemsDropdownItems() {

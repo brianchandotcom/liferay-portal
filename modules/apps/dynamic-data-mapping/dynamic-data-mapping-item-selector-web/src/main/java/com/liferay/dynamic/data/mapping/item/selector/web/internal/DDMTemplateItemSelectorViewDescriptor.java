@@ -93,27 +93,29 @@ public class DDMTemplateItemSelectorViewDescriptor
 	public SearchContainer<DDMTemplate> getSearchContainer()
 		throws PortalException {
 
-		SearchContainer<DDMTemplate> ddmTemplateSearch = new SearchContainer<>(
-			(PortletRequest)_httpServletRequest.getAttribute(
-				JavaConstants.JAVAX_PORTLET_REQUEST),
-			_portletURL, null, "there-are-no-templates");
+		SearchContainer<DDMTemplate> ddmTemplateSearchContainer =
+			new SearchContainer<>(
+				(PortletRequest)_httpServletRequest.getAttribute(
+					JavaConstants.JAVAX_PORTLET_REQUEST),
+				_portletURL, null, "there-are-no-templates");
 
-		if (ddmTemplateSearch.isSearch()) {
-			ddmTemplateSearch.setEmptyResultsMessage("no-templates-were-found");
+		if (ddmTemplateSearchContainer.isSearch()) {
+			ddmTemplateSearchContainer.setEmptyResultsMessage(
+				"no-templates-were-found");
 		}
 
-		ddmTemplateSearch.setOrderByCol(getOrderByCol());
-		ddmTemplateSearch.setOrderByComparator(
+		ddmTemplateSearchContainer.setOrderByCol(getOrderByCol());
+		ddmTemplateSearchContainer.setOrderByComparator(
 			DDMUtil.getTemplateOrderByComparator(
 				getOrderByCol(), getOrderByType()));
-		ddmTemplateSearch.setOrderByType(getOrderByType());
+		ddmTemplateSearchContainer.setOrderByType(getOrderByType());
 
 		long[] groupIds =
 			SiteConnectedGroupGroupProviderUtil.
 				getCurrentAndAncestorSiteAndDepotGroupIds(
 					_themeDisplay.getScopeGroupId(), true);
 
-		ddmTemplateSearch.setResultsAndTotal(
+		ddmTemplateSearchContainer.setResultsAndTotal(
 			() -> DDMTemplateServiceUtil.search(
 				_themeDisplay.getCompanyId(), groupIds,
 				new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
@@ -122,9 +124,10 @@ public class DDMTemplateItemSelectorViewDescriptor
 				},
 				_ddmTemplateItemSelectorCriterion.getClassNameId(),
 				_getKeywords(), StringPool.BLANK, StringPool.BLANK,
-				WorkflowConstants.STATUS_ANY, ddmTemplateSearch.getStart(),
-				ddmTemplateSearch.getEnd(),
-				ddmTemplateSearch.getOrderByComparator()),
+				WorkflowConstants.STATUS_ANY,
+				ddmTemplateSearchContainer.getStart(),
+				ddmTemplateSearchContainer.getEnd(),
+				ddmTemplateSearchContainer.getOrderByComparator()),
 			DDMTemplateServiceUtil.searchCount(
 				_themeDisplay.getCompanyId(), groupIds,
 				new long[] {PortalUtil.getClassNameId(DDMStructure.class)},
@@ -135,7 +138,7 @@ public class DDMTemplateItemSelectorViewDescriptor
 				_getKeywords(), StringPool.BLANK, StringPool.BLANK,
 				WorkflowConstants.STATUS_ANY));
 
-		return ddmTemplateSearch;
+		return ddmTemplateSearchContainer;
 	}
 
 	@Override

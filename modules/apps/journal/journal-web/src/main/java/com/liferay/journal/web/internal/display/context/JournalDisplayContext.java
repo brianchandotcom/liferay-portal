@@ -972,16 +972,17 @@ public class JournalDisplayContext {
 	}
 
 	public int getTotalItems() throws PortalException {
-		SearchContainer<?> articleSearch = _getArticlesSearchContainer();
+		SearchContainer<?> articleSearchContainer =
+			_getArticlesSearchContainer();
 
-		return articleSearch.getTotal();
+		return articleSearchContainer.getTotal();
 	}
 
 	public int getVersionsTotal() throws PortalException {
-		SearchContainer<JournalArticle> articleSearch =
+		SearchContainer<JournalArticle> articleSearchContainer =
 			_getVersionsSearchContainer();
 
-		return articleSearch.getTotal();
+		return articleSearchContainer.getTotal();
 	}
 
 	public boolean hasCommentsResults() throws PortalException {

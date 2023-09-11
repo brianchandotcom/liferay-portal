@@ -60,8 +60,8 @@ public class JournalDDMStructuresDisplayContext {
 	public SearchContainer<DDMStructure> getDDMStructureSearch()
 		throws Exception {
 
-		if (_ddmStructureSearch != null) {
-			return _ddmStructureSearch;
+		if (_ddmStructureSearchContainer != null) {
+			return _ddmStructureSearchContainer;
 		}
 
 		ThemeDisplay themeDisplay =
@@ -74,12 +74,14 @@ public class JournalDDMStructuresDisplayContext {
 			emptyResultsMessage = "no-structures-were-found";
 		}
 
-		SearchContainer<DDMStructure> ddmStructureSearch = new SearchContainer(
-			_renderRequest, _getPortletURL(), null, emptyResultsMessage);
+		SearchContainer<DDMStructure> ddmStructureSearchContainer =
+			new SearchContainer(
+				_renderRequest, _getPortletURL(), null, emptyResultsMessage);
 
-		ddmStructureSearch.setOrderByCol(getOrderByCol());
-		ddmStructureSearch.setOrderByComparator(_getOrderByComparator());
-		ddmStructureSearch.setOrderByType(getOrderByType());
+		ddmStructureSearchContainer.setOrderByCol(getOrderByCol());
+		ddmStructureSearchContainer.setOrderByComparator(
+			_getOrderByComparator());
+		ddmStructureSearchContainer.setOrderByType(getOrderByType());
 
 		long[] groupIds = {_themeDisplay.getScopeGroupId()};
 
@@ -93,22 +95,22 @@ public class JournalDDMStructuresDisplayContext {
 		long[] structureGroupIds = groupIds;
 
 		if (Validator.isNotNull(_getKeywords())) {
-			ddmStructureSearch.setResultsAndTotal(
+			ddmStructureSearchContainer.setResultsAndTotal(
 				() -> {
 					List<DDMStructure> results = DDMStructureServiceUtil.search(
 						themeDisplay.getCompanyId(), structureGroupIds,
 						PortalUtil.getClassNameId(
 							JournalArticle.class.getName()),
 						_getKeywords(), WorkflowConstants.STATUS_ANY,
-						ddmStructureSearch.getStart(),
-						ddmStructureSearch.getEnd(),
-						ddmStructureSearch.getOrderByComparator());
+						ddmStructureSearchContainer.getStart(),
+						ddmStructureSearchContainer.getEnd(),
+						ddmStructureSearchContainer.getOrderByComparator());
 
 					List<DDMStructure> sortedResults = new ArrayList<>(results);
 
 					Collections.sort(
 						sortedResults,
-						ddmStructureSearch.getOrderByComparator());
+						ddmStructureSearchContainer.getOrderByComparator());
 
 					return sortedResults;
 				},
@@ -118,22 +120,22 @@ public class JournalDDMStructuresDisplayContext {
 					_getKeywords(), WorkflowConstants.STATUS_ANY));
 		}
 		else {
-			ddmStructureSearch.setResultsAndTotal(
+			ddmStructureSearchContainer.setResultsAndTotal(
 				() -> {
 					List<DDMStructure> results =
 						DDMStructureServiceUtil.getStructures(
 							themeDisplay.getCompanyId(), structureGroupIds,
 							PortalUtil.getClassNameId(
 								JournalArticle.class.getName()),
-							ddmStructureSearch.getStart(),
-							ddmStructureSearch.getEnd(),
-							ddmStructureSearch.getOrderByComparator());
+							ddmStructureSearchContainer.getStart(),
+							ddmStructureSearchContainer.getEnd(),
+							ddmStructureSearchContainer.getOrderByComparator());
 
 					List<DDMStructure> sortedResults = new ArrayList<>(results);
 
 					Collections.sort(
 						sortedResults,
-						ddmStructureSearch.getOrderByComparator());
+						ddmStructureSearchContainer.getOrderByComparator());
 
 					return sortedResults;
 				},
@@ -142,12 +144,12 @@ public class JournalDDMStructuresDisplayContext {
 					PortalUtil.getClassNameId(JournalArticle.class.getName())));
 		}
 
-		ddmStructureSearch.setRowChecker(
+		ddmStructureSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
-		_ddmStructureSearch = ddmStructureSearch;
+		_ddmStructureSearchContainer = ddmStructureSearchContainer;
 
-		return ddmStructureSearch;
+		return ddmStructureSearchContainer;
 	}
 
 	public String getOrderByCol() {
@@ -259,7 +261,7 @@ public class JournalDDMStructuresDisplayContext {
 		).buildPortletURL();
 	}
 
-	private SearchContainer<DDMStructure> _ddmStructureSearch;
+	private SearchContainer<DDMStructure> _ddmStructureSearchContainer;
 	private final HttpServletRequest _httpServletRequest;
 	private final JournalWebConfiguration _journalWebConfiguration;
 	private String _keywords;

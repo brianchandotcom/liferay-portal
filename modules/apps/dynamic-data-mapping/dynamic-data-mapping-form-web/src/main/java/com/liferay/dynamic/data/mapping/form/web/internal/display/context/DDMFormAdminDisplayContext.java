@@ -627,11 +627,11 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	public String getEmptyResultsMessage() {
-		SearchContainer<?> search = getSearch();
+		SearchContainer<?> searchContainer = getSearch();
 
 		return LanguageUtil.get(
 			ddmFormAdminRequestHelper.getRequest(),
-			search.getEmptyResultsMessage());
+			searchContainer.getEmptyResultsMessage());
 	}
 
 	public String getExportFormURL(long formInstanceId) {

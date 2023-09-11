@@ -71,21 +71,21 @@ public class PortletConfigurationTemplatesDisplayContext {
 	public SearchContainer<ArchivedSettings>
 		getArchivedSettingsSearchContainer() {
 
-		if (_archivedSettingsSearch != null) {
-			return _archivedSettingsSearch;
+		if (_archivedSettingsSearchContainer != null) {
+			return _archivedSettingsSearchContainer;
 		}
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		SearchContainer<ArchivedSettings> archivedSettingsSearch =
+		SearchContainer<ArchivedSettings> archivedSettingsSearchContainer =
 			new SearchContainer<>(
 				_renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM,
 				SearchContainer.DEFAULT_DELTA, getPortletURL(), null,
 				"there-are-no-configuration-templates");
 
-		archivedSettingsSearch.setOrderByCol(getOrderByCol());
+		archivedSettingsSearchContainer.setOrderByCol(getOrderByCol());
 
 		boolean orderByAsc = false;
 
@@ -103,25 +103,25 @@ public class PortletConfigurationTemplatesDisplayContext {
 			orderByComparator = new ArchivedSettingsNameComparator(orderByAsc);
 		}
 
-		archivedSettingsSearch.setOrderByComparator(orderByComparator);
-		archivedSettingsSearch.setOrderByType(getOrderByType());
+		archivedSettingsSearchContainer.setOrderByComparator(orderByComparator);
+		archivedSettingsSearchContainer.setOrderByType(getOrderByType());
 
 		Portlet selPortlet = PortletLocalServiceUtil.getPortletById(
 			themeDisplay.getCompanyId(), getPortletResource());
 
-		archivedSettingsSearch.setResultsAndTotal(
+		archivedSettingsSearchContainer.setResultsAndTotal(
 			ListUtil.sort(
 				_archivedSettingsFactory.getPortletInstanceArchivedSettingsList(
 					themeDisplay.getScopeGroupId(),
 					selPortlet.getRootPortletId()),
-				archivedSettingsSearch.getOrderByComparator()));
+				archivedSettingsSearchContainer.getOrderByComparator()));
 
-		archivedSettingsSearch.setRowChecker(
+		archivedSettingsSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));
 
-		_archivedSettingsSearch = archivedSettingsSearch;
+		_archivedSettingsSearchContainer = archivedSettingsSearchContainer;
 
-		return _archivedSettingsSearch;
+		return _archivedSettingsSearchContainer;
 	}
 
 	public String getDisplayStyle() {
@@ -244,7 +244,7 @@ public class PortletConfigurationTemplatesDisplayContext {
 	}
 
 	private final ArchivedSettingsFactory _archivedSettingsFactory;
-	private SearchContainer<ArchivedSettings> _archivedSettingsSearch;
+	private SearchContainer<ArchivedSettings> _archivedSettingsSearchContainer;
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private final String _moduleName;

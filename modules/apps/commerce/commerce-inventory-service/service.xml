@@ -208,6 +208,10 @@
 		<finder name="CommerceInventoryWarehouseId" return-type="Collection">
 			<finder-column name="commerceInventoryWarehouseId" />
 		</finder>
+		<finder name="CIWI_S" return-type="Collection">
+			<finder-column name="commerceInventoryWarehouseId" />
+			<finder-column name="sku" />
+		</finder>
 		<finder name="C_S_U" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="sku" />

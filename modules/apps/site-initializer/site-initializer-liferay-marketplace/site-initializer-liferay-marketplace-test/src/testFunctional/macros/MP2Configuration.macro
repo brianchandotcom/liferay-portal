@@ -135,6 +135,8 @@ definition {
 			templateType = "Site Initializer");
 
 		ApplicationsMenu.gotoSite(site = "Marketplace Site");
+
+		WaitForPageLoad();
 	}
 
 }

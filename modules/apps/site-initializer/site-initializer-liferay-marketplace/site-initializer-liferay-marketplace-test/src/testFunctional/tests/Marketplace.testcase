@@ -54,6 +54,10 @@ definition {
 				category = "Product Management",
 				portlet = "Catalogs");
 
+			// Workaround
+
+			Refresh();
+
 			CommerceNavigator.gotoEntry(entryName = "Acme Development");
 		}
 
@@ -72,6 +76,10 @@ definition {
 			CommerceNavigator.gotoPortlet(
 				category = "Store Management",
 				portlet = "Channels");
+
+			// Workaround
+
+			Refresh();
 
 			CommerceNavigator.gotoEntry(entryName = "Marketplace Channel");
 		}

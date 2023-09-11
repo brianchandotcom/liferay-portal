@@ -63,7 +63,9 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 		if (applicationServiceRegistration != null) {
 			applicationServiceRegistration.setProperties(
-				_getApplicationProperties(apiApplication));
+				_getApplicationProperties(
+					apiApplication.getBaseURL(),
+					_registerCompanyId(apiApplication)));
 
 			return;
 		}
@@ -104,6 +106,14 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 		companyIds.remove(companyId);
 
 		if (SetUtil.isNotEmpty(companyIds)) {
+			ServiceRegistration<Application> applicationServiceRegistration =
+				_applicationServiceRegistrationsMap.get(baseURL);
+
+			if (applicationServiceRegistration != null) {
+				applicationServiceRegistration.setProperties(
+					_getApplicationProperties(baseURL, companyIds));
+			}
+
 			return;
 		}
 
@@ -137,18 +147,11 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 	}
 
 	private HashMapDictionary<String, Object> _getApplicationProperties(
-		APIApplication apiApplication) {
+		String baseURL, Set<Long> companyIds) {
 
 		return HashMapDictionaryBuilder.<String, Object>put(
 			"companyId",
-			() -> {
-				Set<Long> companyIds = _getCompanyIds(
-					apiApplication.getBaseURL());
-
-				companyIds.add(apiApplication.getCompanyId());
-
-				return TransformUtil.transform(companyIds, String::valueOf);
-			}
+			() -> TransformUtil.transform(companyIds, String::valueOf)
 		).put(
 			"liferay.filter.disabled", true
 		).put(
@@ -157,12 +160,11 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 			"liferay.jackson", false
 		).put(
 			"osgi.jaxrs.application.base",
-			HeadlessBuilderConstants.BASE_PATH_SUFFIX +
-				apiApplication.getBaseURL()
+			HeadlessBuilderConstants.BASE_PATH_SUFFIX + baseURL
 		).put(
 			"osgi.jaxrs.extension.select", "(osgi.jaxrs.name=Liferay.Vulcan)"
 		).put(
-			"osgi.jaxrs.name", apiApplication.getBaseURL()
+			"osgi.jaxrs.name", baseURL
 		).build();
 	}
 
@@ -180,12 +182,22 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 		ServiceRegistration<Application> applicationServiceRegistration =
 			_bundleContext.registerService(
 				Application.class, new Application(),
-				_getApplicationProperties(apiApplication));
+				_getApplicationProperties(
+					apiApplication.getBaseURL(),
+					_registerCompanyId(apiApplication)));
 
 		_applicationServiceRegistrationsMap.put(
 			apiApplication.getBaseURL(), applicationServiceRegistration);
 
 		return applicationServiceRegistration;
+	}
+
+	private Set<Long> _registerCompanyId(APIApplication apiApplication) {
+		Set<Long> companyIds = _getCompanyIds(apiApplication.getBaseURL());
+
+		companyIds.add(apiApplication.getCompanyId());
+
+		return companyIds;
 	}
 
 	private <T> ServiceRegistration<T> _registerResource(

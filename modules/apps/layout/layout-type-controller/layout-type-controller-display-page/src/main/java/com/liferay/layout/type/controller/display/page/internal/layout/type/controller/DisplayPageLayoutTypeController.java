@@ -151,8 +151,8 @@ public class DisplayPageLayoutTypeController
 		DisplayPageLayoutTypeControllerDisplayContext
 			displayPageLayoutTypeControllerDisplayContext =
 				new DisplayPageLayoutTypeControllerDisplayContext(
-					httpServletRequest, _infoItemServiceRegistry,
-					_infoSearchClassMapperRegistry);
+					_assetDisplayPageFriendlyURLProvider, httpServletRequest,
+					_infoItemServiceRegistry, _infoSearchClassMapperRegistry);
 
 		httpServletRequest.setAttribute(
 			DisplayPageLayoutTypeControllerWebKeys.

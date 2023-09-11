@@ -5,6 +5,7 @@
 
 package com.liferay.layout.type.controller.display.page.internal.display.context;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
@@ -21,8 +22,15 @@ import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,12 +42,18 @@ import javax.servlet.http.HttpServletResponse;
 public class DisplayPageLayoutTypeControllerDisplayContext {
 
 	public DisplayPageLayoutTypeControllerDisplayContext(
+			AssetDisplayPageFriendlyURLProvider
+				assetDisplayPageFriendlyURLProvider,
 			HttpServletRequest httpServletRequest,
 			InfoItemServiceRegistry infoItemServiceRegistry,
 			InfoSearchClassMapperRegistry infoSearchClassMapperRegistry)
 		throws Exception {
 
+		_assetDisplayPageFriendlyURLProvider =
+			assetDisplayPageFriendlyURLProvider;
+		_httpServletRequest = httpServletRequest;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
+		_infoSearchClassMapperRegistry = infoSearchClassMapperRegistry;
 
 		long assetEntryId = ParamUtil.getLong(
 			httpServletRequest, "assetEntryId");
@@ -105,6 +119,70 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 			getAssetRendererFactoryByClassName(_infoItemDetails.getClassName());
 	}
 
+	public String getCanonicalURL() {
+		InfoItemDetails infoItemDetails =
+			(InfoItemDetails)_httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_DETAILS);
+
+		if (infoItemDetails == null) {
+			return StringPool.BLANK;
+		}
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_infoSearchClassMapperRegistry.getSearchClassName(
+					infoItemDetails.getClassName()));
+
+		InfoItemReference infoItemReference =
+			infoItemDetails.getInfoItemReference();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			if (assetRendererFactory == null) {
+				return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					infoItemReference, themeDisplay);
+			}
+
+			AssetRenderer<?> assetRenderer = null;
+
+			if (infoItemReference.getInfoItemIdentifier() instanceof
+					ClassPKInfoItemIdentifier) {
+
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					(ClassPKInfoItemIdentifier)
+						infoItemReference.getInfoItemIdentifier();
+
+				assetRenderer = assetRendererFactory.getAssetRenderer(
+					classPKInfoItemIdentifier.getClassPK());
+			}
+
+			if (assetRenderer == null) {
+				return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+					infoItemReference, themeDisplay);
+			}
+
+			String viewInContextURL = assetRenderer.getURLViewInContext(
+				themeDisplay, StringPool.BLANK);
+
+			if (Validator.isNotNull(viewInContextURL)) {
+				return viewInContextURL;
+			}
+
+			return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				infoItemReference, themeDisplay);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, String actionId)
 		throws Exception {
@@ -149,6 +227,19 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		return true;
 	}
 
+	public boolean isDefaultDisplayPage() {
+		boolean defaultDisplayPage = GetterUtil.getBoolean(
+			_httpServletRequest.getAttribute(
+				LayoutDisplayPageWebKeys.DEFAULT_LAYOUT_DISPLAY),
+			true);
+
+		if (defaultDisplayPage) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isForbidden(HttpServletResponse httpServletResponse) {
 		if (httpServletResponse.getStatus() ==
 				HttpServletResponse.SC_FORBIDDEN) {
@@ -159,8 +250,15 @@ public class DisplayPageLayoutTypeControllerDisplayContext {
 		return false;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DisplayPageLayoutTypeControllerDisplayContext.class);
+
+	private final AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
+	private final HttpServletRequest _httpServletRequest;
 	private final Object _infoItem;
 	private final InfoItemDetails _infoItemDetails;
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
+	private final InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 }

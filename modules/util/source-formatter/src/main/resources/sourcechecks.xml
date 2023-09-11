@@ -621,10 +621,6 @@
 			<category name="Upgrade" />
 			<description name="Replace constructors that use the empty constructor of the SchedulerEntryImpl class." />
 		</check>
-		<check name="JavaUpgradeServiceTrackerListCheck">
-			<category name="Upgrade" />
-			<description name="Replace the number of generic type arguments in ServiceTrackerList" />
-		</check>
 		<check name="MethodCallsOrderCheck">
 			<category name="Styling" />
 			<description name="Sorts method calls for certain object (for example, `put` calls in `java.util.HashMap`)." />
@@ -1758,6 +1754,10 @@
 		<check name="UpgradeJavaServiceReferenceAnnotationCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration to replace '@ServiceReference' by '@Reference'" />
+		</check>
+		<check name="UpgradeJavaServiceTrackerListCheck">
+			<category name="Upgrade" />
+			<description name="Replace the number of generic type arguments in ServiceTrackerList" />
 		</check>
 		<check name="UpgradeJavaUpdateCommerceAddressCheck">
 			<category name="Upgrade" />

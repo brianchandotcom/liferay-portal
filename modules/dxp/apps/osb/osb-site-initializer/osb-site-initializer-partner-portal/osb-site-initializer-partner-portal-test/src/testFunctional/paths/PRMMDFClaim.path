@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>CLAIM_ID_INDEX</td>
-	<td>xpath=(//tbody//th//*[contains(.,'Request-')])[${key_index}]</td>
+	<td>xpath=(//tbody//th//*[contains(.,'Claim-')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

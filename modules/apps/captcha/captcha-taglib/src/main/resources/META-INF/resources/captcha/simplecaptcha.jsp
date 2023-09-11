@@ -41,7 +41,10 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 				<liferay-ui:message key="text-verification" />
 			</label>
 
-			<input aria-labelledby="<portlet:namespace />captchaLabel <portlet:namespace />captchaError" class="form-control" name="captchaText" required="<%= true %>" size="10" type="text" value="" />
+			<input
+				aria-labelledby="<portlet:namespace />captchaLabel <portlet:namespace />captchaError" class="form-control"
+				name="<portlet:namespace />captchaText" required="<%= true %>" size="10" type="text" value=""
+			/>
 
 			<c:if test="<%= Validator.isNotNull(errorMessage) %>">
 				<p class="font-weight-semi-bold mt-1 text-danger" id="<portlet:namespace />captchaError">

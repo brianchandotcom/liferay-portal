@@ -30,7 +30,6 @@ import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
-import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.field.setting.contributor.ObjectFieldSettingContributor;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
@@ -79,6 +78,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -1018,13 +1018,12 @@ public class ObjectFieldLocalServiceImpl
 				"Only allowed bundles can delete system object fields");
 		}
 
-		int customObjectFieldsCount =
-			objectFieldLocalService.getObjectFieldsCount(
-				objectField.getObjectDefinitionId(), false);
+		List<ObjectField> objectFields = ListUtil.filter(
+			objectFieldLocalService.getObjectFields(
+				objectField.getObjectDefinitionId()),
+			objectField1 -> !objectField1.isMetadata());
 
-		if (objectDefinition.isApproved() && !objectDefinition.isSystem() &&
-			(customObjectFieldsCount == 1)) {
-
+		if (objectDefinition.isApproved() && (objectFields.size() == 1)) {
 			throw new RequiredObjectFieldException();
 		}
 

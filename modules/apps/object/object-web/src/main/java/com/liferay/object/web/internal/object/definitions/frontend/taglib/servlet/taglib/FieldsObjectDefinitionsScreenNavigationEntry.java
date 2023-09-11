@@ -10,7 +10,6 @@ import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
-import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsFieldsDisplayContext;
 import com.liferay.portal.kernel.model.User;
@@ -63,8 +62,7 @@ public class FieldsObjectDefinitionsScreenNavigationEntry
 				httpServletRequest, _listTypeDefinitionService,
 				_objectDefinitionModelResourcePermission,
 				_objectFieldBusinessTypeRegistry,
-				_objectFieldSettingLocalService,
-				_objectRelationshipLocalService));
+				_objectFieldSettingLocalService));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
@@ -83,8 +81,5 @@ public class FieldsObjectDefinitionsScreenNavigationEntry
 
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
-
-	@Reference
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

@@ -41,22 +41,11 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			).put(
 				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 			).put(
-				"objectFieldTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(false, locale)
+				"objectFieldTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(locale)
 			).put(
 				"style", "fluid"
 			).put(
 				"url", objectDefinitionsFieldsDisplayContext.getEditObjectFieldURL()
-			).build()
-		%>'
-	/>
-</div>
-
-<div>
-	<react:component
-		module="js/components/ExpressionBuilderModal"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"sidebarElements", objectDefinitionsFieldsDisplayContext.getObjectFieldCodeEditorElements(ObjectFieldConstants.BUSINESS_TYPE_FORMULA)
 			).build()
 		%>'
 	/>

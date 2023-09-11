@@ -41,9 +41,7 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import org.osgi.framework.Bundle;
@@ -70,7 +68,8 @@ public class UpgradeExecutor {
 
 		String schemaVersionString = "0.0.0";
 
-		Release release = _fetchUpgradedRelease(bundle.getSymbolicName());
+		Release release = _releaseLocalService.fetchRelease(
+			bundle.getSymbolicName());
 
 		if ((release != null) &&
 			Validator.isNotNull(release.getSchemaVersion())) {
@@ -235,35 +234,6 @@ public class UpgradeExecutor {
 		CacheRegistryUtil.clear();
 	}
 
-	private Release _fetchUpgradedRelease(String bundleSymbolicName) {
-		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
-
-		if (release == null) {
-			List<UpgradeStep> releaseUpgradeSteps = _releaseUpgradeStepsMap.get(
-				bundleSymbolicName);
-
-			if (releaseUpgradeSteps != null) {
-				for (UpgradeStep releaseUpgradeStep : releaseUpgradeSteps) {
-					try {
-						UpgradeLogContext.setContext(bundleSymbolicName);
-
-						releaseUpgradeStep.upgrade();
-					}
-					catch (UpgradeException upgradeException) {
-						_log.error(upgradeException);
-					}
-					finally {
-						UpgradeLogContext.clearContext();
-					}
-				}
-
-				release = _releaseLocalService.fetchRelease(bundleSymbolicName);
-			}
-		}
-
-		return release;
-	}
-
 	private boolean _isInitialRelease(List<UpgradeInfo> upgradeInfos) {
 		UpgradeInfo upgradeInfo = upgradeInfos.get(0);
 
@@ -314,8 +284,6 @@ public class UpgradeExecutor {
 	@Reference
 	private ReleasePublisher _releasePublisher;
 
-	private final Map<String, List<UpgradeStep>> _releaseUpgradeStepsMap =
-		new HashMap<>();
 	private ServiceTracker<UpgradeStepRegistrator, SafeCloseable>
 		_serviceTracker;
 
@@ -364,17 +332,30 @@ public class UpgradeExecutor {
 			List<UpgradeStep> releaseUpgradeSteps =
 				upgradeStepRegistry.getReleaseCreationUpgradeSteps();
 
-			if (!releaseUpgradeSteps.isEmpty()) {
-				_releaseUpgradeStepsMap.put(
-					bundleSymbolicName, releaseUpgradeSteps);
+			Release release = _releaseLocalService.fetchRelease(
+				bundleSymbolicName);
+
+			if (!releaseUpgradeSteps.isEmpty() && (release == null)) {
+				for (UpgradeStep releaseUpgradeStep : releaseUpgradeSteps) {
+					try {
+						UpgradeLogContext.setContext(bundleSymbolicName);
+
+						releaseUpgradeStep.upgrade();
+					}
+					catch (UpgradeException upgradeException) {
+						_log.error(upgradeException);
+					}
+					finally {
+						UpgradeLogContext.clearContext();
+					}
+				}
 			}
 
 			List<UpgradeInfo> upgradeInfos =
 				upgradeStepRegistry.getUpgradeInfos(_portalUpgraded);
 
 			if (DBUpgrader.isUpgradeDatabaseAutoRunEnabled() ||
-				(_releaseLocalService.fetchRelease(bundleSymbolicName) ==
-					null)) {
+				(release == null)) {
 
 				try {
 					execute(bundle, upgradeInfos);
@@ -415,8 +396,6 @@ public class UpgradeExecutor {
 
 					serviceRegistration.unregister();
 				}
-
-				_releaseUpgradeStepsMap.remove(bundleSymbolicName);
 			};
 		}
 

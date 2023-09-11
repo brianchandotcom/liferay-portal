@@ -10,6 +10,7 @@ import {fetch, sub} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import {CHANNEL_RESOURCE_ENDPOINT} from '../../utilities/constants';
+import {isNonnull} from '../price/util/index';
 import MiniCartContext from './MiniCartContext';
 
 const getProductOptions = (channelId, productId) => {
@@ -42,6 +43,8 @@ function EditItem() {
 		[cartItems, editedItem]
 	);
 
+	const {price} = selectedItem;
+
 	useEffect(() => {
 		const url = getProductOptions(channel.id, editedItem.productId);
 
@@ -51,13 +54,15 @@ function EditItem() {
 			.catch((error) => console.error(error));
 	}, [channel.id, editedItem.productId]);
 
+	const hasDiscount = isNonnull(price.discountPercentage);
+	const hasPromoPrice = isNonnull(price.promoPrice);
+
 	return (
 		<>
 			<div className="d-flex flex-column h-100 mini-cart-edit-item">
 				<div className="align-items-center d-flex mini-cart-header px-4">
 					<ClayButtonWithIcon
 						aria-label={backLabel}
-						className="d-inline-flex"
 						displayType="unstyled"
 						onClick={() => setEditedItem(null)}
 						symbol="angle-left"
@@ -78,6 +83,46 @@ function EditItem() {
 							/>
 						</ClayForm>
 					) : null}
+
+					<div className="mini-cart-prices pt-2">
+						<PriceRow
+							priceName={Liferay.Language.get('price-list')}
+						>
+							<span className="price-line-through">
+								{price.priceFormatted}
+							</span>
+						</PriceRow>
+
+						{hasPromoPrice ? (
+							<PriceRow
+								priceName={Liferay.Language.get('promo-price')}
+							>
+								<span className="price-line-through">
+									{price.promoPriceFormatted}
+								</span>
+							</PriceRow>
+						) : null}
+
+						{hasDiscount ? (
+							<PriceRow
+								priceName={Liferay.Language.get('discount')}
+							>
+								<span className="price-discount">
+									{`-${price.discountPercentage}%`}
+								</span>
+							</PriceRow>
+						) : null}
+
+						<PriceRow
+							priceName={Liferay.Language.get(
+								'price-as-configurated'
+							)}
+						>
+							<span className="text-7">
+								{price.finalPriceFormatted}
+							</span>
+						</PriceRow>
+					</div>
 				</div>
 
 				<div className="mini-cart-footer px-4 py-2 text-right">
@@ -136,4 +181,14 @@ const Options = ({items, selectedItem}) => {
 			</ClaySelect>
 		</ClayForm.Group>
 	));
+};
+
+const PriceRow = ({children, priceName}) => {
+	return (
+		<div className="align-items-baseline d-flex justify-content-between mb-2">
+			<span className="text-2">{priceName}</span>
+
+			{children}
+		</div>
+	);
 };

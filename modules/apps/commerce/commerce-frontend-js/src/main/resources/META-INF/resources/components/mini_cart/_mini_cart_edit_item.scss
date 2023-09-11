@@ -13,5 +13,18 @@ $border: 1px solid rgba(180, 187, 201, 0.2);
 			border-top: $border;
 			height: 54px;
 		}
+
+		&-prices {
+			color: $gray-900;
+			font-weight: bold;
+
+			.price-discount {
+				color: $danger;
+			}
+
+			.price-line-through {
+				text-decoration: line-through;
+			}
+		}
 	}
 }

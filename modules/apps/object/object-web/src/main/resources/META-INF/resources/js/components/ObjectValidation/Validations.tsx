@@ -162,7 +162,7 @@ export default function Validations({
 				label: 'Table',
 				name: 'table',
 				schema: {
-					fields: fdsFields
+					fields: fdsFields,
 				},
 				thumbnail: 'table',
 			},

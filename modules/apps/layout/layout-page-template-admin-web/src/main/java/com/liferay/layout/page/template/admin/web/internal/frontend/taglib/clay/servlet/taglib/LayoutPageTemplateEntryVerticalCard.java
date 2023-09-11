@@ -9,12 +9,10 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
-import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.LayoutPageTemplateEntryActionDropdownItemsProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -26,10 +24,10 @@ import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeServiceUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -88,9 +86,7 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 				return null;
 			}
 
-			String backURLTitle =
-				JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
-					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES;
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			if (Objects.equals(
 					_layoutPageTemplateEntry.getType(),
@@ -109,8 +105,7 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 				return HttpComponentsUtil.addParameters(
 					layoutPrototypeGroup.getDisplayURL(themeDisplay, true),
 					"p_l_back_url", themeDisplay.getURLCurrent(),
-					"p_l_back_url_title",
-					LanguageUtil.get(themeDisplay.getLocale(), backURLTitle));
+					"p_l_back_url_title", portletDisplay.getTitle());
 			}
 
 			return HttpComponentsUtil.addParameters(
@@ -119,9 +114,8 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 						_layoutPageTemplateEntry.getPlid()),
 					themeDisplay),
 				"p_l_back_url", themeDisplay.getURLCurrent(),
-				"p_l_back_url_title",
-				LanguageUtil.get(themeDisplay.getLocale(), backURLTitle),
-				"p_l_mode", Constants.EDIT);
+				"p_l_back_url_title", portletDisplay.getTitle(), "p_l_mode",
+				Constants.EDIT);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

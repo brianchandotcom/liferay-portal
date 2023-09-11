@@ -10,13 +10,11 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
-import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.MasterLayoutActionDropdownItemsProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -25,11 +23,11 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -102,19 +100,16 @@ public class MasterLayoutVerticalCard
 				return null;
 			}
 
-			String backURLTitle =
-				JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
-					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES;
-
 			Layout layout = LayoutLocalServiceUtil.getLayout(
 				_layoutPageTemplateEntry.getPlid());
+
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 			return HttpComponentsUtil.addParameters(
 				PortalUtil.getLayoutFullURL(
 					layout.fetchDraftLayout(), _themeDisplay),
 				"p_l_back_url", _themeDisplay.getURLCurrent(),
-				"p_l_back_url_title",
-				LanguageUtil.get(_httpServletRequest, backURLTitle), "p_l_mode",
+				"p_l_back_url_title", portletDisplay.getTitle(), "p_l_mode",
 				Constants.EDIT);
 		}
 		catch (Exception exception) {

@@ -10,7 +10,6 @@ import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTem
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -25,13 +24,13 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -133,14 +132,12 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 			String backURL = ParamUtil.getString(actionRequest, "backURL");
 
 			if (Validator.isNotNull(backURL)) {
-				String backURLTitle =
-					JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
-						LayoutPageTemplateAdminPortletKeys.
-							LAYOUT_PAGE_TEMPLATES;
+				PortletDisplay portletDisplay =
+					themeDisplay.getPortletDisplay();
 
 				redirectURL = HttpComponentsUtil.addParameters(
 					redirectURL, "p_l_back_url", backURL, "p_l_back_url_title",
-					_language.get(themeDisplay.getLocale(), backURLTitle));
+					portletDisplay.getTitle());
 			}
 
 			JSONPortletResponseUtil.writeJSON(

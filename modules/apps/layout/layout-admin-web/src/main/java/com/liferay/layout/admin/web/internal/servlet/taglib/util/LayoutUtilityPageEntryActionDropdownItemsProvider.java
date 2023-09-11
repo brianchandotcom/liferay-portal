@@ -33,11 +33,11 @@ import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProviderUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -251,17 +251,14 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 		_getEditLayoutUtilityPageEntryActionUnsafeConsumer() {
 
 		return dropdownItem -> {
-			String backURLTitle =
-				JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
-					LayoutAdminPortletKeys.GROUP_PAGES;
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 			dropdownItem.setHref(
 				HttpComponentsUtil.addParameters(
 					PortalUtil.getLayoutFullURL(_draftLayout, _themeDisplay),
 					"p_l_back_url", _themeDisplay.getURLCurrent(),
-					"p_l_back_url_title",
-					LanguageUtil.get(_httpServletRequest, backURLTitle),
-					"p_l_mode", Constants.EDIT));
+					"p_l_back_url_title", portletDisplay.getTitle(), "p_l_mode",
+					Constants.EDIT));
 
 			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(

@@ -9,7 +9,6 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutUtilityPageEntryPortalExceptionRequestHandlerUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -24,10 +23,10 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -108,9 +107,7 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String backURLTitle =
-			JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
-				LayoutAdminPortletKeys.GROUP_PAGES;
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return HttpComponentsUtil.addParameters(
 			_portal.getLayoutFullURL(draftLayout, themeDisplay), "p_l_back_url",
@@ -121,8 +118,7 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 			).setTabs1(
 				"utility-pages"
 			).buildString(),
-			"p_l_back_url_title",
-			_language.get(themeDisplay.getLocale(), backURLTitle), "p_l_mode",
+			"p_l_back_url_title", portletDisplay.getTitle(), "p_l_mode",
 			Constants.EDIT);
 	}
 

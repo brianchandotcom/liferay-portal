@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeServiceUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProviderUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -311,9 +312,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			_getEditLayoutPageTemplateEntryActionUnsafeConsumer()
 		throws Exception {
 
-		String backURLTitle =
-			JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
-				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES;
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 		if (Objects.equals(
 				_layoutPageTemplateEntry.getType(),
@@ -330,18 +329,11 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			Group layoutPrototypeGroup = layoutPrototype.getGroup();
 
 			return dropdownItem -> {
-				String layoutFullURL = layoutPrototypeGroup.getDisplayURL(
-					_themeDisplay, true);
-
-				layoutFullURL = HttpComponentsUtil.setParameter(
-					layoutFullURL, "p_l_back_url",
-					_themeDisplay.getURLCurrent());
-				layoutFullURL = HttpComponentsUtil.setParameter(
-					layoutFullURL, "p_l_back_url_title",
-					LanguageUtil.get(_httpServletRequest, backURLTitle));
-
-				dropdownItem.setHref(layoutFullURL);
-
+				dropdownItem.setHref(
+					HttpComponentsUtil.addParameters(
+						layoutPrototypeGroup.getDisplayURL(_themeDisplay, true),
+						"p_l_back_url", _themeDisplay.getURLCurrent(),
+						"p_l_back_url_title", portletDisplay.getTitle()));
 				dropdownItem.setIcon("pencil");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "edit"));
@@ -353,10 +345,8 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 				HttpComponentsUtil.addParameters(
 					PortalUtil.getLayoutFullURL(_draftLayout, _themeDisplay),
 					"p_l_back_url", _themeDisplay.getURLCurrent(),
-					"p_l_back_url_title",
-					LanguageUtil.get(_httpServletRequest, backURLTitle),
-					"p_l_mode", Constants.EDIT));
-
+					"p_l_back_url_title", portletDisplay.getTitle(), "p_l_mode",
+					Constants.EDIT));
 			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));

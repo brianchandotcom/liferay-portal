@@ -15,22 +15,20 @@ import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
-import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util.DisplayPageActionDropdownItemsProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -92,16 +90,13 @@ public class DisplayPageVerticalCard
 	@Override
 	public String getHref() {
 		try {
-			String backURLTitle =
-				JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
-					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES;
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 			return HttpComponentsUtil.addParameters(
 				PortalUtil.getLayoutFullURL(_draftLayout, _themeDisplay),
 				"p_l_back_url", _themeDisplay.getURLCurrent(),
-				"p_l_back_url_title",
-				LanguageUtil.get(_themeDisplay.getLocale(), backURLTitle),
-				"p_l_mode", Constants.EDIT);
+				"p_l_back_url_title", portletDisplay.getTitle(), "p_l_mode",
+				Constants.EDIT);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

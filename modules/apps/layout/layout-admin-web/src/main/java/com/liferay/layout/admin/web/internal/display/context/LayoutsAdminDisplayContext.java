@@ -88,7 +88,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -2287,15 +2286,12 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private String _getDraftLayoutURL(Layout layout) throws Exception {
-		String backURLTitle =
-			JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
-				LayoutAdminPortletKeys.GROUP_PAGES;
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return HttpComponentsUtil.addParameters(
 			PortalUtil.getLayoutFullURL(getDraftLayout(layout), themeDisplay),
 			"p_l_back_url", _getBackURL(), "p_l_back_url_title",
-			LanguageUtil.get(themeDisplay.getLocale(), backURLTitle),
-			"p_l_mode", Constants.EDIT);
+			portletDisplay.getTitle(), "p_l_mode", Constants.EDIT);
 	}
 
 	private String _getFriendlyURLWarningURL() {

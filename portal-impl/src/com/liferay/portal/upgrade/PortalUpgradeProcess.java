@@ -68,8 +68,22 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 
 			_currentPortalReleaseDTODCLSingleton.getSingleton(
 				() -> new PortalReleaseDTO(
-					schemaVersion, 0, ReleaseConstants.TEST_STRING));
+					schemaVersion, ReleaseInfo.getBuildNumber(), 0,
+					ReleaseConstants.TEST_STRING));
 		}
+	}
+
+	public static int getCurrentBuildNumber(Connection connection)
+		throws SQLException {
+
+		PortalReleaseDTO portalReleaseDTO = _getCurrentPortalReleaseDTO(
+			connection);
+
+		if (portalReleaseDTO == PortalReleaseDTO._NULL_INSTANCE) {
+			return 0;
+		}
+
+		return portalReleaseDTO._buildNumber;
 	}
 
 	public static Version getCurrentSchemaVersion(Connection connection)
@@ -242,6 +256,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 				_currentPortalReleaseDTODCLSingleton.getSingleton(
 					() -> new PortalReleaseDTO(
 						newSchemaVersion, portalReleaseDTO._state,
+						portalReleaseDTO._buildNumber,
 						portalReleaseDTO._testString));
 			}
 		}
@@ -311,8 +326,8 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 			() -> {
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
-							"select schemaVersion, state_, testString from " +
-								"Release_ where releaseId = " +
+							"select schemaVersion, buildNumber, state_, " +
+								"testString from Release_ where releaseId = " +
 									ReleaseConstants.DEFAULT_ID)) {
 
 					try (ResultSet resultSet =
@@ -322,6 +337,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 							return new PortalReleaseDTO(
 								Version.parseVersion(
 									resultSet.getString("schemaVersion")),
+								resultSet.getInt("buildNumber"),
 								resultSet.getInt("state_"),
 								resultSet.getString("testString"));
 						}
@@ -366,6 +382,7 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 				_currentPortalReleaseDTODCLSingleton.getSingleton(
 					() -> new PortalReleaseDTO(
 						_initialSchemaVersion, portalReleaseDTO._state,
+						portalReleaseDTO._buildNumber,
 						portalReleaseDTO._testString));
 			}
 		}
@@ -399,16 +416,19 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 	private static class PortalReleaseDTO {
 
 		private PortalReleaseDTO(
-			Version schemaVersion, int state, String testString) {
+			Version schemaVersion, int buildNumber, int state,
+			String testString) {
 
 			_schemaVersion = schemaVersion;
+			_buildNumber = buildNumber;
 			_state = state;
 			_testString = testString;
 		}
 
 		private static final PortalReleaseDTO _NULL_INSTANCE =
-			new PortalReleaseDTO(null, -1, null);
+			new PortalReleaseDTO(null, 0, -1, null);
 
+		private final int _buildNumber;
 		private final Version _schemaVersion;
 		private final int _state;
 		private final String _testString;

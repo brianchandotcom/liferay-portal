@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>CONFLICTING_CHANGES_DISCARD_ELLIPSIS</td>
-	<td>//div[contains(@class,'autofit-col-expand')]//following-sibling::div//button</td>
+	<td>//div[contains(@class,'autofit-col-expand')]//following-sibling::div//button[contains(@aria-label,'more-actions')]</td>
 	<td></td>
 </tr>
 <tr>

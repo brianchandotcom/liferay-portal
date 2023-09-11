@@ -1083,7 +1083,7 @@ definition {
 		}
 
 		task ("Delete AB Test") {
-			ABTest.deleteABTest(deleteWay = "kebab");
+			ABTest.deleteABTest();
 		}
 
 		task ("Assert that does not exist ab test") {
@@ -1199,7 +1199,7 @@ definition {
 		task ("Delete the AB test") {
 			ABTest.openABTestPanel();
 
-			ABTest.deleteABTest(deleteWay = "kebab");
+			ABTest.deleteABTest();
 		}
 
 		task ("Go to AC page and assert the ERROR page is open") {

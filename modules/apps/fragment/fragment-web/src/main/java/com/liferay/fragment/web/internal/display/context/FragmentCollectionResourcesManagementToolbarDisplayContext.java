@@ -8,7 +8,6 @@ package com.liferay.fragment.web.internal.display.context;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
-import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -55,7 +54,7 @@ public class FragmentCollectionResourcesManagementToolbarDisplayContext
 			(FragmentPortletConfiguration)httpServletRequest.getAttribute(
 				FragmentPortletConfiguration.class.getName());
 		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
-			FragmentWebKeys.ITEM_SELECTOR);
+			ItemSelector.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

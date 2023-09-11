@@ -8,7 +8,6 @@ package com.liferay.fragment.web.internal.display.context;
 import com.liferay.fragment.collection.item.selector.criterion.FragmentCollectionItemSelectorCriterion;
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.info.field.type.CaptchaInfoFieldType;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -69,7 +68,7 @@ public class BasicFragmentManagementToolbarDisplayContext
 			fragmentDisplayContext);
 
 		_itemSelector = (ItemSelector)httpServletRequest.getAttribute(
-			FragmentWebKeys.ITEM_SELECTOR);
+			ItemSelector.class.getName());
 	}
 
 	@Override

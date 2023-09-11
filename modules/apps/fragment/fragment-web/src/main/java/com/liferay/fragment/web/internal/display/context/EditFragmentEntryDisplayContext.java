@@ -14,7 +14,6 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
-import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.info.field.type.CaptchaInfoFieldType;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
@@ -85,10 +84,10 @@ public class EditFragmentEntryDisplayContext {
 		_fragmentCollectionContributorRegistry =
 			(FragmentCollectionContributorRegistry)
 				httpServletRequest.getAttribute(
-					FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER);
+					FragmentCollectionContributorRegistry.class.getName());
 		_fragmentEntryProcessorRegistry =
 			(FragmentEntryProcessorRegistry)httpServletRequest.getAttribute(
-				FragmentWebKeys.FRAGMENT_ENTRY_PROCESSOR_REGISTRY);
+				FragmentEntryProcessorRegistry.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

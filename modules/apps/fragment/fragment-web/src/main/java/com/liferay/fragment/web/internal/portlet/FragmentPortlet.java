@@ -5,7 +5,6 @@
 
 package com.liferay.fragment.web.internal.portlet;
 
-import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.helper.DefaultInputFragmentEntryConfigurationProvider;
@@ -105,7 +104,7 @@ public class FragmentPortlet extends MVCPortlet {
 			DefaultInputFragmentEntryConfigurationProvider.class.getName(),
 			_defaultInputFragmentEntryConfigurationProvider);
 		renderRequest.setAttribute(
-			FragmentWebKeys.FRAGMENT_COLLECTION_CONTRIBUTOR_TRACKER,
+			FragmentCollectionContributorRegistry.class.getName(),
 			_fragmentCollectionContributorRegistry);
 		renderRequest.setAttribute(
 			FragmentWebKeys.FRAGMENT_COLLECTIONS,
@@ -115,10 +114,10 @@ public class FragmentPortlet extends MVCPortlet {
 			FragmentPortletConfiguration.class.getName(),
 			fragmentPortletConfiguration);
 		renderRequest.setAttribute(
-			FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER,
+			FragmentRendererController.class.getName(),
 			_fragmentRendererController);
 		renderRequest.setAttribute(
-			FragmentWebKeys.FRAGMENT_ENTRY_PROCESSOR_REGISTRY,
+			FragmentEntryProcessorRegistry.class.getName(),
 			_fragmentEntryProcessorRegistry);
 
 		try {
@@ -132,8 +131,7 @@ public class FragmentPortlet extends MVCPortlet {
 			}
 		}
 
-		renderRequest.setAttribute(
-			FragmentWebKeys.ITEM_SELECTOR, _itemSelector);
+		renderRequest.setAttribute(ItemSelector.class.getName(), _itemSelector);
 		renderRequest.setAttribute(
 			FragmentWebKeys.SYSTEM_FRAGMENT_COLLECTIONS,
 			_fragmentCollectionService.getFragmentCollections(

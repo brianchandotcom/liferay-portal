@@ -10,7 +10,6 @@ import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
-import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -55,7 +54,7 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 			(FragmentPortletConfiguration)_httpServletRequest.getAttribute(
 				FragmentPortletConfiguration.class.getName());
 		_itemSelector = (ItemSelector)_httpServletRequest.getAttribute(
-			FragmentWebKeys.ITEM_SELECTOR);
+			ItemSelector.class.getName());
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

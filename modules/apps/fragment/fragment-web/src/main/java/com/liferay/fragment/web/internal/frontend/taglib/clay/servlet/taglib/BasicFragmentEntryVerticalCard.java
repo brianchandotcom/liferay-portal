@@ -10,7 +10,6 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.validator.FragmentEntryValidator;
-import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.fragment.web.internal.servlet.taglib.util.BasicFragmentEntryActionDropdownItemsProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -116,7 +115,7 @@ public class BasicFragmentEntryVerticalCard
 
 		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry =
 			(FragmentEntryProcessorRegistry)_httpServletRequest.getAttribute(
-				FragmentWebKeys.FRAGMENT_ENTRY_PROCESSOR_REGISTRY);
+				FragmentEntryProcessorRegistry.class.getName());
 
 		try {
 			fragmentEntryValidator.validateConfiguration(

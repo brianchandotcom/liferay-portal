@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentActionKeys.FRAGMENT_RENDERER_CONTROLLER);
+FragmentRendererController fragmentRendererController = (FragmentRendererController)request.getAttribute(FragmentRendererController.class.getName());
 
 RenderFragmentEntryDisplayContext renderFragmentEntryDisplayContext = new RenderFragmentEntryDisplayContext(request, liferayPortletRequest);
 %>

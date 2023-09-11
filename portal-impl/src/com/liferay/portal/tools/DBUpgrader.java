@@ -49,7 +49,6 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import java.util.Collection;
 
@@ -94,7 +93,7 @@ public class DBUpgrader {
 	public static void checkRequiredBuildNumber(int requiredBuildNumber)
 		throws Exception {
 
-		int buildNumber = _getReleaseColumnValue("buildNumber");
+		int buildNumber = _getBuildNumber();
 
 		if (buildNumber > ReleaseInfo.getParentBuildNumber()) {
 			throw new IllegalStateException(
@@ -251,7 +250,7 @@ public class DBUpgrader {
 
 			checkReleaseState();
 
-			int buildNumber = _getReleaseColumnValue("buildNumber");
+			int buildNumber = _getBuildNumber();
 
 			try (Connection connection = DataAccess.getConnection()) {
 				if (PortalUpgradeProcess.isInLatestSchemaVersion(connection) &&
@@ -351,6 +350,12 @@ public class DBUpgrader {
 		StartupHelperUtil.initResourceActions();
 	}
 
+	private static int _getBuildNumber() throws Exception {
+		try (Connection connection = DataAccess.getConnection()) {
+			return PortalUpgradeProcess.getCurrentBuildNumber(connection);
+		}
+	}
+
 	private static int _getBuildNumberForMissedUpgradeProcesses(int buildNumber)
 		throws Exception {
 
@@ -366,28 +371,6 @@ public class DBUpgrader {
 		}
 
 		return buildNumber;
-	}
-
-	private static int _getReleaseColumnValue(String columnName)
-		throws Exception {
-
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select " + columnName +
-					" from Release_ where releaseId = ?")) {
-
-			preparedStatement.setLong(1, ReleaseConstants.DEFAULT_ID);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return resultSet.getInt(columnName);
-				}
-			}
-
-			throw new IllegalArgumentException(
-				"No Release exists with the primary key " +
-					ReleaseConstants.DEFAULT_ID);
-		}
 	}
 
 	private static void _initUpgradeStopwatch() {

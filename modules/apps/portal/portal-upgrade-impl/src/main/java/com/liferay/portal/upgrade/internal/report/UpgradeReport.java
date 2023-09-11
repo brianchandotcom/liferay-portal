@@ -80,16 +80,8 @@ public class UpgradeReport {
 	}
 
 	private int _getBuildNumber() {
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select buildNumber from Release_ where releaseId = " +
-					ReleaseConstants.DEFAULT_ID)) {
-
-			ResultSet resultSet = preparedStatement.executeQuery();
-
-			if (resultSet.next()) {
-				return resultSet.getInt("buildNumber");
-			}
+		try (Connection connection = DataAccess.getConnection()) {
+			return PortalUpgradeProcess.getCurrentBuildNumber(connection);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

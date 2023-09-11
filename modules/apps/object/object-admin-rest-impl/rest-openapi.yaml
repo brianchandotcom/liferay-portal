@@ -510,6 +510,8 @@ components:
                     type: string
                 script:
                     type: string
+                system:
+                    type: boolean
             type: object
         ObjectValidationRuleSetting:
             properties:

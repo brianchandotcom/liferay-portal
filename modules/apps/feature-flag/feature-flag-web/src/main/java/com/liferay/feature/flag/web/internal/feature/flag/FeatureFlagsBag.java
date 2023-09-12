@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.feature.flag.web.internal.company.feature.flags;
+package com.liferay.feature.flag.web.internal.feature.flag;
 
 import com.liferay.feature.flag.web.internal.model.FeatureFlagWrapper;
 import com.liferay.feature.flag.web.internal.model.PreferenceAwareFeatureFlag;
@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -24,10 +26,13 @@ import java.util.function.Predicate;
 /**
  * @author Drew Brokke
  */
-public class CompanyFeatureFlags {
+public class FeatureFlagsBag {
 
-	public CompanyFeatureFlags(Map<String, FeatureFlag> featureFlagsMap) {
+	public FeatureFlagsBag(
+		Map<String, FeatureFlag> featureFlagsMap, long companyId) {
+
 		_featureFlagsMap = featureFlagsMap;
+		_companyId = companyId;
 	}
 
 	public List<FeatureFlag> getFeatureFlags(Predicate<FeatureFlag> predicate) {
@@ -77,6 +82,13 @@ public class CompanyFeatureFlags {
 			return featureFlag.isEnabled();
 		}
 
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				String.format(
+					"Feature flag %s is not available for company with id %s",
+					key, _companyId));
+		}
+
 		return GetterUtil.getBoolean(
 			PropsUtil.get(FeatureFlagConstants.getKey(key)));
 	}
@@ -107,6 +119,10 @@ public class CompanyFeatureFlags {
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		FeatureFlagsBag.class);
+
+	private final long _companyId;
 	private final Map<String, FeatureFlag> _featureFlagsMap;
 	private volatile String _json;
 

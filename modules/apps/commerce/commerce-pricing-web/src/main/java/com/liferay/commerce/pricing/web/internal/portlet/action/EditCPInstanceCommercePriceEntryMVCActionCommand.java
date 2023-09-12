@@ -163,15 +163,17 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 			actionRequest, "price", BigDecimal.ZERO);
 		BigDecimal promoPrice = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "promoPrice", BigDecimal.ZERO);
-		String unitOfMeasureKey = ParamUtil.getString(
-			actionRequest, "unitOfMeasureKey");
+
+		CommercePriceEntry commercePriceEntry =
+			_commercePriceEntryService.getCommercePriceEntry(
+				commercePriceEntryId);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommercePriceEntry.class.getName(), actionRequest);
 
 		return _commercePriceEntryService.updatePricingInfo(
 			commercePriceEntryId, bulkPricing, price, false, promoPrice,
-			unitOfMeasureKey, serviceContext);
+			commercePriceEntry.getUnitOfMeasureKey(), serviceContext);
 	}
 
 	@Reference

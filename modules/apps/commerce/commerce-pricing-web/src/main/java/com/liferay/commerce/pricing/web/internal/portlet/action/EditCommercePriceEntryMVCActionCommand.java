@@ -215,11 +215,11 @@ public class EditCommercePriceEntryMVCActionCommand
 		boolean priceOnApplication = ParamUtil.getBoolean(
 			actionRequest, "priceOnApplication");
 
-		if (priceOnApplication) {
-			CommercePriceEntry commercePriceEntry =
-				_commercePriceEntryService.getCommercePriceEntry(
-					commercePriceEntryId);
+		CommercePriceEntry commercePriceEntry =
+			_commercePriceEntryService.getCommercePriceEntry(
+				commercePriceEntryId);
 
+		if (priceOnApplication) {
 			bulkPricing = commercePriceEntry.isBulkPricing();
 			overrideDiscount = !commercePriceEntry.isDiscountDiscovery();
 			discountLevel1 = commercePriceEntry.getDiscountLevel1();
@@ -229,16 +229,14 @@ public class EditCommercePriceEntryMVCActionCommand
 			price = commercePriceEntry.getPrice();
 		}
 
-		String unitOfMeasureKey = ParamUtil.getString(
-			actionRequest, "unitOfMeasureKey");
-
 		return _commercePriceEntryService.updateCommercePriceEntry(
 			commercePriceEntryId, bulkPricing, !overrideDiscount,
 			discountLevel1, discountLevel2, discountLevel3, discountLevel4,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, price, priceOnApplication, unitOfMeasureKey,
+			neverExpire, price, priceOnApplication,
+			commercePriceEntry.getUnitOfMeasureKey(),
 			ServiceContextFactory.getInstance(
 				CommercePriceEntry.class.getName(), actionRequest));
 	}

@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>NAME_LIST</td>
-	<td>//div[contains(@class,'table-title')][normalize-space()='${key_nameList}']</td>
+	<td>//*[contains(@class,'table-title')][normalize-space()='${key_nameList}']</td>
 	<td></td>
 </tr>
 <tr>

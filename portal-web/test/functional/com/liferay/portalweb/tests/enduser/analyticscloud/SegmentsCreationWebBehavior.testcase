@@ -1413,10 +1413,6 @@ definition {
 
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, "Combined");
-
-			var dataSourceName = StringUtil.trim(${dataSourceName});
-
 			JSONUser.addUser(
 				userEmailAddress = "ac@liferay.com",
 				userFirstName = "ac",
@@ -1459,9 +1455,9 @@ definition {
 
 			Click(locator1 = "ACSegments#SELECT_BUTTON");
 
-			ACSegments.searchSegment(findSegment = "Blogs AC Title - Site Name - ${dataSourceName}");
+			ACSegments.searchSegment(findSegment = "Blogs AC Title - Site Name");
 
-			ACUtils.viewGenericText(textValueList = ${dataSourceName});
+			ACUtils.viewGenericText(textValueList = ${assignedPropertyName});
 		}
 	}
 

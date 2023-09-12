@@ -468,6 +468,41 @@ definition {
 		return ${responseBody};
 	}
 
+	macro _addCommerceProductSpecifications {
+		Variables.assertDefined(parameterList = "${productName},${specificationKey},${value}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(priority))) {
+			var priority = 0;
+		}
+
+		var productId = CommerceJSONProductsAPI._getProductId(productName = ${productName});
+
+		var productId = ${productId} - 1;
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}/productSpecifications \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"priority": ${priority},
+					"specificationKey": "${specificationKey}",
+					"value": {
+						"en_US": "${value}"
+					}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 	macro _addDiagramPin {
 		Variables.assertDefined(parameterList = "${pinType},${position},${positionX},${positionY},${quantity},${diagram}");
 

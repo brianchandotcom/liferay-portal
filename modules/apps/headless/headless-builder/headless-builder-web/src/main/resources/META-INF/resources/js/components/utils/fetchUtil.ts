@@ -23,6 +23,26 @@ export async function fetchJSON<T>({
 	return (await result.json()) as T;
 }
 
+export async function getAllItems<T>({url}: {url: string}) {
+	let allItems: T[] = [];
+	let currentPage = 1;
+	let lastPage;
+
+	do {
+		const {items, lastPage: lastPageFromAPI, page} = await fetchJSON<{
+			items: T[];
+			lastPage: number;
+			page: number;
+		}>({input: url + `?page=${currentPage}`});
+
+		allItems = [...allItems, ...items];
+		currentPage = page + 1;
+		lastPage = lastPageFromAPI;
+	} while (currentPage <= lastPage);
+
+	return allItems;
+}
+
 export async function getItems<T>({url}: {url: string}) {
 	const {items} = await fetchJSON<{items: T[]}>({input: url});
 

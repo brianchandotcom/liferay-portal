@@ -5,9 +5,9 @@
 
 package com.liferay.layout.type.controller.content.internal.layout.type.controller;
 
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.content.LayoutContentProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
+import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.model.LayoutLocalization;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -33,7 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
-import com.liferay.portal.kernel.servlet.TransferHeadersHelper;
+import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -44,8 +43,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
-
-import javax.portlet.PortletRequest;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -127,22 +124,8 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 				layoutMode = Constants.VIEW;
 			}
 			else if (!layout.isUnlocked(layoutMode, themeDisplay.getUserId())) {
-				redirect = PortletURLBuilder.create(
-					_portal.getControlPanelPortletURL(
-						httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-						PortletRequest.RENDER_PHASE)
-				).setMVCRenderCommandName(
-					"/layout_admin/locked_layout"
-				).setBackURL(
-					() -> {
-						HttpServletRequest originalHttpServletRequest =
-							_portal.getOriginalServletRequest(
-								httpServletRequest);
-
-						return ParamUtil.getString(
-							originalHttpServletRequest, "p_l_back_url", null);
-					}
-				).buildString();
+				redirect = _layoutLockManager.getLockedLayoutURL(
+					httpServletRequest);
 			}
 			else {
 				redirect = _getDraftLayoutFullURL(
@@ -173,7 +156,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		}
 
 		RequestDispatcher requestDispatcher =
-			_transferHeadersHelper.getTransferHeadersRequestDispatcher(
+			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
 				_servletContext.getRequestDispatcher(page));
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
@@ -437,6 +420,9 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
+	private LayoutLockManager _layoutLockManager;
+
+	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 
@@ -453,8 +439,5 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.content)"
 	)
 	private ServletContext _servletContext;
-
-	@Reference
-	private TransferHeadersHelper _transferHeadersHelper;
 
 }

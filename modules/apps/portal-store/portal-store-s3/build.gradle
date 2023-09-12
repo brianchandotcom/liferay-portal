@@ -62,7 +62,7 @@ dependencies {
 	compileInclude group: "com.ibm.cos", name: "ibm-cos-java-sdk-core", version: "2.9.0"
 	compileInclude group: "com.ibm.cos", name: "ibm-cos-java-sdk-kms", version: "2.9.0"
 	compileInclude group: "com.ibm.cos", name: "ibm-cos-java-sdk-s3", version: "2.9.0"
-	compileInclude group: "commons-logging", name: "commons-logging", version: "1.2"
+	compileInclude group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"
 	compileInclude group: "software.amazon.ion", name: "ion-java", version: "1.1.0"
 
 	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.4"

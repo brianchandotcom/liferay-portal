@@ -395,10 +395,10 @@ function ImagePanelSizeSelector({item}) {
 	};
 
 	return editableContent?.fileEntryId ||
-		isMappedToInfoItem(editableContent) ||
-		isMappedToCollection(editableContent) ? (
+		isMappedToInfoItem(editableValue) ||
+		isMappedToCollection(editableValue) ? (
 		<ImageSelectorSize
-			fieldValue={editableContent}
+			fieldValue={editableContent || editableValue}
 			getEditableElement={getEditableElement}
 			imageSizeId={imageSizeId}
 			imageSizeLimit={

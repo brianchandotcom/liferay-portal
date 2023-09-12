@@ -18,6 +18,7 @@ export const AppPropertiesContext = createContext({
 	oktaSessionAPI: '',
 	provisioningServerAPI: '',
 	submitSupportTicketURL: '',
+	theOverviewPageURL: '',
 });
 
 export function useAppPropertiesContext() {

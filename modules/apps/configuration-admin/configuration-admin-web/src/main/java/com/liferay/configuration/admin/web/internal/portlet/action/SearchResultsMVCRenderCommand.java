@@ -14,7 +14,6 @@ import com.liferay.configuration.admin.web.internal.display.ConfigurationScreenC
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContextFactory;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
-import com.liferay.configuration.admin.web.internal.search.ClusterConfigurationModelIndexer;
 import com.liferay.configuration.admin.web.internal.search.FieldNames;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryIterator;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationEntryRetriever;
@@ -61,8 +60,6 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
-
-		_clusterConfigurationModelIndexer.initialize();
 
 		Indexer<ConfigurationModel> indexer =
 			_indexerRegistry.nullSafeGetIndexer(ConfigurationModel.class);
@@ -171,9 +168,6 @@ public class SearchResultsMVCRenderCommand implements MVCRenderCommand {
 
 		return "/search_results.jsp";
 	}
-
-	@Reference
-	private ClusterConfigurationModelIndexer _clusterConfigurationModelIndexer;
 
 	@Reference
 	private ConfigurationEntryRetriever _configurationEntryRetriever;

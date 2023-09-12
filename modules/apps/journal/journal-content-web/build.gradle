@@ -26,6 +26,7 @@ dependencies {
 	compileOnly project(":apps:journal:journal-taglib")
 	compileOnly project(":apps:journal:journal-web")
 	compileOnly project(":apps:layout:layout-api")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:ratings:ratings-taglib")
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":apps:static:osgi:osgi-util")

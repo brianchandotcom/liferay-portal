@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {openModal} from 'frontend-js-web';
+
 function attachListener(element, eventType, callback) {
 	element?.addEventListener(eventType, callback);
 
@@ -13,7 +15,12 @@ function attachListener(element, eventType, callback) {
 	};
 }
 
-export default function EditKBArticle({kbArticle, namespace, publishAction}) {
+export default function EditKBArticle({
+	kbArticle,
+	namespace,
+	publishAction,
+	scheduleModalURL,
+}) {
 	const contextualSidebarButton = document.getElementById(
 		`${namespace}contextualSidebarButton`
 	);
@@ -48,9 +55,41 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 	const form = document.getElementById(`${namespace}fm`);
 
 	let publishButton;
+	let scheduleItemOnClick;
+	let scheduleItem;
 
 	if (Liferay.FeatureFlags['LPS-188060']) {
 		publishButton = document.getElementById(`${namespace}publishItem`);
+
+		scheduleItem = document.getElementById(`${namespace}scheduleItem`);
+
+		scheduleItemOnClick = () => {
+			const modalEventHandlers = [];
+
+			openModal({
+				height: '60vh',
+				id: 'scheduleKBArticleDialog',
+				iframeBodyCssClass: '',
+				onClose: () => {
+					modalEventHandlers.forEach((eventHandler) => {
+						eventHandler.detach();
+					});
+
+					modalEventHandlers.splice(0, modalEventHandlers.length);
+				},
+				onOpen: () => {
+					const scheduleEventHandler = Liferay.on(
+						'scheduleKBArticle',
+						publishButtonOnClick
+					);
+
+					modalEventHandlers.push(scheduleEventHandler);
+				},
+				size: 'md',
+				title: Liferay.Language.get('schedule-publication'),
+				url: scheduleModalURL,
+			});
+		};
 	}
 	else {
 		publishButton = document.getElementById(`${namespace}publishButton`);
@@ -120,6 +159,12 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 			beforeSubmit();
 		}),
 	];
+
+	if (Liferay.FeatureFlags['LPS-188060']) {
+		eventHandlers.push(
+			attachListener(scheduleItem, 'click', scheduleItemOnClick)
+		);
+	}
 
 	if (!kbArticle) {
 		eventHandlers.push(

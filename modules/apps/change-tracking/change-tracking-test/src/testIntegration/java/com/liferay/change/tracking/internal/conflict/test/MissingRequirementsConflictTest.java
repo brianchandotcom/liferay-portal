@@ -63,7 +63,8 @@ public class MissingRequirementsConflictTest {
 
 	private CTCollection _addCTCollection(String name) throws Exception {
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0,
 			MissingRequirementsConflictTest.class.getSimpleName() + " " + name,
 			null);
 

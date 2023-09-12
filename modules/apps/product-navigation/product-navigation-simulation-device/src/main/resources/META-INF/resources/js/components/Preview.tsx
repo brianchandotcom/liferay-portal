@@ -11,67 +11,39 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {SIZES, ScreenSize, Size} from '../constants/sizes';
+import {useCustomSize} from '../contexts/CustomSizeContext';
 
 interface IPreviewProps {
 	activeSize: Size;
+	open: boolean;
 	previewRef: React.RefObject<HTMLDivElement>;
 }
 
 const SEGMENT_SIMULATION_EVENT = 'SegmentSimulation:changeSegment';
 
-export default function Preview({activeSize, previewRef}: IPreviewProps) {
-	const [visible, setVisible] = useState<boolean>(true);
+export default function Preview({activeSize, open, previewRef}: IPreviewProps) {
 	const [segmentMessage, setSegmentMessage] = useState<string | null>(null);
 	const [size, setSize] = useState<ScreenSize | undefined>(
 		activeSize.screenSize
 	);
+	const customSize = useCustomSize();
 
 	const previewWrapperRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		const wrapper = document.getElementById('wrapper');
-
-		const onCloseSimulationPanel = () => {
-			setVisible(false);
-
-			if (wrapper) {
-				wrapper.removeAttribute('inert');
-			}
-		};
-		const onOpenSimulationPanel = () => {
-			setVisible(true);
-
-			if (wrapper) {
-				wrapper.setAttribute('inert', '');
-			}
-		};
-
 		const handleSegmentChange = ({message}: {message: string}) => {
 			setSegmentMessage(message);
 		};
 
-		Liferay.on(
-			'SimulationMenu:closeSimulationPanel',
-			onCloseSimulationPanel
-		);
-		Liferay.on('SimulationMenu:openSimulationPanel', onOpenSimulationPanel);
 		Liferay.on(SEGMENT_SIMULATION_EVENT, handleSegmentChange);
 
 		return () => {
-			Liferay.detach(
-				'SimulationMenu:closeSimulationPanel',
-				onCloseSimulationPanel
-			);
-			Liferay.detach(
-				'SimulationMenu:openSimulationPanel',
-				onOpenSimulationPanel
-			);
 			Liferay.detach(SEGMENT_SIMULATION_EVENT);
 		};
 	}, []);
 
 	const updateAutosizePreview = useCallback(() => {
-		if (!visible || !previewWrapperRef.current) {
+		if (!open || !previewWrapperRef.current) {
 			return;
 		}
 
@@ -86,7 +58,7 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 				  }
 				: activeSize.screenSize
 		);
-	}, [activeSize.id, activeSize.screenSize, visible]);
+	}, [activeSize.id, activeSize.screenSize, open]);
 
 	useEffect(() => {
 		updateAutosizePreview();
@@ -100,7 +72,7 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 
 	useEventListener('resize', handleWindowResize, false, window);
 
-	if (!visible) {
+	if (!open) {
 		return null;
 	}
 
@@ -133,7 +105,7 @@ export default function Preview({activeSize, previewRef}: IPreviewProps) {
 					}
 				)}
 				ref={previewRef}
-				style={size}
+				style={activeSize.id === SIZES.custom.id ? customSize : size}
 			>
 				<iframe
 					className="border-0 h-100 w-100"

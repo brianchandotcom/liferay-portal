@@ -260,6 +260,23 @@ components:
                     type: object
                 name:
                     type: string
+                objectFolderItems:
+                    items:
+                        $ref: "#/components/schemas/ObjectFolderItem"
+                    type: array
+        ObjectFolderItem:
+            properties:
+                linkedObjectDefinition:
+                    readOnly: true
+                    type: boolean
+                objectDefinitionExternalReferenceCode:
+                    type: string
+                positionX:
+                    format: int32
+                    type: integer
+                positionY:
+                    format: int32
+                    type: integer
         ObjectLayout:
             properties:
                 actions:
@@ -600,7 +617,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.object.admin.rest.client', and version '1.0.57'."
+        'com.liferay.object.admin.rest.client', and version '1.0.58'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -1743,8 +1760,12 @@ paths:
             responses:
                 200:
                     content:
-                        application/json: {}
-                        application/xml: {}
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectDefinition"
             tags: ["ObjectDefinition"]
     "/object-fields/{objectFieldId}":
         delete:

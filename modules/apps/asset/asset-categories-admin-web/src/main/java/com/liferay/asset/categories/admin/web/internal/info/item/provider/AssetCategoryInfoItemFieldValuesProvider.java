@@ -32,6 +32,8 @@ import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,7 +58,8 @@ public class AssetCategoryInfoItemFieldValuesProvider
 					new InfoItemReference(
 						AssetCategory.class.getName(),
 						assetCategory.getCategoryId()),
-					StringPool.BLANK, _getThemeDisplay())
+					StringPool.BLANK, AssetCategory.class.getSimpleName(),
+					_getThemeDisplay())
 			).infoFieldValues(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
 					AssetCategory.class.getName(), assetCategory)
@@ -72,6 +75,18 @@ public class AssetCategoryInfoItemFieldValuesProvider
 		catch (Exception exception) {
 			throw new RuntimeException("Unexpected exception", exception);
 		}
+	}
+
+	private Map<Locale, String> _getAssetCategoryDescriptionMap(
+		AssetCategory assetCategory) {
+
+		Map<Locale, String> descriptionMap = assetCategory.getDescriptionMap();
+
+		descriptionMap.putIfAbsent(
+			LocaleUtil.fromLanguageId(assetCategory.getDefaultLanguageId()),
+			StringPool.BLANK);
+
+		return descriptionMap;
 	}
 
 	private List<InfoFieldValue<Object>> _getAssetCategoryInfoFieldValues(
@@ -98,7 +113,7 @@ public class AssetCategoryInfoItemFieldValuesProvider
 					LocaleUtil.fromLanguageId(
 						assetCategory.getDefaultLanguageId())
 				).values(
-					assetCategory.getDescriptionMap()
+					_getAssetCategoryDescriptionMap(assetCategory)
 				).build()));
 
 		AssetVocabulary assetVocabulary =
@@ -121,7 +136,7 @@ public class AssetCategoryInfoItemFieldValuesProvider
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		if ((themeDisplay != null) &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+			!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 
 			assetCategoryInfoFieldValues.add(
 				new InfoFieldValue<>(

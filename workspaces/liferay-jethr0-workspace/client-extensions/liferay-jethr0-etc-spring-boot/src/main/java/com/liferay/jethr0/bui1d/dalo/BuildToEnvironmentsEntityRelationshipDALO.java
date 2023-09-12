@@ -5,12 +5,12 @@
 
 package com.liferay.jethr0.bui1d.dalo;
 
-import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.BuildFactory;
+import com.liferay.jethr0.bui1d.BuildEntity;
+import com.liferay.jethr0.bui1d.BuildEntityFactory;
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.environment.Environment;
-import com.liferay.jethr0.environment.EnvironmentFactory;
+import com.liferay.jethr0.environment.EnvironmentEntity;
+import com.liferay.jethr0.environment.EnvironmentEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -20,16 +20,16 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class BuildToEnvironmentsEntityRelationshipDALO
-	extends BaseEntityRelationshipDALO<Build, Environment> {
+	extends BaseEntityRelationshipDALO<BuildEntity, EnvironmentEntity> {
 
 	@Override
-	public EntityFactory<Environment> getChildEntityFactory() {
-		return _environmentFactory;
+	public EntityFactory<EnvironmentEntity> getChildEntityFactory() {
+		return _environmentEntityFactory;
 	}
 
 	@Override
-	public EntityFactory<Build> getParentEntityFactory() {
-		return _buildFactory;
+	public EntityFactory<BuildEntity> getParentEntityFactory() {
+		return _buildEntityFactory;
 	}
 
 	@Override
@@ -38,9 +38,9 @@ public class BuildToEnvironmentsEntityRelationshipDALO
 	}
 
 	@Autowired
-	private BuildFactory _buildFactory;
+	private BuildEntityFactory _buildEntityFactory;
 
 	@Autowired
-	private EnvironmentFactory _environmentFactory;
+	private EnvironmentEntityFactory _environmentEntityFactory;
 
 }

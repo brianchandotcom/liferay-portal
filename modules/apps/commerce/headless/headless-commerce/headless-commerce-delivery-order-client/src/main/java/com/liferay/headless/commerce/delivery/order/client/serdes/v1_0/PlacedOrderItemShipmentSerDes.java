@@ -8,6 +8,8 @@ package com.liferay.headless.commerce.delivery.order.client.serdes.v1_0;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.PlacedOrderItemShipment;
 import com.liferay.headless.commerce.delivery.order.client.json.BaseJSONParser;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -268,6 +270,20 @@ public class PlacedOrderItemShipmentSerDes {
 			sb.append("\"");
 		}
 
+		if (placedOrderItemShipment.getUnitOfMeasureKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(placedOrderItemShipment.getUnitOfMeasureKey()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -446,6 +462,15 @@ public class PlacedOrderItemShipmentSerDes {
 				String.valueOf(placedOrderItemShipment.getTrackingURL()));
 		}
 
+		if (placedOrderItemShipment.getUnitOfMeasureKey() == null) {
+			map.put("unitOfMeasureKey", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasureKey",
+				String.valueOf(placedOrderItemShipment.getUnitOfMeasureKey()));
+		}
+
 		return map;
 	}
 
@@ -528,7 +553,7 @@ public class PlacedOrderItemShipmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "quantity")) {
 				if (jsonParserFieldValue != null) {
 					placedOrderItemShipment.setQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippingAddressId")) {
@@ -572,6 +597,12 @@ public class PlacedOrderItemShipmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "trackingURL")) {
 				if (jsonParserFieldValue != null) {
 					placedOrderItemShipment.setTrackingURL(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasureKey")) {
+				if (jsonParserFieldValue != null) {
+					placedOrderItemShipment.setUnitOfMeasureKey(
 						(String)jsonParserFieldValue);
 				}
 			}

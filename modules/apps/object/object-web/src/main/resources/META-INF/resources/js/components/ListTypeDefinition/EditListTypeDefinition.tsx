@@ -8,11 +8,11 @@ import {
 	API,
 	Card,
 	Input,
-	InputLocalized,
 	SidePanelForm,
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
+import {InputLocalized} from 'frontend-js-components-web';
 import React, {useEffect} from 'react';
 
 import {useListTypeForm} from './ListTypeFormBase';

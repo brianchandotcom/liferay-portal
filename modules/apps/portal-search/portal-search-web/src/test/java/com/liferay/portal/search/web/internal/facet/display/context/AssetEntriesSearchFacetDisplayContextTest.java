@@ -6,6 +6,7 @@
 package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -94,11 +95,17 @@ public class AssetEntriesSearchFacetDisplayContextTest
 			String[] classNames, String order)
 		throws Exception {
 
+		configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			Mockito.mock(TypeFacetPortletInstanceConfiguration.class)
+		);
+
 		AssetEntriesSearchFacetDisplayContextBuilder
 			assetEntriesSearchFacetDisplayContextBuilder =
 				new AssetEntriesSearchFacetDisplayContextBuilder(
-					getRenderRequest(
-						TypeFacetPortletInstanceConfiguration.class));
+					getRenderRequest());
 
 		assetEntriesSearchFacetDisplayContextBuilder.setClassNames(classNames);
 		assetEntriesSearchFacetDisplayContextBuilder.setFacet(facet);

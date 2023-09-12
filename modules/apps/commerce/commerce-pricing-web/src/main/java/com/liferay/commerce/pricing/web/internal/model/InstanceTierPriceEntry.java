@@ -5,13 +5,15 @@
 
 package com.liferay.commerce.pricing.web.internal.model;
 
+import java.math.BigDecimal;
+
 /**
  * @author Alessio Antonio Rendina
  */
 public class InstanceTierPriceEntry {
 
 	public InstanceTierPriceEntry(
-		long priceTierEntryId, String createDateString, int minQuantity,
+		long priceTierEntryId, String createDateString, BigDecimal minQuantity,
 		String price) {
 
 		_priceTierEntryId = priceTierEntryId;
@@ -24,7 +26,7 @@ public class InstanceTierPriceEntry {
 		return _createDateString;
 	}
 
-	public int getMinQuantity() {
+	public BigDecimal getMinQuantity() {
 		return _minQuantity;
 	}
 
@@ -37,7 +39,7 @@ public class InstanceTierPriceEntry {
 	}
 
 	private final String _createDateString;
-	private final int _minQuantity;
+	private final BigDecimal _minQuantity;
 	private final String _price;
 	private final long _priceTierEntryId;
 

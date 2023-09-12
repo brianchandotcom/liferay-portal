@@ -40,6 +40,22 @@ CommerceCurrency commerceCurrency = commercePriceList.getCommerceCurrency();
 				</aui:input>
 			</commerce-ui:panel>
 
+			<commerce-ui:panel
+				title='<%= LanguageUtil.get(request, "tier-price-settings") %>'
+			>
+				<aui:fieldset collapsible="<%= false %>" cssClass="price-entry-price-settings">
+					<div class="row">
+						<div class="col-12">
+							<aui:input checked="<%= commercePriceEntry.isBulkPricing() %>" label="bulk-pricing" name="bulkPricing" type="radio" value="<%= true %>" />
+						</div>
+
+						<div class="col-12">
+							<aui:input checked="<%= !commercePriceEntry.isBulkPricing() %>" label="tiered-pricing" name="bulkPricing" type="radio" value="<%= false %>" />
+						</div>
+					</div>
+				</aui:fieldset>
+			</commerce-ui:panel>
+
 			<c:if test="<%= CustomAttributesUtil.hasCustomAttributes(company.getCompanyId(), CommercePriceEntry.class.getName(), commercePriceEntryId, null) %>">
 				<commerce-ui:panel
 					title='<%= LanguageUtil.get(request, "custom-attribute") %>'

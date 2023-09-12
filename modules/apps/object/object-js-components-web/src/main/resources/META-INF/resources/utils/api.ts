@@ -34,6 +34,76 @@ interface Folder {
 	name: string;
 }
 
+type NotificationTemplateType = 'email' | 'userNotification';
+
+type RecipientType = 'role' | 'term' | 'user';
+
+type Recipient = {
+	bcc: string;
+	cc: string;
+	from: string;
+	fromName: LocalizedValue<string>;
+	to: LocalizedValue<string>;
+};
+
+export interface NotificationTemplate {
+	attachmentObjectFieldIds: string[] | number[];
+	bcc: string;
+	body: LocalizedValue<string>;
+	cc: string;
+	description: string;
+	editorType: 'freemarker' | 'richText';
+	externalReferenceCode: string;
+	from: string;
+	fromName: LocalizedValue<string>;
+	id: number;
+	name: string;
+	objectDefinitionExternalReferenceCode: string;
+	objectDefinitionId: number | null;
+	recipientType: RecipientType;
+	recipients: Recipient[];
+	subject: LocalizedValue<string>;
+	to: LocalizedValue<string>;
+	type: NotificationTemplateType;
+}
+
+interface ObjectFolderItem {
+	linkedObjectDefinition: boolean;
+	objectDefinitionExternalReferenceCode: string;
+	positionX: number;
+	positionY: number;
+}
+
+interface ObjectFolder {
+	actions: Actions;
+	dateCreated: string;
+	dateModified: string;
+	externalReferenceCode: string;
+	id: number;
+	label: LocalizedValue<string>;
+	name: string;
+	objectFolderItems: ObjectFolderItem[];
+}
+
+type ObjectRelationshipType = 'manyToMany' | 'oneToMany' | 'oneToOne';
+
+interface ObjectRelationship {
+	deletionType: string;
+	edge: boolean;
+	id: number;
+	label: LocalizedValue<string>;
+	name: string;
+	objectDefinitionExternalReferenceCode1: string;
+	objectDefinitionExternalReferenceCode2: string;
+	objectDefinitionId1: number;
+	objectDefinitionId2: number;
+	readonly objectDefinitionName2: string;
+	objectRelationshipId: number;
+	parameterObjectFieldId?: number;
+	reverse: boolean;
+	type: ObjectRelationshipType;
+}
+
 interface PickListItem {
 	externalReferenceCode: string;
 	id: number;
@@ -52,56 +122,12 @@ interface PickList {
 	name_i18n: LocalizedValue<string>;
 }
 
-type NotificationTemplateType = 'email' | 'userNotification';
-
-export interface NotificationTemplate {
-	attachmentObjectFieldIds: string[] | number[];
-	bcc: string;
-	body: LocalizedValue<string>;
-	cc: string;
-	description: string;
-	editorType: 'freemarker' | 'richText';
-	externalReferenceCode: string;
-	from: string;
-	fromName: LocalizedValue<string>;
-	id: number;
-	name: string;
-	objectDefinitionExternalReferenceCode: string;
-	objectDefinitionId: number | null;
-	recipientType: RecipientType;
-	recipients: Recipients[];
-	subject: LocalizedValue<string>;
-	to: LocalizedValue<string>;
-	type: NotificationTemplateType;
+interface saveProps {
+	item: unknown;
+	method?: 'PATCH' | 'POST' | 'PUT';
+	returnValue?: boolean;
+	url: string;
 }
-
-type ObjectRelationshipType = 'manyToMany' | 'oneToMany' | 'oneToOne';
-
-interface ObjectRelationship {
-	deletionType: string;
-	id: number;
-	label: LocalizedValue<string>;
-	name: string;
-	objectDefinitionExternalReferenceCode1: string;
-	objectDefinitionExternalReferenceCode2: string;
-	objectDefinitionId1: number;
-	objectDefinitionId2: number;
-	readonly objectDefinitionName2: string;
-	objectRelationshipId: number;
-	parameterObjectFieldId?: number;
-	reverse: boolean;
-	type: ObjectRelationshipType;
-}
-
-type RecipientType = 'role' | 'term' | 'user';
-
-type Recipients = {
-	bcc: string;
-	cc: string;
-	from: string;
-	fromName: LocalizedValue<string>;
-	to: LocalizedValue<string>;
-};
 
 const headers = new Headers({
 	'Accept': 'application/json',
@@ -128,12 +154,12 @@ async function deleteItem(url: string) {
 	}
 }
 
-export function deleteObjectDefinitions(id: number) {
-	return deleteItem(`/o/object-admin/v1.0/object-definitions/${id}`);
-}
-
 export function deleteFolder(id: number) {
 	return deleteItem(`/o/object-admin/v1.0/object-folders/${id}`);
+}
+
+export function deleteObjectDefinitions(id: number) {
+	return deleteItem(`/o/object-admin/v1.0/object-definitions/${id}`);
 }
 
 export function deleteObjectField(id: number) {
@@ -162,6 +188,10 @@ export async function fetchJSON<T>(input: RequestInfo, init?: RequestInit) {
 	return (await result.json()) as T;
 }
 
+export async function getAllFolders() {
+	return await getList<ObjectFolder>('/o/object-admin/v1.0/object-folders');
+}
+
 export async function getAllObjectDefinitions() {
 	return await getList<ObjectDefinition>(
 		'/o/object-admin/v1.0/object-definitions?page=-1'
@@ -172,6 +202,17 @@ export async function getAllObjectFolders() {
 	return await getList<Folder>(
 		'/o/object-admin/v1.0/object-folders?pageSize=-1'
 	);
+}
+
+export async function getFolderByERC(folderERC: string) {
+	const folderResponse = await fetch(
+		`/o/object-admin/v1.0/object-folders/by-external-reference-code/${folderERC}`,
+		{method: 'GET'}
+	);
+
+	const folder = (await folderResponse.json()) as ObjectFolder;
+
+	return folder;
 }
 
 export async function getList<T>(url: string) {
@@ -264,6 +305,14 @@ export async function getObjectRelationshipsById(objectDefinitionId: number) {
 	);
 }
 
+export async function getObjectValidationRuleById<T>(
+	objectValidationRuleId: number
+) {
+	return await fetchJSON<T>(
+		`/o/object-admin/v1.0/object-validation-rules/${objectValidationRuleId}`
+	);
+}
+
 export async function getPickList(pickListId: number): Promise<PickList> {
 	return await fetchJSON<PickList>(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions/${pickListId}`
@@ -285,14 +334,6 @@ export async function getPickLists() {
 export async function getRelationship<T>(objectRelationshipId: number) {
 	return fetchJSON<T>(
 		`/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`
-	);
-}
-
-export async function getObjectValidationRuleById<T>(
-	objectValidationRuleId: number
-) {
-	return await fetchJSON<T>(
-		`/o/object-admin/v1.0/object-validation-rules/${objectValidationRuleId}`
 	);
 }
 
@@ -318,11 +359,12 @@ export async function putObjectDefinitionByExternalReferenceCode(
 	);
 }
 
-export async function save(
-	url: string,
-	item: unknown,
-	method: 'PATCH' | 'POST' | 'PUT' = 'PUT'
-) {
+export async function save({
+	item,
+	method = 'PUT',
+	returnValue = false,
+	url,
+}: saveProps) {
 	const isFormData = item instanceof FormData;
 
 	const response = await fetch(url, {
@@ -359,6 +401,10 @@ export async function save(
 		};
 		throw ErrorDetails();
 	}
+
+	if (returnValue) {
+		return response.json();
+	}
 }
 
 export async function addPickListItem({
@@ -366,11 +412,11 @@ export async function addPickListItem({
 	key,
 	name_i18n,
 }: Partial<PickListItem>) {
-	return await save(
-		`/o/headless-admin-list-type/v1.0/list-type-definitions/${id}/list-type-entries`,
-		{key, name_i18n},
-		'POST'
-	);
+	return await save({
+		item: {key, name_i18n},
+		method: 'POST',
+		url: `/o/headless-admin-list-type/v1.0/list-type-definitions/${id}/list-type-entries`,
+	});
 }
 
 export async function updatePickList({
@@ -379,11 +425,11 @@ export async function updatePickList({
 	listTypeEntries,
 	name_i18n,
 }: Partial<PickList>) {
-	return await save(
-		`/o/headless-admin-list-type/v1.0/list-type-definitions/${id}`,
-		{externalReferenceCode, listTypeEntries, name_i18n},
-		'PUT'
-	);
+	return await save({
+		item: {externalReferenceCode, listTypeEntries, name_i18n},
+		method: 'PUT',
+		url: `/o/headless-admin-list-type/v1.0/list-type-definitions/${id}`,
+	});
 }
 
 export async function updatePickListItem({
@@ -391,19 +437,19 @@ export async function updatePickListItem({
 	id,
 	name_i18n,
 }: Partial<PickListItem>) {
-	return await save(
-		`/o/headless-admin-list-type/v1.0/list-type-entries/${id}`,
-		{externalReferenceCode, name_i18n},
-		'PUT'
-	);
+	return await save({
+		item: {externalReferenceCode, name_i18n},
+		method: 'PUT',
+		url: `/o/headless-admin-list-type/v1.0/list-type-entries/${id}`,
+	});
 }
 
 export async function updateRelationship({
 	objectRelationshipId,
 	...others
 }: ObjectRelationship) {
-	return await save(
-		`/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`,
-		others
-	);
+	return await save({
+		item: others,
+		url: `/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`,
+	});
 }

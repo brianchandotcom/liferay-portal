@@ -75,7 +75,12 @@ definition {
 			priceOnApplication = ${priceOnApplication},
 			promoPrice = ${promoPrice});
 
-		Button.clickPublish();
+		if (IsElementPresent(key_text = "Publish", locator1 = "Button#ANY")) {
+			Button.clickPublish();
+		}
+		else if (IsElementPresent(key_text = "Save", locator1 = "Button#ANY")) {
+			Button.clickSave();
+		}
 
 		Click(locator1 = "Icon#CLOSE");
 

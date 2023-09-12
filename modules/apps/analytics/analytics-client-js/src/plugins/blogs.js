@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getNumberOfWords} from '../utils/assets';
+import {getNumberOfWords, isTrackable} from '../utils/assets';
 import {BLOG, DEBOUNCE} from '../utils/constants';
 import {debounce} from '../utils/debounce';
 import {clickEvent, onReady} from '../utils/events';
@@ -26,15 +26,6 @@ function getBlogPayload({dataset}) {
 	}
 
 	return payload;
-}
-
-/**
- * Wether a Blog is trackable or not.
- * @param {Object} element The Blog DOM element
- * @returns {boolean} True if the element is trackable.
- */
-function isTrackableBlog(element) {
-	return element && 'analyticsAssetId' in element.dataset;
 }
 
 /**
@@ -74,7 +65,7 @@ function trackBlogViewed(analytics) {
 			.call(
 				document.querySelectorAll('[data-analytics-asset-type="blog"]')
 			)
-			.filter((element) => isTrackableBlog(element))
+			.filter((element) => isTrackable(element))
 			.forEach((element) => {
 				const payload = getBlogPayload(element);
 				Object.assign(payload, {
@@ -104,7 +95,7 @@ function trackBlogClicked(analytics) {
 		applicationId,
 		eventType: 'blogClicked',
 		getPayload: getBlogPayload,
-		isTrackable: isTrackableBlog,
+		isTrackable,
 		type: 'blog',
 	});
 }

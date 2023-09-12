@@ -110,7 +110,8 @@ public class ProductOptionDTOConverter
 					new DefaultDTOConverterContext(
 						cpDefinitionOptionValueRel.
 							getCPDefinitionOptionValueRelId(),
-						dtoConverterContext.getLocale())));
+						dtoConverterContext.getLocale()),
+					cpDefinitionOptionValueRel));
 		}
 
 		return productOptionValues.toArray(new ProductOptionValue[0]);

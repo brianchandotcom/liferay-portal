@@ -6,9 +6,10 @@
 import {FormError} from '@liferay/object-js-components-web';
 import React from 'react';
 interface ObjectRelationshipFormBaseProps {
+	baseResourceURL: string;
 	errors: FormError<ObjectRelationship>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
-	objectRelationshipTypes?: string[];
+	objectDefinitionExternalReferenceCode: string;
 	readonly?: boolean;
 	setValues: (values: Partial<ObjectRelationship>) => void;
 	values: Partial<ObjectRelationship>;
@@ -35,9 +36,10 @@ export declare function useObjectRelationshipForm({
 	values: Partial<ObjectRelationship>;
 };
 export declare function ObjectRelationshipFormBase({
+	baseResourceURL,
 	errors,
 	handleChange,
-	objectRelationshipTypes,
+	objectDefinitionExternalReferenceCode,
 	readonly,
 	setValues,
 	values,

@@ -471,6 +471,12 @@ public class FragmentCollectionLocalServiceWrapper
 			userId, groupId, folderName);
 	}
 
+	@Override
+	public String getUniqueFragmentCollectionName(long groupId, String name) {
+		return _fragmentCollectionLocalService.getUniqueFragmentCollectionName(
+			groupId, name);
+	}
+
 	/**
 	 * Updates the fragment collection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

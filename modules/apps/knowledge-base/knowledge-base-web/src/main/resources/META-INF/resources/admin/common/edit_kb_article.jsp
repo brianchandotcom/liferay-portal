@@ -28,6 +28,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 
 <aui:form action="<%= editKBArticleDisplayContext.getUpdateKBArticleURL() %>" cssClass="edit-knowledge-base-article-form" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= editKBArticleDisplayContext.getRedirect() %>" />
+	<aui:input name="displayDate" type="hidden" value="" />
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-knowledge-base-edit-article">
@@ -340,12 +341,18 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 	</div>
 </aui:form>
 
+<portlet:renderURL var="scheduleModalURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/admin/common/schedule_modal.jsp" />
+</portlet:renderURL>
+
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
 			"kbArticle", editKBArticleDisplayContext.getKBArticle()
 		).put(
 			"publishAction", WorkflowConstants.ACTION_PUBLISH
+		).put(
+			"scheduleModalURL", scheduleModalURL.toString()
 		).build()
 	%>'
 	module="admin/js/EditKBArticle"

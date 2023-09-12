@@ -8,11 +8,9 @@ package com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.convert
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
-import com.liferay.commerce.product.service.CPDefinitionOptionValueRelLocalService;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.ProductOptionValue;
 import com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -71,16 +69,15 @@ public class ProductOptionDTOConverter
 			DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			_cpDefinitionOptionValueRelLocalService.
-				getCPDefinitionOptionValueRels(
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
 		List<ProductOptionValue> productOptionValues = new ArrayList<>();
 
 		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
-				cpDefinitionOptionValueRels) {
+				cpDefinitionOptionRel.getCPDefinitionOptionValueRels()) {
+
+			if (cpDefinitionOptionValueRel.getCPDefinitionOptionRelId() == 0) {
+				cpDefinitionOptionValueRel.setCPDefinitionOptionRelId(
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId());
+			}
 
 			DefaultDTOConverterContext defaultDTOConverterContext =
 				new DefaultDTOConverterContext(
@@ -99,7 +96,7 @@ public class ProductOptionDTOConverter
 
 			productOptionValues.add(
 				_productOptionValueDTOConverter.toDTO(
-					defaultDTOConverterContext));
+					defaultDTOConverterContext, cpDefinitionOptionValueRel));
 		}
 
 		return productOptionValues.toArray(new ProductOptionValue[0]);
@@ -108,10 +105,6 @@ public class ProductOptionDTOConverter
 	@Reference
 	private CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
-
-	@Reference
-	private CPDefinitionOptionValueRelLocalService
-		_cpDefinitionOptionValueRelLocalService;
 
 	@Reference
 	private Language _language;

@@ -8,6 +8,8 @@ package com.liferay.commerce.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.math.BigDecimal;
+
 import java.sql.Types;
 
 import java.util.Date;
@@ -66,9 +68,9 @@ public class CommerceShipmentItemTable
 		commerceInventoryWarehouseId = createColumn(
 			"commerceInventoryWarehouseId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<CommerceShipmentItemTable, Integer> quantity =
+	public final Column<CommerceShipmentItemTable, BigDecimal> quantity =
 		createColumn(
-			"quantity", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+			"quantity", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
 	public final Column<CommerceShipmentItemTable, String> unitOfMeasureKey =
 		createColumn(
 			"unitOfMeasureKey", String.class, Types.VARCHAR,

@@ -67,7 +67,6 @@ const _runExperimentMockGenerator = (segmentsExperiment) => ({status}) =>
 export default function renderApp({
 	APIService = {},
 	initialGoals = segmentsGoals,
-	initialExperimentHistory = [],
 	initialSegmentsExperiment,
 	initialSegmentsVariants = [],
 	plid = '',
@@ -115,7 +114,6 @@ export default function renderApp({
 			}}
 		>
 			<SegmentsExperimentsSidebar
-				initialExperimentHistory={initialExperimentHistory}
 				initialGoals={initialGoals}
 				initialSegmentsExperiment={initialSegmentsExperiment}
 				initialSegmentsVariants={initialSegmentsVariants}

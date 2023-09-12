@@ -279,8 +279,9 @@ components:
                     readOnly: true
                     type: object
                 quantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 replacedSku:
                     example: "12341234"
                     readOnly: true
@@ -301,6 +302,10 @@ components:
                     readOnly: true
                     type: boolean
                 thumbnail:
+                    readOnly: true
+                    type: string
+                unitOfMeasureKey:
+                    example: m
                     readOnly: true
                     type: string
                 valid:
@@ -399,18 +404,22 @@ components:
             properties:
                 allowedQuantities:
                     items:
-                        format: int32
-                        type: integer
+                        example: 10.1
+                        format: bigdecimal
+                        type: number
                     type: array
                 maxQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 minQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 multipleQuantity:
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
             type: object
         ShippingMethod:
             properties:
@@ -456,7 +465,9 @@ components:
                 currency:
                     type: string
                 itemsQuantity:
-                    type: integer
+                    example: 1.1
+                    format: bigdecimal
+                    type: number
                 shippingDiscountPercentages:
                     items:
                         type: string

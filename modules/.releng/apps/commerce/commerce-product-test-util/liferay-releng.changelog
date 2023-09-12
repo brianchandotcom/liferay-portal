@@ -102,3 +102,8 @@ f28f5a71ec2a862e32351ea6700aee6c51f6e968^..4efdcaaaac438c46b32c69ab965e85f099e6b
 # Bundle Version 8.0.1
 #
 4efdcaaaac438c46b32c69ab965e85f099e6bed1^..bb86fb3e7d9c938a70fbd2a65d13aa9432a1166c=COMMERCE-11354
+
+#
+# Bundle Version 8.0.2
+#
+bb86fb3e7d9c938a70fbd2a65d13aa9432a1166c^..c32d41ca77f579ef5db65cfb62539ba36dd7135d=LPS-188270

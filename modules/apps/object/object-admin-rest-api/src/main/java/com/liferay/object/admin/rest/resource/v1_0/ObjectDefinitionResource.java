@@ -95,7 +95,7 @@ public interface ObjectDefinitionResource {
 	public Response putObjectDefinitionBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void postObjectDefinitionPublish(Long objectDefinitionId)
+	public ObjectDefinition postObjectDefinitionPublish(Long objectDefinitionId)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

@@ -144,6 +144,9 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 		newLayoutPageTemplateCollection.setModifiedDate(
 			RandomTestUtil.nextDate());
 
+		newLayoutPageTemplateCollection.setParentLayoutPageTemplateCollectionId(
+			RandomTestUtil.nextLong());
+
 		newLayoutPageTemplateCollection.setLayoutPageTemplateCollectionKey(
 			RandomTestUtil.randomString());
 
@@ -151,6 +154,8 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 
 		newLayoutPageTemplateCollection.setDescription(
 			RandomTestUtil.randomString());
+
+		newLayoutPageTemplateCollection.setType(RandomTestUtil.nextInt());
 
 		newLayoutPageTemplateCollection.setLastPublishDate(
 			RandomTestUtil.nextDate());
@@ -200,6 +205,11 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 				newLayoutPageTemplateCollection.getModifiedDate()));
 		Assert.assertEquals(
 			existingLayoutPageTemplateCollection.
+				getParentLayoutPageTemplateCollectionId(),
+			newLayoutPageTemplateCollection.
+				getParentLayoutPageTemplateCollectionId());
+		Assert.assertEquals(
+			existingLayoutPageTemplateCollection.
 				getLayoutPageTemplateCollectionKey(),
 			newLayoutPageTemplateCollection.
 				getLayoutPageTemplateCollectionKey());
@@ -209,6 +219,9 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 		Assert.assertEquals(
 			existingLayoutPageTemplateCollection.getDescription(),
 			newLayoutPageTemplateCollection.getDescription());
+		Assert.assertEquals(
+			existingLayoutPageTemplateCollection.getType(),
+			newLayoutPageTemplateCollection.getType());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingLayoutPageTemplateCollection.getLastPublishDate()),
@@ -318,8 +331,9 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 			"ctCollectionId", true, "uuid", true,
 			"layoutPageTemplateCollectionId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "layoutPageTemplateCollectionKey", true,
-			"name", true, "description", true, "lastPublishDate", true);
+			true, "modifiedDate", true, "parentLayoutPageTemplateCollectionId",
+			true, "layoutPageTemplateCollectionKey", true, "name", true,
+			"description", true, "type", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -688,6 +702,9 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 
 		layoutPageTemplateCollection.setModifiedDate(RandomTestUtil.nextDate());
 
+		layoutPageTemplateCollection.setParentLayoutPageTemplateCollectionId(
+			RandomTestUtil.nextLong());
+
 		layoutPageTemplateCollection.setLayoutPageTemplateCollectionKey(
 			RandomTestUtil.randomString());
 
@@ -695,6 +712,8 @@ public class LayoutPageTemplateCollectionPersistenceTest {
 
 		layoutPageTemplateCollection.setDescription(
 			RandomTestUtil.randomString());
+
+		layoutPageTemplateCollection.setType(RandomTestUtil.nextInt());
 
 		layoutPageTemplateCollection.setLastPublishDate(
 			RandomTestUtil.nextDate());

@@ -64,7 +64,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CommerceInventoryBookedQuantity addCommerceBookedQuantity(
+	public CommerceInventoryBookedQuantity addCommerceInventoryBookedQuantity(
 			long userId, Date expirationDate, BigDecimal quantity, String sku,
 			String unitOfMeasureKey, Map<String, String> context)
 		throws PortalException {
@@ -106,129 +106,36 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	}
 
 	@Override
-	public CommerceInventoryBookedQuantity consumeCommerceBookedQuantity(
-			long commerceBookedQuantityId, BigDecimal quantity)
+	public CommerceInventoryBookedQuantity
+			consumeCommerceInventoryBookedQuantity(
+				long commerceInventoryBookedQuantityId, BigDecimal quantity)
 		throws NoSuchInventoryBookedQuantityException {
 
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 			commerceInventoryBookedQuantityPersistence.findByPrimaryKey(
-				commerceBookedQuantityId);
+				commerceInventoryBookedQuantityId);
 
-		int bookedQuantity = 0;
-
-		if (quantity != null) {
-			bookedQuantity = quantity.intValue();
+		if (quantity == null) {
+			quantity = BigDecimal.ZERO;
 		}
 
 		BigDecimal commerceInventoryWarehouseItemQuantity =
 			commerceInventoryBookedQuantity.getQuantity();
 
-		if (bookedQuantity <
-				commerceInventoryWarehouseItemQuantity.intValue()) {
+		if (BigDecimalUtil.lt(
+				quantity, commerceInventoryWarehouseItemQuantity)) {
 
-			int newQuantity =
-				commerceInventoryWarehouseItemQuantity.intValue() -
-					bookedQuantity;
+			BigDecimal newQuantity =
+				commerceInventoryWarehouseItemQuantity.subtract(quantity);
 
-			commerceInventoryBookedQuantity.setQuantity(
-				BigDecimal.valueOf(newQuantity));
+			commerceInventoryBookedQuantity.setQuantity(newQuantity);
 
 			return commerceInventoryBookedQuantityPersistence.update(
 				commerceInventoryBookedQuantity);
 		}
 
 		return commerceInventoryBookedQuantityPersistence.remove(
-			commerceBookedQuantityId);
-	}
-
-	@Override
-	public BigDecimal getCommerceBookedQuantity(
-		long companyId, long commerceChannelGroupId, String sku,
-		String unitOfMeasureKey) {
-
-		List<BigDecimal> result = dslQuery(
-			DSLQueryFactoryUtil.select(
-				DSLFunctionFactoryUtil.sum(
-					CommerceInventoryBookedQuantityTable.INSTANCE.quantity
-				).as(
-					"SUM_VALUE"
-				)
-			).from(
-				CommerceInventoryBookedQuantityTable.INSTANCE
-			).innerJoinON(
-				CommerceOrderItemTable.INSTANCE,
-				CommerceInventoryBookedQuantityTable.INSTANCE.
-					commerceInventoryBookedQuantityId.eq(
-						CommerceOrderItemTable.INSTANCE.bookedQuantityId)
-			).innerJoinON(
-				GroupTable.INSTANCE,
-				CommerceOrderItemTable.INSTANCE.groupId.eq(
-					GroupTable.INSTANCE.groupId
-				).and(
-					GroupTable.INSTANCE.classNameId.eq(
-						_portal.getClassNameId(CommerceChannel.class.getName()))
-				)
-			).where(
-				CommerceInventoryBookedQuantityTable.INSTANCE.companyId.eq(
-					companyId
-				).and(
-					CommerceInventoryBookedQuantityTable.INSTANCE.sku.eq(sku)
-				).and(
-					() -> {
-						if (Validator.isNull(unitOfMeasureKey)) {
-							return null;
-						}
-
-						return CommerceInventoryBookedQuantityTable.INSTANCE.
-							unitOfMeasureKey.eq(unitOfMeasureKey);
-					}
-				).and(
-					GroupTable.INSTANCE.groupId.eq(commerceChannelGroupId)
-				)
-			));
-
-		if (result.get(0) == null) {
-			return BigDecimal.ZERO;
-		}
-
-		return result.get(0);
-	}
-
-	@Override
-	public BigDecimal getCommerceBookedQuantity(
-		long companyId, String sku, String unitOfMeasureKey) {
-
-		List<BigDecimal> result = dslQuery(
-			DSLQueryFactoryUtil.select(
-				DSLFunctionFactoryUtil.sum(
-					CommerceInventoryBookedQuantityTable.INSTANCE.quantity
-				).as(
-					"SUM_VALUE"
-				)
-			).from(
-				CommerceInventoryBookedQuantityTable.INSTANCE
-			).where(
-				CommerceInventoryBookedQuantityTable.INSTANCE.companyId.eq(
-					companyId
-				).and(
-					CommerceInventoryBookedQuantityTable.INSTANCE.sku.eq(sku)
-				).and(
-					() -> {
-						if (Validator.isNull(unitOfMeasureKey)) {
-							return null;
-						}
-
-						return CommerceInventoryBookedQuantityTable.INSTANCE.
-							unitOfMeasureKey.eq(unitOfMeasureKey);
-					}
-				)
-			));
-
-		if (result.get(0) == null) {
-			return BigDecimal.ZERO;
-		}
-
-		return result.get(0);
+			commerceInventoryBookedQuantityId);
 	}
 
 	@Override
@@ -281,39 +188,132 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	}
 
 	@Override
-	public CommerceInventoryBookedQuantity resetCommerceBookedQuantity(
-			long commerceBookedQuantityId, long userId, Date expirationDate,
-			BigDecimal quantity, String sku, String unitOfMeasureKey,
-			Map<String, String> context)
+	public BigDecimal getCommerceInventoryBookedQuantity(
+		long companyId, long commerceChannelGroupId, String sku,
+		String unitOfMeasureKey) {
+
+		List<BigDecimal> result = dslQuery(
+			DSLQueryFactoryUtil.select(
+				DSLFunctionFactoryUtil.sum(
+					CommerceInventoryBookedQuantityTable.INSTANCE.quantity
+				).as(
+					"SUM_VALUE"
+				)
+			).from(
+				CommerceInventoryBookedQuantityTable.INSTANCE
+			).innerJoinON(
+				CommerceOrderItemTable.INSTANCE,
+				CommerceInventoryBookedQuantityTable.INSTANCE.
+					commerceInventoryBookedQuantityId.eq(
+						CommerceOrderItemTable.INSTANCE.
+							commerceInventoryBookedQuantityId)
+			).innerJoinON(
+				GroupTable.INSTANCE,
+				CommerceOrderItemTable.INSTANCE.groupId.eq(
+					GroupTable.INSTANCE.groupId
+				).and(
+					GroupTable.INSTANCE.classNameId.eq(
+						_portal.getClassNameId(CommerceChannel.class.getName()))
+				)
+			).where(
+				CommerceInventoryBookedQuantityTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					CommerceInventoryBookedQuantityTable.INSTANCE.sku.eq(sku)
+				).and(
+					() -> {
+						if (Validator.isNull(unitOfMeasureKey)) {
+							return null;
+						}
+
+						return CommerceInventoryBookedQuantityTable.INSTANCE.
+							unitOfMeasureKey.eq(unitOfMeasureKey);
+					}
+				).and(
+					GroupTable.INSTANCE.groupId.eq(commerceChannelGroupId)
+				)
+			));
+
+		if (result.get(0) == null) {
+			return BigDecimal.ZERO;
+		}
+
+		return result.get(0);
+	}
+
+	@Override
+	public BigDecimal getCommerceInventoryBookedQuantity(
+		long companyId, String sku, String unitOfMeasureKey) {
+
+		List<BigDecimal> result = dslQuery(
+			DSLQueryFactoryUtil.select(
+				DSLFunctionFactoryUtil.sum(
+					CommerceInventoryBookedQuantityTable.INSTANCE.quantity
+				).as(
+					"SUM_VALUE"
+				)
+			).from(
+				CommerceInventoryBookedQuantityTable.INSTANCE
+			).where(
+				CommerceInventoryBookedQuantityTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					CommerceInventoryBookedQuantityTable.INSTANCE.sku.eq(sku)
+				).and(
+					() -> {
+						if (Validator.isNull(unitOfMeasureKey)) {
+							return null;
+						}
+
+						return CommerceInventoryBookedQuantityTable.INSTANCE.
+							unitOfMeasureKey.eq(unitOfMeasureKey);
+					}
+				)
+			));
+
+		if (result.get(0) == null) {
+			return BigDecimal.ZERO;
+		}
+
+		return result.get(0);
+	}
+
+	@Override
+	public CommerceInventoryBookedQuantity resetCommerceInventoryBookedQuantity(
+			long commerceInventoryBookedQuantityId, long userId,
+			Date expirationDate, BigDecimal quantity, String sku,
+			String unitOfMeasureKey, Map<String, String> context)
 		throws PortalException {
 
-		CommerceInventoryBookedQuantity commerceBookedQuantity =
+		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
 			commerceInventoryBookedQuantityPersistence.fetchByPrimaryKey(
-				commerceBookedQuantityId);
+				commerceInventoryBookedQuantityId);
 
-		if (commerceBookedQuantity == null) {
+		if (commerceInventoryBookedQuantity == null) {
 			User user = _userLocalService.getUser(userId);
 
-			commerceBookedQuantity =
+			commerceInventoryBookedQuantity =
 				commerceInventoryBookedQuantityPersistence.create(
-					commerceBookedQuantityId);
+					commerceInventoryBookedQuantityId);
 
-			commerceBookedQuantity.setCompanyId(user.getCompanyId());
-			commerceBookedQuantity.setUserId(userId);
-			commerceBookedQuantity.setUserName(user.getFullName());
-			commerceBookedQuantity.setExpirationDate(expirationDate);
-			commerceBookedQuantity.setSku(sku);
-			commerceBookedQuantity.setUnitOfMeasureKey(unitOfMeasureKey);
+			commerceInventoryBookedQuantity.setCompanyId(user.getCompanyId());
+			commerceInventoryBookedQuantity.setUserId(userId);
+			commerceInventoryBookedQuantity.setUserName(user.getFullName());
+			commerceInventoryBookedQuantity.setExpirationDate(expirationDate);
+			commerceInventoryBookedQuantity.setSku(sku);
+			commerceInventoryBookedQuantity.setUnitOfMeasureKey(
+				unitOfMeasureKey);
 		}
 		else {
-			quantity = quantity.add(commerceBookedQuantity.getQuantity());
+			quantity = quantity.add(
+				commerceInventoryBookedQuantity.getQuantity());
 
 			if (BigDecimalUtil.lt(quantity, BigDecimal.ZERO)) {
 				quantity = BigDecimal.ZERO;
 			}
 		}
 
-		commerceBookedQuantity.setQuantity(quantity);
+		commerceInventoryBookedQuantity.setQuantity(quantity);
 
 		CommerceInventoryAuditType commerceInventoryAuditType =
 			_commerceInventoryAuditTypeRegistry.getCommerceInventoryAuditType(
@@ -325,7 +325,7 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 			unitOfMeasureKey);
 
 		return commerceInventoryBookedQuantityPersistence.update(
-			commerceBookedQuantity);
+			commerceInventoryBookedQuantity);
 	}
 
 	@Override

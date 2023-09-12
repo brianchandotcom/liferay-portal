@@ -77,5 +77,5 @@ create table NotificationTemplate (
 	name STRING null,
 	recipientType VARCHAR(75) null,
 	subject STRING null,
-	type_ VARCHAR(75) null
+	type_ VARCHAR(255) null
 );

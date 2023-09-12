@@ -29,12 +29,6 @@ public interface LockedLayoutsConfiguration {
 	public boolean allowAutomaticUnlockingProcess();
 
 	@Meta.AD(
-		deflt = "15", max = "99999", min = "1", name = "lock-review-frequency",
-		required = false
-	)
-	public int lockReviewFrequency();
-
-	@Meta.AD(
 		deflt = "5", max = "99999", min = "1", name = "time-without-autosave",
 		required = false
 	)

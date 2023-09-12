@@ -297,6 +297,7 @@ const ProductOptionSelect = ({
 	useEffect(() => {
 		if (
 			!selectedProductOptionValue.productOptionValueId ||
+			selectedProductOptionValue.productOptionValueId <= 0 ||
 			!selectedProductOptionValue.skuId
 		) {
 			return;

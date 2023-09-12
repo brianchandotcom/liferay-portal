@@ -931,15 +931,12 @@ public class LayoutStructureRenderer {
 			}
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-183498")) {
-			jspWriter.write(
-				"\"><input name=\"displayPage\" type=\"hidden\" value=\"");
-			jspWriter.write(
-				_renderLayoutStructureDisplayContext.
-					getFormStyledLayoutStructureItemSuccessMessageDisplayPage(
-						formStyledLayoutStructureItem));
-		}
-
+		jspWriter.write(
+			"\"><input name=\"displayPage\" type=\"hidden\" value=\"");
+		jspWriter.write(
+			_renderLayoutStructureDisplayContext.
+				getFormStyledLayoutStructureItemSuccessMessageDisplayPage(
+					formStyledLayoutStructureItem));
 		jspWriter.write(
 			"\"><input name=\"formItemId\" type=\"hidden\" value=\"");
 		jspWriter.write(formStyledLayoutStructureItem.getItemId());

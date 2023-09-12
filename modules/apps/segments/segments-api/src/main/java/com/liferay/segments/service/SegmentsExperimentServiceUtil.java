@@ -48,6 +48,13 @@ public class SegmentsExperimentServiceUtil {
 	}
 
 	public static SegmentsExperiment deleteSegmentsExperiment(
+			SegmentsExperiment segmentsExperiment, boolean force)
+		throws PortalException {
+
+		return getService().deleteSegmentsExperiment(segmentsExperiment, force);
+	}
+
+	public static SegmentsExperiment deleteSegmentsExperiment(
 			String segmentsExperimentKey)
 		throws PortalException {
 

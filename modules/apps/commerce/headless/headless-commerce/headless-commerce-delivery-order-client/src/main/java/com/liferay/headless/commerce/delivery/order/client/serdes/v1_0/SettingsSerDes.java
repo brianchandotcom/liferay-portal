@@ -8,6 +8,8 @@ package com.liferay.headless.commerce.delivery.order.client.serdes.v1_0;
 import com.liferay.headless.commerce.delivery.order.client.dto.v1_0.Settings;
 import com.liferay.headless.commerce.delivery.order.client.json.BaseJSONParser;
 
+import java.math.BigDecimal;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -167,25 +169,25 @@ public class SettingsSerDes {
 			if (Objects.equals(jsonParserFieldName, "allowedQuantities")) {
 				if (jsonParserFieldValue != null) {
 					settings.setAllowedQuantities(
-						toIntegers((Object[])jsonParserFieldValue));
+						toBigDecimals((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "maxQuantity")) {
 				if (jsonParserFieldValue != null) {
 					settings.setMaxQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "minQuantity")) {
 				if (jsonParserFieldValue != null) {
 					settings.setMinQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "multipleQuantity")) {
 				if (jsonParserFieldValue != null) {
 					settings.setMultipleQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 		}

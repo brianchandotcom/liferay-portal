@@ -5,6 +5,7 @@
 
 package com.liferay.headless.builder.internal.util;
 
+import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -24,39 +25,85 @@ public class OpenAPIUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetOperationId() {
+	public void testGetCollectionOperationId() {
 		Assert.assertEquals(
 			"getCamelSchemasPage",
 			OpenAPIUtil.getOperationId(
-				Http.Method.GET, "/camelschemas", "CamelSchema"));
-		Assert.assertEquals(
-			"getPathNamePage",
-			OpenAPIUtil.getOperationId(Http.Method.GET, "/path-name", null));
+				Http.Method.GET, "/camelschemas",
+				APIApplication.Endpoint.RetrieveType.COLLECTION,
+				"CamelSchema"));
 		Assert.assertEquals(
 			"getPathNamePage",
 			OpenAPIUtil.getOperationId(
-				Http.Method.GET, "/path-name", "Schema"));
+				Http.Method.GET, "/path-name",
+				APIApplication.Endpoint.RetrieveType.COLLECTION, null));
+		Assert.assertEquals(
+			"getPathNamePage",
+			OpenAPIUtil.getOperationId(
+				Http.Method.GET, "/path-name",
+				APIApplication.Endpoint.RetrieveType.COLLECTION, "Schema"));
 		Assert.assertEquals(
 			"getSchemasWhateverPage",
 			OpenAPIUtil.getOperationId(
-				Http.Method.GET, "/schema/whatever", "Schema"));
+				Http.Method.GET, "/schema/whatever",
+				APIApplication.Endpoint.RetrieveType.COLLECTION, "Schema"));
 		Assert.assertEquals(
 			"getScopeScopeKeyNoSchemaPage",
 			OpenAPIUtil.getOperationId(
-				Http.Method.GET, "/scopes/{scopeKey}/no-schema", null));
+				Http.Method.GET, "/scopes/{scopeKey}/no-schema",
+				APIApplication.Endpoint.RetrieveType.COLLECTION, null));
 		Assert.assertEquals(
 			"getScopeScopeKeySiteScopedPathPage",
 			OpenAPIUtil.getOperationId(
 				Http.Method.GET, "/scopes/{scopeKey}/site-scoped-path",
-				"Schema"));
+				APIApplication.Endpoint.RetrieveType.COLLECTION, "Schema"));
 		Assert.assertEquals(
 			"getSegmentASegmentBPage",
 			OpenAPIUtil.getOperationId(
-				Http.Method.GET, "/segment-a/segment-b", "Schema"));
+				Http.Method.GET, "/segment-a/segment-b",
+				APIApplication.Endpoint.RetrieveType.COLLECTION, "Schema"));
 		Assert.assertEquals(
 			"getWhateverPage",
 			OpenAPIUtil.getOperationId(
-				Http.Method.GET, "/whatever", "CamelSchema"));
+				Http.Method.GET, "/whatever",
+				APIApplication.Endpoint.RetrieveType.COLLECTION,
+				"CamelSchema"));
+	}
+
+	@Test
+	public void testGetIndividualOperationId() {
+		Assert.assertEquals(
+			"getCamelSchema",
+			OpenAPIUtil.getOperationId(
+				Http.Method.GET, "/camelschemas/{camelSchemaId}",
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT,
+				"CamelSchema"));
+		Assert.assertEquals(
+			"getPathNamePathName",
+			OpenAPIUtil.getOperationId(
+				Http.Method.GET, "/path-names/{pathNameId}",
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, null));
+		Assert.assertEquals(
+			"getPathName",
+			OpenAPIUtil.getOperationId(
+				Http.Method.GET, "/path-names/{pathNameId}",
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, "Schema"));
+		Assert.assertEquals(
+			"getSchemaWhatever",
+			OpenAPIUtil.getOperationId(
+				Http.Method.GET, "/schema/whatever/{whateverId}",
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, "Schema"));
+		Assert.assertEquals(
+			"getSegmentASegmentB",
+			OpenAPIUtil.getOperationId(
+				Http.Method.GET, "/segment-a/segment-b/{segmentBId}",
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, "Schema"));
+		Assert.assertEquals(
+			"getWhatever",
+			OpenAPIUtil.getOperationId(
+				Http.Method.GET, "/whatever/{whateverId}",
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT,
+				"CamelSchema"));
 	}
 
 }

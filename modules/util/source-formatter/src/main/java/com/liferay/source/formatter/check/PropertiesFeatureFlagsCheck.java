@@ -140,13 +140,23 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				return content;
 			}
 
+			List<String> deprecationFeatureFlags = new ArrayList<>();
+
+			Matcher deprecationFeatureFlagMatcher =
+				_deprecationFeatureFlagPattern.matcher(content);
+
+			while (deprecationFeatureFlagMatcher.find()) {
+				deprecationFeatureFlags.add(
+					deprecationFeatureFlagMatcher.group(1));
+			}
+
 			StringBundler sb = new StringBundler(featureFlags.size() * 14);
 
 			for (String featureFlag : featureFlags) {
-				featureFlag = "feature.flag." + featureFlag;
+				String featureFlagPropertyKey = "feature.flag." + featureFlag;
 
 				String environmentVariable =
-					ToolsUtil.encodeEnvironmentProperty(featureFlag);
+					ToolsUtil.encodeEnvironmentProperty(featureFlagPropertyKey);
 
 				sb.append(StringPool.NEW_LINE);
 				sb.append(StringPool.NEW_LINE);
@@ -160,8 +170,15 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				sb.append(StringPool.POUND);
 				sb.append(StringPool.NEW_LINE);
 				sb.append(StringPool.FOUR_SPACES);
-				sb.append(featureFlag);
-				sb.append("=false");
+				sb.append(featureFlagPropertyKey);
+				sb.append(StringPool.EQUAL);
+
+				if (deprecationFeatureFlags.contains(featureFlag)) {
+					sb.append(true);
+				}
+				else {
+					sb.append(false);
+				}
 			}
 
 			if (matchedFeatureFlags.contains("feature.flag.")) {
@@ -222,6 +239,8 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		return featureFlags;
 	}
 
+	private static final Pattern _deprecationFeatureFlagPattern =
+		Pattern.compile("feature\\.flag\\.([A-Z]+-\\d+)\\.type=deprecation");
 	private static final Pattern _featureFlagPattern1 = Pattern.compile(
 		"feature\\.flag[.=]([A-Z]+-\\d+)");
 	private static final Pattern _featureFlagPattern2 = Pattern.compile(

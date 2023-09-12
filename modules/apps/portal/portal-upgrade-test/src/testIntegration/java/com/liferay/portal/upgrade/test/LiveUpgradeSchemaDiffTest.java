@@ -18,6 +18,7 @@ import com.liferay.portal.upgrade.live.LiveUpgradeSchemaDiff;
 
 import java.sql.Connection;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.AfterClass;
@@ -49,7 +50,8 @@ public class LiveUpgradeSchemaDiffTest {
 		_db.runSQL(
 			StringBundler.concat(
 				"create table ", _TABLE_NAME,
-				" (id LONG not null primary key, name VARCHAR(128) not null)"));
+				" (id LONG not null primary key, name VARCHAR(128) not null, ",
+				"description VARCHAR(255) null)"));
 
 		_dbInspector = new DBInspector(_connection);
 	}
@@ -69,13 +71,19 @@ public class LiveUpgradeSchemaDiffTest {
 
 	@Test
 	public void testRecordAddColumns() throws Exception {
-		_liveUpgradeSchemaDiff.recordAddColumns("version LONG not null");
+		_liveUpgradeSchemaDiff.recordAddColumns(
+			"title VARCHAR(128) null", "version LONG default 1 not null");
 
-		_checkResultColumnNamesMap(
+		_checkSchemaDiff(
 			HashMapBuilder.put(
+				"description", "description"
+			).put(
 				"id", "id"
 			).put(
 				"name", "name"
+			).build(),
+			HashMapBuilder.put(
+				"version", "1"
 			).build());
 	}
 
@@ -84,42 +92,57 @@ public class LiveUpgradeSchemaDiffTest {
 		_liveUpgradeSchemaDiff.recordAlterColumnName(
 			"name", "title VARCHAR(128) not null");
 
-		_checkResultColumnNamesMap(
+		_checkSchemaDiff(
 			HashMapBuilder.put(
+				"description", "description"
+			).put(
 				"id", "id"
 			).put(
 				"name", "title"
-			).build());
+			).build(),
+			new HashMap<>());
 	}
 
 	@Test
 	public void testRecordAlterColumnType() throws Exception {
 		_liveUpgradeSchemaDiff.recordAlterColumnType(
 			"name", "VARCHAR(255) null");
+		_liveUpgradeSchemaDiff.recordAlterColumnType(
+			"id", "LONG default 1000 not null");
+		_liveUpgradeSchemaDiff.recordAlterColumnType(
+			"description", "VARCHAR(255) default 'test test' not null");
 
-		_checkResultColumnNamesMap(
+		_checkSchemaDiff(
 			HashMapBuilder.put(
+				"description", "description"
+			).put(
 				"id", "id"
 			).put(
 				"name", "name"
+			).build(),
+			HashMapBuilder.put(
+				"description", "'test test'"
+			).put(
+				"id", "1000"
 			).build());
-
-		// TODO Check type
-
 	}
 
 	@Test
 	public void testRecordDropColumns() throws Exception {
 		_liveUpgradeSchemaDiff.recordDropColumns("name");
 
-		_checkResultColumnNamesMap(
+		_checkSchemaDiff(
 			HashMapBuilder.put(
+				"description", "description"
+			).put(
 				"id", "id"
-			).build());
+			).build(),
+			new HashMap<>());
 	}
 
-	private void _checkResultColumnNamesMap(
-			Map<String, String> expectedColumnNamesMap)
+	private void _checkSchemaDiff(
+			Map<String, String> expectedColumnNamesMap,
+			Map<String, String> expectedDefaultValuesMap)
 		throws Exception {
 
 		Map<String, String> actualColumnNamesMap =
@@ -140,6 +163,23 @@ public class LiveUpgradeSchemaDiffTest {
 			Assert.assertEquals(
 				_dbInspector.normalizeName(entry.getValue()),
 				actualColumnNamesMap.get(expectedOldColumnName));
+		}
+
+		Map<String, String> actualDefaultValuesMap =
+			_liveUpgradeSchemaDiff.getResultDefaultValuesMap();
+
+		Assert.assertEquals(
+			actualDefaultValuesMap.toString(), expectedDefaultValuesMap.size(),
+			actualDefaultValuesMap.size());
+
+		for (Map.Entry<String, String> entry :
+				expectedDefaultValuesMap.entrySet()) {
+
+			String columnName = _dbInspector.normalizeName(entry.getKey());
+
+			Assert.assertTrue(actualDefaultValuesMap.containsKey(columnName));
+			Assert.assertEquals(
+				entry.getValue(), actualDefaultValuesMap.get(columnName));
 		}
 	}
 

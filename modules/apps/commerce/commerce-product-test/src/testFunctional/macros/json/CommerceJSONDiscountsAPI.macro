@@ -451,6 +451,36 @@ definition {
 
 		ListUtil.add(${fieldsList}, ${limitationType});
 
+		if (isSet(maximumDiscountAmount)) {
+			var maximumDiscountAmount = '''"maximumDiscountAmount": ${maximumDiscountAmount}''';
+
+			ListUtil.add(${fieldsList}, ${maximumDiscountAmount});
+		}
+
+		if (isSet(percentageLevel1)) {
+			var percentageLevel1 = '''"percentageLevel1": ${percentageLevel1}''';
+
+			ListUtil.add(${fieldsList}, ${percentageLevel1});
+		}
+
+		if (isSet(percentageLevel2)) {
+			var percentageLevel1 = '''"percentageLevel2": ${percentageLevel2}''';
+
+			ListUtil.add(${fieldsList}, ${percentageLevel2});
+		}
+
+		if (isSet(percentageLevel3)) {
+			var percentageLevel1 = '''"percentageLevel3": ${percentageLevel3}''';
+
+			ListUtil.add(${fieldsList}, ${percentageLevel3});
+		}
+
+		if (isSet(percentageLevel4)) {
+			var percentageLevel1 = '''"percentageLevel4": ${percentageLevel4}''';
+
+			ListUtil.add(${fieldsList}, ${percentageLevel4});
+		}
+
 		if (!(isSet(target))) {
 			var target = '''"target": "products"''';
 		}
@@ -460,7 +490,7 @@ definition {
 
 		ListUtil.add(${fieldsList}, ${target});
 
-		if (!(isSet(newTitle))) {
+		if (isSet(newTitle)) {
 			var title = '''"title": "${newTitle}"''';
 		}
 		else {

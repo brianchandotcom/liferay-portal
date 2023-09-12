@@ -48,6 +48,7 @@ public class AssetListEntrySegmentsEntryRelStagedModelRepository
 			addAssetListEntrySegmentsEntryRel(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 				assetListEntrySegmentsEntryRel.getAssetListEntryId(),
+				assetListEntrySegmentsEntryRel.getPriority(),
 				assetListEntrySegmentsEntryRel.getSegmentsEntryId(),
 				assetListEntrySegmentsEntryRel.getTypeSettings(),
 				serviceContext);

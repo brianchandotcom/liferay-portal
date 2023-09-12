@@ -13,8 +13,8 @@ export default function switchSidebarPanel({
 }: {
 	hidden?: boolean;
 	itemConfigurationOpen?: boolean;
-	sidebarOpen: boolean;
-	sidebarPanelId: string;
+	sidebarOpen?: boolean;
+	sidebarPanelId?: string | null;
 }) {
 	return {
 		hidden,

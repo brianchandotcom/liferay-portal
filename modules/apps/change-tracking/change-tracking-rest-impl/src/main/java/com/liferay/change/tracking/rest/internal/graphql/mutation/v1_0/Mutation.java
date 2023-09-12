@@ -113,6 +113,35 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean deleteCTCollectionByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_ctCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctCollectionResource ->
+				ctCollectionResource.deleteCTCollectionByExternalReferenceCode(
+					externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public CTCollection patchCTCollectionByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("ctCollection") CTCollection ctCollection)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctCollectionResource ->
+				ctCollectionResource.patchCTCollectionByExternalReferenceCode(
+					externalReferenceCode, ctCollection));
+	}
+
+	@GraphQLField
 	public boolean deleteCTCollection(
 			@GraphQLName("ctCollectionId") Long ctCollectionId)
 		throws Exception {

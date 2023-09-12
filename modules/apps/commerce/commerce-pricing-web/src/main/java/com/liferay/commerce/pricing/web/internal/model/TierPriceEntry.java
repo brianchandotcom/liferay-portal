@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.pricing.web.internal.model;
 
+import java.math.BigDecimal;
+
 /**
  * @author Alessio Antonio Rendina
  */
@@ -12,7 +14,7 @@ public class TierPriceEntry {
 
 	public TierPriceEntry(
 		String discountLevels, String endDate, String override, String price,
-		int quantity, String startDate, long tierPriceEntryId) {
+		BigDecimal quantity, String startDate, long tierPriceEntryId) {
 
 		_discountLevels = discountLevels;
 		_endDate = endDate;
@@ -39,7 +41,7 @@ public class TierPriceEntry {
 		return _price;
 	}
 
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return _quantity;
 	}
 
@@ -55,7 +57,7 @@ public class TierPriceEntry {
 	private final String _endDate;
 	private final String _override;
 	private final String _price;
-	private final int _quantity;
+	private final BigDecimal _quantity;
 	private final String _startDate;
 	private final long _tierPriceEntryId;
 

@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.source.formatter.check.comparator.ElementComparator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
@@ -43,6 +44,9 @@ public class XMLTestIgnorableErrorLinesFileCheck extends BaseFileCheck {
 			return;
 		}
 
+		IgnoreErrorElementComparator ignoreErrorElementComparator =
+			new IgnoreErrorElementComparator();
+
 		Element rootElement = document.getRootElement();
 
 		List<Element> javascriptElements = rootElement.elements("javascript");
@@ -50,7 +54,7 @@ public class XMLTestIgnorableErrorLinesFileCheck extends BaseFileCheck {
 		for (Element javascriptElement : javascriptElements) {
 			checkElementOrder(
 				fileName, javascriptElement, "ignore-error", null,
-				new ElementComparator("description"));
+				ignoreErrorElementComparator);
 		}
 
 		List<Element> logElements = rootElement.elements("log");
@@ -58,8 +62,42 @@ public class XMLTestIgnorableErrorLinesFileCheck extends BaseFileCheck {
 		for (Element logElement : logElements) {
 			checkElementOrder(
 				fileName, logElement, "ignore-error", null,
-				new ElementComparator("description"));
+				ignoreErrorElementComparator);
 		}
+	}
+
+	private class IgnoreErrorElementComparator extends ElementComparator {
+
+		@Override
+		public int compare(Element element1, Element element2) {
+			String description1 = element1.attributeValue("description");
+			String description2 = element2.attributeValue("description");
+
+			if (!description1.equals(description2)) {
+				return super.compare(description1, description2);
+			}
+
+			String contains1 = getTagValue(element1, "contains");
+			String contains2 = getTagValue(element2, "contains");
+
+			if (!contains1.equals(contains2)) {
+				return super.compare(contains1, contains2);
+			}
+
+			String matches1 = getTagValue(element1, "matches");
+			String matches2 = getTagValue(element2, "matches");
+
+			return super.compare(matches1, matches2);
+		}
+
+		@Override
+		public String getElementName(Element element) {
+			return StringBundler.concat(
+				"{description=", element.attributeValue("description"),
+				", contains=", getTagValue(element, "contains"), ", matches=",
+				getTagValue(element, "matches"), "}");
+		}
+
 	}
 
 }

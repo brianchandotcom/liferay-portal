@@ -6,4 +6,12 @@
 /// <reference types="react" />
 
 import './LeftSidebar.scss';
-export default function LeftSidebar(): JSX.Element;
+interface LeftSidebarProps {
+	selectedFolderName: string;
+	setShowModal: (value: boolean) => void;
+}
+export default function LeftSidebar({
+	selectedFolderName,
+	setShowModal,
+}: LeftSidebarProps): JSX.Element;
+export {};

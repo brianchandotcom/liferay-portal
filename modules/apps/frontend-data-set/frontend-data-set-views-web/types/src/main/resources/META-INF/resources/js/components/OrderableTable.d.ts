@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import React from 'react';
 import '../../css/OrderableTable.scss';
 interface IAction {
@@ -26,6 +27,11 @@ interface IField {
 }
 interface IOrderableTableProps {
 	actions?: Array<IAction>;
+	className?: string;
+	creationMenuItems?: React.ComponentProps<
+		typeof ClayDropDownWithItems
+	>['items'];
+	creationMenuLabel?: string;
 	disableSave?: boolean;
 	fields: Array<IField>;
 	items: Array<any>;
@@ -33,13 +39,15 @@ interface IOrderableTableProps {
 	noItemsDescription: string;
 	noItemsTitle: string;
 	onCancelButtonClick: Function;
-	onCreationButtonClick: Function;
 	onOrderChange: (args: {orderedItems: any[]}) => void;
 	onSaveButtonClick: Function;
-	title: string;
+	title?: string;
 }
 declare const OrderableTable: ({
 	actions,
+	className,
+	creationMenuItems,
+	creationMenuLabel,
 	disableSave,
 	fields,
 	items: initialItems,
@@ -47,7 +55,6 @@ declare const OrderableTable: ({
 	noItemsDescription,
 	noItemsTitle,
 	onCancelButtonClick,
-	onCreationButtonClick,
 	onOrderChange,
 	onSaveButtonClick,
 	title,

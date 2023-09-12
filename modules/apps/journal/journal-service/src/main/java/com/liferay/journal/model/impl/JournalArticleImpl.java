@@ -280,6 +280,13 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public DDMFormValues getDDMFormValues() {
+		return getDDMFormValues(true);
+	}
+
+	@Override
+	public DDMFormValues getDDMFormValues(
+		boolean addMissingDDMFormFieldValues) {
+
 		DDMStructure ddmStructure = getDDMStructure();
 
 		if (ddmStructure == null) {
@@ -291,7 +298,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		DDMFormValues ddmFormValues = DDMFieldLocalServiceUtil.getDDMFormValues(
 			ddmForm, getId());
 
-		if (ddmFormValues != null) {
+		if ((ddmFormValues != null) && addMissingDDMFormFieldValues) {
 			ddmFormValues.setDDMFormFieldValues(
 				DDMFormValuesConverterUtil.addMissingDDMFormFieldValues(
 					ddmForm.getDDMFormFields(),

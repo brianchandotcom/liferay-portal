@@ -311,6 +311,15 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItem
 				layoutDisplayPageObjectProvider.getClassTypeId());
 
 		if (layoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry =
+				AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
+					layoutDisplayPageObjectProvider.getGroupId(),
+					layoutDisplayPageObjectProvider.getClassNameId(),
+					layoutDisplayPageObjectProvider.getClassPK(),
+					layoutDisplayPageObjectProvider.getClassTypeId());
+		}
+
+		if (layoutPageTemplateEntry == null) {
 			return null;
 		}
 

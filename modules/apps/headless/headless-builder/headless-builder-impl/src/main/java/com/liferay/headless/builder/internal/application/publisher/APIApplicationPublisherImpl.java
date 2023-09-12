@@ -8,23 +8,27 @@ package com.liferay.headless.builder.internal.application.publisher;
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
+import com.liferay.headless.builder.internal.application.endpoint.EndpointMatcher;
 import com.liferay.headless.builder.internal.helper.EndpointHelper;
-import com.liferay.headless.builder.internal.jaxrs.context.provider.APIApplicationContextProvider;
 import com.liferay.headless.builder.internal.resource.HeadlessBuilderResourceImpl;
 import com.liferay.headless.builder.internal.resource.OpenAPIResourceImpl;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import javax.ws.rs.core.Application;
-
-import org.apache.cxf.jaxrs.ext.ContextProvider;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -48,33 +52,39 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				"APIApplicationPublisher not available");
 		}
 
-		String osgiJaxRsName = _getOSGiJaxRsName(apiApplication);
+		_endpointMatchersMap.put(
+			_getEndpointMatcherKey(
+				apiApplication.getBaseURL(), apiApplication.getCompanyId()),
+			new EndpointMatcher(apiApplication.getEndpoints()));
 
-		APIApplicationContextProvider apiApplicationContextProvider =
-			_apiApplicationContextProviders.get(osgiJaxRsName);
+		ServiceRegistration<Application> applicationServiceRegistration =
+			_applicationServiceRegistrationsMap.get(
+				apiApplication.getBaseURL());
 
-		if (apiApplicationContextProvider != null) {
-			apiApplicationContextProvider.setApiApplication(apiApplication);
+		if (applicationServiceRegistration != null) {
+			applicationServiceRegistration.setProperties(
+				_getApplicationProperties(apiApplication));
 
 			return;
 		}
 
-		_serviceRegistrationsMap.computeIfAbsent(
-			osgiJaxRsName,
-			key -> new ArrayList<ServiceRegistration<?>>() {
+		_serviceRegistrationsMap.put(
+			apiApplication.getBaseURL(),
+			new ArrayList<ServiceRegistration<?>>() {
 				{
-					add(_registerApplication(apiApplication, osgiJaxRsName));
-					add(
-						_registerContextProvider(
-							apiApplication, osgiJaxRsName));
+					add(_registerAPIApplication(apiApplication));
 					add(
 						_registerResource(
-							osgiJaxRsName, HeadlessBuilderResourceImpl.class,
+							apiApplication, HeadlessBuilderResourceImpl.class,
 							() -> new HeadlessBuilderResourceImpl(
-								_endpointHelper)));
+								_endpointHelper,
+								companyId -> _endpointMatchersMap.get(
+									_getEndpointMatcherKey(
+										apiApplication.getBaseURL(),
+										companyId)))));
 					add(
 						_registerResource(
-							osgiJaxRsName, OpenAPIResourceImpl.class,
+							apiApplication, OpenAPIResourceImpl.class,
 							() -> new OpenAPIResourceImpl(_openAPIResource)));
 				}
 			});
@@ -87,16 +97,24 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				"APIApplicationPublisher not available");
 		}
 
-		_apiApplicationContextProviders.remove(
-			_getOSGiJaxRsName(baseURL, companyId));
+		_endpointMatchersMap.remove(baseURL + companyId);
+
+		Set<Long> companyIds = _getCompanyIds(baseURL);
+
+		companyIds.remove(companyId);
+
+		if (SetUtil.isNotEmpty(companyIds)) {
+			return;
+		}
 
 		List<ServiceRegistration<?>> serviceRegistrations =
-			_serviceRegistrationsMap.remove(
-				_getOSGiJaxRsName(baseURL, companyId));
+			_serviceRegistrationsMap.remove(baseURL);
 
 		if (serviceRegistrations != null) {
 			_unregisterServiceRegistrations(serviceRegistrations);
 		}
+
+		_applicationServiceRegistrationsMap.remove(baseURL);
 	}
 
 	@Activate
@@ -112,68 +130,66 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 			_unregisterServiceRegistrations(serviceRegistrations);
 		}
 
+		_applicationServiceRegistrationsMap.clear();
+		_companyIdsMap.clear();
+		_endpointMatchersMap.clear();
 		_serviceRegistrationsMap.clear();
-		_apiApplicationContextProviders.clear();
 	}
 
-	private String _getOSGiJaxRsName(APIApplication apiApplication) {
-		return _getOSGiJaxRsName(
-			apiApplication.getBaseURL(), apiApplication.getCompanyId());
+	private HashMapDictionary<String, Object> _getApplicationProperties(
+		APIApplication apiApplication) {
+
+		return HashMapDictionaryBuilder.<String, Object>put(
+			"companyId",
+			() -> {
+				Set<Long> companyIds = _getCompanyIds(
+					apiApplication.getBaseURL());
+
+				companyIds.add(apiApplication.getCompanyId());
+
+				return TransformUtil.transform(companyIds, String::valueOf);
+			}
+		).put(
+			"liferay.filter.disabled", true
+		).put(
+			"liferay.headless.builder.application", true
+		).put(
+			"liferay.jackson", false
+		).put(
+			"osgi.jaxrs.application.base",
+			HeadlessBuilderConstants.BASE_PATH_SUFFIX +
+				apiApplication.getBaseURL()
+		).put(
+			"osgi.jaxrs.extension.select", "(osgi.jaxrs.name=Liferay.Vulcan)"
+		).put(
+			"osgi.jaxrs.name", apiApplication.getBaseURL()
+		).build();
 	}
 
-	private String _getOSGiJaxRsName(String baseURL, long companyId) {
-		return baseURL + companyId;
+	private Set<Long> _getCompanyIds(String baseURL) {
+		return _companyIdsMap.computeIfAbsent(baseURL, key -> new HashSet<>());
 	}
 
-	private ServiceRegistration<Application> _registerApplication(
-		APIApplication apiApplication, String osgiJaxRsName) {
-
-		return _bundleContext.registerService(
-			Application.class, new Application(),
-			HashMapDictionaryBuilder.<String, Object>put(
-				"companyId", apiApplication.getCompanyId()
-			).put(
-				"liferay.filter.disabled", true
-			).put(
-				"liferay.headless.builder.application", true
-			).put(
-				"liferay.jackson", false
-			).put(
-				"osgi.jaxrs.application.base",
-				HeadlessBuilderConstants.BASE_PATH_SUFFIX +
-					apiApplication.getBaseURL()
-			).put(
-				"osgi.jaxrs.extension.select",
-				"(osgi.jaxrs.name=Liferay.Vulcan)"
-			).put(
-				"osgi.jaxrs.name", osgiJaxRsName
-			).build());
+	private String _getEndpointMatcherKey(String baseURL, long companyId) {
+		return baseURL + StringPool.POUND + companyId;
 	}
 
-	private ServiceRegistration<?> _registerContextProvider(
-		APIApplication apiApplication, String osgiJaxRsName) {
+	private ServiceRegistration<Application> _registerAPIApplication(
+		APIApplication apiApplication) {
 
-		APIApplicationContextProvider apiApplicationContextProvider =
-			new APIApplicationContextProvider(apiApplication);
+		ServiceRegistration<Application> applicationServiceRegistration =
+			_bundleContext.registerService(
+				Application.class, new Application(),
+				_getApplicationProperties(apiApplication));
 
-		_apiApplicationContextProviders.put(
-			osgiJaxRsName, apiApplicationContextProvider);
+		_applicationServiceRegistrationsMap.put(
+			apiApplication.getBaseURL(), applicationServiceRegistration);
 
-		return _bundleContext.registerService(
-			ContextProvider.class, apiApplicationContextProvider,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"osgi.jaxrs.application.select",
-				"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
-			).put(
-				"osgi.jaxrs.extension", "true"
-			).put(
-				"osgi.jaxrs.name",
-				osgiJaxRsName + "APIApplicationContextProvider"
-			).build());
+		return applicationServiceRegistration;
 	}
 
 	private <T> ServiceRegistration<T> _registerResource(
-		String osgiJaxRsName, Class<T> resourceClass,
+		APIApplication apiApplication, Class<T> resourceClass,
 		Supplier<T> resourceSupplier) {
 
 		return _bundleContext.registerService(
@@ -198,7 +214,7 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 				"api.version", "v1.0"
 			).put(
 				"osgi.jaxrs.application.select",
-				"(osgi.jaxrs.name=" + osgiJaxRsName + ")"
+				"(osgi.jaxrs.name=" + apiApplication.getBaseURL() + ")"
 			).put(
 				"osgi.jaxrs.resource", "true"
 			).build());
@@ -218,11 +234,15 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	private static BundleContext _bundleContext;
 
-	private final Map<String, APIApplicationContextProvider>
-		_apiApplicationContextProviders = new HashMap<>();
+	private final Map<String, ServiceRegistration<Application>>
+		_applicationServiceRegistrationsMap = new HashMap<>();
+	private final Map<String, Set<Long>> _companyIdsMap = new HashMap<>();
 
 	@Reference
 	private EndpointHelper _endpointHelper;
+
+	private final Map<String, EndpointMatcher> _endpointMatchersMap =
+		new HashMap<>();
 
 	@Reference
 	private OpenAPIResource _openAPIResource;

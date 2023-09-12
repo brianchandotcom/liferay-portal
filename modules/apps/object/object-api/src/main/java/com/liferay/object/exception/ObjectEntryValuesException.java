@@ -6,7 +6,6 @@
 package com.liferay.object.exception;
 
 import com.liferay.object.model.ObjectState;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.Serializable;
@@ -334,19 +333,6 @@ public class ObjectEntryValuesException extends PortalException {
 					"Unique value constraint violation for %s.%s with value %s",
 					tableName, columnName, columnValue),
 				"the-x-is-already-in-use-please-enter-a-unique-x", throwable);
-		}
-
-	}
-
-	public static class UnmodifiableAccountEntryObjectField
-		extends ObjectEntryValuesException {
-
-		public UnmodifiableAccountEntryObjectField(String objectFieldName) {
-			super(
-				StringBundler.concat(
-					"The object field ", objectFieldName,
-					" is unmodifiable because it is the account entry ",
-					"restrictor"));
 		}
 
 	}

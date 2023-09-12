@@ -46,14 +46,14 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 						<liferay-ui:message key="not-set" />
 					</c:when>
 					<c:otherwise>
-						<h4><%= defaultBillingAddress.getName() %></h4>
+						<h4><%= HtmlUtil.escape(defaultBillingAddress.getName()) %></h4>
 
 						<liferay-text-localizer:address-display
 							address="<%= defaultBillingAddress %>"
 						/>
 
 						<c:if test="<%= Validator.isNotNull(defaultBillingAddress.getPhoneNumber()) %>">
-							<span class="autofit-row"><%= defaultBillingAddress.getPhoneNumber() %></span>
+							<span class="autofit-row"><%= HtmlUtil.escape(defaultBillingAddress.getPhoneNumber()) %></span>
 						</c:if>
 					</c:otherwise>
 				</c:choose>
@@ -113,14 +113,14 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 						<liferay-ui:message key="not-set" />
 					</c:when>
 					<c:otherwise>
-						<h4><%= defaultShippingAddress.getName() %></h4>
+						<h4><%= HtmlUtil.escape(defaultShippingAddress.getName()) %></h4>
 
 						<liferay-text-localizer:address-display
 							address="<%= defaultShippingAddress %>"
 						/>
 
 						<c:if test="<%= Validator.isNotNull(defaultShippingAddress.getPhoneNumber()) %>">
-							<span class="autofit-row"><%= defaultShippingAddress.getPhoneNumber() %></span>
+							<span class="autofit-row"><%= HtmlUtil.escape(defaultShippingAddress.getPhoneNumber()) %></span>
 						</c:if>
 					</c:otherwise>
 				</c:choose>

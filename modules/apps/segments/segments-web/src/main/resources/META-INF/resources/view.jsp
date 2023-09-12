@@ -36,7 +36,7 @@ request.setAttribute("view.jsp-eventName", eventName);
 			<c:when test="<%= segmentsConfigurationURL != null %>">
 				<clay:link
 					href="<%= segmentsConfigurationURL %>"
-					label='<%= LanguageUtil.get(request, "to-enable,-go-to-instance-settings") %>'
+					label="to-enable,-go-to-instance-settings"
 				/>
 			</c:when>
 			<c:otherwise>

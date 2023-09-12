@@ -54,8 +54,8 @@ const getVelocityUnits = (timeRange) => {
 		return [];
 	}
 
-	const dateEnd = moment.utc(timeRange.dateEnd);
-	const dateStart = moment.utc(timeRange.dateStart);
+	const dateEnd = moment(timeRange.dateEnd);
+	const dateStart = moment(timeRange.dateStart);
 
 	let daysDiff = dateEnd.diff(dateStart, 'days');
 

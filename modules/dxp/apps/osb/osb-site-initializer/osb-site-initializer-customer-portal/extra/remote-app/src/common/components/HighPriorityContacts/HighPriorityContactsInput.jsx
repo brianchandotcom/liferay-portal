@@ -14,6 +14,7 @@ const HighPriorityContactsInput = ({
 	currentHighPriorityContacts,
 	disableSubmit,
 	inputName,
+	isCriticalIncidentCard,
 	koroneikiAccount,
 	setContactList,
 }) => {
@@ -77,7 +78,11 @@ const HighPriorityContactsInput = ({
 				groupStyle="pb-1"
 				helper={i18n.translate('please-enter-name-or-email-address')}
 				items={items}
-				label={i18n.translate(`${getKebabCase(inputName)}-contact`)}
+				label={
+					isCriticalIncidentCard
+						? i18n.translate('contacts')
+						: i18n.translate(`${getKebabCase(inputName)}-contact`)
+				}
 				metaErrorCallback={handleMetaErrorChange}
 				name={`${inputName}Contact`}
 				onChange={handleMultiSelectChange}

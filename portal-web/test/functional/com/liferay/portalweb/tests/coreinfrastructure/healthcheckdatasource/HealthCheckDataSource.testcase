@@ -1,0 +1,38 @@
+@component-name = "portal-data-source"
+definition {
+
+	property custom.properties = "health.check.data.source.enabled=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Database";
+
+	@priority = 3
+	test CanGetFailureResponseOnLostConnection {
+		property test.assert.warning.exceptions = "false";
+		property test.liferay.virtual.instance = "false";
+
+		AntCommands.runCommand("build-test.xml", "stop-docker-database");
+
+		var curl = '''http://localhost:8080/health_check/data_source -i''';
+
+		var response = JSONCurlUtil.get(${curl});
+
+		TestUtils.assertPartialEquals(
+			actual = ${response},
+			expected = "HTTP/1.1 500");
+	}
+
+	@priority = 3
+	test CanUseDataSourceForDatabaseLivenessChecking {
+		property test.liferay.virtual.instance = "false";
+
+		var curl = '''http://localhost:8080/health_check/data_source -i''';
+
+		var response = JSONCurlUtil.get(${curl});
+
+		TestUtils.assertPartialEquals(
+			actual = ${response},
+			expected = "HTTP/1.1 200");
+	}
+
+}

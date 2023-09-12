@@ -10,7 +10,6 @@ import com.liferay.info.exception.InfoItemActionExecutionInvalidLayoutModeExcept
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.action.executor.InfoItemActionExecutor;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,10 +43,6 @@ public class ExecuteInfoItemActionStrutsAction implements StrutsAction {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-169992")) {
-			return null;
-		}
 
 		try {
 			if (!Objects.equals(

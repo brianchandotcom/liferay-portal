@@ -1,6 +1,7 @@
 @component-name = "portal-publications"
 definition {
 
+	property custom.properties = "feature.flag.LPS-186360=true";
 	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 	property osgi.module.configurations = "enabled=B\"true\"";
 	property portal.release = "true";
@@ -27,11 +28,11 @@ definition {
 	@description = "This is use case for LPS-186361. Assert we can add edit and delete publication remote server."
 	@priority = 4
 	test CanCRUDPublicationRemoteServer {
-		property custom.properties = "feature.flag.LPS-186360=true";
-
 		PublicationsRemoteServer.gotoRemoteServers();
 
 		PublicationsRemoteServer.addRemoteServer(
+			remoteServerClientId = "clientidedit",
+			remoteServerClientSecret = "clientsecretedit",
 			remoteServerDescription = "Remote Server Description",
 			remoteServerName = "Remote Server Name",
 			remoteServerURL = "http://localhost:8080");
@@ -39,6 +40,8 @@ definition {
 		PublicationsRemoteServer.gotoRemoteServers();
 
 		PublicationsRemoteServer.editRemoteServer(
+			remoteServerClientId = "clientidedit",
+			remoteServerClientSecret = "clientsecretedit",
 			remoteServerDescriptionEdit = "Remote Server Description Edit",
 			remoteServerName = "Remote Server Name",
 			remoteServerNameEdit = "Remote Server Name Edit",
@@ -51,6 +54,99 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_STATE_TEXT",
 			value1 = "no results were found");
+	}
+
+	@description = "This is use case for LPS-193854. Assert we can enable and disable Manage Remotely with the related assets being created or deleted accordingly."
+	@priority = 5
+	test EnableAndDisableManageRemotely {
+		task ("Enable Manage Remotely and get the clientId and clientSecret") {
+			Publications.enableManageRemotely();
+
+			WaitForSPARefresh();
+
+			var clientId = selenium.getElementValue("Publications#CLIENT_ID");
+			var clientSecret = selenium.getElementValue("Publications#CLIENT_SECRET");
+
+			echo("Publications Client Id is ${clientId}, Client Secret is ${clientSecret}");
+		}
+
+		task ("Assert Publication Service Account user is created in Service Accounts") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Service Accounts");
+
+			LexiconEntry.viewEntryName(rowEntry = "Publications Service Account");
+		}
+
+		task ("Assert Remote Publications Headless Server is created in OAuth2Applications") {
+			OAuth2.openOAuth2Admin();
+
+			LexiconEntry.viewEntryName(rowEntry = "Remote Publications Headless Server");
+		}
+
+		task ("Assert Client Id and Client Secret is displayed and matches the values in OAuth2Applications") {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Remote Publications Headless Server");
+
+			WaitForSPARefresh();
+
+			var generatedClientId = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_ID");
+			var generatedClientSecret = selenium.getElementValue("OAuth2#ADMIN_INPUT_FORM_CLIENT_SECRET");
+
+			echo("In OAuth2Applications Client Id is ${clientId}, Client Secret is ${clientSecret}");
+
+			if (${generatedClientId} != ${clientId}) {
+				fail("Client Id doesn't match the values in OAuth2Applications");
+			}
+
+			if (${generatedClientSecret} != ${clientSecret}) {
+				fail("Client Secret doesn't match the values in OAuth2Applications");
+			}
+		}
+
+		task ("Disable Manage Remotely") {
+			Publications.disableManageRemotely();
+		}
+
+		task ("Assert Remote Publications Headless Server is deleted") {
+			OAuth2.openOAuth2Admin();
+
+			AssertElementNotPresent(
+				key_rowEntry = "Remote Publications Headless Server",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+		}
+
+		task ("Publications Service Account does not get deleted") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Service Accounts");
+
+			LexiconEntry.viewEntryName(rowEntry = "Publications Service Account");
+		}
+
+		task ("Reenable Manage Remotely and get the clientId and clientSecret") {
+			Publications.enableManageRemotely();
+
+			WaitForSPARefresh();
+
+			var newClientId = selenium.getElementValue("Publications#CLIENT_ID");
+			var newClientSecret = selenium.getElementValue("Publications#CLIENT_SECRET");
+
+			echo("Publications New Client Id is ${clientId}, New Client Secret is ${clientSecret}");
+		}
+
+		task ("Reenable Manage Remotely and get the clientId and clientSecret") {
+			if (${newClientId} == ${clientId}) {
+				fail("Client Id is same as previous one");
+			}
+
+			if (${newClientSecret} == ${clientSecret}) {
+				fail("Client Secret is same as previous one");
+			}
+		}
 	}
 
 }

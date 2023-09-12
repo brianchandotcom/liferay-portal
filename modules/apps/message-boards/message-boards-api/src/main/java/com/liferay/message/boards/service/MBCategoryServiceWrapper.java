@@ -287,6 +287,13 @@ public class MBCategoryServiceWrapper
 		return _mbCategoryService.getCategoryIds(groupId, categoryId);
 	}
 
+	@Override
+	public MBCategory getMBCategory(long groupId, String friendlyURL)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _mbCategoryService.getMBCategory(groupId, friendlyURL);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

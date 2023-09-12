@@ -51,10 +51,12 @@ public class CTRemoteLocalServiceUtil {
 	}
 
 	public static CTRemote addCTRemote(
-			long userId, String name, String description, String url)
+			long userId, String name, String description, String url,
+			String clientId, String clientSecret)
 		throws PortalException {
 
-		return getService().addCTRemote(userId, name, description, url);
+		return getService().addCTRemote(
+			userId, name, description, url, clientId, clientSecret);
 	}
 
 	/**
@@ -239,6 +241,10 @@ public class CTRemoteLocalServiceUtil {
 		return getService().getCTRemotes(start, end);
 	}
 
+	public static List<CTRemote> getCTRemotes(long companyId) {
+		return getService().getCTRemotes(companyId);
+	}
+
 	public static List<CTRemote> getCTRemotes(
 		long companyId, int start, int end) {
 
@@ -294,10 +300,12 @@ public class CTRemoteLocalServiceUtil {
 	}
 
 	public static CTRemote updateCTRemote(
-			long ctRemoteId, String name, String description, String url)
+			long ctRemoteId, String name, String description, String url,
+			String clientId, String clientSecret)
 		throws PortalException {
 
-		return getService().updateCTRemote(ctRemoteId, name, description, url);
+		return getService().updateCTRemote(
+			ctRemoteId, name, description, url, clientId, clientSecret);
 	}
 
 	public static CTRemoteLocalService getService() {

@@ -513,7 +513,7 @@ public class CommerceShipmentTest {
 				null, commerceShipment1.getCommerceShipmentId(),
 				commerceOrderItem1.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				commerceOrderItem1Quantity.intValue(), null, true,
+				commerceOrderItem1Quantity, null, true,
 				ServiceContextTestUtil.getServiceContext(
 					commerceOrder.getGroupId()));
 
@@ -525,7 +525,7 @@ public class CommerceShipmentTest {
 				null, commerceShipment2.getCommerceShipmentId(),
 				commerceOrderItem2.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				commerceOrderItem2Quantity.intValue(), null, true,
+				commerceOrderItem2Quantity, null, true,
 				ServiceContextTestUtil.getServiceContext(
 					commerceOrder.getGroupId()));
 
@@ -718,7 +718,7 @@ public class CommerceShipmentTest {
 			null, commerceShipment.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			orderedQuantity.intValue(), null, true,
+			orderedQuantity, null, true,
 			ServiceContextTestUtil.getServiceContext(
 				commerceOrder.getGroupId()));
 	}
@@ -956,7 +956,7 @@ public class CommerceShipmentTest {
 		CommerceShipmentItem commerceShipmentItem = commerceShipmentItems.get(
 			0);
 
-		int newOrderedQuantity = 10;
+		BigDecimal newOrderedQuantity = new BigDecimal(10);
 
 		_commerceShipmentItemLocalService.updateCommerceShipmentItem(
 			commerceShipmentItem.getCommerceShipmentItemId(),
@@ -1010,7 +1010,7 @@ public class CommerceShipmentTest {
 
 		_commerceShipmentItemLocalService.updateCommerceShipmentItem(
 			0, commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			orderedQuantity.intValue(), true);
+			orderedQuantity, true);
 	}
 
 	@Rule

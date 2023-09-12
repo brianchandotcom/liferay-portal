@@ -80,10 +80,10 @@ export default function EditObjectValidation({
 		delete objectValidation.lineCount;
 
 		try {
-			await API.save(
-				`/o/object-admin/v1.0/object-validation-rules/${objectValidation.id}`,
-				objectValidation
-			);
+			await API.save({
+				item: objectValidation,
+				url: `/o/object-admin/v1.0/object-validation-rules/${objectValidation.id}`,
+			});
 			saveAndReload();
 			openToast({
 				message: Liferay.Language.get(

@@ -34,8 +34,7 @@ public class JavaAnnotationsCheck extends BaseJavaTermCheck {
 
 	protected void checkComponentName(
 			String fileName, String absolutePath, JavaClass javaClass,
-			String annotation, String attributeValue,
-			boolean forceOSGiComponent)
+			String attributeValue, boolean forceOSGiComponent)
 		throws Exception {
 
 		String componentName = _getComponentName(

@@ -5,10 +5,12 @@
 
 /// <reference types="react" />
 
-import {FDSCellRenderer} from '@liferay/js-api/data-set';
+interface IHTMLElementBuilder {
+	(args: any): HTMLElement;
+}
 export interface IClientExtensionRenderer {
 	erc?: string;
-	htmlBuilder?: FDSCellRenderer;
+	htmlElementBuilder?: IHTMLElementBuilder;
 	name?: string;
 	type: 'clientExtension';
 	url?: string;
@@ -21,3 +23,4 @@ export interface IInternalRenderer {
 	url?: string;
 }
 export declare type TRenderer = IClientExtensionRenderer | IInternalRenderer;
+export {};

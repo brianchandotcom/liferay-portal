@@ -32,7 +32,7 @@ const AccountSubscriptionsList = ({
 
 	if (loading) {
 		return (
-			<div className="d-flex flex-wrap">
+			<div className="d-flex flex-column">
 				{[...new Array(maxCardsLoading)].map((_, index) => (
 					<AccountSubscriptionCard key={index} loading />
 				))}
@@ -49,7 +49,7 @@ const AccountSubscriptionsList = ({
 	}
 
 	return (
-		<div className="d-flex flex-wrap">
+		<div className="d-flex flex-column">
 			{open && (
 				<AccountSubscriptionModal
 					accountKey={accountKey}

@@ -176,6 +176,7 @@ public abstract class BaseTierPriceResourceTestCase {
 		tierPrice.setExternalReferenceCode(regex);
 		tierPrice.setPriceEntryExternalReferenceCode(regex);
 		tierPrice.setPriceFormatted(regex);
+		tierPrice.setUnitOfMeasureKey(regex);
 
 		String json = TierPriceSerDes.toJSON(tierPrice);
 
@@ -187,6 +188,7 @@ public abstract class BaseTierPriceResourceTestCase {
 		Assert.assertEquals(
 			regex, tierPrice.getPriceEntryExternalReferenceCode());
 		Assert.assertEquals(regex, tierPrice.getPriceFormatted());
+		Assert.assertEquals(regex, tierPrice.getUnitOfMeasureKey());
 	}
 
 	@Test
@@ -978,6 +980,14 @@ public abstract class BaseTierPriceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("unitOfMeasureKey", additionalAssertFieldName)) {
+				if (tierPrice.getUnitOfMeasureKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1290,6 +1300,17 @@ public abstract class BaseTierPriceResourceTestCase {
 				if (!Objects.deepEquals(
 						tierPrice1.getPriceFormatted(),
 						tierPrice2.getPriceFormatted())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("unitOfMeasureKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						tierPrice1.getUnitOfMeasureKey(),
+						tierPrice2.getUnitOfMeasureKey())) {
 
 					return false;
 				}
@@ -1668,6 +1689,52 @@ public abstract class BaseTierPriceResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("unitOfMeasureKey")) {
+			Object object = tierPrice.getUnitOfMeasureKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -1725,6 +1792,8 @@ public abstract class BaseTierPriceResourceTestCase {
 					RandomTestUtil.randomString());
 				priceEntryId = RandomTestUtil.randomLong();
 				priceFormatted = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				unitOfMeasureKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}
 		};

@@ -58,6 +58,10 @@ definition {
 			userScreenName = "buyeruser",
 			userSiteMembership = "Minium");
 
+		Account.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
+
 		Account.addAssigneeToRoleViaRolesTab(
 			accountRoleTitle = "Account Administrator",
 			assigneeName = "Buyer");
@@ -171,6 +175,10 @@ definition {
 			userRole = "Buyer",
 			userScreenName = "buyeruser",
 			userSiteMembership = "Minium");
+
+		Account.openAccountsAdmin();
+
+		LexiconEntry.gotoEntry(rowEntry = "Commerce Account");
 
 		Account.addAssigneeToRoleViaRolesTab(
 			accountRoleTitle = "Account Administrator",

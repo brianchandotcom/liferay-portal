@@ -176,9 +176,9 @@ definition {
 			searchAssetSummary = "Blogs User Entry Content",
 			searchAssetTitle = "Blogs User Entry Title");
 
-		AssertClick(
-			locator1 = "SearchResults#USER_FACET_ANY_USER",
-			value1 = "Any User");
+		Click(
+			key_term = "Any User",
+			locator1 = "SearchResults#USER_FACET_TERM");
 
 		ClassicSearch.viewUserFacetPG(
 			facetFrequency = 1,
@@ -197,7 +197,9 @@ definition {
 
 		ClassicSearch.search(searchTerm = "Entry");
 
-		AssertElementNotPresent(locator1 = "SearchResults#USER_FACET_ANY_USER");
+		AssertElementNotPresent(
+			key_term = "Any User",
+			locator1 = "SearchResults#USER_FACET_TERM");
 	}
 
 	@priority = 5

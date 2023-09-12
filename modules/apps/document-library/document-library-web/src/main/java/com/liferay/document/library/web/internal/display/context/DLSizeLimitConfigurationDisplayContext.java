@@ -5,9 +5,14 @@
 
 package com.liferay.document.library.web.internal.display.context;
 
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -70,6 +75,33 @@ public class DLSizeLimitConfigurationDisplayContext {
 		}
 
 		throw new IllegalArgumentException("Unsupported scope: " + _scope);
+	}
+
+	public String[] getFileMaxSizeHelpArguments() {
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
+
+		return new String[] {
+			LanguageUtil.get(
+				_httpServletRequest, "overall-maximum-upload-request-size"),
+			StringBundler.concat(
+				"<a href=\"",
+				PortletURLBuilder.create(
+					requestBackedPortletURLFactory.createActionURL(
+						ConfigurationAdminPortletKeys.SYSTEM_SETTINGS)
+				).setMVCRenderCommandName(
+					"/configuration_admin/edit_configuration"
+				).setParameter(
+					"factoryPid",
+					"com.liferay.portal.upload.internal.configuration." +
+						"UploadServletRequestConfiguration"
+				).buildString(),
+				"\">",
+				LanguageUtil.get(
+					_httpServletRequest,
+					"upload-servlet-request-configuration-name"),
+				"</a>")
+		};
 	}
 
 	public Map<String, Object> getFileSizePerMimeTypeData() {

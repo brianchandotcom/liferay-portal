@@ -17,10 +17,11 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.content.web.internal.configuration.JournalContentPortletInstanceConfiguration;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.UnicodeLanguage;
+import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -129,8 +130,9 @@ public class JournalContentPortletToolbarContributor
 
 		JournalContentPortletInstanceConfiguration
 			journalContentPortletInstanceConfiguration =
-				portletDisplay.getPortletInstanceConfiguration(
-					JournalContentPortletInstanceConfiguration.class);
+				_configurationProvider.getPortletInstanceConfiguration(
+					JournalContentPortletInstanceConfiguration.class,
+					themeDisplay);
 
 		if (journalContentPortletInstanceConfiguration.
 				sortStructuresByByName()) {
@@ -220,7 +222,7 @@ public class JournalContentPortletToolbarContributor
 					"'));}}, selectEventName: '",
 					portletResponse.getNamespace(),
 					"selectDDMStructure', title: '",
-					_unicodeLanguage.get(
+					UnicodeLanguageUtil.get(
 						_portal.getHttpServletRequest(portletRequest),
 						"select-structure"),
 					"', url: '",
@@ -311,6 +313,9 @@ public class JournalContentPortletToolbarContributor
 		JournalContentPortletToolbarContributor.class);
 
 	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
 	private DDMStructureService _ddmStructureService;
 
 	@Reference
@@ -329,8 +334,5 @@ public class JournalContentPortletToolbarContributor
 		target = "(resource.name=" + JournalConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private UnicodeLanguage _unicodeLanguage;
 
 }

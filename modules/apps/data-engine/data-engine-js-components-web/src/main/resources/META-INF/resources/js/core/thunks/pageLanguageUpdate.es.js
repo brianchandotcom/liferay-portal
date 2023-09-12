@@ -75,9 +75,9 @@ export default function pageLanguageUpdate({
 		});
 
 		fetch(
-			`/o/data-engine/v2.0/data-layouts/${ddmStructureLayoutId}/context?p_p_id=${getPortletId(
+			`/o/data-engine/v2.0/data-layouts/${ddmStructureLayoutId}/context?p_l_id=${themeDisplay.getPlid()}&p_p_id=${getPortletId(
 				portletNamespace
-			)}&p_l_id=${themeDisplay.getPlid()}`,
+			)}`,
 			{
 				body: JSON.stringify({
 					dataRecordValues,

@@ -34,7 +34,6 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -118,6 +117,10 @@ public class AssetListEntryUsagesManager {
 				_assetListEntryUsageLocalService.getAssetEntryListUsagesByPlid(
 					plid)) {
 
+			if (!_exists(assetListEntryUsage)) {
+				continue;
+			}
+
 			String uniqueKey = _generateUniqueLayoutClassedModelUsageKey(
 				assetListEntryUsage);
 
@@ -189,13 +192,48 @@ public class AssetListEntryUsagesManager {
 		return liferayRenderRequest;
 	}
 
+	private boolean _exists(AssetListEntryUsage assetListEntryUsage) {
+		if (Objects.equals(
+				assetListEntryUsage.getClassName(),
+				AssetListEntry.class.getName())) {
+
+			AssetListEntry assetListEntry =
+				_assetListEntryLocalService.fetchAssetListEntry(
+					GetterUtil.getLong(assetListEntryUsage.getKey()));
+
+			if (assetListEntry != null) {
+				return true;
+			}
+		}
+
+		if (Objects.equals(
+				assetListEntryUsage.getClassName(),
+				InfoCollectionProvider.class.getName())) {
+
+			InfoCollectionProvider<?> infoCollectionProvider =
+				_infoItemServiceRegistry.getInfoItemService(
+					InfoCollectionProvider.class, assetListEntryUsage.getKey());
+
+			if (infoCollectionProvider == null) {
+				infoCollectionProvider =
+					_infoItemServiceRegistry.getInfoItemService(
+						RelatedInfoItemCollectionProvider.class,
+						assetListEntryUsage.getKey());
+			}
+
+			if (infoCollectionProvider != null) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private String _generateUniqueLayoutClassedModelUsageKey(
 		AssetListEntryUsage assetListEntryUsage) {
 
-		return StringBundler.concat(
-			assetListEntryUsage.getClassNameId(), StringPool.DASH,
-			assetListEntryUsage.getContainerKey(), StringPool.DASH,
-			assetListEntryUsage.getKey());
+		return assetListEntryUsage.getClassNameId() + StringPool.DASH +
+			assetListEntryUsage.getKey();
 	}
 
 	private String _getAssetEntryListSubtypeLabel(

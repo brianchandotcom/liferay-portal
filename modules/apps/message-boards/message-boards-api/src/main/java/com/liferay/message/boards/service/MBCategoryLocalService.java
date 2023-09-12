@@ -421,6 +421,10 @@ public interface MBCategoryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBCategory getMBCategory(long categoryId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBCategory getMBCategory(long groupId, String friendlyURL)
+		throws PortalException;
+
 	/**
 	 * Returns the message boards category matching the UUID and group.
 	 *

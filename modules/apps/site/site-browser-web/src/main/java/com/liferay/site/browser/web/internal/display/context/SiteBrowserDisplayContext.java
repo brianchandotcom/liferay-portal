@@ -7,10 +7,8 @@ package com.liferay.site.browser.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -243,19 +241,8 @@ public class SiteBrowserDisplayContext {
 	public List<NavigationItem> getNavigationItems() {
 		String[] types = _getTypes();
 
-		if (ArrayUtil.isEmpty(types)) {
+		if (ArrayUtil.isEmpty(types) || (types.length == 1)) {
 			return Collections.emptyList();
-		}
-
-		if (types.length == 1) {
-			return NavigationItemListBuilder.add(
-				navigationItem -> {
-					navigationItem.setActive(true);
-					navigationItem.setHref(getPortletURL());
-					navigationItem.setLabel(
-						LanguageUtil.get(_httpServletRequest, "sites"));
-				}
-			).build();
 		}
 
 		return new NavigationItemList() {

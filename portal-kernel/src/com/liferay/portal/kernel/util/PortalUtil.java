@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.upload.UploadServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 
-import java.net.InetAddress;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -52,7 +50,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.PreferencesValidator;
-import javax.portlet.ValidatorException;
 import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
@@ -909,15 +906,6 @@ public class PortalUtil {
 
 	public static String getLayoutActualURL(
 			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL)
-		throws PortalException {
-
-		return _portal.getLayoutActualURL(
-			groupId, privateLayout, mainPath, friendlyURL);
-	}
-
-	public static String getLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException {
@@ -1178,20 +1166,12 @@ public class PortalUtil {
 		return _portal;
 	}
 
-	public static InetAddress getPortalLocalInetAddress(boolean secure) {
-		return _portal.getPortalLocalInetAddress(secure);
-	}
-
 	public static int getPortalLocalPort(boolean secure) {
 		return _portal.getPortalLocalPort(secure);
 	}
 
 	public static Properties getPortalProperties() {
 		return _portal.getPortalProperties();
-	}
-
-	public static InetAddress getPortalServerInetAddress(boolean secure) {
-		return _portal.getPortalServerInetAddress(secure);
 	}
 
 	public static int getPortalServerPort(boolean secure) {
@@ -1289,38 +1269,14 @@ public class PortalUtil {
 		return _portal.getPortletId(portletRequest);
 	}
 
-	public static String getPortletLongTitle(Portlet portlet, Locale locale) {
-		return _portal.getPortletLongTitle(portlet, locale);
-	}
-
 	public static String getPortletLongTitle(
 		Portlet portlet, ServletContext servletContext, Locale locale) {
 
 		return _portal.getPortletLongTitle(portlet, servletContext, locale);
 	}
 
-	public static String getPortletLongTitle(
-		Portlet portlet, String languageId) {
-
-		return _portal.getPortletLongTitle(portlet, languageId);
-	}
-
-	public static String getPortletLongTitle(Portlet portlet, User user) {
-		return _portal.getPortletLongTitle(portlet, user);
-	}
-
 	public static String getPortletLongTitle(String portletId, Locale locale) {
 		return _portal.getPortletLongTitle(portletId, locale);
-	}
-
-	public static String getPortletLongTitle(
-		String portletId, String languageId) {
-
-		return _portal.getPortletLongTitle(portletId, languageId);
-	}
-
-	public static String getPortletLongTitle(String portletId, User user) {
-		return _portal.getPortletLongTitle(portletId, user);
 	}
 
 	public static String getPortletNamespace(String portletId) {
@@ -1369,10 +1325,6 @@ public class PortalUtil {
 
 	public static String getPortletTitle(String portletId, User user) {
 		return _portal.getPortletTitle(portletId, user);
-	}
-
-	public static String getPortletXmlFileName() {
-		return _portal.getPortletXmlFileName();
 	}
 
 	public static PortletPreferences getPreferences(
@@ -1709,33 +1661,6 @@ public class PortalUtil {
 		return _portal.isCompanyAdmin(user);
 	}
 
-	public static boolean isCompanyControlPanelPortlet(
-			String portletId, String category, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return _portal.isCompanyControlPanelPortlet(
-			portletId, category, themeDisplay);
-	}
-
-	public static boolean isCompanyControlPanelPortlet(
-			String portletId, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return _portal.isCompanyControlPanelPortlet(portletId, themeDisplay);
-	}
-
-	public static boolean isControlPanelPortlet(
-		String portletId, String category, ThemeDisplay themeDisplay) {
-
-		return _portal.isControlPanelPortlet(portletId, category, themeDisplay);
-	}
-
-	public static boolean isControlPanelPortlet(
-		String portletId, ThemeDisplay themeDisplay) {
-
-		return _portal.isControlPanelPortlet(portletId, themeDisplay);
-	}
-
 	public static boolean isCustomPortletMode(PortletMode portletMode) {
 		return _portal.isCustomPortletMode(portletMode);
 	}
@@ -1783,14 +1708,6 @@ public class PortalUtil {
 		HttpServletRequest httpServletRequest) {
 
 		return _portal.isLoginRedirectRequired(httpServletRequest);
-	}
-
-	public static boolean isMethodGet(PortletRequest portletRequest) {
-		return _portal.isMethodGet(portletRequest);
-	}
-
-	public static boolean isMethodPost(PortletRequest portletRequest) {
-		return _portal.isMethodPost(portletRequest);
 	}
 
 	public static boolean isMultipartRequest(
@@ -1849,10 +1766,6 @@ public class PortalUtil {
 
 	public static void resetCDNHosts() {
 		_portal.resetCDNHosts();
-	}
-
-	public static String resetPortletParameters(String url, String portletId) {
-		return _portal.resetPortletParameters(url, portletId);
 	}
 
 	public static void sendError(
@@ -1947,12 +1860,6 @@ public class PortalUtil {
 		HttpServletRequest httpServletRequest) {
 
 		_portal.setPortalInetSocketAddresses(httpServletRequest);
-	}
-
-	public static void storePreferences(PortletPreferences portletPreferences)
-		throws IOException, ValidatorException {
-
-		_portal.storePreferences(portletPreferences);
 	}
 
 	public static String[] stripURLAnchor(String url, String separator) {

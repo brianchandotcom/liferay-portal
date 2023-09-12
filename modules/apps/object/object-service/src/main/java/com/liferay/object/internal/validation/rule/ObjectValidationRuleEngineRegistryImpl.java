@@ -5,6 +5,7 @@
 
 package com.liferay.object.internal.validation.rule;
 
+import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.scope.CompanyScoped;
 import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
@@ -13,6 +14,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collection;
@@ -32,7 +34,8 @@ public class ObjectValidationRuleEngineRegistryImpl
 
 	@Override
 	public ObjectValidationRuleEngine getObjectValidationRuleEngine(
-		long companyId, String key) {
+			long companyId, String key)
+		throws PortalException {
 
 		ObjectValidationRuleEngine objectValidationRuleEngine =
 			_serviceTrackerMap.getService(key);
@@ -43,8 +46,7 @@ public class ObjectValidationRuleEngineRegistryImpl
 		}
 
 		if (objectValidationRuleEngine == null) {
-			throw new IllegalArgumentException(
-				"No object action executor found with key " + key);
+			throw new ObjectValidationRuleEngineException.NoSuchEngine(key);
 		}
 
 		return objectValidationRuleEngine;

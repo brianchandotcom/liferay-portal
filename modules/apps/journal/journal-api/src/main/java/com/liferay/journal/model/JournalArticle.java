@@ -96,6 +96,9 @@ public interface JournalArticle
 	public com.liferay.dynamic.data.mapping.storage.DDMFormValues
 		getDDMFormValues();
 
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues
+		getDDMFormValues(boolean addMissingDDMFormFieldValues);
+
 	public com.liferay.dynamic.data.mapping.model.DDMStructure
 		getDDMStructure();
 

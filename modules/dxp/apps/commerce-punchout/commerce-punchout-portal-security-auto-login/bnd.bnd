@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Punch Out Portal Security Auto Login
 Bundle-SymbolicName: com.liferay.commerce.punchout.portal.security.auto.login
-Bundle-Version: 4.0.22
+Bundle-Version: 4.0.23
 Import-Package:\
 	com.liferay.portal.kernel.service;version="[4.0.0,9999.0.0)",\
 	\

@@ -7,10 +7,19 @@ package com.liferay.batch.planner.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.planner.rest.client.dto.v1_0.Plan;
+import com.liferay.batch.planner.rest.client.http.HttpInvoker;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.rest.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.Collections;
+
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -28,6 +37,31 @@ public class PlanResourceTest extends BasePlanResourceTestCase {
 			200,
 			planResource.getPlanTemplateHttpResponse(
 				"com.liferay.headless.admin.user.dto.v1_0.Account"));
+
+		String fieldName = "a" + RandomTestUtil.randomString();
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						fieldName
+					).build()));
+
+		HttpInvoker.HttpResponse httpResponse =
+			planResource.getPlanTemplateHttpResponse(
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry" +
+					URLCodec.encodeURL("#") + objectDefinition.getName());
+
+		Assert.assertEquals(200, httpResponse.getStatusCode());
+
+		String[] lines = StringUtil.split(
+			httpResponse.getContent(), System.lineSeparator());
+
+		Assert.assertTrue(StringUtil.contains(lines[0], fieldName));
 	}
 
 	@Override

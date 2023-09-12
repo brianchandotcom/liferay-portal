@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.order.content.web.internal.model;
 
+import java.math.BigDecimal;
+
 /**
  * @author Alessio Antonio Rendina
  */
@@ -12,7 +14,7 @@ public class PreviewOrderItem {
 
 	public PreviewOrderItem(
 		String externalReferenceCode, String importStatus, String options,
-		String productName, int quantity, String replacingSKU,
+		String productName, BigDecimal quantity, String replacingSKU,
 		String requestedDeliveryDateString, int rowNumber, String sku,
 		String totalPrice, String unitOfMeasureKey, String unitPrice) {
 
@@ -46,7 +48,7 @@ public class PreviewOrderItem {
 		return _productName;
 	}
 
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return _quantity;
 	}
 
@@ -70,6 +72,10 @@ public class PreviewOrderItem {
 		return _totalPrice;
 	}
 
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
+	}
+
 	public String getUnitPrice() {
 		return _unitPrice;
 	}
@@ -78,7 +84,7 @@ public class PreviewOrderItem {
 	private final String _importStatus;
 	private final String _options;
 	private final String _productName;
-	private final int _quantity;
+	private final BigDecimal _quantity;
 	private final String _replacingSKU;
 	private final String _requestedDeliveryDateString;
 	private final int _rowNumber;

@@ -10,7 +10,7 @@
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY);
 
-SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDisplayContext = new SiteAdministrationPanelCategoryDisplayContext(liferayPortletRequest, liferayPortletResponse, null);
+SiteAdministrationPanelCategoryDisplayContext siteAdministrationPanelCategoryDisplayContext = new SiteAdministrationPanelCategoryDisplayContext(liferayPortletRequest, null);
 
 Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
 %>
@@ -92,7 +92,7 @@ Group group = siteAdministrationPanelCategoryDisplayContext.getGroup();
 					displayType="unstyled"
 					icon="pages-tree"
 					id='<%= liferayPortletResponse.getNamespace() + "pagesTreeSidenavToggleId" %>'
-					label='<%= LanguageUtil.get(resourceBundle, "page-tree") %>'
+					label="page-tree"
 				/>
 			</c:if>
 		</clay:col>

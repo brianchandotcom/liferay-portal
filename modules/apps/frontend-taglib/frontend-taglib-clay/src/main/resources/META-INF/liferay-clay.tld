@@ -382,6 +382,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>fullWidth</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>size</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -65,8 +66,7 @@ public class OnDemandAdminTicketGeneratorTest {
 			company, null, user.getUserId());
 
 		Assert.assertEquals(
-			OnDemandAdminConstants.TICKET_TYPE_ON_DEMAND_ADMIN_LOGIN,
-			ticket.getType());
+			TicketConstants.TYPE_ON_DEMAND_ADMIN_LOGIN, ticket.getType());
 
 		User onDemandAdminUser = _userLocalService.getUser(ticket.getClassPK());
 

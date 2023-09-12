@@ -1779,15 +1779,17 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
@@ -1800,7 +1802,6 @@
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -1916,15 +1917,17 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
@@ -1937,7 +1940,6 @@
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -2052,15 +2054,17 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
@@ -2073,7 +2077,6 @@
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -2188,15 +2191,17 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
@@ -2209,7 +2214,6 @@
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -2325,15 +2329,17 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
@@ -2346,7 +2352,6 @@
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -2461,15 +2466,17 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
@@ -2482,7 +2489,6 @@
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -2628,15 +2634,17 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
@@ -2649,7 +2657,6 @@
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -2764,15 +2771,17 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
@@ -2785,7 +2794,6 @@
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -2931,15 +2939,17 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
@@ -2952,7 +2962,6 @@
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -3062,15 +3071,17 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
@@ -3083,7 +3094,6 @@
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -3272,6 +3282,118 @@
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
 																			"fragmentConfig": {
+																				"fontSize": "font-size-heading-f2",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "<h3 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Site benefits - with Cognizant SIP, sites are able to:</h3>\n"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "spacer",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "5",
+																				"paddingTop": "5"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-paragraph-large",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "<ul>\n\t<li><strong>Create a single sign-on -&nbsp;</strong>Sites can access all of their clinical trials across participating sponsors in one place.<br />\n\t </li>\n\t<li><strong>Build a user profile -&nbsp;</strong>Enter data once and maintain credentials centrally for platform sponsors and studies. Includes sponsor-searchable, electronically-signed digital CVs for investigators.</li>\n</ul>\n \n\n<ul>\n\t<li><strong>Manage facility and department profiles -</strong>&nbsp;Sites need only to complete their profiles and upload once for them to be accessible to platform sponsors and their future studies. User profiles can also be associated with multiple facilities and departments.</li>\n</ul>\n \n\n<ul>\n\t<li><strong>Work digitally -</strong>&nbsp;Sites, facilities and investigators are interconnected, enabling all to complete feasibility surveys and manage startup and day-to-day tasks for clinical studies.</li>\n</ul>\n \n\n<ul>\n\t<li><strong>Participate in dedicated study workspaces -&nbsp;&nbsp;</strong>Each study has its own designated work area where sponsors and study teams can post, share and retrieve documents safely and securely.</li>\n</ul>\n \n\n<ul>\n\t<li><strong>Prioritize and manage work -&nbsp;</strong>Investigators have a consolidated view of tasks across studies and sponsors.</li>\n</ul>\n \n\n<ul>\n\t<li><strong>Access and acknowledge receipt of safety notification reports -&nbsp;</strong>Sites have access to a centralized dashboard view of their clinical trial safety reports.</li>\n</ul>\n \n\n<ul>\n\t<li><strong>Track training -</strong>&nbsp;Investigators can complete training courses for one sponsor and receive credit across all participating sponsors via mutually-recognized GCP training.</li>\n</ul>\n \n\n<ul>\n\t<li><strong>Facilitate and maintain site regulatory binders -</strong>&nbsp;Cognizant SIP streamlines access to eISF, which enables clinical trial sites to electronically manage their essential regulatory study documents and data. This capability also enables both sites and sponsors to seamlessly exchange documents and information.</li>\n</ul>\n"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "spacer",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "5",
+																				"paddingTop": "5"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "spacer",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingBottom": "4",
+																				"paddingTop": "4"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
 																				"fontSize": "font-size-heading-f4",
 																				"smallCaps": false,
 																				"tabletScreenCenter": false
@@ -3346,6 +3468,9 @@
 																	},
 																	{
 																		"definition": {
+																			"fragmentStyle": {
+																				"borderWidth": "0"
+																			},
 																			"indexed": true,
 																			"layout": {
 																				"borderWidth": 0,

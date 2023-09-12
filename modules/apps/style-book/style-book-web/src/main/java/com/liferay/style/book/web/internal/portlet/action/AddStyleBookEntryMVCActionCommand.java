@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryService;
-import com.liferay.style.book.web.internal.handler.StyleBookEntryExceptionRequestHandler;
+import com.liferay.style.book.web.internal.handler.StyleBookEntryExceptionRequestHandlerUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -66,7 +66,7 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			hideDefaultErrorMessage(actionRequest);
 
-			_styleBookEntryExceptionRequestHandler.handlePortalException(
+			StyleBookEntryExceptionRequestHandlerUtil.handlePortalException(
 				actionRequest, actionResponse, portalException);
 		}
 	}
@@ -98,10 +98,6 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private StyleBookEntryExceptionRequestHandler
-		_styleBookEntryExceptionRequestHandler;
 
 	@Reference
 	private StyleBookEntryService _styleBookEntryService;

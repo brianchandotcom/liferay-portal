@@ -44,7 +44,7 @@
 	</tr>
 	<tr>
 		<td>LABEL_LOCALIZED</td>
-		<td>//div[contains(@class,'lfr-objects__input-localized')]//input</td>
+		<td>//div[contains(@class,'input-localized')]//input</td>
 		<td></td>
 	</tr>
 	<tr>

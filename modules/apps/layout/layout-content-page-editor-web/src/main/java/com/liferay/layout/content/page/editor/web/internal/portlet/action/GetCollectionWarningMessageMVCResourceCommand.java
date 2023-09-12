@@ -5,25 +5,12 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.info.exception.NoSuchInfoItemException;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.info.pagination.InfoPage;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.LayoutObjectReferenceUtil;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.layout.list.retriever.DefaultLayoutListRetrieverContext;
-import com.liferay.layout.list.retriever.LayoutListRetriever;
-import com.liferay.layout.list.retriever.LayoutListRetrieverRegistry;
-import com.liferay.layout.list.retriever.ListObjectReference;
-import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
-import com.liferay.layout.list.retriever.ListObjectReferenceFactoryRegistry;
-import com.liferay.layout.util.CollectionPaginationUtil;
+import com.liferay.layout.helper.LayoutWarningMessageHelper;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -37,9 +24,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
-
-import java.util.Objects;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -72,15 +56,12 @@ public class GetCollectionWarningMessageMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String layoutObjectReference = ParamUtil.getString(
-			resourceRequest, "layoutObjectReference");
-
 		try {
 			jsonObject = JSONUtil.put(
 				"warningMessage",
 				_getWarningMessage(
 					_portal.getHttpServletRequest(resourceRequest),
-					layoutObjectReference, themeDisplay));
+					themeDisplay));
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -97,92 +78,8 @@ public class GetCollectionWarningMessageMVCResourceCommand
 			resourceRequest, resourceResponse, jsonObject);
 	}
 
-	private Object _getInfoItem(HttpServletRequest httpServletRequest) {
-		long classNameId = ParamUtil.getLong(httpServletRequest, "classNameId");
-		long classPK = ParamUtil.getLong(httpServletRequest, "classPK");
-
-		if ((classNameId <= 0) && (classPK <= 0)) {
-			return null;
-		}
-
-		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			(InfoItemObjectProvider<Object>)
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemObjectProvider.class,
-					_portal.getClassName(classNameId),
-					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-
-		if (infoItemObjectProvider == null) {
-			return null;
-		}
-
-		try {
-			return infoItemObjectProvider.getInfoItem(
-				new ClassPKInfoItemIdentifier(classPK));
-		}
-		catch (NoSuchInfoItemException noSuchInfoItemException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchInfoItemException);
-			}
-		}
-
-		return null;
-	}
-
-	private int _getTotalCount(
-			CollectionStyledLayoutStructureItem
-				collectionStyledLayoutStructureItem,
-			HttpServletRequest httpServletRequest, String layoutObjectReference)
-		throws Exception {
-
-		JSONObject layoutObjectReferenceJSONObject =
-			_jsonFactory.createJSONObject(layoutObjectReference);
-
-		String type = layoutObjectReferenceJSONObject.getString("type");
-
-		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
-			(LayoutListRetriever<?, ListObjectReference>)
-				_layoutListRetrieverRegistry.getLayoutListRetriever(type);
-
-		if (layoutListRetriever == null) {
-			throw new Exception(
-				"Layout list retriever is null for type " + type);
-		}
-
-		ListObjectReferenceFactory<?> listObjectReferenceFactory =
-			_listObjectReferenceFactoryRegistry.getListObjectReference(type);
-
-		if (listObjectReferenceFactory == null) {
-			throw new Exception(
-				"List object reference factory is null for type " + type);
-		}
-
-		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
-			new DefaultLayoutListRetrieverContext();
-
-		defaultLayoutListRetrieverContext.setConfiguration(
-			LayoutObjectReferenceUtil.getConfiguration(
-				layoutObjectReferenceJSONObject));
-
-		Object infoItem = _getInfoItem(httpServletRequest);
-
-		if (infoItem != null) {
-			defaultLayoutListRetrieverContext.setContextObject(infoItem);
-		}
-
-		InfoPage<?> infoPage = layoutListRetriever.getInfoPage(
-			listObjectReferenceFactory.getListObjectReference(
-				layoutObjectReferenceJSONObject),
-			defaultLayoutListRetrieverContext);
-
-		return Math.min(
-			collectionStyledLayoutStructureItem.getNumberOfItems(),
-			infoPage.getTotalCount());
-	}
-
 	private String _getWarningMessage(
-			HttpServletRequest httpServletRequest, String layoutObjectReference,
-			ThemeDisplay themeDisplay)
+			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		long segmentsExperienceId = ParamUtil.getLong(
@@ -208,32 +105,12 @@ public class GetCollectionWarningMessageMVCResourceCommand
 			collectionStyledLayoutStructureItem =
 				(CollectionStyledLayoutStructureItem)layoutStructureItem;
 
-		int totalCount = _getTotalCount(
-			collectionStyledLayoutStructureItem, httpServletRequest,
-			layoutObjectReference);
-
-		if (Objects.equals(
-				collectionStyledLayoutStructureItem.getPaginationType(),
-				CollectionPaginationUtil.PAGINATION_TYPE_NONE) &&
-			(collectionStyledLayoutStructureItem.isDisplayAllItems() ||
-			 (totalCount > PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA))) {
-
-			return _language.format(
-				httpServletRequest,
-				"this-setting-can-affect-page-performance-severely-if-the-" +
-					"number-of-collection-items-is-above-x.-we-strongly-" +
-						"recommend-using-pagination-instead",
-				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA);
-		}
-
-		return StringPool.BLANK;
+		return _layoutWarningMessageHelper.getCollectionWarningMessage(
+			collectionStyledLayoutStructureItem, httpServletRequest);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GetCollectionWarningMessageMVCResourceCommand.class);
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;
@@ -242,11 +119,7 @@ public class GetCollectionWarningMessageMVCResourceCommand
 	private Language _language;
 
 	@Reference
-	private LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
-
-	@Reference
-	private ListObjectReferenceFactoryRegistry
-		_listObjectReferenceFactoryRegistry;
+	private LayoutWarningMessageHelper _layoutWarningMessageHelper;
 
 	@Reference
 	private Portal _portal;

@@ -74,6 +74,7 @@ WikiPagesManagementToolbarDisplayContext wikiPagesManagementToolbarDisplayContex
 	filterLabelItems="<%= wikiPagesManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	infoPanelId="infoPanelId"
 	itemsTotal="<%= wikiPagesManagementToolbarDisplayContext.getTotalItems() %>"
+	orderDropdownItems="<%= wikiPagesManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
 	propsTransformer="wiki_admin/js/WikiPagesManagementToolbarPropsTransformer"
 	searchActionURL="<%= String.valueOf(wikiPagesManagementToolbarDisplayContext.getSearchActionURL()) %>"
 	searchContainerId="wikiPages"

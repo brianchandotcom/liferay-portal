@@ -13,6 +13,7 @@ import {ImageSelectorSize} from '../../../common/components/ImageSelectorSize';
 import MappingSelector from '../../../common/components/MappingSelector';
 import {ConfigurationFieldPropTypes} from '../../../prop_types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
+import {STANDARD_IMAGE_SIZE_LIMIT} from '../../config/constants/standardImageSizeLimit';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {useSelector} from '../../contexts/StoreContext';
 import isMapped from '../../utils/editable_value/isMapped';
@@ -87,6 +88,7 @@ export function ImageSelectorField({field, onValueSelect, value = {}}) {
 						<ImageSelectorSize
 							fieldValue={{fileEntryId: value.fileEntryId}}
 							imageSizeId="auto"
+							imageSizeLimit={STANDARD_IMAGE_SIZE_LIMIT}
 						/>
 					)}
 				</>
@@ -106,6 +108,7 @@ export function ImageSelectorField({field, onValueSelect, value = {}}) {
 						<ImageSelectorSize
 							fieldValue={value}
 							imageSizeId="auto"
+							imageSizeLimit={STANDARD_IMAGE_SIZE_LIMIT}
 						/>
 					)}
 				</>

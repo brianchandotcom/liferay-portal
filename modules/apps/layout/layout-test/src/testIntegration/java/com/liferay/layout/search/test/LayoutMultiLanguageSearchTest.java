@@ -28,6 +28,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -82,6 +83,19 @@ public class LayoutMultiLanguageSearchTest {
 	@Test
 	public void testJapaneseTitle() throws Exception {
 		_testLocaleKeywords(LocaleUtil.JAPAN, _JAPANESE_KEYWORD, _TITLE);
+	}
+
+	@Test
+	public void testLocalizedFields() throws Exception {
+		setTestLocale(LocaleUtil.US);
+
+		_addLayoutMultiLanguage();
+
+		Document document = layoutIndexerFixture.searchOnlyOne(
+			_ENGLISH_KEYWORD, LocaleUtil.US);
+
+		Assert.assertEquals(
+			_ENGLISH_KEYWORD, document.get("localized_title_en_US"));
 	}
 
 	protected void assertFieldValues(

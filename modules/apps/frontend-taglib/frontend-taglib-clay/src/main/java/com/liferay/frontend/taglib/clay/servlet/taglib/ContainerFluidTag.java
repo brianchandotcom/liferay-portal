@@ -20,13 +20,30 @@ public class ContainerFluidTag extends ContainerTag {
 
 		setFluid(true);
 
-		if (Validator.isNull(getSize())) {
+		if (Validator.isNull(getSize()) && !isFullWidth()) {
 			setSize("xl");
 		}
 
 		return super.doStartTag();
 	}
 
+	public boolean isFullWidth() {
+		return _fullWidth;
+	}
+
+	public void setFullWidth(boolean fullWidth) {
+		_fullWidth = fullWidth;
+	}
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_fullWidth = false;
+	}
+
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:container-fluid:";
+
+	private boolean _fullWidth;
 
 }

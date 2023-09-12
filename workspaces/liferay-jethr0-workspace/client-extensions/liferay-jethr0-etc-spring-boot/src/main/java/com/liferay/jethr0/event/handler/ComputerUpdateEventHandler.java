@@ -6,7 +6,7 @@
 package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.jenkins.JenkinsQueue;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 
 import org.json.JSONObject;
 
@@ -29,9 +29,9 @@ public class ComputerUpdateEventHandler extends BaseJenkinsEventHandler {
 			return "{\"message\": \"Jenkins queue is not initialized\"}";
 		}
 
-		JenkinsNode jenkinsNode = updateJenkinsNode();
+		JenkinsNodeEntity jenkinsNodeEntity = updateJenkinsNodeEntity();
 
-		return jenkinsNode.toString();
+		return jenkinsNodeEntity.toString();
 	}
 
 }

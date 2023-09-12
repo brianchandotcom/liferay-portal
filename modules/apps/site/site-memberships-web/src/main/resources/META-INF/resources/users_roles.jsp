@@ -16,7 +16,7 @@ UserRolesDisplayContext userRolesDisplayContext = new UserRolesDisplayContext(re
 />
 
 <aui:form cssClass="container-fluid container-fluid-max-xl portlet-site-memberships-assign-roles" name="fm">
-	<liferay-ui:membership-policy-error />
+	<liferay-site:membership-policy-error />
 
 	<liferay-ui:search-container
 		id="userGroupRoleRole"

@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.internal.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateExportImportConstants;
@@ -289,7 +290,8 @@ public class DisplayPagesImporterTest {
 
 		try {
 			layoutsImporterResultEntries = _layoutsImporter.importFile(
-				_user.getUserId(), _group.getGroupId(), 0, file, false);
+				_user.getUserId(), _group.getGroupId(), 0, file,
+				LayoutsImportStrategy.DO_NOT_OVERWRITE);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

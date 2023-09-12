@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Product Options Web
 Bundle-SymbolicName: com.liferay.commerce.product.options.web
-Bundle-Version: 4.0.59
+Bundle-Version: 4.0.60
 Liferay-JS-Submodules-Bridge: commerce-product-options-web
 Web-ContextPath: /commerce-product-options-web
 -dsannotations-options: inherit

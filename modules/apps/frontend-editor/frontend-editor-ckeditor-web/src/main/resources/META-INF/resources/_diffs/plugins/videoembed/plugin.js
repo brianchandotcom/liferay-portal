@@ -362,8 +362,10 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 
 		afterInit(editor) {
 			editor.on('resize', () => {
-				editor.resizer.hide();
-				selectWidget(editor);
+				if (editor.resizer) {
+					editor.resizer.hide();
+					selectWidget(editor);
+				}
 			});
 
 			ALIGN_VALUES.forEach((alignValue) => {
@@ -638,7 +640,9 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 						}
 					}
 					else {
-						editor.resizer.hide();
+						if (editor.resizer) {
+							editor.resizer.hide();
+						}
 					}
 				}
 			});

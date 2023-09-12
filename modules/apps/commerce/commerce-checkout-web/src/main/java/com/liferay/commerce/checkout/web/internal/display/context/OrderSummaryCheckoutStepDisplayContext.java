@@ -42,9 +42,9 @@ import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -384,12 +384,6 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		BigDecimal activePriceWithTaxAmount =
 			commerceOrderItem.getUnitPriceWithTaxAmount();
 
-		BigDecimal quantity = commerceOrderItem.getQuantity();
-
-		BigDecimal unitOfMeasureIncrementalOrderQuantity =
-			_getUnitOfMeasureIncrementalOrderQuantity(
-				activePrice, commerceOrderItem.getFinalPriceMoney(), quantity);
-
 		BigDecimal promoPrice = commerceOrderItem.getPromoPrice();
 
 		if ((promoPrice != null) &&
@@ -399,11 +393,15 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			activePrice = promoPrice;
 			activePriceWithTaxAmount =
 				commerceOrderItem.getPromoPriceWithTaxAmount();
+		}
 
-			unitOfMeasureIncrementalOrderQuantity =
-				_getUnitOfMeasureIncrementalOrderQuantity(
-					activePrice, commerceOrderItem.getFinalPriceMoney(),
-					quantity);
+		BigDecimal quantity = commerceOrderItem.getQuantity();
+
+		BigDecimal unitOfMeasureIncrementalOrderQuantity =
+			commerceOrderItem.getUnitOfMeasureIncrementalOrderQuantity();
+
+		if (unitOfMeasureIncrementalOrderQuantity == null) {
+			unitOfMeasureIncrementalOrderQuantity = BigDecimal.ONE;
 		}
 
 		commerceProductPriceImpl.setFinalPrice(
@@ -411,10 +409,10 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		commerceProductPriceImpl.setFinalPriceWithTaxAmount(
 			commerceOrderItem.getFinalPriceWithTaxAmountMoney());
 		commerceProductPriceImpl.setQuantity(quantity);
-		commerceProductPriceImpl.setUnitOfMeasureKey(
-			commerceOrderItem.getUnitOfMeasureKey());
 		commerceProductPriceImpl.setUnitOfMeasureIncrementalOrderQuantity(
 			unitOfMeasureIncrementalOrderQuantity);
+		commerceProductPriceImpl.setUnitOfMeasureKey(
+			commerceOrderItem.getUnitOfMeasureKey());
 		commerceProductPriceImpl.setUnitPrice(
 			commerceOrderItem.getUnitPriceMoney());
 		commerceProductPriceImpl.setUnitPriceWithTaxAmount(
@@ -510,16 +508,6 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			discountPercentage.precision(), roundingMode);
 
 		return _ONE_HUNDRED.subtract(discountPercentage, mathContext);
-	}
-
-	private BigDecimal _getUnitOfMeasureIncrementalOrderQuantity(
-		BigDecimal activePrice, CommerceMoney finalPrice, BigDecimal quantity) {
-
-		BigDecimal price = finalPrice.getPrice();
-
-		return quantity.divide(
-			price.divide(activePrice, RoundingMode.HALF_UP),
-			RoundingMode.HALF_UP);
 	}
 
 	private static final BigDecimal _ONE_HUNDRED = BigDecimal.valueOf(100);

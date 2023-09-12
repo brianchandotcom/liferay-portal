@@ -82,8 +82,9 @@ public class ObjectEntriesPanelApp extends BasePanelApp {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (permissionChecker.getCompanyId() !=
-				_objectDefinition.getCompanyId()) {
+		if ((permissionChecker.getCompanyId() !=
+				_objectDefinition.getCompanyId()) ||
+			_objectDefinition.isRootDescendantNode()) {
 
 			return false;
 		}

@@ -11,9 +11,9 @@ liferay-jethr0-etc-spring-boot-oauth-application-headless-server:
         - C_JenkinsCohort.everything
         - C_JenkinsNode.everything
         - C_JenkinsServer.everything
-        - C_Project.everything
-        - C_ProjectComparator.everything
-        - C_ProjectPrioritizer.everything
+        - C_Job.everything
+        - C_JobComparator.everything
+        - C_JobPrioritizer.everything
         - C_Task.everything
         - C_TaskRun.everything
         - C_TestSuite.everything

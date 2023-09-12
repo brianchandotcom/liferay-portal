@@ -22,6 +22,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -47,15 +49,18 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.sql.Timestamp;
+
+import java.util.Calendar;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -226,6 +231,10 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			HashMapBuilder.<String, Object>put(
 				"apiURL", _getAPIURL(fdsEntryObjectEntry, httpServletRequest)
 			).put(
+				"filters",
+				_getFiltersJSONArray(
+					fdsViewObjectDefinition, fdsViewObjectEntry)
+			).put(
 				"id", "FDS_" + fragmentRendererContext.getFragmentElementId()
 			).put(
 				"namespace", fragmentRendererContext.getFragmentElementId()
@@ -276,29 +285,43 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return _interpolateURL(sb.toString(), httpServletRequest);
 	}
 
+	private JSONObject _getDateJSONObject(Object object) {
+		Calendar calendar = Calendar.getInstance();
+
+		Timestamp timestamp = (Timestamp)object;
+
+		calendar.setTime(new Date(timestamp.getTime()));
+
+		return JSONUtil.put(
+			"day", calendar.get(Calendar.DATE)
+		).put(
+			"month", calendar.get(Calendar.MONTH) + 1
+		).put(
+			"year", calendar.get(Calendar.YEAR)
+		);
+	}
+
 	private JSONArray _getFieldsJSONArray(
 			FragmentEntryLink fragmentEntryLink,
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry)
+			ObjectDefinition fdsViewObjectDefinition,
+			ObjectEntry fdsViewObjectEntry)
 		throws Exception {
 
-		List<ObjectEntry> fdsFieldObjectEntries = new ArrayList<>(
-			_getRelatedObjectEntries(
-				objectDefinition, objectEntry, "fdsViewFDSFieldRelationship"));
-
-		Map<String, Object> fdsViewProperties = objectEntry.getProperties();
-
-		List<Long> fdsFieldIds = ListUtil.toList(
-			Arrays.asList(
-				StringUtil.split(
-					(String)fdsViewProperties.get("fdsFieldsOrder"),
-					StringPool.COMMA)),
+		List<Long> ids = ListUtil.toList(
+			ListUtil.fromString(
+				MapUtil.getString(
+					fdsViewObjectEntry.getProperties(), "fdsFieldsOrder"),
+				StringPool.COMMA),
 			Long::parseLong);
 
-		Collections.sort(
-			fdsFieldObjectEntries,
+		Set<ObjectEntry> fdsFieldObjectEntries = new TreeSet<>(
 			Comparator.comparing(
-				ObjectEntry::getId,
-				Comparator.comparingInt(fdsFieldIds::indexOf)));
+				ObjectEntry::getId, Comparator.comparingInt(ids::indexOf)));
+
+		fdsFieldObjectEntries.addAll(
+			_getRelatedObjectEntries(
+				fdsViewObjectDefinition, fdsViewObjectEntry,
+				"fdsViewFDSFieldRelationship"));
 
 		return JSONUtil.toJSONArray(
 			fdsFieldObjectEntries,
@@ -334,6 +357,59 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				).put(
 					"contentRendererModuleURL",
 					"default from " + fdsCellRendererCET.getURL()
+				);
+			});
+	}
+
+	private JSONArray _getFiltersJSONArray(
+			ObjectDefinition fdsViewObjectDefinition,
+			ObjectEntry fdsViewObjectEntry)
+		throws Exception {
+
+		List<Long> ids = ListUtil.toList(
+			ListUtil.fromString(
+				MapUtil.getString(
+					fdsViewObjectEntry.getProperties(), "fdsFiltersOrder"),
+				StringPool.COMMA),
+			Long::parseLong);
+
+		Set<ObjectEntry> fdsFilterObjectEntries = new TreeSet<>(
+			Comparator.comparing(
+				ObjectEntry::getId, Comparator.comparingInt(ids::indexOf)));
+
+		fdsFilterObjectEntries.addAll(
+			_getRelatedObjectEntries(
+				fdsViewObjectDefinition, fdsViewObjectEntry,
+				"fdsViewFDSDateFilterRelationship"));
+		fdsFilterObjectEntries.addAll(
+			_getRelatedObjectEntries(
+				fdsViewObjectDefinition, fdsViewObjectEntry,
+				"fdsViewFDSDynamicFilterRelationship"));
+
+		return JSONUtil.toJSONArray(
+			fdsFilterObjectEntries,
+			(ObjectEntry fdsFilterObjectEntry) -> {
+				Map<String, Object> properties =
+					fdsFilterObjectEntry.getProperties();
+
+				if (!Objects.equals(
+						MapUtil.getString(properties, "type"), "date")) {
+
+					return null;
+				}
+
+				return JSONUtil.put(
+					"entityFieldType", properties.get("type")
+				).put(
+					"id", properties.get("fieldName")
+				).put(
+					"label", properties.get("name")
+				).put(
+					"max", _getDateJSONObject(properties.get("to"))
+				).put(
+					"min", _getDateJSONObject(properties.get("from"))
+				).put(
+					"type", "dateRange"
 				);
 			});
 	}
@@ -378,8 +454,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private Collection<ObjectEntry> _getRelatedObjectEntries(
-			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-			String relationshipName)
+			ObjectDefinition fdsViewObjectDefinition,
+			ObjectEntry fdsViewObjectEntry, String relationshipName)
 		throws Exception {
 
 		DTOConverterContext dtoConverterContext =
@@ -390,12 +466,12 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
-					objectDefinition.getStorageType()));
+					fdsViewObjectDefinition.getStorageType()));
 
 		Page<ObjectEntry> relatedObjectEntriesPage =
 			defaultObjectEntryManager.getObjectEntryRelatedObjectEntries(
-				dtoConverterContext, objectDefinition, objectEntry.getId(),
-				relationshipName,
+				dtoConverterContext, fdsViewObjectDefinition,
+				fdsViewObjectEntry.getId(), relationshipName,
 				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
 		return relatedObjectEntriesPage.getItems();
@@ -431,6 +507,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

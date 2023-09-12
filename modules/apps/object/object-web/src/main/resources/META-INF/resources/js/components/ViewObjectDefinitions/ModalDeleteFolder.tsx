@@ -11,7 +11,7 @@ import DangerModal from '../DangerModal';
 import {deleteFolder} from './objectDefinitionUtil';
 
 interface ModalDeleteFolderProps {
-	folder: Folder;
+	folder: ObjectFolder;
 	handleOnClose: () => void;
 }
 

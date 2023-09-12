@@ -18,8 +18,11 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -36,6 +39,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -72,6 +76,14 @@ public class ObjectEntryRowInfoItemRenderer
 	}
 
 	@Override
+	public String getKey() {
+		return StringBundler.concat(
+			ObjectEntryRowInfoItemRenderer.class.getName(),
+			StringPool.UNDERLINE, _objectDefinition.getCompanyId(),
+			StringPool.UNDERLINE, _objectDefinition.getName());
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "row");
 	}
@@ -93,7 +105,8 @@ public class ObjectEntryRowInfoItemRenderer
 				ObjectWebKeys.OBJECT_ENTRY_VALUES,
 				_getValues(
 					objectEntry.getExternalReferenceCode(),
-					httpServletRequest));
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY)));
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
@@ -107,17 +120,13 @@ public class ObjectEntryRowInfoItemRenderer
 	}
 
 	private Map<String, Serializable> _getValues(
-			String externalReferenceCode, HttpServletRequest httpServletRequest)
+			String externalReferenceCode, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		Map<String, Serializable> values = new TreeMap<>();
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry;
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
-			_objectEntryManager.getObjectEntry(
+		try {
+			objectEntry = _objectEntryManager.getObjectEntry(
 				themeDisplay.getCompanyId(),
 				new DefaultDTOConverterContext(
 					false, null, null, null, null, themeDisplay.getLocale(),
@@ -126,6 +135,16 @@ public class ObjectEntryRowInfoItemRenderer
 				ObjectEntryUtil.getScopeKey(
 					themeDisplay.getScopeGroupId(), _objectDefinition,
 					_objectScopeProviderRegistry));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return Collections.emptyMap();
+		}
+
+		Map<String, Serializable> values = new TreeMap<>();
 
 		for (ObjectField objectField :
 				_objectFieldLocalService.getActiveObjectFields(
@@ -199,6 +218,9 @@ public class ObjectEntryRowInfoItemRenderer
 
 		return values;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryRowInfoItemRenderer.class);
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;

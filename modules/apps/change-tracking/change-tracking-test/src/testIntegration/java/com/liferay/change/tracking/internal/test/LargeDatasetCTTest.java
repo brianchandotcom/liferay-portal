@@ -92,8 +92,8 @@ public class LargeDatasetCTTest {
 	@Before
 	public void setUp() throws Exception {
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			LargeDatasetCTTest.class.getName(), null);
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, LargeDatasetCTTest.class.getName(), null);
 
 		_group = GroupTestUtil.addGroup();
 

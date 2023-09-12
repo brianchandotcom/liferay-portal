@@ -8,7 +8,7 @@ package com.liferay.fragment.web.internal.portlet.action;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
-import com.liferay.fragment.web.internal.handler.FragmentEntryExceptionRequestHandler;
+import com.liferay.fragment.web.internal.handler.FragmentEntryExceptionRequestHandlerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -85,7 +85,7 @@ public class PublishFragmentEntryMVCActionCommand
 					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 		}
 		catch (PortalException portalException) {
-			_fragmentEntryExceptionRequestHandler.handlePortalException(
+			FragmentEntryExceptionRequestHandlerUtil.handlePortalException(
 				actionRequest, actionResponse, portalException);
 		}
 	}
@@ -101,10 +101,6 @@ public class PublishFragmentEntryMVCActionCommand
 			"fragmentCollectionId", fragmentEntry.getFragmentCollectionId()
 		).buildString();
 	}
-
-	@Reference
-	private FragmentEntryExceptionRequestHandler
-		_fragmentEntryExceptionRequestHandler;
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;

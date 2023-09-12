@@ -136,8 +136,8 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 				commerceOrder.getCommerceOrderId(), cartItem.getSkuId(),
 				cartItem.getOptions(),
 				BigDecimal.valueOf(GetterUtil.get(cartItem.getQuantity(), 1)),
-				GetterUtil.getLong(cartItem.getReplacedSkuId()), 0,
-				StringPool.BLANK,
+				GetterUtil.getLong(cartItem.getReplacedSkuId()),
+				BigDecimal.ZERO, StringPool.BLANK,
 				_commerceContextFactory.create(
 					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
 					contextUser.getUserId(), cartId,
@@ -159,7 +159,7 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 			commerceOrder.getCommerceAccountId(),
 			_commerceOrderItemService.updateCommerceOrderItem(
 				commerceOrderItem.getCommerceOrderItemId(),
-				BigDecimal.valueOf(cartItem.getQuantity()),
+				cartItem.getQuantity(),
 				_commerceContextFactory.create(
 					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
 					contextUser.getUserId(), commerceOrder.getCommerceOrderId(),

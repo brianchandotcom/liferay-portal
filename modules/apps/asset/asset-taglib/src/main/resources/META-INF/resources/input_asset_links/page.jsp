@@ -72,7 +72,7 @@
 				data-rowId="<%= assetLinkEntry.getEntryId() %>"
 				displayType="secondary"
 				icon="times-circle"
-				title='<%= LanguageUtil.get(request, "remove") %>'
+				title="remove"
 				type="button"
 			/>
 		</liferay-ui:search-container-column-text>

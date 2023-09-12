@@ -69,7 +69,7 @@
 				icon="times"
 				monospaced="<%= true %>"
 				small="<%= true %>"
-				title='<%= LanguageUtil.get(request, "close") %>'
+				title="close"
 			/>
 		</clay:content-col>
 	</clay:content-row>

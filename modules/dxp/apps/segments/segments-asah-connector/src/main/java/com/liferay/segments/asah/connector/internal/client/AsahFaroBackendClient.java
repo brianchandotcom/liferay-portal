@@ -56,6 +56,8 @@ public interface AsahFaroBackendClient {
 	 */
 	public void deleteExperiment(long companyId, String experimentId);
 
+	public Experiment getExperiment(long companyId, String experimentId);
+
 	/**
 	 * Returns the individual matching the primary key for the data source.
 	 *

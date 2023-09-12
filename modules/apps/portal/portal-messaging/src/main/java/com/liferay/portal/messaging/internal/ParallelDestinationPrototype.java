@@ -8,6 +8,7 @@ package com.liferay.portal.messaging.internal;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.messaging.MessageListenerRegistry;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 
@@ -17,10 +18,12 @@ import com.liferay.portal.kernel.service.UserLocalService;
 public class ParallelDestinationPrototype implements DestinationPrototype {
 
 	public ParallelDestinationPrototype(
+		MessageListenerRegistry messageListenerRegistry,
 		PortalExecutorManager portalExecutorManager,
 		PermissionCheckerFactory permissionCheckerFactory,
 		UserLocalService userLocalService) {
 
+		_messageListenerRegistry = messageListenerRegistry;
 		_portalExecutorManager = portalExecutorManager;
 		_permissionCheckerFactory = permissionCheckerFactory;
 		_userLocalService = userLocalService;
@@ -38,6 +41,8 @@ public class ParallelDestinationPrototype implements DestinationPrototype {
 			destinationConfiguration.getDestinationName());
 		parallelDestination.setMaximumQueueSize(
 			destinationConfiguration.getMaximumQueueSize());
+		parallelDestination.setMessageListenerRegistry(
+			_messageListenerRegistry);
 		parallelDestination.setPermissionCheckerFactory(
 			_permissionCheckerFactory);
 		parallelDestination.setPortalExecutorManager(_portalExecutorManager);
@@ -51,6 +56,7 @@ public class ParallelDestinationPrototype implements DestinationPrototype {
 		return parallelDestination;
 	}
 
+	private final MessageListenerRegistry _messageListenerRegistry;
 	private final PermissionCheckerFactory _permissionCheckerFactory;
 	private final PortalExecutorManager _portalExecutorManager;
 	private final UserLocalService _userLocalService;

@@ -287,7 +287,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Multi Task Process");
 
-		WorkflowMetrics.goToBulkTransitionSelectTasks();
+		WorkflowMetrics.goToTransitionSteps();
 
 		WorkflowMetrics.selectAllTransitionTasks();
 
@@ -295,7 +295,11 @@ definition {
 			taskName = "Task1",
 			transitionOption = "task1_join_join");
 
-		WorkflowMetrics.goToKebabMenuOptions(dropdownItem = "Track Workflow");
+		Click(
+			key_text = "Blogs Entry: Blogs Entry Title",
+			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Track Workflow");
 
 		WorkflowMetrics.viewCurrentNodeCircleIcon(currentNode = "task2");
 
@@ -564,7 +568,9 @@ definition {
 			workflowMetricsTab = "DASHBOARD",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.viewKebabMenuOptionsIsAvailable(dropdownItem = "Track Workflow");
+		Click(locator1 = "Icon#SVG_ELLIPSIS");
+
+		MenuItem.viewPresent(menuItem = "Track Workflow");
 	}
 
 	@description = "LPS-92053 - Verify that, at the items table, users should be able to click on process ID column and open a modal for the respective item details"
@@ -1360,7 +1366,7 @@ definition {
 			isPresent = "Blogs Entry Title 2",
 			taskName = "Review");
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 
 		WorkflowMetrics.verifyFiltersFromDashboardNotPresent(isNotPresent = "Pending");
 
@@ -2357,7 +2363,7 @@ definition {
 			workflowMetricsTab = "PERFORMANCE",
 			workflowProcess = "Single Approver");
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 
 		AssertElementPresent(
 			key_order = 1,
@@ -2614,7 +2620,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Similar Single Approver Process");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.selectReassignTasks(taskList = "task1");
 
@@ -2626,7 +2632,7 @@ definition {
 			nameOfAssignee = "user1 user1",
 			taskList = "task1");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.selectReassignTasks(taskList = "task2");
 
@@ -2638,7 +2644,7 @@ definition {
 			nameOfAssignee = "user2 user2",
 			taskList = "task2");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.selectReassignTasks(taskList = "task3");
 
@@ -3083,7 +3089,7 @@ definition {
 
 		WorkflowMetrics.goToWorkflowAllItems(workflowProcessName = "Multi Task Process");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.selectReassignTasks(taskList = "task1");
 
@@ -3091,7 +3097,7 @@ definition {
 			nameOfAssignee = "User User",
 			taskList = "task1");
 
-		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.goToReassignTask();
 
 		WorkflowMetrics.selectReassignTasks(taskList = "task3");
 

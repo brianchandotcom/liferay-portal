@@ -88,7 +88,7 @@ public class OpenAPIUtil {
 				propertyName,
 				Field.of(
 					propertySchema.getDescription(), propertyName,
-					propertySchema.isReadOnly(),
+					propertySchema.isReadOnly(), null,
 					requiredPropertySchemaNames.contains(propertyName),
 					propertySchema.getType(), propertySchema.isWriteOnly()));
 		}

@@ -5,8 +5,12 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.change.tracking.CTAware;
+import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
@@ -52,7 +56,7 @@ public class ClassNameLocalServiceImpl
 		List<ClassName> classNames = classNamePersistence.findAll();
 
 		for (ClassName className : classNames) {
-			_classNames.put(className.getValue(), className);
+			_classNames.put(_getKey(className.getValue()), className);
 		}
 
 		List<String> models = ModelHintsUtil.getModels();
@@ -64,7 +68,7 @@ public class ClassNameLocalServiceImpl
 
 	@Override
 	public ClassName deleteClassName(ClassName className) {
-		_classNames.remove(className.getValue());
+		_classNames.remove(_getKey(className.getValue()));
 
 		return classNamePersistence.remove(className);
 	}
@@ -81,7 +85,7 @@ public class ClassNameLocalServiceImpl
 		}
 
 		ClassName className = _classNames.computeIfAbsent(
-			value, key -> classNamePersistence.fetchByValue(value));
+			_getKey(value), key -> classNamePersistence.fetchByValue(value));
 
 		if (className == null) {
 			return _nullClassName;
@@ -101,7 +105,7 @@ public class ClassNameLocalServiceImpl
 		// performance. Create the class name if one does not exist.
 
 		ClassName className = _classNames.computeIfAbsent(
-			value,
+			_getKey(value),
 			key -> {
 				try {
 					return classNameLocalService.addClassName(value);
@@ -144,6 +148,15 @@ public class ClassNameLocalServiceImpl
 	@Override
 	public void invalidate() {
 		_classNames.clear();
+	}
+
+	private String _getKey(String value) {
+		if (DBPartition.isPartitionEnabled()) {
+			return StringBundler.concat(
+				value, StringPool.AT, DBPartitionUtil.getCurrentCompanyId());
+		}
+
+		return value;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

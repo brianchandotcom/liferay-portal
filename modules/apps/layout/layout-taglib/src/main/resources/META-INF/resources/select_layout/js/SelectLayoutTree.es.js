@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import {TreeView as ClayTreeView} from '@clayui/core';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {getOpener, sub} from 'frontend-js-web';
-import React, {useMemo, useRef, useState} from 'react';
+import {fetch, getOpener, openToast, sub} from 'frontend-js-web';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
 
 const nodeByName = (items, name) => {
 	return items.reduce(function reducer(acc, item) {
@@ -24,13 +25,20 @@ const nodeByName = (items, name) => {
 };
 
 export function SelectLayoutTree({
+	checkDisplayPage,
+	config,
 	filter,
+	groupId,
+	itemSelectorReturnType,
 	itemSelectorSaveEvent,
 	items: initialItems = [],
 	onItemsCountChange,
+	privateLayout,
 	multiSelection,
 	selectedLayoutIds,
 }) {
+	const {loadMoreItemsURL, maxPageSize} = config;
+
 	const [items, setItems] = useState(initialItems);
 
 	const [selectedKeys, setSelectionChange] = useState(
@@ -153,6 +161,58 @@ export function SelectLayoutTree({
 		}
 	};
 
+	const onLoadMore = useCallback(
+		(item) => {
+			if (!item.hasChildren) {
+				return Promise.resolve({
+					cursor: null,
+					items: null,
+				});
+			}
+
+			const cursor = item.children
+				? Math.floor(item.children.length / maxPageSize)
+				: 0;
+
+			return fetch(loadMoreItemsURL, {
+				body: Liferay.Util.objectToURLSearchParams({
+					[`checkDisplayPage`]: checkDisplayPage,
+					[`groupId`]: groupId,
+					[`itemSelectorReturnType`]: itemSelectorReturnType,
+					[`layoutUuid`]: item.id,
+					[`parentLayoutId`]: item.layoutId,
+					[`privateLayout`]: privateLayout,
+					[`redirect`]:
+						window.location.pathname + window.location.search,
+					[`start`]: cursor * maxPageSize,
+				}),
+				method: 'post',
+			})
+				.then((response) => response.json())
+				.then(({hasMoreElements, items: nextItems}) => ({
+					cursor: hasMoreElements ? cursor + 1 : null,
+					items: nextItems,
+				}))
+				.catch(() =>
+					openToast({
+						message: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+						title: Liferay.Language.get('error'),
+						type: 'danger',
+					})
+				);
+		},
+		[
+			checkDisplayPage,
+			groupId,
+			itemSelectorReturnType,
+			loadMoreItemsURL,
+			privateLayout,
+			maxPageSize,
+		]
+	);
+
 	return filteredItems.length ? (
 		<div className="pt-3 px-3">
 			{multiSelection && (
@@ -170,14 +230,16 @@ export function SelectLayoutTree({
 			)}
 
 			<ClayTreeView
+				defaultExpandedKeys={new Set(['0'])}
 				items={filteredItems}
 				onItemsChange={(items) => setItems(items)}
+				onLoadMore={onLoadMore}
 				onSelectionChange={(keys) => setSelectionChange(keys)}
 				selectedKeys={selectedKeys}
 				selectionMode={multiSelection ? 'multiple' : 'single'}
 				showExpanderOnHover={false}
 			>
-				{(item, selection, expand) => (
+				{(item, selection, expand, load) => (
 					<ClayTreeView.Item active={false}>
 						<ClayTreeView.ItemStack
 							active={false}
@@ -254,6 +316,19 @@ export function SelectLayoutTree({
 								</ClayTreeView.Item>
 							)}
 						</ClayTreeView.Group>
+
+						{load.get(item.id) !== null &&
+							expand.has(item.id) &&
+							item.paginated && (
+								<ClayButton
+									borderless
+									className="ml-3 mt-2 text-secondary"
+									displayType="secondary"
+									onClick={() => load.loadMore(item.id, item)}
+								>
+									{Liferay.Language.get('load-more-results')}
+								</ClayButton>
+							)}
 					</ClayTreeView.Item>
 				)}
 			</ClayTreeView>

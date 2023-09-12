@@ -6,6 +6,7 @@
 package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.facet.display.context.builder.AssetTagsSearchFacetDisplayContextBuilder;
@@ -14,6 +15,8 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+
+import org.mockito.Mockito;
 
 /**
  * @author André de Oliveira
@@ -38,11 +41,17 @@ public class AssetTagsSearchFacetDisplayContextTest
 			String parameterValue, String order)
 		throws ConfigurationException {
 
+		configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			Mockito.mock(TagFacetPortletInstanceConfiguration.class)
+		);
+
 		AssetTagsSearchFacetDisplayContextBuilder
 			assetTagsSearchFacetDisplayContextBuilder =
 				new AssetTagsSearchFacetDisplayContextBuilder(
-					getRenderRequest(
-						TagFacetPortletInstanceConfiguration.class));
+					getRenderRequest());
 
 		assetTagsSearchFacetDisplayContextBuilder.setDisplayStyle("cloud");
 		assetTagsSearchFacetDisplayContextBuilder.setFacet(facet);

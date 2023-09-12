@@ -282,7 +282,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 				BigDecimal.valueOf(priceEntry.getPrice()),
 				GetterUtil.getBoolean(priceEntry.getPriceOnApplication()),
 				priceEntry.getSkuExternalReferenceCode(),
-				priceEntry.getUnitOfMeasure(), serviceContext);
+				priceEntry.getUnitOfMeasureKey(), serviceContext);
 
 		// Update nested resources
 
@@ -398,7 +398,7 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 					priceEntry.getPriceOnApplication(),
 					commercePriceEntry.isPriceOnApplication()),
 				GetterUtil.get(
-					priceEntry.getUnitOfMeasure(),
+					priceEntry.getUnitOfMeasureKey(),
 					commercePriceEntry.getUnitOfMeasureKey()),
 				serviceContext);
 

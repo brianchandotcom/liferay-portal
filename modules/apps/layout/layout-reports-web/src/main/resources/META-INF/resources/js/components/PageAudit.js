@@ -35,6 +35,12 @@ export default function PageAudit({panelIsOpen}) {
 		}
 	}, [layoutReportsDataURL, panelIsOpen]);
 
+	useEffect(() => {
+		if (selectedItem) {
+			document.querySelector('.lfr-layout-reports-panel')?.focus();
+		}
+	}, [selectedItem]);
+
 	if (loading) {
 		return <ClayLoadingIndicator displayType="secondary" size="sm" />;
 	}

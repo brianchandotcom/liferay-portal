@@ -99,6 +99,11 @@ public final class Experiment {
 		return _id;
 	}
 
+	@JsonProperty("metrics")
+	public List<Metric> getMetrics() {
+		return _metrics;
+	}
+
 	@JsonFormat(
 		pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",
 		shape = JsonFormat.Shape.STRING, timezone = "UTC"
@@ -209,6 +214,10 @@ public final class Experiment {
 		_id = id;
 	}
 
+	public void setMetrics(List<Metric> metrics) {
+		_metrics = metrics;
+	}
+
 	public void setModifiedDate(Date modifiedDate) {
 		if (modifiedDate != null) {
 			_modifiedDate = new Date(modifiedDate.getTime());
@@ -257,6 +266,7 @@ public final class Experiment {
 	private ExperimentType _experimentType = ExperimentType.AB;
 	private Goal _goal;
 	private String _id;
+	private List<Metric> _metrics;
 	private Date _modifiedDate;
 	private String _name;
 	private String _pageRelativePath;

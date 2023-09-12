@@ -56,6 +56,18 @@ public class AssetListEntrySegmentsEntryRelLocalServiceUtil {
 
 	public static AssetListEntrySegmentsEntryRel
 			addAssetListEntrySegmentsEntryRel(
+				long userId, long groupId, long assetListEntryId, int priority,
+				long segmentsEntryId, String typeSettings,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addAssetListEntrySegmentsEntryRel(
+			userId, groupId, assetListEntryId, priority, segmentsEntryId,
+			typeSettings, serviceContext);
+	}
+
+	public static AssetListEntrySegmentsEntryRel
+			addAssetListEntrySegmentsEntryRel(
 				long userId, long groupId, long assetListEntryId,
 				long segmentsEntryId, String typeSettings,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)

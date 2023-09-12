@@ -18,7 +18,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.test.util.BaseObjectEntryManagerImplTestCase;
 import com.liferay.object.storage.salesforce.configuration.SalesforceConfiguration;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -37,8 +37,10 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
@@ -187,6 +189,13 @@ public class SalesforceObjectEntryManagerImplTest
 
 	@After
 	public void tearDown() throws Exception {
+		for (ObjectEntry objectEntry : _objectEntries) {
+			_objectEntryManager.deleteObjectEntry(
+				companyId, dtoConverterContext,
+				objectEntry.getExternalReferenceCode(), _objectDefinition,
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+		}
+
 		if (_objectDefinition != null) {
 			objectDefinitionLocalService.deleteObjectDefinition(
 				_objectDefinition.getObjectDefinitionId());
@@ -200,43 +209,25 @@ public class SalesforceObjectEntryManagerImplTest
 
 	@Test
 	public void testAddObjectEntry() throws Exception {
-		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"title", RandomTestUtil.randomString()
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectEntry objectEntry = _addObjectEntry(
+			null, RandomTestUtil.randomString());
 
 		Assert.assertNotNull(objectEntry.getExternalReferenceCode());
-
-		_objectEntryManager.deleteObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), _objectDefinition,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
 	@Test
 	public void testAddOrUpdateObjectEntry() throws Exception {
-		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"title", RandomTestUtil.randomString()
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		Map<String, Object> properties = objectEntry.getProperties();
+		ObjectEntry objectEntry = _addObjectEntry(
+			null, RandomTestUtil.randomString());
 
 		String title = RandomTestUtil.randomString();
 
-		properties.put("title", title);
+		objectEntry.setProperties(
+			HashMapBuilder.putAll(
+				objectEntry.getProperties()
+			).put(
+				"title", title
+			).build());
 
 		objectEntry = _objectEntryManager.updateObjectEntry(
 			companyId, dtoConverterContext,
@@ -245,11 +236,6 @@ public class SalesforceObjectEntryManagerImplTest
 
 		Assert.assertEquals(
 			title, MapUtil.getString(objectEntry.getProperties(), "title"));
-
-		_objectEntryManager.deleteObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), _objectDefinition,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
 	@Test
@@ -259,61 +245,23 @@ public class SalesforceObjectEntryManagerImplTest
 		String title3 = "c" + RandomTestUtil.randomString();
 		String title4 = "d" + RandomTestUtil.randomString();
 
-		ObjectEntry objectEntry1 = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"customStatus", "queued"
-					).put(
-						"title", title1
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-		ObjectEntry objectEntry2 = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"customStatus", "started"
-					).put(
-						"title", title2
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-		ObjectEntry objectEntry3 = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"customStatus", "completed"
-					).put(
-						"title", title3
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-		ObjectEntry objectEntry4 = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"customStatus", "queued"
-					).put(
-						"title", title4
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectEntry objectEntry1 = _addObjectEntry("queued", title1);
+		ObjectEntry objectEntry2 = _addObjectEntry("started", title2);
+		ObjectEntry objectEntry3 = _addObjectEntry("completed", title3);
+		ObjectEntry objectEntry4 = _addObjectEntry("queued", title4);
 
 		// And/or with equals/not equals expression
+
+		String filterString = StringBundler.concat(
+			"(title eq ", getValue(title1), " or title eq ", getValue(title2),
+			" or title eq ", getValue(title3), " or title eq ",
+			getValue(title4), ") and ");
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
 				StringBundler.concat(
+					filterString,
 					buildEqualsExpressionFilterString("customStatus", "queued"),
 					" and ", buildEqualsExpressionFilterString("title", title1))
 			).build(),
@@ -323,6 +271,7 @@ public class SalesforceObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				StringBundler.concat(
+					filterString,
 					_buildNotEqualsExpressionFilterString(
 						"customStatus", "queued"),
 					" and ",
@@ -334,6 +283,7 @@ public class SalesforceObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				StringBundler.concat(
+					filterString,
 					buildEqualsExpressionFilterString("customStatus", "queued"),
 					" or ", buildEqualsExpressionFilterString("title", title1))
 			).build(),
@@ -343,6 +293,7 @@ public class SalesforceObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				StringBundler.concat(
+					filterString,
 					_buildNotEqualsExpressionFilterString(
 						"customStatus", "queued"),
 					" or ",
@@ -355,81 +306,50 @@ public class SalesforceObjectEntryManagerImplTest
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
-				buildEqualsExpressionFilterString("customStatus", "queued")
+				filterString.concat(
+					buildEqualsExpressionFilterString("customStatus", "queued"))
 			).build(),
 			objectEntry1, objectEntry4);
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
 				"filter",
-				_buildNotEqualsExpressionFilterString("customStatus", "queued")
+				filterString.concat(
+					_buildNotEqualsExpressionFilterString(
+						"customStatus", "queued"))
 			).build(),
 			objectEntry2, objectEntry3);
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
-				"filter", buildEqualsExpressionFilterString("title", title1)
+				"filter",
+				filterString.concat(
+					buildEqualsExpressionFilterString("title", title1))
 			).build(),
 			objectEntry1);
 
 		testGetObjectEntries(
 			HashMapBuilder.put(
-				"filter", _buildNotEqualsExpressionFilterString("title", title1)
+				"filter",
+				filterString.concat(
+					_buildNotEqualsExpressionFilterString("title", title1))
 			).build(),
 			objectEntry2, objectEntry3, objectEntry4);
-
-		for (ObjectEntry objectEntry :
-				Arrays.asList(
-					objectEntry1, objectEntry2, objectEntry3, objectEntry4)) {
-
-			_objectEntryManager.deleteObjectEntry(
-				companyId, dtoConverterContext,
-				objectEntry.getExternalReferenceCode(), _objectDefinition,
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-		}
 	}
 
 	@Test
 	public void testGetObjectEntry() throws Exception {
 		String title = RandomTestUtil.randomString();
 
-		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"title", title
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectEntry objectEntry = _addObjectEntry(null, title);
 
-		objectEntry = _objectEntryManager.getObjectEntry(
-			companyId, dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), _objectDefinition,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		Assert.assertEquals(
-			title, MapUtil.getString(objectEntry.getProperties(), "title"));
-
-		_objectEntryManager.deleteObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), _objectDefinition,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		_assertObjectEntry(objectEntry.getExternalReferenceCode(), title);
 	}
 
 	@Test
 	public void testPartialUpdateObjectEntry() throws Exception {
-		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
-			dtoConverterContext, _objectDefinition,
-			new ObjectEntry() {
-				{
-					properties = HashMapBuilder.<String, Object>put(
-						"title", RandomTestUtil.randomString()
-					).build();
-				}
-			},
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		ObjectEntry objectEntry = _addObjectEntry(
+			null, RandomTestUtil.randomString());
 
 		_objectEntryManager.partialUpdateObjectEntry(
 			TestPropsValues.getCompanyId(), dtoConverterContext,
@@ -443,19 +363,7 @@ public class SalesforceObjectEntryManagerImplTest
 			},
 			null);
 
-		objectEntry = _objectEntryManager.getObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), _objectDefinition,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		Map<String, Object> properties = objectEntry.getProperties();
-
-		Assert.assertEquals("Able", properties.get("title"));
-
-		_objectEntryManager.deleteObjectEntry(
-			TestPropsValues.getCompanyId(), dtoConverterContext,
-			objectEntry.getExternalReferenceCode(), _objectDefinition,
-			ObjectDefinitionConstants.SCOPE_COMPANY);
+		_assertObjectEntry(objectEntry.getExternalReferenceCode(), "Able");
 	}
 
 	@Override
@@ -473,6 +381,38 @@ public class SalesforceObjectEntryManagerImplTest
 			sorts);
 	}
 
+	private ObjectEntry _addObjectEntry(String customStatus, String title)
+		throws Exception {
+
+		ObjectEntry objectEntry = _objectEntryManager.addObjectEntry(
+			dtoConverterContext, _objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"customStatus", customStatus
+					).put(
+						"title", title
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_objectEntries.add(objectEntry);
+
+		return objectEntry;
+	}
+
+	private void _assertObjectEntry(String externalReferenceCode, String title)
+		throws Exception {
+
+		ObjectEntry objectEntry = _objectEntryManager.getObjectEntry(
+			companyId, dtoConverterContext, externalReferenceCode,
+			_objectDefinition, ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Assert.assertEquals(
+			title, MapUtil.getString(objectEntry.getProperties(), "title"));
+	}
+
 	private String _buildNotEqualsExpressionFilterString(
 		String fieldName, Object value) {
 
@@ -483,6 +423,7 @@ public class SalesforceObjectEntryManagerImplTest
 	private static ConfigurationProvider _configurationProvider;
 
 	private ObjectDefinition _objectDefinition;
+	private final List<ObjectEntry> _objectEntries = new ArrayList<>();
 
 	@Inject(
 		filter = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_SALESFORCE

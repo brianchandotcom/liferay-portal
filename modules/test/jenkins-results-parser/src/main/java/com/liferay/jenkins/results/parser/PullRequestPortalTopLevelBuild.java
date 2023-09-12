@@ -30,6 +30,12 @@ public class PullRequestPortalTopLevelBuild
 		super(url, topLevelBuild);
 
 		setCompareToUpstream(true);
+
+		String testSuiteName = getTestSuiteName();
+
+		if (testSuiteName.equals("stable")) {
+			setCompareToUpstream(false);
+		}
 	}
 
 	public boolean bypassCITestRelevant() {

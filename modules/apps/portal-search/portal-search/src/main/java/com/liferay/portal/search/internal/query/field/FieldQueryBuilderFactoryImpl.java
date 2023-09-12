@@ -62,17 +62,17 @@ public class FieldQueryBuilderFactoryImpl implements FieldQueryBuilderFactory {
 		_titleFieldNames = _getFields(properties, "title.fields");
 	}
 
-	@Reference
-	protected DescriptionFieldQueryBuilder descriptionFieldQueryBuilder;
+	@Reference(target = "(query.builder.type=description)")
+	protected FieldQueryBuilder descriptionFieldQueryBuilder;
 
 	@Reference
 	protected QueryPreProcessConfiguration queryPreProcessConfiguration;
 
-	@Reference
-	protected SubstringFieldQueryBuilder substringFieldQueryBuilder;
+	@Reference(target = "(query.builder.type=substring)")
+	protected FieldQueryBuilder substringFieldQueryBuilder;
 
-	@Reference
-	protected TitleFieldQueryBuilder titleFieldQueryBuilder;
+	@Reference(target = "(query.builder.type=title)")
+	protected FieldQueryBuilder titleFieldQueryBuilder;
 
 	private Collection<String> _getFields(
 		Map<String, Object> properties, String key) {

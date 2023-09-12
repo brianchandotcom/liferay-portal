@@ -6,6 +6,7 @@
 package com.liferay.object.admin.rest.client.serdes.v1_0;
 
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectFolder;
+import com.liferay.object.admin.rest.client.dto.v1_0.ObjectFolderItem;
 import com.liferay.object.admin.rest.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -140,6 +141,29 @@ public class ObjectFolderSerDes {
 			sb.append("\"");
 		}
 
+		if (objectFolder.getObjectFolderItems() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectFolderItems\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < objectFolder.getObjectFolderItems().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(objectFolder.getObjectFolderItems()[i]));
+
+				if ((i + 1) < objectFolder.getObjectFolderItems().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -217,6 +241,15 @@ public class ObjectFolderSerDes {
 			map.put("name", String.valueOf(objectFolder.getName()));
 		}
 
+		if (objectFolder.getObjectFolderItems() == null) {
+			map.put("objectFolderItems", null);
+		}
+		else {
+			map.put(
+				"objectFolderItems",
+				String.valueOf(objectFolder.getObjectFolderItems()));
+		}
+
 		return map;
 	}
 
@@ -281,6 +314,23 @@ public class ObjectFolderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					objectFolder.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "objectFolderItems")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					ObjectFolderItem[] objectFolderItemsArray =
+						new ObjectFolderItem[jsonParserFieldValues.length];
+
+					for (int i = 0; i < objectFolderItemsArray.length; i++) {
+						objectFolderItemsArray[i] =
+							ObjectFolderItemSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					objectFolder.setObjectFolderItems(objectFolderItemsArray);
 				}
 			}
 		}

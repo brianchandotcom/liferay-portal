@@ -14,10 +14,16 @@ import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
 import {SIZES, Size} from '../constants/sizes';
+import {
+	useCustomSize,
+	useSetCustomHeight,
+	useSetCustomWidth,
+} from '../contexts/CustomSizeContext';
 
 interface ISizeSelectorProps {
 	activeSize: Size;
 	namespace: string;
+	open: boolean;
 	previewRef: React.RefObject<HTMLDivElement>;
 	setActiveSize: Function;
 }
@@ -36,6 +42,7 @@ const MIN_CUSTOM_SIZE: number = 1;
 export default function SizeSelector({
 	activeSize,
 	namespace,
+	open,
 	previewRef,
 	setActiveSize,
 }: ISizeSelectorProps) {
@@ -78,6 +85,7 @@ export default function SizeSelector({
 						<CustomSizeSelector
 							id={customSizeSelectorId}
 							namespace={namespace}
+							open={open}
 							previewRef={previewRef}
 						/>
 					)}
@@ -108,6 +116,7 @@ export default function SizeSelector({
 						<CustomSizeSelector
 							id={customSizeSelectorId}
 							namespace={namespace}
+							open={open}
 							previewRef={previewRef}
 						/>
 					)}
@@ -199,18 +208,20 @@ SizeButton.propTypes = {
 interface ICustomSizeSelectorProps {
 	id: string;
 	namespace: string;
+	open: boolean;
 	previewRef: React.RefObject<HTMLDivElement>;
 }
 
 function CustomSizeSelector({
 	id,
 	namespace,
+	open,
 	previewRef,
 }: ICustomSizeSelectorProps) {
-	const [height, setHeight] = useState<number>(
-		SIZES.custom.screenSize.height
-	);
-	const [width, setWidth] = useState<number>(SIZES.custom.screenSize.width);
+	const {height, width} = useCustomSize();
+
+	const setHeight = useSetCustomHeight();
+	const setWidth = useSetCustomWidth();
 
 	const [alertMessage, setAlertMessage] = useState<string | null>(null);
 
@@ -236,14 +247,14 @@ function CustomSizeSelector({
 			setWidth(preview.clientWidth);
 		});
 
-		if (previewRef.current) {
+		if (previewRef.current && open) {
 			resizeObserver.observe(previewRef.current);
 		}
 
 		return () => {
 			resizeObserver.disconnect();
 		};
-	}, [previewRef]);
+	}, [open, previewRef, setHeight, setWidth]);
 
 	return (
 		<div id={id}>

@@ -968,23 +968,19 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 	@Test
 	public void testPostObjectDefinitionPublish() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		ObjectDefinition objectDefinition =
-			testPostObjectDefinitionPublish_addObjectDefinition();
+		ObjectDefinition randomObjectDefinition = randomObjectDefinition();
 
-		assertHttpResponseStatusCode(
-			204,
-			objectDefinitionResource.postObjectDefinitionPublishHttpResponse(
-				objectDefinition.getId()));
+		ObjectDefinition postObjectDefinition =
+			testPostObjectDefinitionPublish_addObjectDefinition(
+				randomObjectDefinition);
 
-		assertHttpResponseStatusCode(
-			404,
-			objectDefinitionResource.postObjectDefinitionPublishHttpResponse(
-				0L));
+		assertEquals(randomObjectDefinition, postObjectDefinition);
+		assertValid(postObjectDefinition);
 	}
 
 	protected ObjectDefinition
-			testPostObjectDefinitionPublish_addObjectDefinition()
+			testPostObjectDefinitionPublish_addObjectDefinition(
+				ObjectDefinition objectDefinition)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

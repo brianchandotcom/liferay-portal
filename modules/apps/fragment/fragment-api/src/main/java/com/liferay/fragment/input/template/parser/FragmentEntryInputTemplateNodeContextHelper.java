@@ -701,7 +701,7 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		if (infoField.getInfoFieldType() == DateTimeInfoFieldType.INSTANCE) {
 			try {
 				DateTimeFormatter dateTimeFormatter =
-					DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+					DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
 				return dateTimeFormatter.format(
 					(TemporalAccessor)infoFieldValue.getValue());

@@ -75,6 +75,16 @@ public class ViewKBTemplatesDisplayContext {
 		return Collections.emptyList();
 	}
 
+	public String getDeleteKBTemplatesURL() {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/knowledge_base/delete_kb_templates"
+		).setRedirect(
+			_currentURL
+		).buildString();
+	}
+
 	public String getEditKBTemplateURL(KBTemplate kbTemplate) {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
@@ -129,7 +139,7 @@ public class ViewKBTemplatesDisplayContext {
 		throws PortalException {
 
 		return new KBTemplatesManagementToolbarDisplayContext(
-			_getDeleteKBTemplatesURL(), _httpServletRequest,
+			getDeleteKBTemplatesURL(), _httpServletRequest,
 			_liferayPortletRequest, _liferayPortletResponse,
 			getSearchContainer());
 	}
@@ -196,16 +206,6 @@ public class ViewKBTemplatesDisplayContext {
 		}
 
 		return false;
-	}
-
-	private String _getDeleteKBTemplatesURL() {
-		return PortletURLBuilder.createActionURL(
-			_liferayPortletResponse
-		).setActionName(
-			"/knowledge_base/delete_kb_templates"
-		).setRedirect(
-			_currentURL
-		).buildString();
 	}
 
 	private RowChecker _getRowChecker() {

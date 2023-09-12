@@ -79,9 +79,8 @@ function ModalAddObjectValidation({
 		else {
 			setShowError(false);
 			try {
-				await API.save(
-					apiURL,
-					{
+				await API.save({
+					item: {
 						active: false,
 						engine: typeSelection.name,
 						name: {
@@ -89,8 +88,9 @@ function ModalAddObjectValidation({
 						},
 						script: 'script_placeholder',
 					},
-					'POST'
-				);
+					method: 'POST',
+					url: apiURL,
+				});
 				onClose();
 
 				window.location.reload();

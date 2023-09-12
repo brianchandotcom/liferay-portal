@@ -5,6 +5,8 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.kernel.servlet.SharedSession;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
@@ -34,7 +36,7 @@ public class SharedSessionServletRequest extends HttpServletRequestWrapper {
 			return _getPortalHttpSession(create);
 		}
 
-		return new SharedSessionWrapper(
+		return new SharedSession(
 			_getPortalHttpSession(true), super.getSession(true));
 	}
 

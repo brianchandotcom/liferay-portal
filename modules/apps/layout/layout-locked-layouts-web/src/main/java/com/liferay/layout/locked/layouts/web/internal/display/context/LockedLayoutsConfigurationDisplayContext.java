@@ -20,10 +20,6 @@ public class LockedLayoutsConfigurationDisplayContext {
 		_lockedLayoutsConfiguration = lockedLayoutsConfiguration;
 	}
 
-	public int getLockReviewFrequency() {
-		return _lockedLayoutsConfiguration.lockReviewFrequency();
-	}
-
 	public int getTimeWithoutAutosave() {
 		return _lockedLayoutsConfiguration.timeWithoutAutosave();
 	}

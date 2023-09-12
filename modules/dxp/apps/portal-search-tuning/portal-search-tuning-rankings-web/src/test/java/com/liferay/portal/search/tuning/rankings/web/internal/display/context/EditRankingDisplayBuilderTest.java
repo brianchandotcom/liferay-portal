@@ -7,9 +7,9 @@ package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 
@@ -38,7 +38,8 @@ public class EditRankingDisplayBuilderTest extends BaseRankingsWebTestCase {
 		_setUpHttpServletRequest();
 
 		_editRankingDisplayBuilder = new EditRankingDisplayBuilder(
-			httpServletRequest, _renderRequest, _renderResponse);
+			httpServletRequest, rankingIndexNameBuilder, _rankingIndexReader,
+			_renderResponse);
 	}
 
 	@Test
@@ -108,8 +109,8 @@ public class EditRankingDisplayBuilderTest extends BaseRankingsWebTestCase {
 	}
 
 	private EditRankingDisplayBuilder _editRankingDisplayBuilder;
-	private final RenderRequest _renderRequest = Mockito.mock(
-		RenderRequest.class);
+	private final RankingIndexReader _rankingIndexReader = Mockito.mock(
+		RankingIndexReader.class);
 	private final RenderResponse _renderResponse = Mockito.mock(
 		RenderResponse.class);
 

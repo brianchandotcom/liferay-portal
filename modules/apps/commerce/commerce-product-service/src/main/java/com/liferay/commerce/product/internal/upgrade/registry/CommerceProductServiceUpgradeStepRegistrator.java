@@ -34,10 +34,10 @@ import com.liferay.commerce.product.internal.upgrade.v4_0_2.CommerceRepositoryUp
 import com.liferay.commerce.product.internal.upgrade.v5_4_0.CommercePermissionUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v5_5_0.util.CPInstanceUnitOfMeasureTable;
 import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -388,6 +388,17 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			"5.6.0", "5.7.0",
 			new com.liferay.commerce.product.internal.upgrade.v5_7_0.
 				CPDefinitionLinkUpgradeProcess(_assetEntryLocalService));
+
+		registry.register(
+			"5.7.0", "5.8.0",
+			UpgradeProcessFactory.addColumns(
+				"CPDefinitionOptionRel", "infoItemServiceKey VARCHAR(255)",
+				"definedExternally BOOLEAN", "typeSettings TEXT null"));
+
+		registry.register(
+			"5.8.0", "5.9.0",
+			UpgradeProcessFactory.alterColumnType(
+				"CPDefinitionOptionRel", "typeSettings", "TEXT null"));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");

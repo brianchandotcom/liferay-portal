@@ -43,7 +43,7 @@ public class CTRemoteServiceHttp {
 
 	public static com.liferay.change.tracking.model.CTRemote addCTRemote(
 			HttpPrincipal httpPrincipal, String name, String description,
-			String url)
+			String url, String clientId, String clientSecret)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -52,7 +52,7 @@ public class CTRemoteServiceHttp {
 				_addCTRemoteParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, name, description, url);
+				methodKey, name, description, url, clientId, clientSecret);
 
 			Object returnObj = null;
 
@@ -234,7 +234,8 @@ public class CTRemoteServiceHttp {
 
 	public static com.liferay.change.tracking.model.CTRemote updateCTRemote(
 			HttpPrincipal httpPrincipal, long ctRemoteId, String name,
-			String description, String url)
+			String description, String url, String clientId,
+			String clientSecret)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -243,7 +244,8 @@ public class CTRemoteServiceHttp {
 				_updateCTRemoteParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, ctRemoteId, name, description, url);
+				methodKey, ctRemoteId, name, description, url, clientId,
+				clientSecret);
 
 			Object returnObj = null;
 
@@ -276,7 +278,7 @@ public class CTRemoteServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(CTRemoteServiceHttp.class);
 
 	private static final Class<?>[] _addCTRemoteParameterTypes0 = new Class[] {
-		String.class, String.class, String.class
+		String.class, String.class, String.class, String.class, String.class
 	};
 	private static final Class<?>[] _deleteCTRemoteParameterTypes1 =
 		new Class[] {com.liferay.change.tracking.model.CTRemote.class};
@@ -289,6 +291,9 @@ public class CTRemoteServiceHttp {
 	private static final Class<?>[] _getCTRemotesCountParameterTypes4 =
 		new Class[] {String.class};
 	private static final Class<?>[] _updateCTRemoteParameterTypes5 =
-		new Class[] {long.class, String.class, String.class, String.class};
+		new Class[] {
+			long.class, String.class, String.class, String.class, String.class,
+			String.class
+		};
 
 }

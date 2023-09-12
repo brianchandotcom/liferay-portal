@@ -1,0 +1,74 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.UserServiceUtil;
+
+/**
+ * @author Michael Cavalcanti
+ */
+public class UpgradeJavaUserLocalServiceUtilCheck {
+
+	public void method1() {
+
+		User user1 = UserLocalServiceUtil.addUser(
+			themeDisplay.getCompanyId(), autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, LocaleUtil.fromLanguageId(languageId),
+			firstName, middleName, lastName, prefixListTypeId,
+			suffixListTypeId, male, birthdayMonth, birthdayDay,
+			birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, serviceContext);
+
+		User user2 = UserLocalServiceUtil.addUser(
+			themeDisplay.getCompanyId(), autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, LocaleUtil.fromLanguageId(languageId),
+			firstName, middleName, lastName, prefixListTypeId,
+			suffixListTypeId, male, birthdayMonth, birthdayDay,
+			birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, addresses, emailAddresses,
+			phones, websites, announcementsDelivers, sendEmail,
+			serviceContext);
+
+	}
+
+	public void method2(long userId, int status){
+
+		// UserLocalService
+
+		user = _userLocalService.updateStatus(
+			userId, status, ServiceContextThreadLocal.getServiceContext());
+
+		// UserLocalServiceUtil
+
+		UserLocalServiceUtil.updateStatus(
+			userId, status, ServiceContextThreadLocal.getServiceContext());
+
+		// UserService
+
+		return _userService.updateStatus(
+			userId, status, ServiceContextThreadLocal.getServiceContext());
+
+		// UserServiceUtil
+
+		UserServiceUtil.updateStatus(
+			userId, status, ServiceContextThreadLocal.getServiceContext());
+
+		// Message case
+
+		UserServiceUtil.updateStatus(12344, 1);
+
+	}
+
+	private UserLocalService _userLocalService;
+    private UserService _userService;
+
+}

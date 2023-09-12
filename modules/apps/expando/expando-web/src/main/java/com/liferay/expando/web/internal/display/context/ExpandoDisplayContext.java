@@ -89,11 +89,8 @@ public class ExpandoDisplayContext {
 					"/edit/select_field_type.jsp", "redirect",
 					PortalUtil.getCurrentURL(_httpServletRequest),
 					"modelResource", modelResource, "backTitle",
-					LanguageUtil.format(
-						_httpServletRequest, "go-to-x",
-						ResourceActionsUtil.getModelResource(
-							_httpServletRequest, modelResource),
-						false));
+					ResourceActionsUtil.getModelResource(
+						_httpServletRequest, modelResource));
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "add-custom-field"));

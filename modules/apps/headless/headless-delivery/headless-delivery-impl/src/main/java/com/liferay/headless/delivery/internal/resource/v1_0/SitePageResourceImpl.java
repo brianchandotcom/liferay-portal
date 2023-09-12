@@ -12,7 +12,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.delivery.dto.v1_0.OpenGraphSettings;
@@ -32,12 +32,12 @@ import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.SitePageEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
+import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryService;
-import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -112,8 +112,6 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
-
-import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -477,10 +475,18 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			assetTagNames = sitePage.getKeywords();
 		}
 
-		return ServiceContextRequestUtil.createServiceContext(
-			assetCategoryIds, assetTagNames,
-			_getExpandoBridgeAttributes(sitePage), groupId,
-			contextHttpServletRequest, null);
+		return ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, null
+		).assetCategoryIds(
+			assetCategoryIds
+		).assetTagNames(
+			assetTagNames
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				Layout.class.getName(), contextCompany.getCompanyId(),
+				sitePage.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 	}
 
 	private Map<String, Map<String, String>> _getBasicActions(Layout layout) {
@@ -588,15 +594,6 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			"custom-meta-tags");
 
 		return ddmStructure.getPrimaryKey();
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		SitePage sitePage) {
-
-		return CustomFieldsUtil.toMap(
-			Layout.class.getName(), contextCompany.getCompanyId(),
-			sitePage.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private Map<String, Map<String, String>> _getExperienceActions(
@@ -1045,9 +1042,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			}
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				null, groupId, contextHttpServletRequest, null);
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, null
+		).build();
 
 		String ddmFormValues = _getDDMFormValues(pageSettings);
 

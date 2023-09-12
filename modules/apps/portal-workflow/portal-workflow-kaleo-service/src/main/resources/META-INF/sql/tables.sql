@@ -17,7 +17,7 @@ create table KaleoAction (
 	description STRING null,
 	executionType VARCHAR(20) null,
 	script TEXT null,
-	scriptLanguage VARCHAR(75) null,
+	scriptLanguage VARCHAR(255) null,
 	scriptRequiredContexts STRING null,
 	priority INTEGER,
 	type_ VARCHAR(75) null,

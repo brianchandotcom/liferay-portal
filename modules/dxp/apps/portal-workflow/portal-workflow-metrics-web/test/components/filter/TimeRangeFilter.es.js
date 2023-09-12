@@ -99,8 +99,8 @@ describe('The time range filter component should', () => {
 			dateStartInput = document.querySelectorAll('.form-control')[0];
 			dateEndInput = document.querySelectorAll('.form-control')[1];
 
-			expect(dateStartInput.value).toEqual('12/03/2019');
-			expect(dateEndInput.value).toEqual('12/09/2019');
+			expect(dateStartInput.value).toEqual('12/02/2019');
+			expect(dateEndInput.value).toEqual('12/08/2019');
 		});
 
 		test('Sho error span with invalid date input', () => {

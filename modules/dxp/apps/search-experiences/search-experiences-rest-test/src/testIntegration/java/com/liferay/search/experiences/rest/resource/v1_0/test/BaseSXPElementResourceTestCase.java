@@ -835,6 +835,30 @@ public abstract class BaseSXPElementResourceTestCase {
 	}
 
 	@Test
+	public void testPutSXPElement() throws Exception {
+		SXPElement postSXPElement = testPutSXPElement_addSXPElement();
+
+		SXPElement randomSXPElement = randomSXPElement();
+
+		SXPElement putSXPElement = sxpElementResource.putSXPElement(
+			postSXPElement.getId(), randomSXPElement);
+
+		assertEquals(randomSXPElement, putSXPElement);
+		assertValid(putSXPElement);
+
+		SXPElement getSXPElement = sxpElementResource.getSXPElement(
+			putSXPElement.getId());
+
+		assertEquals(randomSXPElement, getSXPElement);
+		assertValid(getSXPElement);
+	}
+
+	protected SXPElement testPutSXPElement_addSXPElement() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostSXPElementCopy() throws Exception {
 		SXPElement randomSXPElement = randomSXPElement();
 

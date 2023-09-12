@@ -73,7 +73,7 @@ public class LayoutPageTemplateCollectionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -95,12 +95,16 @@ public class LayoutPageTemplateCollectionCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", parentLayoutPageTemplateCollectionId=");
+		sb.append(parentLayoutPageTemplateCollectionId);
 		sb.append(", layoutPageTemplateCollectionKey=");
 		sb.append(layoutPageTemplateCollectionKey);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -152,6 +156,10 @@ public class LayoutPageTemplateCollectionCacheModel
 				new Date(modifiedDate));
 		}
 
+		layoutPageTemplateCollectionImpl.
+			setParentLayoutPageTemplateCollectionId(
+				parentLayoutPageTemplateCollectionId);
+
 		if (layoutPageTemplateCollectionKey == null) {
 			layoutPageTemplateCollectionImpl.setLayoutPageTemplateCollectionKey(
 				"");
@@ -174,6 +182,8 @@ public class LayoutPageTemplateCollectionCacheModel
 		else {
 			layoutPageTemplateCollectionImpl.setDescription(description);
 		}
+
+		layoutPageTemplateCollectionImpl.setType(type);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			layoutPageTemplateCollectionImpl.setLastPublishDate(null);
@@ -205,9 +215,13 @@ public class LayoutPageTemplateCollectionCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		parentLayoutPageTemplateCollectionId = objectInput.readLong();
 		layoutPageTemplateCollectionKey = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+
+		type = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -242,6 +256,8 @@ public class LayoutPageTemplateCollectionCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		objectOutput.writeLong(parentLayoutPageTemplateCollectionId);
+
 		if (layoutPageTemplateCollectionKey == null) {
 			objectOutput.writeUTF("");
 		}
@@ -263,6 +279,7 @@ public class LayoutPageTemplateCollectionCacheModel
 			objectOutput.writeUTF(description);
 		}
 
+		objectOutput.writeInt(type);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -276,9 +293,11 @@ public class LayoutPageTemplateCollectionCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long parentLayoutPageTemplateCollectionId;
 	public String layoutPageTemplateCollectionKey;
 	public String name;
 	public String description;
+	public int type;
 	public long lastPublishDate;
 
 }

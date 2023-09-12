@@ -14,6 +14,12 @@
 }
 
 .hero-container__image-hero {
-	border-radius: 0.75rem;
+	margin: 0px auto;
 	margin-top: 6rem;
+	width: 80%;
+}
+
+picture {
+	display: flex;
+	justify-content: center;
 }

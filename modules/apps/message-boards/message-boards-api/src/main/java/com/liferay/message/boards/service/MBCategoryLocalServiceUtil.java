@@ -542,6 +542,12 @@ public class MBCategoryLocalServiceUtil {
 		return getService().getMBCategory(categoryId);
 	}
 
+	public static MBCategory getMBCategory(long groupId, String friendlyURL)
+		throws PortalException {
+
+		return getService().getMBCategory(groupId, friendlyURL);
+	}
+
 	/**
 	 * Returns the message boards category matching the UUID and group.
 	 *

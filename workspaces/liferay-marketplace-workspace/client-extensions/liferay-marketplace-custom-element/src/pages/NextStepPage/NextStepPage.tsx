@@ -9,7 +9,6 @@ import {ReactNode, useState} from 'react';
 
 import catalogIcon from '../../assets/icons/catalog_icon.svg';
 import {AccountAndAppCard} from '../../components/Card/AccountAndAppCard';
-import {Footer} from '../../components/Footer/Footer';
 import {Header} from '../../components/Header/Header';
 import {NewAppPageFooterButtons} from '../../components/NewAppPageFooterButtons/NewAppPageFooterButtons';
 import {Liferay} from '../../liferay/liferay';
@@ -182,8 +181,6 @@ export function NextStepPage({
 						</a>
 					</div>
 				</div>
-
-				<Footer />
 			</div>
 		</>
 	);

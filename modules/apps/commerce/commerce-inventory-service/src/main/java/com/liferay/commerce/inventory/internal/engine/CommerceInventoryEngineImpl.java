@@ -10,11 +10,11 @@ import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.engine.CommerceInventoryEngine;
 import com.liferay.commerce.inventory.method.CommerceInventoryMethod;
 import com.liferay.commerce.inventory.method.CommerceInventoryMethodRegistry;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
@@ -38,9 +38,10 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 		propagation = Propagation.REQUIRED, rollbackFor = Exception.class
 	)
 	public void consumeQuantity(
-			long userId, long bookedQuantityId, long commerceCatalogGroupId,
-			long commerceInventoryWarehouseId, BigDecimal quantity, String sku,
-			String unitOfMeasureKey, Map<String, String> context)
+			long userId, long commerceInventoryBookedQuantityId,
+			long commerceCatalogGroupId, long commerceInventoryWarehouseId,
+			BigDecimal quantity, String sku, String unitOfMeasureKey,
+			Map<String, String> context)
 		throws PortalException {
 
 		CommerceInventoryMethod commerceInventoryMethod =
@@ -51,8 +52,9 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 		}
 
 		commerceInventoryMethod.consumeQuantity(
-			userId, bookedQuantityId, commerceInventoryWarehouseId, quantity,
-			sku, unitOfMeasureKey, context);
+			userId, commerceInventoryBookedQuantityId,
+			commerceInventoryWarehouseId, quantity, sku, unitOfMeasureKey,
+			context);
 	}
 
 	@Override

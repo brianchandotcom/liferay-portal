@@ -59,14 +59,15 @@ public class MasterLayoutActionDropdownItemsProvider {
 		_layoutPageTemplateEntry = layoutPageTemplateEntry;
 		_renderResponse = renderResponse;
 
+		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
+			layoutPageTemplateEntry.getPlid());
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_itemSelector = (ItemSelector)renderRequest.getAttribute(
 			LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR);
+		_layout = LayoutLocalServiceUtil.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
-			layoutPageTemplateEntry.getPlid());
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
@@ -123,7 +124,6 @@ public class MasterLayoutActionDropdownItemsProvider {
 					).add(
 						() ->
 							(layoutPageTemplateEntryId > 0) &&
-							_layoutPageTemplateEntry.isApproved() &&
 							!_layoutPageTemplateEntry.isDefaultTemplate() &&
 							hasUpdatePermission,
 						_getMarkAsDefaultMasterLayoutActionUnsafeConsumer()
@@ -326,7 +326,7 @@ public class MasterLayoutActionDropdownItemsProvider {
 		_getExportMasterLayoutActionUnsafeConsumer() {
 
 		return dropdownItem -> {
-			dropdownItem.setDisabled(_layoutPageTemplateEntry.isDraft());
+			dropdownItem.setDisabled(!_layout.isPublished());
 			dropdownItem.setHref(
 				ResourceURLBuilder.createResourceURL(
 					_renderResponse
@@ -433,6 +433,7 @@ public class MasterLayoutActionDropdownItemsProvider {
 					"layoutPageTemplateEntryId",
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 				).buildString());
+			dropdownItem.setDisabled(!_layout.isPublished());
 
 			String name = "Blank";
 
@@ -545,6 +546,7 @@ public class MasterLayoutActionDropdownItemsProvider {
 	private final Layout _draftLayout;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
+	private final Layout _layout;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;

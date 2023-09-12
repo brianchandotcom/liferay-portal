@@ -36,6 +36,8 @@ public abstract class CommerceOrderItemFinderBaseImpl
 
 		dbColumnNames.put("uuid", "uuid_");
 		dbColumnNames.put(
+			"commerceInventoryBookedQuantityId", "CIBookedQuantityId");
+		dbColumnNames.put(
 			"deliverySubscriptionTypeSettings", "deliverySubTypeSettings");
 		dbColumnNames.put(
 			"discountPercentageLevel1WithTaxAmount",
@@ -49,6 +51,9 @@ public abstract class CommerceOrderItemFinderBaseImpl
 		dbColumnNames.put(
 			"discountPercentageLevel4WithTaxAmount",
 			"discountPctLevel4WithTaxAmount");
+		dbColumnNames.put(
+			"unitOfMeasureIncrementalOrderQuantity",
+			"UOMIncrementalOrderQuantity");
 
 		setDBColumnNames(dbColumnNames);
 	}

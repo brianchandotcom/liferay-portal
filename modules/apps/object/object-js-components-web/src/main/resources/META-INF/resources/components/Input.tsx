@@ -4,9 +4,8 @@
  */
 
 import {ClayInput} from '@clayui/form';
+import {FieldBase} from 'frontend-js-components-web';
 import React from 'react';
-
-import {FieldBase} from './FieldBase';
 
 export const Input = React.forwardRef<HTMLInputElement, IProps>(
 	(
@@ -21,6 +20,7 @@ export const Input = React.forwardRef<HTMLInputElement, IProps>(
 			name,
 			onChange,
 			onInput,
+			readOnly,
 			required,
 			type,
 			value,
@@ -46,6 +46,7 @@ export const Input = React.forwardRef<HTMLInputElement, IProps>(
 					name={name}
 					onChange={onChange}
 					onInput={onInput}
+					readOnly={readOnly}
 					ref={ref}
 					type={type}
 					value={value}

@@ -21,12 +21,13 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface DisplayPageInfoItemFieldSetProvider {
 
 	public InfoFieldSet getInfoFieldSet(
-		String itemClassName, String infoItemFormVariationKey,
+		String itemClassName, String infoItemFormVariationKey, String namespace,
 		long scopeGroupId);
 
 	public List<InfoFieldValue<Object>> getInfoFieldValues(
 			InfoItemReference infoItemReference,
-			String infoItemFormVariationKey, ThemeDisplay themeDisplay)
+			String infoItemFormVariationKey, String namespace,
+			ThemeDisplay themeDisplay)
 		throws Exception;
 
 }

@@ -173,6 +173,20 @@ public class BigDecimalUtil {
 		return xBigDecimal.doubleValue();
 	}
 
+	public static BigDecimal stripTrailingZeros(BigDecimal x) {
+		if (x == null) {
+			return null;
+		}
+
+		x = x.stripTrailingZeros();
+
+		if (x.scale() < 0) {
+			return x.setScale(0, RoundingMode.HALF_UP);
+		}
+
+		return x;
+	}
+
 	public static double subtract(Number x, Number y) {
 		if (x == null) {
 			x = 0;

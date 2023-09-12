@@ -509,6 +509,20 @@ public class OrderItemSerDes {
 			sb.append("\"");
 		}
 
+		if (orderItem.getUnitOfMeasureKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(orderItem.getUnitOfMeasureKey()));
+
+			sb.append("\"");
+		}
+
 		if (orderItem.getUnitPrice() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -912,6 +926,15 @@ public class OrderItemSerDes {
 				"unitOfMeasure", String.valueOf(orderItem.getUnitOfMeasure()));
 		}
 
+		if (orderItem.getUnitOfMeasureKey() == null) {
+			map.put("unitOfMeasureKey", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasureKey",
+				String.valueOf(orderItem.getUnitOfMeasureKey()));
+		}
+
 		if (orderItem.getUnitPrice() == null) {
 			map.put("unitPrice", null);
 		}
@@ -1169,7 +1192,7 @@ public class OrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "quantity")) {
 				if (jsonParserFieldValue != null) {
 					orderItem.setQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "replacedSku")) {
@@ -1194,7 +1217,7 @@ public class OrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "shippedQuantity")) {
 				if (jsonParserFieldValue != null) {
 					orderItem.setShippedQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippingAddress")) {
@@ -1237,6 +1260,11 @@ public class OrderItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "unitOfMeasure")) {
 				if (jsonParserFieldValue != null) {
 					orderItem.setUnitOfMeasure((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasureKey")) {
+				if (jsonParserFieldValue != null) {
+					orderItem.setUnitOfMeasureKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "unitPrice")) {

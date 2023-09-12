@@ -22,6 +22,7 @@ String displayStyle = oAuth2ApplicationsManagementToolbarDisplayContext.getDispl
 	disabled="<%= oAuth2ApplicationsCount == 0 %>"
 	filterDropdownItems="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= oAuth2ApplicationsCount %>"
+	orderDropdownItems="<%= oAuth2ApplicationsManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
 	propsTransformer="admin/js/OAuth2ApplicationsManagementToolbarPropsTransformer"
 	searchContainerId="oAuth2ApplicationsSearchContainer"
 	selectable="<%= true %>"

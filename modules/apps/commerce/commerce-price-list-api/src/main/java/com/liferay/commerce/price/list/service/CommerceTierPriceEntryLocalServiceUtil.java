@@ -673,12 +673,13 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 	public static CommerceTierPriceEntry updateCommerceTierPriceEntry(
 			long commerceTierPriceEntryId, java.math.BigDecimal price,
 			java.math.BigDecimal promoPrice, java.math.BigDecimal minQuantity,
+			boolean bulkPricing,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCommerceTierPriceEntry(
 			commerceTierPriceEntryId, price, promoPrice, minQuantity,
-			serviceContext);
+			bulkPricing, serviceContext);
 	}
 
 	public static CommerceTierPriceEntry updateCommerceTierPriceEntry(

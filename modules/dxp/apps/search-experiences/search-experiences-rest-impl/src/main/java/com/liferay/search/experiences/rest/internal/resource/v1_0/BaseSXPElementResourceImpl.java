@@ -501,7 +501,150 @@ public abstract class BaseSXPElementResourceImpl
 			SXPElement sxpElement)
 		throws Exception {
 
+		SXPElement existingSXPElement = getSXPElement(sxpElementId);
+
+		if (sxpElement.getCreateDate() != null) {
+			existingSXPElement.setCreateDate(sxpElement.getCreateDate());
+		}
+
+		if (sxpElement.getDescription() != null) {
+			existingSXPElement.setDescription(sxpElement.getDescription());
+		}
+
+		if (sxpElement.getDescription_i18n() != null) {
+			existingSXPElement.setDescription_i18n(
+				sxpElement.getDescription_i18n());
+		}
+
+		if (sxpElement.getExternalReferenceCode() != null) {
+			existingSXPElement.setExternalReferenceCode(
+				sxpElement.getExternalReferenceCode());
+		}
+
+		if (sxpElement.getHidden() != null) {
+			existingSXPElement.setHidden(sxpElement.getHidden());
+		}
+
+		if (sxpElement.getModifiedDate() != null) {
+			existingSXPElement.setModifiedDate(sxpElement.getModifiedDate());
+		}
+
+		if (sxpElement.getReadOnly() != null) {
+			existingSXPElement.setReadOnly(sxpElement.getReadOnly());
+		}
+
+		if (sxpElement.getSchemaVersion() != null) {
+			existingSXPElement.setSchemaVersion(sxpElement.getSchemaVersion());
+		}
+
+		if (sxpElement.getTitle() != null) {
+			existingSXPElement.setTitle(sxpElement.getTitle());
+		}
+
+		if (sxpElement.getTitle_i18n() != null) {
+			existingSXPElement.setTitle_i18n(sxpElement.getTitle_i18n());
+		}
+
+		if (sxpElement.getType() != null) {
+			existingSXPElement.setType(sxpElement.getType());
+		}
+
+		if (sxpElement.getUserName() != null) {
+			existingSXPElement.setUserName(sxpElement.getUserName());
+		}
+
+		if (sxpElement.getVersion() != null) {
+			existingSXPElement.setVersion(sxpElement.getVersion());
+		}
+
+		preparePatch(sxpElement, existingSXPElement);
+
+		return putSXPElement(sxpElementId, existingSXPElement);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-elements/{sxpElementId}' -d $'{"createDate": ___, "description": ___, "description_i18n": ___, "elementDefinition": ___, "externalReferenceCode": ___, "hidden": ___, "id": ___, "modifiedDate": ___, "readOnly": ___, "schemaVersion": ___, "title": ___, "title_i18n": ___, "type": ___, "userName": ___, "version": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "sxpElementId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "SXPElement")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/sxp-elements/{sxpElementId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public SXPElement putSXPElement(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("sxpElementId")
+			Long sxpElementId,
+			SXPElement sxpElement)
+		throws Exception {
+
 		return new SXPElement();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/search-experiences-rest/v1.0/sxp-elements/{sxpElementId}/batch' -d $'{"createDate": ___, "description": ___, "description_i18n": ___, "elementDefinition": ___, "externalReferenceCode": ___, "hidden": ___, "id": ___, "modifiedDate": ___, "readOnly": ___, "schemaVersion": ___, "title": ___, "title_i18n": ___, "type": ___, "userName": ___, "version": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "sxpElementId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "SXPElement")}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path("/sxp-elements/{sxpElementId}/batch")
+	@javax.ws.rs.Produces("application/json")
+	@javax.ws.rs.PUT
+	@Override
+	public Response putSXPElementBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("sxpElementId")
+			Long sxpElementId,
+			SXPElement sxpElement,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.putImportTask(
+				SXPElement.class.getName(), callbackURL, object)
+		).build();
 	}
 
 	/**
@@ -587,6 +730,12 @@ public abstract class BaseSXPElementResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				sxpElementUnsafeFunction =
+					sxpElement -> putSXPElementByExternalReferenceCode(
+						sxpElement.getExternalReferenceCode(), sxpElement);
+			}
+
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				sxpElementUnsafeFunction = sxpElement -> {
 					SXPElement persistedSXPElement = null;
@@ -649,7 +798,7 @@ public abstract class BaseSXPElementResourceImpl
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray("PARTIAL_UPDATE");
+		return SetUtil.fromArray("PARTIAL_UPDATE", "UPDATE");
 	}
 
 	@Override
@@ -716,6 +865,13 @@ public abstract class BaseSXPElementResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			sxpElementUnsafeFunction = sxpElement -> patchSXPElement(
+				sxpElement.getId() != null ? sxpElement.getId() :
+					_parseLong((String)parameters.get("sxpElementId")),
+				sxpElement);
+		}
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+			sxpElementUnsafeFunction = sxpElement -> putSXPElement(
 				sxpElement.getId() != null ? sxpElement.getId() :
 					_parseLong((String)parameters.get("sxpElementId")),
 				sxpElement);
@@ -948,6 +1104,10 @@ public abstract class BaseSXPElementResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		SXPElement sxpElement, SXPElement existingSxpElement) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

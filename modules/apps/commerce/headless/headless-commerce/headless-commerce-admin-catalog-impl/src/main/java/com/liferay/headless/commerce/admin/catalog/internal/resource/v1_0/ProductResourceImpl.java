@@ -95,12 +95,12 @@ import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -794,12 +794,6 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			contextAcceptLanguage.getPreferredLocale());
 	}
 
-	private Map<String, Serializable> _getExpandoBridgeAttributes(Sku sku) {
-		return CustomFieldsUtil.toMap(
-			CPInstance.class.getName(), contextCompany.getCompanyId(),
-			sku.getCustomFields(), contextAcceptLanguage.getPreferredLocale());
-	}
-
 	private ProductShippingConfiguration _getProductShippingConfiguration(
 		Product product) {
 
@@ -967,7 +961,10 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		if (skus != null) {
 			for (Sku sku : skus) {
 				serviceContext.setExpandoBridgeAttributes(
-					_getExpandoBridgeAttributes(sku));
+					CustomFieldsUtil.toMap(
+						CPInstance.class.getName(),
+						contextCompany.getCompanyId(), sku.getCustomFields(),
+						contextAcceptLanguage.getPreferredLocale()));
 
 				CPInstance cpInstance = SkuUtil.addOrUpdateCPInstance(
 					_cpInstanceService, sku, cpDefinition,

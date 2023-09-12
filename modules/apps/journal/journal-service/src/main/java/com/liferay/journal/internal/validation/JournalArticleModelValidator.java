@@ -6,6 +6,7 @@
 package com.liferay.journal.internal.validation;
 
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
 import com.liferay.dynamic.data.mapping.exception.StorageFieldNameException;
@@ -49,7 +50,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -480,14 +480,14 @@ public class JournalArticleModelValidator
 		if (smallImage &&
 			(smallImageSource ==
 				JournalArticleConstants.
-					SMALL_IMAGE_SOURCE_DOCUMENTS_AND_MEDIA) &&
-			(smallImageId > 0)) {
+					SMALL_IMAGE_SOURCE_DOCUMENTS_AND_MEDIA)) {
 
-			FileEntry fileEntry = _dlAppLocalService.getFileEntry(smallImageId);
-
-			if (fileEntry == null) {
+			try {
+				_dlAppLocalService.getFileEntry(smallImageId);
+			}
+			catch (NoSuchFileEntryException noSuchFileEntryException) {
 				throw new NoSuchImageException(
-					"Small image ID " + smallImageId);
+					"Small image ID " + smallImageId, noSuchFileEntryException);
 			}
 		}
 

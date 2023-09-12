@@ -140,7 +140,7 @@ public class WarehouseItem implements Serializable {
 	protected Date modifiedDate;
 
 	@DecimalMin("0")
-	@Schema(example = "1")
+	@Schema(example = "1.1")
 	@Valid
 	public BigDecimal getQuantity() {
 		return quantity;
@@ -170,7 +170,7 @@ public class WarehouseItem implements Serializable {
 	protected BigDecimal quantity;
 
 	@DecimalMin("0")
-	@Schema(example = "2")
+	@Schema(example = "2.1")
 	@Valid
 	public BigDecimal getReservedQuantity() {
 		return reservedQuantity;

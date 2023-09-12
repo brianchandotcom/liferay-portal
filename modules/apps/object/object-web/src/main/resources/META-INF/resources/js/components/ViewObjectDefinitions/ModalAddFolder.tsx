@@ -43,7 +43,7 @@ export function ModalAddFolder({handleOnClose}: ModalAddFolderProps) {
 	};
 
 	const onSubmit = async ({label, name}: TInitialValues) => {
-		const folder: Partial<Folder> = {
+		const folder: Partial<ObjectFolder> = {
 			label: {
 				[defaultLanguageId]: label,
 			},
@@ -51,11 +51,11 @@ export function ModalAddFolder({handleOnClose}: ModalAddFolderProps) {
 		};
 
 		try {
-			await API.save(
-				'/o/object-admin/v1.0/object-folders',
-				folder,
-				'POST'
-			);
+			await API.save({
+				item: folder,
+				method: 'POST',
+				url: '/o/object-admin/v1.0/object-folders',
+			});
 
 			onClose();
 

@@ -6,11 +6,16 @@
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectFolder;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectFolderItem;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFolderResource;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFolderItemLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectFolderService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -148,7 +153,33 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 		return _toObjectFolder(
 			_objectFolderService.updateObjectFolder(
 				objectFolder.getExternalReferenceCode(), objectFolderId,
-				LocalizedMapUtil.getLocalizedMap(objectFolder.getLabel())));
+				LocalizedMapUtil.getLocalizedMap(objectFolder.getLabel()),
+				transformToList(
+					objectFolder.getObjectFolderItems(),
+					objectFolderItem -> {
+						ObjectDefinition objectDefinition =
+							_objectDefinitionLocalService.
+								getObjectDefinitionByExternalReferenceCode(
+									objectFolderItem.
+										getObjectDefinitionExternalReferenceCode(),
+									contextUser.getCompanyId());
+
+						com.liferay.object.model.ObjectFolderItem
+							serviceBuilderObjectFolderItem =
+								_objectFolderItemLocalService.
+									createObjectFolderItem(0L);
+
+						serviceBuilderObjectFolderItem.setObjectDefinitionId(
+							objectDefinition.getObjectDefinitionId());
+						serviceBuilderObjectFolderItem.setObjectFolderId(
+							objectFolderId);
+						serviceBuilderObjectFolderItem.setPositionX(
+							objectFolderItem.getPositionX());
+						serviceBuilderObjectFolderItem.setPositionY(
+							objectFolderItem.getPositionY());
+
+						return serviceBuilderObjectFolderItem;
+					})));
 	}
 
 	@Override
@@ -168,6 +199,16 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 
 		return putObjectFolder(
 			serviceBuilderObjectFolder.getObjectFolderId(), objectFolder);
+	}
+
+	@Override
+	protected void preparePatch(
+		ObjectFolder objectFolder, ObjectFolder existingObjectFolder) {
+
+		if (objectFolder.getObjectFolderItems() != null) {
+			existingObjectFolder.setObjectFolderItems(
+				objectFolder.getObjectFolderItems());
+		}
 	}
 
 	private ObjectFolder _toObjectFolder(
@@ -218,9 +259,47 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 				label = LocalizedMapUtil.getLanguageIdMap(
 					objectFolder.getLabelMap());
 				name = objectFolder.getName();
+				objectFolderItems = transformToArray(
+					_objectFolderItemLocalService.
+						getObjectFolderItemsByObjectFolderId(
+							objectFolder.getObjectFolderId()),
+					objectFolderItem -> _toObjectFolderItem(
+						objectFolder.getObjectFolderId(), objectFolderItem),
+					ObjectFolderItem.class);
 			}
 		};
 	}
+
+	private ObjectFolderItem _toObjectFolderItem(
+			long objectFolderId,
+			com.liferay.object.model.ObjectFolderItem objectFolderItem)
+		throws PortalException {
+
+		if (objectFolderItem == null) {
+			return null;
+		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectFolderItem.getObjectDefinitionId());
+
+		return new ObjectFolderItem() {
+			{
+				linkedObjectDefinition =
+					objectDefinition.isLinkedToObjectFolder(objectFolderId);
+				objectDefinitionExternalReferenceCode =
+					objectDefinition.getExternalReferenceCode();
+				positionX = objectFolderItem.getPositionX();
+				positionY = objectFolderItem.getPositionY();
+			}
+		};
+	}
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectFolderItemLocalService _objectFolderItemLocalService;
 
 	@Reference
 	private ObjectFolderLocalService _objectFolderLocalService;

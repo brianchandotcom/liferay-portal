@@ -5,14 +5,14 @@
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
-import com.liferay.jethr0.bui1d.repository.BuildRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRunRepository;
-import com.liferay.jethr0.bui1d.run.BuildRun;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
+import com.liferay.jethr0.event.controller.EventJmsController;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
-import com.liferay.jethr0.jms.JMSEventHandler;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 
 import org.json.JSONObject;
 
@@ -37,40 +37,42 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 
 		super.process();
 
-		JenkinsNode jenkinsNode = getJenkinsNode();
+		JenkinsNodeEntity jenkinsNodeEntity = getJenkinsNodeEntity();
 
-		if (jenkinsNode == null) {
+		if (jenkinsNodeEntity == null) {
 			return null;
 		}
 
 		BuildQueue buildQueue = getBuildQueue();
 
-		Build build = buildQueue.nextBuild(jenkinsNode);
+		BuildEntity buildEntity = buildQueue.nextBuildEntity(jenkinsNodeEntity);
 
-		if (build == null) {
+		if (buildEntity == null) {
 			return null;
 		}
 
-		build.setState(Build.State.QUEUED);
+		buildEntity.setState(BuildEntity.State.QUEUED);
 
-		BuildRunRepository buildRunRepository = getBuildRunRepository();
+		BuildRunEntityRepository buildRunEntityRepository =
+			getBuildRunRepository();
 
-		BuildRun buildRun = buildRunRepository.add(
-			build, BuildRun.State.QUEUED);
+		BuildRunEntity buildRunEntity = buildRunEntityRepository.add(
+			buildEntity, BuildRunEntity.State.QUEUED);
 
-		JMSEventHandler jmsEventHandler = getJMSEventHandler();
+		EventJmsController eventJmsController = getEventJmsController();
 
-		jmsEventHandler.send(
-			jenkinsNode.getJenkinsServer(),
-			String.valueOf(buildRun.getInvokeJSONObject(jenkinsNode)));
+		eventJmsController.send(
+			jenkinsNodeEntity.getJenkinsServerEntity(),
+			String.valueOf(
+				buildRunEntity.getInvokeJSONObject(jenkinsNodeEntity)));
 
-		BuildRepository buildRepository = getBuildRepository();
+		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
-		buildRepository.update(build);
+		buildEntityRepository.update(buildEntity);
 
-		buildRunRepository.update(buildRun);
+		buildRunEntityRepository.update(buildRunEntity);
 
-		return jenkinsNode.toString();
+		return jenkinsNodeEntity.toString();
 	}
 
 }

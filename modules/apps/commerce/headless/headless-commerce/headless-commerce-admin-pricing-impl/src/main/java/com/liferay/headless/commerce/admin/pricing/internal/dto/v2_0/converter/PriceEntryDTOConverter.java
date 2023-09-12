@@ -87,7 +87,7 @@ public class PriceEntryDTOConverter
 				skuExternalReferenceCode =
 					cpInstance.getExternalReferenceCode();
 				skuId = cpInstance.getCPInstanceId();
-				unitOfMeasure = commercePriceEntry.getUnitOfMeasureKey();
+				unitOfMeasureKey = commercePriceEntry.getUnitOfMeasureKey();
 			}
 		};
 	}

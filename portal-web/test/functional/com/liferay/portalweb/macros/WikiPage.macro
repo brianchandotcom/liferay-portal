@@ -37,11 +37,13 @@ definition {
 
 		AssertVisible(locator1 = "Button#SELECT_FILES");
 
-		var key_attachmentFileName = ${attachmentFileName};
+		var fileName = ${attachmentFileName};
 
-		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = ${fileName});
+
+		UploadFile(
 			locator1 = "TextInput#FILE",
-			value1 = ${attachmentFileName});
+			value1 = ${dependencyFilePath});
 
 		WaitForElementPresent(locator1 = "Checkbox#SELECT_ALL");
 

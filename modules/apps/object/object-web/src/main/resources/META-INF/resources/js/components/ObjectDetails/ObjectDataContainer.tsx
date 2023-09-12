@@ -3,12 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	FormError,
-	Input,
-	InputLocalized,
-	Toggle,
-} from '@liferay/object-js-components-web';
+import {FormError, Input, Toggle} from '@liferay/object-js-components-web';
+import {InputLocalized} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {ChangeEventHandler, useState} from 'react';
 
@@ -20,6 +16,7 @@ interface ObjectDataContainerProps {
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
+	isLinkedNode?: boolean;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
@@ -30,6 +27,7 @@ export function ObjectDataContainer({
 	handleChange,
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
+	isLinkedNode,
 	setValues,
 	values,
 }: ObjectDataContainerProps) {
@@ -41,10 +39,13 @@ export function ObjectDataContainer({
 		? !values.modifiable && values.system
 		: values.system;
 
+	const noPermissionOrLinked =
+		!hasUpdateObjectDefinitionPermission || isLinkedNode;
+
 	return (
 		<>
 			<Input
-				disabled={isApproved || !hasUpdateObjectDefinitionPermission}
+				disabled={isApproved || noPermissionOrLinked}
 				error={errors.name}
 				label={Liferay.Language.get('name')}
 				name="name"
@@ -54,7 +55,7 @@ export function ObjectDataContainer({
 			/>
 
 			<InputLocalized
-				disabled={isReadOnly || !hasUpdateObjectDefinitionPermission}
+				disabled={isReadOnly || noPermissionOrLinked}
 				error={errors.label}
 				label={Liferay.Language.get('label')}
 				onChange={(label) => setValues({label})}
@@ -65,7 +66,7 @@ export function ObjectDataContainer({
 			/>
 
 			<InputLocalized
-				disabled={isReadOnly || !hasUpdateObjectDefinitionPermission}
+				disabled={isReadOnly || noPermissionOrLinked}
 				error={errors.pluralLabel}
 				label={Liferay.Language.get('plural-label')}
 				onChange={(pluralLabel) => setValues({pluralLabel})}
@@ -83,11 +84,7 @@ export function ObjectDataContainer({
 			/>
 
 			<Toggle
-				disabled={
-					!isApproved ||
-					isReadOnly ||
-					!hasUpdateObjectDefinitionPermission
-				}
+				disabled={!isApproved || isReadOnly || noPermissionOrLinked}
 				label={sub(
 					Liferay.Language.get('activate-x'),
 					Liferay.Language.get('object')

@@ -6,13 +6,20 @@
 /// <reference types="react" />
 
 import {IFDSTableProps} from '../../utils/fds';
+interface FieldsProps extends IFDSTableProps {
+	baseResourceURL: string;
+	objectFieldTypes: ObjectFieldType[];
+}
 export default function Fields({
 	apiURL,
+	baseResourceURL,
 	creationMenu,
 	formName,
 	id,
 	items,
 	objectDefinitionExternalReferenceCode,
+	objectFieldTypes,
 	style,
 	url,
-}: IFDSTableProps): JSX.Element;
+}: FieldsProps): JSX.Element;
+export {};

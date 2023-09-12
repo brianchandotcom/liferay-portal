@@ -76,9 +76,9 @@ components:
                     format: int64
                     type: integer
                 quantity:
-                    example: 1
-                    format: int32
-                    type: integer
+                    example: 10.1
+                    format: bigdecimal
+                    type: number
                 sku:
                     example: SKU
                     type: string
@@ -214,12 +214,12 @@ components:
                     format: date
                     type: string
                 quantity:
-                    example: 1
+                    example: 1.1
                     format: bigdecimal
                     minimum: 0
                     type: number
                 reservedQuantity:
-                    example: 2
+                    example: 2.1
                     format: bigdecimal
                     minimum: 0
                     type: number
@@ -304,7 +304,7 @@ info:
         name: "Commerce Team"
     description:
         "Liferay Commerce Admin Inventory API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.admin.inventory.client', and version '4.0.24'."
+        artifact ID 'com.liferay.headless.commerce.admin.inventory.client', and version '4.0.25'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

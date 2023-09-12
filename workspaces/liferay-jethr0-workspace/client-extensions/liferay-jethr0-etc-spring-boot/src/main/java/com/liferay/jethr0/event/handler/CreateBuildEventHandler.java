@@ -5,14 +5,14 @@
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.parameter.BuildParameter;
+import com.liferay.jethr0.bui1d.BuildEntity;
+import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
-import com.liferay.jethr0.bui1d.repository.BuildParameterRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRepository;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
-import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.repository.ProjectRepository;
+import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 
 import org.json.JSONObject;
 
@@ -25,50 +25,52 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 	public String process() throws Exception {
 		JSONObject messageJSONObject = getMessageJSONObject();
 
-		Project project = getProject(
-			messageJSONObject.optJSONObject("project"));
+		JobEntity jobEntity = getJobEntity(
+			messageJSONObject.optJSONObject("job"));
 
-		BuildRepository buildRepository = getBuildRepository();
+		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
 		JSONObject buildJSONObject = validateBuildJSONObject(
 			messageJSONObject.optJSONObject("build"));
 
-		Build build = buildRepository.add(project, buildJSONObject);
+		BuildEntity buildEntity = buildEntityRepository.add(
+			jobEntity, buildJSONObject);
 
 		JSONObject parametersJSONObject = buildJSONObject.optJSONObject(
 			"parameters");
 
 		if ((parametersJSONObject != null) && !parametersJSONObject.isEmpty()) {
-			BuildParameterRepository buildParameterRepository =
+			BuildParameterEntityRepository buildParameterEntityRepository =
 				getBuildParameterRepository();
 
 			for (String key : parametersJSONObject.keySet()) {
-				BuildParameter buildParameter = buildParameterRepository.add(
-					build, key, parametersJSONObject.getString(key));
+				BuildParameterEntity buildParameterEntity =
+					buildParameterEntityRepository.add(
+						buildEntity, key, parametersJSONObject.getString(key));
 
-				build.addBuildParameter(buildParameter);
+				buildEntity.addBuildParameterEntity(buildParameterEntity);
 
-				buildParameter.setBuild(build);
+				buildParameterEntity.setBuildEntity(buildEntity);
 			}
 		}
 
-		if (project.getState() == Project.State.COMPLETED) {
-			project.setState(Project.State.QUEUED);
+		if (jobEntity.getState() == JobEntity.State.COMPLETED) {
+			jobEntity.setState(JobEntity.State.QUEUED);
 
-			ProjectRepository projectRepository = getProjectRepository();
+			JobEntityRepository jobEntityRepository = getJobEntityRepository();
 
-			projectRepository.update(project);
+			jobEntityRepository.update(jobEntity);
 		}
 
 		BuildQueue buildQueue = getBuildQueue();
 
-		buildQueue.addProject(project);
+		buildQueue.addJobEntity(jobEntity);
 
 		JenkinsQueue jenkinsQueue = getJenkinsQueue();
 
 		jenkinsQueue.invoke();
 
-		return project.toString();
+		return jobEntity.toString();
 	}
 
 	protected CreateBuildEventHandler(

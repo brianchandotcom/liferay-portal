@@ -2539,7 +2539,7 @@ definition {
 	@description = "This is a test for LPS-165556. The page creator without trigger permission could see the available actions in Action selector."
 	@priority = 4
 	test ViewAvailableActionsInActionSelectorAsUserWithoutTriggerPermission {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-169992=true";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		var labelName = StringUtil.randomString(8);
 

@@ -39,11 +39,16 @@ definition {
 		''';
 
 		if (isSet(relatedEndpoint)) {
+			if (!(isSet(ScopeKey))) {
+				var scopeKey = "company";
+			}
+
 			var relatedEndpoint = '''
 				"apiApplicationToAPIEndpoints": [{
 					"httpMethod": "get",
 					"name": "${endpointName}",
-					"path": "${endpointPath}"
+					"path": "${endpointPath}",
+					"scope": {"name": "${scopeKey}"}
 				}]
 			''';
 

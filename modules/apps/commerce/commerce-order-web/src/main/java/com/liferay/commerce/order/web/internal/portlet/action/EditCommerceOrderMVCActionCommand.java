@@ -289,13 +289,17 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 				for (CommerceOrderItem commerceOrderItem :
 						commerceOrder.getCommerceOrderItems()) {
 
-					if (commerceOrderItem.getBookedQuantityId() > 0) {
+					long commerceInventoryBookedQuantityId =
+						commerceOrderItem.
+							getCommerceInventoryBookedQuantityId();
+
+					if (commerceInventoryBookedQuantityId > 0) {
 						CommerceInventoryBookedQuantity
 							commerceInventoryBookedQuantity =
 								_commerceInventoryBookedQuantityLocalService.
 									fetchCommerceInventoryBookedQuantity(
 										commerceOrderItem.
-											getBookedQuantityId());
+											getCommerceInventoryBookedQuantityId());
 
 						if (commerceInventoryBookedQuantity != null) {
 							_commerceInventoryBookedQuantityLocalService.

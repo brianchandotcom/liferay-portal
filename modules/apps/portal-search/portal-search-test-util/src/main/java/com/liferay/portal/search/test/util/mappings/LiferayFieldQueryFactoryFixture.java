@@ -56,7 +56,7 @@ public class LiferayFieldQueryFactoryFixture {
 			assetTagNamesFieldQueryBuilderFactory =
 				new AssetTagNamesFieldQueryBuilderFactory() {
 					{
-						titleQueryBuilder = _titleFieldQueryBuilder;
+						titleFieldQueryBuilder = _titleFieldQueryBuilder;
 					}
 				};
 

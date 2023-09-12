@@ -45,6 +45,8 @@ public class APIApplicationProviderTest extends BaseTestCase {
 					).put(
 						"path", "/path"
 					).put(
+						"retrieveType", "collection"
+					).put(
 						"scope", "company"
 					))
 			).put(
@@ -122,6 +124,9 @@ public class APIApplicationProviderTest extends BaseTestCase {
 		Assert.assertEquals("/path", endpoint.getPath());
 		Assert.assertEquals(schema, endpoint.getRequestSchema());
 		Assert.assertEquals(schema, endpoint.getResponseSchema());
+		Assert.assertEquals(
+			APIApplication.Endpoint.RetrieveType.COLLECTION,
+			endpoint.getRetrieveType());
 		Assert.assertEquals(
 			APIApplication.Endpoint.Scope.COMPANY, endpoint.getScope());
 

@@ -15,12 +15,13 @@ public class BookedQuantity {
 
 	public BookedQuantity(
 		String account, long commerceOrderId, String expirationDate,
-		BigDecimal quantity) {
+		BigDecimal quantity, String unitOfMeasureKey) {
 
 		_account = account;
 		_commerceOrderId = commerceOrderId;
 		_expirationDate = expirationDate;
 		_quantity = quantity;
+		_unitOfMeasureKey = unitOfMeasureKey;
 	}
 
 	public String getAccount() {
@@ -39,9 +40,14 @@ public class BookedQuantity {
 		return _quantity;
 	}
 
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
+	}
+
 	private final String _account;
 	private final long _commerceOrderId;
 	private final String _expirationDate;
 	private final BigDecimal _quantity;
+	private final String _unitOfMeasureKey;
 
 }

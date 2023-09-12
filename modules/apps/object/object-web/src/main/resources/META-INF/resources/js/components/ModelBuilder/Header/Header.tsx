@@ -11,6 +11,8 @@ import './Header.scss';
 
 import {sub} from 'frontend-js-web';
 
+import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+
 interface Header {
 	folderExternalReferenceCode: string;
 	folderName: string;
@@ -22,6 +24,8 @@ export default function ({
 	folderName,
 	hasDraftObjectDefinitions,
 }: Header) {
+	const [{showChangesSaved}] = useFolderContext();
+
 	return (
 		<div className="lfr-objects__model-builder-header">
 			<div className="lfr-objects__model-builder-header-container">
@@ -56,6 +60,14 @@ export default function ({
 						/>
 					)}
 				</div>
+
+				{showChangesSaved && (
+					<span className="lfr-objects__model-builder-header-changes-saved">
+						{Liferay.Language.get('changes-saved')}
+						&nbsp;
+						<ClayIcon symbol="check-circle" />
+					</span>
+				)}
 
 				<div className="lfr-objects__model-builder-header-buttons-container">
 					<ClayButtonWithIcon

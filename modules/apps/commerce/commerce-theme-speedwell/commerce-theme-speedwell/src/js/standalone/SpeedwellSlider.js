@@ -3,26 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-function showNotification(message, type, closeable = true, duration = 500) {
-	if (!window.AUI) {
-		return;
-	}
-	AUI().use('liferay-notification', () => {
-		new Liferay.Notification({
-			closeable,
-			delay: {
-				hide: 5000,
-				show: 0,
-			},
-			duration,
-			message,
-			render: true,
-			title: '',
-			type,
-		});
-	});
-}
-
 const CURRENT = 'current';
 const NEXT = 'next';
 const WILL_BE_NEXT = 'will-be-next';
@@ -190,7 +170,11 @@ SpeedwellSlider.prototype = {
 					`Request code: ${error.statusCode.toString()}` ||
 					'API error';
 
-				showNotification(errorMessage, 'danger');
+				Liferay.Util.openToast({
+					message: errorMessage,
+					title: '',
+					type: 'danger',
+				});
 			});
 	},
 

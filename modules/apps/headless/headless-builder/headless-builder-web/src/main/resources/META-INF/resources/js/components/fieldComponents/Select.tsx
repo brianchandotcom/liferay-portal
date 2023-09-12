@@ -3,106 +3,154 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAutocomplete from '@clayui/autocomplete';
+import ClayButton from '@clayui/button';
+import DropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
-
-interface Option {
-	label: string;
-	value: string;
-}
 
 interface SelectProps {
 	cleanUp?: voidReturn;
 	disabled?: boolean;
+	dropDownSearchAriaLabel?: string;
+	invalid?: boolean;
 	onClick: (value: string) => void;
-	options: Option[];
+	options: SelectOption[];
 	placeholder?: string;
-	selectedOption?: string;
+	required?: boolean;
+	selectedOption?: SelectOption;
+	triggerAriaLabel?: string;
 }
 
 export function Select({
 	cleanUp,
 	disabled,
+	dropDownSearchAriaLabel,
+	invalid,
 	onClick,
 	options,
 	placeholder,
+	required,
 	selectedOption,
+	triggerAriaLabel,
 }: SelectProps) {
-	const [dropdownActive, setDropdownActive] = useState(false);
-	const [inputValue, setInputValue] = useState('');
-
-	const filteredOptions = options.filter((option) =>
-		option.label.toUpperCase().includes(inputValue.toUpperCase())
+	const [displayPlaceholder, setDisplayPlaceholder] = useState<boolean>(
+		!!placeholder
 	);
+	const [dropdownActive, setDropdownActive] = useState<boolean>(false);
+	const [dropdownWidth, setDropdownWidth] = useState<string | null>();
+	const [
+		selectTriggerElement,
+		setSelectTriggerElement,
+	] = useState<HTMLElement | null>();
+	const [triggerLabel, setTriggerLabel] = useState<string>(placeholder ?? '');
 
 	const handleBlur = () => {
-		if (cleanUp && !options.some((option) => option.label === inputValue)) {
+		if (
+			cleanUp &&
+			!options.some((option) => option.label === triggerLabel)
+		) {
 			cleanUp();
 		}
 	};
 
-	const handleInputChange = (value: string) => {
-		setInputValue(value);
-
-		if (!dropdownActive) {
-			setDropdownActive(true);
+	const handleOnActiveChange = () => {
+		if (!disabled) {
+			setDropdownActive((previousState) => !previousState);
 		}
 	};
 
-	const handleSelect = (option: Option) => {
-		setInputValue(option.label);
+	const handleSelect = (option: SelectOption) => {
+		if (selectTriggerElement) {
+			selectTriggerElement.focus();
+		}
+		setDisplayPlaceholder(false);
+		setTriggerLabel(option.label);
 		onClick(option.value);
 		setDropdownActive(false);
 	};
 
 	useEffect(() => {
 		if (disabled && options && selectedOption) {
-			const selectedObjectLabel = options.find(
-				(option) => option.value === selectedOption
-			)?.label;
+			const selectedObjectLabel = selectedOption.label;
 
 			if (selectedObjectLabel) {
-				setInputValue(selectedObjectLabel);
+				setTriggerLabel(selectedObjectLabel);
 			}
 		}
 	}, [disabled, options, selectedOption]);
 
+	useEffect(() => {
+		const trigger = document.getElementById('selectTrigger');
+
+		if (trigger) {
+			setSelectTriggerElement(trigger);
+			setDropdownWidth(
+				trigger.getBoundingClientRect().width.toString() + 'px'
+			);
+		}
+	}, []);
+
 	return (
-		<ClayAutocomplete>
-			<ClayIcon
-				className="select-field-icon"
-				onClick={() => setDropdownActive((active) => !active)}
-				symbol="caret-double"
-			/>
-
-			<ClayAutocomplete.Input
-				disabled={disabled}
-				onBlur={handleBlur}
-				onChange={({target: {value}}) => handleInputChange(value)}
-				onFocus={() => setDropdownActive((active) => !active)}
-				placeholder={
-					placeholder ??
-					Liferay.Language.get('please-select-an-option')
-				}
-				value={inputValue}
-			/>
-
-			<ClayAutocomplete.DropDown
-				active={dropdownActive}
-				closeOnClickOutside
-				onSetActive={setDropdownActive}
-			>
-				{filteredOptions.map((option) => (
-					<ClayAutocomplete.Item
-						key={option.value}
-						match={inputValue}
-						onClick={() => handleSelect(option)}
+		<DropDown
+			active={dropdownActive}
+			closeOnClickOutside={true}
+			filterKey="label"
+			menuElementAttrs={{
+				id: 'selectDropdown',
+				style: {
+					maxHeight: '300px',
+					maxWidth: 'none',
+					width: dropdownWidth ?? '550px',
+				},
+			}}
+			onActiveChange={handleOnActiveChange}
+			trigger={
+				<div id="selectTriggerContainer">
+					<ClayButton
+						aria-controls="selectDropdown"
+						aria-expanded={dropdownActive}
+						aria-invalid={invalid}
+						aria-label={triggerAriaLabel}
+						aria-required={required}
+						className={classNames({
+							'button-select-trigger': true,
+							'display-placeholder': displayPlaceholder,
+						})}
+						disabled={disabled}
+						id="selectTrigger"
+						onBlur={handleBlur}
+						role="input"
 					>
-						{option.label}
-					</ClayAutocomplete.Item>
-				))}
-			</ClayAutocomplete.DropDown>
-		</ClayAutocomplete>
+						{triggerLabel}
+
+						<span className="inline-item inline-item-before">
+							<ClayIcon
+								className="select-field-icon"
+								symbol="caret-double"
+							/>
+						</span>
+					</ClayButton>
+				</div>
+			}
+		>
+			<DropDown.Search
+				aria-label={dropDownSearchAriaLabel}
+				placeholder={Liferay.Language.get('search')}
+			/>
+
+			<DropDown.ItemList items={options}>
+				{(item: SelectOption) => (
+					<DropDown.Item
+						key={item.value}
+						onClick={() => {
+							handleSelect(item);
+						}}
+					>
+						{item.label}
+					</DropDown.Item>
+				)}
+			</DropDown.ItemList>
+		</DropDown>
 	);
 }

@@ -1,0 +1,10 @@
+{
+	"#child-nodes": [
+		{
+			"#tag-name": "label",
+			"#value": "Label",
+			"language-id": "en_US"
+		}
+	],
+	"#tag-name": "labels"
+}

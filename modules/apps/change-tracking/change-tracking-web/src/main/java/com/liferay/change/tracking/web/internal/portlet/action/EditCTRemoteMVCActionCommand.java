@@ -45,14 +45,18 @@ public class EditCTRemoteMVCActionCommand extends BaseMVCActionCommand {
 		String description = ParamUtil.getString(actionRequest, "description");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String url = ParamUtil.getString(actionRequest, "url");
+		String clientId = ParamUtil.getString(actionRequest, "clientId");
+		String clientSecret = ParamUtil.getString(
+			actionRequest, "clientSecret");
 
 		try {
 			if (ctRemoteId > 0) {
 				_ctRemoteService.updateCTRemote(
-					ctRemoteId, name, description, url);
+					ctRemoteId, name, description, url, clientId, clientSecret);
 			}
 			else {
-				_ctRemoteService.addCTRemote(name, description, url);
+				_ctRemoteService.addCTRemote(
+					name, description, url, clientId, clientSecret);
 			}
 		}
 		catch (PortalException portalException) {

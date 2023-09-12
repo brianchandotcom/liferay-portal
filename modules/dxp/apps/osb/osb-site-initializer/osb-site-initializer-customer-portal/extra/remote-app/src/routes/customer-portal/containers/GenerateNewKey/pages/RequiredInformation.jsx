@@ -8,22 +8,37 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {FieldArray, Formik} from 'formik';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
+import useProvisioningLicenseKeys from '~/common/hooks/useProvisioningLicenseKeys';
+import {Liferay} from '~/common/services/liferay';
 import i18n from '../../../../../common/I18n';
 import {Badge, Button, Input} from '../../../../../common/components';
 import Layout from '../../../../../common/containers/setup-forms/Layout';
 import {useAppPropertiesContext} from '../../../../../common/contexts/AppPropertiesContext';
 import {patchOrderItemByExternalReferenceCode} from '../../../../../common/services/liferay/graphql/queries';
-import {
-	createNewGenerateKey,
-	putSubscriptionInKey,
-} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
+import {putSubscriptionInKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import getInitialGenerateNewKey from '../../../../../common/utils/constants/getInitialGenerateNewKey';
 import GenerateCardLayout from '../GenerateCardLayout';
 import KeyInputs from '../KeyInputs';
 import KeySelect from '../KeySelect';
 import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDateUtil';
+
+const getLicenseEntryTypeSelected = (infoSelectedKey) => {
+	if (infoSelectedKey?.licenseEntryType.includes('Virtual Cluster')) {
+		return 'virtual-cluster';
+	}
+
+	if (infoSelectedKey?.licenseEntryType.includes('OEM')) {
+		return 'oem';
+	}
+
+	if (infoSelectedKey?.licenseEntryType.includes('Enterprise')) {
+		return 'enterprise';
+	}
+
+	return 'production';
+};
 
 const RequiredInformation = ({
 	accountKey,
@@ -42,6 +57,8 @@ const RequiredInformation = ({
 		featureFlags,
 		provisioningServerAPI,
 	} = useAppPropertiesContext();
+
+	const provisioningService = useProvisioningLicenseKeys();
 
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [addButtonDisabled, setAddButtonDisabled] = useState(false);
@@ -111,7 +128,38 @@ const RequiredInformation = ({
 		  }
 		: {};
 
-	const submitKey = async () => {
+	const licenseKey = useMemo(
+		() => ({
+			accountKey,
+			active: true,
+			complimentary: infoSelectedKey?.selectedSubscription.complimentary,
+			description: values?.description,
+			expirationDate:
+				getLicenseKeyEndDatesByLicenseType(infoSelectedKey) ??
+				infoSelectedKey?.selectedSubscription.endDate,
+			licenseEntryType: getLicenseEntryTypeSelected(infoSelectedKey),
+			maxClusterNodes: values?.maxClusterNodes || 0,
+			name: values?.name,
+			productKey: infoSelectedKey?.selectedSubscription.productKey,
+			productName: `${infoSelectedKey?.productType} ${infoSelectedKey?.licenseEntryType}`,
+			productPurchaseKey:
+				infoSelectedKey?.selectedSubscription.productPurchaseKey,
+			productVersion: infoSelectedKey?.productVersion,
+			sizing: `Sizing ${
+				infoSelectedKey?.selectedSubscription?.instanceSize || 1
+			}`,
+			startDate: infoSelectedKey?.selectedSubscription.startDate,
+		}),
+		[
+			accountKey,
+			infoSelectedKey,
+			values?.description,
+			values?.maxClusterNodes,
+			values?.name,
+		]
+	);
+
+	const submitKey = useCallback(async () => {
 		if (
 			!infoSelectedKey.hasNotPermanentLicence &&
 			!hasFilledAtLeastOneField
@@ -140,117 +188,115 @@ const RequiredInformation = ({
 			return;
 		}
 
-		const productName = `${infoSelectedKey?.productType} ${infoSelectedKey?.licenseEntryType}`;
-		const sizing = `Sizing ${
-			infoSelectedKey?.selectedSubscription?.instanceSize || 1
-		}`;
-
-		const getLicenseEntryTypeSelected = () => {
-			if (infoSelectedKey?.licenseEntryType.includes('Virtual Cluster')) {
-				return 'virtual-cluster';
-			}
-
-			if (infoSelectedKey?.licenseEntryType.includes('OEM')) {
-				return 'oem';
-			}
-
-			if (infoSelectedKey?.licenseEntryType.includes('Enterprise')) {
-				return 'enterprise';
-			}
-
-			return 'production';
-		};
-
-		const licenseKey = {
-			accountKey,
-			active: true,
-			complimentary: infoSelectedKey?.selectedSubscription.complimentary,
-			description: values?.description,
-			expirationDate:
-				getLicenseKeyEndDatesByLicenseType(infoSelectedKey) ??
-				infoSelectedKey?.selectedSubscription.endDate,
-			licenseEntryType: getLicenseEntryTypeSelected(),
-			maxClusterNodes: values?.maxClusterNodes || 0,
-			name: values?.name,
-			productKey: infoSelectedKey?.selectedSubscription.productKey,
-			productName,
-			productPurchaseKey:
-				infoSelectedKey?.selectedSubscription.productPurchaseKey,
-			productVersion: infoSelectedKey?.productVersion,
-			sizing,
-			startDate: infoSelectedKey?.selectedSubscription.startDate,
-		};
-
 		const saveSubscriptionKey = async (id) => {
 			return putSubscriptionInKey(provisioningServerAPI, id, sessionId);
 		};
 
-		if (infoSelectedKey.hasNotPermanentLicence) {
-			setIsLoadingGenerateKey(true);
+		try {
+			if (infoSelectedKey.hasNotPermanentLicence) {
+				setIsLoadingGenerateKey(true);
 
-			const result = await createNewGenerateKey(
-				accountKey,
-				provisioningServerAPI,
-				sessionId,
-				licenseKey
-			);
+				const response = await provisioningService.createNewGenerateKey(
+					accountKey,
+					licenseKey
+				);
 
-			if (checkedBoxSubscription) {
-				await saveSubscriptionKey(result?.items[0]?.id);
-			}
+				if (checkedBoxSubscription) {
+					await saveSubscriptionKey(response?.items?.[0]?.id);
+				}
 
-			setIsLoadingGenerateKey(false);
-		} else {
-			setIsLoadingGenerateKey(true);
+				setIsLoadingGenerateKey(false);
+			} else {
+				setIsLoadingGenerateKey(true);
 
-			const results = await Promise.all(
-				values?.keys?.map(({hostName, ipAddresses, macAddresses}) => {
-					licenseKey.macAddresses = macAddresses.replace('\n', ',');
-					licenseKey.hostName = hostName.replace('\n', ',');
-					licenseKey.ipAddresses = ipAddresses.replace('\n', ',');
+				const results = await Promise.all(
+					values?.keys?.map(
+						({hostName, ipAddresses, macAddresses}) => {
+							licenseKey.macAddresses = macAddresses.replace(
+								'\n',
+								','
+							);
+							licenseKey.hostName = hostName.replace('\n', ',');
+							licenseKey.ipAddresses = ipAddresses.replace(
+								'\n',
+								','
+							);
 
-					return createNewGenerateKey(
-						accountKey,
-						provisioningServerAPI,
-						sessionId,
-						licenseKey
-					);
-				})
-			);
+							return provisioningService.createNewGenerateKey(
+								accountKey,
+								licenseKey
+							);
+						}
+					)
+				);
 
-			if (checkedBoxSubscription && isComplementaryKey) {
-				await saveSubscriptionKey(results[0]?.items[0]?.id);
-			}
+				if (checkedBoxSubscription && isComplementaryKey) {
+					await saveSubscriptionKey(results[0]?.items[0]?.id);
+				}
 
-			setIsLoadingGenerateKey(false);
-		}
+				setIsLoadingGenerateKey(false);
 
-		if (!isComplementaryKey) {
-			await client.mutate({
-				context: {
-					displaySuccess: false,
-				},
-				mutation: patchOrderItemByExternalReferenceCode,
-				variables: {
-					externalReferenceCode: licenseKey.productPurchaseKey,
-					orderItem: {
-						customFields: [
-							{
-								customValue: {
-									data:
-										infoSelectedKey.selectedSubscription
-											.provisionedCount + 1,
-								},
-								name: 'provisionedCount',
+				if (!isComplementaryKey) {
+					await client.mutate({
+						context: {
+							displaySuccess: false,
+						},
+						mutation: patchOrderItemByExternalReferenceCode,
+						variables: {
+							externalReferenceCode:
+								licenseKey.productPurchaseKey,
+							orderItem: {
+								customFields: [
+									{
+										customValue: {
+											data:
+												infoSelectedKey
+													.selectedSubscription
+													.provisionedCount + 1,
+										},
+										name: 'provisionedCount',
+									},
+								],
 							},
-						],
-					},
-				},
-			});
-		}
+						},
+					});
+				}
 
-		navigate(urlPreviousPage, {state: {newKeyGeneratedAlert: true}});
-	};
+				navigate(urlPreviousPage, {
+					state: {newKeyGeneratedAlert: true},
+				});
+			}
+		} catch (error) {
+			Liferay.Util.openToast({
+				message:
+					error?.info?.title ??
+					i18n.translate('an-unexpected-error-occurred'),
+				title: i18n.translate('error'),
+				type: 'danger',
+			});
+
+			console.error(error);
+
+			setIsLoadingGenerateKey(false);
+		}
+	}, [
+		accountKey,
+		checkedBoxSubscription,
+		client,
+		hasFilledAtLeastOneField,
+		infoSelectedKey.hasNotPermanentLicence,
+		infoSelectedKey.selectedSubscription.provisionedCount,
+		isComplementaryKey,
+		licenseKey,
+		navigate,
+		provisioningServerAPI,
+		provisioningService,
+		sessionId,
+		setErrors,
+		setTouched,
+		urlPreviousPage,
+		values.keys,
+	]);
 
 	const CheckboxSubscriptionNotification = () => {
 		if (

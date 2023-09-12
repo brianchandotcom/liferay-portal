@@ -396,9 +396,10 @@ public class CPDefinitionLocalServiceTest {
 				duplicateCPInstance.getCPInstanceUuid(), StringPool.BLANK);
 
 		duplicateCommercePriceEntry =
-			_commercePriceEntryLocalService.updateCommercePriceEntry(
+			_commercePriceEntryLocalService.updatePricingInfo(
 				duplicateCommercePriceEntry.getCommercePriceEntryId(),
-				BigDecimal.TEN, false, BigDecimal.ZERO, null, _serviceContext);
+				duplicateCommercePriceEntry.isBulkPricing(), BigDecimal.TEN,
+				false, BigDecimal.ZERO, null, _serviceContext);
 
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
@@ -495,11 +496,11 @@ public class CPDefinitionLocalServiceTest {
 
 		BigDecimal newPrice = new BigDecimal(10);
 
-		commercePriceEntry =
-			_commercePriceEntryLocalService.updateCommercePriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(), newPrice,
-				commercePriceEntry.isPriceOnApplication(), promoPrice, null,
-				_serviceContext);
+		commercePriceEntry = _commercePriceEntryLocalService.updatePricingInfo(
+			commercePriceEntry.getCommercePriceEntryId(),
+			commercePriceEntry.isBulkPricing(), newPrice,
+			commercePriceEntry.isPriceOnApplication(), promoPrice, null,
+			_serviceContext);
 
 		CommercePriceEntry parentPriceEntry =
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(

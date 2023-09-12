@@ -8,14 +8,19 @@ import {FieldArray, Formik} from 'formik';
 import {useEffect, useMemo, useState} from 'react';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import {
+	HIGH_PRIORITY_CONTACT_CATEGORIES,
+	addHighPriorityContactsList,
+	associateContactRole,
+	removeContactRole,
+	removeHighPriorityContactsList,
+} from '~/routes/customer-portal/utils/getHighPriorityContacts';
+
+import {
 	addAnalyticsCloudWorkspace,
-	addHighPriorityContact,
-	deleteHighPriorityContacts,
 	getAnalyticsCloudPageInfo,
 	getAnalyticsCloudWorkspace,
 	updateAccountSubscriptionGroups,
 } from '../../../../common/services/liferay/graphql/queries';
-
 import {
 	isLowercaseAndNumbers,
 	isValidEmail,
@@ -23,12 +28,11 @@ import {
 	isValidFriendlyURL,
 	maxLength,
 } from '../../../../common/utils/validations.form';
+import {useCustomerPortal} from '../../../../routes/customer-portal/context';
 import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/constants';
 import i18n from '../../../I18n';
 import {Button, Input, Select} from '../../../components';
-import SetupHighPriorityContactForm, {
-	HIGH_PRIORITY_CONTACT_CATEGORIES,
-} from '../../../components/HighPriorityContacts/SetupHighPriorityContact';
+import SetupHighPriorityContactForm from '../../../components/HighPriorityContacts/SetupHighPriorityContact';
 import useBannedDomains from '../../../hooks/useBannedDomains';
 import NotificationQueueService from '../../../services/actions/notificationAction';
 import getKebabCase from '../../../utils/getKebabCase';
@@ -50,6 +54,7 @@ const SetupAnalyticsCloudPage = ({
 	touched,
 	values,
 }) => {
+	const [isLoadingSubmitButton, setIsLoadingSubmitButton] = useState(false);
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [
 		addHighPriorityContactList,
@@ -88,7 +93,9 @@ const SetupAnalyticsCloudPage = ({
 		},
 	});
 
-	const {featureFlags} = useAppPropertiesContext();
+	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
+
+	const [{sessionId}] = useCustomerPortal();
 
 	const analyticsDataCenterLocations = useMemo(
 		() =>
@@ -100,7 +107,6 @@ const SetupAnalyticsCloudPage = ({
 	);
 
 	const hasDisasterRecovery = !!data?.c?.accountSubscriptions?.items?.length;
-
 	useEffect(() => {
 		if (analyticsDataCenterLocations.length) {
 			setFieldValue(
@@ -176,6 +182,8 @@ const SetupAnalyticsCloudPage = ({
 			});
 
 			if (data) {
+				setIsLoadingSubmitButton(true);
+
 				await client.mutate({
 					context: {
 						displaySuccess: false,
@@ -195,38 +203,32 @@ const SetupAnalyticsCloudPage = ({
 
 				await Promise.all(
 					removeHighPriorityContactList?.map((item) => {
-						return client.mutate({
-							context: {
-								displaySuccess: false,
-								type: 'liferay-rest',
-							},
-							mutation: deleteHighPriorityContacts,
-							variables: {
-								highPriorityContactsId: item.objectId,
-							},
-						});
+						return removeHighPriorityContactsList(client, item);
 					})
 				);
-
+				await Promise.all(
+					removeHighPriorityContactList?.map(async (item) => {
+						removeContactRole(
+							item,
+							project,
+							sessionId,
+							provisioningServerAPI
+						);
+					})
+				);
+				await Promise.all(
+					addHighPriorityContactList?.map(async (item) => {
+						return associateContactRole(
+							item,
+							project,
+							sessionId,
+							provisioningServerAPI
+						);
+					})
+				);
 				await Promise.all(
 					addHighPriorityContactList?.map((item) => {
-						return client.mutate({
-							context: {
-								displaySuccess: false,
-								type: 'liferay-rest',
-							},
-							mutation: addHighPriorityContact,
-							variables: {
-								HighPriorityContacts: {
-									contactsCategory: {
-										key: item.category.key,
-										name: item.category.name,
-									},
-									r_userToHighPriorityContacts_userId:
-										item.id,
-								},
-							},
-						});
+						return addHighPriorityContactsList(client, item);
 					})
 				);
 
@@ -262,22 +264,23 @@ const SetupAnalyticsCloudPage = ({
 						}
 					);
 				}
+				setIsLoadingSubmitButton(false);
 			}
 
 			handlePage(true);
 		}
 	};
+
 	const handleButtonClick = () => {
 		// eslint-disable-next-line no-unused-expressions
 		step === 1 ? handlePage(false) : handlePreviousStep();
 	};
 	const addHighPriorityContacts = (contactList) => {
 		const contactsList = contactList.map((item) => item);
-
 		setAddHighPriorityContactList(contactsList);
 	};
 	const removeHighPriorityContacts = (contactList) => {
-		const contactsList = contactList.map(({objectId}) => objectId);
+		const contactsList = contactList.map((objectId) => objectId);
 		setRemoveHighPriorityContactList(contactsList);
 	};
 
@@ -308,9 +311,11 @@ const SetupAnalyticsCloudPage = ({
 							disabled={
 								step === 1
 									? baseButtonDisabled
-									: isMultiSelectEmpty
+									: isMultiSelectEmpty ||
+									  isLoadingSubmitButton
 							}
 							displayType="primary"
+							isLoading={isLoadingSubmitButton}
 							onClick={step === 1 ? handleNextStep : handleSubmit}
 						>
 							{step === 1
@@ -468,7 +473,7 @@ const SetupAnalyticsCloudPage = ({
 							addContactList={addHighPriorityContacts}
 							disableSubmit={updateMultiSelectEmpty}
 							filter={
-								HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncidentContact
+								HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncident
 							}
 							removedContactList={removeHighPriorityContacts}
 						/>

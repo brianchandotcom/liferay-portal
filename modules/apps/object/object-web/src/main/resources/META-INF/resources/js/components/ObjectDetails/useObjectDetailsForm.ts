@@ -9,6 +9,7 @@ import {
 	invalidateRequired,
 	useForm,
 } from '@liferay/object-js-components-web';
+import {sub} from 'frontend-js-web';
 
 import {
 	checkIfFirstLetterIsUppercase,
@@ -43,7 +44,10 @@ const getNameErrors = (
 	}
 
 	if (name.length > 41) {
-		errors.name = Liferay.Language.get('only-41-characters-are-allowed');
+		errors.name = sub(
+			Liferay.Language.get('only-x-characters-are-allowed'),
+			'41'
+		);
 
 		return;
 	}

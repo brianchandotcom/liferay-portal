@@ -321,7 +321,7 @@ definition {
 
 		Type(
 			inputFieldId = "friendlyURL",
-			locator1 = "TextInput#INPUT_ID",
+			locator1 = "TextInput#TEXT_INPUT_ID",
 			value1 = ${friendlyURLEdit});
 
 		ClickNoError(

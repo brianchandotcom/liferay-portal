@@ -95,6 +95,8 @@ type APISchemaUIData = Pick<
 	'description' | 'name' | 'mainObjectDefinitionERC'
 >;
 
+type MainSchemaNav = 'list' | {edit: number};
+
 interface ManagementButton {
 	onClick: voidReturn;
 	visible: boolean;
@@ -143,4 +145,7 @@ interface ObjectDefinition {
 	titleObjectFieldName: string;
 }
 
-type MainSchemaNav = 'list' | {edit: number};
+interface SelectOption {
+	label: string;
+	value: string;
+}

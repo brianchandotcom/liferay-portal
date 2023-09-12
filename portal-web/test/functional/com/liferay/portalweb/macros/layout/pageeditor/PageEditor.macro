@@ -3142,9 +3142,9 @@ definition {
 	}
 
 	macro editFragmentTextViaPageContentPanel {
-		Click(
+		Click.clickAtNotVisible(
 			key_itemName = ${itemName},
-			locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+			locator1 = "PageEditor#PAGE_CONTENTS_ITEM_EDIT_PENCIL");
 
 		AssertElementPresent(
 			key_text = "Edit Text",
@@ -4519,7 +4519,15 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 
 		PageEditor.openExperienceMenu();
 
-		Click(locator1 = "PageEditor#EXPERIENCE_PRIORITIZE_BUTTON");
+		if (!(isSet(count))) {
+			var count = 1;
+		}
+
+		while (${count} != 0) {
+			Click(locator1 = "PageEditor#EXPERIENCE_PRIORITIZE_BUTTON");
+
+			var count = ${count} - 1;
+		}
 	}
 
 	macro publish {

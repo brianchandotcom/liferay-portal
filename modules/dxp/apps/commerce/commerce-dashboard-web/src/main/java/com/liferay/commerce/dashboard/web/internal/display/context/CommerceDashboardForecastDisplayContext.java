@@ -8,13 +8,13 @@ package com.liferay.commerce.dashboard.web.internal.display.context;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.dashboard.web.internal.configuration.CommerceDashboardForecastPortletInstanceConfiguration;
 import com.liferay.commerce.dashboard.web.internal.display.context.helper.CommerceDashboardForecastRequestHelper;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,12 +35,10 @@ public class CommerceDashboardForecastDisplayContext {
 		_commerceDashboardForecastRequestHelper =
 			new CommerceDashboardForecastRequestHelper(httpServletRequest);
 
-		PortletDisplay portletDisplay =
-			_commerceDashboardForecastRequestHelper.getPortletDisplay();
-
 		_commerceDashboardForecastPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				CommerceDashboardForecastPortletInstanceConfiguration.class);
+			ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				CommerceDashboardForecastPortletInstanceConfiguration.class,
+				_commerceDashboardForecastRequestHelper.getThemeDisplay());
 	}
 
 	public String getAssetCategoryIds() {

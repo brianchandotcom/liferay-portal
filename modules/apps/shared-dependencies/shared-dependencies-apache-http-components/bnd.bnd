@@ -1,6 +1,6 @@
-Bundle-Name: Liferay Shared Dependencies Apache Http Components
+Bundle-Name: Liferay Shared Dependencies Apache HTTP Components
 Bundle-SymbolicName: com.liferay.shared.dependencies.apache.http.components
-Bundle-Version: 1.0.3
+Bundle-Version: 1.0.4
 -exportcontents:\
 	org.apache.http,\
 	org.apache.http.auth,\

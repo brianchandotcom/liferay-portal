@@ -79,6 +79,11 @@ public interface LayoutPageTemplateCollectionLocalService
 		LayoutPageTemplateCollection layoutPageTemplateCollection);
 
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
+			long userId, long groupId, long parentLayoutPageTemplateCollection,
+			String name, String description, ServiceContext serviceContext)
+		throws PortalException;
+
+	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
 			long userId, long groupId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException;
@@ -356,6 +361,10 @@ public interface LayoutPageTemplateCollectionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public String getUniqueLayoutPageTemplateCollectionName(
+		long groupId, String name);
 
 	/**
 	 * Updates the layout page template collection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHAT_PROVIDER_OPTION</td>
+	<td>//select//option[contains(text(),'${chatProviderOption}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHAT_PROVIDER_ID</td>
 	<td>//select[contains(@name,'chatProviderId')]</td>
 	<td></td>

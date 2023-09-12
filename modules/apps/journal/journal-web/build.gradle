@@ -56,6 +56,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:layout:layout-taglib")
 	compileOnly project(":apps:message-boards:message-boards-api")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal-search:portal-search-api")
 	compileOnly project(":apps:portal-template:portal-template-engine-api")
 	compileOnly project(":apps:portal-workflow:portal-workflow-api")

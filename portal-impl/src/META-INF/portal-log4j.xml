@@ -59,8 +59,9 @@
 		<Logger level="FATAL" name="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper" />
 		<Logger level="WARN" name="com.liferay.portal.db.index.IndexUpdaterUtil" />
 		<Logger level="INFO" name="com.liferay.portal.deploy" />
-		<Logger level="INFO" name="com.liferay.portal.deploy.hot.HookHotDeployListener" />
+		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.HookHotDeployListener" />
 		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.PluginPackageHotDeployListener" />
+		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.ThemeHotDeployListener" />
 		<Logger level="ERROR" name="com.liferay.portal.deploy.hot.ThemeLoaderHotDeployListener" />
 		<Logger level="ERROR" name="com.liferay.portal.editor" />
 		<Logger level="ERROR" name="com.liferay.portal.events.EventsProcessor" />
@@ -111,7 +112,6 @@
 		<Logger level="WARN" name="com.liferay.portal.language.LanguageResources" />
 		<Logger level="INFO" name="com.liferay.portal.license" />
 		<Logger level="ERROR" name="com.liferay.portal.model.DefaultModelHintsImpl" />
-		<Logger level="WARN" name="com.liferay.portal.patcher.PatcherImpl" />
 		<Logger level="INFO" name="com.liferay.portal.plugin.PluginPackageUtil" />
 		<Logger level="ERROR" name="com.liferay.portal.pop" />
 		<Logger level="WARN" name="com.liferay.portal.security" />

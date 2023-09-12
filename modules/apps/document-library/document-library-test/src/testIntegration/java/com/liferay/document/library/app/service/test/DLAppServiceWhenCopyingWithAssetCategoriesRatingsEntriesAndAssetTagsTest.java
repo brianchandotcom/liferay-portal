@@ -13,6 +13,7 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
@@ -35,6 +36,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -114,7 +116,9 @@ public class
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			_childGroup.getGroupId(), new long[] {group.getGroupId()},
+			_childGroup.getGroupId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			new long[] {group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(_childGroup.getGroupId()));
 
 		Assert.assertArrayEquals(
@@ -151,7 +155,9 @@ public class
 
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _newParentFolder.getFolderId(),
-			_newParentFolder.getGroupId(), new long[] {group.getGroupId()},
+			_newParentFolder.getGroupId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			new long[] {group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(
 				_newParentFolder.getGroupId()));
 
@@ -191,7 +197,9 @@ public class
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			_childGroup.getGroupId(), new long[] {group.getGroupId()},
+			_childGroup.getGroupId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			new long[] {group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(_childGroup.getGroupId()));
 
 		Assert.assertArrayEquals(
@@ -229,7 +237,9 @@ public class
 
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _newParentFolder.getFolderId(),
-			_newParentFolder.getGroupId(), new long[] {group.getGroupId()},
+			_newParentFolder.getGroupId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			new long[] {group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(
 				_newParentFolder.getGroupId()));
 
@@ -273,7 +283,9 @@ public class
 
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _newParentFolder.getFolderId(),
-			_newParentFolder.getGroupId(), new long[] {group.getGroupId()},
+			_newParentFolder.getGroupId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			new long[] {group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(
 				_newParentFolder.getGroupId()));
 
@@ -317,6 +329,7 @@ public class
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _targetParentFolder.getFolderId(),
 			_targetParentFolder.getGroupId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			new long[] {_targetParentFolder.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(
 				_targetParentFolder.getGroupId()));
@@ -358,6 +371,7 @@ public class
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _targetParentFolder.getFolderId(),
 			_targetParentFolder.getGroupId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			new long[] {_targetParentFolder.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(
 				_targetParentFolder.getGroupId()));
@@ -394,7 +408,7 @@ public class
 		Folder folder = _dlAppService.copyFolder(
 			group.getGroupId(), parentFolder.getFolderId(),
 			_childGroup.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, new HashMap<>(),
 			new long[] {group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(_childGroup.getGroupId()));
 
@@ -443,7 +457,8 @@ public class
 
 		Folder folder = _dlAppService.copyFolder(
 			group.getGroupId(), parentFolder.getFolderId(), group.getGroupId(),
-			_newParentFolder.getFolderId(), new long[] {group.getGroupId()},
+			_newParentFolder.getFolderId(), new HashMap<>(),
+			new long[] {group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		List<FileEntry> fileEntries = _dlAppService.getFileEntries(
@@ -502,7 +517,8 @@ public class
 
 		Folder folder = _dlAppService.copyFolder(
 			group.getGroupId(), parentFolder.getFolderId(), group.getGroupId(),
-			_newParentFolder.getFolderId(), new long[] {group.getGroupId()},
+			_newParentFolder.getFolderId(), new HashMap<>(),
+			new long[] {group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		List<FileEntry> fileEntries = _dlAppService.getFileEntries(
@@ -549,7 +565,8 @@ public class
 
 		Folder folder = _dlAppService.copyFolder(
 			group.getGroupId(), parentFolder.getFolderId(), group.getGroupId(),
-			_newParentFolder.getFolderId(), new long[] {group.getGroupId()},
+			_newParentFolder.getFolderId(), new HashMap<>(),
+			new long[] {group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		List<RatingsEntry> ratingsEntries2 =
@@ -590,7 +607,7 @@ public class
 		Folder folder = _dlAppService.copyFolder(
 			group.getGroupId(), parentFolder.getFolderId(),
 			targetGroup.getGroupId(), _targetParentFolder.getFolderId(),
-			new long[] {targetGroup.getGroupId()},
+			new HashMap<>(), new long[] {targetGroup.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		List<FileEntry> fileEntries = _dlAppService.getFileEntries(

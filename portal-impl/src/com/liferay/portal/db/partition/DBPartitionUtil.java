@@ -99,6 +99,13 @@ public class DBPartitionUtil {
 					else {
 						statement.executeUpdate(
 							_getCreateTableSQL(companyId, tableName));
+
+						if (dbInspector.isPartitionedControlTable(tableName)) {
+							_copyData(
+								tableName, _defaultSchemaName,
+								_getSchemaName(companyId), statement,
+								StringPool.BLANK);
+						}
 					}
 				}
 			}
@@ -171,6 +178,26 @@ public class DBPartitionUtil {
 		}
 
 		return _dropDBPartition(companyId);
+	}
+
+	public static void replaceByTable(Connection connection, String viewName)
+		throws Exception {
+
+		long companyId = getCurrentCompanyId();
+
+		if (companyId == _defaultCompanyId) {
+			return;
+		}
+
+		try (Statement statement = connection.createStatement()) {
+			statement.execute(_getDropViewSQL(companyId, viewName));
+
+			statement.execute(_getCreateTableSQL(companyId, viewName));
+
+			_copyData(
+				viewName, _defaultSchemaName, _getSchemaName(companyId),
+				statement, StringPool.BLANK);
+		}
 	}
 
 	public static void setDefaultCompanyId(Connection connection)

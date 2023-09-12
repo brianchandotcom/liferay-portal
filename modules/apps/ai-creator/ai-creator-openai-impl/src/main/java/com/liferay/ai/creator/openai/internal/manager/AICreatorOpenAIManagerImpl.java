@@ -8,7 +8,6 @@ package com.liferay.ai.creator.openai.internal.manager;
 import com.liferay.ai.creator.openai.configuration.manager.AICreatorOpenAIConfigurationManager;
 import com.liferay.ai.creator.openai.manager.AICreatorOpenAIManager;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -29,8 +28,7 @@ public class AICreatorOpenAIManagerImpl implements AICreatorOpenAIManager {
 	public boolean isAICreatorToolbarEnabled(
 		long companyId, long groupId, String portletNamespace) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-179483") ||
-			!Objects.equals(
+		if (!Objects.equals(
 				portletNamespace,
 				_portal.getPortletNamespace(JournalPortletKeys.JOURNAL))) {
 

@@ -172,6 +172,31 @@ public class AsahFaroBackendClientImplTest {
 	}
 
 	@Test
+	public void testGetExperiment() throws Exception {
+		String experimentId = RandomTestUtil.randomString();
+
+		AsahFaroBackendClient asahFaroBackendClient =
+			new AsahFaroBackendClientImpl(
+				_analyticsSettingsManager,
+				new MockHttp(
+					Collections.singletonMap(
+						"/api/1.0/experiments/" + experimentId,
+						() -> JSONUtil.put(
+							"channelId", "637850400632477181"
+						).put(
+							"goal", JSONUtil.put("metric", "BOUNCE_RATE")
+						).put(
+							"status", "RUNNING"
+						).toString())));
+
+		Experiment experiment = asahFaroBackendClient.getExperiment(
+			RandomTestUtil.randomLong(), experimentId);
+
+		Assert.assertEquals(
+			"RUNNING", String.valueOf(experiment.getExperimentStatus()));
+	}
+
+	@Test
 	public void testGetIndividual() throws Exception {
 		AsahFaroBackendClient asahFaroBackendClient =
 			new AsahFaroBackendClientImpl(

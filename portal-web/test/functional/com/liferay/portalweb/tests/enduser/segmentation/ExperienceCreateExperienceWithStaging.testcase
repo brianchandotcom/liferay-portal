@@ -1,0 +1,465 @@
+@component-name = "portal-segmentation"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Segmentation";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		task ("Create an user using JSONWS") {
+			JSONUser.addUser(
+				jobTitle = "Test Engineer1",
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+		}
+
+		HeadlessSite.addSite(siteName = "Test Site Name");
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+		Staging.activateStagingCP(siteName = "Test Site Name");
+	}
+
+	@description = "This is a test for LPS-128438. Changes after reordering experiences with Staging should be applied in live."
+	@priority = 5
+	test ViewChangeIsPublishedWhenReorderExperiences {
+		task ("Given a content page in staging site") {
+			task ("Add a content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name (Staging)",
+					layoutName = "Experience Content Page",
+					site = "false",
+					type = "content");
+			}
+		}
+
+		task ("When adding a fragment and an experience") {
+			task ("Add a Heading fragment and an experience in the Content Page") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/experience-content-page");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Heading");
+
+				PageEditor.editFragmentText(
+					fragmentName = "Heading",
+					id = "element-text",
+					text = "Default Heading");
+
+				PageEditor.addExperience(
+					experienceName = "Experience Name 1",
+					segmentName = "Anyone");
+
+				PageEditor.editFragmentText(
+					fragmentName = "Heading",
+					id = "element-text",
+					text = "Experience Name 1 Heading");
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("Then changes after reordering experiences with Staging should be applied in live") {
+			task ("Assert publishing is sucessful") {
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+				Staging.publishCustomPublication();
+			}
+
+			task ("Check heading for experience in live site") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Default Heading");
+			}
+
+			task ("Prioritize the first created experience in the Content Page") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/experience-content-page");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.prioritizeExperience(experienceName = "Experience Name 1");
+
+				PageEditor.publish();
+			}
+
+			task ("Assert publishing is sucessful") {
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+				Staging.publishCustomPublication();
+			}
+
+			task ("Check heading for experience in live site") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Experience Name 1 Heading");
+			}
+
+			task ("Add another experience in the Content Page") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/experience-content-page");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.addExperience(
+					experienceName = "Experience Name 2",
+					segmentName = "Anyone");
+
+				PageEditor.editFragmentText(
+					fragmentName = "Heading",
+					id = "element-text",
+					text = "Experience Name 2 Heading");
+
+				PageEditor.publish();
+			}
+
+			task ("Assert publishing is sucessful") {
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+				Staging.publishCustomPublication();
+			}
+
+			task ("Check heading for experience in live site") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Experience Name 1 Heading");
+			}
+
+			task ("Prioritize the second created experience in the Content Page") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/experience-content-page");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.prioritizeExperience(
+					count = 2,
+					experienceName = "Experience Name 2");
+
+				PageEditor.publish();
+			}
+
+			task ("Assert publishing is sucessful") {
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+				Staging.publishCustomPublication();
+			}
+
+			task ("Check heading for experience in live site") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Experience Name 2 Heading");
+			}
+
+			task ("Add another experience in the Content Page") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/experience-content-page");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.addExperience(
+					experienceName = "Experience Name 3",
+					segmentName = "Anyone");
+
+				PageEditor.editFragmentText(
+					fragmentName = "Heading",
+					id = "element-text",
+					text = "Experience Name 3 Heading");
+
+				PageEditor.publish();
+			}
+
+			task ("Assert publishing is sucessful") {
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+				Staging.publishCustomPublication();
+			}
+
+			task ("Check heading for experience in live site") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Experience Name 2 Heading");
+			}
+
+			task ("Prioritize the third created experience in the Content Page") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/experience-content-page");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.prioritizeExperience(
+					count = 3,
+					experienceName = "Experience Name 3");
+
+				PageEditor.publish();
+			}
+
+			task ("Assert publishing is sucessful") {
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+				Staging.publishCustomPublication();
+			}
+
+			task ("Check heading for experience in live site") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Experience Name 3 Heading");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-140510. Changes after reordering experiences with Staging should be applied in live using Org and Session segments."
+	@priority = 5
+	test ViewChangeIsPublishedWhenReorderExperiencesWithOrgAndSessionSegments {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given add 3 segemnts with 3 different criterias using Org and Session") {
+			task ("Add a user") {
+				JSONUser.addUser(
+					userEmailAddress = "userea1@liferay.com",
+					userFirstName = "userfn1",
+					userLastName = "userln1",
+					userScreenName = "usersn1");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "userea1@liferay.com");
+			}
+
+			task ("Add a Organization with country Afghanistan via JSONWS") {
+				JSONOrganization.addOrganization(
+					organizationCountry = "Afghanistan",
+					organizationName = "Organization Name");
+			}
+
+			task ("Assign the created user to the organization") {
+				JSONOrganization.assignUserToOrganization(
+					organizationName = "Organization Name",
+					userEmailAddress = "userea1@liferay.com");
+			}
+
+			task ("Add another user and set its lanaguage to Catalan (Spain)") {
+				JSONUser.addUser(
+					preferredLocale = "ca_ES",
+					userEmailAddress = "userea2@liferay.com",
+					userFirstName = "userfn2",
+					userLastName = "userln2",
+					userScreenName = "usersn2");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "userea2@liferay.com");
+			}
+
+			task ("Add a segment, criteria:Organization > Country equals Afghanistan") {
+				JSONSegmentsentry.addSegment(
+					conditionType = "Organization",
+					fieldName = "Country",
+					groupName = "Test Site Name (Staging)",
+					operator = "equals",
+					segmentName = "Segment Name 1",
+					site = "false",
+					text = "afghanistan");
+			}
+
+			task ("Add a segment, criteria:Session > Language equals Catalan (Spain)") {
+				JSONSegmentsentry.addSegment(
+					conditionType = "Session",
+					fieldName = "Language",
+					groupName = "Test Site Name (Staging)",
+					operator = "equals",
+					segmentName = "Segment Name 2",
+					site = "false",
+					text = "ca_ES");
+			}
+
+			task ("Add a segment, criteria:Session > Signed in equals TRUE") {
+				JSONSegmentsentry.addSegment(
+					conditionType = "Session",
+					fieldName = "Signed In",
+					groupName = "Test Site Name (Staging)",
+					operator = "equals",
+					segmentName = "Segment Name 3",
+					site = "false",
+					value = "true");
+			}
+
+			task ("Add a content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name (Staging)",
+					layoutName = "Experience Content Page",
+					site = "false",
+					type = "content");
+			}
+		}
+
+		task ("When adding a fragment and an experience") {
+			task ("Add a Heading fragment and 3 experiences in the Content Page") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/experience-content-page");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Heading");
+
+				PageEditor.editFragmentText(
+					fragmentName = "Heading",
+					id = "element-text",
+					text = "Default Heading");
+
+				for (var i : list "1,2,3") {
+					PageEditor.addExperience(
+						experienceName = "Experience Name ${i}",
+						segmentName = "Segment Name ${i}");
+
+					PageEditor.editFragmentText(
+						fragmentName = "Heading",
+						id = "element-text",
+						text = "Experience Name ${i} Heading");
+				}
+
+				PageEditor.publish();
+			}
+		}
+
+		task ("Then changes after reordering experiences with Staging should be applied in live") {
+			task ("Reorder the experiences as the following: Exp3 > Exp2 > Exp1 > Default") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/experience-content-page");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.prioritizeExperience(experienceName = "Experience Name 1");
+
+				PageEditor.prioritizeExperience(
+					count = 2,
+					experienceName = "Experience Name 2");
+
+				PageEditor.prioritizeExperience(
+					count = 3,
+					experienceName = "Experience Name 3");
+
+				PageEditor.publish();
+			}
+
+			task ("Assert publishing is sucessful") {
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+				Staging.publishCustomPublication();
+			}
+
+			task ("Log out and log in by created users and check heading for experience in live site") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Experience Name 3 Heading");
+
+				for (var num : list "1,2") {
+					User.logoutPG();
+
+					User.loginUserPG(
+						password = "test",
+						userEmailAddress = "userea${num}@liferay.com");
+
+					Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+					AssertTextEquals(
+						locator1 = "Experience#FRAGMENT_HEADING",
+						value1 = "Experience Name 3 Heading");
+				}
+
+				User.logoutPG(signOutLocalizationName = "Surt");
+
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Default Heading");
+			}
+
+			task ("Reorder the experiences as the following: Exp1 > Exp2 > Default > Exp3") {
+				User.loginUserPG(
+					password = "test",
+					userEmailAddress = "test@liferay.com");
+
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/experience-content-page");
+
+				ContentPages.gotoPageEditor();
+
+				PageEditor.prioritizeExperience(experienceName = "Experience Name 1");
+
+				PageEditor.prioritizeExperience(
+					count = 3,
+					experienceName = "Experience Name 1");
+
+				PageEditor.prioritizeExperience(experienceName = "Experience Name 2");
+
+				PageEditor.deprioritizeExperience(experienceName = "Experience Name 3");
+
+				PageEditor.publish();
+			}
+
+			task ("Assert publishing is sucessful") {
+				Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+				Staging.publishCustomPublication();
+			}
+
+			task ("Log out and log in by created users and check heading for experience in live site") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Default Heading");
+
+				for (var num : list "1,2") {
+					User.logoutPG();
+
+					User.loginUserPG(
+						password = "test",
+						userEmailAddress = "userea${num}@liferay.com");
+
+					Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+					AssertTextEquals(
+						locator1 = "Experience#FRAGMENT_HEADING",
+						value1 = "Experience Name ${num} Heading");
+				}
+
+				User.logoutPG(signOutLocalizationName = "Surt");
+
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/experience-content-page");
+
+				AssertTextEquals(
+					locator1 = "Experience#FRAGMENT_HEADING",
+					value1 = "Default Heading");
+			}
+		}
+	}
+
+}

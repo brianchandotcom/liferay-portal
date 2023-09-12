@@ -146,12 +146,18 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 			duplicateQueryStringsDetector.builder(
 			).index(
 				_getIndexName(resourceRequest)
+			).groupExternalReferenceCode(
+				validateRankingMVCResourceRequest.
+					getGroupExternalReferenceCode()
 			).queryStrings(
 				RankingUtil.getQueryStrings(
 					validateRankingMVCResourceRequest.getQueryString(),
 					_getAliases(validateRankingMVCResourceRequest))
 			).rankingIndexName(
 				_getRankingIndexName(resourceRequest)
+			).sxpBlueprintExternalReferenceCode(
+				validateRankingMVCResourceRequest.
+					getSXPBlueprintExternalReferenceCode()
 			).unlessRankingDocumentId(
 				validateRankingMVCResourceRequest.getResultsRankingUid()
 			).build());
@@ -190,14 +196,22 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 
 			_aliases = Arrays.asList(
 				ParamUtil.getStringValues(resourceRequest, "aliases"));
+			_groupExternalReferenceCode = ParamUtil.getString(
+				resourceRequest, "groupExternalReferenceCode");
 			_inactive = ParamUtil.getBoolean(resourceRequest, "inactive");
 			_queryString = ParamUtil.getString(resourceRequest, "keywords");
 			_resultsRankingUid = ParamUtil.getString(
 				resourceRequest, "resultsRankingUid");
+			_sxpBlueprintExternalReferenceCode = ParamUtil.getString(
+				resourceRequest, "sxpBlueprintExternalReferenceCode");
 		}
 
 		public List<String> getAliases() {
 			return Collections.unmodifiableList(_aliases);
+		}
+
+		public String getGroupExternalReferenceCode() {
+			return _groupExternalReferenceCode;
 		}
 
 		public boolean getInactive() {
@@ -212,10 +226,16 @@ public class ValidateRankingMVCResourceCommand implements MVCResourceCommand {
 			return _resultsRankingUid;
 		}
 
+		public String getSXPBlueprintExternalReferenceCode() {
+			return _sxpBlueprintExternalReferenceCode;
+		}
+
 		private final List<String> _aliases;
+		private final String _groupExternalReferenceCode;
 		private final boolean _inactive;
 		private final String _queryString;
 		private final String _resultsRankingUid;
+		private final String _sxpBlueprintExternalReferenceCode;
 
 	}
 

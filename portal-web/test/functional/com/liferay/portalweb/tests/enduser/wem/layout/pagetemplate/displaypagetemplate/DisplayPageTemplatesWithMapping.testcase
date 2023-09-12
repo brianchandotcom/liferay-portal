@@ -676,7 +676,6 @@ definition {
 	@description = "This is a use case for LPS-182999. The page designer could see mapped image from attachment field on associated display page template."
 	@priority = 4
 	test MapPreviewURLOfImageAttachmentToFragment {
-		property custom.properties = "feature.flag.LPS-176083=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -782,8 +781,6 @@ definition {
 	@description = "This is a test for LPS-165556. The page designer could map a standalone action from current object to Button fragment in display page template."
 	@priority = 4
 	test MapStandaloneActionFromCurrentObjectToFragment {
-		property custom.properties = "feature.flag.LPS-169992=true";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -911,8 +908,6 @@ definition {
 	@description = "This is a test for LPS-165556. The page designer could map a standalone action from current object to Button fragment inside Colllection Display in display page template."
 	@priority = 4
 	test MapStandaloneActionFromCurrentObjectToFragmentInsideCollectionDisplay {
-		property custom.properties = "feature.flag.LPS-169992=true";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";
@@ -1044,8 +1039,6 @@ definition {
 	@description = "This is a test for LPS-165556. The page designer could map a standalone action from a specific object entry to Button fragment in display page template."
 	@priority = 4
 	test MapStandaloneActionFromSpecificObjectEntryToFragment {
-		property custom.properties = "feature.flag.LPS-169992=true";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";

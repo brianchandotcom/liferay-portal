@@ -5,10 +5,12 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
+import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -56,6 +58,8 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -67,13 +71,54 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 		File file = uploadPortletRequest.getFile("file");
 
-		boolean overwrite = ParamUtil.getBoolean(
-			resourceRequest, "overwrite", true);
+		String importType = ParamUtil.getString(resourceRequest, "importType");
 
-		JSONObject jsonObject = _importFile(
-			file, themeDisplay.getScopeGroupId(),
-			layoutPageTemplateCollectionId, themeDisplay.getLocale(), overwrite,
-			themeDisplay.getUserId());
+		boolean validFile = true;
+
+		if (_featureFlagManager.isEnabled("LPS-174939") &&
+			Validator.isNull(importType)) {
+
+			validFile = _layoutsImporter.validateFile(
+				themeDisplay.getScopeGroupId(), layoutPageTemplateCollectionId,
+				file);
+		}
+
+		if (validFile) {
+			LayoutsImportStrategy layoutsImportStrategy;
+
+			if (_featureFlagManager.isEnabled("LPS-174939")) {
+				layoutsImportStrategy = LayoutsImportStrategy.create(
+					importType);
+
+				if (layoutsImportStrategy == null) {
+					layoutsImportStrategy =
+						LayoutsImportStrategy.DO_NOT_OVERWRITE;
+				}
+			}
+			else {
+				boolean overwrite = ParamUtil.getBoolean(
+					resourceRequest, "overwrite", true);
+
+				if (overwrite) {
+					layoutsImportStrategy = LayoutsImportStrategy.OVERWRITE;
+				}
+				else {
+					layoutsImportStrategy =
+						LayoutsImportStrategy.DO_NOT_OVERWRITE;
+				}
+			}
+
+			jsonObject = _importFile(
+				file, themeDisplay.getScopeGroupId(),
+				layoutPageTemplateCollectionId, layoutsImportStrategy,
+				themeDisplay.getLocale(), themeDisplay.getUserId());
+
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse, jsonObject);
+		}
+		else {
+			jsonObject.put("valid", false);
+		}
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse, jsonObject);
@@ -103,7 +148,8 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private JSONObject _importFile(
 		File file, long groupId, long layoutPageTemplateCollectionId,
-		Locale locale, boolean overwrite, long userId) {
+		LayoutsImportStrategy layoutsImportStrategy, Locale locale,
+		long userId) {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -111,7 +157,7 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
 				_layoutsImporter.importFile(
 					userId, groupId, layoutPageTemplateCollectionId, file,
-					overwrite);
+					layoutsImportStrategy);
 
 			JSONObject importResultsJSONObject =
 				_jsonFactory.createJSONObject();
@@ -174,6 +220,9 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportMVCResourceCommand.class);
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private JSONFactory _jsonFactory;

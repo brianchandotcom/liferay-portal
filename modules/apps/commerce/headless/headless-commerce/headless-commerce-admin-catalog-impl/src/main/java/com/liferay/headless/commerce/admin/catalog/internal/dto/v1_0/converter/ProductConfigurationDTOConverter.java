@@ -8,12 +8,9 @@ package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration;
-import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-
-import java.math.BigDecimal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,34 +46,16 @@ public class ProductConfigurationDTOConverter
 		return new ProductConfiguration() {
 			{
 				allowBackOrder = cpDefinitionInventory.isBackOrders();
-				allowedOrderQuantities = TransformUtil.transformToArray(
-					ListUtil.fromArray(
-						cpDefinitionInventory.getAllowedOrderQuantitiesArray()),
-					BigDecimal::intValue, Integer.class);
+				allowedOrderQuantities =
+					cpDefinitionInventory.getAllowedOrderQuantitiesArray();
 				inventoryEngine =
 					cpDefinitionInventory.getCPDefinitionInventoryEngine();
-
-				setMaxOrderQuantity(
-					() -> {
-						BigDecimal maxOrderQuantity =
-							cpDefinitionInventory.getMaxOrderQuantity();
-
-						return maxOrderQuantity.intValue();
-					});
-				setMinOrderQuantity(
-					() -> {
-						BigDecimal minOrderQuantity =
-							cpDefinitionInventory.getMinOrderQuantity();
-
-						return minOrderQuantity.intValue();
-					});
-				setMultipleOrderQuantity(
-					() -> {
-						BigDecimal multipleOrderQuantity =
-							cpDefinitionInventory.getMultipleOrderQuantity();
-
-						return multipleOrderQuantity.intValue();
-					});
+				maxOrderQuantity = BigDecimalUtil.stripTrailingZeros(
+					cpDefinitionInventory.getMaxOrderQuantity());
+				minOrderQuantity = BigDecimalUtil.stripTrailingZeros(
+					cpDefinitionInventory.getMinOrderQuantity());
+				multipleOrderQuantity = BigDecimalUtil.stripTrailingZeros(
+					cpDefinitionInventory.getMultipleOrderQuantity());
 			}
 		};
 	}

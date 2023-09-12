@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -41,6 +42,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alicia García
  */
+@FeatureFlags("LPS-188060")
 @RunWith(Arquillian.class)
 @Sync
 public class CheckKBArticleSchedulerJobConfigurationTest {
@@ -61,7 +63,7 @@ public class CheckKBArticleSchedulerJobConfigurationTest {
 	}
 
 	@Test
-	public void testDoNotExpireFileEntryIfKBArticleIsScheduled()
+	public void testDoNotExpireKBArticleIfKBArticleIsScheduled()
 		throws Exception {
 
 		Date displayDate = DateUtils.addDays(RandomTestUtil.nextDate(), 1);
@@ -92,7 +94,7 @@ public class CheckKBArticleSchedulerJobConfigurationTest {
 	}
 
 	@Test
-	public void testExpireFileEntry() throws Exception {
+	public void testExpireKBArticle() throws Exception {
 		Date expirationDate = new Date(
 			System.currentTimeMillis() + (Time.MINUTE * 5));
 
@@ -117,6 +119,37 @@ public class CheckKBArticleSchedulerJobConfigurationTest {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_EXPIRED, kbArticle.getStatus());
+	}
+
+	@Test
+	public void testPublishKBArticleIfKBArticleIsScheduled() throws Exception {
+		Date displayDate = new Date(
+			System.currentTimeMillis() + (Time.MINUTE * 10));
+
+		KBArticle kbArticle = _kbArticleLocalService.addKBArticle(
+			null, UserLocalServiceUtil.getGuestUserId(_group.getCompanyId()),
+			PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			null, displayDate, null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user.getUserId()));
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, kbArticle.getStatus());
+
+		kbArticle.setDisplayDate(
+			new Date(System.currentTimeMillis() - (Time.MINUTE * 10)));
+
+		kbArticle = _kbArticleLocalService.updateKBArticle(kbArticle);
+
+		_kbArticleLocalService.checkKBArticles(_group.getCompanyId());
+
+		kbArticle = _kbArticleLocalService.getLatestKBArticle(
+			kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_ANY);
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, kbArticle.getStatus());
 	}
 
 	@DeleteAfterTestRun

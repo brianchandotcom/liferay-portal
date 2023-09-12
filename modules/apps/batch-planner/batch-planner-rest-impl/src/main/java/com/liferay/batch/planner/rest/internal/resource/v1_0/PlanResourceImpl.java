@@ -70,7 +70,8 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 			internalClassName.substring(
 				internalClassName.lastIndexOf(StringPool.PERIOD) + 1),
 			_fieldProvider.getFields(
-				contextCompany.getCompanyId(), internalClassName));
+				contextCompany.getCompanyId(), internalClassName,
+				contextUriInfo));
 	}
 
 	@Override

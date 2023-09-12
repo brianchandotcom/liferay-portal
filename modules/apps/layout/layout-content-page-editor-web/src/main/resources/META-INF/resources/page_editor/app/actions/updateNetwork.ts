@@ -5,12 +5,18 @@
 
 import {UPDATE_NETWORK} from './types';
 
-import type {ServiceNetworkStatusType} from '../config/constants/serviceNetworkStatusTypes';
+import type {
+	SERVICE_NETWORK_STATUS_TYPES,
+	ServiceNetworkStatusType,
+} from '../config/constants/serviceNetworkStatusTypes';
 
-export default function updateNetwork(network: {
-	error?: string | null;
-	status: ServiceNetworkStatusType;
-}) {
+type ErrorStatusType = typeof SERVICE_NETWORK_STATUS_TYPES['error'];
+
+export type NetworkStatus =
+	| {error: string; status: ErrorStatusType}
+	| {status: Omit<ServiceNetworkStatusType, ErrorStatusType> | null};
+
+export default function updateNetwork(network: NetworkStatus) {
 	return {
 		network,
 		type: UPDATE_NETWORK,

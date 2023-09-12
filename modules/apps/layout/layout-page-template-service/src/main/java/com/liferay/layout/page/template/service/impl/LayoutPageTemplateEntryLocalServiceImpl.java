@@ -279,7 +279,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				sourceLayoutPageTemplateEntry.getClassTypeId(), name,
 				sourceLayoutPageTemplateEntry.getType(), 0, false,
 				sourceLayoutPageTemplateEntry.getLayoutPrototypeId(), 0,
-				masterLayoutPlid, sourceLayoutPageTemplateEntry.getStatus(),
+				masterLayoutPlid, WorkflowConstants.STATUS_DRAFT,
 				serviceContext);
 
 		FileEntry targetPreviewFileEntry = _copyPreviewFileEntry(
@@ -560,6 +560,34 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		return layoutPageTemplateEntryPersistence.findByG_LPTEK(
 			groupId, layoutPageTemplateEntryKey);
+	}
+
+	@Override
+	public String getUniqueLayoutPageTemplateEntryName(
+		long groupId, String name, int type) {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryPersistence.fetchByG_N_T(
+				groupId, name, type);
+
+		if (layoutPageTemplateEntry == null) {
+			return name;
+		}
+
+		int count = 1;
+
+		while (true) {
+			String newName = StringUtil.appendParentheticalSuffix(
+				name, count++);
+
+			layoutPageTemplateEntry =
+				layoutPageTemplateEntryPersistence.fetchByG_N_T(
+					groupId, newName, type);
+
+			if (layoutPageTemplateEntry == null) {
+				return newName;
+			}
+		}
 	}
 
 	@Override

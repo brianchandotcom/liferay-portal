@@ -11,16 +11,11 @@ import useCurrentKoroneikiAccount from '../../hooks/useCurrentKoroneikiAccount';
 import {getHighPriorityContacts} from '../../services/liferay/api';
 import HighPriorityContactsInput from './HighPriorityContactsInput';
 
-export const HIGH_PRIORITY_CONTACT_CATEGORIES = {
-	criticalIncidentContact: 'Critical Incident',
-	privacyBreachContact: 'Privacy Breach',
-	securityBreachContact: 'Security Breach',
-};
-
 const SetupHighPriorityContact = ({
 	addContactList,
 	disableSubmit,
 	filter,
+	isCriticalIncidentCard,
 	removedContactList,
 }) => {
 	const {data} = useCurrentKoroneikiAccount();
@@ -29,6 +24,19 @@ const SetupHighPriorityContact = ({
 		currentHighPriorityContacts,
 		setCurrentHighPriorityContacts,
 	] = useState([]);
+
+	const getContactRoleByFilter = (filter) => {
+		if (filter.includes('Privacy')) {
+			return 'Data Breach Contact';
+		}
+
+		if (filter.includes('Security')) {
+			return 'Security Incident Contact';
+		}
+		if (filter.includes('Critical')) {
+			return 'Critical Incident Contact';
+		}
+	};
 
 	const mapFilterToContactsCategory = (filter) => {
 		const _filter = (
@@ -39,6 +47,7 @@ const SetupHighPriorityContact = ({
 			contactsCategory: {
 				key: _filter,
 				name: `${filter}`,
+				role: getContactRoleByFilter(filter),
 			},
 			filterRequest: SearchBuilder.eq('contactsCategory', _filter),
 		};
@@ -132,6 +141,7 @@ const SetupHighPriorityContact = ({
 						}
 						disableSubmit={handleMetaErrorChange}
 						inputName={filter}
+						isCriticalIncidentCard={isCriticalIncidentCard}
 						koroneikiAccount={koroneikiAccount}
 						setContactList={updateContacts}
 					/>

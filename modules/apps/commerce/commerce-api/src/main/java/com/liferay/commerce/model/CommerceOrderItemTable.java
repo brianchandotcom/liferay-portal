@@ -53,9 +53,10 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 	public final Column<CommerceOrderItemTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderItemTable, Long> bookedQuantityId =
-		createColumn(
-			"bookedQuantityId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, Long>
+		commerceInventoryBookedQuantityId = createColumn(
+			"CIBookedQuantityId", Long.class, Types.BIGINT,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, Long> commerceOrderId =
 		createColumn(
 			"commerceOrderId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
@@ -211,9 +212,9 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 	public final Column<CommerceOrderItemTable, Boolean> shippable =
 		createColumn(
 			"shippable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
-	public final Column<CommerceOrderItemTable, Integer> shippedQuantity =
+	public final Column<CommerceOrderItemTable, BigDecimal> shippedQuantity =
 		createColumn(
-			"shippedQuantity", Integer.class, Types.INTEGER,
+			"shippedQuantity", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, Double> shippingExtraPrice =
 		createColumn(
@@ -235,6 +236,10 @@ public class CommerceOrderItemTable extends BaseTable<CommerceOrderItemTable> {
 	public final Column<CommerceOrderItemTable, String>
 		subscriptionTypeSettings = createColumn(
 			"subscriptionTypeSettings", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderItemTable, BigDecimal>
+		unitOfMeasureIncrementalOrderQuantity = createColumn(
+			"UOMIncrementalOrderQuantity", BigDecimal.class, Types.DECIMAL,
 			Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderItemTable, String> unitOfMeasureKey =
 		createColumn(

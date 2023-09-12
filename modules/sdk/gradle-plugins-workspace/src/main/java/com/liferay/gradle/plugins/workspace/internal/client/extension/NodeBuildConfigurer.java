@@ -75,15 +75,11 @@ public class NodeBuildConfigurer implements ClientExtensionConfigurer {
 				"Unable to parse Node version", exception);
 		}
 
-		String npmVersion = nodeExtension.getNpmVersion();
-
 		try {
 			Version version = Version.parseVersion(nodeVersion);
 
 			if (version.compareTo(_MINIMUM_NPM_VERSION) < 0) {
-				npmVersion = _MINIMUM_NPM_VERSION.toString();
-
-				nodeExtension.setNpmVersion(npmVersion);
+				nodeExtension.setNpmVersion(_MINIMUM_NPM_VERSION.toString());
 			}
 		}
 		catch (Exception exception) {

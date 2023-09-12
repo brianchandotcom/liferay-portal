@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.upload.UploadServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 
-import java.net.InetAddress;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -49,7 +47,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.PreferencesValidator;
-import javax.portlet.ValidatorException;
 import javax.portlet.WindowState;
 
 import javax.servlet.ServletContext;
@@ -644,11 +641,6 @@ public interface Portal {
 
 	public String getLayoutActualURL(
 			long groupId, boolean privateLayout, String mainPath,
-			String friendlyURL)
-		throws PortalException;
-
-	public String getLayoutActualURL(
-			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException;
@@ -778,13 +770,9 @@ public interface Portal {
 	public long getPlidFromPortletId(long groupId, String portletId)
 		throws PortalException;
 
-	public InetAddress getPortalLocalInetAddress(boolean secure);
-
 	public int getPortalLocalPort(boolean secure);
 
 	public Properties getPortalProperties();
-
-	public InetAddress getPortalServerInetAddress(boolean secure);
 
 	public int getPortalServerPort(boolean secure);
 
@@ -832,20 +820,10 @@ public interface Portal {
 
 	public String getPortletId(PortletRequest portletRequest);
 
-	public String getPortletLongTitle(Portlet portlet, Locale locale);
-
 	public String getPortletLongTitle(
 		Portlet portlet, ServletContext servletContext, Locale locale);
 
-	public String getPortletLongTitle(Portlet portlet, String languageId);
-
-	public String getPortletLongTitle(Portlet portlet, User user);
-
 	public String getPortletLongTitle(String portletId, Locale locale);
-
-	public String getPortletLongTitle(String portletId, String languageId);
-
-	public String getPortletLongTitle(String portletId, User user);
 
 	public String getPortletNamespace(String portletId);
 
@@ -870,8 +848,6 @@ public interface Portal {
 	public String getPortletTitle(String portletId, String languageId);
 
 	public String getPortletTitle(String portletId, User user);
-
-	public String getPortletXmlFileName();
 
 	public PortletPreferences getPreferences(
 		HttpServletRequest httpServletRequest);
@@ -1050,20 +1026,6 @@ public interface Portal {
 
 	public boolean isCompanyAdmin(User user) throws Exception;
 
-	public boolean isCompanyControlPanelPortlet(
-			String portletId, String category, ThemeDisplay themeDisplay)
-		throws PortalException;
-
-	public boolean isCompanyControlPanelPortlet(
-			String portletId, ThemeDisplay themeDisplay)
-		throws PortalException;
-
-	public boolean isControlPanelPortlet(
-		String portletId, String category, ThemeDisplay themeDisplay);
-
-	public boolean isControlPanelPortlet(
-		String portletId, ThemeDisplay themeDisplay);
-
 	public boolean isCustomPortletMode(PortletMode portletMode);
 
 	public boolean isForwardedSecure(HttpServletRequest httpServletRequest);
@@ -1084,10 +1046,6 @@ public interface Portal {
 
 	public boolean isLoginRedirectRequired(
 		HttpServletRequest httpServletRequest);
-
-	public boolean isMethodGet(PortletRequest portletRequest);
-
-	public boolean isMethodPost(PortletRequest portletRequest);
 
 	public boolean isMultipartRequest(HttpServletRequest httpServletRequest);
 
@@ -1116,8 +1074,6 @@ public interface Portal {
 	public boolean isValidResourceId(String resourceId);
 
 	public void resetCDNHosts();
-
-	public String resetPortletParameters(String url, String portletId);
 
 	public void sendError(
 			Exception exception, ActionRequest actionRequest,
@@ -1177,9 +1133,6 @@ public interface Portal {
 
 	public void setPortalInetSocketAddresses(
 		HttpServletRequest httpServletRequest);
-
-	public void storePreferences(PortletPreferences portletPreferences)
-		throws IOException, ValidatorException;
 
 	public String[] stripURLAnchor(String url, String separator);
 

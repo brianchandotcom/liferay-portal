@@ -32,7 +32,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.RelatedContent;
@@ -112,13 +112,12 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.util.ContentLanguageUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
-
-import java.io.Serializable;
 
 import java.time.LocalDateTime;
 
@@ -781,16 +780,32 @@ public class StructuredContentResourceImpl
 	}
 
 	private ServiceContext _createServiceContext(
-		Long[] assetCategoryIds, long[] assetLinkEntryIds, double assetPriority,
-		String[] assetTagNames, long groupId,
-		StructuredContent structuredContent) {
+			Long[] assetCategoryIds, long[] assetLinkEntryIds,
+			double assetPriority, String[] assetTagNames, long groupId,
+			StructuredContent structuredContent)
+		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				assetCategoryIds, assetTagNames,
-				_getExpandoBridgeAttributes(structuredContent), groupId,
-				contextHttpServletRequest,
-				structuredContent.getViewableByAsString());
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest,
+			structuredContent.getViewableByAsString()
+		).assetCategoryIds(
+			assetCategoryIds
+		).assetTagNames(
+			assetTagNames
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				JournalArticle.class.getName(), contextCompany.getCompanyId(),
+				structuredContent.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).permissions(
+			ModelPermissionsUtil.toModelPermissions(
+				contextCompany.getCompanyId(),
+				structuredContent.getPermissions(),
+				getPermissionCheckerResourceId(structuredContent.getId()),
+				getPermissionCheckerResourceName(structuredContent.getId()),
+				resourceActionLocalService, resourcePermissionLocalService,
+				roleLocalService)
+		).build();
 
 		serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
 		serviceContext.setAssetPriority(assetPriority);
@@ -935,15 +950,6 @@ public class StructuredContentResourceImpl
 		DDMTemplate ddmTemplate = ddmTemplates.get(0);
 
 		return ddmTemplate.getTemplateKey();
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		StructuredContent structuredContent) {
-
-		return CustomFieldsUtil.toMap(
-			JournalArticle.class.getName(), contextCompany.getCompanyId(),
-			structuredContent.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private List<DDMFormField> _getRootDDMFormFields(

@@ -6,15 +6,14 @@
 import ClayForm from '@clayui/form';
 import {FieldArray} from 'formik';
 import {useEffect, useState} from 'react';
+import {HIGH_PRIORITY_CONTACT_CATEGORIES} from '~/routes/customer-portal/utils/getHighPriorityContacts';
 import i18n from '../../../../../../../../../../../common/I18n';
 import {
 	Button,
 	Input,
 	Select,
 } from '../../../../../../../../../../../common/components';
-import SetupHighPriorityContactForm, {
-	HIGH_PRIORITY_CONTACT_CATEGORIES,
-} from '../../../../../../../../../../../common/components/HighPriorityContacts/SetupHighPriorityContact';
+import SetupHighPriorityContactForm from '../../../../../../../../../../../common/components/HighPriorityContacts/SetupHighPriorityContact';
 import Layout from '../../../../../../../../../../../common/containers/setup-forms/Layout';
 import getInitialLxcAdmins from '../../utils/getInitialLxcAdmins';
 import AdminInputs from './components/AdminsInput';
@@ -28,11 +27,13 @@ const SetupLiferayExperienceCloudPage = ({
 	handleOnLeftButtonClick,
 	leftButton,
 	project,
+	setFieldValue,
 	setFormAlreadySubmitted,
 	subscriptionGroupLxcId,
 	touched,
 	values,
 }) => {
+	const [isLoadingSubmitButton, setIsLoadingSubmitButton] = useState(false);
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [
 		addHighPriorityContactList,
@@ -93,11 +94,21 @@ const SetupLiferayExperienceCloudPage = ({
 	const primaryRegionList = useGetPrimaryRegionList();
 
 	useEffect(() => {
+		if (primaryRegionList.length) {
+			setFieldValue('lxc.primaryRegion', primaryRegionList[0].value);
+		}
+	}, [primaryRegionList, setFieldValue]);
+
+	useEffect(() => {
 		const hasTouched = !Object.keys(touched).length;
 		const hasError = Object.keys(errors).length;
 
 		setBaseButtonDisabled(hasTouched || hasError);
 	}, [touched, errors]);
+
+	const handleLoadingSubmitButton = (state) => {
+		return setIsLoadingSubmitButton(state);
+	};
 
 	const handleSubmitLxcEnvironment = useSubmitLXCEnvironment(
 		handleChangeForm,
@@ -106,6 +117,7 @@ const SetupLiferayExperienceCloudPage = ({
 		addHighPriorityContactList,
 		removeHighPriorityContactList,
 		subscriptionGroupLxcId,
+		handleLoadingSubmitButton,
 		values
 	);
 
@@ -138,9 +150,12 @@ const SetupLiferayExperienceCloudPage = ({
 				middleButton: (
 					<Button
 						disabled={
-							step === 1 ? baseButtonDisabled : isSubmitDisable()
+							step === 1
+								? baseButtonDisabled
+								: isSubmitDisable() || isLoadingSubmitButton
 						}
 						displayType="primary"
+						isLoading={isLoadingSubmitButton}
 						onClick={
 							step === 1
 								? handleNextStep
@@ -252,7 +267,7 @@ const SetupLiferayExperienceCloudPage = ({
 						addContactList={addHighPriorityContacts}
 						disableSubmit={updateMultiSelectEmpty}
 						filter={
-							HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncidentContact
+							HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncident
 						}
 						removedContactList={removeHighPriorityContacts}
 					/>
@@ -260,18 +275,14 @@ const SetupLiferayExperienceCloudPage = ({
 					<SetupHighPriorityContactForm
 						addContactList={addHighPriorityContacts}
 						disableSubmit={updateMultiSelectEmpty}
-						filter={
-							HIGH_PRIORITY_CONTACT_CATEGORIES.privacyBreachContact
-						}
+						filter={HIGH_PRIORITY_CONTACT_CATEGORIES.privacyBreach}
 						removedContactList={removeHighPriorityContacts}
 					/>
 
 					<SetupHighPriorityContactForm
 						addContactList={addHighPriorityContacts}
 						disableSubmit={updateMultiSelectEmpty}
-						filter={
-							HIGH_PRIORITY_CONTACT_CATEGORIES.securityBreachContact
-						}
+						filter={HIGH_PRIORITY_CONTACT_CATEGORIES.securityBreach}
 						removedContactList={removeHighPriorityContacts}
 					/>
 				</div>

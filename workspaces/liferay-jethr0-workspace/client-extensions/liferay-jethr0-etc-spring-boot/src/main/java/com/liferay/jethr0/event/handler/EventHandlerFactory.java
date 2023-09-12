@@ -53,12 +53,12 @@ public class EventHandlerFactory {
 			eventHandler = new CreateJenkinsCohortEventHandler(
 				_eventHandlerContext, messageJSONObject);
 		}
-		else if (eventType == EventHandler.EventType.CREATE_PROJECT) {
-			eventHandler = new CreateProjectEventHandler(
+		else if (eventType == EventHandler.EventType.CREATE_JOB) {
+			eventHandler = new CreateJobEventHandler(
 				_eventHandlerContext, messageJSONObject);
 		}
-		else if (eventType == EventHandler.EventType.QUEUE_PROJECT) {
-			eventHandler = new QueueProjectEventHandler(
+		else if (eventType == EventHandler.EventType.QUEUE_JOB) {
+			eventHandler = new QueueJobEventHandler(
 				_eventHandlerContext, messageJSONObject);
 		}
 		else {

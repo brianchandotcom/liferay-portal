@@ -164,10 +164,10 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 		if (!objectView.defaultObjectView || objectViewColumns.length !== 0) {
 			try {
-				await API.save(
-					`/o/object-admin/v1.0/object-views/${objectViewId}`,
-					newObjectView
-				);
+				await API.save({
+					item: newObjectView,
+					url: `/o/object-admin/v1.0/object-views/${objectViewId}`,
+				});
 				saveAndReload();
 
 				openToast({

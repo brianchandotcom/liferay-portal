@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.List;
@@ -61,6 +62,20 @@ public class DisplayPageTemplateCollectionHorizontalCard
 		}
 
 		return null;
+	}
+
+	@Override
+	public String getHref() {
+		return PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setTabs1(
+			"display-page-templates"
+		).setParameter(
+			"groupId", _layoutPageTemplateCollection.getGroupId()
+		).setParameter(
+			"layoutPageTemplateCollectionId",
+			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()
+		).buildString();
 	}
 
 	@Override

@@ -43,6 +43,11 @@ renderResponse.setTitle((auditEvent == null) ? "audit-event" : auditEvent.getEve
 			</aui:field-wrapper>
 
 			<aui:field-wrapper label="create-date">
+
+				<%
+				Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+				%>
+
 				<%= dateFormatDateTime.format(auditEvent.getCreateDate()) %>
 			</aui:field-wrapper>
 

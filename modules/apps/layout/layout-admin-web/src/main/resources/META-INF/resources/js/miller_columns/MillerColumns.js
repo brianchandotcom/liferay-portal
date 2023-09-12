@@ -4,11 +4,12 @@
  */
 
 import {usePrevious} from '@liferay/frontend-js-react-web';
+import {DragPreview} from '@liferay/layout-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import DragPreview from './DragPreview';
 import MillerColumnsColumn from './MillerColumnsColumn';
 
 const getItemsMap = (columns, oldItems = new Map()) => {
@@ -251,9 +252,24 @@ const MillerColumns = ({
 		);
 	};
 
+	const getDragPreviewLabel = (item) => {
+		const items = item?.items;
+
+		if (items) {
+			if (items.length > 1) {
+				return sub(Liferay.Language.get('x-elements'), items.length);
+			}
+			else {
+				const [item] = items;
+
+				return item.title;
+			}
+		}
+	};
+
 	return (
 		<DndProvider backend={HTML5Backend}>
-			<DragPreview rtl={rtl} />
+			<DragPreview getLabel={getDragPreviewLabel} />
 
 			<div className="bg-white miller-columns-row" ref={ref}>
 				{columns.map((column, index) => (

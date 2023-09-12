@@ -1442,6 +1442,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test CanOrderTagFacetTerms {
 		task ("Create Web Contents with tags") {
 			JSONWebcontent.addWebContent(
@@ -1575,29 +1576,29 @@ definition {
 	test CanOrderUserFacetTerms {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
-		for (var userList : list "carter.braxton,john.adams,jonathan.franklin") {
-			var firstName = StringUtil.extractFirst(${userList}, ".");
-			var lastName = StringUtil.extractLast(${userList}, ".");
+		for (var userName : list "carter braxton,john adams,jonathan franklin") {
+			var firstName = StringUtil.extractFirst(${userName}, " ");
+			var lastName = StringUtil.extractLast(${userName}, " ");
 
 			JSONUser.addUser(
-				userEmailAddress = "${userList}@liferay.com",
+				userEmailAddress = "${firstName}.${lastName}@liferay.com",
 				userFirstName = ${firstName},
 				userLastName = ${lastName},
 				userScreenName = ${firstName});
 
 			JSONUser.addUserToSite(
 				groupName = "Guest",
-				userEmailAddress = "${userList}@liferay.com");
+				userEmailAddress = "${firstName}.${lastName}@liferay.com");
 
 			JSONRole.assignSiteRoleToUser(
 				groupName = "Guest",
 				roleTitle = "Site Administrator",
-				userEmailAddress = "${userList}@liferay.com");
+				userEmailAddress = "${firstName}.${lastName}@liferay.com");
 
 			JSONUser.setFirstPassword(
 				agreeToTermsAndAnswerReminderQuery = "true",
 				requireReset = "false",
-				userEmailAddress = "${userList}@liferay.com");
+				userEmailAddress = "${firstName}.${lastName}@liferay.com");
 		}
 
 		for (var count : list "1,2,3,4") {
@@ -1624,11 +1625,9 @@ definition {
 			userEmailAddress = "jonathan.franklin@liferay.com",
 			userPassword = "test");
 
-		Navigator.gotoPage(pageName = "Home");
+		Search.openSearchPage(searchTerm = "test");
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
-
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "test test,john adams,carter braxton,jonathan franklin");
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Test Test,john adams,carter braxton,jonathan franklin");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "User Facet",
@@ -1636,7 +1635,7 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "jonathan franklin,carter braxton,john adams,test test");
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "jonathan franklin,carter braxton,john adams,Test Test");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "User Facet",
@@ -1644,7 +1643,7 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "carter braxton,john adams,jonathan franklin,test test");
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Test Test,carter braxton,john adams,jonathan franklin");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "User Facet",
@@ -1652,7 +1651,7 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "test test,jonathan franklin,john adams,carter braxton");
+		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "jonathan franklin,john adams,carter braxton,Test Test");
 	}
 
 	@description = "This is a use case for LPS-130126 and LPS-145648."
@@ -1875,12 +1874,12 @@ definition {
 
 		AssertElementPresent(
 			key_checkboxName = "1.0",
-			key_facetClass = "Custom Facet",
+			key_facetName = "Custom Facet",
 			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
 
 		Click(
 			key_checkboxName = "1.0",
-			key_facetClass = "Custom Facet",
+			key_facetName = "Custom Facet",
 			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
 
 		SearchResultPortlet.viewSearchResults(
@@ -1913,12 +1912,12 @@ definition {
 
 		AssertElementPresent(
 			key_checkboxName = "1.1",
-			key_facetClass = "Custom Facet",
+			key_facetName = "Custom Facet",
 			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
 
 		Click(
 			key_checkboxName = "1.1",
-			key_facetClass = "Custom Facet",
+			key_facetName = "Custom Facet",
 			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
 
 		SearchResultPortlet.viewSearchResults(
@@ -1983,7 +1982,7 @@ definition {
 
 		AssertElementPresent(
 			key_checkboxName = "Unlocalized text field",
-			key_facetClass = "Custom Facet",
+			key_facetName = "Custom Facet",
 			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
 	}
 
@@ -2273,6 +2272,7 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	@priority = 3
 	test SearchWithCustomSortOption {
 		task ("Create 3 Web Content Articles. Add more words to some article's content fields to get them to show up lower in search results") {
 			JSONWebcontent.addWebContent(
@@ -2751,7 +2751,7 @@ definition {
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Document,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "type",
+			facetName = "Type Facet",
 			facetValueName = "Web Content Article",
 			searchPage = "Search Page",
 			searchTerm = "apple");
@@ -2763,7 +2763,7 @@ definition {
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,banana/Document,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "type",
+			facetName = "Type Facet",
 			facetValueName = "Blogs Entry",
 			searchURL = ${testSearchURL});
 
@@ -2774,7 +2774,7 @@ definition {
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Document,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
-			facetClass = "type",
+			facetName = "Type Facet",
 			facetValueName = "Web Content Article",
 			searchURL = ${testSearchURL});
 
@@ -2799,7 +2799,7 @@ definition {
 			searchTerm = "test");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "category",
+			facetName = "Category Facet",
 			facetValue = ${organicCategoryId},
 			facetValueName = "organic",
 			searchURL = ${testSearchURL});
@@ -2811,7 +2811,7 @@ definition {
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "user",
+			facetName = "User Facet",
 			facetValueName = "userfn userln",
 			searchURL = ${testSearchURL});
 
@@ -2822,7 +2822,7 @@ definition {
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,orange/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
-			facetClass = "user",
+			facetName = "User Facet",
 			facetValueName = "userfn userln",
 			searchURL = ${testSearchURL});
 
@@ -2841,12 +2841,12 @@ definition {
 			searchTerm = "test");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "tag",
+			facetName = "Tag Facet",
 			facetValueName = "sweet",
 			searchURL = ${testSearchURL});
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "tag",
+			facetName = "Tag Facet",
 			facetValueName = "fresh",
 			searchURL = ${testSearchURL});
 
@@ -2862,7 +2862,7 @@ definition {
 		var siteName = TestCase.getSiteName();
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "site",
+			facetName = "Site Facet",
 			facetValue = ${liferaySiteId},
 			facetValueName = ${siteName},
 			searchURL = ${testSearchURL});
@@ -2871,7 +2871,7 @@ definition {
 			site = "true");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "site",
+			facetName = "Site Facet",
 			facetValue = ${newSiteId},
 			facetValueName = "New Site",
 			searchURL = ${testSearchURL});
@@ -2883,7 +2883,7 @@ definition {
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
-			facetClass = "site",
+			facetName = "Site Facet",
 			facetValue = ${newSiteId},
 			facetValueName = "New Site",
 			searchURL = ${testSearchURL});
@@ -2899,7 +2899,7 @@ definition {
 			groupName = "Guest");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "folder",
+			facetName = "Folder Facet",
 			facetValue = ${webContentFolderId2},
 			facetValueName = "WC Folder Name 2",
 			searchURL = ${testSearchURL});
@@ -2911,7 +2911,7 @@ definition {
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "tag",
+			facetName = "Tag Facet",
 			facetValueName = "ripe",
 			searchURL = ${testSearchURL});
 
@@ -2922,13 +2922,13 @@ definition {
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document");
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
-			facetClass = "folder",
+			facetName = "Folder Facet",
 			facetValue = ${webContentFolderId2},
 			facetValueName = "WC Folder Name 2",
 			searchURL = ${testSearchURL});
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
-			facetClass = "tag",
+			facetName = "Tag Facet",
 			facetValueName = "fresh",
 			searchURL = ${testSearchURL});
 
@@ -2947,7 +2947,7 @@ definition {
 			searchTerm = "organic");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "category",
+			facetName = "Category Facet",
 			facetValue = ${organicCategoryId},
 			facetValueName = "organic",
 			searchURL = ${testSearchURL});
@@ -2956,30 +2956,30 @@ definition {
 			groupName = "Guest");
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "folder",
+			facetName = "Folder Facet",
 			facetValue = ${webContentFolderId1},
 			facetValueName = "WC Folder Name 1",
 			searchURL = ${testSearchURL});
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "site",
+			facetName = "Site Facet",
 			facetValue = ${liferaySiteId},
 			facetValueName = ${siteName},
 			searchURL = ${testSearchURL});
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "tag",
+			facetName = "Tag Facet",
 			facetValueName = "ripe",
 			searchURL = ${testSearchURL});
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "type",
+			facetName = "Type Facet",
 			facetValueName = "Web Content Article",
 			searchURL = ${testSearchURL});
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
-			facetClass = "user",
-			facetValueName = "test test",
+			facetName = "User Facet",
+			facetValueName = "Test Test",
 			searchURL = ${testSearchURL});
 
 		SearchResultPortlet.viewMultipleSearchResults(
@@ -2988,6 +2988,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-134052."
+	@priority = 3
 	test ViewSortWidgetConfigurationNewUI {
 		task ("Execute a search to populate the search widgets and add the Sort widget") {
 			Search.openSearchPage(searchTerm = "test");

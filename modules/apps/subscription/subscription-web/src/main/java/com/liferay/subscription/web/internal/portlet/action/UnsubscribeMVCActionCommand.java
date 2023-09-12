@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.subscription.exception.NoSuchSubscriptionException;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
-import com.liferay.subscription.web.internal.constants.SubscriptionConstants;
 import com.liferay.subscription.web.internal.constants.SubscriptionPortletKeys;
 
 import java.util.Locale;
@@ -122,7 +122,7 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 	private Ticket _getTicket(String key) throws PortalException {
 		Ticket ticket = _ticketLocalService.getTicket(key);
 
-		if (ticket.getType() != SubscriptionConstants.TICKET_TYPE) {
+		if (ticket.getType() != TicketConstants.TYPE_SUBSCRIPTION) {
 			throw new NoSuchTicketException("Invalid type " + ticket.getType());
 		}
 

@@ -60,6 +60,12 @@ public class ObjectFolderLocalServiceUtil {
 			externalReferenceCode, userId, labelMap, name);
 	}
 
+	public static ObjectFolder addOrGetUncategorizedObjectFolder(long companyId)
+		throws PortalException {
+
+		return getService().addOrGetUncategorizedObjectFolder(companyId);
+	}
+
 	/**
 	 * Creates a new object folder with the primary key. Does not add the object folder to the database.
 	 *
@@ -365,11 +371,12 @@ public class ObjectFolderLocalServiceUtil {
 
 	public static ObjectFolder updateObjectFolder(
 			String externalReferenceCode, long objectFolderId,
-			Map<java.util.Locale, String> labelMap)
+			Map<java.util.Locale, String> labelMap,
+			List<com.liferay.object.model.ObjectFolderItem> objectFolderItems)
 		throws PortalException {
 
 		return getService().updateObjectFolder(
-			externalReferenceCode, objectFolderId, labelMap);
+			externalReferenceCode, objectFolderId, labelMap, objectFolderItems);
 	}
 
 	public static ObjectFolderLocalService getService() {

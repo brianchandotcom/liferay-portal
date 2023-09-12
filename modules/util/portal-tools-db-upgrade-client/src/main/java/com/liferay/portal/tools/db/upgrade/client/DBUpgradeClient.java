@@ -267,7 +267,8 @@ public class DBUpgradeClient {
 					}
 				}
 			}
-			catch (Exception exception) {
+			catch (IOException ioException) {
+				ioException.printStackTrace();
 			}
 		}
 

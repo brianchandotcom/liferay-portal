@@ -509,6 +509,15 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 
 		<sequential>
 			<if>
+				<not>
+					<available file="${selenium.output.dir.name}" type="dir" />
+				</not>
+				<then>
+					<mkdir dir="${selenium.output.dir.name}" />
+				</then>
+			</if>
+
+			<if>
 				<or>
 					<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
 					<isset property="database.${database.type}.docker.image" />
@@ -518,7 +527,7 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 
 					<property location="export_database_mysql_compact_export.sh" name="export.database.mysql.compact.file.path" />
 					<property name="docker.src.file.path" value="/tmp/export.sql" />
-					<property name="export.dmp.file.path" value="${basedir}/@{database.file.prefix}-@{database.schema.name}.sql" />
+					<property name="export.dmp.file.path" value="${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}.sql" />
 
 					<echo file="${export.database.mysql.compact.file.path}">
 						<![CDATA[
@@ -557,7 +566,7 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 					</execute>
 				</then>
 				<else>
-					<exec executable="mysqldump" output="@{database.file.prefix}-@{database.schema.name}.sql">
+					<exec executable="mysqldump" output="${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}.sql">
 						<arg value="--compact" />
 						<arg value="--no-data" />
 						<arg value="--order-by-primary" />
@@ -569,7 +578,7 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 					</exec>
 
 					<replaceregexp
-						file="@{database.file.prefix}-@{database.schema.name}.sql"
+						file="${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}.sql"
 						match=".*Using a password on the command line interface can be insecure.*\n"
 						replace=""
 					/>
@@ -595,16 +604,18 @@ typeSettings=&#91;&quot;friendlyURLMapping=perico&quot;,&quot;instanceable=false
 			</echo>
 
 			<execute>
-				export_database_mysql_compact_sort_sql.sh @{database.file.prefix}-@{database.schema.name}.sql > @{database.file.prefix}-@{database.schema.name}-sorted.sql
+				export_database_mysql_compact_sort_sql.sh ${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}.sql > ${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}-sorted.sql
 			</execute>
 
-			<delete file="@{database.file.prefix}-@{database.schema.name}.sql" />
+			<delete file="${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}.sql" />
 			<delete file="export_database_mysql_compact_sort_sql.sh" />
 
 			<move
-				file="@{database.file.prefix}-@{database.schema.name}-sorted.sql"
-				tofile="@{database.file.prefix}-@{database.schema.name}.sql"
+				file="${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}-sorted.sql"
+				tofile="${selenium.output.dir.name}/@{database.file.prefix}-@{database.schema.name}.sql"
 			/>
+
+			<delete failonerror="false" file="${project.dir}/export_database_mysql_compact_export.sh" />
 		</sequential>
 	</macrodef>
 
@@ -7122,20 +7133,21 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			</if>
 
 			<docker-execute container="${browser.host}">
-				ssh -fN -4 -L 88:${ip.address}:88 ${browser.host}
+				ssh -fN -4 -L 10080:${ip.address}:10080 ${browser.host}
+				ssh -fN -4 -L 12080:${ip.address}:12080 ${browser.host}
+				ssh -fN -4 -L 18080:${ip.address}:18080 ${browser.host}
+				ssh -fN -4 -L 18443:${ip.address}:18443 ${browser.host}
+				ssh -fN -4 -L 58081:${ip.address}:58081 ${browser.host}
 				ssh -fN -4 -L 8080:${ip.address}:8080 ${browser.host}
 				ssh -fN -4 -L 8082:${ip.address}:8082 ${browser.host}
 				ssh -fN -4 -L 8282:${ip.address}:8282 ${browser.host}
 				ssh -fN -4 -L 8443:${ip.address}:8443 ${browser.host}
+				ssh -fN -4 -L 88:${ip.address}:88 ${browser.host}
 				ssh -fN -4 -L 8983:${ip.address}:8983 ${browser.host}
 				ssh -fN -4 -L 9080:${ip.address}:9080 ${browser.host}
 				ssh -fN -4 -L 9200:${ip.address}:9200 ${browser.host}
 				ssh -fN -4 -L 9201:${ip.address}:9201 ${browser.host}
 				ssh -fN -4 -L 9202:${ip.address}:9202 ${browser.host}
-				ssh -fN -4 -L 10080:${ip.address}:10080 ${browser.host}
-				ssh -fN -4 -L 12080:${ip.address}:12080 ${browser.host}
-				ssh -fN -4 -L 18080:${ip.address}:18080 ${browser.host}
-				ssh -fN -4 -L 18443:${ip.address}:18443 ${browser.host}
 			</docker-execute>
 		</sequential>
 	</macrodef>
@@ -8239,8 +8251,17 @@ war.path=${app.server.portal.dir}/</echo>
 		<attribute default="fresh" name="fresh.db.schema" />
 
 		<sequential>
+			<if>
+				<not>
+					<available file="${selenium.output.dir.name}" type="dir" />
+				</not>
+				<then>
+					<mkdir dir="${selenium.output.dir.name}" />
+				</then>
+			</if>
+
 			<echo file="validate_db_upgrade_schemas.sh">
-diff -B --new-line-format='%L' --old-line-format= --unchanged-line-format= upgraded-@{upgraded.db.schema}.sql fresh-@{fresh.db.schema}.sql || true
+diff -B --new-line-format='%L' --old-line-format= --unchanged-line-format= ${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql ${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql || true
 			</echo>
 
 			<chmod
@@ -8255,14 +8276,14 @@ diff -B --new-line-format='%L' --old-line-format= --unchanged-line-format= upgra
 					<equals arg1="${database.changes.master}" arg2="" />
 				</not>
 				<then>
-					<echo file="@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt">
+					<echo file="${selenium.output.dir.name}/@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt">
 Upgraded database is missing the following elements from a fresh database: ${line.separator}${database.changes.master}
 
-diff:${line.separator}upgraded-@{upgraded.db.schema}.sql > fresh-@{fresh.db.schema}.sql
+diff:${line.separator}${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql > ${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql
 					</echo>
 
 					<echo file="validate_db_upgrade_schemas.sh">
-diff -y -B -W250 upgraded-@{upgraded.db.schema}.sql fresh-@{fresh.db.schema}.sql | expand | grep -E -C40 '^.{123} [|>]( |$)'
+diff -y -B -W250 ${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql ${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql | expand | grep -E -C40 '^.{123} [|>]( |$)'
 					</echo>
 
 					<chmod
@@ -8270,12 +8291,14 @@ diff -y -B -W250 upgraded-@{upgraded.db.schema}.sql fresh-@{fresh.db.schema}.sql
 						perm="a+x"
 					/>
 
-					<exec append="true" executable="./validate_db_upgrade_schemas.sh" output="@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt" />
+					<exec append="true" executable="./validate_db_upgrade_schemas.sh" output="${selenium.output.dir.name}/@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt" />
 				</then>
 				<else>
-					<echo file="@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt">Database schemas match</echo>
+					<echo file="${selenium.output.dir.name}/@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt">Database schemas match</echo>
 				</else>
 			</if>
+
+			<delete failonerror="false" file="${project.dir}/validate_db_upgrade_schemas.sh" />
 		</sequential>
 	</macrodef>
 
@@ -9590,6 +9613,13 @@ org.apache.catalina.tribes.level = FINE]]>
 					</and>
 					<then>
 						<delete dir="${test.app.server.liferay.home}/osgi/state" />
+
+						<if>
+							<equals arg1="${app.server.type}" arg2="websphere" />
+							<then>
+								<delete dir="${test.app.server.liferay.home}/logs" />
+							</then>
+						</if>
 					</then>
 					<else>
 						<if>
@@ -11221,6 +11251,10 @@ ${update.properties}</echo>
 		<prepare-gcs-store-configuration />
 	</target>
 
+	<target name="prepare-ibm-s3-configuration">
+		<prepare-ibm-s3-configuration />
+	</target>
+
 	<target name="prepare-log4j-ext-xml">
 		<var name="dialect.detector.log.level" value="INFO" />
 
@@ -11368,6 +11402,25 @@ ${update.properties}</echo>
 		<Logger level="DEBUG" name="com.liferay.portal.cache.ehcache.internal.event.PortalCacheCacheEventListener.test.cache" />
 	</Loggers>
 </Configuration>]]></echo>
+
+		<!-- Temporarily increase Tika log level until LPS-193838 -->
+
+		<get-testcase-property property.name="portal.version" />
+
+		<if>
+			<and>
+				<equals arg1="${app.server.type}" arg2="websphere" />
+				<isset property="portal.version" />
+			</and>
+			<then>
+				<echo file="${liferay.home}/osgi/log4j/com.liferay.portal.tika-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
+<Configuration strict="true">
+	<Loggers>
+		<Logger level="ERROR" name="com.liferay.portal.tika.internal.extract.TextExtractorImpl" />
+	</Loggers>
+</Configuration>]]></echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-ms-exchange-configuration">
@@ -11443,6 +11496,22 @@ ${update.properties}</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="database.partition.enabled" />
+		<get-testcase-property property.name="portal.version" />
+
+		<if>
+			<and>
+				<isset property="database.partition.enabled" />
+				<isset property="portal.version" />
+			</and>
+			<then>
+				<property name="database.max.pool.size" value="50" />
+			</then>
+			<else>
+				<property name="database.max.pool.size" value="30" />
+			</else>
+		</if>
+
 		<get-database-property property.name="database.driver" />
 		<get-database-property property.name="database.password" />
 		<get-database-property property.name="database.url" />
@@ -11462,7 +11531,7 @@ jdbc.default.password=${database.password}
 // HikariCP
 
 jdbc.default.connectionTimeout=600000
-jdbc.default.maximumPoolSize=30
+jdbc.default.maximumPoolSize=${database.max.pool.size}
 jdbc.default.minimumIdle=0
 
 enterprise.product.notification.enabled=false
@@ -11786,7 +11855,13 @@ dl.store.impl=com.liferay.portal.store.gcs.GCSStore</echo>
 		</if>
 
 		<if>
-			<equals arg1="${ibm.store.enabled}" arg2="true" />
+			<and>
+				<equals arg1="${ibm.store.enabled}" arg2="true" />
+				<not>
+					<equals arg1="${store.migration.test}" arg2="true" />
+				</not>
+			</and>
+
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 dl.store.impl=com.liferay.portal.store.s3.IBMS3Store</echo>
@@ -12356,21 +12431,24 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			app.server.temp.dir=${app.server.tomcat.temp.dir}
 			app.server.type=${app.server.type}
 			component.names=${component.names}
+			custom.default.user.email=${custom.default.user.email}
+			custom.default.user.first.password=${custom.default.user.first.password}
+			custom.default.user.password=${custom.default.user.password}
 			custom.super.admin.user.email=${custom.super.admin.user.email}
 			custom.super.admin.user.password=${custom.super.admin.user.password}
-			custom.default.user.password=${custom.default.user.password}
-			custom.default.user.email=${custom.default.user.email}
 			get.location.max.retries=${test.get.location.max.retries}
 			get.location.timeout=${test.get.location.timeout}
 			ignore.errors.file.name=${project.dir}/portal-web/test-ignorable-error-lines.xml
+			instance.url=${instance.url}
 			ip.address=${ip.address}
-			liferay.home.dir.name=${liferay.home.absolute}
 			liferay.app.server.classes.portal.dir=${app.server.classes.portal.dir}
 			liferay.app.server.global.lib.dir=${app.server.lib.global.dir}
 			liferay.app.server.portal.lib.dir=${app.server.lib.portal.dir}
-			liferay.app.server.shielded.container.lib.portal.dir=${app.server.shielded-container-lib.portal.dir}
 			liferay.app.server.portal.web.dir=${app.server.portal.dir}
+			liferay.app.server.shielded.container.lib.portal.dir=${app.server.shielded-container-lib.portal.dir}
+			liferay.home.dir.name=${liferay.home.absolute}
 			logger.resources.url=${test.poshi.logger.resources.url}
+			lxc.environment=${lxc.environment}
 			oauth2.url=${oauth2.url}
 			operating.system.type=${operating.system.type}
 			output.dir.name=${selenium.output.dir.name}
@@ -12385,6 +12463,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			test.liferay.console.shut.down.file.name=${project.dir}/console-shut-down
 			test.poshi.warnings.file.name=${test.poshi.warnings.file.name}
 			test.retry.command.wait.time=${test.retry.command.wait.time}
+			validation.resource.file.types=${validation.resource.file.types}
 		</echo>
 
 		<if>
@@ -15666,7 +15745,14 @@ mail.send.blacklist=</echo>
 
 				<ant antfile="build-test-s3-store.xml" target="create-s3-bucket" />
 
-				<prepare-ibm-s3-configuration />
+				<if>
+					<not>
+						<equals arg1="${store.migration.test}" arg2="true" />
+					</not>
+					<then>
+						<prepare-ibm-s3-configuration />
+					</then>
+				</if>
 			</then>
 		</if>
 
@@ -16443,9 +16529,16 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 	</target>
 
 	<target name="start-app-server-tomcat-simple">
+		<get-java-jdk-bundle-version test.batch.name="${test.batch.name}" />
+
+		<get-java-jdk-bundle-type test.batch.name="${test.batch.name}" />
+
+		<get-java-jdk-home type="${java.jdk.bundle.type}" version="${java.jdk.bundle.version}" />
+
 		<trycatch property="startup.error">
 			<try>
 				<exec executable="${app.server.tomcat.bin.dir}/catalina.sh" failonerror="true" timeout="600000">
+					<env key="JAVA_HOME" value="${java.jdk.home}" />
 					<arg line="run" />
 				</exec>
 			</try>

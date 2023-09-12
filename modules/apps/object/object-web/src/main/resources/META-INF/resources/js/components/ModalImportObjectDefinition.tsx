@@ -69,7 +69,11 @@ export default function ModalImportObjectDefinition({
 
 	const handleImport = async (formData: FormData) => {
 		try {
-			await API.save(importObjectDefinitionURL, formData, 'POST');
+			await API.save({
+				item: formData,
+				method: 'POST',
+				url: importObjectDefinitionURL,
+			});
 
 			window.location.reload();
 		}
@@ -131,7 +135,7 @@ export default function ModalImportObjectDefinition({
 	return visible ? (
 		<ClayModal center observer={observer}>
 			<ClayModal.Header>
-				{Liferay.Language.get('import-object')}
+				{Liferay.Language.get('import-object-definition')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
@@ -147,6 +151,11 @@ export default function ModalImportObjectDefinition({
 						displayType="info"
 						title={`${Liferay.Language.get('info')}:`}
 					>
+						{Liferay.FeatureFlags['LPS-148856'] &&
+							Liferay.Language.get(
+								'the-object-definition-will-be-imported-to-the-uncategorized-folder'
+							)}
+						&nbsp;
 						{Liferay.Language.get(
 							'the-import-process-will-run-in-the-background-and-may-take-a-few-minutes'
 						)}

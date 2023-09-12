@@ -48,6 +48,14 @@ public class SXPBlueprintServiceWrapper
 	}
 
 	@Override
+	public com.liferay.search.experiences.model.SXPBlueprint fetchSXPBlueprint(
+			long sxpBlueprintId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpBlueprintService.fetchSXPBlueprint(sxpBlueprintId);
+	}
+
+	@Override
 	public com.liferay.search.experiences.model.SXPBlueprint
 			fetchSXPBlueprintByExternalReferenceCode(
 				String externalReferenceCode, long companyId)

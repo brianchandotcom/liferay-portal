@@ -11,7 +11,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {FDS_INTERNAL_CELL_RENDERERS} from '@liferay/frontend-data-set-web';
-import {ManagementToolbar} from 'frontend-js-components-web';
+import {InputLocalized, ManagementToolbar} from 'frontend-js-components-web';
 import {
 	IClientExtensionRenderer,
 	IInternalRenderer,
@@ -31,10 +31,14 @@ import OrderableTable from '../components/OrderableTable';
 
 import '../../css/FDSEntries.scss';
 
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
+
 interface IFDSField {
 	externalReferenceCode: string;
 	id: number;
 	label: string;
+	label_i18n: LocalizedValue<string>;
 	name: string;
 	renderer: string;
 	rendererLabel?: string;
@@ -409,9 +413,24 @@ const EditFDSFieldModalContent = ({
 		(cellRenderer: IInternalRenderer) => cellRenderer.name
 	);
 
+	const fdsFieldTranslations = fdsField.label_i18n;
+
+	let fieldLabel: string;
+
+	if (Liferay.FeatureFlags['LPS-172017']) {
+		fieldLabel = fdsField.label_i18n[defaultLanguageId] ?? fdsField.name;
+	}
+	else {
+		fieldLabel = fdsField.label;
+	}
+
+	const [i18nFieldLabels, setI18nFieldLabels] = useState(
+		fdsFieldTranslations
+	);
+
 	const editFDSField = async () => {
-		const body = {
-			label: fdsFieldLabelRef.current?.value,
+		let body;
+		const bodyTmp = {
 			renderer: selectedFDSFieldRenderer,
 			rendererType: !fdsInternalCellRendererNames.includes(
 				selectedFDSFieldRenderer
@@ -420,6 +439,13 @@ const EditFDSFieldModalContent = ({
 				: 'internal',
 			sortable: fdsFieldSortable,
 		};
+
+		if (Liferay.FeatureFlags['LPS-172017']) {
+			body = {...bodyTmp, label_i18n: i18nFieldLabels};
+		}
+		else {
+			body = {...bodyTmp, label: fdsFieldLabelRef.current?.value};
+		}
 
 		const response = await fetch(
 			`${API_URL.FDS_FIELDS}/by-external-reference-code/${fdsField.externalReferenceCode}`,
@@ -538,10 +564,7 @@ const EditFDSFieldModalContent = ({
 	return (
 		<>
 			<ClayModal.Header>
-				{Liferay.Util.sub(
-					Liferay.Language.get('edit-x'),
-					fdsField.label
-				)}
+				{Liferay.Util.sub(Liferay.Language.get('edit-x'), fieldLabel)}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
@@ -558,18 +581,35 @@ const EditFDSFieldModalContent = ({
 					/>
 				</ClayForm.Group>
 
-				<ClayForm.Group>
-					<label htmlFor={fdsFieldLabelInputId}>
-						{Liferay.Language.get('label')}
-					</label>
+				{Liferay.FeatureFlags['LPS-172017'] ? (
+					<ClayForm.Group>
+						<InputLocalized
+							id={fdsFieldLabelInputId}
+							label={Liferay.Language.get('label')}
+							name="label"
+							onChange={(newFieldLabel) => {
+								setI18nFieldLabels({
+									...i18nFieldLabels,
+									...newFieldLabel,
+								});
+							}}
+							translations={i18nFieldLabels}
+						/>
+					</ClayForm.Group>
+				) : (
+					<ClayForm.Group>
+						<label htmlFor={fdsFieldLabelInputId}>
+							{Liferay.Language.get('label')}
+						</label>
 
-					<ClayInput
-						defaultValue={fdsField.label}
-						id={fdsFieldLabelInputId}
-						ref={fdsFieldLabelRef}
-						type="text"
-					/>
-				</ClayForm.Group>
+						<ClayInput
+							defaultValue={fieldLabel}
+							id={fdsFieldLabelInputId}
+							ref={fdsFieldLabelRef}
+							type="text"
+						/>
+					</ClayForm.Group>
+				)}
 
 				<ClayForm.Group>
 					<label htmlFor={fdsFieldRendererSelectId}>
@@ -645,7 +685,13 @@ const Fields = ({
 
 		const responseJSON = await response.json();
 
-		const storedFDSFields = responseJSON?.items;
+		const storedFDSFields = responseJSON?.items.map((field: any) => {
+			if (!field.label) {
+				field.label = field.name;
+			}
+
+			return field;
+		});
 
 		if (!storedFDSFields) {
 			openToast({
@@ -849,10 +895,22 @@ const Fields = ({
 		});
 
 	const onEditFDSField = ({editedFDSField}: {editedFDSField: IFDSField}) => {
+		let updatedFDSField: IFDSField;
+
+		if (!editedFDSField.label) {
+			updatedFDSField = {
+				...editedFDSField,
+				label: editedFDSField.name,
+			};
+		}
+		else {
+			updatedFDSField = {...editedFDSField};
+		}
+
 		setFDSFields(
 			fdsFields?.map((fdsField) => {
-				if (fdsField.id === editedFDSField.id) {
-					return editedFDSField;
+				if (fdsField.id === updatedFDSField.id) {
+					return updatedFDSField;
 				}
 
 				return fdsField;
@@ -893,6 +951,12 @@ const Fields = ({
 							icon: 'trash',
 							label: Liferay.Language.get('delete'),
 							onClick: handleDelete,
+						},
+					]}
+					creationMenuItems={[
+						{
+							label: Liferay.Language.get('add-fields'),
+							onClick: onCreationButtonClick,
 						},
 					]}
 					fields={[
@@ -940,7 +1004,6 @@ const Fields = ({
 					)}
 					noItemsTitle={Liferay.Language.get('no-fields-added-yet')}
 					onCancelButtonClick={() => navigate(fdsViewsURL)}
-					onCreationButtonClick={onCreationButtonClick}
 					onOrderChange={({
 						orderedItems,
 					}: {

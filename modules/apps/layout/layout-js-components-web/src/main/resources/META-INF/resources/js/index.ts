@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+export {default as DragPreview} from './components/drag_preview/DragPreview';
 export {default as ExperienceSelector} from './components/experience_selector/ExperienceSelector';
 export {default as Import} from './components/import/Import';
 export {default as ImportResults} from './components/import/ImportResults';
+export {default as ImportOptionsModal} from './components/import/ImportOptionsModal';
 export {default as LengthInput} from './components/length_input/LengthInput';
 export {
 	default as ColorPicker,

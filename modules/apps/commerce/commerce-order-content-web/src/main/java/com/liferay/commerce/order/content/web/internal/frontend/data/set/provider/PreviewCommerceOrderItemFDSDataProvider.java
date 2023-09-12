@@ -21,16 +21,17 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -126,14 +127,16 @@ public class PreviewCommerceOrderItemFDSDataProvider
 				CommerceOrderItemPrice commerceOrderItemPrice =
 					commerceOrderImporterItem.getCommerceOrderItemPrice();
 
-				BigDecimal quantity = commerceOrderImporterItem.getQuantity();
+				BigDecimal quantity = _commerceQuantityFormatter.format(
+					commerceOrderImporterItem.getCPInstanceId(),
+					commerceOrderImporterItem.getQuantity(),
+					commerceOrderImporterItem.getUnitOfMeasureKey());
 
 				return new PreviewOrderItem(
 					externalReferenceCode,
 					_getImportStatus(commerceOrderImporterItem, locale),
 					_getCommerceOrderOptions(commerceOrderImporterItem, locale),
-					commerceOrderImporterItem.getName(locale),
-					quantity.intValue(),
+					commerceOrderImporterItem.getName(locale), quantity,
 					commerceOrderImporterItem.getReplacingSKU(),
 					_formatImportDate(
 						commerceOrderImporterItem.
@@ -362,6 +365,9 @@ public class PreviewCommerceOrderItemFDSDataProvider
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

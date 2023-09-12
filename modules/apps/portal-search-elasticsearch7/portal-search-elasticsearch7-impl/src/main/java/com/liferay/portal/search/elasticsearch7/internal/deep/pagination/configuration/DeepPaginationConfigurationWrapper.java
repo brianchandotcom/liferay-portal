@@ -6,8 +6,8 @@
 package com.liferay.portal.search.elasticsearch7.internal.deep.pagination.configuration;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.search.elasticsearch7.configuration.DeepPaginationConfiguration;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,8 +43,7 @@ public class DeepPaginationConfigurationWrapper {
 	}
 
 	public int getPointInTimeKeepAliveSeconds() {
-		return _validatePointInTimeKeepAliveSeconds(
-			_deepPaginationConfiguration.pointInTimeKeepAliveSeconds());
+		return _deepPaginationConfiguration.pointInTimeKeepAliveSeconds();
 	}
 
 	public boolean isEnableDeepPagination(long companyId) {
@@ -52,18 +51,6 @@ public class DeepPaginationConfigurationWrapper {
 			companyId);
 
 		return _deepPaginationConfiguration.enableDeepPagination();
-	}
-
-	private int _validatePointInTimeKeepAliveSeconds(
-		int pointInTimeKeepAliveSeconds) {
-
-		if ((pointInTimeKeepAliveSeconds > 0) &&
-			(pointInTimeKeepAliveSeconds <= 60)) {
-
-			return pointInTimeKeepAliveSeconds;
-		}
-
-		return 60;
 	}
 
 	@Reference

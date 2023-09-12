@@ -1,14 +1,14 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.jethr0.bui1d.dalo;
 
-import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.BuildFactory;
-import com.liferay.jethr0.bui1d.parameter.BuildParameter;
-import com.liferay.jethr0.bui1d.parameter.BuildParameterFactory;
+import com.liferay.jethr0.bui1d.BuildEntity;
+import com.liferay.jethr0.bui1d.BuildEntityFactory;
+import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
+import com.liferay.jethr0.bui1d.parameter.BuildParameterEntityFactory;
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 
@@ -20,16 +20,16 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class BuildToBuildParametersEntityRelationshipDALO
-	extends BaseEntityRelationshipDALO<Build, BuildParameter> {
+	extends BaseEntityRelationshipDALO<BuildEntity, BuildParameterEntity> {
 
 	@Override
-	public EntityFactory<BuildParameter> getChildEntityFactory() {
-		return _buildParameterFactory;
+	public EntityFactory<BuildParameterEntity> getChildEntityFactory() {
+		return _buildParameterEntityFactory;
 	}
 
 	@Override
-	public EntityFactory<Build> getParentEntityFactory() {
-		return _buildFactory;
+	public EntityFactory<BuildEntity> getParentEntityFactory() {
+		return _buildEntityFactory;
 	}
 
 	@Override
@@ -38,9 +38,9 @@ public class BuildToBuildParametersEntityRelationshipDALO
 	}
 
 	@Autowired
-	private BuildFactory _buildFactory;
+	private BuildEntityFactory _buildEntityFactory;
 
 	@Autowired
-	private BuildParameterFactory _buildParameterFactory;
+	private BuildParameterEntityFactory _buildParameterEntityFactory;
 
 }

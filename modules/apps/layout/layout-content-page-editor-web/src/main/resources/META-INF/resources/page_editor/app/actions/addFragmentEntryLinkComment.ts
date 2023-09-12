@@ -12,6 +12,7 @@ export interface FragmentEntryLinkComment {
 		userId: string;
 	};
 	body: string;
+	children?: FragmentEntryLinkComment[];
 	commentId: string;
 	dateDescription: string;
 	edited: false;
@@ -26,7 +27,7 @@ export default function addFragmentEntryLinkComment({
 }: {
 	fragmentEntryLinkComment: FragmentEntryLinkComment;
 	fragmentEntryLinkId: string;
-	parentCommentId: string;
+	parentCommentId?: string;
 }) {
 	return {
 		fragmentEntryLinkComment,

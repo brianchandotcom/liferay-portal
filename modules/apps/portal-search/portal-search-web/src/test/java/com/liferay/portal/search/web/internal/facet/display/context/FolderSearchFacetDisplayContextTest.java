@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.search.facet.collector.DefaultTermCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -48,11 +49,16 @@ public class FolderSearchFacetDisplayContextTest
 			String parameterValue, String order)
 		throws Exception {
 
+		configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			Mockito.mock(FolderFacetPortletInstanceConfiguration.class)
+		);
+
 		FolderSearchFacetDisplayContextBuilder
 			folderSearchFacetDisplayContextBuilder =
-				new FolderSearchFacetDisplayContextBuilder(
-					getRenderRequest(
-						FolderFacetPortletInstanceConfiguration.class));
+				new FolderSearchFacetDisplayContextBuilder(getRenderRequest());
 
 		folderSearchFacetDisplayContextBuilder.setFacet(facet);
 		folderSearchFacetDisplayContextBuilder.setFolderTitleLookup(

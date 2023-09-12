@@ -20,6 +20,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 	filterDropdownItems="<%= viewAppsManagerManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	filterLabelItems="<%= viewAppsManagerManagementToolbarDisplayContext.getFilterLabelItems() %>"
 	itemsTotal="<%= viewAppsManagerManagementToolbarDisplayContext.getItemsTotal() %>"
+	orderDropdownItems="<%= viewAppsManagerManagementToolbarDisplayContext.getOrderDropdownItems() %>"
 	searchActionURL="<%= viewAppsManagerManagementToolbarDisplayContext.getSearchActionURL() %>"
 	searchContainerId="appDisplays"
 	searchFormName="searchFm"

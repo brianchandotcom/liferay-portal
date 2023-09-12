@@ -8,6 +8,8 @@ package com.liferay.headless.commerce.admin.shipment.client.serdes.v1_0;
 import com.liferay.headless.commerce.admin.shipment.client.dto.v1_0.ShipmentItem;
 import com.liferay.headless.commerce.admin.shipment.client.json.BaseJSONParser;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -160,6 +162,20 @@ public class ShipmentItemSerDes {
 			sb.append(shipmentItem.getShipmentId());
 		}
 
+		if (shipmentItem.getUnitOfMeasureKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(shipmentItem.getUnitOfMeasureKey()));
+
+			sb.append("\"");
+		}
+
 		if (shipmentItem.getUserName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -289,6 +305,15 @@ public class ShipmentItemSerDes {
 			map.put("shipmentId", String.valueOf(shipmentItem.getShipmentId()));
 		}
 
+		if (shipmentItem.getUnitOfMeasureKey() == null) {
+			map.put("unitOfMeasureKey", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasureKey",
+				String.valueOf(shipmentItem.getUnitOfMeasureKey()));
+		}
+
 		if (shipmentItem.getUserName() == null) {
 			map.put("userName", null);
 		}
@@ -376,7 +401,7 @@ public class ShipmentItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "quantity")) {
 				if (jsonParserFieldValue != null) {
 					shipmentItem.setQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
@@ -391,6 +416,12 @@ public class ShipmentItemSerDes {
 				if (jsonParserFieldValue != null) {
 					shipmentItem.setShipmentId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasureKey")) {
+				if (jsonParserFieldValue != null) {
+					shipmentItem.setUnitOfMeasureKey(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "userName")) {

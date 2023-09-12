@@ -107,6 +107,14 @@ public class ObjectDefinitionLocalServiceWrapper
 			version, status, objectFields);
 	}
 
+	@Override
+	public void bindObjectDefinitions(long[] objectRelationshipIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectDefinitionLocalService.bindObjectDefinitions(
+			objectRelationshipIds);
+	}
+
 	/**
 	 * Creates a new object definition with the primary key. Does not add the object definition to the database.
 	 *
@@ -532,6 +540,14 @@ public class ObjectDefinitionLocalServiceWrapper
 			companyId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectDefinition>
+		getObjectFolderObjectDefinitions(long objectFolderId) {
+
+		return _objectDefinitionLocalService.getObjectFolderObjectDefinitions(
+			objectFolderId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -582,6 +598,14 @@ public class ObjectDefinitionLocalServiceWrapper
 
 		return _objectDefinitionLocalService.publishSystemObjectDefinition(
 			userId, objectDefinitionId);
+	}
+
+	@Override
+	public void unbindObjectDefinition(long objectDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectDefinitionLocalService.unbindObjectDefinition(
+			objectDefinitionId);
 	}
 
 	@Override

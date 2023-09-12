@@ -5,6 +5,7 @@
 
 package com.liferay.layout.page.template.service.impl;
 
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -47,8 +48,8 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long userId, long groupId, String name, String description,
-			ServiceContext serviceContext)
+			long userId, long groupId, long parentLayoutPageTemplateCollection,
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template collection
@@ -72,6 +73,8 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			serviceContext.getCreateDate(new Date()));
 		layoutPageTemplateCollection.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
+		layoutPageTemplateCollection.setParentLayoutPageTemplateCollectionId(
+			parentLayoutPageTemplateCollection);
 		layoutPageTemplateCollection.setLayoutPageTemplateCollectionKey(
 			_generateLayoutPageTemplateCollectionKey(groupId, name));
 		layoutPageTemplateCollection.setName(name);
@@ -87,6 +90,19 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			layoutPageTemplateCollection, serviceContext);
 
 		return layoutPageTemplateCollection;
+	}
+
+	@Override
+	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
+			long userId, long groupId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addLayoutPageTemplateCollection(
+			userId, groupId,
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			name, description, serviceContext);
 	}
 
 	@Override
@@ -208,6 +224,33 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 		return layoutPageTemplateCollectionPersistence.countByG_LikeN(
 			groupId,
 			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
+	}
+
+	@Override
+	public String getUniqueLayoutPageTemplateCollectionName(
+		long groupId, String name) {
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			layoutPageTemplateCollectionPersistence.fetchByG_N(groupId, name);
+
+		if (layoutPageTemplateCollection == null) {
+			return name;
+		}
+
+		int count = 1;
+
+		while (true) {
+			String newName = StringUtil.appendParentheticalSuffix(
+				name, count++);
+
+			layoutPageTemplateCollection =
+				layoutPageTemplateCollectionPersistence.fetchByG_N(
+					groupId, newName);
+
+			if (layoutPageTemplateCollection == null) {
+				return newName;
+			}
+		}
 	}
 
 	@Override

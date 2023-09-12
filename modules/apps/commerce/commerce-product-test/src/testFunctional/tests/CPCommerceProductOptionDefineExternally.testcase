@@ -1,0 +1,923 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Product Info Management";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-12111. As a buyer user, I can checkout discount products using Define Externally configuration"
+	@priority = 4
+	test CanApplyDiscountToExternallyDefinedProducts {
+		property portal.acceptance = "false";
+
+		task ("Given a business account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a 50% discount is applied to the U-joint product") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 50,
+				target = "products",
+				title = "Discount 1 50% off",
+				usePercentage = "true");
+
+			CommerceJSONDiscountsAPI._addDiscountProduct(
+				discountTitle = "Discount 1 50% off",
+				productName = "U-Joint");
+		}
+
+		task ("And the admin opens the U-Joint Product via Admin") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+		}
+
+		task ("And a new option is created") {
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List");
+		}
+
+		task ("And is linked to the product") {
+			CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List",
+				productName = "U-Joint");
+		}
+
+		task ("When the admin enables the Define Externally toggle with a category") {
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				collectionProvider = "SKUs by Categories",
+				key_option = "Option Select from List",
+				key_priceType = "Dynamic",
+				productAddOptionCategoriesList = "Transmission",
+				productOptionDefineExternally = "true",
+				productOptionPriceType = "true");
+		}
+
+		task ("And the buyer adds Calipers as an option value to the cart in U-Joint product details") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
+
+			FrontStore.addToCartFromProductDetails(
+				optionNamesAndValues = "Option Select from List:Mount",
+				productName = "U-Joint",
+				productSku = "MIN55861");
+		}
+
+		task ("Then can see the discount applied to combined products in the mini-cart as less than 50%") {
+			CommerceNavigator.gotoMiniCart();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
+				value1 = "27.00");
+
+			AssertTextEquals.assertPartialText(
+				key_index = 1,
+				locator1 = "CommerceAccelerators#MINI_CART_DISCOUNT_LEVELS",
+				value1 = "44.44");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_NET_PRICE",
+				value1 = "$ 15.00");
+		}
+
+		task ("And can see the discount price is only applied to the combined product on the order summary page") {
+			Button.click(button = "Submit");
+
+			CommerceCheckout.setAddress(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code");
+
+			Click(locator1 = "Button#CONTINUE");
+
+			Click(
+				key_radioOption = "Standard",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click(locator1 = "Button#CONTINUE");
+
+			CommerceCheckout.viewCheckoutOrderSummary(
+				addressAddress = "Test Address",
+				addressCity = "Test City",
+				addressCountry = "United States",
+				addressName = "Address Name",
+				deliveryValue = 15,
+				productDiscountedTotalPrice = "13.5",
+				productDiscountValue = "13.5",
+				productName = "U-Joint",
+				productPrice = 27,
+				productQuantity = 1,
+				subtotalValue = 15,
+				totalValue = 30);
+
+			CommerceCheckout.viewCheckoutOrderSummary(
+				addressAddress = "Test Address",
+				addressCity = "Test City",
+				addressCountry = "United States",
+				addressName = "Address Name",
+				productDiscountedTotalPrice = 3,
+				productName = "Mount",
+				productPrice = 3,
+				productQuantity = 1);
+		}
+	}
+
+	@description = "COMMERCE-12096 | Verify that the visibility affects the sku's eligibility"
+	@priority = 4
+	test CanAssertExternallyDefinedOptionValuesListShowsOnlySkusWithProductVisibilitySet {
+		property portal.acceptance = "false";
+
+		task ("Given the admin opens the U-Joint Product via Admin") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+		}
+
+		task ("And a new option is created") {
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List");
+		}
+
+		task ("And is linked to the product") {
+			CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List",
+				productName = "U-Joint");
+		}
+
+		task ("When the admin enables the Define Externally toggle with the Turbocharger category") {
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				collectionProvider = "SKUs by Categories",
+				key_option = "Option Select from List",
+				key_priceType = "Dynamic",
+				productAddOptionCategoriesList = "Turbocharger",
+				productOptionDefineExternally = "true",
+				productOptionPriceType = "true");
+		}
+
+		task ("Then no product is present") {
+			AssertElementNotPresent(
+				key_entryName = "Turbocharger",
+				locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+
+			echo("The product Turbocharger is not present");
+		}
+
+		task ("When the admin disables the visibility for Turbocharger") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Turbocharger");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Visibility");
+
+			Click(
+				key_name = "Account Groups",
+				locator1 = "ToggleSwitch#ENABLE_SPECIFIC_TOGGLE_SWITCH");
+
+			Button.clickPublish();
+		}
+
+		task ("Then now tubocharger is present inside the U-Joint option") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			Click(
+				key_index = "Option Select from List",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertElementPresent(
+				key_entryName = "Turbocharger",
+				locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+
+			echo("The product Turbocharger is present");
+		}
+	}
+
+	@description = "COMMERCE-12094. As a buyer user, I can view all the products with Define Externally configuration listed as option values in product details and checkout"
+	@priority = 5
+	test CanCheckoutBundledProductWithExternallyDefinedProductOptions {
+		property portal.acceptance = "true";
+
+		task ("Given a business account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And the admin opens the U-Joint Product via Admin") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+		}
+
+		task ("And a new option is created") {
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List");
+		}
+
+		task ("And is linked to the product") {
+			CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List",
+				productName = "U-Joint");
+		}
+
+		task ("When the admin enables the Define Externally toggle with a category") {
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				collectionProvider = "SKUs by Categories",
+				key_option = "Option Select from List",
+				key_priceType = "Dynamic",
+				productAddOptionCategoriesList = "Transmission",
+				productOptionDefineExternally = "true",
+				productOptionPriceType = "true");
+		}
+
+		task ("Then the buyer can view all the products related to the category added as options values in the store front except U-Joint") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
+
+			Click(
+				key_optionName = "Option Select from List",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			for (var productEntry : list "CV Axles,Drive Shafts,Mount,Torque Converters,Transmission Cooler Line Assembly,Transmission Fluid,Universal CV Boot,Wheel Seal - Front") {
+				AssertElementPresent(
+					key_fieldLabel = "Option Select from List",
+					key_value = ${productEntry},
+					locator1 = "Select#GENERIC_SELECT_VALUE");
+
+				echo("The product ${productEntry} is present");
+			}
+
+			AssertElementNotPresent(
+				key_fieldLabel = "Option Select from List",
+				key_value = "U-Joint",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+
+			echo("The product U-Joint is not present");
+		}
+
+		task ("And the buyer can checkout with those option products") {
+			for (var optionNamesAndValues : list "Option Select from List:Mount,Option Select from List:Wheel Seal - Front,Option Select from List:CV Axles") {
+				FrontStore.addToCartFromProductDetails(
+					optionNamesAndValues = ${optionNamesAndValues},
+					productName = "U-Joint",
+					productSku = "MIN55861");
+			}
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#CHECKOUT_SUCCESS_MESSAGE",
+				value1 = "Success! Your order has been processed.");
+		}
+	}
+
+	@description = "COMMERCE-12109 Verify that is possible to use multiple categories for the provider with the Define Externally Options"
+	@priority = 4
+	test CanDefineExternallyWithMultipleCategories {
+		property portal.acceptance = "false";
+
+		task ("Given the admin opens the U-Joint Product via Admin") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+		}
+
+		task ("And adds the category Turbocharger to ABS Sensor") {
+			AssetCategorization.addCategory(
+				categoryName = "Turbocharger",
+				vocabularyName = "Minium");
+
+			Button.clickPublish();
+		}
+
+		task ("And a new option is created") {
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List");
+		}
+
+		task ("And is linked to the product") {
+			CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List",
+				productName = "U-Joint");
+		}
+
+		task ("And the admin opens the U-Joint") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+		}
+
+		task ("When the admin enables the Define Externally toggle with a category") {
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				collectionProvider = "SKUs by Categories",
+				key_option = "Option Select from List",
+				key_priceType = "Dynamic",
+				productAddOptionCategoriesList = "Transmission,Turbocharger",
+				productOptionDefineExternally = "true",
+				productOptionPriceType = "true");
+		}
+
+		task ("Then all the products related to categories are added") {
+			for (var productEntry : list "CV Axles,Drive Shafts,Mount,Torque Converters,Transmission Cooler Line Assembly,Transmission Fluid,Universal CV Boot,Wheel Seal - Front,ABS Sensor") {
+				AssertElementPresent(
+					key_entryName = ${productEntry},
+					locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+
+				echo("The product ${productEntry} is present");
+			}
+		}
+
+		task ("When the admin removes the Turbocharger category") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			AssetCategorization.removeCategories(categoryNameList = "Turbocharger");
+
+			Button.clickPublish();
+		}
+
+		task ("Then ABS Sensor will not be present anymore inside U-Joint option") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			Click(
+				key_index = "Option Select from List",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertElementNotPresent(
+				key_entryName = "ABS Sensor",
+				locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+
+			echo("The product ABS Sensor is not present anymore");
+		}
+	}
+
+	@description = "COMMERCE-12110 Verify that when we configure an option both manually or using the define externally toggle, when the toggle is enabled or disabled the past configurations are remembered"
+	@priority = 4
+	test CanManuallySelectedProductOptionConfigurationBeRemembered {
+		property portal.acceptance = "false";
+
+		task ("Given the admin opens the U-Joint Product via Admin") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+		}
+
+		task ("And a new option is created") {
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List",
+				optionValues = "value1:value1:1,value2:value2:2,value3:value3:3");
+		}
+
+		task ("And is linked to the product") {
+			CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List",
+				productName = "U-Joint");
+		}
+
+		task ("And the admin checks if all the option values are there") {
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			Click(
+				key_index = "Option Select from List",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			for (var optionValueEntry : list "value1,value2,value3") {
+				AssertElementPresent(
+					key_entryName = ${optionValueEntry},
+					locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+			}
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+		}
+
+		task ("And enables the Define Externally toggle with a category") {
+			CommerceProductOptions.editProductOption(
+				collectionProvider = "SKUs by Categories",
+				key_option = "Option Select from List",
+				key_priceType = "Dynamic",
+				productAddOptionCategoriesList = "Transmission",
+				productOptionDefineExternally = "true",
+				productOptionPriceType = "true");
+
+			for (var productEntry : list "CV Axles,Drive Shafts,Mount") {
+				AssertElementPresent(
+					key_entryName = ${productEntry},
+					locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+			}
+		}
+
+		task ("When the toggle Define Externally is disabled") {
+			Uncheck.uncheckNotVisible(
+				key_toggleSwitchLabel = "Define Externally",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("Then all the previous manually defined option values are still remembered") {
+			for (var optionValueEntry : list "value1,value2,value3") {
+				AssertElementPresent(
+					key_entryName = ${optionValueEntry},
+					locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+			}
+		}
+
+		task ("But if the toggle Define Externally is enabled again") {
+			Check.checkNotVisible(
+				key_toggleSwitchLabel = "Define Externally",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("Then the previous configurations defined by the Provider is still remembered") {
+			for (var productEntry : list "CV Axles,Drive Shafts,Mount,Torque Converters,Transmission Cooler Line Assembly,Transmission Fluid,Universal CV Boot,Wheel Seal - Front") {
+				AssertElementPresent(
+					key_entryName = ${productEntry},
+					locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+			}
+		}
+	}
+
+	@description = "COMMERCE-12107 Verify that is possible to use the categories as a Content Provider and that by adding a category of which the product itself belongs, it does not see itself in the list generated by the Provider"
+	@priority = 5
+	test CanProductNotViewItselfInExternallyDefinedOptionValuesList {
+		property portal.acceptance = "true";
+
+		task ("Given the admin opens the U-Joint Product via Admin") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+		}
+
+		task ("And a new option is created") {
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List");
+		}
+
+		task ("And is linked to the product") {
+			CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List",
+				productName = "U-Joint");
+		}
+
+		task ("When the admin enables the Define Externally toggle with a category") {
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				collectionProvider = "SKUs by Categories",
+				key_option = "Option Select from List",
+				key_priceType = "Dynamic",
+				productAddOptionCategoriesList = "Transmission",
+				productOptionDefineExternally = "true",
+				productOptionPriceType = "true");
+		}
+
+		task ("Then all the products related to that category are added except for U-Joint") {
+			for (var productEntry : list "CV Axles,Drive Shafts,Mount,Torque Converters,Transmission Cooler Line Assembly,Transmission Fluid,Universal CV Boot,Wheel Seal - Front") {
+				AssertElementPresent(
+					key_entryName = ${productEntry},
+					locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+
+				echo("The product ${productEntry} is present");
+			}
+
+			AssertElementNotPresent(
+				key_entryName = "U-Joint",
+				locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+
+			echo("The product U-Joint is not present");
+		}
+	}
+
+	@description = "COMMERCE-12137 Verify that is possible only to use the Dynamic Price Type with the Define Externally Options"
+	@priority = 4
+	test CanUseDefineExternallyOnlyWithDynamicPriceType {
+		property portal.acceptance = "false";
+
+		task ("Given the admin opens the U-Joint Product via Admin") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+		}
+
+		task ("And a new option is created") {
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List");
+		}
+
+		task ("And is linked to the product") {
+			CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List",
+				productName = "U-Joint");
+		}
+
+		task ("Then the admin is able only to use the Dynamic Price Type") {
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			Click(
+				key_index = "Option Select from List",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Select(
+				key_fieldLabel = "Price Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Static");
+
+			Check.checkNotVisible(
+				key_toggleSwitchLabel = "Define Externally",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+
+			AssertElementPresent(
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				text = "Price type can only be dynamic for externally defined product options");
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+
+			Click(
+				key_index = "Option Select from List",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertElementNotPresent(
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				text = "Price type can only be dynamic for externally defined product options");
+
+			AssertElementPresent(
+				key_title = "Price Type",
+				locator1 = "CommerceEntry#CATALOGS_FORM",
+				value1 = "");
+
+			Check.checkNotVisible(
+				key_toggleSwitchLabel = "Define Externally",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+
+			AssertElementPresent(
+				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
+				text = "Price type can only be dynamic for externally defined product options");
+
+			AssertElementPresent(
+				key_title = "Price Type",
+				locator1 = "CommerceEntry#CATALOGS_FORM",
+				value1 = "");
+		}
+	}
+
+	@description = "COMMERCE-12093. As an admin, I can create a bundled product with options using Define Externally configuration"
+	@priority = 5
+	test CanViewExternallyDefinedProductsListedAccordingToSelectedCategory {
+		property portal.acceptance = "true";
+
+		task ("Given the admin opens the U-Joint Product via Admin") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+		}
+
+		task ("And a new option is created") {
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List");
+		}
+
+		task ("And is linked to the product") {
+			CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List",
+				productName = "U-Joint");
+		}
+
+		task ("When enables Define Externally toggle, selects Dynamic price type and clicks save") {
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			Click(
+				key_index = "Option Select from List",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Check.checkNotVisible(
+				key_toggleSwitchLabel = "Define Externally",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Select(
+				key_fieldLabel = "Price Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Dynamic");
+
+			Button.clickSave();
+		}
+
+		task ("Then can see Collection Provider and Category fields") {
+			AssertElementPresent(
+				key_selectFieldLabel = "Collection Provider",
+				locator1 = "CommerceEntry#ANY_SELECT");
+
+			AssertElementPresent(
+				key_text = "Category",
+				locator1 = "TextInput#ANY");
+		}
+
+		task ("When chooses SKUs by Categories as Collection Provider") {
+			Select(
+				key_selectFieldLabel = "Collection Provider",
+				locator1 = "CommerceEntry#ANY_SELECT",
+				value1 = "SKUs by Categories");
+
+			Button.clickSave();
+		}
+
+		task ("Then can see all the existing categories listed in the dropdown") {
+			Type(
+				key_text = "Category",
+				locator1 = "TextInput#ANY",
+				value1 = "");
+
+			for (var categories : list "Brake System,Engine,Exhaust System,Suspension,Transmission,Turbocharger") {
+				AssertElementPresent(
+					key_selectValue = ${categories},
+					locator1 = "CommerceEntry#OPTIONS_SELECT_LIST");
+
+				echo("The category ${categories} is present");
+			}
+		}
+
+		task ("When chooses one of the categories i.e: Engine and clicks save") {
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+
+			CommerceProductOptions.editProductOption(
+				key_option = "Option Select from List",
+				productAddOptionCategoriesList = "Engine");
+		}
+
+		task ("Then can verify the products of that category are listed as values (i.e: 11 products for Engine)") {
+			Pagination.viewResults(results = "Showing 1 to 10 of 11 entries.");
+
+			Pagination.changePagination(itemsPerPage = "20 Items");
+
+			for (var productEntry : list "Bearings,Cams,Engine Mount,Oil Filter,Oil Pump,Piston,Pulley Kit,Seal,Timing Chain,Timing Chain Tensioner,Valve Cover Grommets") {
+				AssertElementPresent(
+					key_entryName = ${productEntry},
+					locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+
+				echo("The product ${productEntry} is present");
+			}
+		}
+
+		task ("When leaves blank the Category field and clicks save (means choosing all categories)") {
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+
+			CommerceProductOptions.editProductOption(
+				categoryNameList = "Engine",
+				key_option = "Option Select from List",
+				productRemoveOptionCategories = "true");
+		}
+
+		task ("Then can verify all the products in the catalog are listed as values") {
+			Pagination.viewResults(results = "Showing 1 to 10 of 46 entries.");
+
+			Pagination.changePagination(itemsPerPage = "60 Items");
+
+			for (var productEntry : list "ABS Sensor,Ball Joints,Bearings,Brake Pads,Brake Rotors,Bushings,Calipers,Cams,Catalytic Converters,Coil Spring - Rear,CV Axles,Differential Ring and Pinion - Universal,Drive Shafts,Engine Mount,Exhaust Clamps,Hub Bearing Assembly - Rear,Lift Support,Master Cylinder,Mount,Muffler/Resonators,Oil Filter,Oil Pump,Piston,Power Steering Pump,Premium Brake Fluid,Pulley Kit,Seal,Shock Absorber,Shock Strut - Front,Tie Rod End Tool,Timing Belt,Timing Chain,Timing Chain Tensioner,Torque Converters,Transmission Cooler Line Assembly,Transmission Fluid,Universal CV Boot,Valve Cover Grommets,Wear Sensors,Wheel Seal - Front,Wheel Bearing Grease") {
+				AssertElementPresent(
+					key_entryName = ${productEntry},
+					locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+
+				echo("The product ${productEntry} is present");
+			}
+		}
+	}
+
+	@description = "COMMERCE-12095. As an admin, I can create a bundled product with options using Define Externally configuration with valid SKUs"
+	@priority = 5
+	test CanViewOnlyValidSKUsAreListedAsExternallyDefinedProducts {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "true";
+
+		task ("Given a business account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And the U-Joint Product SKU is deleted") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.searchEntry(entryName = "MIN55861");
+
+			CommerceEntry.deleteCommerceEntry(key_value = "MIN55861");
+		}
+
+		task ("And the admin opens the ABS Sensor Product via Admin") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+		}
+
+		task ("And a new option is created") {
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List");
+		}
+
+		task ("And is linked to the product") {
+			CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List",
+				productName = "ABS Sensor");
+		}
+
+		task ("When the admin enables the Define Externally toggle with a category") {
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				collectionProvider = "SKUs by Categories",
+				key_option = "Option Select from List",
+				key_priceType = "Dynamic",
+				productAddOptionCategoriesList = "Transmission",
+				productOptionDefineExternally = "true",
+				productOptionPriceType = "true");
+		}
+
+		task ("Then all the products related to that category are added except U-Joint") {
+			for (var productEntry : list "CV Axles,Drive Shafts,Mount,Torque Converters,Transmission Cooler Line Assembly,Transmission Fluid,Universal CV Boot,Wheel Seal - Front") {
+				AssertElementPresent(
+					key_entryName = ${productEntry},
+					locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+
+				echo("The product ${productEntry} is present");
+			}
+
+			AssertElementNotPresent(
+				key_entryName = "U-Joint",
+				locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+
+			echo("The product U-Joint is not present");
+		}
+
+		task ("And the buyer can assert that all the products related to that category are added except U-Joint as options values in product details in the front store") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+
+			Click(
+				key_optionName = "Option Select from List",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT");
+
+			for (var productEntry : list "CV Axles,Drive Shafts,Mount,Torque Converters,Transmission Cooler Line Assembly,Transmission Fluid,Universal CV Boot,Wheel Seal - Front") {
+				AssertElementPresent(
+					key_fieldLabel = "Option Select from List",
+					key_value = ${productEntry},
+					locator1 = "Select#GENERIC_SELECT_VALUE");
+
+				echo("The product ${productEntry} is present");
+			}
+
+			AssertElementNotPresent(
+				key_fieldLabel = "Option Select from List",
+				key_value = "U-Joint",
+				locator1 = "Select#GENERIC_SELECT_VALUE");
+
+			echo("The product U-Joint is not present");
+		}
+	}
+
+}

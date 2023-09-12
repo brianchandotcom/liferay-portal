@@ -5,12 +5,12 @@
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.bui1d.repository.BuildRunRepository;
-import com.liferay.jethr0.bui1d.run.BuildRun;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
-import com.liferay.jethr0.jenkins.repository.JenkinsNodeRepository;
-import com.liferay.jethr0.jenkins.repository.JenkinsServerRepository;
-import com.liferay.jethr0.jenkins.server.JenkinsServer;
+import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
+import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
+import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
+import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.net.URL;
@@ -62,7 +62,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		return buildJSONObject.optLong("number");
 	}
 
-	protected BuildRun getBuildRun() throws Exception {
+	protected BuildRunEntity getBuildRun() throws Exception {
 		JSONObject buildJSONObject = getBuildJSONObject();
 
 		if (buildJSONObject == null) {
@@ -82,12 +82,13 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 			return null;
 		}
 
-		BuildRunRepository buildRunRepository = getBuildRunRepository();
+		BuildRunEntityRepository buildRunEntityRepository =
+			getBuildRunRepository();
 
-		return buildRunRepository.getById(Long.valueOf(buildRunID));
+		return buildRunEntityRepository.getById(Long.valueOf(buildRunID));
 	}
 
-	protected BuildRun.Result getBuildRunResult() throws Exception {
+	protected BuildRunEntity.Result getBuildRunResult() throws Exception {
 		JSONObject buildJSONObject = getBuildJSONObject();
 
 		if (!buildJSONObject.has("result")) {
@@ -97,10 +98,10 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		String result = buildJSONObject.getString("result");
 
 		if (result.equals("SUCCESS")) {
-			return BuildRun.Result.PASSED;
+			return BuildRunEntity.Result.PASSED;
 		}
 
-		return BuildRun.Result.FAILED;
+		return BuildRunEntity.Result.FAILED;
 	}
 
 	protected URL getBuildURL() throws Exception {
@@ -135,36 +136,39 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		return jenkinsJSONObject;
 	}
 
-	protected JenkinsNode getJenkinsNode() throws Exception {
-		JenkinsServer jenkinsServer = getJenkinsServer();
+	protected JenkinsNodeEntity getJenkinsNodeEntity() throws Exception {
+		JenkinsServerEntity jenkinsServerEntity = getJenkinsServerEntity();
 
-		JenkinsNodeRepository jenkinsNodeRepository =
-			getJenkinsNodeRepository();
+		JenkinsNodeEntityRepository jenkinsNodeEntityRepository =
+			getJenkinsNodeEntityRepository();
 
 		JSONObject computerJSONObject = getComputerJSONObject();
 
 		String computerName = computerJSONObject.getString("name");
 
-		for (JenkinsNode jenkinsNode : jenkinsNodeRepository.getAll()) {
+		for (JenkinsNodeEntity jenkinsNodeEntity :
+				jenkinsNodeEntityRepository.getAll()) {
+
 			if (!Objects.equals(
-					jenkinsServer, jenkinsNode.getJenkinsServer())) {
+					jenkinsServerEntity,
+					jenkinsNodeEntity.getJenkinsServerEntity())) {
 
 				continue;
 			}
 
-			if (Objects.equals(computerName, jenkinsNode.getName())) {
-				return jenkinsNode;
+			if (Objects.equals(computerName, jenkinsNodeEntity.getName())) {
+				return jenkinsNodeEntity;
 			}
 		}
 
 		return null;
 	}
 
-	protected JenkinsServer getJenkinsServer() throws Exception {
-		JenkinsServerRepository jenkinsServerRepository =
-			getJenkinsServerRepository();
+	protected JenkinsServerEntity getJenkinsServerEntity() throws Exception {
+		JenkinsServerEntityRepository jenkinsServerEntityRepository =
+			getJenkinsServerEntityRepository();
 
-		return jenkinsServerRepository.getByURL(getJenkinsURL());
+		return jenkinsServerEntityRepository.getByURL(getJenkinsURL());
 	}
 
 	protected URL getJenkinsURL() throws Exception {
@@ -199,7 +203,7 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 		return jobJSONObject.optString("name");
 	}
 
-	protected JenkinsNode updateJenkinsNode() throws Exception {
+	protected JenkinsNodeEntity updateJenkinsNodeEntity() throws Exception {
 		JSONObject computerJSONObject = getComputerJSONObject();
 
 		computerJSONObject.put(
@@ -208,11 +212,11 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 			"offline", !computerJSONObject.getBoolean("online")
 		);
 
-		JenkinsNode jenkinsNode = getJenkinsNode();
+		JenkinsNodeEntity jenkinsNodeEntity = getJenkinsNodeEntity();
 
-		jenkinsNode.update(computerJSONObject);
+		jenkinsNodeEntity.update(computerJSONObject);
 
-		return jenkinsNode;
+		return jenkinsNodeEntity;
 	}
 
 }

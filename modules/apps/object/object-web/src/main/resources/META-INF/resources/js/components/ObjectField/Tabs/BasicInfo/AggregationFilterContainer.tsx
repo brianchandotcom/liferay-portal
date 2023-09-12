@@ -7,6 +7,7 @@ import {useModal} from '@clayui/modal';
 import {
 	API,
 	BuilderScreen,
+	Card,
 	getLocalizableLabel,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
@@ -520,29 +521,32 @@ export function AggregationFilterContainer({
 
 	return (
 		<>
-			<BuilderScreen
-				creationLanguageId={
-					creationLanguageId2 as Liferay.Language.Locale
-				}
-				disableEdit
-				emptyState={{
-					buttonText: Liferay.Language.get('new-filter'),
-					description: Liferay.Language.get(
-						'use-conditions-to-specify-which-fields-will-be-considered-in-the-aggregation'
-					),
-					title: Liferay.Language.get('no-filter-was-created-yet'),
-				}}
-				filter
-				firstColumnHeader={Liferay.Language.get('filter-by')}
-				objectColumns={aggregationFilters}
-				onDeleteColumn={handleDeleteFilterColumn}
-				onEditingObjectFieldName={setEditingObjectFieldName}
-				onVisibleEditModal={setVisibleModal}
-				openModal={() => setVisibleModal(true)}
-				secondColumnHeader={Liferay.Language.get('type')}
-				thirdColumnHeader={Liferay.Language.get('value')}
-				title={Liferay.Language.get('filters')}
-			/>
+			<Card title={Liferay.Language.get('filters')}>
+				<BuilderScreen
+					creationLanguageId={
+						creationLanguageId2 as Liferay.Language.Locale
+					}
+					disableEdit
+					emptyState={{
+						buttonText: Liferay.Language.get('new-filter'),
+						description: Liferay.Language.get(
+							'use-conditions-to-specify-which-fields-will-be-considered-in-the-aggregation'
+						),
+						title: Liferay.Language.get(
+							'no-filter-was-created-yet'
+						),
+					}}
+					filter
+					firstColumnHeader={Liferay.Language.get('filter-by')}
+					objectColumns={aggregationFilters}
+					onDeleteColumn={handleDeleteFilterColumn}
+					onEditingObjectFieldName={setEditingObjectFieldName}
+					onVisibleEditModal={setVisibleModal}
+					openModal={() => setVisibleModal(true)}
+					secondColumnHeader={Liferay.Language.get('type')}
+					thirdColumnHeader={Liferay.Language.get('value')}
+				/>
+			</Card>
 
 			{visibleModal && (
 				<ModalAddFilter

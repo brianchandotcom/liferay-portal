@@ -87,6 +87,14 @@ public interface SXPElementResource {
 	public SXPElement patchSXPElement(Long sxpElementId, SXPElement sxpElement)
 		throws Exception;
 
+	public SXPElement putSXPElement(Long sxpElementId, SXPElement sxpElement)
+		throws Exception;
+
+	public Response putSXPElementBatch(
+			Long sxpElementId, SXPElement sxpElement, String callbackURL,
+			Object object)
+		throws Exception;
+
 	public SXPElement postSXPElementCopy(Long sxpElementId) throws Exception;
 
 	public Response getSXPElementExport(Long sxpElementId) throws Exception;

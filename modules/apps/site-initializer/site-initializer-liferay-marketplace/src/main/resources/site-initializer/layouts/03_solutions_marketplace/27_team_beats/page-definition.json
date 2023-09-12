@@ -1565,15 +1565,17 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
@@ -1586,7 +1588,7 @@
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
+																								"paddingBottom": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -1701,28 +1703,30 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
 																										"text": {
 																											"value_i18n": {
-																												"en_US": "On-Prem &amp; On Cloud"
+																												"en_US": "On-Prem<br />\n&amp; On Cloud"
 																											}
 																										}
 																									}
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
+																								"paddingBottom": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -1837,28 +1841,30 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
 																										"text": {
 																											"value_i18n": {
-																												"en_US": "Customizations &amp; Integrations"
+																												"en_US": "Customizations<br />\n&amp; Integrations"
 																											}
 																										}
 																									}
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
+																								"paddingBottom": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -1973,28 +1979,30 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
 																										"text": {
 																											"value_i18n": {
-																												"en_US": "Simple &amp; Secured"
+																												"en_US": "Simple &amp;<br />\nSecured"
 																											}
 																										}
 																									}
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
+																								"paddingBottom": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -2109,28 +2117,30 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
 																										"text": {
 																											"value_i18n": {
-																												"en_US": "Smart Devices Compatibility"
+																												"en_US": "Smart Devices<br />\nCompatibility"
 																											}
 																										}
 																									}
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
+																								"paddingBottom": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -2245,28 +2255,30 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
 																										"text": {
 																											"value_i18n": {
-																												"en_US": "Documentation &amp; Help"
+																												"en_US": "Documentation<br />\n&amp; Help"
 																											}
 																										}
 																									}
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
+																								"paddingBottom": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -2416,15 +2428,17 @@
 																					{
 																						"definition": {
 																							"fragment": {
-																								"key": "DIALECT-dialect-text"
+																								"key": "text",
+																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"textType": "h1",
-																								"truncateText": false
+																								"fontSize": "font-size-heading-f2",
+																								"smallCaps": false,
+																								"tabletScreenCenter": false
 																							},
 																							"fragmentFields": [
 																								{
-																									"id": "element-text",
+																									"id": "text",
 																									"value": {
 																										"fragmentLink": {
 																										},
@@ -2437,7 +2451,7 @@
 																								}
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "2",
+																								"paddingBottom": "2",
 																								"textAlign": "center"
 																							},
 																							"indexed": true
@@ -2498,6 +2512,122 @@
 																			"fragmentFields": [
 																			],
 																			"fragmentStyle": {
+																				"paddingTop": "6"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "text",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																				"fontSize": "font-size-heading-f1",
+																				"smallCaps": false,
+																				"tabletScreenCenter": false
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "text",
+																					"value": {
+																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Solution Highlights:"
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "spacer",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
+																				"paddingTop": "6"
+																			},
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragmentStyle": {
+																				"borderWidth": "0"
+																			},
+																			"indexed": true,
+																			"layout": {
+																				"borderWidth": 0,
+																				"marginBottom": 0,
+																				"marginLeft": 0,
+																				"marginRight": 0,
+																				"marginTop": 0,
+																				"opacity": 100,
+																				"paddingBottom": 0,
+																				"paddingLeft": 0,
+																				"paddingRight": 0,
+																				"paddingTop": 0,
+																				"widthType": "Fluid"
+																			}
+																		},
+																		"pageElements": [
+																			{
+																				"definition": {
+																					"fragment": {
+																						"key": "text",
+																						"siteKey": "[$GROUP_KEY$]"
+																					},
+																					"fragmentConfig": {
+																						"fontSize": "font-size-paragraph-base",
+																						"smallCaps": false,
+																						"tabletScreenCenter": false
+																					},
+																					"fragmentFields": [
+																						{
+																							"id": "text",
+																							"value": {
+																								"fragmentLink": {
+																								},
+																								"text": {
+																									"value_i18n": {
+																										"en_US": "<ul>\n\t<li><strong>Build a People-Focused Intranet: Establish a modern hub for the organization to apply best people management practices.</strong></li>\n\t<li><strong>Foster Internal Collaboration: Build a digital platform that promotes a culture of collaboration and productivity.</strong></li>\n\t<li><strong>Connect Teams: Create an online space for the workforce to gather, communicate and digitally grow their relationship together and with the company.</strong></li>\n\t<li><strong>Unify Communications: Have all teams communicating via a single, unified online space on 24*7 basis.</strong></li>\n</ul>\n"
+																									}
+																								}
+																							}
+																						}
+																					],
+																					"indexed": true
+																				},
+																				"type": "Fragment"
+																			}
+																		],
+																		"type": "Section"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "spacer",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
+																			"fragmentStyle": {
 																				"paddingTop": "7"
 																			},
 																			"indexed": true
@@ -2545,85 +2675,6 @@
 																				"backgroundColor": "gray200Color",
 																				"textAlign": "center"
 																			},
-																			"indexed": true
-																		},
-																		"type": "Fragment"
-																	},
-																	{
-																		"definition": {
-																			"fragment": {
-																				"key": "spacer",
-																				"siteKey": "[$GROUP_KEY$]"
-																			},
-																			"fragmentConfig": {
-																			},
-																			"fragmentFields": [
-																			],
-																			"fragmentStyle": {
-																				"paddingBottom": "5",
-																				"paddingTop": "5"
-																			},
-																			"indexed": true
-																		},
-																		"type": "Fragment"
-																	},
-																	{
-																		"definition": {
-																			"fragment": {
-																				"key": "text",
-																				"siteKey": "[$GROUP_KEY$]"
-																			},
-																			"fragmentConfig": {
-																				"fontSize": "font-size-heading-f1",
-																				"smallCaps": false,
-																				"tabletScreenCenter": false
-																			},
-																			"fragmentFields": [
-																				{
-																					"id": "text",
-																					"value": {
-																						"fragmentLink": {
-																						},
-																						"text": {
-																							"value_i18n": {
-																								"en_US": "Solution Highlights:"
-																							}
-																						}
-																					}
-																				}
-																			],
-																			"fragmentStyle": {
-																				"fontWeight": "fontWeightBolder"
-																			},
-																			"indexed": true
-																		},
-																		"type": "Fragment"
-																	},
-																	{
-																		"definition": {
-																			"fragment": {
-																				"key": "text",
-																				"siteKey": "[$GROUP_KEY$]"
-																			},
-																			"fragmentConfig": {
-																				"fontSize": "font-size-paragraph-large",
-																				"smallCaps": false,
-																				"tabletScreenCenter": false
-																			},
-																			"fragmentFields": [
-																				{
-																					"id": "text",
-																					"value": {
-																						"fragmentLink": {
-																						},
-																						"text": {
-																							"value_i18n": {
-																								"en_US": "<ul>\n\t<li>Build a People-Focused Intranet: Establish a modern hub for the organization to apply best people management practices.</li>\n\t<li>Foster Internal Collaboration: Build a digital platform that promotes a culture of collaboration and productivity.</li>\n\t<li>Connect Teams: Create an online space for the workforce to gather, communicate and digitally grow their relationship together and with the company.</li>\n\t<li>Unify Communications: Have all teams communicating via a single, unified online space on 24*7 basis.</li>\n</ul>\n"
-																							}
-																						}
-																					}
-																				}
-																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"

@@ -292,78 +292,42 @@ public class PrefsPropsImpl implements PrefsProps {
 	public String getString(
 		PortletPreferences preferences, String name, boolean defaultValue) {
 
-		String value = getString(preferences, name);
-
-		if (value != null) {
-			return value;
-		}
-
-		return String.valueOf(defaultValue);
+		return preferences.getValue(name, String.valueOf(defaultValue));
 	}
 
 	@Override
 	public String getString(
 		PortletPreferences preferences, String name, double defaultValue) {
 
-		String value = getString(preferences, name);
-
-		if (value != null) {
-			return value;
-		}
-
-		return String.valueOf(defaultValue);
+		return preferences.getValue(name, String.valueOf(defaultValue));
 	}
 
 	@Override
 	public String getString(
 		PortletPreferences preferences, String name, int defaultValue) {
 
-		String value = getString(preferences, name);
-
-		if (value != null) {
-			return value;
-		}
-
-		return String.valueOf(defaultValue);
+		return preferences.getValue(name, String.valueOf(defaultValue));
 	}
 
 	@Override
 	public String getString(
 		PortletPreferences preferences, String name, long defaultValue) {
 
-		String value = getString(preferences, name);
-
-		if (value != null) {
-			return value;
-		}
-
-		return String.valueOf(defaultValue);
+		return preferences.getValue(name, String.valueOf(defaultValue));
 	}
 
 	@Override
 	public String getString(
 		PortletPreferences preferences, String name, short defaultValue) {
 
-		String value = getString(preferences, name);
-
-		if (value != null) {
-			return value;
-		}
-
-		return String.valueOf(defaultValue);
+		return preferences.getValue(name, String.valueOf(defaultValue));
 	}
 
 	@Override
 	public String getString(
 		PortletPreferences preferences, String name, String defaultValue) {
 
-		String value = getString(preferences, name);
-
-		if (value != null) {
-			return value;
-		}
-
-		return defaultValue;
+		return preferences.getValue(name, defaultValue);
 	}
 
 	@Override

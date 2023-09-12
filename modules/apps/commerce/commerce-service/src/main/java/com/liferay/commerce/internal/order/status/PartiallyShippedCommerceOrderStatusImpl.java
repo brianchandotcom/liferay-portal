@@ -14,8 +14,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-
-import java.math.BigDecimal;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 
 import java.util.Locale;
 
@@ -92,10 +91,9 @@ public class PartiallyShippedCommerceOrderStatusImpl
 		for (CommerceOrderItem shippedCommerceOrderItem :
 				commerceOrder.getCommerceOrderItems()) {
 
-			BigDecimal quantity = shippedCommerceOrderItem.getQuantity();
-
-			if ((shippedCommerceOrderItem.getShippedQuantity() <
-					quantity.intValue()) &&
+			if (BigDecimalUtil.lt(
+					shippedCommerceOrderItem.getShippedQuantity(),
+					shippedCommerceOrderItem.getQuantity()) &&
 				shippedCommerceOrderItem.isShippable()) {
 
 				allOrderItemsShipped = false;

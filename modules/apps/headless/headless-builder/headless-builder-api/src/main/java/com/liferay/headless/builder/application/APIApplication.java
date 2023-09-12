@@ -36,13 +36,29 @@ public interface APIApplication {
 
 		public String getPath();
 
+		public PathParameter getPathParameter();
+
 		public Schema getRequestSchema();
 
 		public Schema getResponseSchema();
 
+		public RetrieveType getRetrieveType();
+
 		public Scope getScope();
 
 		public Sort getSort();
+
+		public enum PathParameter {
+
+			ID, NONE
+
+		}
+
+		public enum RetrieveType {
+
+			COLLECTION, SINGLE_ELEMENT
+
+		}
 
 		public enum Scope {
 

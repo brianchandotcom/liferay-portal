@@ -578,6 +578,12 @@ const Sorting = ({
 								onClick: handleDelete,
 							},
 						]}
+						creationMenuItems={[
+							{
+								label: Liferay.Language.get('new-default-sort'),
+								onClick: handleCreation,
+							},
+						]}
 						disableSave={!newFDSSortsOrder.length}
 						fields={[
 							{
@@ -605,7 +611,6 @@ const Sorting = ({
 							'no-default-sort-created-yet'
 						)}
 						onCancelButtonClick={() => navigate(fdsViewsURL)}
-						onCreationButtonClick={handleCreation}
 						onOrderChange={({
 							orderedItems,
 						}: {

@@ -93,6 +93,7 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 		const {
 			confirmationMessage,
 			errorMessage,
+			size,
 			status,
 			successMessage,
 			title,
@@ -109,7 +110,7 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 				}
 				else {
 					openModal({
-						size: resolveModalSize(target),
+						size: size || resolveModalSize(target),
 						title,
 						url,
 					});
@@ -220,7 +221,9 @@ const actionType = PropTypes.shape({
 		errorMessage: PropTypes.string,
 		method: PropTypes.oneOf(['delete', 'get', 'patch', 'post']),
 		permissionKey: PropTypes.string,
+		size: PropTypes.oneOf(['sm', 'lg', 'full-screen']),
 		successMessage: PropTypes.string,
+		title: PropTypes.string,
 	}),
 	href: PropTypes.string,
 	icon: PropTypes.string,

@@ -319,11 +319,11 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 
 		// Commerce price entry
 
-		commercePriceEntry =
-			_commercePriceEntryService.updateCommercePriceEntry(
-				commercePriceEntry.getCommercePriceEntryId(),
-				priceEntry.getPrice(), false, priceEntry.getPromoPrice(), null,
-				_serviceContextHelper.getServiceContext());
+		commercePriceEntry = _commercePriceEntryService.updatePricingInfo(
+			commercePriceEntry.getCommercePriceEntryId(),
+			commercePriceEntry.isBulkPricing(), priceEntry.getPrice(), false,
+			priceEntry.getPromoPrice(), null,
+			_serviceContextHelper.getServiceContext());
 
 		// Update nested resources
 

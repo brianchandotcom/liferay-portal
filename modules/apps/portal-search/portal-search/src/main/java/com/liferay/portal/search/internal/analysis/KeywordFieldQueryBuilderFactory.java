@@ -28,8 +28,8 @@ public class KeywordFieldQueryBuilderFactory
 		return null;
 	}
 
-	@Reference
-	protected KeywordFieldQueryBuilder keywordFieldQueryBuilder;
+	@Reference(target = "(query.builder.type=keyword)")
+	protected FieldQueryBuilder keywordFieldQueryBuilder;
 
 	@Reference
 	protected QueryPreProcessConfiguration queryPreProcessConfiguration;

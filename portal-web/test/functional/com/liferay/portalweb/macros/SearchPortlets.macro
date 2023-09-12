@@ -228,6 +228,17 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
+		if (${invisible} == "true") {
+			Click(
+				checkboxName = "Invisible",
+				locator1 = "Checkbox#ANY_CHECKBOX_UNCHECKED");
+		}
+		else if (${invisible} == "false") {
+			Click(
+				checkboxName = "Invisible",
+				locator1 = "Checkbox#ANY_CHECKBOX_CHECKED");
+		}
+
 		if (isSet(destinationPage)) {
 			if (contains(${destinationPage}, " ")) {
 				var destinationPage = StringUtil.replace(${destinationPage}, " ", "-");

@@ -20,6 +20,7 @@ export function FrontendDataSet({
 	filters,
 	formId,
 	formName,
+	header,
 	id,
 	initialSelectedItemsValues,
 	inlineAddingSettings,
@@ -82,6 +83,8 @@ export interface IItemsActions {
 		id?: string;
 		method?: 'delete' | 'get';
 		permissionKey?: string;
+		size?: 'sm' | 'lg' | 'full-screen';
+		title?: string;
 	};
 	href?: string;
 	icon?: string;
@@ -89,7 +92,14 @@ export interface IItemsActions {
 	label?: string;
 	onClick?: Function;
 	separator?: boolean;
-	target?: 'async' | 'headless' | 'link' | 'modal' | 'sidePanel' | 'event';
+	target?:
+		| 'async'
+		| 'headless'
+		| 'link'
+		| 'modal'
+		| 'modal-permissions'
+		| 'sidePanel'
+		| 'event';
 	type?: string;
 }
 
@@ -135,6 +145,9 @@ export interface IFrontendDataSetProps {
 	filters?: any;
 	formId?: string;
 	formName?: string;
+	header?: {
+		title?: string;
+	};
 	id: string;
 	initialSelectedItemsValues?: any[];
 	inlineAddingSettings?: {
@@ -166,6 +179,7 @@ export interface IFrontendDataSetProps {
 	sorting?: TSorting[];
 	style?: 'default' | 'fluid' | 'stacked';
 	views: TViews[];
+	viewsTitle?: string;
 }
 
 export {INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS} from './cell_renderers/InternalCellRenderer';

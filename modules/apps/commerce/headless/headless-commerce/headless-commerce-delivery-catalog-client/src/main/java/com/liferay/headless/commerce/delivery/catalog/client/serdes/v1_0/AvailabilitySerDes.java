@@ -8,6 +8,8 @@ package com.liferay.headless.commerce.delivery.catalog.client.serdes.v1_0;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.Availability;
 import com.liferay.headless.commerce.delivery.catalog.client.json.BaseJSONParser;
 
+import java.math.BigDecimal;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -160,7 +162,7 @@ public class AvailabilitySerDes {
 			else if (Objects.equals(jsonParserFieldName, "stockQuantity")) {
 				if (jsonParserFieldValue != null) {
 					availability.setStockQuantity(
-						Integer.valueOf((String)jsonParserFieldValue));
+						new BigDecimal((String)jsonParserFieldValue));
 				}
 			}
 		}

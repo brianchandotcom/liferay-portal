@@ -127,14 +127,10 @@ const DISPLAY_PAGE_OPTION = 'displayPage';
 const STAY_OPTION = 'none';
 
 const SUCCESS_MESSAGE_OPTIONS = [
-	...(Liferay.FeatureFlags['LPS-183498']
-		? [
-				{
-					label: Liferay.Language.get('stay-in-page'),
-					value: STAY_OPTION,
-				},
-		  ]
-		: []),
+	{
+		label: Liferay.Language.get('stay-in-page'),
+		value: STAY_OPTION,
+	},
 	{
 		label: Liferay.Language.get('show-embedded-message'),
 		value: EMBEDDED_OPTION,
@@ -147,14 +143,10 @@ const SUCCESS_MESSAGE_OPTIONS = [
 		label: Liferay.Language.get('go-to-external-url'),
 		value: URL_OPTION,
 	},
-	...(Liferay.FeatureFlags['LPS-183498']
-		? [
-				{
-					label: Liferay.Language.get('go-to-entry-display-page'),
-					value: DISPLAY_PAGE_OPTION,
-				},
-		  ]
-		: []),
+	{
+		label: Liferay.Language.get('go-to-entry-display-page'),
+		value: DISPLAY_PAGE_OPTION,
+	},
 ];
 
 function SuccessInteractionOptions({item, onValueSelect}) {
@@ -369,7 +361,7 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 				/>
 			)}
 
-			{type !== URL_OPTION && Liferay.FeatureFlags['LPS-183498'] && (
+			{type !== URL_OPTION && (
 				<>
 					<ClayForm.Group small>
 						<CheckboxField

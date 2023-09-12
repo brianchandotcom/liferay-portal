@@ -8,7 +8,6 @@ package com.liferay.batch.planner.rest.internal.resource.v1_0;
 import com.liferay.batch.planner.rest.dto.v1_0.Field;
 import com.liferay.batch.planner.rest.internal.vulcan.batch.engine.FieldProvider;
 import com.liferay.batch.planner.rest.resource.v1_0.FieldResource;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -34,7 +33,9 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 		throws Exception {
 
 		List<com.liferay.portal.vulcan.batch.engine.Field> vulcanFields =
-			_getVulcanFields(internalClassName);
+			_fieldProvider.getFields(
+				contextCompany.getCompanyId(), internalClassName,
+				contextUriInfo);
 
 		if (GetterUtil.getBoolean(export)) {
 			vulcanFields = _fieldProvider.filter(
@@ -50,22 +51,6 @@ public class FieldResourceImpl extends BaseFieldResourceImpl {
 		vulcanFields.sort(Comparator.comparing(field -> field.getName()));
 
 		return Page.of(transform(vulcanFields, this::_toField));
-	}
-
-	private List<com.liferay.portal.vulcan.batch.engine.Field> _getVulcanFields(
-			String internalClassName)
-		throws Exception {
-
-		int idx = internalClassName.indexOf(StringPool.POUND);
-
-		if (idx < 0) {
-			return _fieldProvider.getFields(
-				contextCompany.getCompanyId(), internalClassName);
-		}
-
-		return _fieldProvider.getFields(
-			contextCompany.getCompanyId(), internalClassName.substring(idx + 1),
-			contextUriInfo);
 	}
 
 	private Field _toField(

@@ -191,8 +191,9 @@ public class LayoutIndexerIndexedFieldsTest {
 
 		indexedFieldsFixture.populateUID(layout, map);
 
-		_populateName(layout, map);
 		_populateDates(layout, map);
+		_populateLocalizedTitle(layout, map);
+		_populateName(layout, map);
 		_populateRoles(layout, map);
 
 		return map;
@@ -203,6 +204,23 @@ public class LayoutIndexerIndexedFieldsTest {
 			Field.MODIFIED_DATE, layout.getModifiedDate(), map);
 		indexedFieldsFixture.populateDate(
 			Field.CREATE_DATE, layout.getCreateDate(), map);
+	}
+
+	private void _populateLocalizedTitle(
+		Layout layout, Map<String, String> map) {
+
+		map.put(
+			"localized_" + Field.TITLE,
+			layout.getName(layout.getDefaultLanguageId()));
+
+		for (Locale locale :
+				LanguageUtil.getAvailableLocales(layout.getGroupId())) {
+
+			String key = LocalizationUtil.getLocalizedName(
+				Field.TITLE, LocaleUtil.toLanguageId(locale));
+
+			map.put("localized_" + key, layout.getName(locale));
+		}
 	}
 
 	private void _populateName(Layout layout, Map<String, String> map) {
@@ -233,6 +251,11 @@ public class LayoutIndexerIndexedFieldsTest {
 			document.remove(
 				LocalizationUtil.getLocalizedName(
 					Field.CONTENT, LocaleUtil.toLanguageId(locale)));
+
+			String key = LocalizationUtil.getLocalizedName(
+				Field.TITLE, LocaleUtil.toLanguageId(locale));
+
+			document.remove("localized_" + key + "_sortable");
 		}
 	}
 

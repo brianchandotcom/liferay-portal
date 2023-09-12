@@ -84,8 +84,6 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 					CPField.SPECIFICATION_NAMES, parameterValues);
 			}
 
-			portletSharedSearchSettings.addFacet(serializableFacet);
-
 			PortletPreferences portletPreferences =
 				portletSharedSearchSettings.getPortletPreferences();
 
@@ -99,7 +97,16 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 					portletPreferences.getValue("maxTerms", null), 10);
 			}
 
-			for (Facet facet : getFacets(renderRequest)) {
+			serializableFacet.setFacetConfiguration(
+				_buildFacetConfiguration(
+					serializableFacet.getFieldName(), frequencyThreshold,
+					maxTerms));
+
+			portletSharedSearchSettings.addFacet(serializableFacet);
+
+			for (Facet facet :
+					getFacets(frequencyThreshold, maxTerms, renderRequest)) {
+
 				String cpSpecificationOptionKey =
 					CPSpecificationOptionFacetsUtil.
 						getCPSpecificationOptionKeyFromIndexFieldName(
@@ -114,7 +121,7 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 
 				serializableFacet.setFacetConfiguration(
 					_buildFacetConfiguration(
-						facet, frequencyThreshold, maxTerms));
+						facet.getFieldName(), frequencyThreshold, maxTerms));
 
 				if (ArrayUtil.isNotEmpty(parameterValues)) {
 					serializableFacet.select(parameterValues);
@@ -177,7 +184,8 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 		return searchContext;
 	}
 
-	protected List<Facet> getFacets(RenderRequest renderRequest)
+	protected List<Facet> getFacets(
+			int frequencyThreshold, int maxTerms, RenderRequest renderRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
@@ -197,14 +205,17 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 
 		Facet facet = new SimpleFacet(searchContext);
 
-		facet.setFieldName(CPField.SPECIFICATION_NAMES);
+		String fieldName = CPField.SPECIFICATION_NAMES;
+
+		facet.setFacetConfiguration(
+			_buildFacetConfiguration(fieldName, frequencyThreshold, maxTerms));
+		facet.setFieldName(fieldName);
 
 		searchContext.addFacet(facet);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-		queryConfig.addSelectedFieldNames(CPField.SPECIFICATION_NAMES);
-
+		queryConfig.addSelectedFieldNames(fieldName);
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
 
@@ -236,11 +247,11 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 	}
 
 	private FacetConfiguration _buildFacetConfiguration(
-		Facet facet, int frequencyThreshold, int maxTerms) {
+		String fieldName, int frequencyThreshold, int maxTerms) {
 
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-		facetConfiguration.setFieldName(facet.getFieldName());
+		facetConfiguration.setFieldName(fieldName);
 		facetConfiguration.setLabel("any-category");
 		facetConfiguration.setOrder("OrderHitsDesc");
 		facetConfiguration.setStatic(false);

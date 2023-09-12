@@ -23,9 +23,11 @@
 
 		<!-- Other fields -->
 
+		<column db-name="parentLPTCollectionId" name="parentLayoutPageTemplateCollectionId" type="long" />
 		<column db-name="lptCollectionKey" name="layoutPageTemplateCollectionKey" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
+		<column name="type" type="int" />
 		<column name="lastPublishDate" type="Date" />
 
 		<!-- Order -->

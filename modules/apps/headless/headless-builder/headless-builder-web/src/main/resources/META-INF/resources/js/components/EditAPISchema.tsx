@@ -78,7 +78,11 @@ export default function EditAPISchema({
 					apiSchema: response,
 				}));
 
-				setLocalUIData(response);
+				setLocalUIData({
+					description: response.description,
+					mainObjectDefinitionERC: response.mainObjectDefinitionERC,
+					name: response.name,
+				});
 			}
 		});
 	};
@@ -266,6 +270,15 @@ export default function EditAPISchema({
 					'unpublished',
 			},
 		});
+
+		for (const key in localUIData) {
+			if (localUIData[key as keyof APISchemaUIData] !== '') {
+				setDisplayError((previousErrors) => ({
+					...previousErrors,
+					[key]: false,
+				}));
+			}
+		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [localUIData]);

@@ -7,19 +7,27 @@ package com.liferay.asset.display.page.internal.portlet;
 
 import com.liferay.asset.display.page.portlet.BaseAssetDisplayPageFriendlyURLResolver;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Víctor Galán
@@ -30,7 +38,7 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 
 	@Override
 	public String getURLSeparator() {
-		return "/display-page/";
+		return "/e/";
 	}
 
 	@Override
@@ -39,55 +47,94 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
 			long groupId, String friendlyURL, Map<String, String[]> params) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 			return null;
 		}
 
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			new ClassPKInfoItemIdentifier(
-				GetterUtil.getLong(_getParam("classPK", params)));
+		String[] parts = _getPathParts(friendlyURL);
+
+		if (parts.length < 3) {
+			return null;
+		}
+
+		InfoItemIdentifier infoItemIdentifier = null;
+
+		if (Validator.isNumber(parts[2])) {
+			infoItemIdentifier = new ClassPKInfoItemIdentifier(
+				GetterUtil.getLong(parts[2]));
+		}
+		else {
+			infoItemIdentifier = new ERCInfoItemIdentifier(parts[2]);
+		}
 
 		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 			new InfoItemReference(
-				_getParam("className", params), classPKInfoItemIdentifier));
+				_portal.getClassName(GetterUtil.getLong(parts[1])),
+				infoItemIdentifier));
 	}
 
 	@Override
 	protected Layout getLayoutDisplayPageObjectProviderLayout(
-		long groupId,
+		long groupId, String friendlyURL,
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
-		Map<String, String[]> params) {
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 			return null;
 		}
 
-		return layoutLocalService.fetchLayout(
-			GetterUtil.getLong(_getParam("selPlid", params)));
+		String[] parts = _getPathParts(friendlyURL);
+
+		if (parts.length < 3) {
+			return null;
+		}
+
+		return layoutLocalService.fetchLayoutByFriendlyURL(
+			groupId, false, StringPool.SLASH + parts[0]);
 	}
 
 	@Override
 	protected LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
-		String friendlyURL, Map<String, String[]> params) {
+		String friendlyURL) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
+			return null;
+		}
+
+		String[] parts = _getPathParts(friendlyURL);
+
+		if (parts.length < 3) {
 			return null;
 		}
 
 		return layoutDisplayPageProviderRegistry.
 			getLayoutDisplayPageProviderByClassName(
-				_getParam("className", params));
+				_portal.getClassName(GetterUtil.getLong(parts[1])));
 	}
 
-	private String _getParam(String name, Map<String, String[]> params) {
-		String[] param = params.get(name);
-
-		if (ArrayUtil.isEmpty(param)) {
-			return StringPool.BLANK;
-		}
-
-		return param[0];
+	@Override
+	protected boolean useOriginalFriendlyURL() {
+		return false;
 	}
+
+	private String[] _getPathParts(String path) {
+		String urlSeparator = getURLSeparator();
+
+		String urlInfo = path.substring(
+			path.indexOf(urlSeparator) + urlSeparator.length() - 1);
+
+		List<String> parts = StringUtil.split(urlInfo, CharPool.SLASH);
+
+		String classNameId = parts.get(parts.size() - 2);
+		String identifier = parts.get(parts.size() - 1);
+		String friendlyURL = ListUtil.toString(
+			ListUtil.subList(parts, 0, parts.size() - 2), StringPool.BLANK,
+			StringPool.SLASH);
+
+		return new String[] {friendlyURL, classNameId, identifier};
+	}
+
+	@Reference
+	private Portal _portal;
 
 }

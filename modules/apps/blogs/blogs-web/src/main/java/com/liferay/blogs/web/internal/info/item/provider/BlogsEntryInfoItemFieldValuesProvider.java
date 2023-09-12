@@ -62,7 +62,8 @@ public class BlogsEntryInfoItemFieldValuesProvider
 				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
 					new InfoItemReference(
 						BlogsEntry.class.getName(), blogsEntry.getEntryId()),
-					StringPool.BLANK, _getThemeDisplay())
+					StringPool.BLANK, BlogsEntry.class.getSimpleName(),
+					_getThemeDisplay())
 			).infoFieldValues(
 				_expandoInfoItemFieldSetProvider.getInfoFieldValues(
 					BlogsEntry.class.getName(), blogsEntry)
@@ -198,7 +199,7 @@ public class BlogsEntryInfoItemFieldValuesProvider
 					blogsEntry.getDisplayDate()));
 
 			if ((themeDisplay != null) &&
-				!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+				!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 
 				blogsEntryFieldValues.add(
 					new InfoFieldValue<>(

@@ -27,7 +27,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.dto.v1_0.Document;
@@ -623,13 +623,17 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			viewableBy = Document.ViewableBy.OWNER.getValue();
 		}
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				assetCategoryIds, assetTagNames,
-				CustomFieldsUtil.toMap(
-					DLFileEntry.class.getName(), contextCompany.getCompanyId(),
-					customFields, contextAcceptLanguage.getPreferredLocale()),
-				groupId, contextHttpServletRequest, viewableBy);
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, viewableBy
+		).assetCategoryIds(
+			assetCategoryIds
+		).assetTagNames(
+			assetTagNames
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				DLFileEntry.class.getName(), contextCompany.getCompanyId(),
+				customFields, contextAcceptLanguage.getPreferredLocale())
+		).build();
 
 		serviceContext.setCommand(command);
 		serviceContext.setCompanyId(contextCompany.getCompanyId());

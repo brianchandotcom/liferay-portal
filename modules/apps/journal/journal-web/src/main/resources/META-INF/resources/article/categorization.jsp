@@ -74,7 +74,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 	<clay:checkbox
 		checked="<%= assetAutoTaggerConfiguration.isUpdateAutoTags() %>"
 		id='<%= liferayPortletResponse.getNamespace() + "updateAutoTags" %>'
-		label='<%= LanguageUtil.get(request, "update-auto-tags") %>'
+		label="update-auto-tags"
 		name='<%= liferayPortletResponse.getNamespace() + "updateAutoTags" %>'
 	/>
 

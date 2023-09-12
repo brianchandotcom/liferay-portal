@@ -1,0 +1,14 @@
+[
+	{
+		"className": "com.liferay.commerce.product.model.CPDefinition",
+		"classPk": "[#CP_DEFINITION_ID:TESTCOMMERCEPRODUCT1#]",
+		"columnName": "Test Expando Column 1",
+		"data": 0.1
+	},
+	{
+		"className": "com.liferay.commerce.product.model.CPDefinition",
+		"classPk": "[#CP_DEFINITION_ID:TESTCOMMERCEPRODUCT1#]",
+		"columnName": "Test Expando Column 2",
+		"data": "Test Value"
+	}
+]

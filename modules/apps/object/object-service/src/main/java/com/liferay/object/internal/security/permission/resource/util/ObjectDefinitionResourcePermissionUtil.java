@@ -13,6 +13,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -77,11 +78,14 @@ public class ObjectDefinitionResourcePermissionUtil {
 				}));
 
 		resourceActions.populateModelResources(document);
-		resourceActions.populatePortletResource(
-			portletLocalService.getPortletById(
-				objectDefinition.getCompanyId(),
-				objectDefinition.getPortletId()),
-			classLoader, document);
+
+		Portlet portlet = portletLocalService.getPortletById(
+			objectDefinition.getCompanyId(), objectDefinition.getPortletId());
+
+		if (portlet != null) {
+			resourceActions.populatePortletResource(
+				portlet, classLoader, document);
+		}
 	}
 
 	private static String _getPermissionsGuestUnsupported(

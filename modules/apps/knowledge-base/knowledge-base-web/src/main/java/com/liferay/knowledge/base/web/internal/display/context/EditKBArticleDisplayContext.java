@@ -21,6 +21,7 @@ import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.knowledge.base.web.internal.util.AdminUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -119,6 +119,9 @@ public class EditKBArticleDisplayContext {
 			}
 		).add(
 			dropdownItem -> {
+				dropdownItem.put(
+					"id",
+					_liferayPortletResponse.getNamespace() + "scheduleItem");
 				dropdownItem.setIcon("date-time");
 				dropdownItem.setLabel(
 					LanguageUtil.get(
@@ -490,11 +493,9 @@ public class EditKBArticleDisplayContext {
 			return _kbSectionPortletInstanceConfiguration;
 		}
 
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
 		_kbSectionPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				KBSectionPortletInstanceConfiguration.class);
+			ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				KBSectionPortletInstanceConfiguration.class, _themeDisplay);
 
 		return _kbSectionPortletInstanceConfiguration;
 	}

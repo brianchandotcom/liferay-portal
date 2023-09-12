@@ -10,6 +10,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.rest.internal.vulcan.openapi.contributor.util.OpenAPIContributorUtil;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
@@ -640,20 +641,6 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return parameters;
 	}
 
-	private ObjectDefinition _getRelatedObjectDefinition(
-		ObjectRelationship objectRelationship) {
-
-		if (_objectDefinition.getObjectDefinitionId() ==
-				objectRelationship.getObjectDefinitionId2()) {
-
-			return _objectDefinitionLocalService.fetchObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-		}
-
-		return _objectDefinitionLocalService.fetchObjectDefinition(
-			objectRelationship.getObjectDefinitionId2());
-	}
-
 	private Map<ObjectRelationship, ObjectDefinition>
 			_getRelatedObjectDefinitionsMap()
 		throws Exception {
@@ -668,7 +655,8 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		for (ObjectRelationship objectRelationship : objectRelationships) {
 			relatedObjectDefinitionsMap.put(
 				objectRelationship,
-				_getRelatedObjectDefinition(objectRelationship));
+				ObjectRelationshipUtil.getRelatedObjectDefinition(
+					_objectDefinition, objectRelationship));
 		}
 
 		return relatedObjectDefinitionsMap;

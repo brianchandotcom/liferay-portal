@@ -68,7 +68,22 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 	@Override
 	public T getById(long id) {
-		return _entitiesMap.get(id);
+		if (hasEntity(id)) {
+			return _entitiesMap.get(id);
+		}
+
+		EntityDALO<T> entityDALO = getEntityDALO();
+
+		return add(entityDALO.get(id));
+	}
+
+	@Override
+	public boolean hasEntity(long id) {
+		if (_entitiesMap.containsKey(id)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

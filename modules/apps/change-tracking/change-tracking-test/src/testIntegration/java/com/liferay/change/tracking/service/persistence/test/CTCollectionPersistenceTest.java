@@ -130,11 +130,17 @@ public class CTCollectionPersistenceTest {
 
 		newCTCollection.setModifiedDate(RandomTestUtil.nextDate());
 
+		newCTCollection.setCtRemoteId(RandomTestUtil.nextLong());
+
 		newCTCollection.setSchemaVersionId(RandomTestUtil.nextLong());
 
 		newCTCollection.setName(RandomTestUtil.randomString());
 
 		newCTCollection.setDescription(RandomTestUtil.randomString());
+
+		newCTCollection.setOnDemandUserId(RandomTestUtil.nextLong());
+
+		newCTCollection.setShareable(RandomTestUtil.randomBoolean());
 
 		newCTCollection.setStatus(RandomTestUtil.nextInt());
 
@@ -170,6 +176,9 @@ public class CTCollectionPersistenceTest {
 			Time.getShortTimestamp(existingCTCollection.getModifiedDate()),
 			Time.getShortTimestamp(newCTCollection.getModifiedDate()));
 		Assert.assertEquals(
+			existingCTCollection.getCtRemoteId(),
+			newCTCollection.getCtRemoteId());
+		Assert.assertEquals(
 			existingCTCollection.getSchemaVersionId(),
 			newCTCollection.getSchemaVersionId());
 		Assert.assertEquals(
@@ -177,6 +186,11 @@ public class CTCollectionPersistenceTest {
 		Assert.assertEquals(
 			existingCTCollection.getDescription(),
 			newCTCollection.getDescription());
+		Assert.assertEquals(
+			existingCTCollection.getOnDemandUserId(),
+			newCTCollection.getOnDemandUserId());
+		Assert.assertEquals(
+			existingCTCollection.isShareable(), newCTCollection.isShareable());
 		Assert.assertEquals(
 			existingCTCollection.getStatus(), newCTCollection.getStatus());
 		Assert.assertEquals(
@@ -290,7 +304,8 @@ public class CTCollectionPersistenceTest {
 			"CTCollection", "mvccVersion", true, "uuid", true,
 			"externalReferenceCode", true, "ctCollectionId", true, "companyId",
 			true, "userId", true, "createDate", true, "modifiedDate", true,
-			"schemaVersionId", true, "name", true, "description", true,
+			"ctRemoteId", true, "schemaVersionId", true, "name", true,
+			"description", true, "onDemandUserId", true, "shareable", true,
 			"status", true, "statusByUserId", true, "statusDate", true);
 	}
 
@@ -589,11 +604,17 @@ public class CTCollectionPersistenceTest {
 
 		ctCollection.setModifiedDate(RandomTestUtil.nextDate());
 
+		ctCollection.setCtRemoteId(RandomTestUtil.nextLong());
+
 		ctCollection.setSchemaVersionId(RandomTestUtil.nextLong());
 
 		ctCollection.setName(RandomTestUtil.randomString());
 
 		ctCollection.setDescription(RandomTestUtil.randomString());
+
+		ctCollection.setOnDemandUserId(RandomTestUtil.nextLong());
+
+		ctCollection.setShareable(RandomTestUtil.randomBoolean());
 
 		ctCollection.setStatus(RandomTestUtil.nextInt());
 

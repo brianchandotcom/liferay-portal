@@ -1,0 +1,8 @@
+[
+	{
+		"className": "com.liferay.commerce.product.model.CPDefinition",
+		"classPk": "[#CP_DEFINITION_ID:RAY001#]",
+		"columnName": "Commission Rate",
+		"data": 0.02
+	}
+]

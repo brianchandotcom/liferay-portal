@@ -40,79 +40,93 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can create a question with an AL image."
+	@description = "LPS-110392 - Verify if the user can create a question with an image from a connected Depot."
 	@priority = 4
 	@refactordone
 	test CanAddQuestionWithDepotImage {
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
+		task ("Given a connected depot with an image") {
+			JSONDepot.addDepot(
+				depotDescription = "This is the description of a depot",
+				depotName = "Test Depot Name");
 
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_2.jpeg",
-			groupName = "Test Depot Name",
-			mimeType = "image/jpeg",
-			sourceFileName = "Document_2.jpeg");
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_2.jpeg",
+				groupName = "Test Depot Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_2.jpeg");
 
-		JSONDepot.connectSite(
-			depotName = "Test Depot Name",
-			groupName = "Guest");
+			JSONDepot.connectSite(
+				depotName = "Test Depot Name",
+				groupName = "Guest");
+		}
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+		task ("and a Message Boards Category is added") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Body AddQuestionWithTheALImage",
-			depotName = "Test Depot Name",
-			imageFileName = "Document_2.jpeg",
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			titleField = "Title AddQuestionWithTheALImage",
-			topicName = "questions-test-category");
+		task ("When a Question is created with an image from the connected Depot") {
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Body AddQuestionWithTheALImage",
+				depotName = "Test Depot Name",
+				imageFileName = "Document_2.jpeg",
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				titleField = "Title AddQuestionWithTheALImage",
+				topicName = "questions-test-category");
 
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Title AddQuestionWithTheALImage");
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Title AddQuestionWithTheALImage");
+		}
 
-		Questions.viewImageInQuestion(imageFileName = "document_2-jpeg");
+		task ("Then the image from the Depot should be displayed.") {
+			Questions.viewImageInQuestion(imageFileName = "document_2-jpeg");
+		}
 	}
 
-	@description = "Validate if the user can create a question with an image."
+	@description = "LPS-110392 - Verify if the user can create a question with an image from the DM Library."
 	@priority = 5
 	@refactordone
 	@uitest
 	test CanAddQuestionWithImage {
 		property portal.acceptance = "true";
 
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "Document_1.svg",
-			groupName = "Guest",
-			mimeType = "image/svg+xml",
-			sourceFileName = "Document_1.svg");
+		task ("Given an image exists in Document Library and a category is available") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_1.svg",
+				groupName = "Guest",
+				mimeType = "image/svg+xml",
+				sourceFileName = "Document_1.svg");
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Questions Test Category",
-			userEmailAddress = "test@liferay.com");
+			JSONMBMessage.addCategory(
+				categoryDescription = "Description",
+				categoryName = "Questions Test Category",
+				userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoPage(pageName = "Questions Page");
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoCategory(categoryName = "Questions Test Category");
+			Questions.gotoCategory(categoryName = "Questions Test Category");
+		}
 
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "Body AddQuestionWithTheImage",
-			imageFileName = "Document_1.svg",
-			titleField = "Title AddQuestionWithTheImage");
+		task ("When a Question is created with an image from Document Library") {
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Body AddQuestionWithTheImage",
+				imageFileName = "Document_1.svg",
+				titleField = "Title AddQuestionWithTheImage");
 
-		Questions.gotoDetails(
-			questionTabField = "Questions",
-			questionTitle = "Title AddQuestionWithTheImage");
+			Questions.gotoDetails(
+				questionTabField = "Questions",
+				questionTitle = "Title AddQuestionWithTheImage");
+		}
 
-		Questions.viewImageInQuestion(imageFileName = "document_1-svg");
+		task ("Then the image from Document Library should be displayed") {
+			Questions.viewImageInQuestion(imageFileName = "document_1-svg");
+		}
 	}
 
 	@description = "Validate if the user can view the topic selector and category label."

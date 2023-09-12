@@ -6,5 +6,9 @@
 /// <reference types="react" />
 
 import './Diagram.scss';
-declare function DiagramBuilder(): JSX.Element;
+declare function DiagramBuilder({
+	setShowModal,
+}: {
+	setShowModal: (value: boolean) => void;
+}): JSX.Element;
 export default DiagramBuilder;

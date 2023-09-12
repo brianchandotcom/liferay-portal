@@ -5,15 +5,43 @@
 
 package com.liferay.poshi.core.elements;
 
+import com.liferay.poshi.core.PoshiGetterUtil;
+import com.liferay.poshi.core.PoshiProperties;
 import com.liferay.poshi.core.util.StringUtil;
 import com.liferay.poshi.core.util.Validator;
 
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Calum Ragan
  */
 public class PoshiElementException extends Exception {
+
+	public static List<Exception> getFilteredExceptions(
+		List<Exception> exceptions) {
+
+		List<Exception> filteredExceptions = new ArrayList<>();
+
+		for (Exception exception : exceptions) {
+			if (exception instanceof PoshiElementException) {
+				PoshiElementException poshiElementException =
+					(PoshiElementException)exception;
+
+				if (!poshiElementException.isWarning()) {
+					filteredExceptions.add(poshiElementException);
+				}
+
+				continue;
+			}
+
+			filteredExceptions.add(exception);
+		}
+
+		return filteredExceptions;
+	}
 
 	public static PoshiElement getRootPoshiElement(PoshiNode<?, ?> poshiNode) {
 		if (Validator.isNotNull(poshiNode.getParent())) {
@@ -24,6 +52,23 @@ public class PoshiElementException extends Exception {
 		}
 
 		return (PoshiElement)poshiNode;
+	}
+
+	public static List<Exception> getWarnings(List<Exception> exceptions) {
+		List<Exception> warnings = new ArrayList<>();
+
+		for (Exception exception : exceptions) {
+			if (exception instanceof PoshiElementException) {
+				PoshiElementException poshiElementException =
+					(PoshiElementException)exception;
+
+				if (poshiElementException.isWarning()) {
+					warnings.add(poshiElementException);
+				}
+			}
+		}
+
+		return warnings;
 	}
 
 	public static String join(Object... objects) {
@@ -157,6 +202,26 @@ public class PoshiElementException extends Exception {
 		return _poshiNode;
 	}
 
+	public String getSimpleMessage() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(super.getMessage());
+		sb.append(" at:\n");
+		sb.append(getFilePath());
+		sb.append(":");
+		sb.append(getErrorLineNumber());
+
+		return sb.toString();
+	}
+
+	public boolean isWarning() {
+		if (_warning == null) {
+			_warning = _isWarning();
+		}
+
+		return _warning;
+	}
+
 	public void setErrorLineNumber(int errorLineNumber) {
 		_errorLineNumber = errorLineNumber;
 	}
@@ -183,6 +248,30 @@ public class PoshiElementException extends Exception {
 		super(msg);
 	}
 
+	private boolean _isWarning() {
+		String filePath = getFilePath();
+
+		if (filePath.contains("com.liferay.poshi.runner.resources")) {
+			String fileExtension = PoshiGetterUtil.getFileExtensionFromFilePath(
+				filePath);
+
+			PoshiProperties poshiProperties =
+				PoshiProperties.getPoshiProperties();
+
+			for (String validationResourceFileType :
+					poshiProperties.validationResourceFileTypes) {
+
+				if (validationResourceFileType.equals(fileExtension)) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final int _ERROR_SNIPPET_POSTFIX_SIZE = 7;
 
 	private static final int _ERROR_SNIPPET_PREFIX_SIZE = 7;
@@ -191,5 +280,6 @@ public class PoshiElementException extends Exception {
 	private String _errorSnippet = "";
 	private String _filePath = "Unknown file";
 	private PoshiNode<?, ?> _poshiNode;
+	private Boolean _warning;
 
 }

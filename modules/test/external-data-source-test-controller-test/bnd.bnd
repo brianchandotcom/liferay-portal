@@ -5,4 +5,4 @@ Bundle-Version: 1.0.0
 	com.liferay.external.data.source.test.api.jar=com.liferay.external.data.source.test.api-*.jar,\
 	com.liferay.external.data.source.test.jar=com.liferay.external.data.source.test-*.jar,\
 	com.liferay.external.data.source.test.service.jar=com.liferay.external.data.source.test.service-*.jar,\
-	@hsqldb-[0-9.]*.jar
+	@org.hsqldb-[0-9.]*.jar

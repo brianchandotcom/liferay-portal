@@ -11,6 +11,7 @@ import com.liferay.object.definition.tree.Tree;
 import com.liferay.object.definition.tree.TreeFactory;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.LinkedList;
@@ -27,8 +28,8 @@ import org.osgi.service.component.annotations.Reference;
 public class TreeFactoryImpl implements TreeFactory {
 
 	@Override
-	public Tree create(long objectDefinitionId) {
-		Node rootNode = new Node(null, objectDefinitionId, null);
+	public Tree create(long rootObjectDefinitionId) throws PortalException {
+		Node rootNode = new Node(null, rootObjectDefinitionId, null);
 
 		Queue<Node> queue = new LinkedList<>();
 

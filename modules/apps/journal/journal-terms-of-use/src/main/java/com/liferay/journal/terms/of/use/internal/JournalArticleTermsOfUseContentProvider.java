@@ -8,7 +8,7 @@ package com.liferay.journal.terms.of.use.internal;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.terms.of.use.internal.constants.JournalArticleTermsOfUseWebConstants;
 import com.liferay.journal.terms.of.use.internal.display.context.JournalArticleTermsOfUseDisplayContext;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.terms.of.use.TermsOfUseContentProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;

@@ -5,7 +5,9 @@
 
 package com.liferay.fragment.internal.file.install;
 
+import com.liferay.fragment.importer.FragmentsImportStrategy;
 import com.liferay.fragment.importer.FragmentsImporter;
+import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -279,13 +281,15 @@ public class FragmentFileInstaller implements FileInstaller {
 		}
 
 		_fragmentsImporter.importFragmentEntries(
-			user.getUserId(), groupId, 0, file, true);
+			user.getUserId(), groupId, 0, file,
+			FragmentsImportStrategy.OVERWRITE);
 
 		if ((company != null) && (group != null) &&
 			(company.getGroupId() != group.getGroupId())) {
 
 			_layoutsImporter.importFile(
-				user.getUserId(), groupId, 0L, file, true);
+				user.getUserId(), groupId, 0L, file,
+				LayoutsImportStrategy.OVERWRITE);
 		}
 	}
 

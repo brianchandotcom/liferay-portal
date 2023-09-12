@@ -9,12 +9,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionLogic;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(service = CommerceTermServicePortletResourcePermissionLogic.class)
 public class CommerceTermServicePortletResourcePermissionLogic
 	implements PortletResourcePermissionLogic {
 

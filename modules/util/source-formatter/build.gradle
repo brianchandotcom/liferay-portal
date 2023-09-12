@@ -17,7 +17,7 @@ dependencies {
 	api group: "com.thoughtworks.qdox", name: "qdox", version: "2.0-M5"
 	api group: "commons-io", name: "commons-io", version: "2.11.0"
 	api group: "commons-lang", name: "commons-lang", version: "2.6"
-	api group: "commons-logging", name: "commons-logging", version: "1.2"
+	api group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"
 	api(group: "jaxen", name: "jaxen", version: "1.1.6") {
 		exclude group: "com.ibm.icu", module: "icu4j"
 	}
@@ -34,7 +34,7 @@ dependencies {
 	compileInclude group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.nio", version: "1.0.0"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "5.3.0"
-	compileInclude group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.135"
+	compileInclude group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.143"
 	compileInclude group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
 	compileInclude group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.14'
 	compileInclude group: "org.codehaus.groovy", name: "groovy", version: "2.4.21"

@@ -27,12 +27,9 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TimeZoneUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -87,7 +84,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 			_jsonFactory.createJSONArray(
 			).toString(),
 			_getObjectRelationshipEdgeCandidatesJSONArray(
-				3, objectDefinitionAAAA.getObjectDefinitionId()
+				2, objectDefinitionAAAA.getObjectDefinitionId()
 			).toString());
 
 		// Object definition, hierarchical structure, not root
@@ -247,14 +244,6 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 					ObjectPortletKeys.OBJECT_DEFINITIONS),
 				null));
 
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
-		themeDisplay.setTimeZone(TimeZoneUtil.getDefault());
-
-		mockLiferayResourceRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
 
@@ -266,7 +255,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				mockLiferayResourceResponse.getPortletOutputStream();
 
 		return JSONFactoryUtil.createJSONArray(
-			new String(byteArrayOutputStream.toByteArray()));
+			byteArrayOutputStream.toString());
 	}
 
 	@Inject

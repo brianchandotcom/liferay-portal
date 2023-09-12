@@ -14,7 +14,7 @@ import com.liferay.commerce.order.status.CommerceOrderStatusRegistry;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.util.CommerceWorkflowedModelHelper;
 import com.liferay.osgi.util.service.Snapshot;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import javax.servlet.ServletContext;

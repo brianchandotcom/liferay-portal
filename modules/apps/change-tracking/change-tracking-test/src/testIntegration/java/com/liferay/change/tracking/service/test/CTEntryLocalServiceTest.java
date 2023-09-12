@@ -194,8 +194,8 @@ public class CTEntryLocalServiceTest {
 
 	private CTCollection _createCTCollection() throws Exception {
 		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		_ctCollections.add(ctCollection);
 

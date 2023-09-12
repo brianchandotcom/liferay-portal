@@ -415,6 +415,12 @@ public class FragmentCollectionLocalServiceUtil {
 		return getService().getTempFileNames(userId, groupId, folderName);
 	}
 
+	public static String getUniqueFragmentCollectionName(
+		long groupId, String name) {
+
+		return getService().getUniqueFragmentCollectionName(groupId, name);
+	}
+
 	/**
 	 * Updates the fragment collection in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

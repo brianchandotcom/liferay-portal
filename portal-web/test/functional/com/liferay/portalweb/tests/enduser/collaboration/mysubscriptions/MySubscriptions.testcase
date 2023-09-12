@@ -34,6 +34,7 @@ definition {
 		}
 	}
 
+	@priority = 5
 	test SubscribeAndUnsubscribetoDMFolder {
 		property custom.properties = "dl.actions.visible=true";
 

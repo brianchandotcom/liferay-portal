@@ -7,7 +7,7 @@ package com.liferay.commerce.pricing.internal.upgrade.v2_1_0;
 
 import com.liferay.commerce.pricing.configuration.CommercePricingConfiguration;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.util.Dictionary;

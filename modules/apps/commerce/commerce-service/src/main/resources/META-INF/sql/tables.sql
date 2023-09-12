@@ -169,7 +169,7 @@ create table CommerceOrderItem (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	bookedQuantityId LONG,
+	CIBookedQuantityId LONG,
 	commerceOrderId LONG,
 	commercePriceListId LONG,
 	CPInstanceId LONG,
@@ -214,13 +214,14 @@ create table CommerceOrderItem (
 	requestedDeliveryDate DATE null,
 	shipSeparately BOOLEAN,
 	shippable BOOLEAN,
-	shippedQuantity INTEGER,
+	shippedQuantity BIGDECIMAL null,
 	shippingExtraPrice DOUBLE,
 	sku VARCHAR(75) null,
 	subscription BOOLEAN,
 	subscriptionLength INTEGER,
 	subscriptionType VARCHAR(75) null,
 	subscriptionTypeSettings VARCHAR(75) null,
+	UOMIncrementalOrderQuantity BIGDECIMAL null,
 	unitOfMeasureKey VARCHAR(75) null,
 	unitPrice BIGDECIMAL null,
 	unitPriceWithTaxAmount BIGDECIMAL null,
@@ -334,7 +335,7 @@ create table CommerceShipmentItem (
 	commerceShipmentId LONG,
 	commerceOrderItemId LONG,
 	commerceInventoryWarehouseId LONG,
-	quantity INTEGER,
+	quantity BIGDECIMAL null,
 	unitOfMeasureKey VARCHAR(75) null
 );
 

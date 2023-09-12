@@ -15,13 +15,14 @@ public class Replenishment {
 
 	public Replenishment(
 		long commerceInventoryReplenishmentItemId, String warehouse,
-		String date, BigDecimal quantity) {
+		String date, BigDecimal quantity, String unitOfMeasureKey) {
 
 		_commerceInventoryReplenishmentItemId =
 			commerceInventoryReplenishmentItemId;
 		_warehouse = warehouse;
 		_date = date;
 		_quantity = quantity;
+		_unitOfMeasureKey = unitOfMeasureKey;
 	}
 
 	public long getCommerceInventoryReplenishmentItemId() {
@@ -36,6 +37,10 @@ public class Replenishment {
 		return _quantity;
 	}
 
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
+	}
+
 	public String getWarehouse() {
 		return _warehouse;
 	}
@@ -43,6 +48,7 @@ public class Replenishment {
 	private final long _commerceInventoryReplenishmentItemId;
 	private final String _date;
 	private final BigDecimal _quantity;
+	private final String _unitOfMeasureKey;
 	private final String _warehouse;
 
 }

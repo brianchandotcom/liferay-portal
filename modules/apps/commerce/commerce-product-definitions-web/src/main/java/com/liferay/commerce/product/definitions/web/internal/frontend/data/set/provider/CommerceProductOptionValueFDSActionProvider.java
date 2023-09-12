@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -62,8 +63,12 @@ public class CommerceProductOptionValueFDSActionProvider
 		ProductOptionValue productOptionValue = (ProductOptionValue)model;
 
 		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			_cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRel(
+			_cpDefinitionOptionValueRelService.fetchCPDefinitionOptionValueRel(
 				productOptionValue.getCPDefinitionOptionValueRelId());
+
+		if (cpDefinitionOptionValueRel == null) {
+			return Collections.emptyList();
+		}
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionValueRel.getCPDefinitionOptionRel();

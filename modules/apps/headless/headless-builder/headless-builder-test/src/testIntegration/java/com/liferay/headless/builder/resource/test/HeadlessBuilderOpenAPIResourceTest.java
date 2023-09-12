@@ -82,6 +82,19 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()));
 
+		_individualObjectDefinition = _publishObjectDefinition(
+			Arrays.asList(
+				new TextObjectFieldBuilder(
+				).externalReferenceCode(
+					_API_INDIVIDUAL_SCHEMA_TEXT_FIELD_ERC
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"textField"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_SITE);
+
 		_listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
@@ -379,6 +392,23 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					JSONUtil.put(
 						"description", "description"
 					).put(
+						"externalReferenceCode", _API_INDIVIDUAL_ENDPOINT_ERC
+					).put(
+						"httpMethod", "get"
+					).put(
+						"name", " individual name"
+					).put(
+						"path", "/individual-path/{individualPathId}"
+					).put(
+						"pathParameter", "ID"
+					).put(
+						"retrieveType", "singleElement"
+					).put(
+						"scope", "company"
+					),
+					JSONUtil.put(
+						"description", "description"
+					).put(
 						"externalReferenceCode", _API_ENDPOINT_ERC
 					).put(
 						"httpMethod", "get"
@@ -386,6 +416,8 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"name", "name"
 					).put(
 						"path", "/path"
+					).put(
+						"retrieveType", "collection"
 					).put(
 						"scope", "company"
 					),
@@ -399,6 +431,8 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						"name", "site scoped name"
 					).put(
 						"path", "/site-scoped-path"
+					).put(
+						"retrieveType", "collection"
 					).put(
 						"scope", "group"
 					),
@@ -545,6 +579,28 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						JSONUtil.putAll(
 							JSONUtil.put(
 								"description",
+								"individualTextProperty description"
+							).put(
+								"name", "individualTextProperty"
+							).put(
+								"objectFieldERC",
+								_API_INDIVIDUAL_SCHEMA_TEXT_FIELD_ERC
+							))
+					).put(
+						"description", "individual description"
+					).put(
+						"externalReferenceCode", _API_INDIVIDUAL_SCHEMA_ERC
+					).put(
+						"mainObjectDefinitionERC",
+						_individualObjectDefinition.getExternalReferenceCode()
+					).put(
+						"name", "IndividualSchemaName"
+					),
+					JSONUtil.put(
+						"apiSchemaToAPIProperties",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"description",
 								"siteScopedTextProperty description"
 							).put(
 								"name", "siteScopedTextProperty"
@@ -585,6 +641,20 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 				"headless-builder/schemas/by-external-reference-code/",
 				_API_SCHEMA_ERC, "/responseAPISchemaToAPIEndpoints/",
 				_API_ENDPOINT_ERC),
+			Http.Method.PUT);
+		assertSuccessfulHttpCode(
+			null,
+			StringBundler.concat(
+				"headless-builder/schemas/by-external-reference-code/",
+				_API_INDIVIDUAL_SCHEMA_ERC, "/requestAPISchemaToAPIEndpoints/",
+				_API_INDIVIDUAL_ENDPOINT_ERC),
+			Http.Method.PUT);
+		assertSuccessfulHttpCode(
+			null,
+			StringBundler.concat(
+				"headless-builder/schemas/by-external-reference-code/",
+				_API_INDIVIDUAL_SCHEMA_ERC, "/responseAPISchemaToAPIEndpoints/",
+				_API_INDIVIDUAL_ENDPOINT_ERC),
 			Http.Method.PUT);
 		assertSuccessfulHttpCode(
 			null,
@@ -642,6 +712,15 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 	private static final String _API_ENDPOINT_ERC =
 		RandomTestUtil.randomString();
 
+	private static final String _API_INDIVIDUAL_ENDPOINT_ERC =
+		RandomTestUtil.randomString();
+
+	private static final String _API_INDIVIDUAL_SCHEMA_ERC =
+		RandomTestUtil.randomString();
+
+	private static final String _API_INDIVIDUAL_SCHEMA_TEXT_FIELD_ERC =
+		RandomTestUtil.randomString();
+
 	private static final String _API_SCHEMA_AGGREGATION_FIELD_ERC =
 		RandomTestUtil.randomString();
 
@@ -697,6 +776,9 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 
 	private static final String _API_SITE_SCOPED_SCHEMA_TEXT_FIELD_ERC =
 		RandomTestUtil.randomString();
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _individualObjectDefinition;
 
 	private ListTypeDefinition _listTypeDefinition;
 

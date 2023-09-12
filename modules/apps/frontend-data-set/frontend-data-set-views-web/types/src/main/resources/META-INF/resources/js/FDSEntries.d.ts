@@ -30,11 +30,13 @@ declare type FDSEntryType = {
 interface IFDSEntriesInterface {
 	fdsViewsURL: string;
 	namespace: string;
+	permissionsURL: string;
 	restApplications: Array<string>;
 }
 declare const FDSEntries: ({
 	fdsViewsURL,
 	namespace,
+	permissionsURL,
 	restApplications,
 }: IFDSEntriesInterface) => JSX.Element;
 export {FDSEntryType};

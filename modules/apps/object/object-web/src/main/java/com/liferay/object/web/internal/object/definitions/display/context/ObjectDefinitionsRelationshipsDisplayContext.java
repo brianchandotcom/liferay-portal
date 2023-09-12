@@ -14,8 +14,6 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldService;
-import com.liferay.object.system.JaxRsApplicationDescriptor;
-import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -31,7 +29,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -187,49 +184,18 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 	public Set<String> getObjectRelationshipTypes(
 		ObjectDefinition objectDefinition) {
 
-		if (!objectDefinition.isUnmodifiableSystemObject()) {
-			return ObjectRelationshipUtil.getDefaultObjectRelationshipTypes();
-		}
-
-		SystemObjectDefinitionManager systemObjectDefinitionManager =
-			_systemObjectDefinitionManagerRegistry.
-				getSystemObjectDefinitionManager(objectDefinition.getName());
-
-		if (systemObjectDefinitionManager == null) {
-			return Collections.emptySet();
-		}
-
-		return systemObjectDefinitionManager.
-			getAllowedObjectRelationshipTypes();
+		return ObjectRelationshipUtil.getObjectRelationshipTypes(
+			objectDefinition, _systemObjectDefinitionManagerRegistry);
 	}
 
 	public String getRESTContextPath(ObjectDefinition objectDefinition) {
-		if (!objectDefinition.isUnmodifiableSystemObject()) {
-			return objectDefinition.getRESTContextPath();
-		}
-
-		SystemObjectDefinitionManager systemObjectDefinitionManager =
-			_systemObjectDefinitionManagerRegistry.
-				getSystemObjectDefinitionManager(objectDefinition.getName());
-
-		if (systemObjectDefinitionManager == null) {
-			return StringPool.BLANK;
-		}
-
-		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
-			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
-
-		return jaxRsApplicationDescriptor.getRESTContextPath();
+		return ObjectRelationshipUtil.getRESTContextPath(
+			objectDefinition, _systemObjectDefinitionManagerRegistry);
 	}
 
 	public boolean isParameterRequired(ObjectDefinition objectDefinition) {
-		String restContextPath = getRESTContextPath(objectDefinition);
-
-		if (restContextPath.matches(".*/\\{\\w+}/.*")) {
-			return true;
-		}
-
-		return false;
+		return ObjectRelationshipUtil.isParameterRequired(
+			objectDefinition, _systemObjectDefinitionManagerRegistry);
 	}
 
 	@Override

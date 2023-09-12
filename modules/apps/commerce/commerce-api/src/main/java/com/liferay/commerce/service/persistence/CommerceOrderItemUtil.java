@@ -526,66 +526,72 @@ public class CommerceOrderItemUtil {
 	}
 
 	/**
-	 * Returns the commerce order item where bookedQuantityId = &#63; or throws a <code>NoSuchOrderItemException</code> if it could not be found.
+	 * Returns the commerce order item where commerceInventoryBookedQuantityId = &#63; or throws a <code>NoSuchOrderItemException</code> if it could not be found.
 	 *
-	 * @param bookedQuantityId the booked quantity ID
+	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
 	 * @return the matching commerce order item
 	 * @throws NoSuchOrderItemException if a matching commerce order item could not be found
 	 */
-	public static CommerceOrderItem findByBookedQuantityId(
-			long bookedQuantityId)
+	public static CommerceOrderItem findByCommerceInventoryBookedQuantityId(
+			long commerceInventoryBookedQuantityId)
 		throws com.liferay.commerce.exception.NoSuchOrderItemException {
 
-		return getPersistence().findByBookedQuantityId(bookedQuantityId);
+		return getPersistence().findByCommerceInventoryBookedQuantityId(
+			commerceInventoryBookedQuantityId);
 	}
 
 	/**
-	 * Returns the commerce order item where bookedQuantityId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the commerce order item where commerceInventoryBookedQuantityId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param bookedQuantityId the booked quantity ID
+	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
 	 * @return the matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
 	 */
-	public static CommerceOrderItem fetchByBookedQuantityId(
-		long bookedQuantityId) {
+	public static CommerceOrderItem fetchByCommerceInventoryBookedQuantityId(
+		long commerceInventoryBookedQuantityId) {
 
-		return getPersistence().fetchByBookedQuantityId(bookedQuantityId);
+		return getPersistence().fetchByCommerceInventoryBookedQuantityId(
+			commerceInventoryBookedQuantityId);
 	}
 
 	/**
-	 * Returns the commerce order item where bookedQuantityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the commerce order item where commerceInventoryBookedQuantityId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param bookedQuantityId the booked quantity ID
+	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching commerce order item, or <code>null</code> if a matching commerce order item could not be found
 	 */
-	public static CommerceOrderItem fetchByBookedQuantityId(
-		long bookedQuantityId, boolean useFinderCache) {
+	public static CommerceOrderItem fetchByCommerceInventoryBookedQuantityId(
+		long commerceInventoryBookedQuantityId, boolean useFinderCache) {
 
-		return getPersistence().fetchByBookedQuantityId(
-			bookedQuantityId, useFinderCache);
+		return getPersistence().fetchByCommerceInventoryBookedQuantityId(
+			commerceInventoryBookedQuantityId, useFinderCache);
 	}
 
 	/**
-	 * Removes the commerce order item where bookedQuantityId = &#63; from the database.
+	 * Removes the commerce order item where commerceInventoryBookedQuantityId = &#63; from the database.
 	 *
-	 * @param bookedQuantityId the booked quantity ID
+	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
 	 * @return the commerce order item that was removed
 	 */
-	public static CommerceOrderItem removeByBookedQuantityId(
-			long bookedQuantityId)
+	public static CommerceOrderItem removeByCommerceInventoryBookedQuantityId(
+			long commerceInventoryBookedQuantityId)
 		throws com.liferay.commerce.exception.NoSuchOrderItemException {
 
-		return getPersistence().removeByBookedQuantityId(bookedQuantityId);
+		return getPersistence().removeByCommerceInventoryBookedQuantityId(
+			commerceInventoryBookedQuantityId);
 	}
 
 	/**
-	 * Returns the number of commerce order items where bookedQuantityId = &#63;.
+	 * Returns the number of commerce order items where commerceInventoryBookedQuantityId = &#63;.
 	 *
-	 * @param bookedQuantityId the booked quantity ID
+	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID
 	 * @return the number of matching commerce order items
 	 */
-	public static int countByBookedQuantityId(long bookedQuantityId) {
-		return getPersistence().countByBookedQuantityId(bookedQuantityId);
+	public static int countByCommerceInventoryBookedQuantityId(
+		long commerceInventoryBookedQuantityId) {
+
+		return getPersistence().countByCommerceInventoryBookedQuantityId(
+			commerceInventoryBookedQuantityId);
 	}
 
 	/**

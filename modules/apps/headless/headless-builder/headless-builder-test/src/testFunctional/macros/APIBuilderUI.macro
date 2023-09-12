@@ -95,6 +95,38 @@ definition {
 		Click(locator1 = "APIBuilder#DELETE_IN_DROPDOWN_MENU");
 	}
 
+	macro deleteAPIEndpoint {
+		APIBuilderUI.switchToRelatedEntryInEditApplication(
+			entity = "Endpoints",
+			title = ${applicationTitle});
+
+		Click(
+			key_title = ${endpointPath},
+			locator1 = "APIBuilder#DROPDOWN_MENU");
+
+		Click(locator1 = "APIBuilder#DELETE_IN_DROPDOWN_MENU");
+
+		if (isSet(confirmDeletion)) {
+			Click(locator1 = "APIBuilder#MODAL_DELETE_BUTTON");
+		}
+	}
+
+	macro deleteAPISchema {
+		APIBuilderUI.switchToRelatedEntryInEditApplication(
+			entity = "Schemas",
+			title = ${applicationTitle});
+
+		Click(
+			key_title = ${schemaName},
+			locator1 = "APIBuilder#DROPDOWN_MENU");
+
+		Click(locator1 = "APIBuilder#DELETE_IN_DROPDOWN_MENU");
+
+		if (isSet(confirmDeletion)) {
+			Click(locator1 = "APIBuilder#MODAL_DELETE_BUTTON");
+		}
+	}
+
 	macro filterByLastUpdated {
 		Variables.assertDefined(parameterList = "${fromDate},${toDate}");
 
@@ -151,7 +183,7 @@ definition {
 	macro publishApplication {
 		APIBuilderUI.goToEditAPIApplicationPage(key_title = ${key_title});
 
-		Click(locator1 = "APIBuilder#PUBLISH_BUTTON");
+		Click.pauseClickAt(locator1 = "APIBuilder#PUBLISH_BUTTON");
 	}
 
 	macro searchItem {

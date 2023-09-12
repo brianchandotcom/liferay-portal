@@ -7,6 +7,7 @@ package com.liferay.object.rest.internal.vulcan.openapi.contributor;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.rest.internal.vulcan.openapi.contributor.util.OpenAPIContributorUtil;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
@@ -111,8 +112,9 @@ public class RelatedObjectEntryOpenAPIContributor
 			ObjectRelationship systemObjectRelationship, String version)
 		throws Exception {
 
-		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
-			systemObjectDefinition, systemObjectRelationship);
+		ObjectDefinition relatedObjectDefinition =
+			ObjectRelationshipUtil.getRelatedObjectDefinition(
+				systemObjectDefinition, systemObjectRelationship);
 
 		if (!relatedObjectDefinition.isActive()) {
 			return;
@@ -336,25 +338,6 @@ public class RelatedObjectEntryOpenAPIContributor
 				tags(Arrays.asList(schemaName));
 			}
 		};
-	}
-
-	private ObjectDefinition _getRelatedObjectDefinition(
-			ObjectDefinition systemObjectDefinition,
-			ObjectRelationship systemObjectRelationship)
-		throws Exception {
-
-		long objectDefinitionId1 =
-			systemObjectRelationship.getObjectDefinitionId1();
-
-		if (objectDefinitionId1 !=
-				systemObjectDefinition.getObjectDefinitionId()) {
-
-			return _objectDefinitionLocalService.getObjectDefinition(
-				systemObjectRelationship.getObjectDefinitionId1());
-		}
-
-		return _objectDefinitionLocalService.getObjectDefinition(
-			systemObjectRelationship.getObjectDefinitionId2());
 	}
 
 	@Reference

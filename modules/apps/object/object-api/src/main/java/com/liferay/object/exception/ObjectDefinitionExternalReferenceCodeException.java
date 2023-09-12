@@ -5,14 +5,26 @@
 
 package com.liferay.object.exception;
 
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Selton Guedes
  */
 public class ObjectDefinitionExternalReferenceCodeException
 	extends PortalException {
+
+	public List<Object> getArguments() {
+		return _arguments;
+	}
+
+	public String getMessageKey() {
+		return _messageKey;
+	}
 
 	public static class
 		ForbiddenUnmodifiableSystemObjectDefinitionExternalReferenceCode
@@ -22,9 +34,24 @@ public class ObjectDefinitionExternalReferenceCodeException
 			String externalReferenceCode) {
 
 			super(
+				Collections.singletonList(externalReferenceCode),
 				StringBundler.concat(
 					"Forbidden unmodifiable system object definition external ",
-					"reference code ", externalReferenceCode));
+					"reference code ", externalReferenceCode),
+				"the-external-reference-code-x-is-not-allowed-for-system-" +
+					"object-definitions");
+		}
+
+	}
+
+	public static class MustBeLessThan75Characters
+		extends ObjectDefinitionExternalReferenceCodeException {
+
+		public MustBeLessThan75Characters() {
+			super(
+				Collections.singletonList(75),
+				"External reference code must be less than 75 characters",
+				"only-x-characters-are-allowed");
 		}
 
 	}
@@ -33,13 +60,33 @@ public class ObjectDefinitionExternalReferenceCodeException
 		extends ObjectDefinitionExternalReferenceCodeException {
 
 		public MustNotStartWithPrefix() {
-			super("The prefix L_ is reserved for Liferay");
+			super(
+				Collections.singletonList(
+					ObjectDefinitionConstants.
+						EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_OBJECT_DEFINITION),
+				"The prefix L_ is reserved", "the-prefix-x-is-reserved");
 		}
 
 	}
 
-	private ObjectDefinitionExternalReferenceCodeException(String msg) {
-		super(msg);
+	private ObjectDefinitionExternalReferenceCodeException(
+		List<Object> arguments, String message, String messageKey) {
+
+		super(message);
+
+		_arguments = arguments;
+		_messageKey = messageKey;
 	}
+
+	private ObjectDefinitionExternalReferenceCodeException(
+		String message, String messageKey) {
+
+		super(message);
+
+		_messageKey = messageKey;
+	}
+
+	private List<Object> _arguments;
+	private final String _messageKey;
 
 }

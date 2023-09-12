@@ -80,7 +80,7 @@ const MultiSelect = ({
 					'has-success': meta.touched && !meta.error,
 				})}
 			>
-				<label>
+				<label className="ml-0">
 					{`${label} `}
 
 					{props.required && (

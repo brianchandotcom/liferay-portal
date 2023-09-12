@@ -8,7 +8,6 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemActionDetailsProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -47,10 +46,6 @@ public class GetInfoItemActionErrorMessageMVCResourceCommand
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-169992")) {
-			return;
-		}
 
 		try {
 			InfoItemActionDetailsProvider<Object>

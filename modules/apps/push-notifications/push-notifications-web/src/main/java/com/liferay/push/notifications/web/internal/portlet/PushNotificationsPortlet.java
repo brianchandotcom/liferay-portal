@@ -10,8 +10,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.push.notifications.constants.PushNotificationsPortletKeys;
 import com.liferay.push.notifications.service.PushNotificationsDeviceService;
-import com.liferay.push.notifications.web.internal.constants.PushNotificationsWebKeys;
-import com.liferay.push.notifications.web.internal.util.ResourceBundleLoaderProvider;
 
 import java.io.IOException;
 
@@ -63,10 +61,6 @@ public class PushNotificationsPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		renderRequest.setAttribute(
-			PushNotificationsWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER,
-			_resourceBundleLoaderProvider);
-
 		super.render(renderRequest, renderResponse);
 	}
 
@@ -77,8 +71,5 @@ public class PushNotificationsPortlet extends MVCPortlet {
 		target = "(&(release.bundle.symbolic.name=com.liferay.push.notifications.web)(&(release.schema.version>=1.0.0)(!(release.schema.version>=2.0.0))))"
 	)
 	private Release _release;
-
-	@Reference
-	private ResourceBundleLoaderProvider _resourceBundleLoaderProvider;
 
 }

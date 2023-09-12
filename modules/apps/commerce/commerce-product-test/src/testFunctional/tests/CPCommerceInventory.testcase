@@ -1,0 +1,489 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Shopping Experience";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		task ("Setup: Create an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "This is a test for COMMERCE-12078. If the stock quantities of the three warehouses of product ABS Sensor are all set to 1 and complete the order with shipments, the inventory quantities can be updated correctly"
+	@priority = 4
+	test CanInventoryQuantitiesAreUpdatedCorrectly {
+		property portal.acceptance = "false";
+
+		task ("Given the stock quantity of the product ABS Sensor is set to 1") {
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN93015",
+					quantity = 1,
+					warehouseName = ${warehouseName});
+			}
+		}
+
+		task ("And Low Stock Threshold is set to 0 for product ABS Sensor") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+			Type(
+				key_labelName = "Low Stock Threshold",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = 0);
+
+			Button.clickPublish();
+		}
+
+		task ("When the buyer user navigates to ABS Sensor's product details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("And completes the checkout by adding three as quantity for the product") {
+			FrontStore.addInitializerProductToCartFromProductDetails(
+				productName = "ABS Sensor",
+				productQuantity = 3);
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("And the admin searches for the MIN93015 on the inventory admin page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
+			CommerceInventory.openInventoryAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "MIN93015");
+		}
+
+		task ("Then the quantity of 'On Order' is 3, the quantity of 'Available' is 0") {
+			AssertElementPresent(
+				key_entryTitle = "MIN93015",
+				key_index = 4,
+				key_value = 3,
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+
+			AssertElementPresent(
+				key_entryTitle = "MIN93015",
+				key_index = 3,
+				key_value = 0,
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
+
+		task ("But if the admin completes and ships the order") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_index = "Accept Order",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			CommerceOrders.checkoutFullWorkflow(
+				sku = "MIN93015",
+				warehouse = "Italy,United States - Southwest,United States - Northeast");
+		}
+
+		task ("Then the quantity of 'On Order' is updated to 0, the quantity of 'Available' is still 0") {
+			CommerceInventory.openInventoryAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "MIN93015");
+
+			for (var key_index : list "3,4") {
+				AssertElementPresent(
+					key_entryTitle = "MIN93015",
+					key_index = ${key_index},
+					key_value = 0,
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12079. If the stock quantities of the three warehouses of product ABS Sensor are all set to 1, and complete checkout with 3 quantities, then delete the order, the inventory quantities can be restocked correctly"
+	@priority = 4
+	test CanRestockInventoryByDeletingTheOrder {
+		property portal.acceptance = "false";
+
+		task ("Given the stock quantity of the product ABS Sensor is set to 1") {
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN93015",
+					quantity = 1,
+					warehouseName = ${warehouseName});
+			}
+		}
+
+		task ("And Low Stock Threshold is set to 0 for product ABS Sensor") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+			Type(
+				key_labelName = "Low Stock Threshold",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = 0);
+
+			Button.clickPublish();
+		}
+
+		task ("When the buyer user navigates to ABS Sensor's product details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("And completes the checkout by adding three as quantity for the product") {
+			FrontStore.addInitializerProductToCartFromProductDetails(
+				productName = "ABS Sensor",
+				productQuantity = 3);
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("And the admin searches for the MIN93015 on the inventory admin page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
+			CommerceInventory.openInventoryAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "MIN93015");
+		}
+
+		task ("Then the quantity of 'On Order' is 3, the quantity of 'Available' is 0") {
+			AssertElementPresent(
+				key_entryTitle = "MIN93015",
+				key_index = 4,
+				key_value = 3,
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+
+			AssertElementPresent(
+				key_entryTitle = "MIN93015",
+				key_index = 3,
+				key_value = 0,
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
+
+		task ("But if the admin deletes the order") {
+			CommerceJSONOrdersAPI._deleteAllCommerceOrders();
+		}
+
+		task ("Then the quantity of 'On Order' is updated to 0, the quantity of 'Available' is updated to 3") {
+			CommerceInventory.openInventoryAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "MIN93015");
+
+			AssertElementPresent(
+				key_entryTitle = "MIN93015",
+				key_index = 4,
+				key_value = 0,
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+
+			AssertElementPresent(
+				key_entryTitle = "MIN93015",
+				key_index = 3,
+				key_value = 3,
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12080. If the stock quantities of the three warehouses of product ABS Sensor are all set to 1, and complete checkout with 3 quantities, then delete the shipment, the inventory quantities can be restocked correctly"
+	@priority = 4
+	test CanRestockInventoryByDeletingTheShipment {
+		property portal.acceptance = "false";
+
+		task ("Given the stock quantity of the product ABS Sensor is set to 1") {
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN93015",
+					quantity = 1,
+					warehouseName = ${warehouseName});
+			}
+		}
+
+		task ("And Low Stock Threshold is set to 0 for product ABS Sensor") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Configuration");
+
+			Type(
+				key_labelName = "Low Stock Threshold",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = 0);
+
+			Button.clickPublish();
+		}
+
+		task ("When the buyer user navigates to ABS Sensor's product details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("And completes the checkout by adding three as quantity for the product") {
+			FrontStore.addInitializerProductToCartFromProductDetails(
+				productName = "ABS Sensor",
+				productQuantity = 3);
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("And the admin searches for the MIN93015 on the inventory admin page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
+			CommerceInventory.openInventoryAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "MIN93015");
+		}
+
+		task ("Then the quantity of 'On Order' is 3, the quantity of 'Available' is 0") {
+			AssertElementPresent(
+				key_entryTitle = "MIN93015",
+				key_index = 4,
+				key_value = 3,
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+
+			AssertElementPresent(
+				key_entryTitle = "MIN93015",
+				key_index = 3,
+				key_value = 0,
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
+
+		task ("But if the admin completes starting the checkout but doesn't ship the products") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			for (var orderAction : list "Accept Order,Create Shipment") {
+				Click(
+					key_index = ${orderAction},
+					locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+			}
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Check.checkToggleSwitch(
+				key_productSku = "MIN93015",
+				locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX");
+
+			Button.clickSubmitButton();
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			for (var warehouse : list "Italy,United States - Southwest,United States - Northeast") {
+				Type(
+					key_warehouseName = ${warehouse},
+					locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
+					value1 = 1);
+			}
+
+			Button.clickSave();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+
+			Click(
+				key_index = "Finish Processing",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+		}
+
+		task ("And the admin deletes the shipment(with checked 'Restock Items' in the assertion popup) under the Shipments admin page") {
+			CommerceShipments.openShipmentsAdmin();
+
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Ready to Ship",
+				menuItem = "Delete");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Check.checkToggleSwitch(
+				checkboxName = "Yes, restock the items.",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Button.click(button = "Submit");
+		}
+
+		task ("Then the quantity of 'On Order' is still 3, the quantity of 'Available' is still 0") {
+			CommerceInventory.openInventoryAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "MIN93015");
+
+			AssertElementPresent(
+				key_entryTitle = "MIN93015",
+				key_index = 4,
+				key_value = 3,
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+
+			AssertElementPresent(
+				key_entryTitle = "MIN93015",
+				key_index = 3,
+				key_value = 0,
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-11873. As a buyer user, I can view the inventory number of the product is calculated correctly after checkout"
+	@priority = 4
+	test CanViewInventoryCalculatedCorrectly {
+		property portal.acceptance = "false";
+
+		task ("Given the stock quantity of the product ABS Sensor is set to 1") {
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN93015",
+					quantity = 1,
+					warehouseName = ${warehouseName});
+			}
+		}
+
+		task ("And Allow Back Orders toggle is switched off for product ABS Sensor") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "false",
+				productName = "ABS Sensor");
+		}
+
+		task ("When the buyer navigates to ABS Sensor's product details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("Then can view the stock value as 3") {
+			AssertElementPresent(
+				key_filterOption = "3 in Stock",
+				locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+		}
+
+		task ("When adds to cart quantity of 4") {
+			Type(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceFrontStore#PRODUCT_DETAILS_QUANTITY_SELECTOR",
+				value1 = 4);
+
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+		}
+
+		task ("Then an alert is shown: Danger:The specified quantity is unavailable") {
+			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+		}
+
+		task ("When places an order with the product with a quantity of 3") {
+			FrontStore.addInitializerProductToCartFromProductDetails(
+				productName = "ABS Sensor",
+				productQuantity = 3);
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("Then can view the Unavailable tag with 0 stock quantity") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+
+			AssertElementPresent(
+				key_filterOption = "0 in Stock",
+				locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+		}
+
+		task ("And add-to-cart/quantity selector disabled") {
+			AssertElementPresent(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_DISABLED");
+
+			AssertElementPresent(
+				key_productName = "ABS Sensor",
+				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD_PRODUCT_DETAILS_PAGE_DISABLED");
+		}
+	}
+
+}

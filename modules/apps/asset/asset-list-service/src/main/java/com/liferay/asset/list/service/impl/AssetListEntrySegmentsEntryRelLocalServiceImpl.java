@@ -37,7 +37,7 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 
 	@Override
 	public AssetListEntrySegmentsEntryRel addAssetListEntrySegmentsEntryRel(
-			long userId, long groupId, long assetListEntryId,
+			long userId, long groupId, long assetListEntryId, int priority,
 			long segmentsEntryId, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -58,14 +58,27 @@ public class AssetListEntrySegmentsEntryRelLocalServiceImpl
 		assetListEntrySegmentsEntryRel.setCreateDate(new Date());
 		assetListEntrySegmentsEntryRel.setModifiedDate(new Date());
 		assetListEntrySegmentsEntryRel.setAssetListEntryId(assetListEntryId);
-		assetListEntrySegmentsEntryRel.setPriority(
-			assetListEntrySegmentsEntryRelPersistence.countByAssetListEntryId(
-				assetListEntryId));
+		assetListEntrySegmentsEntryRel.setPriority(priority);
 		assetListEntrySegmentsEntryRel.setSegmentsEntryId(segmentsEntryId);
 		assetListEntrySegmentsEntryRel.setTypeSettings(typeSettings);
 
 		return assetListEntrySegmentsEntryRelPersistence.update(
 			assetListEntrySegmentsEntryRel);
+	}
+
+	@Override
+	public AssetListEntrySegmentsEntryRel addAssetListEntrySegmentsEntryRel(
+			long userId, long groupId, long assetListEntryId,
+			long segmentsEntryId, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return assetListEntrySegmentsEntryRelLocalService.
+			addAssetListEntrySegmentsEntryRel(
+				userId, groupId, assetListEntryId,
+				assetListEntrySegmentsEntryRelPersistence.
+					countByAssetListEntryId(assetListEntryId),
+				segmentsEntryId, typeSettings, serviceContext);
 	}
 
 	@Override

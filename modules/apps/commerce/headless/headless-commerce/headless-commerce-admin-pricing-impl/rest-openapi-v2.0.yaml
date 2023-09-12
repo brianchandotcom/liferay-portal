@@ -762,7 +762,7 @@ components:
                     items:
                         $ref: "#/components/schemas/TierPrice"
                     type: array
-                unitOfMeasure:
+                unitOfMeasureKey:
                     example: m
                     type: string
             required:
@@ -1450,6 +1450,9 @@ components:
                     type: integer
                 priceFormatted:
                     type: string
+                unitOfMeasureKey:
+                    example: m
+                    type: string
             required:
                 - minimumQuantity
                 - price
@@ -1478,7 +1481,7 @@ info:
         name: Commerce Team
     description:
         "Liferay Commerce Admin Pricing API. A Java client JAR is available for use with the group ID 'com.liferay',
-        artifact ID 'com.liferay.headless.commerce.admin.pricing.client', and version '4.0.26'."
+        artifact ID 'com.liferay.headless.commerce.admin.pricing.client', and version '4.0.27'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

@@ -7,9 +7,7 @@ package com.liferay.ai.creator.openai.web.internal.portal.settings.configuration
 
 import com.liferay.ai.creator.openai.configuration.manager.AICreatorOpenAIConfigurationManager;
 import com.liferay.ai.creator.openai.web.internal.display.context.AICreatorOpenAIGroupConfigurationDisplayContext;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.site.settings.configuration.admin.display.SiteSettingsConfigurationScreenContributor;
 
 import java.util.Locale;
@@ -56,15 +54,6 @@ public class AICreatorOpenAISiteSettingsConfigurationScreenContributor
 	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
-	}
-
-	@Override
-	public boolean isVisible(Group group) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-179483")) {
-			return false;
-		}
-
-		return true;
 	}
 
 	@Override

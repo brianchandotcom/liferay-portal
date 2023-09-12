@@ -125,7 +125,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			).infoFieldValues(
 				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
 					_getInfoItemReference(objectEntry), StringPool.BLANK,
-					_getThemeDisplay())
+					ObjectEntry.class.getSimpleName(), _getThemeDisplay())
 			).infoFieldValues(
 				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
 					objectEntry.getModelClassName(), objectEntry)
@@ -144,8 +144,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	private List<InfoFieldValue<Object>> _getAttachmentInfoFieldValues(
 		ObjectField objectField, Object value) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-176083") ||
-			!objectField.compareBusinessType(
+		if (!objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
 			return Collections.emptyList();
@@ -310,7 +309,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
 		if ((themeDisplay != null) &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+			!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 
 			objectEntryFieldValues.add(
 				new InfoFieldValue<>(
@@ -329,36 +328,34 @@ public class ObjectEntryInfoItemFieldValuesProvider
 					themeDisplay));
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-169992")) {
-			objectEntryFieldValues.addAll(
-				TransformUtil.transform(
-					_objectActionLocalService.getObjectActions(
-						_objectDefinition.getObjectDefinitionId(),
-						ObjectActionTriggerConstants.KEY_STANDALONE),
-					objectAction -> {
-						InfoLocalizedValue<String> actionLabelLocalizedValue =
-							InfoLocalizedValue.<String>builder(
-							).defaultLocale(
-								LocaleUtil.fromLanguageId(
-									objectAction.getDefaultLanguageId())
-							).values(
-								objectAction.getLabelMap()
-							).build();
+		objectEntryFieldValues.addAll(
+			TransformUtil.transform(
+				_objectActionLocalService.getObjectActions(
+					_objectDefinition.getObjectDefinitionId(),
+					ObjectActionTriggerConstants.KEY_STANDALONE),
+				objectAction -> {
+					InfoLocalizedValue<String> actionLabelLocalizedValue =
+						InfoLocalizedValue.<String>builder(
+						).defaultLocale(
+							LocaleUtil.fromLanguageId(
+								objectAction.getDefaultLanguageId())
+						).values(
+							objectAction.getLabelMap()
+						).build();
 
-						return new InfoFieldValue<>(
-							InfoField.builder(
-							).infoFieldType(
-								ActionInfoFieldType.INSTANCE
-							).namespace(
-								ObjectAction.class.getSimpleName()
-							).name(
-								objectAction.getName()
-							).labelInfoLocalizedValue(
-								actionLabelLocalizedValue
-							).build(),
-							actionLabelLocalizedValue);
-					}));
-		}
+					return new InfoFieldValue<>(
+						InfoField.builder(
+						).infoFieldType(
+							ActionInfoFieldType.INSTANCE
+						).namespace(
+							ObjectAction.class.getSimpleName()
+						).name(
+							objectAction.getName()
+						).labelInfoLocalizedValue(
+							actionLabelLocalizedValue
+						).build(),
+						actionLabelLocalizedValue);
+				}));
 
 		return objectEntryFieldValues;
 	}
@@ -434,29 +431,41 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	}
 
 	private com.liferay.object.rest.dto.v1_0.ObjectEntry _getObjectEntry(
-			String externalReferenceCode, ObjectDefinition objectDefinition,
-			ThemeDisplay themeDisplay)
-		throws Exception {
+		String externalReferenceCode, ObjectDefinition objectDefinition,
+		ThemeDisplay themeDisplay) {
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				objectDefinition.getStorageType());
 
-		return objectEntryManager.getObjectEntry(
-			themeDisplay.getCompanyId(),
-			new DefaultDTOConverterContext(
-				false, null, null, null, null, themeDisplay.getLocale(), null,
-				themeDisplay.getUser()),
-			externalReferenceCode, objectDefinition,
-			ObjectEntryUtil.getScopeKey(
-				themeDisplay.getScopeGroupId(), objectDefinition,
-				_objectScopeProviderRegistry));
+		try {
+			return objectEntryManager.getObjectEntry(
+				themeDisplay.getCompanyId(),
+				new DefaultDTOConverterContext(
+					false, null, null, null, null, themeDisplay.getLocale(),
+					null, themeDisplay.getUser()),
+				externalReferenceCode, objectDefinition,
+				ObjectEntryUtil.getScopeKey(
+					themeDisplay.getScopeGroupId(), objectDefinition,
+					_objectScopeProviderRegistry));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return null;
+		}
 	}
 
 	private List<InfoFieldValue<Object>> _getObjectFieldsInfoFieldValues(
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry,
 			List<ObjectField> objectFields, ThemeDisplay themeDisplay)
 		throws Exception {
+
+		if (objectEntry == null) {
+			return Collections.emptyList();
+		}
 
 		List<InfoFieldValue<Object>> objectFieldsInfoFieldValues =
 			new ArrayList<>();
@@ -499,24 +508,33 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			Map<String, Object> values)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-176083") ||
-			!objectField.compareBusinessType(
+		if (!objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
 			return Collections.emptyList();
 		}
 
-		ObjectEntry relatedObjectEntry =
+		ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.fetchObjectEntry(
 				GetterUtil.getLong(values.get(objectField.getName())));
 
-		if (relatedObjectEntry == null) {
+		if (serviceBuilderObjectEntry == null) {
 			return Collections.emptyList();
 		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
-				relatedObjectEntry.getObjectDefinitionId());
+				serviceBuilderObjectEntry.getObjectDefinitionId());
+
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+			_getObjectEntry(
+				serviceBuilderObjectEntry.getExternalReferenceCode(),
+				objectDefinition, themeDisplay);
+
+		if (objectEntry == null) {
+			return Collections.emptyList();
+		}
+
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.
 				fetchObjectRelationshipByObjectFieldId2(
@@ -524,7 +542,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 		return TransformUtil.transform(
 			_objectFieldLocalService.getObjectFields(
-				relatedObjectEntry.getObjectDefinitionId(), false),
+				serviceBuilderObjectEntry.getObjectDefinitionId(), false),
 			relatedObjectField -> new InfoFieldValue<>(
 				InfoField.builder(
 				).infoFieldType(
@@ -545,11 +563,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 						relatedObjectField.getLabelMap()
 					).build()
 				).build(),
-				_getValue(
-					_getObjectEntry(
-						relatedObjectEntry.getExternalReferenceCode(),
-						objectDefinition, themeDisplay),
-					relatedObjectField, themeDisplay)));
+				_getValue(objectEntry, relatedObjectField, themeDisplay)));
 	}
 
 	private ThemeDisplay _getThemeDisplay() {

@@ -144,33 +144,28 @@ public class DataLayoutUtilTest {
 			new DataLayoutPage[] {
 				new DataLayoutPage() {
 					{
-						setDataLayoutRows(
-							new DataLayoutRow[] {
-								new DataLayoutRow() {
-									{
-										setDataLayoutColumns(
-											new DataLayoutColumn[] {
-												new DataLayoutColumn() {
-													{
-														setColumnSize(12);
-														setFieldNames(
-															new String[] {
-																"textName"
-															});
-													}
-												}
-											});
-									}
+						dataLayoutRows = new DataLayoutRow[] {
+							new DataLayoutRow() {
+								{
+									dataLayoutColumns = new DataLayoutColumn[] {
+										new DataLayoutColumn() {
+											{
+												columnSize = 12;
+												fieldNames = new String[] {
+													"textName"
+												};
+											}
+										}
+									};
 								}
-							});
-						setDescription(
-							HashMapBuilder.<String, Object>put(
-								"en_US", "Description"
-							).build());
-						setTitle(
-							HashMapBuilder.<String, Object>put(
-								"en_US", "Title"
-							).build());
+							}
+						};
+						description = HashMapBuilder.<String, Object>put(
+							"en_US", "Description"
+						).build();
+						title = HashMapBuilder.<String, Object>put(
+							"en_US", "Title"
+						).build();
 					}
 				}
 			});

@@ -16,6 +16,7 @@ dependencies {
 	compileOnly project(":apps:export-import:export-import-changeset-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:ratings:ratings-taglib")
 	compileOnly project(":apps:site-navigation:site-navigation-taglib")
 	compileOnly project(":apps:staging:staging-api")

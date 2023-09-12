@@ -548,6 +548,14 @@ public class FragmentEntryLocalServiceWrapper
 	}
 
 	@Override
+	public String getUniqueFragmentEntryName(
+		long groupId, long fragmentCollectionId, String name) {
+
+		return _fragmentEntryLocalService.getUniqueFragmentEntryName(
+			groupId, fragmentCollectionId, name);
+	}
+
+	@Override
 	public com.liferay.fragment.model.FragmentEntryVersion getVersion(
 			FragmentEntry fragmentEntry, int version)
 		throws com.liferay.portal.kernel.exception.PortalException {

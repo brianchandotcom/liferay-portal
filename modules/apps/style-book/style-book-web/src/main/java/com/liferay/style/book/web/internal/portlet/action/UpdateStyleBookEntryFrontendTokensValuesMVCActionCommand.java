@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.service.StyleBookEntryService;
-import com.liferay.style.book.web.internal.handler.StyleBookEntryExceptionRequestHandler;
+import com.liferay.style.book.web.internal.handler.StyleBookEntryExceptionRequestHandlerUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -60,14 +60,10 @@ public class UpdateStyleBookEntryFrontendTokensValuesMVCActionCommand
 		catch (PortalException portalException) {
 			hideDefaultErrorMessage(actionRequest);
 
-			_styleBookEntryExceptionRequestHandler.handlePortalException(
+			StyleBookEntryExceptionRequestHandlerUtil.handlePortalException(
 				actionRequest, actionResponse, portalException);
 		}
 	}
-
-	@Reference
-	private StyleBookEntryExceptionRequestHandler
-		_styleBookEntryExceptionRequestHandler;
 
 	@Reference
 	private StyleBookEntryService _styleBookEntryService;

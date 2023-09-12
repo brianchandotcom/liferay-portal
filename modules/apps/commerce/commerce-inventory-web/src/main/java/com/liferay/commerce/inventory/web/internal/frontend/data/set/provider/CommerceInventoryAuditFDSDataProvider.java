@@ -119,7 +119,7 @@ public class CommerceInventoryAuditFDSDataProvider
 
 		String sku = ParamUtil.getString(httpServletRequest, "sku");
 		String unitOfMeasureKey = ParamUtil.getString(
-			httpServletRequest, "sku");
+			httpServletRequest, "unitOfMeasureKey");
 
 		return _commerceInventoryAuditService.getCommerceInventoryAuditsCount(
 			_portal.getCompanyId(httpServletRequest), sku, unitOfMeasureKey);

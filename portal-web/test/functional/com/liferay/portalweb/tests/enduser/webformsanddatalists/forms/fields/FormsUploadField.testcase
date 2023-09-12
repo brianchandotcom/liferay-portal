@@ -984,4 +984,81 @@ definition {
 
 	}
 
+	@description = "LPS-176235 - Verify if entries in a form created by an admin are private"
+	@priority = 4
+	test UserGuestCanVerifyEntriesPrivate {
+		task ("Given a form with an upload field that Allow Guest Users to Send Files") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form 1");
+
+			Form.gotoAddField(
+				fieldPositionNumber = 0,
+				fieldType = "Upload");
+
+			Form.editFieldLabelMetal(fieldValue = "Upload Field");
+
+			FormFields.enableSwitch(fieldName = "Allow Guest Users to Send Files");
+
+			Form.publishForm();
+		}
+
+		task ("and Given a page with an added Form") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Form Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = 1,
+				groupName = "Guest",
+				layoutName = "Form Page",
+				widgetName = "Form");
+
+			Navigator.gotoPage(pageName = "Form Page");
+
+			FormPortletNavigator.gotoSelectForm();
+
+			FormPortletConfiguration.selectForm(formName = "Form 1");
+
+			PortletEntry.save();
+		}
+
+		task ("and Given a guest user adds an entry") {
+			User.logoutPG();
+
+			Navigator.gotoPage(pageName = "Form Page");
+
+			UploadDependencyFile.uploadFile(fileName = "Document_1.jpg");
+
+			FormPortlet.clickSubmit();
+
+			FormPortlet.viewSuccessPage(
+				successPageDescription = "Your information was successfully received. Thank you for filling out the form.",
+				successPageTitle = "Thank you.");
+		}
+
+		task ("When guest user navigates to the attachment using its url") {
+			User.firstLoginPG();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdminNavigator.gotoViewEntries();
+
+			var currentURL = selenium.getCurrentUrl();
+
+			User.logoutPG();
+
+			Navigator.openSpecificURL(url = ${currentURL});
+		}
+
+		task ("Then won't be able to access the form entries") {
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = 404);
+		}
+	}
+
 }

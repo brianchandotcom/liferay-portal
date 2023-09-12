@@ -230,10 +230,10 @@ components:
                     minimum: 0
                     type: integer
                 quantity:
-                    example: 1
-                    format: int32
+                    example: 10.1
+                    format: bigdecimal
                     minimum: 0
-                    type: integer
+                    type: number
                 shipmentExternalReferenceCode:
                     type: string
                 shipmentId:
@@ -242,6 +242,9 @@ components:
                     minimum: 0
                     readOnly: true
                     type: integer
+                unitOfMeasureKey:
+                    example: s
+                    type: string
                 userName:
                     example: "John"
                     readOnly: true

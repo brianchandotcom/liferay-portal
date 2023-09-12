@@ -7,10 +7,12 @@ package com.liferay.portal.search.web.internal.search.bar.portlet.display.contex
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -40,13 +42,16 @@ import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -59,8 +64,19 @@ public class SearchBarPortletDisplayContextFactoryTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@BeforeClass
+	public static void setUpClass() {
+		_configurationProviderUtilMockedStatic = Mockito.mockStatic(
+			ConfigurationProviderUtil.class);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_configurationProviderUtilMockedStatic.close();
+	}
+
 	@Before
-	public void setUp() {
+	public void setUp() throws ConfigurationException {
 		_setUpLanguageUtil();
 		_setUpPortal();
 		_setUpThemeDisplay();
@@ -525,27 +541,36 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		);
 	}
 
-	private void _setUpThemeDisplay() {
+	private void _setUpThemeDisplay() throws ConfigurationException {
 		Mockito.when(
 			_themeDisplay.getScopeGroup()
 		).thenReturn(
 			_group
 		);
 
-		try {
-			Mockito.when(
-				_portletDisplay.getPortletInstanceConfiguration(Mockito.any())
-			).thenReturn(
-				_searchBarPortletInstanceConfiguration
-			);
-		}
-		catch (Exception exception) {
-		}
+		Mockito.when(
+			_portletDisplay.getPortletResource()
+		).thenReturn(
+			"test"
+		);
+
+		Mockito.when(
+			_portletDisplay.getThemeDisplay()
+		).thenReturn(
+			_themeDisplay
+		);
 
 		Mockito.when(
 			_themeDisplay.getPortletDisplay()
 		).thenReturn(
 			_portletDisplay
+		);
+
+		_configurationProviderUtilMockedStatic.when(
+			() -> ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				Mockito.any(), Mockito.any())
+		).thenReturn(
+			_searchBarPortletInstanceConfiguration
 		);
 	}
 
@@ -579,6 +604,9 @@ public class SearchBarPortletDisplayContextFactoryTest {
 	}
 
 	private static final String _DEFAULT_SCOPE_PARAMETER_NAME = "scope";
+
+	private static MockedStatic<ConfigurationProviderUtil>
+		_configurationProviderUtilMockedStatic;
 
 	private final Group _group = Mockito.mock(Group.class);
 	private final LayoutLocalService _layoutLocalService = Mockito.mock(

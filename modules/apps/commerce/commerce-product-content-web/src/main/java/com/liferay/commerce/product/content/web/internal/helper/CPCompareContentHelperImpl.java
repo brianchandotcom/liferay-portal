@@ -28,6 +28,7 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -272,8 +273,9 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 
 			CPCompareContentMiniPortletInstanceConfiguration
 				cpCompareContentMiniPortletInstanceConfiguration =
-					portletDisplay.getPortletInstanceConfiguration(
-						CPCompareContentMiniPortletInstanceConfiguration.class);
+					_configurationProvider.getPortletInstanceConfiguration(
+						CPCompareContentMiniPortletInstanceConfiguration.class,
+						portletDisplay.getThemeDisplay());
 
 			return cpCompareContentMiniPortletInstanceConfiguration.
 				productsLimit();
@@ -283,8 +285,9 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 
 			CPCompareContentPortletInstanceConfiguration
 				cpCompareContentPortletInstanceConfiguration =
-					portletDisplay.getPortletInstanceConfiguration(
-						CPCompareContentPortletInstanceConfiguration.class);
+					_configurationProvider.getPortletInstanceConfiguration(
+						CPCompareContentPortletInstanceConfiguration.class,
+						portletDisplay.getThemeDisplay());
 
 			return cpCompareContentPortletInstanceConfiguration.productsLimit();
 		}
@@ -390,6 +393,9 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 
 		return multiValueCPDefinitionOptionRels;
 	}
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPCompareHelper _cpCompareHelper;

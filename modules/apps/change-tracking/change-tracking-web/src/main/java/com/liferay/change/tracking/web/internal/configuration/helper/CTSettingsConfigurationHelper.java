@@ -7,11 +7,11 @@ package com.liferay.change.tracking.web.internal.configuration.helper;
 
 import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.Map;
@@ -99,25 +99,35 @@ public class CTSettingsConfigurationHelper {
 		return ctSettingsConfiguration.unapprovedChangesAllowed();
 	}
 
-	public void save(
-			long companyId, long defaultCTCollectionTemplateId,
-			long defaultSandboxCTCollectionTemplateId, boolean enabled,
-			boolean sandboxEnabled, boolean unapprovedChangesAllowed)
+	public void save(long companyId, Map<String, Object> properties)
 		throws PortalException {
+
+		CTSettingsConfiguration ctSettingsConfiguration =
+			_getCTSettingsConfiguration(companyId);
+
+		properties.putIfAbsent(
+			"defaultCTCollectionTemplateId",
+			ctSettingsConfiguration.defaultCTCollectionTemplateId());
+		properties.putIfAbsent(
+			"defaultSandboxCTCollectionTemplateId",
+			ctSettingsConfiguration.defaultSandboxCTCollectionTemplateId());
+		properties.putIfAbsent("enabled", ctSettingsConfiguration.enabled());
+		properties.putIfAbsent(
+			"remoteEnabled", ctSettingsConfiguration.remoteEnabled());
+		properties.putIfAbsent(
+			"remoteClientId", ctSettingsConfiguration.remoteClientId());
+		properties.putIfAbsent(
+			"remoteClientSecret", ctSettingsConfiguration.remoteClientSecret());
+		properties.putIfAbsent(
+			"sandboxEnabled", ctSettingsConfiguration.sandboxEnabled());
+		properties.putIfAbsent(
+			"unapprovedChangesAllowed",
+			ctSettingsConfiguration.unapprovedChangesAllowed());
 
 		_configurationProvider.saveCompanyConfiguration(
 			CTSettingsConfiguration.class, companyId,
-			HashMapDictionaryBuilder.<String, Object>put(
-				"defaultCTCollectionTemplateId", defaultCTCollectionTemplateId
-			).put(
-				"defaultSandboxCTCollectionTemplateId",
-				defaultSandboxCTCollectionTemplateId
-			).put(
-				"enabled", enabled
-			).put(
-				"sandboxEnabled", sandboxEnabled
-			).put(
-				"unapprovedChangesAllowed", unapprovedChangesAllowed
+			HashMapDictionaryBuilder.putAll(
+				properties
 			).build());
 	}
 

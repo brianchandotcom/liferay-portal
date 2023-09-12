@@ -13,7 +13,7 @@ import com.liferay.bean.portlet.extension.BeanPortletMethodInvoker;
 import com.liferay.bean.portlet.extension.BeanPortletMethodType;
 import com.liferay.bean.portlet.extension.ScopedBean;
 import com.liferay.bean.portlet.extension.ViewRenderer;
-import com.liferay.bean.portlet.registration.BeanPortletRegistrar;
+import com.liferay.bean.portlet.registration.util.BeanPortletRegistrarUtil;
 import com.liferay.bean.portlet.spring.extension.internal.scope.SpringPortletRequestScope;
 import com.liferay.bean.portlet.spring.extension.internal.scope.SpringPortletSessionScope;
 import com.liferay.bean.portlet.spring.extension.internal.scope.SpringRedirectScope;
@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncListenerFactory;
 import com.liferay.portal.kernel.portlet.async.PortletAsyncScopeManagerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.PrintWriter;
@@ -269,7 +268,7 @@ public class SpringBeanPortletExtension {
 			};
 
 		_serviceRegistrations.addAll(
-			_beanPortletRegistrar.register(
+			BeanPortletRegistrarUtil.register(
 				new SpringBeanFilterMethodFactory(_configurableBeanFactory),
 				beanFilterMethodInvoker,
 				new SpringBeanPortletMethodFactory(_configurableBeanFactory),
@@ -295,7 +294,8 @@ public class SpringBeanPortletExtension {
 	public void step5ApplicationScopeBeforeDestroyed(
 		ServletContext servletContext) {
 
-		_beanPortletRegistrar.unregister(_serviceRegistrations, servletContext);
+		BeanPortletRegistrarUtil.unregister(
+			_serviceRegistrations, servletContext);
 
 		_serviceRegistrations.clear();
 	}
@@ -531,11 +531,6 @@ public class SpringBeanPortletExtension {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SpringBeanPortletExtension.class);
-
-	private static volatile BeanPortletRegistrar _beanPortletRegistrar =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			BeanPortletRegistrar.class, SpringBeanPortletExtension.class,
-			"_beanPortletRegistrar", true);
 
 	private final Set<Class<?>> _annotatedClasses = new HashSet<>();
 	private final ApplicationContext _applicationContext;

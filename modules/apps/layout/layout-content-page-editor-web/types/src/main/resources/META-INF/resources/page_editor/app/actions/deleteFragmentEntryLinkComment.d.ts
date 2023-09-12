@@ -10,10 +10,10 @@ export default function deleteFragmentEntryLinkComment({
 }: {
 	commentId: string;
 	fragmentEntryLinkId: string;
-	parentCommentId: string;
+	parentCommentId?: string;
 }): {
 	readonly commentId: string;
 	readonly fragmentEntryLinkId: string;
-	readonly parentCommentId: string;
+	readonly parentCommentId: string | undefined;
 	readonly type: 'DELETE_FRAGMENT_ENTRY_LINK_COMMENT';
 };

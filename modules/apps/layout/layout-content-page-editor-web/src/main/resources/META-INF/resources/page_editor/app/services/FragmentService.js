@@ -31,23 +31,23 @@ export default {
 	 * @param {string} options.body Body of the comment
 	 * @param {string} options.fragmentEntryLinkId Id of the Fragment
 	 * @param {function} options.onNetworkStatus
-	 * @param {number} [options.parentCommentId=0]
+	 * @param {string} [options.parentCommentId]
 	 * @return {Promise<FragmentComment>} Created FragmentComment
 	 */
-	addComment({
-		body,
-		fragmentEntryLinkId,
-		onNetworkStatus,
-		parentCommentId = 0,
-	}) {
+	addComment({body, fragmentEntryLinkId, onNetworkStatus, parentCommentId}) {
+		const fetchBody = {
+			body,
+			fragmentEntryLinkId,
+		};
+
+		if (parentCommentId) {
+			fetchBody.parentCommentId = parentCommentId;
+		}
+
 		return serviceFetch(
 			config.addFragmentEntryLinkCommentURL,
 			{
-				body: {
-					body,
-					fragmentEntryLinkId,
-					parentCommentId,
-				},
+				body: fetchBody,
 			},
 			onNetworkStatus
 		);

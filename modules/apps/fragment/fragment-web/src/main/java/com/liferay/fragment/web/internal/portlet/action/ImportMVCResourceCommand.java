@@ -6,9 +6,11 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.importer.FragmentsImportStrategy;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.fragment.importer.FragmentsImporterResultEntry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -55,20 +57,67 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		long fragmentCollectionId = ParamUtil.getLong(
+			resourceRequest, "fragmentCollectionId");
 
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(resourceRequest);
 
+		File file = uploadPortletRequest.getFile("file");
+
+		String importType = ParamUtil.getString(resourceRequest, "importType");
+
+		boolean validFragmentEntries = true;
+
+		if (_featureFlagManager.isEnabled("LPS-174939") &&
+			Validator.isNull(importType)) {
+
+			validFragmentEntries = _fragmentsImporter.validateFragmentEntries(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				fragmentCollectionId, file);
+		}
+
+		if (validFragmentEntries) {
+			FragmentsImportStrategy fragmentsImportStrategy;
+
+			if (_featureFlagManager.isEnabled("LPS-174939")) {
+				fragmentsImportStrategy = FragmentsImportStrategy.create(
+					importType);
+
+				if (fragmentsImportStrategy == null) {
+					fragmentsImportStrategy =
+						FragmentsImportStrategy.DO_NOT_OVERWRITE;
+				}
+			}
+			else {
+				boolean overwrite = ParamUtil.getBoolean(
+					resourceRequest, "overwrite");
+
+				if (overwrite) {
+					fragmentsImportStrategy = FragmentsImportStrategy.OVERWRITE;
+				}
+				else {
+					fragmentsImportStrategy =
+						FragmentsImportStrategy.DO_NOT_OVERWRITE;
+				}
+			}
+
+			jsonObject = _importFragmentEntries(
+				file, fragmentCollectionId, themeDisplay.getScopeGroupId(),
+				fragmentsImportStrategy, themeDisplay.getLocale(),
+				themeDisplay.getUserId());
+		}
+		else {
+			jsonObject.put("valid", false);
+		}
+
 		JSONPortletResponseUtil.writeJSON(
-			resourceRequest, resourceResponse,
-			_importFragmentEntries(
-				uploadPortletRequest.getFile("file"),
-				ParamUtil.getLong(resourceRequest, "fragmentCollectionId"),
-				themeDisplay.getScopeGroupId(), themeDisplay.getLocale(),
-				ParamUtil.getBoolean(resourceRequest, "overwrite"),
-				themeDisplay.getUserId()));
+			resourceRequest, resourceResponse, jsonObject);
 	}
 
 	private String _getKey(FragmentsImporterResultEntry.Status status) {
@@ -88,15 +137,17 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private JSONObject _importFragmentEntries(
-		File file, long fragmentCollectionId, long groupId, Locale locale,
-		boolean overwrite, long userId) {
+		File file, long fragmentCollectionId, long groupId,
+		FragmentsImportStrategy fragmentsImportStrategy, Locale locale,
+		long userId) {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		try {
 			List<FragmentsImporterResultEntry> fragmentsImporterResultEntries =
 				_fragmentsImporter.importFragmentEntries(
-					userId, groupId, fragmentCollectionId, file, overwrite);
+					userId, groupId, fragmentCollectionId, file,
+					fragmentsImportStrategy);
 
 			JSONObject importResultsJSONObject =
 				_jsonFactory.createJSONObject();
@@ -148,6 +199,9 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ImportMVCResourceCommand.class);
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private FragmentsImporter _fragmentsImporter;

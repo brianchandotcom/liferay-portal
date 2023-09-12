@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_FIELD</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//input[contains(@placeholder,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMPTY_MESSAGE_DROPDOWN</td>
 	<td>//div[contains(@class,'empty-result-message')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>

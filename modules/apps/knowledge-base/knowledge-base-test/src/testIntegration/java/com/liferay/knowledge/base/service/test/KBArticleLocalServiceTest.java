@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
@@ -278,6 +279,7 @@ public class KBArticleLocalServiceTest {
 			_serviceContext);
 	}
 
+	@FeatureFlags("LPS-188060")
 	@Test
 	public void testAddKBArticleDisplayDateKBArticleStatusScheduled()
 		throws Exception {

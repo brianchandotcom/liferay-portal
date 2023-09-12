@@ -434,6 +434,13 @@ public class JournalArticleWrapper
 	}
 
 	@Override
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues
+		getDDMFormValues(boolean addMissingDDMFormFieldValues) {
+
+		return model.getDDMFormValues(addMissingDDMFormFieldValues);
+	}
+
+	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructure
 		getDDMStructure() {
 

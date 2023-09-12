@@ -382,17 +382,23 @@ public abstract class BaseEntityRelationshipDALO
 	private String _getChildURLPath() {
 		EntityFactory<U> childEntityFactory = getChildEntityFactory();
 
-		return StringUtil.combine(
-			"/o/c/",
-			StringUtil.toLowerCase(childEntityFactory.getEntityPluralLabel()));
+		String entityPluralLabel = childEntityFactory.getEntityPluralLabel();
+
+		entityPluralLabel = entityPluralLabel.replaceAll("\\s+", "");
+		entityPluralLabel = StringUtil.toLowerCase(entityPluralLabel);
+
+		return StringUtil.combine("/o/c/", entityPluralLabel);
 	}
 
 	private String _getParentURLPath() {
 		EntityFactory<T> parentEntityFactory = getParentEntityFactory();
 
-		return StringUtil.combine(
-			"/o/c/",
-			StringUtil.toLowerCase(parentEntityFactory.getEntityPluralLabel()));
+		String entityPluralLabel = parentEntityFactory.getEntityPluralLabel();
+
+		entityPluralLabel = entityPluralLabel.replaceAll("\\s+", "");
+		entityPluralLabel = StringUtil.toLowerCase(entityPluralLabel);
+
+		return StringUtil.combine("/o/c/", entityPluralLabel);
 	}
 
 	private static final Log _log = LogFactory.getLog(

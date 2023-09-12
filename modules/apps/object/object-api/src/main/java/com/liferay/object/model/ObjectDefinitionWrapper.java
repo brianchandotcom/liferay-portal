@@ -955,6 +955,11 @@ public class ObjectDefinitionWrapper
 		return model.isEnableObjectEntryHistory();
 	}
 
+	@Override
+	public boolean isLinkedToObjectFolder(long objectFolderId) {
+		return model.isLinkedToObjectFolder(objectFolderId);
+	}
+
 	/**
 	 * Returns <code>true</code> if this object definition is modifiable.
 	 *
@@ -973,6 +978,16 @@ public class ObjectDefinitionWrapper
 	@Override
 	public boolean isPortlet() {
 		return model.isPortlet();
+	}
+
+	@Override
+	public boolean isRootDescendantNode() {
+		return model.isRootDescendantNode();
+	}
+
+	@Override
+	public boolean isRootNode() {
+		return model.isRootNode();
 	}
 
 	/**

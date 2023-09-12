@@ -8,11 +8,10 @@ package com.liferay.object.service.impl;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.exception.ObjectFolderLabelException;
 import com.liferay.object.exception.ObjectFolderNameException;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
-import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.model.ObjectFolderItem;
+import com.liferay.object.service.ObjectFolderItemLocalService;
 import com.liferay.object.service.base.ObjectFolderLocalServiceBaseImpl;
-import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -20,14 +19,13 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -80,6 +78,34 @@ public class ObjectFolderLocalServiceImpl
 	}
 
 	@Override
+	public ObjectFolder addOrGetUncategorizedObjectFolder(long companyId)
+		throws PortalException {
+
+		ObjectFolder objectFolder = fetchObjectFolder(
+			companyId, ObjectFolderConstants.NAME_UNCATEGORIZED);
+
+		if (objectFolder != null) {
+			return objectFolder;
+		}
+
+		synchronized (this) {
+			objectFolder = fetchObjectFolder(
+				companyId, ObjectFolderConstants.NAME_UNCATEGORIZED);
+
+			if (objectFolder != null) {
+				return objectFolder;
+			}
+
+			return objectFolderLocalService.addObjectFolder(
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_UNCATEGORIZED,
+				_userLocalService.getGuestUserId(companyId),
+				LocalizedMapUtil.getLocalizedMap(
+					ObjectFolderConstants.NAME_UNCATEGORIZED),
+				ObjectFolderConstants.NAME_UNCATEGORIZED);
+		}
+	}
+
+	@Override
 	public void deleteCompanyObjectFolders(long companyId)
 		throws PortalException {
 
@@ -121,21 +147,9 @@ public class ObjectFolderLocalServiceImpl
 			objectFolder, ResourceConstants.SCOPE_INDIVIDUAL);
 
 		if (PortalInstances.isCurrentCompanyInDeletionProcess()) {
-			return objectFolder;
-		}
-
-		ObjectFolder uncategorizedObjectFolder =
-			objectFolderPersistence.findByC_N(
-				objectFolder.getCompanyId(),
-				ObjectFolderConstants.NAME_UNCATEGORIZED);
-
-		for (ObjectDefinition objectDefinition :
-				_objectDefinitionPersistence.findByObjectFolderId(
-					objectFolder.getObjectFolderId())) {
-
-			_objectDefinitionLocalService.updateObjectFolderId(
-				objectDefinition.getObjectDefinitionId(),
-				uncategorizedObjectFolder.getObjectFolderId());
+			_objectFolderItemLocalService.
+				deleteObjectFolderItemByObjectFolderId(
+					objectFolder.getObjectFolderId());
 		}
 
 		return objectFolder;
@@ -157,7 +171,8 @@ public class ObjectFolderLocalServiceImpl
 	@Override
 	public ObjectFolder updateObjectFolder(
 			String externalReferenceCode, long objectFolderId,
-			Map<Locale, String> labelMap)
+			Map<Locale, String> labelMap,
+			List<ObjectFolderItem> objectFolderItems)
 		throws PortalException {
 
 		_validateLabel(labelMap);
@@ -165,27 +180,22 @@ public class ObjectFolderLocalServiceImpl
 		ObjectFolder objectFolder = objectFolderPersistence.findByPrimaryKey(
 			objectFolderId);
 
+		for (ObjectFolderItem objectFolderItem : objectFolderItems) {
+			_objectFolderItemLocalService.updateObjectFolderItem(
+				objectFolderItem.getObjectDefinitionId(),
+				objectFolder.getObjectFolderId(),
+				objectFolderItem.getPositionX(),
+				objectFolderItem.getPositionY());
+		}
+
 		if (objectFolder.isUncategorized()) {
-			throw new UnsupportedOperationException(
-				"Uncategorized cannot be updated");
+			return objectFolder;
 		}
 
 		objectFolder.setExternalReferenceCode(externalReferenceCode);
 		objectFolder.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 
-		objectFolder = objectFolderPersistence.update(objectFolder);
-
-		for (ObjectDefinition objectDefinition :
-				_objectDefinitionPersistence.findByObjectFolderId(
-					objectFolder.getObjectFolderId())) {
-
-			Indexer<ObjectDefinition> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(ObjectDefinition.class);
-
-			indexer.reindex(objectDefinition);
-		}
-
-		return objectFolder;
+		return objectFolderPersistence.update(objectFolder);
 	}
 
 	private void _validateLabel(Map<Locale, String> labelMap)
@@ -227,10 +237,7 @@ public class ObjectFolderLocalServiceImpl
 	}
 
 	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectDefinitionPersistence _objectDefinitionPersistence;
+	private ObjectFolderItemLocalService _objectFolderItemLocalService;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

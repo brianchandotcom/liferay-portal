@@ -30,7 +30,6 @@ import ClayAlert, {DisplayType} from '@clayui/alert';
 import ClaySticker from '@clayui/sticker';
 
 import emptyPictureIcon from '../../assets/icons/avatar.svg';
-import {Footer} from '../../components/Footer/Footer';
 import Select from '../../components/Select/Select';
 import fetcher from '../../services/fetcher';
 import CreatedProjectCard from './CreatedProjectCard';
@@ -599,10 +598,6 @@ const PurchasedSolutions: React.FC = () => {
 					{step?.page === 'projectCreated' && (
 						<CreatedProjectCard product={product} />
 					)}
-				</div>
-
-				<div className="footer-to-bottom">
-					<Footer />
 				</div>
 			</div>
 			<ClayAlert.ToastContainer>

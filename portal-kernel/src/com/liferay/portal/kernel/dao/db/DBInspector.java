@@ -246,18 +246,18 @@ public class DBInspector {
 	public boolean hasTable(String tableName, boolean caseSensitive)
 		throws Exception {
 
-		if (caseSensitive) {
-			if (_hasTable(tableName)) {
-				return true;
-			}
-
-			return false;
-		}
-
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
-		if (_hasTable(normalizeName(tableName, databaseMetaData))) {
-			return true;
+		if (!caseSensitive) {
+			tableName = normalizeName(tableName, databaseMetaData);
+		}
+
+		try (ResultSet resultSet = databaseMetaData.getTables(
+				getCatalog(), getSchema(), tableName, new String[] {"TABLE"})) {
+
+			while (resultSet.next()) {
+				return true;
+			}
 		}
 
 		return false;
@@ -266,7 +266,8 @@ public class DBInspector {
 	public boolean isControlTable(List<Long> companyIds, String tableName)
 		throws Exception {
 
-		if (!isObjectTable(companyIds, tableName) &&
+		if (!isPartitionedControlTable(tableName) &&
+			!isObjectTable(companyIds, tableName) &&
 			(_controlTableNames.contains(StringUtil.toLowerCase(tableName)) ||
 			 !hasColumn(tableName, "companyId"))) {
 
@@ -297,6 +298,16 @@ public class DBInspector {
 
 			return false;
 		}
+	}
+
+	public boolean isPartitionedControlTable(String tableName) {
+		if (_partitionedControlTableNames.contains(
+				StringUtil.toLowerCase(tableName))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public String normalizeName(String name) throws SQLException {
@@ -394,20 +405,6 @@ public class DBInspector {
 			normalizeName(tableName, databaseMetaData), columnName);
 	}
 
-	private boolean _hasTable(String tableName) throws Exception {
-		DatabaseMetaData metadata = _connection.getMetaData();
-
-		try (ResultSet resultSet = metadata.getTables(
-				getCatalog(), getSchema(), tableName, new String[] {"TABLE"})) {
-
-			while (resultSet.next()) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private boolean _isColumnNullable(String typeName) {
 		typeName = typeName.trim();
 
@@ -430,6 +427,8 @@ public class DBInspector {
 		"(^\\w+)", Pattern.CASE_INSENSITIVE);
 	private static final Set<String> _controlTableNames = new HashSet<>(
 		Arrays.asList("company", "virtualhost"));
+	private static final Set<String> _partitionedControlTableNames =
+		new HashSet<>(Arrays.asList("classname_"));
 
 	private final Connection _connection;
 

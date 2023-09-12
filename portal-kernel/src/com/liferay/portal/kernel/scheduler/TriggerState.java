@@ -10,6 +10,6 @@ package com.liferay.portal.kernel.scheduler;
  */
 public enum TriggerState {
 
-	COMPLETE, EXPIRED, NORMAL, PAUSED, UNSCHEDULED
+	COMPLETE, NORMAL, PAUSED
 
 }

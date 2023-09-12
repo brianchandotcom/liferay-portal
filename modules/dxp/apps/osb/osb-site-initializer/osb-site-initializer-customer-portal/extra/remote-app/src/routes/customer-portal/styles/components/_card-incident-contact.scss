@@ -95,6 +95,17 @@
 	margin-top: -0.5rem;
 }
 
+.high-priority-contacts-modal {
+	.modal-content {
+		height: 21.75rem;
+	}
+
+	main {
+		max-height: 8.75rem;
+		overflow-y: scroll;
+	}
+}
+
 ::-webkit-scrollbar {
 	width: 0.313rem;
 }

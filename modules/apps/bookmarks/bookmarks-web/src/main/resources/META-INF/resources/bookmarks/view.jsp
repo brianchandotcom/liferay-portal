@@ -116,16 +116,22 @@ else {
 }
 %>
 
-<aui:script use="liferay-bookmarks">
-	var bookmarks = new Liferay.Portlet.Bookmarks({
-		editEntryUrl: '<portlet:actionURL name="/bookmarks/edit_entry" />',
-		form: {
-			method: 'POST',
-			node: A.one(document.<portlet:namespace />fm),
-		},
-		moveEntryUrl:
-			'<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/bookmarks/move_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
-		namespace: '<portlet:namespace />',
-		searchContainerId: 'entries',
-	});
-</aui:script>
+<portlet:actionURL name="/bookmarks/edit_entry" var="editEntryURL" />
+
+<portlet:renderURL var="moveEntryURL">
+	<portlet:param name="mvcRenderCommandName" value="/bookmarks/move_entry" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:renderURL>
+
+<liferay-frontend:component
+	context='<%=
+		HashMapBuilder.<String, Object>put(
+			"editEntryURL", editEntryURL
+		).put(
+			"moveEntryURL", moveEntryURL
+		).put(
+			"searchContainerId", "entries"
+		).build()
+	%>'
+	module="bookmarks/js/BookmarksDragAndDrop"
+/>

@@ -24,7 +24,7 @@ const ActionButton = ({
 	sessionId,
 	setStatus,
 }) => {
-	const {provisioningServerAPI} = useAppPropertiesContext();
+	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
 	const navigate = useNavigate();
 
 	const allowSelfProvisioning = project.allowSelfProvisioning;
@@ -60,7 +60,8 @@ const ActionButton = ({
 			handleMultipleAlertStatus,
 			handleAlertStatus,
 			activationKeysByStatusPaginatedChecked,
-			project.name
+			project.name,
+			featureFlags
 		);
 
 		return (
@@ -78,7 +79,7 @@ const ActionButton = ({
 		return (
 			<Button
 				className="btn btn-primary"
-				onClick={async () =>
+				onClick={() =>
 					getActivationKeyDownload(
 						provisioningServerAPI,
 						sessionId,
@@ -126,17 +127,16 @@ const ActionButton = ({
 			/>
 		);
 	}
-	else {
-		return (
-			<ButtonDropDown
-				items={filteredKeysActionsItems}
-				label={i18n.translate('actions')}
-				menuElementAttrs={{
-					className: 'p-0',
-				}}
-			/>
-		);
-	}
+
+	return (
+		<ButtonDropDown
+			items={filteredKeysActionsItems}
+			label={i18n.translate('actions')}
+			menuElementAttrs={{
+				className: 'p-0',
+			}}
+		/>
+	);
 };
 
 export default ActionButton;

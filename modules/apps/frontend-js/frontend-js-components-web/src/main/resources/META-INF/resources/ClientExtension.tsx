@@ -7,18 +7,18 @@ import React, {useEffect, useRef} from 'react';
 
 interface IClientExtensionProps<T> {
 	args: T;
-	htmlBuilder: (args: T) => HTMLElement;
+	htmlElementBuilder: (args: T) => HTMLElement;
 }
 
 export default function ClientExtension<T>({
 	args,
-	htmlBuilder,
+	htmlElementBuilder,
 }: IClientExtensionProps<T>): React.ReactElement {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		if (containerRef.current) {
-			containerRef.current.appendChild(htmlBuilder(args));
+			containerRef.current.appendChild(htmlElementBuilder(args));
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps

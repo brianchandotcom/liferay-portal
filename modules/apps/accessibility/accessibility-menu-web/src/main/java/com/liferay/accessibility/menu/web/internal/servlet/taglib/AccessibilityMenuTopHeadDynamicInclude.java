@@ -6,8 +6,8 @@
 package com.liferay.accessibility.menu.web.internal.servlet.taglib;
 
 import com.liferay.accessibility.menu.web.internal.util.AccessibilitySettingsUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.ui.QuickAccessEntry;

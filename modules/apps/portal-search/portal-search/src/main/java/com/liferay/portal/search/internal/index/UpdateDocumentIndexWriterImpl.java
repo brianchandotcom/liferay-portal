@@ -59,7 +59,7 @@ public class UpdateDocumentIndexWriterImpl
 
 		searchContext.setCompanyId(companyId);
 
-		_setCommitImmediately(searchContext, true);
+		_setCommitImmediately(searchContext, _commitImmediately);
 
 		try {
 			indexWriter.updateDocument(searchContext, document);

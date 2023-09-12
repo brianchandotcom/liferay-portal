@@ -7,6 +7,7 @@ package com.liferay.blogs.web.internal.editor.configuration;
 
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.web.internal.configuration.BlogsPortletInstanceConfiguration;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -14,7 +15,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -45,13 +45,11 @@ public class BlogsReadingTimeEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		try {
 			BlogsPortletInstanceConfiguration
 				blogsPortletInstanceConfiguration =
-					portletDisplay.getPortletInstanceConfiguration(
-						BlogsPortletInstanceConfiguration.class);
+					_configurationProvider.getPortletInstanceConfiguration(
+						BlogsPortletInstanceConfiguration.class, themeDisplay);
 
 			if (!blogsPortletInstanceConfiguration.enableReadingTime()) {
 				return;
@@ -92,6 +90,9 @@ public class BlogsReadingTimeEditorConfigContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsReadingTimeEditorConfigContributor.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference(target = "(editor.config.key=reading-time-editor-config-key)")
 	private EditorConfigContributor _readingTimeConfigContributor;

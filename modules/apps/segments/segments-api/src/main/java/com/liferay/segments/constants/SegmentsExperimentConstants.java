@@ -26,6 +26,8 @@ public class SegmentsExperimentConstants {
 
 	public static final int STATUS_COMPLETED = 2;
 
+	public static final int STATUS_DELETED_ON_DXP_ONLY = 8;
+
 	public static final int STATUS_DRAFT = 0;
 
 	public static final int STATUS_FINISHED_NO_WINNER = 4;
@@ -74,9 +76,12 @@ public class SegmentsExperimentConstants {
 	public enum Status {
 
 		COMPLETED(
-			STATUS_COMPLETED, "COMPLETED", "completed", true, false, true,
+			STATUS_COMPLETED, "COMPLETED", "completed", true, true, false, true,
 			false),
-		DRAFT(STATUS_DRAFT, "DRAFT", "draft", true) {
+		DELETED_ON_DXP_ONLY(
+			STATUS_DELETED_ON_DXP_ONLY, "DELETED_ON_DXP_ONLY",
+			"deleted-on-dxp-only", true, true),
+		DRAFT(STATUS_DRAFT, "DRAFT", "draft", true, true) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -86,8 +91,8 @@ public class SegmentsExperimentConstants {
 
 		},
 		FINISHED_NO_WINNER(
-			STATUS_FINISHED_NO_WINNER, "FINISHED_NO_WINNER", "no-winner", false,
-			true, false, true) {
+			STATUS_FINISHED_NO_WINNER, "FINISHED_NO_WINNER", "no-winner", true,
+			false, true, false, true) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -96,8 +101,8 @@ public class SegmentsExperimentConstants {
 
 		},
 		FINISHED_WINNER_DECLARED(
-			STATUS_FINISHED_WINNER, "FINISHED_WINNER", "winner", false, true,
-			true, true) {
+			STATUS_FINISHED_WINNER, "FINISHED_WINNER", "winner", true, false,
+			true, true, true) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -105,7 +110,7 @@ public class SegmentsExperimentConstants {
 			}
 
 		},
-		PAUSED(STATUS_PAUSED, "PAUSED", "paused", false) {
+		PAUSED(STATUS_PAUSED, "PAUSED", "paused", true, false) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -114,7 +119,8 @@ public class SegmentsExperimentConstants {
 
 		},
 		RUNNING(
-			STATUS_RUNNING, "RUNNING", "running", false, true, false, true) {
+			STATUS_RUNNING, "RUNNING", "running", false, false, true, false,
+			true) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -126,7 +132,7 @@ public class SegmentsExperimentConstants {
 			}
 
 		},
-		SCHEDULED(STATUS_SCHEDULED, "SCHEDULED", "scheduled", false) {
+		SCHEDULED(STATUS_SCHEDULED, "SCHEDULED", "scheduled", true, false) {
 
 			@Override
 			public Set<Status> validTransitions() {
@@ -136,7 +142,7 @@ public class SegmentsExperimentConstants {
 		},
 		TERMINATED(
 			STATUS_TERMINATED, "TERMINATED", "terminated", true, false, false,
-			false);
+			false, false);
 
 		public static int[] getExclusiveStatusValues() {
 			return ArrayUtil.toIntArray(
@@ -264,6 +270,10 @@ public class SegmentsExperimentConstants {
 			return _value;
 		}
 
+		public boolean isDeletable() {
+			return _deletable;
+		}
+
 		public boolean isEditable() {
 			return _editable;
 		}
@@ -290,11 +300,13 @@ public class SegmentsExperimentConstants {
 		}
 
 		private Status(
-			int value, String stringValue, String label, boolean editable) {
+			int value, String stringValue, String label, boolean deletable,
+			boolean editable) {
 
 			_value = value;
 			_stringValue = stringValue;
 			_label = label;
+			_deletable = deletable;
 			_editable = editable;
 
 			_exclusive = true;
@@ -303,19 +315,21 @@ public class SegmentsExperimentConstants {
 		}
 
 		private Status(
-			int value, String stringValue, String label, boolean editable,
-			boolean exclusive, boolean requiresWinnerExperience,
-			boolean split) {
+			int value, String stringValue, String label, boolean deletable,
+			boolean editable, boolean exclusive,
+			boolean requiresWinnerExperience, boolean split) {
 
 			_value = value;
 			_stringValue = stringValue;
 			_label = label;
+			_deletable = deletable;
 			_editable = editable;
 			_exclusive = exclusive;
 			_requiresWinnerExperience = requiresWinnerExperience;
 			_split = split;
 		}
 
+		private final boolean _deletable;
 		private final boolean _editable;
 		private final boolean _exclusive;
 		private final String _label;

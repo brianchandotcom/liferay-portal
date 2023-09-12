@@ -2047,7 +2047,7 @@ definition {
 			type = "One to Many");
 
 		AssertElementPresent(
-			key_fieldLabel = "Object",
+			key_fieldLabel = "Many Records Of",
 			locator1 = "FieldBase#ERROR_MESSAGE_REQUIRED_FIELD");
 	}
 
@@ -2065,9 +2065,7 @@ definition {
 
 		ObjectAdmin.gotoRelationshipsTab();
 
-		ObjectAdmin.addObjectRelationshipViaUI(
-			label = "Relationship",
-			object = "Custom Object 51");
+		ObjectAdmin.addObjectRelationshipViaUI(label = "Relationship");
 
 		AssertElementPresent(
 			key_fieldLabel = "Type",
@@ -8349,6 +8347,10 @@ definition {
 
 		AssertElementNotPresent(
 			key_entryName = "Entry A",
+			locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
+
+		AssertElementPresent(
+			key_entryName = "Entry B",
 			locator1 = "ObjectAdmin#VIEW_ENTRY_NAME_ON_PAGE");
 	}
 

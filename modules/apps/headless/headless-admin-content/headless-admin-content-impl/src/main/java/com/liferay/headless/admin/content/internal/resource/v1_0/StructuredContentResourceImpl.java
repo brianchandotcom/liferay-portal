@@ -18,7 +18,7 @@ import com.liferay.headless.admin.content.internal.dto.v1_0.extension.ExtensionS
 import com.liferay.headless.admin.content.internal.dto.v1_0.util.VersionUtil;
 import com.liferay.headless.admin.content.internal.odata.entity.v1_0.StructuredContentEntityModel;
 import com.liferay.headless.admin.content.resource.v1_0.StructuredContentResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
@@ -70,8 +70,6 @@ import com.liferay.portal.vulcan.util.EntityExtensionUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
-
-import java.io.Serializable;
 
 import java.time.LocalDateTime;
 
@@ -282,13 +280,19 @@ public class StructuredContentResourceImpl
 		LocalDateTime localDateTime = LocalDateTimeUtil.toLocalDateTime(
 			structuredContent.getDatePublished());
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				structuredContent.getTaxonomyCategoryIds(),
-				structuredContent.getKeywords(),
-				_getExpandoBridgeAttributes(structuredContent), siteId,
-				contextHttpServletRequest,
-				structuredContent.getViewableByAsString());
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			siteId, contextHttpServletRequest,
+			structuredContent.getViewableByAsString()
+		).assetCategoryIds(
+			structuredContent.getTaxonomyCategoryIds()
+		).assetTagNames(
+			structuredContent.getKeywords()
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				JournalArticle.class.getName(), contextCompany.getCompanyId(),
+				structuredContent.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 
 		Double priority = structuredContent.getPriority();
 
@@ -330,15 +334,6 @@ public class StructuredContentResourceImpl
 		DDMTemplate ddmTemplate = ddmTemplates.get(0);
 
 		return ddmTemplate.getTemplateKey();
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		StructuredContent structuredContent) {
-
-		return CustomFieldsUtil.toMap(
-			JournalArticle.class.getName(), contextCompany.getCompanyId(),
-			structuredContent.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private List<DDMFormField> _getRootDDMFormFields(

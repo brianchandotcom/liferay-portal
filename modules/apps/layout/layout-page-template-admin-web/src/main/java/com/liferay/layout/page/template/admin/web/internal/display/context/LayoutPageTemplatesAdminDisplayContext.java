@@ -7,6 +7,7 @@ package com.liferay.layout.page.template.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -84,7 +85,10 @@ public class LayoutPageTemplatesAdminDisplayContext {
 				navigationItem.setActive(
 					Objects.equals(getTabs1(), "display-page-templates"));
 				navigationItem.setHref(
-					getPortletURL(), "tabs1", "display-page-templates");
+					getPortletURL(), "tabs1", "display-page-templates",
+					"layoutPageTemplateCollectionId",
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT);
 				navigationItem.setLabel(
 					LanguageUtil.get(
 						_httpServletRequest, "display-page-templates"));

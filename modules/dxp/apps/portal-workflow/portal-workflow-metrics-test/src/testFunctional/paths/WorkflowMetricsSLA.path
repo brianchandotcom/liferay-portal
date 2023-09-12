@@ -226,11 +226,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SLA_SUCCESS_MESSAGE</td>
-	<td>//div[contains(@class,'alert-success')]//div[contains(.,'SLA was saved')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SLA_TABLE</td>
 	<td>//div[contains(@class, 'table-responsive')]</td>
 	<td></td>

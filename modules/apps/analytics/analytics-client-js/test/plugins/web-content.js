@@ -28,6 +28,29 @@ const createWebContentElement = (assetId, assetTitle) => {
 	return webContentElement;
 };
 
+function createDynamicWebContentElement(attrs) {
+	const element = document.createElement('div');
+
+	for (let index = 0; index < Object.keys(attrs).length; index++) {
+		element.dataset[Object.keys(attrs)[index]] = attrs[index];
+	}
+
+	element.innerText =
+		'Lorem ipsum dolor, sit amet consectetur adipisicing elit.';
+
+	document.body.appendChild(element);
+
+	const paragraph = document.createElement('p');
+
+	paragraph.href = googleUrl;
+
+	setInnerHTML(paragraph, 'Paragraph inside a Web Content');
+
+	element.appendChild(paragraph);
+
+	return [element, paragraph];
+}
+
 describe('WebContent Plugin', () => {
 	let Analytics;
 
@@ -255,5 +278,45 @@ describe('WebContent Plugin', () => {
 
 			document.body.removeChild(webContentElement);
 		});
+	});
+
+	describe('webContentClicked required attributes', () => {
+		it.each([
+			[
+				'assetId',
+				{
+					analyticsAssetTitle: 'assetTitle',
+					analyticsAssetType: 'blog',
+				},
+			],
+			[
+				'assetTitle',
+				{
+					analyticsAssetId: 'assetId',
+					analyticsAssetType: 'blog',
+				},
+			],
+			[
+				'assetType',
+				{
+					analyticsAssetId: 'assetId',
+					analyticsAssetType: 'assetTitle',
+				},
+			],
+		])(
+			'is not fired if asset missing %s attribute',
+			async (label, attrs) => {
+				const [
+					element,
+					paragraph,
+				] = await createDynamicWebContentElement(attrs);
+
+				await userEvent.click(paragraph);
+
+				expect(Analytics.getEvents()).toEqual([]);
+
+				document.body.removeChild(element);
+			}
+		);
 	});
 });

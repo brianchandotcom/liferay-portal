@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusInterceptor;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
@@ -32,6 +33,7 @@ import com.liferay.portal.util.PropsUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -58,7 +60,13 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_serviceRegistration.unregister();
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+
+		_serviceRegistrations.clear();
 
 		PropsUtil.set(
 			"database.partition.enabled", _originalDatabasePartitionEnabled);
@@ -261,16 +269,21 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 		Destination destination = _destinationFactory.createDestination(
 			new DestinationConfiguration(destinationType, _DESTINATION_NAME));
 
-		destination.register(_testDBPartitionMessageListener);
-
 		Bundle bundle = FrameworkUtil.getBundle(
 			BaseDBPartitionMessageBusInterceptorTestCase.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		_serviceRegistration = bundleContext.registerService(
-			Destination.class, destination,
-			MapUtil.singletonDictionary("destination.name", _DESTINATION_NAME));
+		Dictionary<String, Object> dictionary = MapUtil.singletonDictionary(
+			"destination.name", destination.getName());
+
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				Destination.class, destination, dictionary));
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				MessageListener.class, _testDBPartitionMessageListener,
+				dictionary));
 	}
 
 	private static final String _DESTINATION_NAME = "liferay/test_dbpartition";
@@ -296,7 +309,8 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase
 
 	private static String _originalDatabasePartitionEnabled;
 	private static String _originalName;
-	private static ServiceRegistration<Destination> _serviceRegistration;
+	private static final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 	private static TestDBPartitionMessageListener
 		_testDBPartitionMessageListener;
 

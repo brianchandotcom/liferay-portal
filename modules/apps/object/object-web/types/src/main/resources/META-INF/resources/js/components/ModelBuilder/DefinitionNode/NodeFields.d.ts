@@ -5,15 +5,14 @@
 
 /// <reference types="react" />
 
-import {FieldNode} from '../types';
+import {ObjectFieldNode} from '../types';
 import './NodeFields.scss';
 interface NodeFieldsProps {
 	defaultLanguageId: Liferay.Language.Locale;
-	objectFields: FieldNode[];
+	objectFields: ObjectFieldNode[];
 	showAll: boolean;
 }
 export default function NodeFields({
-	defaultLanguageId,
 	objectFields,
 	showAll,
 }: NodeFieldsProps): JSX.Element;

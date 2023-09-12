@@ -1845,6 +1845,8 @@ definition {
 
 	macro firstLoginPG {
 		var appServerType = PropsUtil.get("app.server.type");
+		var password = JSONUtil2.getDefaultUserFirstPassword(password = ${password});
+		var userEmailAddress = JSONUtil2.getDefaultUserEmail(userEmailAddress = ${userEmailAddress});
 
 		if (${appServerType} == "weblogic") {
 
@@ -1864,15 +1866,30 @@ definition {
 
 		UserBar.signOut();
 
-		JSONUser.agreeToTermsAndAnswerReminderQuery(
-			portalURL = ${virtualHostsURL},
-			userEmailAddress = ${userEmailAddress});
+		if (isSet(virtualHostsURL)) {
+			var portalURL = ${virtualHostsURL};
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var isLXC = JSONUtil2.getLXCEnvironment();
+
+		if (${isLXC} != "true") {
+
+			// Workaround for LXC not supporting JSON call currently
+
+			JSONUser.agreeToTermsAndAnswerReminderQuery(
+				password = ${password},
+				portalURL = ${portalURL},
+				userEmailAddress = ${userEmailAddress});
+		}
 
 		if (isSet(virtualHostsURL)) {
 			Navigator.openSpecificURL(url = "${virtualHostsURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
 		else {
-			var baseURL = PropsUtil.get("portal.url");
+			var baseURL = JSONCompany.getPortalURL();
 
 			Navigator.openSpecificURL(url = "${baseURL}/web/guest?SM_USER=${userEmailAddress}");
 		}
@@ -2234,7 +2251,7 @@ definition {
 	macro logoutAndLoginPG {
 		Navigator.openURL();
 
-		UserBar.signOut();
+		UserBar.signOut(signOutLocalizationName = ${signOutLocalizationName});
 
 		User.loginPG(
 			authenticationMethod = ${authenticationMethod},
@@ -2253,7 +2270,7 @@ definition {
 			Navigator.openURL();
 		}
 
-		UserBar.signOut();
+		UserBar.signOut(signOutLocalizationName = ${signOutLocalizationName});
 	}
 
 	@description = "Log out of Liferay Portal via URL."

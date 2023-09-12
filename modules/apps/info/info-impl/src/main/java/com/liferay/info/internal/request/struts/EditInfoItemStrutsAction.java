@@ -287,9 +287,46 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 				_log.debug(infoFormValidationException);
 			}
 
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-182728")) {
+				SessionErrors.add(
+					httpServletRequest, formItemId,
+					infoFormValidationException);
+			}
+
+			boolean hasInfoFormValidationExceptionCustomValidationErrors =
+				false;
+
+			if (infoFormValidationException instanceof
+					InfoFormValidationException.RuleValidation) {
+
+				InfoFormValidationException.RuleValidation
+					infoFormValidationExceptionRuleValidation =
+						(InfoFormValidationException.RuleValidation)
+							infoFormValidationException;
+
+				for (InfoFormValidationException.CustomValidation
+						infoFormValidationExceptionCustomValidation :
+							infoFormValidationExceptionRuleValidation.
+								getCustomValidations()) {
+
+					if (Validator.isNotNull(
+							infoFormValidationExceptionCustomValidation.
+								getInfoFieldUniqueId())) {
+
+						SessionErrors.add(
+							httpServletRequest,
+							infoFormValidationExceptionCustomValidation.
+								getInfoFieldUniqueId(),
+							infoFormValidationExceptionCustomValidation);
+
+						hasInfoFormValidationExceptionCustomValidationErrors =
+							true;
+					}
+				}
+			}
+
 			if (!FeatureFlagManagerUtil.isEnabled("LPS-182728") ||
-				Validator.isNull(
-					infoFormValidationException.getInfoFieldUniqueId())) {
+				!hasInfoFormValidationExceptionCustomValidationErrors) {
 
 				SessionErrors.add(
 					httpServletRequest, formItemId,

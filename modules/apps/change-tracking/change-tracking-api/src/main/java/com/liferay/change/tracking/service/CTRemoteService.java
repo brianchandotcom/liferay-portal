@@ -43,7 +43,9 @@ public interface CTRemoteService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.change.tracking.service.impl.CTRemoteServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the ct remote remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CTRemoteServiceUtil} if injection and service tracking are not available.
 	 */
-	public CTRemote addCTRemote(String name, String description, String url)
+	public CTRemote addCTRemote(
+			String name, String description, String url, String clientId,
+			String clientSecret)
 		throws PortalException;
 
 	public CTRemote deleteCTRemote(CTRemote ctRemote) throws PortalException;
@@ -66,7 +68,8 @@ public interface CTRemoteService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	public CTRemote updateCTRemote(
-			long ctRemoteId, String name, String description, String url)
+			long ctRemoteId, String name, String description, String url,
+			String clientId, String clientSecret)
 		throws PortalException;
 
 }

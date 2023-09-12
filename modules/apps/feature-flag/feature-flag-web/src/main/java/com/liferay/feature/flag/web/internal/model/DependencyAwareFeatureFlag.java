@@ -6,6 +6,7 @@
 package com.liferay.feature.flag.web.internal.model;
 
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 
 /**
  * @author Drew Brokke

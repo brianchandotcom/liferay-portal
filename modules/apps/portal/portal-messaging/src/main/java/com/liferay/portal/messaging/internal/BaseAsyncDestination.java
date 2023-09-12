@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
-import java.util.Set;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -134,6 +134,9 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 
 	@Override
 	public void send(Message message) {
+		List<MessageListener> messageListeners =
+			messageListenerRegistry.getMessageListeners(name);
+
 		if (messageListeners.isEmpty()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("No message listeners for destination " + getName());
@@ -242,7 +245,7 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 	}
 
 	protected abstract void dispatch(
-		Set<MessageListener> messageListeners, Message message);
+		List<MessageListener> messageListeners, Message message);
 
 	protected void execute(Runnable runnable) {
 		_noticeableThreadPoolExecutor.execute(runnable);

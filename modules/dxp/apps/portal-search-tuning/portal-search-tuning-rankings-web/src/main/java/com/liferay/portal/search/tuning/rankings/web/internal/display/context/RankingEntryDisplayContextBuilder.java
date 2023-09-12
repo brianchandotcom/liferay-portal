@@ -25,11 +25,13 @@ public class RankingEntryDisplayContextBuilder {
 			new RankingEntryDisplayContext();
 
 		_setAliases(rankingEntryDisplayContext);
+		_setGroupExternalReferenceCode(rankingEntryDisplayContext);
 		_setHiddenResultsCount(rankingEntryDisplayContext);
 		_setInactive(rankingEntryDisplayContext);
 		_setIndex(rankingEntryDisplayContext);
 		_setNameForDisplay(rankingEntryDisplayContext);
 		_setPinnedResultsCount(rankingEntryDisplayContext);
+		_setSXPBlueprintExternalReferenceCode(rankingEntryDisplayContext);
 		_setUid(rankingEntryDisplayContext);
 
 		return rankingEntryDisplayContext;
@@ -45,6 +47,13 @@ public class RankingEntryDisplayContextBuilder {
 		rankingEntryDisplayContext.setAliases(
 			StringUtil.merge(
 				_ranking.getAliases(), StringPool.COMMA_AND_SPACE));
+	}
+
+	private void _setGroupExternalReferenceCode(
+		RankingEntryDisplayContext rankingEntryDisplayContext) {
+
+		rankingEntryDisplayContext.setGroupExternalReferenceCode(
+			_ranking.getGroupExternalReferenceCode());
 	}
 
 	private void _setHiddenResultsCount(
@@ -77,6 +86,13 @@ public class RankingEntryDisplayContextBuilder {
 
 		rankingEntryDisplayContext.setPinnedResultsCount(
 			_getSizeString(_ranking.getPins()));
+	}
+
+	private void _setSXPBlueprintExternalReferenceCode(
+		RankingEntryDisplayContext rankingEntryDisplayContext) {
+
+		rankingEntryDisplayContext.setSXPBlueprintExternalReferenceCode(
+			_ranking.getSXPBlueprintExternalReferenceCode());
 	}
 
 	private void _setUid(

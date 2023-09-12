@@ -18,6 +18,7 @@
 	filterDropdownItems="<%= layoutSetPrototypeDisplayContext.getFilterDropdownItems() %>"
 	infoPanelId="infoPanelId"
 	itemsTotal="<%= layoutSetPrototypeDisplayContext.getTotalItems() %>"
+	orderDropdownItems="<%= layoutSetPrototypeDisplayContext.getOrderByDropdownItems() %>"
 	propsTransformer="js/LayoutSetPrototypeManagementToolbarPropsTransformer"
 	searchActionURL="<%= layoutSetPrototypeDisplayContext.getSearchActionURL() %>"
 	searchContainerId="layoutSetPrototype"

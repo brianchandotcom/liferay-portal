@@ -8,6 +8,7 @@ package com.liferay.oauth2.provider.web.internal.display.context;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.oauth2.provider.model.OAuth2Authorization;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -62,14 +63,9 @@ public class OAuth2ConnectedApplicationsManagementToolbarDisplayContext
 
 	public List<DropdownItem> getFilterDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(
-					getOrderByDropdownItems(
-						HashMapBuilder.put(
-							"createDate", "authorization"
-						).put(
-							"oAuth2ApplicationId", "application-id"
-						).build()));
+				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "order-by"));
 			}
@@ -91,6 +87,15 @@ public class OAuth2ConnectedApplicationsManagementToolbarDisplayContext
 
 		return OrderByComparatorFactoryUtil.create(
 			"OAuth2Authorization", columnName, orderByType.equals("asc"));
+	}
+
+	public List<DropdownItem> getOrderByDropdownItems() {
+		return getOrderByDropdownItems(
+			HashMapBuilder.put(
+				"createDate", "authorization"
+			).put(
+				"oAuth2ApplicationId", "application-id"
+			).build());
 	}
 
 }

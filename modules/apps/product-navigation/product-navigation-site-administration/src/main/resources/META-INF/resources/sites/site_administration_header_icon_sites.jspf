@@ -15,7 +15,7 @@
 		id='<%= liferayPortletResponse.getNamespace() + "manageSitesLink" %>'
 		monospaced="<%= true %>"
 		small="<%= true %>"
-		title='<%= LanguageUtil.get(request, "go-to-other-site") %>'
+		title="go-to-other-site"
 	/>
 </div>
 

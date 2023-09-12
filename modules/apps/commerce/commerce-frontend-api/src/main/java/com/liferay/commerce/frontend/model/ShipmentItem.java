@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.frontend.model;
 
+import java.math.BigDecimal;
+
 /**
  * @author Alessio Antonio Rendina
  * @author Alec Sloan
@@ -12,9 +14,9 @@ package com.liferay.commerce.frontend.model;
 public class ShipmentItem {
 
 	public ShipmentItem(
-		String externalReferenceCode, long orderId, int orderedQuantity,
-		long shipmentItemId, int shippedQuantity, String sku,
-		int toSendQuantity, String warehouse) {
+		String externalReferenceCode, long orderId, BigDecimal orderedQuantity,
+		long shipmentItemId, BigDecimal shippedQuantity, String sku,
+		BigDecimal toSendQuantity, String unitOfMeasureKey, String warehouse) {
 
 		_externalReferenceCode = externalReferenceCode;
 		_orderId = orderId;
@@ -23,6 +25,7 @@ public class ShipmentItem {
 		_shippedQuantity = shippedQuantity;
 		_sku = sku;
 		_toSendQuantity = toSendQuantity;
+		_unitOfMeasureKey = unitOfMeasureKey;
 		_warehouse = warehouse;
 	}
 
@@ -30,7 +33,7 @@ public class ShipmentItem {
 		return _externalReferenceCode;
 	}
 
-	public int getOrderedQuantity() {
+	public BigDecimal getOrderedQuantity() {
 		return _orderedQuantity;
 	}
 
@@ -42,7 +45,7 @@ public class ShipmentItem {
 		return _shipmentItemId;
 	}
 
-	public int getShippedQuantity() {
+	public BigDecimal getShippedQuantity() {
 		return _shippedQuantity;
 	}
 
@@ -50,8 +53,12 @@ public class ShipmentItem {
 		return _sku;
 	}
 
-	public int getToSendQuantity() {
+	public BigDecimal getToSendQuantity() {
 		return _toSendQuantity;
+	}
+
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
 	}
 
 	public String getWarehouse() {
@@ -59,12 +66,13 @@ public class ShipmentItem {
 	}
 
 	private final String _externalReferenceCode;
-	private final int _orderedQuantity;
+	private final BigDecimal _orderedQuantity;
 	private final long _orderId;
 	private final long _shipmentItemId;
-	private final int _shippedQuantity;
+	private final BigDecimal _shippedQuantity;
 	private final String _sku;
-	private final int _toSendQuantity;
+	private final BigDecimal _toSendQuantity;
+	private final String _unitOfMeasureKey;
 	private final String _warehouse;
 
 }

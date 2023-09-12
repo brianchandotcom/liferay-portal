@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
 import com.liferay.push.notifications.service.PushNotificationsDeviceLocalService;
 
@@ -33,43 +33,21 @@ public class PushNotificationMessagingConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		DestinationConfiguration pushNotificationDestinationConfiguration =
-			new DestinationConfiguration(
-				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-				PushNotificationsDestinationNames.PUSH_NOTIFICATION);
-
-		Destination pushNotificationDestination = _registerDestination(
-			pushNotificationDestinationConfiguration);
-
-		MessageListener pushNotificationsMessageListener =
+		_registerMessaging(
+			bundleContext, PushNotificationsDestinationNames.PUSH_NOTIFICATION,
 			new PushNotificationsMessageListener(
-				_pushNotificationsDeviceLocalService);
+				_pushNotificationsDeviceLocalService));
 
-		pushNotificationDestination.register(pushNotificationsMessageListener);
-
-		DestinationConfiguration
-			pushNotificationResponseDestinationConfiguration =
-				new DestinationConfiguration(
-					DestinationConfiguration.DESTINATION_TYPE_SERIAL,
-					PushNotificationsDestinationNames.
-						PUSH_NOTIFICATION_RESPONSE);
-
-		Destination pushNotificationResponseDestination = _registerDestination(
-			pushNotificationResponseDestinationConfiguration);
-
-		MessageListener pushNotificationsResponseMessageListener =
-			new PushNotificationsResponseMessageListener(_jsonFactory);
-
-		pushNotificationResponseDestination.register(
-			pushNotificationsResponseMessageListener);
+		_registerMessaging(
+			bundleContext,
+			PushNotificationsDestinationNames.PUSH_NOTIFICATION_RESPONSE,
+			new PushNotificationsResponseMessageListener(_jsonFactory));
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		if (!_serviceRegistrations.isEmpty()) {
-			for (ServiceRegistration<Destination> serviceRegistration :
+			for (ServiceRegistration<?> serviceRegistration :
 					_serviceRegistrations) {
 
 				serviceRegistration.unregister();
@@ -77,29 +55,28 @@ public class PushNotificationMessagingConfigurator {
 
 			_serviceRegistrations.clear();
 		}
-
-		_bundleContext = null;
 	}
 
-	private Destination _registerDestination(
-		DestinationConfiguration destinationConfiguration) {
+	private void _registerMessaging(
+		BundleContext bundleContext, String destinationName,
+		MessageListener messageListener) {
 
 		Destination destination = _destinationFactory.createDestination(
-			destinationConfiguration);
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_SERIAL,
+				destinationName));
 
-		Dictionary<String, Object> properties =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"destination.name", destination.getName()
-			).build();
+		Dictionary<String, Object> dictionary = MapUtil.singletonDictionary(
+			"destination.name", destination.getName());
 
 		_serviceRegistrations.add(
-			_bundleContext.registerService(
-				Destination.class, destination, properties));
+			bundleContext.registerService(
+				Destination.class, destination, dictionary));
 
-		return destination;
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				MessageListener.class, messageListener, dictionary));
 	}
-
-	private BundleContext _bundleContext;
 
 	@Reference
 	private DestinationFactory _destinationFactory;
@@ -111,7 +88,7 @@ public class PushNotificationMessagingConfigurator {
 	private PushNotificationsDeviceLocalService
 		_pushNotificationsDeviceLocalService;
 
-	private final List<ServiceRegistration<Destination>> _serviceRegistrations =
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();
 
 }

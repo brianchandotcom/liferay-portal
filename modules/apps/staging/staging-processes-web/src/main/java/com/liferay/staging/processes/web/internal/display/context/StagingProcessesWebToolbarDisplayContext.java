@@ -14,6 +14,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -179,8 +180,9 @@ public class StagingProcessesWebToolbarDisplayContext {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).addGroup(
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getOrderByDropDownItems());
+				dropdownGroupItem.setDropdownItems(getOrderByDropDownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "order-by"));
 			}
@@ -197,6 +199,28 @@ public class StagingProcessesWebToolbarDisplayContext {
 			StringPool.BLANK);
 
 		return _orderByCol;
+	}
+
+	public List<DropdownItem> getOrderByDropDownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.setHref(_getOrderByURL("name"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "name"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setHref(_getOrderByURL("create-date"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "create-date"));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setHref(_getOrderByURL("completion-date"));
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "completion-date"));
+			}
+		).build();
 	}
 
 	public String getSortingOrder() {
@@ -263,28 +287,6 @@ public class StagingProcessesWebToolbarDisplayContext {
 		).setNavigation(
 			navigation
 		).buildPortletURL();
-	}
-
-	private List<DropdownItem> _getOrderByDropDownItems() {
-		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setHref(_getOrderByURL("name"));
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "name"));
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setHref(_getOrderByURL("create-date"));
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "create-date"));
-			}
-		).add(
-			dropdownItem -> {
-				dropdownItem.setHref(_getOrderByURL("completion-date"));
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "completion-date"));
-			}
-		).build();
 	}
 
 	private PortletURL _getOrderByURL(String orderByColumnName) {

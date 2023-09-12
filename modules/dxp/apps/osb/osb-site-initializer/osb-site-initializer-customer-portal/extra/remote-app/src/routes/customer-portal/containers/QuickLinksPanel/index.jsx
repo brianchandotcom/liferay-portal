@@ -97,7 +97,7 @@ const QuickLinksPanel = () => {
 				'cp-link-body quick-links-container rounded',
 				{
 					'p-4': isQuickLinksExpanded,
-					'position-absolute px-3 py-4': !isQuickLinksExpanded,
+					'position-absolute px-3 py-3': !isQuickLinksExpanded,
 				}
 			)}
 		>

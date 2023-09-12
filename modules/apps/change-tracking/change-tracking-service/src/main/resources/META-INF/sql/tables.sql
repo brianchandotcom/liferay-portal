@@ -19,9 +19,12 @@ create table CTCollection (
 	userId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
+	ctRemoteId LONG,
 	schemaVersionId LONG,
 	name VARCHAR(75) null,
 	description VARCHAR(200) null,
+	onDemandUserId LONG,
+	shareable BOOLEAN,
 	status INTEGER,
 	statusByUserId LONG,
 	statusDate DATE null
@@ -102,7 +105,9 @@ create table CTRemote (
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
 	description VARCHAR(75) null,
-	url VARCHAR(75) null
+	url VARCHAR(75) null,
+	clientId VARCHAR(75) null,
+	clientSecret VARCHAR(75) null
 );
 
 create table CTSchemaVersion (

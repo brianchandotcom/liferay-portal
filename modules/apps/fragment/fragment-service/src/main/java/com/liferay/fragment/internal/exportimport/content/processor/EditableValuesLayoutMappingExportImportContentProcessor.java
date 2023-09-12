@@ -9,6 +9,9 @@ import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -130,6 +133,13 @@ public class EditableValuesLayoutMappingExportImportContentProcessor
 			return;
 		}
 
+		if ((layout.isPrivateLayout() !=
+				portletDataContext.isPrivateLayout()) &&
+			!layout.isTypeAssetDisplay() && !_isSkipExportLayout(layout)) {
+
+			return;
+		}
+
 		layoutJSONObject.put("plid", layout.getPlid());
 
 		if (exportReferencedContent) {
@@ -145,6 +155,36 @@ public class EditableValuesLayoutMappingExportImportContentProcessor
 				referrerStagedModel, entityElement, layout,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 		}
+	}
+
+	private boolean _isSkipExportLayout(Layout layout) {
+		if (!layout.isTypeContent()) {
+			return false;
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+
+		if (layoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					fetchLayoutPageTemplateEntryByPlid(layout.getClassPK());
+		}
+
+		if (layoutPageTemplateEntry == null) {
+			return false;
+		}
+
+		if ((layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) ||
+			(layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _replaceImportLayoutReferences(
@@ -180,5 +220,9 @@ public class EditableValuesLayoutMappingExportImportContentProcessor
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 }

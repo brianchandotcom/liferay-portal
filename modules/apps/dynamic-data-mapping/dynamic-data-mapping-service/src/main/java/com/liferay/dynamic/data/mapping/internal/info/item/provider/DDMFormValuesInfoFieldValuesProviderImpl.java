@@ -118,7 +118,7 @@ public class DDMFormValuesInfoFieldValuesProviderImpl
 
 		Value value = ddmFormFieldValue.getValue();
 
-		if (value == null) {
+		if ((value == null) || (ddmFormFieldValue.getDDMFormField() == null)) {
 			return null;
 		}
 

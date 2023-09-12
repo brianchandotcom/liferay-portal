@@ -72,6 +72,12 @@ public interface ObjectDefinition
 
 	public boolean isDefaultStorageType();
 
+	public boolean isLinkedToObjectFolder(long objectFolderId);
+
+	public boolean isRootDescendantNode();
+
+	public boolean isRootNode();
+
 	public boolean isUnmodifiableSystemObject();
 
 }

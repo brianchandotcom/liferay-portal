@@ -8,7 +8,7 @@ package com.liferay.fragment.web.internal.portlet.action;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.service.FragmentCompositionService;
-import com.liferay.fragment.web.internal.handler.FragmentEntryExceptionRequestHandler;
+import com.liferay.fragment.web.internal.handler.FragmentEntryExceptionRequestHandlerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -69,7 +69,7 @@ public class RenameFragmentCompositionMVCActionCommand
 
 			hideDefaultErrorMessage(actionRequest);
 
-			_fragmentEntryExceptionRequestHandler.handlePortalException(
+			FragmentEntryExceptionRequestHandlerUtil.handlePortalException(
 				actionRequest, actionResponse, portalException);
 		}
 	}
@@ -90,10 +90,6 @@ public class RenameFragmentCompositionMVCActionCommand
 
 	@Reference
 	private FragmentCompositionService _fragmentCompositionService;
-
-	@Reference
-	private FragmentEntryExceptionRequestHandler
-		_fragmentEntryExceptionRequestHandler;
 
 	@Reference
 	private Portal _portal;

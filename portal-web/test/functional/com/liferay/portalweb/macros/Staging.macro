@@ -520,13 +520,6 @@ definition {
 		}
 
 		var displayDateHour = selenium.getAttribute("//input[contains(@id,'schedulerStartDateHour')]@value");
-
-		var displayDateHourLength = StringUtil.length(${displayDateHour});
-
-		if (${displayDateHourLength} == 1) {
-			var displayDateHour = "0${displayDateHour}";
-		}
-
 		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'schedulerStartDateAmPm')]@value");
 
 		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
@@ -543,6 +536,12 @@ definition {
 			var displayDateMinuteFuture = ${displayDateMinuteFuture} - 60;
 		}
 
+		var displayDateHourLength = StringUtil.length(${displayDateHour});
+
+		if (${displayDateHourLength} == 1) {
+			var displayDateHour = "0${displayDateHour}";
+		}
+
 		var displayDateMinuteFutureLength = StringUtil.length(${displayDateMinuteFuture});
 
 		if (${displayDateMinuteFutureLength} == 1) {
@@ -551,7 +550,7 @@ definition {
 
 		var displayDate = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAmpm}";
 
-		Type(
+		Type.sendKeys(
 			locator1 = "StagingPublishToLive#DATE_SCHEDULE_TIME_INPUT",
 			value1 = ${displayDate});
 

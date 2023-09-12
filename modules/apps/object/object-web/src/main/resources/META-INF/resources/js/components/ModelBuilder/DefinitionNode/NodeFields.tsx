@@ -7,23 +7,17 @@ import classNames from 'classnames';
 import React from 'react';
 
 import {getBusinessTypeLabel} from '../../../utils/businessTypeLabel';
-import {FieldNode} from '../types';
+import {ObjectFieldNode} from '../types';
 
 import './NodeFields.scss';
 
-import {getLocalizableLabel} from '@liferay/object-js-components-web';
-
 interface NodeFieldsProps {
 	defaultLanguageId: Liferay.Language.Locale;
-	objectFields: FieldNode[];
+	objectFields: ObjectFieldNode[];
 	showAll: boolean;
 }
 
-export default function NodeFields({
-	defaultLanguageId,
-	objectFields,
-	showAll,
-}: NodeFieldsProps) {
+export default function NodeFields({objectFields, showAll}: NodeFieldsProps) {
 	return (
 		<>
 			{objectFields.map((objectField, index) => {
@@ -40,19 +34,13 @@ export default function NodeFields({
 							key={objectField.name}
 						>
 							<div className="lfr-objects__model-builder-node-field-label">
-								<span>
-									{getLocalizableLabel(
-										defaultLanguageId,
-										objectField.label,
-										objectField.name
-									)}
-								</span>
+								<span>{objectField.label}</span>
 							</div>
 
 							<div className="lfr-objects__model-builder-node-field-business-type">
 								<span>
 									{getBusinessTypeLabel(
-										objectField.businessType
+										objectField.businessType as string
 									)}
 								</span>
 							</div>

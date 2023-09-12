@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
@@ -448,6 +449,11 @@ public class DBTest {
 
 		_db.runSQL(
 			StringBundler.concat(
+				"insert into ", _TABLE_NAME_1,
+				" (id, notNilColumn) values (3, '3')"));
+
+		_db.runSQL(
+			StringBundler.concat(
 				"insert into ", _TABLE_NAME_2,
 				" (id, notNilColumn, typeString) values (1, '1', ",
 				"'testTable2Value1')"));
@@ -459,7 +465,10 @@ public class DBTest {
 		}
 
 		_db.copyTableRows(
-			_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap);
+			_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
+			HashMapBuilder.put(
+				_dbInspector.normalizeName("typeString"), "'test'"
+			).build());
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
 				"select * from " + _TABLE_NAME_2 + " order by id asc");
@@ -476,6 +485,83 @@ public class DBTest {
 			Assert.assertEquals("2", resultSet.getString("notNilColumn"));
 			Assert.assertEquals(
 				"testTable1Value2", resultSet.getString("typeString"));
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(3, resultSet.getLong("id"));
+			Assert.assertEquals("3", resultSet.getString("notNilColumn"));
+			Assert.assertEquals("test", resultSet.getString("typeString"));
+
+			Assert.assertFalse(resultSet.next());
+		}
+	}
+
+	@Test
+	public void testCopyTableRowsDifferentColumnNames() throws Exception {
+		_db.runSQL(
+			StringBundler.concat(
+				"create table ", _TABLE_NAME_2, " (id2 LONG not null primary ",
+				"key, notNilColumn2 VARCHAR(75) not null, nilColumn2 ",
+				"VARCHAR(75) null, typeBlob2 BLOB, typeBoolean2 BOOLEAN,",
+				"typeDate2 DATE null, typeDouble2 DOUBLE, typeInteger2 ",
+				"INTEGER, typeLong2 LONG null, typeSBlob2 SBLOB, typeString2 ",
+				"STRING null, typeText2 TEXT null, typeVarchar2 VARCHAR(75) ",
+				"null);"));
+
+		_db.runSQL(
+			StringBundler.concat(
+				"insert into ", _TABLE_NAME_1,
+				" (id, notNilColumn, typeString) values (1, '1', ",
+				"'testTable1Value1')"));
+
+		_db.runSQL(
+			StringBundler.concat(
+				"insert into ", _TABLE_NAME_1,
+				" (id, notNilColumn, typeString) values (2, '2', ",
+				"'testTable1Value2')"));
+
+		_db.runSQL(
+			StringBundler.concat(
+				"insert into ", _TABLE_NAME_1,
+				" (id, notNilColumn) values (3, '3')"));
+
+		_db.runSQL(
+			StringBundler.concat(
+				"insert into ", _TABLE_NAME_2,
+				" (id2, notNilColumn2, typeString2) values (1, '1', ",
+				"'testTable2Value1')"));
+
+		Map<String, String> columnNamesMap = new HashMap<>();
+
+		for (String columnName : _SYNC_TABLES_COLUMN_NAMES) {
+			columnNamesMap.put(columnName, columnName + "2");
+		}
+
+		_db.copyTableRows(
+			_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
+			HashMapBuilder.put(
+				_dbInspector.normalizeName("typeString2"), "'test'"
+			).build());
+
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select * from " + _TABLE_NAME_2 + " order by id2 asc");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(1, resultSet.getLong("id2"));
+			Assert.assertEquals("1", resultSet.getString("notNilColumn2"));
+			Assert.assertEquals(
+				"testTable2Value1", resultSet.getString("typeString2"));
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(2, resultSet.getLong("id2"));
+			Assert.assertEquals("2", resultSet.getString("notNilColumn2"));
+			Assert.assertEquals(
+				"testTable1Value2", resultSet.getString("typeString2"));
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(3, resultSet.getLong("id2"));
+			Assert.assertEquals("3", resultSet.getString("notNilColumn2"));
+			Assert.assertEquals("test", resultSet.getString("typeString2"));
 
 			Assert.assertFalse(resultSet.next());
 		}
@@ -596,7 +682,10 @@ public class DBTest {
 		}
 
 		try (AutoCloseable autoCloseable = _db.syncTables(
-				_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap)) {
+				_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
+				HashMapBuilder.put(
+					_dbInspector.normalizeName("typeString"), "'test'"
+				).build())) {
 
 			_db.runSQL(
 				StringBundler.concat(
@@ -604,23 +693,31 @@ public class DBTest {
 					" (id, notNilColumn, typeString) values (2, '2', ",
 					"'testValueB')"));
 
+			_db.runSQL(
+				StringBundler.concat(
+					"insert into ", _TABLE_NAME_1,
+					" (id, notNilColumn) values (3, '3')"));
+
 			_db.runSQL("delete from " + _TABLE_NAME_1 + " where id = 1");
 
 			_db.runSQL(
 				"update " + _TABLE_NAME_1 +
-					" set typeString = 'testValueC' where id = 2");
+					" set typeString = NULL where id = 2");
 		}
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select * from " + _TABLE_NAME_2);
+				"select * from " + _TABLE_NAME_2 + " order by id");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
-
 			Assert.assertEquals(2, resultSet.getLong("id"));
 			Assert.assertEquals("2", resultSet.getString("notNilColumn"));
-			Assert.assertEquals(
-				"testValueC", resultSet.getString("typeString"));
+			Assert.assertEquals("test", resultSet.getString("typeString"));
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(3, resultSet.getLong("id"));
+			Assert.assertEquals("3", resultSet.getString("notNilColumn"));
+			Assert.assertEquals("test", resultSet.getString("typeString"));
 
 			Assert.assertFalse(resultSet.next());
 		}
@@ -659,7 +756,10 @@ public class DBTest {
 		}
 
 		try (AutoCloseable autoCloseable = _db.syncTables(
-				_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap)) {
+				_connection, _TABLE_NAME_1, _TABLE_NAME_2, columnNamesMap,
+				HashMapBuilder.put(
+					_dbInspector.normalizeName("typeString2"), "'test'"
+				).build())) {
 
 			_db.runSQL(
 				StringBundler.concat(
@@ -667,22 +767,31 @@ public class DBTest {
 					" (id, notNilColumn, typeString) values (2, '2', ",
 					"'testValueB')"));
 
+			_db.runSQL(
+				StringBundler.concat(
+					"insert into ", _TABLE_NAME_1,
+					" (id, notNilColumn) values (3, '3')"));
+
 			_db.runSQL("delete from " + _TABLE_NAME_1 + " where id = 1");
 
 			_db.runSQL(
 				"update " + _TABLE_NAME_1 +
-					" set typeString = 'testValueC' where id = 2");
+					" set typeString = NULL where id = 2");
 		}
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select * from " + _TABLE_NAME_2);
+				"select * from " + _TABLE_NAME_2 + " order by id2");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Assert.assertTrue(resultSet.next());
 			Assert.assertEquals(2, resultSet.getLong("id2"));
 			Assert.assertEquals("2", resultSet.getString("notNilColumn2"));
-			Assert.assertEquals(
-				"testValueC", resultSet.getString("typeString2"));
+			Assert.assertEquals("test", resultSet.getString("typeString2"));
+
+			Assert.assertTrue(resultSet.next());
+			Assert.assertEquals(3, resultSet.getLong("id2"));
+			Assert.assertEquals("3", resultSet.getString("notNilColumn2"));
+			Assert.assertEquals("test", resultSet.getString("typeString2"));
 
 			Assert.assertFalse(resultSet.next());
 		}

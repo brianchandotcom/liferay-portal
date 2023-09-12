@@ -10,9 +10,9 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.settings.TypedSettings;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -140,6 +142,24 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 			clazz,
 			new PortletInstanceSettingsLocator(
 				layout, portletId, configurationPid));
+	}
+
+	@Override
+	public <T> T getPortletInstanceConfiguration(
+			Class<T> clazz, ThemeDisplay themeDisplay)
+		throws ConfigurationException {
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletResource = portletDisplay.getPortletResource();
+
+		if (Validator.isNull(portletResource)) {
+			return getPortletInstanceConfiguration(
+				clazz, themeDisplay.getLayout(), portletDisplay.getId());
+		}
+
+		return getPortletInstanceConfiguration(
+			clazz, themeDisplay.getLayout(), portletResource);
 	}
 
 	@Override

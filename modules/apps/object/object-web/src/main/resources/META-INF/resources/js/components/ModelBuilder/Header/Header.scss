@@ -11,6 +11,15 @@
 		gap: 1rem;
 	}
 
+	&-changes-saved {
+		align-items: center;
+		color: #287d3c;
+		display: flex;
+		font-size: 14px;
+		font-weight: 600;
+		gap: 0.5rem;
+	}
+
 	&-container {
 		display: flex;
 		justify-content: space-between;

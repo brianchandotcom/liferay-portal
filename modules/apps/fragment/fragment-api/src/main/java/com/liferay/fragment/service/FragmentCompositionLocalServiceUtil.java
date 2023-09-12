@@ -425,6 +425,13 @@ public class FragmentCompositionLocalServiceUtil {
 		return getService().getTempFileNames(userId, groupId, folderName);
 	}
 
+	public static String getUniqueFragmentCompositionName(
+		long groupId, long fragmentCollectionId, String name) {
+
+		return getService().getUniqueFragmentCompositionName(
+			groupId, fragmentCollectionId, name);
+	}
+
 	public static FragmentComposition moveFragmentComposition(
 			long fragmentCompositionId, long fragmentCollectionId)
 		throws PortalException {

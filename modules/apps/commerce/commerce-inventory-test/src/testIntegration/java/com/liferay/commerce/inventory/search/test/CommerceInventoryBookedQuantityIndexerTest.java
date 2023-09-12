@@ -122,14 +122,14 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 	public void tearDown() throws Exception {
 		List<CommerceInventoryBookedQuantity>
 			commerceInventoryBookedQuantities =
-				_commerceBookedQuantityLocalService.
+				_commerceInventoryBookedQuantityLocalService.
 					getCommerceInventoryBookedQuantities(
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (CommerceInventoryBookedQuantity commerceInventoryBookedQuantity :
 				commerceInventoryBookedQuantities) {
 
-			_commerceBookedQuantityLocalService.
+			_commerceInventoryBookedQuantityLocalService.
 				deleteCommerceInventoryBookedQuantity(
 					commerceInventoryBookedQuantity);
 		}
@@ -174,13 +174,16 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				_user.getUserId(), commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), null, BigDecimal.valueOf(2), 0, 0,
-				StringPool.BLANK, _commerceContext, _serviceContext);
+				cpInstance.getCPInstanceId(), null, BigDecimal.valueOf(2), 0,
+				BigDecimal.ZERO, StringPool.BLANK, _commerceContext,
+				_serviceContext);
 
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
-			_commerceBookedQuantityLocalService.addCommerceBookedQuantity(
-				_user.getUserId(), null, new BigDecimal(2), cpInstance.getSku(),
-				StringPool.BLANK, Collections.emptyMap());
+			_commerceInventoryBookedQuantityLocalService.
+				addCommerceInventoryBookedQuantity(
+					_user.getUserId(), null, new BigDecimal(2),
+					cpInstance.getSku(), StringPool.BLANK,
+					Collections.emptyMap());
 
 		commerceOrderItem =
 			_commerceOrderItemLocalService.updateCommerceOrderItem(
@@ -231,13 +234,16 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				_user.getUserId(), commerceOrder.getCommerceOrderId(),
-				cpInstance.getCPInstanceId(), null, BigDecimal.valueOf(2), 0, 0,
-				StringPool.BLANK, _commerceContext, _serviceContext);
+				cpInstance.getCPInstanceId(), null, BigDecimal.valueOf(2), 0,
+				BigDecimal.ZERO, StringPool.BLANK, _commerceContext,
+				_serviceContext);
 
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
-			_commerceBookedQuantityLocalService.addCommerceBookedQuantity(
-				_user.getUserId(), null, new BigDecimal(2), cpInstance.getSku(),
-				StringPool.BLANK, Collections.emptyMap());
+			_commerceInventoryBookedQuantityLocalService.
+				addCommerceInventoryBookedQuantity(
+					_user.getUserId(), null, new BigDecimal(2),
+					cpInstance.getSku(), StringPool.BLANK,
+					Collections.emptyMap());
 
 		commerceOrderItem =
 			_commerceOrderItemLocalService.updateCommerceOrderItem(
@@ -367,11 +373,6 @@ public class CommerceInventoryBookedQuantityIndexerTest {
 	private static IndexerRegistry _indexerRegistry;
 
 	private AccountEntry _accountEntry;
-
-	@Inject
-	private CommerceInventoryBookedQuantityLocalService
-		_commerceBookedQuantityLocalService;
-
 	private CommerceCatalog _commerceCatalog;
 
 	@DeleteAfterTestRun

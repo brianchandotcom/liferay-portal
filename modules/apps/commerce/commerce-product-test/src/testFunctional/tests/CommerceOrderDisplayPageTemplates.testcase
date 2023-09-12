@@ -332,6 +332,97 @@ definition {
 		}
 	}
 
+	@description = "This is a test to check the COMMERCE-12060. As an admin I want the Order Item fragment to display correctly the options for the product bundles"
+	@priority = 5
+	test CanOrderItemCorrectlyShowOptionsProductBundles {
+		property portal.acceptance = "true";
+
+		task ("Given a product bundle is created") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "Hoses");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_option = "Package Quantity",
+				key_priceType = "Static",
+				productOptionPriceType = "true");
+
+			CommerceOptions.setDeltaPrice(
+				deltaPrice = 50,
+				key_index = 6,
+				key_optionIndex = 6,
+				productSKU = "MIN93015");
+		}
+
+		task ("And an order is created using the product bundle") {
+			CommerceJSONAccountsAPI._addCommerceAccountAddress(
+				accountEntryName = "Commerce Account",
+				city = "Test City",
+				countryISOCode = "US",
+				name = "Test Address",
+				street1 = "Test Street",
+				zip = "Test Zip Code");
+
+			CommerceJSONDeliveryCart._addCommerceCart(
+				accountEntryName = "Commerce Account",
+				billingAddressName = "Test Address",
+				cartItems = "MIN93022A:1",
+				shippingAddressName = "Test Address",
+				shippingOption = "Standard Delivery");
+
+			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
+		}
+
+		task ("And a new Display Page Template for Commerce Order is created") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Commerce Order",
+				displayPageTemplateEntryName = "Test Commerce Order Display Page Template",
+				groupName = "Minium");
+		}
+
+		task ("And a Collection Display fragment is deployed on the page") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "minium");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Test Commerce Order Display Page Template");
+
+			CommerceDisplayPageTemplates.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display",
+				index = 1);
+
+			CommerceDisplayPageTemplates.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				index = 1,
+				infoItemRelatedListProviderName = "Order Items");
+		}
+
+		task ("And a Heading fragment is deployed to map Basic Information fields") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "",
+				fragmentName = "Heading");
+		}
+
+		task ("And an order is set for the preview") {
+			DisplayPageTemplate.selectPreviewItem(
+				assetTitle = ${orderId},
+				assetType = "Document");
+		}
+
+		task ("When the order item field is mapped to the Heading fragment to show the options") {
+			CommerceDisplayPageTemplates.mapEditableTextToField(
+				field = "Options",
+				fragmentName = "Heading",
+				index = 1);
+		}
+
+		task ("Then only one of the products shows a link to the option") {
+			CommerceDisplayPageTemplates.viewMappedFragmentsText(fragmentsTextList = "6,");
+		}
+	}
+
 	@description = "Verify that order fields values are mapped to fragments."
 	@priority = 5
 	test CanUseCommerceOrderFieldsWithFragments {

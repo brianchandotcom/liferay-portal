@@ -284,17 +284,21 @@ definition {
 	}
 
 	macro tearDownNonAdminUsers {
-		var userIds = JSONUserAPI._getUserIds(authenticationMethod = ${authenticationMethod});
+		var lxcEnvironment = JSONUtil2.getLXCEnvironment();
 
-		for (var userId : list ${userIds}) {
-			var currentEmailAddress = JSONUserGetter.getEmailAddress(
-				authenticationMethod = ${authenticationMethod},
-				userId = ${userId});
+		if (${lxcEnvironment} != "true") {
+			var userIds = JSONUserAPI._getUserIds(authenticationMethod = ${authenticationMethod});
 
-			if (${currentEmailAddress} != "test@liferay.com") {
-				JSONUser.deleteUserByUserId(
+			for (var userId : list ${userIds}) {
+				var currentEmailAddress = JSONUserGetter.getEmailAddress(
 					authenticationMethod = ${authenticationMethod},
 					userId = ${userId});
+
+				if (${currentEmailAddress} != "test@liferay.com") {
+					JSONUser.deleteUserByUserId(
+						authenticationMethod = ${authenticationMethod},
+						userId = ${userId});
+				}
 			}
 		}
 	}

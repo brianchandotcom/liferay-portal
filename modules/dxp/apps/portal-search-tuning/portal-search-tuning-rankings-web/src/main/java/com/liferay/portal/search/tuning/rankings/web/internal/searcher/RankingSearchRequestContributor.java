@@ -5,8 +5,13 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.searcher;
 
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -16,6 +21,9 @@ import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndex
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 import com.liferay.portal.search.tuning.rankings.web.internal.searcher.helper.RankingSearchRequestHelper;
+
+import java.util.List;
+import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,15 +50,21 @@ public class RankingSearchRequestContributor
 			return searchRequest;
 		}
 
-		Ranking ranking = rankingIndexReader.fetchByQueryString(
-			rankingIndexName, searchRequest.getQueryString());
+		SearchContext searchContext = _getSearchContext(searchRequest);
 
-		if (ranking == null) {
+		List<Ranking> rankings = rankingIndexReader.fetch(
+			_getGroupExternalReferenceCode(searchContext.getGroupIds()),
+			searchRequest.getQueryString(), rankingIndexName,
+			GetterUtil.getString(
+				searchContext.getAttribute(
+					"search.experiences.blueprint.external.reference.code")));
+
+		if (rankings == null) {
 			return searchRequest;
 		}
 
 		SearchRequest contributeSearchRequest = contribute(
-			searchRequest, ranking);
+			rankings, searchRequest);
 
 		if (contributeSearchRequest == null) {
 			return searchRequest;
@@ -60,12 +74,15 @@ public class RankingSearchRequestContributor
 	}
 
 	protected SearchRequest contribute(
-		SearchRequest searchRequest, Ranking ranking) {
+		List<Ranking> rankings, SearchRequest searchRequest) {
 
 		SearchRequestBuilder searchRequestBuilder =
 			searchRequestBuilderFactory.builder(searchRequest);
 
-		rankingSearchRequestHelper.contribute(searchRequestBuilder, ranking);
+		for (Ranking ranking : rankings) {
+			rankingSearchRequestHelper.contribute(
+				searchRequestBuilder, ranking);
+		}
 
 		return searchRequestBuilder.build();
 	}
@@ -93,6 +110,20 @@ public class RankingSearchRequestContributor
 	@Reference
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
+	private String _getGroupExternalReferenceCode(long[] groupIds) {
+		if (ArrayUtil.isNotEmpty(groupIds)) {
+			Group group = _groupLocalService.fetchGroup(groupIds[0]);
+
+			if (group != null) {
+				return group.getExternalReferenceCode();
+			}
+
+			return null;
+		}
+
+		return null;
+	}
+
 	private RankingIndexName _getRankingIndexName(SearchRequest searchRequest) {
 		SearchRequestBuilder builder = searchRequestBuilderFactory.builder(
 			searchRequest);
@@ -104,5 +135,15 @@ public class RankingSearchRequestContributor
 
 		return rankingIndexNameBuilder.getRankingIndexName(companyIds[0]);
 	}
+
+	private SearchContext _getSearchContext(SearchRequest searchRequest) {
+		SearchRequestBuilder searchRequestBuilder =
+			searchRequestBuilderFactory.builder(searchRequest);
+
+		return searchRequestBuilder.withSearchContextGet(Function.identity());
+	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

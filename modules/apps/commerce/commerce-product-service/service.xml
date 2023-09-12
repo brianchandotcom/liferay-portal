@@ -507,12 +507,15 @@
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
 		<column name="DDMFormFieldTypeName" type="String" />
+		<column name="infoItemServiceKey" type="String" />
 		<column name="priority" type="double" />
+		<column name="definedExternally" type="boolean" />
 		<column name="facetable" type="boolean" />
 		<column name="required" type="boolean" />
 		<column name="skuContributor" type="boolean" />
 		<column name="key" type="String" />
 		<column name="priceType" type="String" />
+		<column name="typeSettings" type="String" />
 
 		<!-- Order -->
 

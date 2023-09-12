@@ -9,6 +9,9 @@ import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.commerce.exception.CPDefinitionInventoryMaxOrderQuantityException;
+import com.liferay.commerce.exception.CPDefinitionInventoryMinOrderQuantityException;
+import com.liferay.commerce.exception.CPDefinitionInventoryMultipleOrderQuantityException;
 import com.liferay.commerce.exception.NoSuchCPDefinitionInventoryException;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
@@ -32,11 +35,11 @@ import com.liferay.commerce.service.CPDAvailabilityEstimateService;
 import com.liferay.commerce.service.CPDefinitionInventoryService;
 import com.liferay.friendly.url.exception.FriendlyURLLengthException;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -206,6 +209,12 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			else if (throwable instanceof AssetCategoryException ||
 					 throwable instanceof AssetTagException ||
 					 throwable instanceof CPDefinitionExpirationDateException ||
+					 throwable instanceof
+						 CPDefinitionInventoryMaxOrderQuantityException ||
+					 throwable instanceof
+						 CPDefinitionInventoryMinOrderQuantityException ||
+					 throwable instanceof
+						 CPDefinitionInventoryMultipleOrderQuantityException ||
 					 throwable instanceof
 						 CPDefinitionMetaDescriptionException ||
 					 throwable instanceof CPDefinitionMetaKeywordsException ||
@@ -596,14 +605,14 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		boolean displayStockQuantity = ParamUtil.getBoolean(
 			actionRequest, "displayStockQuantity");
 		boolean backOrders = ParamUtil.getBoolean(actionRequest, "backOrders");
-		int minStockQuantity = ParamUtil.getInteger(
-			actionRequest, "minStockQuantity");
-		int minOrderQuantity = ParamUtil.getInteger(
-			actionRequest, "minOrderQuantity");
-		int maxOrderQuantity = ParamUtil.getInteger(
-			actionRequest, "maxOrderQuantity");
-		int multipleOrderQuantity = ParamUtil.getInteger(
-			actionRequest, "multipleOrderQuantity");
+		BigDecimal minStockQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "minStockQuantity", BigDecimal.ZERO);
+		BigDecimal minOrderQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "minOrderQuantity", BigDecimal.ZERO);
+		BigDecimal maxOrderQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "maxOrderQuantity", BigDecimal.ZERO);
+		BigDecimal multipleOrderQuantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "multipleOrderQuantity", BigDecimal.ZERO);
 		String allowedOrderQuantities = ParamUtil.getString(
 			actionRequest, "allowedOrderQuantities");
 
@@ -617,21 +626,17 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		if (cpDefinitionInventory == null) {
 			_cpDefinitionInventoryService.addCPDefinitionInventory(
 				cpDefinitionId, cpDefinitionInventoryEngine, lowStockActivity,
-				displayAvailability, displayStockQuantity,
-				BigDecimal.valueOf(minStockQuantity), backOrders,
-				BigDecimal.valueOf(minOrderQuantity),
-				BigDecimal.valueOf(maxOrderQuantity), allowedOrderQuantities,
-				BigDecimal.valueOf(multipleOrderQuantity));
+				displayAvailability, displayStockQuantity, minStockQuantity,
+				backOrders, minOrderQuantity, maxOrderQuantity,
+				allowedOrderQuantities, multipleOrderQuantity);
 		}
 		else {
 			_cpDefinitionInventoryService.updateCPDefinitionInventory(
 				cpDefinitionInventory.getCPDefinitionInventoryId(),
 				cpDefinitionInventoryEngine, lowStockActivity,
-				displayAvailability, displayStockQuantity,
-				BigDecimal.valueOf(minStockQuantity), backOrders,
-				BigDecimal.valueOf(minOrderQuantity),
-				BigDecimal.valueOf(maxOrderQuantity), allowedOrderQuantities,
-				BigDecimal.valueOf(multipleOrderQuantity));
+				displayAvailability, displayStockQuantity, minStockQuantity,
+				backOrders, minOrderQuantity, maxOrderQuantity,
+				allowedOrderQuantities, multipleOrderQuantity);
 		}
 
 		_cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(

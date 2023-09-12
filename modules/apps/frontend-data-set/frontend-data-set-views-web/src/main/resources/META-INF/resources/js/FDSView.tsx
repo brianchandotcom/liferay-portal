@@ -68,6 +68,7 @@ interface IFDSViewSectionInterface {
 	namespace: string;
 	onFDSViewUpdate: (data: FDSViewType) => void;
 	saveFDSFieldsURL: string;
+	spritemap: string;
 }
 
 interface IFDSViewInterface {
@@ -76,6 +77,7 @@ interface IFDSViewInterface {
 	fdsViewsURL: string;
 	namespace: string;
 	saveFDSFieldsURL: string;
+	spritemap: string;
 }
 
 const FDSView = ({
@@ -84,6 +86,7 @@ const FDSView = ({
 	fdsViewsURL,
 	namespace,
 	saveFDSFieldsURL,
+	spritemap,
 }: IFDSViewInterface) => {
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [fdsView, setFDSView] = useState<FDSViewType>();
@@ -154,6 +157,7 @@ const FDSView = ({
 							setFDSView({...fdsView, ...updatedFdsViewData});
 						}}
 						saveFDSFieldsURL={saveFDSFieldsURL}
+						spritemap={spritemap}
 					/>
 				)
 			)}

@@ -53,7 +53,7 @@
 			<finder-column name="auto" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="SiteNavigationMenuItem" remote-service="true" uuid="true">
+	<entity external-reference-code="group" local-service="true" name="SiteNavigationMenuItem" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

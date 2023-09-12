@@ -86,6 +86,62 @@ public class CTRemote implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
+	@Schema
+	public String getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
+	}
+
+	@JsonIgnore
+	public void setClientId(
+		UnsafeSupplier<String, Exception> clientIdUnsafeSupplier) {
+
+		try {
+			clientId = clientIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String clientId;
+
+	@Schema
+	public String getClientSecret() {
+		return clientSecret;
+	}
+
+	public void setClientSecret(String clientSecret) {
+		this.clientSecret = clientSecret;
+	}
+
+	@JsonIgnore
+	public void setClientSecret(
+		UnsafeSupplier<String, Exception> clientSecretUnsafeSupplier) {
+
+		try {
+			clientSecret = clientSecretUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String clientSecret;
+
 	@Schema(description = "The remote's creation date.")
 	public Date getDateCreated() {
 		return dateCreated;
@@ -318,6 +374,34 @@ public class CTRemote implements Serializable {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(actions));
+		}
+
+		if (clientId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"clientId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(clientId));
+
+			sb.append("\"");
+		}
+
+		if (clientSecret != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"clientSecret\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(clientSecret));
+
+			sb.append("\"");
 		}
 
 		if (dateCreated != null) {

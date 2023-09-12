@@ -522,6 +522,10 @@ definition {
 			value1 = ${key_option});
 	}
 
+	macro selectComplimentarySubscriptionTerm {
+		Click(locator1 = "CP2ActivationKeys#COMPLIMENTARY_KEY");
+	}
+
 	macro selectFistActiveSubscriptionInput {
 		if (isSet(index)) {
 			var key_position = ${index};

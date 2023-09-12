@@ -357,9 +357,12 @@ public class ObjectEntryRelatedObjectsResourceTest {
 			String.valueOf(_objectEntry2.getPrimaryKey()), role.getRoleId(),
 			new String[] {ActionKeys.VIEW});
 
-		HTTPTestUtil.withCredentials(
-			user.getEmailAddress(), password,
-			this::testGetRelatedCustomObjectEntriesWhenRelationExists);
+		HTTPTestUtil.customize(
+		).withCredentials(
+			user.getEmailAddress(), password
+		).apply(
+			this::testGetRelatedCustomObjectEntriesWhenRelationExists
+		);
 	}
 
 	@Test

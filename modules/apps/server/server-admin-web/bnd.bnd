@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Server Admin Web
 Bundle-SymbolicName: com.liferay.server.admin.web
-Bundle-Version: 5.0.67
+Bundle-Version: 5.0.68
 DynamicImport-Package: *
 Import-Package:\
 	!com.thoughtworks.xstream.*,\

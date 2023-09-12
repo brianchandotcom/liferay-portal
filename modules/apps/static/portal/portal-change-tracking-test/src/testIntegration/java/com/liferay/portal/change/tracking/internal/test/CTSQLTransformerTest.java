@@ -1004,7 +1004,8 @@ public class CTSQLTransformerTest {
 
 		if (ctCollection == null) {
 			ctCollection = _ctCollectionLocalService.addCTCollection(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				null, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), 0,
 				CTSQLTransformerTest.class.getName(), null);
 
 			_ctCollections.add(ctCollection);

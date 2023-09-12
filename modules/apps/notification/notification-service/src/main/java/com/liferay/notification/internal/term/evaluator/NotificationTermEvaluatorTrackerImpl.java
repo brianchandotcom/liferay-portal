@@ -14,12 +14,12 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gustavo Lima
@@ -82,8 +82,16 @@ public class NotificationTermEvaluatorTrackerImpl
 		return notificationTermEvaluators;
 	}
 
-	@Reference
-	private DefaultNotificationTermEvaluator _defaultNotificationTermEvaluator;
+	private static final NotificationTermEvaluator
+		_defaultNotificationTermEvaluator = (context, object, termName) -> {
+			if (!(object instanceof Map)) {
+				return termName;
+			}
+
+			Map<String, String> termValues = (Map<String, String>)object;
+
+			return termValues.get(termName);
+		};
 
 	private ServiceTrackerMap
 		<String,

@@ -640,6 +640,212 @@ definition {
 
 	}
 
+	@description = "Verify that the correct entries are shown when the page refreshes after autosave"
+	@priority = 4
+	test CorrectEntriesShownWhenPageRefreshedAfterAutoSaveForm {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given that Access Local Network and Trust Self Signed Certificates is enabled") {
+			FormsAdminNavigator.enableLocalNetworkDataProvider();
+
+			Click(
+				key_checkboxOption = "Trust Self Signed Certificates",
+				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
+
+			PortletEntry.update();
+		}
+
+		task ("and Given a REST data provider") {
+			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+
+			Navigator.gotoNavItem(navItem = "Data Providers");
+
+			FormsAdminNavigator.gotoAddDataProvider();
+
+			var portalURL = PropsUtil.get("portal.url");
+
+			FormsAdmin.editDataProviderLocalNetwork(
+				name = "Get Countries",
+				outputParameterLabel = "Country Names",
+				outputParameterPath = "$..nameCurrentValue",
+				outputParameterType = "List",
+				timeout = 1000,
+				url = "${portalURL}/api/jsonws/country/get-countries");
+
+			FormsAdmin.saveDataProvider();
+		}
+
+		task ("and Given a new form with a Data Provider Field and two Text Fields") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Select country");
+
+			Form.gotoAddField(
+				fieldPositionNumber = 0,
+				fieldType = "Select from List");
+
+			var fieldNameSelectFromList = FormFields.getFieldName();
+
+			FormFields.enableSwitch(fieldName = "Required Field");
+
+			Form.editFieldLabelMetal(fieldValue = "Country");
+
+			Form.editFieldDataProvider(
+				dataProvider = "Get Countries",
+				dataProviderOutput = "Country Names");
+
+			Form.closeSidebar();
+
+			Form.addTextField(fieldPositionNumber = 1);
+
+			var fieldNameTextField = FormFields.getFieldName();
+
+			Form.editFieldLabelMetal(fieldValue = "US Postal Code");
+
+			Form.closeSidebar();
+
+			Form.addTextField(fieldPositionNumber = 2);
+
+			Form.editFieldLabelMetal(fieldValue = "Non-US Postal Code");
+
+			Form.save();
+		}
+
+		task ("and Given that two rules are added") {
+			FormsAdminNavigator.gotoRules();
+
+			FormRules.addRule();
+
+			FormRules.configureConditionOptions(
+				conditionField = "Country",
+				conditionOperator = "Is Equal To",
+				conditionRowNumber = 1,
+				conditionValueField = "United States",
+				conditionValueType = "Value");
+
+			for (var actionTypeAndPosition : list "Show-1,Enable-2") {
+				var actionType = StringUtil.extractFirst(${actionTypeAndPosition}, "-");
+				var position = StringUtil.extractLast(${actionTypeAndPosition}, "-");
+
+				FormRules.configureActionOptions(
+					action = ${actionType},
+					actionRowNumber = ${position},
+					actionTarget = "US Postal Code");
+
+				FormRules.addAction();
+			}
+
+			FormRules.configureActionOptions(
+				action = "Require",
+				actionRowNumber = 3,
+				actionTarget = "US Postal Code");
+
+			FormRules.save();
+
+			FormRules.addRule();
+
+			FormRules.configureConditionOptions(
+				conditionField = "Country",
+				conditionOperator = "Is Not Equal To",
+				conditionRowNumber = 1,
+				conditionValueField = "United States",
+				conditionValueType = "Value");
+
+			for (var actionTypeAndPosition : list "Show-1,Enable-2") {
+				var actionType = StringUtil.extractFirst(${actionTypeAndPosition}, "-");
+				var position = StringUtil.extractLast(${actionTypeAndPosition}, "-");
+
+				FormRules.configureActionOptions(
+					action = ${actionType},
+					actionRowNumber = ${position},
+					actionTarget = "Non-US Postal Code");
+
+				FormRules.addAction();
+			}
+
+			FormRules.configureActionOptions(
+				action = "Require",
+				actionRowNumber = 3,
+				actionTarget = "Non-US Postal Code");
+
+			FormRules.save();
+
+			FormsAdminNavigator.gotoFormBuilder();
+
+			Form.publishForm();
+		}
+
+		task ("and Given that a form page is created and the form is selected") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Form Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Form Page",
+				widgetName = "Form");
+
+			Navigator.gotoPage(pageName = "Form Page");
+
+			FormPortletNavigator.gotoSelectForm();
+
+			FormPortletConfiguration.selectForm(formName = "Select country");
+
+			PortletEntry.save();
+
+			Navigator.gotoPage(pageName = "Form Page");
+		}
+
+		task ("When an entry is automatically saved and a new tab is opened") {
+			FormFields.selectSelectOption(
+				fieldName = ${fieldNameSelectFromList},
+				selectOption = "United States");
+
+			FormFields.editText(
+				fieldName = ${fieldNameTextField},
+				fieldValue = 10004);
+
+			// Pause for 40 seconds for the entry to be automatically saved. See LPS-185648
+
+			Pause(locator1 = 40000);
+
+			Open.openInTheNewTab(locator1 = "http://localhost:8080");
+
+			SelectWindow(locator1 = "title=Home - Liferay DXP");
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdminNavigator.gotoViewEntries();
+		}
+
+		task ("Then the entry is saved") {
+			FormsAdmin.viewFormTableEntry(
+				fieldLabel = "US Postal Code",
+				fieldValue = 10004);
+		}
+
+		task ("When the Form Page is refreshed") {
+			SelectWindow(locator1 = "title=Form Page - Liferay DXP");
+
+			Refresh();
+		}
+
+		task ("Then United States is selected in Country field and US Postal Code is displayed with the value entered") {
+			AssertTextEquals(
+				key_fieldName = "Country",
+				locator1 = "FormFields#SELECT_FIELD",
+				value1 = "United States");
+
+			AssertValue(
+				key_labelName = "US Postal Code",
+				locator1 = "TextInput#SPECIFIC_LABEL_TEXT_INPUT",
+				value1 = 10004);
+		}
+	}
+
 	@description = "Verify that the Field References for the options can be edited"
 	@priority = 5
 	test FieldReferenceOfOptionsCanBeEdited {

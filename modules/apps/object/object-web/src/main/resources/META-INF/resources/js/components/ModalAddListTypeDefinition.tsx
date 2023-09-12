@@ -31,7 +31,7 @@ const ModalAddListTypeDefinition: React.FC<IProps> = ({
 
 	const onSubmit = async (values: TInitialValues) => {
 		try {
-			await API.save(apiURL, values, 'POST');
+			await API.save({item: values, method: 'POST', url: apiURL});
 
 			onClose();
 			window.location.reload();

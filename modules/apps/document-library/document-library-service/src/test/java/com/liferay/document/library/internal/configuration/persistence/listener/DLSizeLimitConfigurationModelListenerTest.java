@@ -5,19 +5,15 @@
 
 package com.liferay.document.library.internal.configuration.persistence.listener;
 
-import com.liferay.document.library.internal.configuration.admin.service.DLSizeLimitManagedServiceFactory;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Adolfo Pérez
@@ -28,13 +24,6 @@ public class DLSizeLimitConfigurationModelListenerTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() {
-		_dlSizeLimitConfigurationModelListener.
-			setDLSizeLimitManagedServiceFactory(
-				Mockito.mock(DLSizeLimitManagedServiceFactory.class));
-	}
 
 	@Test
 	public void testEmptyConfigurationValue() throws Exception {

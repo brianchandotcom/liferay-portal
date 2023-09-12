@@ -99,6 +99,7 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
@@ -124,7 +125,6 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -4784,7 +4784,7 @@ public class JournalArticleLocalServiceImpl
 				validateReferences(
 					groupId, latestArticle.getDDMStructureId(), ddmTemplateKey,
 					layoutUuid, smallImage, smallImageURL, smallImageBytes,
-					latestArticle.getSmallImageId(), smallImageSource, content);
+					smallImageId, smallImageSource, content);
 			}
 			catch (ExportImportContentValidationException
 						exportImportContentValidationException) {
@@ -6111,7 +6111,7 @@ public class JournalArticleLocalServiceImpl
 				}
 
 				long userId = _portal.getValidUserId(
-					article.getCompanyId(), article.getUserId());
+					article.getCompanyId(), article.getStatusByUserId());
 
 				ServiceContext serviceContext = new ServiceContext();
 

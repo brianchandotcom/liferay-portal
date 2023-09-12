@@ -96,16 +96,11 @@ definition {
 		}
 
 		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = JSONCompany.getDefaultPortalURL();
 		}
 
-		if (!(isSet(creatorEmailAddress))) {
-			var creatorEmailAddress = JSONUtil2.getDefaultUserEmail();
-		}
-
-		if (!(isSet(creatorPassword))) {
-			var creatorPassword = JSONUtil2.getDefaultUserPassword();
-		}
+		var creatorEmailAddress = JSONUtil2.getSuperAdminUserEmail();
+		var creatorPassword = JSONUtil2.getSuperAdminUserPassword();
 
 		var curl = '''
 			${portalURL}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
@@ -129,6 +124,19 @@ definition {
 		}
 
 		return ${portalURL};
+	}
+
+	macro getDomain {
+		var lxcEnvironment = PropsUtil.get("lxc.environment");
+
+		if (${lxcEnvironment} == "true") {
+			var domain = "lxc.app";
+		}
+		else {
+			var domain = "liferay.com";
+		}
+
+		return ${domain};
 	}
 
 	macro getPortalInstanceName {
@@ -162,7 +170,11 @@ definition {
 	}
 
 	macro getPortalURL {
-		var portalURL = PropsUtil.get("portal.url");
+		var portalURL = PropsUtil.get("instance.url");
+
+		if (!(isSet(portalURL))) {
+			var portalURL = PropsUtil.get("portal.url");
+		}
 
 		return ${portalURL};
 	}
@@ -173,7 +185,7 @@ definition {
 		}
 
 		if (!(isSet(portalURL))) {
-			var portalURL = JSONCompany.getPortalURL();
+			var portalURL = JSONCompany.getDefaultPortalURL();
 		}
 
 		if (!(isSet(creatorEmailAddress))) {

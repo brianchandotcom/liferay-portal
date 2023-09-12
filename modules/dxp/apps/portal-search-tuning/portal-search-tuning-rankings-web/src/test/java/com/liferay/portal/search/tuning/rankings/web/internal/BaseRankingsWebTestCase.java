@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.Portal;
@@ -282,6 +283,38 @@ public abstract class BaseRankingsWebTestCase {
 		).getDocument();
 
 		return getDocumentResponse;
+	}
+
+	protected void setUpGroupLocalServiceFetchGroup() throws PortalException {
+		Group group = Mockito.mock(Group.class);
+
+		Mockito.doReturn(
+			"groupExternalReferenceCode"
+		).when(
+			group
+		).getExternalReferenceCode();
+
+		Mockito.doReturn(
+			12345L
+		).when(
+			group
+		).getGroupId();
+
+		Mockito.doReturn(
+			group
+		).when(
+			groupLocalService
+		).fetchGroup(
+			Mockito.anyLong()
+		);
+
+		Mockito.doReturn(
+			group
+		).when(
+			groupLocalService
+		).fetchGroupByExternalReferenceCode(
+			Mockito.anyString(), Mockito.anyLong()
+		);
 	}
 
 	protected void setUpHttpServletRequestAttribute(
@@ -794,6 +827,8 @@ public abstract class BaseRankingsWebTestCase {
 		DLAppLocalService.class);
 	protected FastDateFormatFactory fastDateFormatFactory = Mockito.mock(
 		FastDateFormatFactory.class);
+	protected GroupLocalService groupLocalService = Mockito.mock(
+		GroupLocalService.class);
 	protected Language language = Mockito.mock(Language.class);
 	protected Portal portal = Mockito.mock(Portal.class);
 	protected Queries queries = Mockito.mock(Queries.class);

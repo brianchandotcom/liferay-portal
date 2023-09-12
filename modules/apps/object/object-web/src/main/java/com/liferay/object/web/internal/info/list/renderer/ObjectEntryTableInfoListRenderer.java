@@ -11,10 +11,13 @@ import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererContext;
 import com.liferay.info.taglib.servlet.taglib.InfoListBasicTableTag;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.info.item.renderer.ObjectEntryRowInfoItemRenderer;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -36,9 +39,11 @@ public class ObjectEntryTableInfoListRenderer
 
 	public ObjectEntryTableInfoListRenderer(
 		InfoItemRendererRegistry infoItemRendererRegistry,
+		ObjectDefinition objectDefinition,
 		ObjectFieldLocalService objectFieldLocalService) {
 
 		_infoItemRendererRegistry = infoItemRendererRegistry;
+		_objectDefinition = objectDefinition;
 		_objectFieldLocalService = objectFieldLocalService;
 	}
 
@@ -46,6 +51,12 @@ public class ObjectEntryTableInfoListRenderer
 	public List<InfoItemRenderer<?>> getAvailableInfoItemRenderers() {
 		return _infoItemRendererRegistry.getInfoItemRenderers(
 			ObjectEntry.class.getName());
+	}
+
+	@Override
+	public String getKey() {
+		return _getCompanyScopedKey(
+			ObjectEntryTableInfoListRenderer.class.getName());
 	}
 
 	@Override
@@ -73,11 +84,9 @@ public class ObjectEntryTableInfoListRenderer
 			new InfoListBasicTableTag();
 
 		if ((objectEntries != null) && !objectEntries.isEmpty()) {
-			ObjectEntry objectEntry = objectEntries.get(0);
-
 			List<ObjectField> objectFields =
 				_objectFieldLocalService.getObjectFields(
-					objectEntry.getObjectDefinitionId(), false);
+					_objectDefinition.getObjectDefinitionId(), false);
 
 			try {
 				objectFields = _objectFieldLocalService.getActiveObjectFields(
@@ -101,7 +110,8 @@ public class ObjectEntryTableInfoListRenderer
 		}
 		else {
 			infoListBasicTableTag.setItemRendererKey(
-				ObjectEntryRowInfoItemRenderer.class.getName());
+				_getCompanyScopedKey(
+					ObjectEntryRowInfoItemRenderer.class.getName()));
 		}
 
 		try {
@@ -114,10 +124,17 @@ public class ObjectEntryTableInfoListRenderer
 		}
 	}
 
+	private String _getCompanyScopedKey(String className) {
+		return StringBundler.concat(
+			className, StringPool.UNDERLINE, _objectDefinition.getCompanyId(),
+			StringPool.UNDERLINE, _objectDefinition.getName());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryTableInfoListRenderer.class);
 
 	private final InfoItemRendererRegistry _infoItemRendererRegistry;
+	private final ObjectDefinition _objectDefinition;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 
 }

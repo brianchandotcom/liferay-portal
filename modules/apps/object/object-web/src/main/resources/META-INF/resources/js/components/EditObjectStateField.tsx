@@ -65,10 +65,10 @@ export default function EditObjectStateField({objectField, readOnly}: IProps) {
 		delete objectField.system;
 
 		try {
-			await API.save(
-				`/o/object-admin/v1.0/object-fields/${id}`,
-				objectField
-			);
+			await API.save({
+				item: objectField,
+				url: `/o/object-admin/v1.0/object-fields/${id}`,
+			});
 
 			saveAndReload();
 			openToast({

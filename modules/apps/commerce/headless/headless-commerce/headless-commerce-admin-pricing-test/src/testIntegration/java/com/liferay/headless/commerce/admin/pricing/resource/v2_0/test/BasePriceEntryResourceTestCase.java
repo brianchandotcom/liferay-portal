@@ -179,7 +179,7 @@ public abstract class BasePriceEntryResourceTestCase {
 		priceEntry.setPriceFormatted(regex);
 		priceEntry.setPriceListExternalReferenceCode(regex);
 		priceEntry.setSkuExternalReferenceCode(regex);
-		priceEntry.setUnitOfMeasure(regex);
+		priceEntry.setUnitOfMeasureKey(regex);
 
 		String json = PriceEntrySerDes.toJSON(priceEntry);
 
@@ -193,7 +193,7 @@ public abstract class BasePriceEntryResourceTestCase {
 		Assert.assertEquals(
 			regex, priceEntry.getPriceListExternalReferenceCode());
 		Assert.assertEquals(regex, priceEntry.getSkuExternalReferenceCode());
-		Assert.assertEquals(regex, priceEntry.getUnitOfMeasure());
+		Assert.assertEquals(regex, priceEntry.getUnitOfMeasureKey());
 	}
 
 	@Test
@@ -1356,8 +1356,8 @@ public abstract class BasePriceEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("unitOfMeasure", additionalAssertFieldName)) {
-				if (priceEntry.getUnitOfMeasure() == null) {
+			if (Objects.equals("unitOfMeasureKey", additionalAssertFieldName)) {
+				if (priceEntry.getUnitOfMeasureKey() == null) {
 					valid = false;
 				}
 
@@ -1775,10 +1775,10 @@ public abstract class BasePriceEntryResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("unitOfMeasure", additionalAssertFieldName)) {
+			if (Objects.equals("unitOfMeasureKey", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						priceEntry1.getUnitOfMeasure(),
-						priceEntry2.getUnitOfMeasure())) {
+						priceEntry1.getUnitOfMeasureKey(),
+						priceEntry2.getUnitOfMeasureKey())) {
 
 					return false;
 				}
@@ -2279,8 +2279,8 @@ public abstract class BasePriceEntryResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("unitOfMeasure")) {
-			Object object = priceEntry.getUnitOfMeasure();
+		if (entityFieldName.equals("unitOfMeasureKey")) {
+			Object object = priceEntry.getUnitOfMeasureKey();
 
 			String value = String.valueOf(object);
 
@@ -2391,7 +2391,7 @@ public abstract class BasePriceEntryResourceTestCase {
 				skuExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				skuId = RandomTestUtil.randomLong();
-				unitOfMeasure = StringUtil.toLowerCase(
+				unitOfMeasureKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}
 		};

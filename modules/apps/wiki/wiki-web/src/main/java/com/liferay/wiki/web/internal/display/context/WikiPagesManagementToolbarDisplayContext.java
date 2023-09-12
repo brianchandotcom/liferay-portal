@@ -15,6 +15,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -194,8 +195,9 @@ public class WikiPagesManagementToolbarDisplayContext {
 						_httpServletRequest, "filter-by-navigation"));
 			}
 		).addGroup(
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
 			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(_getOrderByDropdownItems());
+				dropdownGroupItem.setDropdownItems(getOrderByDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "order-by"));
 			}
@@ -222,6 +224,45 @@ public class WikiPagesManagementToolbarDisplayContext {
 					LanguageUtil.get(_httpServletRequest, navigation));
 			}
 		).build();
+	}
+
+	public List<DropdownItem> getOrderByDropdownItems()
+		throws PortletException {
+
+		return new DropdownItemList() {
+			{
+				Map<String, String> orderColumns = HashMapBuilder.put(
+					"modifiedDate", "modified-date"
+				).put(
+					"title", "title"
+				).build();
+
+				PortletURL portletURL = _getPortletURL();
+
+				for (Map.Entry<String, String> orderByColEntry :
+						orderColumns.entrySet()) {
+
+					String orderByCol = orderByColEntry.getKey();
+
+					add(
+						dropdownItem -> {
+							dropdownItem.setActive(
+								orderByCol.equals(_getOrderByCol()));
+
+							PortletURL orderByPortletURL = PortletURLUtil.clone(
+								portletURL, _liferayPortletResponse);
+
+							dropdownItem.setHref(
+								orderByPortletURL, "orderByCol", orderByCol);
+
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest,
+									orderByColEntry.getValue()));
+						});
+				}
+			}
+		};
 	}
 
 	public PortletURL getSearchActionURL() {
@@ -340,45 +381,6 @@ public class WikiPagesManagementToolbarDisplayContext {
 
 	private String _getOrderByCol() {
 		return _searchContainer.getOrderByCol();
-	}
-
-	private List<DropdownItem> _getOrderByDropdownItems()
-		throws PortletException {
-
-		return new DropdownItemList() {
-			{
-				Map<String, String> orderColumns = HashMapBuilder.put(
-					"modifiedDate", "modified-date"
-				).put(
-					"title", "title"
-				).build();
-
-				PortletURL portletURL = _getPortletURL();
-
-				for (Map.Entry<String, String> orderByColEntry :
-						orderColumns.entrySet()) {
-
-					String orderByCol = orderByColEntry.getKey();
-
-					add(
-						dropdownItem -> {
-							dropdownItem.setActive(
-								orderByCol.equals(_getOrderByCol()));
-
-							PortletURL orderByPortletURL = PortletURLUtil.clone(
-								portletURL, _liferayPortletResponse);
-
-							dropdownItem.setHref(
-								orderByPortletURL, "orderByCol", orderByCol);
-
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest,
-									orderByColEntry.getValue()));
-						});
-				}
-			}
-		};
 	}
 
 	private String _getOrderByType() {

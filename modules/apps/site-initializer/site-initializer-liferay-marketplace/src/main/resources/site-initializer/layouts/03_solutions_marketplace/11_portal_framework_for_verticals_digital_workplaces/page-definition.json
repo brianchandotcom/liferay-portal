@@ -2443,7 +2443,7 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Customer​-centric"
+																										"en_US": "Prototype"
 																									}
 																								}
 																							}
@@ -2475,7 +2475,7 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "<div style=\"text-align:center\">Compose truly customer-centric dialogs across any device. Combine content, data, and functionality from different underlying systems into a user process-centric presentation layer.</div>\n"
+																										"en_US": "<div style=\"text-align:center\">Predefined prototypes that can be used as the basis of the information architecture design</div>\n"
 																									}
 																								}
 																							}
@@ -2600,7 +2600,7 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Agile"
+																										"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Information Architecture</h4>\n"
 																									}
 																								}
 																							}
@@ -2632,7 +2632,7 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "<div style=\"text-align:center\">Our components are based on modern JS frameworks. With lightweight REST frameworks, we enable you to integrate into underlying back-office systems.</div>\n"
+																										"en_US": "<div style=\"text-align:center\">A tested organization scheme and content structure for findability and scaling</div>\n"
 																									}
 																								}
 																							}
@@ -2752,7 +2752,7 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Fast Adoption"
+																										"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Design System</h4>\n"
 																									}
 																								}
 																							}
@@ -2784,7 +2784,7 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "<div style=\"text-align:center\">Our solution enables fast adoption by business content creators and authors who want ease of use. It includes a design system for enterprises suited to enterprise adoption.</div>\n"
+																										"en_US": "<div style=\"text-align:center\">A predefined design system that is integrated with DevOps lifecycle</div>\n"
 																									}
 																								}
 																							}
@@ -2904,7 +2904,7 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Foster Autonomy"
+																										"en_US": "Code"
 																									}
 																								}
 																							}
@@ -2936,7 +2936,7 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "<div style=\"text-align:center\">Grants wide autonomy to&nbsp;business teams thanks to&nbsp;dedicated UIs, advanced&nbsp;editing features, simple&nbsp;contributing,&nbsp;personalization<br />\n&nbsp;configuration, and templates&nbsp;development.<br />\n&nbsp;</div>\n"
+																										"en_US": "<div style=\"text-align:center\">JavaScript-based user experience component code per the design system</div>\n"
 																									}
 																								}
 																							}
@@ -3056,7 +3056,7 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Foster Autonomy"
+																										"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Integration</h4>\n"
 																									}
 																								}
 																							}
@@ -3088,7 +3088,7 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "<div style=\"text-align:center\">Grants wide autonomy to&nbsp;business teams thanks to&nbsp;dedicated UIs, advanced&nbsp;editing features, simple&nbsp;contributing,&nbsp;personalization<br />\n&nbsp;configuration, and templates&nbsp;development.<br />\n&nbsp;</div>\n"
+																										"en_US": "<div style=\"text-align:center\">REST integration software pre-connected to the UX components&nbsp;configuration, and templates&nbsp;development.</div>\n"
 																									}
 																								}
 																							}
@@ -3208,7 +3208,7 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "Foster Autonomy"
+																										"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Content Migration</h4>\n"
 																									}
 																								}
 																							}
@@ -3240,7 +3240,7 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "<div style=\"text-align:center\">Grants wide autonomy to&nbsp;business teams thanks to&nbsp;dedicated UIs, advanced&nbsp;editing features, simple&nbsp;contributing,&nbsp;personalization<br />\n&nbsp;configuration, and templates&nbsp;development.<br />\n&nbsp;</div>\n"
+																										"en_US": "<div style=\"text-align:center\">Tools to help extract, clean, enhance and establish a formal content lifecycle management process</div>\n"
 																									}
 																								}
 																							}

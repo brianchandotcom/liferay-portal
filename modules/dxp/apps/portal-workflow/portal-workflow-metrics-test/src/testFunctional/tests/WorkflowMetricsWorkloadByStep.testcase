@@ -246,43 +246,53 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Applications",
-			portlet = "Process Builder");
+		task ("Given a workflow with parallel branches") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Workflow",
+				panel = "Applications",
+				portlet = "Process Builder");
 
-		Workflow.addNewDefinition(workflowDefinitionTitle = "Multi Task Process");
+			Workflow.addNewDefinition(workflowDefinitionTitle = "Multi Task Process");
 
-		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "multi-task-process-workflow-definition.xml");
+			ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "multi-task-process-workflow-definition.xml");
 
-		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+			ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 
-		Button.clickPublish();
+			Button.clickPublish();
+		}
 
-		Navigator.gotoBack();
+		task ("and Given that the workflow is configured for blogs") {
+			Navigator.gotoBack();
 
-		Navigator.gotoNavItem(navItem = "Configuration");
+			Navigator.gotoNavItem(navItem = "Configuration");
 
-		Workflow.configureWorkflow(
-			workflowDefinition = "Multi Task Process",
-			workflowResourceValue = "Blogs Entry");
+			Workflow.configureWorkflow(
+				workflowDefinition = "Multi Task Process",
+				workflowResourceValue = "Blogs Entry");
+		}
 
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+		task ("and Given a blog") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
 
-		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Multi Task Process");
+		task ("When adding up all the pending items") {
+			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Multi Task Process");
 
-		WorkflowMetrics.checkPendingWorkflowValues(
-			key_ontime = 0,
-			key_overdue = 0,
-			key_pending = 1,
-			key_untracked = 1);
+			WorkflowMetrics.checkPendingWorkflowValues(
+				key_ontime = 0,
+				key_overdue = 0,
+				key_pending = 1,
+				key_untracked = 1);
+		}
 
-		for (var taskNumber : list "1,2,3") {
-			AssertElementPresent(
-				key_taskNumber = ${taskNumber},
-				locator1 = "WorkflowMetricsWorkloadByStep#METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_COLUMN");
+		task ("Then the outstanding items of the steps will be greater than the total pending items") {
+			for (var taskNumber : list "1,2,3") {
+				AssertElementPresent(
+					key_taskNumber = ${taskNumber},
+					locator1 = "WorkflowMetricsWorkloadByStep#METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_COLUMN");
+			}
 		}
 	}
 

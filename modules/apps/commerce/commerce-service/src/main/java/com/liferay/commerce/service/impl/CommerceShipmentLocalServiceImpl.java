@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -62,6 +63,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -697,7 +700,8 @@ public class CommerceShipmentLocalServiceImpl
 		for (CommerceShipmentItem commerceShipmentItem :
 				commerceShipmentItems) {
 
-			if ((commerceShipmentItem.getQuantity() < 1) ||
+			if (BigDecimalUtil.lt(
+					commerceShipmentItem.getQuantity(), BigDecimal.ONE) ||
 				(commerceShipmentItem.getCommerceInventoryWarehouseId() <= 0)) {
 
 				throw new CommerceShipmentStatusException();

@@ -29,6 +29,8 @@ renderResponse.setTitle(ParamUtil.getString(request, "fdsViewLabel"));
 			"namespace", liferayPortletResponse.getNamespace()
 		).put(
 			"saveFDSFieldsURL", fdsViewsDisplayContext.getSaveFDSFieldsURL()
+		).put(
+			"spritemap", themeDisplay.getPathThemeSpritemap()
 		).build()
 	%>'
 />

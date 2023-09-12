@@ -16,8 +16,6 @@ pushNotificationsDeviceSearchContainer.setOrderByComparator(PushNotificationsUti
 pushNotificationsDeviceSearchContainer.setOrderByType(orderByType);
 
 pushNotificationsDeviceSearchContainer.setResultsAndTotal(() -> PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevices(pushNotificationsDeviceSearchContainer.getStart(), pushNotificationsDeviceSearchContainer.getEnd(), pushNotificationsDeviceSearchContainer.getOrderByComparator()), PushNotificationsDeviceLocalServiceUtil.getPushNotificationsDevicesCount());
-
-ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoaderProvider)request.getAttribute(PushNotificationsWebKeys.RESOURCE_BUNDLE_LOADER_PROVIDER);
 %>
 
 <clay:management-toolbar
@@ -51,7 +49,7 @@ ResourceBundleLoaderProvider resourceBundleLoaderProvider = (ResourceBundleLoade
 			/>
 
 			<%
-			ResourceBundleLoader platformResourceBundleLoader = resourceBundleLoaderProvider.getResourceBundleLoader(pushNotificationsDevice.getPlatform());
+			ResourceBundleLoader platformResourceBundleLoader = ResourceBundleLoaderProviderUtil.getResourceBundleLoader(pushNotificationsDevice.getPlatform());
 
 			ResourceBundle platformResourceBundle = platformResourceBundleLoader.loadResourceBundle(PortalUtil.getLocale(request));
 			%>

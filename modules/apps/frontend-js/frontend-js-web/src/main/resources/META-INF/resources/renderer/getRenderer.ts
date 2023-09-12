@@ -32,7 +32,7 @@ async function getRenderer({
 
 		if (type === 'clientExtension') {
 			renderer = {
-				htmlBuilder: module[symbolName],
+				htmlElementBuilder: module[symbolName],
 				type,
 			};
 		}

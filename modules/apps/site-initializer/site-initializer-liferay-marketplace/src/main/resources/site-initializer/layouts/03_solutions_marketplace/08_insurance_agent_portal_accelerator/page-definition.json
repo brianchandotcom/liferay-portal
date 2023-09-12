@@ -4,6 +4,7 @@
 			{
 				"definition": {
 					"fragmentStyle": {
+						"backgroundColor": "gray100Color",
 						"borderWidth": "0"
 					},
 					"indexed": true,
@@ -260,7 +261,7 @@
 																								"siteKey": "[$GROUP_KEY$]"
 																							},
 																							"fragmentConfig": {
-																								"fontSize": "font-size-heading-f4",
+																								"fontSize": "font-size-heading-f1",
 																								"smallCaps": false,
 																								"tabletScreenCenter": false
 																							},
@@ -272,7 +273,7 @@
 																										},
 																										"text": {
 																											"value_i18n": {
-																												"en_US": "<div class=\"color-neutral-3 flex flex-wrap font-size-paragraph-small solution-category-container\">\n<div class=\"bg-neutral-8 border-radius-small mb-1 mr-1 px-1 solution-category\">\n<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Insurance Agent Portal Accelerator</h4>\n</div>\n</div>\n"
+																												"en_US": "Insurance Agent Portal Accelerator"
 																											}
 																										}
 																									}
@@ -1129,6 +1130,52 @@
 												"pageElements": [
 													{
 														"definition": {
+															"fragment": {
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-heading-f1",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Reclaim Lost Profit Margins"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-spacer"
+															},
+															"fragmentConfig": {
+																"height": "py-3"
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"backgroundColor": "gray100Color"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
 															"gutters": true,
 															"indexed": true,
 															"modulesPerRow": 3,
@@ -1223,9 +1270,6 @@
 																							"id": "image-square",
 																							"value": {
 																								"fragmentImage": {
-																									"title": {
-																										"value": "streamline_workflows"
-																									},
 																									"url": {
 																										"mapping": {
 																											"fieldKey": "FileEntry_previewImage",
@@ -1256,7 +1300,7 @@
 																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
-																						"fontSize": "font-size-display-large",
+																						"fontSize": "font-size-heading-f2",
 																						"smallCaps": false,
 																						"tabletScreenCenter": false
 																					},
@@ -1389,9 +1433,6 @@
 																							"id": "image-square",
 																							"value": {
 																								"fragmentImage": {
-																									"title": {
-																										"value": "digitalize_the_producer_experience"
-																									},
 																									"url": {
 																										"mapping": {
 																											"fieldKey": "FileEntry_previewImage",
@@ -1422,7 +1463,7 @@
 																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
-																						"fontSize": "font-size-display-large",
+																						"fontSize": "font-size-heading-f2",
 																						"smallCaps": false,
 																						"tabletScreenCenter": false
 																					},
@@ -1547,9 +1588,6 @@
 																							"id": "image-square",
 																							"value": {
 																								"fragmentImage": {
-																									"title": {
-																										"value": "reduce_application_complexity"
-																									},
 																									"url": {
 																										"mapping": {
 																											"fieldKey": "FileEntry_previewImage",
@@ -1580,7 +1618,7 @@
 																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
-																						"fontSize": "font-size-display-large",
+																						"fontSize": "font-size-heading-f2",
 																						"smallCaps": false,
 																						"tabletScreenCenter": false
 																					},
@@ -1720,6 +1758,52 @@
 												"pageElements": [
 													{
 														"definition": {
+															"fragment": {
+																"key": "text",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {
+																"fontSize": "font-size-heading-f1",
+																"smallCaps": false,
+																"tabletScreenCenter": false
+															},
+															"fragmentFields": [
+																{
+																	"id": "text",
+																	"value": {
+																		"fragmentLink": {
+																		},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Accelerate Existing Channels and Retain Competitive Edge"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-spacer"
+															},
+															"fragmentConfig": {
+																"height": "py-3"
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"backgroundColor": "gray100Color"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
 															"gutters": true,
 															"indexed": true,
 															"modulesPerRow": 3,
@@ -1849,7 +1933,7 @@
 																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
-																						"fontSize": "font-size-display-large",
+																						"fontSize": "font-size-heading-f2",
 																						"smallCaps": false,
 																						"tabletScreenCenter": true
 																					},
@@ -1861,7 +1945,7 @@
 																								},
 																								"text": {
 																									"value_i18n": {
-																										"en_US": "<h4 data-lfr-editable-id=\"text\" data-lfr-editable-type=\"rich-text\">Manage Multiple Insurance Lines</h4>\n"
+																										"en_US": "Manage Multiple Insurance Lines"
 																									}
 																								}
 																							}
@@ -1987,9 +2071,6 @@
 																											"en_US": ""
 																										}
 																									},
-																									"title": {
-																										"value": "easily_cross-sell_and_upsell"
-																									},
 																									"url": {
 																										"mapping": {
 																											"fieldKey": "FileEntry_previewImage",
@@ -2020,7 +2101,7 @@
 																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
-																						"fontSize": "font-size-display-large",
+																						"fontSize": "font-size-heading-f2",
 																						"smallCaps": false,
 																						"tabletScreenCenter": false
 																					},
@@ -2174,7 +2255,7 @@
 																						"siteKey": "[$GROUP_KEY$]"
 																					},
 																					"fragmentConfig": {
-																						"fontSize": "font-size-display-large",
+																						"fontSize": "font-size-heading-f2",
 																						"smallCaps": false,
 																						"tabletScreenCenter": false
 																					},
@@ -2347,6 +2428,9 @@
 															},
 															"fragmentFields": [
 															],
+															"fragmentStyle": {
+																"backgroundColor": "gray100Color"
+															},
 															"indexed": true
 														},
 														"type": "Fragment"

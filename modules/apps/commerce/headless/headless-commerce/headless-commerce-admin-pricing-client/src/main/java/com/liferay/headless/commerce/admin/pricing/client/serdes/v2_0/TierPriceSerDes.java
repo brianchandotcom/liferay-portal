@@ -254,6 +254,20 @@ public class TierPriceSerDes {
 			sb.append("\"");
 		}
 
+		if (tierPrice.getUnitOfMeasureKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(tierPrice.getUnitOfMeasureKey()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -425,6 +439,15 @@ public class TierPriceSerDes {
 				String.valueOf(tierPrice.getPriceFormatted()));
 		}
 
+		if (tierPrice.getUnitOfMeasureKey() == null) {
+			map.put("unitOfMeasureKey", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasureKey",
+				String.valueOf(tierPrice.getUnitOfMeasureKey()));
+		}
+
 		return map;
 	}
 
@@ -554,6 +577,11 @@ public class TierPriceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "priceFormatted")) {
 				if (jsonParserFieldValue != null) {
 					tierPrice.setPriceFormatted((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasureKey")) {
+				if (jsonParserFieldValue != null) {
+					tierPrice.setUnitOfMeasureKey((String)jsonParserFieldValue);
 				}
 			}
 		}

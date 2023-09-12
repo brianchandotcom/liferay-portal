@@ -5,11 +5,11 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
+import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
-import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -91,29 +91,23 @@ public class CopyLayoutPageTemplateEntryMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
-		LayoutPageTemplateEntry sourceLayoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
-				layoutPageTemplateEntryId);
-
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.copyLayoutPageTemplateEntry(
 				themeDisplay.getScopeGroupId(), layoutPageTemplateCollectionId,
 				layoutPageTemplateEntryId, serviceContext);
 
+		LayoutPageTemplateEntry sourceLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
+				layoutPageTemplateEntryId);
+
 		Layout sourceLayout = _layoutLocalService.getLayout(
 			sourceLayoutPageTemplateEntry.getPlid());
-
-		Layout draftSourceLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class), sourceLayout.getPlid());
 
 		Layout targetLayout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		Layout draftTargetLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class), targetLayout.getPlid());
-
 		_layoutCopyHelper.copyLayoutContent(
-			draftSourceLayout, draftTargetLayout);
+			sourceLayout, targetLayout.fetchDraftLayout());
 
 		_layoutCopyHelper.copyLayoutContent(sourceLayout, targetLayout);
 

@@ -12,15 +12,14 @@ const DEFAULT_STATE = {
 	errors: {},
 	experiences: [],
 	experiment: null,
-	experimentHistory: [],
 	reviewExperimentModal: {active: false},
 	selectedExperienceId: null,
+	terminateExperimentModal: {active: false},
 	variants: [],
 };
 
 export function getInitialState(firstState) {
 	const {
-		initialExperimentHistory,
 		initialSegmentsExperiment,
 		initialSegmentsVariants,
 		initialSelectedSegmentsExperienceId,
@@ -29,7 +28,6 @@ export function getInitialState(firstState) {
 
 	const state = {
 		experiment: initialSegmentsExperiment,
-		experimentHistory: initialExperimentHistory || [],
 		selectedExperienceId: initialSelectedSegmentsExperienceId,
 		variants: initialSegmentsVariants.map((initialVariant) => {
 			if (

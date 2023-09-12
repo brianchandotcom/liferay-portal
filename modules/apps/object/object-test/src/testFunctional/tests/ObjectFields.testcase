@@ -1632,6 +1632,7 @@ definition {
 	@priority = 4
 	test CanManageFormulaFieldWithCustomAction {
 		property custom.properties = "feature.flag.LPS-164948=true";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given a custom object with a Formula Field and action") {
 			ObjectAdmin.addObjectViaAPI(
@@ -3252,6 +3253,7 @@ definition {
 	@priority = 5
 	test CanUseERCFieldWithGroovyScript {
 		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
 
 		task ("Given an object with a field is created") {
 			ObjectAdmin.addObjectViaAPI(

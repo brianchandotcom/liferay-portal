@@ -11,7 +11,6 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.base.AccountEntryUserRelServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -233,16 +232,12 @@ public class AccountEntryUserRelServiceImpl
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-188798")) {
-			_modelResourcePermission.check(
-				permissionChecker, accountEntryId, ActionKeys.MANAGE_USERS);
-		}
-		else if (!(_modelResourcePermission.contains(
-					permissionChecker, accountEntryId,
-					AccountActionKeys.INVITE_USER) ||
-				   _modelResourcePermission.contains(
-					   permissionChecker, accountEntryId,
-					   ActionKeys.MANAGE_USERS))) {
+		if (!(_modelResourcePermission.contains(
+				permissionChecker, accountEntryId,
+				AccountActionKeys.INVITE_USER) ||
+			  _modelResourcePermission.contains(
+				  permissionChecker, accountEntryId,
+				  ActionKeys.MANAGE_USERS))) {
 
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, AccountEntry.class.getName(), accountEntryId,

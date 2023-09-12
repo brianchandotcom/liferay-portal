@@ -16,6 +16,7 @@ import com.liferay.layout.page.template.internal.upgrade.v2_1_0.LayoutUpgradePro
 import com.liferay.layout.page.template.internal.upgrade.v3_1_4.ResourcePermissionUpgradeProcess;
 import com.liferay.layout.page.template.internal.upgrade.v3_3_0.LayoutPageTemplateStructureRelUpgradeProcess;
 import com.liferay.layout.page.template.internal.upgrade.v3_4_1.FragmentEntryLinkEditableValuesUpgradeProcess;
+import com.liferay.layout.page.template.internal.upgrade.v5_3_0.LayoutPageTemplateCollectionUpgradeProcess;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
@@ -189,6 +190,9 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 				"LayoutPageTemplateStructure", "classPK", "plid LONG"),
 			UpgradeProcessFactory.dropColumns(
 				"LayoutPageTemplateStructure", "classNameId"));
+
+		registry.register(
+			"5.2.0", "5.3.0", new LayoutPageTemplateCollectionUpgradeProcess());
 	}
 
 	@Reference

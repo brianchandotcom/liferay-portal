@@ -71,7 +71,7 @@ public class CommerceTierPriceEntryServiceImpl
 
 		return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
 			externalReferenceCode, commercePriceEntryId, price, promoPrice,
-			minQuantity, serviceContext);
+			commercePriceEntry.isBulkPricing(), minQuantity, serviceContext);
 	}
 
 	@Override
@@ -403,7 +403,7 @@ public class CommerceTierPriceEntryServiceImpl
 
 		return commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(
 			commerceTierPriceEntryId, price, promoPrice, minQuantity,
-			serviceContext);
+			commercePriceEntry.isBulkPricing(), serviceContext);
 	}
 
 	@Override

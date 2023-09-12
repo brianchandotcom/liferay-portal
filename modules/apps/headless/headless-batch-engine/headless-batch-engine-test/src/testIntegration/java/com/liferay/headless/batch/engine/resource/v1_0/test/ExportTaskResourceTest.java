@@ -530,7 +530,6 @@ public class ExportTaskResourceTest {
 		"com.liferay.search.experiences.rest.dto.v1_0." +
 			"SearchableAssetNameDisplay",
 		"com.liferay.search.experiences.rest.dto.v1_0.SearchIndex",
-		"com.liferay.search.experiences.rest.dto.v1_0.SXPElement",
 		"com.liferay.search.experiences.rest.dto.v1_0." +
 			"SXPParameterContributorDefinition",
 		"com.liferay.segments.asah.rest.dto.v1_0.Experiment",

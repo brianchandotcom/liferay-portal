@@ -1,0 +1,17 @@
+.incident-contact-button {
+	background-color: var(--color-neutral-0);
+	border-radius: 0.375rem;
+	color: var(--color-action-neutral-default);
+
+	&:hover {
+		background-color: var(--color-neutral-2);
+		box-shadow: initial;
+		color: var(--color-action-neutral-hover);
+	}
+
+	&:active,
+	&:focus {
+		background-color: var(--color-neutral-0);
+		box-shadow: initial;
+	}
+}

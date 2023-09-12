@@ -8,13 +8,12 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import ClayTabs from '@clayui/tabs';
 import {openConfirmModal, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import SegmentsExperimentsContext from '../context.es';
-import {archiveExperiment, openDeletionModal} from '../state/actions.es';
+import {openDeletionModal} from '../state/actions.es';
 import {DispatchContext, StateContext} from '../state/context.es';
 import {NO_EXPERIMENT_ILLUSTRATION_FILE_NAME} from '../util/contants.es';
 import {navigateToExperience} from '../util/navigation.es';
@@ -22,29 +21,23 @@ import {
 	STATUS_COMPLETED,
 	STATUS_DRAFT,
 	STATUS_FINISHED_WINNER,
+	STATUS_RUNNING,
+	STATUS_TERMINATED,
 	statusToLabelDisplayType,
 } from '../util/statuses.es';
 import {openErrorToast, openSuccessToast} from '../util/toasts.es';
 import ClickGoalPicker from './ClickGoalPicker/ClickGoalPicker.es';
-import ExperimentsHistory from './ExperimentsHistory.es';
 import SegmentsExperimentsActions from './SegmentsExperimentsActions.es';
 import SegmentsExperimentsDetails from './SegmentsExperimentsDetails.es';
 import Variants from './Variants/Variants.es';
 
-const TABS_STATES = {
-	ACTIVE: 0,
-	HISTORY: 1,
-};
-
 function SegmentsExperiments({
 	onCreateSegmentsExperiment,
-	onDeleteSegmentsExperiment,
 	onEditSegmentsExperiment,
 	onEditSegmentsExperimentStatus,
 	onTargetChange,
 }) {
-	const [activeTab, setActiveTab] = useState(TABS_STATES.ACTIVE);
-	const {experiment, experimentHistory} = useContext(StateContext);
+	const {experiment} = useContext(StateContext);
 	const dispatch = useContext(DispatchContext);
 
 	const goalTarget = experiment?.goal?.target?.replace('#', '');
@@ -56,73 +49,18 @@ function SegmentsExperiments({
 		onTargetChange('');
 	}
 
-	if (Liferay.FeatureFlags['LRAC-14055']) {
-		return (
-			<Experiments
-				experiment={experiment}
-				goalTarget={goalTarget}
-				onCreateSegmentsExperiment={onCreateSegmentsExperiment}
-				onDeleteSegmentsExperiment={() => {
-					dispatch(openDeletionModal());
-				}}
-				onEditSegmentsExperiment={onEditSegmentsExperiment}
-				onEditSegmentsExperimentStatus={onEditSegmentsExperimentStatus}
-				onTargetChange={onTargetChange}
-			/>
-		);
-	}
-
 	return (
-		<>
-			<ClayTabs justified={true}>
-				<ClayTabs.Item
-					active={activeTab === TABS_STATES.ACTIVE}
-					className="c-pt-1"
-					onClick={() => setActiveTab(TABS_STATES.ACTIVE)}
-				>
-					{Liferay.Language.get('active-test')}
-				</ClayTabs.Item>
-
-				<ClayTabs.Item
-					active={activeTab === TABS_STATES.HISTORY}
-					className="c-pt-1"
-					onClick={() => setActiveTab(TABS_STATES.HISTORY)}
-				>
-					{Liferay.Language.get('history[record]')}
-
-					{' (' + experimentHistory.length + ')'}
-				</ClayTabs.Item>
-			</ClayTabs>
-
-			<ClayTabs.Content
-				activeIndex={activeTab}
-				className="pt-3"
-				fade={false}
-			>
-				<ClayTabs.TabPane>
-					<Experiments
-						experiment={experiment}
-						goalTarget={goalTarget}
-						onCreateSegmentsExperiment={onCreateSegmentsExperiment}
-						onDeleteSegmentsExperiment={() => {
-							dispatch(openDeletionModal());
-						}}
-						onEditSegmentsExperiment={onEditSegmentsExperiment}
-						onEditSegmentsExperimentStatus={
-							onEditSegmentsExperimentStatus
-						}
-						onTargetChange={onTargetChange}
-					/>
-				</ClayTabs.TabPane>
-
-				<ClayTabs.TabPane>
-					<ExperimentsHistory
-						experimentHistory={experimentHistory}
-						onDeleteSegmentsExperiment={onDeleteSegmentsExperiment}
-					/>
-				</ClayTabs.TabPane>
-			</ClayTabs.Content>
-		</>
+		<Experiments
+			experiment={experiment}
+			goalTarget={goalTarget}
+			onCreateSegmentsExperiment={onCreateSegmentsExperiment}
+			onDeleteSegmentsExperiment={() => {
+				dispatch(openDeletionModal());
+			}}
+			onEditSegmentsExperiment={onEditSegmentsExperiment}
+			onEditSegmentsExperimentStatus={onEditSegmentsExperimentStatus}
+			onTargetChange={onTargetChange}
+		/>
 	);
 }
 
@@ -136,8 +74,8 @@ function Experiments({
 	onTargetChange,
 }) {
 	const [dropdown, setDropdown] = useState(false);
+	const [dimissAlert, setDimissAlert] = useState(true);
 	const {APIService, imagesPath} = useContext(SegmentsExperimentsContext);
-	const dispatch = useContext(DispatchContext);
 	const noExperimentIllustration = `${imagesPath}${NO_EXPERIMENT_ILLUSTRATION_FILE_NAME}`;
 	const {selectedExperienceId, variants} = useContext(StateContext);
 	const winnerVariant = variants.find((variant) => variant.winner === true);
@@ -160,14 +98,9 @@ function Experiments({
 			onConfirm: (isConfimed) => {
 				if (isConfimed) {
 					APIService.publishExperience(body)
-						.then(({segmentsExperiment}) => {
+						.then(() => {
 							openSuccessToast();
 
-							dispatch(
-								archiveExperiment({
-									status: segmentsExperiment.status,
-								})
-							);
 							navigateToExperience(experienceId);
 						})
 						.catch((_error) => {
@@ -230,6 +163,19 @@ function Experiments({
 								</ClayDropDown.ItemList>
 							</ClayDropDown>
 						)}
+
+						{!experiment.editable &&
+							experiment.status.value !== STATUS_RUNNING && (
+								<ClayButton
+									className="text-secondary"
+									data-testid="delete-variant"
+									displayType={null}
+									monospaced
+									onClick={onDeleteSegmentsExperiment}
+								>
+									<ClayIcon symbol="trash" />
+								</ClayButton>
+							)}
 					</div>
 
 					<ClayLabel
@@ -239,6 +185,20 @@ function Experiments({
 					>
 						{experiment.status.label}
 					</ClayLabel>
+
+					{experiment.status.value === STATUS_TERMINATED &&
+						dimissAlert && (
+							<ClayAlert
+								className="mt-3"
+								displayType="warning"
+								onClose={() => setDimissAlert(false)}
+								title={Liferay.Language.get('alert')}
+							>
+								{Liferay.Language.get(
+									'the-test-has-not-gathered-sufficient-data-to-confidently-determine-a-winner.-however,-variants-can-still-be-published'
+								)}
+							</ClayAlert>
+						)}
 
 					{experiment.status.value === STATUS_FINISHED_WINNER && (
 						<ClayAlert className="mt-3" displayType="success">
@@ -293,6 +253,7 @@ function Experiments({
 					/>
 
 					<SegmentsExperimentsActions
+						onCreateSegmentsExperiment={onCreateSegmentsExperiment}
 						onEditSegmentsExperimentStatus={
 							onEditSegmentsExperimentStatus
 						}

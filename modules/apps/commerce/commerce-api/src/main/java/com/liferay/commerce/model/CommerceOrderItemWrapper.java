@@ -46,7 +46,9 @@ public class CommerceOrderItemWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("bookedQuantityId", getBookedQuantityId());
+		attributes.put(
+			"commerceInventoryBookedQuantityId",
+			getCommerceInventoryBookedQuantityId());
 		attributes.put("commerceOrderId", getCommerceOrderId());
 		attributes.put("commercePriceListId", getCommercePriceListId());
 		attributes.put("CPInstanceId", getCPInstanceId());
@@ -120,6 +122,9 @@ public class CommerceOrderItemWrapper
 		attributes.put("subscriptionType", getSubscriptionType());
 		attributes.put(
 			"subscriptionTypeSettings", getSubscriptionTypeSettings());
+		attributes.put(
+			"unitOfMeasureIncrementalOrderQuantity",
+			getUnitOfMeasureIncrementalOrderQuantity());
 		attributes.put("unitOfMeasureKey", getUnitOfMeasureKey());
 		attributes.put("unitPrice", getUnitPrice());
 		attributes.put("unitPriceWithTaxAmount", getUnitPriceWithTaxAmount());
@@ -192,10 +197,12 @@ public class CommerceOrderItemWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		Long bookedQuantityId = (Long)attributes.get("bookedQuantityId");
+		Long commerceInventoryBookedQuantityId = (Long)attributes.get(
+			"commerceInventoryBookedQuantityId");
 
-		if (bookedQuantityId != null) {
-			setBookedQuantityId(bookedQuantityId);
+		if (commerceInventoryBookedQuantityId != null) {
+			setCommerceInventoryBookedQuantityId(
+				commerceInventoryBookedQuantityId);
 		}
 
 		Long commerceOrderId = (Long)attributes.get("commerceOrderId");
@@ -491,7 +498,8 @@ public class CommerceOrderItemWrapper
 			setShippable(shippable);
 		}
 
-		Integer shippedQuantity = (Integer)attributes.get("shippedQuantity");
+		BigDecimal shippedQuantity = (BigDecimal)attributes.get(
+			"shippedQuantity");
 
 		if (shippedQuantity != null) {
 			setShippedQuantity(shippedQuantity);
@@ -534,6 +542,14 @@ public class CommerceOrderItemWrapper
 
 		if (subscriptionTypeSettings != null) {
 			setSubscriptionTypeSettings(subscriptionTypeSettings);
+		}
+
+		BigDecimal unitOfMeasureIncrementalOrderQuantity =
+			(BigDecimal)attributes.get("unitOfMeasureIncrementalOrderQuantity");
+
+		if (unitOfMeasureIncrementalOrderQuantity != null) {
+			setUnitOfMeasureIncrementalOrderQuantity(
+				unitOfMeasureIncrementalOrderQuantity);
 		}
 
 		String unitOfMeasureKey = (String)attributes.get("unitOfMeasureKey");
@@ -595,19 +611,19 @@ public class CommerceOrderItemWrapper
 		return model.getAvailableLanguageIds();
 	}
 
-	/**
-	 * Returns the booked quantity ID of this commerce order item.
-	 *
-	 * @return the booked quantity ID of this commerce order item
-	 */
-	@Override
-	public long getBookedQuantityId() {
-		return model.getBookedQuantityId();
-	}
-
 	@Override
 	public java.util.List<CommerceOrderItem> getChildCommerceOrderItems() {
 		return model.getChildCommerceOrderItems();
+	}
+
+	/**
+	 * Returns the commerce inventory booked quantity ID of this commerce order item.
+	 *
+	 * @return the commerce inventory booked quantity ID of this commerce order item
+	 */
+	@Override
+	public long getCommerceInventoryBookedQuantityId() {
+		return model.getCommerceInventoryBookedQuantityId();
 	}
 
 	@Override
@@ -1281,7 +1297,7 @@ public class CommerceOrderItemWrapper
 	 * @return the shipped quantity of this commerce order item
 	 */
 	@Override
-	public int getShippedQuantity() {
+	public BigDecimal getShippedQuantity() {
 		return model.getShippedQuantity();
 	}
 
@@ -1363,6 +1379,16 @@ public class CommerceOrderItemWrapper
 	@Override
 	public String getSubscriptionTypeSettings() {
 		return model.getSubscriptionTypeSettings();
+	}
+
+	/**
+	 * Returns the unit of measure incremental order quantity of this commerce order item.
+	 *
+	 * @return the unit of measure incremental order quantity of this commerce order item
+	 */
+	@Override
+	public BigDecimal getUnitOfMeasureIncrementalOrderQuantity() {
+		return model.getUnitOfMeasureIncrementalOrderQuantity();
 	}
 
 	/**
@@ -1576,13 +1602,16 @@ public class CommerceOrderItemWrapper
 	}
 
 	/**
-	 * Sets the booked quantity ID of this commerce order item.
+	 * Sets the commerce inventory booked quantity ID of this commerce order item.
 	 *
-	 * @param bookedQuantityId the booked quantity ID of this commerce order item
+	 * @param commerceInventoryBookedQuantityId the commerce inventory booked quantity ID of this commerce order item
 	 */
 	@Override
-	public void setBookedQuantityId(long bookedQuantityId) {
-		model.setBookedQuantityId(bookedQuantityId);
+	public void setCommerceInventoryBookedQuantityId(
+		long commerceInventoryBookedQuantityId) {
+
+		model.setCommerceInventoryBookedQuantityId(
+			commerceInventoryBookedQuantityId);
 	}
 
 	/**
@@ -2171,7 +2200,7 @@ public class CommerceOrderItemWrapper
 	 * @param shippedQuantity the shipped quantity of this commerce order item
 	 */
 	@Override
-	public void setShippedQuantity(int shippedQuantity) {
+	public void setShippedQuantity(BigDecimal shippedQuantity) {
 		model.setShippedQuantity(shippedQuantity);
 	}
 
@@ -2253,6 +2282,19 @@ public class CommerceOrderItemWrapper
 	@Override
 	public void setSubscriptionTypeSettings(String subscriptionTypeSettings) {
 		model.setSubscriptionTypeSettings(subscriptionTypeSettings);
+	}
+
+	/**
+	 * Sets the unit of measure incremental order quantity of this commerce order item.
+	 *
+	 * @param unitOfMeasureIncrementalOrderQuantity the unit of measure incremental order quantity of this commerce order item
+	 */
+	@Override
+	public void setUnitOfMeasureIncrementalOrderQuantity(
+		BigDecimal unitOfMeasureIncrementalOrderQuantity) {
+
+		model.setUnitOfMeasureIncrementalOrderQuantity(
+			unitOfMeasureIncrementalOrderQuantity);
 	}
 
 	/**

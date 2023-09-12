@@ -30,7 +30,7 @@ int mergeFailCount = layoutPrototype.getMergeFailCount();
 		<clay:link
 			displayType="secondary"
 			href="<%= resetMergeFailCountURL %>"
-			label='<%= LanguageUtil.get(request, "reset") %>'
+			label="reset"
 			type="button"
 		/>
 	</clay:alert>

@@ -93,4 +93,399 @@ definition {
 		ValidateSearchUpgrade.viewSearchPortletsConfiguration();
 	}
 
+	@priority = 5
+	test ViewSXPBlueprintsAndElements {
+		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
+		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
+
+		AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
+
+		Portlet.startServer(keepOsGiState = "true");
+
+		AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:8080",
+			userEmailAddress = "test@liferay.com");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createElement(title = "Test Element");
+
+		Navigator.gotoNavItem(navItem = "Blueprints");
+
+		Blueprints.createBlueprint(title = "Empty Blueprint");
+
+		PortletEntry.save();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Boost Tags Match");
+
+		Blueprints.addElement(element = "Boost Tagged Contents");
+
+		Type(
+			key_elementName = "Boost Tagged Contents",
+			key_fieldLabel = "Asset Tags",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "test");
+
+		Blueprints.addElement(element = "Boost Proximity");
+
+		Uncheck.uncheckToggleSwitch(
+			key_elementName = "Boost Proximity",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_ENABLE_DISABLE_TOGGLE");
+
+		Blueprints.addElement(element = "Boost Longer Contents");
+
+		Blueprints.addElement(element = "Boost Freshness");
+
+		Blueprints.addElement(element = "Boost Contents With More Versions");
+
+		Blueprints.addElement(element = "Boost Contents on My Sites");
+
+		Blueprints.addElement(element = "Boost Contents in a Category");
+
+		Type(
+			key_elementName = "Boost Contents in a Category",
+			key_fieldLabel = "Asset Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = 12345);
+
+		KeyPress(
+			key_elementName = "Boost Contents in a Category",
+			key_fieldLabel = "Asset Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "\ENTER");
+
+		Blueprints.addElement(element = "Boost Contents for the Current Language");
+
+		Blueprints.addElement(element = "Boost Asset Type");
+
+		Blueprints.configureElementDropdown(
+			dropdownName = "Asset Type",
+			option = "Web Content Article");
+
+		Blueprints.addElement(element = "Boost All Keywords Match");
+
+		Blueprints.addElement(element = "Hide Contents in a Category for Guest Users");
+
+		Type(
+			key_elementName = "Hide Contents in a Category for Guest Users",
+			key_fieldLabel = "Asset Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = 12345);
+
+		Blueprints.addElement(element = "Boost Web Contents by Keyword Match");
+
+		Type(
+			key_elementName = "Boost Web Contents by Keyword Match",
+			key_fieldLabel = "Article IDs",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = 12345);
+
+		Type(
+			key_elementName = "Boost Web Contents by Keyword Match",
+			key_fieldLabel = "Keywords",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "test");
+
+		Blueprints.addElement(element = "Boost Contents in a Category for the Time of Day");
+
+		Type(
+			key_elementName = "Boost Contents in a Category for the Time of Day",
+			key_fieldLabel = "Asset Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = 12345);
+
+		Blueprints.addElement(element = "Boost Contents in a Category for New User Accounts");
+
+		Type(
+			key_elementName = "Boost Contents in a Category for New User Accounts",
+			key_fieldLabel = "Asset Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = 12345);
+
+		Blueprints.addElement(element = "Boost Contents in a Category for Guest Users");
+
+		Type(
+			key_elementName = "Boost Contents in a Category for Guest Users",
+			key_fieldLabel = "Asset Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = 12345);
+
+		Blueprints.addElement(element = "Boost Contents in a Category for User Segments");
+
+		Type(
+			key_elementName = "Boost Contents in a Category for User Segments",
+			key_fieldLabel = "Asset Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = 12345);
+
+		Type(
+			key_elementName = "Boost Contents in a Category for User Segments",
+			key_fieldLabel = "User Segment IDs",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = 12345);
+
+		Blueprints.addElement(element = "Boost Contents in a Category for a Period of Time");
+
+		Type(
+			key_elementName = "Boost Contents in a Category for a Period of Time",
+			key_fieldLabel = "Asset Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = 12345);
+
+		Click(locator1 = "//div[contains(@id,'querySXPElement')][./ul[contains(.,'Boost Contents in a Category for a Period of Time')]]//li[contains(.,'From')]//button[contains(@class,'date-picker-dropdown-toggle')]");
+
+		Click(locator1 = "//div[@class='date-picker-calendar-body']//div[@class='date-picker-col']/button[text()='10']");
+
+		Click(locator1 = "//div[contains(@id,'querySXPElement')][./ul[contains(.,'Boost Contents in a Category for a Period of Time')]]//li[contains(.,'To')]//button[contains(@class,'date-picker-dropdown-toggle')]");
+
+		Click(locator1 = "xpath=(//div[@class='date-picker-calendar-body']//div[@class='date-picker-col']/button[text()='15'])[2]");
+
+		Blueprints.addElement(element = "Boost Contents in a Category by Keyword Match");
+
+		Type(
+			key_elementName = "Boost Contents in a Category by Keyword Match",
+			key_fieldLabel = "Asset Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = 12345);
+
+		Type(
+			key_elementName = "Boost Contents in a Category by Keyword Match",
+			key_fieldLabel = "Keywords",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "test");
+
+		Blueprints.addElement(element = "Staging Aware");
+
+		Blueprints.addElement(element = "Scheduling Aware");
+
+		Blueprints.addElement(element = "Limit Search to These Sites");
+
+		Type(
+			key_elementName = "Limit Search to These Sites",
+			key_fieldLabel = "Group IDs",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = 12345);
+
+		Blueprints.addElement(element = "Limit Search to the Current Site");
+
+		Blueprints.addElement(element = "Limit Search to Published Contents");
+
+		Blueprints.addElement(element = "Limit Search to PDF files");
+
+		Blueprints.addElement(element = "Limit Search to My Sites");
+
+		Blueprints.addElement(element = "Limit Search to My Contents");
+
+		Blueprints.addElement(element = "Limit Search to HEAD Version");
+
+		Blueprints.addElement(element = "Limit Search to Contents Created Within a Period of Time");
+
+		Click(locator1 = "//div[contains(@id,'querySXPElement')][./ul[contains(.,'Limit Search to Contents Created Within a Period of Time')]]//li[contains(.,'From')]//button[contains(@class,'date-picker-dropdown-toggle')]");
+
+		Click(locator1 = "xpath=(//div[@class='date-picker-calendar-body']//div[@class='date-picker-col']/button[text()='10'])[3]");
+
+		Click(locator1 = "//div[contains(@id,'querySXPElement')][./ul[contains(.,'Limit Search to Contents Created Within a Period of Time')]]//li[contains(.,'To')]//button[contains(@class,'date-picker-dropdown-toggle')]");
+
+		Click(locator1 = "xpath=(//div[@class='date-picker-calendar-body']//div[@class='date-picker-col']/button[text()='15'])[4]");
+
+		Blueprints.addElement(element = "Filter by Exact Terms Match");
+
+		Type(
+			key_elementName = "Filter by Exact Terms Match",
+			key_fieldLabel = "Field",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "articleId");
+
+		Type(
+			key_elementName = "Filter by Exact Terms Match",
+			key_fieldLabel = "Values",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "test");
+
+		Blueprints.addElement(element = "Hide Tagged Contents");
+
+		Type(
+			key_elementName = "Hide Tagged Contents",
+			key_fieldLabel = "Asset Tag",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "test");
+
+		Blueprints.addElement(element = "Hide Hidden Contents");
+
+		Blueprints.addElement(element = "Hide Contents in a Category");
+
+		Type(
+			key_elementName = "Hide Contents in a Category",
+			key_fieldLabel = "Asset Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = 12345);
+
+		Blueprints.addElement(element = "Hide Comments");
+
+		Blueprints.addElement(element = "Hide by Exact Term Match");
+
+		Type(
+			key_elementName = "Hide by Exact Term Match",
+			key_fieldLabel = "Field",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "articleId");
+
+		Type(
+			key_elementName = "Hide by Exact Term Match",
+			key_fieldLabel = "Value",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = "test");
+
+		Blueprints.addElement(element = "Text Match Over Multiple Fields");
+
+		Blueprints.addElement(element = "Search with Query String Syntax");
+
+		Blueprints.addElement(element = "Paste Any Elasticsearch Query");
+
+		Blueprints.addElement(element = "Test Element");
+
+		PortletEntry.save();
+
+		Portlet.shutdownServer();
+
+		AntCommands.runCommand("build-test.xml", "prepare-upgrade-original-bundle-test-environment");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+
+		TestUtils.hardRefresh();
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://localhost:8080",
+			userEmailAddress = "test@liferay.com");
+
+		SearchAdministration.executeReindex();
+
+		Blueprints.openBlueprintsAdmin();
+
+		AssertElementPresent(
+			key_entryTitle = "Empty Blueprint",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
+
+		Navigator.gotoNavItem(navItem = "Elements");
+
+		WaitForElementPresent(locator1 = "Pagination#RESULTS");
+
+		var paginationResults = selenium.getText("Pagination#RESULTS");
+
+		var totalElements = StringUtil.extractLast(${paginationResults}, "of ");
+
+		var totalElements = StringUtil.extractFirst(${totalElements}, " ");
+
+		var difference = ${totalElements} - 39;
+
+		if (${difference} != 0) {
+			TestUtils.fail(message = "FAILED: Actual total elements '${totalElements}' is not equal to expected total elements of 39");
+		}
+
+		Search.searchCP(searchTerm = "Test Element");
+
+		AssertElementPresent(
+			key_entryTitle = "Test Element",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
+
+		Search.searchCP(searchTerm = "Boost Contents in a Category for User Segments");
+
+		AssertElementPresent(
+			key_entryTitle = "Boost Contents in a Category for User Segments",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
+
+		AssertTextEquals(
+			key_entryTitle = "Boost Contents in a Category for User Segments",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION",
+			value1 = "Boost contents in a category for users belonging to the given user segments.");
+
+		Search.searchCP(searchTerm = "Search with Query String Syntax");
+
+		AssertElementPresent(
+			key_entryTitle = "Search with Query String Syntax",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
+
+		Navigator.gotoNavItem(navItem = "Blueprints");
+
+		Blueprints.gotoBlueprint(title = "Test Blueprint");
+
+		AssertElementPresent(
+			key_index = 38,
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_NTH_ELEMENT");
+
+		AssertElementPresent(
+			key_element = "Test Element",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		AssertElementPresent(
+			key_element = "Boost Contents in a Category for the Time of Day",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		AssertElementPresent(
+			key_element = "Boost Contents in a Category for User Segments",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		AssertElementPresent(
+			key_element = "Boost Contents in a Category for a Period of Time",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		AssertElementPresent(
+			key_element = "Search with Query String Syntax",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		AssertElementPresent(
+			key_elementName = "Boost Contents in a Category for the Time of Day",
+			key_fieldLabel = "Asset Category",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+			value1 = 12345);
+
+		AssertElementPresent(
+			key_dropdownName = "Time of Day",
+			key_option = "Morning (4am - 12pm)",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_GENERIC_DROPDOWN_OPTION");
+
+		AssertTextPresent(
+			key_element = "Boost Contents in a Category for User Segments",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT",
+			value1 = "Boost contents in a category for users belonging to the given user segments.");
+
+		AssertElementPresent(
+			key_elementName = "Boost Contents in a Category for a Period of Time",
+			key_fieldName = "Date: From",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
+
+		AssertElementNotPresent(
+			key_elementName = "Boost Contents in a Category for a Period of Time",
+			key_fieldName = "Create Date: From",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
+
+		AssertElementPresent(
+			key_elementName = "Boost Contents in a Category for a Period of Time",
+			key_fieldName = "Date: To",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
+
+		AssertElementNotPresent(
+			key_elementName = "Boost Contents in a Category for a Period of Time",
+			key_fieldName = "Create Date: To",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_LABEL");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			key_elementName = "Boost Proximity",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_ENABLE_DISABLE_TOGGLE");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "test");
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+	}
+
 }

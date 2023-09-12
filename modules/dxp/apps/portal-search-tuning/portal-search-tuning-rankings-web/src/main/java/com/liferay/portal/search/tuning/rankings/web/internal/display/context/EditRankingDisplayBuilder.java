@@ -5,20 +5,22 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.Ranking;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexName;
+import com.liferay.portal.search.tuning.rankings.web.internal.index.name.RankingIndexNameBuilder;
 
 import java.util.Map;
 
-import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 
@@ -26,19 +28,24 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Kevin Tan
+ * @author Petteri Karttunen
  */
 public class EditRankingDisplayBuilder {
 
 	public EditRankingDisplayBuilder(
-		HttpServletRequest httpServletRequest, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		HttpServletRequest httpServletRequest,
+		RankingIndexNameBuilder rankingIndexNameBuilder,
+		RankingIndexReader rankingIndexReader, RenderResponse renderResponse) {
 
 		_httpServletRequest = httpServletRequest;
-		_renderRequest = renderRequest;
+		_rankingIndexNameBuilder = rankingIndexNameBuilder;
+		_rankingIndexReader = rankingIndexReader;
 		_renderResponse = renderResponse;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_ranking = _fetchRanking();
 	}
 
 	public EditRankingDisplayContext build() {
@@ -57,10 +64,23 @@ public class EditRankingDisplayBuilder {
 		return editRankingDisplayContext;
 	}
 
+	private Ranking _fetchRanking() {
+		String resultsRankingUid = _getResultsRankingUid();
+
+		if (!Validator.isBlank(resultsRankingUid)) {
+			return _rankingIndexReader.fetch(
+				resultsRankingUid, _getRankingIndexName());
+		}
+
+		return null;
+	}
+
 	private String[] _getAliases() {
-		return StringUtil.split(
-			ParamUtil.getString(_httpServletRequest, "aliases"),
-			StringPool.COMMA_AND_SPACE);
+		if (_ranking != null) {
+			return ArrayUtil.toStringArray(_ranking.getAliases());
+		}
+
+		return new String[0];
 	}
 
 	private Map<String, Object> _getConstants() {
@@ -85,6 +105,14 @@ public class EditRankingDisplayBuilder {
 
 	private String _getFormName() {
 		return "editResultRankingsFm";
+	}
+
+	private String _getGroupExternalReferenceCode() {
+		if (_ranking != null) {
+			return _ranking.getGroupExternalReferenceCode();
+		}
+
+		return null;
 	}
 
 	private String _getHiddenResultRankingsResourceURL() {
@@ -117,7 +145,13 @@ public class EditRankingDisplayBuilder {
 		).put(
 			"initialAliases", _getAliases()
 		).put(
+			"initialGroupExternalReferenceCode",
+			_getGroupExternalReferenceCode()
+		).put(
 			"initialInactive", _isInactive()
+		).put(
+			"initialSXPBlueprintExternalReferenceCode",
+			_getSXPBlueprintExternalReferenceCode()
 		).put(
 			"resultsRankingUid", _getResultsRankingUid()
 		).put(
@@ -125,6 +159,11 @@ public class EditRankingDisplayBuilder {
 		).put(
 			"validateFormUrl", _getValidateResultRankingsResourceURL()
 		).build();
+	}
+
+	private RankingIndexName _getRankingIndexName() {
+		return _rankingIndexNameBuilder.getRankingIndexName(
+			_themeDisplay.getCompanyId());
 	}
 
 	private String _getRedirect() {
@@ -152,6 +191,14 @@ public class EditRankingDisplayBuilder {
 		return resourceURL.toString();
 	}
 
+	private String _getSXPBlueprintExternalReferenceCode() {
+		if (_ranking != null) {
+			return _ranking.getSXPBlueprintExternalReferenceCode();
+		}
+
+		return null;
+	}
+
 	private String _getValidateResultRankingsResourceURL() {
 		ResourceURL resourceURL = _renderResponse.createResourceURL();
 
@@ -173,7 +220,11 @@ public class EditRankingDisplayBuilder {
 	}
 
 	private boolean _isInactive() {
-		return ParamUtil.getBoolean(_httpServletRequest, "inactive");
+		if (_ranking != null) {
+			return _ranking.isInactive();
+		}
+
+		return false;
 	}
 
 	private void _setBackURL(
@@ -230,7 +281,9 @@ public class EditRankingDisplayBuilder {
 	}
 
 	private final HttpServletRequest _httpServletRequest;
-	private final RenderRequest _renderRequest;
+	private final Ranking _ranking;
+	private final RankingIndexNameBuilder _rankingIndexNameBuilder;
+	private final RankingIndexReader _rankingIndexReader;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
 

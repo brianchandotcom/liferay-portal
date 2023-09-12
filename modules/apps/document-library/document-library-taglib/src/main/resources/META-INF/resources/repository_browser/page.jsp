@@ -93,6 +93,7 @@ RepositoryBrowserTagDisplayContext repositoryBrowserTagDisplayContext = (Reposit
 							<c:otherwise>
 								<clay:horizontal-card
 									horizontalCard="<%= repositoryBrowserTagDisplayContext.getHorizontalCard(repositoryEntry) %>"
+									translated="<%= false %>"
 								/>
 							</c:otherwise>
 						</c:choose>

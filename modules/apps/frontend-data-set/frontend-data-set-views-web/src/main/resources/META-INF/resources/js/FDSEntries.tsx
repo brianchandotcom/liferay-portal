@@ -831,12 +831,14 @@ const RenameFDSEntryModalContent = ({
 interface IFDSEntriesInterface {
 	fdsViewsURL: string;
 	namespace: string;
+	permissionsURL: string;
 	restApplications: Array<string>;
 }
 
 const FDSEntries = ({
 	fdsViewsURL,
 	namespace,
+	permissionsURL,
 	restApplications,
 }: IFDSEntriesInterface) => {
 	const creationMenu = {
@@ -863,7 +865,7 @@ const FDSEntries = ({
 		],
 	};
 
-	const getViewURL = (itemData: FDSEntryType) => {
+	const getEditURL = (itemData: FDSEntryType) => {
 		const url = new URL(fdsViewsURL);
 
 		url.searchParams.set(`${namespace}fdsEntryId`, itemData.id);
@@ -872,8 +874,8 @@ const FDSEntries = ({
 		return url;
 	};
 
-	const onViewClick = ({itemData}: {itemData: FDSEntryType}) => {
-		navigate(getViewURL(itemData));
+	const onEditClick = ({itemData}: {itemData: FDSEntryType}) => {
+		navigate(getEditURL(itemData));
 	};
 
 	const onDeleteClick = ({
@@ -955,7 +957,7 @@ const FDSEntries = ({
 			schema: {
 				fields: [
 					{
-						actionId: 'view',
+						actionId: 'edit',
 						contentRenderer: 'actionLink',
 						fieldName: 'label',
 						label: Liferay.Language.get('name'),
@@ -1018,17 +1020,21 @@ const FDSEntries = ({
 				itemsActions={[
 					{
 						data: {
-							id: 'view',
+							id: 'edit',
+							permissionKey: 'get',
 						},
 						icon: 'pencil',
 						label: Liferay.Language.get('edit'),
-						onClick: onViewClick,
+						onClick: onEditClick,
 					},
 					{
 						separator: true,
 						type: 'group',
 					},
 					{
+						data: {
+							permissionKey: 'update',
+						},
 						icon: 'blank',
 						label: Liferay.Language.get('rename'),
 						onClick: onRenameClick,
@@ -1038,6 +1044,24 @@ const FDSEntries = ({
 						type: 'group',
 					},
 					{
+						data: {
+							permissionKey: 'permissions',
+							size: 'full-screen',
+							title: Liferay.Language.get('permissions'),
+						},
+						href: permissionsURL,
+						icon: 'password-policies',
+						label: Liferay.Language.get('permissions'),
+						target: 'modal',
+					},
+					{
+						separator: true,
+						type: 'group',
+					},
+					{
+						data: {
+							permissionKey: 'delete',
+						},
 						icon: 'trash',
 						label: Liferay.Language.get('delete'),
 						onClick: onDeleteClick,

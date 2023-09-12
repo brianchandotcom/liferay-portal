@@ -10,6 +10,8 @@ import com.liferay.headless.commerce.delivery.cart.client.serdes.v1_0.SettingsSe
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -25,16 +27,17 @@ public class Settings implements Cloneable, Serializable {
 		return SettingsSerDes.toDTO(json);
 	}
 
-	public Integer[] getAllowedQuantities() {
+	public BigDecimal[] getAllowedQuantities() {
 		return allowedQuantities;
 	}
 
-	public void setAllowedQuantities(Integer[] allowedQuantities) {
+	public void setAllowedQuantities(BigDecimal[] allowedQuantities) {
 		this.allowedQuantities = allowedQuantities;
 	}
 
 	public void setAllowedQuantities(
-		UnsafeSupplier<Integer[], Exception> allowedQuantitiesUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal[], Exception>
+			allowedQuantitiesUnsafeSupplier) {
 
 		try {
 			allowedQuantities = allowedQuantitiesUnsafeSupplier.get();
@@ -44,18 +47,18 @@ public class Settings implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer[] allowedQuantities;
+	protected BigDecimal[] allowedQuantities;
 
-	public Integer getMaxQuantity() {
+	public BigDecimal getMaxQuantity() {
 		return maxQuantity;
 	}
 
-	public void setMaxQuantity(Integer maxQuantity) {
+	public void setMaxQuantity(BigDecimal maxQuantity) {
 		this.maxQuantity = maxQuantity;
 	}
 
 	public void setMaxQuantity(
-		UnsafeSupplier<Integer, Exception> maxQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> maxQuantityUnsafeSupplier) {
 
 		try {
 			maxQuantity = maxQuantityUnsafeSupplier.get();
@@ -65,18 +68,18 @@ public class Settings implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer maxQuantity;
+	protected BigDecimal maxQuantity;
 
-	public Integer getMinQuantity() {
+	public BigDecimal getMinQuantity() {
 		return minQuantity;
 	}
 
-	public void setMinQuantity(Integer minQuantity) {
+	public void setMinQuantity(BigDecimal minQuantity) {
 		this.minQuantity = minQuantity;
 	}
 
 	public void setMinQuantity(
-		UnsafeSupplier<Integer, Exception> minQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> minQuantityUnsafeSupplier) {
 
 		try {
 			minQuantity = minQuantityUnsafeSupplier.get();
@@ -86,18 +89,18 @@ public class Settings implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer minQuantity;
+	protected BigDecimal minQuantity;
 
-	public Integer getMultipleQuantity() {
+	public BigDecimal getMultipleQuantity() {
 		return multipleQuantity;
 	}
 
-	public void setMultipleQuantity(Integer multipleQuantity) {
+	public void setMultipleQuantity(BigDecimal multipleQuantity) {
 		this.multipleQuantity = multipleQuantity;
 	}
 
 	public void setMultipleQuantity(
-		UnsafeSupplier<Integer, Exception> multipleQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> multipleQuantityUnsafeSupplier) {
 
 		try {
 			multipleQuantity = multipleQuantityUnsafeSupplier.get();
@@ -107,7 +110,7 @@ public class Settings implements Cloneable, Serializable {
 		}
 	}
 
-	protected Integer multipleQuantity;
+	protected BigDecimal multipleQuantity;
 
 	@Override
 	public Settings clone() throws CloneNotSupportedException {

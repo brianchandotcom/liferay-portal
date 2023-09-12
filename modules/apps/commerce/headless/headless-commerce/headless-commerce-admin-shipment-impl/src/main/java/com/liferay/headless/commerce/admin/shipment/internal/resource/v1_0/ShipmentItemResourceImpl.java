@@ -16,6 +16,7 @@ import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem;
 import com.liferay.headless.commerce.admin.shipment.internal.util.v1_0.ShipmentItemUtil;
 import com.liferay.headless.commerce.admin.shipment.resource.v1_0.ShipmentItemResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -153,7 +154,7 @@ public class ShipmentItemResourceImpl extends BaseShipmentItemResourceImpl {
 			GetterUtil.get(
 				shipmentItem.getWarehouseId(),
 				commerceShipmentItem.getCommerceInventoryWarehouseId()),
-			GetterUtil.get(
+			BigDecimalUtil.get(
 				shipmentItem.getQuantity(), commerceShipmentItem.getQuantity()),
 			GetterUtil.getBoolean(shipmentItem.getValidateInventory(), true));
 
@@ -187,7 +188,7 @@ public class ShipmentItemResourceImpl extends BaseShipmentItemResourceImpl {
 			GetterUtil.get(
 				shipmentItem.getWarehouseId(),
 				commerceShipmentItem.getCommerceInventoryWarehouseId()),
-			GetterUtil.get(
+			BigDecimalUtil.get(
 				shipmentItem.getQuantity(), commerceShipmentItem.getQuantity()),
 			GetterUtil.getBoolean(shipmentItem.getValidateInventory(), true));
 

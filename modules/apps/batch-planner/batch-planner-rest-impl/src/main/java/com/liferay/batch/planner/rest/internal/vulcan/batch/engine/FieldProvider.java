@@ -10,15 +10,18 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResourceProvider;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.util.OpenAPIUtil;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -51,27 +54,26 @@ public class FieldProvider {
 			});
 	}
 
-	public List<Field> getFields(long companyId, String internalClassName)
-		throws Exception {
-
-		OpenAPIYAML openAPIYAML = _openAPIYAMLProvider.getOpenAPIYAML(
-			companyId, internalClassName);
-
-		Map<String, Field> dtoEntityFields = OpenAPIUtil.getDTOEntityFields(
-			internalClassName.substring(
-				internalClassName.lastIndexOf(StringPool.PERIOD) + 1),
-			openAPIYAML);
-
-		return new ArrayList<>(dtoEntityFields.values());
-	}
-
 	public List<Field> getFields(
-			long companyId, String objectDefinitionName, UriInfo uriInfo)
+			long companyId, String internalClassName, UriInfo uriInfo)
 		throws Exception {
+
+		int index = internalClassName.indexOf(StringPool.POUND);
+
+		if (index < 0) {
+			OpenAPIYAML openAPIYAML = _openAPIYAMLProvider.getOpenAPIYAML(
+				companyId, internalClassName);
+
+			return ListUtil.fromMapValues(
+				OpenAPIUtil.getDTOEntityFields(
+					StringUtil.extractLast(
+						internalClassName, StringPool.PERIOD),
+					openAPIYAML));
+		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				companyId, objectDefinitionName);
+				companyId, internalClassName.substring(index + 1));
 
 		ObjectEntryOpenAPIResource objectEntryOpenAPIResource =
 			_objectEntryOpenAPIResourceProvider.getObjectEntryOpenAPIResource(
@@ -80,7 +82,18 @@ public class FieldProvider {
 		Map<String, Field> fields = objectEntryOpenAPIResource.getFields(
 			uriInfo);
 
-		return new ArrayList<>(fields.values());
+		return TransformUtil.transform(
+			fields.values(),
+			field -> {
+				if ((Objects.equals(field.getType(), "array") ||
+					 Objects.equals(field.getType(), "object")) &&
+					!Validator.isBlank(field.getRef())) {
+
+					return null;
+				}
+
+				return field;
+			});
 	}
 
 	@Reference

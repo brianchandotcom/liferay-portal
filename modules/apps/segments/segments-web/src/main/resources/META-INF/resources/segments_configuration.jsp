@@ -65,7 +65,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 					<c:when test="<%= segmentsConfigurationURL != null %>">
 						<clay:link
 							href="<%= segmentsConfigurationURL %>"
-							label='<%= LanguageUtil.get(request, "to-enable,-go-to-system-settings") %>'
+							label="to-enable,-go-to-system-settings"
 						/>
 					</c:when>
 					<c:otherwise>
@@ -91,7 +91,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 					<c:when test="<%= segmentsConfigurationURL != null %>">
 						<clay:link
 							href="<%= segmentsConfigurationURL %>"
-							label='<%= LanguageUtil.get(request, "to-enable,-go-to-system-settings") %>'
+							label="to-enable,-go-to-system-settings"
 						/>
 					</c:when>
 					<c:otherwise>
@@ -128,7 +128,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 						checked="<%= segmentsCompanyConfigurationDisplayContext.isSegmentationChecked() %>"
 						disabled="<%= !segmentsCompanyConfigurationDisplayContext.isSegmentationEnabled() %>"
 						id='<%= liferayPortletResponse.getNamespace() + "segmentationEnabled" %>'
-						label='<%= LanguageUtil.get(request, "segmentation-enabled-name") %>'
+						label="segmentation-enabled-name"
 						name='<%= liferayPortletResponse.getNamespace() + "segmentationEnabled" %>'
 					/>
 
@@ -155,7 +155,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 						checked="<%= segmentsCompanyConfigurationDisplayContext.isRoleSegmentationChecked() %>"
 						disabled="<%= !segmentsCompanyConfigurationDisplayContext.isRoleSegmentationEnabled() %>"
 						id='<%= liferayPortletResponse.getNamespace() + "roleSegmentationEnabled" %>'
-						label='<%= LanguageUtil.get(request, "role-segmentation-enabled-name") %>'
+						label="role-segmentation-enabled-name"
 						name='<%= liferayPortletResponse.getNamespace() + "roleSegmentationEnabled" %>'
 					/>
 
@@ -197,7 +197,7 @@ SegmentsCompanyConfigurationDisplayContext segmentsCompanyConfigurationDisplayCo
 					displayType="secondary"
 					href="<%= redirect %>"
 					id='<%= liferayPortletResponse.getNamespace() + "cancel" %>'
-					label='<%= LanguageUtil.get(request, "cancel") %>'
+					label="cancel"
 					type="button"
 				/>
 			</div>

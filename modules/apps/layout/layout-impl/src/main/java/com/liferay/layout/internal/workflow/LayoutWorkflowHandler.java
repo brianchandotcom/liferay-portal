@@ -7,9 +7,9 @@ package com.liferay.layout.internal.workflow;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.layout.content.LayoutContentProvider;
+import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.internal.configuration.LayoutWorkflowHandlerConfiguration;
 import com.liferay.layout.service.LayoutLocalizationLocalService;
-import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;

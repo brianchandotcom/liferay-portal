@@ -290,7 +290,7 @@ public abstract class BaseAggregationFilteringTestCase
 				document.addKeyword(Field.ASSET_TAG_NAMES, tag);
 				document.addKeyword(Field.MODIFIED_DATE, modified);
 				document.addNumber(Field.GROUP_ID, site);
-				document.addKeyword(Field.USER_NAME, user);
+				document.addKeyword(Field.USER_ID, user);
 			});
 	}
 

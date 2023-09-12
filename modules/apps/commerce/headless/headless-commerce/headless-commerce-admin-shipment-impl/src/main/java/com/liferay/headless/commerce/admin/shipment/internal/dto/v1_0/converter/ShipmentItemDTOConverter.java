@@ -5,9 +5,12 @@
 
 package com.liferay.headless.commerce.admin.shipment.internal.dto.v1_0.converter;
 
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -48,12 +51,29 @@ public class ShipmentItemDTOConverter
 				id = commerceShipmentItem.getCommerceShipmentItemId();
 				modifiedDate = commerceShipmentItem.getModifiedDate();
 				orderItemId = commerceShipmentItem.getCommerceOrderItemId();
-				quantity = commerceShipmentItem.getQuantity();
 				shipmentId = commerceShipmentItem.getCommerceShipmentId();
+				unitOfMeasureKey = commerceShipmentItem.getUnitOfMeasureKey();
 				userName = commerceShipmentItem.getUserName();
 				warehouseId =
 					commerceShipmentItem.getCommerceInventoryWarehouseId();
 
+				setQuantity(
+					() -> {
+						CommerceOrderItem commerceOrderItem =
+							_commerceOrderItemLocalService.
+								fetchCommerceOrderItem(
+									commerceShipmentItem.
+										getCommerceOrderItemId());
+
+						if (commerceOrderItem == null) {
+							return null;
+						}
+
+						return _commerceQuantityFormatter.format(
+							commerceOrderItem.getCPInstanceId(),
+							commerceShipmentItem.getQuantity(),
+							commerceOrderItem.getUnitOfMeasureKey());
+					});
 				setShipmentExternalReferenceCode(
 					() -> {
 						CommerceShipment commerceShipment =
@@ -64,6 +84,12 @@ public class ShipmentItemDTOConverter
 			}
 		};
 	}
+
+	@Reference
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
 
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;

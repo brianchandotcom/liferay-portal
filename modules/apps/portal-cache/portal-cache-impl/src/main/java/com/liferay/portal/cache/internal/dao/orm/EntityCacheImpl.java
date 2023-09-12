@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.MVCCModel;
-import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LRUMap;
@@ -133,17 +132,10 @@ public class EntityCacheImpl
 			mvcc = true;
 		}
 
-		boolean sharded = false;
-
-		if (DBPartition.isPartitionEnabled() &&
-			ShardedModel.class.isAssignableFrom(clazz)) {
-
-			sharded = true;
-		}
-
 		portalCache =
 			(PortalCache<Serializable, Serializable>)
-				_multiVMPool.getPortalCache(groupKey, mvcc, sharded);
+				_multiVMPool.getPortalCache(
+					groupKey, mvcc, DBPartition.isPartitionedModel(clazz));
 
 		PortalCache<Serializable, Serializable> previousPortalCache =
 			_portalCaches.putIfAbsent(className, portalCache);

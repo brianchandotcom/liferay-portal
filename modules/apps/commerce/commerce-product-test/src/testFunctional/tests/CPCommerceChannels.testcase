@@ -800,18 +800,9 @@ definition {
 		}
 
 		task ("When the admin selects the same order type eligibility once again") {
-			CommerceNavigator.gotoEntry(entryName = "Standard Delivery");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-			Click(
-				key_panel = "Details",
-				locator1 = "Panel#PANEL_COLLAPSED");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Eligibility");
-
 			CommerceEntry.setEntryEligibility(
 				orderTypesEligibility = "Order Type Test",
+				shippingOption = "Standard Delivery",
 				unpublish = "true");
 		}
 

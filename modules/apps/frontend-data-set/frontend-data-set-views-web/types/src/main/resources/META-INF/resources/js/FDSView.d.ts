@@ -14,6 +14,7 @@ interface IFDSViewSectionInterface {
 	namespace: string;
 	onFDSViewUpdate: (data: FDSViewType) => void;
 	saveFDSFieldsURL: string;
+	spritemap: string;
 }
 interface IFDSViewInterface {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
@@ -21,6 +22,7 @@ interface IFDSViewInterface {
 	fdsViewsURL: string;
 	namespace: string;
 	saveFDSFieldsURL: string;
+	spritemap: string;
 }
 declare const FDSView: ({
 	fdsClientExtensionCellRenderers,
@@ -28,6 +30,7 @@ declare const FDSView: ({
 	fdsViewsURL,
 	namespace,
 	saveFDSFieldsURL,
+	spritemap,
 }: IFDSViewInterface) => JSX.Element;
 export {IFDSViewSectionInterface};
 export default FDSView;

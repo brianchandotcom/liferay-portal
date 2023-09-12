@@ -135,7 +135,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 								id='<%= liferayPortletResponse.getNamespace() + "contextualSidebarButton" %>'
 								role="tab"
 								small="<%= true %>"
-								title='<%= LanguageUtil.get(request, "close-configuration-panel") %>'
+								title="close-configuration-panel"
 								type="button"
 							/>
 						</div>

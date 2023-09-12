@@ -13,6 +13,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -118,6 +120,10 @@ public class DisplayPageManagementToolbarDisplayContext
 			getPortletURL()
 		).setKeywords(
 			StringPool.BLANK
+		).setParameter(
+			"layoutPageTemplateCollectionId",
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT
 		).buildString();
 	}
 
@@ -141,6 +147,11 @@ public class DisplayPageManagementToolbarDisplayContext
 							"/add_display_page_collection"
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
+					).setParameter(
+						"layoutPageTemplateCollectionId",
+						ParamUtil.getLong(
+							httpServletRequest,
+							"layoutPageTemplateCollectionId")
 					).buildString());
 				dropdownItem.setIcon("folder");
 				dropdownItem.setLabel(
@@ -155,6 +166,11 @@ public class DisplayPageManagementToolbarDisplayContext
 						"/select_display_page_master_layout.jsp"
 					).setRedirect(
 						_themeDisplay.getURLCurrent()
+					).setParameter(
+						"layoutPageTemplateCollectionId",
+						ParamUtil.getLong(
+							httpServletRequest,
+							"layoutPageTemplateCollectionId")
 					).buildString());
 				dropdownItem.setLabel(
 					LanguageUtil.get(
@@ -166,6 +182,15 @@ public class DisplayPageManagementToolbarDisplayContext
 	@Override
 	public String getDefaultEventHandler() {
 		return "DISPLAY_PAGE_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
+	}
+
+	@Override
+	public String getSearchActionURL() {
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"layoutPageTemplateCollectionId", -1
+		).buildString();
 	}
 
 	@Override

@@ -521,9 +521,7 @@ definition {
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "There are no documents or media files in this folder.");
+		DMFolder.viewEntryNotPresent(dmFolderName = ${dmFolderName});
 	}
 
 	macro removePermissions {

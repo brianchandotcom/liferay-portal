@@ -303,7 +303,7 @@ renderResponse.setTitle(title);
 										displayType="secondary"
 										icon="times-circle"
 										monospaced="<%= true %>"
-										title='<%= LanguageUtil.get(request, "remove") %>'
+										title="remove"
 									/>
 								</liferay-ui:search-container-column-text>
 							</liferay-ui:search-container-row>

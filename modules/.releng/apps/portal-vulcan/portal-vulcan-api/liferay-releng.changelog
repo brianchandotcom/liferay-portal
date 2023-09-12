@@ -457,3 +457,8 @@ ebd125295bdac3226d408dc60911858b74b908ac^..14c35c8a0ff5aa619f20cc310aaf2f9c37fe8
 # Bundle Version 39.0.0
 #
 a6833d8f2f72e1ea2d9578a19ab436778faaa8b0^..fc5e2dfaa3b0ce41d0f47e5db6ec3cf7bf3d20ba=LPS-192151 LPS-193378
+
+#
+# Bundle Version 40.0.0
+#
+fc5e2dfaa3b0ce41d0f47e5db6ec3cf7bf3d20ba^..fd24ebe3610f200d15483ddd004f7b60e77c997c=LPS-193109 LPS-195109 LPS-195622

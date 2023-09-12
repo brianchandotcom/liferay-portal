@@ -7,13 +7,13 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {useModal} from '@clayui/modal';
-import {openConfirmModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
 import SegmentsExperimentsContext from '../context.es';
 import {
 	closeReviewAndRunExperiment,
+	openTerminateModal,
 	reviewAndRunExperiment,
 	runExperiment,
 	updateSegmentsExperimentStatus,
@@ -30,7 +30,10 @@ import {
 import {DispatchContext, StateContext} from './../state/context.es';
 import {ReviewExperimentModal} from './ReviewExperimentModal.es';
 
-function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
+function SegmentsExperimentsActions({
+	onCreateSegmentsExperiment,
+	onEditSegmentsExperimentStatus,
+}) {
 	const {
 		experiment,
 		reviewExperimentModal,
@@ -59,21 +62,7 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 				<ClayButton
 					className="w-100"
 					displayType="secondary"
-					onClick={() => {
-						openConfirmModal({
-							message: Liferay.Language.get(
-								'are-you-sure-you-want-to-terminate-this-test'
-							),
-							onConfirm: (isConfirmed) => {
-								if (isConfirmed) {
-									onEditSegmentsExperimentStatus(
-										experiment,
-										STATUS_TERMINATED
-									);
-								}
-							},
-						});
-					}}
+					onClick={() => dispatch(openTerminateModal())}
 				>
 					{Liferay.Language.get('terminate-test')}
 				</ClayButton>
@@ -117,6 +106,16 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 				</ClayButton>
 			)}
 
+			{experiment.status.value === STATUS_TERMINATED && (
+				<ClayButton
+					className="w-100"
+					displayType="primary"
+					onClick={onCreateSegmentsExperiment}
+				>
+					{Liferay.Language.get('create-new-test')}
+				</ClayButton>
+			)}
+
 			{reviewExperimentModal.active && (
 				<ReviewExperimentModal
 					modalObserver={observer}
@@ -125,6 +124,7 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 					variants={variants}
 				/>
 			)}
+
 			{viewExperimentDetailsURL && (
 				<ClayLink
 					className="btn btn-secondary btn-sm mt-3 w-100"
@@ -174,6 +174,7 @@ function SegmentsExperimentsActions({onEditSegmentsExperimentStatus}) {
 }
 
 SegmentsExperimentsActions.propTypes = {
+	onCreateSegmentsExperiment: PropTypes.func.isRequired,
 	onEditSegmentsExperimentStatus: PropTypes.func.isRequired,
 };
 

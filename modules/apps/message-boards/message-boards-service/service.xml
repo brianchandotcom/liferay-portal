@@ -568,6 +568,7 @@
 		<exception>MessageBody</exception>
 		<exception>MessageSubject</exception>
 		<exception>RequiredMessage</exception>
+		<exception>RequiredThread</exception>
 		<exception>SplitThread</exception>
 	</exceptions>
 </service-builder>

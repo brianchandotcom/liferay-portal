@@ -67,7 +67,8 @@ public class PortletBackLinkProductNavigationControlMenuEntry
 		String urlBackTitle = portletDisplay.getURLBackTitle();
 
 		if (Validator.isNotNull(urlBackTitle)) {
-			return urlBackTitle;
+			return _language.format(
+				locale, "go-to-x", new String[] {urlBackTitle});
 		}
 
 		return _language.get(locale, "back");

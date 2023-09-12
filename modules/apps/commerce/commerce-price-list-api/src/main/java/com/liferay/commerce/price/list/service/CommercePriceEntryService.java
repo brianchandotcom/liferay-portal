@@ -155,12 +155,6 @@ public interface CommercePriceEntryService extends BaseService {
 		throws PortalException;
 
 	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, BigDecimal price,
-			boolean priceOnApplication, BigDecimal promoPrice,
-			String unitOfMeasureKey, ServiceContext serviceContext)
-		throws PortalException;
-
-	public CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, boolean bulkPricing,
 			boolean discountDiscovery, BigDecimal discountLevel1,
 			BigDecimal discountLevel2, BigDecimal discountLevel3,
@@ -175,6 +169,12 @@ public interface CommercePriceEntryService extends BaseService {
 
 	public CommercePriceEntry updateExternalReferenceCode(
 			String externalReferenceCode, CommercePriceEntry commercePriceEntry)
+		throws PortalException;
+
+	public CommercePriceEntry updatePricingInfo(
+			long commercePriceEntryId, boolean bulkPricing, BigDecimal price,
+			boolean priceOnApplication, BigDecimal promoPrice,
+			String unitOfMeasureKey, ServiceContext serviceContext)
 		throws PortalException;
 
 }

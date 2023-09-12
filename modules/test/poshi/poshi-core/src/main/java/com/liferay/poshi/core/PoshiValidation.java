@@ -71,6 +71,8 @@ public class PoshiValidation {
 
 		long start = System.currentTimeMillis();
 
+		validateProperties();
+
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
@@ -143,6 +145,8 @@ public class PoshiValidation {
 	}
 
 	public static void validate(String testName) throws Exception {
+		validateProperties();
+
 		validateTestName(testName);
 
 		if (!_exceptions.isEmpty()) {
@@ -1560,6 +1564,43 @@ public class PoshiValidation {
 		}
 	}
 
+	protected static void validateProperties() {
+		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
+
+		if (Validator.isNull(poshiProperties.testCaseAvailablePropertyNames)) {
+			return;
+		}
+
+		for (String testCaseAvailablePropertyName :
+				StringUtil.split(
+					poshiProperties.testCaseAvailablePropertyNames)) {
+
+			String testCaseAvailablePropertyValues = PropsUtil.get(
+				"test.case.available.property.values[" +
+					testCaseAvailablePropertyName + "]");
+
+			if (Validator.isNotNull(testCaseAvailablePropertyValues)) {
+				List<String> uniquePropertyValues = new ArrayList<>();
+
+				for (String propertyValue :
+						StringUtil.split(testCaseAvailablePropertyValues)) {
+
+					if (uniquePropertyValues.contains(propertyValue)) {
+						_exceptions.add(
+							new ValidationException(
+								"Duplicate property value " + propertyValue +
+									" in property name " +
+										testCaseAvailablePropertyName));
+
+						continue;
+					}
+
+					uniquePropertyValues.add(propertyValue);
+				}
+			}
+		}
+	}
+
 	protected static void validatePropertyElement(PoshiElement poshiElement) {
 		String filePath = _getFilePath(poshiElement);
 
@@ -2064,20 +2105,40 @@ public class PoshiValidation {
 	}
 
 	private static void _throwExceptions() throws Exception {
-		StringBuilder sb = new StringBuilder();
+		List<Exception> warnings = PoshiElementException.getWarnings(
+			new ArrayList<>(_exceptions));
 
-		sb.append("\n\n");
-		sb.append(_exceptions.size());
-		sb.append(" errors in POSHI\n\n");
-
-		for (Exception exception : _exceptions) {
-			sb.append(exception.getMessage());
-			sb.append("\n\n");
+		if (!warnings.isEmpty()) {
+			_throwWarnings(warnings);
 		}
 
-		System.out.println(sb.toString());
+		List<Exception> filteredExceptions =
+			PoshiElementException.getFilteredExceptions(
+				new ArrayList<>(_exceptions));
+
+		if (filteredExceptions.isEmpty()) {
+			return;
+		}
+
+		System.out.println("\n\n");
+		System.out.println(filteredExceptions.size());
+		System.out.println(" errors in POSHI\n\n");
+
+		for (Exception exception : filteredExceptions) {
+			System.out.println(exception.getMessage());
+			System.out.println("\n\n");
+		}
 
 		throw new Exception();
+	}
+
+	private static void _throwWarnings(List<Exception> warnings) {
+		for (Exception exception : warnings) {
+			PoshiElementException poshiElementException =
+				(PoshiElementException)exception;
+
+			_logger.warning(poshiElementException.getSimpleMessage());
+		}
 	}
 
 	private static final Logger _logger = Logger.getLogger(

@@ -14,7 +14,6 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {filterArrayByQuery} from '../../utils/array';
 import {getLocalizableLabel} from '../../utils/string';
-import {Card} from '../Card';
 import {ManagementToolbarSearch} from '../ManagementToolbar/ManagementToolbarSearch';
 import BuilderListItem from './BuilderListItem';
 
@@ -37,7 +36,6 @@ export function BuilderScreen({
 	openModal,
 	secondColumnHeader,
 	thirdColumnHeader,
-	title,
 }: IProps) {
 	const [query, setQuery] = useState('');
 
@@ -52,7 +50,7 @@ export function BuilderScreen({
 	const tableItems = query ? filteredItems : objectColumns;
 
 	return (
-		<Card title={title}>
+		<>
 			<ManagementToolbar.Container>
 				<ManagementToolbar.ItemList expand>
 					<ManagementToolbarSearch
@@ -182,7 +180,7 @@ export function BuilderScreen({
 					</ClayEmptyState>
 				</div>
 			)}
-		</Card>
+		</>
 	);
 }
 
@@ -227,5 +225,4 @@ interface IProps {
 	openModal: () => void;
 	secondColumnHeader: string;
 	thirdColumnHeader?: string;
-	title: string;
 }

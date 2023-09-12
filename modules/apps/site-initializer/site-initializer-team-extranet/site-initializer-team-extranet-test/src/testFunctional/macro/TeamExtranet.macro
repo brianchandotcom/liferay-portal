@@ -206,4 +206,25 @@ definition {
 		}
 	}
 
+	macro searchEmbedded {
+		AssertElementPresent(locator1 = "TeamExtranet#EMBEDDED_SEARCH_BAR");
+
+		Type(
+			locator1 = "TeamExtranet#EMBEDDED_SEARCH_BAR",
+			value1 = ${searchTerm});
+
+		var browserType = PropsUtil.get("browser.type");
+
+		if ((${browserType} == "safari") || (${clickMagnifyingGlassIcon} == "true")) {
+			Click(locator1 = "Icon#BASIC_SEARCH");
+		}
+		else {
+			KeyPress(
+				locator1 = "TeamExtranet#EMBEDDED_SEARCH_BAR",
+				value1 = "\RETURN");
+		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+	}
+
 }

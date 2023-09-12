@@ -5,7 +5,7 @@
 
 package com.liferay.document.library.preview.pdf.internal;
 
-import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
+import com.liferay.document.library.kernel.document.conversion.DocumentConversion;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.store.Store;
@@ -14,7 +14,7 @@ import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.document.library.preview.pdf.internal.background.task.PDFPreviewBackgroundTaskExecutor;
-import com.liferay.document.library.preview.pdf.internal.configuration.admin.service.PDFPreviewManagedServiceFactory;
+import com.liferay.document.library.preview.pdf.internal.configuration.admin.service.helper.PDFPreviewConfigurationHelper;
 import com.liferay.document.library.preview.pdf.internal.util.ProcessConfigUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.image.Ghostscript;
@@ -113,7 +113,7 @@ public class PDFProcessorImpl
 		throws Exception {
 
 		int maxNumberOfPages =
-			_pdfPreviewManagedServiceFactory.getMaxNumberOfPages(
+			_pdfPreviewConfigurationHelper.getMaxNumberOfPages(
 				ExtendedObjectClassDefinition.Scope.GROUP.getValue(),
 				destinationFileVersion.getGroupId());
 
@@ -234,14 +234,14 @@ public class PDFProcessorImpl
 			return true;
 		}
 
-		if (DocumentConversionUtil.isEnabled()) {
+		if (_documentConversion.isEnabled()) {
 			Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);
 
 			for (String extension : extensions) {
 				extension = extension.substring(1);
 
-				String[] targetExtensions =
-					DocumentConversionUtil.getConversions(extension);
+				String[] targetExtensions = _documentConversion.getConversions(
+					extension);
 
 				if (Arrays.binarySearch(targetExtensions, "pdf") >= 0) {
 					return true;
@@ -471,7 +471,7 @@ public class PDFProcessorImpl
 						destinationFileVersion, inputStream, maxNumberOfPages);
 				}
 			}
-			else if (DocumentConversionUtil.isEnabled()) {
+			else if (_documentConversion.isEnabled()) {
 				try (InputStream inputStream =
 						destinationFileVersion.getContentStream(false)) {
 
@@ -484,13 +484,12 @@ public class PDFProcessorImpl
 						destinationFileVersion.isPending()) {
 
 						File file = new File(
-							DocumentConversionUtil.getFilePath(
-								tempFileId, "pdf"));
+							_documentConversion.getFilePath(tempFileId, "pdf"));
 
 						FileUtil.delete(file);
 					}
 
-					File file = DocumentConversionUtil.convert(
+					File file = _documentConversion.convert(
 						tempFileId, inputStream, extension, "pdf");
 
 					_generateImages(
@@ -1077,8 +1076,8 @@ public class PDFProcessorImpl
 		if (extension.equals("pdf")) {
 			generateImages = true;
 		}
-		else if (DocumentConversionUtil.isEnabled()) {
-			String[] conversions = DocumentConversionUtil.getConversions(
+		else if (_documentConversion.isEnabled()) {
+			String[] conversions = _documentConversion.getConversions(
 				extension);
 
 			for (String conversion : conversions) {
@@ -1108,6 +1107,9 @@ public class PDFProcessorImpl
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	@Reference
+	private DocumentConversion _documentConversion;
+
 	private final List<Long> _fileVersionIds = new Vector<>();
 
 	@Reference
@@ -1119,7 +1121,7 @@ public class PDFProcessorImpl
 	private boolean _ghostscriptInitialized;
 
 	@Reference
-	private PDFPreviewManagedServiceFactory _pdfPreviewManagedServiceFactory;
+	private PDFPreviewConfigurationHelper _pdfPreviewConfigurationHelper;
 
 	@Reference
 	private PortalUUID _portalUUID;

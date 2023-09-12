@@ -7,8 +7,8 @@ package com.liferay.jethr0.jenkins.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.jenkins.server.JenkinsServer;
-import com.liferay.jethr0.jenkins.server.JenkinsServerFactory;
+import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
+import com.liferay.jethr0.jenkins.server.JenkinsServerEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -17,14 +17,15 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class JenkinsServerEntityDALO extends BaseEntityDALO<JenkinsServer> {
+public class JenkinsServerEntityDALO
+	extends BaseEntityDALO<JenkinsServerEntity> {
 
 	@Override
-	protected EntityFactory<JenkinsServer> getEntityFactory() {
-		return _jenkinsServerFactory;
+	protected EntityFactory<JenkinsServerEntity> getEntityFactory() {
+		return _jenkinsServerEntityFactory;
 	}
 
 	@Autowired
-	private JenkinsServerFactory _jenkinsServerFactory;
+	private JenkinsServerEntityFactory _jenkinsServerEntityFactory;
 
 }

@@ -6,7 +6,7 @@
 package com.liferay.exportimport.internal.upgrade.v1_0_2;
 
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;

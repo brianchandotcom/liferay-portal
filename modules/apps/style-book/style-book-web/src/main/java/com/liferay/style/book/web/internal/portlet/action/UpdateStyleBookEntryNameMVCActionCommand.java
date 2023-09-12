@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.service.StyleBookEntryService;
-import com.liferay.style.book.web.internal.handler.StyleBookEntryExceptionRequestHandler;
+import com.liferay.style.book.web.internal.handler.StyleBookEntryExceptionRequestHandlerUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -62,7 +62,7 @@ public class UpdateStyleBookEntryNameMVCActionCommand
 
 			hideDefaultErrorMessage(actionRequest);
 
-			_styleBookEntryExceptionRequestHandler.handlePortalException(
+			StyleBookEntryExceptionRequestHandlerUtil.handlePortalException(
 				actionRequest, actionResponse, portalException);
 		}
 	}
@@ -77,10 +77,6 @@ public class UpdateStyleBookEntryNameMVCActionCommand
 
 		_styleBookEntryService.updateName(styleBookEntryId, name);
 	}
-
-	@Reference
-	private StyleBookEntryExceptionRequestHandler
-		_styleBookEntryExceptionRequestHandler;
 
 	@Reference
 	private StyleBookEntryService _styleBookEntryService;

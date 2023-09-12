@@ -7,6 +7,7 @@ package com.liferay.layout.utility.page.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -146,7 +147,7 @@ public class ExportImportLayoutUtilityPageTest {
 		try {
 			layoutsImporterResultEntries = _layoutsImporter.importFile(
 				TestPropsValues.getUserId(), otherGroup.getGroupId(), 0, file,
-				false);
+				LayoutsImportStrategy.DO_NOT_OVERWRITE);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -233,7 +234,7 @@ public class ExportImportLayoutUtilityPageTest {
 		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
 			_layoutsImporter.importFile(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0, file,
-				false);
+				LayoutsImportStrategy.DO_NOT_OVERWRITE);
 
 		Assert.assertNotNull(layoutsImporterResultEntries);
 		Assert.assertEquals(
@@ -248,7 +249,8 @@ public class ExportImportLayoutUtilityPageTest {
 			layoutUtilityPageImportEntry.getStatus());
 
 		layoutsImporterResultEntries = _layoutsImporter.importFile(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0, file, true);
+			TestPropsValues.getUserId(), _group.getGroupId(), 0, file,
+			LayoutsImportStrategy.OVERWRITE);
 
 		Assert.assertNotNull(layoutsImporterResultEntries);
 		Assert.assertEquals(

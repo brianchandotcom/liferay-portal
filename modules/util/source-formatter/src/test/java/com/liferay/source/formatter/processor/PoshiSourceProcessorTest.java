@@ -23,6 +23,14 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testMissingCiRetirtiesDisabledSmoke() throws Exception {
+		test(
+			"MissingCiRetriesDisabledSmoke.testtestcase",
+			"Missing property ci.retries.disabled = \"true\" in definition " +
+				"for smoke test");
+	}
+
+	@Test
 	public void testMultipleSpacesInTaskDefinitions() throws Exception {
 		test("MultipleSpacesInTaskDefinitions.testmacro");
 	}

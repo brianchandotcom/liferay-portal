@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.saml.constants.SamlWebKeys;
+import com.liferay.saml.helper.RelayStateHelper;
 import com.liferay.saml.helper.SamlHttpRequestHelper;
 import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.transport.HttpClientFactory;
@@ -607,7 +608,8 @@ public class SingleLogoutProfileImpl
 				SAMLBindingContext.class, true);
 
 		samlBindingContext.setRelayState(
-			portal.getPortalURL(httpServletRequest));
+			_relayStateHelper.getRelayStateTokenFromRedirect(
+				portal.getPortalURL(httpServletRequest)));
 
 		outboundMessageContext.setMessage(logoutRequest);
 
@@ -1063,8 +1065,8 @@ public class SingleLogoutProfileImpl
 			terminateSsoSession(httpServletRequest, httpServletResponse);
 		}
 
-		String relayState = ParamUtil.getString(
-			httpServletRequest, "RelayState");
+		String relayState = _relayStateHelper.getRedirectFromRelayStateToken(
+			ParamUtil.getString(httpServletRequest, "RelayState"));
 
 		if (Validator.isNotNull(relayState)) {
 			httpServletResponse.sendRedirect(
@@ -1441,6 +1443,9 @@ public class SingleLogoutProfileImpl
 
 	@Reference
 	private HttpClientFactory _httpClientFactory;
+
+	@Reference
+	private RelayStateHelper _relayStateHelper;
 
 	@Reference
 	private SamlHttpRequestHelper _samlHttpRequestHelper;

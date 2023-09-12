@@ -15,11 +15,11 @@ import com.liferay.commerce.tax.engine.fixed.configuration.CommerceTaxByAddressT
 import com.liferay.commerce.tax.engine.fixed.model.CommerceTaxFixedRateAddressRel;
 import com.liferay.commerce.tax.engine.fixed.service.CommerceTaxFixedRateAddressRelLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -127,7 +127,7 @@ public class ByAddressCommerceTaxEngine implements CommerceTaxEngine {
 		try {
 			CommerceTaxByAddressTypeConfiguration
 				commerceTaxByAddressTypeConfiguration =
-					ConfigurationProviderUtil.getConfiguration(
+					_configurationProvider.getConfiguration(
 						CommerceTaxByAddressTypeConfiguration.class,
 						new GroupServiceSettingsLocator(
 							groupId,
@@ -157,6 +157,9 @@ public class ByAddressCommerceTaxEngine implements CommerceTaxEngine {
 	@Reference
 	private CommerceTaxFixedRateAddressRelLocalService
 		_commerceTaxFixedRateAddressRelLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Language _language;

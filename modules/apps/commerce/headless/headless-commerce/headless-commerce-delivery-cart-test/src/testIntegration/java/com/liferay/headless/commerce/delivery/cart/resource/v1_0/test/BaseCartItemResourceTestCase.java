@@ -177,6 +177,7 @@ public abstract class BaseCartItemResourceTestCase {
 		cartItem.setReplacedSku(regex);
 		cartItem.setSku(regex);
 		cartItem.setThumbnail(regex);
+		cartItem.setUnitOfMeasureKey(regex);
 
 		String json = CartItemSerDes.toJSON(cartItem);
 
@@ -190,6 +191,7 @@ public abstract class BaseCartItemResourceTestCase {
 		Assert.assertEquals(regex, cartItem.getReplacedSku());
 		Assert.assertEquals(regex, cartItem.getSku());
 		Assert.assertEquals(regex, cartItem.getThumbnail());
+		Assert.assertEquals(regex, cartItem.getUnitOfMeasureKey());
 	}
 
 	@Test
@@ -755,6 +757,14 @@ public abstract class BaseCartItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("unitOfMeasureKey", additionalAssertFieldName)) {
+				if (cartItem.getUnitOfMeasureKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("valid", additionalAssertFieldName)) {
 				if (cartItem.getValid() == null) {
 					valid = false;
@@ -1077,6 +1087,17 @@ public abstract class BaseCartItemResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("unitOfMeasureKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						cartItem1.getUnitOfMeasureKey(),
+						cartItem2.getUnitOfMeasureKey())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("valid", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						cartItem1.getValid(), cartItem2.getValid())) {
@@ -1369,9 +1390,8 @@ public abstract class BaseCartItemResourceTestCase {
 		}
 
 		if (entityFieldName.equals("quantity")) {
-			sb.append(String.valueOf(cartItem.getQuantity()));
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("replacedSku")) {
@@ -1532,6 +1552,52 @@ public abstract class BaseCartItemResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("unitOfMeasureKey")) {
+			Object object = cartItem.getUnitOfMeasureKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("valid")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1588,7 +1654,6 @@ public abstract class BaseCartItemResourceTestCase {
 				options = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				parentCartItemId = RandomTestUtil.randomLong();
 				productId = RandomTestUtil.randomLong();
-				quantity = RandomTestUtil.randomInt();
 				replacedSku = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				replacedSkuId = RandomTestUtil.randomLong();
@@ -1596,6 +1661,8 @@ public abstract class BaseCartItemResourceTestCase {
 				skuId = RandomTestUtil.randomLong();
 				subscription = RandomTestUtil.randomBoolean();
 				thumbnail = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				unitOfMeasureKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				valid = RandomTestUtil.randomBoolean();
 			}

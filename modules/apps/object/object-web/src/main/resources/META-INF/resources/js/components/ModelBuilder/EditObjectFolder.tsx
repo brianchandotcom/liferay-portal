@@ -3,15 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React from 'react';
+import {API} from '@liferay/object-js-components-web';
+import React, {useEffect, useState} from 'react';
 
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
 import {TDeletionType} from '../ObjectRelationship/EditRelationship';
+import {ModalAddObjectDefinition} from '../ViewObjectDefinitions/ModalAddObjectDefinition';
 import Diagram from './Diagram/Diagram';
 import Header from './Header/Header';
 import LeftSidebar from './LeftSidebar/LeftSidebar';
+import {useFolderContext} from './ModelBuilderContext/objectFolderContext';
+import {TYPES} from './ModelBuilderContext/typesEnum';
 import {RightSideBar} from './RightSidebar/index';
-import {useFolderContext} from './objectFolderContext';
 
 interface EditObjectFolder {
 	companyKeyValuePair: KeyValuePair[];
@@ -23,19 +26,83 @@ export default function EditObjectFolder({
 	deletionTypes,
 	siteKeyValuePair,
 }: EditObjectFolder) {
-	const [{rightSidebarType}] = useFolderContext();
+	const [
+		{rightSidebarType, selectedFolderERC, storages, viewApiURL},
+		dispatch,
+	] = useFolderContext();
+	const [showModal, setShowModal] = useState(false);
+
+	const [selectedFolderName, setSelectedFolderName] = useState('');
+
+	useEffect(() => {
+		const makeFetch = async () => {
+			const folderResponse = await API.getAllFolders();
+
+			setSelectedFolderName(
+				folderResponse.find(
+					(folder) =>
+						folder.externalReferenceCode === selectedFolderERC
+				)!.name
+			);
+
+			const objectFoldersWithDefinitions: ObjectFolder[] = await Promise.all(
+				folderResponse.map(async (folder) => {
+					const folderDefinitions = await API.getObjectDefinitions(
+						`filter=objectFolderExternalReferenceCode eq '${folder.externalReferenceCode}'`
+					);
+
+					return {
+						...folder,
+						definitions: folderDefinitions,
+					};
+				})
+			);
+
+			dispatch({
+				payload: {objectFolders: objectFoldersWithDefinitions},
+				type: TYPES.CREATE_MODEL_BUILDER_STRUCTURE,
+			});
+		};
+
+		makeFetch();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<>
+			{showModal && (
+				<ModalAddObjectDefinition
+					apiURL={viewApiURL}
+					handleOnClose={() => {
+						setShowModal(false);
+					}}
+					objectFolderExternalReferenceCode={selectedFolderERC}
+					onAfterSubmit={(newObjectDefinition) => {
+						dispatch({
+							payload: {
+								newObjectDefinition,
+								selectedFolderName,
+							},
+							type: TYPES.ADD_NEW_NODE_TO_FOLDER,
+						});
+					}}
+					reload={false}
+					storages={storages}
+				/>
+			)}
 			<Header
-				folderExternalReferenceCode="uncategorized"
-				folderName="Uncategorized"
+				folderExternalReferenceCode={selectedFolderERC}
+				folderName={selectedFolderName}
 				hasDraftObjectDefinitions={false}
 			/>
 			<div className="lfr-objects__model-builder-diagram-container">
-				<LeftSidebar />
+				<LeftSidebar
+					selectedFolderName={selectedFolderName}
+					setShowModal={setShowModal}
+				/>
 
-				<Diagram />
+				<Diagram setShowModal={setShowModal} />
 
 				<RightSideBar.Root>
 					{rightSidebarType === 'empty' && <RightSideBar.Empty />}

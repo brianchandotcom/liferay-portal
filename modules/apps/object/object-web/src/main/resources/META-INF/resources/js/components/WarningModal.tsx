@@ -15,7 +15,7 @@ export default function WarningModal({
 	title,
 }: IProps) {
 	return (
-		<ClayModal observer={observer} status="warning">
+		<ClayModal center observer={observer} status="warning">
 			<ClayModal.Header>{title}</ClayModal.Header>
 
 			<ClayModal.Body>{children}</ClayModal.Body>

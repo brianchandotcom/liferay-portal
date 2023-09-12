@@ -56,13 +56,20 @@ public class PoshiScriptParserException extends PoshiElementException {
 
 	public static void throwExceptions() throws Exception {
 		if (!_poshiScriptParserExceptions.isEmpty()) {
+			List<Exception> filteredExceptions = getFilteredExceptions(
+				new ArrayList<>(_poshiScriptParserExceptions));
+
+			if (filteredExceptions.isEmpty()) {
+				return;
+			}
+
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("\n\n");
-			sb.append(_poshiScriptParserExceptions.size());
+			sb.append(filteredExceptions.size());
 			sb.append(" error");
 
-			if (_poshiScriptParserExceptions.size() > 1) {
+			if (filteredExceptions.size() > 1) {
 				sb.append("s");
 			}
 
@@ -70,7 +77,7 @@ public class PoshiScriptParserException extends PoshiElementException {
 
 			int i = 1;
 
-			for (Exception exception : _poshiScriptParserExceptions) {
+			for (Exception exception : filteredExceptions) {
 				sb.append(i);
 				sb.append(". ");
 				sb.append(exception.getMessage());

@@ -65,6 +65,21 @@ public class SXPBlueprintServiceImpl extends SXPBlueprintServiceBaseImpl {
 	}
 
 	@Override
+	public SXPBlueprint fetchSXPBlueprint(long sxpBlueprintId)
+		throws PortalException {
+
+		SXPBlueprint sxpBlueprint = sxpBlueprintLocalService.fetchSXPBlueprint(
+			sxpBlueprintId);
+
+		if (sxpBlueprint != null) {
+			_sxpBlueprintModelResourcePermission.check(
+				getPermissionChecker(), sxpBlueprint, ActionKeys.VIEW);
+		}
+
+		return sxpBlueprint;
+	}
+
+	@Override
 	public SXPBlueprint fetchSXPBlueprintByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException {

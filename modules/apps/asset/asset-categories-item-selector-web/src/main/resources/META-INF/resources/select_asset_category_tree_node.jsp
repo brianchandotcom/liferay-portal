@@ -28,7 +28,7 @@ SelectAssetCategoryTreeNodeDisplayContext selectAssetCategoryTreeNodeDisplayCont
 			data-category-tree-node-type="<%= selectAssetCategoryTreeNodeDisplayContext.getAssetCategoryTreeNodeType() %>"
 			data-title="<%= selectAssetCategoryTreeNodeDisplayContext.getAssetCategoryTreeNodeName() %>"
 			displayType="primary"
-			label='<%= LanguageUtil.get(resourceBundle, "select-this-level") %>'
+			label="select-this-level"
 			small="<%= true %>"
 		/>
 	</div>

@@ -19,9 +19,10 @@ import java.util.Map;
 public interface CommerceInventoryEngine {
 
 	public void consumeQuantity(
-			long userId, long bookedQuantityId, long commerceCatalogGroupId,
-			long commerceInventoryWarehouseId, BigDecimal quantity, String sku,
-			String unitOfMeasureKey, Map<String, String> context)
+			long userId, long commerceInventoryBookedQuantityId,
+			long commerceCatalogGroupId, long commerceInventoryWarehouseId,
+			BigDecimal quantity, String sku, String unitOfMeasureKey,
+			Map<String, String> context)
 		throws PortalException;
 
 	public void decreaseStockQuantity(

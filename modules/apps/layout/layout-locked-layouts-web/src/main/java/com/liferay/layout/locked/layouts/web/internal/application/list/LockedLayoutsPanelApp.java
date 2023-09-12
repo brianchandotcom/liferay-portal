@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.staging.StagingGroupHelper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,7 +45,10 @@ public class LockedLayoutsPanelApp extends BasePanelApp {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-180328") ||
+			group.isCompany() || _stagingGroupHelper.isLocalLiveGroup(group) ||
+			_stagingGroupHelper.isRemoteLiveGroup(group)) {
+
 			return false;
 		}
 
@@ -55,5 +59,8 @@ public class LockedLayoutsPanelApp extends BasePanelApp {
 		target = "(javax.portlet.name=" + LockedLayoutsPortletKeys.LOCKED_LAYOUTS_PORTLET + ")"
 	)
 	private Portlet _portlet;
+
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
 
 }

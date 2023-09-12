@@ -6,7 +6,7 @@
 /// <reference types="react" />
 
 interface ModalDeleteFolderProps {
-	folder: Folder;
+	folder: ObjectFolder;
 	handleOnClose: () => void;
 }
 export declare function ModalDeleteFolder({

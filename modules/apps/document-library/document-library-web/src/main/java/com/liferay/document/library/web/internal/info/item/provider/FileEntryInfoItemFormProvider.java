@@ -67,7 +67,8 @@ public class FileEntryInfoItemFormProvider
 					DLFileEntryConstants.getClassName()),
 				0,
 				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-					FileEntry.class.getName(), StringPool.BLANK, 0),
+					FileEntry.class.getName(), StringPool.BLANK,
+					FileEntry.class.getSimpleName(), 0),
 				0);
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
@@ -101,7 +102,7 @@ public class FileEntryInfoItemFormProvider
 				ddmStructureId,
 				_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 					FileEntry.class.getName(), String.valueOf(fileEntryTypeId),
-					0),
+					FileEntry.class.getSimpleName(), 0),
 				fileEntryTypeId);
 		}
 		catch (NoSuchFormVariationException noSuchFormVariationException) {
@@ -135,7 +136,7 @@ public class FileEntryInfoItemFormProvider
 			ddmStructureId,
 			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
 				FileEntry.class.getName(), String.valueOf(ddmStructureId),
-				groupId),
+				FileEntry.class.getSimpleName(), groupId),
 			GetterUtil.getLong(formVariationKey));
 	}
 
@@ -253,13 +254,13 @@ public class FileEntryInfoItemFormProvider
 				}
 			).infoFieldSetEntry(
 				unsafeConsumer -> {
-					if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+					if (!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 						unsafeConsumer.accept(_getDisplayPageInfoFieldSet());
 					}
 				}
 			).infoFieldSetEntry(
 				unsafeConsumer -> {
-					if (FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+					if (FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 						unsafeConsumer.accept(displayPageInfoFieldSet);
 					}
 				}

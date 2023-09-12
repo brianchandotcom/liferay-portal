@@ -7,7 +7,7 @@ import {useQuery} from '@apollo/client';
 import {useEffect} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
-import IncidentContactCard from '~/routes/customer-portal/components/IncidentContactCard/IncidentContactCard';
+import IncidentContactCard from '~/routes/customer-portal/components/IncidentContactCard';
 import i18n from '../../../../../common/I18n';
 import useCurrentKoroneikiAccount from '../../../../../common/hooks/useCurrentKoroneikiAccount';
 import {getAccountSubscriptionGroups} from '../../../../../common/services/liferay/graphql/queries';

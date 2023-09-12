@@ -289,6 +289,11 @@ public class SXPElementResourceTest extends BaseSXPElementResourceTestCase {
 	}
 
 	@Override
+	protected SXPElement testPutSXPElement_addSXPElement() throws Exception {
+		return _addSXPElement(randomSXPElement());
+	}
+
+	@Override
 	protected SXPElement
 			testPutSXPElementByExternalReferenceCode_addSXPElement()
 		throws Exception {

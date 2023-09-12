@@ -82,8 +82,28 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaAddCategoryParameterCheck() throws Exception {
+		test(
+			"upgrade/UpgradeJavaAddCategoryParameterCheck.testjava",
+			StringBundler.concat(
+				"Unable to format method addCategory from ",
+				"AssetCategoryLocalService and AssetCategoryLocalServiceUtil. ",
+				"Fill the new parameters manually, see LPS-192320"));
+	}
+
+	@Test
 	public void testUpgradeJavaAddFDSTableSchemaFieldCheck() throws Exception {
 		test("upgrade/UpgradeJavaAddFDSTableSchemaFieldCheck.testjava");
+	}
+
+	@Test
+	public void testUpgradeJavaAddFileEntryParameterCheck() throws Exception {
+		test(
+			"upgrade/UpgradeJavaAddFileEntryParameterCheck.testjava",
+			StringBundler.concat(
+				"Unable to format method addFileEntry from DLAppLocalService ",
+				"and DLAppLocalServiceUtil. Fill the new parameters manually, ",
+				"see LPS-194818"));
 	}
 
 	@Test
@@ -131,6 +151,17 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testUpgradeJavaCookieUtilCheck() throws Exception {
 		test("upgrade/UpgradeJavaCookieUtilCheck.testjava");
+	}
+
+	@Test
+	public void testUpgradeJavaDLFolderMethodCheck() throws Exception {
+		test(
+			"upgrade/UpgradeJavaDLFolderMethodCheck.testjava",
+			StringBundler.concat(
+				"Unable to format method addFolder from DLFolderService, ",
+				"DLFolderLocalService, DLFolderServiceUtil and ",
+				"DLFolderLocalServiceUtil. Fill the new parameter manually, ",
+				"see LPS-194001."));
 	}
 
 	@Test
@@ -280,6 +311,27 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaUpdateFileEntryMethodCheck() throws Exception {
+		test(
+			"upgrade/UpgradeJavaUpdateFileEntryMethodCheck.testjava",
+			StringBundler.concat(
+				"Unable to format method updateFileEntry from ",
+				"DLAppLocalService and DLAppLocalServiceUtil. Fill the new ",
+				"parameters manually, see LPS-194134."));
+	}
+
+	@Test
+	public void testUpgradeJavaUserLocalServiceUtilCheck() throws Exception {
+		test(
+			"upgrade/UpgradeJavaUserLocalServiceUtilCheck.testjava",
+			StringBundler.concat(
+				"Could not resolve types of updateStatus method. The method ",
+				"signature has changed to updateStatus(long userId,",
+				"int status, ServiceContext serviceContext). Fill the new ",
+				"parameter manually."));
+	}
+
+	@Test
 	public void testUpgradeJSPFieldSetGroupCheck() throws Exception {
 		test("upgrade/UpgradeJSPFieldSetGroupCheck.testjsp");
 	}
@@ -292,6 +344,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testUpgradeRejectedExecutionHandlerCheck() throws Exception {
 		test("upgrade/UpgradeRejectedExecutionHandlerCheck.testjava");
+	}
+
+	@Test
+	public void testUpgradeSCSSImportsCheck() throws Exception {
+		test("upgrade/UpgradeSCSSImportsCheck.testscss");
 	}
 
 	@Test

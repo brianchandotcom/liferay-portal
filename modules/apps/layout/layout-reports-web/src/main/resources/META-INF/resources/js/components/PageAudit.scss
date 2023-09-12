@@ -34,6 +34,12 @@ html#{$cadmin-selector} .cadmin .page-audit {
 					width: 100%;
 				}
 			}
+
+			.warning-badge {
+				cursor: pointer;
+				position: relative;
+				z-index: 1;
+			}
 		}
 	}
 }

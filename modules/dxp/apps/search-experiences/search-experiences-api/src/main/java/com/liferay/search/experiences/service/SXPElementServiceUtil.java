@@ -49,6 +49,12 @@ public class SXPElementServiceUtil {
 		return getService().deleteSXPElement(sxpElementId);
 	}
 
+	public static SXPElement fetchSXPElement(long sxpElementId)
+		throws PortalException {
+
+		return getService().fetchSXPElement(sxpElementId);
+	}
+
 	public static SXPElement fetchSXPElementByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException {

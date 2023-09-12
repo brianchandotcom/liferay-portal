@@ -310,7 +310,6 @@ definition {
 	}
 
 	@description = "LPS-176187. Confirm that the fields Name and Filter by are present in the New Filter modal."
-	@ignore = "true"
 	@priority = 5
 	test CanAssertFieldsIsPresent {
 		task ("And Clicks Save") {
@@ -578,7 +577,6 @@ definition {
 	}
 
 	@description = "LPS-176187. Confirm that the Selection option is not displayed."
-	@ignore = "true"
 	@priority = 5
 	test CanAssertSelectionIsNotDisplayed {
 		task ("And creating a picklist") {
@@ -610,7 +608,6 @@ definition {
 	}
 
 	@description = "LPS-176187. Confirm that the Selection option has a tooltip with the text message."
-	@ignore = "true"
 	@priority = 3
 	test CanAssertSelectionTooltip {
 		task ("And creating a picklist") {
@@ -649,7 +646,6 @@ definition {
 	}
 
 	@description = "LPS-176187. Confirm that the Source Option is displayed in the New Filter Modal."
-	@ignore = "true"
 	@priority = 3
 	test CanAssertSourceOption {
 		task ("And selects the option "creator" in the Filter By field") {
@@ -743,7 +739,6 @@ definition {
 	}
 
 	@description = "LPS-176187. Confirm the text message in the Source Option Tooltip."
-	@ignore = "true"
 	@priority = 3
 	test CanAssertSourceOptionTooltip {
 		task ("And selects an option "creator" in the Filter By field") {
@@ -777,7 +772,6 @@ definition {
 	}
 
 	@description = "LPS-176187. Confirm that the Filter has been created and has the Name and Field Name fields."
-	@ignore = "true"
 	@priority = 5
 	test CanAssertTheFieldsIsDisplayed {
 		task ("And creating a picklist") {
@@ -1213,7 +1207,6 @@ definition {
 	}
 
 	@description = "LPS-176187. Confirm the cancellation of the Filter creation with the cancel button."
-	@ignore = "true"
 	@priority = 4
 	test CanCancelOnCancelButton {
 		task ("And creating a picklist") {
@@ -1261,7 +1254,6 @@ definition {
 	}
 
 	@description = "LPS-176187. Confirm the cancellation of the Filter creation with the close button."
-	@ignore = "true"
 	@priority = 4
 	test CanCancelOnCloseButton {
 		task ("And creating a picklist") {
@@ -1380,7 +1372,6 @@ definition {
 	}
 
 	@description = "LPS-176187. Confirm that only one radio button can be selected."
-	@ignore = "true"
 	@priority = 5
 	test CanOnlyOneRadioButtonIsSelected {
 		task ("And creating a picklist") {

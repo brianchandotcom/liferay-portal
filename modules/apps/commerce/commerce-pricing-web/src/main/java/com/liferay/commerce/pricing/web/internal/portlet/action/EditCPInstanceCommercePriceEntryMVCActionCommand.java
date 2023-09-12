@@ -156,6 +156,8 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 		long commercePriceEntryId = ParamUtil.getLong(
 			actionRequest, "commercePriceEntryId");
 
+		boolean bulkPricing = ParamUtil.getBoolean(
+			actionRequest, "bulkPricing");
 		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "price", BigDecimal.ZERO);
 		BigDecimal promoPrice = (BigDecimal)ParamUtil.getNumber(
@@ -166,9 +168,9 @@ public class EditCPInstanceCommercePriceEntryMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommercePriceEntry.class.getName(), actionRequest);
 
-		return _commercePriceEntryService.updateCommercePriceEntry(
-			commercePriceEntryId, price, false, promoPrice, unitOfMeasureKey,
-			serviceContext);
+		return _commercePriceEntryService.updatePricingInfo(
+			commercePriceEntryId, bulkPricing, price, false, promoPrice,
+			unitOfMeasureKey, serviceContext);
 	}
 
 	@Reference

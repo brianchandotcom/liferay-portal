@@ -5,7 +5,6 @@
 
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import {
-	Card,
 	ExpressionBuilder,
 	SidebarCategory,
 } from '@liferay/object-js-components-web';
@@ -39,10 +38,7 @@ export function ReadOnlyContainer({
 	return (
 		<>
 			{values.readOnly && (
-				<Card
-					disabled={disabled}
-					title={Liferay.Language.get('read-only')}
-				>
+				<>
 					<ClayRadioGroup defaultValue={values?.readOnly}>
 						<ClayRadio
 							disabled={disabled}
@@ -109,7 +105,7 @@ export function ReadOnlyContainer({
 							value={values.readOnlyConditionExpression ?? ''}
 						/>
 					)}
-				</Card>
+				</>
 			)}
 		</>
 	);

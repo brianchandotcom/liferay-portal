@@ -5,13 +5,15 @@
 
 package com.liferay.commerce.shipment.web.internal.model;
 
+import java.math.BigDecimal;
+
 /**
  * @author Alec Sloan
  */
 public class Warehouse {
 
 	public Warehouse(
-		long warehouseId, WarehouseItem warehouseItem, int available,
+		long warehouseId, WarehouseItem warehouseItem, BigDecimal available,
 		String distance, String name) {
 
 		_warehouseId = warehouseId;
@@ -21,7 +23,7 @@ public class Warehouse {
 		_name = name;
 	}
 
-	public int getAvailable() {
+	public BigDecimal getAvailable() {
 		return _available;
 	}
 
@@ -41,7 +43,7 @@ public class Warehouse {
 		return _warehouseItem;
 	}
 
-	private final int _available;
+	private final BigDecimal _available;
 	private final String _distance;
 	private final String _name;
 	private final long _warehouseId;

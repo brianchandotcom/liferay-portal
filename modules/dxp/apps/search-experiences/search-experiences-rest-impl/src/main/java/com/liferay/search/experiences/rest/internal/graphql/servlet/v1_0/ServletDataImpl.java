@@ -208,6 +208,15 @@ public class ServletDataImpl implements ServletData {
 							SXPBlueprintResourceImpl.class,
 							"patchSXPBlueprint"));
 					put(
+						"mutation#updateSXPBlueprint",
+						new ObjectValuePair<>(
+							SXPBlueprintResourceImpl.class, "putSXPBlueprint"));
+					put(
+						"mutation#updateSXPBlueprintBatch",
+						new ObjectValuePair<>(
+							SXPBlueprintResourceImpl.class,
+							"putSXPBlueprintBatch"));
+					put(
 						"mutation#createSXPBlueprintCopy",
 						new ObjectValuePair<>(
 							SXPBlueprintResourceImpl.class,
@@ -254,6 +263,15 @@ public class ServletDataImpl implements ServletData {
 						"mutation#patchSXPElement",
 						new ObjectValuePair<>(
 							SXPElementResourceImpl.class, "patchSXPElement"));
+					put(
+						"mutation#updateSXPElement",
+						new ObjectValuePair<>(
+							SXPElementResourceImpl.class, "putSXPElement"));
+					put(
+						"mutation#updateSXPElementBatch",
+						new ObjectValuePair<>(
+							SXPElementResourceImpl.class,
+							"putSXPElementBatch"));
 					put(
 						"mutation#createSXPElementCopy",
 						new ObjectValuePair<>(

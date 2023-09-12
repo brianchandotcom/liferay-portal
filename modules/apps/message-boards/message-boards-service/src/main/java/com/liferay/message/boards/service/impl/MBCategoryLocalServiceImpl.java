@@ -543,6 +543,13 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public MBCategory getMBCategory(long groupId, String friendlyURL)
+		throws PortalException {
+
+		return mbCategoryPersistence.findByG_F(groupId, friendlyURL);
+	}
+
+	@Override
 	public List<Long> getSubcategoryIds(
 		List<Long> categoryIds, long groupId, long categoryId) {
 

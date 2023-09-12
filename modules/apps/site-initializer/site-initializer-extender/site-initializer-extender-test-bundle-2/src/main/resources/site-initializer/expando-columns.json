@@ -9,7 +9,7 @@
 		"dataType": 15,
 		"defaultValue": "Test Default Value Update",
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
-		"name": "Test Expando Column 2 "
+		"name": "Test Expando Column 2"
 	},
 	{
 		"dataType": 6,
@@ -47,5 +47,10 @@
 		],
 		"modelResource": "com.liferay.portal.kernel.model.User",
 		"name": "Test Expando Column 5"
+	},
+	{
+		"dataType": 10,
+		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"name": "Test Expando Column 6"
 	}
 ]

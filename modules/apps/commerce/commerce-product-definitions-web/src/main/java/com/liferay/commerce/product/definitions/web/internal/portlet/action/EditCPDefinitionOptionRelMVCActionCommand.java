@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Locale;
 import java.util.Map;
@@ -140,20 +141,38 @@ public class EditCPDefinitionOptionRelMVCActionCommand
 			actionRequest, "description");
 		String ddmFormFieldTypeName = ParamUtil.getString(
 			actionRequest, "DDMFormFieldTypeName");
+		String infoItemServiceKey = ParamUtil.getString(
+			actionRequest, "infoItemServiceKey");
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
+		boolean definedExternally = ParamUtil.getBoolean(
+			actionRequest, "definedExternally");
 		boolean facetable = ParamUtil.getBoolean(actionRequest, "facetable");
 		boolean required = ParamUtil.getBoolean(actionRequest, "required");
 		boolean skuContributor = ParamUtil.getBoolean(
 			actionRequest, "skuContributor");
 		String priceType = ParamUtil.getString(actionRequest, "priceType");
 
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			cpDefinitionOptionRel.getTypeSettingsUnicodeProperties();
+
+		long[] categoryIds = ParamUtil.getLongValues(
+			actionRequest, "categoryIds");
+
+		typeSettingsUnicodeProperties.put(
+			"categoryIds", StringUtil.merge(categoryIds));
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionOptionRel.class.getName(), actionRequest);
 
 		return _cpDefinitionOptionRelService.updateCPDefinitionOptionRel(
 			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, priority, facetable, required, skuContributor,
-			priceType, serviceContext);
+			ddmFormFieldTypeName, infoItemServiceKey, priority,
+			definedExternally, facetable, required, skuContributor, priceType,
+			typeSettingsUnicodeProperties.toString(), serviceContext);
 	}
 
 	@Reference

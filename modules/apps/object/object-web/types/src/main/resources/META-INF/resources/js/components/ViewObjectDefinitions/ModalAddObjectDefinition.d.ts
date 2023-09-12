@@ -10,12 +10,16 @@ interface ModalAddObjectDefinitionProps {
 	apiURL: string;
 	handleOnClose: () => void;
 	objectFolderExternalReferenceCode?: string;
-	storages: LabelTypeObject[];
+	onAfterSubmit?: (value: ObjectDefinition) => void;
+	reload?: boolean;
+	storages: LabelValueObject[];
 }
 export declare function ModalAddObjectDefinition({
 	apiURL,
 	handleOnClose,
 	objectFolderExternalReferenceCode,
+	onAfterSubmit,
+	reload,
 	storages,
 }: ModalAddObjectDefinitionProps): JSX.Element;
 export {};

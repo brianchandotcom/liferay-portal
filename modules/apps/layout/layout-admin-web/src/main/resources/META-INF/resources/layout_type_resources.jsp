@@ -50,7 +50,7 @@ if (selLayout != null) {
 				<liferay-ui:message key="empty-page-description" />
 			</p>
 
-			<liferay-ui:layout-templates-list
+			<liferay-layout:layout-templates-list
 				layoutTemplateId="<%= layoutTemplateId %>"
 				layoutTemplateIdPrefix="addLayout"
 				layoutTemplates="<%= LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId()) %>"

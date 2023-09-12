@@ -27,7 +27,7 @@ public class UserNameFieldQueryBuilderFactory
 		return null;
 	}
 
-	@Reference
-	private UserNameFieldQueryBuilder _userNameFieldQueryBuilder;
+	@Reference(target = "(query.builder.type=userName)")
+	private FieldQueryBuilder _userNameFieldQueryBuilder;
 
 }

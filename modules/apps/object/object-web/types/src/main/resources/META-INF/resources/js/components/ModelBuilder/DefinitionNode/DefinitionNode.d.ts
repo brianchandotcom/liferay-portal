@@ -7,29 +7,22 @@
 
 import {NodeProps} from 'react-flow-renderer';
 import './DefinitionNode.scss';
-import {FieldNode} from '../types';
-interface DefinitionNodeProps {
-	creationLanguageId: Liferay.Language.Locale;
-	hasDeleteResourcePermission: boolean;
-	hasManagePermissionsResourcePermission: boolean;
-	hasObjectDefinitionPublished: boolean;
-	isLinkedNode: boolean;
-	nodeSelected: boolean;
-	objectDefinitionLabel: string;
-	objectFields: FieldNode[];
-	system: boolean;
-}
+import {ObjectDefinitionNodeData} from '../types';
 export declare function DefinitionNode({
 	data: {
-		creationLanguageId,
-		hasDeleteResourcePermission,
-		hasManagePermissionsResourcePermission,
-		hasObjectDefinitionPublished,
+		defaultLanguageId,
+		editObjectDefinitionURL,
+		externalReferenceCode,
+		hasObjectDefinitionDeleteResourcePermission,
+		hasObjectDefinitionManagePermissionsResourcePermission,
+		id,
 		isLinkedNode,
+		label,
+		name,
 		nodeSelected,
-		objectDefinitionLabel,
+		objectDefinitionPermissionsURL,
 		objectFields,
+		status,
 		system,
 	},
-}: NodeProps<DefinitionNodeProps>): JSX.Element;
-export {};
+}: NodeProps<ObjectDefinitionNodeData>): JSX.Element;

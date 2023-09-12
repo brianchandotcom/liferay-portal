@@ -853,6 +853,15 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public boolean isOnDemandUser() {
+		if (getType() == UserConstants.TYPE_ON_DEMAND_USER) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isPasswordModified() {
 		return _passwordModified;
 	}

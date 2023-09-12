@@ -12,6 +12,10 @@ definition {
 		ManagementBar.viewDisplayStyle(displayStyle = ${displayStyle});
 	}
 
+	macro clearFilter {
+		Click(locator1 = "ManagementBar#CLEAR_FILTER");
+	}
+
 	macro clickInfo {
 		if (IsElementPresent(locator1 = "Icon#INFO_DM")) {
 			Click.clickNoMouseOver(locator1 = "Icon#INFO_DM");

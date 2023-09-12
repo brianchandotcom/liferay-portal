@@ -12,7 +12,9 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 %>
 
 <div class="management-bar navbar navbar-expand-md page-editor__toolbar <%= contentPageEditorDisplayContext.isMasterLayout() ? "page-editor__toolbar--master-layout" : StringPool.BLANK %>" id="<%= contentPageEditorDisplayContext.getPortletNamespace() %>pageEditorToolbar">
-	<clay:container-fluid>
+	<clay:container-fluid
+		fullWidth='<%= FeatureFlagManagerUtil.isEnabled("LPS-184404") %>'
+	>
 		<ul class="navbar-nav start">
 			<li class="nav-item">
 				<div class="dropdown">
@@ -42,7 +44,7 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 						icon="undo"
 						monospaced="<%= true %>"
 						small="<%= true %>"
-						title='<%= LanguageUtil.get(request, "undo") %>'
+						title="undo"
 					/>
 
 					<clay:button
@@ -51,7 +53,7 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 						icon="redo"
 						monospaced="<%= true %>"
 						small="<%= true %>"
-						title='<%= LanguageUtil.get(request, "redo") %>'
+						title="redo"
 					/>
 				</div>
 
@@ -64,7 +66,7 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 							icon="time"
 							monospaced="<%= true %>"
 							small="<%= true %>"
-							title='<%= LanguageUtil.get(request, "history") %>'
+							title="history"
 						/>
 					</div>
 				</span>
@@ -90,10 +92,19 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 							icon="view"
 							monospaced="<%= true %>"
 							small="<%= true %>"
-							title='<%= LanguageUtil.get(request, "view") %>'
+							title="view"
 						/>
 					</li>
 				</ul>
+			</li>
+			<li class="nav-item">
+				<clay:button
+					disabled="<%= true %>"
+					displayType="secondary"
+					small="<%= true %>"
+				>
+					<liferay-ui:message key="discard-draft" />
+				</clay:button>
 			</li>
 
 			<c:if test="<%= contentPageEditorDisplayContext.isSingleSegmentsExperienceMode() %>">

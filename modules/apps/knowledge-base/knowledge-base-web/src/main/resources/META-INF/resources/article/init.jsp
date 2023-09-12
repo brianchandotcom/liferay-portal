@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-KBArticlePortletInstanceConfiguration kbArticlePortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(KBArticlePortletInstanceConfiguration.class);
+KBArticlePortletInstanceConfiguration kbArticlePortletInstanceConfiguration = ConfigurationProviderUtil.getPortletInstanceConfiguration(KBArticlePortletInstanceConfiguration.class, themeDisplay);
 
 long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());
 

@@ -4,18 +4,26 @@
  */
 
 import type {LayoutData} from '../../types/LayoutData';
-import type {FragmentEntryLink} from './addFragmentEntryLinks';
+import type {FragmentEntryLinkMap} from './addFragmentEntryLinks';
+declare type MasterLayoutOptions =
+	| {
+			masterLayoutData: null;
+			masterLayoutPlid: '0';
+	  }
+	| {
+			masterLayoutData: LayoutData;
+			masterLayoutPlid: string;
+	  };
 export default function changeMasterLayout({
 	fragmentEntryLinks,
 	masterLayoutData,
 	masterLayoutPlid,
-}: {
-	fragmentEntryLinks: FragmentEntryLink[];
-	masterLayoutData: LayoutData | null;
-	masterLayoutPlid: string;
+}: MasterLayoutOptions & {
+	fragmentEntryLinks: FragmentEntryLinkMap;
 }): {
-	readonly fragmentEntryLinks: FragmentEntryLink<string, string>[];
+	readonly fragmentEntryLinks: FragmentEntryLinkMap;
 	readonly masterLayoutData: LayoutData | null;
 	readonly masterLayoutPlid: string;
 	readonly type: 'CHANGE_MASTER_LAYOUT';
 };
+export {};

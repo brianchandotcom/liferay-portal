@@ -1,11 +1,11 @@
 definition {
 
 	macro validateSchemas {
-		var projectDir = PropsUtil.get("project.dir");
+		var tempDir = PropsUtil.get("output.dir.name");
 
 		AntCommands.runCommand("build-test.xml", "validate-db-upgrade-schemas -Dfresh.db.schema=${freshDBSchemaName} -Dupgraded.db.schema=${upgradedDBSchemaName}");
 
-		var result = FileUtil.read("${projectDir}/${upgradedDBSchemaName}-${freshDBSchemaName}-validate-db-schemas.txt");
+		var result = FileUtil.read("${tempDir}/${upgradedDBSchemaName}-${freshDBSchemaName}-validate-db-schemas.txt");
 
 		if (!(contains(${result}, "Database schemas match"))) {
 			echo(${result});

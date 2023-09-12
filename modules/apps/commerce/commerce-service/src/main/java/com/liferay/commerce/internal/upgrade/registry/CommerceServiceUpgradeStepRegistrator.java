@@ -629,6 +629,30 @@ public class CommerceServiceUpgradeStepRegistrator
 				CPDefinitionInventoryModelImpl.TABLE_NAME,
 				"multipleOrderQuantity", "BIGDECIMAL null"));
 
+		registry.register(
+			"10.1.0", "10.2.0",
+			UpgradeProcessFactory.addColumns(
+				CommerceOrderItemModelImpl.TABLE_NAME,
+				"UOMIncrementalOrderQuantity BIGDECIMAL"));
+
+		registry.register(
+			"10.2.0", "11.0.0",
+			UpgradeProcessFactory.alterColumnName(
+				CommerceOrderItemModelImpl.TABLE_NAME, "bookedQuantityId",
+				"CIBookedQuantityId LONG"));
+
+		registry.register(
+			"11.0.0", "11.1.0",
+			UpgradeProcessFactory.alterColumnType(
+				CommerceOrderItemModelImpl.TABLE_NAME, "shippedQuantity",
+				"BIGDECIMAL null"));
+
+		registry.register(
+			"11.1.0", "11.2.0",
+			UpgradeProcessFactory.alterColumnType(
+				CommerceShipmentItemModelImpl.TABLE_NAME, "quantity",
+				"BIGDECIMAL null"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
 		}

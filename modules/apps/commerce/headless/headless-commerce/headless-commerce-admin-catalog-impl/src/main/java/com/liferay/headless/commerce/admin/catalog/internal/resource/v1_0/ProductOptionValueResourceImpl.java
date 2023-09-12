@@ -88,7 +88,9 @@ public class ProductOptionValueResourceImpl
 
 	@Override
 	public ProductOptionValue getProductOptionValue(Long id) throws Exception {
-		return _toProductOptionValue(id);
+		return _toProductOptionValue(
+			_cpDefinitionOptionValueRelService.getCPDefinitionOptionValueRel(
+				id));
 	}
 
 	@Override
@@ -158,26 +160,18 @@ public class ProductOptionValueResourceImpl
 				_serviceContextHelper.getServiceContext(
 					cpDefinitionOptionRel.getGroupId()));
 
-		return _toProductOptionValue(
-			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
+		return _toProductOptionValue(cpDefinitionOptionValueRel);
 	}
 
 	private ProductOptionValue _toProductOptionValue(
 			CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
 		throws Exception {
 
-		return _toProductOptionValue(
-			cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId());
-	}
-
-	private ProductOptionValue _toProductOptionValue(
-			Long cpDefinitionOptionValueRelId)
-		throws Exception {
-
 		return _productOptionValueDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				cpDefinitionOptionValueRelId,
-				contextAcceptLanguage.getPreferredLocale()));
+				cpDefinitionOptionValueRel.getCPDefinitionOptionValueRelId(),
+				contextAcceptLanguage.getPreferredLocale()),
+			cpDefinitionOptionValueRel);
 	}
 
 	@Reference

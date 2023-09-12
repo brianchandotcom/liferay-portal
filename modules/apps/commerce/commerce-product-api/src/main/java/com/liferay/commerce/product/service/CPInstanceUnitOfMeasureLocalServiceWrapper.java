@@ -277,6 +277,14 @@ public class CPInstanceUnitOfMeasureLocalServiceWrapper
 			fetchCPInstanceUnitOfMeasure(cpInstanceId, key);
 	}
 
+	@Override
+	public CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(
+		long companyId, String key, String sku) {
+
+		return _cpInstanceUnitOfMeasureLocalService.
+			fetchCPInstanceUnitOfMeasure(companyId, key, sku);
+	}
+
 	/**
 	 * Returns the cp instance unit of measure with the matching UUID and company.
 	 *

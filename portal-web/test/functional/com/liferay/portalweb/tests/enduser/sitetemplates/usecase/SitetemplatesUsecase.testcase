@@ -1207,7 +1207,7 @@ definition {
 
 			AssertTextEquals(
 				inputFieldId = "friendlyURL",
-				locator1 = "TextInput#INPUT_ID",
+				locator1 = "TextInput#TEXT_INPUT_ID",
 				value1 = "/1");
 		}
 
@@ -1224,7 +1224,7 @@ definition {
 
 			AssertTextEquals(
 				inputFieldId = "friendlyURL",
-				locator1 = "TextInput#INPUT_ID",
+				locator1 = "TextInput#TEXT_INPUT_ID",
 				value1 = "/2");
 		}
 
@@ -1241,7 +1241,7 @@ definition {
 
 			AssertTextEquals(
 				inputFieldId = "friendlyURL",
-				locator1 = "TextInput#INPUT_ID",
+				locator1 = "TextInput#TEXT_INPUT_ID",
 				value1 = "/hello");
 		}
 

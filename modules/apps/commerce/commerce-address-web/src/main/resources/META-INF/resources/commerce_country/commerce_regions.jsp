@@ -49,12 +49,12 @@ CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDi
 								"regionId", region.getRegionId()
 							).buildPortletURL()
 						%>'
-						property="name"
+						value="<%= HtmlUtil.escape(region.getName()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand"
-						property="regionCode"
+						value="<%= HtmlUtil.escape(region.getRegionCode()) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

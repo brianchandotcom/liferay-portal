@@ -24,7 +24,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pei-Jung Lan
  */
-@Component(service = UserNameFieldQueryBuilder.class)
+@Component(
+	property = "query.builder.type=userName", service = FieldQueryBuilder.class
+)
 public class UserNameFieldQueryBuilder implements FieldQueryBuilder {
 
 	@Override

@@ -87,6 +87,13 @@ public class UserLocalServiceWrapper
 		return _userLocalService.addDefaultRoles(userId);
 	}
 
+	@Override
+	public User addDefaultServiceAccountUser(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _userLocalService.addDefaultServiceAccountUser(companyId);
+	}
+
 	/**
 	 * Adds the user to the default user groups, unless the user is already in
 	 * these user groups. The default user groups can be specified in

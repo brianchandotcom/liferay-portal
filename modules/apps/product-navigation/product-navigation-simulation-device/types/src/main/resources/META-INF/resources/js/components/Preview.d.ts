@@ -8,10 +8,12 @@ import React from 'react';
 import {Size} from '../constants/sizes';
 interface IPreviewProps {
 	activeSize: Size;
+	open: boolean;
 	previewRef: React.RefObject<HTMLDivElement>;
 }
 declare function Preview({
 	activeSize,
+	open,
 	previewRef,
 }: IPreviewProps): JSX.Element | null;
 declare namespace Preview {

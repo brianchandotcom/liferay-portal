@@ -24,17 +24,17 @@ import org.osgi.service.component.annotations.Reference;
 public class KaleoTaskScriptedAssignmentCache {
 
 	public Collection<KaleoTaskAssignment> getKaleoTaskAssignments(
-		long kaleoTaskAssignmentId) {
+		long kaleoTaskInstanceTokenId) {
 
-		return _portalCache.get(kaleoTaskAssignmentId);
+		return _portalCache.get(kaleoTaskInstanceTokenId);
 	}
 
 	public void putKaleoTaskAssignments(
-		long kaleoTaskAssignmentId,
+		long kaleoTaskInstanceTokenId,
 		Collection<KaleoTaskAssignment> kaleoTaskAssignments, int timeToLive) {
 
 		_portalCache.put(
-			kaleoTaskAssignmentId, new ArrayList<>(kaleoTaskAssignments),
+			kaleoTaskInstanceTokenId, new ArrayList<>(kaleoTaskAssignments),
 			timeToLive);
 	}
 

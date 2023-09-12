@@ -9,6 +9,8 @@ import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -21,10 +23,14 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -61,10 +67,34 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _checkDestinationGroup(Group group) throws PortalException {
-		if ((group != null) && group.isStaged() && !group.isStagingGroup()) {
+	private void _checkDestinationGroup(
+			Group group, long[] groupIds, long sourceGroupId)
+		throws PortalException {
+
+		if (group.isStaged() && !group.isStagingGroup()) {
 			throw new PortalException(
 				"cannot-copy-folders-to-the-live-version-of-a-group");
+		}
+
+		Group sourceGroup = _groupLocalService.getGroup(sourceGroupId);
+
+		if (group.isDepot() ^ sourceGroup.isDepot()) {
+			long[] connectedGroupIds = groupIds;
+
+			if (group.isDepot()) {
+				connectedGroupIds =
+					_siteConnectedGroupGroupProvider.
+						getCurrentAndAncestorSiteAndDepotGroupIds(
+							sourceGroup.getGroupId());
+			}
+
+			if (ArrayUtil.isEmpty(connectedGroupIds) ||
+				!ArrayUtil.contains(connectedGroupIds, sourceGroupId)) {
+
+				throw new PortalException(
+					"the-item-is-not-copied-because-the-site-and-asset-" +
+						"library-are-not-connected");
+			}
 		}
 	}
 
@@ -85,17 +115,20 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "destinationParentFolderId");
 
 		try {
-			Group group = _groupLocalService.fetchGroup(
-				destinationRepositoryId);
+			Group group = _groupLocalService.getGroup(destinationRepositoryId);
 
-			_checkDestinationGroup(group);
+			long[] groupIds =
+				_siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						group.getGroupId());
+
+			_checkDestinationGroup(group, groupIds, sourceRepositoryId);
 
 			_dlAppService.copyFolder(
 				sourceRepositoryId, sourceFolderId, destinationRepositoryId,
 				destinationParentFolderId,
-				_siteConnectedGroupGroupProvider.
-					getCurrentAndAncestorSiteAndDepotGroupIds(
-						group.getGroupId()),
+				_getFileEntryTypeIds(group.getGroupId(), sourceFolderId),
+				groupIds,
 				ServiceContextFactory.getInstance(
 					DLFolder.class.getName(), actionRequest));
 
@@ -114,11 +147,36 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private Map<Long, Long> _getFileEntryTypeIds(long groupId, long folderId)
+		throws PortalException {
+
+		DLFolder folder = _dlFolderService.getFolder(folderId);
+
+		long[] groupIds =
+			_siteConnectedGroupGroupProvider.
+				getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true);
+
+		if (ArrayUtil.isEmpty(groupIds) ||
+			!ArrayUtil.contains(groupIds, folder.getGroupId())) {
+
+			return new HashMap<>();
+		}
+
+		return _dlFileEntryLocalService.getFileEntryTypeIds(
+			folder.getCompanyId(), folder.getGroupId(), folder.getTreePath());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CopyFolderMVCActionCommand.class);
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private DLFolderService _dlFolderService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

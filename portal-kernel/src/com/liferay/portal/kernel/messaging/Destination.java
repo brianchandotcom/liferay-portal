@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.messaging;
 
-import java.util.Set;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -16,16 +14,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface Destination {
 
-	public boolean addDestinationEventListener(
-		DestinationEventListener destinationEventListener);
-
 	public void close();
 
 	public void close(boolean force);
-
-	public void copyDestinationEventListeners(Destination destination);
-
-	public void copyMessageListeners(Destination destination);
 
 	public void destroy();
 
@@ -33,30 +24,10 @@ public interface Destination {
 
 	public String getDestinationType();
 
-	public int getMessageListenerCount();
-
-	public Set<MessageListener> getMessageListeners();
-
 	public String getName();
-
-	public boolean isRegistered();
 
 	public void open();
 
-	public boolean register(MessageListener messageListener);
-
-	public boolean register(
-		MessageListener messageListener, ClassLoader classLoader);
-
-	public boolean removeDestinationEventListener(
-		DestinationEventListener destinationEventListener);
-
-	public void removeDestinationEventListeners();
-
 	public void send(Message message);
-
-	public boolean unregister(MessageListener messageListener);
-
-	public void unregisterMessageListeners();
 
 }

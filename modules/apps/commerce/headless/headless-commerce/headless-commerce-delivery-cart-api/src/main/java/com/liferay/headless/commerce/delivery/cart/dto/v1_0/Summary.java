@@ -20,12 +20,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Generated;
+
+import javax.validation.Valid;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -75,18 +79,19 @@ public class Summary implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String currency;
 
-	@Schema
-	public Integer getItemsQuantity() {
+	@Schema(example = "1.1")
+	@Valid
+	public BigDecimal getItemsQuantity() {
 		return itemsQuantity;
 	}
 
-	public void setItemsQuantity(Integer itemsQuantity) {
+	public void setItemsQuantity(BigDecimal itemsQuantity) {
 		this.itemsQuantity = itemsQuantity;
 	}
 
 	@JsonIgnore
 	public void setItemsQuantity(
-		UnsafeSupplier<Integer, Exception> itemsQuantityUnsafeSupplier) {
+		UnsafeSupplier<BigDecimal, Exception> itemsQuantityUnsafeSupplier) {
 
 		try {
 			itemsQuantity = itemsQuantityUnsafeSupplier.get();
@@ -101,7 +106,7 @@ public class Summary implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer itemsQuantity;
+	protected BigDecimal itemsQuantity;
 
 	@Schema
 	public String[] getShippingDiscountPercentages() {

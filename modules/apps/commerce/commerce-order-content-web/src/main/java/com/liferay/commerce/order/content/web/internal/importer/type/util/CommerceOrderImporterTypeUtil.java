@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.math.BigDecimal;
+
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
@@ -85,7 +87,8 @@ public class CommerceOrderImporterTypeUtil {
 						tempCommerceOrder.getCommerceOrderId(),
 						commerceOrderImporterItemImpl.getCPInstanceId(),
 						commerceOrderImporterItemImpl.getJSON(),
-						commerceOrderImporterItemImpl.getQuantity(), 0, 0,
+						commerceOrderImporterItemImpl.getQuantity(), 0,
+						BigDecimal.ZERO,
 						commerceOrderImporterItemImpl.getUnitOfMeasureKey(),
 						commerceContext, serviceContext);
 
@@ -178,8 +181,8 @@ public class CommerceOrderImporterTypeUtil {
 				commerceOrderItemService.addCommerceOrderItem(
 					tempCommerceOrderId, commerceOrderItem.getCPInstanceId(),
 					commerceOrderItem.getJson(),
-					commerceOrderItem.getQuantity(), 0, 0, StringPool.BLANK,
-					commerceContext, serviceContext);
+					commerceOrderItem.getQuantity(), 0, BigDecimal.ZERO,
+					StringPool.BLANK, commerceContext, serviceContext);
 			}
 		}
 		catch (Exception exception) {

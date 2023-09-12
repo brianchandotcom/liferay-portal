@@ -23,10 +23,6 @@ export function reducer(state, action) {
 				...state,
 				errors: {},
 				experiment: null,
-				experimentHistory: [
-					{...state.experiment, status: action.payload.status},
-					...state.experimentHistory,
-				],
 				variants: [],
 				viewExperimentDetailsURL: undefined,
 			};
@@ -42,23 +38,18 @@ export function reducer(state, action) {
 		case 'CREATE_EXPERIMENT_START':
 			return _createExperimentStart(state, action.payload);
 
-		case 'DELETE_ARCHIVED_EXPERIMENT':
-			return {
-				...state,
-				experimentHistory: state.experimentHistory.filter(
-					(experiment) => {
-						return (
-							experiment.segmentsExperimentId !==
-							action.payload.experimentId
-						);
-					}
-				),
-			};
-
 		case 'DELETE_EXPERIMENT':
 			return {
 				...state,
 				deleteExperimentModal: {
+					active: action.payload.active,
+				},
+			};
+
+		case 'TERMINATE_EXPERIMENT':
+			return {
+				...state,
+				terminateExperimentModal: {
 					active: action.payload.active,
 				},
 			};
@@ -280,6 +271,5 @@ function _updateExperimentStatus(state, updatedValues) {
 		...state,
 		errors: {},
 		experiment: {...state.experiment, ...updatedValues},
-		variants: [],
 	};
 }

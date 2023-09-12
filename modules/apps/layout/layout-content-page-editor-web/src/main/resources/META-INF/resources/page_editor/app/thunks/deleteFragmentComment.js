@@ -6,6 +6,11 @@
 import deleteFragmentEntryLinkComment from '../actions/deleteFragmentEntryLinkComment';
 import FragmentService from '../services/FragmentService';
 
+/**
+ * @param {string} options.commentId
+ * @param {string} options.fragmentEntryLinkId
+ * @param {string} [options.parentCommentId]
+ */
 export default function deleteFragmentComment({
 	commentId,
 	fragmentEntryLinkId,

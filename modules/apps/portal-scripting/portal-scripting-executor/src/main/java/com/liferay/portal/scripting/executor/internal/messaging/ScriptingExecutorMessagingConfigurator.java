@@ -9,11 +9,14 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.scripting.executor.internal.constants.ScriptingExecutorMessagingConstants;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -43,18 +46,23 @@ public class ScriptingExecutorMessagingConfigurator {
 				"destination.name", destination.getName()
 			).build();
 
-		_serviceRegistration = bundleContext.registerService(
-			Destination.class, destination, properties);
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				Destination.class, destination, properties));
 
-		ScriptingExecutorMessageListener scriptingExecutorMessageListener =
-			new ScriptingExecutorMessageListener(_scripting);
-
-		destination.register(scriptingExecutorMessageListener);
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				MessageListener.class,
+				new ScriptingExecutorMessageListener(_scripting), properties));
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceRegistration.unregister();
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Reference
@@ -66,6 +74,7 @@ public class ScriptingExecutorMessagingConfigurator {
 	@Reference
 	private Scripting _scripting;
 
-	private ServiceRegistration<Destination> _serviceRegistration;
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 
 }

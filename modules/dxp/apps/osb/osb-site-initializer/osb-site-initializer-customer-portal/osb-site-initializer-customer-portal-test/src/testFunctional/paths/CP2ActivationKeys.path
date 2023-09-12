@@ -214,6 +214,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMPLIMENTARY_KEY</td>
+	<td>//div[contains(@class, 'card-outline')]//label//p[contains(.,'Complimentary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOGGLE_SWITCH_ON</td>
+	<td>//div[contains(@aria-labelledby,'clay-modal-label')]//label//span//input[@checked]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOGGLE_SWITCH_OFF</td>
+	<td>//div[contains(@aria-labelledby,'clay-modal-label')]//label//span//input[@value]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBSCRIPTION_LENGTH</td>
 	<td>//div[contains(@class, 'cp-radio-card')][${key_position}]//label[contains(@class, 'cp-radio-card-label')]</td>
 	<td></td>

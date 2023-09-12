@@ -131,12 +131,10 @@ const renderComponent = ({item = MAPPED_FORM_ITEM, successMessage} = {}) => {
 describe('FormGeneralPanel', () => {
 	beforeAll(() => {
 		Liferay.FeatureFlags['LPS-169923'] = true;
-		Liferay.FeatureFlags['LPS-183498'] = true;
 	});
 
 	afterAll(() => {
 		Liferay.FeatureFlags['LPS-169923'] = false;
-		Liferay.FeatureFlags['LPS-183498'] = false;
 	});
 
 	beforeEach(() => {

@@ -75,10 +75,13 @@ public class RankingToDocumentTranslatorTest {
 			document, null);
 
 		Assert.assertEquals("[]", String.valueOf(ranking2.getAliases()));
+		Assert.assertEquals(null, ranking2.getGroupExternalReferenceCode());
 		Assert.assertEquals(
 			"[]", String.valueOf(ranking2.getHiddenDocumentIds()));
 		Assert.assertEquals("[]", String.valueOf(ranking2.getPins()));
 		Assert.assertEquals("[]", String.valueOf(ranking2.getQueryStrings()));
+		Assert.assertEquals(
+			null, ranking2.getSXPBlueprintExternalReferenceCode());
 	}
 
 	@Test

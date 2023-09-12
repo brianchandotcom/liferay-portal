@@ -54,6 +54,19 @@ public class AssetListEntrySegmentsEntryRelLocalServiceWrapper
 
 	@Override
 	public AssetListEntrySegmentsEntryRel addAssetListEntrySegmentsEntryRel(
+			long userId, long groupId, long assetListEntryId, int priority,
+			long segmentsEntryId, String typeSettings,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetListEntrySegmentsEntryRelLocalService.
+			addAssetListEntrySegmentsEntryRel(
+				userId, groupId, assetListEntryId, priority, segmentsEntryId,
+				typeSettings, serviceContext);
+	}
+
+	@Override
+	public AssetListEntrySegmentsEntryRel addAssetListEntrySegmentsEntryRel(
 			long userId, long groupId, long assetListEntryId,
 			long segmentsEntryId, String typeSettings,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

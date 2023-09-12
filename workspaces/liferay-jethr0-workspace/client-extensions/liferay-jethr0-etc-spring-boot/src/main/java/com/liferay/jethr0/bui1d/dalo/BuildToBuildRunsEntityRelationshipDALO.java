@@ -5,10 +5,10 @@
 
 package com.liferay.jethr0.bui1d.dalo;
 
-import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.BuildFactory;
-import com.liferay.jethr0.bui1d.run.BuildRun;
-import com.liferay.jethr0.bui1d.run.BuildRunFactory;
+import com.liferay.jethr0.bui1d.BuildEntity;
+import com.liferay.jethr0.bui1d.BuildEntityFactory;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
+import com.liferay.jethr0.bui1d.run.BuildRunEntityFactory;
 import com.liferay.jethr0.entity.dalo.BaseEntityRelationshipDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
 
@@ -20,16 +20,16 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class BuildToBuildRunsEntityRelationshipDALO
-	extends BaseEntityRelationshipDALO<Build, BuildRun> {
+	extends BaseEntityRelationshipDALO<BuildEntity, BuildRunEntity> {
 
 	@Override
-	public EntityFactory<BuildRun> getChildEntityFactory() {
-		return _buildRunFactory;
+	public EntityFactory<BuildRunEntity> getChildEntityFactory() {
+		return _buildRunEntityFactory;
 	}
 
 	@Override
-	public EntityFactory<Build> getParentEntityFactory() {
-		return _buildFactory;
+	public EntityFactory<BuildEntity> getParentEntityFactory() {
+		return _buildEntityFactory;
 	}
 
 	@Override
@@ -38,9 +38,9 @@ public class BuildToBuildRunsEntityRelationshipDALO
 	}
 
 	@Autowired
-	private BuildFactory _buildFactory;
+	private BuildEntityFactory _buildEntityFactory;
 
 	@Autowired
-	private BuildRunFactory _buildRunFactory;
+	private BuildRunEntityFactory _buildRunEntityFactory;
 
 }

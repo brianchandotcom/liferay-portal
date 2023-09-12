@@ -1,8 +1,10 @@
 @import 'variables';
 
 @import 'data_renderers/tooltip_summary';
+
 @import 'modal';
 @import 'side_panel';
+@import 'views/list';
 
 .fds {
 	@import 'data_renderers/comment';

@@ -53,6 +53,11 @@
 	<td>//h2[contains(.,'${key_entryTitle}')]//a</td>
 	<td></td>
 </tr>
+<tr>
+	<td>EMBEDDED_SEARCH_BAR</td>
+	<td>//*[contains(@class, 'navbar')]//input[contains(@data-qa-id,'searchInput')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

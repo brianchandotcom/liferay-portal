@@ -54,7 +54,7 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 		_checkPackageName(
 			fileName, absolutePath, packageName, javaClass.getName());
 
-		if (isModulesFile(absolutePath) && !isModulesApp(absolutePath, true)) {
+		if (isModulesFile(absolutePath)) {
 			_checkModulePackageName(fileName, absolutePath, packageName);
 		}
 

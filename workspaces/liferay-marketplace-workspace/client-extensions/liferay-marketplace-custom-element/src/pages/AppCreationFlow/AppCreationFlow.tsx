@@ -5,7 +5,6 @@
 
 import {useState} from 'react';
 
-import {Footer} from '../../components/Footer/Footer';
 import {AppFlowList} from '../../components/NewAppFlowList/AppFlowList';
 import {NewAppToolBar} from '../../components/NewAppToolBar/NewAppToolBar';
 import {ChoosePricingModelPage} from '../ChoosePricingModelPage/ChoosePricingModelPage';
@@ -402,8 +401,6 @@ export function AppCreationFlow() {
 					/>
 				)}
 			</div>
-
-			<Footer />
 		</div>
 	);
 }

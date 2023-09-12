@@ -318,8 +318,7 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemLocalService.addCommerceOrderItem(
 				_user.getUserId(), _commerceOrder.getCommerceOrderId(),
-				orderItem.getSkuId(), null,
-				BigDecimal.valueOf(orderItem.getQuantity()), 0,
+				orderItem.getSkuId(), null, orderItem.getQuantity(), 0,
 				orderItem.getQuantity(), StringPool.BLANK,
 				new TestCommerceContext(
 					_accountEntry, _commerceCurrency, _commerceChannel, _user,
@@ -331,7 +330,8 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 
 		return new OrderItem() {
 			{
-				bookedQuantityId = commerceOrderItem.getBookedQuantityId();
+				bookedQuantityId =
+					commerceOrderItem.getCommerceInventoryBookedQuantityId();
 				deliveryGroup = commerceOrderItem.getDeliveryGroup();
 				discountManuallyAdjusted =
 					commerceOrderItem.isDiscountManuallyAdjusted();
@@ -344,6 +344,7 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 				priceManuallyAdjusted =
 					commerceOrderItem.isPriceManuallyAdjusted();
 				printedNote = commerceOrderItem.getPrintedNote();
+				quantity = commerceOrderItem.getQuantity();
 				requestedDeliveryDate =
 					commerceOrderItem.getRequestedDeliveryDate();
 				shippedQuantity = commerceOrderItem.getShippedQuantity();
@@ -354,12 +355,6 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 				skuId = commerceOrderItem.getCPInstanceId();
 				subscription = commerceOrderItem.isSubscription();
 
-				setQuantity(
-					() -> {
-						BigDecimal quantity = commerceOrderItem.getQuantity();
-
-						return quantity.intValue();
-					});
 				setVirtualItemURLs(
 					() -> {
 						CommerceVirtualOrderItem commerceVirtualOrderItem =
@@ -410,9 +405,10 @@ public class OrderItemResourceTest extends BaseOrderItemResourceTestCase {
 				priceManuallyAdjusted = RandomTestUtil.randomBoolean();
 				printedNote = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				quantity = RandomTestUtil.randomInt(1, 100);
+				quantity = BigDecimal.valueOf(RandomTestUtil.randomInt(1, 100));
 				requestedDeliveryDate = RandomTestUtil.nextDate();
-				shippedQuantity = RandomTestUtil.randomInt();
+				shippedQuantity = BigDecimal.valueOf(
+					RandomTestUtil.randomInt());
 				shippingAddressId = RandomTestUtil.randomLong();
 				sku = cpInstance.getSku();
 				skuExternalReferenceCode =

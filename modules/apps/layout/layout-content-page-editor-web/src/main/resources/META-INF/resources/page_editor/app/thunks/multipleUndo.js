@@ -101,7 +101,6 @@ export default function multipleUndo({numberOfActions, store, type}) {
 			.then(() => {
 				dispatch(
 					updateNetwork({
-						requestGenerateDraft: false,
 						status: SERVICE_NETWORK_STATUS_TYPES.draftSaved,
 					})
 				);

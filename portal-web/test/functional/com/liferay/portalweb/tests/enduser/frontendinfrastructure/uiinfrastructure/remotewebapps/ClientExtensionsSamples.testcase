@@ -14,6 +14,8 @@ definition {
 	}
 
 	tearDown {
+		AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "stop-liferay-sample-etc-spring-boot");
+
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {

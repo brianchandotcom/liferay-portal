@@ -193,29 +193,45 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 				<liferay-ui:search-container-column-text
 					name="status"
 				>
+					<c:choose>
+						<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-188060") && kbArticle.isScheduled() %>'>
 
-					<%
-					String expirationDateString = StringPool.BLANK;
+							<%
+							String displayDateString = StringPool.BLANK;
 
-					if (kbArticle.getExpirationDate() != null) {
-						expirationDateString = dateFormatDateTime.format(kbArticle.getExpirationDate());
-					}
-					%>
+							if (kbArticle.getDisplayDate() != null) {
+								displayDateString = dateFormatDateTime.format(kbArticle.getDisplayDate());
+							}
+							%>
 
-					<aui:workflow-status helpMessage="<%= kbArticle.isExpired() ? expirationDateString : StringPool.BLANK %>" markupView="lexicon" showHelpMessage="<%= kbArticle.isExpired() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
+							<aui:workflow-status helpMessage="<%= kbArticle.isScheduled() ? displayDateString : StringPool.BLANK %>" markupView="lexicon" showHelpMessage="<%= kbArticle.isScheduled() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
+						</c:when>
+						<c:otherwise>
 
-					<c:if test="<%= kbArticleViewDisplayContext.isExpiringSoon(kbArticle) %>">
-						<span class="label label-warning">
-							<span class="label-item label-item-expand"><liferay-ui:message key="expiring-soon" /></span>
-						</span>
+							<%
+							String expirationDateString = StringPool.BLANK;
 
-						<clay:icon
-							aria-label="<%= expirationDateString %>"
-							cssClass="lfr-portal-tooltip"
-							symbol="question-circle-full"
-							title="<%= expirationDateString %>"
-						/>
-					</c:if>
+							if (kbArticle.getExpirationDate() != null) {
+								expirationDateString = dateFormatDateTime.format(kbArticle.getExpirationDate());
+							}
+							%>
+
+							<aui:workflow-status helpMessage="<%= kbArticle.isExpired() ? expirationDateString : StringPool.BLANK %>" markupView="lexicon" showHelpMessage="<%= kbArticle.isExpired() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= kbArticle.getStatus() %>" />
+
+							<c:if test="<%= kbArticleViewDisplayContext.isExpiringSoon(kbArticle) %>">
+								<span class="label label-warning">
+									<span class="label-item label-item-expand"><liferay-ui:message key="expiring-soon" /></span>
+								</span>
+
+								<clay:icon
+									aria-label="<%= expirationDateString %>"
+									cssClass="lfr-portal-tooltip"
+									symbol="question-circle-full"
+									title="<%= expirationDateString %>"
+								/>
+							</c:if>
+						</c:otherwise>
+					</c:choose>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text

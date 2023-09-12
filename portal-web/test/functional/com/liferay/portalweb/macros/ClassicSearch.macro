@@ -151,23 +151,18 @@ definition {
 	}
 
 	macro viewUserFacetPG {
-		var key_facetFrequency = ${facetFrequency};
-
-		AssertTextEquals(
-			locator1 = "SearchResults#USER_FACET_ANY_USER",
-			value1 = "Any User");
-
-		var userLoginFullName = StringUtil.lowerCase(${userLoginFullName});
-
-		var key_userLoginFullName = ${userLoginFullName};
+		AssertElementPresent(
+			key_term = "Any User",
+			locator1 = "SearchResults#USER_FACET_TERM");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "SearchResults#USER_FACET_FREQUENCY",
+			key_term = ${userLoginFullName},
+			locator1 = "SearchResults#USER_FACET_TERM_FREQUENCY",
 			value1 = ${facetFrequency});
 
-		AssertClick.assertPartialTextClickAt(
-			locator1 = "SearchResults#USER_FACET_USER_NAME",
-			value1 = ${userLoginFullName});
+		Click(
+			key_term = ${userLoginFullName},
+			locator1 = "SearchResults#USER_FACET_TERM");
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetSummary = ${searchAssetSummary},

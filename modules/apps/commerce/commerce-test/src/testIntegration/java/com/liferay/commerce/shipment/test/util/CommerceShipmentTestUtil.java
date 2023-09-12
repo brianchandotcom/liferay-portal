@@ -83,7 +83,7 @@ public class CommerceShipmentTestUtil {
 			null, commerceShipmentId,
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			addQuantity, null, true, serviceContext);
+			BigDecimal.valueOf(addQuantity), null, true, serviceContext);
 	}
 
 	public static CommerceShipment createEmptyOrderShipment(
@@ -111,12 +111,10 @@ public class CommerceShipmentTestUtil {
 		for (CommerceOrderItem commerceOrderItem :
 				commerceOrder.getCommerceOrderItems()) {
 
-			BigDecimal quantity = commerceOrderItem.getQuantity();
-
 			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
 				null, commerceShipment.getCommerceShipmentId(),
 				commerceOrderItem.getCommerceOrderItemId(), warehouseId,
-				quantity.intValue(), null, true, serviceContext);
+				commerceOrderItem.getQuantity(), null, true, serviceContext);
 		}
 	}
 
@@ -137,12 +135,10 @@ public class CommerceShipmentTestUtil {
 		for (CommerceOrderItem commerceOrderItem :
 				commerceOrder.getCommerceOrderItems()) {
 
-			BigDecimal quantity = commerceOrderItem.getQuantity();
-
 			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
 				null, commerceShipment.getCommerceShipmentId(),
 				commerceOrderItem.getCommerceOrderItemId(), commerceWarehouseId,
-				quantity.intValue(), null, true, serviceContext);
+				commerceOrderItem.getQuantity(), null, true, serviceContext);
 		}
 
 		return commerceShipment;

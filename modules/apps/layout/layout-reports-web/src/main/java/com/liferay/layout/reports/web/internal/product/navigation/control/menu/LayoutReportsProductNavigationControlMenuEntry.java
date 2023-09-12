@@ -295,7 +295,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			sb.append("lfr-product-menu-panel lfr-layout-reports-panel ");
 			sb.append("sidenav-fixed sidenav-menu-slider sidenav-right\" ");
 			sb.append("id=\"");
-			sb.append("layoutReportsPanelId\" tabindex=\"0\">");
+			sb.append("layoutReportsPanelId\" tabindex=\"-1\">");
 			sb.append("<div class=\"sidebar sidebar-light ");
 			sb.append("sidenav-menu sidebar-sm\">");
 			sb.append("<div class=\"sidebar-header\">");

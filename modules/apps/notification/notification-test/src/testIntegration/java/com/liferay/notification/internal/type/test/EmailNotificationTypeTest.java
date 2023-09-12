@@ -196,7 +196,7 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			dtoConverterContext, parentObjectDefinition,
 			new ObjectEntry() {
 				{
-					setProperties(parentObjectEntryValues);
+					properties = parentObjectEntryValues;
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
@@ -205,13 +205,12 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			dtoConverterContext, childObjectDefinition,
 			new ObjectEntry() {
 				{
-					setProperties(
-						HashMapBuilder.putAll(
-							childObjectEntryValues
-						).put(
-							getObjectRelationshipObjectField2Name(),
-							objectEntry.getId()
-						).build());
+					properties = HashMapBuilder.putAll(
+						childObjectEntryValues
+					).put(
+						getObjectRelationshipObjectField2Name(),
+						objectEntry.getId()
+					).build();
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);

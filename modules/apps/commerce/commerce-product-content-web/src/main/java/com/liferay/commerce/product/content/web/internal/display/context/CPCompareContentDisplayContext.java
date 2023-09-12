@@ -22,10 +22,9 @@ import com.liferay.commerce.product.util.CPCompareHelper;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -61,13 +60,10 @@ public class CPCompareContentDisplayContext {
 
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
-		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		_cpCompareContentPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				CPCompareContentPortletInstanceConfiguration.class);
+			ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				CPCompareContentPortletInstanceConfiguration.class,
+				_cpRequestHelper.getThemeDisplay());
 
 		if (hasCommerceChannel()) {
 			CommerceContext commerceContext =

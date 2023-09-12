@@ -4,6 +4,7 @@ dependencies {
 	testImplementation group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	testImplementation project(":apps:cookies:cookies-api")
 	testImplementation project(":apps:cookies:cookies-impl")
+	testImplementation project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	testImplementation project(":core:petra:petra-string")
 
 	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")

@@ -347,8 +347,8 @@ public class CommerceShipmentItemTest {
 		CommerceShipmentItem newCommerceShipmentItem =
 			_commerceShipmentItemLocalService.updateCommerceShipmentItem(
 				_commerceShipmentItem.getCommerceShipmentItemId(),
-				_commerceShipmentItem.getCommerceInventoryWarehouseId(), 2,
-				true);
+				_commerceShipmentItem.getCommerceInventoryWarehouseId(),
+				BigDecimal.valueOf(2), true);
 
 		Assert.assertEquals(
 			_commerceShipment.getStatus(),

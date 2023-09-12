@@ -11,9 +11,7 @@ import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstant
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -25,13 +23,14 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminPortletKeys;
-import com.liferay.portal.search.admin.web.internal.reindexer.IndexReindexerRegistry;
+import com.liferay.portal.search.admin.web.internal.reindexer.IndexReindexerRegistryUtil;
 import com.liferay.portal.search.admin.web.internal.util.DictionaryReindexer;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 
@@ -46,6 +45,9 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletSession;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -112,6 +114,11 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		sendRedirect(actionRequest, actionResponse, redirect);
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+	}
+
 	private void _reindex(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -170,10 +177,12 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 			countDownLatch.countDown();
 		};
 
-		Destination destination = _messageBus.getDestination(
-			DestinationNames.BACKGROUND_TASK_STATUS);
-
-		destination.register(messageListener);
+		ServiceRegistration<MessageListener> serviceRegistration =
+			_bundleContext.registerService(
+				MessageListener.class, messageListener,
+				MapUtil.singletonDictionary(
+					"destination.name",
+					DestinationNames.BACKGROUND_TASK_STATUS));
 
 		try {
 			_indexWriterHelper.reindex(
@@ -185,7 +194,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 				TimeUnit.MILLISECONDS);
 		}
 		finally {
-			destination.unregister(messageListener);
+			serviceRegistration.unregister();
 		}
 	}
 
@@ -212,7 +221,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		IndexReindexer indexReindexer =
-			_indexReindexerRegistry.getIndexReindexer(className);
+			IndexReindexerRegistryUtil.getIndexReindexer(className);
 
 		indexReindexer.reindex(
 			ParamUtil.getLongValues(actionRequest, "companyIds"),
@@ -223,7 +232,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		for (IndexReindexer indexReindexer :
-				_indexReindexerRegistry.getIndexReindexers()) {
+				IndexReindexerRegistryUtil.getIndexReindexers()) {
 
 			if (_log.isInfoEnabled()) {
 				Class<?> clazz = indexReindexer.getClass();
@@ -243,14 +252,10 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditMVCActionCommand.class);
 
-	@Reference
-	private IndexReindexerRegistry _indexReindexerRegistry;
+	private BundleContext _bundleContext;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;
-
-	@Reference
-	private MessageBus _messageBus;
 
 	@Reference
 	private PortalInstancesLocalService _portalInstancesLocalService;

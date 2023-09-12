@@ -5,6 +5,7 @@
 
 package com.liferay.layout.page.template.service.impl;
 
+import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -14,7 +15,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryServiceBaseImpl;
-import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
@@ -228,21 +227,12 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public List<Object> getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-		long groupId, int type, int start, int end,
-		OrderByComparator<Object> orderByComparator) {
-
-		return getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-			groupId, null, type, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<Object> getLayoutPageCollectionsAndLayoutPageTemplateEntries(
-		long groupId, String name, int type, int start, int end,
-		OrderByComparator<Object> orderByComparator) {
+		long groupId, long layoutPageTemplateCollectionId, int type, int start,
+		int end, OrderByComparator<Object> orderByComparator) {
 
 		Table<?> tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry =
 			_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-				groupId, name, type);
+				groupId, layoutPageTemplateCollectionId, type);
 
 		return _getLayoutPageTemplateCollectionAndLayoutPageTemplateEntries(
 			DSLQueryFactoryUtil.select(
@@ -259,19 +249,11 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-		long groupId, int type) {
-
-		return getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-			groupId, null, type);
-	}
-
-	@Override
-	public int getLayoutPageCollectionsAndLayoutPageTemplateEntriesCount(
-		long groupId, String name, int type) {
+		long groupId, long layoutPageTemplateCollectionId, int type) {
 
 		Table<?> tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntry =
 			_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-				groupId, name, type);
+				groupId, layoutPageTemplateCollectionId, type);
 
 		return layoutPageTemplateEntryPersistence.dslQueryCount(
 			DSLQueryFactoryUtil.countDistinct(
@@ -862,7 +844,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	private Table<?>
 		_getTempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable(
-			long groupId, String name, int type) {
+			long groupId, long layoutPageTemplateCollectionId, int type) {
 
 		return DSLQueryFactoryUtil.select(
 			LayoutPageTemplateEntryTable.INSTANCE.layoutPageTemplateEntryId,
@@ -878,9 +860,10 @@ public class LayoutPageTemplateEntryServiceImpl
 				groupId
 			).and(
 				() -> {
-					if (Validator.isNotNull(name)) {
-						return LayoutPageTemplateEntryTable.INSTANCE.name.eq(
-							name);
+					if (layoutPageTemplateCollectionId != -1) {
+						return LayoutPageTemplateEntryTable.INSTANCE.
+							layoutPageTemplateCollectionId.eq(
+								layoutPageTemplateCollectionId);
 					}
 
 					return null;
@@ -900,7 +883,19 @@ public class LayoutPageTemplateEntryServiceImpl
 			).from(
 				LayoutPageTemplateCollectionTable.INSTANCE
 			).where(
-				LayoutPageTemplateCollectionTable.INSTANCE.groupId.eq(groupId)
+				LayoutPageTemplateCollectionTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					() -> {
+						if (layoutPageTemplateCollectionId != -1) {
+							return LayoutPageTemplateCollectionTable.INSTANCE.
+								parentLayoutPageTemplateCollectionId.eq(
+									layoutPageTemplateCollectionId);
+						}
+
+						return null;
+					}
+				)
 			)
 		).as(
 			"tempLayoutPageTemplateCollectionAndLayoutPageTemplateEntryTable"

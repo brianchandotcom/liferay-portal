@@ -8,6 +8,7 @@ package com.liferay.document.library.web.internal.portlet.action;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -18,9 +19,11 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -61,10 +64,38 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _checkDestinationGroup(Group group) throws PortalException {
-		if ((group != null) && group.isStaged() && !group.isStagingGroup()) {
+	private void _checkDestinationGroup(
+			long fileEntryId, Group group, long[] groupIds)
+		throws PortalException {
+
+		if (group.isStaged() && !group.isStagingGroup()) {
 			throw new PortalException(
 				"cannot-copy-file-entries-to-the-live-version-of-a-group");
+		}
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+		long sourceGroupId = fileEntry.getGroupId();
+
+		Group sourceGroup = _groupLocalService.getGroup(sourceGroupId);
+
+		if (group.isDepot() ^ sourceGroup.isDepot()) {
+			long[] connectedGroupIds = groupIds;
+
+			if (group.isDepot()) {
+				connectedGroupIds =
+					_siteConnectedGroupGroupProvider.
+						getCurrentAndAncestorSiteAndDepotGroupIds(
+							sourceGroup.getGroupId());
+			}
+
+			if (ArrayUtil.isEmpty(connectedGroupIds) ||
+				!ArrayUtil.contains(connectedGroupIds, sourceGroupId)) {
+
+				throw new PortalException(
+					"the-item-is-not-copied-because-the-site-and-asset-" +
+						"library-are-not-connected");
+			}
 		}
 	}
 
@@ -82,16 +113,19 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "destinationRepositoryId");
 
 		try {
-			Group group = _groupLocalService.fetchGroup(
-				destinationRepositoryId);
+			Group group = _groupLocalService.getGroup(destinationRepositoryId);
 
-			_checkDestinationGroup(group);
+			long[] groupIds =
+				_siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						group.getGroupId());
+
+			_checkDestinationGroup(fileEntryId, group, groupIds);
 
 			_dlAppService.copyFileEntry(
 				fileEntryId, destinationFolderId, destinationRepositoryId,
-				_siteConnectedGroupGroupProvider.
-					getCurrentAndAncestorSiteAndDepotGroupIds(
-						group.getGroupId()),
+				_getFileEntryTypeId(destinationRepositoryId, fileEntryId),
+				groupIds,
 				ServiceContextFactory.getInstance(
 					DLFileEntry.class.getName(), actionRequest));
 
@@ -108,6 +142,26 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
+	}
+
+	private long _getFileEntryTypeId(long groupId, long fileEntryId)
+		throws PortalException {
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+		long[] groupIds =
+			_siteConnectedGroupGroupProvider.
+				getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true);
+
+		if (ArrayUtil.isEmpty(groupIds) ||
+			!ArrayUtil.contains(groupIds, fileEntry.getGroupId())) {
+
+			return DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
+		}
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		return dlFileEntry.getFileEntryTypeId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

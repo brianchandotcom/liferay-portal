@@ -632,6 +632,14 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 			primaryKeyObj);
 	}
 
+	@Override
+	public String getUniqueLayoutPageTemplateEntryName(
+		long groupId, String name, int type) {
+
+		return _layoutPageTemplateEntryLocalService.
+			getUniqueLayoutPageTemplateEntryName(groupId, name, type);
+	}
+
 	/**
 	 * Updates the layout page template entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

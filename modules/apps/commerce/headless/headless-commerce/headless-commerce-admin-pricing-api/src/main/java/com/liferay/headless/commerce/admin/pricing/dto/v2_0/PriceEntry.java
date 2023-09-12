@@ -811,20 +811,20 @@ public class PriceEntry implements Serializable {
 	protected TierPrice[] tierPrices;
 
 	@Schema(example = "m")
-	public String getUnitOfMeasure() {
-		return unitOfMeasure;
+	public String getUnitOfMeasureKey() {
+		return unitOfMeasureKey;
 	}
 
-	public void setUnitOfMeasure(String unitOfMeasure) {
-		this.unitOfMeasure = unitOfMeasure;
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		this.unitOfMeasureKey = unitOfMeasureKey;
 	}
 
 	@JsonIgnore
-	public void setUnitOfMeasure(
-		UnsafeSupplier<String, Exception> unitOfMeasureUnsafeSupplier) {
+	public void setUnitOfMeasureKey(
+		UnsafeSupplier<String, Exception> unitOfMeasureKeyUnsafeSupplier) {
 
 		try {
-			unitOfMeasure = unitOfMeasureUnsafeSupplier.get();
+			unitOfMeasureKey = unitOfMeasureKeyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -836,7 +836,7 @@ public class PriceEntry implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String unitOfMeasure;
+	protected String unitOfMeasureKey;
 
 	@Override
 	public boolean equals(Object object) {
@@ -1166,16 +1166,16 @@ public class PriceEntry implements Serializable {
 			sb.append("]");
 		}
 
-		if (unitOfMeasure != null) {
+		if (unitOfMeasureKey != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"unitOfMeasure\": ");
+			sb.append("\"unitOfMeasureKey\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(unitOfMeasure));
+			sb.append(_escape(unitOfMeasureKey));
 
 			sb.append("\"");
 		}

@@ -5,16 +5,13 @@
 
 package com.liferay.batch.engine.internal.bundle;
 
+import com.liferay.batch.engine.internal.unit.MultiCompanyBatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnitReader;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.FileUtil;
 
@@ -23,7 +20,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -31,7 +27,6 @@ import java.util.Objects;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -49,8 +44,6 @@ public class BatchEngineBundleTracker {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_bundleContext = bundleContext;
-
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE,
 			new BatchEngineBundleTrackerCustomizer());
@@ -61,9 +54,6 @@ public class BatchEngineBundleTracker {
 	@Deactivate
 	protected void deactivate() {
 		_bundleTracker.close();
-
-		_serviceRegistrations.forEach(
-			(bundle, serviceRegistration) -> serviceRegistration.unregister());
 	}
 
 	private boolean _isAlreadyProcessed(Bundle bundle) {
@@ -99,15 +89,14 @@ public class BatchEngineBundleTracker {
 	@Reference
 	private BatchEngineUnitReader _batchEngineUnitReader;
 
-	private BundleContext _bundleContext;
 	private BundleTracker<Bundle> _bundleTracker;
 
 	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
-	private final Map
-		<Bundle, ServiceRegistration<PortalInstanceLifecycleListener>>
-			_serviceRegistrations = new HashMap<>();
+	@Reference
+	private MultiCompanyBatchEngineUnitProcessor
+		_multiCompanyBatchEngineUnitProcessor;
 
 	private class BatchEngineBundleTrackerCustomizer
 		implements BundleTrackerCustomizer<Bundle> {
@@ -117,9 +106,7 @@ public class BatchEngineBundleTracker {
 			Dictionary<String, String> headers = bundle.getHeaders(
 				StringPool.BLANK);
 
-			if ((headers.get("Liferay-Client-Extension-Batch") == null) ||
-				_isAlreadyProcessed(bundle)) {
-
+			if (headers.get("Liferay-Client-Extension-Batch") == null) {
 				return null;
 			}
 
@@ -152,31 +139,19 @@ public class BatchEngineBundleTracker {
 				}
 			}
 
-			_batchEngineUnitProcessor.processBatchEngineUnits(
-				singleCompanyBatchEngineUnits);
+			boolean alreadyProcessed = _isAlreadyProcessed(bundle);
+
+			if (!alreadyProcessed) {
+				_batchEngineUnitProcessor.processBatchEngineUnits(
+					singleCompanyBatchEngineUnits);
+			}
 
 			if (multiCompanyBatchEngineUnits.isEmpty()) {
 				return null;
 			}
 
-			_serviceRegistrations.put(
-				bundle,
-				_bundleContext.registerService(
-					PortalInstanceLifecycleListener.class,
-					new BasePortalInstanceLifecycleListener() {
-
-						@Override
-						public void portalInstanceRegistered(Company company) {
-							_batchEngineUnitProcessor.processBatchEngineUnits(
-								TransformUtil.transform(
-									multiCompanyBatchEngineUnits,
-									batchEngineUnit ->
-										new CompanyBatchEngineUnitWrapper(
-											batchEngineUnit, company)));
-						}
-
-					},
-					null));
+			_multiCompanyBatchEngineUnitProcessor.registerBatchEngineUnits(
+				bundle, multiCompanyBatchEngineUnits, !alreadyProcessed);
 
 			return bundle;
 		}
@@ -190,12 +165,7 @@ public class BatchEngineBundleTracker {
 		public void removedBundle(
 			Bundle bundle, BundleEvent bundleEvent, Bundle unusedBundle) {
 
-			ServiceRegistration<PortalInstanceLifecycleListener>
-				serviceRegistration = _serviceRegistrations.remove(bundle);
-
-			if (serviceRegistration != null) {
-				serviceRegistration.unregister();
-			}
+			_multiCompanyBatchEngineUnitProcessor.unregister(bundle);
 		}
 
 	}

@@ -26,6 +26,7 @@ import com.liferay.commerce.product.service.persistence.CPInstanceOptionValueRel
 import com.liferay.commerce.product.util.CPJSONUtil;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -147,7 +147,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionRelPersistence.create(cpDefinitionOptionRelId);
 
-		_validatePriceType(cpDefinitionOptionRel, priceType);
+		_validatePriceType(cpDefinitionOptionRel, false, priceType);
 
 		if (CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
 				cpDefinitionId, serviceContext.getRequest())) {
@@ -703,10 +703,16 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		CPDefinitionOptionRel cpDefinitionOptionRel =
+			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRel(
+				cpDefinitionOptionRelId);
+
 		return cpDefinitionOptionRelLocalService.updateCPDefinitionOptionRel(
 			cpDefinitionOptionRelId, cpOptionId, nameMap, descriptionMap,
-			ddmFormFieldTypeName, priority, facetable, required, skuContributor,
-			null, serviceContext);
+			ddmFormFieldTypeName, cpDefinitionOptionRel.getInfoItemServiceKey(),
+			priority, cpDefinitionOptionRel.isDefinedExternally(), facetable,
+			required, skuContributor, cpDefinitionOptionRel.getPriceType(),
+			cpDefinitionOptionRel.getTypeSettings(), serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -714,9 +720,10 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	public CPDefinitionOptionRel updateCPDefinitionOptionRel(
 			long cpDefinitionOptionRelId, long cpOptionId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String ddmFormFieldTypeName, double priority, boolean facetable,
+			String ddmFormFieldTypeName, String infoItemServiceKey,
+			double priority, boolean definedExternally, boolean facetable,
 			boolean required, boolean skuContributor, String priceType,
-			ServiceContext serviceContext)
+			String typeSettings, ServiceContext serviceContext)
 		throws PortalException {
 
 		_validateDDMFormFieldTypeName(ddmFormFieldTypeName, skuContributor);
@@ -725,7 +732,7 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionOptionRelPersistence.findByPrimaryKey(
 				cpDefinitionOptionRelId);
 
-		_validatePriceType(cpDefinitionOptionRel, priceType);
+		_validatePriceType(cpDefinitionOptionRel, definedExternally, priceType);
 
 		if (CPDefinitionLocalServiceCircularDependencyUtil.isVersionable(
 				cpDefinitionOptionRel.getCPDefinitionId(),
@@ -744,11 +751,14 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		cpDefinitionOptionRel.setNameMap(nameMap);
 		cpDefinitionOptionRel.setDescriptionMap(descriptionMap);
 		cpDefinitionOptionRel.setDDMFormFieldTypeName(ddmFormFieldTypeName);
+		cpDefinitionOptionRel.setInfoItemServiceKey(infoItemServiceKey);
 		cpDefinitionOptionRel.setPriority(priority);
+		cpDefinitionOptionRel.setDefinedExternally(definedExternally);
 		cpDefinitionOptionRel.setFacetable(facetable);
 		cpDefinitionOptionRel.setRequired(required);
 		cpDefinitionOptionRel.setSkuContributor(skuContributor);
 		cpDefinitionOptionRel.setPriceType(priceType);
+		cpDefinitionOptionRel.setTypeSettings(typeSettings);
 		cpDefinitionOptionRel.setExpandoBridgeAttributes(serviceContext);
 
 		cpDefinitionOptionRel = cpDefinitionOptionRelPersistence.update(
@@ -1000,8 +1010,16 @@ public class CPDefinitionOptionRelLocalServiceImpl
 	}
 
 	private void _validatePriceType(
-			CPDefinitionOptionRel cpDefinitionOptionRel, String priceType)
+			CPDefinitionOptionRel cpDefinitionOptionRel,
+			boolean definedExternally, String priceType)
 		throws PortalException {
+
+		if (definedExternally &&
+			!priceType.equals(CPConstants.PRODUCT_OPTION_PRICE_TYPE_DYNAMIC)) {
+
+			throw new CPDefinitionOptionRelPriceTypeException(
+				"Price type must be dynamic");
+		}
 
 		if (cpDefinitionOptionRel.isNew() ||
 			!cpDefinitionOptionRel.isPriceContributor() ||

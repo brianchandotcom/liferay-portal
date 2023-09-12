@@ -1,5 +1,14 @@
 definition {
 
+	macro addRecipient {
+		for (var list : list ${addList}) {
+			AssertClick(
+				key_text = "Add Recipient",
+				locator1 = "Button#ANY_WITH_SPAN",
+				value1 = "Add Recipient");
+		}
+	}
+
 	macro assertAlertMessage {
 		AssertElementPresent(
 			locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_MODAL_ALERT",
@@ -10,6 +19,65 @@ definition {
 		AssertElementPresent(
 			key_title = ${assertPage},
 			locator1 = "Header#H1_TITLE");
+	}
+
+	macro canNotSeeUnsupportedFiles {
+		Click(locator1 = "Button#CONTINUE");
+
+		SelectFrameTop();
+
+		AssertElementNotPresent(
+			fileTitle = ${fileName},
+			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_ENVELOPE_ADDED_FILE");
+	}
+
+	macro canNotViewAddRecipient {
+		AssertElementNotPresent(
+			key_text = "Add Recipient",
+			locator1 = "Button#ANY_WITH_SPAN");
+	}
+
+	macro canSeeDataPersistAfterEnabled {
+		var siteSettingsStrategy = ${siteStrategy};
+		var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
+		var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
+		var digitalSignatureAccountBaseUri = PropsUtil.get("digital.signature.account.base.uri");
+		var digitalSignatureIntegrationKey = PropsUtil.get("digital.signature.integration.key");
+		var digitalSignatureRsaPrivateKey = PropsUtil.get("digital.signature.rsa.private.key");
+
+		AssertElementPresent(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",
+			siteSettingsStrategy = ${siteSettingsStrategy});
+
+		AssertElementPresent(locator1 = "ClickToChatConfiguration#CHECK_INPUT_ENABLED");
+
+		AssertElementPresent(
+			digitalSignatureApiUsername = ${digitalSignatureApiUsername},
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_USER_ID");
+
+		AssertElementPresent(
+			digitalSignatureApiAccountId = ${digitalSignatureApiAccountId},
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_ACCOUNT_ID");
+
+		AssertElementPresent(
+			digitalSignatureAccountBaseUri = ${digitalSignatureAccountBaseUri},
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_BASE_URI");
+
+		AssertElementPresent(
+			digitalSignatureIntegrationKey = ${digitalSignatureIntegrationKey},
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_INTEGRATION_KEY");
+
+		AssertElementPresent(
+			digitalSignatureRsaPrivateKey = ${digitalSignatureRsaPrivateKey},
+			locator1 = "DigitalSignatureConfiguration#DIGITAL_SIGNATURE_RSA_PRIVATE_KEY");
+	}
+
+	macro canViewRequiredFields {
+		for (var fieldName : list ${fieldList}) {
+			AssertElementPresent(
+				fieldLabel = ${fieldName},
+				locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
+		}
 	}
 
 	macro createEnvelope {
@@ -31,27 +99,27 @@ definition {
 		Type(
 			key_text = "Envelope Name",
 			locator1 = "TextInput#ANY",
-			value1 = ${envelopeName});
+			value1 = ${addName});
 
 		Type(
 			key_text = "Recipient Full Name",
 			locator1 = "TextInput#ANY",
-			value1 = ${recipientFullName});
+			value1 = ${addFullName});
 
 		Type(
 			key_text = "Email Subject",
 			locator1 = "TextInput#ANY",
-			value1 = ${emailSubject});
+			value1 = ${addSubject});
 
 		Type(
 			key_text = "Recipient Email",
 			locator1 = "TextInput#ANY",
-			value1 = ${recipientEmail});
+			value1 = ${addEmail});
 
 		Type(
 			key_text = "emailMessage",
 			locator1 = "TextArea#ANY",
-			value1 = ${emailMessage});
+			value1 = ${addMessage});
 
 		Click(
 			key_text = "Add Document",
@@ -84,27 +152,27 @@ definition {
 		Type(
 			key_text = "Envelope Name",
 			locator1 = "TextInput#ANY",
-			value1 = ${envelopeName});
+			value1 = ${addName});
 
 		Type(
 			key_text = "Recipient Full Name",
 			locator1 = "TextInput#ANY",
-			value1 = ${recipientFullName});
+			value1 = ${addFullName});
 
 		Type(
 			key_text = "Email Subject",
 			locator1 = "TextInput#ANY",
-			value1 = ${emailSubject});
+			value1 = ${addSubject});
 
 		Type(
 			key_text = "Recipient Email",
 			locator1 = "TextInput#ANY",
-			value1 = ${recipientEmail});
+			value1 = ${addEmail});
 
 		Type(
 			key_text = "emailMessage",
 			locator1 = "TextArea#ANY",
-			value1 = ${emailMessage});
+			value1 = ${addMessage});
 
 		Click(
 			key_text = "Add Document",
@@ -120,6 +188,8 @@ definition {
 			dmDocumentTitle = "Document_2",
 			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_SELECT_DOCUMENT_MODAL");
 
+		SelectFrameTop();
+
 		Click(
 			key_text = "Add Document",
 			locator1 = "Button#ANY_WITH_SPAN");
@@ -133,6 +203,8 @@ definition {
 		Click(
 			dmDocumentTitle = "Document_3",
 			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_SELECT_DOCUMENT_MODAL");
+
+		SelectFrameTop();
 	}
 
 	macro deleteCreatedDM {
@@ -172,9 +244,11 @@ definition {
 	}
 
 	macro enableDigitalSignature {
-		Select(
-			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
-			value1 = ${siteStrategy});
+		if (isSet(siteStrategy)) {
+			Select(
+				locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+				value1 = ${siteStrategy});
+		}
 
 		var digitalSignatureApiUsername = PropsUtil.get("digital.signature.api.username");
 		var digitalSignatureApiAccountId = PropsUtil.get("digital.signature.api.accountId");
@@ -209,6 +283,18 @@ definition {
 		Click.javaScriptClick(locator1 = "DigitalSignatureDM#DIGITAL_SIGNATURE_COLLECT_BUTTON");
 	}
 
+	macro goToDigitalSignatureByPortlet {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			portlet = "Site Settings");
+
+		Click(
+			key_itemName = ${nameComponent},
+			locator1 = "ListGroupItem#ITEM_TEXT");
+	}
+
 	macro goToDigitalSignatureEllipsis {
 		Click.waitForMenuToggleJSClick(
 			key_rowEntry = ${dmDocumentTitle},
@@ -228,10 +314,48 @@ definition {
 			locator1 = "ListGroupItem#ITEM_TEXT");
 	}
 
+	macro removeRecipient {
+		Click(locator1 = "Button#REMOVE_IMAGE_LAST");
+
+		AssertElementPresent(locator1 = "Button#TRASH_DISABLED");
+	}
+
 	macro selectDMFolder {
 		Click.javaScriptClick(
 			key_fieldName = ${checkboxDM},
 			locator1 = "Checkbox#CHECKBOX_NAME");
+	}
+
+	macro selectSiteStrategy {
+		Select(
+			locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
+			value1 = ${siteStrategy});
+	}
+
+	macro verifyUnsupportedFileError {
+		AssertElementPresent(locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_UNSUPPORTED_FILE");
+
+		AssertElementPresent(
+			key_value = ${disabledButton},
+			locator1 = "DigitalSignatureEnvelopeSettings#ANY_DISABLED_BUTTON");
+	}
+
+	macro viewDigitalSignatureEnabled {
+		AssertElementPresent(
+			dsStatus = ${dsStatus},
+			locator1 = "DigitalSignatureListView#DIGITAL_SIGNATURE_STATUS");
+	}
+
+	macro viewNotSupportedExtensionsError {
+		SelectFrame(locator1 = "Modal#MODAL");
+
+		AssertElementPresent(
+			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_MODAL_TITLE",
+			modalTitle = ${modalLabel});
+
+		AssertElementPresent(
+			fileTitle = ${documentTitle},
+			locator1 = "DigitalSignatureEnvelopeSettings#DIGITAL_SIGNATURE_MODAL_UNSUPPORTED_FILE");
 	}
 
 }

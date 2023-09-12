@@ -579,6 +579,10 @@ public class DataFactory {
 		return getClassNameId(DLFileEntry.class);
 	}
 
+	public RoleModel getGuestRoleModel() {
+		return _guestRoleModel;
+	}
+
 	public long getJournalArticleClassNameId() {
 		return getClassNameId(JournalArticle.class);
 	}
@@ -1750,7 +1754,7 @@ public class DataFactory {
 
 		// Other fields
 
-		commerceOrderItemModel.setBookedQuantityId(0);
+		commerceOrderItemModel.setCommerceInventoryBookedQuantityId(0);
 		commerceOrderItemModel.setCommerceOrderId(
 			commerceOrderModel.getCommerceOrderId());
 		commerceOrderItemModel.setCommercePriceListId(commercePriceListId);
@@ -1765,7 +1769,7 @@ public class DataFactory {
 		commerceOrderItemModel.setParentCommerceOrderItemId(0);
 		commerceOrderItemModel.setName("Commerce Order Item Name");
 		commerceOrderItemModel.setQuantity(BigDecimal.ONE);
-		commerceOrderItemModel.setShippedQuantity(0);
+		commerceOrderItemModel.setShippedQuantity(BigDecimal.ONE);
 		commerceOrderItemModel.setShipSeparately(true);
 		commerceOrderItemModel.setShippable(true);
 		commerceOrderItemModel.setDiscountAmount(BigDecimal.valueOf(0));
@@ -6646,9 +6650,15 @@ public class DataFactory {
 
 		mbCategoryModel.setParentCategoryId(
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
-		mbCategoryModel.setName("Test Category " + index);
+
+		String name = "Test Category " + index;
+
+		mbCategoryModel.setName(name);
+
 		mbCategoryModel.setDisplayStyle(
 			MBCategoryConstants.DEFAULT_DISPLAY_STYLE);
+		mbCategoryModel.setFriendlyURL(
+			StringUtil.replace(name, CharPool.SPACE, StringPool.DASH));
 		mbCategoryModel.setLastPublishDate(new Date());
 		mbCategoryModel.setStatusDate(new Date());
 
@@ -7099,6 +7109,9 @@ public class DataFactory {
 				else if (name.equals("CmExternalReferenceCode")) {
 					name = "ClassedModelExternalReferenceCode";
 				}
+				else if (name.equals("CIBookedQuantityId")) {
+					name = "CommerceInventoryBookedQuantityId";
+				}
 				else if (name.equals("CIWarehouseId")) {
 					name = "CommerceInventoryWarehouseId";
 				}
@@ -7191,6 +7204,9 @@ public class DataFactory {
 				}
 				else if (name.equals("TotalDiscountPctLev4WithTax")) {
 					name = "TotalDiscountPercentageLevel4WithTaxAmount";
+				}
+				else if (name.equals("UOMIncrementalOrderQuantity")) {
+					name = "UnitOfMeasureIncrementalOrderQuantity";
 				}
 
 				int type = (int)tableColumn[1];

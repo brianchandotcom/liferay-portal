@@ -7,8 +7,8 @@ package com.liferay.jethr0.task.dalo;
 
 import com.liferay.jethr0.entity.dalo.BaseEntityDALO;
 import com.liferay.jethr0.entity.factory.EntityFactory;
-import com.liferay.jethr0.task.Task;
-import com.liferay.jethr0.task.TaskFactory;
+import com.liferay.jethr0.task.TaskEntity;
+import com.liferay.jethr0.task.TaskEntityFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -17,14 +17,14 @@ import org.springframework.context.annotation.Configuration;
  * @author Michael Hashimoto
  */
 @Configuration
-public class TaskEntityDALO extends BaseEntityDALO<Task> {
+public class TaskEntityDALO extends BaseEntityDALO<TaskEntity> {
 
 	@Override
-	protected EntityFactory<Task> getEntityFactory() {
-		return _taskFactory;
+	protected EntityFactory<TaskEntity> getEntityFactory() {
+		return _taskEntityFactory;
 	}
 
 	@Autowired
-	private TaskFactory _taskFactory;
+	private TaskEntityFactory _taskEntityFactory;
 
 }

@@ -25,7 +25,7 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 
 		<clay:sheet-section>
 			<p class="c-mb-4 text-3 text-secondary">
-				<liferay-ui:message key="file-max-size-help" />
+				<liferay-ui:message arguments="<%= dlSizeLimitConfigurationDisplayContext.getFileMaxSizeHelpArguments() %>" key="file-max-size-help" />
 			</p>
 
 			<aui:input label="file-max-size" name="fileMaxSize" value="<%= dlSizeLimitConfigurationDisplayContext.getFileMaxSize() %>" />

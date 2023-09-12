@@ -15,12 +15,15 @@ import com.liferay.commerce.order.content.web.internal.util.CommerceOrderItemUti
 import com.liferay.commerce.price.CommerceOrderItemPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CPSubscriptionInfo;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.product.util.CPSubscriptionType;
 import com.liferay.commerce.product.util.CPSubscriptionTypeRegistry;
 import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
@@ -38,6 +41,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -185,6 +190,12 @@ public class PlacedCommerceOrderItemFDSDataProvider
 				_commerceOrderPriceCalculation.getCommerceOrderItemPrice(
 					commerceOrder.getCommerceCurrency(), commerceOrderItem);
 
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+				_cpInstanceUnitOfMeasureLocalService.
+					fetchCPInstanceUnitOfMeasure(
+						commerceOrderItem.getCPInstanceId(),
+						commerceOrderItem.getUnitOfMeasureKey());
+
 			orderItems.add(
 				new OrderItem(
 					commerceOrderItem.getCPInstanceId(),
@@ -192,7 +203,7 @@ public class PlacedCommerceOrderItemFDSDataProvider
 						commerceOrderItemPrice, locale),
 					null,
 					_commerceOrderItemQuantityFormatter.format(
-						commerceOrderItem, locale),
+						commerceOrderItem, cpInstanceUnitOfMeasure, locale),
 					_formatSubscriptionPeriod(commerceOrderItem, locale),
 					commerceOrderItem.getName(locale),
 					CommerceOrderItemUtil.getOptions(
@@ -205,7 +216,9 @@ public class PlacedCommerceOrderItemFDSDataProvider
 						commerceOrderItemPrice, _language, locale),
 					CommerceOrderItemUtil.formatPromoPrice(
 						commerceOrderItemPrice, locale),
-					commerceOrderItem.getShippedQuantity(),
+					_commerceQuantityFormatter.format(
+						cpInstanceUnitOfMeasure,
+						commerceOrderItem.getShippedQuantity()),
 					commerceOrderItem.getSku(),
 					_cpInstanceHelper.getCPInstanceThumbnailSrc(
 						CommerceUtil.getCommerceAccountId(
@@ -213,7 +226,8 @@ public class PlacedCommerceOrderItemFDSDataProvider
 								CommerceWebKeys.COMMERCE_CONTEXT)),
 						commerceOrderItem.getCPInstanceId()),
 					CommerceOrderItemUtil.formatTotalPrice(
-						commerceOrderItemPrice, locale)));
+						commerceOrderItemPrice, locale),
+					commerceOrderItem.getUnitOfMeasureKey()));
 		}
 
 		return orderItems;
@@ -233,7 +247,14 @@ public class PlacedCommerceOrderItemFDSDataProvider
 	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 
 	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
+
+	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private CPSubscriptionTypeRegistry _cpSubscriptionTypeRegistry;

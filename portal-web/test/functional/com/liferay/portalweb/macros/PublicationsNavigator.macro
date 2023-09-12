@@ -98,4 +98,10 @@ definition {
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_change_tracking_web_portlet_PublicationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_change_tracking_web_portlet_PublicationsPortlet_mvcRenderCommandName=%2Fchange_tracking%2Fview_scheduled");
 	}
 
+	macro openPublicationsSettings {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = ${baseURL},
+			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_change_tracking_web_portlet_PublicationsPortlet&p_p_lifecycle=0&_com_liferay_change_tracking_web_portlet_PublicationsPortlet_mvcRenderCommandName=%2Fchange_tracking%2Fview_settings");
+	}
+
 }

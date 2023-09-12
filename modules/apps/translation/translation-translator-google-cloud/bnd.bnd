@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Translation Translator Google Cloud
 Bundle-SymbolicName: com.liferay.translation.translator.google.cloud
-Bundle-Version: 1.0.14
+Bundle-Version: 1.0.15
 Import-Package:\
 	!com.aayushatharva.brotli4j.*,\
 	\

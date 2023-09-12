@@ -89,9 +89,7 @@ export default function Item({
 			<ClayTable.Cell>{durationString}</ClayTable.Cell>
 
 			<ClayTable.Cell>
-				{moment
-					.utc(dateModified)
-					.format(Liferay.Language.get('mmm-dd'))}
+				{moment(dateModified).format(Liferay.Language.get('mmm-dd'))}
 			</ClayTable.Cell>
 
 			<ClayTable.Cell className="actions">

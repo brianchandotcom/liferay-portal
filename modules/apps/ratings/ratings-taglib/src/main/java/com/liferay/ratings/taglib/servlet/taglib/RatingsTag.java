@@ -5,11 +5,14 @@
 
 package com.liferay.ratings.taglib.servlet.taglib;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -20,6 +23,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.ratings.kernel.RatingsType;
 import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil;
 import com.liferay.ratings.kernel.model.RatingsEntry;
@@ -74,6 +78,13 @@ public class RatingsTag extends IncludeTag {
 	}
 
 	public void setClassName(String className) {
+		if (className.equals(DLFileEntry.class.getName()) ||
+			className.equals(FileEntry.class.getName()) ||
+			className.equals(LiferayFileEntry.class.getName())) {
+
+			className = DLFileEntryConstants.getClassName();
+		}
+
 		_className = className;
 	}
 

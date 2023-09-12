@@ -1,0 +1,13 @@
+{
+	"#child-nodes": [
+		{
+			"#tag-name": "repeatable-tag",
+			"#value": "First"
+		},
+		{
+			"#tag-name": "repeatable-tag",
+			"#value": "Second"
+		}
+	],
+	"#tag-name": "container-tag"
+}

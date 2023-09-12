@@ -107,6 +107,10 @@ public class InputDateTag extends BaseValidatorTagSupport {
 		return _showDisableCheckbox;
 	}
 
+	public boolean isUseNamespace() {
+		return _useNamespace;
+	}
+
 	public void setAutoComplete(String autoComplete) {
 		_autoComplete = autoComplete;
 	}
@@ -183,6 +187,10 @@ public class InputDateTag extends BaseValidatorTagSupport {
 		_showDisableCheckbox = showDisableCheckbox;
 	}
 
+	public void setUseNamespace(boolean useNamespace) {
+		_useNamespace = useNamespace;
+	}
+
 	public void setYearParam(String yearParam) {
 		_yearParam = yearParam;
 	}
@@ -214,6 +222,7 @@ public class InputDateTag extends BaseValidatorTagSupport {
 		_nullable = false;
 		_required = false;
 		_showDisableCheckbox = true;
+		_useNamespace = true;
 		_yearParam = null;
 		_yearValue = 0;
 	}
@@ -267,6 +276,9 @@ public class InputDateTag extends BaseValidatorTagSupport {
 			"liferay-ui:input-date:showDisableCheckbox",
 			String.valueOf(_showDisableCheckbox));
 		httpServletRequest.setAttribute(
+			"liferay-ui:input-date:useNamespace",
+			String.valueOf(_useNamespace));
+		httpServletRequest.setAttribute(
 			"liferay-ui:input-date:yearParam", _yearParam);
 		httpServletRequest.setAttribute(
 			"liferay-ui:input-date:yearValue", String.valueOf(_yearValue));
@@ -293,6 +305,7 @@ public class InputDateTag extends BaseValidatorTagSupport {
 	private boolean _nullable;
 	private boolean _required;
 	private boolean _showDisableCheckbox = true;
+	private boolean _useNamespace = true;
 	private String _yearParam;
 	private int _yearValue;
 

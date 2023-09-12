@@ -14,6 +14,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.model.TicketConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.web.internal.configuration.SubscriptionConfiguration;
-import com.liferay.subscription.web.internal.constants.SubscriptionConstants;
 
 import java.io.IOException;
 
@@ -145,13 +145,13 @@ public class UnsubscribeHooks {
 		List<Ticket> tickets = _ticketLocalService.getTickets(
 			subscription.getCompanyId(), Subscription.class.getName(),
 			subscription.getSubscriptionId(),
-			SubscriptionConstants.TICKET_TYPE);
+			TicketConstants.TYPE_SUBSCRIPTION);
 
 		if (ListUtil.isEmpty(tickets)) {
 			return _ticketLocalService.addTicket(
 				subscription.getCompanyId(), Subscription.class.getName(),
 				subscription.getSubscriptionId(),
-				SubscriptionConstants.TICKET_TYPE, StringPool.BLANK,
+				TicketConstants.TYPE_SUBSCRIPTION, StringPool.BLANK,
 				calendar.getTime(), _subscriptionSender.getServiceContext());
 		}
 
@@ -161,7 +161,7 @@ public class UnsubscribeHooks {
 			return _ticketLocalService.updateTicket(
 				ticket.getTicketId(), Subscription.class.getName(),
 				subscription.getSubscriptionId(),
-				SubscriptionConstants.TICKET_TYPE, StringPool.BLANK,
+				TicketConstants.TYPE_SUBSCRIPTION, StringPool.BLANK,
 				calendar.getTime());
 		}
 		catch (PortalException portalException) {

@@ -7,11 +7,10 @@ package com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0.converte
 
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.ReplenishmentItem;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-
-import java.math.BigDecimal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -51,23 +50,17 @@ public class ReplenishmentItemDTOConverter
 				id =
 					commerceInventoryReplenishmentItem.
 						getCommerceInventoryReplenishmentItemId();
+				quantity = _commerceQuantityFormatter.format(
+					commerceInventoryReplenishmentItem.getCompanyId(),
+					commerceInventoryReplenishmentItem.getQuantity(),
+					commerceInventoryReplenishmentItem.getSku(),
+					commerceInventoryReplenishmentItem.getUnitOfMeasureKey());
 				sku = commerceInventoryReplenishmentItem.getSku();
+				unitOfMeasureKey =
+					commerceInventoryReplenishmentItem.getUnitOfMeasureKey();
 				warehouseId =
 					commerceInventoryReplenishmentItem.
 						getCommerceInventoryWarehouseId();
-
-				setQuantity(
-					() -> {
-						BigDecimal commerceInventoryWarehouseItemQuantity =
-							commerceInventoryReplenishmentItem.getQuantity();
-
-						if (commerceInventoryWarehouseItemQuantity == null) {
-							return null;
-						}
-
-						return commerceInventoryWarehouseItemQuantity.
-							intValue();
-					});
 			}
 		};
 	}
@@ -75,5 +68,8 @@ public class ReplenishmentItemDTOConverter
 	@Reference
 	private CommerceInventoryReplenishmentItemService
 		_commerceInventoryReplenishmentItemService;
+
+	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
 
 }

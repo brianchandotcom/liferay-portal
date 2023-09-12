@@ -54,13 +54,10 @@ public class ProductOptionValueDTOConverter
 	}
 
 	@Override
-	public ProductOptionValue toDTO(DTOConverterContext dtoConverterContext)
+	public ProductOptionValue toDTO(
+			DTOConverterContext dtoConverterContext,
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel)
 		throws Exception {
-
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-			_cpDefinitionOptionValueRelLocalService.
-				getCPDefinitionOptionValueRel(
-					(Long)dtoConverterContext.getId());
 
 		CPDefinitionOptionRel cpDefinitionOptionRel =
 			cpDefinitionOptionValueRel.getCPDefinitionOptionRel();

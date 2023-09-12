@@ -650,23 +650,6 @@ public class CommercePriceEntryLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePriceEntry updateCommercePriceEntry(
-			long commercePriceEntryId, BigDecimal price,
-			boolean priceOnApplication, BigDecimal promoPrice,
-			String unitOfMeasureKey, ServiceContext serviceContext)
-		throws PortalException {
-
-		Calendar calendar = new GregorianCalendar();
-
-		return commercePriceEntryLocalService.updateCommercePriceEntry(
-			commercePriceEntryId, true, true, null, null, null, null,
-			calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
-			calendar.get(Calendar.YEAR), calendar.get(Calendar.HOUR),
-			calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, price,
-			priceOnApplication, promoPrice, unitOfMeasureKey, serviceContext);
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	public CommercePriceEntry updateCommercePriceEntry(
 			long commercePriceEntryId, boolean bulkPricing,
 			boolean discountDiscovery, BigDecimal discountLevel1,
 			BigDecimal discountLevel2, BigDecimal discountLevel3,
@@ -767,6 +750,27 @@ public class CommercePriceEntryLocalServiceImpl
 		}
 
 		commercePriceEntry.setExternalReferenceCode(externalReferenceCode);
+
+		return commercePriceEntryPersistence.update(commercePriceEntry);
+	}
+
+	@Override
+	public CommercePriceEntry updatePricingInfo(
+			long commercePriceEntryId, boolean bulkPricing, BigDecimal price,
+			boolean priceOnApplication, BigDecimal promoPrice,
+			String unitOfMeasureKey, ServiceContext serviceContext)
+		throws PortalException {
+
+		CommercePriceEntry commercePriceEntry =
+			commercePriceEntryLocalService.getCommercePriceEntry(
+				commercePriceEntryId);
+
+		commercePriceEntry.setBulkPricing(bulkPricing);
+		commercePriceEntry.setPrice(price);
+		commercePriceEntry.setPriceOnApplication(priceOnApplication);
+		commercePriceEntry.setPromoPrice(promoPrice);
+		commercePriceEntry.setUnitOfMeasureKey(unitOfMeasureKey);
+		commercePriceEntry.setExpandoBridgeAttributes(serviceContext);
 
 		return commercePriceEntryPersistence.update(commercePriceEntry);
 	}

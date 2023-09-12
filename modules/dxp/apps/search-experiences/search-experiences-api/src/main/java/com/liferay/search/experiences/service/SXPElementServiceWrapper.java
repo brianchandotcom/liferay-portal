@@ -49,6 +49,14 @@ public class SXPElementServiceWrapper
 	}
 
 	@Override
+	public com.liferay.search.experiences.model.SXPElement fetchSXPElement(
+			long sxpElementId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sxpElementService.fetchSXPElement(sxpElementId);
+	}
+
+	@Override
 	public com.liferay.search.experiences.model.SXPElement
 			fetchSXPElementByExternalReferenceCode(
 				String externalReferenceCode, long companyId)

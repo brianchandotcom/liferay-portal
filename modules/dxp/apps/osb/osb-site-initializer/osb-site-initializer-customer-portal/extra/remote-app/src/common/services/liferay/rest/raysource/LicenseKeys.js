@@ -162,19 +162,23 @@ export async function associateContactRoleNameByEmailByProject({
 		}
 	);
 
+	if (!response.ok) {
+		throw new Error();
+	}
+
 	return response;
 }
 
-export async function deleteContactRoleNameByEmailByProject(
+export async function deleteContactRoleNameByEmailByProject({
 	accountKey,
-	provisioningServerAPI,
-	sessionId,
 	emailURI,
-	rolesToDelete
-) {
+	provisioningServerAPI,
+	rolesToDelete,
+	sessionId,
+}) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?${rolesToDelete}`,
+		`${provisioningServerAPI}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?contactRoleNames=${rolesToDelete}`,
 		{
 			headers: {
 				'Okta-Session-ID': sessionId,
@@ -182,6 +186,10 @@ export async function deleteContactRoleNameByEmailByProject(
 			method: 'DELETE',
 		}
 	);
+
+	if (!response.ok) {
+		throw new Error();
+	}
 
 	return response;
 }

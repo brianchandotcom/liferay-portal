@@ -176,21 +176,7 @@ public abstract class BasePermissionFilteredPaginationTestCase
 	public void testPastLast() throws Exception {
 		index(9, filtering());
 
-		assertPagination(10, 12, 3, "[[7, 8, 9]]");
-	}
-
-	@Test
-	public void testPastLastSecondIndex() throws Exception {
-		index(9, filtering());
-
-		assertPagination(11, 12, 3, "[[9]]");
-	}
-
-	@Test
-	public void testPastLastThirdIndex() throws Exception {
-		index(9, filtering());
-
-		assertPagination(12, 12, 3, "[[9]]");
+		assertPagination(10, 12, 3, "[[]]");
 	}
 
 	@Test

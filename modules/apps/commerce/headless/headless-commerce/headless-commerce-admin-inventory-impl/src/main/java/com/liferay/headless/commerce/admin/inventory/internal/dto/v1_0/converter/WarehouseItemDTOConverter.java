@@ -8,12 +8,12 @@ package com.liferay.headless.commerce.admin.inventory.internal.dto.v1_0.converte
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
+import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.headless.commerce.admin.inventory.dto.v1_0.WarehouseItem;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-
-import java.math.BigDecimal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,6 +45,12 @@ public class WarehouseItemDTOConverter
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			commerceInventoryWarehouseItem.getCommerceInventoryWarehouse();
 
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			_cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
+				commerceInventoryWarehouseItem.getCompanyId(),
+				commerceInventoryWarehouseItem.getUnitOfMeasureKey(),
+				commerceInventoryWarehouseItem.getSku());
+
 		return new WarehouseItem() {
 			{
 				externalReferenceCode =
@@ -52,53 +58,20 @@ public class WarehouseItemDTOConverter
 				id =
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseItemId();
+				quantity = _commerceQuantityFormatter.format(
+					cpInstanceUnitOfMeasure,
+					commerceInventoryWarehouseItem.getQuantity());
+				reservedQuantity = _commerceQuantityFormatter.format(
+					cpInstanceUnitOfMeasure,
+					commerceInventoryWarehouseItem.getReservedQuantity());
 				sku = commerceInventoryWarehouseItem.getSku();
+				unitOfMeasureKey =
+					commerceInventoryWarehouseItem.getUnitOfMeasureKey();
 				warehouseExternalReferenceCode =
 					commerceInventoryWarehouse.getExternalReferenceCode();
 				warehouseId =
 					commerceInventoryWarehouseItem.
 						getCommerceInventoryWarehouseId();
-
-				setQuantity(
-					() -> {
-						BigDecimal commerceInventoryWarehouseItemQuantity =
-							commerceInventoryWarehouseItem.getQuantity();
-
-						if (commerceInventoryWarehouseItemQuantity == null) {
-							return null;
-						}
-
-						return commerceInventoryWarehouseItemQuantity.setScale(
-							2);
-					});
-				setReservedQuantity(
-					() -> {
-						BigDecimal
-							commerceInventoryWarehouseItemReservedQuantity =
-								commerceInventoryWarehouseItem.
-									getReservedQuantity();
-
-						if (commerceInventoryWarehouseItemReservedQuantity ==
-								null) {
-
-							return null;
-						}
-
-						return commerceInventoryWarehouseItemReservedQuantity.
-							setScale(2);
-					});
-				setUnitOfMeasureKey(
-					() -> {
-						if (Validator.isNull(
-								commerceInventoryWarehouseItem.
-									getUnitOfMeasureKey())) {
-
-							return null;
-						}
-
-						return commerceInventoryWarehouseItem.
-							getUnitOfMeasureKey();
-					});
 			}
 		};
 	}
@@ -106,5 +79,12 @@ public class WarehouseItemDTOConverter
 	@Reference
 	private CommerceInventoryWarehouseItemService
 		_commerceInventoryWarehouseItemService;
+
+	@Reference
+	private CommerceQuantityFormatter _commerceQuantityFormatter;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 }

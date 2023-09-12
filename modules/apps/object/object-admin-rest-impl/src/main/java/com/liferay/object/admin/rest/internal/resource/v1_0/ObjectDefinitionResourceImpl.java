@@ -407,7 +407,7 @@ public class ObjectDefinitionResourceImpl
 	}
 
 	@Override
-	public void postObjectDefinitionPublish(Long objectDefinitionId)
+	public ObjectDefinition postObjectDefinitionPublish(Long objectDefinitionId)
 		throws Exception {
 
 		com.liferay.object.model.ObjectDefinition
@@ -418,13 +418,14 @@ public class ObjectDefinitionResourceImpl
 		if (GetterUtil.getBoolean(serviceBuilderObjectDefinition.getSystem()) &&
 			FeatureFlagManagerUtil.isEnabled("LPS-167253")) {
 
-			_objectDefinitionService.publishSystemObjectDefinition(
-				objectDefinitionId);
+			return _toObjectDefinition(
+				_objectDefinitionService.publishSystemObjectDefinition(
+					objectDefinitionId));
 		}
-		else {
+
+		return _toObjectDefinition(
 			_objectDefinitionService.publishCustomObjectDefinition(
-				objectDefinitionId);
-		}
+				objectDefinitionId));
 	}
 
 	@Override
@@ -908,6 +909,23 @@ public class ObjectDefinitionResourceImpl
 				accountEntryRestricted =
 					objectDefinition.isAccountEntryRestricted();
 				actions = HashMapBuilder.put(
+					"bind",
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPS-187142") ||
+							(objectDefinition.getRootObjectDefinitionId() !=
+								0) ||
+							objectDefinition.isApproved() ||
+							objectDefinition.isSystem()) {
+
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.UPDATE, "putObjectDefinition",
+							permissionName,
+							objectDefinition.getObjectDefinitionId());
+					}
+				).put(
 					"delete",
 					() -> {
 						if (objectDefinition.isUnmodifiableSystemObject()) {
@@ -939,6 +957,18 @@ public class ObjectDefinitionResourceImpl
 
 						return addAction(
 							ActionKeys.UPDATE, "postObjectDefinitionPublish",
+							permissionName,
+							objectDefinition.getObjectDefinitionId());
+					}
+				).put(
+					"unbind",
+					() -> {
+						if (objectDefinition.getRootObjectDefinitionId() == 0) {
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.UPDATE, "putObjectDefinition",
 							permissionName,
 							objectDefinition.getObjectDefinitionId());
 					}

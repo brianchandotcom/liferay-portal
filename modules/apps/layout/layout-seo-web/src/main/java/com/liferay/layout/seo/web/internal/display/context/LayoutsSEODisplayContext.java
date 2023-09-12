@@ -438,6 +438,19 @@ public class LayoutsSEODisplayContext {
 		).build();
 	}
 
+	public boolean isDefaultAssetDisplayPage() {
+		Layout layout = getSelLayout();
+
+		if ((layout == null) || !layout.isTypeAssetDisplay()) {
+			return false;
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry();
+
+		return layoutPageTemplateEntry.isDefaultTemplate();
+	}
+
 	public boolean isPrivateLayout() {
 		if (_privateLayout != null) {
 			return _privateLayout;

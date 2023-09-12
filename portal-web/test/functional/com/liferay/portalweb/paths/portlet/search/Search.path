@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>GLOBAL_SEARCH_BAR</td>
-	<td>//input[@ref='searchInput']</td>
+	<td>//div[contains(@id,'search-bar')]//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>EMBEDDED_SEARCH_BAR</td>
-	<td>//input[contains(@data-qa-id,'searchInput')]</td>
+	<td>//header[@id='banner']//input[contains(@data-qa-id,'searchInput')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -22,7 +22,6 @@ describe('liferay-kaleo-designer-xml-definition-serializer', () => {
 		require('../../../../src/main/resources/META-INF/resources/designer/js/legacy/xml_definition_serializer');
 		require('../../../../src/main/resources/META-INF/resources/designer/js/legacy/utils');
 		require('../../../../src/main/resources/META-INF/resources/designer/js/legacy/xml_util');
-		require('../../../../../../../../apps/frontend-js/frontend-js-aui-web/src/main/resources/META-INF/resources/liferay/xml_formatter');
 
 		AUI().use(
 			['liferay-kaleo-designer-xml-util', 'liferay-kaleo-designer-utils'],

@@ -363,13 +363,13 @@ definition {
 
 		AssertElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION");
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 
 		WorkflowMetrics.selectWorkloadByAssigneeCardFilterValueProcessStep(workflowStep = "Review");
 
 		AssertElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION");
 
-		WorkflowMetrics.clearAllFilter();
+		ManagementBar.clearFilter();
 	}
 
 	@description = "LPS-97669 - Verify that info icon hover state and tooltip message"

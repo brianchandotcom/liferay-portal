@@ -5,17 +5,17 @@
 
 package com.liferay.jethr0.bui1d.queue;
 
-import com.liferay.jethr0.bui1d.Build;
-import com.liferay.jethr0.bui1d.repository.BuildParameterRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRunRepository;
-import com.liferay.jethr0.environment.repository.EnvironmentRepository;
-import com.liferay.jethr0.jenkins.node.JenkinsNode;
-import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.dalo.ProjectToBuildsEntityRelationshipDALO;
-import com.liferay.jethr0.project.queue.ProjectQueue;
-import com.liferay.jethr0.project.repository.ProjectRepository;
-import com.liferay.jethr0.task.repository.TaskRepository;
+import com.liferay.jethr0.bui1d.BuildEntity;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
+import com.liferay.jethr0.environment.repository.EnvironmentEntityRepository;
+import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
+import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
+import com.liferay.jethr0.job.queue.JobQueue;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.task.repository.TaskEntityRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,130 +32,132 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BuildQueue {
 
-	public void addBuild(Build build) {
-		if (build == null) {
+	public void addBuildEntities(Set<BuildEntity> buildEntities) {
+		if (buildEntities == null) {
 			return;
 		}
 
-		_sortedBuilds.add(build);
+		buildEntities.removeAll(Collections.singleton(null));
+
+		if (buildEntities.isEmpty()) {
+			return;
+		}
+
+		_sortedBuildEntities.addAll(buildEntities);
 
 		sort();
 	}
 
-	public void addBuilds(Set<Build> builds) {
-		if (builds == null) {
+	public void addBuildEntity(BuildEntity buildEntity) {
+		if (buildEntity == null) {
 			return;
 		}
 
-		builds.removeAll(Collections.singleton(null));
-
-		if (builds.isEmpty()) {
-			return;
-		}
-
-		_sortedBuilds.addAll(builds);
+		_sortedBuildEntities.add(buildEntity);
 
 		sort();
 	}
 
-	public void addProject(Project project) {
-		addProjects(Collections.singleton(project));
-	}
-
-	public void addProjects(Set<Project> projects) {
-		for (Project project : projects) {
-			_projectQueue.addProject(project);
+	public void addJobEntities(Set<JobEntity> jobEntities) {
+		for (JobEntity jobEntity : jobEntities) {
+			_jobQueue.addJobEntity(jobEntity);
 		}
 
 		sort();
 	}
 
-	public List<Build> getBuilds() {
-		synchronized (_sortedBuilds) {
-			return _sortedBuilds;
+	public void addJobEntity(JobEntity jobEntity) {
+		addJobEntities(Collections.singleton(jobEntity));
+	}
+
+	public List<BuildEntity> getBuildEntities() {
+		synchronized (_sortedBuildEntities) {
+			return _sortedBuildEntities;
 		}
 	}
 
-	public ProjectQueue getProjectQueue() {
-		return _projectQueue;
+	public JobQueue getJobQueue() {
+		return _jobQueue;
 	}
 
 	public void initialize() {
-		for (Project project : _projectQueue.getProjects()) {
-			for (Build build : project.getBuilds()) {
-				_buildRunRepository.getAll(build);
-				_buildParameterRepository.getAll(build);
-				_environmentRepository.getAll(build);
-				_taskRepository.getAll(build);
+		for (JobEntity jobEntity : _jobQueue.getJobEntities()) {
+			for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
+				_buildRunEntityRepository.getAll(buildEntity);
+				_buildParameterEntityRepository.getAll(buildEntity);
+				_environmentEntityRepository.getAll(buildEntity);
+				_taskEntityRepository.getAll(buildEntity);
 			}
 		}
 
 		sort();
 
-		for (Build build : getBuilds()) {
-			System.out.println(build);
+		for (BuildEntity buildEntity : getBuildEntities()) {
+			System.out.println(buildEntity);
 		}
 	}
 
-	public Build nextBuild(JenkinsNode jenkinsNode) {
-		synchronized (_sortedBuilds) {
-			Build nextBuild = null;
+	public BuildEntity nextBuildEntity(JenkinsNodeEntity jenkinsNodeEntity) {
+		synchronized (_sortedBuildEntities) {
+			BuildEntity nextBuildEntity = null;
 
-			for (Build build : _sortedBuilds) {
-				if (!jenkinsNode.isCompatible(build)) {
+			for (BuildEntity buildEntity : _sortedBuildEntities) {
+				if (!jenkinsNodeEntity.isCompatible(buildEntity)) {
 					continue;
 				}
 
-				nextBuild = build;
+				nextBuildEntity = buildEntity;
 
 				break;
 			}
 
-			_sortedBuilds.remove(nextBuild);
+			_sortedBuildEntities.remove(nextBuildEntity);
 
-			return nextBuild;
+			return nextBuildEntity;
 		}
 	}
 
-	public void setProjectQueue(ProjectQueue projectQueue) {
-		_projectQueue = projectQueue;
+	public void setJobQueue(JobQueue jobQueue) {
+		_jobQueue = jobQueue;
 
 		sort();
 	}
 
 	public void sort() {
-		synchronized (_sortedBuilds) {
-			_sortedBuilds.clear();
+		synchronized (_sortedBuildEntities) {
+			_sortedBuildEntities.clear();
 
-			_projectQueue.sort();
+			_jobQueue.sort();
 
-			for (Project project : _projectQueue.getProjects()) {
-				List<Build> builds = new ArrayList<>(project.getBuilds());
+			for (JobEntity jobEntity : _jobQueue.getJobEntities()) {
+				List<BuildEntity> buildEntities = new ArrayList<>(
+					jobEntity.getBuildEntities());
 
-				builds.removeAll(Collections.singleton(null));
+				buildEntities.removeAll(Collections.singleton(null));
 
-				Collections.sort(builds, new ParentBuildComparator());
+				Collections.sort(buildEntities, new ParentBuildComparator());
 
-				for (Build build : builds) {
-					if ((build.getState() == Build.State.BLOCKED) ||
-						(build.getState() == Build.State.OPENED)) {
+				for (BuildEntity buildEntity : buildEntities) {
+					if ((buildEntity.getState() == BuildEntity.State.BLOCKED) ||
+						(buildEntity.getState() == BuildEntity.State.OPENED)) {
 
-						_sortedBuilds.add(build);
+						_sortedBuildEntities.add(buildEntity);
 					}
 				}
 			}
 		}
 	}
 
-	public static class ParentBuildComparator implements Comparator<Build> {
+	public static class ParentBuildComparator
+		implements Comparator<BuildEntity> {
 
 		@Override
-		public int compare(Build build1, Build build2) {
-			if (build1.isParentBuild(build2)) {
+		public int compare(BuildEntity buildEntity1, BuildEntity buildEntity2) {
+			if (buildEntity1.isParentBuildEntity(buildEntity2)) {
 				return -1;
 			}
 
-			if (build2.isParentBuild(build1)) {
+			if (buildEntity2.isParentBuildEntity(buildEntity1)) {
 				return 1;
 			}
 
@@ -165,30 +167,30 @@ public class BuildQueue {
 	}
 
 	@Autowired
-	private BuildParameterRepository _buildParameterRepository;
+	private BuildEntityRepository _buildEntityRepository;
 
 	@Autowired
-	private BuildRepository _buildRepository;
+	private BuildParameterEntityRepository _buildParameterEntityRepository;
 
 	@Autowired
-	private BuildRunRepository _buildRunRepository;
+	private BuildRunEntityRepository _buildRunEntityRepository;
 
 	@Autowired
-	private EnvironmentRepository _environmentRepository;
+	private EnvironmentEntityRepository _environmentEntityRepository;
 
 	@Autowired
-	private ProjectQueue _projectQueue;
+	private JobEntityRepository _jobEntityRepository;
 
 	@Autowired
-	private ProjectRepository _projectRepository;
+	private JobQueue _jobQueue;
 
 	@Autowired
-	private ProjectToBuildsEntityRelationshipDALO
-		_projectToBuildsEntityRelationshipDALO;
+	private JobToBuildsEntityRelationshipDALO
+		_jobToBuildsEntityRelationshipDALO;
 
-	private final List<Build> _sortedBuilds = new ArrayList<>();
+	private final List<BuildEntity> _sortedBuildEntities = new ArrayList<>();
 
 	@Autowired
-	private TaskRepository _taskRepository;
+	private TaskEntityRepository _taskEntityRepository;
 
 }

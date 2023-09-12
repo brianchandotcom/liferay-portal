@@ -8,9 +8,9 @@ import {
 	Card,
 	FormError,
 	Input,
-	InputLocalized,
 	Toggle,
 } from '@liferay/object-js-components-web';
+import {InputLocalized} from 'frontend-js-components-web';
 import React from 'react';
 
 import {defaultLanguageId} from '../../../utils/constants';

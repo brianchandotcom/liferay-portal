@@ -88,6 +88,37 @@ const ExperimentActions: React.FC<IExperimentActionsProps> = ({
 				}
 			]
 		);
+	} else if (status === 'RUNNING') {
+		actions.push({
+			displayType: 'secondary',
+			label: Liferay.Language.get('terminate'),
+			redirectURL: getExperimentLink({
+				action: 'terminate',
+				id,
+				pageURL
+			})
+		});
+	} else if (status === 'TERMINATED') {
+		actions.push(
+			{
+				displayType: 'primary',
+				label: Liferay.Language.get('publish'),
+				redirectURL: getExperimentLink({
+					action: 'publish',
+					id,
+					pageURL
+				})
+			},
+			{
+				displayType: 'secondary',
+				label: Liferay.Language.get('delete'),
+				redirectURL: getExperimentLink({
+					action: 'delete',
+					id,
+					pageURL
+				})
+			}
+		);
 	}
 
 	return <BasePage.Header.Actions actions={actions} />;

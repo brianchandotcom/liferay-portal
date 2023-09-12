@@ -82,7 +82,8 @@ public class CPDefinitionInfoItemFieldValuesProvider
 					new InfoItemReference(
 						CPDefinition.class.getName(),
 						cpDefinition.getCPDefinitionId()),
-					StringPool.BLANK, _getThemeDisplay())
+					StringPool.BLANK, CPDefinition.class.getSimpleName(),
+					_getThemeDisplay())
 			).infoFieldValues(
 				_templateInfoItemFieldSetProvider.getInfoFieldValues(
 					CPDefinition.class.getName(), cpDefinition)
@@ -335,7 +336,7 @@ public class CPDefinitionInfoItemFieldValuesProvider
 					cpDefinition.isIncomplete()));
 
 			if ((themeDisplay != null) &&
-				!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+				!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
 
 				cpDefinitionInfoFieldValues.add(
 					new InfoFieldValue<>(
@@ -542,7 +543,7 @@ public class CPDefinitionInfoItemFieldValuesProvider
 		return commerceMoney.format(themeDisplay.getLocale());
 	}
 
-	private Integer _getInventory(
+	private BigDecimal _getInventory(
 			CPInstance cpInstance, ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -568,13 +569,9 @@ public class CPDefinitionInfoItemFieldValuesProvider
 					getCommerceChannelGroupIdBySiteGroupId(
 						themeDisplay.getScopeGroupId());
 
-			BigDecimal stockQuantity =
-				_commerceInventoryEngine.getStockQuantity(
-					cpInstance.getCompanyId(), cpInstance.getGroupId(),
-					commerceChannelGroupId, cpInstance.getSku(),
-					StringPool.BLANK);
-
-			return stockQuantity.intValue();
+			return _commerceInventoryEngine.getStockQuantity(
+				cpInstance.getCompanyId(), cpInstance.getGroupId(),
+				commerceChannelGroupId, cpInstance.getSku(), StringPool.BLANK);
 		}
 
 		return null;

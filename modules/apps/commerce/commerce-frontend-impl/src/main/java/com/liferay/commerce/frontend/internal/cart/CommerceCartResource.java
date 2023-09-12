@@ -196,8 +196,8 @@ public class CommerceCartResource {
 			CommerceOrderItem commerceOrderItem =
 				_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 					commerceOrder.getCommerceOrderId(), cpInstanceId, options,
-					new BigDecimal(quantity), 0, 0, unitOfMeasureKey,
-					commerceContext, serviceContext);
+					new BigDecimal(quantity), 0, BigDecimal.ZERO,
+					unitOfMeasureKey, commerceContext, serviceContext);
 
 			cart = _commerceCartResourceUtil.getCart(
 				commerceOrderItem.getCommerceOrderId(),

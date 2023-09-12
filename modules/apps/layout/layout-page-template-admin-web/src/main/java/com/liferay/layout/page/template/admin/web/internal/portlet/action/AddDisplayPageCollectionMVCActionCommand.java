@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
@@ -56,6 +57,10 @@ public class AddDisplayPageCollectionMVCActionCommand
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
 					themeDisplay.getScopeGroupId(),
+					ParamUtil.getLong(
+						actionRequest, "layoutPageTemplateCollectionId",
+						LayoutPageTemplateConstants.
+							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT),
 					ParamUtil.getString(actionRequest, "name"),
 					ParamUtil.getString(actionRequest, "description"),
 					ServiceContextFactory.getInstance(actionRequest));

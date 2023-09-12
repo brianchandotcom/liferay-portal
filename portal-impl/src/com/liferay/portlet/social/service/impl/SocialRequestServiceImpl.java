@@ -6,11 +6,12 @@
 package com.liferay.portlet.social.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portlet.social.service.base.SocialRequestServiceBaseImpl;
 import com.liferay.social.kernel.model.SocialRequest;
-import com.liferay.social.kernel.service.permission.SocialRequestPermissionUtil;
 
 /**
  * Provides the remote service for updating social requests. Its methods include
@@ -25,11 +26,43 @@ public class SocialRequestServiceImpl extends SocialRequestServiceBaseImpl {
 			long requestId, int status, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		SocialRequestPermissionUtil.check(
-			getPermissionChecker(), requestId, ActionKeys.UPDATE);
+		_check(getPermissionChecker(), requestId, ActionKeys.UPDATE);
 
 		return socialRequestLocalService.updateRequest(
 			requestId, status, themeDisplay);
+	}
+
+	private void _check(
+			PermissionChecker permissionChecker, long requestId,
+			String actionId)
+		throws PortalException {
+
+		if (!_contains(permissionChecker, requestId, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, SocialRequest.class.getName(), requestId,
+				actionId);
+		}
+	}
+
+	private boolean _contains(
+			PermissionChecker permissionChecker, long requestId,
+			String actionId)
+		throws PortalException {
+
+		if (permissionChecker.isOmniadmin()) {
+			return true;
+		}
+
+		if (actionId.equals(ActionKeys.UPDATE)) {
+			SocialRequest request = socialRequestLocalService.getSocialRequest(
+				requestId);
+
+			if (permissionChecker.getUserId() == request.getReceiverUserId()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

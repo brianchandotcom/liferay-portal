@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeModulesFactory;
 import com.liferay.portal.kernel.upgrade.util.UpgradeVersionTreeMap;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
+import com.liferay.portal.upgrade.util.UpgradePartitionedControlTable;
 
 /**
  * @author Pei-Jung Lan
@@ -315,6 +316,10 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(26, 5, 0),
 			UpgradeModulesFactory.create(
 				new String[] {"com.liferay.asset.link.service"}, null));
+
+		upgradeVersionTreeMap.put(
+			new Version(27, 0, 0),
+			new UpgradePartitionedControlTable("ClassName_"));
 	}
 
 }

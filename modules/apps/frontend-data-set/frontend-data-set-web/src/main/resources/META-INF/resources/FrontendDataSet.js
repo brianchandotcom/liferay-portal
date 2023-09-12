@@ -60,6 +60,7 @@ const FrontendDataSet = ({
 	filters: initialFilters,
 	formId,
 	formName,
+	header,
 	id,
 	inlineAddingSettings,
 	inlineEditingSettings,
@@ -475,6 +476,7 @@ const FrontendDataSet = ({
 				inlineAddingSettings ? (
 					<View
 						frontendDataSetContext={FrontendDataSetContext}
+						header={header}
 						items={items}
 						itemsActions={itemsActions}
 						style={style}

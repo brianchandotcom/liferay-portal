@@ -195,6 +195,11 @@
 	<td>//div[label[contains(.,'${key_fieldName}')]]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ENTRY_ELLIPSIS_BUTTON</td>
+	<td>//div[contains(@class,'dnd-tbody') and contains(., '${key_entryName}')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

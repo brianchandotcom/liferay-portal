@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.InputStream;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service utility for DLApp. This utility wraps
@@ -501,13 +502,14 @@ public class DLAppServiceUtil {
 	public static com.liferay.portal.kernel.repository.model.FileEntry
 			copyFileEntry(
 				long fileEntryId, long destinationFolderId,
-				long destinationRepositoryId, long[] groupIds,
+				long destinationRepositoryId, long fileEntryTypeId,
+				long[] groupIds,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().copyFileEntry(
-			fileEntryId, destinationFolderId, destinationRepositoryId, groupIds,
-			serviceContext);
+			fileEntryId, destinationFolderId, destinationRepositoryId,
+			fileEntryTypeId, groupIds, serviceContext);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileShortcut
@@ -525,13 +527,14 @@ public class DLAppServiceUtil {
 	public static com.liferay.portal.kernel.repository.model.Folder copyFolder(
 			long sourceRepositoryId, long sourceFolderId,
 			long destinationRepositoryId, long destinationParentFolderId,
-			long[] groupIds,
+			Map<Long, Long> fileEntryTypeIds, long[] groupIds,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().copyFolder(
 			sourceRepositoryId, sourceFolderId, destinationRepositoryId,
-			destinationParentFolderId, groupIds, serviceContext);
+			destinationParentFolderId, fileEntryTypeIds, groupIds,
+			serviceContext);
 	}
 
 	/**

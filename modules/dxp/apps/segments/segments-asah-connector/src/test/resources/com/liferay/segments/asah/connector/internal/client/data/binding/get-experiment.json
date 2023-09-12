@@ -1,0 +1,171 @@
+{
+	"channelId": 637850400632477181,
+	"confidenceLevel": 95.0,
+	"createDate": "2023-08-24T10:15:52.838Z",
+	"dataSourceId": "630897274394116060",
+	"description": "Bounce rate testing",
+	"dxpExperienceId": "37087",
+	"dxpExperienceName": "MyExperience",
+	"dxpGroupId": "20119",
+	"dxpLayoutId": "bef01869-15d0-e23a-1021-34fae005d438",
+	"dxpSegmentId": "DEFAULT",
+	"dxpSegmentName": "Anyone",
+	"dxpVariants": [
+		{
+			"changes": 0,
+			"control": true,
+			"dxpVariantId": "37087",
+			"dxpVariantName": "Control",
+			"trafficSplit": 50.0
+		},
+		{
+			"changes": 0,
+			"control": false,
+			"dxpVariantId": "37205",
+			"dxpVariantName": "VariantX",
+			"trafficSplit": 50.0
+		}
+	],
+	"experiments": [
+	],
+	"goal": {
+		"metric": "BOUNCE_RATE",
+		"target": ""
+	},
+	"id": "638310475457241934",
+	"metrics": [
+		{
+			"completion": 4.4705294705294705,
+			"confidenceLevel": 95.0,
+			"elapsedDays": 1,
+			"estimatedDaysLeft": 114,
+			"id": 55,
+			"processedDate": "2023-08-21T00:00:00.000Z",
+			"variantMetrics": [
+				{
+					"confidenceInterval": [
+						34.61698,
+						54.152367
+					],
+					"control": true,
+					"dxpVariantId": "37087",
+					"median": 44.23762512207031,
+					"probabilityToWin": 99.82653045654297
+				},
+				{
+					"confidenceInterval": [
+						58.953716,
+						73.46075
+					],
+					"control": false,
+					"dxpVariantId": "37205",
+					"improvement": -50.24675750732422,
+					"median": 66.4655990600586,
+					"probabilityToWin": 0.1734693944454193
+				}
+			]
+		},
+		{
+			"completion": 6.4617083946980856,
+			"confidenceLevel": 95.0,
+			"elapsedDays": 2,
+			"estimatedDaysLeft": 64,
+			"id": 57,
+			"processedDate": "2023-08-22T00:00:00.000Z",
+			"variantMetrics": [
+				{
+					"confidenceInterval": [
+						31.054945,
+						43.49118
+					],
+					"control": true,
+					"dxpVariantId": "37087",
+					"median": 37.15995788574219,
+					"probabilityToWin": 100.0
+				},
+				{
+					"confidenceInterval": [
+						62.37404,
+						73.515495
+					],
+					"control": false,
+					"dxpVariantId": "37205",
+					"improvement": -83.29322052001953,
+					"median": 68.11168670654297,
+					"probabilityToWin": 0.0
+				}
+			]
+		},
+		{
+			"completion": 9.329395413481585,
+			"confidenceLevel": 95.0,
+			"elapsedDays": 3,
+			"estimatedDaysLeft": 41,
+			"id": 59,
+			"processedDate": "2023-08-23T00:00:00.000Z",
+			"variantMetrics": [
+				{
+					"confidenceInterval": [
+						31.21126,
+						40.548794
+					],
+					"control": true,
+					"dxpVariantId": "37087",
+					"median": 35.8023567199707,
+					"probabilityToWin": 100.0
+				},
+				{
+					"confidenceInterval": [
+						61.958305,
+						71.50375
+					],
+					"control": false,
+					"dxpVariantId": "37205",
+					"improvement": -86.76029205322266,
+					"median": 66.86458587646484,
+					"probabilityToWin": 0.0
+				}
+			]
+		},
+		{
+			"completion": 13.340448239060834,
+			"confidenceLevel": 95.0,
+			"elapsedDays": 4,
+			"estimatedDaysLeft": 27,
+			"id": 61,
+			"processedDate": "2023-08-24T00:00:00.000Z",
+			"variantMetrics": [
+				{
+					"confidenceInterval": [
+						32.25307,
+						40.54738
+					],
+					"control": true,
+					"dxpVariantId": "37087",
+					"median": 36.32306671142578,
+					"probabilityToWin": 100.0
+				},
+				{
+					"confidenceInterval": [
+						62.773884,
+						70.6362
+					],
+					"control": false,
+					"dxpVariantId": "37205",
+					"improvement": -83.89238739013672,
+					"median": 66.79535675048828,
+					"probabilityToWin": 0.0
+				}
+			]
+		}
+	],
+	"modifiedDate": "2023-08-24T10:16:17.360Z",
+	"name": "Bounce Rate Test",
+	"pageRelativePath": "/home",
+	"pageTitle": "",
+	"pageURL": "http://localhost:8080/web/guest/home",
+	"startedDate": "2023-08-21T12:00:00.000Z",
+	"status": "RUNNING",
+	"type": "AB",
+	"winnerDXPVariantId": "37087"
+}

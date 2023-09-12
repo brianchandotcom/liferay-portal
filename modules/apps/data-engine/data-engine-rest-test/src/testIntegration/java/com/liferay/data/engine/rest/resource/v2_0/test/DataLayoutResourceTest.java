@@ -290,32 +290,28 @@ public class DataLayoutResourceTest extends BaseDataLayoutResourceTestCase {
 				dataDefinition.getId(),
 				new DataLayout() {
 					{
+						dataDefinitionId = dataDefinition.getId();
 						dataLayoutKey = RandomTestUtil.randomString();
-						paginationMode = "wizard";
-
-						setDataDefinitionId(dataDefinition.getId());
-						setDataLayoutPages(
-							new DataLayoutPage[] {
-								new DataLayoutPage() {
-									{
-										dataLayoutRows = new DataLayoutRow[] {
-											dataLayoutRow
-										};
-										description =
-											HashMapBuilder.<String, Object>put(
-												"en_US", "Page Description"
-											).build();
-										title =
-											HashMapBuilder.<String, Object>put(
-												"en_US", "Page Title"
-											).build();
-									}
+						dataLayoutPages = new DataLayoutPage[] {
+							new DataLayoutPage() {
+								{
+									dataLayoutRows = new DataLayoutRow[] {
+										dataLayoutRow
+									};
+									description =
+										HashMapBuilder.<String, Object>put(
+											"en_US", "Page Description"
+										).build();
+									title = HashMapBuilder.<String, Object>put(
+										"en_US", "Page Title"
+									).build();
 								}
-							});
-						setName(
-							HashMapBuilder.<String, Object>put(
-								"en_US", RandomTestUtil.randomString()
-							).build());
+							}
+						};
+						name = HashMapBuilder.<String, Object>put(
+							"en_US", RandomTestUtil.randomString()
+						).build();
+						paginationMode = "wizard";
 					}
 				});
 

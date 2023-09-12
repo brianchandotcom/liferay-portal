@@ -5,6 +5,7 @@
 
 package com.liferay.site.navigation.internal.upgrade.registry;
 
+import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
@@ -52,6 +53,19 @@ public class SiteNavigationServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.2.0", "2.3.0", new SiteNavigationMenuItemUpgradeProcess());
+
+		registry.register(
+			"2.3.0", "2.4.0",
+			new BaseExternalReferenceCodeUpgradeProcess() {
+
+				@Override
+				protected String[][] getTableAndPrimaryKeyColumnNames() {
+					return new String[][] {
+						{"SiteNavigationMenuItem", "siteNavigationMenuItemId"}
+					};
+				}
+
+			});
 	}
 
 }

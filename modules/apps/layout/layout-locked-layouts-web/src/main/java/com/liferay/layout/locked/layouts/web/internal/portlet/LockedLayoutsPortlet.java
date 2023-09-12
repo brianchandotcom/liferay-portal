@@ -6,11 +6,21 @@
 package com.liferay.layout.locked.layouts.web.internal.portlet;
 
 import com.liferay.layout.locked.layouts.web.internal.constants.LockedLayoutsPortletKeys;
+import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayoutsDisplayContext;
+import com.liferay.layout.manager.LayoutLockManager;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lourdes Fernández Besada
@@ -31,4 +41,29 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class LockedLayoutsPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			LockedLayoutsDisplayContext.class.getName(),
+			new LockedLayoutsDisplayContext(
+				_language, _layoutLockManager,
+				_portal.getLiferayPortletRequest(renderRequest),
+				_portal.getLiferayPortletResponse(renderResponse)));
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private LayoutLockManager _layoutLockManager;
+
+	@Reference
+	private Portal _portal;
+
 }

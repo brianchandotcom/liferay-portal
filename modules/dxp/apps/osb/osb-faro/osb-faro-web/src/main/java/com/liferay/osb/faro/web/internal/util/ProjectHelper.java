@@ -64,7 +64,8 @@ public class ProjectHelper {
 				FaroProject::getGroupId);
 		}
 
-		if (key.equals(LCPProject.Cluster.EU2.toString()) ||
+		if (key.equals(LCPProject.Cluster.AS1.toString()) ||
+			key.equals(LCPProject.Cluster.EU2.toString()) ||
 			key.equals(LCPProject.Cluster.EU3.toString()) ||
 			key.equals(LCPProject.Cluster.SA.toString()) ||
 			key.equals(LCPProject.Cluster.US.toString())) {

@@ -84,7 +84,7 @@ export default function Action({
 		delete objectAction.objectDefinitionId;
 
 		try {
-			await API.save(url, objectAction, method);
+			await API.save({item: objectAction, method, url});
 			saveAndReload();
 			openToast({message: successMessage});
 		}

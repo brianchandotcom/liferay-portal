@@ -19,6 +19,8 @@ definition {
 	}
 
 	tearDown {
+		AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "stop-liferay-sample-etc-spring-boot -Dvirtual.instance.id=${companyWebId}");
+
 		if (isSet(clientExtensionSamples)) {
 			for (var clientExtension : list ${clientExtensionSamples}) {
 				AntCommands.runCommand("build-test-liferay-sample-workspace.xml", "undeploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtension}");

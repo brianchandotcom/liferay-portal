@@ -17,7 +17,7 @@
 			cssClass="dropdown-toggle form-control form-control-select form-control-sm text-left w-100"
 			disabled="<%= true %>"
 			displayType="secondary"
-			label='<%= LanguageUtil.get(request, "select") %>'
+			label="select"
 			small="<%= true %>"
 		/>
 

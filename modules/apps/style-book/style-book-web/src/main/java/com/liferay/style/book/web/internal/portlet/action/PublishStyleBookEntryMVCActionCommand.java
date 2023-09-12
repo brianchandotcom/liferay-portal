@@ -14,7 +14,7 @@ import com.liferay.style.book.exception.NoSuchEntryException;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.service.StyleBookEntryService;
-import com.liferay.style.book.web.internal.handler.StyleBookEntryExceptionRequestHandler;
+import com.liferay.style.book.web.internal.handler.StyleBookEntryExceptionRequestHandlerUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -67,16 +67,12 @@ public class PublishStyleBookEntryMVCActionCommand
 		catch (PortalException portalException) {
 			hideDefaultErrorMessage(actionRequest);
 
-			_styleBookEntryExceptionRequestHandler.handlePortalException(
+			StyleBookEntryExceptionRequestHandlerUtil.handlePortalException(
 				actionRequest, actionResponse, portalException);
 		}
 
 		sendRedirect(actionRequest, actionResponse);
 	}
-
-	@Reference
-	private StyleBookEntryExceptionRequestHandler
-		_styleBookEntryExceptionRequestHandler;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

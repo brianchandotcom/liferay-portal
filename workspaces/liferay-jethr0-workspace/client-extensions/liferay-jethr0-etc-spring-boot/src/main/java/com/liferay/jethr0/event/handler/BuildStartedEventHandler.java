@@ -5,13 +5,13 @@
 
 package com.liferay.jethr0.event.handler;
 
-import com.liferay.jethr0.bui1d.Build;
+import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
-import com.liferay.jethr0.bui1d.repository.BuildRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRunRepository;
-import com.liferay.jethr0.bui1d.run.BuildRun;
-import com.liferay.jethr0.project.Project;
-import com.liferay.jethr0.project.repository.ProjectRepository;
+import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
+import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
+import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.repository.JobEntityRepository;
 
 import java.util.Date;
 
@@ -24,39 +24,40 @@ public class BuildStartedEventHandler extends BaseJenkinsEventHandler {
 
 	@Override
 	public String process() throws Exception {
-		BuildRun buildRun = getBuildRun();
+		BuildRunEntity buildRunEntity = getBuildRun();
 
-		buildRun.setBuildURL(getBuildURL());
-		buildRun.setState(BuildRun.State.RUNNING);
+		buildRunEntity.setBuildURL(getBuildURL());
+		buildRunEntity.setState(BuildRunEntity.State.RUNNING);
 
-		Build build = buildRun.getBuild();
+		BuildEntity buildEntity = buildRunEntity.getBuildEntity();
 
-		build.setState(Build.State.RUNNING);
+		buildEntity.setState(BuildEntity.State.RUNNING);
 
-		Project project = build.getProject();
+		JobEntity jobEntity = buildEntity.getJobEntity();
 
-		if (project.getState() != Project.State.RUNNING) {
-			project.setStartDate(new Date());
-			project.setState(Project.State.RUNNING);
+		if (jobEntity.getState() != JobEntity.State.RUNNING) {
+			jobEntity.setStartDate(new Date());
+			jobEntity.setState(JobEntity.State.RUNNING);
 
-			ProjectRepository projectRepository = getProjectRepository();
+			JobEntityRepository jobEntityRepository = getJobEntityRepository();
 
-			projectRepository.update(project);
+			jobEntityRepository.update(jobEntity);
 
 			BuildQueue buildQueue = getBuildQueue();
 
 			buildQueue.sort();
 		}
 
-		BuildRepository buildRepository = getBuildRepository();
+		BuildEntityRepository buildEntityRepository = getBuildRepository();
 
-		buildRepository.update(build);
+		buildEntityRepository.update(buildEntity);
 
-		BuildRunRepository buildRunRepository = getBuildRunRepository();
+		BuildRunEntityRepository buildRunEntityRepository =
+			getBuildRunRepository();
 
-		buildRunRepository.update(buildRun);
+		buildRunEntityRepository.update(buildRunEntity);
 
-		return buildRun.toString();
+		return buildRunEntity.toString();
 	}
 
 	protected BuildStartedEventHandler(

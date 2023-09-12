@@ -28,6 +28,7 @@ if (Validator.isNotNull(backURL)) {
 	disabled="<%= userOAuth2AuthorizationsCount == 0 %>"
 	filterDropdownItems="<%= oAuth2ConnectedApplicationsManagementToolbarDisplayContext.getFilterDropdownItems() %>"
 	itemsTotal="<%= userOAuth2AuthorizationsCount %>"
+	orderDropdownItems="<%= oAuth2ConnectedApplicationsManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
 	propsTransformer="connected_applications/js/oAuth2ConnectedApplicationsManagementToolbarPropsTransformer"
 	searchContainerId="oAuth2ConnectedApplicationsSearchContainer"
 	selectable="<%= true %>"

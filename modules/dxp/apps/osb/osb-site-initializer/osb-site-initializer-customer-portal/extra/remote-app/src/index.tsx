@@ -7,12 +7,12 @@ import {ApolloProvider} from '@apollo/client';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
-import {createRoot} from 'react-dom/client';
+import {Root, createRoot} from 'react-dom/client';
 import {SWRConfig} from 'swr';
 import './common/styles/global.scss';
 
-import {OktaStatusPortal} from './OktaStatus';
 import SWRCacheProvider from './SWRCacheProvider';
+import OktaStatus from './common/components/OktaSession';
 import {AppPropertiesContext} from './common/contexts/AppPropertiesContext';
 import useApollo from './common/hooks/useApollo';
 import useGlobalNetworkIndicator from './common/hooks/useGlobalNetworkIndicator';
@@ -38,6 +38,7 @@ type Properties = {
 	featureFlags?: string[];
 	importDate?: Date | null;
 	submitSupportTicketURL: string | null;
+	theOverviewPageURL: string | null;
 };
 
 type APIs = {
@@ -81,7 +82,7 @@ const CustomerPortalApp: React.FC<CustomerPortalAppProps> = ({
 				}
 			>
 				{properties.featureFlags?.includes('LPS-192494') && (
-					<OktaStatusPortal />
+					<OktaStatus />
 				)}
 
 				<AppRouteComponent />
@@ -91,6 +92,8 @@ const CustomerPortalApp: React.FC<CustomerPortalAppProps> = ({
 };
 
 class CustomerPortalWebComponent extends HTMLElement {
+	private root: Root | undefined;
+
 	connectedCallback() {
 		const properties = {
 			articleAccountSupportURL: super.getAttribute(
@@ -114,6 +117,9 @@ class CustomerPortalWebComponent extends HTMLElement {
 			submitSupportTicketURL: super.getAttribute(
 				'submit-support-ticket-url'
 			),
+			theOverviewPageURL: super.getAttribute(
+				'about-the-overview-page-url'
+			),
 		};
 
 		if (
@@ -131,24 +137,26 @@ class CustomerPortalWebComponent extends HTMLElement {
 			),
 		};
 
-		const root = createRoot(this);
+		if (!this.root) {
+			this.root = createRoot(this);
 
-		root.render(
-			<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
-				<SWRConfig
-					value={{
-						provider: SWRCacheProvider,
-						revalidateOnFocus: false,
-					}}
-				>
-					<CustomerPortalApp
-						{...properties}
-						apis={apis}
-						route={super.getAttribute('route') as string}
-					/>
-				</SWRConfig>
-			</ClayIconSpriteContext.Provider>
-		);
+			this.root.render(
+				<ClayIconSpriteContext.Provider value={getIconSpriteMap()}>
+					<SWRConfig
+						value={{
+							provider: SWRCacheProvider,
+							revalidateOnFocus: false,
+						}}
+					>
+						<CustomerPortalApp
+							{...properties}
+							apis={apis}
+							route={super.getAttribute('route') as string}
+						/>
+					</SWRConfig>
+				</ClayIconSpriteContext.Provider>
+			);
+		}
 	}
 }
 

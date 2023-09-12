@@ -267,6 +267,7 @@ public class RoleLocalServiceTest {
 				if (excludedRoleNames.contains(role.getName()) ||
 					(role.getType() == RoleConstants.TYPE_ACCOUNT) ||
 					(role.getType() == RoleConstants.TYPE_DEPOT) ||
+					(role.getType() == RoleConstants.TYPE_PUBLICATIONS) ||
 					(role.getType() == RoleConstants.TYPE_SITE)) {
 
 					return false;

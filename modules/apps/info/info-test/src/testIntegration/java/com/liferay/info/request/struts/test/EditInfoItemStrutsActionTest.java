@@ -242,7 +242,7 @@ public class EditInfoItemStrutsActionTest {
 			"999.9999999999999", null, null, null, null, null, null);
 	}
 
-	@FeatureFlags({"LPS-183727", "LPS-187754"})
+	@FeatureFlags({"LPS-183727", "LPS-187754", "LPS-195205"})
 	@Test
 	public void testAddInfoItemWithDisplayPageSuccessMessage()
 		throws Exception {
@@ -552,10 +552,10 @@ public class EditInfoItemStrutsActionTest {
 		Assert.assertEquals("0.0", String.valueOf(values.get("myDecimal")));
 		Assert.assertEquals("0", String.valueOf(values.get("myInteger")));
 		Assert.assertEquals("0", String.valueOf(values.get("myLongInteger")));
+		Assert.assertTrue(
+			Validator.isNull(String.valueOf(values.get("myPicklist"))));
 		Assert.assertEquals(
-			StringPool.BLANK, String.valueOf(values.get("myPicklist")));
-		Assert.assertEquals(
-			"0E-16", String.valueOf(values.get("myPrecisionDecimal")));
+			0, GetterUtil.getLong(values.get("myPrecisionDecimal")));
 		Assert.assertEquals(
 			StringPool.BLANK, String.valueOf(values.get("myRichText")));
 	}
@@ -1096,7 +1096,7 @@ public class EditInfoItemStrutsActionTest {
 			String locationHeader = pipingServletResponse.getHeader("Location");
 
 			Assert.assertNotNull(locationHeader);
-			Assert.assertTrue(locationHeader.contains("/display-page/custom"));
+			Assert.assertTrue(locationHeader.contains("/e/"));
 		}
 
 		if (doubleValueInput != null) {

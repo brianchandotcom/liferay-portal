@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PwdGenerator;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.exportimport.UserImporter;
@@ -925,20 +924,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			role.getRoleId(), new long[] {group.getGroupId()});
 	}
 
-	private void _addUserGroupsNotAddedByLDAPImport(
-			long userId, Set<Long> userGroupIds)
-		throws Exception {
-
-		List<UserGroup> userGroups = _userGroupLocalService.getUserUserGroups(
-			userId);
-
-		for (UserGroup userGroup : userGroups) {
-			if (!userGroup.isAddedByLDAPImport()) {
-				userGroupIds.add(userGroup.getUserGroupId());
-			}
-		}
-	}
-
 	private LDAPImportContext _getLDAPImportContext(
 		long companyId, Properties contactExpandoMappings,
 		Properties contactMappings, Properties groupMappings,
@@ -1323,17 +1308,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			}
 		}
 
-		_addUserGroupsNotAddedByLDAPImport(user.getUserId(), newUserGroupIds);
-
-		Set<Long> oldUserGroupIds = SetUtil.fromArray(
-			_userLocalService.getUserGroupPrimaryKeys(user.getUserId()));
-
-		if (!oldUserGroupIds.equals(newUserGroupIds)) {
-			long[] userGroupIds = ArrayUtil.toLongArray(newUserGroupIds);
-
-			_userGroupLocalService.setUserUserGroups(
-				user.getUserId(), userGroupIds);
-		}
+		_updateUserUserGroups(user.getUserId(), newUserGroupIds);
 	}
 
 	private User _importUser(
@@ -1972,6 +1947,37 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		}
 
 		return password;
+	}
+
+	private void _updateUserUserGroups(long userId, Set<Long> userGroupIds)
+		throws Exception {
+
+		List<Long> deleteUserGroupIds = new ArrayList<>();
+
+		for (UserGroup userGroup :
+				_userGroupLocalService.getUserUserGroups(userId)) {
+
+			if (userGroup.isAddedByLDAPImport()) {
+				long userGroupId = userGroup.getUserGroupId();
+
+				if (userGroupIds.contains(userGroupId)) {
+					userGroupIds.remove(userGroupId);
+				}
+				else {
+					deleteUserGroupIds.add(userGroupId);
+				}
+			}
+		}
+
+		if (!deleteUserGroupIds.isEmpty()) {
+			_userGroupLocalService.deleteUserUserGroups(
+				userId, ArrayUtil.toLongArray(deleteUserGroupIds));
+		}
+
+		if (!userGroupIds.isEmpty()) {
+			_userGroupLocalService.addUserUserGroups(
+				userId, ArrayUtil.toLongArray(userGroupIds));
+		}
 	}
 
 	private static final String[] _CONTACT_PROPERTY_NAMES = {

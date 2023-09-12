@@ -686,6 +686,7 @@
 			<property name="checkHasMultipleConfigurationPids" value="false" />
 			<property name="checkHasMultipleServiceTypes" value="false" />
 			<property name="checkMismatchedServiceAttribute" value="false" />
+			<property name="checkResourceImpl" value="false" />
 			<property name="checkSelfRegistration" value="false" />
 		</check>
 		<check name="JavaDeprecatedJavadocCheck">
@@ -1365,6 +1366,10 @@
 			<description name="Finds missing comment with JIRA project when using `Pause`." />
 			<property name="enabled" value="false" />
 		</check>
+		<check name="PoshiSmokeTestCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for missing and unnecessary `property ci.retries.disabled = true` in smoke test." />
+		</check>
 		<check name="PoshiStylingCheck">
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in code style." />
@@ -1633,10 +1638,18 @@
 			<category name="Upgrade" />
 			<description name="Fill the new parameter of the method 'addAddress' of AddressLocalService, AddressLocalServiceUtil, AddressService and AddressServiceUtil" />
 		</check>
+		<check name="UpgradeJavaAddCategoryParameterCheck">
+			<category name="Upgrade" />
+			<description name="Fill the new parameter of the method 'addCategory' of 'AssetCategoryLocalService' and 'AssetCategoryLocalServiceUtil' classes" />
+		</check>
 		<check name="UpgradeJavaAddFDSTableSchemaFieldCheck">
 			<category name="Upgrade" />
 			<description name="Replace method addFDSTableSchemaFieldCheck by add" />
 			<weight>1</weight>
+		</check>
+		<check name="UpgradeJavaAddFileEntryParameterCheck">
+			<category name="Upgrade" />
+			<description name="Fill the new parameter of the method 'addFileEntry' of 'DLAppLocalServiceUtil' and 'DLAppLocalService'" />
 		</check>
 		<check name="UpgradeJavaAddFolderParameterCheck">
 			<category name="Upgrade" />
@@ -1673,6 +1686,10 @@
 		<check name="UpgradeJavaCookieUtilCheck">
 			<category name="Upgrade" />
 			<description name="Replace CookieUtilCheck.get by CookiesManagerUtil.getCookieValue and reorder parameters" />
+		</check>
+		<check name="UpgradeJavaDLFolderMethodCheck">
+			<category name="Upgrade" />
+			<description name="Fill the new parameter of the method addFolder of DLFolderLocalService, DLFolderLocalServiceUtil, DLFolderService and DLFolderServiceUtil" />
 		</check>
 		<check name="UpgradeJavaExtractTextMethodCheck">
 			<category name="Upgrade" />
@@ -1746,6 +1763,14 @@
 			<category name="Upgrade" />
 			<description name="Replace parameter in updateCommerceAddress method by other parameters list" />
 		</check>
+		<check name="UpgradeJavaUpdateFileEntryMethodCheck">
+			<category name="Upgrade" />
+			<description name="Fill in the new parameters of the method 'updateFileEntry' of 'DLAppLocalService' and 'DLAppLocalServiceUtil'" />
+		</check>
+		<check name="UpgradeJavaUserLocalServiceUtilCheck">
+			<category name="Upgrade" />
+			<description name="Replace parameters of addUser and updateStatus methods in UserServices" />
+		</check>
 		<check name="UpgradeJSPFieldSetGroupCheck">
 			<category name="Upgrade" />
 			<description name="Run code to remove 'fieldset-group' tag" />
@@ -1757,6 +1782,10 @@
 		<check name="UpgradeRejectedExecutionHandlerCheck">
 			<category name="Upgrade" />
 			<description name="Replace Liferay's RejectedExecutionHandler with Java's RejectedExecutionHandler" />
+		</check>
+		<check name="UpgradeSCSSImportsCheck">
+			<category name="Upgrade" />
+			<description name="Replace compat/mixins by clay/cadmin-variables" />
 		</check>
 		<check name="UpgradeSetResultsSetTotalMethodCheck">
 			<category name="Upgrade" />

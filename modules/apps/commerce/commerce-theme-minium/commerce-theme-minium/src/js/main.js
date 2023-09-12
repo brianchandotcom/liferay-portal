@@ -4,23 +4,15 @@
  */
 
 function handleSearchBar() {
-	Liferay.componentReady('search-bar')
-		.then((searchBar) => {
-			searchBar.on('toggled', (status) => {
-				document
-					.querySelectorAll('.js-toggle-search')
-					.forEach((element) => {
-						element.classList.toggle('is-active', status);
-					});
-
-				document
-					.getElementById('minium')
-					.classList.toggle('has-search', status);
-			});
-		})
-		.catch((error) => {
-			console.error('Search bar not found!', error);
+	Liferay.on('search-bar-toggled', ({active}) => {
+		document.querySelectorAll('.js-toggle-search').forEach((element) => {
+			element.classList.toggle('is-active', active);
 		});
+
+		document
+			.getElementById('minium')
+			.classList.toggle('has-search', active);
+	});
 }
 
 Liferay.on('allPortletsReady', () => {

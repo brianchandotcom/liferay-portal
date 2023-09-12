@@ -10,7 +10,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.resource.SPIRatingResource;
-import com.liferay.headless.common.spi.service.context.ServiceContextRequestUtil;
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.util.CustomFieldsUtil;
@@ -67,8 +67,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
-
-import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.Map;
@@ -524,11 +522,15 @@ public class MessageBoardMessageResourceImpl
 	private ServiceContext _createServiceContext(
 		long groupId, MessageBoardMessage messageBoardMessage) {
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				_getExpandoBridgeAttributes(messageBoardMessage), groupId,
-				contextHttpServletRequest,
-				messageBoardMessage.getViewableByAsString());
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest,
+			messageBoardMessage.getViewableByAsString()
+		).expandoBridgeAttributes(
+			CustomFieldsUtil.toMap(
+				MBMessage.class.getName(), contextCompany.getCompanyId(),
+				messageBoardMessage.getCustomFields(),
+				contextAcceptLanguage.getPreferredLocale())
+		).build();
 
 		String link = contextHttpServletRequest.getHeader("Link");
 
@@ -552,15 +554,6 @@ public class MessageBoardMessageResourceImpl
 		}
 
 		return serviceContext;
-	}
-
-	private Map<String, Serializable> _getExpandoBridgeAttributes(
-		MessageBoardMessage messageBoardMessage) {
-
-		return CustomFieldsUtil.toMap(
-			MBMessage.class.getName(), contextCompany.getCompanyId(),
-			messageBoardMessage.getCustomFields(),
-			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private OrderByComparator<MBMessage> _getMBMessageOrderByComparator(

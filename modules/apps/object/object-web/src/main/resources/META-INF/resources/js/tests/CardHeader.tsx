@@ -31,11 +31,9 @@ describe('The CardHeader component should', () => {
 
 		userEvent.click(screen.getByRole('button', {name: 'folder-actions'}));
 
-		expect(screen.getAllByRole('menuitem')).toHaveLength(4);
+		expect(screen.getAllByRole('menuitem')).toHaveLength(3);
 
 		expect(screen.getByText('edit-label-and-erc')).toBeInTheDocument();
-
-		expect(screen.getByText('import-object')).toBeInTheDocument();
 
 		expect(screen.getByText('folder-permissions')).toBeInTheDocument();
 
@@ -59,9 +57,7 @@ describe('The CardHeader component should', () => {
 
 		userEvent.click(screen.getByRole('button', {name: 'folder-actions'}));
 
-		expect(screen.getAllByRole('menuitem')).toHaveLength(2);
-
-		expect(screen.getByText('import-object')).toBeInTheDocument();
+		expect(screen.getAllByRole('menuitem')).toHaveLength(1);
 
 		expect(screen.getByText('folder-permissions')).toBeInTheDocument();
 	});

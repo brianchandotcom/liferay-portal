@@ -117,3 +117,8 @@ ed490be017d8ee10dcd4de95c247a5139dd404de^..76c2f4c3da58da3c24f5db5e3cd813d7e7751
 # Bundle Version 2.0.25
 #
 6eb45d5961f1e90eb9c7176837fc96c45ddb3d5b^..a2da44b5ef988b598b4fcf0863f9f05dbeeeb6d6=LPS-192967
+
+#
+# Bundle Version 2.0.26
+#
+a2da44b5ef988b598b4fcf0863f9f05dbeeeb6d6^..9c1cd699d371aaf43b59746e8d38302b9b8ab16b=COMMERCE-11747 LPS-193510

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Site Initializer Testray Dispatch Task Executor
 Bundle-SymbolicName: com.liferay.site.initializer.testray.dispatch.task.executor
-Bundle-Version: 1.0.15
+Bundle-Version: 1.0.16
 Import-Package:\
 	!com.google.api.client.json.gson.*,\
 	!com.google.appengine.api.datastore,\

@@ -20,6 +20,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -97,7 +98,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			FDSViewsWebKeys.FDS_VIEWS_DISPLAY_CONTEXT,
 			new FDSViewsDisplayContext(
-				_cetManager, renderRequest, _serviceTrackerList));
+				_cetManager, _objectDefinitionLocalService, renderRequest,
+				renderResponse, _serviceTrackerList));
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
@@ -224,10 +226,6 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "column-label"), "label", false),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 						_language.get(locale, "name"), "name", true),
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
@@ -245,7 +243,41 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 						ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
-						_language.get(locale, "sortable"), "sortable", true)));
+						_language.get(locale, "sortable"), "sortable", false)));
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
+			fdsFieldObjectDefinition.setEnableLocalization(true);
+
+			fdsFieldObjectDefinition =
+				_objectDefinitionLocalService.updateObjectDefinition(
+					fdsFieldObjectDefinition);
+		}
+
+		ObjectField fieldLabelObjectField = ObjectFieldUtil.createObjectField(
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+			ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+			_language.get(locale, "column-label"), "label", false);
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
+			fieldLabelObjectField.setLocalized(true);
+		}
+
+		_objectFieldLocalService.addCustomObjectField(
+			fieldLabelObjectField.getExternalReferenceCode(), userId,
+			fieldLabelObjectField.getListTypeDefinitionId(),
+			fdsFieldObjectDefinition.getObjectDefinitionId(),
+			fieldLabelObjectField.getBusinessType(),
+			fieldLabelObjectField.getDBType(),
+			fieldLabelObjectField.isIndexed(),
+			fieldLabelObjectField.isIndexedAsKeyword(),
+			fieldLabelObjectField.getIndexedLanguageId(),
+			fieldLabelObjectField.getLabelMap(),
+			fieldLabelObjectField.isLocalized(),
+			fieldLabelObjectField.getName(),
+			fieldLabelObjectField.getReadOnly(),
+			fieldLabelObjectField.getReadOnlyConditionExpression(),
+			fieldLabelObjectField.isRequired(), fieldLabelObjectField.isState(),
+			fieldLabelObjectField.getObjectFieldSettings());
 
 		_objectDefinitionLocalService.publishSystemObjectDefinition(
 			userId, fdsFieldObjectDefinition.getObjectDefinitionId());

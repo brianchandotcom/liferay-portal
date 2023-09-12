@@ -10,6 +10,11 @@ import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
+import com.liferay.object.system.SystemObjectDefinitionManager;
+import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -19,6 +24,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -63,6 +69,27 @@ public class ObjectRelationshipUtil {
 		throw new ObjectRelationshipReverseException();
 	}
 
+	public static Set<String> getObjectRelationshipTypes(
+		ObjectDefinition objectDefinition,
+		SystemObjectDefinitionManagerRegistry
+			systemObjectDefinitionManagerRegistry) {
+
+		if (!objectDefinition.isUnmodifiableSystemObject()) {
+			return _defaultObjectRelationshipTypes;
+		}
+
+		SystemObjectDefinitionManager systemObjectDefinitionManager =
+			systemObjectDefinitionManagerRegistry.
+				getSystemObjectDefinitionManager(objectDefinition.getName());
+
+		if (systemObjectDefinitionManager == null) {
+			return Collections.emptySet();
+		}
+
+		return systemObjectDefinitionManager.
+			getAllowedObjectRelationshipTypes();
+	}
+
 	public static Map<String, String> getPKObjectFieldDBColumnNames(
 		ObjectDefinition objectDefinition1, ObjectDefinition objectDefinition2,
 		boolean reverse) {
@@ -89,6 +116,80 @@ public class ObjectRelationshipUtil {
 			"pkObjectFieldDBColumnName2",
 			pkObjectFieldDBColumnName2.concat(reverse ? "1" : "2")
 		).build();
+	}
+
+	public static ObjectDefinition getRelatedObjectDefinition(
+		ObjectDefinition objectDefinition,
+		ObjectRelationship objectRelationship) {
+
+		if (objectRelationship.getObjectDefinitionId1() ==
+				objectDefinition.getObjectDefinitionId()) {
+
+			return ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+				objectRelationship.getObjectDefinitionId2());
+		}
+
+		return ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+			objectRelationship.getObjectDefinitionId1());
+	}
+
+	public static Set<ObjectDefinition> getRelatedObjectDefinitions(
+		ObjectDefinition objectDefinition) {
+
+		Set<ObjectDefinition> relatedObjectDefinitions = new HashSet<>();
+
+		for (ObjectRelationship objectRelationship :
+				ObjectRelationshipLocalServiceUtil.getAllObjectRelationships(
+					objectDefinition.getObjectDefinitionId())) {
+
+			if (objectRelationship.isSelf()) {
+				continue;
+			}
+
+			relatedObjectDefinitions.add(
+				getRelatedObjectDefinition(
+					objectDefinition, objectRelationship));
+		}
+
+		return relatedObjectDefinitions;
+	}
+
+	public static String getRESTContextPath(
+		ObjectDefinition objectDefinition,
+		SystemObjectDefinitionManagerRegistry
+			systemObjectDefinitionManagerRegistry) {
+
+		if (!objectDefinition.isUnmodifiableSystemObject()) {
+			return objectDefinition.getRESTContextPath();
+		}
+
+		SystemObjectDefinitionManager systemObjectDefinitionManager =
+			systemObjectDefinitionManagerRegistry.
+				getSystemObjectDefinitionManager(objectDefinition.getName());
+
+		if (systemObjectDefinitionManager == null) {
+			return StringPool.BLANK;
+		}
+
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
+
+		return jaxRsApplicationDescriptor.getRESTContextPath();
+	}
+
+	public static boolean isParameterRequired(
+		ObjectDefinition objectDefinition,
+		SystemObjectDefinitionManagerRegistry
+			systemObjectDefinitionManagerRegistry) {
+
+		String restContextPath = getRESTContextPath(
+			objectDefinition, systemObjectDefinitionManagerRegistry);
+
+		if (restContextPath.matches(".*/\\{\\w+}/.*")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Set<String> _defaultObjectRelationshipTypes =

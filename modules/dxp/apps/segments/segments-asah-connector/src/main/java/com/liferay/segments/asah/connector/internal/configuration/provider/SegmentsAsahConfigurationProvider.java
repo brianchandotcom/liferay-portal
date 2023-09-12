@@ -8,8 +8,8 @@ package com.liferay.segments.asah.connector.internal.configuration.provider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.segments.asah.connector.internal.configuration.SegmentsAsahCompanyConfiguration;
 import com.liferay.segments.asah.connector.internal.configuration.SegmentsAsahConfiguration;
 

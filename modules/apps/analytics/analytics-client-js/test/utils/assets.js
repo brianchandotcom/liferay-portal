@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getNumberOfWords} from '../../src/utils/assets';
+import {getNumberOfWords, isTrackable} from '../../src/utils/assets';
 
 describe('getNumberOfWords()', () => {
 	let document;
@@ -41,5 +41,47 @@ describe('getNumberOfWords()', () => {
 		const numberOfWords = getNumberOfWords(element);
 
 		expect(numberOfWords).toBe(0);
+	});
+});
+
+describe('isTrackable', () => {
+	it('checks if asset is trackable', () => {
+		const element = document.createElement('div');
+
+		expect(isTrackable(element)).toBeFalsy();
+
+		element.dataset.analyticsAssetId = 'assetId';
+
+		expect(isTrackable(element)).toBeFalsy();
+
+		element.dataset.analyticsAssetTitle = 'assetTitle';
+
+		expect(isTrackable(element)).toBeFalsy();
+
+		element.dataset.analyticsAssetType = 'blog';
+
+		expect(isTrackable(element)).toBeTruthy();
+	});
+
+	it('checks if asset is trackable with custom dataset list', () => {
+		const element = document.createElement('div');
+
+		expect(isTrackable(element, ['analyticsCustomName'])).toBeFalsy();
+
+		element.dataset.analyticsAssetId = 'assetId';
+
+		expect(isTrackable(element, ['analyticsCustomName'])).toBeFalsy();
+
+		element.dataset.analyticsAssetTitle = 'assetTitle';
+
+		expect(isTrackable(element, ['analyticsCustomName'])).toBeFalsy();
+
+		element.dataset.analyticsAssetType = 'blog';
+
+		expect(isTrackable(element, ['analyticsCustomName'])).toBeFalsy();
+
+		element.dataset.analyticsCustomName = 'assetCustomNameAttr';
+
+		expect(isTrackable(element, ['analyticsCustomName'])).toBeTruthy();
 	});
 });

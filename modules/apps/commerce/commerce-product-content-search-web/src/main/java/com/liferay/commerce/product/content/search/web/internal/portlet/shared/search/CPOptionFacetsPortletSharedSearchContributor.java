@@ -103,11 +103,14 @@ public class CPOptionFacetsPortletSharedSearchContributor
 
 			serializableFacet.setFacetConfiguration(
 				buildFacetConfiguration(
-					frequencyThreshold, maxTerms, serializableFacet));
+					serializableFacet.getFieldName(), frequencyThreshold,
+					maxTerms));
 
 			portletSharedSearchSettings.addFacet(serializableFacet);
 
-			for (Facet facet : getFacets(renderRequest)) {
+			for (Facet facet :
+					getFacets(frequencyThreshold, maxTerms, renderRequest)) {
+
 				String cpOptionKey =
 					CPOptionFacetsUtil.getCPOptionKeyFromIndexFieldName(
 						facet.getFieldName());
@@ -120,7 +123,8 @@ public class CPOptionFacetsPortletSharedSearchContributor
 
 				serializableFacet.setFacetConfiguration(
 					buildFacetConfiguration(
-						frequencyThreshold, maxTerms, serializableFacet));
+						serializableFacet.getFieldName(), frequencyThreshold,
+						maxTerms));
 
 				if (ArrayUtil.isNotEmpty(parameterValues)) {
 					serializableFacet.select(parameterValues);
@@ -169,12 +173,11 @@ public class CPOptionFacetsPortletSharedSearchContributor
 	}
 
 	protected FacetConfiguration buildFacetConfiguration(
-		int frequencyThreshold, int maxTerms,
-		SerializableFacet serializableFacet) {
+		String fieldName, int frequencyThreshold, int maxTerms) {
 
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
-		facetConfiguration.setFieldName(serializableFacet.getFieldName());
+		facetConfiguration.setFieldName(fieldName);
 
 		JSONObject jsonObject = facetConfiguration.getData();
 
@@ -233,7 +236,8 @@ public class CPOptionFacetsPortletSharedSearchContributor
 		return searchContext;
 	}
 
-	protected List<Facet> getFacets(RenderRequest renderRequest)
+	protected List<Facet> getFacets(
+			int frequencyThreshold, int maxTerms, RenderRequest renderRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
@@ -253,14 +257,17 @@ public class CPOptionFacetsPortletSharedSearchContributor
 
 		Facet facet = new SimpleFacet(searchContext);
 
-		facet.setFieldName(CPField.OPTION_NAMES);
+		String fieldName = CPField.OPTION_NAMES;
+
+		facet.setFacetConfiguration(
+			buildFacetConfiguration(fieldName, frequencyThreshold, maxTerms));
+		facet.setFieldName(fieldName);
 
 		searchContext.addFacet(facet);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-		queryConfig.addSelectedFieldNames(CPField.OPTION_NAMES);
-
+		queryConfig.addSelectedFieldNames(fieldName);
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
 

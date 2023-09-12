@@ -68,7 +68,11 @@ export default function ModalImportListTypeDefinition({
 
 	const handleImport = async (formData: FormData) => {
 		try {
-			await API.save(importListTypeDefinitionURL, formData, 'POST');
+			await API.save({
+				item: formData,
+				method: 'POST',
+				url: importListTypeDefinitionURL,
+			});
 
 			window.location.reload();
 		}

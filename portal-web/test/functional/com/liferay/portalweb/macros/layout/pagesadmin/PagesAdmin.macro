@@ -401,7 +401,7 @@ definition {
 
 			Type(
 				inputFieldId = "friendlyURL",
-				locator1 = "TextInput#INPUT_ID",
+				locator1 = "TextInput#TEXT_INPUT_ID",
 				value1 = ${localizedFriendlyURL});
 
 			if (${localizedName} != "-") {
@@ -865,7 +865,7 @@ definition {
 
 		Type(
 			inputFieldId = "friendlyURL",
-			locator1 = "TextInput#INPUT_ID",
+			locator1 = "TextInput#TEXT_INPUT_ID",
 			value1 = " ");
 
 		PortletEntry.save();
@@ -986,7 +986,7 @@ definition {
 	macro editFriendlyURL {
 		Type(
 			inputFieldId = "friendlyURL",
-			locator1 = "TextInput#INPUT_ID",
+			locator1 = "TextInput#TEXT_INPUT_ID",
 			value1 = ${friendlyURLEdit});
 
 		if (isSet(confirm)) {
@@ -1268,7 +1268,7 @@ definition {
 
 		AssertVisible(
 			inputFieldId = "friendlyURL",
-			locator1 = "TextInput#INPUT_ID",
+			locator1 = "TextInput#TEXT_INPUT_ID",
 			value1 = ${friendlyURLEdit});
 
 		PortletEntry.save();
@@ -1562,7 +1562,7 @@ definition {
 
 		AssertTextEquals(
 			inputFieldId = "friendlyURL",
-			locator1 = "TextInput#INPUT_ID",
+			locator1 = "TextInput#TEXT_INPUT_ID",
 			value1 = "/${pageName}");
 	}
 

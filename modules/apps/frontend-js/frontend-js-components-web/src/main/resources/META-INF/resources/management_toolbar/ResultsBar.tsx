@@ -15,7 +15,9 @@ export default function ResultsBar({
 			{...otherProps}
 			className="subnav-tbar subnav-tbar-primary tbar tbar-inline-xs-down"
 		>
-			<ClayLayout.ContainerFluid>
+			<ClayLayout.ContainerFluid
+				size={Liferay.FeatureFlags['LPS-184404'] ? false : 'xl'}
+			>
 				<ul className="tbar-nav tbar-nav-wrap">{children}</ul>
 			</ClayLayout.ContainerFluid>
 		</nav>

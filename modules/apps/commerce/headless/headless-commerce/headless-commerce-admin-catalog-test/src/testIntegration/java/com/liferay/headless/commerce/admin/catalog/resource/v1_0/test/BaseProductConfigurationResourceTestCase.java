@@ -871,32 +871,23 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		}
 
 		if (entityFieldName.equals("maxOrderQuantity")) {
-			sb.append(
-				String.valueOf(productConfiguration.getMaxOrderQuantity()));
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("minOrderQuantity")) {
-			sb.append(
-				String.valueOf(productConfiguration.getMinOrderQuantity()));
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("minStockQuantity")) {
-			sb.append(
-				String.valueOf(productConfiguration.getMinStockQuantity()));
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("multipleOrderQuantity")) {
-			sb.append(
-				String.valueOf(
-					productConfiguration.getMultipleOrderQuantity()));
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
@@ -952,10 +943,6 @@ public abstract class BaseProductConfigurationResourceTestCase {
 					RandomTestUtil.randomString());
 				lowStockAction = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				maxOrderQuantity = RandomTestUtil.randomInt();
-				minOrderQuantity = RandomTestUtil.randomInt();
-				minStockQuantity = RandomTestUtil.randomInt();
-				multipleOrderQuantity = RandomTestUtil.randomInt();
 			}
 		};
 	}

@@ -221,4 +221,70 @@ definition {
 		}
 	}
 
+	@description = "Story: LRAC-14101 | Automation ID: LRAC-14544 | Test Summary: Delete a terminated test in DXP"
+	@priority = 4
+	test CanDeleteTerminatedTestOnDXP {
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = ${nameABTest});
+		}
+
+		task ("Select the button element added to the page for AB test") {
+			ABTest.selectElementID();
+		}
+
+		task ("Create variable") {
+			ABTest.createVariant(variantName = "Variant name");
+		}
+
+		task ("Click on Review and Run test") {
+			ABTest.runTest();
+		}
+
+		task ("Go to AC > Tests") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
+			ACNavigation.goToTests();
+		}
+
+		task ("Check that the created AB test appears in the list") {
+			ACUtils.viewNameList(nameList = ${nameABTest});
+		}
+
+		task ("Go to DXP > Go to AB Test Side Panel") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+
+			ABTest.openABTestPanel();
+		}
+
+		task ("Terminate the test") {
+			ABTest.terminateTest();
+		}
+
+		task ("Delete AB Test") {
+			ABTest.deleteABTest();
+		}
+
+		task ("Assert the empty state after the test is deleted") {
+			ABTest.assertDXPABTestEmptyState();
+		}
+
+		task ("Go to AC > Tests") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
+			ACNavigation.goToTests();
+		}
+
+		task ("Check that the empty state message appears in the list") {
+			ACUtils.viewNoResultsMessage(noResultMessage = "There are no tests found.");
+		}
+	}
+
 }

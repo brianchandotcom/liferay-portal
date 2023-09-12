@@ -4,6 +4,7 @@
  */
 
 const Liferay = {
+	FeatureFlags: {},
 	Language: {
 		available: {
 			ar_SA: 'Arabic (Saudi Arabia)',

@@ -78,8 +78,8 @@ describe('Add to Cart', () => {
 
 		addToCart = render(<AddToCart {...defaultProps} />);
 
-		input = addToCart.container.querySelector('input');
 		button = addToCart.container.querySelector('button');
+		input = addToCart.container.querySelector('input');
 	});
 
 	afterEach(() => {
@@ -117,7 +117,7 @@ describe('Add to Cart', () => {
 	}); */
 
 	it('must focus the quantity selector when a user tries to add to the cart an invalid quantity', async () => {
-		addToCart.rerender(
+		addToCart = render(
 			<AddToCart
 				{...defaultProps}
 				settings={{
@@ -131,6 +131,9 @@ describe('Add to Cart', () => {
 				}}
 			/>
 		);
+
+		button = addToCart.container.querySelector('button');
+		input = addToCart.container.querySelector('input');
 
 		act(() => {
 			fireEvent.change(input, {target: {value: 6}});

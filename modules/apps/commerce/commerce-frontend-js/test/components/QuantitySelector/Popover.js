@@ -33,24 +33,20 @@ describe('Quantity Selector - Popover', () => {
 		onUpdate = jest.fn();
 
 		defaultProps.onUpdate = onUpdate;
-
-		inputQuantitySelector = render(
-			<InputQuantitySelector {...defaultProps} ref={{current: null}} />
-		);
-
-		input = inputQuantitySelector.container.querySelector('input');
 	});
 
 	afterEach(() => {
 		cleanup();
 	});
 
-	it('must NOT show a popover when the min quantity is 1 and the current value is < 1', () => {
+	it('must show a popover when the min quantity is 0 and the current value is < 0 but not for min error', () => {
 		jest.useFakeTimers();
 
-		inputQuantitySelector.rerender(
-			<InputQuantitySelector min={1} quantity={-1} />
+		inputQuantitySelector = render(
+			<InputQuantitySelector min={0} quantity={-1} />
 		);
+
+		input = inputQuantitySelector.container.querySelector('input');
 
 		act(() => {
 			fireEvent.focus(input);
@@ -59,15 +55,21 @@ describe('Quantity Selector - Popover', () => {
 
 		const popover = document.querySelector('.popover');
 
-		expect(popover).not.toBeInTheDocument();
+		expect(popover).toBeInTheDocument();
+
+		expect(
+			screen.queryByText(/min-quantity-per-order-is/)
+		).not.toBeInTheDocument();
 	});
 
-	it('must show a popover when the min quantity is > 1 and the current value is <= 1', () => {
+	it('must show a popover when the min quantity is > 0 and the current value is <= 1', () => {
 		jest.useFakeTimers();
 
-		inputQuantitySelector.rerender(
+		inputQuantitySelector = render(
 			<InputQuantitySelector min={4} quantity={1} />
 		);
+
+		input = inputQuantitySelector.container.querySelector('input');
 
 		fireEvent.focus(input);
 
@@ -87,9 +89,11 @@ describe('Quantity Selector - Popover', () => {
 	it("must show a popover when the max quantity is defined and the current value doesn't apply", () => {
 		jest.useFakeTimers();
 
-		inputQuantitySelector.rerender(
+		inputQuantitySelector = render(
 			<InputQuantitySelector max={5} quantity={7} />
 		);
+
+		input = inputQuantitySelector.container.querySelector('input');
 
 		fireEvent.focus(input);
 
@@ -109,9 +113,11 @@ describe('Quantity Selector - Popover', () => {
 	it("must show a popover when the multiple quantity is > 1 and the current value doesn't apply", () => {
 		jest.useFakeTimers();
 
-		inputQuantitySelector.rerender(
+		inputQuantitySelector = render(
 			<InputQuantitySelector quantity={3} step={4} />
 		);
+
+		input = inputQuantitySelector.container.querySelector('input');
 
 		fireEvent.focus(input);
 
@@ -131,9 +137,11 @@ describe('Quantity Selector - Popover', () => {
 	it("must inform the user when multiple constrains don't apply to the current value - min, multiple", () => {
 		jest.useFakeTimers();
 
-		inputQuantitySelector.rerender(
+		inputQuantitySelector = render(
 			<InputQuantitySelector max={60} min={5} quantity={3} step={4} />
 		);
+
+		input = inputQuantitySelector.container.querySelector('input');
 
 		fireEvent.focus(input);
 
@@ -164,9 +172,11 @@ describe('Quantity Selector - Popover', () => {
 	it("must inform the user when multiple constrains don't apply to the current value - max, multiple", () => {
 		jest.useFakeTimers();
 
-		inputQuantitySelector.rerender(
+		inputQuantitySelector = render(
 			<InputQuantitySelector max={60} min={5} quantity={61} step={4} />
 		);
+
+		input = inputQuantitySelector.container.querySelector('input');
 
 		fireEvent.focus(input);
 

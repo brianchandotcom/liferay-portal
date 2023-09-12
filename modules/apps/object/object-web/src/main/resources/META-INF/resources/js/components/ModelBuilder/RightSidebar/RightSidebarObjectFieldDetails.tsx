@@ -207,7 +207,6 @@ export function RightSidebarObjectFieldDetails() {
 							selectedNode.data?.externalReferenceCode ?? ''
 						}
 						objectName={selectedNode.data?.name as string}
-						objectRelationshipId={0}
 						readOnly={
 							!selectedNode.data
 								?.hasObjectDefinitionUpdateResourcePermission ??

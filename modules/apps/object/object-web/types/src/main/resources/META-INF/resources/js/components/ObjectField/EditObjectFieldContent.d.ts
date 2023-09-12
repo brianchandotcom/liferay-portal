@@ -35,7 +35,6 @@ export declare function EditObjectFieldContent({
 	modelBuilder,
 	objectDefinitionExternalReferenceCode,
 	objectName,
-	objectRelationshipId,
 	readOnly,
 	readOnlySidebarElements,
 	setValues,

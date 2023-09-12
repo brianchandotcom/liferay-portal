@@ -141,7 +141,7 @@ async function getFieldSettingsByBusinessType(
 		}
 	}
 
-	if (businessType === 'Relationship' && objectRelationshipId) {
+	if (businessType === 'Relationship' && objectRelationshipId !== 0) {
 		const relationshipData = await API.getObjectRelationship<
 			TObjectRelationship
 		>(objectRelationshipId!);
@@ -341,7 +341,7 @@ export default function ObjectFieldFormBase({
 
 		makeFetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values.businessType]);
+	}, [values.businessType, objectRelationshipId]);
 
 	return (
 		<>

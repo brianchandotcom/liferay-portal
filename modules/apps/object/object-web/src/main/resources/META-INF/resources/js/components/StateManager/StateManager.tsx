@@ -9,8 +9,8 @@ import {
 	// @ts-ignore
 
 } from '@liferay/frontend-data-set-web';
-import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
-import React, {useEffect, useState} from 'react';
+import {API} from '@liferay/object-js-components-web';
+import React, {useEffect} from 'react';
 
 import {
 	IFDSTableProps,
@@ -33,17 +33,11 @@ export default function StateManager({
 	style,
 	url,
 }: IFDSTableProps) {
-	const [creationLanguageId, setCreationLanguageId] = useState<
-		Liferay.Language.Locale
-	>();
-
 	useEffect(() => {
 		const makeFetch = async () => {
-			const objectDefinition = await API.getObjectDefinitionByExternalReferenceCode(
+			await API.getObjectDefinitionByExternalReferenceCode(
 				objectDefinitionExternalReferenceCode
 			);
-
-			setCreationLanguageId(objectDefinition.defaultLanguageId);
 		};
 
 		makeFetch();
@@ -63,10 +57,7 @@ export default function StateManager({
 		return (
 			<div className="table-list-title">
 				<a href="#" onClick={handleEditField}>
-					{getLocalizableLabel(
-						creationLanguageId as Liferay.Language.Locale,
-						value
-					)}
+					{value}
 				</a>
 			</div>
 		);

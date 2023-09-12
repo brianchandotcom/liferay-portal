@@ -9,12 +9,14 @@ import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.exception.ObjectValidationRuleNameException;
 import com.liferay.object.exception.ObjectValidationRuleOutputTypeException;
 import com.liferay.object.exception.ObjectValidationRuleScriptException;
 import com.liferay.object.exception.ObjectValidationRuleSettingNameException;
 import com.liferay.object.exception.ObjectValidationRuleSettingValueException;
+import com.liferay.object.exception.ObjectValidationRuleSystemException;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.internal.validation.rule.FunctionObjectValidationRuleEngineImpl;
 import com.liferay.object.model.ObjectDefinition;
@@ -135,7 +137,12 @@ public class ObjectValidationRuleLocalServiceImpl
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public ObjectValidationRule deleteObjectValidationRule(
-		ObjectValidationRule objectValidationRule) {
+			ObjectValidationRule objectValidationRule)
+		throws PortalException {
+
+		_validateInvokerBundle(
+			"Only allowed bundles can delete system object validations",
+			objectValidationRule.isSystem());
 
 		objectValidationRule = objectValidationRulePersistence.remove(
 			objectValidationRule);
@@ -574,6 +581,16 @@ public class ObjectValidationRuleLocalServiceImpl
 						objectValidationRuleSetting.getValue());
 			}
 		}
+	}
+
+	private void _validateInvokerBundle(String message, boolean system)
+		throws PortalException {
+
+		if (!system || ObjectDefinitionUtil.isInvokerBundleAllowed()) {
+			return;
+		}
+
+		throw new ObjectValidationRuleSystemException(message);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

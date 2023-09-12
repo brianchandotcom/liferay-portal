@@ -140,7 +140,7 @@ public abstract class ObjectValidationRuleLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ObjectValidationRule deleteObjectValidationRule(
-		ObjectValidationRule objectValidationRule) {
+		ObjectValidationRule objectValidationRule) throws PortalException {
 
 		return objectValidationRulePersistence.remove(objectValidationRule);
 	}

@@ -129,7 +129,7 @@ public interface ObjectValidationRuleLocalService
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public ObjectValidationRule deleteObjectValidationRule(
-		ObjectValidationRule objectValidationRule);
+		ObjectValidationRule objectValidationRule) throws PortalException;
 
 	public void deleteObjectValidationRules(Long objectDefinitionId)
 		throws PortalException;

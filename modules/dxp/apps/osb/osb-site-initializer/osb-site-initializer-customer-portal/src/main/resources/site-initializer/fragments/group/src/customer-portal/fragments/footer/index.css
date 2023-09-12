@@ -1,0 +1,35 @@
+.cp_footer_home {
+	align-items: flex-start;
+	background: var(--neutral-00, #fff);
+	display: flex;
+	gap: 8px;
+	height: 80px;
+	justify-content: center;
+	padding: 32px 24px;
+
+	.cp_footer_container {
+		align-items: center;
+		display: flex;
+		flex: 1 0 0;
+		gap: 24px;
+	}
+
+	.cp_footer_text {
+		color: var(--neutral-07, #6c6c75);
+		font-family: Source Sans Pro;
+		font-size: 13px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 16px;
+	}
+
+	.cp_footer_text a {
+		color: inherit;
+	}
+}
+
+#cp_footer_text_feedback {
+	font-weight: 600;
+	padding-right: 150px;
+	text-align: center;
+}

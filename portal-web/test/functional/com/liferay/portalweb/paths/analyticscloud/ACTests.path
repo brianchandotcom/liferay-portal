@@ -38,7 +38,9 @@
 </tr>
 <tr>
 	<td>SUMMARY_CARD_TEXT</td>
-	<td>//div[contains(@class, 'analytics-summary-card')] //div[contains(@class,'card-header')] //h3</td>
+	<td>//div[contains(@class,'analytics-summary-card')]//div[contains(@class,'card-header')]//h3</td>
+	<td></td>
+</tr>
 	<td></td>
 </tr>
 </tbody>

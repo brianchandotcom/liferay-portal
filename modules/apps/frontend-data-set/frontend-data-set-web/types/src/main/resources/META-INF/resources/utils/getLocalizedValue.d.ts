@@ -8,7 +8,7 @@ interface ILocalizedItemDetails {
 	value: string;
 	valuePath: Array<string>;
 }
-export declare function getLocalizedValueFromItem(
+export declare function getLocalizedValue(
 	item: any,
 	fieldName: string | Array<string>
 ): ILocalizedItemDetails | null;

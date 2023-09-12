@@ -5,7 +5,8 @@
 
 import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
-import React, {ElementType, useState} from 'react';
+import {createResourceURL, fetch} from 'frontend-js-web';
+import React, {ElementType, useEffect, useState} from 'react';
 
 import {EditObjectFieldProps} from './EditObjectField';
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
@@ -33,6 +34,7 @@ interface EditObjectFieldContentProps
 const TABS = [Liferay.Language.get('basic-info')];
 
 export function EditObjectFieldContent({
+	baseResourceURL,
 	containerWrapper,
 	creationLanguageId,
 	errors,
@@ -43,7 +45,6 @@ export function EditObjectFieldContent({
 	learnResources,
 	modelBuilder = false,
 	objectDefinitionExternalReferenceCode,
-	objectFieldTypes,
 	objectName,
 	objectRelationshipId,
 	readOnly,
@@ -54,6 +55,9 @@ export function EditObjectFieldContent({
 	workflowStatusJSONArray,
 }: EditObjectFieldContentProps) {
 	const [activeIndex, setActiveIndex] = useState(0);
+	const [objectFieldTypes, setObjectFieldTypes] = useState<ObjectFieldType[]>(
+		[]
+	);
 
 	if (
 		(Liferay.FeatureFlags['LPS-170122'] ||
@@ -62,6 +66,30 @@ export function EditObjectFieldContent({
 	) {
 		TABS.push(Liferay.Language.get('advanced'));
 	}
+
+	useEffect(() => {
+		const makeFetch = async () => {
+			if (values.id !== 0) {
+				const url = createResourceURL(baseResourceURL, {
+					objectFieldId: values?.id,
+					p_p_resource_id:
+						'/object_definitions/get_object_field_info',
+				}).href;
+
+				const objectFieldInfoResponse = await fetch(url, {
+					method: 'GET',
+				});
+
+				const objectFieldInfoJSON = (await objectFieldInfoResponse.json()) as {
+					objectFieldTypes: ObjectFieldType[];
+				};
+
+				setObjectFieldTypes(objectFieldInfoJSON.objectFieldTypes);
+			}
+		};
+
+		makeFetch();
+	}, [baseResourceURL, values.id]);
 
 	return (
 		<>

@@ -13,10 +13,14 @@ ObjectDefinitionsFieldsDisplayContext objectDefinitionsFieldsDisplayContext = (O
 ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT_FIELD);
 %>
 
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="baseResourceURL" />
+
 <react:component
 	module="js/components/ObjectField/EditObjectField"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
+			"baseResourceURL", String.valueOf(baseResourceURL)
+		).put(
 			"creationLanguageId", objectDefinition.getDefaultLanguageId()
 		).put(
 			"filterOperators", LocalizedJSONArrayUtil.getFilterOperatorsJSONObject(locale)

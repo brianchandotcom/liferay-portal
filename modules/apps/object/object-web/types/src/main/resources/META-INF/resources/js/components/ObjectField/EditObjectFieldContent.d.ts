@@ -23,6 +23,7 @@ interface EditObjectFieldContentProps
 	values: Partial<ObjectField>;
 }
 export declare function EditObjectFieldContent({
+	baseResourceURL,
 	containerWrapper,
 	creationLanguageId,
 	errors,
@@ -33,7 +34,6 @@ export declare function EditObjectFieldContent({
 	learnResources,
 	modelBuilder,
 	objectDefinitionExternalReferenceCode,
-	objectFieldTypes,
 	objectName,
 	objectRelationshipId,
 	readOnly,

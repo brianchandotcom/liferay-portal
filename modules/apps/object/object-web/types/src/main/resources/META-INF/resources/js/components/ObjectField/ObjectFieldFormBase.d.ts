@@ -13,7 +13,7 @@ interface ObjectFieldFormBaseProps {
 	editingField?: boolean;
 	errors: ObjectFieldErrors;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
-	objectDefinition?: ObjectDefinition;
+	objectDefinition?: Partial<ObjectDefinition>;
 	objectDefinitionExternalReferenceCode: string;
 	objectField: Partial<ObjectField>;
 	objectFieldTypes: ObjectFieldType[];

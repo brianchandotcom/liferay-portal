@@ -18,6 +18,7 @@ import {EditObjectFieldContent} from './EditObjectFieldContent';
 import {useObjectFieldForm} from './useObjectFieldForm';
 
 export interface EditObjectFieldProps {
+	baseResourceURL: string;
 	creationLanguageId: Liferay.Language.Locale;
 	filterOperators: TFilterOperators;
 	forbiddenChars: string[];
@@ -28,7 +29,6 @@ export interface EditObjectFieldProps {
 	learnResources: ObjectWebLearnResources;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldId: number;
-	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
 	objectRelationshipId: number;
 	readOnly: boolean;
@@ -57,6 +57,7 @@ export const objectFieldInitialValues: Partial<ObjectField> = {
 };
 
 export default function EditObjectField({
+	baseResourceURL,
 	creationLanguageId,
 	filterOperators,
 	forbiddenChars,
@@ -67,7 +68,6 @@ export default function EditObjectField({
 	learnResources,
 	objectDefinitionExternalReferenceCode,
 	objectFieldId,
-	objectFieldTypes,
 	objectName,
 	objectRelationshipId,
 	readOnly,
@@ -131,6 +131,7 @@ export default function EditObjectField({
 			title={Liferay.Language.get('field')}
 		>
 			<EditObjectFieldContent
+				baseResourceURL={baseResourceURL}
 				containerWrapper={Card}
 				creationLanguageId={creationLanguageId}
 				errors={errors}
@@ -142,7 +143,6 @@ export default function EditObjectField({
 				objectDefinitionExternalReferenceCode={
 					objectDefinitionExternalReferenceCode
 				}
-				objectFieldTypes={objectFieldTypes}
 				objectName={objectName}
 				objectRelationshipId={objectRelationshipId}
 				readOnly={readOnly}

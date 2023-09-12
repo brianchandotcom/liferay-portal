@@ -18,19 +18,21 @@ import {useObjectFieldForm} from './useObjectFieldForm';
 
 import './ModalAddObjectField.scss';
 
+import {createResourceURL, fetch} from 'frontend-js-web';
+
 interface ModalAddObjectField {
+	baseResourceURL: string;
 	creationLanguageId: Liferay.Language.Locale;
 	objectDefinitionExternalReferenceCode: string;
-	objectFieldTypes: ObjectFieldType[];
 	objectName?: string;
 	onAfterSubmit: (value: ObjectField) => void;
 	setVisibility: (value: boolean) => void;
 }
 
 export function ModalAddObjectField({
+	baseResourceURL,
 	creationLanguageId,
 	objectDefinitionExternalReferenceCode,
-	objectFieldTypes,
 	objectName,
 	onAfterSubmit,
 	setVisibility,
@@ -39,6 +41,9 @@ export function ModalAddObjectField({
 	const [objectDefinition, setObjectDefinition] = useState<
 		ObjectDefinition
 	>();
+	const [objectFieldTypes, setObjectFieldTypes] = useState<ObjectFieldType[]>(
+		[]
+	);
 	const {observer, onClose} = useModal({onClose: () => setVisibility(false)});
 
 	const initialValues: Partial<ObjectField> = {
@@ -103,31 +108,38 @@ export function ModalAddObjectField({
 		onSubmit,
 	});
 
-	const applyFeatureFlag = () => {
-		return objectFieldTypes.filter((objectFieldType) => {
-			if (!Liferay.FeatureFlags['LPS-164948']) {
-				return objectFieldType.businessType !== 'Formula';
-			}
-		});
-	};
-
 	const showEnableTranslationToggle =
 		values.businessType === 'LongText' ||
 		values.businessType === 'RichText' ||
 		values.businessType === 'Text';
 
 	useEffect(() => {
-		if (!objectDefinition) {
-			const makeFetch = async () => {
-				const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
-					objectDefinitionExternalReferenceCode
-				);
+		const makeFetch = async () => {
+			const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
+				objectDefinitionExternalReferenceCode
+			);
 
-				setObjectDefinition(objectDefinitionResponse);
+			setObjectDefinition(objectDefinitionResponse);
+
+			const url = createResourceURL(baseResourceURL, {
+				objectDefinitionId: objectDefinitionResponse.id,
+				p_p_resource_id: '/object_definitions/get_object_field_types',
+			}).href;
+
+			const objectFieldTypesResponse = await fetch(url, {
+				method: 'GET',
+			});
+
+			const {
+				objectFieldTypes,
+			} = (await objectFieldTypesResponse.json()) as {
+				objectFieldTypes: ObjectFieldType[];
 			};
 
-			makeFetch();
-		}
+			setObjectFieldTypes(objectFieldTypes);
+		};
+
+		makeFetch();
 
 		if (Liferay.FeatureFlags['LPS-172017']) {
 			if (
@@ -148,7 +160,7 @@ export function ModalAddObjectField({
 			return;
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values.businessType]);
+	}, [objectDefinitionExternalReferenceCode, values.businessType]);
 
 	return (
 		<ClayModalProvider>
@@ -184,11 +196,7 @@ export function ModalAddObjectField({
 								objectDefinitionExternalReferenceCode
 							}
 							objectField={values}
-							objectFieldTypes={
-								!Liferay.FeatureFlags['LPS-164948']
-									? applyFeatureFlag()
-									: objectFieldTypes
-							}
+							objectFieldTypes={objectFieldTypes}
 							objectName={objectName ?? ''}
 							setValues={setValues}
 						>

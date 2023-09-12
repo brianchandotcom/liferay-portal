@@ -13,6 +13,7 @@ interface BasicInfoContainerProps {
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	isApproved: boolean;
 	modelBuilder?: boolean;
+	objectDefinition: Partial<ObjectDefinition>;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldTypes: ObjectFieldType[];
 	objectName: string;
@@ -29,6 +30,7 @@ export declare function BasicInfoContainer({
 	handleChange,
 	isApproved,
 	modelBuilder,
+	objectDefinition,
 	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
 	objectName,

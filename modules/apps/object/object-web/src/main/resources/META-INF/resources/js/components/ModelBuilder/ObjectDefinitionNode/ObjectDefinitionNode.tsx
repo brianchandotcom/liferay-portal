@@ -318,7 +318,49 @@ export function ObjectDefinitionNode({
 					objectDefinitionExternalReferenceCode={
 						externalReferenceCode
 					}
-					objectFieldTypes={[]}
+					objectName={name}
+					onAfterSubmit={(newObjectField) => {
+						const {edges, nodes} = store.getState();
+
+						dispatch({
+							payload: {
+								edges,
+								newObjectField,
+								nodes,
+								objectDefinitionExternalReferenceCode: externalReferenceCode,
+							},
+							type: TYPES.ADD_NEW_OBJECT_FIELD,
+						});
+
+						openToast({
+							message: Liferay.Language.get(
+								'field-successfully-added'
+							),
+							type: 'success',
+						});
+
+						setShowModal((prevState) => ({
+							...prevState,
+							addObjectField: false,
+						}));
+
+						setShowAllObjectFields(true);
+					}}
+					setVisibility={() =>
+						setShowModal((prevState) => ({
+							...prevState,
+							addObjectField: false,
+						}))
+					}
+				/>
+			)}
+
+			{showModal.addObjectField && (
+				<ModalAddObjectField
+					creationLanguageId={defaultLanguageId}
+					objectDefinitionExternalReferenceCode={
+						externalReferenceCode
+					}
 					objectName={name}
 					onAfterSubmit={(newObjectField) => {
 						const {edges, nodes} = store.getState();

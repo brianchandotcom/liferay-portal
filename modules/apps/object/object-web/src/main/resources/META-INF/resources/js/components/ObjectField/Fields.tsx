@@ -28,7 +28,6 @@ interface ItemData {
 
 interface FieldsProps extends IFDSTableProps {
 	baseResourceURL: string;
-	objectFieldTypes: ObjectFieldType[];
 }
 
 export default function Fields({
@@ -39,7 +38,6 @@ export default function Fields({
 	id,
 	items,
 	objectDefinitionExternalReferenceCode,
-	objectFieldTypes,
 	style,
 	url,
 }: FieldsProps) {
@@ -225,13 +223,13 @@ export default function Fields({
 
 			{showAddFieldModal && (
 				<ModalAddObjectField
+					baseResourceURL={baseResourceURL}
 					creationLanguageId={
 						creationLanguageId as Liferay.Language.Locale
 					}
 					objectDefinitionExternalReferenceCode={
 						objectDefinitionExternalReferenceCode
 					}
-					objectFieldTypes={objectFieldTypes}
 					onAfterSubmit={() => {
 						setShowAddFieldModal(false);
 						window.location.reload();

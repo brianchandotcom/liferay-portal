@@ -8,7 +8,6 @@
 import {IFDSTableProps} from '../../utils/fds';
 interface FieldsProps extends IFDSTableProps {
 	baseResourceURL: string;
-	objectFieldTypes: ObjectFieldType[];
 }
 export default function Fields({
 	apiURL,
@@ -18,7 +17,6 @@ export default function Fields({
 	id,
 	items,
 	objectDefinitionExternalReferenceCode,
-	objectFieldTypes,
 	style,
 	url,
 }: FieldsProps): JSX.Element;

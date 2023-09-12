@@ -43,7 +43,7 @@ interface ObjectFieldFormBaseProps {
 	editingField?: boolean;
 	errors: ObjectFieldErrors;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
-	objectDefinition?: ObjectDefinition;
+	objectDefinition?: Partial<ObjectDefinition>;
 	objectDefinitionExternalReferenceCode: string;
 	objectField: Partial<ObjectField>;
 	objectFieldTypes: ObjectFieldType[];
@@ -156,7 +156,7 @@ export default function ObjectFieldFormBase({
 	children,
 	creationLanguageId2,
 	disabled,
-	editingField,
+	editingField = false,
 	errors,
 	handleChange,
 	objectDefinition,
@@ -169,6 +169,13 @@ export default function ObjectFieldFormBase({
 	onRelationshipChange,
 	setValues,
 }: ObjectFieldFormBaseProps) {
+	const [oneToManyRelationship, setOneToManyRelationship] = useState<
+		TObjectRelationship
+	>();
+	const [pickLists, setPickLists] = useState<Partial<PickList>[]>([]);
+	const [picklistQuery, setPicklistQuery] = useState<string>('');
+	const [selectedOutput, setSelectedOutput] = useState<string>('');
+
 	const businessTypeMap = useMemo(() => {
 		const businessTypeMap = new Map<string, ObjectFieldType>();
 
@@ -313,6 +320,29 @@ export default function ObjectFieldFormBase({
 		}
 	};
 
+	const applyFeatureFlag = () => {
+		return objectFieldTypes.filter((objectFieldType) => {
+			if (!Liferay.FeatureFlags['LPS-164948']) {
+				return objectFieldType.businessType !== 'Formula';
+			}
+		});
+	};
+
+	useEffect(() => {
+		const makeFetch = async () => {
+			await getFieldSettingsByBusinessType(
+				objectRelationshipId as number,
+				setOneToManyRelationship,
+				setPickLists,
+				setSelectedOutput,
+				values
+			);
+		};
+
+		makeFetch();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [values.businessType]);
+
 	return (
 		<>
 			<Input
@@ -333,7 +363,11 @@ export default function ObjectFieldFormBase({
 				error={errors.businessType}
 				label={Liferay.Language.get('type')}
 				onChange={handleTypeChange}
-				options={objectFieldTypes}
+				options={
+					!Liferay.FeatureFlags['LPS-164948'] && !editingField
+						? applyFeatureFlag()
+						: objectFieldTypes
+				}
 				required
 				value={businessTypeMap.get(values.businessType ?? '')?.label}
 			/>

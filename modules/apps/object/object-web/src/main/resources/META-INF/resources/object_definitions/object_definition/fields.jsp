@@ -41,8 +41,6 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			).put(
 				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 			).put(
-				"objectFieldTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(locale)
-			).put(
 				"style", "fluid"
 			).put(
 				"url", objectDefinitionsFieldsDisplayContext.getEditObjectFieldURL()

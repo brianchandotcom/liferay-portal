@@ -106,6 +106,7 @@ export function BasicInfoTab({
 					handleChange={handleChange}
 					isApproved={isApproved}
 					modelBuilder={modelBuilder}
+					objectDefinition={objectDefinition}
 					objectDefinitionExternalReferenceCode={
 						objectDefinitionExternalReferenceCode
 					}

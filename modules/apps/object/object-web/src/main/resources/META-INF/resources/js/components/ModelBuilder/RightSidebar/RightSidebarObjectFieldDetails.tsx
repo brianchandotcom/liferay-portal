@@ -187,6 +187,7 @@ export function RightSidebarObjectFieldDetails() {
 			<div>
 				<div className="lfr-objects__model-builder-right-sidebar-definition-node-content">
 					<EditObjectFieldContent
+						baseResourceURL={baseResourceURL}
 						containerWrapper={ClayPanel}
 						creationLanguageId={
 							selectedNode.data?.defaultLanguageId ?? 'en_US'
@@ -205,7 +206,6 @@ export function RightSidebarObjectFieldDetails() {
 						objectDefinitionExternalReferenceCode={
 							selectedNode.data?.externalReferenceCode ?? ''
 						}
-						objectFieldTypes={[]}
 						objectName={selectedNode.data?.name as string}
 						objectRelationshipId={0}
 						readOnly={

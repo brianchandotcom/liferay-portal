@@ -277,11 +277,11 @@ definition {
 		}
 
 		task ("Check that an AB test appears with the status terminated and another with the status running in the AC list") {
-			ABTest.viewABTestStatusInACList(
+			ACTests.viewABTestStatusInACList(
 				abTestTitle = ${nameABTest},
 				status = "TERMINATED");
 
-			ABTest.viewABTestStatusInACList(
+			ACTests.viewABTestStatusInACList(
 				abTestTitle = "AB Test 2",
 				status = "RUNNING");
 		}

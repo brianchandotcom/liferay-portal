@@ -17,6 +17,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AB_TEST_ALERT_MESSAGE</td>
+	<td>//div[contains(@class,'analytics-summary-card-alert')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETE_TEST</td>
 	<td>//*[contains(@class,'dropdown-item')and text()='Delete Test']</td>
 	<td></td>

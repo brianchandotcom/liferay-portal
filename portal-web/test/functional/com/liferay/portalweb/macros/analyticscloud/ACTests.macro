@@ -37,7 +37,12 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-		Button.click(button = "Terminate Test");
+	macro viewABTestStatusInACList {
+		AssertTextEquals(
+			key_abTestTitle = ${abTestTitle},
+			locator1 = "ACTests#VIEW_TEST_STATUS_ANALYTICS_CLOUD",
+			value1 = ${status});
+	}
 
 		Button.click(button = "Stop Test");
 	}

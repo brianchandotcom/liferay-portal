@@ -332,13 +332,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewABTestStatusInACList {
-		AssertTextEquals(
-			key_abTestTitle = ${abTestTitle},
-			locator1 = "ABTest#VIEW_TEST_STATUS_ANALYTICS_CLOUD",
-			value1 = ${status});
-	}
-
 	@summary = "Default summary"
 	macro viewDataInAnalyticsCloud() {
 		AssertElementPresent(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");

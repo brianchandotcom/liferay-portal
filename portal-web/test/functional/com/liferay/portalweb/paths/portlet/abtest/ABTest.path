@@ -171,11 +171,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VIEW_TEST_STATUS_ANALYTICS_CLOUD</td>
-	<td>//span[@title and text()='${key_abTestTitle}']//ancestor::tr//div[contains(@class,'experiment-status')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>VALUES_IN_LIST</td>
 	<td>//ul[contains(@class,'list-group show-quick-actions-on-hover')]//li[${key_index}]//*[text()='${key_name}']</td>
 	<td></td>

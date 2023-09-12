@@ -5,9 +5,49 @@
 
 package com.liferay.layout.page.template.model.impl;
 
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  */
 public class LayoutPageTemplateCollectionImpl
 	extends LayoutPageTemplateCollectionBaseImpl {
+
+	@Override
+	public LayoutPageTemplateCollection getAncestor() {
+		if (getParentLayoutPageTemplateCollectionId() ==
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT) {
+
+			return null;
+		}
+
+		return LayoutPageTemplateCollectionLocalServiceUtil.
+			fetchLayoutPageTemplateCollection(
+				getParentLayoutPageTemplateCollectionId());
+	}
+
+	@Override
+	public List<LayoutPageTemplateCollection> getAncestors() {
+		List<LayoutPageTemplateCollection>
+			ancestorsLayoutPageTemplateCollection = new ArrayList<>();
+
+		LayoutPageTemplateCollection curLayoutPageTemplateCollection = this;
+
+		while (curLayoutPageTemplateCollection != null) {
+			ancestorsLayoutPageTemplateCollection.add(
+				curLayoutPageTemplateCollection);
+
+			curLayoutPageTemplateCollection =
+				curLayoutPageTemplateCollection.getAncestor();
+		}
+
+		return ancestorsLayoutPageTemplateCollection;
+	}
+
 }

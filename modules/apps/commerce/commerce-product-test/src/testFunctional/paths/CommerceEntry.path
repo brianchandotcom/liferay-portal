@@ -111,6 +111,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_TABLE_CHECKBOX_CHECKED</td>
+	<td>//tr[contains(.,'${checkboxName}')]//input[@type='checkbox' and @checked]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANY_TABLE_CHECKBOX_UNCHECKED</td>
+	<td>//tr[contains(.,'${checkboxName}')]//input[@type='checkbox' and not(@checked)]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_COMPARE_ITEM_ACTIVE</td>
 	<td>//div[@class="mini-compare-item active"]//div[@class="mini-compare-thumbnail"]</td>
 	<td></td>
@@ -985,6 +995,11 @@
 <tr>
 	<td>TABLE_LIST_TITLE</td>
 	<td>//div[contains(@class,'table-list-title')]/a[contains(.,'${key_entryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TABLE_LIST_TITLE_AND_POSITION</td>
+	<td>xpath=(//div[contains(@class,'table-list-title')]/a[contains(.,'${key_entryName}')])[${index}]</td>
 	<td></td>
 </tr>
 <tr>

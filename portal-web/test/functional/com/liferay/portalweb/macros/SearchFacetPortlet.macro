@@ -9,11 +9,11 @@ definition {
 
 		var searchURL = SearchFacetPortlet.generateFacetCheckedURL(
 			facetName = ${facetName},
-			termURLValue = ${termURLValue},
 			facetTerm = ${facetTerm},
 			searchPage = ${searchPage},
 			searchTerm = ${searchTerm},
-			searchURL = ${searchURL});
+			searchURL = ${searchURL},
+			termURLValue = ${termURLValue});
 
 		AssertLocation(value1 = ${searchURL});
 
@@ -276,9 +276,9 @@ definition {
 
 		var searchURL = SearchFacetPortlet.generateFacetUncheckedURL(
 			facetName = ${facetName},
-			termURLValue = ${termURLValue},
 			facetTerm = ${facetTerm},
-			searchURL = ${searchURL});
+			searchURL = ${searchURL},
+			termURLValue = ${termURLValue});
 
 		AssertLocation(value1 = ${searchURL});
 

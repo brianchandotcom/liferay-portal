@@ -64,14 +64,18 @@ public class ViewRelatedEntriesDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public long getCTCollectionId() {
+		return _ctCollectionId;
+	}
+
 	public Map<String, Object> getReactData() throws Exception {
-		Map<Long, List<CTEntry>> discardCTEntries =
-			_ctCollectionLocalService.getDiscardCTEntries(
+		Map<Long, List<CTEntry>> relatedCTEntriesMap =
+			_ctCollectionLocalService.getRelatedCTEntriesMap(
 				_ctCollectionId, _modelClassNameId, _modelClassPK);
 
 		List<CTEntry> ctEntries = new ArrayList<>();
 
-		for (List<CTEntry> value : discardCTEntries.values()) {
+		for (List<CTEntry> value : relatedCTEntriesMap.values()) {
 			ctEntries.addAll(value);
 		}
 
@@ -110,8 +114,6 @@ public class ViewRelatedEntriesDisplayContext {
 						).put(
 							"userId", ctEntry.getUserId()
 						));
-
-					_ctEntryIds.add(ctEntry.getCtEntryId());
 				}
 
 				return ctEntriesJSONArray;
@@ -121,7 +123,7 @@ public class ViewRelatedEntriesDisplayContext {
 		).put(
 			"typeNames",
 			DisplayContextUtil.getTypeNamesJSONObject(
-				discardCTEntries.keySet(), _ctDisplayRendererRegistry,
+				relatedCTEntriesMap.keySet(), _ctDisplayRendererRegistry,
 				_themeDisplay)
 		).put(
 			"userInfo",
@@ -176,6 +178,22 @@ public class ViewRelatedEntriesDisplayContext {
 		return selectOptions;
 	}
 
+	public String getSubmitDiscardURL() {
+		return PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/change_tracking/discard_changes"
+		).setRedirect(
+			getRedirectURL()
+		).setParameter(
+			"ctCollectionId", _ctCollectionId
+		).setParameter(
+			"modelClassNameId", _modelClassNameId
+		).setParameter(
+			"modelClassPK", _modelClassPK
+		).buildString();
+	}
+
 	public String getSubmitMoveURL() {
 		return PortletURLBuilder.createActionURL(
 			_renderResponse
@@ -192,26 +210,9 @@ public class ViewRelatedEntriesDisplayContext {
 		).buildString();
 	}
 
-	public String getSubmitURL() {
-		return PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/change_tracking/discard_changes"
-		).setRedirect(
-			getRedirectURL()
-		).setParameter(
-			"ctCollectionId", _ctCollectionId
-		).setParameter(
-			"modelClassNameId", _modelClassNameId
-		).setParameter(
-			"modelClassPK", _modelClassPK
-		).buildString();
-	}
-
 	private final long _ctCollectionId;
 	private final CTCollectionLocalService _ctCollectionLocalService;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
-	private final List<Long> _ctEntryIds = new ArrayList<>();
 	private final HttpServletRequest _httpServletRequest;
 	private final long _modelClassNameId;
 	private final long _modelClassPK;

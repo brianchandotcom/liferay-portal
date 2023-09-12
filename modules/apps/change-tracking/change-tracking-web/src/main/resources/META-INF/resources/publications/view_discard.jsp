@@ -37,7 +37,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "discard-changes"));
 		</clay:sheet-section>
 
 		<clay:sheet-footer>
-			<aui:button href="<%= viewRelatedEntriesDisplayContext.getSubmitURL() %>" primary="true" value="discard" />
+			<aui:button href="<%= viewRelatedEntriesDisplayContext.getSubmitDiscardURL() %>" primary="true" value="discard" />
 
 			<aui:button href="<%= viewRelatedEntriesDisplayContext.getRedirectURL() %>" type="cancel" />
 		</clay:sheet-footer>

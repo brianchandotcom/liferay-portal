@@ -37,6 +37,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "move-changes"));
 		</clay:sheet-section>
 
 		<aui:form action="<%= viewRelatedEntriesDisplayContext.getSubmitMoveURL() %>" method="post" name="fm">
+			<aui:input name="fromCTCollectionId" type="hidden" value="<%= viewRelatedEntriesDisplayContext.getCTCollectionId() %>" />
+
 			<clay:select
 				containerCssClass="mt-3"
 				id='<%= liferayPortletResponse.getNamespace() + "toPublication" %>'

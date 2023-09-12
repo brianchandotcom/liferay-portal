@@ -5,16 +5,9 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
-import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.model.CTProcess;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTCollectionService;
-import com.liferay.portal.background.task.model.BackgroundTask;
-import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -22,9 +15,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-
-import java.util.List;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,57 +48,28 @@ public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 			(fromCTCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION) &&
 			(toCTCollectionId != CTConstants.CT_COLLECTION_ID_PRODUCTION)) {
 
-			long[] ctEntryIds = ParamUtil.getLongValues(
-				actionRequest, "ctEntryIds");
-
 			try {
-				CTCollection fromCTCollection =
-					_ctCollectionLocalService.getCTCollection(
-						fromCTCollectionId);
-				CTCollection toCTCollection =
-					_ctCollectionLocalService.getCTCollection(toCTCollectionId);
+				long modelClassNameId = ParamUtil.getLong(
+					actionRequest, "modelClassNameId");
+				long modelClassPK = ParamUtil.getLong(
+					actionRequest, "modelClassPK");
 
-				Map<Long, List<ConflictInfo>> conflictInfoMap =
-					_ctCollectionLocalService.checkConflicts(
-						fromCTCollection.getCompanyId(), ctEntryIds,
-						fromCTCollectionId, fromCTCollection.getName(),
-						toCTCollectionId, toCTCollection.getName());
-
-				if (conflictInfoMap.isEmpty()) {
-					CTProcess ctProcess = _ctCollectionService.moveCTEntries(
-						fromCTCollectionId, toCTCollectionId, ctEntryIds);
-
-					if (ctProcess != null) {
-						BackgroundTask backgroundTask =
-							_backgroundTaskLocalService.fetchBackgroundTask(
-								ctProcess.getBackgroundTaskId());
-
-						if (backgroundTask.getStatus() ==
-								BackgroundTaskConstants.STATUS_FAILED) {
-
-							SessionErrors.add(actionRequest, "failedMove");
-						}
-					}
-				}
-				else {
-					SessionErrors.add(actionRequest, "failedMove");
-				}
+				_ctCollectionService.moveCTEntry(
+					fromCTCollectionId, toCTCollectionId, modelClassNameId,
+					modelClassPK);
 			}
 			catch (PortalException portalException) {
 				SessionErrors.add(actionRequest, portalException.getClass());
 			}
-
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-			actionResponse.sendRedirect(redirect);
 		}
+		else {
+			SessionErrors.add(actionRequest, "failedMove");
+		}
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		actionResponse.sendRedirect(redirect);
 	}
-
-	@Reference
-	private BackgroundTaskLocalService _backgroundTaskLocalService;
-
-	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Reference
 	private CTCollectionService _ctCollectionService;

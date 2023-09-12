@@ -11,7 +11,7 @@ import React, {useContext, useRef, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
 import Actions from '../../actions/Actions';
-import {getValueDetailsFromItem} from '../../utils/index';
+import {getLocalizedValueFromItem} from '../../utils/i18nHelper';
 import ViewsContext from '../ViewsContext';
 import TableCell from './TableCell';
 import TableHead from './TableHead';
@@ -28,7 +28,7 @@ function getItemFields(
 	return fields.map((field) => {
 		const {actionDropdownItems} = item;
 		const {rootPropertyName, value, valuePath} = field.fieldName
-			? getValueDetailsFromItem(item, field.fieldName)
+			? getLocalizedValueFromItem(item, field.fieldName)
 			: {};
 
 		return (

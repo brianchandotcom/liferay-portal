@@ -155,72 +155,6 @@ definition {
 		}
 	}
 
-	@description = "Story: LRAC-14101 | Automation ID: LRAC-14543 | Test Summary: Terminate an AB Test and create a new one"
-	@priority = 4
-	test CanTerminateABTestAndCreateNewOne {
-		task ("Create AB test") {
-			ABTest.createABTest(
-				goal = "Click",
-				testTitle = ${nameABTest});
-		}
-
-		task ("Select the button element added to the page for AB test") {
-			ABTest.selectElementID();
-		}
-
-		task ("Create variable") {
-			ABTest.createVariant(variantName = "Variant name");
-		}
-
-		task ("Click on Review and Run test") {
-			ABTest.runTest();
-		}
-
-		task ("Terminate the test") {
-			ABTest.terminateTest();
-		}
-
-		task ("Click on the Create New Test button on the side panel") {
-			Button.click(button = "Create New Test");
-		}
-
-		task ("Fill in the information for the new AB test") {
-			ABTest.fillInput(
-				key_testTitle = "AB Test 2",
-				labelValue = "Test Name");
-
-			ABTest.selectGoal(key_goal = "Bounce Rate");
-
-			Click(locator1 = "Modal#SAVE_BUTTON");
-		}
-
-		task ("Create variable") {
-			ABTest.createVariant(variantName = "Variant name 2");
-		}
-
-		task ("Click on Review and Run test") {
-			ABTest.runTest();
-		}
-
-		task ("Go to AC > Tests") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
-
-			ACNavigation.goToTests();
-		}
-
-		task ("Check that an AB test appears with the status terminated and another with the status running in the AC list") {
-			ABTest.viewABTestStatusInACList(
-				abTestTitle = ${nameABTest},
-				status = "TERMINATED");
-
-			ABTest.viewABTestStatusInACList(
-				abTestTitle = "AB Test 2",
-				status = "RUNNING");
-		}
-	}
-
 	@description = "Story: LRAC-14101 | Automation ID: LRAC-14544 | Test Summary: Delete a terminated test in DXP"
 	@priority = 4
 	test CanDeleteTerminatedTestOnDXP {
@@ -284,6 +218,72 @@ definition {
 
 		task ("Check that the empty state message appears in the list") {
 			ACUtils.viewNoResultsMessage(noResultMessage = "There are no tests found.");
+		}
+	}
+
+	@description = "Story: LRAC-14101 | Automation ID: LRAC-14543 | Test Summary: Terminate an AB Test and create a new one"
+	@priority = 4
+	test CanTerminateABTestAndCreateNewOne {
+		task ("Create AB test") {
+			ABTest.createABTest(
+				goal = "Click",
+				testTitle = ${nameABTest});
+		}
+
+		task ("Select the button element added to the page for AB test") {
+			ABTest.selectElementID();
+		}
+
+		task ("Create variable") {
+			ABTest.createVariant(variantName = "Variant name");
+		}
+
+		task ("Click on Review and Run test") {
+			ABTest.runTest();
+		}
+
+		task ("Terminate the test") {
+			ABTest.terminateTest();
+		}
+
+		task ("Click on the Create New Test button on the side panel") {
+			Button.click(button = "Create New Test");
+		}
+
+		task ("Fill in the information for the new AB test") {
+			ABTest.fillInput(
+				key_testTitle = "AB Test 2",
+				labelValue = "Test Name");
+
+			ABTest.selectGoal(key_goal = "Bounce Rate");
+
+			Click(locator1 = "Modal#SAVE_BUTTON");
+		}
+
+		task ("Create variable") {
+			ABTest.createVariant(variantName = "Variant name 2");
+		}
+
+		task ("Click on Review and Run test") {
+			ABTest.runTest();
+		}
+
+		task ("Go to AC > Tests") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
+			ACNavigation.goToTests();
+		}
+
+		task ("Check that an AB test appears with the status terminated and another with the status running in the AC list") {
+			ABTest.viewABTestStatusInACList(
+				abTestTitle = ${nameABTest},
+				status = "TERMINATED");
+
+			ABTest.viewABTestStatusInACList(
+				abTestTitle = "AB Test 2",
+				status = "RUNNING");
 		}
 	}
 

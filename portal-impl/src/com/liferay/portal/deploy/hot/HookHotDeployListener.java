@@ -211,7 +211,7 @@ public class HookHotDeployListener
 		"theme.images.fast.load", "theme.jsp.override.enabled",
 		"theme.loader.new.theme.id.on.import", "theme.portlet.decorate.default",
 		"theme.portlet.sharing.default", "theme.shortcut.icon", "time.zones",
-		"upgrade.processes", "user.notification.event.confirmation.enabled",
+		"user.notification.event.confirmation.enabled",
 		"users.email.address.generator", "users.email.address.validator",
 		"users.email.address.required", "users.form.add.identification",
 		"users.form.add.main", "users.form.add.miscellaneous",

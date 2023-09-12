@@ -6,7 +6,7 @@
 /// <reference types="react" />
 
 import {IFDSViewSectionInterface} from '../FDSView';
-import '../../css/FDSEntries.scss';
+import '../../css/Fields.scss';
 declare const Fields: ({
 	fdsClientExtensionCellRenderers,
 	fdsView,

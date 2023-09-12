@@ -713,7 +713,13 @@ describe('Terminated', () => {
 		 * Checks for button to view data in Analytics Cloud
 		 */
 
-		expect(getByText('view-data-in-analytics-cloud')).toBeInTheDocument();
+		const redirectButton = getByText('view-data-in-analytics-cloud');
+
+		expect(redirectButton).toBeInTheDocument();
+		expect(redirectButton).toHaveAttribute(
+			'href',
+			'https://analytics.liferay.com/'
+		);
 
 		/**
 		 * Checks for modal to create a new test

@@ -25,7 +25,7 @@ export const variant = {
 export const segmentsExperiment = {
 	confidenceLevel: 0,
 	description: 'Experiment 1 description',
-	detailsURL: 'www.example.com',
+	detailsURL: 'https://analytics.liferay.com/',
 	editable: true,
 	goal: {
 		label: 'Bounce Rate',

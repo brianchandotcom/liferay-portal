@@ -1,0 +1,79 @@
+// Aspect ratio
+
+.aspect-ratio {
+	padding-bottom: var(--aspect-ratio);
+}
+
+.aspect-ratio-1 {
+	--aspect-ratio: var(--aspect-ratio-1);
+}
+
+.aspect-ratio-2 {
+	--aspect-ratio: var(--aspect-ratio-2);
+}
+
+.aspect-ratio-3 {
+	--aspect-ratio: var(--aspect-ratio-3);
+}
+
+.aspect-ratio-4 {
+	--aspect-ratio: var(--aspect-ratio-4);
+}
+
+.aspect-ratio-5 {
+	--aspect-ratio: var(--aspect-ratio-5);
+}
+
+.aspect-ratio-6 {
+	--aspect-ratio: var(--aspect-ratio-6);
+}
+
+// Body
+
+#wrapper {
+	--portlet-topper-bg: var(--primary);
+	--portlet-topper-color: var(--white);
+	--portlet-topper-link-color: var(--portlet-topper-color);
+
+	background-color: var(--body-bg, $body-bg);
+	color: var(--body-color, $body-color);
+	font-size: var(--font-size-base, $font-size-base);
+}
+
+// Portlet
+
+.portlet {
+	.portlet-content {
+		background-color: var(--portlet-bg, transparent);
+	}
+
+	@at-root .controls-visible {
+		.portlet-content-editable {
+			@include media-breakpoint-down(sm) {
+				border-color: $portlet-topper-border;
+			}
+		}
+
+		.portlet:hover,
+		.portlet.open,
+		.portlet.focus {
+			> .portlet-content-editable {
+				@include media-breakpoint-up(sm) {
+					border-color: $portlet-topper-border;
+				}
+			}
+		}
+	}
+}
+
+.portlet-layout {
+	.portlet-header {
+		margin-bottom: $portlet-header-margin-bottom;
+	}
+}
+
+// Theme footer
+
+#footer {
+	background-color: var(--brand-color-4, #30313f);
+}

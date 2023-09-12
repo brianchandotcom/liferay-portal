@@ -1,0 +1,5 @@
+liferay-delectablebonsai-theme-css:
+    clayURL: css/clay.css
+    mainURL: css/main.css
+    name: Liferay Delectable Bonsai Theme CSS
+    type: themeCSS

@@ -1,0 +1,9 @@
+.custom-control-input {
+	& ~ .custom-control-label::before {
+		clip-path: circle(1.25rem);
+	}
+
+	&:not(:disabled):hover ~ .custom-control-label::before {
+		box-shadow: $custom-control-indicator-hover-box-shadow;
+	}
+}

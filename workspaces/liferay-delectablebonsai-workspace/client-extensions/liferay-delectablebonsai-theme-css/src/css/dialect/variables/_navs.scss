@@ -1,0 +1,415 @@
+// Nav Base
+
+$nav-base-link: (
+	after: (
+		bottom: 0,
+		content: none,
+		display: block,
+		position: absolute,
+		left: 0,
+		right: 0,
+		width: auto,
+	),
+);
+
+// Nav Primary
+
+$nav-underline-link: (
+	background-color: var(--tab-primary-item-background-color),
+	border-color: var(--tab-primary-item-border-color),
+	border-radius: var(--tab-primary-item-border-radius),
+	border-style: solid,
+	border-bottom-width: var(--tab-primary-horizontal-item-border-bottom-width),
+	border-left-width: var(--tab-primary-horizontal-item-border-left-width),
+	border-right-width: var(--tab-primary-horizontal-item-border-right-width),
+	border-top-width: var(--tab-primary-horizontal-item-border-top-width),
+	color: var(--tab-primary-item-color),
+	font-size: var(--tab-primary-item-font-size),
+	font-weight: var(--tab-primary-item-font-weight),
+	line-height: var(--tab-primary-item-line-height),
+	padding: var(--tab-primary-horizontal-item-padding-y)
+		var(--tab-primary-horizontal-item-padding-x),
+	active-class: (
+		background-color: var(--tab-primary-item-background-color-active),
+		border-color: var(--tab-primary-item-border-color-active),
+		box-shadow: var(--tab-primary-item-box-shadow-active),
+		color: var(--tab-primary-item-color-active),
+		font-weight: var(--tab-primary-item-font-weight-active),
+		after: (
+			background-color: var(--tab-primary-item-active-bar-color-active),
+			height: var(--tab-primary-item-active-bar-thickness),
+			content: '',
+		),
+		inline-item: (
+			color: var(--tab-primary-item-icon-color-active),
+		),
+	),
+	after: (
+		border-radius: var(--tab-primary-item-active-bar-border-radius),
+		height: var(--tab-primary-item-active-bar-thickness),
+		width: var(--tab-primary-horizontal-item-active-bar-width),
+	),
+	disabled: (
+		border: 0,
+		background-color: var(--tab-primary-item-background-color-disabled),
+		color: var(--tab-primary-item-color-disabled),
+		font-weight: var(--tab-secondary-item-font-weight),
+		after: (
+			content: none,
+		),
+		inline-item: (
+			color: var(--tab-primary-item-icon-color-disabled),
+		),
+	),
+	hover: (
+		background-color: var(--tab-primary-item-background-color-hover),
+		border-color: var(--tab-primary-item-border-color-hover),
+		color: var(--tab-primary-item-color-hover),
+		box-shadow: var(--tab-primary-item-box-shadow-hover),
+		font-weight: var(--tab-primary-item-font-weight),
+		after: (
+			background-color: var(--tab-primary-item-active-bar-color-hover),
+			content: '',
+		),
+		inline-item: (
+			color: var(--tab-primary-item-icon-color-hover),
+		),
+	),
+	inline-item: (
+		color: var(--tab-primary-item-icon-color),
+		font-size: var(--tab-primary-item-icon-font-size),
+		margin-y: var(--tab-primary-item-inline-item-spacer-y),
+	),
+	inline-item-after: (
+		margin-left: var(--tab-primary-item-inline-item-spacer-x),
+	),
+	inline-item-before: (
+		margin-right: var(--tab-primary-item-inline-item-spacer-x),
+	),
+);
+
+$nav-underline-link-active-bar-top: (
+	border-bottom-width: var(--tab-primary-horizontal-item-border-top-width),
+	border-left-width: var(--tab-primary-horizontal-item-border-left-width),
+	border-right-width: var(--tab-primary-horizontal-item-border-right-width),
+	border-top-width: var(--tab-primary-horizontal-item-border-bottom-width),
+	active-class: (
+		border-bottom-color: transparent,
+	),
+	after: (
+		top: 0,
+		height: var(--tab-primary-item-active-bar-thickness),
+		width: var(--tab-primary-horizontal-item-active-bar-width),
+	),
+);
+
+$nav-underline-link-vertical: (
+	border-bottom-width: var(--tab-primary-vertical-item-border-bottom-width),
+	border-left-width: var(--tab-primary-vertical-item-border-left-width),
+	border-right-width: var(--tab-primary-vertical-item-border-right-width),
+	border-top-width: var(--tab-primary-vertical-item-border-top-width),
+	padding: var(--tab-primary-vertical-item-padding-y)
+		var(--tab-primary-vertical-item-padding-x),
+	active-class: (
+		border-right-color: transparent,
+	),
+	after: (
+		top: 0,
+		height: var(--tab-primary-vertical-item-active-bar-height),
+		width: var(--tab-primary-item-active-bar-thickness),
+	),
+);
+
+// Nav Secondary
+
+$nav-secondary-link: map-deep-merge(
+	(
+		background-color: var(--tab-secondary-item-background-color),
+		border-color: var(--tab-secondary-item-border-color),
+		border-radius: var(--tab-secondary-item-border-radius),
+		border-style: solid,
+		border-bottom-width:
+			var(--tab-secondary-horizontal-item-border-bottom-width),
+		border-left-width:
+			var(--tab-secondary-horizontal-item-border-left-width),
+		border-right-width:
+			var(--tab-secondary-horizontal-item-border-right-width),
+		border-top-width: var(--tab-secondary-horizontal-item-border-top-width),
+		color: var(--tab-secondary-item-color),
+		font-size: var(--tab-secondary-item-font-size),
+		font-weight: var(--tab-secondary-item-font-weight),
+		line-height: var(--tab-secondary-item-line-height),
+		padding: var(--tab-secondary-horizontal-item-padding-y)
+			var(--tab-secondary-horizontal-item-padding-x),
+		active-class: (
+			background-color: var(--tab-secondary-item-background-color-active),
+			border-color: var(--tab-secondary-item-border-color-active),
+			box-shadow: var(--tab-secondary-item-box-shadow-active),
+			color: var(--tab-secondary-item-color-active),
+			font-weight: var(--tab-secondary-item-font-weight-active),
+			after: (
+				content: '',
+			),
+			inline-item: (
+				color: var(--tab-secondary-item-icon-color-active),
+			),
+		),
+		after: (
+			background-color: var(--tab-secondary-item-active-bar-color-active),
+			border-radius: var(--tab-secondary-item-active-bar-border-radius),
+			height: var(--tab-secondary-item-active-bar-thickness),
+			width: var(--tab-secondary-horizontal-item-active-bar-width),
+		),
+		disabled: (
+			border: 0,
+			background-color:
+				var(--tab-secondary-item-background-color-disabled),
+			color: var(--tab-secondary-item-color-disabled),
+			font-weight: var(--tab-secondary-item-font-weight),
+			after: (
+				content: none,
+			),
+			inline-item: (
+				color: var(--tab-secondary-item-icon-color-disabled),
+			),
+		),
+		hover: (
+			background-color: var(--tab-secondary-item-background-color-hover),
+			border-color: var(--tab-secondary-item-border-color-hover),
+			color: var(--tab-secondary-item-color-hover),
+			box-shadow: var(--tab-secondary-item-box-shadow-hover),
+			after: (
+				background-color:
+					var(--tab-secondary-item-active-bar-color-hover),
+				content: '',
+			),
+			inline-item: (
+				color: var(--tab-secondary-item-icon-color-hover),
+			),
+		),
+		inline-item: (
+			color: var(--tab-secondary-item-icon-color),
+			font-size: var(--tab-secondary-item-icon-font-size),
+			margin-y: var(--tab-secondary-item-inline-item-spacer-y),
+		),
+		inline-item-after: (
+			margin-left: var(--tab-secondary-item-inline-item-spacer-x),
+		),
+		inline-item-before: (
+			margin-right: var(--tab-secondary-item-inline-item-spacer-x),
+		),
+	),
+	$nav-base-link
+);
+
+$nav-secondary-link-active-bar-top: (
+	active-class: (
+		border-bottom-color: transparent,
+	),
+	after: (
+		top: 0,
+		width: var(--tab-secondary-horizontal-item-active-bar-width),
+	),
+);
+
+$nav-secondary-link-vertical: (
+	border-bottom-width: var(--tab-secondary-vertical-item-border-top-width),
+	border-left-width: var(--tab-secondary-vertical-item-border-left-width),
+	border-right-width: var(--tab-secondary-vertical-item-border-right-width),
+	border-top-width: var(--tab-secondary-vertical-item-border-bottom-width),
+	padding: var(--tab-secondary-vertical-item-padding-y)
+		var(--tab-secondary-vertical-item-padding-x),
+	active-class: (
+		border-right-color: transparent,
+	),
+	after: (
+		top: 0,
+		height: var(--tab-secondary-vertical-item-active-bar-height),
+		width: var(--tab-secondary-item-active-bar-thickness),
+	),
+);
+
+// Nav Tertiary
+
+$nav-tertiary-link: map-deep-merge(
+	(
+		background-color: var(--tab-tertiary-item-background-color),
+		border-color: var(--tab-tertiary-item-border-color),
+		border-radius: var(--tab-tertiary-item-border-radius),
+		border-style: solid,
+		border-bottom-width:
+			var(--tab-tertiary-horizontal-item-border-bottom-width),
+		border-left-width: var(--tab-tertiary-horizontal-item-border-left-width),
+		border-right-width:
+			var(--tab-tertiary-horizontal-item-border-right-width),
+		border-top-width: var(--tab-tertiary-horizontal-item-border-top-width),
+		color: var(--tab-tertiary-item-color),
+		font-size: var(--tab-tertiary-item-font-size),
+		font-weight: var(--tab-tertiary-item-font-weight),
+		margin-top: 0.0625rem,
+		padding: var(--tab-tertiary-horizontal-item-padding-y)
+			var(--tab-tertiary-horizontal-item-padding-x),
+		line-height: var(--tab-tertiary-item-line-height),
+		z-index: 1,
+		active-class: (
+			background-color: var(--tab-tertiary-item-background-color-active),
+			border-color: var(--tab-tertiary-item-border-color-active),
+			box-shadow: var(--tab-tertiary-item-box-shadow-active),
+			color: var(--tab-tertiary-item-color-active),
+			font-weight: var(--tab-tertiary-item-font-weight-active),
+			z-index: 2,
+			after: (
+				content: '',
+			),
+			inline-item: (
+				color: var(--tab-tertiary-item-icon-color-disabled),
+			),
+		),
+		after: (
+			background-color: var(--tab-tertiary-item-active-bar-color-active),
+			border-radius: var(--tab-tertiary-item-active-bar-border-radius),
+			height: var(--tab-tertiary-item-active-bar-thickness),
+			width: var(--tab-tertiary-horizontal-item-active-bar-width),
+		),
+		disabled: (
+			border: 0,
+			background-color: var(--tab-tertiary-item-background-color-disabled),
+			color: var(--tab-tertiary-item-color-disabled),
+			font-weight: var(--tab-tertiary-item-font-weight),
+			after: (
+				content: none,
+			),
+			inline-item: (
+				color: var(--tab-tertiary-item-icon-color-disabled),
+			),
+		),
+		hover: (
+			background-color: var(--tab-tertiary-item-background-color-hover),
+			border-color: var(--tab-tertiary-item-border-color-hover),
+			color: var(--tab-tertiary-item-color-hover),
+			box-shadow: var(--tab-tertiary-item-box-shadow-hover),
+			font-weight: var(--tab-tertiary-item-font-weight),
+			after: (
+				background-color:
+					var(--tab-tertiary-item-active-bar-color-hover),
+				content: '',
+			),
+			inline-item: (
+				color: var(--tab-tertiary-item-icon-color-hover),
+			),
+		),
+		inline-item: (
+			color: var(--tab-tertiary-item-icon-color),
+			font-size: var(--tab-tertiary-item-icon-font-size),
+			margin-y: var(--tab-tertiary-item-inline-item-spacer-y),
+			active-class: (
+				color: var(--tab-tertiary-item-icon-color-active),
+			),
+		),
+		inline-item-after: (
+			margin-left: var(--tab-tertiary-item-inline-item-spacer-x),
+		),
+		inline-item-before: (
+			margin-right: var(--tab-tertiary-item-inline-item-spacer-x),
+		),
+	),
+	$nav-base-link
+);
+
+$nav-tertiary-link-active-bar-top: (
+	border-bottom-width: var(--tab-tertiary-horizontal-item-border-top-width),
+	border-left-width: var(--tab-tertiary-horizontal-item-border-left-width),
+	border-right-width: var(--tab-tertiary-horizontal-item-border-right-width),
+	border-top-width: var(--tab-tertiary-horizontal-item-border-bottom-width),
+	active-class: (
+		border-bottom-color: transparent,
+	),
+	after: (
+		top: 0,
+	),
+);
+
+$nav-tertiary-link-vertical: (
+	border-bottom-width: var(--tab-tertiary-vertical-item-border-bottom-width),
+	border-left-width: var(--tab-tertiary-vertical-item-border-left-width),
+	border-right-width: var(--tab-tertiary-vertical-item-border-right-width),
+	border-top-width: var(--tab-tertiary-vertical-item-border-top-width),
+	padding: var(--tab-tertiary-vertical-item-padding-y)
+		var(--tab-tertiary-vertical-item-padding-x),
+	after: (
+		height: var(--tab-tertiary-vertical-item-active-bar-height),
+		top: 0,
+		width: var(--tab-tertiary-item-active-bar-thickness),
+	),
+	active-class: (
+		border-right-color: transparent,
+	),
+);
+
+// Nav Segment
+
+$nav-segment: (
+	background-color: var(--tab-segment-background-color),
+	border-color: var(--tab-segment-border-color),
+	border-radius: var(--tab-segment-border-radius),
+	border-width: var(--tab-segment-border-width),
+	border-style: solid,
+	padding: var(--tab-segment-padding-x) var(--tab-segment-padding-y),
+	width: fit-content,
+);
+
+$nav-segment-link: (
+	background-color: var(--tab-segment-item-background-color),
+	border-color: var(--tab-segment-item-border-color),
+	border-radius: var(--tab-segment-item-border-radius),
+	border-width: var(--tab-segment-item-border-width),
+	color: var(--tab-segment-item-color),
+	font-size: var(--tab-segment-item-font-size),
+	font-weight: var(--tab-segment-item-font-weight),
+	line-height: var(--tab-segment-item-line-height),
+	padding: var(--tab-segment-item-padding-x) var(--tab-segment-item-padding-y),
+	active-class: (
+		background-color: var(--tab-segment-item-background-color-active),
+		border-color: var(--tab-segment-item-border-color-active),
+		box-shadow: var(--tab-segment-item-box-shadow-active),
+		color: var(--tab-segment-item-color-active),
+		font-weight: var(--tab-segment-item-font-weight-active),
+		inline-item: (
+			color: var(--tab-segment-item-icon-color-active),
+		),
+	),
+	disabled: (
+		background-color: var(--tab-segment-item-background-color-disabled),
+		border-color: var(--tab-segment-item-border-color-disabled),
+		color: var(--tab-segment-item-color-disabled),
+		inline-item: (
+			color: var(--tab-segment-item-icon-color-disabled),
+		),
+	),
+	hover: (
+		background-color: var(--tab-segment-item-background-color-hover),
+		border-color: var(--tab-segment-item-border-color-hover),
+		box-shadow: var(--tab-segment-item-box-shadow-hover),
+		color: var(--tab-segment-item-color-hover),
+		inline-item: (
+			color: var(--tab-segment-item-icon-color-hover),
+		),
+	),
+	inline-item: (
+		color: var(--tab-segment-item-icon-color),
+		font-size: var(--tab-segment-item-icon-font-size),
+		margin-y: var(--tab-segment-item-inline-item-spacer-y),
+	),
+	inline-item-after: (
+		margin-left: var(--tab-segment-item-inline-item-spacer-x),
+	),
+	inline-item-before: (
+		margin-right: var(--tab-segment-item-inline-item-spacer-x),
+	),
+);
+
+// Nav Vertical
+
+$nav-vertical: (
+	flex-direction: column,
+);

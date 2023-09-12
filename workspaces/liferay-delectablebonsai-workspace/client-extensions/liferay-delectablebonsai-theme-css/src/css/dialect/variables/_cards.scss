@@ -1,0 +1,165 @@
+$card-border-radius: var(--card-border-radius);
+$card-border-width: var(--card-border-width, var(--card-elevated-border-width));
+
+$card-type-template-aspect-ratio-item: (
+	color: $clay-unset,
+	width: $clay-unset,
+);
+
+$card-body-padding-bottom: var(--card-body-padding-bottom);
+$card-body-padding-left: var(--card-body-padding-left);
+$card-body-padding-right: var(--card-body-padding-right);
+$card-body-padding-top: var(--card-body-padding-top);
+
+$form-check-card-checked-box-shadow: 0 0 0 2px $form-input-focus-color;
+
+// Card Aspect Ratio
+
+$card-aspect-ratio-item-top-left: (
+	left: var(--card-aspect-ratio-item-offset),
+	top: var(--card-aspect-ratio-item-offset),
+);
+
+$card-aspect-ratio-item-top-center: (
+	top: var(--card-aspect-ratio-item-offset),
+);
+
+$card-aspect-ratio-item-top-right: (
+	right: var(--card-aspect-ratio-item-offset),
+	top: var(--card-aspect-ratio-item-offset),
+);
+
+$card-aspect-ratio-item-right-middle: (
+	right: var(--card-aspect-ratio-item-offset),
+);
+
+$card-aspect-ratio-item-bottom-right: (
+	bottom: var(--card-aspect-ratio-item-offset),
+	right: var(--card-aspect-ratio-item-offset),
+);
+
+$card-aspect-ratio-item-bottom-center: (
+	bottom: var(--card-aspect-ratio-item-offset),
+);
+
+$card-aspect-ratio-item-bottom-left: (
+	bottom: var(--card-aspect-ratio-item-offset),
+	left: var(--card-aspect-ratio-item-offset),
+);
+
+// Card Title
+
+$card-title: (
+	color: var(--color-neutral-10),
+	font-size: var(--h5-font-size),
+	font-weight: var(--font-weight-bolder),
+);
+
+// Card Subtitle
+
+$card-subtitle: (
+	color: var(--color-neutral-8),
+	font-size: var(--text-small-caps-font-size),
+	font-weight: var(--font-weight-bolder),
+	letter-spacing: var(--text-small-caps-letter-spacing),
+	line-height: var(--text-small-caps-line-height),
+	margin-top: 0.25rem,
+	text-transform: uppercase,
+);
+
+// Card Type Asset
+
+$card-type-asset: (
+	aspect-ratio: (
+		enabled: false,
+	),
+	aspect-ratio-border-bottom-width: 0,
+	aspect-ratio-border-width: 0,
+	card-body: (
+		padding-top: $card-body-padding-top,
+	),
+);
+
+// Card Variants
+
+$card-bg: var(--card-elevated-background-color);
+$card-border-color: var(--card-elevated-border-color);
+$card-box-shadow: var(--card-elevated-box-shadow);
+
+$card-interactive-base: (
+	cursor: $link-cursor,
+	outline: 0,
+	transition: $btn-transition,
+);
+
+$card-elevated-interactive: map-deep-merge(
+	$card-interactive-base,
+	(
+		active: (
+			background-color: var(--card-elevated-background-color-active),
+			border-color: var(--card-elevated-border-color-active),
+			box-shadow: var(--card-elevated-box-shadow-active),
+		),
+		focus: (
+			border-color: null,
+			box-shadow: $component-focus-box-shadow,
+		),
+		hover: (
+			background-color: var(--card-elevated-background-color-hover),
+			border-color: var(--card-elevated-border-color-hover),
+			box-shadow: var(--card-elevated-box-shadow-hover),
+		),
+	)
+);
+
+$card-outlined: (
+	background-color: var(--card-outlined-background-color),
+	border-color: var(--card-outlined-border-color),
+	box-shadow: var(--card-outlined-box-shadow),
+);
+
+$card-outlined-interactive: map-deep-merge(
+	$card-interactive-base,
+	(
+		active: (
+			background-color: var(--card-outlined-background-color-active),
+			border-color: var(--card-outlined-border-color-active),
+			box-shadow: var(--card-outlined-box-shadow-active),
+		),
+		focus: (
+			border-color: null,
+			box-shadow: $component-focus-box-shadow,
+		),
+		hover: (
+			background-color: var(--card-outlined-background-color-hover),
+			border-color: var(--card-outlined-border-color-hover),
+			box-shadow: var(--card-outlined-box-shadow-hover),
+		),
+	)
+);
+
+$card-flat: (
+	background-color: var(--card-flat-background-color),
+	border-color: var(--card-flat-border-color),
+	box-shadow: var(--card-flat-box-shadow),
+);
+
+$card-flat-interactive: map-deep-merge(
+	$card-interactive-base,
+	(
+		active: (
+			background-color: var(--card-flat-background-color-active),
+			border-color: var(--card-flat-border-color-active),
+			box-shadow: var(--card-flat-box-shadow-active),
+		),
+		focus: (
+			border-color: null,
+			box-shadow: $component-focus-box-shadow,
+		),
+		hover: (
+			background-color: var(--card-flat-background-color-hover),
+			border-color: var(--card-flat-border-color-hover),
+			box-shadow: var(--card-flat-box-shadow-hover),
+		),
+	)
+);

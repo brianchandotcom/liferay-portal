@@ -1,0 +1,125 @@
+$btn-border-width: var(--btn-border-width);
+
+$btn-border-radius: var(--btn-border-radius);
+$btn-border-radius-lg: var(--btn-lg-border-radius);
+$btn-border-radius-sm: var(--btn-sm-border-radius);
+
+$btn-font-size: var(--btn-font-size);
+$btn-font-size-lg: var(--btn-lg-font-size);
+$btn-font-size-sm: var(--btn-sm-font-size);
+
+$btn-inline-item-font-size: var(--btn-inline-item-font-size);
+$btn-inline-item-font-size-lg: var(--btn-lg-inline-item-font-size);
+$btn-inline-item-font-size-sm: var(--btn-sm-inline-item-font-size);
+
+$btn-line-height: var(--btn-line-height);
+$btn-line-height-lg: var(--btn-lg-line-height);
+$btn-line-height-sm: var(--btn-sm-line-height);
+
+$dialect-btn-padding-x: var(--btn-padding-x);
+$dialect-btn-padding-x-lg: var(--btn-lg-padding-x);
+$dialect-btn-padding-x-sm: var(--btn-sm-padding-x);
+
+$btn-padding-y: var(--btn-padding-y);
+$btn-padding-y-lg: var(--btn-lg-padding-y);
+$btn-padding-y-sm: var(--btn-sm-padding-y);
+
+$btn-monospaced-size: calc(#{$btn-line-height} + 2 * #{$btn-padding-y});
+$btn-monospaced-size-lg: calc(
+	#{$btn-line-height-lg} + 2 * #{$btn-padding-y-lg}
+);
+$btn-monospaced-size-sm: calc(
+	#{$btn-line-height-sm} + 2 * #{$btn-padding-y-sm}
+);
+
+$btn-disabled-opacity: 1;
+
+$inline-item-spacer-x: var(--btn-inline-item-spacer-x);
+
+$btn: (
+	--btn-default-border-color: transparent,
+	active: (
+		background-color:
+			var(
+				--btn-active-background-color,
+				var(--btn-default-background-color)
+			),
+		border-color:
+			var(--btn-active-border-color, var(--btn-default-border-color)),
+		color: var(--btn-active-color),
+	),
+	background-color: var(--btn-default-background-color),
+	border-color: var(--btn-default-border-color),
+	box-shadow: var(--btn-box-shadow),
+	color: var(--btn-default-color),
+	disabled: (
+		background-color:
+			var(
+				--btn-disabled-background-color,
+				var(--btn-default-background-color)
+			),
+		border-color:
+			var(--btn-disabled-border-color, var(--btn-default-border-color)),
+		color: var(--btn-disabled-color, var(--btn-default-color)),
+	),
+	focus: (
+		background-color: var(--btn-default-background-color),
+		border-color: var(--btn-default-border-color),
+		color: var(--btn-default-color),
+	),
+	font-weight: var(--btn-font-weight),
+	hover: (
+		background-color:
+			var(
+				--btn-hover-background-color,
+				var(--btn-default-background-color)
+			),
+		border-color:
+			var(--btn-hover-border-color, var(--btn-default-border-color)),
+		color: var(--btn-hover-color, var(--btn-default-color)),
+	),
+	padding-bottom: calc(#{$btn-padding-y} - #{$btn-border-width}),
+	padding-left: calc(#{$dialect-btn-padding-x} - #{$btn-border-width}),
+	padding-right: calc(#{$dialect-btn-padding-x} - #{$btn-border-width}),
+	padding-top: calc(#{$btn-padding-y} - #{$btn-border-width}),
+);
+
+$btn-sm: (
+	padding-bottom: calc(#{$btn-padding-y-sm} - #{$btn-border-width}),
+	padding-left: calc(#{$dialect-btn-padding-x-sm} - #{$btn-border-width}),
+	padding-right: calc(#{$dialect-btn-padding-x-sm} - #{$btn-border-width}),
+	padding-top: calc(#{$btn-padding-y-sm} - #{$btn-border-width}),
+);
+
+$btn-lg: (
+	padding-bottom: calc(#{$btn-padding-y-lg} - #{$btn-border-width}),
+	padding-left: calc(#{$dialect-btn-padding-x-lg} - #{$btn-border-width}),
+	padding-right: calc(#{$dialect-btn-padding-x-lg} - #{$btn-border-width}),
+	padding-top: calc(#{$btn-padding-y-lg} - #{$btn-border-width}),
+);
+
+$btn-primary: (
+	enabled: false,
+);
+
+$btn-secondary: (
+	enabled: false,
+);
+
+$btn-outline-primary: (
+	enabled: false,
+);
+
+$btn-outline-secondary: (
+	enabled: false,
+);
+
+$btn-link: (
+	color: $link-color,
+	hover: (
+		color: $link-hover-color,
+	),
+	disabled: (
+		color: var(--color-action-primary-disabled),
+	),
+);

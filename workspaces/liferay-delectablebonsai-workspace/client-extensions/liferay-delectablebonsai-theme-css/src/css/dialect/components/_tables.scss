@@ -1,0 +1,97 @@
+// Table
+
+.table {
+	td,
+	th {
+		@include clay-css($c-table-base-cell);
+	}
+}
+
+// Table Header
+
+th {
+	--table-cell-min-height: var(--table-header-cell-min-height);
+	--table-cell-padding-y: var(--table-header-cell-padding-y);
+	--table-cell-padding-x: var(--table-header-cell-padding-x);
+	--table-font-size: var(--table-header-font-size);
+	--table-font-weight: var(--table-header-font-weight);
+	--table-line-height: var(--table-header-line-height);
+}
+
+// Table Spaced
+
+.table-spaced {
+	--table-border-radius: var(--table-spaced-row-border-radius);
+	--table-border-width: 0;
+
+	@include clay-css($table-spaced);
+
+	&,
+	thead {
+		td,
+		th {
+			@include clay-css($table-spaced-cell);
+		}
+	}
+
+	tr {
+		@include clay-css(map-deep-get($table-spaced, table-row));
+	}
+
+	td:first-child,
+	th:first-child,
+	.table-cell-start {
+		@include clay-css(map-deep-get($table-spaced, table-cell-start));
+	}
+
+	td:last-child,
+	th:last-child,
+	.table-cell-end {
+		@include clay-css(map-deep-get($table-spaced, table-cell-end));
+	}
+}
+
+// Table Bordered
+
+.table-bordered thead {
+	td,
+	th {
+		@include clay-css($table-bordered-thead-cell);
+	}
+}
+
+// Table Sizes
+
+.table-lg {
+	--table-cell-min-height: var(--table-lg-cell-min-height);
+	--table-cell-padding-y: var(--table-lg-cell-padding-y);
+	--table-cell-padding-x: var(--table-lg-cell-padding-x);
+	--table-font-size: var(--table-lg-font-size);
+	--table-font-weight: var(--table-lg-font-weight);
+	--table-line-height: var(--table-lg-line-height);
+
+	th {
+		--table-header-cell-min-height: var(--table-lg-header-cell-min-height);
+		--table-header-cell-padding-y: var(--table-lg-header-cell-padding-y);
+		--table-header-cell-padding-x: var(--table-lg-header-cell-padding-x);
+		--table-header-font-size: var(--table-lg-header-font-size);
+		--table-header-font-weight: var(--table-lg-header-font-weight);
+		--table-header-line-height: var(--table-lg-header-line-height);
+	}
+}
+
+.table-sm {
+	--table-cell-min-height: var(--table-sm-cell-min-height);
+	--table-font-size: var(--table-sm-font-size);
+	--table-font-weight: var(--table-sm-font-weight);
+	--table-line-height: var(--table-sm-line-height);
+
+	th {
+		--table-header-cell-min-height: var(--table-sm-header-cell-min-height);
+		--table-header-cell-padding-x: var(--table-sm-header-cell-padding-x);
+		--table-header-cell-padding-y: var(--table-sm-header-cell-padding-y);
+		--table-header-font-size: var(--table-sm-header-font-size);
+		--table-header-font-weight: var(--table-sm-header-font-weight);
+		--table-header-line-height: var(--table-sm-header-line-height);
+	}
+}

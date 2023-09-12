@@ -1,0 +1,8 @@
+.mini-compare-delete {
+	--btn-active-background-color: var(--color-state-error-darken-2);
+	--btn-active-color: #{$white};
+	--btn-default-background-color: var(--color-state-error);
+	--btn-default-color: #{$white};
+	--btn-hover-background-color: var(--color-state-error-darken-1);
+	--btn-hover-color: #{$white};
+}

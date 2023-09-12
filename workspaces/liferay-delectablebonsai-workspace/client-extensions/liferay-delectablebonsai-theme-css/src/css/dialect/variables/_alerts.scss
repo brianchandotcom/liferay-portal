@@ -1,0 +1,145 @@
+// Alert Variants
+
+$alert-primary-color: $primary;
+
+$alert-primary-bg: $primary-l2;
+$alert-primary-border-color: transparent;
+$alert-primary-btn: (
+	active-bg: $primary-d1,
+	active-border-color: $primary-d1,
+	active-color: $white,
+	bg: $white,
+	border-color: $primary-l1,
+	color: $alert-primary-color,
+	hover-bg: $alert-primary-color,
+	hover-border-color: $alert-primary-color,
+	hover-color: $white,
+);
+$alert-primary-close-hover-color: $primary-d1;
+$alert-primary-link-color: $primary-d2;
+
+$alert-secondary-color: $secondary;
+
+$alert-secondary-bg: $secondary-l2;
+$alert-secondary-border-color: transparent;
+$alert-secondary-btn: (
+	active-bg: $secondary-d1,
+	active-border-color: $secondary-d1,
+	active-color: $white,
+	bg: $white,
+	border-color: $secondary-l1,
+	color: $alert-secondary-color,
+	hover-bg: $alert-secondary-color,
+	hover-border-color: $alert-secondary-color,
+	hover-color: $white,
+);
+$alert-secondary-close-hover-color: $secondary-d1;
+$alert-secondary-link-color: $secondary-d2;
+
+$alert-success-color: $success;
+
+$alert-success-bg: $success-l2;
+$alert-success-border-color: transparent;
+$alert-success-btn: (
+	active-bg: $success-d1,
+	active-border-color: $success-d1,
+	active-color: $white,
+	bg: $white,
+	border-color: $success-l1,
+	color: $alert-success-color,
+	hover-bg: $alert-success-color,
+	hover-border-color: $alert-success-color,
+	hover-color: $white,
+);
+$alert-success-close-hover-color: $success-d1;
+$alert-success-link-color: $success-d2;
+
+$alert-info-color: $info;
+
+$alert-info-bg: $info-l2;
+$alert-info-border-color: transparent;
+$alert-info-btn: (
+	active-bg: $info-d1,
+	active-border-color: $info-d1,
+	active-color: $white,
+	bg: $white,
+	border-color: $info-l1,
+	color: $alert-info-color,
+	hover-bg: $alert-info-color,
+	hover-border-color: $alert-info-color,
+	hover-color: $white,
+);
+$alert-info-close-hover-color: $info-d1;
+$alert-info-link-color: $info-d2;
+
+$alert-warning-color: $warning;
+
+$alert-warning-bg: $warning-l2;
+$alert-warning-border-color: transparent;
+$alert-warning-btn: (
+	active-bg: $warning-d1,
+	active-border-color: $warning-d1,
+	active-color: $white,
+	bg: $white,
+	border-color: $warning-l1,
+	color: $alert-warning-color,
+	hover-bg: $alert-warning-color,
+	hover-border-color: $alert-warning-color,
+	hover-color: $white,
+);
+$alert-warning-close-hover-color: $warning-d1;
+$alert-warning-link-color: $warning-d2;
+
+$alert-danger-color: $danger;
+
+$alert-danger-bg: $danger-l2;
+$alert-danger-border-color: transparent;
+$alert-danger-btn: (
+	active-bg: $danger-d1,
+	active-border-color: $danger-d1,
+	active-color: $white,
+	bg: $white,
+	border-color: $danger-l1,
+	color: $alert-danger-color,
+	hover-bg: $alert-danger-color,
+	hover-border-color: $alert-danger-color,
+	hover-color: $white,
+);
+$alert-danger-close-hover-color: $danger-d1;
+$alert-danger-link-color: $danger-d2;
+
+$alert-light-color: $dark;
+
+$alert-light-bg: $light-l2;
+$alert-light-border-color: transparent;
+$alert-light-btn: (
+	active-bg: $light,
+	active-border-color: $light-d1,
+	active-color: $white,
+	bg: $light-d2,
+	border-color: $light-l1,
+	color: $white,
+	hover-bg: $light-d1,
+	hover-border-color: $alert-light-color,
+	hover-color: $white,
+);
+$alert-light-close-hover-color: $light-d1;
+$alert-light-link-color: $light-d2;
+
+$alert-dark-color: $light;
+
+$alert-dark-bg: $dark-l2;
+$alert-dark-border-color: transparent;
+$alert-dark-btn: (
+	active-bg: $dark-d1,
+	active-border-color: $dark-d1,
+	active-color: $white,
+	bg: $white,
+	border-color: $dark-l1,
+	color: $dark-l2,
+	hover-bg: $dark,
+	hover-border-color: $alert-dark-color,
+	hover-color: $white,
+);
+$alert-dark-close-hover-color: $dark-d1;
+$alert-dark-link-color: $dark-d2;

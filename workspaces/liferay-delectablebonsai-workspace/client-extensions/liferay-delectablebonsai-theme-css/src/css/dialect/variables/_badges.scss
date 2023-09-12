@@ -1,0 +1,28 @@
+$badge-border-radius: $rounded-pill;
+$badge-pill-border-radius: $rounded-pill;
+
+// Badge Variants
+
+$badge-primary-bg: $primary;
+$badge-primary-color: var(--color-action-primary-inverted);
+
+$badge-secondary-bg: $secondary;
+$badge-secondary-color: var(--color-action-secondary-inverted);
+
+$badge-success-bg: $success;
+$badge-success-color: var(--color-action-neutral-inverted);
+
+$badge-info-bg: $info;
+$badge-info-color: var(--color-action-neutral-inverted);
+
+$badge-warning-bg: $warning;
+$badge-warning-color: var(--color-action-neutral-inverted);
+
+$badge-danger-bg: $danger;
+$badge-danger-color: var(--color-action-neutral-inverted);
+
+$badge-light-bg: $light;
+$badge-light-color: var(--color-neutral-1);
+
+$badge-dark-bg: $dark;
+$badge-dark-color: var(--color-action-neutral-inverted);

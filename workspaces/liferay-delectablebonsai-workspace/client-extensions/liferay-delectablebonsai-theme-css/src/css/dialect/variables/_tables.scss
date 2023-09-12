@@ -1,0 +1,128 @@
+// Table
+
+$table-accent-bg: var(--table-row-background-color-alternate);
+$table-bg: var(--table-row-background-color);
+$table-border-color: var(--table-border-color);
+$table-border-radius: var(--table-border-radius);
+$table-border-width: var(--table-border-width);
+$table-cell-padding: var(--table-cell-padding-y) var(--table-cell-padding-x);
+$table-cell-padding-sm: var(--table-sm-cell-padding-y)
+	var(--table-sm-cell-padding-x);
+$table-color: var(--table-color);
+$table-font-size: var(--table-font-size);
+$table-hover-bg: var(--table-row-background-color-hover);
+$table-hover-color: var(--table-row-color-hover);
+
+$c-table-base: (
+	font-weight: var(--table-font-weight),
+);
+
+$c-table-base-cell: (
+	height: var(--table-cell-min-height),
+);
+
+$table-title: (
+	color: var(--table-title-color),
+	font-size: var(--table-title-font-size),
+	font-weight: var(--table-title-font-weight),
+	line-height: var(--table-title-line-height),
+);
+
+$table-title-link: (
+	color: var(--table-title-link-color),
+	text-decoration: var(--table-title-link-text-decoration),
+	hover: (
+		color: var(--table-title-link-color-hover),
+		text-decoration: var(--table-title-link-text-decoration-hover),
+	),
+);
+
+// Table Head
+
+$table-head-bg: var(--table-header-background-color);
+$table-head-color: var(--table-header-color);
+
+// Table List
+
+$table-list-active-bg: var(--table-row-background-color-active);
+$table-list-border-color: $table-border-color;
+$table-list-border-radius: $table-border-radius;
+$table-list-border-x-width: var(--table-border-width);
+$table-list-border-y-width: var(--table-border-width);
+$table-list-color: $table-color;
+
+$c-table-list: (
+	box-shadow: var(--table-box-shadow),
+);
+
+$c-table-list-cell: (
+	border-color: $table-border-color,
+	border-top-width: var(--table-border-width),
+	line-height: var(--table-line-height),
+);
+
+$c-table-list-tfoot: (
+	background-color: var(--table-row-background-color),
+);
+
+$c-table-list-tbody: (
+	background-color: var(--table-row-background-color),
+);
+
+$table-list-title: $table-title;
+$table-list-title-link: $table-title-link;
+
+// Table List Head
+
+$table-list-head-bg: $table-head-bg;
+$table-list-head-font-size: var(--table-header-font-size);
+$table-list-head-font-weight: var(--table-header-font-weight);
+$table-list-head-height: var(--table-header-cell-min-height);
+$table-list-head-vertical-alignment: var(--table-header-vertical-align);
+
+// Table Spaced
+
+$table-spaced: (
+	border-collapse: separate,
+	border-radius: 0,
+	border-spacing: 0 var(--table-spaced-row-border-spacing),
+	box-shadow: none,
+	table-cell-end: (
+		border-bottom-right-radius:
+			clay-enable-rounded(var(--table-spaced-row-border-radius)),
+		border-right: var(--table-spaced-row-border-width) solid
+			var(--table-spaced-row-border-color),
+		border-top-right-radius:
+			clay-enable-rounded(var(--table-spaced-row-border-radius)),
+	),
+	table-cell-start: (
+		border-bottom-left-radius:
+			clay-enable-rounded(var(--table-spaced-row-border-radius)),
+		border-left: var(--table-spaced-row-border-width) solid
+			var(--table-spaced-row-border-color),
+		border-top-left-radius:
+			clay-enable-rounded(var(--table-spaced-row-border-radius)),
+	),
+	table-row: (
+		border-radius:
+			clay-enable-rounded(var(--table-spaced-row-border-radius)),
+		box-shadow: var(--table-spaced-row-box-shadow),
+	),
+);
+
+$table-spaced-cell: (
+	border-bottom: var(--table-spaced-row-border-width) solid
+		var(--table-spaced-row-border-color),
+	border-top: var(--table-spaced-row-border-width) solid
+		var(--table-spaced-row-border-color),
+);
+
+// Table Bordered
+
+$table-bordered-thead-cell: (
+	border-bottom-width: 0,
+);
+
+// Table Image
+
+$table-img-max-height: var(--table-image-max-height);

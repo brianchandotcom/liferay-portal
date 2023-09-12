@@ -1,0 +1,323 @@
+// Solid & Rounded
+
+.btn-rounded,
+.btn-solid {
+	&.btn-style-primary {
+		&:not(.btn-inverted) {
+			--btn-active-background-color: var(--color-action-primary-active);
+			--btn-active-color: var(--color-action-primary-inverted);
+			--btn-default-background-color: var(--color-action-primary-default);
+			--btn-default-color: var(--color-action-primary-inverted);
+			--btn-disabled-background-color: var(
+				--color-action-primary-disabled
+			);
+			--btn-hover-background-color: var(--color-action-primary-hover);
+		}
+
+		&.btn-inverted {
+			--btn-active-color: var(--color-action-primary-active);
+			--btn-default-background-color: var(
+				--color-action-primary-inverted
+			);
+			--btn-default-color: var(--color-action-primary-default);
+			--btn-disabled-color: var(--color-action-primary-disabled);
+			--btn-hover-color: var(--color-action-primary-hover);
+		}
+	}
+
+	&.btn-style-secondary {
+		&:not(.btn-inverted) {
+			--btn-active-background-color: var(--color-action-secondary-active);
+			--btn-active-color: var(--color-action-secondary-inverted);
+			--btn-default-background-color: var(
+				--color-action-secondary-default
+			);
+			--btn-default-color: var(--color-action-secondary-inverted);
+			--btn-disabled-background-color: var(
+				--color-action-secondary-disabled
+			);
+			--btn-hover-background-color: var(--color-action-secondary-hover);
+		}
+
+		&.btn-inverted {
+			--btn-active-color: var(--color-action-secondary-active);
+			--btn-default-background-color: var(
+				--color-action-secondary-inverted
+			);
+			--btn-default-color: var(--color-action-secondary-default);
+			--btn-disabled-color: var(--color-action-secondary-disabled);
+			--btn-hover-color: var(--color-action-secondary-hover);
+		}
+	}
+
+	&.btn-style-neutral {
+		&:not(.btn-inverted) {
+			--btn-active-background-color: var(--color-action-neutral-active);
+			--btn-active-color: var(--color-action-neutral-inverted);
+			--btn-default-background-color: var(--color-action-neutral-default);
+			--btn-default-color: var(--color-action-neutral-inverted);
+			--btn-disabled-background-color: var(
+				--color-action-neutral-disabled
+			);
+			--btn-hover-background-color: var(--color-action-neutral-hover);
+		}
+
+		&.btn-inverted {
+			--btn-active-color: var(--color-action-neutral-active);
+			--btn-default-background-color: var(
+				--color-action-neutral-inverted
+			);
+			--btn-default-color: var(--color-action-neutral-default);
+			--btn-disabled-color: var(--color-action-neutral-disabled);
+			--btn-hover-color: var(--color-action-neutral-hover);
+		}
+	}
+}
+
+// Ghost
+
+.btn-ghost {
+	--btn-default-background-color: transparent;
+
+	&.btn-style-primary {
+		&:not(.btn-inverted) {
+			--btn-active-border-color: var(--color-action-primary-active);
+			--btn-active-color: var(--color-action-primary-active);
+			--btn-default-border-color: var(--color-action-primary-default);
+			--btn-default-color: var(--color-action-primary-default);
+			--btn-disabled-border-color: var(--color-action-primary-disabled);
+			--btn-disabled-color: var(--color-action-primary-disabled);
+			--btn-hover-background-color: var(
+				--color-action-primary-inverted-hover
+			);
+			--btn-hover-border-color: var(--color-action-primary-hover);
+			--btn-hover-color: var(--color-action-primary-hover);
+		}
+
+		&.btn-inverted {
+			--btn-active-color: var(--color-action-primary-inverted);
+			--btn-default-border-color: var(--color-action-primary-inverted);
+			--btn-default-color: var(--color-action-primary-inverted);
+			--btn-disabled-border-color: var(
+				--color-action-primary-inverted-disabled
+			);
+			--btn-disabled-color: var(--color-action-primary-inverted-disabled);
+			--btn-hover-background-color: var(
+				--color-action-primary-inverted-hover
+			);
+			--btn-hover-border-color: var(--color-action-primary-inverted);
+			--btn-hover-color: var(--color-action-primary-inverted);
+		}
+	}
+
+	&.btn-style-secondary {
+		&:not(.btn-inverted) {
+			--btn-active-border-color: var(--color-action-secondary-active);
+			--btn-active-color: var(--color-action-secondary-active);
+			--btn-default-border-color: var(--color-action-secondary-default);
+			--btn-default-color: var(--color-action-secondary-default);
+			--btn-disabled-border-color: var(--color-action-secondary-disabled);
+			--btn-disabled-color: var(--color-action-secondary-disabled);
+			--btn-hover-background-color: var(
+				--color-action-secondary-inverted-hover
+			);
+			--btn-hover-border-color: var(--color-action-secondary-hover);
+			--btn-hover-color: var(--color-action-secondary-hover);
+		}
+
+		&.btn-inverted {
+			--btn-active-color: var(--color-action-secondary-inverted);
+			--btn-default-border-color: var(--color-action-secondary-inverted);
+			--btn-default-color: var(--color-action-secondary-inverted);
+			--btn-disabled-border-color: var(
+				--color-action-secondary-inverted-disabled
+			);
+			--btn-disabled-color: var(
+				--color-action-secondary-inverted-disabled
+			);
+			--btn-hover-background-color: var(
+				--color-action-secondary-inverted-hover
+			);
+			--btn-hover-border-color: var(--color-action-secondary-inverted);
+			--btn-hover-color: var(--color-action-secondary-inverted);
+		}
+	}
+
+	&.btn-style-neutral {
+		&:not(.btn-inverted) {
+			--btn-active-border-color: var(--color-action-neutral-active);
+			--btn-active-color: var(--color-action-neutral-active);
+			--btn-default-border-color: var(--color-action-neutral-default);
+			--btn-default-color: var(--color-action-neutral-default);
+			--btn-disabled-border-color: var(--color-action-neutral-disabled);
+			--btn-disabled-color: var(--color-action-neutral-disabled);
+			--btn-hover-background-color: var(
+				--color-action-neutral-inverted-hover
+			);
+			--btn-hover-border-color: var(--color-action-neutral-hover);
+			--btn-hover-color: var(--color-action-neutral-hover);
+		}
+
+		&.btn-inverted {
+			--btn-active-color: var(--color-action-neutral-inverted);
+			--btn-default-border-color: var(--color-action-neutral-inverted);
+			--btn-default-color: var(--color-action-neutral-inverted);
+			--btn-disabled-border-color: var(
+				--color-action-neutral-inverted-disabled
+			);
+			--btn-disabled-color: var(--color-action-neutral-inverted-disabled);
+			--btn-hover-background-color: var(
+				--color-action-neutral-inverted-hover
+			);
+			--btn-hover-border-color: var(--color-action-neutral-inverted);
+			--btn-hover-color: var(--color-action-neutral-inverted);
+		}
+	}
+}
+
+// Borderless
+
+.btn-borderless {
+	--btn-active-background-color: transparent;
+	--btn-default-background-color: transparent;
+	--btn-default-border-color: transparent;
+	--btn-disabled-background-color: transparent;
+	--btn-disabled-border-color: transparent;
+	--btn-focus-background-color: transparent;
+	--btn-focus-border-color: transparent;
+
+	&:not(.btn-inverted) {
+		--btn-hover-background-color: transparent;
+	}
+
+	&.btn-style-primary {
+		&:not(.btn-inverted) {
+			--btn-active-background-color: var(--color-action-primary-inverted);
+			--btn-active-border-color: var(--color-action-primary-active);
+			--btn-active-color: var(--color-action-primary-active);
+			--btn-default-color: var(--color-action-primary-default);
+			--btn-disabled-color: var(--color-action-primary-disabled);
+			--btn-hover-border-color: var(--color-action-primary-hover);
+			--btn-hover-color: var(--color-action-primary-hover);
+		}
+
+		&.btn-inverted {
+			--btn-active-border-color: var(--color-action-primary-inverted);
+			--btn-active-color: var(--color-action-primary-inverted);
+			--btn-default-color: var(--color-action-primary-inverted);
+			--btn-disabled-color: var(--color-action-primary-inverted-disabled);
+			--btn-hover-background-color: var(
+				--color-action-primary-inverted-hover
+			);
+			--btn-hover-border-color: var(--color-action-primary-inverted);
+			--btn-hover-color: var(--color-action-primary-inverted);
+		}
+	}
+
+	&.btn-style-secondary {
+		&:not(.btn-inverted) {
+			--btn-active-background-color: var(
+				--color-action-secondary-inverted
+			);
+			--btn-active-border-color: var(--color-action-secondary-active);
+			--btn-active-color: var(--color-action-secondary-active);
+			--btn-default-color: var(--color-action-secondary-default);
+			--btn-disabled-color: var(--color-action-secondary-disabled);
+			--btn-hover-border-color: var(--color-action-secondary-hover);
+			--btn-hover-color: var(--color-action-secondary-hover);
+		}
+
+		&.btn-inverted {
+			--btn-active-border-color: var(--color-action-secondary-inverted);
+			--btn-active-color: var(--color-action-secondary-inverted);
+			--btn-default-color: var(--color-action-secondary-inverted);
+			--btn-disabled-color: var(
+				--color-action-secondary-inverted-disabled
+			);
+			--btn-hover-background-color: var(
+				--color-action-secondary-inverted-hover
+			);
+			--btn-hover-border-color: var(--color-action-secondary-inverted);
+			--btn-hover-color: var(--color-action-secondary-inverted);
+		}
+	}
+
+	&.btn-style-neutral {
+		&:not(.btn-inverted) {
+			--btn-active-background-color: var(--color-action-neutral-inverted);
+			--btn-active-border-color: var(--color-action-neutral-active);
+			--btn-active-color: var(--color-action-neutral-active);
+			--btn-default-color: var(--color-action-neutral-default);
+			--btn-disabled-color: var(--color-action-neutral-disabled);
+			--btn-hover-border-color: var(--color-action-neutral-hover);
+			--btn-hover-color: var(--color-action-neutral-hover);
+		}
+
+		&.btn-inverted {
+			--btn-active-border-color: var(--color-action-neutral-inverted);
+			--btn-active-color: var(--color-action-neutral-inverted);
+			--btn-default-color: var(--color-action-neutral-inverted);
+			--btn-disabled-color: var(--color-action-neutral-inverted-disabled);
+			--btn-hover-background-color: var(
+				--color-action-neutral-inverted-hover
+			);
+			--btn-hover-border-color: var(--color-action-neutral-inverted);
+			--btn-hover-color: var(--color-action-neutral-inverted);
+		}
+	}
+}
+
+// Rounded
+
+.btn-rounded {
+	--btn-border-radius: #{$rounded-pill};
+	--btn-lg-border-radius: #{$rounded-pill};
+	--btn-sm-border-radius: #{$rounded-pill};
+
+	&.btn-style-primary {
+		--btn-box-shadow: var(--elevation-tight-4)
+			var(--color-action-primary-disabled);
+	}
+
+	&.btn-style-secondary {
+		--btn-box-shadow: var(--elevation-tight-4)
+			var(--color-action-secondary-disabled);
+	}
+
+	&.btn-style-neutral {
+		--btn-box-shadow: var(--elevation-tight-4)
+			var(--color-action-neutral-disabled);
+	}
+}
+
+// Unstyled
+
+.btn-unstyled {
+	--btn-default-border-color: transparent;
+}
+
+// Defaults
+
+.btn-primary {
+	@extend .btn-solid, .btn-style-primary, :not(.btn-inverted);
+}
+
+.btn-secondary {
+	@extend .btn-ghost, .btn-style-neutral, :not(.btn-inverted);
+}
+
+.btn-tertiary {
+	@extend .btn-borderless, .btn-style-neutral, :not(.btn-inverted);
+}
+
+.btn-outline-primary {
+	@extend .btn-ghost, .btn-style-primary, :not(.btn-inverted);
+}
+
+.btn-outline-secondary {
+	@extend .btn-ghost, .btn-style-neutral, :not(.btn-inverted);
+}
+
+.btn-outline-borderless {
+	@extend .btn-borderless, :not(.btn-inverted);
+}

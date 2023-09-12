@@ -1,0 +1,73 @@
+.card {
+	--aspect-ratio: var(--card-vertical-aspect-ratio-default);
+}
+
+.card-horizontal {
+	--aspect-ratio: var(--card-horizontal-aspect-ratio-default);
+}
+
+// Card Variants
+
+.card,
+.card-horizontal {
+	&.interactive {
+		@include clay-card-variant($card-elevated-interactive);
+	}
+}
+
+.card-outlined {
+	--card-border-width: var(--card-outlined-border-width);
+
+	@include clay-card-variant($card-outlined);
+
+	&.interactive {
+		@include clay-card-variant($card-outlined-interactive);
+	}
+}
+
+.card-flat {
+	--card-border-width: var(--card-flat-border-width);
+
+	@include clay-card-variant($card-flat);
+
+	&.interactive {
+		@include clay-card-variant($card-flat-interactive);
+	}
+}
+
+// Card Helpers
+
+.card-horizontal {
+	.card-item-first {
+		@include border-radius(
+			$card-inner-border-radius 0 0 $card-inner-border-radius
+		);
+	}
+
+	.card-item-last {
+		@include border-radius(
+			0 $card-inner-border-radius $card-inner-border-radius 0
+		);
+	}
+}
+
+// Card Row
+
+.card-row {
+	.autofit-col-gutters {
+		padding-left: $card-body-padding-left;
+		padding-right: $card-body-padding-right;
+	}
+
+	.autofit-col-sm {
+		width: var(--card-autofit-col-sm-width);
+	}
+
+	.autofit-col-md {
+		width: var(--card-autofit-col-md-width);
+	}
+
+	.autofit-col-lg {
+		width: var(--card-autofit-col-lg-width);
+	}
+}

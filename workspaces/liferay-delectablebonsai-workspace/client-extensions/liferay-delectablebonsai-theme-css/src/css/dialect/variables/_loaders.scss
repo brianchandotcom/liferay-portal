@@ -1,0 +1,19 @@
+// Loading Icon Dotted
+
+$loading-animation: (
+	ball-0-color: $gray-600,
+	ball-1-color: $gray-500,
+	ball-2-color: $gray-400,
+	ball-3-color: $gray-300,
+	ball-4-color: $gray-200,
+	ball-5-color: $gray-100,
+);
+
+$loading-animation-light: (
+	ball-0-color: $white,
+	ball-1-color: $gray-100,
+	ball-2-color: $gray-200,
+	ball-3-color: $gray-300,
+	ball-4-color: $gray-400,
+	ball-5-color: $gray-500,
+);

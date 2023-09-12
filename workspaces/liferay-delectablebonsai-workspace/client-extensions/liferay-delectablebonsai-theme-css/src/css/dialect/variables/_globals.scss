@@ -1,0 +1,137 @@
+// Border Radius
+
+$border-radius-xxl: var(--border-radius-xxl);
+$border-radius-xl: var(--border-radius-xl);
+$border-radius-lg: var(--border-radius-lg);
+$border-radius: var(--border-radius);
+$border-radius-sm: var(--border-radius-sm);
+$border-radius-xs: var(--border-radius-xs);
+
+$rounded-border-radius: $border-radius;
+$rounded-circle-border-radius: var(--border-radius-circle);
+$rounded-pill: var(--border-radius-pill);
+
+$panel-border-radius: 0.5rem;
+
+// Forms
+
+$form-input-focus-color: var(--color-focus);
+$form-white-color: var(--color-neutral-0);
+
+$component-focus-box-shadow: 0 0 0 0.125rem $form-white-color#{','} 0 0 0 0.25rem
+	$form-input-focus-color;
+$component-focus-inset-box-shadow: inset 0 0 0 0.125rem $form-input-focus-color#{','}
+	inset 0 0 0 0.25rem $form-white-color;
+
+// Colors
+
+$white: var(--color-neutral-0);
+$gray-100: var(--color-neutral-1);
+$gray-200: var(--color-neutral-2);
+$gray-300: var(--color-neutral-3);
+$gray-400: var(--color-neutral-4);
+$gray-500: var(--color-neutral-5);
+$gray-600: var(--color-neutral-6);
+$gray-700: var(--color-neutral-7);
+$gray-800: var(--color-neutral-8);
+$gray-900: var(--color-neutral-9);
+$black: var(--color-neutral-10);
+
+$primary: var(--color-brand-primary);
+$primary-d1: var(--color-brand-primary-darken-1);
+$primary-d2: var(--color-brand-primary-darken-2);
+$primary-l1: var(--color-brand-primary-lighten-2);
+$primary-l2: var(--color-brand-primary-lighten-5);
+$primary-l3: var(--color-brand-primary-lighten-6);
+
+$secondary: var(--color-brand-secondary);
+$secondary-d1: var(--color-brand-secondary-darken-1);
+$secondary-d2: var(--color-brand-secondary-darken-2);
+$secondary-l1: var(--color-brand-secondary-lighten-2);
+$secondary-l2: var(--color-brand-secondary-lighten-5);
+$secondary-l3: var(--color-brand-secondary-lighten-6);
+
+$info: var(--color-state-info);
+$info-d1: var(--color-state-info-darken-1);
+$info-d2: var(--color-state-info-darken-2);
+$info-l1: var(--color-state-info-lighten-1);
+$info-l2: var(--color-state-info-lighten-2);
+
+$success: var(--color-state-success);
+$success-d1: var(--color-state-success-darken-1);
+$success-d2: var(--color-state-success-darken-2);
+$success-l1: var(--color-state-success-lighten-1);
+$success-l2: var(--color-state-success-lighten-2);
+
+$warning: var(--color-state-warning);
+$warning-d1: var(--color-state-warning-darken-1);
+$warning-d2: var(--color-state-warning-darken-2);
+$warning-l1: var(--color-state-warning-lighten-1);
+$warning-l2: var(--color-state-warning-lighten-2);
+
+$danger: var(--color-state-error);
+$danger-d1: var(--color-state-error-darken-1);
+$danger-d2: var(--color-state-error-darken-2);
+$danger-l1: var(--color-state-error-lighten-1);
+$danger-l2: var(--color-state-error-lighten-2);
+
+$light: var(--color-neutral-3);
+$light-d1: var(--color-neutral-4);
+$light-d2: var(--color-neutral-5);
+$light-l1: var(--color-neutral-2);
+$light-l2: var(--color-neutral-1);
+
+$dark: var(--color-neutral-7);
+$dark-d1: var(--color-neutral-5);
+$dark-d2: var(--color-neutral-6);
+$dark-l1: var(--color-neutral-8);
+$dark-l2: var(--color-neutral-9);
+
+// Headings h1-h6
+
+$headings-line-height: var(--headings-line-height);
+
+$h1: (
+	font-weight: var(--h1-font-weight),
+);
+
+$h2: (
+	font-weight: var(--h2-font-weight),
+);
+
+$h3: (
+	font-weight: var(--h3-font-weight),
+);
+
+$h4: (
+	font-weight: var(--h4-font-weight),
+);
+
+$h5: (
+	font-weight: var(--h5-font-weight),
+);
+
+$h6: (
+	font-weight: var(--h6-font-weight),
+);
+
+// Link
+
+$link-color: var(--link-color);
+$link-decoration: var(--link-text-decoration);
+$link-hover-color: var(--link-hover-color);
+$link-hover-decoration: var(--link-hover-text-decoration);
+
+// Transitions
+
+$transition-base: all var(--transition-base);
+$transition-fade: opacity var(--transition-fade);
+$transition-collapse: height var(--transition-collapse);
+
+$btn-transition: color var(--transition-base),
+	background-color var(--transition-base), border-color var(--transition-base),
+	box-shadow var(--transition-base);
+
+// Other
+
+$mark-bg: var(--marked-text-background-color);

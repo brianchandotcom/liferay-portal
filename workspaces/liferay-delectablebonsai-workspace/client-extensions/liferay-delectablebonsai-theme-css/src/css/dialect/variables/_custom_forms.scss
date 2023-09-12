@@ -1,0 +1,61 @@
+$custom-checkbox-indicator-icon-checked: clay-icon(check-small, #fff);
+
+$custom-control-indicator-bg: var(--custom-control-background-color);
+$custom-control-indicator-border-color: var(--custom-control-border-color);
+$custom-control-indicator-border-width: 0.0625rem; // 1px
+
+$custom-control-indicator-active-bg: var(--custom-control-background-color);
+$custom-control-indicator-active-border-color: $custom-control-indicator-border-color;
+
+$custom-control-indicator-hover-box-shadow: 0 0 0 1rem
+	var(--custom-control-color-hover);
+
+$custom-control-indicator-focus-border-color: $form-input-focus-color;
+
+$custom-control-indicator-disabled-bg: var(--custom-control-background-color);
+$custom-control-indicator-disabled-border-color: var(
+	--custom-control-border-color-disabled
+);
+
+$custom-control-indicator-checked-bg: var(--custom-control-border-color);
+$custom-control-indicator-checked-border-color: var(
+	--custom-control-border-color
+);
+
+$custom-control-indicator-checked-active-bg: var(--custom-control-border-color);
+$custom-control-indicator-checked-active-border-color: var(
+	--custom-control-border-color
+);
+
+$custom-control-indicator-checked-disabled-bg: var(
+	--custom-control-border-color-disabled
+);
+$custom-control-indicator-checked-disabled-border-color: transparent;
+
+$custom-checkbox-indicator-indeterminate-bg: var(--custom-control-border-color);
+$custom-checkbox-indicator-indeterminate-box-shadow: none;
+$custom-control-indicator-indeterminate-border-color: var(
+	--custom-control-border-color
+);
+
+$custom-radio-indicator-icon-checked: clay-icon(circle, #fff);
+
+$custom-radio-indicator-icon-checked-bg-size: 0.5rem;
+
+$custom-radio-indicator-checked-disabled-border-color: var(
+	--custom-control-border-color-disabled
+);
+$custom-radio-indicator-disabled-border-color: var(
+	--custom-control-border-color-disabled
+);
+
+$custom-control-label: (
+	color: var(--custom-control-label-color),
+	font-size: var(--custom-control-label-font-size),
+	font-weight: var(--custom-control-label-font-weight),
+	line-height: var(--custom-control-label-line-height),
+);
+
+$custom-control-label-text: (
+	padding-left: var(--custom-control-label-padding-left),
+);

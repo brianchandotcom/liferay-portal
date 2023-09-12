@@ -1,0 +1,154 @@
+// Primary
+
+@include color-variant(
+	brand-primary-darken-5,
+	var(--color-brand-primary-darken-5)
+);
+@include color-variant(
+	brand-primary-darken-4,
+	var(--color-brand-primary-darken-4)
+);
+@include color-variant(
+	brand-primary-darken-3,
+	var(--color-brand-primary-darken-3)
+);
+@include color-variant(
+	brand-primary-darken-2,
+	var(--color-brand-primary-darken-2)
+);
+@include color-variant(
+	brand-primary-darken-1,
+	var(--color-brand-primary-darken-1)
+);
+@include color-variant(brand-primary, var(--color-brand-primary));
+@include color-variant(
+	brand-primary-lighten-1,
+	var(--color-brand-primary-lighten-1)
+);
+@include color-variant(
+	brand-primary-lighten-2,
+	var(--color-brand-primary-lighten-2)
+);
+@include color-variant(
+	brand-primary-lighten-3,
+	var(--color-brand-primary-lighten-3)
+);
+@include color-variant(
+	brand-primary-lighten-4,
+	var(--color-brand-primary-lighten-4)
+);
+@include color-variant(
+	brand-primary-lighten-5,
+	var(--color-brand-primary-lighten-5)
+);
+@include color-variant(
+	brand-primary-lighten-6,
+	var(--color-brand-primary-lighten-6)
+);
+
+// Secondary
+
+@include color-variant(
+	brand-secondary-darken-5,
+	var(--color-brand-secondary-darken-5)
+);
+@include color-variant(
+	brand-secondary-darken-4,
+	var(--color-brand-secondary-darken-4)
+);
+@include color-variant(
+	brand-secondary-darken-3,
+	var(--color-brand-secondary-darken-3)
+);
+@include color-variant(
+	brand-secondary-darken-2,
+	var(--color-brand-secondary-darken-2)
+);
+@include color-variant(
+	brand-secondary-darken-1,
+	var(--color-brand-secondary-darken-1)
+);
+@include color-variant(brand-secondary, var(--color-brand-secondary));
+@include color-variant(
+	brand-secondary-lighten-1,
+	var(--color-brand-secondary-lighten-1)
+);
+@include color-variant(
+	brand-secondary-lighten-2,
+	var(--color-brand-secondary-lighten-2)
+);
+@include color-variant(
+	brand-secondary-lighten-3,
+	var(--color-brand-secondary-lighten-3)
+);
+@include color-variant(
+	brand-secondary-lighten-4,
+	var(--color-brand-secondary-lighten-4)
+);
+@include color-variant(
+	brand-secondary-lighten-5,
+	var(--color-brand-secondary-lighten-5)
+);
+@include color-variant(
+	brand-secondary-lighten-6,
+	var(--color-brand-secondary-lighten-6)
+);
+
+// Neutral
+
+@include color-variant(neutral-0, var(--color-neutral-0));
+@include color-variant(neutral-1, var(--color-neutral-1));
+@include color-variant(neutral-2, var(--color-neutral-2));
+@include color-variant(neutral-3, var(--color-neutral-3));
+@include color-variant(neutral-4, var(--color-neutral-4));
+@include color-variant(neutral-5, var(--color-neutral-5));
+@include color-variant(neutral-6, var(--color-neutral-6));
+@include color-variant(neutral-7, var(--color-neutral-7));
+@include color-variant(neutral-8, var(--color-neutral-8));
+@include color-variant(neutral-9, var(--color-neutral-9));
+@include color-variant(neutral-10, var(--color-neutral-10));
+
+// Accents
+
+@include color-variant(accent-1, var(--color-accent-1));
+@include color-variant(accent-1-lighten, var(--color-accent-1-lighten));
+@include color-variant(accent-2, var(--color-accent-2));
+@include color-variant(accent-2-lighten, var(--color-accent-2-lighten));
+@include color-variant(accent-3, var(--color-accent-3));
+@include color-variant(accent-3-lighten, var(--color-accent-3-lighten));
+@include color-variant(accent-4, var(--color-accent-4));
+@include color-variant(accent-4-lighten, var(--color-accent-4-lighten));
+@include color-variant(accent-5, var(--color-accent-5));
+@include color-variant(accent-5-lighten, var(--color-accent-5-lighten));
+@include color-variant(accent-6, var(--color-accent-6));
+@include color-variant(accent-6-lighten, var(--color-accent-6-lighten));
+
+// States
+
+// Success
+
+@include color-variant(success-darken-2, var(--color-state-success-darken-2));
+@include color-variant(success-darken-1, var(--color-state-success-darken-1));
+@include color-variant(success-lighten-1, var(--color-state-success-lighten-1));
+@include color-variant(success-lighten-2, var(--color-state-success-lighten-2));
+
+// Info
+
+@include color-variant(info-darken-2, var(--color-state-info-darken-2));
+@include color-variant(info-darken-1, var(--color-state-info-darken-1));
+@include color-variant(info-lighten-1, var(--color-state-info-lighten-1));
+@include color-variant(info-lighten-2, var(--color-state-info-lighten-2));
+
+// Warning
+
+@include color-variant(warning-darken-2, var(--color-state-warning-darken-2));
+@include color-variant(warning-darken-1, var(--color-state-warning-darken-1));
+@include color-variant(warning-lighten-1, var(--color-state-warning-lighten-1));
+@include color-variant(warning-lighten-2, var(--color-state-warning-lighten-2));
+
+// Danger
+
+@include color-variant(danger-darken-2, var(--color-state-error-darken-2));
+@include color-variant(danger-darken-1, var(--color-state-error-darken-1));
+@include color-variant(danger-lighten-1, var(--color-state-error-lighten-1));
+@include color-variant(danger-lighten-2, var(--color-state-error-lighten-2));

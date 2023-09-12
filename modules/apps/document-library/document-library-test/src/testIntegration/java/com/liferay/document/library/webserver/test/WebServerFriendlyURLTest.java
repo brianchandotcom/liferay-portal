@@ -81,13 +81,13 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 			WebServerServlet.hasFiles(
 				_createMockHttpServletRequest(
 					String.format("/%s/0/%s", group.getGroupId(), fileURL))));
+
 		_addFileEntry(fileName, RandomTestUtil.randomString());
 
 		Assert.assertTrue(
 			WebServerServlet.hasFiles(
 				_createMockHttpServletRequest(
 					String.format("/%s/0/%s", group.getGroupId(), fileURL))));
-
 		Assert.assertFalse(
 			WebServerServlet.hasFiles(
 				_createMockHttpServletRequest(
@@ -105,6 +105,7 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 			WebServerServlet.hasFiles(
 				_createMockHttpServletRequest(
 					String.format("/%s/0/%s", group.getGroupId(), fileURL))));
+
 		_addFileEntry(fileName, RandomTestUtil.randomString());
 
 		Assert.assertTrue(

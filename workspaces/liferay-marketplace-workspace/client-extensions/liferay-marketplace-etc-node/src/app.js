@@ -16,6 +16,16 @@ import log from './util/log.js';
 
 import 'dotenv/config.js';
 
+const trialTypes = {
+	CLOUDAPP: 0,
+	CLOUDAPP30: 30,
+	DXPAPP: 0,
+	DXPAPP30: 30,
+	PROJECT60: 60,
+	SOLUTIONS7: 7,
+	SOLUTIONS30: 30,
+};
+
 const SSA_BASE_URL =
 	process.env.LIFERAY_MARKETPLACE_ETC_NODE_SSA_BASE_URL ||
 	'https://dev-business.liferay.cloud';
@@ -230,9 +240,11 @@ app.post('/marketplace/trial', async (req, res) => {
 
 		data.devEnabled = false;
 		data.drEnabled = false;
-		data.duration = Number(SSA_DURATION);
+		data.duration =
+			trialTypes[body.modelDTOOrder.orderTypeExternalReferenceCode] ||
+			Number(SSA_DURATION);
 		data.sendEmailForTrial = true;
-		data.userId = Number(SSA_SERVICE_USER_ID);
+		data.userId = Number(SSA_SERVICE_USER_ID) || body.userId;
 
 		fetch(uri, {
 			body: JSON.stringify(data),

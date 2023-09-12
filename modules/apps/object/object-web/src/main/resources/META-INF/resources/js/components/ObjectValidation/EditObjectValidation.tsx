@@ -93,15 +93,17 @@ export default function EditObjectValidation({
 		}
 		catch (error) {
 			const {detail, message} = error as ErrorDetails;
-			const {fieldName, message: detailMessage} = JSON.parse(
-				detail as string
-			) as {
-				fieldName: keyof ObjectValidationErrors;
-				message: string;
-			};
 
-			setErrorMessage({[fieldName]: detailMessage});
+			if (detail) {
+				const {fieldName, message: detailMessage} = JSON.parse(
+					detail as string
+				) as {
+					fieldName: keyof ObjectValidationErrors;
+					message: string;
+				};
 
+				setErrorMessage({[fieldName]: detailMessage});
+			}
 			openToast({message, type: 'danger'});
 		}
 	};

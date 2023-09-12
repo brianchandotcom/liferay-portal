@@ -144,10 +144,7 @@ export default function ViewObjectDefinitions({
 		return (
 			<div className="table-list-title">
 				<a href="#" onClick={handleEditObjectDefinition}>
-					{getLocalizableLabel(
-						itemData.defaultLanguageId as Liferay.Language.Locale,
-						value
-					)}
+					{value}
 				</a>
 			</div>
 		);

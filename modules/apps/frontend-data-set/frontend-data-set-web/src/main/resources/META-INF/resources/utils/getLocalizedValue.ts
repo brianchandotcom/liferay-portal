@@ -26,7 +26,7 @@ function getLanguageKey(data: any): string {
 	return languageKey;
 }
 
-export function getLocalizedValueFromItem(
+export function getLocalizedValue(
 	item: any,
 	fieldName: string | Array<string>
 ): ILocalizedItemDetails | null {

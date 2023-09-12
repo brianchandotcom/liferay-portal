@@ -280,6 +280,7 @@ export function mockExperimentRootReq({status}) {
 					id: '123',
 					name: 'Experiment Test',
 					pageURL: 'https://www.beryl.com/experiment-test',
+					publishable: false,
 					status
 				}
 			}

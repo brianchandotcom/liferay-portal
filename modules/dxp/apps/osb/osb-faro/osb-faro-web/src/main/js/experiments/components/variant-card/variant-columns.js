@@ -7,13 +7,14 @@ import {
 	getFormattedMedian,
 	getFormattedMedianLabel,
 	getFormattedProbabilityToWin,
-	getVariantLabel
+	getVariantLabels
 } from 'experiments/util/experiments';
 
 export default ({
 	bestVariant,
 	metric,
 	metricUnit,
+	publishedDXPVariantId,
 	status,
 	winnerDXPVariantId
 }) => [
@@ -21,14 +22,14 @@ export default ({
 		accessor: 'dxpVariantName',
 		cellRenderer: ({data: {dxpVariantId, dxpVariantName}}) => (
 			<VariantTitleCell
-				id={dxpVariantId}
-				label={getVariantLabel(
-					status,
+				labels={getVariantLabels({
 					bestVariant,
-					winnerDXPVariantId,
-					dxpVariantId
-				)}
-				title={`${dxpVariantName}`}
+					dxpVariantId,
+					publishedDXPVariantId,
+					status,
+					winnerDXPVariantId
+				})}
+				title={dxpVariantName}
 			/>
 		),
 		label: Liferay.Language.get('variants'),

@@ -8,6 +8,7 @@ export default ({
 		dxpVariants,
 		goal,
 		metrics: {variantMetrics},
+		publishedDXPVariantId,
 		status,
 		winnerDXPVariantId
 	}
@@ -21,6 +22,7 @@ export default ({
 		data: variants,
 		metric,
 		metricUnit,
+		publishedDXPVariantId,
 		status,
 		winnerDXPVariantId
 	};

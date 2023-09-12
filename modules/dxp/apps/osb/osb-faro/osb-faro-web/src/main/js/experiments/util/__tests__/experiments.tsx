@@ -13,7 +13,7 @@ import {
 	getStatusName,
 	getStep,
 	getTicks,
-	getVariantLabel,
+	getVariantLabels,
 	normalizeHistogram,
 	toThousandsABTesting
 } from '../experiments';
@@ -280,43 +280,74 @@ describe('formatProcessedDate', () => {
 	});
 });
 
-describe('getVariantLabel', () => {
+describe('getVariantLabels', () => {
 	it('should return a label in especific cases', () => {
 		expect(
-			getVariantLabel('RUNNING', mockBestVariant, undefined, 'DEFAULT')
-		).toBe('Current Best');
+			getVariantLabels({
+				bestVariant: mockBestVariant,
+				dxpVariantId: 'DEFAULT',
+				status: 'RUNNING'
+			})
+		).toEqual([{status: 'success', value: 'Current Best'}]);
 
 		expect(
-			getVariantLabel(
-				'FINISHED_WINNER',
-				mockBestVariant,
-				'DEFAULT',
-				'DEFAULT'
-			)
-		).toBe('Winner');
+			getVariantLabels({
+				bestVariant: mockBestVariant,
+				dxpVariantId: 'DEFAULT',
+				status: 'FINISHED_WINNER',
+				winnerDXPVariantId: 'DEFAULT'
+			})
+		).toEqual([{status: 'success', value: 'Winner'}]);
+
+		expect(
+			getVariantLabels({
+				bestVariant: mockBestVariant,
+				dxpVariantId: 'DEFAULT',
+				publishedDXPVariantId: 'DEFAULT',
+				status: 'TERMINATED'
+			})
+		).toEqual([{status: 'info', value: 'Published'}]);
+
+		expect(
+			getVariantLabels({
+				bestVariant: mockBestVariant,
+				dxpVariantId: 'DEFAULT',
+				publishedDXPVariantId: 'DEFAULT',
+				status: 'FINISHED_WINNER',
+				winnerDXPVariantId: 'DEFAULT'
+			})
+		).toEqual([
+			{status: 'success', value: 'Winner'},
+			{status: 'info', value: 'Published'}
+		]);
 	});
-	it('should return undefined', () => {
+	it('should return an empty array', () => {
 		expect(
-			getVariantLabel('RUNNING', undefined, undefined, 'DEFAULT')
-		).toBe(undefined);
+			getVariantLabels({
+				dxpVariantId: 'DEFAULT',
+				status: 'RUNNING'
+			})
+		).toEqual([]);
 
 		expect(
-			getVariantLabel(
-				'FINISHED_WINNER',
-				mockBestVariant,
-				'1000',
-				'DEFAULT'
-			)
-		).toBe(undefined);
+			getVariantLabels({
+				bestVariant: mockBestVariant,
+				dxpVariantId: 'DEFAULT',
+				publishedDXPVariantId: null,
+				status: 'FINISHED_NO_WINNER',
+				winnerDXPVariantId: null
+			})
+		).toEqual([]);
 
 		expect(
-			getVariantLabel(
-				'FINISHED_NO_WINNER',
-				mockBestVariant,
-				'DEFAULT',
-				'DEFAULT'
-			)
-		).toBe(undefined);
+			getVariantLabels({
+				bestVariant: mockBestVariant,
+				dxpVariantId: 'DEFAULT',
+				publishedDXPVariantId: null,
+				status: 'TERMINATED',
+				winnerDXPVariantId: null
+			})
+		).toEqual([]);
 	});
 });
 

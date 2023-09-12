@@ -22,7 +22,7 @@ import {
 	GetStatusNameFn,
 	GetStepFn,
 	GetTicksFn,
-	GetVariantLabel,
+	GetVariantLabels,
 	MakeAllRefetchFn,
 	MergedVariantsFn,
 	ModalCompleteFn,
@@ -349,25 +349,37 @@ export const useAddRefetch = (refetch: Function) => {
 	}, [refetch]);
 };
 
-export const getVariantLabel: GetVariantLabel = (
-	status,
+export const getVariantLabels: GetVariantLabels = ({
 	bestVariant,
-	winnerVariantId,
-	variantId
-) => {
-	let label = undefined;
+	dxpVariantId,
+	publishedDXPVariantId,
+	status,
+	winnerDXPVariantId
+}) => {
+	const labels = [];
 
-	if (
-		bestVariant &&
-		status === 'RUNNING' &&
-		bestVariant.dxpVariantId === variantId
-	) {
-		label = Liferay.Language.get('current-best');
-	} else if (status === 'FINISHED_WINNER' && winnerVariantId === variantId) {
-		label = Liferay.Language.get('winner');
+	if (status === 'RUNNING' && bestVariant?.dxpVariantId === dxpVariantId) {
+		labels.push({
+			status: 'success',
+			value: Liferay.Language.get('current-best')
+		});
 	}
 
-	return label;
+	if (winnerDXPVariantId === dxpVariantId) {
+		labels.push({
+			status: 'success',
+			value: Liferay.Language.get('winner')
+		});
+	}
+
+	if (publishedDXPVariantId === dxpVariantId) {
+		labels.push({
+			status: 'info',
+			value: Liferay.Language.get('published')
+		});
+	}
+
+	return labels;
 };
 
 export const getTicks: GetTicksFn = maxValue => {

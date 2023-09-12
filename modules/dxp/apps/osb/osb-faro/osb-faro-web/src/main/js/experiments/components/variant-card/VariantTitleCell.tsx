@@ -5,11 +5,11 @@ import ReactDOM from 'react-dom';
 import {isEllipisActive} from 'shared/util/util';
 
 interface IVariantTitleProps {
-	label?: string;
+	labels: Array<{value: string; status: string}>;
 	title: string;
 }
 
-const VariantTitle: React.FC<IVariantTitleProps> = ({label, title}) => {
+const VariantTitle: React.FC<IVariantTitleProps> = ({labels, title}) => {
 	const [showPopover, setShowPopover] = useState(false);
 	const titleRef = useRef();
 
@@ -29,7 +29,12 @@ const VariantTitle: React.FC<IVariantTitleProps> = ({label, title}) => {
 				{title}
 			</h5>
 
-			{label && <Label display='success'>{label}</Label>}
+			{!!labels.length &&
+				labels.map(({status, value}, index) => (
+					<Label display={status} key={index}>
+						{value}
+					</Label>
+				))}
 
 			{ReactDOM.createPortal(
 				<Popover

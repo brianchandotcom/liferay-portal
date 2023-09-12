@@ -17,7 +17,9 @@ describe('VariantTitle', () => {
 	});
 
 	it('should render label component when a label prop is set', () => {
-		const {getByText} = render(<DefaultComponent label='winner' />);
+		const {getByText} = render(
+			<DefaultComponent label={{status: 'success', value: 'winner'}} />
+		);
 
 		expect(getByText('winner')).toBeTruthy();
 	});

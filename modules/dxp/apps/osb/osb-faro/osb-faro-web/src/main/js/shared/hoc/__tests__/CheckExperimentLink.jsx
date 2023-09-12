@@ -24,6 +24,7 @@ export function mockExperimentRootReq() {
 					id: '456',
 					name: 'Test 5',
 					pageURL: 'http://172.16.11.12:8090/web/guest/4',
+					publishable: false,
 					status: 'TERMINATED'
 				}
 			}

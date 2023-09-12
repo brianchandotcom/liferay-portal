@@ -84,12 +84,13 @@ export type GetShortIntervals = (intervals: Array<Date>) => Array<Date>;
 
 export type GetTicksFn = (maxValue: number) => Array<number>;
 
-export type GetVariantLabel = (
-	status: Status,
-	bestVariant: Variant,
-	winnerVariantId: string,
-	variantId: string
-) => string | undefined;
+export type GetVariantLabels = (experiment: {
+	bestVariant?: Variant;
+	dxpVariantId: string;
+	publishedDXPVariantId?: string;
+	status: Status;
+	winnerDXPVariantId?: string;
+}) => Array<{status: string; value: string}>;
 
 export type Histogram = {
 	key: string;

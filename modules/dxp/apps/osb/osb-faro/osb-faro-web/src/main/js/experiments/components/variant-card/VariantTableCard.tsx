@@ -31,6 +31,7 @@ export interface VariantCardIProps extends React.HTMLAttributes<HTMLElement> {
 	data: Array<Variant>;
 	metric: string;
 	metricUnit: string;
+	publishedDXPVariantId: string;
 	status: Status;
 	winnerDXPVariantId: string;
 }
@@ -54,6 +55,7 @@ const VariantTableCard = () => {
 					data,
 					metric,
 					metricUnit,
+					publishedDXPVariantId,
 					status,
 					winnerDXPVariantId
 				}: VariantCardIProps = getVariantTableMapper(props);
@@ -65,6 +67,7 @@ const VariantTableCard = () => {
 								bestVariant,
 								metric,
 								metricUnit,
+								publishedDXPVariantId,
 								status,
 								winnerDXPVariantId
 							})}

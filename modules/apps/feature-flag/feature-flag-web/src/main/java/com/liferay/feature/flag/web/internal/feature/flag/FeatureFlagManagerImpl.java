@@ -5,8 +5,6 @@
 
 package com.liferay.feature.flag.web.internal.feature.flag;
 
-import com.liferay.feature.flag.web.internal.company.feature.flags.CompanyFeatureFlags;
-import com.liferay.feature.flag.web.internal.company.feature.flags.CompanyFeatureFlagsProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -27,23 +25,21 @@ public class FeatureFlagManagerImpl implements FeatureFlagManager {
 	public List<FeatureFlag> getFeatureFlags(
 		long companyId, Predicate<FeatureFlag> predicate) {
 
-		return _companyFeatureFlagsProvider.withCompanyFeatureFlags(
+		return _featureFlagsBagProvider.withFeatureFlagsBag(
 			companyId,
-			companyFeatureFlags -> companyFeatureFlags.getFeatureFlags(
-				predicate));
+			featureFlagsBag -> featureFlagsBag.getFeatureFlags(predicate));
 	}
 
 	@Override
 	public String getJSON(long companyId) {
-		return _companyFeatureFlagsProvider.withCompanyFeatureFlags(
-			companyId, CompanyFeatureFlags::getJSON);
+		return _featureFlagsBagProvider.withFeatureFlagsBag(
+			companyId, FeatureFlagsBag::getJSON);
 	}
 
 	@Override
 	public boolean isEnabled(long companyId, String key) {
-		return _companyFeatureFlagsProvider.withCompanyFeatureFlags(
-			companyId,
-			companyFeatureFlags -> companyFeatureFlags.isEnabled(key));
+		return _featureFlagsBagProvider.withFeatureFlagsBag(
+			companyId, featureFlagsBag -> featureFlagsBag.isEnabled(key));
 	}
 
 	@Override
@@ -52,6 +48,6 @@ public class FeatureFlagManagerImpl implements FeatureFlagManager {
 	}
 
 	@Reference
-	private CompanyFeatureFlagsProvider _companyFeatureFlagsProvider;
+	private FeatureFlagsBagProvider _featureFlagsBagProvider;
 
 }

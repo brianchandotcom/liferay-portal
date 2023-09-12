@@ -5,8 +5,8 @@
 
 package com.liferay.feature.flag.web.internal.model.listener;
 
-import com.liferay.feature.flag.web.internal.company.feature.flags.CompanyFeatureFlags;
-import com.liferay.feature.flag.web.internal.company.feature.flags.CompanyFeatureFlagsProvider;
+import com.liferay.feature.flag.web.internal.feature.flag.FeatureFlagsBag;
+import com.liferay.feature.flag.web.internal.feature.flag.FeatureFlagsBagProvider;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
@@ -28,21 +28,21 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 	@Override
 	public void onAfterCreate(Company company) throws ModelListenerException {
-		CompanyFeatureFlags companyFeatureFlags =
-			_companyFeatureFlagsProvider.getOrCreateCompanyFeatureFlags(
+		FeatureFlagsBag featureFlagsBag =
+			_featureFlagsBagProvider.getOrCreateFeatureFlagsBag(
 				company.getCompanyId());
 
 		List<FeatureFlag> deprecationFeatureFlags =
-			companyFeatureFlags.getFeatureFlags(
+			featureFlagsBag.getFeatureFlags(
 				FeatureFlagType.DEPRECATION.getPredicate());
 
 		for (FeatureFlag deprecationFeatureFlag : deprecationFeatureFlags) {
-			_companyFeatureFlagsProvider.setEnabled(
+			_featureFlagsBagProvider.setEnabled(
 				company.getCompanyId(), deprecationFeatureFlag.getKey(), false);
 		}
 	}
 
 	@Reference
-	private CompanyFeatureFlagsProvider _companyFeatureFlagsProvider;
+	private FeatureFlagsBagProvider _featureFlagsBagProvider;
 
 }

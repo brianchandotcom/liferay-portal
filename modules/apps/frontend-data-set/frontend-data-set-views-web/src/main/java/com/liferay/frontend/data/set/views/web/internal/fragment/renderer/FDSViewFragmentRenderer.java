@@ -447,8 +447,6 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 						"items",
 						_getListTypeEntriesJSONArray(listTypeEntries, locale)
 					).put(
-						"label", _language.get(locale, "search")
-					).put(
 						"label", properties.get("name")
 					).put(
 						"multiple", properties.get("multiple")

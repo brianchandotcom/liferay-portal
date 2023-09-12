@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -51,6 +52,8 @@ public class ComboRequestAbsolutePortalURLBuilderTest
 
 	@Before
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
 			mockCacheHelper(), mockPortal(context, proxy, cdnHost),
 			mockHttpServletRequest());
@@ -69,6 +72,11 @@ public class ComboRequestAbsolutePortalURLBuilderTest
 
 		_comboRequestAbsolutePortalURLBuilder =
 			_absolutePortalURLBuilder.forComboRequest();
+	}
+
+	@After
+	public void tearDown() {
+		super.tearDown();
 	}
 
 	@Test

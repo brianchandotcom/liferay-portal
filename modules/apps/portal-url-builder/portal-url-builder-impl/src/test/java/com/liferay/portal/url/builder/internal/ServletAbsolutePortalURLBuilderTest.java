@@ -12,6 +12,7 @@ import com.liferay.portal.url.builder.ServletAbsolutePortalURLBuilder;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -44,12 +45,19 @@ public class ServletAbsolutePortalURLBuilderTest
 
 	@Before
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
 			mockCacheHelper(), mockPortal(context, proxy, cdnHost),
 			mockHttpServletRequest());
 
 		_servletAbsolutePortalURLBuilder = _absolutePortalURLBuilder.forServlet(
 			"path/to/resource");
+	}
+
+	@After
+	public void tearDown() {
+		super.tearDown();
 	}
 
 	@Test

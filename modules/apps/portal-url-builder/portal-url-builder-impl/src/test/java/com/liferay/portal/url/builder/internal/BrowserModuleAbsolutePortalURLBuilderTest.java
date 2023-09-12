@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -72,6 +73,11 @@ public class BrowserModuleAbsolutePortalURLBuilderTest
 		_browserModuleAbsolutePortalURLBuilder =
 			_absolutePortalURLBuilder.forBrowserModule(
 				"/o/js/resolved-module/frontend-js-web@1.0.0/index");
+	}
+
+	@After
+	public void tearDown() {
+		super.tearDown();
 	}
 
 	@Test

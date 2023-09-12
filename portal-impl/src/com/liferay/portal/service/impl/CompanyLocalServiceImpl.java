@@ -228,6 +228,14 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			company.setMaxUsers(maxUsers);
 			company.setActive(active);
 
+			String name = webId;
+
+			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+				name = PropsValues.COMPANY_DEFAULT_NAME;
+			}
+
+			company.setName(name);
+
 			company = companyPersistence.update(company);
 
 			User guestUser = _addGuestUser(company);
@@ -240,16 +248,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				_dlFileEntryTypeLocalService.
 					createBasicDocumentDLFileEntryType();
 			}
-
-			String name = webId;
-
-			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-				name = PropsValues.COMPANY_DEFAULT_NAME;
-			}
-
-			company.setName(name);
-
-			company = companyPersistence.update(company);
 
 			// Company info
 

@@ -691,6 +691,8 @@ definition {
 
 			Form.editFieldLabelMetal(fieldValue = "Country");
 
+			SetWindowSize.maximizeWindow();
+
 			Form.editFieldDataProvider(
 				dataProvider = "Get Countries",
 				dataProviderOutput = "Country Names");

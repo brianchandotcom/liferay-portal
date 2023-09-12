@@ -5,7 +5,6 @@
 
 /// <reference types="react" />
 
-import {SidebarCategory} from '@liferay/object-js-components-web';
 import './EditObjectField.scss';
 export interface EditObjectFieldProps {
 	baseResourceURL: string;
@@ -21,8 +20,6 @@ export interface EditObjectFieldProps {
 	objectFieldId: number;
 	objectName: string;
 	readOnly: boolean;
-	readOnlySidebarElements: SidebarCategory[];
-	sidebarElements: SidebarCategory[];
 	workflowStatusJSONArray: LabelValueObject[];
 }
 export declare const objectFieldInitialValues: Partial<ObjectField>;
@@ -40,7 +37,5 @@ export default function EditObjectField({
 	objectFieldId,
 	objectName,
 	readOnly,
-	readOnlySidebarElements,
-	sidebarElements,
 	workflowStatusJSONArray,
 }: EditObjectFieldProps): JSX.Element;

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {SidebarCategory} from '@liferay/object-js-components-web';
 import React, {ElementType} from 'react';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 export interface AggregationFilters {
@@ -33,6 +34,7 @@ interface BasicInfoTabProps {
 	objectRelationshipId: number;
 	readOnly: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
+	sidebarElements: SidebarCategory[];
 	values: Partial<ObjectField>;
 	workflowStatusJSONArray: LabelValueObject[];
 }
@@ -50,6 +52,7 @@ export declare function BasicInfoTab({
 	objectRelationshipId,
 	readOnly,
 	setValues,
+	sidebarElements,
 	values,
 	workflowStatusJSONArray,
 }: BasicInfoTabProps): JSX.Element;

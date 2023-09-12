@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ExpressionBuilder} from '@liferay/object-js-components-web';
+import {
+	ExpressionBuilder,
+	SidebarCategory,
+} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -16,6 +19,7 @@ interface FormulaContainerProps {
 	modelBuilder?: boolean;
 	objectFieldSettings: ObjectFieldSetting[];
 	setValues: (values: Partial<ObjectField>) => void;
+	sidebarElements: SidebarCategory[];
 }
 
 const getNewObjectFieldSettings = (
@@ -38,6 +42,7 @@ export function FormulaContainer({
 	modelBuilder = false,
 	objectFieldSettings,
 	setValues,
+	sidebarElements,
 }: FormulaContainerProps) {
 	const currentScript = objectFieldSettings?.find(
 		(objectFieldSetting) => objectFieldSetting.name === 'script'
@@ -69,6 +74,7 @@ export function FormulaContainer({
 					const parentWindow = Liferay.Util.getOpener();
 
 					parentWindow.Liferay.fire('openExpressionBuilderModal', {
+						eventSidebarElements: sidebarElements,
 						header: Liferay.Language.get('formula-builder'),
 						onSave: (script: string) => {
 							setValues({

@@ -212,9 +212,7 @@ export function RightSidebarObjectFieldDetails() {
 								?.hasObjectDefinitionUpdateResourcePermission ??
 							false
 						}
-						readOnlySidebarElements={[]}
 						setValues={setValues}
-						sidebarElements={[]}
 						values={values}
 						workflowStatusJSONArray={workflowStatusJSONArray}
 					/>

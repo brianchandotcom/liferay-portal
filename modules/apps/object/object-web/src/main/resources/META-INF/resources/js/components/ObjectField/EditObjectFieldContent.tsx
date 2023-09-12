@@ -4,6 +4,7 @@
  */
 
 import ClayTabs from '@clayui/tabs';
+import {SidebarCategory} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import {createResourceURL, fetch} from 'frontend-js-web';
 import React, {ElementType, useEffect, useState} from 'react';
@@ -47,9 +48,7 @@ export function EditObjectFieldContent({
 	objectDefinitionExternalReferenceCode,
 	objectName,
 	readOnly,
-	readOnlySidebarElements,
 	setValues,
-	sidebarElements,
 	values,
 	workflowStatusJSONArray,
 }: EditObjectFieldContentProps) {
@@ -58,6 +57,12 @@ export function EditObjectFieldContent({
 		[]
 	);
 	const [objectRelationshipId, setObjectRelationshipId] = useState(0);
+	const [readOnlySidebarElements, setReadOnlySidebarElements] = useState<
+		SidebarCategory[]
+	>([]);
+	const [sidebarElements, setSidebarElements] = useState<SidebarCategory[]>(
+		[]
+	);
 
 	if (
 		(Liferay.FeatureFlags['LPS-170122'] ||
@@ -83,6 +88,8 @@ export function EditObjectFieldContent({
 				const objectFieldInfoJSON = (await objectFieldInfoResponse.json()) as {
 					objectFieldTypes: ObjectFieldType[];
 					objectRelationshipId: number;
+					readOnlySidebarElements: SidebarCategory[];
+					sidebarElements: SidebarCategory[];
 				};
 
 				if (values.businessType === 'Relationship') {
@@ -92,6 +99,10 @@ export function EditObjectFieldContent({
 				}
 
 				setObjectFieldTypes(objectFieldInfoJSON.objectFieldTypes);
+				setReadOnlySidebarElements(
+					objectFieldInfoJSON.readOnlySidebarElements
+				);
+				setSidebarElements(objectFieldInfoJSON.sidebarElements);
 			}
 		};
 
@@ -138,6 +149,7 @@ export function EditObjectFieldContent({
 								objectRelationshipId={objectRelationshipId}
 								readOnly={readOnly}
 								setValues={setValues}
+								sidebarElements={sidebarElements}
 								values={values}
 								workflowStatusJSONArray={
 									workflowStatusJSONArray
@@ -184,6 +196,7 @@ export function EditObjectFieldContent({
 					objectRelationshipId={objectRelationshipId}
 					readOnly={readOnly}
 					setValues={setValues}
+					sidebarElements={sidebarElements}
 					values={values}
 					workflowStatusJSONArray={workflowStatusJSONArray}
 				/>

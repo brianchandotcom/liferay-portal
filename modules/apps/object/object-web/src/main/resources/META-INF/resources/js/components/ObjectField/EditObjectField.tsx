@@ -7,15 +7,15 @@ import {
 	API,
 	Card,
 	SidePanelForm,
-	SidebarCategory,
 	openToast,
 	saveAndReload,
 } from '@liferay/object-js-components-web';
 import React, {useEffect} from 'react';
 
-import './EditObjectField.scss';
 import {EditObjectFieldContent} from './EditObjectFieldContent';
 import {useObjectFieldForm} from './useObjectFieldForm';
+
+import './EditObjectField.scss';
 
 export interface EditObjectFieldProps {
 	baseResourceURL: string;
@@ -31,8 +31,6 @@ export interface EditObjectFieldProps {
 	objectFieldId: number;
 	objectName: string;
 	readOnly: boolean;
-	readOnlySidebarElements: SidebarCategory[];
-	sidebarElements: SidebarCategory[];
 	workflowStatusJSONArray: LabelValueObject[];
 }
 
@@ -69,8 +67,6 @@ export default function EditObjectField({
 	objectFieldId,
 	objectName,
 	readOnly,
-	readOnlySidebarElements,
-	sidebarElements,
 	workflowStatusJSONArray,
 }: EditObjectFieldProps) {
 	const onSubmit = async ({id, ...objectField}: ObjectField) => {
@@ -143,9 +139,7 @@ export default function EditObjectField({
 				}
 				objectName={objectName}
 				readOnly={readOnly}
-				readOnlySidebarElements={readOnlySidebarElements}
 				setValues={setValues}
-				sidebarElements={sidebarElements}
 				values={values}
 				workflowStatusJSONArray={workflowStatusJSONArray}
 			/>

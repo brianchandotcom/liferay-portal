@@ -36,9 +36,7 @@ export declare function EditObjectFieldContent({
 	objectDefinitionExternalReferenceCode,
 	objectName,
 	readOnly,
-	readOnlySidebarElements,
 	setValues,
-	sidebarElements,
 	values,
 	workflowStatusJSONArray,
 }: EditObjectFieldContentProps): JSX.Element;

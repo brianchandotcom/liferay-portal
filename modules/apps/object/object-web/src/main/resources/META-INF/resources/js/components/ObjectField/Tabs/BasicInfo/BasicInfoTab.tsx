@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {API, Input} from '@liferay/object-js-components-web';
+import {API, Input, SidebarCategory} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React, {ElementType, useEffect, useState} from 'react';
 
@@ -43,6 +43,7 @@ interface BasicInfoTabProps {
 	objectRelationshipId: number;
 	readOnly: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
+	sidebarElements: SidebarCategory[];
 	values: Partial<ObjectField>;
 	workflowStatusJSONArray: LabelValueObject[];
 }
@@ -61,6 +62,7 @@ export function BasicInfoTab({
 	objectRelationshipId,
 	readOnly,
 	setValues,
+	sidebarElements,
 	values,
 	workflowStatusJSONArray,
 }: BasicInfoTabProps) {
@@ -156,6 +158,7 @@ export function BasicInfoTab({
 							values.objectFieldSettings as ObjectFieldSetting[]
 						}
 						setValues={setValues}
+						sidebarElements={sidebarElements}
 					/>
 				</ContainerWrapper>
 			)}

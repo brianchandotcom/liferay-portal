@@ -1000,7 +1000,10 @@ public class ObjectDefinitionResourceImpl
 				).put(
 					"unbind",
 					() -> {
-						if (objectDefinition.getRootObjectDefinitionId() == 0) {
+						if ((objectDefinition.getRootObjectDefinitionId() ==
+								0) ||
+							objectDefinition.isApproved()) {
+
 							return null;
 						}
 

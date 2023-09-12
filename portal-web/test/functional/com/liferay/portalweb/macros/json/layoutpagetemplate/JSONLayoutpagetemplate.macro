@@ -148,6 +148,13 @@ definition {
 			var description = "";
 		}
 
+		if (${layoutPageTemplateType} == "Display Page Template") {
+			var type = 1;
+		}
+		else {
+			var type = 0;
+		}
+
 		var serviceContext = JSONLayoutpagetemplateSetter.setServiceContext(
 			addGuestPermissions = "true",
 			assetCategoryIds = ${assetCategoryIds},
@@ -159,7 +166,8 @@ definition {
 			description = ${description},
 			groupId = ${groupId},
 			layoutPageTemplateCollectionName = ${layoutPageTemplateCollectionName},
-			serviceContext = ${serviceContext});
+			serviceContext = ${serviceContext},
+			type = ${type});
 	}
 
 	macro addLayoutPageTemplateEntry {
@@ -174,7 +182,8 @@ definition {
 		if (isSet(layoutPageTemplateCollectionName)) {
 			var layoutPageTemplateCollectionId = JSONLayoutpagetemplateSetter.setLayoutPageTemplateCollectionId(
 				groupId = ${groupId},
-				layoutPageTemplateCollectionName = ${layoutPageTemplateCollectionName});
+				layoutPageTemplateCollectionName = ${layoutPageTemplateCollectionName},
+				layoutPageTemplateType = ${layoutPageTemplateType});
 		}
 		else {
 			var layoutPageTemplateCollectionId = 0;
@@ -195,8 +204,8 @@ definition {
 			assetTagNames = ${assetTagNames},
 			serviceContext = ${serviceContext},
 			workflowAction = ${workflowAction});
-		var status = JSONLayoutpagetemplateUtil._getStatus(layoutPageTemplateStatus = ${layoutPageTemplateStatus});
 		var type = JSONLayoutpagetemplateUtil._getType(layoutPageTemplateType = ${layoutPageTemplateType});
+		var status = JSONLayoutpagetemplateUtil._getStatus(layoutPageTemplateStatus = ${layoutPageTemplateStatus});
 
 		JSONLayoutpagetemplateAPI._addLayoutPageTemplateEntry(
 			groupId = ${groupId},

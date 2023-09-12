@@ -38,6 +38,7 @@ import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
 import com.liferay.object.model.ObjectFieldModel;
 import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.model.ObjectValidationRuleModel;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -557,6 +558,10 @@ public class ObjectDefinitionResourceImpl
 		List<com.liferay.object.model.ObjectField> serviceBuilderObjectFields =
 			new ArrayList<>(
 				_objectFieldLocalService.getObjectFields(objectDefinitionId));
+		List<com.liferay.object.model.ObjectValidationRule>
+			serviceBuilderObjectValidationRules = new ArrayList<>(
+				_objectValidationRuleLocalService.getObjectValidationRules(
+					objectDefinitionId));
 
 		if (serviceBuilderObjectDefinition.isModifiable() &&
 			serviceBuilderObjectDefinition.isSystem() &&
@@ -569,12 +574,18 @@ public class ObjectDefinitionResourceImpl
 				serviceBuilderObjectField ->
 					serviceBuilderObjectField.isMetadata() ||
 					!serviceBuilderObjectField.isSystem());
+
+			serviceBuilderObjectValidationRules.removeIf(
+				serviceBuilderObjectValidationRule ->
+					!serviceBuilderObjectValidationRule.isSystem());
 		}
 		else {
 			objectFields.removeIf(
 				objectField -> GetterUtil.getBoolean(objectField.getSystem()));
 
 			serviceBuilderObjectFields.removeIf(ObjectFieldModel::isSystem);
+			serviceBuilderObjectValidationRules.removeIf(
+				ObjectValidationRuleModel::isSystem);
 		}
 
 		for (ObjectField objectField : objectFields) {
@@ -645,8 +656,13 @@ public class ObjectDefinitionResourceImpl
 			objectDefinition.getObjectValidationRules();
 
 		if (objectValidationRules != null) {
-			_objectValidationRuleLocalService.deleteObjectValidationRules(
-				objectDefinitionId);
+			for (com.liferay.object.model.ObjectValidationRule
+					serviceBuilderObjectValidationRule :
+						serviceBuilderObjectValidationRules) {
+
+				_objectValidationRuleLocalService.deleteObjectValidationRule(
+					serviceBuilderObjectValidationRule);
+			}
 		}
 
 		ObjectView[] objectViews = objectDefinition.getObjectViews();

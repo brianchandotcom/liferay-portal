@@ -69,6 +69,7 @@ export default function EditModeSelector() {
 	return (
 		<Form.Group className="mb-0">
 			<Picker
+				UNSAFE_menuClassName="cadmin"
 				aria-label={sub(
 					Liferay.Language.get('page-edition-mode-x'),
 					editMode

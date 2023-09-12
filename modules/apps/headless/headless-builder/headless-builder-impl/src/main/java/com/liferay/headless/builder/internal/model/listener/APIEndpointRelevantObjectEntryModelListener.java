@@ -313,6 +313,17 @@ public class APIEndpointRelevantObjectEntryModelListener
 				"%s must contain a path parameter between curly braces",
 				"x-must-contain-a-path-parameter-between-curly-braces");
 		}
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		if (Objects.equals(values.get("scope"), "group") &&
+			Objects.equals(pathParameter, "id")) {
+
+			throw new ObjectEntryValuesException.InvalidObjectField(
+				Arrays.asList(objectField.getLabel(user.getLocale())),
+				"Single element ID endpoint can not be scoped by group",
+				"single-element-id-endpoint-can-not-be-scoped-by-group");
+		}
 	}
 
 	private static final Pattern _curlyBracePattern = Pattern.compile(

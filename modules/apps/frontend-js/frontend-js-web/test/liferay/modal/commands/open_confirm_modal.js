@@ -50,7 +50,6 @@ describe('openConfirmModal', () => {
 					onClick: expect.anything(),
 				},
 			],
-			center: true,
 			disableHeader: false,
 			footerCssClass: 'border-0',
 			headerCssClass: 'border-0',

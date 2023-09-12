@@ -27,7 +27,6 @@ const openConfirmModal = ({message, onConfirm, status, title}) => {
 					},
 				},
 			],
-			center: true,
 			disableHeader: !title,
 			footerCssClass: 'border-0',
 			headerCssClass: 'border-0',

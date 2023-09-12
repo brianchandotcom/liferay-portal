@@ -12,6 +12,7 @@ import com.liferay.portal.url.builder.PortalMainResourceAbsolutePortalURLBuilder
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -44,12 +45,19 @@ public class PortalMainResourceAbsolutePortalURLBuilderTest
 
 	@Before
 	public void setUp() throws Exception {
+		super.setUp();
+
 		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
 			mockCacheHelper(), mockPortal(context, proxy, cdnHost),
 			mockHttpServletRequest());
 
 		_portalMainResourceAbsolutePortalURLBuilder =
 			_absolutePortalURLBuilder.forPortalMainResource("path/to/login");
+	}
+
+	@After
+	public void tearDown() {
+		super.tearDown();
 	}
 
 	@Test

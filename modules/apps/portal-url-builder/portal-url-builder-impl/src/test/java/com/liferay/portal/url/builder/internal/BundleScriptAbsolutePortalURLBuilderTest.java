@@ -12,6 +12,7 @@ import com.liferay.portal.url.builder.BundleScriptAbsolutePortalURLBuilder;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -53,6 +54,11 @@ public class BundleScriptAbsolutePortalURLBuilderTest
 
 		_bundleScriptAbsolutePortalURLBuilder =
 			_absolutePortalURLBuilder.forBundleScript(mockBundle(), "index.js");
+	}
+
+	@After
+	public void tearDown() {
+		super.tearDown();
 	}
 
 	@Test

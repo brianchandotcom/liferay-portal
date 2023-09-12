@@ -12,6 +12,7 @@ import com.liferay.portal.url.builder.BundleStylesheetAbsolutePortalURLBuilder;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -54,6 +55,11 @@ public class BundleStylesheetAbsolutePortalURLBuilderTest
 		_bundleStylesheetAbsolutePortalURLBuilder =
 			_absolutePortalURLBuilder.forBundleStylesheet(
 				mockBundle(), "main.css");
+	}
+
+	@After
+	public void tearDown() {
+		super.tearDown();
 	}
 
 	@Test

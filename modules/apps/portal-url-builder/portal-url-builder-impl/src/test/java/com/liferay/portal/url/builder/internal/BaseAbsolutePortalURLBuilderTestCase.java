@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -22,6 +21,7 @@ import java.util.Dictionary;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.osgi.framework.Bundle;
@@ -157,21 +157,22 @@ public abstract class BaseAbsolutePortalURLBuilderTestCase {
 	}
 
 	protected void setUp() throws Exception {
-		BrowserSnifferUtil browserSnifferUtil = new BrowserSnifferUtil();
+		_browserSnifferUtilMockedStatic = Mockito.mockStatic(
+			BrowserSnifferUtil.class);
 
-		browserSnifferUtil.setBrowserSniffer(_mockBrowserSniffer());
-	}
-
-	private BrowserSniffer _mockBrowserSniffer() {
-		BrowserSniffer browserSniffer = Mockito.mock(BrowserSniffer.class);
-
-		Mockito.when(
-			browserSniffer.getBrowserId(Mockito.any(HttpServletRequest.class))
+		_browserSnifferUtilMockedStatic.when(
+			() -> BrowserSnifferUtil.getBrowserId(
+				Mockito.any(HttpServletRequest.class))
 		).thenReturn(
-			BrowserSniffer.BROWSER_ID_FIREFOX
+			BrowserSnifferUtil.BROWSER_ID_FIREFOX
 		);
-
-		return browserSniffer;
 	}
+
+	protected void tearDown() {
+		_browserSnifferUtilMockedStatic.close();
+	}
+
+	private static MockedStatic<BrowserSnifferUtil>
+		_browserSnifferUtilMockedStatic;
 
 }

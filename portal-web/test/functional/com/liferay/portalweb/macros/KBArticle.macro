@@ -801,60 +801,19 @@ definition {
 	}
 
 	macro moveArticleCP {
+		var key_rowEntry = ${kbArticleTitle};
+		var key_nodeName = ${destinationItem};
+
 		if (isSet(navigationPane)) {
 			KBArticle.gotoMenuItemViaNavigationPane(
 				kbArticleTitle = ${kbArticleTitle},
 				menuItem = "Move");
 		}
 		else {
-			var key_rowEntry = ${kbArticleTitle};
-
-			if (IsElementPresent(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS")) {
-				Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
-			}
-			else {
-				Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
-			}
+			Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Move");
 		}
-
-		AssertTextEquals(
-			locator1 = "Portlet#HEADER",
-			value1 = ${kbArticleTitle});
-
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_CURRENT_PARENT_TITLE_LABEL",
-			value1 = "Current Parent");
-
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_CURRENT_PARENT_TITLE_FIELD",
-			value1 = ${kbArticleCurrentParent});
-
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_CURRENT_PARENT_PRIORITY_LABEL",
-			value1 = "Priority");
-
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_NEW_PARENT_TITLE_LABEL",
-			value1 = "New Parent");
-
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_NEW_PARENT_PRIORITY_LABEL",
-			value1 = "Priority");
-
-		AssertClick(
-			locator1 = "Button#SELECT",
-			value1 = "Select");
-	}
-
-	macro moveArticleCPViaMoveModal {
-		var key_rowEntry = ${kbArticleTitle};
-		var key_nodeName = ${destinationItem};
-
-		Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
-
-		MenuItem.click(menuItem = "Move");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

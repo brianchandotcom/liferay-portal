@@ -1047,7 +1047,6 @@ com.liferay.portal.service.permission.TeamPermissionUtil=com.liferay.portal.kern
 com.liferay.portal.service.permission.UserGroupPermission=com.liferay.portal.kernel.service.permission.UserGroupPermission
 com.liferay.portal.service.permission.UserGroupPermissionUtil=com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil
 com.liferay.portal.service.permission.UserGroupRolePermissionUtil=com.liferay.portal.kernel.service.permission.UserGroupRolePermissionUtil
-com.liferay.portal.service.permission.UserPermission=com.liferay.portal.kernel.service.permission.UserPermission
 com.liferay.portal.service.permission.UserPermissionUtil=com.liferay.portal.kernel.service.permission.UserPermissionUtil
 com.liferay.portal.service.persistence.AddressPersistence=com.liferay.portal.kernel.service.persistence.AddressPersistence
 com.liferay.portal.service.persistence.AddressUtil=com.liferay.portal.kernel.service.persistence.AddressUtil

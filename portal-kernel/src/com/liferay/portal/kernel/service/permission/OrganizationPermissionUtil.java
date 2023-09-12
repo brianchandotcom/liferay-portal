@@ -7,7 +7,12 @@ package com.liferay.portal.kernel.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -19,8 +24,11 @@ public class OrganizationPermissionUtil {
 			String actionId)
 		throws PortalException {
 
-		_organizationPermission.check(
-			permissionChecker, organizationId, actionId);
+		if (!contains(permissionChecker, organizationId, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Organization.class.getName(), organizationId,
+				actionId);
+		}
 	}
 
 	public static void check(
@@ -28,8 +36,11 @@ public class OrganizationPermissionUtil {
 			String actionId)
 		throws PortalException {
 
-		_organizationPermission.check(
-			permissionChecker, organization, actionId);
+		if (!contains(permissionChecker, organization, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Organization.class.getName(),
+				organization.getOrganizationId(), actionId);
+		}
 	}
 
 	public static boolean contains(
@@ -37,8 +48,14 @@ public class OrganizationPermissionUtil {
 			String actionId)
 		throws PortalException {
 
-		return _organizationPermission.contains(
-			permissionChecker, organizationId, actionId);
+		if (organizationId > 0) {
+			return contains(
+				permissionChecker,
+				OrganizationLocalServiceUtil.getOrganization(organizationId),
+				actionId);
+		}
+
+		return false;
 	}
 
 	public static boolean contains(
@@ -46,8 +63,17 @@ public class OrganizationPermissionUtil {
 			String actionId)
 		throws PortalException {
 
-		return _organizationPermission.contains(
-			permissionChecker, organizationIds, actionId);
+		if (ArrayUtil.isEmpty(organizationIds)) {
+			return false;
+		}
+
+		for (long organizationId : organizationIds) {
+			if (!contains(permissionChecker, organizationId, actionId)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public static boolean contains(
@@ -55,20 +81,41 @@ public class OrganizationPermissionUtil {
 			String actionId)
 		throws PortalException {
 
-		return _organizationPermission.contains(
-			permissionChecker, organization, actionId);
+		return _contains(
+			permissionChecker, organization.getGroupId(), organization,
+			actionId);
 	}
 
-	public static OrganizationPermission getOrganizationPermission() {
-		return _organizationPermission;
+	private static boolean _contains(
+			PermissionChecker permissionChecker, long groupId,
+			Organization organization, String actionId)
+		throws PortalException {
+
+		while ((organization != null) &&
+			   (organization.getOrganizationId() !=
+				   OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID)) {
+
+			if (actionId.equals(ActionKeys.ADD_ORGANIZATION) &&
+				(permissionChecker.hasPermission(
+					groupId, Organization.class.getName(),
+					organization.getOrganizationId(),
+					ActionKeys.MANAGE_SUBORGANIZATIONS) ||
+				 PortalPermissionUtil.contains(
+					 permissionChecker, ActionKeys.ADD_ORGANIZATION))) {
+
+				return true;
+			}
+			else if (permissionChecker.hasPermission(
+						groupId, Organization.class.getName(),
+						organization.getOrganizationId(), actionId)) {
+
+				return true;
+			}
+
+			organization = organization.getParentOrganization();
+		}
+
+		return false;
 	}
-
-	public void setOrganizationPermission(
-		OrganizationPermission organizationPermission) {
-
-		_organizationPermission = organizationPermission;
-	}
-
-	private static OrganizationPermission _organizationPermission;
 
 }

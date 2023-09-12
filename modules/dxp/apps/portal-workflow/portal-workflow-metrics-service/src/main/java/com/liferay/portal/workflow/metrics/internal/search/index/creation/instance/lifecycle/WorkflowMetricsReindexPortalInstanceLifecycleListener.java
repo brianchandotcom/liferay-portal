@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 
 import java.util.Date;
 
@@ -35,6 +36,14 @@ public class WorkflowMetricsReindexPortalInstanceLifecycleListener
 		String jobName = StringBundler.concat(
 			DestinationNames.WORKFLOW_METRICS_REINDEX, StringPool.SLASH,
 			company.getCompanyId());
+
+		SchedulerResponse schedulerResponse =
+			_schedulerEngineHelper.getScheduledJob(
+				jobName, jobName, StorageType.MEMORY);
+
+		if (schedulerResponse != null) {
+			return;
+		}
 
 		Trigger trigger = _triggerFactory.createTrigger(
 			jobName, jobName, new Date(), null, 5, TimeUnit.SECOND);

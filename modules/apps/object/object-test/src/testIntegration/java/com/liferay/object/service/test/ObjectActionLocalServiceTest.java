@@ -127,7 +127,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-@FeatureFlags("LPS-173537")
+@FeatureFlags({"LPS-173537", "LPS-187142"})
 @RunWith(Arquillian.class)
 public class ObjectActionLocalServiceTest {
 

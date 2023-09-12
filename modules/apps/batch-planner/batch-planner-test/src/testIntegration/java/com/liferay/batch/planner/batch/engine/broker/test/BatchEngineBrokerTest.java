@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.jackson.databind.ser.VulcanPropertyFilter;
@@ -139,6 +140,8 @@ public class BatchEngineBrokerTest {
 			TestPropsValues.getUserId());
 
 		_company2 = CompanyTestUtil.addCompany();
+
+		PortalInstances.initCompany(_company2);
 
 		User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
 

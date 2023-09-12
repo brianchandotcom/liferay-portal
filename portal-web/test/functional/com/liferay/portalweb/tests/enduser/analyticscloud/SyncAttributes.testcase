@@ -825,30 +825,30 @@ definition {
 	@description = "Story: LRAC-10866 | Automation ID: LRAC-12905 | Test Summary: Check that it is possible to sort the Attribute for Product list by Attribute Name and Data Type"
 	@priority = 3
 	test CanSortProductListByAttribute {
-		var indexList = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34";
+		var indexList = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48";
 		var attributesAscendingProduct = '''
-			catalogId,categoryIds,createDate,currencyCode,customFields,description,displayDate,expirationDate,
-			externalReferenceCode,externalReferenceCode,externalReferenceCode,id,id,id,metaDescription,
-			metaKeyword,metaTitle,modifiedDate,name,name,name,productChannelIds,productId,productOptions,
-			productSpecifications,productType,siteId,skus,status,subscriptionEnabled,tags,type,urls,vocabulary
+			catalogId,categoryIds,cost,createDate,currencyCode,customFields,description,discontinued,displayDate,expirationDate,
+			expirationDate,externalReferenceCode,externalReferenceCode,externalReferenceCode,gtin,id,id,id,key,manufacturerPartNumber,metaDescription,
+			metaKeyword,metaTitle,modifiedDate,name,name,name,optionCategoryId,optionKey,productChannelIds,productId,productOptions,
+			productSpecifications,productType,published,purchasable,siteId,sku,skus,specificationKey,status,subscriptionEnabled,tags,type,urls,value,values,vocabulary
 		''';
 		var attributesDescendingProduct = '''
-			vocabulary,urls,type,tags,subscriptionEnabled,status,skus,siteId,productType,productSpecifications,
-			productOptions,productId,productChannelIds,name,name,name,modifiedDate,metaTitle,metaKeyword,
-			metaDescription,id,id,id,externalReferenceCode,externalReferenceCode,externalReferenceCode,
-			expirationDate,displayDate,description,customFields,currencyCode,createDate,categoryIds,catalogId
+			vocabulary,values,value,urls,type,tags,subscriptionEnabled,status,specificationKey,skus,sku,siteId,purchasable,published,productType,productSpecifications,
+			productOptions,productId,productChannelIds,optionKey,optionCategoryId,name,name,name,modifiedDate,metaTitle,metaKeyword,
+			metaDescription,manufacturerPartNumber,key,id,id,id,gtin,externalReferenceCode,externalReferenceCode,externalReferenceCode,
+			expirationDate,expirationDate,displayDate,discontinued,description,customFields,currencyCode,createDate,cost,categoryIds,catalogId
 		''';
 		var attributesDataTypeAscending = '''
-			categoryIds,productChannelIds,productOptions,productSpecifications,skus,tags,subscriptionEnabled,id,siteId,catalogId,id,
-			productId,status,id,customFields,description,metaDescription,metaKeyword,metaTitle,name,urls,
-			externalReferenceCode,name,vocabulary,createDate,displayDate,expirationDate,externalReferenceCode,
-			modifiedDate,productType,currencyCode,externalReferenceCode,name,type
+			categoryIds,productChannelIds,productOptions,productSpecifications,skus,tags,discontinued,published,purchasable,subscriptionEnabled,id,siteId,catalogId,id,
+			optionCategoryId,productId,status,id,cost,customFields,description,metaDescription,metaKeyword,metaTitle,name,urls,values,
+			externalReferenceCode,name,vocabulary,createDate,displayDate,expirationDate,expirationDate,externalReferenceCode,gtin,key,manufacturerPartNumber,
+			modifiedDate,optionKey,productType,sku,specificationKey,value,currencyCode,externalReferenceCode,name,type
 		''';
 		var attributesDataTypeDescending = '''
-			externalReferenceCode,name,vocabulary,createDate,displayDate,expirationDate,
-			externalReferenceCode,modifiedDate,productType,currencyCode,externalReferenceCode,name,type,
-			customFields,description,metaDescription,metaKeyword,metaTitle,name,urls,id,siteId,catalogId,
-			id,productId,status,id,subscriptionEnabled,categoryIds,productChannelIds,productOptions,productSpecifications,
+			externalReferenceCode,name,vocabulary,createDate,displayDate,expirationDate,expirationDate,
+			externalReferenceCode,gtin,key,manufacturerPartNumber,modifiedDate,optionKey,productType,sku,specificationKey,value,currencyCode,externalReferenceCode,name,type,
+			customFields,description,metaDescription,metaKeyword,metaTitle,name,urls,values,cost,id,siteId,catalogId,
+			id,optionCategoryId,productId,status,id,discontinued,published,purchasable,subscriptionEnabled,categoryIds,productChannelIds,productOptions,productSpecifications,
 			skus,tags
 		''';
 

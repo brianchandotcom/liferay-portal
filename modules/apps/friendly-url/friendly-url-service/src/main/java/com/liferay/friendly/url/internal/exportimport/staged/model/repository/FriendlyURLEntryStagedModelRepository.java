@@ -162,6 +162,10 @@ public class FriendlyURLEntryStagedModelRepository
 				friendlyURLEntry.getUuid(),
 				portletDataContext.getScopeGroupId());
 
+		if (existingFriendlyURLEntry == null) {
+			return null;
+		}
+
 		return _friendlyURLEntryLocalService.updateFriendlyURLEntry(
 			existingFriendlyURLEntry.getFriendlyURLEntryId(),
 			existingFriendlyURLEntry.getClassNameId(),

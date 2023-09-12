@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.UserPermission;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 
 import javax.servlet.ServletContext;
 
@@ -89,7 +89,8 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return _userPermission.contains(permissionChecker, classPK, actionId);
+		return UserPermissionUtil.contains(
+			permissionChecker, classPK, actionId);
 	}
 
 	@Reference
@@ -100,8 +101,5 @@ public class UserAssetRendererFactory extends BaseAssetRendererFactory<User> {
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UserPermission _userPermission;
 
 }

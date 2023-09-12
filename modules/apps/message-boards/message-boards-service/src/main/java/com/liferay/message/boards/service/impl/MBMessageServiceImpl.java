@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.UserPermission;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -665,7 +665,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			long groupId, long userId, int start, int end)
 		throws PortalException {
 
-		_userPermission.check(getPermissionChecker(), userId, ActionKeys.VIEW);
+		UserPermissionUtil.check(
+			getPermissionChecker(), userId, ActionKeys.VIEW);
 
 		return mbMessageLocalService.getGroupUserMessageBoardMessagesActivity(
 			groupId, userId, start, end);
@@ -675,7 +676,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			long groupId, long userId)
 		throws PortalException {
 
-		_userPermission.check(getPermissionChecker(), userId, ActionKeys.VIEW);
+		UserPermissionUtil.check(
+			getPermissionChecker(), userId, ActionKeys.VIEW);
 
 		return mbMessageLocalService.
 			getGroupUserMessageBoardMessagesActivityCount(groupId, userId);
@@ -1094,8 +1096,5 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	@Reference
 	private SyndModelFactory _syndModelFactory;
-
-	@Reference
-	private UserPermission _userPermission;
 
 }

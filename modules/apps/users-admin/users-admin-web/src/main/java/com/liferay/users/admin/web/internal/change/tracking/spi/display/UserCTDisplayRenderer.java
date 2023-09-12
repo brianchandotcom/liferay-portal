@@ -10,7 +10,7 @@ import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.UserPermission;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,7 +39,7 @@ public class UserCTDisplayRenderer extends BaseCTDisplayRenderer<User> {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!_userPermission.contains(
+		if (!UserPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getUserId(),
 				ActionKeys.UPDATE)) {
 
@@ -123,8 +123,5 @@ public class UserCTDisplayRenderer extends BaseCTDisplayRenderer<User> {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UserPermission _userPermission;
 
 }

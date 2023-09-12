@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.permission.UserPermission;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 
 import java.io.IOException;
 
@@ -72,7 +72,7 @@ public class AccountUserAccountEntriesScreenNavigationEntry
 		if (AccountPermission.contains(
 				permissionChecker, AccountPortletKeys.ACCOUNT_USERS_ADMIN,
 				AccountActionKeys.ASSIGN_ACCOUNTS) ||
-			_userPermission.contains(
+			UserPermissionUtil.contains(
 				permissionChecker, selUser.getUserId(), ActionKeys.UPDATE)) {
 
 			return true;
@@ -96,8 +96,5 @@ public class AccountUserAccountEntriesScreenNavigationEntry
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private UserPermission _userPermission;
 
 }

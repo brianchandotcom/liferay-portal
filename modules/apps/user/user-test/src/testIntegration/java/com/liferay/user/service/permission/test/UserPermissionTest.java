@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.UserPermission;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -52,7 +52,7 @@ public class UserPermissionTest {
 			_user1);
 
 		Assert.assertFalse(
-			_userPermission.contains(
+			UserPermissionUtil.contains(
 				permissionChecker, _user1.getUserId(), null,
 				ActionKeys.PERMISSIONS));
 
@@ -61,7 +61,7 @@ public class UserPermissionTest {
 			String.valueOf(_user1.getCompanyId()), ActionKeys.PERMISSIONS);
 
 		Assert.assertTrue(
-			_userPermission.contains(
+			UserPermissionUtil.contains(
 				permissionChecker, _user1.getUserId(), null,
 				ActionKeys.PERMISSIONS));
 	}
@@ -81,7 +81,7 @@ public class UserPermissionTest {
 			_user1);
 
 		Assert.assertTrue(
-			_userPermission.contains(
+			UserPermissionUtil.contains(
 				permissionChecker, ResourceConstants.PRIMKEY_DNE,
 				ActionKeys.VIEW));
 	}
@@ -104,7 +104,7 @@ public class UserPermissionTest {
 			_user1);
 
 		Assert.assertFalse(
-			_userPermission.contains(
+			UserPermissionUtil.contains(
 				permissionChecker, _user2.getUserId(), ActionKeys.UPDATE));
 
 		_organization = OrganizationTestUtil.addOrganization();
@@ -113,7 +113,7 @@ public class UserPermissionTest {
 			_organization.getOrganizationId(), _user2.getUserId());
 
 		Assert.assertTrue(
-			_userPermission.contains(
+			UserPermissionUtil.contains(
 				permissionChecker, _user2.getUserId(), ActionKeys.UPDATE));
 	}
 
@@ -134,8 +134,5 @@ public class UserPermissionTest {
 
 	@Inject
 	private UserLocalService _userLocalService;
-
-	@Inject
-	private UserPermission _userPermission;
 
 }

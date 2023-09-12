@@ -303,7 +303,7 @@ function StructureTreeNodeContent({
 				inline: 'nearest',
 			});
 		}
-	}, [activationOrigin, isActive, keyboardMovementTargetId, item]);
+	}, [activationOrigin, isActive, item.itemId, keyboardMovementTargetId]);
 
 	useEffect(() => {
 		let timeoutId = null;

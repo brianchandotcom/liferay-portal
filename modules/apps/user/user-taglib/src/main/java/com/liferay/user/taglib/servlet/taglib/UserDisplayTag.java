@@ -7,78 +7,53 @@ package com.liferay.user.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.taglib.util.PortalIncludeUtil;
+import com.liferay.taglib.util.IncludeTag;
+import com.liferay.user.taglib.internal.servlet.ServletContextUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.tagext.TagSupport;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class UserDisplayTag extends TagSupport {
+public class UserDisplayTag extends IncludeTag {
 
 	@Override
 	public int doEndTag() throws JspException {
-		try {
-			PortalIncludeUtil.include(pageContext, getEndPage());
-
-			HttpServletRequest httpServletRequest =
-				(HttpServletRequest)pageContext.getRequest();
-
-			httpServletRequest.removeAttribute("liferay-user:user-display:url");
-
-			return EVAL_PAGE;
+		if (_getUser() == null) {
+			return SKIP_BODY;
 		}
-		catch (Exception exception) {
-			throw new JspException(exception);
-		}
+
+		return super.doEndTag();
 	}
 
 	@Override
 	public int doStartTag() throws JspException {
-		try {
-			HttpServletRequest httpServletRequest =
-				(HttpServletRequest)pageContext.getRequest();
-
-			httpServletRequest.setAttribute(
-				"liferay-user:user-display:userId", String.valueOf(_userId));
-			httpServletRequest.setAttribute(
-				"liferay-user:user-display:userName", _userName);
-
-			User user = UserLocalServiceUtil.fetchUserById(_userId);
-
-			if (user != null) {
-				if (user.isGuestUser()) {
-					user = null;
-				}
-
-				httpServletRequest.setAttribute(
-					"liferay-user:user-display:user", user);
-
-				pageContext.setAttribute("userDisplay", user);
-			}
-			else {
-				httpServletRequest.removeAttribute(
-					"liferay-user:user-display:user");
-
-				pageContext.removeAttribute("userDisplay");
-			}
-
-			httpServletRequest.setAttribute(
-				"liferay-user:user-display:url", _url);
-
-			PortalIncludeUtil.include(pageContext, getStartPage());
-
-			if (user != null) {
-				return EVAL_BODY_INCLUDE;
-			}
-
+		if (_getUser() == null) {
 			return SKIP_BODY;
 		}
-		catch (Exception exception) {
-			throw new JspException(exception);
-		}
+
+		return super.doStartTag();
+	}
+
+	public String getUrl() {
+		return _url;
+	}
+
+	public long getUserId() {
+		return _userId;
+	}
+
+	public String getUserName() {
+		return _userName;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	public void setUrl(String url) {
@@ -93,15 +68,57 @@ public class UserDisplayTag extends TagSupport {
 		_userName = userName;
 	}
 
-	protected String getEndPage() {
-		return "/user_display/end.jsp";
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_url = null;
+		_user = null;
+		_userId = 0;
+		_userName = null;
 	}
 
-	protected String getStartPage() {
-		return "/user_display/start.jsp";
+	@Override
+	protected String getEndPage() {
+		return _END_PAGE;
 	}
+
+	@Override
+	protected String getStartPage() {
+		return _START_PAGE;
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		httpServletRequest.setAttribute("liferay-user:user-display:url", _url);
+		httpServletRequest.setAttribute(
+			"liferay-user:user-display:user", _getUser());
+		httpServletRequest.setAttribute(
+			"liferay-user:user-display:userName", _userName);
+	}
+
+	private User _getUser() {
+		if (_user != null) {
+			return _user;
+		}
+
+		User user = UserLocalServiceUtil.fetchUserById(_userId);
+
+		if ((user != null) && user.isGuestUser()) {
+			user = null;
+		}
+
+		_user = user;
+
+		return _user;
+	}
+
+	private static final String _END_PAGE = "/user_display/end.jsp";
+
+	private static final String _START_PAGE = "/user_display/start.jsp";
 
 	private String _url;
+	private User _user;
 	private long _userId;
 	private String _userName;
 

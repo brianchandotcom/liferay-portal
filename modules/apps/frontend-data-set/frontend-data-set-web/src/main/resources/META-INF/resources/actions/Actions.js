@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openConfirmModal} from 'frontend-js-web';
+import {navigate, openConfirmModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
@@ -101,7 +101,7 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 
 		const url = formatActionURL(href, itemData);
 
-		const doAction = () => {
+		const doAction = ({defaultPrevented}) => {
 			if (target?.includes('modal')) {
 				event.preventDefault();
 
@@ -166,14 +166,26 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 			if (onActionDropdownItemClick) {
 				onActionDropdownItemClick(exposedProps);
 			}
+
+			if (target === 'link' && defaultPrevented) {
+				navigate(url);
+			}
 		};
 
 		if (confirmationMessage) {
+			let defaultPrevented = false;
+
+			if (target === 'link') {
+				event.preventDefault();
+
+				defaultPrevented = true;
+			}
+
 			openConfirmModal({
 				message: confirmationMessage,
 				onConfirm: (isConfirmed) => {
 					if (isConfirmed) {
-						doAction();
+						doAction({defaultPrevented});
 					}
 				},
 				status,

@@ -1,0 +1,111 @@
+[
+	{
+		"externalReferenceCode": "SITE-NAVIGATION-FOOTER",
+		"menuItems": [
+			{
+				"externalReferenceCode": "SITE-NAVIGATION-PLATFORM",
+				"menuItems": [
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-PLATFORM-1",
+						"friendlyURL": "/resource-library",
+						"privateLayout": false,
+						"type": "layout"
+					},
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-PLATFORM-2",
+						"friendlyURL": "/subscription-services",
+						"privateLayout": false,
+						"type": "layout"
+					},
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-PLATFORM-3",
+						"friendlyURL": "/request-a-demo",
+						"privateLayout": false,
+						"type": "layout"
+					},
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-PLATFORM-4",
+						"name": "Marketplace Apps",
+						"type": "url",
+						"url": "https://web.liferay.com/marketplace",
+						"useNewTab": false
+					},
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-PLATFORM-5",
+						"friendlyURL": "/trial",
+						"privateLayout": false,
+						"type": "layout"
+					}
+				],
+				"name": "Platform",
+				"type": "node"
+			},
+			{
+				"externalReferenceCode": "SITE-NAVIGATION-COMPANY",
+				"menuItems": [
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-COMPANY-1",
+						"friendlyURL": "/press-releases",
+						"privateLayout": false,
+						"type": "layout"
+					},
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-COMPANY-2",
+						"friendlyURL": "/careers",
+						"privateLayout": false,
+						"type": "layout"
+					},
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-COMPANY-3",
+						"friendlyURL": "/gdpr",
+						"privateLayout": false,
+						"type": "layout"
+					},
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-COMPANY-4",
+						"friendlyURL": "/our-story",
+						"privateLayout": false,
+						"type": "layout"
+					},
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-COMPANY-5",
+						"friendlyURL": "/compliance",
+						"privateLayout": false,
+						"type": "layout"
+					}
+				],
+				"name": "Company",
+				"type": "node"
+			},
+			{
+				"externalReferenceCode": "SITE-NAVIGATION-EXPAND-CONNECT",
+				"menuItems": [
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-EXPAND-CONNECT-1",
+						"name": "Community",
+						"type": "url",
+						"url": "https://liferay.dev",
+						"useNewTab": false
+					},
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-EXPAND-CONNECT-2",
+						"name": "Developer Network",
+						"type": "url",
+						"url": "https://portal.liferay.dev",
+						"useNewTab": false
+					},
+					{
+						"externalReferenceCode": "SITE-NAVIGATION-EXPAND-CONNECT-3",
+						"name": "Marketplace",
+						"type": "url",
+						"url": "https://marketplace.liferay.com",
+						"useNewTab": false
+					}
+				],
+				"name": "Expand & Connect",
+				"type": "node"
+			}
+		],
+		"name": "Footer"
+	}
+]

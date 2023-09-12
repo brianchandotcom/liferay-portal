@@ -241,9 +241,9 @@ public class DefaultObjectEntryManagerImpl
 
 		long[] relatedPrimaryKeys = TransformUtil.transformToLongArray(
 			_getRelatedModels(
-				dtoConverterContext, objectDefinition, objectRelationship,
-				primaryKey, relatedObjectDefinition),
-			this::_getPrimaryKey);
+				objectDefinition, objectRelationship, primaryKey,
+				relatedObjectDefinition),
+			BaseModel::getPrimaryKeyObj);
 
 		_disassociateRelatedModels(
 			objectDefinition, objectRelationship, primaryKey,
@@ -957,17 +957,20 @@ public class DefaultObjectEntryManagerImpl
 			long[] toDisassociatePrimaryKeys =
 				TransformUtil.transformToLongArray(
 					_getRelatedModels(
-						dtoConverterContext, objectDefinition,
-						objectRelationship, primaryKey,
+						objectDefinition, objectRelationship, primaryKey,
 						relatedObjectDefinition),
 					relatedModel -> {
+						ExternalReferenceCodeModel externalReferenceCodeModel =
+							(ExternalReferenceCodeModel)relatedModel;
+
 						if (nestedExternalReferenceCodes.contains(
-								_getExternalReferenceCode(relatedModel))) {
+								externalReferenceCodeModel.
+									getExternalReferenceCode())) {
 
 							return null;
 						}
 
-						return _getPrimaryKey(relatedModel);
+						return relatedModel.getPrimaryKeyObj();
 					});
 
 			if (toDisassociatePrimaryKeys.length > 0) {
@@ -1140,25 +1143,7 @@ public class DefaultObjectEntryManagerImpl
 		return QueryUtil.ALL_POS;
 	}
 
-	private String _getExternalReferenceCode(Object relatedModel) {
-		if (relatedModel instanceof ExternalReferenceCodeModel) {
-			ExternalReferenceCodeModel externalReferenceCodeModel =
-				(ExternalReferenceCodeModel)relatedModel;
-
-			return externalReferenceCodeModel.getExternalReferenceCode();
-		}
-		else if (relatedModel instanceof ObjectEntry) {
-			ObjectEntry objectEntry = (ObjectEntry)relatedModel;
-
-			return objectEntry.getExternalReferenceCode();
-		}
-
-		return null;
-	}
-
-	private Object _getManyToOneRelatedModel(
-			DTOConverterContext dtoConverterContext,
-			ObjectDefinition objectDefinition,
+	private BaseModel<ExternalReferenceCodeModel> _getManyToOneRelatedModel(
 			ObjectRelationship objectRelationship, long primaryKey,
 			ObjectDefinition relatedObjectDefinition)
 		throws Exception {
@@ -1178,9 +1163,17 @@ public class DefaultObjectEntryManagerImpl
 				objectRelationship.getObjectRelationshipId(), primaryKey);
 		}
 
-		return fetchRelatedManyToOneObjectEntry(
-			dtoConverterContext, objectDefinition, primaryKey,
-			objectRelationship.getName());
+		ManyToOneObjectRelatedModelsProvider objectRelatedModelsProvider =
+			(ManyToOneObjectRelatedModelsProvider)
+				_objectRelatedModelsProviderRegistry.
+					getObjectRelatedModelsProvider(
+						relatedObjectDefinition.getClassName(),
+						relatedObjectDefinition.getCompanyId(),
+						objectRelationship.getType());
+
+		return objectRelatedModelsProvider.fetchRelatedModel(
+			GroupThreadLocal.getGroupId(),
+			objectRelationship.getObjectRelationshipId(), primaryKey);
 	}
 
 	private String _getObjectEntriesPermissionName(long objectDefinitionId) {
@@ -1230,23 +1223,7 @@ public class DefaultObjectEntryManagerImpl
 		return objectRelationships;
 	}
 
-	private long _getPrimaryKey(Object relatedModel) {
-		if (relatedModel instanceof BaseModel<?>) {
-			BaseModel<?> baseModel = (BaseModel<?>)relatedModel;
-
-			return (long)baseModel.getPrimaryKeyObj();
-		}
-		else if (relatedModel instanceof ObjectEntry) {
-			ObjectEntry objectEntry = (ObjectEntry)relatedModel;
-
-			return objectEntry.getId();
-		}
-
-		return 0;
-	}
-
-	private List<Object> _getRelatedModels(
-			DTOConverterContext dtoConverterContext,
+	private List<? extends BaseModel<?>> _getRelatedModels(
 			ObjectDefinition objectDefinition,
 			ObjectRelationship objectRelationship, long primaryKey,
 			ObjectDefinition relatedObjectDefinition)
@@ -1258,8 +1235,7 @@ public class DefaultObjectEntryManagerImpl
 
 			return Collections.singletonList(
 				_getManyToOneRelatedModel(
-					dtoConverterContext, objectDefinition, objectRelationship,
-					primaryKey, relatedObjectDefinition));
+					objectRelationship, primaryKey, relatedObjectDefinition));
 		}
 
 		ObjectRelatedModelsProvider<?> objectRelatedModelsProvider =
@@ -1280,7 +1256,7 @@ public class DefaultObjectEntryManagerImpl
 					objectRelationship.getName());
 		}
 
-		return (List<Object>)objectRelatedModelsProvider.getRelatedModels(
+		return objectRelatedModelsProvider.getRelatedModels(
 			GroupThreadLocal.getGroupId(),
 			objectRelationship.getObjectRelationshipId(), primaryKey, null, -1,
 			-1);

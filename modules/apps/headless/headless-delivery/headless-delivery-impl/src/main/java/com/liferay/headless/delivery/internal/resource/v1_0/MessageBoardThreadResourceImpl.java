@@ -272,6 +272,9 @@ public class MessageBoardThreadResourceImpl
 				if (fieldName.equals("modified")) {
 					fieldName = "modifiedDate";
 				}
+				else if (fieldName.equals("ratingsStatTotalScore")) {
+					fieldName = "totalScore";
+				}
 
 				if (sort.isReverse()) {
 					dynamicQuery.addOrder(OrderFactoryUtil.desc(fieldName));

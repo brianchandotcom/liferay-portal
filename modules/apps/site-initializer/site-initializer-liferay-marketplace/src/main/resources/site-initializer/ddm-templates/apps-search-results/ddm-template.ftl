@@ -69,12 +69,12 @@
 										<#list productAttachments as attachmentFields>
 											<#list attachmentFields.customFields as field>
 												<#if (field.name == "App Icon") && (field.customValue.data[0] == "Yes")>
-													<#assign srcName = attachmentFields.src?keep_after("liferay.com") />
+													<#assign srcName ="/o/" + attachmentFields.src?keep_after("/o/") />
 
 													<img
 														alt=${product.name.en_US}
 														class="h-100 mw-100"
-														src="${srcName}"
+														src=	"${srcName}"
 													/>
 												</#if>
 											</#list>

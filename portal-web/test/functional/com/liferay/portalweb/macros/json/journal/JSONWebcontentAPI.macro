@@ -12,11 +12,17 @@ definition {
 			var description = "";
 		}
 
-		var userLoginInfo = JSONUtil2.formatJSONUser();
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = JSONUtil2.getDefaultUserEmail();
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = JSONUtil2.getDefaultUserPassword();
+		}
 
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalfolder/add-folder \
-				-u ${userLoginInfo} \
+				-u ${userEmailAddress}:${userPassword} \
 				-d externalReferenceCode='' \
 				-d groupId=${groupId} \
 				-d parentFolderId=${parentFolderId} \
@@ -31,11 +37,18 @@ definition {
 		Variables.assertDefined(parameterList = "${groupId},${folderId},${titleMap},${descriptionMap},${contentXml},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
-		var userLoginInfo = JSONUtil2.formatJSONUser();
 		var classNameId = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");
 		var globalGroupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Global",
 			site = "true");
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = JSONUtil2.getDefaultUserEmail();
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = JSONUtil2.getDefaultUserPassword();
+		}
 
 		var basicWebContentStructureId = JSONDDMstructureAPI._getStructureId(
 			classNameId = ${classNameId},
@@ -44,7 +57,7 @@ definition {
 
 		var curl = '''
 			${portalURL}/api/jsonws/journal.journalarticle/add-article \
-				-u ${userLoginInfo} \
+				-u ${userEmailAddress}:${userPassword} \
 				-d externalReferenceCode= \
 				-d groupId=${groupId} \
 				-d folderId=${folderId} \

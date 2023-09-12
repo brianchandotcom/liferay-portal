@@ -376,4 +376,13 @@ definition {
 			locator1 = "ABTest#IMPROVEMENT_NUMBER",
 			value1 = ${improvementNumber});
 	}
+
+	macro getVariantImprovementNumberInDXP {
+		var key_variantName = ${variantName};
+
+		var improvementNumber = selenium.getText("ABTest#IMPROVEMENT_NUMBER");
+
+		return ${improvementNumber};
+	}
+
 }

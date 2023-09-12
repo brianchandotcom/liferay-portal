@@ -52,5 +52,12 @@ definition {
 			locator1 = "ACTests#IMPROVEMENT_NUMBER",
 			value1 = ${improvementNumber});
 	}
+
+	macro getVariantImprovementNumberInAC {
+		var key_variantName = ${variantName};
+
+		var improvementNumber = selenium.getText("ACTests#IMPROVEMENT_NUMBER");
+
+		return ${improvementNumber};
 	}
 }

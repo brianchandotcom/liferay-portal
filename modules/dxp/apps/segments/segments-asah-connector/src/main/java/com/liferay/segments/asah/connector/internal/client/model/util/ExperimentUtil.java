@@ -115,8 +115,10 @@ public class ExperimentUtil {
 		experiment.setPageTitle(layout.getTitle(locale));
 		experiment.setPageURL(pageURL);
 
-		if (segmentsExperiment.getStatus() ==
-				SegmentsExperimentConstants.STATUS_COMPLETED) {
+		if ((segmentsExperiment.getStatus() ==
+				SegmentsExperimentConstants.STATUS_COMPLETED) ||
+			(segmentsExperiment.getStatus() ==
+				SegmentsExperimentConstants.STATUS_TERMINATED)) {
 
 			experiment.setPublishedDXPVariantId(
 				segmentsExperiment.getWinnerSegmentsExperienceKey());

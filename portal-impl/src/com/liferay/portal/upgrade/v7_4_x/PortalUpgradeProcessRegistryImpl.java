@@ -380,6 +380,10 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(
 			new Version(29, 3, 0),
 			new CTModelUpgradeProcess("AnnouncementsDelivery"));
+
+		upgradeVersionTreeMap.put(
+			new Version(30, 0, 0),
+			new UpgradePartitionedControlTable("Counter"));
 	}
 
 }

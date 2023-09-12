@@ -305,6 +305,45 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			JSONCompareMode.STRICT);
 		JSONAssert.assertEquals(
 			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"Single element ID endpoint can not be scoped by group."
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringBundler.concat(
+						StringPool.FORWARD_SLASH, RandomTestUtil.randomString(),
+						StringPool.FORWARD_SLASH, StringPool.OPEN_CURLY_BRACE,
+						RandomTestUtil.randomString(),
+						StringPool.CLOSE_CURLY_BRACE)
+				).put(
+					"pathParameter", "id"
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					apiApplicationJSONObject1.getLong("id")
+				).put(
+					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+					apiSchemaJSONObject1.getLong("id")
+				).put(
+					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
+					apiSchemaJSONObject1.getLong("id")
+				).put(
+					"retrieveType", "singleElement"
+				).put(
+					"scope", "group"
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
 				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 				apiApplicationJSONObject1.get("id")
 			).put(

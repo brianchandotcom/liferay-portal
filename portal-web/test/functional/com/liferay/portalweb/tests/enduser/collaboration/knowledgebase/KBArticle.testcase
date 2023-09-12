@@ -562,7 +562,7 @@ definition {
 
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
-		KBArticle.moveArticleCPViaMoveModal(
+		KBArticle.moveArticleCP(
 			destinationItem = "KB Folder",
 			kbArticleTitle = "Knowledge Base Article Title");
 
@@ -594,13 +594,11 @@ definition {
 		KBArticle.openPageTreePanel(section = "Folders and Articles");
 
 		KBArticle.moveArticleCP(
-			kbArticleCurrentParent = "Home",
+			destinationItem = "KB Folder",
 			kbArticleTitle = "Knowledge Base Article Title",
 			navigationPane = "true");
 
-		KBFolder.selectParentCP(kbFolderName = "KB Folder");
-
-		KBAdmin.openKBAdmin(siteURLKey = "guest");
+		Alert.reloadPageAfterSuccessMessage(successMessage = "Your request completed successfully.");
 
 		KBArticle.openPageTreePanel(section = "Folders and Articles");
 

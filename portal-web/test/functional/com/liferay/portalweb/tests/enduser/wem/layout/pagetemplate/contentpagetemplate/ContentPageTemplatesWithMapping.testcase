@@ -322,7 +322,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-98031. Map web content field with URL to link editable field."
+	@description = "This is a test for LPS-98031. Map web content field with URL to link editable field for Content Page Templates."
 	@priority = 2
 	test MapWebContentFieldWithURLToLinkFragment {
 		task ("Add a web content structure with a Text field") {

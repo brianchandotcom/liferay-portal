@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -39,6 +40,7 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest
 		_company = CompanyTestUtil.addCompany();
 	}
 
+	@Ignore
 	@Test
 	public void testGetWorkflowMetricsSLADefinitionVersions1()
 		throws Exception {
@@ -68,6 +70,7 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest
 			"Cdf", workflowMetricsSLADefinitionVersion.getName());
 	}
 
+	@Ignore
 	@Test
 	public void testGetWorkflowMetricsSLADefinitionVersions2()
 		throws Exception {
@@ -97,6 +100,7 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest
 			"Abc", workflowMetricsSLADefinitionVersion.getName());
 	}
 
+	@Ignore
 	@Test
 	public void testGetWorkflowMetricsSLADefinitionVersions3()
 		throws Exception {

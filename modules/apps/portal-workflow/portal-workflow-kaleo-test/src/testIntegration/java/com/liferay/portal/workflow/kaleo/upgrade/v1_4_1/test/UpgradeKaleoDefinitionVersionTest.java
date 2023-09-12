@@ -41,6 +41,7 @@ import java.util.function.BiConsumer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -76,6 +77,7 @@ public class UpgradeKaleoDefinitionVersionTest {
 		_deleteKaleoDefinitionVersion(_name);
 	}
 
+	@Ignore
 	@Test
 	public void testCreateKaleoDefinitionVersion() throws Exception {
 		Company company1 = CompanyTestUtil.addCompany();

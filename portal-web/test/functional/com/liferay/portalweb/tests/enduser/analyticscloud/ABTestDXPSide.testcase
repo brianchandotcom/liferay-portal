@@ -340,20 +340,20 @@ definition {
 
 		task ("Check the AB Test result alert message") {
 			ACTests.viewABTestResultAlertMessage(
-				messageTitle = "There is no clear winner.",
-				messageDescription = "While some improvement was observed, the current test has not gathered sufficient data to confidently determine a winner.");
+				messageDescription = "While some improvement was observed, the current test has not gathered sufficient data to confidently determine a winner.",
+				messageTitle = "There is no clear winner.");
 		}
-		
+
 		task ("Compare the Control improvement number obtained in DXP with the number present in AC") {
 			ACTests.viewVariantImprovementNumberInAC(
-				variantName = "Control",
-				improvementNumber = ${improvementNumberControl});
+				improvementNumber = ${improvementNumberControl},
+				variantName = "Control");
 		}
 
 		task ("Compare the Variant improvement number obtained in DXP with the number present in AC") {
 			ACTests.viewVariantImprovementNumberInAC(
-				variantName = ${variantName},
-				improvementNumber = ${improvementNumberVariant});
+				improvementNumber = ${improvementNumberVariant},
+				variantName = ${variantName});
 		}
 	}
 

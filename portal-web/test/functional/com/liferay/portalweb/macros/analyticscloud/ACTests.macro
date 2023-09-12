@@ -24,11 +24,21 @@ definition {
 
 	@summary = "Default summary"
 	macro terminateABTest(testName = null) {
-		ACNavigation.openItem(itemName = ${testName});
+		if (isSet(testName)) {
+			ACNavigation.openItem(itemName = ${testName});
+		}
+
+		Button.click(button = "Terminate");
+
+		SelectWindow(locator1 = "name=undefined");
+
+		Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
 
 		Button.click(button = "Terminate Test");
 
 		Button.click(button = "Stop Test");
 	}
-
 }

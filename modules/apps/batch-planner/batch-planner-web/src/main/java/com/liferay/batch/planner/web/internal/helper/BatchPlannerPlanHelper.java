@@ -54,16 +54,16 @@ public class BatchPlannerPlanHelper {
 
 		String externalType = ParamUtil.getString(
 			portletRequest, "externalType");
-		String internalClassName = _resolveInternalClassName(
-			ParamUtil.getString(portletRequest, "internalClassName"));
 		String taskItemDelegateName = TaskItemUtil.getDelegateName(
 			ParamUtil.getString(portletRequest, "internalClassName"));
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanService.addBatchPlannerPlan(
-				true, externalType, StringPool.SLASH, internalClassName, name,
-				0, taskItemDelegateName, template);
+				true, externalType, StringPool.SLASH,
+				TaskItemUtil.getInternalClassName(
+					ParamUtil.getString(portletRequest, "internalClassName")),
+				name, 0, taskItemDelegateName, template);
 
 		_addBatchPlannerPolicies(
 			batchPlannerPlan.getBatchPlannerPlanId(),
@@ -90,7 +90,7 @@ public class BatchPlannerPlanHelper {
 
 		String externalType = ParamUtil.getString(
 			portletRequest, "externalType", "CSV");
-		String internalClassName = _resolveInternalClassName(
+		String internalClassName = TaskItemUtil.getInternalClassName(
 			ParamUtil.getString(portletRequest, "internalClassName"));
 		String taskItemDelegateName = TaskItemUtil.getDelegateName(
 			ParamUtil.getString(portletRequest, "internalClassName"));
@@ -329,16 +329,6 @@ public class BatchPlannerPlanHelper {
 		}
 
 		return batchPlannerMappings;
-	}
-
-	private String _resolveInternalClassName(String internalClassName) {
-		int index = internalClassName.indexOf(StringPool.POUND);
-
-		if (index < 0) {
-			return internalClassName;
-		}
-
-		return internalClassName.substring(0, index);
 	}
 
 	private BatchPlannerPlan _updateBatchPlannerPlan(

@@ -1630,13 +1630,13 @@ definition {
 		task ("Given a Minium site with 2 UOMs is created") {
 			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-			CommerceJSONSkusAPI._addCommerceUOM(
+			CommerceJSONSKUsAPI._addCommerceUOM(
 				basePrice = 10,
 				productSKU = "MIN93015",
 				uomKey = "Liter",
 				uomName = "Liter");
 
-			CommerceJSONSkusAPI._addCommerceUOM(
+			CommerceJSONSKUsAPI._addCommerceUOM(
 				basePrice = 20,
 				productSKU = "MIN93015",
 				uomKey = "Gallon",

@@ -17,7 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Pei-Jung Lan
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.user.taglib.servlet.taglib.UserNameFieldsTag}
  */
+@Deprecated
 public class UserNameFieldsTag extends IncludeTag {
 
 	public Object getBean() {

@@ -26,7 +26,10 @@ import javax.servlet.jsp.JspWriter;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.user.taglib.servlet.taglib.UserPortraitTag}
  */
+@Deprecated
 public class UserPortraitTag extends IncludeTag {
 
 	public static String getUserPortraitHTML(

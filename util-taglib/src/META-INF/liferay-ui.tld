@@ -3154,6 +3154,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.4.0, replaced by the <![CDATA[<code>liferay-user:user-display</code>]]> tag.</description>
 		<name>user-display</name>
 		<tag-class>com.liferay.taglib.ui.UserDisplayTag</tag-class>
 		<tei-class>com.liferay.taglib.ui.UserDisplayTei</tei-class>
@@ -3216,6 +3217,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.4.0, replaced by the <![CDATA[<code>liferay-user:user-name-fields</code>]]> tag.</description>
 		<name>user-name-fields</name>
 		<tag-class>com.liferay.taglib.ui.UserNameFieldsTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3236,6 +3238,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.4.0, replaced by the <![CDATA[<code>liferay-user:user-portrait</code>]]> tag.</description>
 		<name>user-portrait</name>
 		<tag-class>com.liferay.taglib.ui.UserPortraitTag</tag-class>
 		<body-content>JSP</body-content>

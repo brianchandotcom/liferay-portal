@@ -369,4 +369,11 @@ definition {
 			value1 = ${elementId});
 	}
 
+	macro viewVariantImprovementNumberInDXP {
+		var key_variantName = ${variantName};
+
+		AssertTextEquals(
+			locator1 = "ABTest#IMPROVEMENT_NUMBER",
+			value1 = ${improvementNumber});
+	}
 }

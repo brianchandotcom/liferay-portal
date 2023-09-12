@@ -1,0 +1,95 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-182586 - Verify an error message is seen for an invalid field in an object entry if the validation is set to partial validation"
+	@priority = 5
+	test CanValidateField {
+		property custom.properties = "feature.flag.LPS-187846=true";
+
+		task ("Given an custom object definition and a precision decimal field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 192638",
+				objectName = "CustomObject192638",
+				pluralLabelName = "Custom Objects 192638");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "PrecisionDecimal",
+				fieldLabelName = "Custom Field",
+				fieldName = "customField",
+				fieldType = "BigDecimal",
+				isRequired = "false",
+				objectName = "CustomObject192638");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject192638");
+		}
+
+		task ("and Given an expression builder validation set to partial validation with the precision decimal field") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 192638");
+
+			ObjectAdmin.goToValidationsTab();
+
+			ObjectCustomValidation.addObjectValidation(
+				validationName = "Custom Validation",
+				validationType = "Expression Builder");
+
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+
+			ObjectCustomValidation.activeValidation();
+
+			ObjectCustomValidation.gotoTab(tabName = "Conditions");
+
+			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "NOT(contains(customField, 123))");
+
+			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
+
+			Click.clickNoWaitForVisible(
+				key_optionSelected = "partialValidation",
+				locator1 = "FormFields#OPTION_SELECTED");
+
+			Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
+
+			Click(
+				key_columnOption = "Custom Field",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+
+			PortletEntry.save();
+		}
+
+		task ("When the user attempts to create an invalid object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject192638");
+
+			ObjectPortlet.addSingleFieldEntryViaUI(entry = 123);
+		}
+
+		task ("Then an error message is seen and the object entry isn't added") {
+			Alert.viewErrorMessage(errorMessage = "Error:This entry is not possible.");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject192638");
+
+			ObjectPortlet.assertEntryNotPresent(entry = 123);
+		}
+	}
+
+}

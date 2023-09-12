@@ -5,6 +5,7 @@
 
 package com.liferay.layout.manager;
 
+import com.liferay.layout.constants.LockedLayoutType;
 import com.liferay.layout.model.LockedLayout;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
@@ -27,7 +28,8 @@ public interface LayoutLockManager {
 
 	public void getLock(ActionRequest actionRequest) throws PortalException;
 
-	public List<LockedLayout> getLockedLayouts(long companyId, long groupId);
+	public List<LockedLayout> getLockedLayouts(
+		long companyId, long groupId, LockedLayoutType lockedLayoutType);
 
 	public String getLockedLayoutURL(ActionRequest actionRequest);
 

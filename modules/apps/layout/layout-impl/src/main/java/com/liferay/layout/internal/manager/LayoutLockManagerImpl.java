@@ -6,19 +6,23 @@
 package com.liferay.layout.internal.manager;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.constants.LockedLayoutType;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.model.LockedLayout;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
 import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRendererRegistryUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntryTable;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.base.BaseTable;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -144,7 +148,44 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	}
 
 	@Override
-	public List<LockedLayout> getLockedLayouts(long companyId, long groupId) {
+	public List<LockedLayout> getLockedLayouts(
+		long companyId, long groupId, LockedLayoutType lockedLayoutType) {
+
+		String layoutType = null;
+		Integer layoutPageTemplateEntryType = null;
+
+		if (lockedLayoutType != null) {
+			if (Objects.equals(
+					lockedLayoutType, LockedLayoutType.COLLECTION_PAGE)) {
+
+				layoutType = LayoutConstants.TYPE_COLLECTION;
+			}
+			else if (Objects.equals(
+						lockedLayoutType, LockedLayoutType.CONTENT_PAGE)) {
+
+				layoutType = LayoutConstants.TYPE_CONTENT;
+			}
+			else if (Objects.equals(
+						lockedLayoutType,
+						LockedLayoutType.CONTENT_PAGE_TEMPLATE)) {
+
+				layoutPageTemplateEntryType =
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC;
+			}
+			else if (Objects.equals(
+						lockedLayoutType,
+						LockedLayoutType.DISPLAY_PAGE_TEMPLATE)) {
+
+				layoutType = LayoutConstants.TYPE_ASSET_DISPLAY;
+			}
+			else if (Objects.equals(
+						lockedLayoutType, LockedLayoutType.MASTER_PAGE)) {
+
+				layoutPageTemplateEntryType =
+					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT;
+			}
+		}
+
 		List<Object[]> results = _layoutLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
 			).from(
@@ -165,26 +206,18 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 							DSLFunctionFactoryUtil.castText(
 								LayoutTable.INSTANCE.plid))
 					)
+				).leftJoinOn(
+					LayoutPageTemplateEntryTable.INSTANCE,
+					_getLayoutPageTemplateEntryTableLeftJoin(
+						groupId, lockedLayoutType)
+				).leftJoinOn(
+					LayoutUtilityPageEntryTable.INSTANCE,
+					_getLayoutUtilityPageEntryTableLeftJoin(
+						groupId, lockedLayoutType)
 				).where(
-					LayoutTable.INSTANCE.groupId.eq(
-						groupId
-					).and(
-						LayoutTable.INSTANCE.classPK.gt(0L)
-					).and(
-						LayoutTable.INSTANCE.hidden.eq(true)
-					).and(
-						LayoutTable.INSTANCE.system.eq(true)
-					).and(
-						LayoutTable.INSTANCE.status.eq(
-							WorkflowConstants.STATUS_DRAFT)
-					).and(
-						LayoutTable.INSTANCE.type.in(
-							new String[] {
-								LayoutConstants.TYPE_ASSET_DISPLAY,
-								LayoutConstants.TYPE_COLLECTION,
-								LayoutConstants.TYPE_CONTENT
-							})
-					)
+					_getWherePredicate(
+						groupId, layoutType, layoutPageTemplateEntryType,
+						lockedLayoutType)
 				).orderBy(
 					orderByStep -> orderByStep.orderBy(
 						LockTable.INSTANCE.createDate.descending())
@@ -384,6 +417,27 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		}
 	}
 
+	private Predicate _getLayoutPageTemplateEntryTableLeftJoin(
+		long groupId, LockedLayoutType lockedLayoutType) {
+
+		if ((lockedLayoutType == null) ||
+			Objects.equals(
+				lockedLayoutType, LockedLayoutType.COLLECTION_PAGE) ||
+			Objects.equals(
+				lockedLayoutType, LockedLayoutType.DISPLAY_PAGE_TEMPLATE) ||
+			Objects.equals(lockedLayoutType, LockedLayoutType.UTILITY_PAGE)) {
+
+			return null;
+		}
+
+		return LayoutPageTemplateEntryTable.INSTANCE.groupId.eq(
+			groupId
+		).and(
+			LayoutPageTemplateEntryTable.INSTANCE.plid.eq(
+				LayoutTable.INSTANCE.classPK)
+		);
+	}
+
 	private String _getLayoutPageTemplateEntryTypeLabel(
 		LayoutPageTemplateEntry layoutPageTemplateEntry, Locale locale) {
 
@@ -411,6 +465,23 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		return StringPool.BLANK;
 	}
 
+	private Predicate _getLayoutUtilityPageEntryTableLeftJoin(
+		long groupId, LockedLayoutType lockedLayoutType) {
+
+		if (!Objects.equals(lockedLayoutType, LockedLayoutType.CONTENT_PAGE) &&
+			!Objects.equals(lockedLayoutType, LockedLayoutType.UTILITY_PAGE)) {
+
+			return null;
+		}
+
+		return LayoutUtilityPageEntryTable.INSTANCE.groupId.eq(
+			groupId
+		).and(
+			LayoutUtilityPageEntryTable.INSTANCE.plid.eq(
+				LayoutTable.INSTANCE.classPK)
+		);
+	}
+
 	private String _getLayoutUtilityPageEntryTypeLabel(
 		LayoutUtilityPageEntry layoutUtilityPageEntry, Locale locale) {
 
@@ -424,6 +495,69 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		}
 
 		return layoutUtilityPageEntryViewRenderer.getLabel(locale);
+	}
+
+	private Predicate _getWherePredicate(
+		long groupId, String layoutType, Integer layoutPageTemplateEntryType,
+		LockedLayoutType lockedLayoutType) {
+
+		Predicate wherePredicate = LayoutTable.INSTANCE.groupId.eq(
+			groupId
+		).and(
+			LayoutTable.INSTANCE.classPK.gt(0L)
+		).and(
+			LayoutTable.INSTANCE.hidden.eq(true)
+		).and(
+			LayoutTable.INSTANCE.system.eq(true)
+		).and(
+			LayoutTable.INSTANCE.status.eq(WorkflowConstants.STATUS_DRAFT)
+		);
+
+		if (lockedLayoutType == null) {
+			return wherePredicate.and(
+				LayoutTable.INSTANCE.type.in(
+					new String[] {
+						LayoutConstants.TYPE_ASSET_DISPLAY,
+						LayoutConstants.TYPE_COLLECTION,
+						LayoutConstants.TYPE_CONTENT
+					}));
+		}
+
+		if (layoutPageTemplateEntryType != null) {
+			return wherePredicate.and(
+				LayoutPageTemplateEntryTable.INSTANCE.type.eq(
+					layoutPageTemplateEntryType));
+		}
+
+		if (layoutType != null) {
+			return wherePredicate.and(
+				LayoutTable.INSTANCE.type.eq(
+					layoutType
+				).and(
+					() -> {
+						if (Objects.equals(
+								layoutType, LayoutConstants.TYPE_CONTENT)) {
+
+							return LayoutPageTemplateEntryTable.INSTANCE.
+								layoutPageTemplateEntryId.isNull(
+								).and(
+									LayoutUtilityPageEntryTable.INSTANCE.
+										LayoutUtilityPageEntryId.isNull()
+								);
+						}
+
+						return null;
+					}
+				));
+		}
+
+		if (Objects.equals(lockedLayoutType, LockedLayoutType.UTILITY_PAGE)) {
+			return wherePredicate.and(
+				LayoutUtilityPageEntryTable.INSTANCE.LayoutUtilityPageEntryId.
+					isNotNull());
+		}
+
+		return wherePredicate;
 	}
 
 	@Reference

@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/press-releases",
+	"hidden": false,
+	"name": "Press Releases",
+	"name_i18n": {
+		"en_US": "Press Releases"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/request-a-demo",
+	"hidden": false,
+	"name": "Request a Demo",
+	"name_i18n": {
+		"en_US": "Request a Demo"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

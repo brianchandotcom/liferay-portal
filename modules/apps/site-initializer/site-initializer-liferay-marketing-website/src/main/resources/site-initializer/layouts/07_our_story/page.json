@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/our-story",
+	"hidden": false,
+	"name": "Our Story",
+	"name_i18n": {
+		"en_US": "Our Story"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

@@ -45,16 +45,26 @@ public class StartupHelperUtil {
 
 	public static void initResourceActions() {
 		if (_dbNew) {
-			_initResourceActions();
+			ResourceActionLocalServiceUtil.checkResourceActions();
 		}
 		else {
 			try {
 				DBPartitionUtil.forEachCompanyId(
-					companyId -> _initResourceActions());
+					companyId ->
+						ResourceActionLocalServiceUtil.checkResourceActions());
 			}
 			catch (Exception exception) {
 				ReflectionUtil.throwException(exception);
 			}
+		}
+
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			ResourceActionsUtil.populateModelResources(
+				StartupHelperUtil.class.getClassLoader(),
+				PropsValues.RESOURCE_ACTIONS_CONFIGS);
+		}
+		catch (ResourceActionsException resourceActionsException) {
+			ReflectionUtil.throwException(resourceActionsException);
 		}
 	}
 
@@ -174,19 +184,6 @@ public class StartupHelperUtil {
 			System.out.println(msg);
 
 			throw new RuntimeException(msg);
-		}
-	}
-
-	private static void _initResourceActions() {
-		ResourceActionLocalServiceUtil.checkResourceActions();
-
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			ResourceActionsUtil.populateModelResources(
-				StartupHelperUtil.class.getClassLoader(),
-				PropsValues.RESOURCE_ACTIONS_CONFIGS);
-		}
-		catch (ResourceActionsException resourceActionsException) {
-			ReflectionUtil.throwException(resourceActionsException);
 		}
 	}
 

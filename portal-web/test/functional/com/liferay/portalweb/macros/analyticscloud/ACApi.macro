@@ -137,7 +137,7 @@ definition {
 
 	macro getSearchHeaderValues {
 		var script = '''
-			    com.liferay.analytics.settings.configuration.AnalyticsConfiguration analyticsConfiguration = (com.liferay.analytics.settings.configuration.AnalyticsConfiguration)com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil.getCompanyConfiguration(com.liferay.analytics.settings.configuration.AnalyticsConfiguration.class, com.liferay.portal.kernel.service.CompanyServiceUtil.getCompanies()[0].getCompanyId());
+			    com.liferay.analytics.settings.configuration.AnalyticsConfiguration analyticsConfiguration = (com.liferay.analytics.settings.configuration.AnalyticsConfiguration)com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil.getCompanyConfiguration(com.liferay.analytics.settings.configuration.AnalyticsConfiguration.class, com.liferay.portal.kernel.service.CompanyServiceUtil.getCompanies()[0].getCompanyId());
 				out.println(analyticsConfiguration."${header}"());
 		    ''';
 

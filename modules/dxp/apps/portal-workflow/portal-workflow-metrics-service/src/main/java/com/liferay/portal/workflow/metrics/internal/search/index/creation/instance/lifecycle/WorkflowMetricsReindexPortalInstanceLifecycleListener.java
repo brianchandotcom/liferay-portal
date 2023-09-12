@@ -5,10 +5,20 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index.creation.instance.lifecycle;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.workflow.metrics.internal.search.index.creation.helper.WorkflowMetricsIndexCreator;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
+
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -22,10 +32,26 @@ public class WorkflowMetricsReindexPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		_workflowMetricsIndexCreator.reindex(company);
+		String jobName = StringBundler.concat(
+			DestinationNames.WORKFLOW_METRICS_REINDEX, StringPool.SLASH,
+			company.getCompanyId());
+
+		Trigger trigger = _triggerFactory.createTrigger(
+			jobName, jobName, new Date(), null, 5, TimeUnit.SECOND);
+
+		Message message = new Message();
+
+		message.put("companyId", company.getCompanyId());
+
+		_schedulerEngineHelper.schedule(
+			trigger, StorageType.MEMORY, null,
+			DestinationNames.WORKFLOW_METRICS_REINDEX, message);
 	}
 
 	@Reference
-	private WorkflowMetricsIndexCreator _workflowMetricsIndexCreator;
+	private SchedulerEngineHelper _schedulerEngineHelper;
+
+	@Reference
+	private TriggerFactory _triggerFactory;
 
 }

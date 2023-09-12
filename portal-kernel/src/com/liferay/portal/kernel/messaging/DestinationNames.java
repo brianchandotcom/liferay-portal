@@ -90,4 +90,7 @@ public interface DestinationNames {
 	public static final String SUBSCRIPTION_SENDER =
 		"liferay/subscription_sender";
 
+	public static final String WORKFLOW_METRICS_REINDEX =
+		"liferay/workflow_metrics_reindex";
+
 }

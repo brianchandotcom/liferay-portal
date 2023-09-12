@@ -362,31 +362,35 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		List<Rule> violations = results.getViolations();
 
-		if (!violations.isEmpty()) {
-			List<Rule> rules = new ArrayList<>();
+		if (violations.isEmpty()) {
+			System.out.println("No accessiblity violations were found");
 
-			if (Validator.isNull(filterByImpacts)) {
-				rules.addAll(violations);
-			}
-			else {
-				List<String> filterByImpactsList = new ArrayList<>(
-					Arrays.asList(filterByImpacts.split(",")));
-
-				for (String filterByImpact : filterByImpactsList) {
-					rules.addAll(
-						ListUtil.filter(
-							violations,
-							violation -> violation.getImpact(
-							).equals(
-								filterByImpact
-							)));
-				}
-			}
-
-			AxeReporter.getReadableAxeResults("analyze", this, rules);
-
-			throw new Exception(AxeReporter.getAxeResultString());
+			return;
 		}
+
+		List<Rule> rules = new ArrayList<>();
+
+		if (Validator.isNull(filterByImpacts)) {
+			rules.addAll(violations);
+		}
+		else {
+			List<String> filterByImpactsList = new ArrayList<>(
+				Arrays.asList(filterByImpacts.split(",")));
+
+			for (String filterByImpact : filterByImpactsList) {
+				rules.addAll(
+					ListUtil.filter(
+						violations,
+						violation -> violation.getImpact(
+						).equals(
+							filterByImpact
+						)));
+			}
+		}
+
+		AxeReporter.getReadableAxeResults("analyze", this, rules);
+
+		throw new Exception(AxeReporter.getAxeResultString());
 	}
 
 	@Override

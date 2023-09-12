@@ -200,6 +200,12 @@ definition {
 			AnalyticsCloud.loginAnalyticsCloud(
 				emailAddress = "test@liferay.com",
 				password = "test");
+
+			Close.closeWindow();
+
+			ABTest.viewDataInAnalyticsCloud();
+
+			SelectWindow(locator1 = "name=undefined");
 		}
 	}
 

@@ -52,44 +52,54 @@ export default function EditKBArticle({
 		event.currentTarget.dataset.customUrl = urlTitleInput.value !== '';
 	};
 
+	const scheduleItemOnClick = () => {
+		openScheduleModal(Liferay.Language.get('schedule-publication'));
+	};
+
+	const scheduledButtonOnClick = () => {
+		openScheduleModal(Liferay.Language.get('edit-scheduled-publication'));
+	};
+
+	const openScheduleModal = (modalTitle) => {
+		const modalEventHandlers = [];
+
+		openModal({
+			height: '60vh',
+			id: 'scheduleKBArticleDialog',
+			iframeBodyCssClass: '',
+			onClose: () => {
+				modalEventHandlers.forEach((eventHandler) => {
+					eventHandler.detach();
+				});
+
+				modalEventHandlers.splice(0, modalEventHandlers.length);
+			},
+			onOpen: () => {
+				const scheduleEventHandler = Liferay.on(
+					'scheduleKBArticle',
+					publishButtonOnClick
+				);
+
+				modalEventHandlers.push(scheduleEventHandler);
+			},
+			size: 'md',
+			title: modalTitle,
+			url: scheduleModalURL,
+		});
+	};
+
 	const form = document.getElementById(`${namespace}fm`);
 
 	let publishButton;
-	let scheduleItemOnClick;
 	let scheduleItem;
+	let scheduledButton;
 
 	if (Liferay.FeatureFlags['LPS-188060']) {
 		publishButton = document.getElementById(`${namespace}publishItem`);
 
+		scheduledButton = document.getElementById(`${namespace}scheduledButton`);
+
 		scheduleItem = document.getElementById(`${namespace}scheduleItem`);
-
-		scheduleItemOnClick = () => {
-			const modalEventHandlers = [];
-
-			openModal({
-				height: '60vh',
-				id: 'scheduleKBArticleDialog',
-				iframeBodyCssClass: '',
-				onClose: () => {
-					modalEventHandlers.forEach((eventHandler) => {
-						eventHandler.detach();
-					});
-
-					modalEventHandlers.splice(0, modalEventHandlers.length);
-				},
-				onOpen: () => {
-					const scheduleEventHandler = Liferay.on(
-						'scheduleKBArticle',
-						publishButtonOnClick
-					);
-
-					modalEventHandlers.push(scheduleEventHandler);
-				},
-				size: 'md',
-				title: Liferay.Language.get('schedule-publication'),
-				url: scheduleModalURL,
-			});
-		};
 	}
 	else {
 		publishButton = document.getElementById(`${namespace}publishButton`);
@@ -163,6 +173,9 @@ export default function EditKBArticle({
 	if (Liferay.FeatureFlags['LPS-188060']) {
 		eventHandlers.push(
 			attachListener(scheduleItem, 'click', scheduleItemOnClick)
+		);
+		eventHandlers.push(
+			attachListener(scheduledButton, 'click', scheduledButtonOnClick)
 		);
 	}
 

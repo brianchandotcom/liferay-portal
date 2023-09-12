@@ -60,13 +60,13 @@ public class ExpandoTableLocalServiceImpl
 
 		long tableId = counterLocalService.increment();
 
-		ExpandoTable table = expandoTablePersistence.create(tableId);
+		expandoTable = expandoTablePersistence.create(tableId);
 
-		table.setCompanyId(companyId);
-		table.setClassNameId(classNameId);
-		table.setName(name);
+		expandoTable.setCompanyId(companyId);
+		expandoTable.setClassNameId(classNameId);
+		expandoTable.setName(name);
 
-		return expandoTablePersistence.update(table);
+		return expandoTablePersistence.update(expandoTable);
 	}
 
 	@Override

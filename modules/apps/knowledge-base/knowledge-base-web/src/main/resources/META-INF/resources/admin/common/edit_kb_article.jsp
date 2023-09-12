@@ -72,7 +72,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 										}
 										%>
 
-										<span class="lfr-portal-tooltip" title="<%= displayDateString %>">
+										<span class="lfr-portal-tooltip">
 											<clay:button
 												cssClass="c-mr-3"
 												displayType="primary"
@@ -81,7 +81,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 												label="scheduled"
 												name="scheduleButton"
 												small="<%= true %>"
-												title="<%= displayDateString %>"
+												title='<%= LanguageUtil.format(request, "this-article-will-be-published-on-x", displayDateString) %>'
 												type="button"
 											/>
 										</span>

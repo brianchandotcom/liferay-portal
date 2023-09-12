@@ -1,0 +1,45 @@
+[#assign current_time = dateUtil.newDate() the_year =
+current_time?date?string("yyyy")]
+
+<footer
+	class="f-navigation-footer"
+	data-swiftype-index="false"
+	id="footer"
+	role="contentinfo"
+>
+	<div class="align-start flex footer-content justify-space-between max-nav">
+		<div class="flex flex-column footer-navigation">
+			[@liferay_ui["language"] ddmTemplateGroupId=(scopeGroupId)
+			ddmTemplateKey="FOOTER" displayCurrentLocale=true
+			languageIds=localeUtil.toLanguageIds(languageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()))
+			useNamespace=false /]
+
+			<lfr-drop-zone></lfr-drop-zone>
+		</div>
+
+		<div class="flex flex-column footer-liferay-connect">
+			<div class="social-nav">
+				<lfr-drop-zone></lfr-drop-zone>
+			</div>
+
+			<div class="contact-info">
+				<lfr-drop-zone></lfr-drop-zone>
+			</div>
+		</div>
+	</div>
+
+	<div class="fine-print justify-space-between max-nav">
+		<p class="powered-by">
+			[@liferay_ui["message"] key="powered-by-liferay" /]
+		</p>
+
+		<p class="copyright">
+			&copy; ${the_year} Liferay Inc. [@liferay.language
+			key="all-rights-reserved" /]
+		</p>
+
+		<a class="privacy-policy" href="/privacy-policy">
+			[@liferay_ui["message"] key="privacy-policy" /]
+		</a>
+	</div>
+</footer>

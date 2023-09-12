@@ -115,9 +115,11 @@ public class ObjectValidationRuleLocalServiceUtil {
 	 *
 	 * @param objectValidationRule the object validation rule
 	 * @return the object validation rule that was removed
+	 * @throws PortalException
 	 */
 	public static ObjectValidationRule deleteObjectValidationRule(
-		ObjectValidationRule objectValidationRule) {
+			ObjectValidationRule objectValidationRule)
+		throws PortalException {
 
 		return getService().deleteObjectValidationRule(objectValidationRule);
 	}

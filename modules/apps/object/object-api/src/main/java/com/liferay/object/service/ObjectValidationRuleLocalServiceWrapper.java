@@ -122,12 +122,14 @@ public class ObjectValidationRuleLocalServiceWrapper
 	 *
 	 * @param objectValidationRule the object validation rule
 	 * @return the object validation rule that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.object.model.ObjectValidationRule
-		deleteObjectValidationRule(
-			com.liferay.object.model.ObjectValidationRule
-				objectValidationRule) {
+			deleteObjectValidationRule(
+				com.liferay.object.model.ObjectValidationRule
+					objectValidationRule)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectValidationRuleLocalService.deleteObjectValidationRule(
 			objectValidationRule);

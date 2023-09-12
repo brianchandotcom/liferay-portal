@@ -125,11 +125,13 @@ public interface ObjectValidationRuleLocalService
 	 *
 	 * @param objectValidationRule the object validation rule
 	 * @return the object validation rule that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public ObjectValidationRule deleteObjectValidationRule(
-		ObjectValidationRule objectValidationRule) throws PortalException;
+			ObjectValidationRule objectValidationRule)
+		throws PortalException;
 
 	public void deleteObjectValidationRules(Long objectDefinitionId)
 		throws PortalException;

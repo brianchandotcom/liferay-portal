@@ -7,6 +7,7 @@ package com.liferay.object.system.util;
 
 import com.liferay.batch.engine.util.BatchEngineThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
@@ -15,6 +16,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class SystemObjectDefinitionManagementChecker {
 
 	public static boolean isInvokerBundleAllowed() {
+		if (PortalRunMode.isTestMode()) {
+			return true;
+		}
+
 		return ArrayUtil.exists(
 			_ALLOWED_INVOKER_BUNDLE_SYMBOLIC_NAMES,
 			allowedInvokerBundleSymbolicName -> StringUtil.startsWith(

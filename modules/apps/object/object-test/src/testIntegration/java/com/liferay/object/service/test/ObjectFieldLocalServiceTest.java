@@ -821,7 +821,7 @@ public class ObjectFieldLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			RequiredObjectFieldException.class,
-			"At least one custom field must be added",
+			"At least one object field must be added",
 			() -> _objectFieldLocalService.deleteObjectField(ableObjectField));
 
 		Assert.assertTrue(
@@ -939,7 +939,7 @@ public class ObjectFieldLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			RequiredObjectFieldException.class,
-			"At least one custom field must be added",
+			"At least one object field must be added",
 			() -> _objectFieldLocalService.deleteObjectField(
 				ableSystemObjectField));
 

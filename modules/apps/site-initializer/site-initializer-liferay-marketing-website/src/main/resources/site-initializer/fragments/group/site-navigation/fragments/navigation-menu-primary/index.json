@@ -1,0 +1,100 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "0",
+					"description": "site-navigation-menu-id",
+					"label": "site-navigation-menu-id",
+					"name": "siteNavigationMenuId",
+					"type": "text"
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "0",
+					"description": "utillity-navigation-menu-id",
+					"label": "utillity-navigation-menu-id",
+					"name": "utilityNavigationMenuId",
+					"type": "text"
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "354406563",
+					"description": "search-recommendation-navigation-menu-id",
+					"label": "search-recommendation-navigation-menu-id",
+					"name": "searchRecommendationNavigationMenuId",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "/",
+					"description": "Logo HREF URL",
+					"label": "Logo HREF URL",
+					"name": "logoHrefUrl",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "logo-image-url",
+					"label": "logo-image-url",
+					"name": "logoImageURL",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"description": "dark-theme",
+					"label": "dark-theme",
+					"name": "darkTheme",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"description": "additional-css-styling",
+					"label": "additional-css-styling",
+					"name": "additionalCssStyling",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "contact-sales",
+					"description": "button",
+					"label": "button",
+					"name": "button",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "contact-sales",
+								"value": "contact-sales"
+							},
+							{
+								"label": "contact-us",
+								"value": "contact-us"
+							},
+							{
+								"label": "subscribe",
+								"value": "subscribe"
+							},
+							{
+								"label": "none",
+								"value": "none"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": true,
+					"description": "show-utility-nav",
+					"label": "show-utility-nav",
+					"name": "showUtilityNav",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

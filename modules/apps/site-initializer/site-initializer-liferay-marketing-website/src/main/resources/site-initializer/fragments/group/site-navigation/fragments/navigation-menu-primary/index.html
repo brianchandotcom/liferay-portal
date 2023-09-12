@@ -1,0 +1,247 @@
+[#assign additionalCssStyling = configuration.additionalCssStyling button =
+configuration.button darkTheme = configuration.darkTheme logoHrefUrl =
+configuration.logoHrefUrl showUtilityNav = configuration.showUtilityNav] [#if
+darkTheme] [#assign additionalCssStyling += " dark-theme"] [/#if] [#if button ==
+"contact-us"] [#assign buttonText = languageUtil.get(locale, "contact-us",
+"Contact Us") buttonHref = "/contact-us"] [#elseif button == "contact-sales"]
+[#assign buttonText = languageUtil.get(locale, "contact-sales", "Contact Sales")
+buttonHref = "/contact-sales"] [#elseif button == "subscribe"] [#assign
+buttonText = languageUtil.get(locale, "subscribe", "Subscribe") buttonHref =
+"#subscribe-blogs"] [/#if]
+
+<div class="f-navigation-primary-padding ${showUtilityNav?then('utility-navigation-padding','')}" />
+
+<header class="f-navigation-primary ${additionalCssStyling} nav-wrapper">
+	<div class="nav">
+	<nav class="align-center flex justify-center utility-nav ${showUtilityNav?then('','d-sm-none')}">
+		<div class="align-center content-wrapper flex justify-space-between utility">
+				[#if configuration.logoImageURL?has_content]
+				<a class="liferay-logo" href="${logoHrefUrl}">
+					<img src="${configuration.logoImageURL}" />
+				</a>
+				[#else]
+				<a class="liferay-logo" href="${logoHrefUrl}">
+					<svg height="40" viewBox="-.25 0 270 90" width="120">
+						<use xlink:href="#liferayLogo"></use>
+					</svg>
+				</a>
+				[/#if]
+
+				<div class="align-center flex utility-nav-left">
+				<div class="font-size-paragraph-xsmall info-for" id="infoFor">
+						<span>${languageUtil.get(locale, 'info-for')}</span>
+					</div>
+
+					[@liferay_site_navigation["navigation-menu"]
+					ddmTemplateGroupId=10182 ddmTemplateKey="NAVIGATION_UTILITY"
+					displayDepth=0 expandedLevels="auto" preview=false
+					rootItemLevel=0 rootLayoutType="absolute"
+					siteNavigationMenuId=(configuration.utilityNavigationMenuId)!0
+					/]
+				</div>
+
+			<a class="align-center flex skip-to-footer-wrapper" href="#footer" tabindex="1">
+					<div class="align-center flex skip-to-footer-text">
+						${languageUtil.get(locale, 'skip-to-footer')}
+					</div>
+				</a>
+
+				[#if showUtilityNav]
+				<div class="align-center flex utility-nav-right">
+					<div class="dropdown" id="languageDropdown">
+						<div class="font-size-paragraph-xsmall language-dropdown-toggle language-selector utility-nav-link" tabindex="7">
+							<svg viewBox="0 0 16 16">
+							<path clip-rule="evenodd" d="M4.48997 3.98411C5.00151 3.53668 5.5993 3.18541 6.25513 2.9585C6.06287 3.37475 5.89466 3.85859 5.75642 4.39523C5.32146 4.28789 4.89851 4.15005 4.48997 3.98411ZM10.2436 4.39534C10.1054 3.85877 9.93722 3.37498 9.74499 2.95877C10.4007 3.18574 10.9983 3.53701 11.5097 3.98441C11.1013 4.15027 10.6785 4.28804 10.2436 4.39534ZM8.64765 3.7812C8.7484 4.03307 8.84143 4.31449 8.92436 4.62153C8.62036 4.65141 8.31208 4.6667 8.00022 4.6667C7.68822 4.6667 7.37979 4.6514 7.07565 4.62149C7.15858 4.31446 7.25161 4.03306 7.35235 3.7812C7.55645 3.27096 7.76613 2.94751 7.93075 2.77344C7.95765 2.745 7.98073 2.72306 8 2.70626C8.01927 2.72306 8.04235 2.745 8.06925 2.77344C8.23387 2.94751 8.44355 3.27096 8.64765 3.7812ZM8.00022 6.00004C7.59774 6.00004 7.20047 5.97775 6.80957 5.93433C6.74642 6.37344 6.70219 6.84203 6.68096 7.33339H9.31904C9.29782 6.84204 9.25358 6.37347 9.19044 5.93438C8.79968 5.97776 8.40255 6.00004 8.00022 6.00004ZM9.31904 8.66673H6.68096C6.70219 9.15809 6.74642 9.62667 6.80957 10.0658C7.20048 10.0224 7.59776 10.0001 8.00024 10.0001C8.40257 10.0001 8.79969 10.0223 9.19044 10.0657C9.25358 9.62663 9.29782 9.15807 9.31904 8.66673ZM5.3465 7.33339C5.36902 6.76648 5.41994 6.22046 5.49566 5.70435C4.82505 5.54298 4.17911 5.31826 3.56454 5.03687C3.11402 5.70987 2.81261 6.49114 2.70759 7.33339H5.3465ZM2.70761 8.66673H5.3465C5.36902 9.23363 5.41994 9.77965 5.49566 10.2958C4.82507 10.4571 4.17917 10.6818 3.56462 10.9632C3.11408 10.2902 2.81265 9.50897 2.70761 8.66673ZM10.6535 8.66673H13.2917C13.1867 9.5088 12.8854 10.2899 12.435 10.9628C11.8206 10.6816 11.1748 10.4569 10.5044 10.2956C10.5801 9.77957 10.631 9.23359 10.6535 8.66673ZM13.2918 7.33339H10.6535C10.631 6.76652 10.5801 6.22053 10.5044 5.70446C11.1748 5.54315 11.8206 5.31852 12.4351 5.03725C12.8854 5.71017 13.1868 6.4913 13.2918 7.33339ZM4.49009 12.016C4.89859 11.85 5.3215 11.7122 5.75641 11.6049C5.89464 12.1414 6.06282 12.6252 6.25504 13.0414C5.59929 12.8145 5.00158 12.4633 4.49009 12.016ZM14.6663 7.99998C14.6663 11.6769 11.6896 14.6586 8.01457 14.6666L8 14.6667L7.98556 14.6666C4.31015 14.659 1.33301 11.6772 1.33301 7.99998C1.33301 4.31808 4.31778 1.33331 7.99967 1.33331C11.6816 1.33331 14.6663 4.31808 14.6663 7.99998ZM10.2436 11.6048C10.1054 12.1413 9.93727 12.625 9.74508 13.0412C10.4007 12.8142 10.9983 12.463 11.5096 12.0156C11.1012 11.8498 10.6784 11.712 10.2436 11.6048ZM8.00024 11.3334C8.31209 11.3334 8.62037 11.3487 8.92437 11.3786C8.84144 11.6856 8.7484 11.967 8.64765 12.2189C8.44355 12.7292 8.23387 13.0526 8.06925 13.2267C8.04235 13.2551 8.01927 13.2771 8 13.2939C7.98073 13.2771 7.95765 13.2551 7.93075 13.2267C7.76613 13.0526 7.55645 12.7292 7.35235 12.2189C7.25161 11.9671 7.15858 11.6856 7.07565 11.3786C7.3798 11.3487 7.68823 11.3334 8.00024 11.3334Z" fill-rule="evenodd" />
+							</svg>
+
+							<div>
+								[#assign current_locale = locale ] [#if
+								current_locale?has_content] [#assign
+								current_locale = current_locale[0..1] + " (" +
+								current_locale[3..4] + ")" ] [/#if]
+								${current_locale?upper_case}
+							</div>
+						</div>
+
+						<div class="dropdown-list-wrapper" id="languageDropdownList">
+							<div class="dropdown-list">
+							<div class="class-toggle language-wrapper" data-target-class="language-selection-menu-active" data-target-nodes=".osb-nav-secondary">
+									[@liferay_ui["language"]
+									ddmTemplateGroupId=10195
+									ddmTemplateKey="LANGUAGE_MENU"
+									displayCurrentLocale=true
+									languageIds=localeUtil.toLanguageIds(languageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()))
+									useNamespace=false /]
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<a class="search-button w-inline-block" tabindex="6">
+						<svg fill="none" viewBox="0 0 40 40">
+						<path d="M18.25 25.6875C22.116 25.6875 25.25 22.5535 25.25 18.6875C25.25 14.8215 22.116 11.6875 18.25 11.6875C14.384 11.6875 11.25 14.8215 11.25 18.6875C11.25 22.5535 14.384 25.6875 18.25 25.6875Z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.33333" />
+						<path d="M26.5625 26.5625L29.625 29.625" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.33333" />
+						</svg>
+					</a>
+				</div>
+				[/#if]
+			</div>
+		</nav>
+
+		<nav class="align-center flex primary-nav">
+			<div class="align-center content-wrapper flex">
+				[#if configuration.logoImageURL?has_content]
+				<a class="liferay-logo" href="${logoHrefUrl}" tabindex="2">
+					<img src="${configuration.logoImageURL}" />
+				</a>
+				[#else]
+				<a class="liferay-logo" href="${logoHrefUrl}" tabindex="2">
+					<svg height="40" viewBox="-.25 0 270 90" width="120">
+						<use xlink:href="#liferayLogo"></use>
+					</svg>
+				</a>
+				[/#if]
+
+				<div class="nav-items-wrapper">
+					[@liferay_site_navigation["navigation-menu"]
+					ddmTemplateGroupId=10182 ddmTemplateKey="NAVIGATION_PRIMARY"
+					displayDepth=0 expandedLevels="auto" preview=false
+					rootItemLevel=0 rootLayoutType="absolute"
+					siteNavigationMenuId=(configuration.siteNavigationMenuId)!0
+					/]
+
+					<div class="underline-container">
+						<div class="underline"></div>
+					</div>
+
+					<div class="utility-nav-left">
+						<div class="info-for">
+							[@liferay_site_navigation["navigation-menu"]
+							ddmTemplateGroupId=10182
+							ddmTemplateKey="NAVIGATION_UTILITY" displayDepth=0
+							expandedLevels="auto" preview=false rootItemLevel=0
+							rootLayoutType="absolute"
+							siteNavigationMenuId=(configuration.utilityNavigationMenuId)!0
+							/]
+						</div>
+					</div>
+
+					[#if buttonText??]
+					<div class="contact-sales-container">
+					<a class="contact-sales w-button" href="${buttonHref}" tabindex="4">${buttonText}</a>
+					</div>
+					[/#if]
+				</div>
+			</div>
+		</nav>
+
+		[#if showUtilityNav]
+		<div class="search-wrapper">
+			<form class="search" id="siteSearch" name="siteSearch">
+			<input class="search-input" id="searchInput" placeholder="${languageUtil.get(locale, 'search')}" type="text" />
+
+			<a class="search-submit" href="/search" id="searchSubmitBtn" type="submit">
+					<svg fill="none" viewBox="0 0 40 40">
+					<path d="M18.25 25.6875C22.116 25.6875 25.25 22.5535 25.25 18.6875C25.25 14.8215 22.116 11.6875 18.25 11.6875C14.384 11.6875 11.25 14.8215 11.25 18.6875C11.25 22.5535 14.384 25.6875 18.25 25.6875Z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.33333" />
+					<path d="M26.5625 26.5625L29.625 29.625" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.33333" />
+					</svg>
+				</a>
+			</form>
+
+			<div class="suggestions">
+				<div class="results-header">
+					<div class="font-size-small-caps popular" id="popular">
+						${languageUtil.get(locale, 'popular')}
+					</div>
+
+					<div class="d-none font-size-small-caps suggested" id="suggested">
+						${languageUtil.get(locale, 'suggested')}
+					</div>
+					>
+					<a class="d-none" href="/search" id="seeAllResultsLink">
+						<span class="all-results-link">
+							<div class="see-all-results" id="seeAllResults">
+								${languageUtil.get(locale, 'see-all-results')}
+							</div>
+						</span>
+					</a>
+				</div>
+
+				<div class="suggestion-links" id="suggestionLinks">
+					[@liferay_site_navigation["navigation-menu"]
+					ddmTemplateGroupId=10182
+					ddmTemplateKey="NAVIGATION_SEARCH_RECOMMENDATION"
+					displayDepth=0 expandedLevels="auto" preview=false
+					rootItemLevel=0 rootLayoutType="absolute"
+					siteNavigationMenuId=(configuration.searchRecommendationNavigationMenuId)!0
+					/]
+				</div>
+
+				<div class="search-results st-nav-results-container" id="st-nav-results-container">
+					&nbsp;
+				</div>
+			</div>
+
+			<a class="close-search w-inline-block" id="closeSearch">
+			<svg fill="none" height="14" viewBox="0 0 14 14" width="14" xmlns="http://www.w3.org/2000/svg">
+					<path d="M12.2929 0.292893C12.6834 -0.0976311 13.3166 -0.0976311 13.7071 0.292893C14.0976 0.683417 14.0976 1.31658 13.7071 1.70711L8.41421 7L13.7071 12.2929C14.0976 12.6834 14.0976 13.3166 13.7071 13.7071C13.3166 14.0976 12.6834 14.0976 12.2929 13.7071L7 8.41421L1.70711 13.7071C1.31658 14.0976 0.683418 14.0976 0.292894 13.7071C-0.0976312 13.3166 -0.0976312 12.6834 0.292894 12.2929L5.58579 7L0.292894 1.70711C-0.0976306 1.31658 -0.0976306 0.683417 0.292894 0.292893C0.683418 -0.0976311 1.31658 -0.0976311 1.70711 0.292893L7 5.58579L12.2929 0.292893Z" fill="white" />
+				</svg>
+			</a>
+		</div>
+		[/#if]
+
+		<div class="mobile-buttons">
+			[#if buttonText??]
+			<div class="contact-sales-container">
+			<a class="contact-sales tablet w-button" href="${buttonHref}">${buttonText}</a>
+			</div>
+			[/#if]
+
+			<a class="mobile-menu w-inline-block">
+				<div class="button-text-menu">
+					${languageUtil.get(locale, 'menu')}
+				</div>
+
+				<div class="button-text-close">
+					${languageUtil.get(locale, 'close')}
+				</div>
+			</a>
+		</div>
+	</div>
+</header>
+
+[@liferay_aui.script
+require="com.liferay.osb.www.frontend.support.web@1.0.0/DropdownProvider as
+dropdownProvider,
+com.liferay.osb.www.frontend.support.web@1.0.0/SpatialNavigation as
+SpatialNavigationProvider,
+com.liferay.osb.www.frontend.support.web@1.0.0/SwiftypeSearch as
+swiftypeSearch"] spatialNavigationProvider = new
+SpatialNavigationProvider.default( '.adt-submenu-item-link' ); new
+dropdownProvider.default( '#languageDropdown', '#languageDropdownList',
+'list-open' ); var navItemsWrapper =
+document.querySelector('.nav-items-wrapper'); var nav =
+document.querySelector('.nav'); var body = document.body; new
+dropdownProvider.default( '.adt-nav-text', '.adt-submenu', 'dropdown-open',
+false, function (menu) { if (window.innerWidth >= 1200) {
+menu.setAttribute('style', 'max-height: 80vh'); if ( menu.scrollHeight >
+window.innerHeight * 0.8 ) { body.classList.add('nav-dropdown-menu-overflow'); }
+} else { menu.setAttribute('style', 'max-height: ' + menu.scrollHeight + 'px');
+} nav.classList.add('show-border'); if (navItemsWrapper) {
+navItemsWrapper.scrollTop = 0; }
+spatialNavigationProvider.addFocusableClasses(menu); }, function (menu) {
+menu.setAttribute('style', 'max-height: 0px');
+body.classList.remove('nav-dropdown-menu-overflow');
+nav.classList.remove('show-border');
+spatialNavigationProvider.removeFocusableClasses(menu); } ); new
+dropdownProvider.default( '.button-text-menu, .button-text-close',
+'.nav-items-wrapper', 'menu-open', true, function () {
+body.classList.add('mobile-tablet-nav-visible'); }, function () {
+body.classList.remove('mobile-tablet-nav-visible'); } ); var navWrapper =
+document.querySelector('.nav-wrapper'); var swiftypeSearchInitialized = false;
+new dropdownProvider.default( '.search-button, .close-search',
+'.search-wrapper', 'search-open', true, function() { if
+(!swiftypeSearchInitialized) {
+swiftypeSearch.default('#st-nav-results-container'); swiftypeSearchInitialized =
+true; } navWrapper.classList.add('search-open'); }, function() {
+navWrapper.classList.remove('search-open'); } ); [/@]

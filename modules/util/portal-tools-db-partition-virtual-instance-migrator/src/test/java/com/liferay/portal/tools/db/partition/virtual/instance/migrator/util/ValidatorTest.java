@@ -108,11 +108,7 @@ public class ValidatorTest {
 		);
 
 		for (Release release : releases) {
-			if (!release.getServletContextName(
-				).equals(
-					"module1"
-				)) {
-
+			if (!Objects.equals(release.getServletContextName(), "module1")) {
 				releasesMap.put(release.getServletContextName(), release);
 			}
 		}

@@ -6,7 +6,6 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.activator;
 
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
@@ -17,9 +16,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.osgi.web.http.servlet.HttpServletEndpoint;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.HttpServletEndpointServlet;
 
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Map;
 
 import javax.servlet.ServletConfig;
@@ -31,16 +28,13 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import org.eclipse.equinox.http.servlet.internal.Activator;
-import org.eclipse.equinox.http.servlet.internal.HttpServiceFactory;
 import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
 import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionTracker;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.http.HttpService;
 import org.osgi.service.http.runtime.HttpServiceRuntime;
 import org.osgi.service.http.runtime.HttpServiceRuntimeConstants;
 import org.osgi.util.tracker.ServiceTracker;
@@ -189,40 +183,9 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 						httpServiceRuntimeImpl, servletConfig),
 					httpServletEndpoint.getProperties()),
 				_bundleContext.registerService(
-					HttpService.class,
-					new HttpServiceFactory(httpServiceRuntimeImpl),
-					HashMapDictionaryBuilder.putAll(
-						attributesMap
-					).build()),
-				_bundleContext.registerService(
 					HttpServiceRuntime.class, httpServiceRuntimeImpl,
 					HashMapDictionaryBuilder.putAll(
 						attributesMap
-					).put(
-						HttpServiceRuntimeConstants.HTTP_SERVICE_ID,
-						() -> {
-							Collection<ServiceReference<HttpService>>
-								serviceReferences =
-									_bundleContext.getServiceReferences(
-										HttpService.class,
-										StringBundler.concat(
-											"(", Activator.UNIQUE_SERVICE_ID,
-											"=",
-											attributesMap.get(
-												Activator.UNIQUE_SERVICE_ID),
-											")"));
-
-							Iterator<ServiceReference<HttpService>> iterator =
-								serviceReferences.iterator();
-
-							ServiceReference<?>
-								httpServiceFactoryServiceReference =
-									iterator.next();
-
-							return Collections.singletonList(
-								httpServiceFactoryServiceReference.getProperty(
-									Constants.SERVICE_ID));
-						}
 					).build()));
 		}
 

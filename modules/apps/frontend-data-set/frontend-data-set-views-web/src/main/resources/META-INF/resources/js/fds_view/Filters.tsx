@@ -34,18 +34,18 @@ import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 
 import '../../css/FDSEntries.scss';
 
-enum filterTypes {
+enum EFilterType {
 	DATE_RANGE = 'DATE_RANGE',
 	SELECTION = 'SELECTION',
 }
 
-enum fieldFormats {
+enum EFieldFormat {
 	DATE_TIME = 'date-time',
 	STRING = 'string',
 }
 
 interface IField {
-	format: fieldFormats;
+	format: EFieldFormat;
 	label: string;
 	name: string;
 	type: string;
@@ -79,20 +79,20 @@ interface IPropsAddFDSFilterModalContent {
 	fieldNames?: string[];
 	fields: IField[];
 	filter?: IDateFilter | ISelectionFilter;
-	filterType?: filterTypes;
+	filterType?: EFilterType;
 	namespace: string;
 	onSave: (newFilter: IFilter) => void;
 }
 
 function getModalHeader(
 	filter: IFilter | undefined,
-	filterType: filterTypes | undefined
+	filterType: EFilterType | undefined
 ): string {
 	if (filter) {
 		return sub(Liferay.Language.get('edit-x-filter'), [filter.name]);
 	}
 
-	if (filterType && filterType === filterTypes.SELECTION) {
+	if (filterType && filterType === EFilterType.SELECTION) {
 		return Liferay.Language.get('new-selection-filter');
 	}
 	else {
@@ -195,7 +195,7 @@ function AddFDSFilterModalContent({
 		let displayType: string = '';
 		let url: string = '';
 
-		if (selectedField.format === fieldFormats.DATE_TIME) {
+		if (selectedField.format === EFieldFormat.DATE_TIME) {
 			url = API_URL.FDS_DATE_FILTERS;
 
 			body = {
@@ -317,7 +317,7 @@ function AddFDSFilterModalContent({
 							className="align-items-center d-flex justify-content-between"
 							disabled={
 								!!filter ||
-								(filterType === filterTypes.SELECTION &&
+								(filterType === EFilterType.SELECTION &&
 									!picklists.length)
 							}
 							key={cellRenderer.name}
@@ -408,14 +408,14 @@ function AddFDSFilterModalContent({
 					)}
 				</ClayForm.Group>
 
-				{filterType === filterTypes.SELECTION && !picklists.length && (
+				{filterType === EFilterType.SELECTION && !picklists.length && (
 					<ClayAlert displayType="info" title="Info">
 						{Liferay.Language.get('no-filter-sources-available')}
 					</ClayAlert>
 				)}
 
 				{selectedField &&
-					filterType === filterTypes.DATE_RANGE &&
+					filterType === EFilterType.DATE_RANGE &&
 					!fieldInUseValidationError && (
 						<ClayForm.Group className="form-group-autofit">
 							<div
@@ -477,7 +477,7 @@ function AddFDSFilterModalContent({
 					)}
 
 				{selectedField &&
-					filterType === filterTypes.SELECTION &&
+					filterType === EFilterType.SELECTION &&
 					!fieldInUseValidationError && (
 						<>
 							<ClayForm.Group>
@@ -827,13 +827,13 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 		}
 	};
 
-	const onCreationButtonClick = (filterType: filterTypes) => {
+	const onCreationButtonClick = (filterType: EFilterType) => {
 		const availableFields = fields.filter(
 			(item) =>
-				(filterType === filterTypes.SELECTION &&
-					item.format === fieldFormats.STRING) ||
-				(filterType === filterTypes.DATE_RANGE &&
-					item.format === fieldFormats.DATE_TIME)
+				(filterType === EFilterType.SELECTION &&
+					item.format === EFieldFormat.STRING) ||
+				(filterType === EFilterType.DATE_RANGE &&
+					item.format === EFieldFormat.DATE_TIME)
 		);
 
 		if (!availableFields.length) {
@@ -967,12 +967,12 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 					{
 						label: Liferay.Language.get('date-range'),
 						onClick: () =>
-							onCreationButtonClick(filterTypes.DATE_RANGE),
+							onCreationButtonClick(EFilterType.DATE_RANGE),
 					},
 					{
 						label: Liferay.Language.get('selection'),
 						onClick: () =>
-							onCreationButtonClick(filterTypes.SELECTION),
+							onCreationButtonClick(EFilterType.SELECTION),
 					},
 				]}
 				disableSave={!newFiltersOrder.length}

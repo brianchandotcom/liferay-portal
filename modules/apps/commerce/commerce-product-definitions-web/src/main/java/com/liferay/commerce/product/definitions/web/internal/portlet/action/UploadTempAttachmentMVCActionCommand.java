@@ -242,11 +242,9 @@ public class UploadTempAttachmentMVCActionCommand extends BaseMVCActionCommand {
 			for (String imageExtension : imageExtensions) {
 				if (StringPool.STAR.equals(imageExtension) ||
 					(imageExtension.equals(StringPool.PERIOD + extension) &&
-					 MimeTypesUtil.getExtensionContentType(
-						 imageExtension
-					 ).equals(
-						 contentType
-					 ))) {
+					 Objects.equals(
+						 MimeTypesUtil.getExtensionContentType(imageExtension),
+						 contentType))) {
 
 					return;
 				}

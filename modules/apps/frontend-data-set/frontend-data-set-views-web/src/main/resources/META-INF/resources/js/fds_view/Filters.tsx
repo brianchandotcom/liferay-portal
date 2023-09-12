@@ -406,7 +406,7 @@ function AddFDSFilterModalContent({
 					{fieldInUseValidationError && (
 						<ValidationFeedback
 							message={Liferay.Language.get(
-								'field-used-in-another-filter'
+								'this-field-is-being-used-by-another-filter'
 							)}
 						/>
 					)}

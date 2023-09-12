@@ -301,10 +301,10 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 	private String _renameDependencyNames(
 		String fileName, String absolutePath, String content) {
 
-		List<String> renameArtifacts = getAttributeValues(
-			_RENAME_ARTIFACTS_KEY, absolutePath);
 		List<String> allowedArtifactsFileNames = getAttributeValues(
 			_ALLOWED_ARTIFACTS_FILE_NAMES_KEY, absolutePath);
+		List<String> renameArtifacts = getAttributeValues(
+			_RENAME_ARTIFACTS_KEY, absolutePath);
 
 		for (String renameArtifact : renameArtifacts) {
 			String[] renameArtifactArray = StringUtil.split(

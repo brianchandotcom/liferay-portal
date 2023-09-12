@@ -903,6 +903,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUseObjectsEqualsOnChaining() throws Exception {
+		test(
+			"UseObjectsEqualsOnChaining.testjava",
+			"Use 'Objects.equals' instead of calling 'equals' on chaining " +
+				"method",
+			15);
+	}
+
+	@Test
 	public void testUsePassedInVariable() throws Exception {
 		test("UsePassedInVariable.testjava");
 	}

@@ -50,6 +50,18 @@ definition {
 			value1 = ${abTestSummaryText});
 	}
 
+	macro viewABTestResultAlertMessage {
+		AssertTextEquals.assertPartialText(
+			locator1 = "ACTests#AB_TEST_ALERT_MESSAGE",
+			value1 = ${messageTitle});
+
+		if (isSet(messageDescription)) {
+			AssertTextEquals.assertPartialText(
+				locator1 = "ACTests#AB_TEST_ALERT_MESSAGE",
+				value1 = ${messageDescription});
+		}
+	}
+
 	macro viewVariantImprovementNumberInAC {
 		var key_variantName = ${variantName};
 

@@ -78,10 +78,7 @@ StagingProcessesWebPublishTemplatesToolbarDisplayContext stagingProcessesWebPubl
 					cssClass="background-task-user-column"
 					name="user"
 				>
-					<liferay-ui:user-display
-						displayStyle="3"
-						showUserDetails="<%= false %>"
-						showUserName="<%= false %>"
+					<liferay-user:user-portrait
 						userId="<%= exportImportConfiguration.getUserId() %>"
 					/>
 				</liferay-ui:search-container-column-text>

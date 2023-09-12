@@ -15,9 +15,7 @@ Comment comment = CommentManagerUtil.fetchComment(commentId);
 
 <article class="lfr-discussion">
 	<div class="lfr-discussion-details">
-		<liferay-ui:user-display
-			displayStyle="2"
-			showUserName="<%= false %>"
+		<liferay-user:user-portrait
 			userId="<%= comment.getUserId() %>"
 		/>
 	</div>

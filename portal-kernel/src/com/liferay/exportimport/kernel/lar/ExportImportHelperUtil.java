@@ -38,6 +38,22 @@ public class ExportImportHelperUtil {
 		return _exportImportHelper.getAllLayoutIdsMap(groupId, privateLayout);
 	}
 
+	public static List<Portlet> getDataSiteAndInstanceLevelPortlets(
+			long companyId)
+		throws Exception {
+
+		return _exportImportHelper.getDataSiteAndInstanceLevelPortlets(
+			companyId);
+	}
+
+	public static List<Portlet> getDataSiteAndInstanceLevelPortlets(
+			long companyId, boolean excludeDataAlwaysStaged)
+		throws Exception {
+
+		return _exportImportHelper.getDataSiteAndInstanceLevelPortlets(
+			companyId, excludeDataAlwaysStaged);
+	}
+
 	public static List<Portlet> getDataSiteLevelPortlets(long companyId)
 		throws Exception {
 

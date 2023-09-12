@@ -32,7 +32,7 @@ import ValidationFeedback from '../components/ValidationFeedback';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 
-import '../../css/FDSEntries.scss';
+import '../../css/Filters.scss';
 
 enum EFilterType {
 	DATE_RANGE = 'DATE_RANGE',

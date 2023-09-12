@@ -58,8 +58,14 @@ LockedLayoutsDisplayContext lockedLayoutsDisplayContext = (LockedLayoutsDisplayC
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand"
 						name="name"
-						value="<%= name %>"
-					/>
+					>
+						<clay:link
+							aria-lable="<%= name %>"
+							href="<%= lockedLayoutsDisplayContext.getLayoutURL(lockedLayout) %>"
+							label="<%= name %>"
+							target="_blank"
+						/>
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand"

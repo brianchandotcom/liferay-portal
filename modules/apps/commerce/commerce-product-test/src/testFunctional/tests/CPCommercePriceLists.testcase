@@ -1627,52 +1627,58 @@ definition {
 		property custom.properties = "feature.flag.COMMERCE-11287=true";
 		property portal.acceptance = "false";
 
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		task ("Given a Minium site with 2 UOMs is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
-		CommerceJSONSkusAPI._addCommerceUOM(
-			basePrice = 10,
-			productSKU = "MIN93015",
-			uomKey = "Liter",
-			uomName = "Liter");
+			CommerceJSONSkusAPI._addCommerceUOM(
+				basePrice = 10,
+				productSKU = "MIN93015",
+				uomKey = "Liter",
+				uomName = "Liter");
 
-		CommerceJSONSkusAPI._addCommerceUOM(
-			basePrice = 20,
-			productSKU = "MIN93015",
-			uomKey = "Gallon",
-			uomName = "Gallon");
+			CommerceJSONSkusAPI._addCommerceUOM(
+				basePrice = 20,
+				productSKU = "MIN93015",
+				uomKey = "Gallon",
+				uomName = "Gallon");
+		}
 
-		CommercePriceLists.openPriceListsAdmin();
+		task ("And the admin uses the item search for the Price List") {
+			CommercePriceLists.openPriceListsAdmin();
 
-		CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
-		CommerceEntry.gotoMenuTab(menuTab = "Entries");
-
-		Type(
-			key_title = "Add SKUs",
-			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
-			value1 = "MIN93015");
-
-		while ((IsElementNotPresent(key_entryName = "MIN93015", key_title = "Add SKUs", locator1 = "CommerceEntry#ADD_RELATION_FIELD_SELECT")) && (maxIterations = "5")) {
-			echo("The element is not present, retrying...");
-
-			Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR_BUTTON");
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
 
 			Type(
 				key_title = "Add SKUs",
 				locator1 = "CommerceEntry#ADD_RELATION_FIELD",
 				value1 = "MIN93015");
+
+			while ((IsElementNotPresent(key_entryName = "MIN93015", key_title = "Add SKUs", locator1 = "CommerceEntry#ADD_RELATION_FIELD_SELECT")) && (maxIterations = "5")) {
+				echo("The element is not present, retrying...");
+
+				Click(locator1 = "WorkflowMetricsProcessListView#METRICS_WORKFLOW_SEARCH_BAR_BUTTON");
+
+				Type(
+					key_title = "Add SKUs",
+					locator1 = "CommerceEntry#ADD_RELATION_FIELD",
+					value1 = "MIN93015");
+			}
 		}
 
-		for (var rowList : list "Liter:1,Gallon:2") {
-			var entry = StringUtil.extractFirst(${rowList}, ":");
-			var row = StringUtil.extractLast(${rowList}, ":");
+		task ("Then is possible to see all the created UOMs for a particular SKU") {
+			for (var rowList : list "Liter:1,Gallon:2") {
+				var entry = StringUtil.extractFirst(${rowList}, ":");
+				var row = StringUtil.extractLast(${rowList}, ":");
 
-			AssertElementPresent(
-				key_entry = ${entry},
-				key_rowNumber = ${row},
-				locator1 = "CommerceEntry#ENTRY_CONTENT_ROW_NUMBER_DATASET");
+				AssertElementPresent(
+					key_entry = ${entry},
+					key_rowNumber = ${row},
+					locator1 = "CommerceEntry#ENTRY_CONTENT_ROW_NUMBER_DATASET");
 
-			echo("The UOM ${entry} at the ${row} is present");
+				echo("The UOM ${entry} at the ${row} is present");
+			}
 		}
 	}
 

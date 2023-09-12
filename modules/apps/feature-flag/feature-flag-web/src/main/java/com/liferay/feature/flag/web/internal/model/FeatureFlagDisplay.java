@@ -16,13 +16,18 @@ import java.util.Locale;
 public class FeatureFlagDisplay extends FeatureFlagWrapper {
 
 	public FeatureFlagDisplay(
-		List<FeatureFlag> dependencyFeatureFlags, FeatureFlag featureFlag,
-		Locale locale) {
+		Long companyId, List<FeatureFlag> dependencyFeatureFlags,
+		FeatureFlag featureFlag, Locale locale) {
 
 		super(featureFlag);
 
+		_companyId = companyId;
 		_dependencyFeatureFlags = dependencyFeatureFlags;
 		_locale = locale;
+	}
+
+	public long getCompanyId() {
+		return _companyId;
 	}
 
 	public String getDescription() {
@@ -43,6 +48,7 @@ public class FeatureFlagDisplay extends FeatureFlagWrapper {
 		return true;
 	}
 
+	private final long _companyId;
 	private final List<FeatureFlag> _dependencyFeatureFlags;
 	private final Locale _locale;
 

@@ -7,6 +7,7 @@ import {ClayToggle} from '@clayui/form';
 import React, {useState} from 'react';
 
 interface IProps {
+	companyId: number;
 	disabled: boolean;
 	featureFlagKey: string;
 	inputName: string;
@@ -16,6 +17,7 @@ interface IProps {
 }
 
 const FeatureFlagToggle = ({
+	companyId,
 	disabled: initialDisabled,
 	featureFlagKey,
 	inputName,
@@ -34,6 +36,7 @@ const FeatureFlagToggle = ({
 				'/o/com-liferay-feature-flag-web/set-enabled',
 				{
 					body: Liferay.Util.objectToFormData({
+						companyId,
 						enabled: newToggled,
 						key: featureFlagKey,
 					}),

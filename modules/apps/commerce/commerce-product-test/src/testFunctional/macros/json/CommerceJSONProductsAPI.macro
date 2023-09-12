@@ -597,6 +597,32 @@ definition {
 		}
 	}
 
+	macro _deleteCommerceProductAttachment {
+		Variables.assertDefined(parameterList = "${attachmentName},${productName},${type}");
+
+		var baseURL = PropsUtil.get("portal.url");
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var attachmentId = CommerceJSONProductsAPI.getCommerceProductMediaFieldValues(
+			jsonPath = "$.items[?(@['title']['en_US'] == '${attachmentName}')].['id']",
+			productName = ${productName},
+			type = ${type});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/attachment/${attachmentId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		JSONCurlUtil.delete(${curl});
+
+		echo("Deleting Commerce Product Attachment with id: ${attachmentId}");
+	}
+
 	macro _getCommerceFieldValue {
 		var portalURL = JSONCompany.getPortalURL();
 		var title = StringUtil.replace(${title}, " ", "%20");

@@ -1337,6 +1337,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECK_PRICE_LIST_CURRENCY</td>
+	<td>//div[@class ="input-group-append input-group-item-shrink"]//span[contains(@class,'input-group-text') and contains(text(),'${key_currency}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ON_ORDER_QUANTITY</td>
 	<td>//div[@class="dnd-tr"]//*[text()='${key_reference}']//..//..//..//div[(@class="dnd-td") and (text()='${key_orderQuantity}')]</td>
 	<td></td>

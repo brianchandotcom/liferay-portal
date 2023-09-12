@@ -70,10 +70,8 @@ public class DDMContentUpgradeProcess extends UpgradeProcess {
 
 					List<DDMFormField> fieldSetDDMFormFields = ListUtil.filter(
 						ddmForm.getDDMFormFields(),
-						ddmFormField -> ddmFormField.getType(
-						).equals(
-							"fieldset"
-						));
+						ddmFormField -> Objects.equals(
+							ddmFormField.getType(), "fieldset"));
 
 					if (fieldSetDDMFormFields.isEmpty()) {
 						continue;

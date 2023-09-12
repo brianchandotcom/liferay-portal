@@ -61,11 +61,9 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			if ((jsonObject != null) &&
-				jsonObject.getString(
-					"key"
-				).equals(
-					"search.experiences.blueprint.id"
-				)) {
+				Objects.equals(
+					jsonObject.getString("key"),
+					"search.experiences.blueprint.id")) {
 
 				return jsonObject.getLong("value");
 			}
@@ -84,11 +82,9 @@ public class SXPBlueprintUpgradeProcess extends UpgradeProcess {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			if ((jsonObject != null) &&
-				jsonObject.getString(
-					"key"
-				).equals(
-					"search.experiences.blueprint.id"
-				)) {
+				Objects.equals(
+					jsonObject.getString("key"),
+					"search.experiences.blueprint.id")) {
 
 				jsonObject.put(
 					"key",

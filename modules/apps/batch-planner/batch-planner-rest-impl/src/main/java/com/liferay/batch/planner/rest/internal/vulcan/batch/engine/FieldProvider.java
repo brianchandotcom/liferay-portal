@@ -46,7 +46,7 @@ public class FieldProvider {
 
 				String name = dtoEntityField.getName();
 
-				if (name.equals("actions") || name.startsWith("x-")) {
+				if (name.startsWith("x-")) {
 					return false;
 				}
 

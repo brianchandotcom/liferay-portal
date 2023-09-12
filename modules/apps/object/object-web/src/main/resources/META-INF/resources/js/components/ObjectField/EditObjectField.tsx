@@ -30,7 +30,6 @@ export interface EditObjectFieldProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldId: number;
 	objectName: string;
-	objectRelationshipId: number;
 	readOnly: boolean;
 	readOnlySidebarElements: SidebarCategory[];
 	sidebarElements: SidebarCategory[];
@@ -69,7 +68,6 @@ export default function EditObjectField({
 	objectDefinitionExternalReferenceCode,
 	objectFieldId,
 	objectName,
-	objectRelationshipId,
 	readOnly,
 	readOnlySidebarElements,
 	sidebarElements,
@@ -144,7 +142,6 @@ export default function EditObjectField({
 					objectDefinitionExternalReferenceCode
 				}
 				objectName={objectName}
-				objectRelationshipId={objectRelationshipId}
 				readOnly={readOnly}
 				readOnlySidebarElements={readOnlySidebarElements}
 				setValues={setValues}

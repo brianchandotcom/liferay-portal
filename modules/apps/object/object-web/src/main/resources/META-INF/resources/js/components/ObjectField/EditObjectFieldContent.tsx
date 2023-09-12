@@ -46,7 +46,6 @@ export function EditObjectFieldContent({
 	modelBuilder = false,
 	objectDefinitionExternalReferenceCode,
 	objectName,
-	objectRelationshipId,
 	readOnly,
 	readOnlySidebarElements,
 	setValues,
@@ -58,6 +57,7 @@ export function EditObjectFieldContent({
 	const [objectFieldTypes, setObjectFieldTypes] = useState<ObjectFieldType[]>(
 		[]
 	);
+	const [objectRelationshipId, setObjectRelationshipId] = useState(0);
 
 	if (
 		(Liferay.FeatureFlags['LPS-170122'] ||
@@ -82,13 +82,21 @@ export function EditObjectFieldContent({
 
 				const objectFieldInfoJSON = (await objectFieldInfoResponse.json()) as {
 					objectFieldTypes: ObjectFieldType[];
+					objectRelationshipId: number;
 				};
+
+				if (values.businessType === 'Relationship') {
+					setObjectRelationshipId(
+						objectFieldInfoJSON.objectRelationshipId
+					);
+				}
 
 				setObjectFieldTypes(objectFieldInfoJSON.objectFieldTypes);
 			}
 		};
 
 		makeFetch();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [baseResourceURL, values.id]);
 
 	return (

@@ -9,7 +9,7 @@ import ClayLabel from '@clayui/label';
 import ClayPopover from '@clayui/popover';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
 import {sub} from 'frontend-js-web';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 
 import {Fragment} from '../../constants/Fragment';
 import {SET_SELECTED_ITEM} from '../../constants/actionTypes';
@@ -47,23 +47,44 @@ export default function FragmentList({
 
 	const dispatch = useContext(StoreDispatchContext);
 
+	const fragmentsWithPosition = useMemo(
+		() =>
+			fragments.map((fragment, index) => ({
+				...fragment,
+				position: index,
+			})),
+		[fragments]
+	);
+
 	const highlightFragment = ({
 		enableScroll = true,
 		hierarchy,
 		itemId,
 		name,
+		position,
 	}: {
 		enableScroll?: boolean;
 		hierarchy?: string;
 		itemId: string;
 		name: string;
+		position: number;
 	}) => {
-		const fragment = document.querySelector(
+		const renderedFragments = document.querySelectorAll(
 			`.lfr-layout-structure-item-${itemId}`
 		);
 
-		if (!fragment) {
+		if (!renderedFragments.length) {
 			return;
+		}
+
+		let [fragment] = renderedFragments;
+
+		if (renderedFragments.length > 1) {
+			const fragmentPosition = fragmentsWithPosition
+				.filter((fragment) => fragment.itemId === itemId)
+				.findIndex((fragment) => fragment.position === position);
+
+			fragment = renderedFragments[fragmentPosition];
 		}
 
 		fragment?.classList.add('page-audit__fragment--highlight');
@@ -106,7 +127,7 @@ export default function FragmentList({
 
 	return (
 		<div className="page-audit__fragmentList">
-			{fragments
+			{fragmentsWithPosition
 				.sort((a: Fragment, b: Fragment) =>
 					ascendingSort
 						? a.renderTime - b.renderTime
@@ -122,18 +143,20 @@ export default function FragmentList({
 						name,
 						renderTime,
 						warnings = [],
+						position,
 					} = fragment;
 
 					return (
 						<div
 							className="c-p-2 page-audit__fragment position-relative"
-							key={itemId}
+							key={`${itemId}${position}`}
 							onMouseLeave={removeHighlightFromFragment}
 							onMouseOver={() =>
 								highlightFragment({
 									enableScroll: false,
 									itemId,
 									name,
+									position,
 								})
 							}
 						>
@@ -178,6 +201,7 @@ export default function FragmentList({
 											highlightFragment({
 												itemId,
 												name,
+												position,
 											})
 										}
 									/>
@@ -198,6 +222,7 @@ export default function FragmentList({
 												hierarchy,
 												itemId,
 												name,
+												position,
 											})
 										}
 										size="sm"

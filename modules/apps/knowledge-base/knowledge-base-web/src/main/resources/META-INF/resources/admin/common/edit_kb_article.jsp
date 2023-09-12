@@ -85,6 +85,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 											label="<%= editKBArticleDisplayContext.getPublishButtonLabel() %>"
 											name="publishDropdown"
 											small="<%= true %>"
+											swapIconSide="<%= true %>"
 										/>
 									</c:otherwise>
 								</c:choose>

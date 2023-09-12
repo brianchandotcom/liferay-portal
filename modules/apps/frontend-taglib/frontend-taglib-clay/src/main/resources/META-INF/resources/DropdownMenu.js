@@ -18,13 +18,13 @@ export default function DropdownMenu({
 	componentId: _componentId,
 	cssClass,
 	icon,
-	iconRight,
 	items,
 	label,
 	locale: _locale,
 	menuProps,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
+	swapIconSide,
 	...otherProps
 }) {
 	return (
@@ -42,7 +42,7 @@ export default function DropdownMenu({
 						})}
 						{...otherProps}
 					>
-						{icon && !iconRight && (
+						{icon && !swapIconSide && (
 							<span
 								className={classNames('inline-item', {
 									'inline-item-before': label,
@@ -54,7 +54,7 @@ export default function DropdownMenu({
 
 						{label}
 
-						{icon && iconRight && (
+						{icon && swapIconSide && (
 							<span
 								className={classNames('inline-item', {
 									'inline-item-after': label,

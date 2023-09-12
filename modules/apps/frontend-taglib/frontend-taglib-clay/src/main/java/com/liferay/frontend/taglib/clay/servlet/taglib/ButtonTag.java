@@ -72,10 +72,6 @@ public class ButtonTag extends BaseContainerTag {
 		return _icon;
 	}
 
-	public boolean getIconRight() {
-		return _iconRight;
-	}
-
 	public String getLabel() {
 		return _label;
 	}
@@ -90,6 +86,10 @@ public class ButtonTag extends BaseContainerTag {
 
 	public boolean getSmall() {
 		return _small;
+	}
+
+	public boolean getSwapIconSide() {
+		return _swapIconSide;
 	}
 
 	public void setAlert(boolean alert) {
@@ -112,10 +112,6 @@ public class ButtonTag extends BaseContainerTag {
 		_icon = icon;
 	}
 
-	public void setIconRight(boolean iconRight) {
-		_iconRight = iconRight;
-	}
-
 	public void setLabel(String label) {
 		_label = label;
 	}
@@ -132,6 +128,10 @@ public class ButtonTag extends BaseContainerTag {
 		_small = small;
 	}
 
+	public void setSwapIconSide(boolean swapIconSide) {
+		_swapIconSide = swapIconSide;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -141,11 +141,11 @@ public class ButtonTag extends BaseContainerTag {
 		_borderless = false;
 		_displayType = "primary";
 		_icon = null;
-		_iconRight = false;
 		_label = null;
 		_monospaced = false;
 		_outline = false;
 		_small = false;
+		_swapIconSide = false;
 	}
 
 	@Override
@@ -163,7 +163,7 @@ public class ButtonTag extends BaseContainerTag {
 		props.put("borderless", _borderless);
 		props.put("displayType", _displayType);
 		props.put("icon", _icon);
-		props.put("iconRight", _iconRight);
+		props.put("swapIconSide", _swapIconSide);
 
 		if (Validator.isNotNull(_label)) {
 			props.put(
@@ -225,7 +225,7 @@ public class ButtonTag extends BaseContainerTag {
 		if (Validator.isNotNull(_icon) || Validator.isNotNull(_label)) {
 			JspWriter jspWriter = pageContext.getOut();
 
-			if (Validator.isNotNull(_icon) && !_iconRight) {
+			if (Validator.isNotNull(_icon) && !_swapIconSide) {
 				jspWriter.write("<span class=\"inline-item");
 
 				if (Validator.isNotNull(_label)) {
@@ -239,7 +239,7 @@ public class ButtonTag extends BaseContainerTag {
 				writeLabel(jspWriter);
 			}
 
-			if (Validator.isNotNull(_icon) && _iconRight) {
+			if (Validator.isNotNull(_icon) && _swapIconSide) {
 				jspWriter.write("<span class=\"inline-item");
 
 				if (Validator.isNotNull(_label)) {
@@ -287,10 +287,10 @@ public class ButtonTag extends BaseContainerTag {
 	private boolean _borderless;
 	private String _displayType = "primary";
 	private String _icon;
-	private boolean _iconRight;
 	private String _label;
 	private boolean _monospaced;
 	private boolean _outline;
 	private boolean _small;
+	private boolean _swapIconSide;
 
 }

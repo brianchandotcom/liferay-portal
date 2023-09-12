@@ -128,7 +128,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Brian Wing Shun Chan
  */
-@FeatureFlags({"LPS-173537", "LPS-181663"})
+@FeatureFlags({"LPS-173537", "LPS-181663", "LPS-187142"})
 @RunWith(Arquillian.class)
 public class ObjectActionLocalServiceTest {
 
@@ -542,7 +542,8 @@ public class ObjectActionLocalServiceTest {
 					"secret", "onafterrootupdate"
 				).put(
 					"url", "https://onafterrootupdate.com"
-				).build(), false);
+				).build(),
+				false);
 
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.db.partition;
 
+import com.liferay.counter.kernel.model.Counter;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -20,6 +21,7 @@ public class DBPartition {
 	public static boolean isPartitionedModel(Class<?> clazz) {
 		if (isPartitionEnabled() &&
 			(ClassName.class.isAssignableFrom(clazz) ||
+			 Counter.class.isAssignableFrom(clazz) ||
 			 ResourceAction.class.isAssignableFrom(clazz) ||
 			 ShardedModel.class.isAssignableFrom(clazz))) {
 

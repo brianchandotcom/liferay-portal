@@ -66,7 +66,11 @@ export default function propsTransformer({
 	};
 
 	const moveEntries = () => {
-		let entrySelectorNodes = document.querySelectorAll('.entry-selector');
+		let entrySelectorNodes = document.querySelectorAll(
+			'input[type="checkbox"][name="' +
+				`${portletNamespace}rowIdsJournalArticle` +
+				'"]'
+		);
 
 		if (!entrySelectorNodes.length) {
 			entrySelectorNodes = document.querySelectorAll(

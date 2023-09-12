@@ -27,6 +27,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMPROVEMENT_NUMBER</td>
+	<td>//*[text()='${key_variantName}']//ancestor::tr//span[text()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LABEL_STATUS</td>
 	<td>//*[contains(@class,'label-item')]</td>
 	<td></td>

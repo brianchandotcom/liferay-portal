@@ -10,6 +10,8 @@
 <%
 EditKBArticleDisplayContext editKBArticleDisplayContext = new EditKBArticleDisplayContext(kbGroupServiceConfiguration, liferayPortletRequest, liferayPortletResponse, portletConfig);
 
+KBArticle kbArticle = editKBArticleDisplayContext.getKBArticle();
+
 if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(editKBArticleDisplayContext.getRedirect());
@@ -59,16 +61,44 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 
 						<c:choose>
 							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-188060") %>'>
-								<clay:dropdown-menu
-									cssClass="c-mr-3"
-									displayType="primary"
-									dropdownItems="<%= editKBArticleDisplayContext.getEditKBArticleActionDropdownItems() %>"
-									icon="caret-bottom"
-									id='<%= liferayPortletResponse.getNamespace() + "publishDropdown" %>'
-									label="<%= editKBArticleDisplayContext.getPublishButtonLabel() %>"
-									name="publishDropdown"
-									small="<%= true %>"
-								/>
+								<c:choose>
+									<c:when test="<%= kbArticle.isScheduled() %>">
+
+										<%
+										String displayDateString = StringPool.BLANK;
+
+										if (kbArticle.getDisplayDate() != null) {
+											displayDateString = dateFormatDateTime.format(kbArticle.getDisplayDate());
+										}
+										%>
+
+										<span class="lfr-portal-tooltip" title="<%= displayDateString %>">
+											<clay:button
+												cssClass="c-mr-3"
+												displayType="primary"
+												icon="time"
+												id='<%= liferayPortletResponse.getNamespace() + "scheduleButton" %>'
+												label="scheduled"
+												name="scheduleButton"
+												small="<%= true %>"
+												title="<%= displayDateString %>"
+												type="button"
+											/>
+										</span>
+									</c:when>
+									<c:otherwise>
+										<clay:dropdown-menu
+											cssClass="c-mr-3"
+											displayType="primary"
+											dropdownItems="<%= editKBArticleDisplayContext.getEditKBArticleActionDropdownItems() %>"
+											icon="caret-bottom"
+											id='<%= liferayPortletResponse.getNamespace() + "publishDropdown" %>'
+											label="<%= editKBArticleDisplayContext.getPublishButtonLabel() %>"
+											name="publishDropdown"
+											small="<%= true %>"
+										/>
+									</c:otherwise>
+								</c:choose>
 							</c:when>
 							<c:otherwise>
 								<clay:button

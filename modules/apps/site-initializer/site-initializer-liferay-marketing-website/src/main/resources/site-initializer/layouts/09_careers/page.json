@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/careers",
+	"hidden": false,
+	"name": "Careers",
+	"name_i18n": {
+		"en_US": "Careers"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

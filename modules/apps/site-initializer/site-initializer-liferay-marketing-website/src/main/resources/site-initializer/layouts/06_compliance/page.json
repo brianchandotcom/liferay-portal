@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/compliance",
+	"hidden": false,
+	"name": "Compliance",
+	"name_i18n": {
+		"en_US": "Compliance"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

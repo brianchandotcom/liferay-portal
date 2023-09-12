@@ -68,7 +68,7 @@ public class ObjectEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -92,6 +92,8 @@ public class ObjectEntryCacheModel
 		sb.append(modifiedDate);
 		sb.append(", objectDefinitionId=");
 		sb.append(objectDefinitionId);
+		sb.append(", rootObjectEntryId=");
+		sb.append(rootObjectEntryId);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append(", status=");
@@ -154,6 +156,7 @@ public class ObjectEntryCacheModel
 		}
 
 		objectEntryImpl.setObjectDefinitionId(objectDefinitionId);
+		objectEntryImpl.setRootObjectEntryId(rootObjectEntryId);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			objectEntryImpl.setLastPublishDate(null);
@@ -202,6 +205,8 @@ public class ObjectEntryCacheModel
 		modifiedDate = objectInput.readLong();
 
 		objectDefinitionId = objectInput.readLong();
+
+		rootObjectEntryId = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
@@ -248,6 +253,8 @@ public class ObjectEntryCacheModel
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(objectDefinitionId);
+
+		objectOutput.writeLong(rootObjectEntryId);
 		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeInt(status);
@@ -275,6 +282,7 @@ public class ObjectEntryCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long objectDefinitionId;
+	public long rootObjectEntryId;
 	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;

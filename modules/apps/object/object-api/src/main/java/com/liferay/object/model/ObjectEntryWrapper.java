@@ -47,6 +47,7 @@ public class ObjectEntryWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
+		attributes.put("rootObjectEntryId", getRootObjectEntryId());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -123,6 +124,12 @@ public class ObjectEntryWrapper
 
 		if (objectDefinitionId != null) {
 			setObjectDefinitionId(objectDefinitionId);
+		}
+
+		Long rootObjectEntryId = (Long)attributes.get("rootObjectEntryId");
+
+		if (rootObjectEntryId != null) {
+			setRootObjectEntryId(rootObjectEntryId);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -271,6 +278,16 @@ public class ObjectEntryWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the root object entry ID of this object entry.
+	 *
+	 * @return the root object entry ID of this object entry
+	 */
+	@Override
+	public long getRootObjectEntryId() {
+		return model.getRootObjectEntryId();
 	}
 
 	/**
@@ -558,6 +575,16 @@ public class ObjectEntryWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the root object entry ID of this object entry.
+	 *
+	 * @param rootObjectEntryId the root object entry ID of this object entry
+	 */
+	@Override
+	public void setRootObjectEntryId(long rootObjectEntryId) {
+		model.setRootObjectEntryId(rootObjectEntryId);
 	}
 
 	/**

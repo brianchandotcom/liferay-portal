@@ -71,6 +71,7 @@ public class ObjectEntryModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}, {"objectDefinitionId", Types.BIGINT},
+		{"rootObjectEntryId", Types.BIGINT},
 		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}
@@ -91,6 +92,7 @@ public class ObjectEntryModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("objectDefinitionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("rootObjectEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -99,7 +101,7 @@ public class ObjectEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,objectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table ObjectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,objectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,rootObjectEntryId LONG,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectEntry";
 
@@ -292,6 +294,8 @@ public class ObjectEntryModelImpl
 			attributeGetterFunctions.put(
 				"objectDefinitionId", ObjectEntry::getObjectDefinitionId);
 			attributeGetterFunctions.put(
+				"rootObjectEntryId", ObjectEntry::getRootObjectEntryId);
+			attributeGetterFunctions.put(
 				"lastPublishDate", ObjectEntry::getLastPublishDate);
 			attributeGetterFunctions.put("status", ObjectEntry::getStatus);
 			attributeGetterFunctions.put(
@@ -350,6 +354,10 @@ public class ObjectEntryModelImpl
 				"objectDefinitionId",
 				(BiConsumer<ObjectEntry, Long>)
 					ObjectEntry::setObjectDefinitionId);
+			attributeSetterBiConsumers.put(
+				"rootObjectEntryId",
+				(BiConsumer<ObjectEntry, Long>)
+					ObjectEntry::setRootObjectEntryId);
 			attributeSetterBiConsumers.put(
 				"lastPublishDate",
 				(BiConsumer<ObjectEntry, Date>)ObjectEntry::setLastPublishDate);
@@ -633,6 +641,21 @@ public class ObjectEntryModelImpl
 
 	@JSON
 	@Override
+	public long getRootObjectEntryId() {
+		return _rootObjectEntryId;
+	}
+
+	@Override
+	public void setRootObjectEntryId(long rootObjectEntryId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_rootObjectEntryId = rootObjectEntryId;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -890,6 +913,7 @@ public class ObjectEntryModelImpl
 		objectEntryImpl.setCreateDate(getCreateDate());
 		objectEntryImpl.setModifiedDate(getModifiedDate());
 		objectEntryImpl.setObjectDefinitionId(getObjectDefinitionId());
+		objectEntryImpl.setRootObjectEntryId(getRootObjectEntryId());
 		objectEntryImpl.setLastPublishDate(getLastPublishDate());
 		objectEntryImpl.setStatus(getStatus());
 		objectEntryImpl.setStatusByUserId(getStatusByUserId());
@@ -925,6 +949,8 @@ public class ObjectEntryModelImpl
 			this.<Date>getColumnOriginalValue("modifiedDate"));
 		objectEntryImpl.setObjectDefinitionId(
 			this.<Long>getColumnOriginalValue("objectDefinitionId"));
+		objectEntryImpl.setRootObjectEntryId(
+			this.<Long>getColumnOriginalValue("rootObjectEntryId"));
 		objectEntryImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 		objectEntryImpl.setStatus(
@@ -1077,6 +1103,8 @@ public class ObjectEntryModelImpl
 
 		objectEntryCacheModel.objectDefinitionId = getObjectDefinitionId();
 
+		objectEntryCacheModel.rootObjectEntryId = getRootObjectEntryId();
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1180,6 +1208,7 @@ public class ObjectEntryModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _objectDefinitionId;
+	private long _rootObjectEntryId;
 	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
@@ -1228,6 +1257,7 @@ public class ObjectEntryModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("objectDefinitionId", _objectDefinitionId);
+		_columnOriginalValues.put("rootObjectEntryId", _rootObjectEntryId);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
@@ -1278,15 +1308,17 @@ public class ObjectEntryModelImpl
 
 		columnBitmasks.put("objectDefinitionId", 1024L);
 
-		columnBitmasks.put("lastPublishDate", 2048L);
+		columnBitmasks.put("rootObjectEntryId", 2048L);
 
-		columnBitmasks.put("status", 4096L);
+		columnBitmasks.put("lastPublishDate", 4096L);
 
-		columnBitmasks.put("statusByUserId", 8192L);
+		columnBitmasks.put("status", 8192L);
 
-		columnBitmasks.put("statusByUserName", 16384L);
+		columnBitmasks.put("statusByUserId", 16384L);
 
-		columnBitmasks.put("statusDate", 32768L);
+		columnBitmasks.put("statusByUserName", 32768L);
+
+		columnBitmasks.put("statusDate", 65536L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -74,6 +74,7 @@ create table ObjectEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	objectDefinitionId LONG,
+	rootObjectEntryId LONG,
 	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,

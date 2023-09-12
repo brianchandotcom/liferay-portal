@@ -10,10 +10,9 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.permission.OrganizationPermission;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Fabiano Nazar
@@ -32,7 +31,7 @@ public class OrganizationModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		organizationPermission.check(
+		OrganizationPermissionUtil.check(
 			permissionChecker, organizationId, actionId);
 	}
 
@@ -42,7 +41,8 @@ public class OrganizationModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		organizationPermission.check(permissionChecker, organization, actionId);
+		OrganizationPermissionUtil.check(
+			permissionChecker, organization, actionId);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class OrganizationModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		return organizationPermission.contains(
+		return OrganizationPermissionUtil.contains(
 			permissionChecker, organizationId, actionId);
 	}
 
@@ -61,7 +61,7 @@ public class OrganizationModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		return organizationPermission.contains(
+		return OrganizationPermissionUtil.contains(
 			permissionChecker, organization, actionId);
 	}
 
@@ -74,8 +74,5 @@ public class OrganizationModelResourcePermission
 	public PortletResourcePermission getPortletResourcePermission() {
 		return null;
 	}
-
-	@Reference
-	protected OrganizationPermission organizationPermission;
 
 }

@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
-import com.liferay.portal.kernel.service.permission.OrganizationPermission;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import java.util.List;
@@ -64,16 +64,16 @@ public class UsersControlPanelEntry extends BaseControlPanelEntry {
 				permissionChecker.getUserId());
 
 		for (Organization organization : organizations) {
-			if (_organizationPermission.contains(
+			if (OrganizationPermissionUtil.contains(
 					permissionChecker, organization, ActionKeys.MANAGE_USERS) ||
-				_organizationPermission.contains(
+				OrganizationPermissionUtil.contains(
 					permissionChecker, organization,
 					ActionKeys.MANAGE_SUBORGANIZATIONS)) {
 
 				return true;
 			}
 
-			/*if (_organizationPermission.contains(
+			/*if (OrganizationPermissionUtil.contains(
 					permissionChecker, organization.getOrganizationId(),
 					ActionKeys.VIEW)) {
 
@@ -87,9 +87,6 @@ public class UsersControlPanelEntry extends BaseControlPanelEntry {
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
-
-	@Reference
-	private OrganizationPermission _organizationPermission;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.service.permission.OrganizationPermission;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -212,7 +212,7 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			if ((organizationId > 0) &&
-				!_organizationPermission.contains(
+				!OrganizationPermissionUtil.contains(
 					permissionChecker, organizationId, ActionKeys.VIEW)) {
 
 				PortletURL portletURL = _portal.getControlPanelPortletURL(
@@ -250,9 +250,6 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 			throw new RequiredRoleException.MustNotRemoveLastAdministator();
 		}
 	}
-
-	@Reference
-	private OrganizationPermission _organizationPermission;
 
 	@Reference
 	private Portal _portal;

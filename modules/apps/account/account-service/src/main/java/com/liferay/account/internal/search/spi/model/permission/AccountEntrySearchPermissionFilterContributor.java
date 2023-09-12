@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.permission.OrganizationPermission;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor;
@@ -77,12 +77,12 @@ public class AccountEntrySearchPermissionFilterContributor
 					_organizationLocalService.getUserOrganizations(userId)) {
 
 				boolean hasManageAvailableAccountsPermission =
-					_organizationPermission.contains(
+					OrganizationPermissionUtil.contains(
 						permissionChecker, organization.getOrganizationId(),
 						AccountActionKeys.MANAGE_AVAILABLE_ACCOUNTS);
 
 				if (hasManageAvailableAccountsPermission ||
-					_organizationPermission.contains(
+					OrganizationPermissionUtil.contains(
 						permissionChecker, organization,
 						AccountActionKeys.MANAGE_ACCOUNTS)) {
 
@@ -90,7 +90,7 @@ public class AccountEntrySearchPermissionFilterContributor
 				}
 
 				if (hasManageAvailableAccountsPermission ||
-					_organizationPermission.contains(
+					OrganizationPermissionUtil.contains(
 						permissionChecker, organization,
 						AccountActionKeys.MANAGE_SUBORGANIZATIONS_ACCOUNTS)) {
 
@@ -141,8 +141,5 @@ public class AccountEntrySearchPermissionFilterContributor
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
-
-	@Reference
-	private OrganizationPermission _organizationPermission;
 
 }

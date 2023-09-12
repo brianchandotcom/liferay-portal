@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.permission.OrganizationPermission;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -33,7 +33,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Fabiano Nazar
@@ -98,7 +97,7 @@ public class OrganizationModelPreFilterContributor
 							organization.getOrganizationId()) ||
 						 permissionChecker.isOrganizationOwner(
 							 organization.getOrganizationId()) ||
-						 _organizationPermission.contains(
+						 OrganizationPermissionUtil.contains(
 							 permissionChecker, organization,
 							 ActionKeys.MANAGE_SUBORGANIZATIONS))) {
 
@@ -129,8 +128,5 @@ public class OrganizationModelPreFilterContributor
 			}
 		}
 	}
-
-	@Reference
-	private OrganizationPermission _organizationPermission;
 
 }

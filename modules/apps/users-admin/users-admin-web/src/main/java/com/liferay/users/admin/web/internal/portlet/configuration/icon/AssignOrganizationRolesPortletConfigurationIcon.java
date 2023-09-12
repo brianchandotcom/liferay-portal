@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.OrganizationPermission;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
@@ -103,7 +103,7 @@ public class AssignOrganizationRolesPortletConfigurationIcon
 			long organizationGroupId = organization.getGroupId();
 
 			if (permissionChecker.isGroupOwner(organizationGroupId) ||
-				_organizationPermission.contains(
+				OrganizationPermissionUtil.contains(
 					permissionChecker, organization,
 					ActionKeys.ASSIGN_USER_ROLES)) {
 
@@ -129,8 +129,5 @@ public class AssignOrganizationRolesPortletConfigurationIcon
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private OrganizationPermission _organizationPermission;
 
 }

@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.portlet.ControlPanelEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.permission.OrganizationPermission;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class AccountsControlPanelEntry extends BaseControlPanelEntry {
 				permissionChecker.getUserId(), true);
 
 		for (Organization organization : organizations) {
-			if (_organizationPermission.contains(
+			if (OrganizationPermissionUtil.contains(
 					permissionChecker, organization,
 					AccountActionKeys.MANAGE_ACCOUNTS) &&
 				permissionChecker.hasPermission(
@@ -61,8 +61,5 @@ public class AccountsControlPanelEntry extends BaseControlPanelEntry {
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
-
-	@Reference
-	private OrganizationPermission _organizationPermission;
 
 }

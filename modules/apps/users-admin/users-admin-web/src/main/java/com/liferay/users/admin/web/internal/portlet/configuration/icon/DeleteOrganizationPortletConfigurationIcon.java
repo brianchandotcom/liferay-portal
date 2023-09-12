@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.OrganizationPermission;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -70,7 +70,7 @@ public class DeleteOrganizationPortletConfigurationIcon
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			if (_organizationPermission.contains(
+			if (OrganizationPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(),
 					ActionUtil.getOrganization(portletRequest),
 					ActionKeys.DELETE)) {
@@ -97,9 +97,6 @@ public class DeleteOrganizationPortletConfigurationIcon
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private OrganizationPermission _organizationPermission;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.users.admin.web)")
 	private ServletContext _servletContext;

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
-import com.liferay.portal.kernel.service.permission.OrganizationPermission;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -101,7 +101,7 @@ public class ManageSitePortletConfigurationIcon
 				(GroupPermissionUtil.contains(
 					permissionChecker, organizationGroup,
 					ActionKeys.MANAGE_STAGING) ||
-				 _organizationPermission.contains(
+				 OrganizationPermissionUtil.contains(
 					 permissionChecker, organization, ActionKeys.UPDATE))) {
 
 				return true;
@@ -121,9 +121,6 @@ public class ManageSitePortletConfigurationIcon
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private OrganizationPermission _organizationPermission;
 
 	@Reference
 	private Portal _portal;

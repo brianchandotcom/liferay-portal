@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.permission.OrganizationPermission;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.List;
@@ -115,7 +115,7 @@ public class AccountEntryModelResourcePermission
 				if (!Objects.equals(
 						actionId, AccountActionKeys.MANAGE_ORGANIZATIONS) &&
 					organizationMember &&
-					_organizationPermission.contains(
+					OrganizationPermissionUtil.contains(
 						permissionChecker, organization.getOrganizationId(),
 						AccountActionKeys.MANAGE_AVAILABLE_ACCOUNTS)) {
 
@@ -131,7 +131,7 @@ public class AccountEntryModelResourcePermission
 				}
 
 				if (!Objects.equals(organization, originalOrganization) &&
-					_organizationPermission.contains(
+					OrganizationPermissionUtil.contains(
 						permissionChecker, organization,
 						AccountActionKeys.MANAGE_SUBORGANIZATIONS_ACCOUNTS) &&
 					((organizationMember &&
@@ -178,9 +178,6 @@ public class AccountEntryModelResourcePermission
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
-
-	@Reference
-	private OrganizationPermission _organizationPermission;
 
 	@Reference(
 		target = "(resource.name=" + AccountConstants.RESOURCE_NAME + ")"

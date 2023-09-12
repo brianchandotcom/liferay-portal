@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.OrganizationPermission;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 
 import java.util.Locale;
 
@@ -52,7 +52,7 @@ public class ControlPanelCategoryWrapper extends BasePanelCategory {
 
 		User user = permissionChecker.getUser();
 
-		if (_organizationPermission.contains(
+		if (OrganizationPermissionUtil.contains(
 				permissionChecker, user.getOrganizationIds(true),
 				AccountActionKeys.MANAGE_ACCOUNTS)) {
 
@@ -61,9 +61,6 @@ public class ControlPanelCategoryWrapper extends BasePanelCategory {
 
 		return false;
 	}
-
-	@Reference
-	private OrganizationPermission _organizationPermission;
 
 	@Reference(
 		target = "(component.name=com.liferay.product.navigation.control.panel.internal.application.list.ControlPanelCategory)"

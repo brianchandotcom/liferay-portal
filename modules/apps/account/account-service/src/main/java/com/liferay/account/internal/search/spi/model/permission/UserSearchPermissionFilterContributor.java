@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.permission.OrganizationPermission;
+import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor;
 
 import java.util.List;
@@ -76,7 +76,7 @@ public class UserSearchPermissionFilterContributor
 			long[] userOrgIds = userBag.getUserOrgIds();
 
 			for (long userOrgId : userOrgIds) {
-				if (_organizationPermission.contains(
+				if (OrganizationPermissionUtil.contains(
 						permissionChecker, userOrgId,
 						AccountActionKeys.MANAGE_ACCOUNTS)) {
 
@@ -129,8 +129,5 @@ public class UserSearchPermissionFilterContributor
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
-
-	@Reference
-	private OrganizationPermission _organizationPermission;
 
 }

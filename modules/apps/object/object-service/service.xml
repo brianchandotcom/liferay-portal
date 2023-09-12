@@ -1010,6 +1010,7 @@
 		<exception>ObjectValidationRuleScript</exception>
 		<exception>ObjectValidationRuleSettingName</exception>
 		<exception>ObjectValidationRuleSettingValue</exception>
+		<exception>ObjectValidationRuleSystem</exception>
 		<exception>ObjectViewColumnFieldName</exception>
 		<exception>ObjectViewFilterColumn</exception>
 		<exception>ObjectViewSortColumn</exception>

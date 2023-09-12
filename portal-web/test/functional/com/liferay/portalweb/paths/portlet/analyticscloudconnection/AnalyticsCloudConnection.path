@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>ANALYTICS_CLOUD_LOGIN_BUTTON</td>
-	<td>//*[contains(@class, 'btn btn-lg btn-primary btn-default')]</td>
+	<td>//*[contains(@class, 'btn-primary')]</td>
 	<td></td>
 </tr>
 <tr>

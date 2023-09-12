@@ -353,6 +353,8 @@ function SegmentsExperimentsSidebar({
 			.then(function _successCallback(objectResponse) {
 				const {editable, status} = objectResponse.segmentsExperiment;
 
+				openSuccessToast();
+
 				dispatch(
 					updateSegmentsExperimentStatus({
 						editable,
@@ -360,13 +362,8 @@ function SegmentsExperimentsSidebar({
 					})
 				);
 			})
-			.catch(function _errorCallback() {
-				openToast({
-					message: Liferay.Language.get(
-						'an-unexpected-error-occurred'
-					),
-					type: 'danger',
-				});
+			.catch((_error) => {
+				openErrorToast();
 			});
 	}
 

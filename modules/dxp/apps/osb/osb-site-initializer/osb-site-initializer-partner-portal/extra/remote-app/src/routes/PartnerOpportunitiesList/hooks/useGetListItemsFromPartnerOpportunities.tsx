@@ -45,7 +45,9 @@ export default function useGetListItemsFromPartnerOpportunities(
 							[PartnerOpportunitiesColumnKey.START_DATE]: ' - ',
 							[PartnerOpportunitiesColumnKey.END_DATE]: ' - ',
 					  }),
-				[PartnerOpportunitiesColumnKey.ACCOUNT_NAME]: ' - ',
+				[PartnerOpportunitiesColumnKey.ACCOUNT_NAME]: item.accountName
+					? item.accountName
+					: ' - ',
 				...(item.amount
 					? getOpportunityAmount(item.amount)
 					: {[PartnerOpportunitiesColumnKey.DEAL_AMOUNT]: ' - '}),

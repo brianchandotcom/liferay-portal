@@ -30,7 +30,7 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 			getKaleoDefinitionVersion(kaleoTask.getKaleoDefinitionVersionId());
 
 		if (Objects.isNull(kaleoDefinitionVersion) ||
-			!_taskWorkflowMetricsIndex.exists(kaleoTask.getCompanyId())) {
+			!_workflowMetricsIndex.exists(kaleoTask.getCompanyId())) {
 
 			return;
 		}
@@ -42,7 +42,7 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 
 	@Override
 	public void onAfterRemove(KaleoTask kaleoTask) {
-		if (!_taskWorkflowMetricsIndex.exists(kaleoTask.getCompanyId())) {
+		if (!_workflowMetricsIndex.exists(kaleoTask.getCompanyId())) {
 			return;
 		}
 
@@ -63,6 +63,6 @@ public class KaleoTaskModelListener extends BaseKaleoModelListener<KaleoTask> {
 	private NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;
 
 	@Reference(target = "(workflow.metrics.index.entity.name=task)")
-	private WorkflowMetricsIndex _taskWorkflowMetricsIndex;
+	private WorkflowMetricsIndex _workflowMetricsIndex;
 
 }

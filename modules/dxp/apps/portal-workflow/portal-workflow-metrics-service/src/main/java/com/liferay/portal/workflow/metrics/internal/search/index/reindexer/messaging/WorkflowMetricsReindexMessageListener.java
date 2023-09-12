@@ -62,7 +62,7 @@ public class WorkflowMetricsReindexMessageListener extends BaseMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		long companyId = message.getLong("companyId");
 
-		if (!_processWorkflowMetricsIndex.exists(companyId)) {
+		if (!_workflowMetricsIndex.exists(companyId)) {
 			return;
 		}
 
@@ -82,13 +82,13 @@ public class WorkflowMetricsReindexMessageListener extends BaseMessageListener {
 	@Reference
 	private DestinationFactory _destinationFactory;
 
-	@Reference(target = "(workflow.metrics.index.entity.name=process)")
-	private WorkflowMetricsIndex _processWorkflowMetricsIndex;
-
 	@Reference
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 	private ServiceRegistration<Destination> _serviceRegistration;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=process)")
+	private WorkflowMetricsIndex _workflowMetricsIndex;
 
 	@Reference
 	private WorkflowMetricsIndexCreator _workflowMetricsIndexCreator;

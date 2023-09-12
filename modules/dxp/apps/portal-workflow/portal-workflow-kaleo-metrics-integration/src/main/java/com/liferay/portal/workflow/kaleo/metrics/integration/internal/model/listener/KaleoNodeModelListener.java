@@ -32,7 +32,7 @@ public class KaleoNodeModelListener extends BaseKaleoModelListener<KaleoNode> {
 
 		if (!Objects.equals(kaleoNode.getType(), NodeType.STATE.name()) ||
 			Objects.isNull(kaleoDefinitionVersion) ||
-			!_nodeWorkflowMetricsIndex.exists(kaleoNode.getCompanyId())) {
+			!_workflowMetricsIndex.exists(kaleoNode.getCompanyId())) {
 
 			return;
 		}
@@ -45,7 +45,7 @@ public class KaleoNodeModelListener extends BaseKaleoModelListener<KaleoNode> {
 	@Override
 	public void onAfterRemove(KaleoNode kaleoNode) {
 		if (!Objects.equals(kaleoNode.getType(), NodeType.STATE.name()) ||
-			!_nodeWorkflowMetricsIndex.exists(kaleoNode.getCompanyId())) {
+			!_workflowMetricsIndex.exists(kaleoNode.getCompanyId())) {
 
 			return;
 		}
@@ -63,10 +63,10 @@ public class KaleoNodeModelListener extends BaseKaleoModelListener<KaleoNode> {
 	@Reference
 	private IndexerHelper _indexerHelper;
 
-	@Reference(target = "(workflow.metrics.index.entity.name=node)")
-	private WorkflowMetricsIndex _nodeWorkflowMetricsIndex;
-
 	@Reference
 	private NodeWorkflowMetricsIndexer _nodeWorkflowMetricsIndexer;
+
+	@Reference(target = "(workflow.metrics.index.entity.name=node)")
+	private WorkflowMetricsIndex _workflowMetricsIndex;
 
 }

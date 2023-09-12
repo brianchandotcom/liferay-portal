@@ -257,7 +257,7 @@
 </tr>
 <tr>
 	<td>WEB_APPLICATION</td>
-	<td>//iframe[contains(@id,'WebApplicationFrame')]</td>
+	<td>//iframe[contains(@id,'WacFrame')]</td>
 	<td></td>
 </tr>
 </tbody>

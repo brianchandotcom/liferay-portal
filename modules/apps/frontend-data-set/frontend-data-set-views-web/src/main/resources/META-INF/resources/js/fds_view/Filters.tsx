@@ -85,22 +85,6 @@ interface IPropsAddFDSFilterModalContent {
 	onSave: (newFilter: IFilter) => void;
 }
 
-function getModalHeader(
-	filter: IFilter | undefined,
-	filterType: EFilterType | undefined
-): string {
-	if (filter) {
-		return sub(Liferay.Language.get('edit-x-filter'), [filter.name]);
-	}
-
-	if (filterType && filterType === EFilterType.SELECTION) {
-		return Liferay.Language.get('new-selection-filter');
-	}
-	else {
-		return Liferay.Language.get('new-date-range-filter');
-	}
-}
-
 function AddFDSFilterModalContent({
 	closeModal,
 	fdsView,
@@ -345,7 +329,16 @@ function AddFDSFilterModalContent({
 	return (
 		<>
 			<ClayModal.Header>
-				{getModalHeader(filter, filterType)}
+				{filter &&
+					sub(Liferay.Language.get('edit-x-filter'), [filter.name])}
+
+				{!filter &&
+					filterType === EFilterType.SELECTION &&
+					Liferay.Language.get('new-selection-filter')}
+
+				{!filter &&
+					filterType !== EFilterType.SELECTION &&
+					Liferay.Language.get('new-date-range-filter')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>

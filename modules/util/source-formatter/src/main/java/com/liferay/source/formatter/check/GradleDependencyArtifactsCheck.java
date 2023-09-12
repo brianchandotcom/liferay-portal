@@ -67,28 +67,6 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private boolean _allowedArtifactsFile(
-		String fileName, String oldArtifact,
-		List<String> allowedArtifactsFileNames) {
-
-		for (String allowedArtifactsFileName : allowedArtifactsFileNames) {
-			String[] fileNameArray = StringUtil.split(
-				allowedArtifactsFileName, "->");
-
-			if ((fileNameArray.length != 2) ||
-				!StringUtil.equals(oldArtifact, fileNameArray[0])) {
-
-				continue;
-			}
-
-			if (fileName.endsWith(fileNameArray[1])) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	private String _enforceDependencyVersions(
 		String content, List<String> enforceVersionArtifacts) {
 
@@ -265,6 +243,28 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 		return _projectNamesMap;
 	}
 
+	private boolean _isAllowedArtifactFile(
+		String fileName, String oldArtifact,
+		List<String> allowedArtifactsFileNames) {
+
+		for (String allowedArtifactsFileName : allowedArtifactsFileNames) {
+			String[] allowedArtifactArray = StringUtil.split(
+				allowedArtifactsFileName, "->");
+
+			if ((allowedArtifactArray.length != 2) ||
+				!StringUtil.equals(oldArtifact, allowedArtifactArray[0])) {
+
+				continue;
+			}
+
+			if (fileName.endsWith(allowedArtifactArray[1])) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _isMasterOnlyFile(String absolutePath) {
 		int x = absolutePath.length();
 
@@ -320,7 +320,7 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 				renameArtifactArray[0]);
 
 			if ((newArtifactString != null) && (oldArtifactString != null) &&
-				!_allowedArtifactsFile(
+				!_isAllowedArtifactFile(
 					fileName, renameArtifactArray[0],
 					allowedArtifactsFileNames)) {
 

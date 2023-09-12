@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvoker;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.spring.aop.AopCacheManager;
 import com.liferay.portal.test.log.LogCapture;
@@ -288,6 +291,8 @@ public class RestrictedLiferayObjectWrapperTest
 	public void testWrapWithTransactionStrictReadOnlyForFalse()
 		throws Exception {
 
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
+
 		TransactionInvokerUtil transactionInvokerUtil =
 			new TransactionInvokerUtil();
 
@@ -305,6 +310,8 @@ public class RestrictedLiferayObjectWrapperTest
 	@Test
 	public void testWrapWithTransactionStrictReadOnlyForTrue()
 		throws Exception {
+
+		PropsUtil.setProps(ProxyFactory.newDummyInstance(Props.class));
 
 		TransactionInvokerUtil transactionInvokerUtil =
 			new TransactionInvokerUtil();

@@ -83,64 +83,6 @@ export function getValueFromItem(item, fieldName) {
 	return item[fieldName];
 }
 
-export function getValueDetailsFromItem(item, fieldName) {
-	if (!fieldName) {
-		return null;
-	}
-
-	const i18nRawTextFieldName = `${fieldName}RawText`;
-
-	let rootPropertyName = fieldName;
-	const valuePath = [];
-	let navigatedValue = item;
-
-	if (
-		Object.hasOwn(item, i18nRawTextFieldName) &&
-		Object.values(i18nRawTextFieldName).length
-	) {
-		valuePath.push(fieldName);
-		navigatedValue = navigatedValue[i18nRawTextFieldName];
-	}
-	else if (Array.isArray(fieldName)) {
-		rootPropertyName = fieldName[0];
-
-		fieldName.forEach((property) => {
-			let formattedProperty = property;
-
-			if (property === 'LANG') {
-				const languageId = Liferay.ThemeDisplay.getLanguageId();
-				const BCP47LanguageId = Liferay.ThemeDisplay.getBCP47LanguageId();
-
-				if (navigatedValue[languageId]) {
-					formattedProperty = languageId;
-				}
-				else if (navigatedValue[BCP47LanguageId]) {
-					formattedProperty = BCP47LanguageId;
-				}
-				else {
-					formattedProperty = Liferay.ThemeDisplay.getDefaultLanguageId();
-				}
-			}
-
-			valuePath.push(formattedProperty);
-
-			if (navigatedValue) {
-				navigatedValue = navigatedValue[formattedProperty];
-			}
-		});
-	}
-	else {
-		valuePath.push(fieldName);
-		navigatedValue = navigatedValue[fieldName];
-	}
-
-	return {
-		rootPropertyName,
-		value: navigatedValue,
-		valuePath,
-	};
-}
-
 export function formatItemChanges(itemChanges) {
 	const formattedChanges = Object.values(itemChanges).reduce(
 		(changes, {value, valuePath}) => {

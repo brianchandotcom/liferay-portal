@@ -30,7 +30,7 @@ if (Validator.isNotNull(replyTo) && !replyTo.startsWith(PortalUtil.getPortalURL(
 				<div class="panel-body">
 					<div class="app-icon aspect-ratio-bg-cover" style="background-image: url('<%= HtmlUtil.escapeAttribute(oAuth2AuthorizePortletDisplayContext.getThumbnailURL()) %>');"></div>
 
-					<liferay-ui:user-portrait
+					<liferay-user:user-portrait
 						user="<%= user %>"
 					/>
 

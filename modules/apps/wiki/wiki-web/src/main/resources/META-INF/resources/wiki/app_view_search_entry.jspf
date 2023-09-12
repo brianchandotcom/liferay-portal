@@ -110,7 +110,7 @@ summary.setQueryTerms(hits.getQueryTerms());
 			<div class="entry-discussion">
 				<aui:a class="lfr-discussion-details" href="<%= rowURL %>">
 					<div class="image">
-						<liferay-ui:user-portrait
+						<liferay-user:user-portrait
 							userId="<%= userDisplay.getUserId() %>"
 						/>
 					</div>

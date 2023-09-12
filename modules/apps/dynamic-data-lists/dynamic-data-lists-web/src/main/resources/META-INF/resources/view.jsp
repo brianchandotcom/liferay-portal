@@ -55,7 +55,7 @@ String displayStyle = ddlDisplayContext.getDisplayStyle();
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
 						<liferay-ui:search-container-column-text>
-							<liferay-ui:user-portrait
+							<liferay-user:user-portrait
 								userId="<%= recordSet.getUserId() %>"
 							/>
 						</liferay-ui:search-container-column-text>

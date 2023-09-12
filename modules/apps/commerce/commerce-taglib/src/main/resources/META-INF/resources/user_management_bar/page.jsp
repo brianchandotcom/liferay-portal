@@ -21,7 +21,7 @@ boolean showNotifications = (boolean)request.getAttribute("liferay-commerce:user
 				</c:if>
 
 				<span class="user-avatar-image">
-					<liferay-ui:user-portrait
+					<liferay-user:user-portrait
 						user="<%= user %>"
 					/>
 				</span>

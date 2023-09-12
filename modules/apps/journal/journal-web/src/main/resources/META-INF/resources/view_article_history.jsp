@@ -57,7 +57,7 @@ renderResponse.setTitle(article.getTitle(locale));
 			<c:choose>
 				<c:when test='<%= Objects.equals(journalHistoryDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-text>
-						<liferay-ui:user-portrait
+						<liferay-user:user-portrait
 							userId="<%= articleVersion.getStatusByUserId() %>"
 						/>
 					</liferay-ui:search-container-column-text>

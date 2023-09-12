@@ -82,7 +82,7 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 										<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
 											<div class="card-col-field mr-2">
 												<div class="list-group-card-icon">
-													<liferay-ui:user-portrait
+													<liferay-user:user-portrait
 														userId="<%= workflowTask.getAssigneeUserId() %>"
 													/>
 												</div>

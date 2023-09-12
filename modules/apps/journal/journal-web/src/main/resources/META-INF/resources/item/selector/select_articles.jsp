@@ -69,7 +69,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 							%>
 
 							<liferay-ui:search-container-column-text>
-								<liferay-ui:user-portrait
+								<liferay-user:user-portrait
 									userId="<%= curArticle.getUserId() %>"
 								/>
 							</liferay-ui:search-container-column-text>

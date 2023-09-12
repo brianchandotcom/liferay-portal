@@ -165,7 +165,7 @@ ContentDashboardAdminDisplayContext contentDashboardAdminDisplayContext = (Conte
 						name="author"
 					>
 						<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(contentDashboardItem.getUserName()) %>">
-							<liferay-ui:user-portrait
+							<liferay-user:user-portrait
 								userId="<%= contentDashboardItem.getUserId() %>"
 							/>
 						</span>

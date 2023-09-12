@@ -104,7 +104,7 @@ SearchContainer<User> searchContainer = editUserGroupAssignmentsManagementToolba
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
 					<liferay-ui:search-container-column-text>
-						<liferay-ui:user-portrait
+						<liferay-user:user-portrait
 							userId="<%= user2.getUserId() %>"
 						/>
 					</liferay-ui:search-container-column-text>

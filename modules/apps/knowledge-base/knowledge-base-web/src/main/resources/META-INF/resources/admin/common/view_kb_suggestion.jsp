@@ -24,7 +24,7 @@ renderResponse.setTitle(viewKBSuggestionDisplayContext.getKBCommentTitle());
 			<div class="card-body">
 				<div class="card-col-field">
 					<div class="list-group-card-icon">
-						<liferay-ui:user-portrait
+						<liferay-user:user-portrait
 							userId="<%= viewKBSuggestionDisplayContext.getKBCommentUserId() %>"
 						/>
 					</div>

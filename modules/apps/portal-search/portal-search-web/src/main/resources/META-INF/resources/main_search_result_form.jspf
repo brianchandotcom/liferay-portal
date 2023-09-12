@@ -9,7 +9,7 @@
 	<c:when test="<%= !searchResultSummaryDisplayContext.isTemporarilyUnavailable() %>">
 		<c:if test="<%= searchResultSummaryDisplayContext.getAssetEntryUserId() > 0 %>">
 			<liferay-ui:search-container-column-text>
-				<liferay-ui:user-portrait
+				<liferay-user:user-portrait
 					userId="<%= searchResultSummaryDisplayContext.getAssetEntryUserId() %>"
 				/>
 			</liferay-ui:search-container-column-text>

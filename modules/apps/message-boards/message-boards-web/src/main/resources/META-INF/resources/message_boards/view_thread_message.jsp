@@ -34,7 +34,7 @@ User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 		>
 			<clay:content-col>
 				<div class="list-group-card-icon">
-					<liferay-ui:user-portrait
+					<liferay-user:user-portrait
 						userId="<%= !message.isAnonymous() ? message.getUserId() : 0 %>"
 					/>
 				</div>

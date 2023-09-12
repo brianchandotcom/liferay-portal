@@ -89,7 +89,7 @@
 				<div class="card-body">
 					<div class="autofit-padded-no-gutters card-row">
 						<div class="autofit-col">
-							<liferay-ui:user-portrait
+							<liferay-user:user-portrait
 								userId="<%= activityDescriptor.getUserId() %>"
 							/>
 						</div>

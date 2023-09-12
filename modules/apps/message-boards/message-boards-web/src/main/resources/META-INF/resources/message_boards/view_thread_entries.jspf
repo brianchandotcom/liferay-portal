@@ -45,7 +45,7 @@
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:search-container-column-text>
-			<liferay-ui:user-portrait
+			<liferay-user:user-portrait
 				userId="<%= thread.getLastPostByUserId() %>"
 			/>
 		</liferay-ui:search-container-column-text>

@@ -100,7 +100,7 @@ for (AssetEntry assetEntry : assetEntryResult.getAssetEntries()) {
 						<clay:content-col
 							cssClass="asset-avatar inline-item-before mr-3 pt-1"
 						>
-							<liferay-ui:user-portrait
+							<liferay-user:user-portrait
 								userId="<%= assetRenderer.getUserId() %>"
 							/>
 						</clay:content-col>

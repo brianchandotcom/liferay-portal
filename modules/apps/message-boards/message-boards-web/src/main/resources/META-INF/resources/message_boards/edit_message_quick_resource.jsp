@@ -61,7 +61,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	>
 		<clay:content-col>
 			<div class="list-group-card-icon">
-				<liferay-ui:user-portrait
+				<liferay-user:user-portrait
 					userId="<%= themeDisplay.getUserId() %>"
 				/>
 			</div>

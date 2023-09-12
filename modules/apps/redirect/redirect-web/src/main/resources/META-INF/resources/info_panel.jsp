@@ -44,7 +44,7 @@ RedirectEntryInfoPanelDisplayContext redirectEntryInfoPanelDisplayContext = (Red
 						<clay:content-col
 							cssClass="inline-item-before"
 						>
-							<liferay-ui:user-portrait
+							<liferay-user:user-portrait
 								size="sm"
 								user="<%= redirectEntryInfoPanelDisplayContext.getRedirectEntryUser() %>"
 							/>

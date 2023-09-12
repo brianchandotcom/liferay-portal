@@ -96,7 +96,7 @@ else if (metadataField.equals("view-count")) {
 
 		<div class="autofit-padded autofit-row">
 			<div class="autofit-col">
-				<liferay-ui:user-portrait
+				<liferay-user:user-portrait
 					user="<%= assetRendererUser %>"
 				/>
 			</div>

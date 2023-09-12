@@ -58,8 +58,7 @@ if (size != null) {
 				id='<%= namespace + "personal_menu_dropdown_toggle" %>'
 			>
 				<span class="<%= userStickerCssClasses %>">
-					<liferay-ui:user-portrait
-						cssClass="bg-white sticker-user-icon"
+					<liferay-user:user-portrait
 						size="<%= size %>"
 						user="<%= user2 %>"
 					/>

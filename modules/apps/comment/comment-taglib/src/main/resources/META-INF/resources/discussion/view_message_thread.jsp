@@ -35,10 +35,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				noGutters="x"
 			>
 				<clay:content-col>
-					<liferay-ui:user-portrait
-						cssClass="sticker-lg"
+					<liferay-user:user-portrait
+						size="lg"
 						userId="<%= discussionComment.getUserId() %>"
-						userName="<%= discussionComment.getUserName() %>"
 					/>
 				</clay:content-col>
 
@@ -248,8 +247,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					<clay:content-col
 						cssClass="lfr-discussion-details"
 					>
-						<liferay-ui:user-portrait
-							cssClass="sticker-lg"
+						<liferay-user:user-portrait
+							size="lg"
 							user="<%= user %>"
 						/>
 					</clay:content-col>

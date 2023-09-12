@@ -64,7 +64,7 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 			<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
 				<clay:content-col>
 					<span class="inline-item">
-						<liferay-ui:user-portrait
+						<liferay-user:user-portrait
 							userId="<%= assetEntry.getUserId() %>"
 						/>
 					</span>

@@ -1654,6 +1654,74 @@ definition {
 		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "jonathan franklin,john adams,carter braxton,Test Test");
 	}
 
+	@description = "This is a use case for LPS-194520."
+	@priority = 3
+	test CanSetFrequencyThresholdToZero {
+		task ("Create a web content structure and a web content using that custom structure") {
+			WebContentNavigator.openWebContentStructuresAdmin(siteURLKey = "guest");
+
+			WebContentStructures.addCP(structureName = "Test Structure");
+
+			DEBuilder.addField(
+				fieldLabel = "Text",
+				fieldName = "Text");
+
+			WebContentStructures.saveCP(structureName = "Test Structure");
+
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "Test Structure");
+
+			WebContent.addWithStructureCP(
+				structureName = "Test Structure",
+				webContentTitle = "Test Structure WebContent");
+
+			PortletEntry.publish();
+		}
+
+		task ("Create a basic web content article") {
+			WebContent.addArticleCP(
+				webContentContent = "Test Basic WebContent Content",
+				webContentTitle = "Test Basic WebContent");
+		}
+
+		task ("Navigate to the search page and add a Custom Facet with Aggregation Field 'entryClassName' and Frequency Threshold '0'") {
+			SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+
+			Search.openSearchPage();
+
+			SearchFacetPortlet.configureCustomFacet(aggregationField = "entryClassName");
+
+			SearchFacetPortlet.updateFacetConfiguration(
+				frequencyThreshold = 0,
+				portletName = "Custom Facet");
+		}
+
+		task ("Set the Type Facet's Frequency Threshold to '0'") {
+			SearchFacetPortlet.updateFacetConfiguration(
+				frequencyThreshold = 0,
+				portletName = "Type Facet");
+		}
+
+		task ("Search for the Web Content articles") {
+			Search.openSearchPage(searchTerm = "test");
+		}
+
+		task ("Assert that the appropriate facet values show up in the custom facet") {
+			AssertElementPresent(
+				key_facetType = "Custom Facet",
+				key_termValue = "(0)",
+				locator1 = "Search#FACET_TERM");
+		}
+
+		task ("Assert that the appropriate facet values show up in the type facet") {
+			AssertElementPresent(
+				key_facetType = "Type Facet",
+				key_termValue = "(0)",
+				locator1 = "Search#FACET_TERM");
+		}
+	}
+
 	@description = "This is a use case for LPS-130126 and LPS-145648."
 	@priority = 4
 	test CustomFacetDoesNotDisplayEmptyDDMField {

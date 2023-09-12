@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.feature.flag.web.internal.company.feature.flags;
+package com.liferay.feature.flag.web.internal.feature.flag;
 
 import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
@@ -16,6 +16,9 @@ import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerB
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.util.PropsUtil;
@@ -24,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,7 +38,7 @@ import org.junit.Test;
 /**
  * @author Drew Brokke
  */
-public class CompanyFeatureFlagsTest {
+public class FeatureFlagsBagTest {
 
 	@ClassRule
 	@Rule
@@ -54,19 +58,19 @@ public class CompanyFeatureFlagsTest {
 			featureFlagsMap.put(featureFlag.getKey(), featureFlag);
 		}
 
-		_companyFeatureFlags = new CompanyFeatureFlags(featureFlagsMap);
+		_featureFlagsBag = new FeatureFlagsBag(featureFlagsMap, _COMPANY_ID);
 	}
 
 	@Test
 	public void testGetFeatureFlags() {
-		List<FeatureFlag> actualFeatureFlags =
-			_companyFeatureFlags.getFeatureFlags(null);
+		List<FeatureFlag> actualFeatureFlags = _featureFlagsBag.getFeatureFlags(
+			null);
 
 		Assert.assertEquals(
 			actualFeatureFlags.toString(), _expectedFeatureFlags.length,
 			actualFeatureFlags.size());
 
-		actualFeatureFlags = _companyFeatureFlags.getFeatureFlags(
+		actualFeatureFlags = _featureFlagsBag.getFeatureFlags(
 			FeatureFlagType.BETA.getPredicate());
 
 		Assert.assertEquals(
@@ -80,7 +84,7 @@ public class CompanyFeatureFlagsTest {
 	@Test
 	public void testGetJSON() throws JSONException {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-			_companyFeatureFlags.getJSON());
+			_featureFlagsBag.getJSON());
 
 		Set<String> set = jsonObject.keySet();
 
@@ -102,17 +106,35 @@ public class CompanyFeatureFlagsTest {
 		for (FeatureFlag expectedFeatureFlag : _expectedFeatureFlags) {
 			Assert.assertEquals(
 				expectedFeatureFlag.isEnabled(),
-				_companyFeatureFlags.isEnabled(expectedFeatureFlag.getKey()));
+				_featureFlagsBag.isEnabled(expectedFeatureFlag.getKey()));
 		}
 
 		String randomKey = _createKey();
 
-		Assert.assertFalse(_companyFeatureFlags.isEnabled(randomKey));
+		Assert.assertFalse(_featureFlagsBag.isEnabled(randomKey));
 
 		PropsUtil.set(
 			FeatureFlagConstants.getKey(randomKey), Boolean.TRUE.toString());
 
-		Assert.assertTrue(_companyFeatureFlags.isEnabled(randomKey));
+		Assert.assertTrue(_featureFlagsBag.isEnabled(randomKey));
+
+		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
+				FeatureFlagsBag.class.getName(), Level.INFO)) {
+
+			String key = "LPS-9099";
+
+			_featureFlagsBag.isEnabled(key);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				String.format(
+					"Feature flag %s is not available for company with id %s",
+					key, _COMPANY_ID),
+				logEntry.getMessage());
+		}
 	}
 
 	private FeatureFlag _createFeatureFlag(FeatureFlagType featureFlagType) {
@@ -128,14 +150,16 @@ public class CompanyFeatureFlagsTest {
 			UniqueStringRandomizerBumper.INSTANCE);
 	}
 
+	private static final long _COMPANY_ID = 1L;
+
 	private final FeatureFlag _betaFeatureFlag = _createFeatureFlag(
 		FeatureFlagType.BETA);
-	private CompanyFeatureFlags _companyFeatureFlags;
 	private final FeatureFlag _deprecationFeatureFlag = _createFeatureFlag(
 		FeatureFlagType.DEPRECATION);
 	private final FeatureFlag _devFeatureFlag = _createFeatureFlag(
 		FeatureFlagType.DEV);
 	private FeatureFlag[] _expectedFeatureFlags;
+	private FeatureFlagsBag _featureFlagsBag;
 	private final FeatureFlag _releaseFeatureFlag = _createFeatureFlag(
 		FeatureFlagType.RELEASE);
 

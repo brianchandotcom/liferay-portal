@@ -44,6 +44,13 @@ definition {
 			value1 = ${status});
 	}
 
-		Button.click(button = "Stop Test");
+
+	macro viewVariantImprovementNumberInAC {
+		var key_variantName = ${variantName};
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ACTests#IMPROVEMENT_NUMBER",
+			value1 = ${improvementNumber});
+	}
 	}
 }

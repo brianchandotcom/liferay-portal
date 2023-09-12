@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMPROVEMENT_NUMBER</td>
+	<td>//button[@data-title='${key_variantName}']//ancestor::tr//td[@class='text-danger']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KEBAB_AB_TEST</td>
 	<td>//button[contains(@class, 'dropdown-toggle btn-monospaced btn btn-outline-borderless btn-outline-secondary')]</td>
 	<td></td>

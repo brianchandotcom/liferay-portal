@@ -558,7 +558,10 @@ public class ObjectDefinitionResourceImpl
 			new ArrayList<>(
 				_objectFieldLocalService.getObjectFields(objectDefinitionId));
 
-		if (SystemObjectDefinitionManagementChecker.isInvokerBundleAllowed()) {
+		if (serviceBuilderObjectDefinition.isModifiable() &&
+			serviceBuilderObjectDefinition.isSystem() &&
+			SystemObjectDefinitionManagementChecker.isInvokerBundleAllowed()) {
+
 			objectFields.removeIf(
 				objectField -> !GetterUtil.getBoolean(objectField.getSystem()));
 

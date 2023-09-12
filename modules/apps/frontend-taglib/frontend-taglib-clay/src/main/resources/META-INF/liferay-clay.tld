@@ -150,12 +150,6 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>iconRight</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -187,6 +181,12 @@
 		<attribute>
 			<description></description>
 			<name>small</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>swapIconSide</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -585,12 +585,6 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>iconRight</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description></description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -628,6 +622,12 @@
 		<attribute>
 			<description></description>
 			<name>small</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>swapIconSide</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

@@ -322,9 +322,11 @@ definition {
 		}
 
 		task ("When the user navigates to the company logs portlet") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
+			User.logoutPG();
+
+			User.firstLoginUI(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
 
 			CompanyLogging.openServerLogsAdmin();
 		}

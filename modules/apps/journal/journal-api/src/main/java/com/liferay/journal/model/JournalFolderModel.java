@@ -8,6 +8,7 @@ package com.liferay.journal.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -33,8 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface JournalFolderModel
 	extends BaseModel<JournalFolder>, ContainerModel, CTModel<JournalFolder>,
-			MVCCModel, ShardedModel, StagedGroupedModel, TrashedModel,
-			WorkflowedModel {
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
+			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -113,6 +114,7 @@ public interface JournalFolderModel
 	 * @return the external reference code of this journal folder
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -120,6 +122,7 @@ public interface JournalFolderModel
 	 *
 	 * @param externalReferenceCode the external reference code of this journal folder
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

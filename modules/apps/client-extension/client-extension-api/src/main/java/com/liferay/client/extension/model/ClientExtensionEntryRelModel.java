@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -32,8 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ClientExtensionEntryRelModel
 	extends AttachedModel, BaseModel<ClientExtensionEntryRel>, ContainerModel,
-			CTModel<ClientExtensionEntryRel>, MVCCModel, ShardedModel,
-			StagedGroupedModel {
+			CTModel<ClientExtensionEntryRel>, ExternalReferenceCodeModel,
+			MVCCModel, ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -112,6 +113,7 @@ public interface ClientExtensionEntryRelModel
 	 * @return the external reference code of this client extension entry rel
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -119,6 +121,7 @@ public interface ClientExtensionEntryRelModel
 	 *
 	 * @param externalReferenceCode the external reference code of this client extension entry rel
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

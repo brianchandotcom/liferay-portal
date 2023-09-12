@@ -7,6 +7,7 @@ package com.liferay.oauth2.provider.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
@@ -27,7 +28,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface OAuth2ApplicationModel
-	extends BaseModel<OAuth2Application>, ShardedModel, StagedAuditedModel {
+	extends BaseModel<OAuth2Application>, ExternalReferenceCodeModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -72,6 +74,7 @@ public interface OAuth2ApplicationModel
 	 * @return the external reference code of this o auth2 application
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -79,6 +82,7 @@ public interface OAuth2ApplicationModel
 	 *
 	 * @param externalReferenceCode the external reference code of this o auth2 application
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

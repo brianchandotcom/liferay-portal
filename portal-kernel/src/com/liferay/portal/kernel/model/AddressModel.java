@@ -25,8 +25,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AddressModel
-	extends AttachedModel, BaseModel<Address>, CTModel<Address>, MVCCModel,
-			ShardedModel, StagedAuditedModel {
+	extends AttachedModel, BaseModel<Address>, CTModel<Address>,
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -105,6 +106,7 @@ public interface AddressModel
 	 * @return the external reference code of this address
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -112,6 +114,7 @@ public interface AddressModel
 	 *
 	 * @param externalReferenceCode the external reference code of this address
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

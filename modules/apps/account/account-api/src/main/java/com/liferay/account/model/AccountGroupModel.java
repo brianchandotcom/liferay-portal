@@ -7,6 +7,7 @@ package com.liferay.account.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
@@ -28,8 +29,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface AccountGroupModel
-	extends BaseModel<AccountGroup>, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<AccountGroup>, ExternalReferenceCodeModel, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -90,6 +91,7 @@ public interface AccountGroupModel
 	 * @return the external reference code of this account group
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -97,6 +99,7 @@ public interface AccountGroupModel
 	 *
 	 * @param externalReferenceCode the external reference code of this account group
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

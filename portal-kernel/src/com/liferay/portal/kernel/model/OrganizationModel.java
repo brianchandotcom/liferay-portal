@@ -25,8 +25,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface OrganizationModel
-	extends BaseModel<Organization>, CTModel<Organization>, MVCCModel,
-			ShardedModel, StagedAuditedModel {
+	extends BaseModel<Organization>, CTModel<Organization>,
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -105,6 +106,7 @@ public interface OrganizationModel
 	 * @return the external reference code of this organization
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -112,6 +114,7 @@ public interface OrganizationModel
 	 *
 	 * @param externalReferenceCode the external reference code of this organization
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

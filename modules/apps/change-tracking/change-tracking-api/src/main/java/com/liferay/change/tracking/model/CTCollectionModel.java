@@ -7,6 +7,7 @@ package com.liferay.change.tracking.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -28,7 +29,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CTCollectionModel
-	extends BaseModel<CTCollection>, MVCCModel, ShardedModel, StagedModel {
+	extends BaseModel<CTCollection>, ExternalReferenceCodeModel, MVCCModel,
+			ShardedModel, StagedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -89,6 +91,7 @@ public interface CTCollectionModel
 	 * @return the external reference code of this ct collection
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -96,6 +99,7 @@ public interface CTCollectionModel
 	 *
 	 * @param externalReferenceCode the external reference code of this ct collection
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

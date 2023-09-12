@@ -8,6 +8,7 @@ package com.liferay.message.boards.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -32,8 +33,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface MBMessageModel
-	extends AttachedModel, BaseModel<MBMessage>, CTModel<MBMessage>, MVCCModel,
-			ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
+	extends AttachedModel, BaseModel<MBMessage>, CTModel<MBMessage>,
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
+			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -112,6 +114,7 @@ public interface MBMessageModel
 	 * @return the external reference code of this message-boards message
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -119,6 +122,7 @@ public interface MBMessageModel
 	 *
 	 * @param externalReferenceCode the external reference code of this message-boards message
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

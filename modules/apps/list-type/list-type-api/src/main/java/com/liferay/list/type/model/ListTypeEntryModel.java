@@ -8,6 +8,7 @@ package com.liferay.list.type.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -32,8 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ListTypeEntryModel
-	extends BaseModel<ListTypeEntry>, LocalizedModel, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<ListTypeEntry>, ExternalReferenceCodeModel,
+			LocalizedModel, MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -94,6 +95,7 @@ public interface ListTypeEntryModel
 	 * @return the external reference code of this list type entry
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -101,6 +103,7 @@ public interface ListTypeEntryModel
 	 *
 	 * @param externalReferenceCode the external reference code of this list type entry
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

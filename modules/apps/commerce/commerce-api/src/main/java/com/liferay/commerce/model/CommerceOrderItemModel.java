@@ -8,6 +8,7 @@ package com.liferay.commerce.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
@@ -35,8 +36,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceOrderItemModel
-	extends BaseModel<CommerceOrderItem>, GroupedModel, LocalizedModel,
-			MVCCModel, ShardedModel, StagedAuditedModel {
+	extends BaseModel<CommerceOrderItem>, ExternalReferenceCodeModel,
+			GroupedModel, LocalizedModel, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -97,6 +99,7 @@ public interface CommerceOrderItemModel
 	 * @return the external reference code of this commerce order item
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -104,6 +107,7 @@ public interface CommerceOrderItemModel
 	 *
 	 * @param externalReferenceCode the external reference code of this commerce order item
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

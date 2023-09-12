@@ -8,6 +8,7 @@ package com.liferay.object.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -32,8 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ObjectFieldModel
-	extends BaseModel<ObjectField>, LocalizedModel, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<ObjectField>, ExternalReferenceCodeModel, LocalizedModel,
+			MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -94,6 +95,7 @@ public interface ObjectFieldModel
 	 * @return the external reference code of this object field
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -101,6 +103,7 @@ public interface ObjectFieldModel
 	 *
 	 * @param externalReferenceCode the external reference code of this object field
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

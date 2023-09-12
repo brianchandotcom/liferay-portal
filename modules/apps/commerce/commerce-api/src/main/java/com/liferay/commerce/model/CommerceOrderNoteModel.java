@@ -7,6 +7,7 @@ package com.liferay.commerce.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -29,8 +30,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceOrderNoteModel
-	extends BaseModel<CommerceOrderNote>, GroupedModel, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<CommerceOrderNote>, ExternalReferenceCodeModel,
+			GroupedModel, MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -91,6 +92,7 @@ public interface CommerceOrderNoteModel
 	 * @return the external reference code of this commerce order note
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -98,6 +100,7 @@ public interface CommerceOrderNoteModel
 	 *
 	 * @param externalReferenceCode the external reference code of this commerce order note
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

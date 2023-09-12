@@ -25,8 +25,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface UserModel
-	extends BaseModel<User>, CTModel<User>, MVCCModel, ShardedModel,
-			StagedModel {
+	extends BaseModel<User>, CTModel<User>, ExternalReferenceCodeModel,
+			MVCCModel, ShardedModel, StagedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -105,6 +105,7 @@ public interface UserModel
 	 * @return the external reference code of this user
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -112,6 +113,7 @@ public interface UserModel
 	 *
 	 * @param externalReferenceCode the external reference code of this user
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

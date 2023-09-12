@@ -28,8 +28,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface GroupModel
-	extends AttachedModel, BaseModel<Group>, CTModel<Group>, LocalizedModel,
-			MVCCModel, ShardedModel {
+	extends AttachedModel, BaseModel<Group>, CTModel<Group>,
+			ExternalReferenceCodeModel, LocalizedModel, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -106,6 +107,7 @@ public interface GroupModel
 	 * @return the external reference code of this group
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -113,6 +115,7 @@ public interface GroupModel
 	 *
 	 * @param externalReferenceCode the external reference code of this group
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

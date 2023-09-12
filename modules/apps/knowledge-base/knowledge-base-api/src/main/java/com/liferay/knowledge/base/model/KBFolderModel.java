@@ -7,6 +7,7 @@ package com.liferay.knowledge.base.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -29,8 +30,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface KBFolderModel
-	extends BaseModel<KBFolder>, CTModel<KBFolder>, MVCCModel, ShardedModel,
-			StagedGroupedModel {
+	extends BaseModel<KBFolder>, CTModel<KBFolder>, ExternalReferenceCodeModel,
+			MVCCModel, ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -109,6 +110,7 @@ public interface KBFolderModel
 	 * @return the external reference code of this kb folder
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -116,6 +118,7 @@ public interface KBFolderModel
 	 *
 	 * @param externalReferenceCode the external reference code of this kb folder
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

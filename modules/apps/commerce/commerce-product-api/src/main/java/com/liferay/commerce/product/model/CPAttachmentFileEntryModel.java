@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -36,8 +37,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CPAttachmentFileEntryModel
 	extends AttachedModel, BaseModel<CPAttachmentFileEntry>,
-			CTModel<CPAttachmentFileEntry>, LocalizedModel, MVCCModel,
-			ShardedModel, StagedGroupedModel, WorkflowedModel {
+			CTModel<CPAttachmentFileEntry>, ExternalReferenceCodeModel,
+			LocalizedModel, MVCCModel, ShardedModel, StagedGroupedModel,
+			WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -116,6 +118,7 @@ public interface CPAttachmentFileEntryModel
 	 * @return the external reference code of this cp attachment file entry
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -123,6 +126,7 @@ public interface CPAttachmentFileEntryModel
 	 *
 	 * @param externalReferenceCode the external reference code of this cp attachment file entry
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

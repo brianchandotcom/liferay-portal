@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Blogs API
 Bundle-SymbolicName: com.liferay.blogs.api
-Bundle-Version: 16.2.3
+Bundle-Version: 16.3.0
 Export-Package:\
 	com.liferay.blogs.configuration,\
 	com.liferay.blogs.configuration.definition,\

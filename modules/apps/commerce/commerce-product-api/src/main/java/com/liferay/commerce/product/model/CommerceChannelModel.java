@@ -7,6 +7,7 @@ package com.liferay.commerce.product.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
@@ -29,8 +30,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceChannelModel
-	extends BaseModel<CommerceChannel>, CTModel<CommerceChannel>, MVCCModel,
-			ShardedModel, StagedAuditedModel {
+	extends BaseModel<CommerceChannel>, CTModel<CommerceChannel>,
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -109,6 +111,7 @@ public interface CommerceChannelModel
 	 * @return the external reference code of this commerce channel
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -116,6 +119,7 @@ public interface CommerceChannelModel
 	 *
 	 * @param externalReferenceCode the external reference code of this commerce channel
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

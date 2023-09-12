@@ -8,6 +8,7 @@ package com.liferay.asset.kernel.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -34,7 +35,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AssetVocabularyModel
 	extends BaseModel<AssetVocabulary>, CTModel<AssetVocabulary>,
-			LocalizedModel, MVCCModel, ShardedModel, StagedGroupedModel {
+			ExternalReferenceCodeModel, LocalizedModel, MVCCModel, ShardedModel,
+			StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -113,6 +115,7 @@ public interface AssetVocabularyModel
 	 * @return the external reference code of this asset vocabulary
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -120,6 +123,7 @@ public interface AssetVocabularyModel
 	 *
 	 * @param externalReferenceCode the external reference code of this asset vocabulary
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

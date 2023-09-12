@@ -8,6 +8,7 @@ package com.liferay.commerce.product.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -33,8 +34,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPTaxCategoryModel
-	extends BaseModel<CPTaxCategory>, CTModel<CPTaxCategory>, LocalizedModel,
-			MVCCModel, ShardedModel, StagedAuditedModel {
+	extends BaseModel<CPTaxCategory>, CTModel<CPTaxCategory>,
+			ExternalReferenceCodeModel, LocalizedModel, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -113,6 +115,7 @@ public interface CPTaxCategoryModel
 	 * @return the external reference code of this cp tax category
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -120,6 +123,7 @@ public interface CPTaxCategoryModel
 	 *
 	 * @param externalReferenceCode the external reference code of this cp tax category
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

@@ -7,6 +7,7 @@ package com.liferay.portal.tools.service.builder.test.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -24,7 +25,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ERCCompanyEntryModel
-	extends BaseModel<ERCCompanyEntry>, ShardedModel {
+	extends BaseModel<ERCCompanyEntry>, ExternalReferenceCodeModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -67,6 +69,7 @@ public interface ERCCompanyEntryModel
 	 * @return the external reference code of this erc company entry
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -74,6 +77,7 @@ public interface ERCCompanyEntryModel
 	 *
 	 * @param externalReferenceCode the external reference code of this erc company entry
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

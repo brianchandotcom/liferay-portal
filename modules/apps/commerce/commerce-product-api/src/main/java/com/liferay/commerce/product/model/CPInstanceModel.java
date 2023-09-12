@@ -7,6 +7,7 @@ package com.liferay.commerce.product.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CPInstanceModel
-	extends BaseModel<CPInstance>, CTModel<CPInstance>, MVCCModel, ShardedModel,
+	extends BaseModel<CPInstance>, CTModel<CPInstance>,
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
 			StagedGroupedModel, WorkflowedModel {
 
 	/*
@@ -112,6 +114,7 @@ public interface CPInstanceModel
 	 * @return the external reference code of this cp instance
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -119,6 +122,7 @@ public interface CPInstanceModel
 	 *
 	 * @param externalReferenceCode the external reference code of this cp instance
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

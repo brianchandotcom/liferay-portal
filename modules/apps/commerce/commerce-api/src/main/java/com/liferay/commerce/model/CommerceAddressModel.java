@@ -8,6 +8,7 @@ package com.liferay.commerce.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -29,8 +30,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceAddressModel
-	extends AttachedModel, BaseModel<CommerceAddress>, GroupedModel, MVCCModel,
-			ShardedModel {
+	extends AttachedModel, BaseModel<CommerceAddress>,
+			ExternalReferenceCodeModel, GroupedModel, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -74,6 +75,7 @@ public interface CommerceAddressModel
 	 * @return the external reference code of this commerce address
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -81,6 +83,7 @@ public interface CommerceAddressModel
 	 *
 	 * @param externalReferenceCode the external reference code of this commerce address
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

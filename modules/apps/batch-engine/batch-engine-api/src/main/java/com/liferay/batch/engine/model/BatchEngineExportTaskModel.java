@@ -7,6 +7,7 @@ package com.liferay.batch.engine.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -33,8 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface BatchEngineExportTaskModel
-	extends BaseModel<BatchEngineExportTask>, MVCCModel, ShardedModel,
-			StagedModel {
+	extends BaseModel<BatchEngineExportTask>, ExternalReferenceCodeModel,
+			MVCCModel, ShardedModel, StagedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -95,6 +96,7 @@ public interface BatchEngineExportTaskModel
 	 * @return the external reference code of this batch engine export task
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -102,6 +104,7 @@ public interface BatchEngineExportTaskModel
 	 *
 	 * @param externalReferenceCode the external reference code of this batch engine export task
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

@@ -7,6 +7,7 @@ package com.liferay.commerce.pricing.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CommercePriceModifierModel
 	extends BaseModel<CommercePriceModifier>, CTModel<CommercePriceModifier>,
-			MVCCModel, ShardedModel, StagedGroupedModel, WorkflowedModel {
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
+			StagedGroupedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -112,6 +114,7 @@ public interface CommercePriceModifierModel
 	 * @return the external reference code of this commerce price modifier
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -119,6 +122,7 @@ public interface CommercePriceModifierModel
 	 *
 	 * @param externalReferenceCode the external reference code of this commerce price modifier
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

@@ -7,6 +7,7 @@ package com.liferay.commerce.discount.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
@@ -31,8 +32,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceDiscountModel
-	extends BaseModel<CommerceDiscount>, MVCCModel, ShardedModel,
-			StagedAuditedModel, WorkflowedModel {
+	extends BaseModel<CommerceDiscount>, ExternalReferenceCodeModel, MVCCModel,
+			ShardedModel, StagedAuditedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -93,6 +94,7 @@ public interface CommerceDiscountModel
 	 * @return the external reference code of this commerce discount
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -100,6 +102,7 @@ public interface CommerceDiscountModel
 	 *
 	 * @param externalReferenceCode the external reference code of this commerce discount
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

@@ -8,6 +8,7 @@ package com.liferay.document.library.kernel.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -32,8 +33,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface DLFolderModel
-	extends BaseModel<DLFolder>, ContainerModel, CTModel<DLFolder>, MVCCModel,
-			ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
+	extends BaseModel<DLFolder>, ContainerModel, CTModel<DLFolder>,
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
+			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -112,6 +114,7 @@ public interface DLFolderModel
 	 * @return the external reference code of this document library folder
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -119,6 +122,7 @@ public interface DLFolderModel
 	 *
 	 * @param externalReferenceCode the external reference code of this document library folder
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

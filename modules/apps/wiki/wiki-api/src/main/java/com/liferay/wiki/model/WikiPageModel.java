@@ -8,6 +8,7 @@ package com.liferay.wiki.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ContainerModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -33,9 +34,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface WikiPageModel
-	extends BaseModel<WikiPage>, ContainerModel, CTModel<WikiPage>, MVCCModel,
-			ResourcedModel, ShardedModel, StagedGroupedModel, TrashedModel,
-			WorkflowedModel {
+	extends BaseModel<WikiPage>, ContainerModel, CTModel<WikiPage>,
+			ExternalReferenceCodeModel, MVCCModel, ResourcedModel, ShardedModel,
+			StagedGroupedModel, TrashedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -260,6 +261,7 @@ public interface WikiPageModel
 	 * @return the external reference code of this wiki page
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -267,6 +269,7 @@ public interface WikiPageModel
 	 *
 	 * @param externalReferenceCode the external reference code of this wiki page
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

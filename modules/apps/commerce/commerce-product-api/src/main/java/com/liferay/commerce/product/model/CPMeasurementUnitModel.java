@@ -8,6 +8,7 @@ package com.liferay.commerce.product.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
@@ -34,7 +35,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface CPMeasurementUnitModel
 	extends BaseModel<CPMeasurementUnit>, CTModel<CPMeasurementUnit>,
-			LocalizedModel, MVCCModel, ShardedModel, StagedGroupedModel {
+			ExternalReferenceCodeModel, LocalizedModel, MVCCModel, ShardedModel,
+			StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -113,6 +115,7 @@ public interface CPMeasurementUnitModel
 	 * @return the external reference code of this cp measurement unit
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -120,6 +123,7 @@ public interface CPMeasurementUnitModel
 	 *
 	 * @param externalReferenceCode the external reference code of this cp measurement unit
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

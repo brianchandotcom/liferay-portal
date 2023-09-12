@@ -7,6 +7,7 @@ package com.liferay.object.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
@@ -29,8 +30,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ObjectEntryModel
-	extends BaseModel<ObjectEntry>, MVCCModel, ShardedModel, StagedGroupedModel,
-			WorkflowedModel {
+	extends BaseModel<ObjectEntry>, ExternalReferenceCodeModel, MVCCModel,
+			ShardedModel, StagedGroupedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -91,6 +92,7 @@ public interface ObjectEntryModel
 	 * @return the external reference code of this object entry
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -98,6 +100,7 @@ public interface ObjectEntryModel
 	 *
 	 * @param externalReferenceCode the external reference code of this object entry
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

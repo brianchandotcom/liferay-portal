@@ -7,6 +7,7 @@ package com.liferay.commerce.inventory.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
@@ -30,7 +31,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CommerceInventoryWarehouseItemModel
-	extends BaseModel<CommerceInventoryWarehouseItem>, MVCCModel, ShardedModel,
+	extends BaseModel<CommerceInventoryWarehouseItem>,
+			ExternalReferenceCodeModel, MVCCModel, ShardedModel,
 			StagedAuditedModel {
 
 	/*
@@ -92,6 +94,7 @@ public interface CommerceInventoryWarehouseItemModel
 	 * @return the external reference code of this commerce inventory warehouse item
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -99,6 +102,7 @@ public interface CommerceInventoryWarehouseItemModel
 	 *
 	 * @param externalReferenceCode the external reference code of this commerce inventory warehouse item
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

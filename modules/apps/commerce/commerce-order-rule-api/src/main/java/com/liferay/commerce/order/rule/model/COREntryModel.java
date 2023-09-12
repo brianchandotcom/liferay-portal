@@ -7,6 +7,7 @@ package com.liferay.commerce.order.rule.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
@@ -29,8 +30,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface COREntryModel
-	extends BaseModel<COREntry>, MVCCModel, ShardedModel, StagedAuditedModel,
-			WorkflowedModel {
+	extends BaseModel<COREntry>, ExternalReferenceCodeModel, MVCCModel,
+			ShardedModel, StagedAuditedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -91,6 +92,7 @@ public interface COREntryModel
 	 * @return the external reference code of this cor entry
 	 */
 	@AutoEscape
+	@Override
 	public String getExternalReferenceCode();
 
 	/**
@@ -98,6 +100,7 @@ public interface COREntryModel
 	 *
 	 * @param externalReferenceCode the external reference code of this cor entry
 	 */
+	@Override
 	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**

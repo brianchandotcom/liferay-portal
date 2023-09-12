@@ -87,6 +87,10 @@ public class ObjectValidationRuleLocalServiceImpl
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
+		_validateInvokerBundle(
+			"Only allowed bundles can create system object validations",
+			system);
+
 		User user = _userLocalService.getUser(userId);
 
 		_validate(
@@ -256,6 +260,10 @@ public class ObjectValidationRuleLocalServiceImpl
 		ObjectValidationRule objectValidationRule =
 			objectValidationRulePersistence.findByPrimaryKey(
 				objectValidationRuleId);
+
+		_validateInvokerBundle(
+			"Only allowed bundles can edit system object validations",
+			objectValidationRule.isSystem());
 
 		_validate(
 			objectValidationRule.getCompanyId(), engine, nameMap, outputType,

@@ -2,13 +2,17 @@ definition {
 
 	@summary = "Default summary"
 	macro deleteABTest(testName = null) {
-		ACNavigation.openItem(itemName = ${testName});
-
-		Click(locator1 = "ACTests#AB_ELLIPSIS");
-
-		Click(locator1 = "ACTests#DELETE_TEST");
+		if (isSet(testName)) {
+			ACNavigation.openItem(itemName = ${testName});
+		}
 
 		Button.clickDelete();
+
+		SelectWindow(locator1 = "name=undefined");
+
+		Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
+
+		Alert.viewSuccessMessage();
 	}
 
 	@summary = "Default summary"

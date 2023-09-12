@@ -310,23 +310,22 @@ public class CTCollectionServiceHttp {
 		}
 	}
 
-	public static com.liferay.change.tracking.model.CTProcess moveCTEntries(
+	public static void moveCTEntry(
 			HttpPrincipal httpPrincipal, long fromCTCollectionId,
-			long toCTCollectionId, long[] ctEntryIds)
+			long toCTCollectionId, long modelClassNameId, long modelClassPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				CTCollectionServiceUtil.class, "moveCTEntries",
-				_moveCTEntriesParameterTypes7);
+				CTCollectionServiceUtil.class, "moveCTEntry",
+				_moveCTEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, fromCTCollectionId, toCTCollectionId, ctEntryIds);
-
-			Object returnObj = null;
+				methodKey, fromCTCollectionId, toCTCollectionId,
+				modelClassNameId, modelClassPK);
 
 			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
 				if (exception instanceof
@@ -339,8 +338,6 @@ public class CTCollectionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
-
-			return (com.liferay.change.tracking.model.CTProcess)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -497,8 +494,9 @@ public class CTCollectionServiceHttp {
 		};
 	private static final Class<?>[] _getCTCollectionsCountParameterTypes6 =
 		new Class[] {long.class, int[].class, String.class};
-	private static final Class<?>[] _moveCTEntriesParameterTypes7 =
-		new Class[] {long.class, long.class, long[].class};
+	private static final Class<?>[] _moveCTEntryParameterTypes7 = new Class[] {
+		long.class, long.class, long.class, long.class
+	};
 	private static final Class<?>[] _publishCTCollectionParameterTypes8 =
 		new Class[] {long.class, long.class};
 	private static final Class<?>[] _undoCTCollectionParameterTypes9 =

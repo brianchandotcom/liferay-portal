@@ -6,7 +6,6 @@
 package com.liferay.change.tracking.service;
 
 import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -80,8 +79,9 @@ public interface CTCollectionService extends BaseService {
 	 */
 	public String getOSGiServiceIdentifier();
 
-	public CTProcess moveCTEntries(
-			long fromCTCollectionId, long toCTCollectionId, long[] ctEntryIds)
+	public void moveCTEntry(
+			long fromCTCollectionId, long toCTCollectionId,
+			long modelClassNameId, long modelClassPK)
 		throws PortalException;
 
 	public void publishCTCollection(long userId, long ctCollectionId)

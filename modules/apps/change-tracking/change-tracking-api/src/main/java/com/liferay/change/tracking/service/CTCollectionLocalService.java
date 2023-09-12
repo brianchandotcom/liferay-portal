@@ -311,11 +311,6 @@ public interface CTCollectionLocalService
 	public List<CTMappingTableInfo> getCTMappingTableInfos(long ctCollectionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<Long, List<CTEntry>> getDiscardCTEntries(
-			long ctCollectionId, long modelClassNameId, long modelClassPK)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTCollection> getExclusivePublishedCTCollections(
 			long modelClassNameId, long modelClassPK)
 		throws PortalException;
@@ -344,7 +339,13 @@ public interface CTCollectionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CTEntry> getRelatedCTEntries(
-		long ctCollectionId, long[] ctEntryIds);
+			long ctCollectionId, long[] ctEntryIds)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<Long, List<CTEntry>> getRelatedCTEntriesMap(
+			long ctCollectionId, long modelClassNameId, long modelClassPK)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUnapprovedChanges(long ctCollectionId)
@@ -353,6 +354,11 @@ public interface CTCollectionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isCTEntryEnclosed(
 		long ctCollectionId, long modelClassNameId, long modelClassPK);
+
+	public void moveCTEntry(
+			long fromCTCollectionId, long toCTCollectionId,
+			long modelClassNameId, long modelClassPK)
+		throws PortalException;
 
 	public CTCollection undoCTCollection(
 			long ctCollectionId, long userId, String name, String description)

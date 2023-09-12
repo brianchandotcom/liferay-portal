@@ -92,12 +92,14 @@ public class CTCollectionServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.change.tracking.model.CTProcess moveCTEntries(
-			long fromCTCollectionId, long toCTCollectionId, long[] ctEntryIds)
+	public static void moveCTEntry(
+			long fromCTCollectionId, long toCTCollectionId,
+			long modelClassNameId, long modelClassPK)
 		throws PortalException {
 
-		return getService().moveCTEntries(
-			fromCTCollectionId, toCTCollectionId, ctEntryIds);
+		getService().moveCTEntry(
+			fromCTCollectionId, toCTCollectionId, modelClassNameId,
+			modelClassPK);
 	}
 
 	public static void publishCTCollection(long userId, long ctCollectionId)

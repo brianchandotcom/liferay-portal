@@ -369,15 +369,6 @@ public class CTCollectionLocalServiceUtil {
 		return getService().getCTMappingTableInfos(ctCollectionId);
 	}
 
-	public static Map<Long, List<com.liferay.change.tracking.model.CTEntry>>
-			getDiscardCTEntries(
-				long ctCollectionId, long modelClassNameId, long modelClassPK)
-		throws PortalException {
-
-		return getService().getDiscardCTEntries(
-			ctCollectionId, modelClassNameId, modelClassPK);
-	}
-
 	public static List<CTCollection> getExclusivePublishedCTCollections(
 			long modelClassNameId, long modelClassPK)
 		throws PortalException {
@@ -420,9 +411,19 @@ public class CTCollectionLocalServiceUtil {
 	}
 
 	public static List<com.liferay.change.tracking.model.CTEntry>
-		getRelatedCTEntries(long ctCollectionId, long[] ctEntryIds) {
+			getRelatedCTEntries(long ctCollectionId, long[] ctEntryIds)
+		throws PortalException {
 
 		return getService().getRelatedCTEntries(ctCollectionId, ctEntryIds);
+	}
+
+	public static Map<Long, List<com.liferay.change.tracking.model.CTEntry>>
+			getRelatedCTEntriesMap(
+				long ctCollectionId, long modelClassNameId, long modelClassPK)
+		throws PortalException {
+
+		return getService().getRelatedCTEntriesMap(
+			ctCollectionId, modelClassNameId, modelClassPK);
 	}
 
 	public static boolean hasUnapprovedChanges(long ctCollectionId)
@@ -436,6 +437,16 @@ public class CTCollectionLocalServiceUtil {
 
 		return getService().isCTEntryEnclosed(
 			ctCollectionId, modelClassNameId, modelClassPK);
+	}
+
+	public static void moveCTEntry(
+			long fromCTCollectionId, long toCTCollectionId,
+			long modelClassNameId, long modelClassPK)
+		throws PortalException {
+
+		getService().moveCTEntry(
+			fromCTCollectionId, toCTCollectionId, modelClassNameId,
+			modelClassPK);
 	}
 
 	public static CTCollection undoCTCollection(

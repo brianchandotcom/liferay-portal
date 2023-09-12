@@ -5,6 +5,7 @@
 
 package com.liferay.poshi.core.selenium;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,7 +20,8 @@ public interface LiferaySelenium {
 
 	public void antCommand(String fileName, String target) throws Exception;
 
-	public void assertAccessible(String filterByImpacts) throws Exception;
+	public void assertAccessible(List<String> ignorableImpacts)
+		throws Exception;
 
 	public void assertAlert(String pattern) throws Exception;
 
@@ -53,7 +55,8 @@ public interface LiferaySelenium {
 
 	public void assertEditable(String locator) throws Exception;
 
-	public void assertElementAccessible(String locator, String filterByImpacts)
+	public void assertElementAccessible(
+			String locator, List<String> ignorableImpacts)
 		throws Exception;
 
 	public void assertElementFocused(String locator) throws Exception;

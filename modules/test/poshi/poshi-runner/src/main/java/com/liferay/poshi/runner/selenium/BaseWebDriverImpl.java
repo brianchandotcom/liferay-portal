@@ -16,7 +16,6 @@ import com.liferay.poshi.core.selenium.LiferaySelenium;
 import com.liferay.poshi.core.util.CharPool;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.GetterUtil;
-import com.liferay.poshi.core.util.ListUtil;
 import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.StringPool;
 import com.liferay.poshi.core.util.StringUtil;
@@ -213,8 +212,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void assertAccessible(String filterByImpacts) throws Exception {
-		assertElementAccessible(null, filterByImpacts);
+	public void assertAccessible(List<String> ignorableImpacts)
+		throws Exception {
+
+		assertElementAccessible(null, ignorableImpacts);
 	}
 
 	@Override
@@ -342,7 +343,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void assertElementAccessible(String locator, String filterByImpacts)
+	public void assertElementAccessible(
+			String locator, List<String> ignorableImpacts)
 		throws Exception {
 
 		AxeBuilder axeBuilder = new AxeBuilder();
@@ -370,21 +372,16 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		List<Rule> rules = new ArrayList<>();
 
-		if (Validator.isNull(filterByImpacts)) {
+		if (ignorableImpacts == null) {
 			rules.addAll(violations);
 		}
 		else {
-			List<String> filterByImpactsList = new ArrayList<>(
-				Arrays.asList(filterByImpacts.split(",")));
+			for (Rule violation : violations) {
+				if (ignorableImpacts.contains(violation.getImpact())) {
+					continue;
+				}
 
-			for (String filterByImpact : filterByImpactsList) {
-				rules.addAll(
-					ListUtil.filter(
-						violations,
-						violation -> violation.getImpact(
-						).equals(
-							filterByImpact
-						)));
+				rules.add(violation);
 			}
 		}
 

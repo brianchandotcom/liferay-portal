@@ -1,9 +1,9 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.feature.flag.web.internal.company.feature.flags;
+package com.liferay.feature.flag.web.internal.feature.flag;
 
 import com.liferay.feature.flag.web.internal.manager.FeatureFlagPreferencesManager;
 import com.liferay.feature.flag.web.internal.model.DependencyAwareFeatureFlag;
@@ -13,6 +13,7 @@ import com.liferay.feature.flag.web.internal.model.PreferenceAwareFeatureFlag;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
@@ -20,8 +21,10 @@ import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -45,12 +48,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(service = CompanyFeatureFlagsProvider.class)
-public class CompanyFeatureFlagsProvider {
+@Component(service = FeatureFlagsBagProvider.class)
+public class FeatureFlagsBagProvider {
 
-	public CompanyFeatureFlags getOrCreateCompanyFeatureFlags(long companyId) {
-		return _companyFeatureFlagsMap.computeIfAbsent(
-			companyId, key -> _createCompanyFeatureFlags(key));
+	public FeatureFlagsBag getOrCreateFeatureFlagsBag(long companyId) {
+		return _featureFlagsBagMap.computeIfAbsent(
+			companyId, this::_createFeatureFlagsBag);
 	}
 
 	public void setEnabled(long companyId, String key, boolean enabled) {
@@ -73,26 +76,38 @@ public class CompanyFeatureFlagsProvider {
 		_clusterExecutor.execute(clusterRequest);
 	}
 
-	public <T> T withCompanyFeatureFlags(
-		long companyId, Function<CompanyFeatureFlags, T> function) {
+	public <T> T withFeatureFlagsBag(
+		long companyId, Function<FeatureFlagsBag, T> function) {
 
-		return function.apply(getOrCreateCompanyFeatureFlags(companyId));
+		return function.apply(getOrCreateFeatureFlagsBag(companyId));
 	}
 
 	private static void _setEnabled(
 		long companyId, String key, boolean enabled) {
 
-		CompanyFeatureFlags companyFeatureFlags = _companyFeatureFlagsMap.get(
-			companyId);
+		FeatureFlagsBag featureFlagsBag = _featureFlagsBagMap.get(companyId);
 
-		if (companyFeatureFlags == null) {
+		if (featureFlagsBag == null) {
 			return;
 		}
 
-		companyFeatureFlags.setEnabled(key, enabled);
+		featureFlagsBag.setEnabled(key, enabled);
 	}
 
-	private CompanyFeatureFlags _createCompanyFeatureFlags(long companyId) {
+	private FeatureFlagsBag _createFeatureFlagsBag(long companyId) {
+		Map<String, FeatureFlag> systemFeatureFlagMap = new HashMap<>();
+
+		if (companyId != CompanyConstants.SYSTEM) {
+			FeatureFlagsBag systemFeatureFlagsBag = getOrCreateFeatureFlagsBag(
+				CompanyConstants.SYSTEM);
+
+			for (FeatureFlag featureFlag :
+					systemFeatureFlagsBag.getFeatureFlags(null)) {
+
+				systemFeatureFlagMap.put(featureFlag.getKey(), featureFlag);
+			}
+		}
+
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
 
@@ -108,15 +123,22 @@ public class CompanyFeatureFlagsProvider {
 					continue;
 				}
 
-				FeatureFlag featureFlag = new FeatureFlagImpl(
-					stringPropertyName);
+				boolean system = GetterUtil.getBoolean(
+					properties.get(stringPropertyName + ".system"));
 
-				featureFlag = new LanguageAwareFeatureFlag(
-					featureFlag, _language);
-				featureFlag = new PreferenceAwareFeatureFlag(
-					companyId, featureFlag, _featureFlagPreferencesManager);
+				if ((system && (companyId == CompanyConstants.SYSTEM)) ||
+					(!system && (companyId != CompanyConstants.SYSTEM))) {
 
-				featureFlagsMap.put(featureFlag.getKey(), featureFlag);
+					FeatureFlag featureFlag = new FeatureFlagImpl(
+						stringPropertyName);
+
+					featureFlag = new LanguageAwareFeatureFlag(
+						featureFlag, _language);
+					featureFlag = new PreferenceAwareFeatureFlag(
+						companyId, featureFlag, _featureFlagPreferencesManager);
+
+					featureFlagsMap.put(featureFlag.getKey(), featureFlag);
+				}
 			}
 
 			for (Map.Entry<String, FeatureFlag> entry :
@@ -135,8 +157,30 @@ public class CompanyFeatureFlagsProvider {
 						continue;
 					}
 
+					if ((companyId == CompanyConstants.SYSTEM) &&
+						!GetterUtil.getBoolean(
+							properties.get(
+								FeatureFlagConstants.getKey(
+									dependencyKey,
+									ExtendedObjectClassDefinition.Scope.SYSTEM.
+										getValue())))) {
+
+						_log.error(
+							String.format(
+								"The system feature flag %s cannot depend on " +
+									"the non-system feature flag %s",
+								featureFlag.getKey(), dependencyKey));
+
+						continue;
+					}
+
 					FeatureFlag dependencyFeatureFlag = featureFlagsMap.get(
 						dependencyKey);
+
+					if (dependencyFeatureFlag == null) {
+						dependencyFeatureFlag = systemFeatureFlagMap.get(
+							dependencyKey);
+					}
 
 					if (dependencyFeatureFlag != null) {
 						if (!ArrayUtil.contains(
@@ -164,20 +208,20 @@ public class CompanyFeatureFlagsProvider {
 				}
 			}
 
-			return new CompanyFeatureFlags(
-				Collections.unmodifiableMap(featureFlagsMap));
+			return new FeatureFlagsBag(
+				Collections.unmodifiableMap(featureFlagsMap), companyId);
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CompanyFeatureFlagsProvider.class);
+		FeatureFlagsBagProvider.class);
 
-	private static final Map<Long, CompanyFeatureFlags>
-		_companyFeatureFlagsMap = new ConcurrentHashMap<>();
+	private static final Map<Long, FeatureFlagsBag> _featureFlagsBagMap =
+		new ConcurrentHashMap<>();
 	private static final Pattern _pattern = Pattern.compile("^([A-Z\\-0-9]+)$");
 	private static final MethodKey _setEnabledMethodKey = new MethodKey(
-		CompanyFeatureFlagsProvider.class, "_setEnabled", long.class,
-		String.class, boolean.class);
+		FeatureFlagsBagProvider.class, "_setEnabled", long.class, String.class,
+		boolean.class);
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;

@@ -1,16 +1,16 @@
 definition {
 
 	macro checkFacet {
-		FormFields.enableCheckbox(fieldName = ${facetValueName});
+		FormFields.enableCheckbox(fieldName = ${facetTerm});
 	}
 
 	macro checkFacetAndViewURL {
-		SearchFacetPortlet.checkFacet(facetValueName = ${facetValueName});
+		SearchFacetPortlet.checkFacet(facetTerm = ${facetTerm});
 
 		var searchURL = SearchFacetPortlet.generateFacetCheckedURL(
 			facetName = ${facetName},
-			facetValue = ${facetValue},
-			facetValueName = ${facetValueName},
+			termURLValue = ${termURLValue},
+			facetTerm = ${facetTerm},
 			searchPage = ${searchPage},
 			searchTerm = ${searchTerm},
 			searchURL = ${searchURL});
@@ -114,43 +114,43 @@ definition {
 		}
 
 		if (${facetName} == "Type Facet") {
-			var facetValue = SearchFacetPortlet.getFacetTypeValue(facetTypeValueName = ${facetValueName});
+			var termURLValue = SearchFacetPortlet.getFacetTypeValue(typeFacetTerm = ${facetTerm});
 		}
 		else if (${facetName} == "User Facet") {
-			var facetValue = SearchFacetPortlet.getUserFacetTermURLValue(userFacetTerm = ${facetValueName});
+			var termURLValue = SearchFacetPortlet.getUserFacetTermURLValue(userFacetTerm = ${facetTerm});
 		}
-		else if (!(isSet(facetValue))) {
-			var facetValue = ${facetValueName};
+		else if (!(isSet(termURLValue))) {
+			var termURLValue = ${facetTerm};
 		}
 
 		var searchURLList = StringUtil.replace(${searchURL}, "&", ",");
-		var facetValue = StringUtil.replace(${facetValue}, " ", "%20");
+		var termURLValue = StringUtil.replace(${termURLValue}, " ", "%20");
 		var facetURLName = StringUtil.replace(${facetName}, " Facet", "");
 
 		var facetURLName = StringUtil.toLowerCase(${facetURLName});
-		var facetValueList = ${facetValue};
+		var termURLValueList = ${termURLValue};
 
 		for (var facetKeyValuePair : list ${searchURLList}) {
 			if (contains(${facetKeyValuePair}, ${facetURLName})) {
 				var facetKeyValue = StringUtil.stripBetween(${facetKeyValuePair}, ${facetURLName}, "=");
 
-				var facetValueList = StringUtil.add(${facetValueList}, ${facetKeyValue});
+				var termURLValueList = StringUtil.add(${termURLValueList}, ${facetKeyValue});
 				var searchURL = StringUtil.stripBetween(${searchURL}, "&${facetURLName}", ${facetKeyValue});
 				var facetURLNameFound = "true";
 			}
 		}
 
 		if (${facetURLNameFound} == "true") {
-			var facetValueList = RegexUtil.replace(${facetValueList}, "(.*),$", 1);
+			var termURLValueList = RegexUtil.replace(${termURLValueList}, "(.*),$", 1);
 
-			var facetValueList = ListUtil.sort(${facetValueList});
+			var termURLValueList = ListUtil.sort(${termURLValueList});
 
-			for (var facetValueListValue : list ${facetValueList}) {
-				var searchURL = "${searchURL}&${facetURLName}=${facetValueListValue}";
+			for (var termURLValueListItem : list ${termURLValueList}) {
+				var searchURL = "${searchURL}&${facetURLName}=${termURLValueListItem}";
 			}
 		}
 		else {
-			var searchURL = "${searchURL}&${facetURLName}=${facetValue}";
+			var searchURL = "${searchURL}&${facetURLName}=${termURLValue}";
 		}
 
 		return ${searchURL};
@@ -171,13 +171,13 @@ definition {
 
 	macro generateFacetUncheckedURL {
 		if (${facetName} == "Type Facet") {
-			var facetValue = SearchFacetPortlet.getFacetTypeValue(facetTypeValueName = ${facetValueName});
+			var termURLValue = SearchFacetPortlet.getFacetTypeValue(typeFacetTerm = ${facetTerm});
 		}
 		else if (${facetName} == "User Facet") {
-			var facetValue = SearchFacetPortlet.getUserFacetTermURLValue(userFacetTerm = ${facetValueName});
+			var termURLValue = SearchFacetPortlet.getUserFacetTermURLValue(userFacetTerm = ${facetTerm});
 		}
-		else if (!(isSet(facetValue))) {
-			var facetValue = ${facetValueName};
+		else if (!(isSet(termURLValue))) {
+			var termURLValue = ${facetTerm};
 		}
 
 		var facetURLName = StringUtil.replace(${facetName}, " Facet", "");
@@ -187,15 +187,15 @@ definition {
 		var beforeFacetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetURLName}[^&]+)+)(.*)", 1);
 		var facetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetURLName}[^&]+)+)(.*)", 2);
 		var afterFacetGroup = RegexUtil.replace(${searchURL}, "^(.*?)((?:&${facetURLName}[^&]+)+)(.*)", 3);
-		var facetValue = StringUtil.replace(${facetValue}, " ", "%20");
+		var termURLValue = StringUtil.replace(${termURLValue}, " ", "%20");
 		var facetGroupList = ${facetGroup};
 
-		while (${facetValueFound} != "true") {
+		while (${termURLValueFound} != "true") {
 			var facetKeyValuePair = RegexUtil.replace(${facetGroupList}, "(&[^&]+)(.*)", 1);
 
-			if (contains(${facetKeyValuePair}, ${facetValue})) {
+			if (contains(${facetKeyValuePair}, ${termURLValue})) {
 				var facetGroup = StringUtil.replaceFirst(${facetGroup}, ${facetKeyValuePair}, "");
-				var facetValueFound = "true";
+				var termURLValueFound = "true";
 			}
 			else {
 				var facetGroupList = StringUtil.replaceFirst(${facetGroupList}, ${facetKeyValuePair}, "");
@@ -208,31 +208,31 @@ definition {
 	}
 
 	macro getFacetTypeValue {
-		if (contains(${facetTypeValueName}, "Blogs")) {
-			var facetTypeValue = "com.liferay.blogs.model.BlogsEntry";
-			var facetValueFound = "true";
+		if (contains(${typeFacetTerm}, "Blogs")) {
+			var typeFacetTermURLValue = "com.liferay.blogs.model.BlogsEntry";
+			var termURLValueFound = "true";
 		}
 
-		if (contains(${facetTypeValueName}, "Document")) {
-			var facetTypeValue = "com.liferay.document.library.kernel.model.DLFileEntry";
-			var facetValueFound = "true";
+		if (contains(${typeFacetTerm}, "Document")) {
+			var typeFacetTermURLValue = "com.liferay.document.library.kernel.model.DLFileEntry";
+			var termURLValueFound = "true";
 		}
 
-		if (contains(${facetTypeValueName}, "Web Content Article")) {
-			var facetTypeValue = "com.liferay.journal.model.JournalArticle";
-			var facetValueFound = "true";
+		if (contains(${typeFacetTerm}, "Web Content Article")) {
+			var typeFacetTermURLValue = "com.liferay.journal.model.JournalArticle";
+			var termURLValueFound = "true";
 		}
 
-		if (contains(${facetTypeValueName}, "Web Content Folder")) {
-			var facetTypeValue = "com.liferay.journal.model.JournalArticle";
-			var facetValueFound = "true";
+		if (contains(${typeFacetTerm}, "Web Content Folder")) {
+			var typeFacetTermURLValue = "com.liferay.journal.model.JournalArticle";
+			var termURLValueFound = "true";
 		}
 
-		if (${facetValueFound} != "true") {
+		if (${termURLValueFound} != "true") {
 			fail("Type Facet term URL value has not been set correctly.");
 		}
 
-		return ${facetTypeValue};
+		return ${typeFacetTermURLValue};
 	}
 
 	macro getUserFacetTermURLValue {
@@ -268,16 +268,16 @@ definition {
 	}
 
 	macro uncheckFacet {
-		FormFields.disableCheckbox(fieldName = ${facetValueName});
+		FormFields.disableCheckbox(fieldName = ${facetTerm});
 	}
 
 	macro uncheckFacetAndViewURL {
-		SearchFacetPortlet.uncheckFacet(facetValueName = ${facetValueName});
+		SearchFacetPortlet.uncheckFacet(facetTerm = ${facetTerm});
 
 		var searchURL = SearchFacetPortlet.generateFacetUncheckedURL(
 			facetName = ${facetName},
-			facetValue = ${facetValue},
-			facetValueName = ${facetValueName},
+			termURLValue = ${termURLValue},
+			facetTerm = ${facetTerm},
 			searchURL = ${searchURL});
 
 		AssertLocation(value1 = ${searchURL});

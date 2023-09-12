@@ -53,7 +53,7 @@ definition {
 			checkboxName = "fruit",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		SearchFacetPortlet.checkFacet(facetValueName = "Blogs Entry");
+		SearchFacetPortlet.checkFacet(facetTerm = "Blogs Entry");
 
 		AssertElementNotPresent(
 			checkboxName = "fruit",
@@ -67,7 +67,7 @@ definition {
 			checkboxName = "fruit",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		SearchFacetPortlet.uncheckFacet(facetValueName = "Blogs Entry");
+		SearchFacetPortlet.uncheckFacet(facetTerm = "Blogs Entry");
 
 		AssertElementPresent(
 			checkboxName = "fruit",
@@ -81,13 +81,13 @@ definition {
 			checkboxName = "fruit",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		SearchFacetPortlet.checkFacet(facetValueName = "Blogs Entry");
+		SearchFacetPortlet.checkFacet(facetTerm = "Blogs Entry");
 
 		AssertElementPresent(
 			checkboxName = "fruit",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		SearchFacetPortlet.checkFacet(facetValueName = "fruit");
+		SearchFacetPortlet.checkFacet(facetTerm = "fruit");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "apple");
 
@@ -409,7 +409,7 @@ definition {
 
 		var siteName = TestCase.getSiteName();
 
-		SearchFacetPortlet.checkFacet(facetValueName = ${siteName});
+		SearchFacetPortlet.checkFacet(facetTerm = ${siteName});
 
 		SearchPortlets.searchWidget(searchTerm = "test");
 
@@ -523,7 +523,7 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "Type Facet",
-			facetValueName = "Web Content Article",
+			facetTerm = "Web Content Article",
 			searchPage = "Search Page",
 			searchTerm = "apple");
 
@@ -535,7 +535,7 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "Type Facet",
-			facetValueName = "Blogs Entry",
+			facetTerm = "Blogs Entry",
 			searchURL = ${testSearchURL});
 
 		SearchResultPortlet.viewMultipleSearchResults(
@@ -546,7 +546,7 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetName = "Type Facet",
-			facetValueName = "Web Content Article",
+			facetTerm = "Web Content Article",
 			searchURL = ${testSearchURL});
 
 		SearchResultPortlet.viewMultipleSearchResults(
@@ -571,8 +571,8 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "Category Facet",
-			facetValue = ${organicCategoryId},
-			facetValueName = "organic",
+			termURLValue = ${organicCategoryId},
+			facetTerm = "organic",
 			searchURL = ${testSearchURL});
 
 		SearchResultPortlet.viewMultipleSearchResults(
@@ -583,7 +583,7 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "User Facet",
-			facetValueName = "userfn userln",
+			facetTerm = "userfn userln",
 			searchURL = ${testSearchURL});
 
 		SearchResultPortlet.viewMultipleSearchResults(
@@ -594,7 +594,7 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetName = "User Facet",
-			facetValueName = "userfn userln",
+			facetTerm = "userfn userln",
 			searchURL = ${testSearchURL});
 
 		SearchResultPortlet.viewMultipleSearchResults(
@@ -613,12 +613,12 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "Tag Facet",
-			facetValueName = "sweet",
+			facetTerm = "sweet",
 			searchURL = ${testSearchURL});
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "Tag Facet",
-			facetValueName = "fresh",
+			facetTerm = "fresh",
 			searchURL = ${testSearchURL});
 
 		SearchResultPortlet.viewMultipleSearchResults(
@@ -634,8 +634,8 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "Site Facet",
-			facetValue = ${liferaySiteId},
-			facetValueName = ${siteName},
+			termURLValue = ${liferaySiteId},
+			facetTerm = ${siteName},
 			searchURL = ${testSearchURL});
 		var newSiteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "New Site",
@@ -643,8 +643,8 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "Site Facet",
-			facetValue = ${newSiteId},
-			facetValueName = "New Site",
+			termURLValue = ${newSiteId},
+			facetTerm = "New Site",
 			searchURL = ${testSearchURL});
 
 		SearchResultPortlet.viewMultipleSearchResults(
@@ -655,8 +655,8 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetName = "Site Facet",
-			facetValue = ${newSiteId},
-			facetValueName = "New Site",
+			termURLValue = ${newSiteId},
+			facetTerm = "New Site",
 			searchURL = ${testSearchURL});
 
 		SearchResultPortlet.viewMultipleSearchResults(
@@ -671,8 +671,8 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "Folder Facet",
-			facetValue = ${webContentFolderId2},
-			facetValueName = "WC Folder Name 2",
+			termURLValue = ${webContentFolderId2},
+			facetTerm = "WC Folder Name 2",
 			searchURL = ${testSearchURL});
 
 		SearchResultPortlet.viewMultipleSearchResults(
@@ -683,7 +683,7 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "Tag Facet",
-			facetValueName = "ripe",
+			facetTerm = "ripe",
 			searchURL = ${testSearchURL});
 
 		SearchResultPortlet.viewMultipleSearchResults(
@@ -694,13 +694,13 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetName = "Folder Facet",
-			facetValue = ${webContentFolderId2},
-			facetValueName = "WC Folder Name 2",
+			termURLValue = ${webContentFolderId2},
+			facetTerm = "WC Folder Name 2",
 			searchURL = ${testSearchURL});
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetName = "Tag Facet",
-			facetValueName = "fresh",
+			facetTerm = "fresh",
 			searchURL = ${testSearchURL});
 
 		SearchResultPortlet.viewMultipleSearchResults(
@@ -719,8 +719,8 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "Category Facet",
-			facetValue = ${organicCategoryId},
-			facetValueName = "organic",
+			termURLValue = ${organicCategoryId},
+			facetTerm = "organic",
 			searchURL = ${testSearchURL});
 		var webContentFolderId1 = JSONWebcontent.getFolderIdByFolderName(
 			folderName = "WC Folder Name 1",
@@ -728,29 +728,29 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "Folder Facet",
-			facetValue = ${webContentFolderId1},
-			facetValueName = "WC Folder Name 1",
+			termURLValue = ${webContentFolderId1},
+			facetTerm = "WC Folder Name 1",
 			searchURL = ${testSearchURL});
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "Site Facet",
-			facetValue = ${liferaySiteId},
-			facetValueName = ${siteName},
+			termURLValue = ${liferaySiteId},
+			facetTerm = ${siteName},
 			searchURL = ${testSearchURL});
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "Tag Facet",
-			facetValueName = "ripe",
+			facetTerm = "ripe",
 			searchURL = ${testSearchURL});
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "Type Facet",
-			facetValueName = "Web Content Article",
+			facetTerm = "Web Content Article",
 			searchURL = ${testSearchURL});
 
 		var testSearchURL = SearchFacetPortlet.checkFacetAndViewURL(
 			facetName = "User Facet",
-			facetValueName = "test test",
+			facetTerm = "test test",
 			searchURL = ${testSearchURL});
 
 		SearchResultPortlet.viewMultipleSearchResults(

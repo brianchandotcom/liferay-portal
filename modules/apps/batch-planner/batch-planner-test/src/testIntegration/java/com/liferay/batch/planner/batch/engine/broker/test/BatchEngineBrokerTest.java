@@ -226,14 +226,29 @@ public class BatchEngineBrokerTest {
 			ServiceContextTestUtil.getServiceContext(companyId, 0, userId));
 	}
 
+	private void _assertActionsContentNotNull(JsonNode actionJsonNode) {
+		String[] actionKeys = {"delete", "get", "permissions", "update"};
+
+		for (String actionKey : actionKeys) {
+			JsonNode jsonNode = actionJsonNode.get(actionKey);
+
+			Assert.assertTrue(!jsonNode.isEmpty());
+		}
+	}
+
 	private void _assertEquals(JsonNode expectedJsonNode, JsonNode jsonNode) {
 		for (String fieldName : _fieldNames) {
 			JsonNode expectedFieldJsonNode = expectedJsonNode.get(fieldName);
 
 			JsonNode fieldJsonNode = jsonNode.get(fieldName);
 
-			Assert.assertEquals(
-				expectedFieldJsonNode.toString(), fieldJsonNode.toString());
+			if (Objects.equals(fieldName, "actions")) {
+				_assertActionsContentNotNull(fieldJsonNode);
+			}
+			else {
+				Assert.assertEquals(
+					expectedFieldJsonNode.toString(), fieldJsonNode.toString());
+			}
 		}
 	}
 
@@ -492,7 +507,7 @@ public class BatchEngineBrokerTest {
 	}
 
 	private static final List<String> _fieldNames = Arrays.asList(
-		"dateCreated", "dateModified", "externalReferenceCode", "id",
+		"actions", "dateCreated", "dateModified", "externalReferenceCode", "id",
 		"testAttachmentField", "testBooleanField", "testDateField",
 		"testDateTimeField", "testDecimalField", "testIntegerField",
 		"testLongIntegerField", "testLongTextField",

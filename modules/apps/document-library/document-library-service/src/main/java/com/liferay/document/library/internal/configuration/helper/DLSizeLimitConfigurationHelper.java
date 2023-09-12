@@ -24,6 +24,7 @@ import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -165,7 +166,10 @@ public class DLSizeLimitConfigurationHelper {
 	}
 
 	@Activate
+	@Modified
 	protected void activate(Map<String, Object> properties) {
+		_companyMimeTypeSizeLimitsMap = new ConcurrentHashMap<>();
+		_groupMimeTypeSizeLimitsMap = new ConcurrentHashMap<>();
 		_systemDLSizeLimitConfiguration = ConfigurableUtil.createConfigurable(
 			DLSizeLimitConfiguration.class, properties);
 	}
@@ -235,8 +239,7 @@ public class DLSizeLimitConfigurationHelper {
 	private final Map<Long, DLSizeLimitConfiguration>
 		_companyConfigurationBeans = new ConcurrentHashMap<>();
 	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
-	private final Map<Long, Map<String, Long>> _companyMimeTypeSizeLimitsMap =
-		new ConcurrentHashMap<>();
+	private volatile Map<Long, Map<String, Long>> _companyMimeTypeSizeLimitsMap;
 	private final Map<Long, DLSizeLimitConfiguration> _groupConfigurationBeans =
 		new ConcurrentHashMap<>();
 	private final Map<String, Long> _groupIds = new ConcurrentHashMap<>();
@@ -244,8 +247,7 @@ public class DLSizeLimitConfigurationHelper {
 	@Reference
 	private GroupLocalService _groupLocalService;
 
-	private final Map<Long, Map<String, Long>> _groupMimeTypeSizeLimitsMap =
-		new ConcurrentHashMap<>();
-	private DLSizeLimitConfiguration _systemDLSizeLimitConfiguration;
+	private volatile Map<Long, Map<String, Long>> _groupMimeTypeSizeLimitsMap;
+	private volatile DLSizeLimitConfiguration _systemDLSizeLimitConfiguration;
 
 }

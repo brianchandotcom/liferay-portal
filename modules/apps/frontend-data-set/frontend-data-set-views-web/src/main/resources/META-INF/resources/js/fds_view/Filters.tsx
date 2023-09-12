@@ -40,6 +40,7 @@ enum EFilterType {
 }
 
 enum EFieldFormat {
+	DATE = 'date',
 	DATE_TIME = 'date-time',
 	STRING = 'string',
 }
@@ -195,7 +196,10 @@ function AddFDSFilterModalContent({
 		let displayType: string = '';
 		let url: string = '';
 
-		if (selectedField.format === EFieldFormat.DATE_TIME) {
+		if (
+			selectedField.format === EFieldFormat.DATE_TIME ||
+			selectedField.format === EFieldFormat.DATE
+		) {
 			url = API_URL.FDS_DATE_FILTERS;
 
 			body = {
@@ -833,7 +837,8 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 				(filterType === EFilterType.SELECTION &&
 					item.format === EFieldFormat.STRING) ||
 				(filterType === EFilterType.DATE_RANGE &&
-					item.format === EFieldFormat.DATE_TIME)
+					item.format === EFieldFormat.DATE_TIME) ||
+				item.format === EFieldFormat.DATE
 		);
 
 		if (!availableFields.length) {

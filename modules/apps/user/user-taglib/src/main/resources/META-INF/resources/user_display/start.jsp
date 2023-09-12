@@ -24,9 +24,10 @@
 				}
 				%>
 
-				<aui:a href="<%= url %>">
-					<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
-				</aui:a>
+				<clay:link
+					href="<%= url %>"
+					label="<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>"
+				/>
 			</div>
 		</div>
 

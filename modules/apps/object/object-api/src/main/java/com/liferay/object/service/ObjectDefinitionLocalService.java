@@ -296,10 +296,6 @@ public interface ObjectDefinitionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<ObjectDefinition> getModifiableObjectDefinitions(
-		long companyId, boolean active, int status);
-
 	/**
 	 * Returns the object definition with the primary key.
 	 *

@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.UserPermission;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -50,7 +50,7 @@ public class EditDisplaySettingsMVCActionCommand extends BaseMVCActionCommand {
 
 		User user = _portal.getSelectedUser(actionRequest);
 
-		_userPermission.check(
+		UserPermissionUtil.check(
 			themeDisplay.getPermissionChecker(), user.getUserId(),
 			ActionKeys.UPDATE);
 
@@ -77,8 +77,5 @@ public class EditDisplaySettingsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UserPermission _userPermission;
 
 }

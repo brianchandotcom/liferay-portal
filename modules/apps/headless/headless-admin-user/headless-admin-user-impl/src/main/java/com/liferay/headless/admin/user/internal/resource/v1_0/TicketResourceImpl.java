@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.UserPermission;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ public class TicketResourceImpl extends BaseTicketResourceImpl {
 	private Ticket _getTicket(int type, Long userAccountId) throws Exception {
 		_userLocalService.getUser(userAccountId);
 
-		_userPermission.check(
+		UserPermissionUtil.check(
 			PermissionThreadLocal.getPermissionChecker(), userAccountId,
 			ActionKeys.UPDATE);
 
@@ -80,8 +80,5 @@ public class TicketResourceImpl extends BaseTicketResourceImpl {
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UserPermission _userPermission;
 
 }

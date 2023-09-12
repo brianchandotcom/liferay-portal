@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ContactLocalService;
-import com.liferay.portal.kernel.service.permission.UserPermission;
+import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -60,7 +60,7 @@ public class UpdateUserContactInformationFormMVCActionCommand
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			_userPermission.check(
+			UserPermissionUtil.check(
 				themeDisplay.getPermissionChecker(), user.getUserId(),
 				ActionKeys.UPDATE);
 
@@ -142,8 +142,5 @@ public class UpdateUserContactInformationFormMVCActionCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UserPermission _userPermission;
 
 }

@@ -10,6 +10,7 @@ import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayo
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
@@ -50,7 +51,7 @@ public class LockedLayoutsPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			LockedLayoutsDisplayContext.class.getName(),
 			new LockedLayoutsDisplayContext(
-				_language, _layoutLockManager,
+				_language, _layoutLocalService, _layoutLockManager,
 				_portal.getLiferayPortletRequest(renderRequest),
 				_portal.getLiferayPortletResponse(renderResponse)));
 
@@ -59,6 +60,9 @@ public class LockedLayoutsPortlet extends MVCPortlet {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutLockManager _layoutLockManager;

@@ -99,12 +99,12 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 	}
 
 	private void _lockLayout(Layout layout, User user) throws Exception {
+		MockActionRequest mockActionRequest = new MockActionRequest();
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setLayout(layout);
 		themeDisplay.setUser(user);
-
-		MockActionRequest mockActionRequest = new MockActionRequest();
 
 		mockActionRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 

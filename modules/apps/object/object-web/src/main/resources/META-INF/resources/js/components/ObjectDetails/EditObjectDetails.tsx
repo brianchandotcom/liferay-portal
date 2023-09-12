@@ -214,6 +214,7 @@ export default function EditObjectDetails({
 						hasUpdateObjectDefinitionPermission
 					}
 					isApproved={isApproved}
+					isRootDescendantNode={isRootDescendantNode}
 					label={getLocalizableLabel(
 						values.defaultLanguageId as Liferay.Language.Locale,
 						values.label,

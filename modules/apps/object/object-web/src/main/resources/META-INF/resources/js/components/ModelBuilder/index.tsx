@@ -39,7 +39,7 @@ export default function CustomObjectFolderWrapper({
 	objectRelationshipDeletionTypes,
 	objectWebLearnResources,
 	siteKeyValuePairs,
-	workflowStatusJSONArray
+	workflowStatusJSONArray,
 }: CustomObjectFolderWrapperProps) {
 	return (
 		<ReactFlowProvider>

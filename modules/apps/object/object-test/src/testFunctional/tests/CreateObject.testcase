@@ -8565,6 +8565,8 @@ definition {
 
 		PortletEntry.save();
 
+		Refresh();
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",

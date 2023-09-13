@@ -395,6 +395,10 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			_getRelatedObjectEntries(
 				fdsViewObjectDefinition, fdsViewObjectEntry,
 				"fdsViewFDSDynamicFilterRelationship"));
+		fdsFilterObjectEntries.addAll(
+			_getRelatedObjectEntries(
+				fdsViewObjectDefinition, fdsViewObjectEntry,
+				"fdsViewFDSClientExtensionFilterRelationship"));
 
 		return JSONUtil.toJSONArray(
 			fdsFilterObjectEntries,

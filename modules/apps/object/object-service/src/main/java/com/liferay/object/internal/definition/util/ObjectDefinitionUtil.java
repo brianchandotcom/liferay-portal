@@ -68,6 +68,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"FDSAction", "/data-set-manager/actions"
 		).put(
+			"FDSClientExtensionFilter", "/data-set-manager/client-extension-filters"
+		).put(
 			"FDSDateFilter", "/data-set-manager/date-filters"
 		).put(
 			"FDSDynamicFilter", "/data-set-manager/dynamic-filters"

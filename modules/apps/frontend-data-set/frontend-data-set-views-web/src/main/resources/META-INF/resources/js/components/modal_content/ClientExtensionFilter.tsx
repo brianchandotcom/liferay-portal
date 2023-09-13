@@ -7,15 +7,14 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import React from 'react';
 
 function Header() {
 	return <>{Liferay.Language.get('new-client-extension-filter')}</>;
 }
 
-function Body({fdsFilterClientExtensions, namespace, selectedFdsFilterClientExtension}: any) {
-	const [selectedFilter, setSelectedFilter] = useState(selectedFdsFilterClientExtension)
-	const fdsFilterClientExtensionFormElementId = `${namespace}FDSFilterClientExtension`;
+function Body({fdsFilterClientExtensions, namespace, onSelectedClientExtensionChange, selectedClientExtension}: any) {
+	const fdsFilterClientExtensionFormElementId = `${namespace}FDSFilterClientExtensionERC`;
 
 	return (
 		<ClayForm.Group className="form-group-autofit">
@@ -26,7 +25,7 @@ function Body({fdsFilterClientExtensions, namespace, selectedFdsFilterClientExte
 					{Liferay.Language.get('client-extension')}
 				</label>
 
-				<input name={fdsFilterClientExtensionFormElementId} type="hidden" value={selectedFdsFilterClientExtension?.erc} />
+				<input name={fdsFilterClientExtensionFormElementId} type="hidden" value={selectedClientExtension?.erc} />
 
 				<ClayDropDown
 					closeOnClick
@@ -39,7 +38,7 @@ function Body({fdsFilterClientExtensions, namespace, selectedFdsFilterClientExte
 							className="form-control form-control-select form-control-select-secondary"
 							displayType="secondary"
 						>
-							{selectedFilter ? selectedFilter.name : Liferay.Language.get('select')}
+							{selectedClientExtension ? selectedClientExtension.name : Liferay.Language.get('select')}
 						</ClayButton>
 					}
 				>
@@ -48,7 +47,7 @@ function Body({fdsFilterClientExtensions, namespace, selectedFdsFilterClientExte
 							<ClayDropDown.Item
 								className="align-items-center d-flex justify-content-between"
 								key={filterClientExtension.name}
-								onClick={() => setSelectedFilter(filterClientExtension)}
+								onClick={() => onSelectedClientExtensionChange(filterClientExtension)}
 								roleItem="option"
 							>
 								{filterClientExtension.name}

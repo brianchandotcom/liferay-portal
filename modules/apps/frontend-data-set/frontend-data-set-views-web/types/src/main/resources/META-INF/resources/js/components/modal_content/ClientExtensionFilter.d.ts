@@ -9,7 +9,8 @@ declare function Header(): JSX.Element;
 declare function Body({
 	fdsFilterClientExtensions,
 	namespace,
-	selectedFdsFilterClientExtension,
+	onSelectedClientExtensionChange,
+	selectedClientExtension,
 }: any): JSX.Element;
 declare const _default: {
 	Body: typeof Body;

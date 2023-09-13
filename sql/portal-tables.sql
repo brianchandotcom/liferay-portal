@@ -809,6 +809,7 @@ create table LayoutSetPrototype (
 create table ListType (
 	mvccVersion LONG default 0 not null,
 	listTypeId LONG not null primary key,
+	companyId LONG,
 	name VARCHAR(75) null,
 	type_ VARCHAR(75) null
 );

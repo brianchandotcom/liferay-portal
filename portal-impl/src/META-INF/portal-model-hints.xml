@@ -966,6 +966,7 @@
 	<model name="com.liferay.portal.kernel.model.ListType">
 		<field name="mvccVersion" type="long" />
 		<field name="listTypeId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="name" type="String" />
 		<field name="type" type="String" />
 	</model>

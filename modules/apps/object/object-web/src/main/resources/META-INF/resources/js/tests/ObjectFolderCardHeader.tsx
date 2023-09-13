@@ -11,13 +11,13 @@ import React from 'react';
 import ObjectFolderCardHeader from '../components/ViewObjectDefinitions/ObjectFolderCardHeader';
 import {getObjectFolderActions} from '../components/ViewObjectDefinitions/objectDefinitionUtil';
 
-describe('The CardHeader component should', () => {
-	it('render all the folder actions', () => {
+describe('The ObjectFolderCardHeader component should', () => {
+	it('render all object folder actions', () => {
 		render(
 			<ObjectFolderCardHeader
 				externalReferenceCode="ticketERC"
 				items={
-					getObjectFolderActions(1010, '', () => {}, {
+					getObjectFolderActions(1, '', () => {}, {
 						delete: {href: '', method: 'DELETE'},
 						get: {href: 'GET', method: ''},
 						permissions: {href: 'PATCH', method: ''},
@@ -40,12 +40,12 @@ describe('The CardHeader component should', () => {
 		expect(screen.getByText('delete-folder')).toBeInTheDocument();
 	});
 
-	it('not render delete and edit folder actions on uncategorized folder', () => {
+	it('not render delete and edit object folder actions on uncategorized object folder', () => {
 		render(
 			<ObjectFolderCardHeader
 				externalReferenceCode="uncategorized"
 				items={
-					getObjectFolderActions(1010, '', () => {}, {
+					getObjectFolderActions(1, '', () => {}, {
 						get: {href: 'GET', method: ''},
 						permissions: {href: 'PATCH', method: ''},
 					}) as IItem[]

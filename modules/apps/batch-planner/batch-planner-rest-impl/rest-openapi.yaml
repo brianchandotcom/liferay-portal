@@ -153,12 +153,12 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Plan"
             tags: ["Plan"]
-    /plans/{internalClassName}/fields:
+    /plans/{internalClassNameKey}/fields:
         get:
-            operationId: getPlanInternalClassNameFieldsPage
+            operationId: getPlanInternalClassNameKeyFieldsPage
             parameters:
                 - in: path
-                  name: internalClassName
+                  name: internalClassNameKey
                   required: true
                   schema:
                       type: string
@@ -181,12 +181,12 @@ paths:
                                     $ref: "#/components/schemas/Field"
                                 type: array
             tags: ["Field"]
-    /plans/{internalClassName}/site-scopes:
+    /plans/{internalClassNameKey}/site-scopes:
         get:
-            operationId: getPlanInternalClassNameSiteScopesPage
+            operationId: getPlanInternalClassNameKeySiteScopesPage
             parameters:
                 - in: path
-                  name: internalClassName
+                  name: internalClassNameKey
                   required: true
                   schema:
                       type: string
@@ -209,12 +209,12 @@ paths:
                                     $ref: "#/components/schemas/SiteScope"
                                 type: array
             tags: ["SiteScope"]
-    /plans/{internalClassName}/strategies:
+    /plans/{internalClassNameKey}/strategies:
         get:
-            operationId: getPlanInternalClassNameStrategiesPage
+            operationId: getPlanInternalClassNameKeyStrategiesPage
             parameters:
                 - in: path
-                  name: internalClassName
+                  name: internalClassNameKey
                   required: true
                   schema:
                       type: string
@@ -232,12 +232,12 @@ paths:
                                     $ref: "#/components/schemas/Strategy"
                                 type: array
             tags: ["Strategy"]
-    /plans/{internalClassName}/template:
+    /plans/{internalClassNameKey}/template:
         get:
             operationId: getPlanTemplate
             parameters:
                 - in: path
-                  name: internalClassName
+                  name: internalClassNameKey
                   required: true
                   schema:
                       type: string

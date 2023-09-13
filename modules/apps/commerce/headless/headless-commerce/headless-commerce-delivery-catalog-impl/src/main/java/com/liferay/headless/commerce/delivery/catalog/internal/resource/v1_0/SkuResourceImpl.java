@@ -177,7 +177,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 	@Override
 	public Sku postChannelProductSkuBySkuOption(
 			Long channelId, Long productId, Long accountId, BigDecimal quantity,
-			String unitOfMeasureKey, SkuOption[] skuOptions)
+			String skuUnitOfMeasureKey, SkuOption[] skuOptions)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -216,8 +216,8 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 				commerceContext, contextCompany.getCompanyId(), cpDefinition,
 				contextAcceptLanguage.getPreferredLocale(),
 				BigDecimalUtil.get(quantity, BigDecimal.ONE),
-				cpInstance.getCPInstanceId(), unitOfMeasureKey, contextUriInfo,
-				contextUser));
+				cpInstance.getCPInstanceId(), skuUnitOfMeasureKey,
+				contextUriInfo, contextUser));
 	}
 
 	private CommerceContext _getCommerceContext(

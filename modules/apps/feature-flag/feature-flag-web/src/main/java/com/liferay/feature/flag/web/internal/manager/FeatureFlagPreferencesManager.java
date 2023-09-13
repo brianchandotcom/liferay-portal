@@ -6,7 +6,6 @@
 package com.liferay.feature.flag.web.internal.manager;
 
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -24,8 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 public class FeatureFlagPreferencesManager {
 
 	public Boolean isEnabled(long companyId, String key) {
-		if ((companyId == CompanyConstants.SYSTEM) ||
-			Validator.isNull(
+		if (Validator.isNull(
 				_portalPreferencesLocalService.fetchPortalPreferences(
 					companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY))) {
 

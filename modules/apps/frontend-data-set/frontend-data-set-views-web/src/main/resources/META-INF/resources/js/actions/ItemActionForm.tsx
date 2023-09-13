@@ -15,6 +15,7 @@ import React, {useEffect, useState} from 'react';
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
 import {FDSViewType} from '../FDSViews';
 import RequiredMark from '../components/RequiredMark';
+import {IFDSAction} from '../fds_view/Actions';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 
@@ -49,11 +50,14 @@ const TYPES = [
 ];
 
 interface IFDSItemActionFormProps {
+	activeSection: string;
 	fdsView: FDSViewType;
+	initialValues?: IFDSAction;
 	loadFDSActions: () => void;
 	namespace: string;
 	sections: {
 		ACTIONS: string;
+		EDIT_ITEM_ACTION: string;
 		NEW_ITEM_ACTION: string;
 	};
 	setActiveSection: (arg: string) => void;
@@ -61,7 +65,9 @@ interface IFDSItemActionFormProps {
 }
 
 const ItemActionForm = ({
+	activeSection,
 	fdsView,
+	initialValues,
 	loadFDSActions,
 	namespace,
 	sections,
@@ -81,16 +87,18 @@ const ItemActionForm = ({
 	const [
 		confirmationMessageTranslations,
 		setConfirmationMessageTranslations,
-	] = useState({});
-	const [labelTranslations, setLabelTranslations] = useState({});
+	] = useState(initialValues?.confirmationMessage_i18n ?? {});
+	const [labelTranslations, setLabelTranslations] = useState(
+		initialValues?.label_i18n ?? {}
+	);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
 
 	const [actionData, setActionData] = useState({
-		confirmationMessage: '',
-		iconSymbol: '',
-		label: '',
-		type: 'link',
-		url: '',
+		confirmationMessage: initialValues?.confirmationMessage ?? '',
+		iconSymbol: initialValues?.icon ?? '',
+		label: initialValues?.label ?? '',
+		type: initialValues?.type ?? 'link',
+		url: initialValues?.url ?? '',
 	});
 
 	const saveFDSAction = async () => {
@@ -114,13 +122,21 @@ const ItemActionForm = ({
 			body.label = labelTranslations;
 		}
 
-		const response = await fetch(API_URL.FDS_ACTIONS, {
+		let fetchURL = API_URL.FDS_ACTIONS;
+		let fetchMethod = 'POST';
+
+		if (activeSection === sections.EDIT_ITEM_ACTION) {
+			fetchURL = `${API_URL.FDS_ACTIONS}/${initialValues?.id}`;
+			fetchMethod = 'PUT';
+		}
+
+		const response = await fetch(fetchURL, {
 			body: JSON.stringify(body),
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
 			},
-			method: 'POST',
+			method: fetchMethod,
 		});
 
 		if (!response.ok) {
@@ -173,7 +189,9 @@ const ItemActionForm = ({
 	return (
 		<>
 			<h2 className="mb-0 p-4">
-				{Liferay.Language.get('new-item-action')}
+				{activeSection === sections.NEW_ITEM_ACTION
+					? Liferay.Language.get('new-item-action')
+					: initialValues?.label}
 			</h2>
 
 			<ClayPanel
@@ -271,6 +289,10 @@ const ItemActionForm = ({
 								</label>
 
 								<ClaySelectWithOption
+									disabled={
+										activeSection ===
+										sections.EDIT_ITEM_ACTION
+									}
 									id={typeFormElementId}
 									onChange={(event) =>
 										setActionData({

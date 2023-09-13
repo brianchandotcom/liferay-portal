@@ -19,6 +19,7 @@ import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 
 const SECTIONS = {
 	ACTIONS: 'actions',
+	EDIT_ITEM_ACTION: 'edit-item-action',
 	NEW_ITEM_ACTION: 'new-item-action',
 };
 
@@ -30,8 +31,16 @@ interface IFDSAction {
 			method: string;
 		};
 	};
+	confirmationMessage: string;
+	confirmationMessage_i18n: {
+		[key: string]: string;
+	};
 	icon: string;
 	id: number;
+	label: string;
+	label_i18n: {
+		[key: string]: string;
+	};
 	type: string;
 	url: string;
 }
@@ -44,6 +53,38 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 	const [fdsActions, setFDSActions] = useState<Array<IFDSAction>>([]);
 	const [loading, setLoading] = useState(true);
 	const [newActionsOrder, setNewActionsOrder] = useState<string>('');
+	const [initialActionFormValues, setInitialActionFormValues] = useState<
+		IFDSAction
+	>();
+
+	const getBreadcrumbItems = () => {
+		const breadcrumbItems: React.ComponentProps<
+			typeof ClayBreadcrumb
+		>['items'] = [
+			{
+				active: activeSection === SECTIONS.ACTIONS,
+				label: Liferay.Language.get('actions'),
+				onClick: () => setActiveSection(SECTIONS.ACTIONS),
+			},
+		];
+
+		if (activeSection === SECTIONS.NEW_ITEM_ACTION) {
+			breadcrumbItems.push({
+				active: true,
+				label: Liferay.Language.get('new-item-action'),
+				onClick: () => setActiveSection(SECTIONS.NEW_ITEM_ACTION),
+			});
+		}
+
+		if (activeSection === SECTIONS.EDIT_ITEM_ACTION) {
+			breadcrumbItems.push({
+				active: true,
+				label: initialActionFormValues?.label || '',
+			});
+		}
+
+		return breadcrumbItems;
+	};
 
 	const loadFDSActions = async () => {
 		setLoading(true);
@@ -128,6 +169,12 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 		});
 	};
 
+	const handleEdit = ({item}: {item: IFDSAction}) => {
+		setInitialActionFormValues(item);
+
+		setActiveSection(SECTIONS.EDIT_ITEM_ACTION);
+	};
+
 	const updateFDSActionsOrder = async () => {
 		const response = await fetch(
 			`${API_URL.FDS_VIEWS}/by-external-reference-code/${fdsView.externalReferenceCode}`,
@@ -175,22 +222,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 
 	return (
 		<ClayLayout.ContainerFluid>
-			<ClayBreadcrumb
-				className="my-2"
-				items={[
-					{
-						active: activeSection === SECTIONS.ACTIONS,
-						label: Liferay.Language.get('actions'),
-						onClick: () => setActiveSection(SECTIONS.ACTIONS),
-					},
-					{
-						active: activeSection === SECTIONS.NEW_ITEM_ACTION,
-						label: Liferay.Language.get('new-item-action'),
-						onClick: () =>
-							setActiveSection(SECTIONS.NEW_ITEM_ACTION),
-					},
-				]}
-			/>
+			<ClayBreadcrumb className="my-2" items={getBreadcrumbItems()} />
 
 			<ClayLayout.ContainerFluid className="bg-white mb-4 p-0 rounded-sm">
 				{activeSection === SECTIONS.ACTIONS && (
@@ -220,6 +252,11 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 							>
 								<OrderableTable
 									actions={[
+										{
+											icon: 'pencil',
+											label: Liferay.Language.get('edit'),
+											onClick: handleEdit,
+										},
 										{
 											icon: 'trash',
 											label: Liferay.Language.get(
@@ -296,7 +333,21 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 
 				{activeSection === SECTIONS.NEW_ITEM_ACTION && (
 					<ItemActionForm
+						activeSection={activeSection}
 						fdsView={fdsView}
+						loadFDSActions={loadFDSActions}
+						namespace={namespace}
+						sections={SECTIONS}
+						setActiveSection={setActiveSection}
+						spritemap={spritemap}
+					/>
+				)}
+
+				{activeSection === SECTIONS.EDIT_ITEM_ACTION && (
+					<ItemActionForm
+						activeSection={activeSection}
+						fdsView={fdsView}
+						initialValues={initialActionFormValues}
 						loadFDSActions={loadFDSActions}
 						namespace={namespace}
 						sections={SECTIONS}
@@ -309,4 +360,5 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 	);
 };
 
+export {IFDSAction};
 export default Actions;

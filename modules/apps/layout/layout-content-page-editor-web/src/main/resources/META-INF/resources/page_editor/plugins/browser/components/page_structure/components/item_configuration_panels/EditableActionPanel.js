@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
+import ClayButton from '@clayui/button';
+import ClayForm, {ClayInput} from '@clayui/form';
 import {useId} from 'frontend-js-components-web';
 import {debounce, openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -194,7 +195,7 @@ function InteractionSelector({config, data, fragmentId, onValueSelect}) {
 		[onConfigChange]
 	);
 
-	const onPreviewToggle = (checked) => {
+	const onShowPreview = (checked) => {
 		setShowPreview(checked);
 
 		dispatch(
@@ -256,13 +257,13 @@ function InteractionSelector({config, data, fragmentId, onValueSelect}) {
 							{sub(Liferay.Language.get('x-text'), label)}
 						</label>
 
-						<ClayInput.Group small>
+						<ClayInput.Group className="c-mb-2" small>
 							<ClayInput.GroupItem>
 								<ClayInput
 									id={textInputId}
 									onChange={(event) => {
 										if (showPreview) {
-											onPreviewToggle(false);
+											onShowPreview(false);
 											hidePreview();
 										}
 
@@ -287,34 +288,31 @@ function InteractionSelector({config, data, fragmentId, onValueSelect}) {
 								<CurrentLanguageFlag />
 							</ClayInput.GroupItem>
 						</ClayInput.Group>
-					</ClayForm.Group>
 
-					<ClayToggle
-						label={sub(
-							Liferay.Language.get('preview-x-notification'),
-							label
-						)}
-						onToggle={(checked) => {
-							onPreviewToggle(checked);
-
-							if (checked) {
+						<ClayButton
+							aria-label={sub(
+								Liferay.Language.get('preview-x-notification'),
+								label
+							)}
+							displayType="secondary"
+							onClick={() => {
+								onShowPreview(true);
 								openToast({
 									message:
 										textValue[languageId] ||
 										defaultMessage[languageId],
-									onClose: () => onPreviewToggle(false),
+									onClose: () => onShowPreview(false),
 									toastProps: {
 										id: previewId,
 									},
 									type,
 								});
-							}
-							else {
-								hidePreview();
-							}
-						}}
-						toggled={showPreview}
-					/>
+							}}
+							size="sm"
+						>
+							{Liferay.Language.get('preview')}
+						</ClayButton>
+					</ClayForm.Group>
 				</>
 			)}
 

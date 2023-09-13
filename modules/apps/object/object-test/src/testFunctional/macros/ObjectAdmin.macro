@@ -402,6 +402,7 @@ definition {
 
 	macro addObjectViaAPI {
 		JSONObject.addObject(
+			externalReferenceCode = ${externalReferenceCode},
 			labelName = ${labelName},
 			objectName = ${objectName},
 			panelCategoryKey = ${panelCategoryKey},

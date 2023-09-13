@@ -68,6 +68,10 @@ definition {
 			var scope = "company";
 		}
 
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions \
 				-H 'Content-Type: application/json' \
@@ -76,6 +80,7 @@ definition {
 					"label": {
 						"en_US": "${labelName}"
 					},
+					"externalReferenceCode": "${externalReferenceCode}",
 					"name": "${objectName}",
 					"objectFields": [],
 					"panelCategoryKey": "${panelCategoryKey}",

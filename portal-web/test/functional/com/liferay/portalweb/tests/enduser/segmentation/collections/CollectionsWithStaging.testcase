@@ -129,4 +129,192 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-109102. User Segment specific Assets Lists should be correctly published to live site."
+	@priority = 4
+	test ViewUserSegmentAssetsListsInLivingView {
+		task ("Add site with two pages") {
+			for (var pageName : list "home,admin") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name (Staging)",
+					layoutName = ${pageName},
+					site = "false");
+			}
+		}
+
+		task ("Add three web content to the site") {
+			for (var i : list "A,B,C") {
+				JSONWebcontent.addWebContent(
+					content = "Content ${i}",
+					groupName = "Test Site Name (Staging)",
+					site = "false",
+					title = "Content ${i}");
+			}
+		}
+
+		task ("Add two Segments that contains two pages") {
+			for (var sgementName : list "HOME,ADMIN") {
+				var text = StringUtil.lowerCase(${sgementName});
+
+				JSONSegmentsentry.addSegment(
+					conditionType = "Session",
+					fieldName = "URL",
+					groupName = "Test Site Name (Staging)",
+					operator = "contains",
+					segmentName = ${sgementName},
+					site = "false",
+					text = ${text});
+			}
+		}
+
+		task ("Add new Manual Selection and select Content A") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "DEMO");
+
+			AssetListsAdmin.selectAsset(
+				assetName = "Content A",
+				assetType = "Basic Web Content",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article");
+		}
+
+		task ("Add new personalized variations with new segments, select Web Content") {
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "HOME");
+
+			AssetListsAdmin.selectAsset(
+				assetType = "Basic Web Content",
+				entryList = "Content B");
+
+			AssetListsAdmin.addPersonalizedVariation(segmentName = "ADMIN");
+
+			AssetListsAdmin.selectAsset(
+				assetType = "Basic Web Content",
+				entryList = "Content C");
+		}
+
+		task ("Deprioritize the Anyone variation") {
+			AssetListsAdmin.deprioritizeVariation(variationTitle = "Anyone");
+
+			AssetListsAdmin.deprioritizeVariation(variationTitle = "Anyone");
+
+			AssertTextEquals(
+				key_index = 3,
+				locator1 = "AssetLists#VARIATION_INDEX",
+				value1 = "Anyone");
+		}
+
+		task ("Add Asset Publisher to pages, select Collection DEMO") {
+			for (var layoutName : list "home,admin") {
+				JSONLayout.addWidgetToPublicLayout(
+					column = 1,
+					groupName = "Test Site Name (Staging)",
+					layoutName = ${layoutName},
+					site = "false",
+					widgetName = "Asset Publisher");
+
+				Navigator.gotoStagedSitePage(
+					pageName = ${layoutName},
+					siteName = "test-site-name");
+
+				AssetPublisherPortlet.selectAssetList(assetListName = "DEMO");
+			}
+		}
+
+		task ("Access pages with the following URLs on the Staging site") {
+			Navigator.openStagingSiteURL(siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Content A",
+				assetTitle = "Content A");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Content B",
+				assetTitle = "Content B");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Content C",
+				assetTitle = "Content C");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/home");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Content B",
+				assetTitle = "Content B");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Content A",
+				assetTitle = "Content A");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Content C",
+				assetTitle = "Content C");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/admin");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Content C",
+				assetTitle = "Content C");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Content A",
+				assetTitle = "Content A");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Content B",
+				assetTitle = "Content B");
+		}
+
+		task ("Access pages with the following URLs on the Living site") {
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+
+			Navigator.openSiteURL(siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Content A",
+				assetTitle = "Content A");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Content B",
+				assetTitle = "Content B");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Content C",
+				assetTitle = "Content C");
+
+			Navigator.openSitePage(
+				pageName = "home",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Content B",
+				assetTitle = "Content B");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Content A",
+				assetTitle = "Content A");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Content C",
+				assetTitle = "Content C");
+
+			Navigator.openSitePage(
+				pageName = "admin",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Content C",
+				assetTitle = "Content C");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Content A",
+				assetTitle = "Content A");
+
+			AssetPublisherPortlet.viewAssetNotPresentPG(
+				assetContent = "Content B",
+				assetTitle = "Content B");
+		}
+	}
+
 }

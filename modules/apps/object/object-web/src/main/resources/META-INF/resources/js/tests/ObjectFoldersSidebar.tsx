@@ -21,10 +21,10 @@ const ticketObjectFolder = {
 	actions: objectFolderActions,
 	dateCreated: '2023-08-07T14:45:00Z',
 	dateModified: '2023-08-07T14:45:00Z',
-	externalReferenceCode: 'ticketERC',
-	id: 2020,
-	label: {en_US: 'Ticket System'},
-	name: 'TicketName',
+	externalReferenceCode: 'ticket',
+	id: 1,
+	label: {en_US: 'Ticket'},
+	name: 'Ticket',
 	objectFolderItems: [],
 };
 
@@ -33,7 +33,7 @@ const uncategorizedObjectFolder = {
 	dateCreated: '2023-08-07T14:42:21Z',
 	dateModified: '2023-08-07T14:42:21Z',
 	externalReferenceCode: 'uncategorized',
-	id: 1010,
+	id: 2,
 	label: {en_US: 'Uncategorized'},
 	name: 'Uncategorized',
 	objectFolderItems: [],
@@ -54,6 +54,6 @@ describe('The ObjectFoldersSidebar component should', () => {
 
 		expect(screen.getByText('Uncategorized')).toBeInTheDocument();
 
-		expect(screen.getByText('Ticket System')).toBeInTheDocument();
+		expect(screen.getByText('Ticket')).toBeInTheDocument();
 	});
 });

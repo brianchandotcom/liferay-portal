@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>IMPROVEMENT_NUMBER</td>
-	<td>//button[@data-title='${key_variantName}']//ancestor::tr//td[@class='text-danger']</td>
+	<td>//button[@data-title='${key_variantName}']//ancestor::tr//td[text()]</td>
 	<td></td>
 </tr>
 <tr>

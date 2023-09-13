@@ -64,7 +64,7 @@ definition {
 	}
 
 	macro viewABTestStatusSummary {
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "ACTests#SUMMARY_CARD_TEXT",
 			value1 = ${abTestSummaryText});
 	}
@@ -72,7 +72,7 @@ definition {
 	macro viewVariantImprovementNumberInAC {
 		var key_variantName = ${variantName};
 
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "ACTests#IMPROVEMENT_NUMBER",
 			value1 = ${improvementNumber});
 	}

@@ -975,6 +975,10 @@
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in code style." />
 		</check>
+		<check name="JSONUpgradeLiferayThemePackageJSONCheck">
+			<category name="Upgrade" />
+			<description name="Upgrade the `package.json` of a Liferay Theme to make it compatible with Liferay 7.4" />
+		</check>
 		<check name="JSONValidationCheck">
 			<category name="Bug Prevention" />
 			<description name="Validates content of `.json` files." />

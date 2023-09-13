@@ -1,0 +1,660 @@
+definition {
+
+	macro addEntryAction {
+		var portalURL = JSONCompany.getPortalURL();
+		var objectId = JSONObject.getObjectId(objectName = ${objectName});
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		if (${objectNameAction} == "Account") {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-actions \
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+						"active": "${active}",
+						"conditionExpression": "${conditionExpression}",
+						"description": "${description}",
+						"errorMessage": {
+							"en_US": "An error occurred when triggering the action"
+						},
+						"label": {
+							"en_US": "${actionLabel}"
+						},
+						"name": "${actionName}",
+						"objectActionExecutorKey": "add-object-entry",
+						"objectActionTriggerKey": "${whenAction}",
+						"parameters": {
+							"objectDefinitionExternalReferenceCode": "L_ACCOUNT",
+							"system": "true",
+							"predefinedValues": [
+								{
+									"businessType": "Text",
+									"inputAsValue": "${inputAsValueName}",
+									"label": {
+										"en_US": "Name"
+									},
+									"name": "name",
+									"value": "${valueName}"
+								},
+								{
+									"businessType": "Text",
+									"inputAsValue": "${inputAsValueType}",
+									"label": {
+										"en_US": "Type"
+									},
+									"name": "type",
+									"value": "${valueType}"
+								}
+							]
+						}
+					}'
+			''';
+		}
+
+		if (${objectNameAction} == "Postal Address") {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-actions \
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+						"active": "${active}",
+						"conditionExpression": "${conditionExpression}",
+						"description": "${description}",
+						"errorMessage": {
+							"en_US": "An error occurred when triggering the action"
+						},
+						"label": {
+							"en_US": "${actionLabel}"
+						},
+						"name": "${actionName}",
+						"objectActionExecutorKey": "add-object-entry",
+						"objectActionTriggerKey": "${whenAction}",
+						"parameters": {
+							"objectDefinitionExternalReferenceCode": "L_POSTAL_ADDRESS",
+							"system": "true",
+							"predefinedValues": [
+								{
+									"businessType": "Text",
+									"inputAsValue": "${inputAsValueName}",
+									"label": {
+										"en_US": "Name"
+									},
+									"name": "name",
+									"value": "${valueName}"
+								},
+								{
+									"businessType": "Text",
+									"inputAsValue": "${inputAsValueStreet1}",
+									"label": {
+										"en_US": "Street 1"
+									},
+									"name": "streetAddressLine1",
+									"value": "${valueStreet1}"
+								}
+							]
+						}
+					}'
+			''';
+		}
+
+		if (${objectNameAction} == "Commerce Order") {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-actions \
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+						"active": "${active}",
+						"conditionExpression": "${conditionExpression}",
+						"description": "${description}",
+						"errorMessage": {
+							"en_US": "An error occurred when triggering the action"
+						},
+						"label": {
+							"en_US": "${actionLabel}"
+						},
+						"name": "${actionName}",
+						"objectActionExecutorKey": "add-object-entry",
+						"objectActionTriggerKey": "${whenAction}",
+						"parameters": {
+							"objectDefinitionExternalReferenceCode": "L_COMMERCE_ORDER",
+							"system": "true",
+							"predefinedValues": [
+								{
+									"businessType": "LongInteger",
+									"inputAsValue": "${inputAsValueAccountId}",
+									"label": {
+										"en_US": "Account ID"
+									},
+									"name": "accountId",
+									"value": "${valueAccountId}"
+								},
+								{
+									"businessType": "LongInteger",
+									"inputAsValue": "${inputAsValueChannelId}",
+									"label": {
+										"en_US": "Channel ID"
+									},
+									"name": "channelId",
+									"value": "${valueChannelId}"
+								},
+								{
+									"businessType": "Text",
+									"inputAsValue": "${inputAsValueCurrencyCode}",
+									"label": {
+										"en_US": "Currency Code"
+									},
+									"name": "currencyCode",
+									"value": "${valueCurrencyCode}"
+								},
+								{
+									"businessType": "Integer",
+									"inputAsValue": "${inputAsValueOrderStatus}",
+									"label": {
+										"en_US": "Order Status"
+									},
+									"name": "orderStatus",
+									"value": "${valueOrderStatus}"
+								},
+								{
+									"businessType": "PrecisionDecimal",
+									"inputAsValue": "${inputAsValueShippingAmount}",
+									"label": {
+										"en_US": "Shipping Amount"
+									},
+									"name": "shippingAmount",
+									"value": "${valueShippingAmount}"
+								}
+							]
+						}
+					}'
+			''';
+		}
+
+		if (${objectNameAction} == "Commerce Product Group") {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-actions \
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+						"active": "${active}",
+						"conditionExpression": "${conditionExpression}",
+						"description": "${description}",
+						"errorMessage": {
+							"en_US": "An error occurred when triggering the action"
+						},
+						"label": {
+							"en_US": "${actionLabel}"
+						},
+						"name": "${actionName}",
+						"objectActionExecutorKey": "add-object-entry",
+						"objectActionTriggerKey": "${whenAction}",
+						"parameters": {
+							"objectDefinitionExternalReferenceCode": "L_COMMERCE_PRODUCT_GROUP",
+							"system": "true",
+							"predefinedValues": [
+								{
+									"businessType": "Text",
+									"inputAsValue": "${inputAsValueTitle}",
+									"label": {
+										"en_US": "Title"
+									},
+									"name": "title",
+									"value": "${valueTitle}"
+								}
+							]
+						}
+					}'
+			''';
+		}
+
+		if (${objectNameAction} == "Commerce Product") {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-actions \
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+						"active": "${active}",
+						"conditionExpression": "${conditionExpression}",
+						"description": "${description}",
+						"errorMessage": {
+							"en_US": "An error occurred when triggering the action"
+						},
+						"label": {
+							"en_US": "${actionLabel}"
+						},
+						"name": "${actionName}",
+						"objectActionExecutorKey": "add-object-entry",
+						"objectActionTriggerKey": "${whenAction}",
+						"parameters": {
+							"objectDefinitionExternalReferenceCode": "L_COMMERCE_PRODUCT_DEFINITION",
+							"system": "true",
+							"predefinedValues": [
+								{
+									"businessType": "Boolean",
+									"inputAsValue": "${inputAsValueActive}",
+									"label": {
+										"en_US": "Active"
+									},
+									"name": "active",
+									"value": "${valueActive}"
+								},
+								{
+									"businessType": "LongInteger",
+									"inputAsValue": "${inputAsValueCatalogId}",
+									"label": {
+										"en_US": "Catalog ID"
+									},
+									"name": "catalogId",
+									"value": "${valueCatalogId}"
+								},
+								{
+									"businessType": "Text",
+									"inputAsValue": "${inputAsValueName}",
+									"label": {
+										"en_US": "Name"
+									},
+									"name": "name",
+									"value": "${valueName}"
+								},
+								{
+									"businessType": "Text",
+									"inputAsValue": "${inputAsValueProductType}",
+									"label": {
+										"en_US": "Product Type"
+									},
+									"name": "productType",
+									"value": "${valueProductType}"
+								}
+							]
+						}
+					}'
+			''';
+		}
+
+		if (${objectNameAction} == "User") {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-actions \
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+						"active": "${active}",
+						"conditionExpression": "${conditionExpression}",
+						"description": "${description}",
+						"errorMessage": {
+							"en_US": "An error occurred when triggering the action"
+						},
+						"label": {
+							"en_US": "${actionLabel}"
+						},
+						"name": "${actionName}",
+						"objectActionExecutorKey": "add-object-entry",
+						"objectActionTriggerKey": "${whenAction}",
+						"parameters": {
+							"objectDefinitionExternalReferenceCode": "L_USER",
+							"system": "true",
+							"predefinedValues": [
+								{
+									"businessType": "Text",
+									"inputAsValue": "${inputAsValueScreenName}",
+									"label": {
+										"en_US": "Screen Name"
+									},
+									"name": "alternateName",
+									"value": "${valueScreenName}"
+								},
+								{
+									"businessType": "Text",
+									"inputAsValue": "${inputAsValueEmailAddress}",
+									"label": {
+										"en_US": "Email Address"
+									},
+									"name": "emailAddress",
+									"value": "${valueEmailAddress}"
+								},
+								{
+									"businessType": "Text",
+									"inputAsValue": "${inputAsValueLastName}",
+									"label": {
+										"en_US": "Last Name"
+									},
+									"name": "familyName",
+									"value": "${valueLastName}"
+								},
+								{
+									"businessType": "Text",
+									"inputAsValue": "${inputAsValueGivenName}",
+									"label": {
+										"en_US": "First Name"
+									},
+									"name": "givenName",
+									"value": "${valueGivenName}"
+								}
+							]
+						}
+					}'
+			''';
+		}
+
+		if (${objectNameAction} == "Organization") {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-actions \
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+						"active": "${active}",
+						"conditionExpression": "${conditionExpression}",
+						"description": "${description}",
+						"errorMessage": {
+							"en_US": "An error occurred when triggering the action"
+						},
+						"label": {
+							"en_US": "${actionLabel}"
+						},
+						"name": "${actionName}",
+						"objectActionExecutorKey": "add-object-entry",
+						"objectActionTriggerKey": "${whenAction}",
+						"parameters": {
+							"objectDefinitionExternalReferenceCode": "L_ORGANIZATION",
+							"system": "true",
+							"predefinedValues": [
+								{
+									"businessType": "Text",
+									"inputAsValue": "${inputAsValueName}",
+									"label": {
+										"en_US": "Name"
+									},
+									"name": "name",
+									"value": "${valueName}"
+								}
+							]
+						}
+					}'
+			''';
+		}
+
+		if (${objectNameAction} == "Custom Object") {
+			var curl = '''
+				${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-actions \
+					-H 'Content-Type: application/json' \
+					-u ${userEmailAddress}:${userPassword} \
+					-d '{
+						"active": "${active}",
+						"conditionExpression": "${conditionExpression}",
+						"description": "${description}",
+						"errorMessage": {
+							"en_US": "An error occurred when triggering the action"
+						},
+						"label": {
+							"en_US": "${actionLabel}"
+						},
+						"name": "${actionName}",
+						"objectActionExecutorKey": "add-object-entry",
+						"objectActionTriggerKey": "${whenAction}",
+						"parameters": {
+							"objectDefinitionExternalReferenceCode": "${objectERC}",
+							"system": "false"
+						}
+					}'
+			''';
+		}
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	macro groovyScriptAction {
+		var portalURL = JSONCompany.getPortalURL();
+		var objectId = JSONObject.getObjectId(objectName = ${objectName});
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-actions \
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+					"active": "${active}",
+					"conditionExpression": "${conditionExpression}",
+					"description": "${description}",
+					"errorMessage": {
+						"en_US": "An error occurred when triggering the action"
+					},
+					"label": {
+						"en_US": "${actionLabel}"
+					},
+					"name": "${actionName}",
+					"objectActionExecutorKey": "groovy",
+					"objectActionTriggerKey": "${whenAction}",
+					"parameters": {
+						"script": "${groovyScript}"
+					}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	macro notificationAction {
+		var portalURL = JSONCompany.getPortalURL();
+		var objectId = JSONObject.getObjectId(objectName = ${objectName});
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-actions \
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+					"active": "${active}",
+					"conditionExpression": "${conditionExpression}",
+					"description": "${description}",
+					"errorMessage": {
+						"en_US": "An error occurred when triggering the action"
+					},
+					"label": {
+						"en_US": "${actionLabel}"
+					},
+					"name": "${actionName}",
+					"objectActionExecutorKey": "notification",
+					"objectActionTriggerKey": "${whenAction}",
+					"parameters": {
+						"notificationTemplateExternalReferenceCode": "${notificationERC}",
+						"type": "${notificationType}"
+					}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	macro setAddEntryAction {
+		JSONObjectAction.addEntryAction(
+			actionLabel = ${actionLabel},
+			actionName = ${actionName},
+			active = ${active},
+			conditionExpression = ${conditionExpression},
+			description = ${description},
+			inputAsValueAccountId = ${inputAsValueAccountId},
+			inputAsValueActive = ${inputAsValueActive},
+			inputAsValueCatalogId = ${inputAsValueCatalogId},
+			inputAsValueChannelId = ${inputAsValueChannelId},
+			inputAsValueCurrencyCode = ${inputAsValueCurrencyCode},
+			inputAsValueEmailAddress = ${inputAsValueEmailAddress},
+			inputAsValueGivenName = ${inputAsValueGivenName},
+			inputAsValueLastName = ${inputAsValueLastName},
+			inputAsValueName = ${inputAsValueName},
+			inputAsValueOrderStatus = ${inputAsValueOrderStatus},
+			inputAsValueProductType = ${inputAsValueProductType},
+			inputAsValueScreenName = ${inputAsValueScreenName},
+			inputAsValueShippingAmount = ${inputAsValueShippingAmount},
+			inputAsValueStreet1 = ${inputAsValueStreet1},
+			inputAsValueTitle = ${inputAsValueTitle},
+			inputAsValueType = ${inputAsValueType},
+			objectERC = ${objectERC},
+			objectName = ${objectName},
+			objectNameAction = ${objectNameAction},
+			valueAccountId = ${valueAccountId},
+			valueActive = ${valueActive},
+			valueCatalogId = ${valueCatalogId},
+			valueChannelId = ${valueChannelId},
+			valueCurrencyCode = ${valueCurrencyCode},
+			valueEmailAddress = ${valueEmailAddress},
+			valueGivenName = ${valueGivenName},
+			valueLastName = ${valueLastName},
+			valueName = ${valueName},
+			valueOrderStatus = ${valueOrderStatus},
+			valueProductType = ${valueProductType},
+			valueScreenName = ${valueScreenName},
+			valueShippingAmount = ${valueShippingAmount},
+			valueStreet1 = ${valueStreet1},
+			valueTitle = ${valueTitle},
+			valueType = ${valueType},
+			whenAction = ${whenAction});
+	}
+
+	macro setGroovyScriptAction {
+		JSONObjectAction.groovyScriptAction(
+			actionLabel = ${actionLabel},
+			actionName = ${actionName},
+			active = ${active},
+			conditionExpression = ${conditionExpression},
+			description = ${description},
+			groovyScript = ${groovyScript},
+			objectName = ${objectName},
+			whenAction = ${whenAction});
+	}
+
+	macro setNotificationAction {
+		JSONObjectAction.notificationAction(
+			actionLabel = ${actionLabel},
+			actionName = ${actionName},
+			active = ${active},
+			conditionExpression = ${conditionExpression},
+			description = ${description},
+			notificationERC = ${notificationERC},
+			notificationType = ${notificationType},
+			objectName = ${objectName},
+			whenAction = ${whenAction});
+	}
+
+	macro setUpdateEntryAction {
+		JSONObjectAction.updateEntryAction(
+			actionLabel = ${actionLabel},
+			actionName = ${actionName},
+			active = ${active},
+			conditionExpression = ${conditionExpression},
+			description = ${description},
+			objectERC = ${objectERC},
+			objectName = ${objectName},
+			whenAction = ${whenAction});
+	}
+
+	macro setWebhookAction {
+		JSONObjectAction.webhookAction(
+			actionLabel = ${actionLabel},
+			actionName = ${actionName},
+			active = ${active},
+			conditionExpression = ${conditionExpression},
+			description = ${description},
+			objectName = ${objectName},
+			secretAction = ${secretAction},
+			urlAction = ${urlAction},
+			whenAction = ${whenAction});
+	}
+
+	macro updateEntryAction {
+		var portalURL = JSONCompany.getPortalURL();
+		var objectId = JSONObject.getObjectId(objectName = ${objectName});
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-actions \
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+					"active": "${active}",
+					"conditionExpression": "${conditionExpression}",
+					"description": "${description}",
+					"errorMessage": {
+						"en_US": "An error occurred when triggering the action"
+					},
+					"label": {
+						"en_US": "${actionLabel}"
+					},
+					"name": "${actionName}",
+					"objectActionExecutorKey": "update-object-entry",
+					"objectActionTriggerKey": "${whenAction}",
+					"parameters": {
+						"objectDefinitionExternalReferenceCode": "${objectERC}"
+					}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	macro webhookAction {
+		var portalURL = JSONCompany.getPortalURL();
+		var objectId = JSONObject.getObjectId(objectName = ${objectName});
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-actions \
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+					"active": "${active}",
+					"conditionExpression": "${conditionExpression}",
+					"description": "${description}",
+					"errorMessage": {
+						"en_US": "An error occurred when triggering the action"
+					},
+					"label": {
+						"en_US": "${actionLabel}"
+					},
+					"name": "${actionName}",
+					"objectActionExecutorKey": "webhook",
+					"objectActionTriggerKey": "${whenAction}",
+					"parameters": {
+						"secret": "${secretAction}",
+						"url": "${urlAction}"
+					}
+				}'
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+}

@@ -6,6 +6,10 @@
 package com.liferay.portal.db.partition.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.counter.kernel.model.Counter;
+import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
@@ -250,6 +254,203 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	public void testCounterGetNames() throws Exception {
+		_runOnCompanyAndCleanup(
+			(runCompanyId, className) -> {
+				_counterLocalService.increment(className);
+
+				DBPartitionUtil.forEachCompanyId(
+					companyId -> {
+						List<String> counterNames =
+							_counterLocalService.getNames();
+
+						if (companyId.equals(runCompanyId)) {
+							Assert.assertTrue(counterNames.contains(className));
+						}
+						else {
+							Assert.assertFalse(
+								counterNames.contains(className));
+						}
+					});
+			});
+	}
+
+	@Test
+	public void testCounterIncrement() throws Exception {
+		CopyOnWriteArrayList<Long> maxCounters = new CopyOnWriteArrayList<>();
+
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> maxCounters.add(_counterLocalService.increment()));
+
+		long maxCounter = 0;
+
+		for (long counter : maxCounters) {
+			if (counter > maxCounter) {
+				maxCounter = counter;
+			}
+		}
+
+		long finalMaxCounter = maxCounter + 1000;
+
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> _counterLocalService.reset(
+				Counter.class.getName(), finalMaxCounter));
+
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> Assert.assertEquals(
+				finalMaxCounter + 1, _counterLocalService.increment()));
+	}
+
+	@Test
+	public void testCounterIncrementWithName() throws Exception {
+		_runOnCompanyAndCleanup(
+			(runCompanyId, className) -> {
+				for (int i = 1; i <= 10; i++) {
+					Assert.assertEquals(
+						i, _counterLocalService.increment(className));
+				}
+
+				DBPartitionUtil.forEachCompanyId(
+					companyId -> {
+						if (runCompanyId.equals(companyId)) {
+							Assert.assertEquals(
+								11, _counterLocalService.increment(className));
+						}
+						else {
+							Assert.assertEquals(
+								1, _counterLocalService.increment(className));
+						}
+					});
+			});
+	}
+
+	@Test
+	public void testCounterIncrementWithNameAndSize() throws Exception {
+		_runOnCompanyAndCleanup(
+			(runCompanyId, className) -> {
+				for (int i = 1; i <= 10; i++) {
+					Assert.assertEquals(
+						i * 10, _counterLocalService.increment(className, 10));
+				}
+
+				DBPartitionUtil.forEachCompanyId(
+					companyId -> {
+						if (runCompanyId.equals(companyId)) {
+							Assert.assertEquals(
+								110,
+								_counterLocalService.increment(className, 10));
+						}
+						else {
+							Assert.assertEquals(
+								10,
+								_counterLocalService.increment(className, 10));
+						}
+					});
+			});
+	}
+
+	@Test
+	public void testCounterRename() throws Exception {
+		_runOnCompanyAndCleanup(
+			(runCompanyId, className) -> {
+				try {
+					DBPartitionUtil.forEachCompanyId(
+						companyId -> _counterLocalService.increment(className));
+
+					_counterLocalService.rename(className, className + ".test");
+
+					DBPartitionUtil.forEachCompanyId(
+						companyId -> {
+							List<String> counterNames =
+								_counterLocalService.getNames();
+
+							if (runCompanyId.equals(companyId)) {
+								Assert.assertFalse(
+									counterNames.contains(className));
+								Assert.assertTrue(
+									counterNames.contains(className + ".test"));
+							}
+							else {
+								Assert.assertFalse(
+									counterNames.contains(className + ".test"));
+								Assert.assertTrue(
+									counterNames.contains(className));
+							}
+						});
+				}
+				finally {
+					DBPartitionUtil.forEachCompanyId(
+						companyId -> _counterLocalService.reset(
+							className + ".test"));
+				}
+			});
+	}
+
+	@Test
+	public void testCounterReset() throws Exception {
+		_runOnCompanyAndCleanup(
+			(runCompanyId, className) -> {
+				for (int i = 0; i < 10; i++) {
+					_counterLocalService.increment(className, 100);
+				}
+
+				Assert.assertEquals(
+					1001, _counterLocalService.increment(className));
+
+				_counterLocalService.reset(getClass().getName());
+
+				Assert.assertEquals(
+					1, _counterLocalService.increment(className));
+
+				DBPartitionUtil.forEachCompanyId(
+					companyId -> {
+						List<String> counterNames =
+							_counterLocalService.getNames();
+
+						if (runCompanyId.equals(companyId)) {
+							Assert.assertTrue(counterNames.contains(className));
+						}
+						else {
+							Assert.assertFalse(
+								counterNames.contains(className));
+						}
+					});
+			});
+	}
+
+	@Test
+	public void testCounterResetWithIncrement() throws Exception {
+		_runOnCompanyAndCleanup(
+			(runCompanyId, className) -> {
+				for (int i = 0; i < 10; i++) {
+					_counterLocalService.increment(className, 100);
+				}
+
+				Assert.assertEquals(
+					1001, _counterLocalService.increment(className));
+
+				_counterLocalService.reset(getClass().getName(), 2000);
+
+				Assert.assertEquals(
+					2001, _counterLocalService.increment(className));
+
+				DBPartitionUtil.forEachCompanyId(
+					companyId -> {
+						List<String> counterNames =
+							_counterLocalService.getNames();
+
+						if (runCompanyId.equals(companyId)) {
+							Assert.assertTrue(counterNames.contains(className));
+						}
+						else {
+							Assert.assertFalse(
+								counterNames.contains(className));
+						}
+					});
+			});
+	}
+
+	@Test
 	public void testDropIndexControlTable() throws Exception {
 		createIndex(TEST_CONTROL_TABLE_NAME);
 
@@ -436,6 +637,21 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	}
 
+	private void _runOnCompanyAndCleanup(
+			UnsafeBiConsumer<Long, String, Exception> unsafeBiConsumer)
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setWithSafeCloseable(COMPANY_IDS[0])) {
+
+			unsafeBiConsumer.accept(COMPANY_IDS[0], getClass().getName());
+		}
+		finally {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> _counterLocalService.reset(getClass().getName()));
+		}
+	}
+
 	private static final String _CLASS_NAME_VALUE = "class.name.test";
 
 	@Inject
@@ -443,6 +659,9 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CounterLocalService _counterLocalService;
 
 	private class ClassNameModelHints extends DefaultModelHintsImpl {
 

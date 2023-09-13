@@ -153,8 +153,6 @@ definition {
 
 		task ("Add two Segments that contains two pages") {
 			for (var sgementName : list "HOME,ADMIN") {
-				var text = StringUtil.lowerCase(${sgementName});
-
 				JSONSegmentsentry.addSegment(
 					conditionType = "Session",
 					fieldName = "URL",
@@ -162,7 +160,7 @@ definition {
 					operator = "contains",
 					segmentName = ${sgementName},
 					site = "false",
-					text = ${text});
+					text = StringUtil.lowerCase(${sgementName}));
 			}
 		}
 

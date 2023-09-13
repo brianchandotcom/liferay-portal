@@ -32,38 +32,47 @@ export default function App({portletNamespace: namespace}: IProps) {
 	useEffect(() => {
 		const wrapper = document.getElementById('wrapper');
 
-		const onCloseSimulationPanel = () => {
-			setOpen(false);
+		const simulationToggle = document.getElementById(
+			`${namespace}simulationToggleId`
+		);
 
-			if (wrapper) {
-				wrapper.removeAttribute('inert');
-			}
-		};
-		const onOpenSimulationPanel = () => {
+		// @ts-ignore
+
+		const sidenavInstance = Liferay.SideNavigation.initialize(
+			simulationToggle
+		);
+
+		sidenavInstance.on('open.lexicon.sidenav', () => {
 			setOpen(true);
 
 			if (wrapper) {
 				wrapper.setAttribute('inert', '');
 			}
-		};
+		});
 
-		Liferay.on(
-			'SimulationMenu:closeSimulationPanel',
-			onCloseSimulationPanel
-		);
-		Liferay.on('SimulationMenu:openSimulationPanel', onOpenSimulationPanel);
+		sidenavInstance.on('closed.lexicon.sidenav', () => {
+			setOpen(false);
+
+			if (wrapper) {
+				wrapper.removeAttribute('inert');
+			}
+		});
+
+		if (sidenavInstance && sidenavInstance.visible()) {
+			setOpen(true);
+
+			if (wrapper) {
+				wrapper.setAttribute('inert', '');
+			}
+		}
 
 		return () => {
-			Liferay.detach(
-				'SimulationMenu:closeSimulationPanel',
-				onCloseSimulationPanel
-			);
-			Liferay.detach(
-				'SimulationMenu:openSimulationPanel',
-				onOpenSimulationPanel
-			);
+
+			// @ts-ignores
+
+			Liferay.SideNavigation.destroy(simulationToggle);
 		};
-	}, []);
+	}, [namespace]);
 
 	if (!simulationPanel) {
 		return null;

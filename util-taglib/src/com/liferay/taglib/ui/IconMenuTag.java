@@ -7,7 +7,6 @@ package com.liferay.taglib.ui;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.FileAvailabilityUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -21,13 +20,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.BaseBodyTagSupport;
 import com.liferay.taglib.aui.ScriptTag;
-import com.liferay.taglib.servlet.PipingServletResponseFactory;
+import com.liferay.taglib.util.PortalIncludeUtil;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import java.util.Map;
 import java.util.Objects;
 
-import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
@@ -294,7 +293,9 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			((singleIcon == null) || _showWhenSingleIcon)) {
 
 			if (!FileAvailabilityUtil.isAvailable(
-					pageContext.getServletContext(), getStartPage()) ||
+					(ServletContext)httpServletRequest.getAttribute(
+						WebKeys.CTX),
+					getStartPage()) ||
 				!Objects.equals(_markupView, "lexicon")) {
 
 				if (_showExpanded) {
@@ -423,14 +424,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			else {
 				setAttributes();
 
-				RequestDispatcher requestDispatcher =
-					DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
-						pageContext.getServletContext(), getStartPage());
-
-				requestDispatcher.include(
-					httpServletRequest,
-					PipingServletResponseFactory.createPipingServletResponse(
-						pageContext));
+				PortalIncludeUtil.include(pageContext, getStartPage());
 			}
 		}
 
@@ -440,7 +434,9 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			((singleIcon == null) || _showWhenSingleIcon)) {
 
 			if (!FileAvailabilityUtil.isAvailable(
-					pageContext.getServletContext(), getEndPage()) ||
+					(ServletContext)httpServletRequest.getAttribute(
+						WebKeys.CTX),
+					getEndPage()) ||
 				!Objects.equals(_markupView, "lexicon")) {
 
 				jspWriter.write("</ul>");
@@ -456,14 +452,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 				}
 			}
 			else {
-				RequestDispatcher requestDispatcher =
-					DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
-						pageContext.getServletContext(), getEndPage());
-
-				requestDispatcher.include(
-					httpServletRequest,
-					PipingServletResponseFactory.createPipingServletResponse(
-						pageContext));
+				PortalIncludeUtil.include(pageContext, getEndPage());
 			}
 		}
 

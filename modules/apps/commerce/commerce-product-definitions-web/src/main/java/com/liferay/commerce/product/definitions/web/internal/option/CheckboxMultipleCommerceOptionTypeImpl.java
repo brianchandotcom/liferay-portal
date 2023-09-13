@@ -78,7 +78,7 @@ public class CheckboxMultipleCommerceOptionTypeImpl
 		printWriter.write("<div>");
 
 		String moduleName = _npmResolver.resolveModuleName(
-			"@liferay/commerce-product-definitions-web");
+			"commerce-frontend-js");
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -88,7 +88,8 @@ public class CheckboxMultipleCommerceOptionTypeImpl
 
 		_reactRenderer.renderReact(
 			new ComponentDescriptor(
-				moduleName + "/js/ProductOptionCheckboxMultiple"),
+				moduleName + "/components/product_options" +
+					"/ProductOptionCheckboxMultiple"),
 			HashMapBuilder.<String, Object>put(
 				"forceRequired", forceRequired
 			).put(

@@ -160,10 +160,11 @@ public class RadioCommerceOptionTypeImpl implements CommerceOptionType {
 		printWriter.write("<div>");
 
 		String moduleName = _npmResolver.resolveModuleName(
-			"@liferay/commerce-product-definitions-web");
+			"commerce-frontend-js");
 
 		_reactRenderer.renderReact(
-			new ComponentDescriptor(moduleName + "/js/ProductOptionRadio"),
+			new ComponentDescriptor(
+				moduleName + "/components/product_options/ProductOptionRadio"),
 			HashMapBuilder.<String, Object>put(
 				"accountId",
 				(accountEntry == null) ? 0 : accountEntry.getAccountEntryId()

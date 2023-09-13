@@ -16,8 +16,8 @@ import {defaultLanguageId} from '../../utils/constants';
 interface AccountRestrictionContainerProps {
 	errors: FormError<ObjectDefinition>;
 	isApproved: boolean;
+	isLinkedObjectDefinition?: boolean;
 	isRootDescendantNode: boolean;
-	linkedDefinition?: boolean;
 	objectFields: ObjectField[];
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
@@ -26,8 +26,8 @@ interface AccountRestrictionContainerProps {
 export function AccountRestrictionContainer({
 	errors,
 	isApproved,
+	isLinkedObjectDefinition,
 	isRootDescendantNode,
-	linkedDefinition,
 	objectFields,
 	setValues,
 	values,
@@ -118,8 +118,8 @@ export function AccountRestrictionContainer({
 				disabled={
 					!accountRelationshipFields.length ||
 					disableAccountToggle ||
-					isRootDescendantNode ||
-					linkedDefinition
+					isLinkedObjectDefinition ||
+					isRootDescendantNode
 				}
 				label={sub(
 					Liferay.Language.get('enable-x'),
@@ -143,8 +143,8 @@ export function AccountRestrictionContainer({
 					!accountRelationshipFields.length ||
 					!values.accountEntryRestricted ||
 					disableAccountSelect ||
-					isRootDescendantNode ||
-					linkedDefinition
+					isLinkedObjectDefinition ||
+					isRootDescendantNode
 				}
 				error={errors.accountEntryRestrictedObjectFieldName}
 				label={Liferay.Language.get(

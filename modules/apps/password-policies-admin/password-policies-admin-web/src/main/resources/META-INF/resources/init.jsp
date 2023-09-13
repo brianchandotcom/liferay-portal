@@ -55,7 +55,7 @@ page import="com.liferay.portal.model.impl.PasswordPolicyImpl" %><%@
 page import="com.liferay.portal.service.permission.PasswordPolicyPermissionUtil" %><%@
 page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.users.admin.kernel.util.UsersAdmin" %>
+page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
 
 <%@ page import="java.util.Arrays" %>
 

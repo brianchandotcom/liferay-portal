@@ -92,8 +92,8 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 
 									<h6 class="text-default">
 										<span><%= HtmlUtil.escape(organization.getAddress().getCity()) %></span>
-										<span><%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %></span>
-										<span><%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %></span>
+										<span><%= UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %></span>
+										<span><%= UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %></span>
 									</h6>
 								</liferay-ui:search-container-column-text>
 
@@ -139,13 +139,13 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 								<liferay-ui:search-container-column-text
 									cssClass="table-cell-expand-smallest table-cell-minw-150"
 									name="region"
-									value="<%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
+									value="<%= UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
 								/>
 
 								<liferay-ui:search-container-column-text
 									cssClass="table-cell-expand-smallest table-cell-minw-150"
 									name="country"
-									value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
+									value="<%= UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
 								/>
 
 								<%

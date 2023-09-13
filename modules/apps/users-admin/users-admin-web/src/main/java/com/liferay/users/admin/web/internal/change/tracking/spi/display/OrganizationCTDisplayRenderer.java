@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.Locale;
 
@@ -112,10 +112,10 @@ public class OrganizationCTDisplayRenderer
 			"city", address.getCity()
 		).display(
 			"region",
-			UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization)
+			UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization)
 		).display(
 			"country",
-			UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization)
+			UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization)
 		).display(
 			"num-of-users",
 			_userLocalService.getOrganizationUsersCount(

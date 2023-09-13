@@ -108,7 +108,6 @@ page import="com.liferay.roles.admin.web.internal.role.type.contributor.util.Rol
 page import="com.liferay.site.search.GroupSearch" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.template.constants.TemplatePortletKeys" %><%@
-page import="com.liferay.users.admin.kernel.util.UsersAdmin" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
 
 <%@ page import="java.io.Serializable" %>

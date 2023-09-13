@@ -20,7 +20,7 @@ import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.constants.ActionConstants;
 import com.liferay.portal.struts.model.ActionForward;
 import com.liferay.portal.struts.model.ActionMapping;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -84,7 +84,7 @@ public class UpdateReminderQueryAction implements Action {
 		String answer = ParamUtil.getString(
 			httpServletRequest, "reminderQueryAnswer");
 
-		if (question.equals(UsersAdmin.CUSTOM_QUESTION)) {
+		if (question.equals(UsersAdminUtil.CUSTOM_QUESTION)) {
 			question = ParamUtil.getString(
 				httpServletRequest, "reminderQueryCustomQuestion");
 		}

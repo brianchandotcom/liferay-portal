@@ -96,7 +96,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 					</c:if>
 
 					<%
-					String region = UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization);
+					String region = UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization);
 					%>
 
 					<c:if test="<%= Validator.isNotNull(region) %>">
@@ -108,7 +108,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute(Site
 					</c:if>
 
 					<%
-					String country = UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization);
+					String country = UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization);
 					%>
 
 					<c:if test="<%= Validator.isNotNull(country) %>">

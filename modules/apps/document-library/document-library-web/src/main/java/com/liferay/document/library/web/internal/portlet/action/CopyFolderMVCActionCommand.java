@@ -108,7 +108,7 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 		long sourceRepositoryId = ParamUtil.getLong(
 			actionRequest, "sourceRepositoryId");
 		long sourceFolderId = ParamUtil.getLong(
-			actionRequest, "sourceFolderId");
+			actionRequest, "selectedEntries");
 		long destinationRepositoryId = ParamUtil.getLong(
 			actionRequest, "destinationRepositoryId");
 		long destinationParentFolderId = ParamUtil.getLong(

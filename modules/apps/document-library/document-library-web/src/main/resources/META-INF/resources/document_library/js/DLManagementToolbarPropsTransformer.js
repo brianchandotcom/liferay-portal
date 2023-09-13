@@ -108,10 +108,10 @@ export default function propsTransformer({
 	};
 
 	const copy = () => {
-		const selectedEntries = getAllSelectedElements().get('value');
+		const entryIds = getAllSelectedElements().get('value');
 
 		const url = addParams(
-			`${portletNamespace}selectedEntries=${selectedEntries.join(',')}`,
+			`${portletNamespace}entryIds=${entryIds.join(',')}`,
 			bulkCopyURL
 		);
 

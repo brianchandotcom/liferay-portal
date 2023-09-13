@@ -374,7 +374,7 @@ public class FolderActionDisplayContext {
 		).setRedirect(
 			_dlRequestHelper.getCurrentURL()
 		).setParameter(
-			"sourceFolderId", _getFolderId()
+			"entryIds", _getFolderId()
 		).setParameter(
 			"sourceRepositoryId", _getRepositoryId()
 		).buildString();

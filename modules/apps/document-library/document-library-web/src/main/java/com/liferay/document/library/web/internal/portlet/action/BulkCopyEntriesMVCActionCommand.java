@@ -105,8 +105,7 @@ public class BulkCopyEntriesMVCActionCommand extends BaseMVCActionCommand {
 			_siteConnectedGroupGroupProvider.
 				getCurrentAndAncestorSiteAndDepotGroupIds(group.getGroupId());
 
-		long[] entryIds = ParamUtil.getLongValues(
-			actionRequest, "selectedEntries");
+		long[] entryIds = ParamUtil.getLongValues(actionRequest, "entryIds");
 
 		for (long entryId : entryIds) {
 			try {

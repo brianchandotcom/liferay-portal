@@ -243,22 +243,8 @@ public class UIItemsBuilder {
 	}
 
 	public DropdownItem createCopyDropdownItem() {
-		String mvcRenderCommand;
-
-		if (_fileShortcut != null) {
-			mvcRenderCommand = "/document_library/copy_file_shortcut";
-		}
-		else {
-			mvcRenderCommand = "/document_library/copy_file_entry";
-		}
-
 		return DropdownItemBuilder.setHref(
-			() -> {
-				PortletURL portletURL = _getControlPanelRenderURL(
-					mvcRenderCommand);
-
-				return portletURL.toString();
-			}
+			_getCopyEntryURL()
 		).setIcon(
 			"copy"
 		).setKey(
@@ -914,6 +900,34 @@ public class UIItemsBuilder {
 		}
 
 		return portletURL;
+	}
+
+	private PortletURL _getCopyEntryURL() {
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				_getLiferayPortletRequest(), _themeDisplay.getScopeGroup(),
+				DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			() -> {
+				if (_fileShortcut != null) {
+					return "/document_library/copy_file_shortcut";
+				}
+
+				return "/document_library/copy_file_entry";
+			}
+		).setRedirect(
+			_getCurrentURL()
+		).setParameter(
+			"entryIds",
+			() -> {
+				if (_fileShortcut != null) {
+					return _fileShortcut.getFileShortcutId();
+				}
+
+				return _fileEntry.getFileEntryId();
+			}
+		).buildPortletURL();
 	}
 
 	private String _getCurrentURL() {

@@ -108,7 +108,7 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long fileEntryId = ParamUtil.getLong(actionRequest, "selectedEntries");
+		long fileEntryId = ParamUtil.getLong(actionRequest, "entryIds");
 		long destinationFolderId = ParamUtil.getLong(
 			actionRequest, "destinationParentFolderId");
 		long destinationRepositoryId = ParamUtil.getLong(

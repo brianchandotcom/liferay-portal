@@ -627,9 +627,9 @@ definition {
 		}
 
 		task ("Then the Language Selector should have correct accessibility") {
-			AssertElementNotPresent(locator1 = "//button[contains(@class,'dropdown-toggle')][@aria-pressed][*[name()='svg'][contains(@class,'lexicon-icon-en-us')]]");
+			AssertElementNotPresent(locator1 = "//button[contains(@type,'button')][@aria-pressed][*[name()='svg'][contains(@class,'lexicon-icon-en-us')]]");
 
-			AssertElementPresent(locator1 = "//button[contains(@class,'dropdown-toggle')]//span[normalize-space()='Select a language, current language: en-US.']");
+			AssertElementPresent(locator1 = "//button[contains(@type,'button')]//span[normalize-space()='Select a language, current language: en-US.']");
 		}
 	}
 

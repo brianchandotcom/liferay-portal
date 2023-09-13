@@ -23,10 +23,10 @@ import React, {useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
 
-interface ModalEditFolderProps {
+interface ModalEditObjectFolderProps {
 	externalReferenceCode: string;
-	folderID: number;
 	handleOnClose: () => void;
+	id: number;
 	initialLabel?: LocalizedValue<string>;
 	name?: string;
 }
@@ -37,13 +37,13 @@ type TInitialValues = {
 	name?: string;
 };
 
-export function ModalEditFolder({
+export function ModalEditObjectFolder({
 	externalReferenceCode,
-	folderID,
 	handleOnClose,
+	id,
 	initialLabel,
 	name,
-}: ModalEditFolderProps) {
+}: ModalEditObjectFolderProps) {
 	const [error, setError] = useState<string>('');
 
 	const [selectedLocale, setSelectedLocale] = useState<
@@ -61,13 +61,13 @@ export function ModalEditFolder({
 	};
 
 	const onSubmit = async (values: TInitialValues) => {
-		const folder: Partial<ObjectFolder> = values;
+		const objectFolder: Partial<ObjectFolder> = values;
 
 		try {
 			await API.save({
-				item: folder,
+				item: objectFolder,
 				method: 'PATCH',
-				url: `/o/object-admin/v1.0/object-folders/${folderID}`,
+				url: `/o/object-admin/v1.0/object-folders/${id}`,
 			});
 
 			onClose();
@@ -77,8 +77,8 @@ export function ModalEditFolder({
 					Liferay.Language.get('x-was-saved-successfully'),
 					`<strong>${getLocalizableLabel(
 						defaultLanguageId,
-						folder.label,
-						folder.name
+						objectFolder.label,
+						objectFolder.name
 					)}</strong>`
 				),
 				type: 'success',
@@ -138,7 +138,6 @@ export function ModalEditFolder({
 
 						<Input
 							disabled
-							id="folderName"
 							label={Liferay.Language.get('name')}
 							name="name"
 							required
@@ -150,7 +149,6 @@ export function ModalEditFolder({
 							feedbackMessage={Liferay.Language.get(
 								'unique-key-for-referencing-the-object-folder'
 							)}
-							id="externalReferenceCode"
 							label={Liferay.Language.get(
 								'external-reference-code'
 							)}

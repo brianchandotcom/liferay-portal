@@ -311,6 +311,7 @@
 	<model name="com.liferay.object.model.ObjectValidationRule">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="objectValidationRuleId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

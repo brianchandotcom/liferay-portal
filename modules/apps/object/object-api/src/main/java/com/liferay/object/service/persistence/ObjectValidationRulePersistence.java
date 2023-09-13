@@ -787,6 +787,68 @@ public interface ObjectValidationRulePersistence
 	public int countByODI_O(long objectDefinitionId, String outputType);
 
 	/**
+	 * Returns the object validation rule where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or throws a <code>NoSuchObjectValidationRuleException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object validation rule
+	 * @throws NoSuchObjectValidationRuleException if a matching object validation rule could not be found
+	 */
+	public ObjectValidationRule findByERC_C_ODI(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId)
+		throws NoSuchObjectValidationRuleException;
+
+	/**
+	 * Returns the object validation rule where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
+	 */
+	public ObjectValidationRule fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId);
+
+	/**
+	 * Returns the object validation rule where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching object validation rule, or <code>null</code> if a matching object validation rule could not be found
+	 */
+	public ObjectValidationRule fetchByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId,
+		boolean useFinderCache);
+
+	/**
+	 * Removes the object validation rule where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the object validation rule that was removed
+	 */
+	public ObjectValidationRule removeByERC_C_ODI(
+			String externalReferenceCode, long companyId,
+			long objectDefinitionId)
+		throws NoSuchObjectValidationRuleException;
+
+	/**
+	 * Returns the number of object validation rules where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param objectDefinitionId the object definition ID
+	 * @return the number of matching object validation rules
+	 */
+	public int countByERC_C_ODI(
+		String externalReferenceCode, long companyId, long objectDefinitionId);
+
+	/**
 	 * Caches the object validation rule in the entity cache if it is enabled.
 	 *
 	 * @param objectValidationRule the object validation rule

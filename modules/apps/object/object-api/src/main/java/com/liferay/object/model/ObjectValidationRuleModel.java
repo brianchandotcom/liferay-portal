@@ -89,6 +89,21 @@ public interface ObjectValidationRuleModel
 	public void setUuid(String uuid);
 
 	/**
+	 * Returns the external reference code of this object validation rule.
+	 *
+	 * @return the external reference code of this object validation rule
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this object validation rule.
+	 *
+	 * @param externalReferenceCode the external reference code of this object validation rule
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the object validation rule ID of this object validation rule.
 	 *
 	 * @return the object validation rule ID of this object validation rule

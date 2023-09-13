@@ -64,6 +64,7 @@ NAVIGATION_BAR_ITEMS = [
 
 interface IFDSViewSectionInterface {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
+	fdsFilterClientExtensions: any[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
@@ -74,6 +75,7 @@ interface IFDSViewSectionInterface {
 
 interface IFDSViewInterface {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
+	fdsFilterClientExtensions: any;
 	fdsViewId: string;
 	fdsViewsURL: string;
 	namespace: string;
@@ -83,6 +85,7 @@ interface IFDSViewInterface {
 
 const FDSView = ({
 	fdsClientExtensionCellRenderers,
+	fdsFilterClientExtensions,
 	fdsViewId,
 	fdsViewsURL,
 	namespace,
@@ -146,6 +149,7 @@ const FDSView = ({
 						fdsClientExtensionCellRenderers={
 							fdsClientExtensionCellRenderers
 						}
+						fdsFilterClientExtensions={fdsFilterClientExtensions}
 						fdsView={fdsView}
 						fdsViewsURL={fdsViewsURL}
 						namespace={namespace}

@@ -1,0 +1,67 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
+import ClayForm from '@clayui/form';
+import classNames from 'classnames';
+import React, {useState} from 'react';
+
+function Header() {
+	return <>{Liferay.Language.get('new-client-extension-filter')}</>;
+}
+
+function Body({fdsFilterClientExtensions, namespace, selectedFdsFilterClientExtension}: any) {
+	const [selectedFilter, setSelectedFilter] = useState(selectedFdsFilterClientExtension)
+	const fdsFilterClientExtensionFormElementId = `${namespace}FDSFilterClientExtension`;
+
+	return (
+		<ClayForm.Group className="form-group-autofit">
+			<div
+				className={classNames('form-group-item')}
+			>
+				<label htmlFor={fdsFilterClientExtensionFormElementId}>
+					{Liferay.Language.get('client-extension')}
+				</label>
+
+				<input name={fdsFilterClientExtensionFormElementId} type="hidden" value={selectedFdsFilterClientExtension?.erc} />
+
+				<ClayDropDown
+					closeOnClick
+					menuElementAttrs={{
+						className: 'fds-cell-renderers-dropdown-menu',
+					}}
+					trigger={
+						<ClayButton
+							aria-labelledby={`${namespace}cellRenderersLabel`}
+							className="form-control form-control-select form-control-select-secondary"
+							displayType="secondary"
+						>
+							{selectedFilter ? selectedFilter.name : Liferay.Language.get('select')}
+						</ClayButton>
+					}
+				>
+					<ClayDropDown.ItemList items={fdsFilterClientExtensions} role="listbox">
+						{fdsFilterClientExtensions.map((filterClientExtension: any) => (
+							<ClayDropDown.Item
+								className="align-items-center d-flex justify-content-between"
+								key={filterClientExtension.name}
+								onClick={() => setSelectedFilter(filterClientExtension)}
+								roleItem="option"
+							>
+								{filterClientExtension.name}
+							</ClayDropDown.Item>
+						))}
+					</ClayDropDown.ItemList>
+				</ClayDropDown>
+			</div>
+		</ClayForm.Group>
+	);
+}
+
+export default {
+	Body,
+	Header,
+};

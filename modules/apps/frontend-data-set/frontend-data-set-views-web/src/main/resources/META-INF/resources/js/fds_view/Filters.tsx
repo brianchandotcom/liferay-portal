@@ -20,6 +20,7 @@ import {FDSViewType} from '../FDSViews';
 import {IPickList, getAllPicklists, getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
 import ValidationFeedback from '../components/ValidationFeedback';
+import ClientExtensionFilterModalContent from '../components/modal_content/ClientExtensionFilter';
 import DateRangeFilterModalContent from '../components/modal_content/DateRangeFilter';
 import SelectionFilterModalContent from '../components/modal_content/SelectionFilter';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
@@ -28,6 +29,7 @@ import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 import '../../css/Filters.scss';
 
 enum EFilterType {
+	CLIENT_EXTENSION = 'CLIENT_EXTENSION',
 	DATE_RANGE = 'DATE_RANGE',
 	SELECTION = 'SELECTION',
 }
@@ -69,6 +71,7 @@ type FilterCollection = Array<IDateFilter | ISelectionFilter>;
 
 interface IPropsAddFDSFilterModalContent {
 	closeModal: Function;
+	fdsFilterClientExtensions?: any;
 	fdsView: FDSViewType;
 	fieldNames?: string[];
 	fields: IField[];
@@ -80,6 +83,7 @@ interface IPropsAddFDSFilterModalContent {
 
 function AddFDSFilterModalContent({
 	closeModal,
+	fdsFilterClientExtensions,
 	fdsView,
 	fieldNames,
 	fields,
@@ -294,6 +298,10 @@ function AddFDSFilterModalContent({
 
 				{!filter && (
 					<>
+						{filterType === EFilterType.CLIENT_EXTENSION && (
+							<ClientExtensionFilterModalContent.Header />
+						)}
+
 						{filterType === EFilterType.DATE_RANGE && (
 							<DateRangeFilterModalContent.Header />
 						)}
@@ -371,6 +379,13 @@ function AddFDSFilterModalContent({
 
 				{!fieldInUseValidationError && (
 					<>
+						{filterType === EFilterType.CLIENT_EXTENSION && (
+							<ClientExtensionFilterModalContent.Body
+								fdsFilterClientExtensions={fdsFilterClientExtensions}
+								namespace={namespace}
+							/>
+						)}
+
 						{filterType === EFilterType.DATE_RANGE && (
 							<DateRangeFilterModalContent.Body
 								from={from}
@@ -431,12 +446,13 @@ function AddFDSFilterModalContent({
 }
 
 interface IProps {
+	fdsFilterClientExtensions: any;
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
 }
 
-function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
+function Filters({fdsFilterClientExtensions,fdsView, fdsViewsURL, namespace}: IProps) {
 	const [fields, setFields] = useState<IField[]>([]);
 	const [filters, setFilters] = useState<IFilter[]>([]);
 	const [newFiltersOrder, setNewFiltersOrder] = useState<string>('');
@@ -538,11 +554,9 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 	const onCreationButtonClick = (filterType: EFilterType) => {
 		const availableFields = fields.filter(
 			(item) =>
-				(filterType === EFilterType.SELECTION &&
-					item.format === EFieldFormat.STRING) ||
-				(filterType === EFilterType.DATE_RANGE &&
-					item.format === EFieldFormat.DATE_TIME) ||
-				item.format === EFieldFormat.DATE
+				filterType === EFilterType.CLIENT_EXTENSION ||
+				(filterType === EFilterType.SELECTION && item.format === EFieldFormat.STRING) ||
+				(filterType === EFilterType.DATE_RANGE && (item.format === EFieldFormat.DATE_TIME || item.format === EFieldFormat.DATE))
 		);
 
 		if (!availableFields.length) {
@@ -569,6 +583,7 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 				contentComponent: ({closeModal}: {closeModal: Function}) => (
 					<AddFDSFilterModalContent
 						closeModal={closeModal}
+						fdsFilterClientExtensions={fdsFilterClientExtensions}
 						fdsView={fdsView}
 						fieldNames={filters.map((filter) => filter.fieldName)}
 						fields={availableFields}
@@ -673,6 +688,11 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 					},
 				]}
 				creationMenuItems={[
+					{
+						label: Liferay.Language.get('client-extension'),
+						onClick: () =>
+							onCreationButtonClick(EFilterType.CLIENT_EXTENSION),
+					},
 					{
 						label: Liferay.Language.get('date-range'),
 						onClick: () =>

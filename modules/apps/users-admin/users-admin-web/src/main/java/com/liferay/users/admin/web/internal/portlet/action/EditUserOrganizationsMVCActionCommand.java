@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.Calendar;
 
@@ -62,7 +62,7 @@ public class EditUserOrganizationsMVCActionCommand
 
 			birthdayCal.setTime(user.getBirthday());
 
-			long[] organizationIds = _usersAdmin.getOrganizationIds(
+			long[] organizationIds = UsersAdminUtil.getOrganizationIds(
 				actionRequest);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -84,7 +84,7 @@ public class EditUserOrganizationsMVCActionCommand
 				contact.getJabberSn(), contact.getSkypeSn(),
 				contact.getTwitterSn(), user.getJobTitle(), user.getGroupIds(),
 				organizationIds, user.getRoleIds(),
-				_usersAdmin.getUserGroupRoles(actionRequest),
+				UsersAdminUtil.getUserGroupRoles(actionRequest),
 				user.getUserGroupIds(), serviceContext);
 		}
 		catch (Exception exception) {
@@ -112,9 +112,6 @@ public class EditUserOrganizationsMVCActionCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UsersAdmin _usersAdmin;
 
 	@Reference
 	private UserService _userService;

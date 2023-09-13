@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -197,11 +197,9 @@ public class AccountUserDisplaySearchContainerFactory {
 		AccountUserRetriever accountUserRetriever =
 			_accountUserRetrieverSnapshot.get();
 
-		UsersAdmin usersAdmin = _usersAdminSnapshot.get();
-
 		return accountUserRetriever.searchAccountRoleUsers(
 			accountEntryId, accountRoleId, keywords, start, end,
-			usersAdmin.getUserOrderByComparator(orderByCol, orderByType));
+			UsersAdminUtil.getUserOrderByComparator(orderByCol, orderByType));
 	}
 
 	private static BaseModelSearchResult<User> _getBaseModelSearchResult(
@@ -245,8 +243,5 @@ public class AccountUserDisplaySearchContainerFactory {
 		_userGroupRoleLocalServiceSnapshot = new Snapshot<>(
 			AccountUserDisplaySearchContainerFactory.class,
 			UserGroupRoleLocalService.class);
-	private static final Snapshot<UsersAdmin> _usersAdminSnapshot =
-		new Snapshot<>(
-			AccountUserDisplaySearchContainerFactory.class, UsersAdmin.class);
 
 }

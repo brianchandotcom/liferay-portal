@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.user.groups.admin.item.selector.UserGroupItemSelectorCriterion;
 import com.liferay.user.groups.admin.item.selector.web.internal.display.context.UserGroupItemSelectorViewDisplayContext;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
 
@@ -66,8 +65,7 @@ public class UserGroupItemSelectorView
 			userGroupItemSelectorViewDisplayContext =
 				new UserGroupItemSelectorViewDisplayContext(
 					_userGroupLocalService, userGroupItemSelectorCriterion,
-					_usersAdmin, (HttpServletRequest)servletRequest,
-					portletURL);
+					(HttpServletRequest)servletRequest, portletURL);
 
 		_itemSelectorViewDescriptorRenderer.renderHTML(
 			servletRequest, servletResponse, userGroupItemSelectorCriterion,
@@ -90,8 +88,5 @@ public class UserGroupItemSelectorView
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;
-
-	@Reference
-	private UsersAdmin _usersAdmin;
 
 }

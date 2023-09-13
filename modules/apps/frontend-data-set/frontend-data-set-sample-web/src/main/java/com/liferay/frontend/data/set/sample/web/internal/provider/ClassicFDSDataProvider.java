@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -47,7 +47,7 @@ public class ClassicFDSDataProvider implements FDSDataProvider<UserEntry> {
 				WebKeys.THEME_DISPLAY);
 
 		return TransformUtil.transform(
-			_usersAdmin.getUsers(
+			UsersAdminUtil.getUsers(
 				_userLocalService.search(
 					themeDisplay.getCompanyId(), fdsKeywords.getKeywords(),
 					WorkflowConstants.STATUS_APPROVED,
@@ -75,8 +75,5 @@ public class ClassicFDSDataProvider implements FDSDataProvider<UserEntry> {
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UsersAdmin _usersAdmin;
 
 }

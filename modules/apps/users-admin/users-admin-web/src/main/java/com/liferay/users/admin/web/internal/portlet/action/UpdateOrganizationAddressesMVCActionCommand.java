@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.List;
 
@@ -98,10 +98,10 @@ public class UpdateOrganizationAddressesMVCActionCommand
 			_organizationService.getOrganization(organizationId),
 			ActionKeys.UPDATE);
 
-		List<Address> addresses = _usersAdmin.getAddresses(actionRequest);
+		List<Address> addresses = UsersAdminUtil.getAddresses(actionRequest);
 
 		if (addresses != null) {
-			_usersAdmin.updateAddresses(
+			UsersAdminUtil.updateAddresses(
 				Organization.class.getName(), organizationId, addresses);
 		}
 	}
@@ -111,8 +111,5 @@ public class UpdateOrganizationAddressesMVCActionCommand
 
 	@Reference
 	private OrganizationService _organizationService;
-
-	@Reference
-	private UsersAdmin _usersAdmin;
 
 }

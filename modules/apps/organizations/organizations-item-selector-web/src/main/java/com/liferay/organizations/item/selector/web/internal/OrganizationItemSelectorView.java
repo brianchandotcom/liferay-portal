@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.io.IOException;
 
@@ -72,8 +71,7 @@ public class OrganizationItemSelectorView
 			organizationItemSelectorViewDisplayContext =
 				new OrganizationItemSelectorViewDisplayContext(
 					organizationItemSelectorCriterion,
-					_organizationLocalService, _usersAdmin, httpServletRequest,
-					portletURL);
+					_organizationLocalService, httpServletRequest, portletURL);
 
 		_itemSelectorViewDescriptorRenderer.renderHTML(
 			httpServletRequest, servletResponse,
@@ -103,8 +101,5 @@ public class OrganizationItemSelectorView
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UsersAdmin _usersAdmin;
 
 }

@@ -22,7 +22,7 @@ import com.liferay.roles.item.selector.RoleItemSelectorCriterion;
 import com.liferay.roles.item.selector.web.internal.constants.RoleItemSelectorViewConstants;
 import com.liferay.roles.item.selector.web.internal.display.context.RoleItemSelectorViewDisplayContext;
 import com.liferay.roles.item.selector.web.internal.search.RoleItemSelectorChecker;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.io.IOException;
 
@@ -127,7 +127,7 @@ public class RoleItemSelectorView
 
 		searchContainer.setEmptyResultsMessage("no-roles-were-found");
 		searchContainer.setOrderByComparator(
-			_usersAdmin.getRoleOrderByComparator(
+			UsersAdminUtil.getRoleOrderByComparator(
 				searchContainer.getOrderByCol(),
 				searchContainer.getOrderByType()));
 
@@ -171,8 +171,5 @@ public class RoleItemSelectorView
 		target = "(osgi.web.symbolicname=com.liferay.roles.item.selector.web)"
 	)
 	private ServletContext _servletContext;
-
-	@Reference
-	private UsersAdmin _usersAdmin;
 
 }

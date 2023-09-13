@@ -30,7 +30,6 @@ import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 import com.liferay.users.admin.test.util.search.GroupBlueprint;
 import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 
@@ -150,9 +149,6 @@ public class UserGroupIndexerTest {
 
 	@Inject
 	protected UserGroupLocalService userGroupLocalService;
-
-	@Inject
-	protected UsersAdmin usersAdmin;
 
 	private Role _addRole() throws Exception {
 		Role role = roleLocalService.addRole(

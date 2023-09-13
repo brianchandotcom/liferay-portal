@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -33,12 +33,10 @@ public class OrganizationItemSelectorViewDisplayContext {
 	public OrganizationItemSelectorViewDisplayContext(
 		OrganizationItemSelectorCriterion organizationItemSelectorCriterion,
 		OrganizationLocalService organizationLocalService,
-		UsersAdmin usersAdmin, HttpServletRequest httpServletRequest,
-		PortletURL portletURL) {
+		HttpServletRequest httpServletRequest, PortletURL portletURL) {
 
 		_organizationItemSelectorCriterion = organizationItemSelectorCriterion;
 		_organizationLocalService = organizationLocalService;
-		_usersAdmin = usersAdmin;
 		_portletURL = portletURL;
 
 		_renderRequest = (RenderRequest)httpServletRequest.getAttribute(
@@ -69,7 +67,7 @@ public class OrganizationItemSelectorViewDisplayContext {
 		_searchContainer.setEmptyResultsMessage("no-organizations-were-found");
 		_searchContainer.setOrderByCol(getOrderByCol());
 		_searchContainer.setOrderByComparator(
-			_usersAdmin.getOrganizationOrderByComparator(
+			UsersAdminUtil.getOrganizationOrderByComparator(
 				getOrderByCol(), getOrderByType()));
 		_searchContainer.setOrderByType(getOrderByType());
 
@@ -104,6 +102,5 @@ public class OrganizationItemSelectorViewDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<Organization> _searchContainer;
-	private final UsersAdmin _usersAdmin;
 
 }

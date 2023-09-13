@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayForm, {ClayCheckbox} from '@clayui/form';
+import ClayForm, {ClayInput} from '@clayui/form';
 import {useLiferayState} from '@liferay/frontend-js-state-web';
 import classnames from 'classnames';
-import skuOptionsAtom from 'commerce-frontend-js/utilities/atoms/skuOptionsAtom';
+import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
 import React, {useEffect, useState} from 'react';
 
 import Asterisk from './Asterisk';
@@ -17,14 +17,14 @@ import {
 	isRequired,
 } from './utils';
 
-const ProductOptionCheckbox = ({
+const ProductOptionText = ({
 	componentId,
 	forceRequired,
 	namespace,
 	productOption,
 }) => {
 	const [hasErrors, setHasErrors] = useState(false);
-	const [isChecked, setIsChecked] = useState(false);
+	const [text, setText] = useState('');
 
 	const [skuOptionsAtomState, setSkuOptionsAtomState] = useLiferayState(
 		skuOptionsAtom
@@ -45,8 +45,6 @@ const ProductOptionCheckbox = ({
 	);
 
 	useEffect(() => {
-		setSkuOptionsAtomState({...skuOptionsAtomState, namespace});
-
 		if (productOption.required) {
 			setHasErrors(true);
 		}
@@ -59,20 +57,28 @@ const ProductOptionCheckbox = ({
 				skuOptionsAtomState
 			),
 			namespace,
+			skuOptions: [
+				...skuOptionsAtomState.skuOptions,
+				{
+					key: productOption.key,
+					skuOptionKey: productOption.key,
+					value: [],
+				},
+			],
 		});
 
 		return () => setSkuOptionsAtomState(initialSkuOptionsAtomState);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const handleChange = ({target: {checked, value}}) => {
+	const handleChange = ({target: {value}}) => {
 		if (skuOptionsAtomState.updating) {
 			return;
 		}
 
 		setSkuOptionsAtomState({...skuOptionsAtomState, updating: true});
 
-		setIsChecked(checked);
+		setText(value);
 
 		let currentSkuOptions = skuOptionsAtomState.skuOptions.slice();
 
@@ -88,7 +94,7 @@ const ProductOptionCheckbox = ({
 			currentSkuOptions[curIndex] = {
 				key: productOption.key,
 				skuOptionKey: productOption.key,
-				value: checked ? [value] : [],
+				value: [value],
 			};
 		}
 		else {
@@ -102,7 +108,7 @@ const ProductOptionCheckbox = ({
 			];
 		}
 
-		const required = (forceRequired || productOption.required) && !checked;
+		const required = (forceRequired || productOption.required) && !value;
 
 		setHasErrors(required);
 
@@ -132,13 +138,13 @@ const ProductOptionCheckbox = ({
 				/>
 			</label>
 
-			<ClayCheckbox
-				checked={isChecked}
+			<ClayInput
 				disabled={skuOptionsAtomState.updating}
 				id={componentId}
 				name={productOption.key}
 				onChange={handleChange}
-				value={productOption.key}
+				type="text"
+				value={text}
 			/>
 
 			{hasErrors && (
@@ -152,4 +158,4 @@ const ProductOptionCheckbox = ({
 	);
 };
 
-export default ProductOptionCheckbox;
+export default ProductOptionText;

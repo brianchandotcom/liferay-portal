@@ -78,7 +78,7 @@ public class TextCommerceOptionTypeImpl implements CommerceOptionType {
 		printWriter.write("<div>");
 
 		String moduleName = _npmResolver.resolveModuleName(
-			"@liferay/commerce-product-definitions-web");
+			"commerce-frontend-js");
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -87,7 +87,8 @@ public class TextCommerceOptionTypeImpl implements CommerceOptionType {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		_reactRenderer.renderReact(
-			new ComponentDescriptor(moduleName + "/js/ProductOptionText"),
+			new ComponentDescriptor(
+				moduleName + "/components/product_options/ProductOptionText"),
 			HashMapBuilder.<String, Object>put(
 				"componentId", StringUtil.randomId()
 			).put(

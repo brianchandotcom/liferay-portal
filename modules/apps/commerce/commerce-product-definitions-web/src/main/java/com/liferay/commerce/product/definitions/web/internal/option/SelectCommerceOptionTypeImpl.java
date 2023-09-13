@@ -160,10 +160,11 @@ public class SelectCommerceOptionTypeImpl implements CommerceOptionType {
 		printWriter.write("<div>");
 
 		String moduleName = _npmResolver.resolveModuleName(
-			"@liferay/commerce-product-definitions-web");
+			"commerce-frontend-js");
 
 		_reactRenderer.renderReact(
-			new ComponentDescriptor(moduleName + "/js/ProductOptionSelect"),
+			new ComponentDescriptor(
+				moduleName + "/components/product_options/ProductOptionSelect"),
 			HashMapBuilder.<String, Object>put(
 				"accountId",
 				(accountEntry == null) ? 0 : accountEntry.getAccountEntryId()

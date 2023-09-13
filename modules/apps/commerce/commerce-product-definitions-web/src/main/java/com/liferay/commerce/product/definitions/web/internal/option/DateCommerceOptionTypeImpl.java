@@ -78,7 +78,7 @@ public class DateCommerceOptionTypeImpl implements CommerceOptionType {
 		printWriter.write("<div>");
 
 		String moduleName = _npmResolver.resolveModuleName(
-			"@liferay/commerce-product-definitions-web");
+			"commerce-frontend-js");
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -87,7 +87,8 @@ public class DateCommerceOptionTypeImpl implements CommerceOptionType {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		_reactRenderer.renderReact(
-			new ComponentDescriptor(moduleName + "/js/ProductOptionDate"),
+			new ComponentDescriptor(
+				moduleName + "/components/product_options/ProductOptionDate"),
 			HashMapBuilder.<String, Object>put(
 				"componentId", StringUtil.randomId()
 			).put(

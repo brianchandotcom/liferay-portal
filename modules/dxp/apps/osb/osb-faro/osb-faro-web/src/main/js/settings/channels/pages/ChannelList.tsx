@@ -389,12 +389,12 @@ const ChannelList: React.FC<IChannelListProps> = ({
 						},
 						{
 							accessor: 'groupIdCount',
-							label: Liferay.Language.get('Sites'),
+							label: Liferay.Language.get('sites'),
 							sortable: false
 						},
 						{
 							accessor: 'commerceChannelIdCount',
-							label: Liferay.Language.get('Channels'),
+							label: Liferay.Language.get('channels'),
 							sortable: false
 						},
 						{

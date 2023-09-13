@@ -43,7 +43,7 @@ describe('The ObjectFoldersSidebar component should', () => {
 	it('render all created object folders', () => {
 		render(
 			<ObjectFoldersSideBar
-				objectFolders={[uncategorizedObjectFolder, ticketObjectFolder]}
+				objectFolders={[ticketObjectFolder, uncategorizedObjectFolder]}
 				selectedObjectFolder={uncategorizedObjectFolder}
 				setSelectedObjectFolder={() => {}}
 				setShowModal={() => {}}

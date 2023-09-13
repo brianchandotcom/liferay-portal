@@ -1300,8 +1300,10 @@ definition {
 		}
 	}
 
+	@description = "This is a test for creating a new discount"
+	@priority = 5
 	test CreateNewDiscount {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(

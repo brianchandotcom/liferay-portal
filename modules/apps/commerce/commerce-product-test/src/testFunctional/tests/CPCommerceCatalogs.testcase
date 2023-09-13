@@ -126,8 +126,10 @@ definition {
 		}
 	}
 
+	@description = "This is a test for creating a catalog"
+	@priority = 5
 	test CreateNewCatalog {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

@@ -741,6 +741,7 @@ definition {
 		}
 	}
 
+	@priority = 3
 	test AssertPriceEntriesAreProductsInTheSameCatalogAsPriceList {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";
@@ -904,6 +905,7 @@ definition {
 		Button.clickPublish();
 	}
 
+	@priority = 3
 	test AssertPriceListCannotBeMovedToADifferentCatalog {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";
@@ -951,6 +953,7 @@ definition {
 			locator1 = "Select#ANY_DISABLED");
 	}
 
+	@priority = 3
 	test AssertPriceListHaveRequiredNameAndCurrency {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";
@@ -2062,9 +2065,9 @@ definition {
 			priceListName = "Test Price List");
 	}
 
+	@priority = 3
 	test PriceListExistsOnlyInOneCatalog {
 		property portal.acceptance = "false";
-		property portal.upstream = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

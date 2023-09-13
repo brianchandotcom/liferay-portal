@@ -2877,10 +2877,11 @@ definition {
 		}
 	}
 
+	@priority = 5
 	test ProductPublishing {
 		property environment.acceptance = "true";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 
@@ -2954,8 +2955,9 @@ definition {
 		CommerceEntry.viewProductSkus(skusList = "6:10.00,12:20.00,24:30.00,48:40.00,112:50.00");
 	}
 
+	@priority = 5
 	test TranslateProductName {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
 

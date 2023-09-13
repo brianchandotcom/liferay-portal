@@ -763,6 +763,7 @@ definition {
 			singleShippingOption = "true");
 	}
 
+	@priority = 4
 	test DeactivateCommerceAccount {
 		property portal.acceptance = "false";
 		property portal.release = "quarantine";
@@ -1092,6 +1093,7 @@ definition {
 		CommerceEntry.viewSpecificationGroupsEntries(specificationGroupsEntries = "Quantity,Fit,Material,Dimensions,Warranty");
 	}
 
+	@priority = 3
 	test MiniumSiteFullFlow {
 		property portal.acceptance = "false";
 		property portal.release = "quarantine";

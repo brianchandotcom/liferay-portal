@@ -1357,8 +1357,10 @@ definition {
 			value1 = "Gross Price");
 	}
 
+	@description = "This is a test for creating a new notification template"
+	@priority = 5
 	test CreateNewNotificationTemplate {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",

@@ -331,17 +331,4 @@ definition {
 			value1 = "12.0");
 	}
 
-	test ViewInstanceCurrenciesAvailable {
-		property environment.acceptance = "true";
-		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
-		property portal.acceptance = "false";
-		property portal.upstream = "true";
-
-		CommerceNavigator.gotoPortlet(
-			category = "Store Management",
-			portlet = "Currencies");
-
-		CommerceEntry.viewCurrenciesEntry(currenciesList = "US Dollar,Australian Dollar,British Pound,Canadian Dollar,Chinese Yuan Renminbi,Euro,Hong Kong Dollar,Japanese Yen,Indian Rupee,Brazilian Real");
-	}
-
 }

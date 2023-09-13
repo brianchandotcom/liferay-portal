@@ -109,7 +109,8 @@ public class ObjectValidationRuleDTOConverter
 			{
 				setName(
 					() -> {
-						if (objectValidationRuleSetting.compareName(
+						if (FeatureFlagManagerUtil.isEnabled("LPS-187854") &&
+							objectValidationRuleSetting.compareName(
 								ObjectValidationRuleSettingConstants.
 									NAME_KEY_OBJECT_FIELD_ID)) {
 
@@ -129,9 +130,18 @@ public class ObjectValidationRuleDTOConverter
 					});
 				setValue(
 					() -> {
-						if (!(objectValidationRuleSetting.compareName(
+						if (FeatureFlagManagerUtil.isEnabled("LPS-187854") &&
+							!(objectValidationRuleSetting.compareName(
 								ObjectValidationRuleSettingConstants.
 									NAME_KEY_OBJECT_FIELD_ID) ||
+							  objectValidationRuleSetting.compareName(
+								  ObjectValidationRuleSettingConstants.
+									  NAME_OUTPUT_OBJECT_FIELD_ID))) {
+
+							return objectValidationRuleSetting.getValue();
+						}
+
+						if (!(FeatureFlagManagerUtil.isEnabled("LPS-187854") ||
 							  objectValidationRuleSetting.compareName(
 								  ObjectValidationRuleSettingConstants.
 									  NAME_OUTPUT_OBJECT_FIELD_ID))) {

@@ -538,12 +538,26 @@ public class ObjectValidationRuleLocalServiceImpl
 		for (ObjectValidationRuleSetting objectValidationRuleSetting :
 				objectValidationRuleSettings) {
 
-			if (!(objectValidationRuleSetting.compareName(
+			if (FeatureFlagManagerUtil.isEnabled("LPS-187854") &&
+				!(objectValidationRuleSetting.compareName(
 					ObjectValidationRuleSettingConstants.
 						NAME_KEY_OBJECT_FIELD_ID) ||
 				  objectValidationRuleSetting.compareName(
 					  ObjectValidationRuleSettingConstants.
 						  NAME_OUTPUT_OBJECT_FIELD_ID))) {
+
+				throw new ObjectValidationRuleSettingNameException.
+					NotAllowedName(objectValidationRuleSetting.getName());
+			}
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-187854") &&
+				(StringUtil.equals(
+					outputType,
+					ObjectValidationRuleConstants.
+						OUTPUT_TYPE_FULL_VALIDATION) ||
+				 !objectValidationRuleSetting.compareName(
+					 ObjectValidationRuleSettingConstants.
+						 NAME_OUTPUT_OBJECT_FIELD_ID))) {
 
 				throw new ObjectValidationRuleSettingNameException.
 					NotAllowedName(objectValidationRuleSetting.getName());

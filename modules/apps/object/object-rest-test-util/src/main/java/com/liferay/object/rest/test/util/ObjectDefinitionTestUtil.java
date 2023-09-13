@@ -20,6 +20,19 @@ import java.util.List;
  */
 public class ObjectDefinitionTestUtil {
 
+	public static ObjectDefinition addCustomObjectDefinition(
+			List<ObjectField> objectFields)
+		throws Exception {
+
+		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
+			TestPropsValues.getUserId(), 0, false, false, false,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"A" + RandomTestUtil.randomString(), null, null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			true, ObjectDefinitionConstants.SCOPE_COMPANY,
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
+	}
+
 	public static ObjectDefinition publishObjectDefinition(
 			List<ObjectField> objectFields)
 		throws Exception {

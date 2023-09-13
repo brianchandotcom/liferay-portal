@@ -4,6 +4,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
 import ClayPanel from '@clayui/panel';
 import {useId} from 'frontend-js-components-web';
@@ -382,7 +383,7 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 						<>
 							<ClayForm.Group small>
 								<ClayInput.Group
-									className="align-items-end"
+									className="align-items-end c-mb-2"
 									small
 								>
 									<ClayInput.GroupItem>
@@ -415,35 +416,26 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 										<CurrentLanguageFlag />
 									</ClayInput.GroupItem>
 								</ClayInput.Group>
-							</ClayForm.Group>
-							<ClayForm.Group small>
-								<ClayToggle
-									label={Liferay.Language.get(
+
+								<ClayButton
+									aria-label={Liferay.Language.get(
 										'preview-success-notification'
 									)}
-									onToggle={(checked) => {
-										onPreviewNotification(checked);
-
-										if (checked) {
-											openToast({
-												message: localizedNotificationText,
-												onClose: () =>
-													onPreviewNotification(
-														false
-													),
-												toastProps: {
-													id: previewId,
-												},
-											});
-										}
-										else {
-											hidePreview();
-										}
+									displayType="secondary"
+									onClick={() => {
+										onPreviewNotification(true);
+										openToast({
+											message: localizedNotificationText,
+											onClose: () =>
+												onPreviewNotification(false),
+											toastProps: {
+												id: previewId,
+											},
+										});
 									}}
-									toggled={Boolean(
-										item.config.showNotificationPreview
-									)}
-								/>
+								>
+									{Liferay.Language.get('preview')}
+								</ClayButton>
 							</ClayForm.Group>
 						</>
 					)}

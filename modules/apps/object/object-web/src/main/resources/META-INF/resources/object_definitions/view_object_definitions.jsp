@@ -18,23 +18,23 @@ ViewObjectDefinitionsDisplayContext viewObjectDefinitionsDisplayContext = (ViewO
 		module="js/components/ViewObjectDefinitions/ViewObjectDefinitions"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"apiURL", viewObjectDefinitionsDisplayContext.getAPIURL()
-			).put(
 				"baseResourceURL", String.valueOf(baseResourceURL)
 			).put(
-				"creationMenu", viewObjectDefinitionsDisplayContext.getCreationMenu()
-			).put(
-				"id", ObjectDefinitionsFDSNames.OBJECT_DEFINITIONS
-			).put(
-				"items", viewObjectDefinitionsDisplayContext.getFDSActionDropdownItems()
+				"editObjectDefinitionURL", viewObjectDefinitionsDisplayContext.getEditObjectDefinitionURL()
 			).put(
 				"modelBuilderURL", viewObjectDefinitionsDisplayContext.getModelBuilderURL()
 			).put(
+				"objectDefinitionsAPIURL", viewObjectDefinitionsDisplayContext.getAPIURL()
+			).put(
+				"objectDefinitionsCreationMenu", viewObjectDefinitionsDisplayContext.getCreationMenu()
+			).put(
+				"objectDefinitionsFDSActionDropdownItems", viewObjectDefinitionsDisplayContext.getFDSActionDropdownItems()
+			).put(
+				"objectDefinitionsFDSName", ObjectDefinitionsFDSNames.OBJECT_DEFINITIONS
+			).put(
+				"objectDefinitionsStorageTypes", viewObjectDefinitionsDisplayContext.getStorageTypesJSONArray()
+			).put(
 				"objectFolderPermissionsURL", viewObjectDefinitionsDisplayContext.getPermissionsURL(ObjectFolder.class.getName())
-			).put(
-				"storages", viewObjectDefinitionsDisplayContext.getStoragesJSONArray()
-			).put(
-				"url", viewObjectDefinitionsDisplayContext.getEditObjectDefinitionURL()
 			).build()
 		%>'
 	/>

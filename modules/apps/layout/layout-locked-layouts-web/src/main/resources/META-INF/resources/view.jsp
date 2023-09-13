@@ -24,12 +24,10 @@ LockedLayoutsDisplayContext lockedLayoutsDisplayContext = (LockedLayoutsDisplayC
 	<clay:sheet-section
 		cssClass="list-locked-pages"
 	>
-		<c:if test="<%= lockedLayoutsDisplayContext.hasLockedLayouts() %>">
-			<clay:management-toolbar
-				managementToolbarDisplayContext="<%= new LockedLayoutsSearchContainerManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, lockedLayoutsDisplayContext) %>"
-				propsTransformer="js/ManagementToolbarPropsTransformer"
-			/>
-		</c:if>
+		<clay:management-toolbar
+			managementToolbarDisplayContext="<%= new LockedLayoutsSearchContainerManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, lockedLayoutsDisplayContext) %>"
+			propsTransformer="js/ManagementToolbarPropsTransformer"
+		/>
 
 		<portlet:actionURL name="/layout_locked_layouts/unlock_layouts" var="unlockLayoutsURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

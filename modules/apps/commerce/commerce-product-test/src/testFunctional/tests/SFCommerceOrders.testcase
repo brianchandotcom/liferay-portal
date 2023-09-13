@@ -490,6 +490,126 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-9450. If a product in the open order is removed from the account visibility, the buyer cannot checkout with the product, can be redirected to the catalog page by viewing the product in both order detail and mini-cart, and no other can be added to the cart"
+	@priority = 3
+	test CanManageOpenOrderCorrectlyIfAccountVisibilityForAProductIsRemoved {
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property portal.acceptance = "false";
+
+		task ("Given an account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And an Account Group is created and contains Commerce Account") {
+			JSONAccountGroup.addAccountGroup(accountGroupName = "AG1");
+
+			AccountGroups.openAccountGroupsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AG1");
+
+			AccountGroups.addAssignee(
+				accountGroupName = "AG1",
+				assigneeNames = "Commerce Account");
+		}
+
+		task ("And U-Joint's Account Groups visibility is added for AG1") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceDiagram.setVisibility(
+				checkboxName = "AG1",
+				name = "Account Groups",
+				webContentTitle = "Add Account Group Relation to U-Joint");
+		}
+
+		task ("And the buyer adds U-Joint to the cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+		}
+
+		task ("When the admin removes Commerce Account in AG1") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			AccountGroups.openAccountGroupsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AG1");
+
+			AccountGroups.removeAccount(accountGroupName = "Commerce Account");
+		}
+
+		task ("Then the buyer can be redirected to the catalog page by viewing the open order's U-Joint item") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "buyer@liferay.com",
+				userLoginFullName = "Buyer User");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/pending-orders");
+
+			Button.click(button = "View");
+
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_NAME");
+
+			AssertLocation.assertPartialLocation(value1 = "web/minium/catalog");
+		}
+
+		task ("And the buyer can be redirected to the catalog page by viewing the mini-cart's U-Joint item") {
+			CommerceNavigator.gotoMiniCart();
+
+			Click(
+				key_cartItemName = "U-Joint",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME");
+
+			AssertLocation.assertPartialLocation(value1 = "web/minium/catalog");
+		}
+
+		task ("And the buyer can just save the order, cannot checkout") {
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			AssertElementPresent(
+				key_text = "Save",
+				locator1 = "Button#ANY");
+
+			AssertElementNotPresent(
+				key_text = "Checkout",
+				locator1 = "Button#ANY");
+		}
+
+		task ("And there is an error alert 'One or more products are no longer available' is shown if the buyer tries to add another product to the cart") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			Click(
+				key_productName = "Mount",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+
+			AssertElementPresent(
+				key_itemCount = 1,
+				locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
+
+			Alert.viewErrorMessage(errorMessage = "Danger:One or more products are no longer available.");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-11355. As a user, I cannot reorder an unavailable product."
 	@priority = 5
 	test CannotReorderUnavailableProduct {

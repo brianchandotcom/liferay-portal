@@ -130,8 +130,10 @@ export function BasicInfoTab({
 					objectDefinitionExternalReferenceCode2 && (
 					<AggregationFilterContainer
 						aggregationFilters={aggregationFilters}
+						containerWrapper={ContainerWrapper}
 						creationLanguageId2={creationLanguageId2}
 						filterOperators={filterOperators}
+						modelBuilder={modelBuilder}
 						objectDefinitionExternalReferenceCode2={
 							objectDefinitionExternalReferenceCode2
 						}

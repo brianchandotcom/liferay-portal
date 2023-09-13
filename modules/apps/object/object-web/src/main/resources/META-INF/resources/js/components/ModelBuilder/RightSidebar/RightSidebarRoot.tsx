@@ -4,29 +4,61 @@
  */
 
 import {CustomVerticalBar} from '@liferay/object-js-components-web';
-import React, {ReactNode} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 
 import './RightSidebarRoot.scss';
+import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 
 interface IRightSidebarRoot {
 	children: ReactNode;
 }
 
 export function RightSideBarRoot({children}: IRightSidebarRoot) {
+	const [{selectedObjectDefinitionField}] = useObjectFolderContext();
+	const [loading, setLoading] = useState(false);
+	const [verticalBarWidth, setVerticalBarWidth] = useState(320);
+
+	const setNewVerticalBarWidthValue = (width: number) => {
+		setLoading(true);
+
+		setVerticalBarWidth(width);
+
+		setTimeout(() => setLoading(false), 50);
+	};
+
+	useEffect(() => {
+		if (
+			selectedObjectDefinitionField &&
+			selectedObjectDefinitionField.businessType === 'Aggregation'
+		) {
+			setNewVerticalBarWidthValue(950);
+
+			return;
+		}
+
+		setNewVerticalBarWidthValue(320);
+
+		return;
+	}, [selectedObjectDefinitionField]);
+
 	return (
-		<CustomVerticalBar
-			defaultActive="objectsModelBuilderRightSidebar"
-			panelWidth={320}
-			position="right"
-			resize={false}
-			triggerSideBarAnimation={true}
-			verticalBarItems={[
-				{
-					title: 'objectsModelBuilderRightSidebar',
-				},
-			]}
-		>
-			{children}
-		</CustomVerticalBar>
+		<>
+			{!loading && (
+				<CustomVerticalBar
+					defaultActive="objectsModelBuilderRightSidebar"
+					panelWidth={verticalBarWidth}
+					position="right"
+					resize={false}
+					triggerSideBarAnimation={true}
+					verticalBarItems={[
+						{
+							title: 'objectsModelBuilderRightSidebar',
+						},
+					]}
+				>
+					{children}
+				</CustomVerticalBar>
+			)}
+		</>
 	);
 }

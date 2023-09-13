@@ -291,6 +291,69 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			};
 		}
 
+		case TYPES.ADD_NEW_OBJECT_FIELD: {
+			const {
+				edges,
+				newObjectField,
+				nodes,
+				objectDefinitionExternalReferenceCode,
+			} = action.payload;
+
+			const selectedObjectDefinitionField: ObjectFieldNode = {
+				businessType: newObjectField.businessType,
+				externalReferenceCode: newObjectField.externalReferenceCode,
+				id: newObjectField.id,
+				label: newObjectField.label,
+				name: newObjectField.name,
+				primaryKey: false,
+				required: newObjectField.required,
+				selected: true,
+			};
+
+			const newNodes = nodes.map((node) => {
+				if (
+					node.data?.externalReferenceCode ===
+					objectDefinitionExternalReferenceCode
+				) {
+					const {objectFields} = node.data;
+					const newObjectFields = convertAllFieldsToUnselected(
+						objectFields
+					);
+
+					newObjectFields.push(selectedObjectDefinitionField);
+
+					return {
+						...node,
+						data: {
+							...node.data,
+							nodeSelected: true,
+							objectFields: newObjectFields,
+						},
+					};
+				}
+
+				const unselectedFields = convertAllFieldsToUnselected(
+					node.data?.objectFields as ObjectFieldNode[]
+				);
+
+				return {
+					...node,
+					data: {
+						...node.data,
+						nodeSelected: false,
+						objectFields: unselectedFields,
+					},
+				};
+			}) as Node<ObjectDefinitionNodeData>[];
+
+			return {
+				...state,
+				elements: [...newNodes, ...edges],
+				rightSidebarType: 'objectFieldDetails',
+				selectedObjectDefinitionField,
+			};
+		}
+
 		case TYPES.BULK_CHANGE_NODE_VIEW: {
 			const {
 				edges,
@@ -673,6 +736,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				...state,
 				elements: [...edges, ...newNodes],
 				rightSidebarType: 'empty',
+				selectedObjectDefinitionField: undefined,
 			};
 		}
 
@@ -761,6 +825,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				...state,
 				elements: [...newEdges, ...newNodes],
 				rightSidebarType: 'objectFieldDetails' as RightSidebarType,
+				selectedObjectDefinitionField: undefined,
 			};
 		}
 
@@ -769,6 +834,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				edges,
 				nodes,
 				selectedFieldDefinitionName,
+				selectedObjectDefinitionField,
 				selectedObjectDefinitionId,
 			} = action.payload;
 
@@ -795,6 +861,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				...state,
 				elements: [...newEdges, ...newNodes],
 				rightSidebarType: 'objectFieldDetails' as RightSidebarType,
+				selectedObjectDefinitionField,
 			};
 		}
 
@@ -878,6 +945,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				],
 				leftSidebarItems: newLeftSidebarItems,
 				rightSidebarType: 'objectDefinitionDetails',
+				selectedObjectDefinitionField: undefined,
 				selectedObjectDefinitionNode,
 			};
 		}

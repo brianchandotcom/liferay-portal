@@ -30,14 +30,17 @@ export default function ObjectDefinitionNodeFields({
 	const store = useStore();
 	const [_, dispatch] = useObjectFolderContext();
 
-	const handleClickDetails = (selectedFieldName: string) => {
+	const handleClickDetails = (
+		selectedObjectDefinitionField: ObjectFieldNode
+	) => {
 		const {edges, nodes} = store.getState();
 
 		dispatch({
 			payload: {
 				edges,
 				nodes,
-				selectedFieldDefinitionName: selectedFieldName,
+				selectedFieldDefinitionName: selectedObjectDefinitionField.name as string,
+				selectedObjectDefinitionField,
 				selectedObjectDefinitionId,
 			},
 			type: TYPES.SET_SELECTED_FIELD,
@@ -58,9 +61,7 @@ export default function ObjectDefinitionNodeFields({
 								}
 							)}
 							key={objectField.name}
-							onClick={() =>
-								handleClickDetails(objectField.name as string)
-							}
+							onClick={() => handleClickDetails(objectField)}
 						>
 							<div className="lfr-objects__model-builder-node-field-label">
 								<span>

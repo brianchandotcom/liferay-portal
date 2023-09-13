@@ -1,25 +1,26 @@
 <style>
-.price-model-facet {
-	border-radius: 10px;
-}
+	.price-model-facet {
+		border-radius: 10px;
+	}
 
-.price-model-facet .panel a {
-	padding: 1rem;
-}
+	.price-model-facet .panel a {
+		padding: 1rem;
+	}
 
-.price-model-facet .collapse-icon .collapse-icon-closed .lexicon-icon,
-.price-model-facet .collapse-icon .collapse-icon-open .lexicon-icon {
-	margin-top: 0.3rem;
-}
+	.price-model-facet .collapse-icon .collapse-icon-closed .lexicon-icon,
+	.price-model-facet .collapse-icon .collapse-icon-open .lexicon-icon {
+		margin-top: 0.3rem;
+	}
 
-.price-model-facet .panel-body {
-	padding: 0.5rem 1rem 1rem;
-}
+	.price-model-facet .panel-body {
+		padding: 0.5rem 1rem 1rem;
+	}
 
-.price-model-facet .list-unstyled {
-	margin-bottom: 0;
-}
+	.price-model-facet .list-unstyled {
+		margin-bottom: 0;
+	}
 </style>
+
 <@liferay_ui["panel-container"]
 	cssClass="price-model-facet bg-white border-radius-xlarge my-2"
 	extended=true
@@ -48,6 +49,7 @@
 								name="${namespace}_term_${entry.getDisplayName()}"
 								onChange="Liferay.Search.FacetUtil.changeSelection(event);"
 								type="checkbox" />
+
 							<span class="custom-control-label font-size-paragraph-small term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
 								<span class="custom-control-label-text">
 									${htmlUtil.escape(entry.getDisplayName())}

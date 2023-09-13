@@ -197,7 +197,7 @@ public class EditBatchPlannerPlanDisplayContext {
 				new SelectOption(
 					String.format(
 						"%s (%s - %s)",
-						_resolveSimpleClassName(
+						TaskItemUtil.getSimpleClassName(
 							internalClassNameKeyParts
 								[internalClassNameKeyParts.length - 1]),
 						internalClassNameKeyParts
@@ -250,16 +250,6 @@ public class EditBatchPlannerPlanDisplayContext {
 		}
 
 		return templateSelectOptions;
-	}
-
-	private String _resolveSimpleClassName(String internalClassNameKey) {
-		int index = internalClassNameKey.indexOf(StringPool.POUND);
-
-		if (index < 0) {
-			return internalClassNameKey;
-		}
-
-		return internalClassNameKey.substring(index + 1);
 	}
 
 	private final HttpServletRequest _httpServletRequest;

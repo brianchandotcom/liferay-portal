@@ -5,9 +5,9 @@
 
 package com.liferay.batch.planner.web.internal.display.context;
 
+import com.liferay.batch.planner.batch.engine.task.TaskItemUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -64,9 +64,8 @@ public abstract class BaseDisplayContext {
 		).build();
 	}
 
-	public String getSimpleInternalClassName(String internalClassName) {
-		return internalClassName.substring(
-			internalClassName.lastIndexOf(StringPool.PERIOD) + 1);
+	public String getSimpleClassName(String internalClassNameKey) {
+		return TaskItemUtil.getSimpleClassName(internalClassNameKey);
 	}
 
 	protected boolean isExport(String navigation) {

@@ -46,4 +46,15 @@ public class TaskItemUtil {
 		return internalClassName + StringPool.POUND + taskItemDelegateName;
 	}
 
+	public static String getSimpleClassName(String internalClassNameKey) {
+		int idx = internalClassNameKey.indexOf(StringPool.POUND);
+
+		if (idx < 0) {
+			return StringUtil.extractLast(
+				internalClassNameKey, StringPool.PERIOD);
+		}
+
+		return getDelegateName(internalClassNameKey);
+	}
+
 }

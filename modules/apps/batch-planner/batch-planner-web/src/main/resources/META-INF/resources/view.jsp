@@ -57,7 +57,7 @@ SearchContainer<BatchPlannerPlanDisplay> batchPlannerPlanDisplaySearchContainer 
 
 			<liferay-ui:search-container-column-text
 				name="type"
-				value="<%= batchPlannerPlanDisplayContext.getSimpleInternalClassName(batchPlannerPlanDisplay.getInternalClassNameKey()) %>"
+				value="<%= batchPlannerPlanDisplayContext.getSimpleClassName(batchPlannerPlanDisplay.getInternalClassNameKey()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

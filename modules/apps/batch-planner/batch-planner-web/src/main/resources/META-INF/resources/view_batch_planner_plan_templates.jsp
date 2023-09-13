@@ -71,7 +71,7 @@ BatchPlannerPlanTemplateManagementToolbarDisplayContext batchPlannerPlanTemplate
 
 				<liferay-ui:search-container-column-text
 					name="type"
-					value="<%= batchPlannerPlanTemplateDisplayContext.getSimpleInternalClassName(batchPlannerPlanTemplateDisplay.getInternalClassNameKey()) %>"
+					value="<%= batchPlannerPlanTemplateDisplayContext.getSimpleClassName(batchPlannerPlanTemplateDisplay.getInternalClassNameKey()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

@@ -62,13 +62,6 @@ public interface ObjectValidationRuleLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectValidationRuleLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object validation rule local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectValidationRuleLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public ObjectValidationRule addObjectValidationRule(
-			long userId, long objectDefinitionId, boolean active, String engine,
-			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String outputType, String script, boolean system,
-			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
-		throws PortalException;
 
 	/**
 	 * Adds the object validation rule to the database. Also notifies the appropriate model listeners.
@@ -83,6 +76,15 @@ public interface ObjectValidationRuleLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectValidationRule addObjectValidationRule(
 		ObjectValidationRule objectValidationRule);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectValidationRule addObjectValidationRule(
+			String externalReferenceCode, long userId, long objectDefinitionId,
+			boolean active, String engine, Map<Locale, String> errorLabelMap,
+			Map<Locale, String> nameMap, String outputType, String script,
+			boolean system,
+			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
+		throws PortalException;
 
 	/**
 	 * Creates a new object validation rule with the primary key. Does not add the object validation rule to the database.
@@ -317,14 +319,6 @@ public interface ObjectValidationRuleLocalService
 
 	public void unassociateObjectField(ObjectField objectField);
 
-	@Indexable(type = IndexableType.REINDEX)
-	public ObjectValidationRule updateObjectValidationRule(
-			long objectValidationRuleId, boolean active, String engine,
-			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String outputType, String script,
-			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
-		throws PortalException;
-
 	/**
 	 * Updates the object validation rule in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -338,6 +332,14 @@ public interface ObjectValidationRuleLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectValidationRule updateObjectValidationRule(
 		ObjectValidationRule objectValidationRule);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectValidationRule updateObjectValidationRule(
+			String externalReferenceCode, long objectValidationRuleId,
+			boolean active, String engine, Map<Locale, String> errorLabelMap,
+			Map<Locale, String> nameMap, String outputType, String script,
+			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
+		throws PortalException;
 
 	@Transactional(readOnly = true)
 	public void validate(

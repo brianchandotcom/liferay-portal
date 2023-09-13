@@ -36,19 +36,6 @@ public class ObjectValidationRuleLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectValidationRuleLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static ObjectValidationRule addObjectValidationRule(
-			long userId, long objectDefinitionId, boolean active, String engine,
-			Map<java.util.Locale, String> errorLabelMap,
-			Map<java.util.Locale, String> nameMap, String outputType,
-			String script, boolean system,
-			List<com.liferay.object.model.ObjectValidationRuleSetting>
-				objectValidationRuleSettings)
-		throws PortalException {
-
-		return getService().addObjectValidationRule(
-			userId, objectDefinitionId, active, engine, errorLabelMap, nameMap,
-			outputType, script, system, objectValidationRuleSettings);
-	}
 
 	/**
 	 * Adds the object validation rule to the database. Also notifies the appropriate model listeners.
@@ -64,6 +51,22 @@ public class ObjectValidationRuleLocalServiceUtil {
 		ObjectValidationRule objectValidationRule) {
 
 		return getService().addObjectValidationRule(objectValidationRule);
+	}
+
+	public static ObjectValidationRule addObjectValidationRule(
+			String externalReferenceCode, long userId, long objectDefinitionId,
+			boolean active, String engine,
+			Map<java.util.Locale, String> errorLabelMap,
+			Map<java.util.Locale, String> nameMap, String outputType,
+			String script, boolean system,
+			List<com.liferay.object.model.ObjectValidationRuleSetting>
+				objectValidationRuleSettings)
+		throws PortalException {
+
+		return getService().addObjectValidationRule(
+			externalReferenceCode, userId, objectDefinitionId, active, engine,
+			errorLabelMap, nameMap, outputType, script, system,
+			objectValidationRuleSettings);
 	}
 
 	/**
@@ -368,20 +371,6 @@ public class ObjectValidationRuleLocalServiceUtil {
 		getService().unassociateObjectField(objectField);
 	}
 
-	public static ObjectValidationRule updateObjectValidationRule(
-			long objectValidationRuleId, boolean active, String engine,
-			Map<java.util.Locale, String> errorLabelMap,
-			Map<java.util.Locale, String> nameMap, String outputType,
-			String script,
-			List<com.liferay.object.model.ObjectValidationRuleSetting>
-				objectValidationRuleSettings)
-		throws PortalException {
-
-		return getService().updateObjectValidationRule(
-			objectValidationRuleId, active, engine, errorLabelMap, nameMap,
-			outputType, script, objectValidationRuleSettings);
-	}
-
 	/**
 	 * Updates the object validation rule in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -396,6 +385,22 @@ public class ObjectValidationRuleLocalServiceUtil {
 		ObjectValidationRule objectValidationRule) {
 
 		return getService().updateObjectValidationRule(objectValidationRule);
+	}
+
+	public static ObjectValidationRule updateObjectValidationRule(
+			String externalReferenceCode, long objectValidationRuleId,
+			boolean active, String engine,
+			Map<java.util.Locale, String> errorLabelMap,
+			Map<java.util.Locale, String> nameMap, String outputType,
+			String script,
+			List<com.liferay.object.model.ObjectValidationRuleSetting>
+				objectValidationRuleSettings)
+		throws PortalException {
+
+		return getService().updateObjectValidationRule(
+			externalReferenceCode, objectValidationRuleId, active, engine,
+			errorLabelMap, nameMap, outputType, script,
+			objectValidationRuleSettings);
 	}
 
 	public static void validate(

@@ -31,7 +31,8 @@ public class ObjectValidationRuleServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectValidationRuleServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectValidationRule addObjectValidationRule(
-			long objectDefinitionId, boolean active, String engine,
+			String externalReferenceCode, long objectDefinitionId,
+			boolean active, String engine,
 			Map<java.util.Locale, String> errorLabelMap,
 			Map<java.util.Locale, String> nameMap, String outputType,
 			String script, boolean system,
@@ -40,8 +41,9 @@ public class ObjectValidationRuleServiceUtil {
 		throws PortalException {
 
 		return getService().addObjectValidationRule(
-			objectDefinitionId, active, engine, errorLabelMap, nameMap,
-			outputType, script, system, objectValidationRuleSettings);
+			externalReferenceCode, objectDefinitionId, active, engine,
+			errorLabelMap, nameMap, outputType, script, system,
+			objectValidationRuleSettings);
 	}
 
 	public static ObjectValidationRule deleteObjectValidationRule(
@@ -68,7 +70,8 @@ public class ObjectValidationRuleServiceUtil {
 	}
 
 	public static ObjectValidationRule updateObjectValidationRule(
-			long objectValidationRuleId, boolean active, String engine,
+			String externalReferenceCode, long objectValidationRuleId,
+			boolean active, String engine,
 			Map<java.util.Locale, String> errorLabelMap,
 			Map<java.util.Locale, String> nameMap, String outputType,
 			String script,
@@ -77,8 +80,9 @@ public class ObjectValidationRuleServiceUtil {
 		throws PortalException {
 
 		return getService().updateObjectValidationRule(
-			objectValidationRuleId, active, engine, errorLabelMap, nameMap,
-			outputType, script, objectValidationRuleSettings);
+			externalReferenceCode, objectValidationRuleId, active, engine,
+			errorLabelMap, nameMap, outputType, script,
+			objectValidationRuleSettings);
 	}
 
 	public static ObjectValidationRuleService getService() {

@@ -8,16 +8,16 @@ import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import CardHeader from '../components/ViewObjectDefinitions/CardHeader';
-import {getFolderActions} from '../components/ViewObjectDefinitions/objectDefinitionUtil';
+import ObjectFolderCardHeader from '../components/ViewObjectDefinitions/ObjectFolderCardHeader';
+import {getObjectFolderActions} from '../components/ViewObjectDefinitions/objectDefinitionUtil';
 
 describe('The CardHeader component should', () => {
 	it('render all the folder actions', () => {
 		render(
-			<CardHeader
+			<ObjectFolderCardHeader
 				externalReferenceCode="ticketERC"
 				items={
-					getFolderActions(1010, '', () => {}, {
+					getObjectFolderActions(1010, '', () => {}, {
 						delete: {href: '', method: 'DELETE'},
 						get: {href: 'GET', method: ''},
 						permissions: {href: 'PATCH', method: ''},
@@ -26,7 +26,7 @@ describe('The CardHeader component should', () => {
 				}
 				label={{en_US: 'Ticket'}}
 				modelBuilderURL=""
-			></CardHeader>
+			></ObjectFolderCardHeader>
 		);
 
 		userEvent.click(screen.getByRole('button', {name: 'folder-actions'}));
@@ -42,17 +42,17 @@ describe('The CardHeader component should', () => {
 
 	it('not render delete and edit folder actions on uncategorized folder', () => {
 		render(
-			<CardHeader
+			<ObjectFolderCardHeader
 				externalReferenceCode="uncategorized"
 				items={
-					getFolderActions(1010, '', () => {}, {
+					getObjectFolderActions(1010, '', () => {}, {
 						get: {href: 'GET', method: ''},
 						permissions: {href: 'PATCH', method: ''},
 					}) as IItem[]
 				}
 				label={{en_US: 'Uncategorized'}}
 				modelBuilderURL=""
-			></CardHeader>
+			></ObjectFolderCardHeader>
 		);
 
 		userEvent.click(screen.getByRole('button', {name: 'folder-actions'}));

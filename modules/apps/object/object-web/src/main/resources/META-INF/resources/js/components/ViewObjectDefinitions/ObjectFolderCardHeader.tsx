@@ -11,7 +11,7 @@ import React from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
 
-interface CardHeaderProps {
+interface ObjectFolderCardHeaderProps {
 	externalReferenceCode?: string;
 	items: IItem[];
 	label?: LocalizedValue<string>;
@@ -19,13 +19,13 @@ interface CardHeaderProps {
 	name?: string;
 }
 
-export default function CardHeader({
+export default function ObjectFolderCardHeader({
 	externalReferenceCode,
 	items,
 	label,
 	modelBuilderURL,
 	name,
-}: CardHeaderProps) {
+}: ObjectFolderCardHeaderProps) {
 	return (
 		<div className="lfr__object-web-view-object-definitions-card-header">
 			<div>
@@ -76,7 +76,7 @@ export default function CardHeader({
 				displayType="secondary"
 				onClick={() => {
 					window.location.href =
-						`${modelBuilderURL}` + `&folderName=${name}`;
+						`${modelBuilderURL}` + `&objectFolderName=${name}`;
 				}}
 			>
 				{Liferay.Language.get('view-in-model-builder')}

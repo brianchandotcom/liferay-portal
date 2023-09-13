@@ -936,7 +936,7 @@
 
 <tr>
 	<td>PAGE_CONTENTS_CONTENT_FILTER_TOGGLE</td>
-	<td>//div[contains(@class,'page-contents__content-filter')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//div[contains(@class,'page-contents__content-filter')]//button[contains(@class,'form-control-select')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1124,6 +1124,10 @@
 
 		<column name="listTypeId" primary="true" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="name" type="String" />
@@ -1137,10 +1141,12 @@
 
 		<!-- Finder methods -->
 
-		<finder name="Type" return-type="Collection">
+		<finder name="C_T" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="N_T" return-type="ListType" unique="true">
+		<finder name="C_N_T" return-type="ListType" unique="true">
+			<finder-column name="companyId" />
 			<finder-column name="name" />
 			<finder-column name="type" />
 		</finder>

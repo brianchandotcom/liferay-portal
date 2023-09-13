@@ -10,6 +10,7 @@ import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalServiceUtil;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalServiceUtil;
+import com.liferay.batch.planner.batch.engine.task.TaskItemUtil;
 import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
 import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
@@ -184,8 +185,10 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 			batchPlannerPlan.getCreateDate()
 		).export(
 			batchPlannerPlan.isExport()
-		).internalClassName(
-			batchPlannerPlan.getInternalClassName()
+		).internalClassNameKey(
+			TaskItemUtil.getInternalClassNameKey(
+				batchPlannerPlan.getInternalClassName(),
+				batchPlannerPlan.getTaskItemDelegateName())
 		).title(
 			batchPlannerPlan.getName()
 		).userId(

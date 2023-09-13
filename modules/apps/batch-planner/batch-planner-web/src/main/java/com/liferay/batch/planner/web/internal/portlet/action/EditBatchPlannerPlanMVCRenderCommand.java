@@ -65,10 +65,10 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 		return "/view.jsp";
 	}
 
-	private Map<String, String> _getInternalClassNameCategories(
+	private Map<String, String> _getInternalClassNameKeyCategories(
 		long companyId, boolean export) {
 
-		Map<String, String> internalClassNameCategories = new HashMap<>();
+		Map<String, String> internalClassNameKeyCategories = new HashMap<>();
 
 		for (String entityClassName :
 				_vulcanBatchEngineTaskItemDelegateRegistry.getEntityClassNames(
@@ -84,17 +84,17 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 						getVulcanBatchEngineTaskItemDelegate(
 							companyId, entityClassName);
 
-			internalClassNameCategories.put(
+			internalClassNameKeyCategories.put(
 				entityClassName,
-				_getInternalClassNameCategory(
+				_getInternalClassNameKeyCategory(
 					FrameworkUtil.getBundle(
 						vulcanBatchEngineTaskItemDelegate.getClass())));
 		}
 
-		return internalClassNameCategories;
+		return internalClassNameKeyCategories;
 	}
 
-	private String _getInternalClassNameCategory(Bundle bundle) {
+	private String _getInternalClassNameKeyCategory(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
@@ -131,8 +131,8 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 		boolean export = _isExport(
 			ParamUtil.getString(renderRequest, "navigation"));
 
-		Map<String, String> internalClassNameCategories =
-			_getInternalClassNameCategories(companyId, export);
+		Map<String, String> internalClassNameKeyCategories =
+			_getInternalClassNameKeyCategories(companyId, export);
 
 		long batchPlannerPlanId = ParamUtil.getLong(
 			renderRequest, "batchPlannerPlanId");
@@ -145,7 +145,7 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 						_batchPlannerPlanService.getBatchPlannerPlans(
 							companyId, true, true, QueryUtil.ALL_POS,
 							QueryUtil.ALL_POS, null),
-						internalClassNameCategories, renderRequest, null));
+						internalClassNameKeyCategories, renderRequest, null));
 
 				return "/export/edit_batch_planner_plan.jsp";
 			}
@@ -156,7 +156,7 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 					_batchPlannerPlanService.getBatchPlannerPlans(
 						_portal.getCompanyId(renderRequest), false, true,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-					internalClassNameCategories, renderRequest, null));
+					internalClassNameKeyCategories, renderRequest, null));
 
 			return "/import/edit_batch_planner_plan.jsp";
 		}
@@ -171,7 +171,7 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 					_batchPlannerPlanService.getBatchPlannerPlans(
 						_portal.getCompanyId(renderRequest), true, true,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-					internalClassNameCategories, renderRequest,
+					internalClassNameKeyCategories, renderRequest,
 					batchPlannerPlan));
 
 			return "/export/edit_batch_planner_plan.jsp";
@@ -183,7 +183,8 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 				_batchPlannerPlanService.getBatchPlannerPlans(
 					_portal.getCompanyId(renderRequest), false, true,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-				internalClassNameCategories, renderRequest, batchPlannerPlan));
+				internalClassNameKeyCategories, renderRequest,
+				batchPlannerPlan));
 
 		return "/import/edit_batch_planner_plan.jsp";
 	}

@@ -56,7 +56,7 @@ export default function ({
 
 			if (type === 'batchPlannerTemplate') {
 				const valueElement = document.getElementById(
-					`${namespace}internalClassName`
+					`${namespace}internalClassNameKey`
 				);
 
 				externalReferenceCode =

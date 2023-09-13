@@ -37,10 +37,10 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 							md="6"
 						>
 							<clay:select
-								id='<%= liferayPortletResponse.getNamespace() + "internalClassName" %>'
+								id='<%= liferayPortletResponse.getNamespace() + "internalClassNameKey" %>'
 								label="entity-type"
-								name="internalClassName"
-								options="<%= editBatchPlannerPlanDisplayContext.getInternalClassNameSelectOptions() %>"
+								name="internalClassNameKey"
+								options="<%= editBatchPlannerPlanDisplayContext.getInternalClassNameKeySelectOptions() %>"
 							/>
 						</clay:col>
 
@@ -168,7 +168,7 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 		HashMapBuilder.<String, Object>put(
 			"initialExternalType", editBatchPlannerPlanDisplayContext.getSelectedExternalType()
 		).put(
-			"initialTemplateClassName", editBatchPlannerPlanDisplayContext.getSelectedInternalClassName()
+			"initialTemplateClassName", editBatchPlannerPlanDisplayContext.getSelectedInternalClassNameKey()
 		).put(
 			"initialTemplateMapping", editBatchPlannerPlanDisplayContext.getSelectedBatchPlannerPlanMappings()
 		).put(

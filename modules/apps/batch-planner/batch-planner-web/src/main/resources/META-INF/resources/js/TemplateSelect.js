@@ -89,7 +89,7 @@ const TemplateSelect = ({
 		Liferay.fire(TEMPLATE_SELECTED_EVENT, {
 			template: {
 				externalType: templateDetails.externalType,
-				internalClassName: templateDetails.internalClassName,
+				internalClassNameKey: templateDetails.internalClassNameKey,
 				mappings: templateDetails.mappings.reduce(
 					(mappings, mapping) => ({
 						...mappings,

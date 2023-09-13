@@ -36,9 +36,10 @@ public class ObjectValidationRuleServiceImpl
 
 	@Override
 	public ObjectValidationRule addObjectValidationRule(
-			long objectDefinitionId, boolean active, String engine,
-			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String outputType, String script, boolean system,
+			String externalReferenceCode, long objectDefinitionId,
+			boolean active, String engine, Map<Locale, String> errorLabelMap,
+			Map<Locale, String> nameMap, String outputType, String script,
+			boolean system,
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
@@ -46,8 +47,9 @@ public class ObjectValidationRuleServiceImpl
 			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
 
 		return objectValidationRuleLocalService.addObjectValidationRule(
-			getUserId(), objectDefinitionId, active, engine, errorLabelMap,
-			nameMap, outputType, script, system, objectValidationRuleSettings);
+			externalReferenceCode, getUserId(), objectDefinitionId, active,
+			engine, errorLabelMap, nameMap, outputType, script, system,
+			objectValidationRuleSettings);
 	}
 
 	@Override
@@ -86,9 +88,9 @@ public class ObjectValidationRuleServiceImpl
 
 	@Override
 	public ObjectValidationRule updateObjectValidationRule(
-			long objectValidationRuleId, boolean active, String engine,
-			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String outputType, String script,
+			String externalReferenceCode, long objectValidationRuleId,
+			boolean active, String engine, Map<Locale, String> errorLabelMap,
+			Map<Locale, String> nameMap, String outputType, String script,
 			List<ObjectValidationRuleSetting> objectValidationRuleSettings)
 		throws PortalException {
 
@@ -101,8 +103,9 @@ public class ObjectValidationRuleServiceImpl
 			objectValidationRule.getObjectDefinitionId(), ActionKeys.UPDATE);
 
 		return objectValidationRuleLocalService.updateObjectValidationRule(
-			objectValidationRuleId, active, engine, errorLabelMap, nameMap,
-			outputType, script, objectValidationRuleSettings);
+			externalReferenceCode, objectValidationRuleId, active, engine,
+			errorLabelMap, nameMap, outputType, script,
+			objectValidationRuleSettings);
 	}
 
 	@Reference(

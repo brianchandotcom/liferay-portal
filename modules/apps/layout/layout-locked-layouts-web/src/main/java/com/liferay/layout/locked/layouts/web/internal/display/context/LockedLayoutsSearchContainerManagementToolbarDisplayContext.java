@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -37,6 +38,8 @@ public class LockedLayoutsSearchContainerManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			lockedLayoutsDisplayContext.getSearchContainer());
+
+		_lockedLayoutsDisplayContext = lockedLayoutsDisplayContext;
 	}
 
 	@Override
@@ -90,6 +93,12 @@ public class LockedLayoutsSearchContainerManagementToolbarDisplayContext
 		return null;
 	}
 
+	@Override
+	public Boolean isDisabled() {
+		return !_lockedLayoutsDisplayContext.hasLockedLayouts() &&
+			   (_lockedLayoutsDisplayContext.getLockedLayoutType() == null);
+	}
+
 	private List<DropdownItem> _getFilterDropdownItems() {
 		List<DropdownItem> dropdownItems = DropdownItemListBuilder.add(
 			dropdownItem -> {
@@ -101,7 +110,11 @@ public class LockedLayoutsSearchContainerManagementToolbarDisplayContext
 
 		for (LockedLayoutType lockedLayoutType : LockedLayoutType.values()) {
 			dropdownItems.add(
-				DropdownItemBuilder.setHref(
+				DropdownItemBuilder.setActive(
+					Objects.equals(
+						_lockedLayoutsDisplayContext.getLockedLayoutType(),
+						lockedLayoutType)
+				).setHref(
 					getPortletURL(), "type", lockedLayoutType.getValue()
 				).setLabel(
 					LanguageUtil.get(
@@ -111,5 +124,7 @@ public class LockedLayoutsSearchContainerManagementToolbarDisplayContext
 
 		return dropdownItems;
 	}
+
+	private final LockedLayoutsDisplayContext _lockedLayoutsDisplayContext;
 
 }

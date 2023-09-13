@@ -104,6 +104,17 @@ public class LockedLayoutsDisplayContext {
 		).build();
 	}
 
+	public LockedLayoutType getLockedLayoutType() {
+		if (_lockedLayoutType != null) {
+			return _lockedLayoutType;
+		}
+
+		_lockedLayoutType = LockedLayoutType.create(
+			ParamUtil.getString(_liferayPortletRequest, "type"));
+
+		return _lockedLayoutType;
+	}
+
 	public String getName(LockedLayout lockedLayout) {
 		return LocalizationUtil.getLocalization(
 			lockedLayout.getName(), _themeDisplay.getLanguageId());
@@ -172,8 +183,7 @@ public class LockedLayoutsDisplayContext {
 
 		_lockedLayouts = _layoutLockManager.getLockedLayouts(
 			_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
-			LockedLayoutType.create(
-				ParamUtil.getString(_liferayPortletRequest, "type")));
+			getLockedLayoutType());
 
 		return _lockedLayouts;
 	}
@@ -200,6 +210,7 @@ public class LockedLayoutsDisplayContext {
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private List<LockedLayout> _lockedLayouts;
+	private LockedLayoutType _lockedLayoutType;
 	private SearchContainer<LockedLayout> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 

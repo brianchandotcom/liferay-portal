@@ -46,7 +46,7 @@ public class DLCopyFolderDisplayContext {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
-			"/document_library/copy_folder"
+			"/document_library/bulk_copy_entries"
 		).buildString();
 	}
 

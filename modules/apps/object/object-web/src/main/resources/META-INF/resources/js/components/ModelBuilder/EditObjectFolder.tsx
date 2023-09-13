@@ -7,94 +7,93 @@ import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
-import {TDeletionType} from '../ObjectRelationship/EditRelationship';
 import {ModalAddObjectDefinition} from '../ViewObjectDefinitions/ModalAddObjectDefinition';
-import {ModalEditFolder} from '../ViewObjectDefinitions/ModalEditFolder';
+import {ModalEditObjectFolder} from '../ViewObjectDefinitions/ModalEditObjectFolder';
 import Diagram from './Diagram/Diagram';
-import Header from './Header/Header';
+import EditObjectFolderHeader from './EditObjectFolderHeader/EditObjectFolderHeader';
 import LeftSidebar from './LeftSidebar/LeftSidebar';
-import {useFolderContext} from './ModelBuilderContext/objectFolderContext';
+import {useObjectFolderContext} from './ModelBuilderContext/objectFolderContext';
 import {TYPES} from './ModelBuilderContext/typesEnum';
 import {RightSideBar} from './RightSidebar/index';
 
 interface EditObjectFolder {
-	companyKeyValuePair: KeyValuePair[];
-	deletionTypes: TDeletionType[];
-	folderName: string;
-	siteKeyValuePair: KeyValuePair[];
+	companyKeyValuePairs: KeyValuePair[];
+	objectFolderName: string;
+	objectRelationshipDeletionTypes: LabelValueObject[];
+	siteKeyValuePairs: KeyValuePair[];
 }
 export default function EditObjectFolder({
-	companyKeyValuePair,
-	deletionTypes,
-	folderName,
-	siteKeyValuePair,
+	companyKeyValuePairs,
+	objectFolderName,
+	objectRelationshipDeletionTypes,
+	siteKeyValuePairs,
 }: EditObjectFolder) {
 	const [
-		{rightSidebarType, selectedFolder, storages, viewApiURL},
+		{objectDefinitionsStorageTypes, rightSidebarType, selectedObjectFolder},
 		dispatch,
-	] = useFolderContext();
+	] = useObjectFolderContext();
 
 	const [showModal, setShowModal] = useState<ModelBuilderModals>({
-		addFolder: false,
 		addObjectDefinition: false,
-		addRelationship: false,
-		deleteFolder: false,
+		addObjectFolder: false,
+		addObjectRelationship: false,
 		deleteObjectDefinition: false,
-		editERC: false,
-		editFolder: false,
+		deleteObjectFolder: false,
+		editObjectDefinitionExternalReferenceCode: false,
+		editObjectFolder: false,
 		moveObjectDefinition: false,
-		redirectEditObjectDefinition: false,
+		redirectToEditObjectDefinitionDetails: false,
 	});
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const folderResponse = await API.getAllFolders();
+			const objectFolders = await API.getAllObjectFolders();
 
-			const currentFolder = folderResponse.find(
-				(folder) => folder.name === folderName
+			const currentObjectFolder = objectFolders.find(
+				(objectFolder) => objectFolder.name === objectFolderName
 			) as ObjectFolder;
 
-			const objectFoldersWithDefinitions: ObjectFolder[] = await Promise.all(
-				folderResponse.map(async (folder) => {
-					const folderDefinitions: ObjectDefinitionNodeData[] = [];
+			const objectFoldersWithObjectDefinitions: ObjectFolder[] = await Promise.all(
+				objectFolders.map(async (objectFolder) => {
+					const objectFolderWithObjectDefinitions: ObjectDefinitionNodeData[] = [];
 
-					const folderDefinitionsResponse = await API.getObjectDefinitions(
-						`filter=objectFolderExternalReferenceCode eq '${folder.externalReferenceCode}'`
+					const objectDefinitionsFilteredByObjectFolder = await API.getObjectDefinitions(
+						`filter=objectFolderExternalReferenceCode eq '${objectFolder.externalReferenceCode}'`
 					);
 
 					const linkedObjectDefinitions: ObjectDefinition[] = [];
 
 					await Promise.all(
-						folder.objectFolderItems
+						objectFolder.objectFolderItems
 							.filter(
-								(folderItem) =>
-									folderItem.linkedObjectDefinition
+								(objectFolderItem) =>
+									objectFolderItem.linkedObjectDefinition
 							)
-							.map(async (folderItem) => {
-								const response = await API.getObjectDefinitionByExternalReferenceCode(
-									folderItem.objectDefinitionExternalReferenceCode
+							.map(async (objectFolderItem) => {
+								linkedObjectDefinitions.push(
+									await API.getObjectDefinitionByExternalReferenceCode(
+										objectFolderItem.objectDefinitionExternalReferenceCode
+									)
 								);
-
-								linkedObjectDefinitions.push(response);
 							})
 					);
 
-					const updateFoldersLinkedDefinitions = ({
-						isLinked,
+					const updateObjectFolderObjectDefinitions = ({
+						linkedObjectDefinition,
 						objectDefinitions,
 					}: {
-						isLinked: boolean;
+						linkedObjectDefinition: boolean;
 						objectDefinitions: ObjectDefinition[];
 					}) => {
 						objectDefinitions.forEach((objectDefinition) => {
-							const folderItem = folder.objectFolderItems.find(
-								(folderItem) =>
-									folderItem.objectDefinitionExternalReferenceCode ===
+							const objectFolderItem = objectFolder.objectFolderItems.find(
+								(objectFolderItem) =>
+									objectFolderItem.objectDefinitionExternalReferenceCode ===
 									objectDefinition.externalReferenceCode
 							);
 
-							if (folderItem) {
-								folderDefinitions.push({
+							if (objectFolderItem) {
+								objectFolderWithObjectDefinitions.push({
 									...objectDefinition,
 									hasObjectDefinitionDeleteResourcePermission: !!objectDefinition
 										.actions.delete,
@@ -104,53 +103,57 @@ export default function EditObjectFolder({
 										.actions.update,
 									hasObjectDefinitionViewResourcePermission: !!objectDefinition
 										.actions.get,
-									hasSelfRelationships: false,
-									linkedDefinition: isLinked,
-									nodeSelected: false,
+									hasSelfObjectRelationships: false,
+									linkedObjectDefinition,
 									objectFields: objectDefinition.objectFields.map(
-										(field) =>
+										({
+											businessType,
+											externalReferenceCode,
+											label,
+											name,
+											required,
+										}) =>
 											({
-												businessType:
-													field.businessType,
-												externalReferenceCode:
-													field.externalReferenceCode,
+												businessType,
+												externalReferenceCode,
 												label: getLocalizableLabel(
 													objectDefinition.defaultLanguageId,
-													field.label,
-													field.name
+													label,
+													name
 												),
-												name: field.name,
-												primaryKey: field.name === 'id',
-												required: field.required,
+												name,
+												primaryKey: name === 'id',
+												required,
 												selected: false,
 											} as ObjectFieldNode)
 									),
+									selected: false,
 								});
 							}
 						});
 					};
 
-					updateFoldersLinkedDefinitions({
-						isLinked: false,
-						objectDefinitions: folderDefinitionsResponse,
+					updateObjectFolderObjectDefinitions({
+						linkedObjectDefinition: false,
+						objectDefinitions: objectDefinitionsFilteredByObjectFolder,
 					});
 
-					updateFoldersLinkedDefinitions({
-						isLinked: true,
+					updateObjectFolderObjectDefinitions({
+						linkedObjectDefinition: true,
 						objectDefinitions: linkedObjectDefinitions,
 					});
 
 					return {
-						...folder,
-						definitions: folderDefinitions,
+						...objectFolder,
+						objectDefinitions: objectFolderWithObjectDefinitions,
 					};
 				})
 			);
 
 			dispatch({
 				payload: {
-					objectFolders: objectFoldersWithDefinitions,
-					selectedFolder: currentFolder,
+					objectFolders: objectFoldersWithObjectDefinitions,
+					selectedObjectFolder: currentObjectFolder,
 				},
 				type: TYPES.CREATE_MODEL_BUILDER_STRUCTURE,
 			});
@@ -165,53 +168,57 @@ export default function EditObjectFolder({
 		<>
 			{showModal.addObjectDefinition && (
 				<ModalAddObjectDefinition
-					apiURL={viewApiURL}
 					handleOnClose={() =>
 						setShowModal((previousState: ModelBuilderModals) => ({
 							...previousState,
 							addObjectDefinition: false,
 						}))
 					}
+					objectDefinitionsStorageTypes={
+						objectDefinitionsStorageTypes
+					}
 					objectFolderExternalReferenceCode={
-						selectedFolder.externalReferenceCode
+						selectedObjectFolder.externalReferenceCode
 					}
 					onAfterSubmit={(newObjectDefinition) => {
 						dispatch({
 							payload: {
 								newObjectDefinition,
-								selectedFolderName: selectedFolder.name,
+								selectedObjectFolderName:
+									selectedObjectFolder.name,
 							},
-							type: TYPES.ADD_NEW_NODE_TO_FOLDER,
+							type: TYPES.ADD_OBJECT_DEFINITION_TO_OBJECT_FOLDER,
 						});
 					}}
 					reload={false}
-					storages={storages}
 				/>
 			)}
 
-			{showModal.editFolder && (
-				<ModalEditFolder
-					externalReferenceCode={selectedFolder.externalReferenceCode}
-					folderID={selectedFolder.id}
+			{showModal.editObjectFolder && (
+				<ModalEditObjectFolder
+					externalReferenceCode={
+						selectedObjectFolder.externalReferenceCode
+					}
 					handleOnClose={() => {
-						setShowModal((previousState: ModelBuilderModals) => ({
+						setShowModal((previousState) => ({
 							...previousState,
-							editFolder: false,
+							editObjectFolder: false,
 						}));
 					}}
-					initialLabel={selectedFolder.label}
-					name={selectedFolder.name}
+					id={selectedObjectFolder.id}
+					initialLabel={selectedObjectFolder.label}
+					name={selectedObjectFolder.name}
 				/>
 			)}
 
-			<Header
-				folder={selectedFolder}
+			<EditObjectFolderHeader
 				hasDraftObjectDefinitions={false}
+				selectedObjectFolder={selectedObjectFolder}
 				setShowModal={setShowModal}
 			/>
 			<div className="lfr-objects__model-builder-diagram-container">
 				<LeftSidebar
-					selectedFolderName={selectedFolder.name}
+					selectedObjectFolderName={selectedObjectFolder.name}
 					setShowModal={setShowModal}
 				/>
 
@@ -222,14 +229,16 @@ export default function EditObjectFolder({
 
 					{rightSidebarType === 'objectDefinitionDetails' && (
 						<RightSideBar.ObjectDefinitionDetails
-							companyKeyValuePair={companyKeyValuePair}
-							siteKeyValuePair={siteKeyValuePair}
+							companyKeyValuePairs={companyKeyValuePairs}
+							siteKeyValuePairs={siteKeyValuePairs}
 						/>
 					)}
 
 					{rightSidebarType === 'objectRelationshipDetails' && (
 						<RightSideBar.ObjectRelationshipDetails
-							deletionTypes={deletionTypes}
+							objectRelationshipDeletionTypes={
+								objectRelationshipDeletionTypes
+							}
 						/>
 					)}
 				</RightSideBar.Root>

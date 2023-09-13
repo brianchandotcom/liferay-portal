@@ -17,7 +17,7 @@ public class MockInfoItemCreator implements InfoItemCreator<MockObject> {
 
 	@Override
 	public MockObject createFromInfoItemFieldValues(
-			long groupId, InfoItemFieldValues infoItemFieldValues)
+			long groupId, InfoItemFieldValues infoItemFieldValues, int status)
 		throws InfoFormException {
 
 		if (_infoFormException != null) {

@@ -11,6 +11,7 @@ import com.liferay.info.item.creator.InfoItemCreator;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
@@ -46,7 +47,7 @@ public class ObjectEntryInfoItemCreator
 
 	@Override
 	public ObjectEntry createFromInfoItemFieldValues(
-			long groupId, InfoItemFieldValues infoItemFieldValues)
+			long groupId, InfoItemFieldValues infoItemFieldValues, int status)
 		throws InfoFormException {
 
 		try {
@@ -59,6 +60,8 @@ public class ObjectEntryInfoItemCreator
 
 			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
+			int objectEntryStatus = status;
+
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 				objectEntryManager.addObjectEntry(
 					new DefaultDTOConverterContext(
@@ -70,6 +73,11 @@ public class ObjectEntryInfoItemCreator
 							keywords = serviceContext.getAssetTagNames();
 							properties = ObjectEntryUtil.toProperties(
 								infoItemFieldValues);
+							status = new Status() {
+								{
+									code = objectEntryStatus;
+								}
+							};
 							taxonomyCategoryIds = ArrayUtil.toLongArray(
 								serviceContext.getAssetCategoryIds());
 						}

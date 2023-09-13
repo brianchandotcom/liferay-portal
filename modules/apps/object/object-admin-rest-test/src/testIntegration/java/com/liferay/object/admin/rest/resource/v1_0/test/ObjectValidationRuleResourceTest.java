@@ -110,6 +110,7 @@ public class ObjectValidationRuleResourceTest
 		objectValidationRule.setObjectDefinitionId(
 			_objectDefinition.getObjectDefinitionId());
 		objectValidationRule.setScript("isEmailAddress(able)");
+		objectValidationRule.setSystem(false);
 
 		return objectValidationRule;
 	}

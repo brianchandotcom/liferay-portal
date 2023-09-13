@@ -37,7 +37,7 @@ definition {
 	@description = "This is a test for LPS-191357. The administrator cannot clear object entry’s mandatory attached file via associated display page."
 	@priority = 3
 	test CannotClearMandatoryAttachmentOnAssociatedDisplayPage {
-		property custom.properties = "feature.flag.LPS-195205=true";
+		property custom.properties = "feature.flag.LPS-195205=true${line.separator}feature.flag.LPS-183727=true";
 
 		task ("Given a site administrater has a display page template for Object with mandatory attachment") {
 			ObjectAdmin.addObjectFieldViaAPI(
@@ -138,7 +138,7 @@ definition {
 	@description = "This is a test for LPS-191554. The administrator could display related object entries inside of form on associated display page."
 	@priority = 4
 	test DisplayRelatedObjectEntiresInsideFormOnAssociatedDisplayPage {
-		property custom.properties = "feature.flag.LPS-195205=true";
+		property custom.properties = "feature.flag.LPS-195205=true${line.separator}feature.flag.LPS-183727=true";
 
 		task ("Given a site administrator has two objects with one to many relationship") {
 			ObjectAdmin.addObjectFieldViaAPI(
@@ -276,7 +276,7 @@ definition {
 	@description = "This is a test for LPS-191554. The administrator could display related object entries outside of form on associated display page."
 	@priority = 4
 	test DisplayRelatedObjectEntiresOutsideFormOnAssociatedDisplayPage {
-		property custom.properties = "feature.flag.LPS-195205=true";
+		property custom.properties = "feature.flag.LPS-195205=true${line.separator}feature.flag.LPS-183727=true";
 
 		task ("Given a site administrator has two objects with one to many relationship") {
 			ObjectAdmin.addObjectFieldViaAPI(
@@ -414,7 +414,7 @@ definition {
 	@description = "This is a test for LPS-191312. The administrator could edit date and time field of object entry via associated display page."
 	@priority = 4
 	test EditDateAndTimeFieldOnAssociatedDisplayPage {
-		property custom.properties = "feature.flag.LPS-195205=true";
+		property custom.properties = "feature.flag.LPS-195205=true${line.separator}feature.flag.LPS-183727=true";
 
 		task ("Given a site administrater has a display page template for Object with date and time field") {
 			ObjectAdmin.addObjectFieldViaAPI(
@@ -529,7 +529,7 @@ definition {
 	@description = "This is a test for LPS-191362. The administrator could edit multiple picklist field of object entry via associated display page."
 	@priority = 4
 	test EditMultipleselectPicklistFieldOnAssociatedDisplayPage {
-		property custom.properties = "feature.flag.LPS-195205=true";
+		property custom.properties = "feature.flag.LPS-195205=true${line.separator}feature.flag.LPS-183727=true";
 
 		task ("Given a site administrater has a display page template for Object with multipleselect picklist field") {
 			Picklist.addPicklistViaAPI(picklistName = "Fruits");
@@ -667,7 +667,7 @@ definition {
 	@description = "This is a test for LPS-191275. The administrator could edit picklist field of object entry via associated display page."
 	@priority = 4
 	test EditPicklistFieldOnAssociatedDisplayPage {
-		property custom.properties = "feature.flag.LPS-195205=true";
+		property custom.properties = "feature.flag.LPS-195205=true${line.separator}feature.flag.LPS-183727=true";
 
 		task ("Given a site administrater has a display page template for Object with picklist field") {
 			Picklist.addPicklistViaAPI(picklistName = "Fruits");
@@ -792,7 +792,7 @@ definition {
 	@description = "This is a test for LPS-184193. Allow selecting specific display page in the page editor for object entry."
 	@priority = 4
 	test MapSpecificDisplayPageForObject {
-		property custom.properties = "feature.flag.LPS-195205=true";
+		property custom.properties = "feature.flag.LPS-195205=true${line.separator}feature.flag.LPS-183727=true";
 
 		task ("Given a page designer has a display page template for Object") {
 			ObjectAdmin.addObjectFieldViaAPI(
@@ -873,7 +873,7 @@ definition {
 	@description = "This is a test for LPS-191532. The administrator could submit form on associated display page of another object."
 	@priority = 4
 	test SubmitFormOnAssociatedDisplayPageOfAnotherObject {
-		property custom.properties = "feature.flag.LPS-195205=true";
+		property custom.properties = "feature.flag.LPS-195205=true${line.separator}feature.flag.LPS-183727=true";
 
 		task ("Given a site administrater has a display page template for Object with two forms") {
 			ObjectAdmin.addObjectFieldViaAPI(

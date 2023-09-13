@@ -2,7 +2,7 @@
 definition {
 
 	property ci.retries.disabled = "true";
-	property custom.properties = "feature.flag.LPS-195205=true";
+	property custom.properties = "feature.flag.LPS-195205=true${line.separator}feature.flag.LPS-183727=true";
 	property portal.accessibility = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";

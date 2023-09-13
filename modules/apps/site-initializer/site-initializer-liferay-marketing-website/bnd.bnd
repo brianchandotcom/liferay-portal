@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Site Initializer Liferay Marketing Website
-Bundle-SymbolicName: com.liferay.site.initializer.liferay.marketing.website
-Bundle-Version: 1.0.0
-Liferay-Site-Initializer-Name: Liferay Marketing Website
-Provide-Capability: liferay.site.initializer
-Web-ContextPath: /site-initializer-liferay-marketing-website

@@ -864,11 +864,15 @@ definition {
 		}
 
 		task ("Check the analysis result appears") {
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, "(");
+
+			var dataSourceName = StringUtil.trim(${dataSourceName});
+
 			ACTimeFilter.clickTimeFilterButton();
 
 			ACTimeFilter.setLast24Hours();
 
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - liferay dxp");
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSourceName}");
 		}
 
 		task ("Remove the breakdown from the analysis") {

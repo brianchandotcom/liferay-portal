@@ -626,11 +626,15 @@ definition {
 		}
 
 		task ("Check that the analysis result appears") {
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, "(");
+
+			var dataSourceName = StringUtil.trim(${dataSourceName});
+
 			ACTimeFilter.clickTimeFilterButton();
 
 			ACTimeFilter.setLast24Hours();
 
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - liferay dxp");
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSourceName}");
 		}
 	}
 
@@ -770,7 +774,11 @@ definition {
 		}
 
 		task ("Check that the analysis result appears") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - liferay dxp");
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, "(");
+
+			var dataSourceName = StringUtil.trim(${dataSourceName});
+
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSourceName}");
 		}
 
 		task ("Remove the filter from the analysis") {
@@ -798,7 +806,7 @@ definition {
 		}
 
 		task ("Check that the analysis result appears") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - liferay dxp");
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSourceName}");
 		}
 
 		task ("Remove the filter from the analysis") {
@@ -868,7 +876,11 @@ definition {
 		}
 
 		task ("Check that the analysis result appears") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - liferay dxp");
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, "(");
+
+			var dataSourceName = StringUtil.trim(${dataSourceName});
+
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSourceName}");
 		}
 
 		task ("Remove the filter from the analysis") {
@@ -902,7 +914,7 @@ definition {
 		}
 
 		task ("Check that the analysis result appears") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - liferay dxp");
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSourceName}");
 		}
 
 		task ("Remove the filter from the analysis") {
@@ -920,7 +932,7 @@ definition {
 		}
 
 		task ("Check that the analysis result appears") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - liferay dxp");
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSourceName}");
 		}
 	}
 
@@ -974,7 +986,11 @@ definition {
 		}
 
 		task ("Check that the analysis result appears") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - liferay dxp");
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, "(");
+
+			var dataSourceName = StringUtil.trim(${dataSourceName});
+
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSourceName}");
 		}
 
 		task ("Remove the filter from the analysis") {
@@ -1005,7 +1021,7 @@ definition {
 		}
 
 		task ("Check that the analysis result appears") {
-			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - liferay dxp");
+			ACEventAnalysis.viewAnalysisInformation(informationValueList = "ac page - site name - ${dataSourceName}");
 		}
 	}
 

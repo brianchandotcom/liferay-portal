@@ -6,6 +6,8 @@
 package com.liferay.batch.planner.batch.engine.task;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Igor Beslic
@@ -30,6 +32,18 @@ public class TaskItemUtil {
 		}
 
 		return internalClassName.substring(0, idx);
+	}
+
+	public static String getInternalClassNameKey(
+		String internalClassName, String taskItemDelegateName) {
+
+		if (Validator.isBlank(taskItemDelegateName) ||
+			StringUtil.equals(taskItemDelegateName, "DEFAULT")) {
+
+			return internalClassName;
+		}
+
+		return internalClassName + StringPool.POUND + taskItemDelegateName;
 	}
 
 }

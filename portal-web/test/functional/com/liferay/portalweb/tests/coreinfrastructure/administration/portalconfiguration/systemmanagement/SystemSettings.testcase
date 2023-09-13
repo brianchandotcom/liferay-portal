@@ -19,6 +19,39 @@ definition {
 		}
 	}
 
+	@description = "LPS-194725 - This test asserts that the hyperlink is available within an anchor tag."
+	@priority = 3
+	test AssertHyperlinkIsRendered {
+		task ("Given signed into portal as admin") {
+			Navigator.openURL();
+		}
+
+		task ("When navigate to Bundle Blacklist edit configuration page ") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Module Container",
+				configurationName = "Bundle Blacklist",
+				configurationScope = "System Scope");
+		}
+
+		task ("Then hyperlink is available within an anchor tag") {
+			AssertElementPresent(
+				key_text = "How does bundle blacklisting work?",
+				locator1 = "Link#ANY");
+		}
+
+		task ("And Then text of hyperlink says “How does bundle blacklisting work?") {
+			AssertTextEquals(
+				key_text = "How does bundle blacklisting work?",
+				locator1 = "Link#ANY",
+				value1 = ${key_text});
+		}
+	}
+
 	@priority = 5
 	test CanOverrideValueSetInConfigFile {
 		property custom.properties = "configuration.override.com.liferay.journal.configuration.JournalServiceConfiguration_articleCommentsEnabled=B\"false\"";

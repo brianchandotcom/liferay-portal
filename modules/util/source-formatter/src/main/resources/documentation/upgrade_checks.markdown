@@ -61,6 +61,7 @@ UpgradeJavaServiceTrackerListCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .j
 UpgradeJavaUpdateCommerceAddressCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace parameter in updateCommerceAddress method by other parameters list |
 UpgradeJavaUpdateFileEntryMethodCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Fill in the new parameters of the method 'updateFileEntry' of 'DLAppLocalService' and 'DLAppLocalServiceUtil' |
 UpgradeJavaUserLocalServiceUtilCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace parameters of addUser and updateStatus methods in UserServices |
+UpgradePortletDisplayCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replaces 'portletDisplay.getPortletInstanceConfiguration' with 'ConfigurationProviderUtil.getPortletInstanceConfiguration' |
 UpgradePortletFTLCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Include the CSS classes 'cadmin' and include for impression of 'right cadmin' in 'portlet.ftl' file |
 UpgradeRejectedExecutionHandlerCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace Liferay's RejectedExecutionHandler with Java's RejectedExecutionHandler |
 UpgradeRemovedAPICheck | .java | Finds cases where calls are made to removed API after an upgrade. |

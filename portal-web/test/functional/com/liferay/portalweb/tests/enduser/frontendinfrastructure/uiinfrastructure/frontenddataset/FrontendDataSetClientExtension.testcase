@@ -27,6 +27,181 @@ definition {
 		}
 	}
 
+	@description = "LPS-185873 Confirm Cell Renderer label in cell renderer option"
+	@priority = 3
+	test AssertTheCellRendererIsDisplayed {
+		property osgi.modules.includes = "frontend-data-set-sample-web";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given a client extension zip file deployed") {
+			FileInstall.deployFileOnServer(jarFile = "liferay-sample-fds-cell-renderer.zip");
+
+			WaitForConsoleTextPresent(value1 = "STARTED liferaysamplefdscellrenderer_7.4.13");
+
+			Refresh();
+		}
+
+		task ("And the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Fields Test",
+				restApplication = "/data-set-manager/fields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+		}
+
+		task ("And adding a dataset view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Fields Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Fields Test");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Fields Test",
+				key_viewName = "View Fields Test");
+		}
+
+		task ("When the user goes to Fields tab") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("And adds new fields //creator, id, status") {
+			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
+		}
+
+		task ("And edits one of the fields") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("When the user clicks on the Renderer field") {
+			Click(
+				key_dropdownItem = "Default",
+				locator1 = "TableViewBuilder#FILTER_DROPDOWN_ITEM");
+		}
+
+		task ("And there is not Cell Renderer label in the cell renderer option") {
+			AssertElementPresent(
+				key_selectAction = "Liferay Sample Frontend Data Set Cell Renderer",
+				locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+		}
+	}
+
+	@description = "LPS-185873 Confirm that the Client Extension label is displayed on the drop-down item"
+	@priority = 5
+	test CanAssertClientExtensionInDropdown {
+		property osgi.modules.includes = "frontend-data-set-sample-web";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given a client extension zip file deployed") {
+			FileInstall.deployFileOnServer(jarFile = "liferay-sample-fds-cell-renderer.zip");
+
+			WaitForConsoleTextPresent(value1 = "STARTED liferaysamplefdscellrenderer_7.4.13");
+
+			Refresh();
+		}
+
+		task ("And the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Fields Test",
+				restApplication = "/data-set-manager/fields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+		}
+
+		task ("And adding a dataset view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Fields Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Fields Test");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Fields Test",
+				key_viewName = "View Fields Test");
+		}
+
+		task ("When the user goes to Fields tab") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("And adds new fields //creator, id, status") {
+			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
+		}
+
+		task ("And edits one of the fields") {
+			Click(
+				key_fieldName = "creator",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("Then there is a Cell Renderer available to be selected") {
+			Click(
+				key_dropdownItem = "Default",
+				locator1 = "TableViewBuilder#FILTER_DROPDOWN_ITEM");
+		}
+
+		task ("And the label Client Extension is displayed in the dropdown item") {
+			AssertElementPresent(
+				key_workflowStatus = "Client Extension",
+				locator1 = "ProcessBuilderKaleoDesigner#WORKFLOW_STATUS");
+		}
+	}
+
+	@description = "LPS-185873 Confirm that the Renderer column is present on the fields creation page"
+	@priority = 5
+	test CanAssertTheRendererColumn {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Fields Test",
+				restApplication = "/data-set-manager/fields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+		}
+
+		task ("And adding a dataset view ") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Fields Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Fields Test");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Fields Test",
+				key_viewName = "View Fields Test");
+		}
+
+		task ("And the user goes to Fields tab") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("When the user adds new fields") {
+			DataSetAdmin.addFields(key_fieldList = "creator,id,status");
+		}
+
+		task ("Then the column Renderer appears") {
+			AssertElementPresent(
+				key_type = "Renderer",
+				locator1 = "DataSet#FIELD_COLUMN_NAME");
+		}
+	}
+
 	@description = "LPS-176807. Verify if the apple icon appears when file is deployed"
 	@priority = 4
 	test CanChangeFilterWithClientExtension {

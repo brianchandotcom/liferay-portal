@@ -207,7 +207,9 @@ const AppsPanel = ({
 	return (
 		<div className="applications-menu-wrapper">
 			<div className="applications-menu-header">
-				<ClayLayout.ContainerFluid>
+				<ClayLayout.ContainerFluid
+					size={Liferay?.FeatureFlags?.['LPS-184404'] ? false : 'xl'}
+				>
 					<ClayLayout.Row>
 						<ClayLayout.Col>
 							<ClayLayout.ContentRow verticalAlign="center">
@@ -254,7 +256,9 @@ const AppsPanel = ({
 			</div>
 
 			<div className="applications-menu-bg applications-menu-border-top applications-menu-content">
-				<ClayLayout.ContainerFluid>
+				<ClayLayout.ContainerFluid
+					size={Liferay?.FeatureFlags?.['LPS-184404'] ? false : 'xl'}
+				>
 					<ClayLayout.Row>
 						<ClayLayout.Col lg="9" md="8">
 							<ClayTabs.Content activeIndex={activeTab}>
@@ -299,7 +303,9 @@ const AppsPanel = ({
 			</div>
 
 			<div className="applications-menu-bg applications-menu-footer">
-				<ClayLayout.ContainerFluid>
+				<ClayLayout.ContainerFluid
+					size={Liferay?.FeatureFlags?.['LPS-184404'] ? false : 'xl'}
+				>
 					<ClayLayout.Row>
 						<ClayLayout.Col lg="9" md="8">
 							<ClayLayout.ContentRow

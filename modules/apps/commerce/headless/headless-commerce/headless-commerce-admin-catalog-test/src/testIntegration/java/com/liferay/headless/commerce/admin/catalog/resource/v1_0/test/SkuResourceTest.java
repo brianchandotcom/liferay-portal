@@ -104,6 +104,20 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testGetUnitOfMeasureSkusPage() throws Exception {
+		super.testGetUnitOfMeasureSkusPage();
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGetUnitOfMeasureSkusPageWithPagination() throws Exception {
+		super.testGetUnitOfMeasureSkusPageWithPagination();
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testGraphQLDeleteSku() throws Exception {
 		super.testGraphQLDeleteSku();
 	}

@@ -20,7 +20,6 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
@@ -73,8 +72,8 @@ public class CommerceChannelsPortlet extends MVCPortlet {
 				_commerceChannelService, _commerceChannelTypeRegistry,
 				_commerceCurrencyLocalService, _configurationProvider,
 				_cpTaxCategoryLocalService, _dlAppLocalService,
-				_groupPermission, _portal.getHttpServletRequest(renderRequest),
-				_itemSelector, _portal, _workflowDefinitionLinkLocalService,
+				_portal.getHttpServletRequest(renderRequest), _itemSelector,
+				_portal, _workflowDefinitionLinkLocalService,
 				_workflowDefinitionManager);
 
 		renderRequest.setAttribute(
@@ -113,9 +112,6 @@ public class CommerceChannelsPortlet extends MVCPortlet {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private ItemSelector _itemSelector;

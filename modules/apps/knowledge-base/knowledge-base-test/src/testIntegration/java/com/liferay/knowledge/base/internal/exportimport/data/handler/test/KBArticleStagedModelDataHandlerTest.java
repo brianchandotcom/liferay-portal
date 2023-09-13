@@ -19,13 +19,13 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -174,8 +174,8 @@ public class KBArticleStagedModelDataHandlerTest
 			null, serviceContext.getUserId(), parentResourceClassNameId,
 			parentResourcePrimKey, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, null, new Date(), null, null, null,
-			serviceContext);
+			StringUtil.randomString(), null, null, RandomTestUtil.nextDate(),
+			null, null, null, serviceContext);
 	}
 
 	private ServiceContext _createServiceContext(Group group) throws Exception {

@@ -103,7 +103,7 @@ public class CheckKBArticleSchedulerJobConfigurationTest {
 			PortalUtil.getClassNameId(KBFolder.class.getName()), 0,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			null, new Date(), expirationDate, null, null,
+			null, RandomTestUtil.nextDate(), expirationDate, null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));
 

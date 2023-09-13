@@ -21,7 +21,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface ListTypeModel extends BaseModel<ListType>, MVCCModel {
+public interface ListTypeModel
+	extends BaseModel<ListType>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -72,6 +73,22 @@ public interface ListTypeModel extends BaseModel<ListType>, MVCCModel {
 	 * @param listTypeId the list type ID of this list type
 	 */
 	public void setListTypeId(long listTypeId);
+
+	/**
+	 * Returns the company ID of this list type.
+	 *
+	 * @return the company ID of this list type
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this list type.
+	 *
+	 * @param companyId the company ID of this list type
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the name of this list type.

@@ -321,7 +321,8 @@ create unique index IX_5FF18552 on LayoutSetBranch (groupId, privateLayout, name
 create index IX_9178FC71 on LayoutSetPrototype (companyId, active_);
 create index IX_D9FFCA84 on LayoutSetPrototype (uuid_[$COLUMN_LENGTH:75$], companyId);
 
-create unique index IX_77729718 on ListType (name[$COLUMN_LENGTH:75$], type_[$COLUMN_LENGTH:75$]);
+create unique index IX_B7F62EEC on ListType (companyId, name[$COLUMN_LENGTH:75$], type_[$COLUMN_LENGTH:75$]);
+create index IX_9AE9E40B on ListType (companyId, type_[$COLUMN_LENGTH:75$]);
 create index IX_2932DD37 on ListType (type_[$COLUMN_LENGTH:75$]);
 
 create index IX_C28C72EC on MembershipRequest (groupId, statusId);

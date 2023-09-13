@@ -60,7 +60,8 @@ public class ListTypeModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"listTypeId", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"type_", Types.VARCHAR}
+		{"companyId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"type_", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -69,12 +70,13 @@ public class ListTypeModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("listTypeId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ListType (mvccVersion LONG default 0 not null,listTypeId LONG not null primary key,name VARCHAR(75) null,type_ VARCHAR(75) null)";
+		"create table ListType (mvccVersion LONG default 0 not null,listTypeId LONG not null primary key,companyId LONG,name VARCHAR(75) null,type_ VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ListType";
 
@@ -110,13 +112,19 @@ public class ListTypeModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 1L;
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPE_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 2L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long TYPE_COLUMN_BITMASK = 4L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(
@@ -218,6 +226,7 @@ public class ListTypeModelImpl
 			attributeGetterFunctions.put(
 				"mvccVersion", ListType::getMvccVersion);
 			attributeGetterFunctions.put("listTypeId", ListType::getListTypeId);
+			attributeGetterFunctions.put("companyId", ListType::getCompanyId);
 			attributeGetterFunctions.put("name", ListType::getName);
 			attributeGetterFunctions.put("type", ListType::getType);
 
@@ -242,6 +251,9 @@ public class ListTypeModelImpl
 			attributeSetterBiConsumers.put(
 				"listTypeId",
 				(BiConsumer<ListType, Long>)ListType::setListTypeId);
+			attributeSetterBiConsumers.put(
+				"companyId",
+				(BiConsumer<ListType, Long>)ListType::setCompanyId);
 			attributeSetterBiConsumers.put(
 				"name", (BiConsumer<ListType, String>)ListType::setName);
 			attributeSetterBiConsumers.put(
@@ -281,6 +293,31 @@ public class ListTypeModelImpl
 		}
 
 		_listTypeId = listTypeId;
+	}
+
+	@JSON
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_companyId = companyId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalCompanyId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@JSON
@@ -368,7 +405,7 @@ public class ListTypeModelImpl
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(
-			0, ListType.class.getName(), getPrimaryKey());
+			getCompanyId(), ListType.class.getName(), getPrimaryKey());
 	}
 
 	@Override
@@ -399,6 +436,7 @@ public class ListTypeModelImpl
 
 		listTypeImpl.setMvccVersion(getMvccVersion());
 		listTypeImpl.setListTypeId(getListTypeId());
+		listTypeImpl.setCompanyId(getCompanyId());
 		listTypeImpl.setName(getName());
 		listTypeImpl.setType(getType());
 
@@ -415,6 +453,8 @@ public class ListTypeModelImpl
 			this.<Long>getColumnOriginalValue("mvccVersion"));
 		listTypeImpl.setListTypeId(
 			this.<Long>getColumnOriginalValue("listTypeId"));
+		listTypeImpl.setCompanyId(
+			this.<Long>getColumnOriginalValue("companyId"));
 		listTypeImpl.setName(this.<String>getColumnOriginalValue("name"));
 		listTypeImpl.setType(this.<String>getColumnOriginalValue("type_"));
 
@@ -493,6 +533,8 @@ public class ListTypeModelImpl
 		listTypeCacheModel.mvccVersion = getMvccVersion();
 
 		listTypeCacheModel.listTypeId = getListTypeId();
+
+		listTypeCacheModel.companyId = getCompanyId();
 
 		listTypeCacheModel.name = getName();
 
@@ -573,6 +615,7 @@ public class ListTypeModelImpl
 
 	private long _mvccVersion;
 	private long _listTypeId;
+	private long _companyId;
 	private String _name;
 	private String _type;
 
@@ -608,6 +651,7 @@ public class ListTypeModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("listTypeId", _listTypeId);
+		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("type_", _type);
 	}
@@ -637,9 +681,11 @@ public class ListTypeModelImpl
 
 		columnBitmasks.put("listTypeId", 2L);
 
-		columnBitmasks.put("name", 4L);
+		columnBitmasks.put("companyId", 4L);
 
-		columnBitmasks.put("type_", 8L);
+		columnBitmasks.put("name", 8L);
+
+		columnBitmasks.put("type_", 16L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -25,6 +25,8 @@ public class ListTypeTable extends BaseTable<ListTypeTable> {
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<ListTypeTable, Long> listTypeId = createColumn(
 		"listTypeId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<ListTypeTable, Long> companyId = createColumn(
+		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ListTypeTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ListTypeTable, String> type = createColumn(

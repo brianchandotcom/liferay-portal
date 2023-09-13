@@ -31,52 +31,57 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	 */
 
 	/**
-	 * Returns all the list types where type = &#63;.
+	 * Returns all the list types where companyId = &#63; and type = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param type the type
 	 * @return the matching list types
 	 */
-	public java.util.List<ListType> findByType(String type);
+	public java.util.List<ListType> findByC_T(long companyId, String type);
 
 	/**
-	 * Returns a range of all the list types where type = &#63;.
+	 * Returns a range of all the list types where companyId = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeModelImpl</code>.
 	 * </p>
 	 *
+	 * @param companyId the company ID
 	 * @param type the type
 	 * @param start the lower bound of the range of list types
 	 * @param end the upper bound of the range of list types (not inclusive)
 	 * @return the range of matching list types
 	 */
-	public java.util.List<ListType> findByType(String type, int start, int end);
+	public java.util.List<ListType> findByC_T(
+		long companyId, String type, int start, int end);
 
 	/**
-	 * Returns an ordered range of all the list types where type = &#63;.
+	 * Returns an ordered range of all the list types where companyId = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeModelImpl</code>.
 	 * </p>
 	 *
+	 * @param companyId the company ID
 	 * @param type the type
 	 * @param start the lower bound of the range of list types
 	 * @param end the upper bound of the range of list types (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching list types
 	 */
-	public java.util.List<ListType> findByType(
-		String type, int start, int end,
+	public java.util.List<ListType> findByC_T(
+		long companyId, String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ListType>
 			orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the list types where type = &#63;.
+	 * Returns an ordered range of all the list types where companyId = &#63; and type = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeModelImpl</code>.
 	 * </p>
 	 *
+	 * @param companyId the company ID
 	 * @param type the type
 	 * @param start the lower bound of the range of list types
 	 * @param end the upper bound of the range of list types (not inclusive)
@@ -84,143 +89,155 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching list types
 	 */
-	public java.util.List<ListType> findByType(
-		String type, int start, int end,
+	public java.util.List<ListType> findByC_T(
+		long companyId, String type, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<ListType>
 			orderByComparator,
 		boolean useFinderCache);
 
 	/**
-	 * Returns the first list type in the ordered set where type = &#63;.
+	 * Returns the first list type in the ordered set where companyId = &#63; and type = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching list type
 	 * @throws NoSuchListTypeException if a matching list type could not be found
 	 */
-	public ListType findByType_First(
-			String type,
+	public ListType findByC_T_First(
+			long companyId, String type,
 			com.liferay.portal.kernel.util.OrderByComparator<ListType>
 				orderByComparator)
 		throws NoSuchListTypeException;
 
 	/**
-	 * Returns the first list type in the ordered set where type = &#63;.
+	 * Returns the first list type in the ordered set where companyId = &#63; and type = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching list type, or <code>null</code> if a matching list type could not be found
 	 */
-	public ListType fetchByType_First(
-		String type,
+	public ListType fetchByC_T_First(
+		long companyId, String type,
 		com.liferay.portal.kernel.util.OrderByComparator<ListType>
 			orderByComparator);
 
 	/**
-	 * Returns the last list type in the ordered set where type = &#63;.
+	 * Returns the last list type in the ordered set where companyId = &#63; and type = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching list type
 	 * @throws NoSuchListTypeException if a matching list type could not be found
 	 */
-	public ListType findByType_Last(
-			String type,
+	public ListType findByC_T_Last(
+			long companyId, String type,
 			com.liferay.portal.kernel.util.OrderByComparator<ListType>
 				orderByComparator)
 		throws NoSuchListTypeException;
 
 	/**
-	 * Returns the last list type in the ordered set where type = &#63;.
+	 * Returns the last list type in the ordered set where companyId = &#63; and type = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching list type, or <code>null</code> if a matching list type could not be found
 	 */
-	public ListType fetchByType_Last(
-		String type,
+	public ListType fetchByC_T_Last(
+		long companyId, String type,
 		com.liferay.portal.kernel.util.OrderByComparator<ListType>
 			orderByComparator);
 
 	/**
-	 * Returns the list types before and after the current list type in the ordered set where type = &#63;.
+	 * Returns the list types before and after the current list type in the ordered set where companyId = &#63; and type = &#63;.
 	 *
 	 * @param listTypeId the primary key of the current list type
+	 * @param companyId the company ID
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next list type
 	 * @throws NoSuchListTypeException if a list type with the primary key could not be found
 	 */
-	public ListType[] findByType_PrevAndNext(
-			long listTypeId, String type,
+	public ListType[] findByC_T_PrevAndNext(
+			long listTypeId, long companyId, String type,
 			com.liferay.portal.kernel.util.OrderByComparator<ListType>
 				orderByComparator)
 		throws NoSuchListTypeException;
 
 	/**
-	 * Removes all the list types where type = &#63; from the database.
+	 * Removes all the list types where companyId = &#63; and type = &#63; from the database.
 	 *
+	 * @param companyId the company ID
 	 * @param type the type
 	 */
-	public void removeByType(String type);
+	public void removeByC_T(long companyId, String type);
 
 	/**
-	 * Returns the number of list types where type = &#63;.
+	 * Returns the number of list types where companyId = &#63; and type = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param type the type
 	 * @return the number of matching list types
 	 */
-	public int countByType(String type);
+	public int countByC_T(long companyId, String type);
 
 	/**
-	 * Returns the list type where name = &#63; and type = &#63; or throws a <code>NoSuchListTypeException</code> if it could not be found.
+	 * Returns the list type where companyId = &#63; and name = &#63; and type = &#63; or throws a <code>NoSuchListTypeException</code> if it could not be found.
 	 *
+	 * @param companyId the company ID
 	 * @param name the name
 	 * @param type the type
 	 * @return the matching list type
 	 * @throws NoSuchListTypeException if a matching list type could not be found
 	 */
-	public ListType findByN_T(String name, String type)
+	public ListType findByC_N_T(long companyId, String name, String type)
 		throws NoSuchListTypeException;
 
 	/**
-	 * Returns the list type where name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the list type where companyId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
+	 * @param companyId the company ID
 	 * @param name the name
 	 * @param type the type
 	 * @return the matching list type, or <code>null</code> if a matching list type could not be found
 	 */
-	public ListType fetchByN_T(String name, String type);
+	public ListType fetchByC_N_T(long companyId, String name, String type);
 
 	/**
-	 * Returns the list type where name = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the list type where companyId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @param companyId the company ID
 	 * @param name the name
 	 * @param type the type
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching list type, or <code>null</code> if a matching list type could not be found
 	 */
-	public ListType fetchByN_T(
-		String name, String type, boolean useFinderCache);
+	public ListType fetchByC_N_T(
+		long companyId, String name, String type, boolean useFinderCache);
 
 	/**
-	 * Removes the list type where name = &#63; and type = &#63; from the database.
+	 * Removes the list type where companyId = &#63; and name = &#63; and type = &#63; from the database.
 	 *
+	 * @param companyId the company ID
 	 * @param name the name
 	 * @param type the type
 	 * @return the list type that was removed
 	 */
-	public ListType removeByN_T(String name, String type)
+	public ListType removeByC_N_T(long companyId, String name, String type)
 		throws NoSuchListTypeException;
 
 	/**
-	 * Returns the number of list types where name = &#63; and type = &#63;.
+	 * Returns the number of list types where companyId = &#63; and name = &#63; and type = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param name the name
 	 * @param type the type
 	 * @return the number of matching list types
 	 */
-	public int countByN_T(String name, String type);
+	public int countByC_N_T(long companyId, String name, String type);
 
 	/**
 	 * Caches the list type in the entity cache if it is enabled.

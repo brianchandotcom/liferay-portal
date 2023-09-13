@@ -65,12 +65,14 @@ public class ListTypeCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", listTypeId=");
 		sb.append(listTypeId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", type=");
@@ -86,6 +88,7 @@ public class ListTypeCacheModel
 
 		listTypeImpl.setMvccVersion(mvccVersion);
 		listTypeImpl.setListTypeId(listTypeId);
+		listTypeImpl.setCompanyId(companyId);
 
 		if (name == null) {
 			listTypeImpl.setName("");
@@ -111,6 +114,8 @@ public class ListTypeCacheModel
 		mvccVersion = objectInput.readLong();
 
 		listTypeId = objectInput.readLong();
+
+		companyId = objectInput.readLong();
 		name = objectInput.readUTF();
 		type = objectInput.readUTF();
 	}
@@ -120,6 +125,8 @@ public class ListTypeCacheModel
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(listTypeId);
+
+		objectOutput.writeLong(companyId);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -138,6 +145,7 @@ public class ListTypeCacheModel
 
 	public long mvccVersion;
 	public long listTypeId;
+	public long companyId;
 	public String name;
 	public String type;
 

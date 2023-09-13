@@ -8,17 +8,17 @@ import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import DangerModal from '../DangerModal';
-import {deleteFolder} from './objectDefinitionUtil';
+import {deleteObjectFolder} from './objectDefinitionUtil';
 
-interface ModalDeleteFolderProps {
-	folder: ObjectFolder;
+interface ModalDeleteObjectFolderProps {
 	handleOnClose: () => void;
+	objectFolder: ObjectFolder;
 }
 
-export function ModalDeleteFolder({
-	folder,
+export function ModalDeleteObjectFolder({
 	handleOnClose,
-}: ModalDeleteFolderProps) {
+	objectFolder,
+}: ModalDeleteObjectFolderProps) {
 	const {observer, onClose} = useModal({
 		onClose: () => {
 			handleOnClose();
@@ -30,19 +30,22 @@ export function ModalDeleteFolder({
 			<DangerModal
 				errorMessage={sub(
 					Liferay.Language.get('input-does-not-match-x'),
-					`${folder.name}`
+					`${objectFolder.name}`
 				)}
 				observer={observer}
 				onClose={onClose}
 				onDelete={async () => {
-					await deleteFolder(folder?.id, folder?.name);
+					await deleteObjectFolder(
+						objectFolder?.id,
+						objectFolder?.name
+					);
 
 					setTimeout(() => window.location.reload(), 1500);
 					onClose();
 				}}
 				placeholder={Liferay.Language.get('confirm-folder-name')}
 				title={Liferay.Language.get('delete-object-folder')}
-				token={folder.name}
+				token={objectFolder.name}
 			>
 				<p>
 					{Liferay.Language.get(
@@ -54,7 +57,7 @@ export function ModalDeleteFolder({
 					dangerouslySetInnerHTML={{
 						__html: sub(
 							Liferay.Language.get('please-enter-x-to-confirm'),
-							`<strong>${folder.name}</strong>`
+							`<strong>${objectFolder.name}</strong>`
 						),
 					}}
 				/>

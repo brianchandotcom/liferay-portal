@@ -19,4 +19,8 @@ public class HeadlessBuilderConstants {
 
 	public static final String BASE_PATH_SUFFIX = "/c/";
 
+	public static final String PATH_PARAMETER_ERC = "externalReferenceCode";
+
+	public static final String PATH_PARAMETER_ID = "id";
+
 }

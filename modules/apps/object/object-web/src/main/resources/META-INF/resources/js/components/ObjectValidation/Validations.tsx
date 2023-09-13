@@ -92,7 +92,7 @@ export default function Validations({
 		return moment().format('MMMM D, YYYY, h:mm:ss A');
 	}
 
-	const fdsFields = [
+	const fdsSchemaFields = [
 		{
 			contentRenderer: 'objectFieldLabelDataRenderer',
 			expand: false,
@@ -127,7 +127,7 @@ export default function Validations({
 	];
 
 	if (Liferay.FeatureFlags['LPS-193355']) {
-		fdsFields.push({
+		fdsSchemaFields.push({
 			contentRenderer: 'FDSSourceDataRenderer',
 			expand: false,
 			fieldName: 'system',
@@ -162,7 +162,7 @@ export default function Validations({
 				label: 'Table',
 				name: 'table',
 				schema: {
-					fields: fdsFields,
+					fields: fdsSchemaFields,
 				},
 				thumbnail: 'table',
 			},

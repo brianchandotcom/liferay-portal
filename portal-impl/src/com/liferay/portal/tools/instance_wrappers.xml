@@ -19,6 +19,10 @@
 	/>
 	<instance-wrapper
 		parent-dir="../portal-kernel/src"
+		src-file="com/liferay/portal/kernel/service/permission/RolePermissionUtil.java"
+	/>
+	<instance-wrapper
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/util/CalendarFactoryUtil.java"
 	/>
 	<instance-wrapper

@@ -13,16 +13,16 @@ interface FDSSourceDataRendererProps {
 }
 
 export default function FDSSourceDataRenderer({
-	itemData,
+	itemData: {system},
 }: FDSSourceDataRendererProps) {
 	return (
 		<strong
 			className={classNames(
-				itemData.system ? 'label-info' : 'label-warning',
+				system ? 'label-info' : 'label-warning',
 				'label'
 			)}
 		>
-			{itemData.system
+			{system
 				? Liferay.Language.get('system')
 				: Liferay.Language.get('custom')}
 		</strong>

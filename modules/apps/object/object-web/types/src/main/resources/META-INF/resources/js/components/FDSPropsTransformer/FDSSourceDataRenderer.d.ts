@@ -11,6 +11,6 @@ interface FDSSourceDataRendererProps {
 	};
 }
 export default function FDSSourceDataRenderer({
-	itemData,
+	itemData: {system},
 }: FDSSourceDataRendererProps): JSX.Element;
 export {};

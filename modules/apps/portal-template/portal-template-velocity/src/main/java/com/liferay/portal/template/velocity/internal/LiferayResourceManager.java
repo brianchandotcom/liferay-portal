@@ -112,7 +112,7 @@ public class LiferayResourceManager extends ResourceManagerImpl {
 
 		_templateResourceLoader =
 			(TemplateResourceLoader)extendedProperties.get(
-				VelocityTemplateResourceLoader.class.getName());
+				VelocityManager.VelocityTemplateResourceLoader.class.getName());
 
 		_portalCache =
 			(PortalCache<TemplateResource, Template>)extendedProperties.get(

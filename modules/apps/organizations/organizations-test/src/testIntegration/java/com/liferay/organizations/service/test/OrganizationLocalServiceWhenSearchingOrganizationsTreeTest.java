@@ -38,7 +38,6 @@ import com.liferay.portal.search.test.util.AssertUtils;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -151,10 +150,6 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 			"IndexerRegistryUtil must be resolved for " +
 				"OrganizationLocalServiceImpl.searchOrganizations",
 			indexerRegistry);
-		Assert.assertNotNull(
-			"UsersAdminUtil must be resolved for " +
-				"OrganizationLocalServiceImpl.searchOrganizations",
-			usersAdmin);
 
 		return organizationLocalService.searchOrganizations(
 			_user.getCompanyId(),
@@ -189,9 +184,6 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 
 	@Inject
 	protected UserLocalService userLocalService;
-
-	@Inject
-	protected UsersAdmin usersAdmin;
 
 	private void _assertSearch(boolean includeSuborganizations)
 		throws Exception {

@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.Calendar;
 import java.util.List;
@@ -86,7 +86,7 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 
 			birthdayCal.setTime(user.getBirthday());
 
-			long[] roleIds = _usersAdmin.getRoleIds(actionRequest);
+			long[] roleIds = UsersAdminUtil.getRoleIds(actionRequest);
 
 			_validate(user, roleIds);
 
@@ -106,7 +106,8 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 				(deleteGroupRolesGroupIds != null) ||
 				(deleteGroupRolesRoleIds != null)) {
 
-				userGroupRoles = _usersAdmin.getUserGroupRoles(actionRequest);
+				userGroupRoles = UsersAdminUtil.getUserGroupRoles(
+					actionRequest);
 			}
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -261,9 +262,6 @@ public class UpdateUserRolesMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UsersAdmin _usersAdmin;
 
 	@Reference
 	private UserService _userService;

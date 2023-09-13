@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.service.EmailAddressLocalService;
 import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.List;
 
@@ -25,13 +24,12 @@ public class EmailAddressContactInfoManager
 	public EmailAddressContactInfoManager(
 		String className, long classPK,
 		EmailAddressLocalService emailAddressLocalService,
-		EmailAddressService emailAddressService, UsersAdmin usersAdmin) {
+		EmailAddressService emailAddressService) {
 
 		_className = className;
 		_classPK = classPK;
 		_emailAddressLocalService = emailAddressLocalService;
 		_emailAddressService = emailAddressService;
-		_usersAdmin = usersAdmin;
 	}
 
 	@Override
@@ -106,6 +104,5 @@ public class EmailAddressContactInfoManager
 	private final long _classPK;
 	private final EmailAddressLocalService _emailAddressLocalService;
 	private final EmailAddressService _emailAddressService;
-	private final UsersAdmin _usersAdmin;
 
 }

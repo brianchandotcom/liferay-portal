@@ -61,7 +61,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.settings.web.internal.exception.RequiredLocaleException;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.Enumeration;
 import java.util.List;
@@ -187,14 +187,14 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 		User guestUser = _userLocalService.getGuestUser(companyId);
 
-		List<Address> addresses = _usersAdmin.getAddresses(actionRequest);
+		List<Address> addresses = UsersAdminUtil.getAddresses(actionRequest);
 
 		if (addresses.isEmpty()) {
 			addresses = _addressLocalService.getAddresses(
 				companyId, Company.class.getName(), company.getCompanyId());
 		}
 
-		List<EmailAddress> emailAddresses = _usersAdmin.getEmailAddresses(
+		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
 			actionRequest);
 
 		if (emailAddresses.isEmpty()) {
@@ -202,14 +202,14 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 				companyId, Company.class.getName(), company.getCompanyId());
 		}
 
-		List<Phone> phones = _usersAdmin.getPhones(actionRequest);
+		List<Phone> phones = UsersAdminUtil.getPhones(actionRequest);
 
 		if (phones.isEmpty()) {
 			phones = _phoneLocalService.getPhones(
 				companyId, Company.class.getName(), company.getCompanyId());
 		}
 
-		List<Website> websites = _usersAdmin.getWebsites(actionRequest);
+		List<Website> websites = UsersAdminUtil.getWebsites(actionRequest);
 
 		if (websites.isEmpty()) {
 			websites = _websiteLocalService.getWebsites(
@@ -403,9 +403,6 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UsersAdmin _usersAdmin;
 
 	@Reference
 	private WebsiteLocalService _websiteLocalService;

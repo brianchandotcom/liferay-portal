@@ -306,7 +306,7 @@ export default function EditObjectDetails({
 					>
 						<ClayPanel.Body>
 							<ScopeContainer
-								companyKeyValuePair={companyKeyValuePair}
+								companyKeyValuePairs={companyKeyValuePair}
 								errors={errors}
 								hasUpdateObjectDefinitionPermission={
 									hasUpdateObjectDefinitionPermission
@@ -314,7 +314,7 @@ export default function EditObjectDetails({
 								isApproved={isApproved}
 								isRootDescendantNode={isRootDescendantNode}
 								setValues={setValues}
-								siteKeyValuePair={siteKeyValuePair}
+								siteKeyValuePairs={siteKeyValuePair}
 								values={values}
 							/>
 						</ClayPanel.Body>

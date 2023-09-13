@@ -65,7 +65,7 @@ public class LiferayResourceLoader extends ResourceLoader {
 
 		_templateResourceLoader =
 			(TemplateResourceLoader)extendedProperties.get(
-				VelocityTemplateResourceLoader.class.getName());
+				VelocityManager.VelocityTemplateResourceLoader.class.getName());
 	}
 
 	@Override

@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.PortalPermission;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 
 import java.util.Locale;
 
@@ -47,7 +47,7 @@ public class ControlPanelCategory extends BasePanelCategory {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (_portalPermission.contains(
+		if (PortalPermissionUtil.contains(
 				permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
 
 			return true;
@@ -61,8 +61,5 @@ public class ControlPanelCategory extends BasePanelCategory {
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;
-
-	@Reference
-	private PortalPermission _portalPermission;
 
 }

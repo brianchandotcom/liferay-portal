@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.PortalPermission;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
 
 import java.util.Locale;
@@ -52,7 +52,7 @@ public class CommercePanelCategory extends BasePanelCategory {
 			return false;
 		}
 
-		if (_portalPermission.contains(
+		if (PortalPermissionUtil.contains(
 				permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
 
 			return true;
@@ -63,9 +63,6 @@ public class CommercePanelCategory extends BasePanelCategory {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private PortalPermission _portalPermission;
 
 	@Reference
 	private SearchCapabilities _searchCapabilities;

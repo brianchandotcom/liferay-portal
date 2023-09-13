@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.permission.PortalPermission;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.LinkedHashMap;
@@ -55,7 +55,7 @@ public class AccountRoleServiceImpl extends AccountRoleServiceBaseImpl {
 				AccountActionKeys.ADD_ACCOUNT_ROLE);
 		}
 		else {
-			_portalPermission.check(permissionChecker, ActionKeys.ADD_ROLE);
+			PortalPermissionUtil.check(permissionChecker, ActionKeys.ADD_ROLE);
 		}
 
 		return accountRoleLocalService.addAccountRole(
@@ -198,8 +198,5 @@ public class AccountRoleServiceImpl extends AccountRoleServiceBaseImpl {
 	)
 	private ModelResourcePermission<AccountRole>
 		_accountRoleModelResourcePermission;
-
-	@Reference
-	private PortalPermission _portalPermission;
 
 }

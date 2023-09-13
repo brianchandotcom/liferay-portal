@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
-import com.liferay.portal.kernel.service.permission.PortalPermission;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -55,7 +55,7 @@ public class SelectSiteInitializerMVCRenderCommand implements MVCRenderCommand {
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		try {
-			if (_portalPermission.contains(
+			if (PortalPermissionUtil.contains(
 					permissionChecker, ActionKeys.ADD_COMMUNITY) ||
 				GroupPermissionUtil.contains(
 					permissionChecker, _groupService.getGroup(parentGroupId),
@@ -78,8 +78,5 @@ public class SelectSiteInitializerMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private GroupService _groupService;
-
-	@Reference
-	private PortalPermission _portalPermission;
 
 }

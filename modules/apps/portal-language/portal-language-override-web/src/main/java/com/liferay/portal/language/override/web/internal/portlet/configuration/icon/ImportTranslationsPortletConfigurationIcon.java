@@ -9,7 +9,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.service.permission.PortalPermission;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -65,7 +65,7 @@ public class ImportTranslationsPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (_portalPermission.contains(
+		if (PortalPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
 				PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES)) {
 
@@ -80,8 +80,5 @@ public class ImportTranslationsPortletConfigurationIcon
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortalPermission _portalPermission;
 
 }

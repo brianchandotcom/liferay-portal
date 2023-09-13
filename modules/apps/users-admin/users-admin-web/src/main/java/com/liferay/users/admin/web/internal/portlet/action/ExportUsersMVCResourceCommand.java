@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.PortalPermission;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -150,7 +150,7 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		boolean exportAllUsers = _portalPermission.contains(
+		boolean exportAllUsers = PortalPermissionUtil.contains(
 			permissionChecker, ActionKeys.EXPORT_USER);
 
 		if (!exportAllUsers &&
@@ -265,9 +265,6 @@ public class ExportUsersMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortalPermission _portalPermission;
 
 	@Reference
 	private UserLocalService _userLocalService;

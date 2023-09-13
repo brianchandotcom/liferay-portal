@@ -8,7 +8,6 @@ package com.liferay.portal.security.audit.web.internal.portlet.configuration.ico
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.service.permission.PortalPermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.security.audit.web.internal.constants.AuditPortletKeys;
 
@@ -67,9 +66,6 @@ public class ExportAuditEventsPortletConfigurationIcon
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private PortalPermission _portalPermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.security.audit.web)"

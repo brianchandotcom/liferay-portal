@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.portlet.LiferayResourceResponse;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.service.permission.PortalPermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -217,8 +216,5 @@ public class ExportAuditEventsMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortalPermission _portalPermission;
 
 }

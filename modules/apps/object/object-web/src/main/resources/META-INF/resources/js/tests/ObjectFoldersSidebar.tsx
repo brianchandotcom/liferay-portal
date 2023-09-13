@@ -7,10 +7,10 @@ import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
 import React from 'react';
 
-import FoldersListSideBar from '../components/ViewObjectDefinitions/FoldersListSidebar';
+import ObjectFoldersSideBar from '../components/ViewObjectDefinitions/ObjectFoldersSidebar';
 const emptyAction = {href: '', method: ''};
 
-const folderActions = {
+const objectFolderActions = {
 	delete: emptyAction,
 	get: emptyAction,
 	permissions: emptyAction,
@@ -18,7 +18,7 @@ const folderActions = {
 };
 
 const ticketFolder = {
-	actions: folderActions,
+	actions: objectFolderActions,
 	dateCreated: '2023-08-07T14:45:00Z',
 	dateModified: '2023-08-07T14:45:00Z',
 	externalReferenceCode: 'ticketERC',
@@ -29,7 +29,7 @@ const ticketFolder = {
 };
 
 const uncategorizedFolder = {
-	actions: folderActions,
+	actions: objectFolderActions,
 	dateCreated: '2023-08-07T14:42:21Z',
 	dateModified: '2023-08-07T14:42:21Z',
 	externalReferenceCode: 'uncategorized',
@@ -42,12 +42,12 @@ const uncategorizedFolder = {
 describe('The FoldersListSidebar component should', () => {
 	it('render all the folders created', () => {
 		render(
-			<FoldersListSideBar
-				foldersList={[uncategorizedFolder, ticketFolder]}
-				selectedFolder={uncategorizedFolder}
-				setSelectedFolder={() => {}}
+			<ObjectFoldersSideBar
+				objectFolders={[uncategorizedFolder, ticketFolder]}
+				selectedObjectFolder={uncategorizedFolder}
+				setSelectedObjectFolder={() => {}}
 				setShowModal={() => {}}
-			></FoldersListSideBar>
+			></ObjectFoldersSideBar>
 		);
 
 		expect(screen.getAllByRole('listitem')).toHaveLength(2);

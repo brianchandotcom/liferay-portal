@@ -65,12 +65,14 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 	}
 
 	@Override
-	public Response getPlanTemplate(String internalClassName) throws Exception {
+	public Response getPlanTemplate(String internalClassNameKey)
+		throws Exception {
+
 		return _getResponse(
-			internalClassName.substring(
-				internalClassName.lastIndexOf(StringPool.PERIOD) + 1),
+			internalClassNameKey.substring(
+				internalClassNameKey.lastIndexOf(StringPool.PERIOD) + 1),
 			_fieldProvider.getFields(
-				contextCompany.getCompanyId(), internalClassName,
+				contextCompany.getCompanyId(), internalClassNameKey,
 				contextUriInfo));
 	}
 

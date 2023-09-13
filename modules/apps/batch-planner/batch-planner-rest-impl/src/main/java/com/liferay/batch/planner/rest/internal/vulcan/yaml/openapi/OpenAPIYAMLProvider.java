@@ -24,13 +24,14 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = OpenAPIYAMLProvider.class)
 public class OpenAPIYAMLProvider {
 
-	public OpenAPIYAML getOpenAPIYAML(long companyId, String internalClassName)
+	public OpenAPIYAML getOpenAPIYAML(
+			long companyId, String internalClassNameKey)
 		throws Exception {
 
 		VulcanBatchEngineTaskItemDelegate vulcanBatchEngineTaskItemDelegate =
 			_vulcanBatchEngineTaskItemDelegateRegistry.
 				getVulcanBatchEngineTaskItemDelegate(
-					companyId, internalClassName);
+					companyId, internalClassNameKey);
 
 		Response response = _openAPIResource.getOpenAPI(
 			Collections.singleton(
@@ -40,7 +41,7 @@ public class OpenAPIYAMLProvider {
 		if (response.getStatus() != 200) {
 			throw new IllegalArgumentException(
 				"Unable to find OpenAPI specification for " +
-					internalClassName);
+					internalClassNameKey);
 		}
 
 		return YAMLUtil.loadOpenAPIYAML((String)response.getEntity());

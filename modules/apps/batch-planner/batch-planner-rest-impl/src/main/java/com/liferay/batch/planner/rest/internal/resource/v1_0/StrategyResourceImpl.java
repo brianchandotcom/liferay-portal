@@ -29,16 +29,16 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class StrategyResourceImpl extends BaseStrategyResourceImpl {
 
 	@Override
-	public Page<Strategy> getPlanInternalClassNameStrategiesPage(
-			String internalClassName)
+	public Page<Strategy> getPlanInternalClassNameKeyStrategiesPage(
+			String internalClassNameKey)
 		throws Exception {
 
 		List<Strategy> strategies = new ArrayList<>();
 
 		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate =
 			_batchEngineTaskItemDelegateRegistry.getBatchEngineTaskItemDelegate(
-				TaskItemUtil.getInternalClassName(internalClassName),
-				TaskItemUtil.getDelegateName(internalClassName));
+				TaskItemUtil.getInternalClassName(internalClassNameKey),
+				TaskItemUtil.getDelegateName(internalClassNameKey));
 
 		for (String createStrategy :
 				batchEngineTaskItemDelegate.getAvailableCreateStrategies()) {

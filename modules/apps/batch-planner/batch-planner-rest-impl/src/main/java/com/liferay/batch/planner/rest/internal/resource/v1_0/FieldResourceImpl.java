@@ -28,13 +28,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class FieldResourceImpl extends BaseFieldResourceImpl {
 
 	@Override
-	public Page<Field> getPlanInternalClassNameFieldsPage(
-			String internalClassName, Boolean export)
+	public Page<Field> getPlanInternalClassNameKeyFieldsPage(
+			String internalClassNameKey, Boolean export)
 		throws Exception {
 
 		List<com.liferay.portal.vulcan.batch.engine.Field> vulcanFields =
 			_fieldProvider.getFields(
-				contextCompany.getCompanyId(), internalClassName,
+				contextCompany.getCompanyId(), internalClassNameKey,
 				contextUriInfo);
 
 		if (GetterUtil.getBoolean(export)) {

@@ -55,25 +55,25 @@ public class FieldProvider {
 	}
 
 	public List<Field> getFields(
-			long companyId, String internalClassName, UriInfo uriInfo)
+			long companyId, String internalClassNameKey, UriInfo uriInfo)
 		throws Exception {
 
-		int index = internalClassName.indexOf(StringPool.POUND);
+		int index = internalClassNameKey.indexOf(StringPool.POUND);
 
 		if (index < 0) {
 			OpenAPIYAML openAPIYAML = _openAPIYAMLProvider.getOpenAPIYAML(
-				companyId, internalClassName);
+				companyId, internalClassNameKey);
 
 			return ListUtil.fromMapValues(
 				OpenAPIUtil.getDTOEntityFields(
 					StringUtil.extractLast(
-						internalClassName, StringPool.PERIOD),
+						internalClassNameKey, StringPool.PERIOD),
 					openAPIYAML));
 		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				companyId, internalClassName.substring(index + 1));
+				companyId, internalClassNameKey.substring(index + 1));
 
 		ObjectEntryOpenAPIResource objectEntryOpenAPIResource =
 			_objectEntryOpenAPIResourceProvider.getObjectEntryOpenAPIResource(

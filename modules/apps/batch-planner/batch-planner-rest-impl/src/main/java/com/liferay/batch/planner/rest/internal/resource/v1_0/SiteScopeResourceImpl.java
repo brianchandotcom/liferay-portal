@@ -37,17 +37,17 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 
 	@Override
-	public Page<SiteScope> getPlanInternalClassNameSiteScopesPage(
-			String internalClassName, Boolean export)
+	public Page<SiteScope> getPlanInternalClassNameKeySiteScopesPage(
+			String internalClassNameKey, Boolean export)
 		throws Exception {
 
 		List<String> entityScopes = null;
 
 		OpenAPIYAML openAPIYAML = _openAPIYAMLProvider.getOpenAPIYAML(
-			contextCompany.getCompanyId(), internalClassName);
+			contextCompany.getCompanyId(), internalClassNameKey);
 
-		String simpleInternalClassName = internalClassName.substring(
-			internalClassName.lastIndexOf(StringPool.PERIOD) + 1);
+		String simpleInternalClassName = internalClassNameKey.substring(
+			internalClassNameKey.lastIndexOf(StringPool.PERIOD) + 1);
 
 		if (GetterUtil.getBoolean(export)) {
 			entityScopes = OpenAPIUtil.getReadEntityScopes(

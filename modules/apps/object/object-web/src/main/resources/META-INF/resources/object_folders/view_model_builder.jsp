@@ -26,19 +26,17 @@ renderResponse.setTitle(LanguageUtil.get(request, "object-model-builder"));
 		HashMapBuilder.<String, Object>put(
 			"baseResourceURL", String.valueOf(baseResourceURL)
 		).put(
-			"companyKeyValuePair", objectDefinitionsDetailsDisplayContext.getScopeKeyValuePairs("company")
-		).put(
-			"deletionTypes", objectDefinitionsRelationshipsDisplayContext.getObjectRelationshipDeletionTypesJSONArray()
+			"companyKeyValuePairs", objectDefinitionsDetailsDisplayContext.getScopeKeyValuePairs(ObjectDefinitionConstants.SCOPE_COMPANY)
 		).put(
 			"editObjectDefinitionURL", objectDefinitionsDetailsDisplayContext.getEditObjectDefinitionURL()
 		).put(
 			"objectDefinitionPermissionsURL", objectDefinitionsDetailsDisplayContext.getPermissionsURL(ObjectDefinition.class.getName())
 		).put(
-			"siteKeyValuePair", objectDefinitionsDetailsDisplayContext.getScopeKeyValuePairs("site")
+			"objectDefinitionsStorageTypes", objectDefinitionsDetailsDisplayContext.getStorageTypesJSONArray()
 		).put(
-			"storages", objectDefinitionsDetailsDisplayContext.getStoragesJSONArray()
+			"objectRelationshipDeletionTypes", objectDefinitionsRelationshipsDisplayContext.getObjectRelationshipDeletionTypesJSONArray()
 		).put(
-			"viewApiURL", "/o/object-admin/v1.0/object-definitions"
+			"siteKeyValuePairs", objectDefinitionsDetailsDisplayContext.getScopeKeyValuePairs(ObjectDefinitionConstants.SCOPE_SITE)
 		).build()
 	%>'
 />

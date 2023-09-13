@@ -1816,6 +1816,10 @@
 			<category name="Upgrade" />
 			<description name="Run code to remove 'fieldset-group' tag" />
 		</check>
+		<check name="UpgradePortletDisplayCheck">
+			<category name="Upgrade" />
+			<description name="Replaces 'portletDisplay.getPortletInstanceConfiguration' with 'ConfigurationProviderUtil.getPortletInstanceConfiguration'" />
+		</check>
 		<check name="UpgradePortletFTLCheck">
 			<category name="Upgrade" />
 			<description name="Include the CSS classes 'cadmin' and include for impression of 'right cadmin' in 'portlet.ftl' file" />

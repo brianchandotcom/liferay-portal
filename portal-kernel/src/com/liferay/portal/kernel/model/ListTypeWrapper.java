@@ -33,6 +33,7 @@ public class ListTypeWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("listTypeId", getListTypeId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
 
@@ -53,6 +54,12 @@ public class ListTypeWrapper
 			setListTypeId(listTypeId);
 		}
 
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -69,6 +76,16 @@ public class ListTypeWrapper
 	@Override
 	public ListType cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	/**
+	 * Returns the company ID of this list type.
+	 *
+	 * @return the company ID of this list type
+	 */
+	@Override
+	public long getCompanyId() {
+		return model.getCompanyId();
 	}
 
 	/**
@@ -124,6 +141,16 @@ public class ListTypeWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	 * Sets the company ID of this list type.
+	 *
+	 * @param companyId the company ID of this list type
+	 */
+	@Override
+	public void setCompanyId(long companyId) {
+		model.setCompanyId(companyId);
 	}
 
 	/**

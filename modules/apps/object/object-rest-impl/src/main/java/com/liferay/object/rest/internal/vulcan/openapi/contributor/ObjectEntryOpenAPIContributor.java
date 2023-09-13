@@ -124,9 +124,13 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 				for (Map.Entry<ObjectRelationship, ObjectDefinition> entry :
 						relatedObjectDefinitionsMap.entrySet()) {
 
-					ObjectRelationship objectRelationship = entry.getKey();
-
 					ObjectDefinition relatedObjectDefinition = entry.getValue();
+
+					if (!relatedObjectDefinition.isActive()) {
+						continue;
+					}
+
+					ObjectRelationship objectRelationship = entry.getKey();
 
 					String relatedSchemaName = getSchemaName(
 						relatedObjectDefinition);

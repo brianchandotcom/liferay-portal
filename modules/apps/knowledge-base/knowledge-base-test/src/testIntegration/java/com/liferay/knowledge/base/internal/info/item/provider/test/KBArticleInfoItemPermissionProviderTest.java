@@ -23,14 +23,13 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -66,7 +65,7 @@ public class KBArticleInfoItemPermissionProviderTest {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(), null,
-			StringPool.BLANK, new Date(), null, null, null,
+			StringPool.BLANK, RandomTestUtil.nextDate(), null, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
 		RoleTestUtil.removeResourcePermission(

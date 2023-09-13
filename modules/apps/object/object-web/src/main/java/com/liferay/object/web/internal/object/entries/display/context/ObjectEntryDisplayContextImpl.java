@@ -1121,11 +1121,15 @@ public class ObjectEntryDisplayContextImpl
 
 		Date dateCreated = objectEntry.getDateCreated();
 
-		values.put("createDate", new Timestamp(dateCreated.getTime()));
+		if (dateCreated != null) {
+			values.put("createDate", new Timestamp(dateCreated.getTime()));
+		}
 
 		Creator creator = objectEntry.getCreator();
 
-		values.put("creator", creator.getName());
+		if (creator != null) {
+			values.put("creator", creator.getName());
+		}
 
 		values.put(
 			"externalReferenceCode", objectEntry.getExternalReferenceCode());
@@ -1133,11 +1137,15 @@ public class ObjectEntryDisplayContextImpl
 
 		Date dateModified = objectEntry.getDateModified();
 
-		values.put("modifiedDate", new Timestamp(dateModified.getTime()));
+		if (dateModified != null) {
+			values.put("modifiedDate", new Timestamp(dateModified.getTime()));
+		}
 
 		Status status = objectEntry.getStatus();
 
-		values.put("status", status.getLabel());
+		if (status != null) {
+			values.put("status", status.getLabel());
+		}
 
 		return values;
 	}

@@ -4,15 +4,15 @@
  */
 
 import React from 'react';
-import './Header.scss';
-interface Header {
-	folder: ObjectFolder;
+import './EditObjectFolderHeader.scss';
+interface EditObjectFolderHeaderProps {
 	hasDraftObjectDefinitions: boolean;
+	selectedObjectFolder: ObjectFolder;
 	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
 }
-export default function ({
-	folder,
+export default function EditObjectFolderHeader({
 	hasDraftObjectDefinitions,
+	selectedObjectFolder,
 	setShowModal,
-}: Header): JSX.Element;
+}: EditObjectFolderHeaderProps): JSX.Element;
 export {};

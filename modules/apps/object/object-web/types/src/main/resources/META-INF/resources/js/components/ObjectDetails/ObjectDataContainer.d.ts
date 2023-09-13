@@ -11,7 +11,7 @@ interface ObjectDataContainerProps {
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
-	linkedDefinition?: boolean;
+	isLinkedObjectDefinition?: boolean;
 	setValues: (values: Partial<ObjectDefinition>) => void;
 	values: Partial<ObjectDefinition>;
 }
@@ -21,7 +21,7 @@ export declare function ObjectDataContainer({
 	handleChange,
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
-	linkedDefinition,
+	isLinkedObjectDefinition,
 	setValues,
 	values,
 }: ObjectDataContainerProps): JSX.Element;

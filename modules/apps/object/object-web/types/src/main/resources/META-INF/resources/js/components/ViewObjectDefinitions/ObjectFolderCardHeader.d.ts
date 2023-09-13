@@ -5,18 +5,18 @@
 
 /// <reference types="react" />
 
-interface CardHeaderProps {
+interface ObjectFolderCardHeaderProps {
 	externalReferenceCode?: string;
 	items: IItem[];
 	label?: LocalizedValue<string>;
 	modelBuilderURL: string;
 	name?: string;
 }
-export default function CardHeader({
+export default function ObjectFolderCardHeader({
 	externalReferenceCode,
 	items,
 	label,
 	modelBuilderURL,
 	name,
-}: CardHeaderProps): JSX.Element;
+}: ObjectFolderCardHeaderProps): JSX.Element;
 export {};

@@ -7,14 +7,22 @@
 
 import {EdgeProps} from 'react-flow-renderer';
 import {ObjectRelationshipEdgeData} from '../types';
-import './Edge.scss';
-export default function SelfEdge({
+export declare function getInitialObjectRelationshipEdgeStyle(
+	edgeSelected: boolean
+): {
+	stroke: string;
+	strokeWidth: string;
+};
+export declare function getInitialLabelBgStyle(
+	edgeSelected: boolean
+): {
+	fill: string;
+	height: string;
+};
+export default function DefaultObjectRelationshipEdge({
 	data,
 	id,
 	source,
-	sourceX,
-	sourceY,
 	style,
-	targetX,
-	targetY,
+	target,
 }: EdgeProps<ObjectRelationshipEdgeData>): JSX.Element | null;

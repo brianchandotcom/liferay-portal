@@ -3,24 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Node} from 'react-flow-renderer';
-import {LeftSidebarItemType, RightSidebarType, TAction, TState} from '../types';
+import {TAction, TState} from '../types';
 export declare function ObjectFolderReducer(
 	state: TState,
 	action: TAction
-): {
-	elements: any;
-	baseResourceURL: string;
-	editObjectDefinitionURL: string;
-	leftSidebarItems: LeftSidebarItemType[];
-	objectDefinitionPermissionsURL: string;
-	objectDefinitions: ObjectDefinition[];
-	objectFolders: ObjectFolder[];
-	rightSidebarType: RightSidebarType;
-	selectedDefinitionNode: Node<ObjectDefinitionNodeData>;
-	selectedFolder: ObjectFolder;
-	selectedObjectRelationship: ObjectRelationship;
-	showChangesSaved: boolean;
-	storages: LabelValueObject[];
-	viewApiURL: string;
-};
+): TState;

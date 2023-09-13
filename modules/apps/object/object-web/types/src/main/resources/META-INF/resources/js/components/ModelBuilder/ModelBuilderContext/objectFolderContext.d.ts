@@ -5,18 +5,18 @@
 
 import React from 'react';
 import {TAction, TState} from '../types';
-interface IFolderContextProps extends Array<TState | Function> {
+interface ObjectFolderContextProps extends Array<TState | Function> {
 	0: typeof initialState;
 	1: React.Dispatch<React.ReducerAction<React.Reducer<TState, TAction>>>;
 }
-interface IFolderContextProviderProps
+interface ObjectFolderContextProviderProps
 	extends React.HTMLAttributes<HTMLElement> {
 	value: {};
 }
 declare const initialState: TState;
-export declare function FolderContextProvider({
+export declare function ObjectFolderContextProvider({
 	children,
 	value,
-}: IFolderContextProviderProps): JSX.Element;
-export declare function useFolderContext(): IFolderContextProps;
+}: ObjectFolderContextProviderProps): JSX.Element;
+export declare function useObjectFolderContext(): ObjectFolderContextProps;
 export {};

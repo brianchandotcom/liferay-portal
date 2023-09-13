@@ -106,10 +106,6 @@
 	<bean class="com.liferay.portal.kernel.service.permission.PortletPermissionUtil" id="com.liferay.portal.kernel.service.permission.PortletPermissionUtil">
 		<property name="portletPermission" ref="com.liferay.portal.kernel.service.permission.PortletPermission" />
 	</bean>
-	<bean class="com.liferay.portal.service.permission.RolePermissionImpl" id="com.liferay.portal.kernel.service.permission.RolePermission" />
-	<bean class="com.liferay.portal.kernel.service.permission.RolePermissionUtil" id="com.liferay.portal.kernel.service.permission.RolePermissionUtil">
-		<property name="rolePermission" ref="com.liferay.portal.kernel.service.permission.RolePermission" />
-	</bean>
 	<bean class="com.liferay.portal.service.permission.UserGroupPermissionImpl" id="com.liferay.portal.kernel.service.permission.UserGroupPermission" />
 	<bean class="com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil" id="com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil">
 		<property name="userGroupPermission" ref="com.liferay.portal.kernel.service.permission.UserGroupPermission" />

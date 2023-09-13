@@ -15,9 +15,12 @@ import React, {useEffect, useState} from 'react';
 const SCHEDULE_EVENT_NAME = 'scheduleKBArticle';
 export default function ScheduleModal({
 	displayDate: initialDisplayDate,
+	isScheduled,
 	portletNamespace,
 }) {
-	const [displayDate, setDisplayDate] = useState(initialDisplayDate);
+	const [displayDate, setDisplayDate] = useState(
+		isScheduled ? initialDisplayDate : null
+	);
 	const [invalidDate, setInvalidDate] = useState(false);
 
 	const closeModal = () => {
@@ -51,7 +54,13 @@ export default function ScheduleModal({
 		<div className="schedule-modal">
 			<div className="container-fluid p-4">
 				<p className="text-secondary">
-					{Liferay.Language.get('set-date-and-time-for-publication')}
+					{isScheduled
+						? Liferay.Language.get(
+								'this-article-is-set-to-publish-later'
+						  )
+						: Liferay.Language.get(
+								'set-date-and-time-for-publication'
+						  )}
 				</p>
 
 				<div className={classnames({'has-error': invalidDate})}>
@@ -102,5 +111,6 @@ export default function ScheduleModal({
 
 ScheduleModal.propTypes = {
 	displayDate: PropTypes.string,
+	isScheduled: PropTypes.bool,
 	portletNamespace: PropTypes.string.isRequired,
 };

@@ -97,7 +97,9 @@ export default function EditKBArticle({
 	if (Liferay.FeatureFlags['LPS-188060']) {
 		publishButton = document.getElementById(`${namespace}publishItem`);
 
-		scheduledButton = document.getElementById(`${namespace}scheduledButton`);
+		scheduledButton = document.getElementById(
+			`${namespace}scheduledButton`
+		);
 
 		scheduleItem = document.getElementById(`${namespace}scheduleItem`);
 	}

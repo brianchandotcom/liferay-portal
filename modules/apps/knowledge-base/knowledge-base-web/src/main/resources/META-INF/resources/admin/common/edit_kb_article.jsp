@@ -371,6 +371,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 </aui:form>
 
 <portlet:renderURL var="scheduleModalURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 	<portlet:param name="mvcPath" value="/admin/common/schedule_modal.jsp" />
 </portlet:renderURL>
 

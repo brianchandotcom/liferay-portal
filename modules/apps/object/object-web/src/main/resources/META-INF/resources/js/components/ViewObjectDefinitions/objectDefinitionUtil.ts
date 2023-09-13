@@ -15,11 +15,20 @@ import {
 import {DropDownItems} from '../ModelBuilder/types';
 import {DeletedObjectDefinition} from './ViewObjectDefinitions';
 
-type DefinitionNodeActionsProps = {
+type DeleteObjectDefinitionProps = {
 	baseResourceURL: string;
-	handleShowDeleteModal: () => void;
-	handleShowEditERCModal: () => void;
-	handleShowRedirectModal: () => void;
+	handleShowDeleteObjectDefinitionModal: () => void;
+	objectDefinitionId: number;
+	objectDefinitionName: string;
+	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void;
+	status: string;
+};
+
+type ObjectDefinitionNodeActionsProps = {
+	baseResourceURL: string;
+	handleShowDeleteObjectDefinitionModal: () => void;
+	handleShowEditObjectDefinitionExternalReferenceCodeModal: () => void;
+	handleShowRedirectObjectDefinitionModal: () => void;
 	hasObjectDefinitionDeleteResourcePermission: boolean;
 	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
 	objectDefinitionId: number;
@@ -33,33 +42,24 @@ type DefinitionNodeActionsProps = {
 	};
 };
 
-type DeleteObjectDefinitionProps = {
-	baseResourceURL: string;
-	handleShowDeleteModal: () => void;
-	objectDefinitionId: number;
-	objectDefinitionName: string;
-	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void;
-	status: string;
-};
-
-type FolderAction = {
+type ObjectFolderAction = {
 	href: string;
 	method: string;
 };
 
-type FolderActions = {
-	delete?: FolderAction;
-	get?: FolderAction;
-	permissions?: FolderAction;
-	update?: FolderAction;
+type ObjectFolderActions = {
+	delete?: ObjectFolderAction;
+	get?: ObjectFolderAction;
+	permissions?: ObjectFolderAction;
+	update?: ObjectFolderAction;
 };
 
-export async function deleteFolder(id: number, folderName: string) {
-	await API.deleteFolder(Number(id)).then(() => {
+export async function deleteObjectFolder(id: number, objectFolderName: string) {
+	await API.deleteObjectFolder(Number(id)).then(() => {
 		Liferay.Util.openToast({
 			message: sub(
 				Liferay.Language.get('x-was-deleted-successfully'),
-				`<strong>${folderName}</strong>`
+				`<strong>${objectFolderName}</strong>`
 			),
 		});
 	});
@@ -81,7 +81,7 @@ export async function deleteObjectDefinitionToast(
 
 export async function deleteObjectDefinition({
 	baseResourceURL,
-	handleShowDeleteModal,
+	handleShowDeleteObjectDefinitionModal,
 	objectDefinitionId,
 	objectDefinitionName,
 	setDeletedObjectDefinition,
@@ -114,7 +114,7 @@ export async function deleteObjectDefinition({
 		objectEntriesCount,
 	});
 
-	handleShowDeleteModal();
+	handleShowDeleteObjectDefinitionModal();
 }
 
 export async function deleteRelationship(id: number) {
@@ -135,11 +135,11 @@ export async function deleteRelationship(id: number) {
 	}
 }
 
-export function getDefinitionNodeActions({
+export function getObjectDefinitionNodeActions({
 	baseResourceURL,
-	handleShowDeleteModal,
-	handleShowEditERCModal,
-	handleShowRedirectModal,
+	handleShowDeleteObjectDefinitionModal,
+	handleShowEditObjectDefinitionExternalReferenceCodeModal,
+	handleShowRedirectObjectDefinitionModal,
 	hasObjectDefinitionDeleteResourcePermission,
 	hasObjectDefinitionManagePermissionsResourcePermission,
 	objectDefinitionId,
@@ -147,7 +147,7 @@ export function getDefinitionNodeActions({
 	objectDefinitionPermissionsURL,
 	setDeletedObjectDefinition,
 	status,
-}: DefinitionNodeActionsProps) {
+}: ObjectDefinitionNodeActionsProps) {
 	const PermissionUrl = formatActionURL(
 		objectDefinitionPermissionsURL,
 		objectDefinitionId
@@ -157,7 +157,7 @@ export function getDefinitionNodeActions({
 		event.stopPropagation();
 		deleteObjectDefinition({
 			baseResourceURL,
-			handleShowDeleteModal,
+			handleShowDeleteObjectDefinitionModal,
 			objectDefinitionId,
 			objectDefinitionName,
 			setDeletedObjectDefinition,
@@ -181,7 +181,7 @@ export function getDefinitionNodeActions({
 			),
 			onClick: (event: Event) => {
 				event.stopPropagation();
-				handleShowRedirectModal();
+				handleShowRedirectObjectDefinitionModal();
 			},
 			symbolRight: 'shortcut',
 		},
@@ -192,7 +192,7 @@ export function getDefinitionNodeActions({
 			),
 			onClick: (event: Event) => {
 				event.stopPropagation();
-				handleShowEditERCModal();
+				handleShowEditObjectDefinitionExternalReferenceCodeModal();
 			},
 			symbolLeft: 'info-panel-closed',
 		},
@@ -225,11 +225,11 @@ export function getDefinitionNodeActions({
 	return kebabOptions;
 }
 
-export function getFolderActions(
+export function getObjectFolderActions(
 	id: number,
 	objectFolderPermissionsURL: string,
 	setShowModal: (value: SetStateAction<ViewObjectDefinitionsModals>) => void,
-	actions?: FolderActions
+	actions?: ObjectFolderActions
 ) {
 	const url = formatActionURL(objectFolderPermissionsURL, id);
 	const kebabOptions = [];
@@ -241,7 +241,7 @@ export function getFolderActions(
 			onClick: () =>
 				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
 					...previousState,
-					editFolder: true,
+					editObjectFolder: true,
 				})),
 			symbolLeft: 'pencil',
 			value: 'editFolder',
@@ -269,7 +269,7 @@ export function getFolderActions(
 			onClick: () =>
 				setShowModal((previousState: ViewObjectDefinitionsModals) => ({
 					...previousState,
-					deleteFolder: true,
+					deleteObjectFolder: true,
 				})),
 			symbolLeft: 'trash',
 			value: 'deleteFolder',

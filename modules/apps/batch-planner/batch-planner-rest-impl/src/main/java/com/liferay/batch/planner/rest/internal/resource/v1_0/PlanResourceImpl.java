@@ -70,8 +70,7 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 		throws Exception {
 
 		return _getResponse(
-			internalClassNameKey.substring(
-				internalClassNameKey.lastIndexOf(StringPool.PERIOD) + 1),
+			TaskItemUtil.getSimpleClassName(internalClassNameKey),
 			_fieldProvider.getFields(
 				contextCompany.getCompanyId(), internalClassNameKey,
 				contextUriInfo));

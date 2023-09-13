@@ -178,7 +178,7 @@ describe('EditableActionPanel', () => {
 
 		expect(screen.getByText('success-text')).toBeInTheDocument();
 		expect(
-			screen.getByText('preview-success-notification')
+			screen.getByLabelText('preview-success-notification')
 		).toBeInTheDocument();
 	});
 

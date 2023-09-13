@@ -8,19 +8,22 @@ import React from 'react';
 
 import {getBusinessTypeLabel} from '../../../utils/businessTypeLabel';
 
-import './NodeFields.scss';
+import './ObjectDefinitionNodeObjectFields.scss';
 
-interface NodeFieldsProps {
+interface ObjectDefinitionNodeFieldsProps {
 	defaultLanguageId: Liferay.Language.Locale;
 	objectFields: ObjectFieldNode[];
-	showAll: boolean;
+	showAllObjectFields: boolean;
 }
 
-export default function NodeFields({objectFields, showAll}: NodeFieldsProps) {
+export default function ObjectDefinitionNodeFields({
+	objectFields,
+	showAllObjectFields,
+}: ObjectDefinitionNodeFieldsProps) {
 	return (
 		<>
 			{objectFields.map((objectField, index) => {
-				if (index < 5 || showAll) {
+				if (index < 5 || showAllObjectFields) {
 					return (
 						<div
 							className={classNames(

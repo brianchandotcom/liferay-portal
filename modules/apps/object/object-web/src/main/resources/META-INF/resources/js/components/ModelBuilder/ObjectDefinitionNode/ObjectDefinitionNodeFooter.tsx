@@ -9,23 +9,23 @@ import ClayIcon from '@clayui/icon';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import './NodeFooter.scss';
+import './ObjectDefinitionNodeFooter.scss';
 
-interface NodeFooterProps {
-	isLinkedNode: boolean;
-	setShowAllFields: (value: boolean) => void;
-	showAllFields: boolean;
+interface ObjectDefinitionNodeFooterProps {
+	isLinkedObjectDefinition: boolean;
+	setShowAllObjectFields: (value: boolean) => void;
+	showAllObjectFields: boolean;
 }
 
-export default function NodeFooter({
-	isLinkedNode,
-	setShowAllFields,
-	showAllFields,
-}: NodeFooterProps) {
+export default function ObjectDefinitionNodeFooter({
+	isLinkedObjectDefinition,
+	setShowAllObjectFields,
+	showAllObjectFields,
+}: ObjectDefinitionNodeFooterProps) {
 	return (
 		<>
 			<div className="lfr-objects__model-builder-node-button-container">
-				{!isLinkedNode && (
+				{!isLinkedObjectDefinition && (
 					<DropDown
 						alignmentPosition={4}
 						trigger={
@@ -71,10 +71,10 @@ export default function NodeFooter({
 					className="lfr-objects__model-builder-node-show-all-fields-button"
 					displayType="unstyled"
 					onClick={() => {
-						setShowAllFields(!showAllFields);
+						setShowAllObjectFields(!showAllObjectFields);
 					}}
 				>
-					{showAllFields
+					{showAllObjectFields
 						? sub(
 								Liferay.Language.get('hide-x'),
 								Liferay.Language.get('fields')
@@ -87,7 +87,7 @@ export default function NodeFooter({
 					<ClayIcon
 						className="c-pt-1 text-4"
 						symbol={
-							showAllFields
+							showAllObjectFields
 								? 'angle-up-small'
 								: 'angle-down-small'
 						}

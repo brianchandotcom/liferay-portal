@@ -14,7 +14,7 @@ import {
 	useStore,
 } from 'react-flow-renderer';
 
-import './DefinitionNode.scss';
+import './NodeContainer.scss';
 
 import {
 	API,
@@ -25,13 +25,13 @@ import {
 import {formatActionURL} from '../../../utils/fds';
 import {ModalDeleteObjectDefinition} from '../../ViewObjectDefinitions/ModalDeleteObjectDefinition';
 import {DeletedObjectDefinition} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
-import {getDefinitionNodeActions} from '../../ViewObjectDefinitions/objectDefinitionUtil';
-import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {getObjectDefinitionNodeActions} from '../../ViewObjectDefinitions/objectDefinitionUtil';
+import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
-import NodeFields from './NodeFields';
-import NodeFooter from './NodeFooter';
-import NodeHeader from './NodeHeader';
-import {RedirectModal} from './RedirectModal';
+import ObjectDefinitionNodeFooter from './ObjectDefinitionNodeFooter';
+import ObjectDefinitionNodeHeader from './ObjectDefinitionNodeHeader';
+import ObjectDefinitionNodeFields from './ObjectDefinitionNodeObjectFields';
+import {RedirectToEditObjectDetailsModal} from './RedirectToEditObjectDetailsModal';
 
 const selfRelationshipHandleStyle = {
 	background: 'transparent',
@@ -39,33 +39,40 @@ const selfRelationshipHandleStyle = {
 	borderRadius: '50%',
 };
 
-export function DefinitionNode({
+export function ObjectDefinitionNode({
 	data: {
 		defaultLanguageId,
 		externalReferenceCode,
 		hasObjectDefinitionDeleteResourcePermission,
 		hasObjectDefinitionManagePermissionsResourcePermission,
-		hasSelfRelationships,
+		hasSelfObjectRelationships,
 		id,
 		label,
-		linkedDefinition,
+		linkedObjectDefinition,
 		name,
-		nodeSelected,
 		objectFields,
+		selected,
 		status,
 		system,
 	},
 }: NodeProps<ObjectDefinitionNodeData>) {
-	const [showAllFields, setShowAllFields] = useState<boolean>(false);
+	const [showAllObjectFields, setShowAllObjectFields] = useState<boolean>(
+		false
+	);
 	const [
-		{editObjectDefinitionURL, elements, objectDefinitionPermissionsURL},
+		{
+			baseResourceURL,
+			editObjectDefinitionURL,
+			elements,
+			objectDefinitionPermissionsURL,
+		},
 		dispatch,
-	] = useFolderContext();
+	] = useObjectFolderContext();
 	const store = useStore();
 
 	const [showModal, setShowModal] = useState<Partial<ModelBuilderModals>>({
 		deleteObjectDefinition: false,
-		editERC: false,
+		editObjectDefinitionExternalReferenceCode: false,
 	});
 	const [
 		deletedObjectDefinition,
@@ -76,27 +83,25 @@ export function DefinitionNode({
 		externalReferenceCode
 	);
 
-	const [{baseResourceURL}] = useFolderContext();
-
-	const handleShowDeleteModal = () => {
+	const handleShowDeleteObjectDefinitionModal = () => {
 		setShowModal({
 			deleteObjectDefinition: true,
 		});
 	};
 
-	const handleShowEditERCModal = () => {
+	const handleShowEditObjectDefinitionExternalReferenceCodeModal = () => {
 		setShowModal({
-			editERC: true,
+			editObjectDefinitionExternalReferenceCode: true,
 		});
 	};
 
-	const handleShowRedirectModal = () => {
+	const handleShowRedirectObjectDefinitionModal = () => {
 		setShowModal({
-			redirectEditObjectDefinition: true,
+			redirectToEditObjectDefinitionDetails: true,
 		});
 	};
 
-	const viewDetailsURL = formatActionURL(editObjectDefinitionURL, id);
+	const viewObjectDetailsURL = formatActionURL(editObjectDefinitionURL, id);
 
 	return (
 		<>
@@ -104,8 +109,8 @@ export function DefinitionNode({
 				className={classNames(
 					'lfr-objects__model-builder-node-container',
 					{
-						'lfr-objects__model-builder-node-container--link': linkedDefinition,
-						'lfr-objects__model-builder-node-container--selected': nodeSelected,
+						'lfr-objects__model-builder-node-container--link': linkedObjectDefinition,
+						'lfr-objects__model-builder-node-container--selected': selected,
 					}
 				)}
 				onClick={() => {
@@ -117,16 +122,16 @@ export function DefinitionNode({
 							nodes,
 							selectedObjectDefinitionId: id.toString(),
 						},
-						type: TYPES.SET_SELECTED_NODE,
+						type: TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE,
 					});
 				}}
 			>
-				<NodeHeader
-					dropDownItems={getDefinitionNodeActions({
+				<ObjectDefinitionNodeHeader
+					dropDownItems={getObjectDefinitionNodeActions({
 						baseResourceURL,
-						handleShowDeleteModal,
-						handleShowEditERCModal,
-						handleShowRedirectModal,
+						handleShowDeleteObjectDefinitionModal,
+						handleShowEditObjectDefinitionExternalReferenceCodeModal,
+						handleShowRedirectObjectDefinitionModal,
 						hasObjectDefinitionDeleteResourcePermission,
 						hasObjectDefinitionManagePermissionsResourcePermission,
 						objectDefinitionId: id,
@@ -135,7 +140,7 @@ export function DefinitionNode({
 						setDeletedObjectDefinition,
 						status,
 					})}
-					isLinkedNode={linkedDefinition}
+					isLinkedObjectDefinition={linkedObjectDefinition}
 					objectDefinitionLabel={getLocalizableLabel(
 						defaultLanguageId,
 						label,
@@ -145,16 +150,16 @@ export function DefinitionNode({
 					system={system}
 				/>
 
-				<NodeFields
+				<ObjectDefinitionNodeFields
 					defaultLanguageId={defaultLanguageId}
 					objectFields={objectFields}
-					showAll={showAllFields}
+					showAllObjectFields={showAllObjectFields}
 				/>
 
-				<NodeFooter
-					isLinkedNode={linkedDefinition}
-					setShowAllFields={setShowAllFields}
-					showAllFields={showAllFields}
+				<ObjectDefinitionNodeFooter
+					isLinkedObjectDefinition={linkedObjectDefinition}
+					setShowAllObjectFields={setShowAllObjectFields}
+					showAllObjectFields={showAllObjectFields}
 				/>
 
 				<Handle
@@ -171,7 +176,7 @@ export function DefinitionNode({
 					type="source"
 				/>
 
-				{hasSelfRelationships && (
+				{hasSelfObjectRelationships && (
 					<>
 						<Handle
 							className="lfr-objects__model-builder-node-handle"
@@ -214,14 +219,14 @@ export function DefinitionNode({
 				/>
 			)}
 
-			{showModal.editERC && (
+			{showModal.editObjectDefinitionExternalReferenceCode && (
 				<ModalEditExternalReferenceCode
 					externalReferenceCode={newExternalReferenceCode as string}
 					handleOnClose={() => {
 						setShowModal(
 							(previousState: Partial<ModelBuilderModals>) => ({
 								...previousState,
-								editERC: false,
+								editObjectDefinitionExternalReferenceCode: false,
 							})
 						);
 					}}
@@ -262,14 +267,14 @@ export function DefinitionNode({
 				/>
 			)}
 
-			{showModal.redirectEditObjectDefinition && (
-				<RedirectModal
+			{showModal.redirectToEditObjectDefinitionDetails && (
+				<RedirectToEditObjectDetailsModal
 					handleOnClose={() => {
 						setShowModal({
-							redirectEditObjectDefinition: false,
+							redirectToEditObjectDefinitionDetails: false,
 						});
 					}}
-					viewDetailsURL={viewDetailsURL}
+					viewObjectDetailsURL={viewObjectDetailsURL}
 				/>
 			)}
 		</>

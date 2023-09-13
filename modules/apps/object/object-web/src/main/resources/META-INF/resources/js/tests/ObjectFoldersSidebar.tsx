@@ -17,7 +17,7 @@ const objectFolderActions = {
 	update: emptyAction,
 };
 
-const ticketFolder = {
+const ticketObjectFolder = {
 	actions: objectFolderActions,
 	dateCreated: '2023-08-07T14:45:00Z',
 	dateModified: '2023-08-07T14:45:00Z',
@@ -43,7 +43,7 @@ describe('The FoldersListSidebar component should', () => {
 	it('render all the folders created', () => {
 		render(
 			<ObjectFoldersSideBar
-				objectFolders={[uncategorizedFolder, ticketFolder]}
+				objectFolders={[uncategorizedFolder, ticketObjectFolder]}
 				selectedObjectFolder={uncategorizedFolder}
 				setSelectedObjectFolder={() => {}}
 				setShowModal={() => {}}

@@ -974,6 +974,7 @@
 		<exception>ObjectActionLabel</exception>
 		<exception>ObjectActionName</exception>
 		<exception>ObjectActionParameters</exception>
+		<exception>ObjectActionSystem</exception>
 		<exception>ObjectActionTriggerKey</exception>
 		<exception>ObjectDefinitionAccountEntryRestricted</exception>
 		<exception>ObjectDefinitionAccountEntryRestrictedObjectFieldId</exception>

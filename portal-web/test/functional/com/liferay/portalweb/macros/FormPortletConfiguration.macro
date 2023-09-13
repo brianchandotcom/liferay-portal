@@ -50,9 +50,11 @@ definition {
 
 		FormPortletNavigator.gotoSelectForm();
 
-		FormPortletConfiguration.selectForm(formTitle = ${formTitle});
+		FormPortletConfiguration.selectForm(formTitle = ${formName});
 
 		PortletEntry.save();
+
+		FormPortletNavigator.exitWidgetModal();
 	}
 
 	macro viewTranslationLanguage {

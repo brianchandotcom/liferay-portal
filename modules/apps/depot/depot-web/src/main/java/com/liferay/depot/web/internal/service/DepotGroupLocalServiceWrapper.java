@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -36,7 +36,7 @@ public class DepotGroupLocalServiceWrapper extends GroupServiceWrapper {
 		Group group = _groupLocalService.getGroup(groupId);
 
 		if (group.isDepot()) {
-			_groupPermission.check(
+			GroupPermissionUtil.check(
 				GuestOrUserUtil.getPermissionChecker(), group,
 				ActionKeys.UPDATE);
 
@@ -68,9 +68,6 @@ public class DepotGroupLocalServiceWrapper extends GroupServiceWrapper {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private Portal _portal;

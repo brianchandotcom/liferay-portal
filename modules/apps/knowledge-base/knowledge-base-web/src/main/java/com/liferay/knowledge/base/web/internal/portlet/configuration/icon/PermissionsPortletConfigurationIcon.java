@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.security.PermissionsURLTag;
@@ -87,7 +87,7 @@ public class PermissionsPortletConfigurationIcon
 				!_portletResourcePermission.contains(
 					themeDisplay.getPermissionChecker(),
 					themeDisplay.getScopeGroup(), ActionKeys.PERMISSIONS) ||
-				!_groupPermission.contains(
+				!GroupPermissionUtil.contains(
 					themeDisplay.getPermissionChecker(),
 					themeDisplay.getScopeGroup(), ActionKeys.PERMISSIONS)) {
 
@@ -112,9 +112,6 @@ public class PermissionsPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PermissionsPortletConfigurationIcon.class);
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private Language _language;

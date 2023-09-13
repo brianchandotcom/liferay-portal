@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -170,7 +170,7 @@ public class GroupSearchProvider {
 				themeDisplay.getPermissionChecker();
 
 			if (!permissionChecker.isCompanyAdmin() &&
-				!_groupPermission.contains(
+				!GroupPermissionUtil.contains(
 					permissionChecker, ActionKeys.VIEW)) {
 
 				User user = themeDisplay.getUser();
@@ -211,7 +211,7 @@ public class GroupSearchProvider {
 			themeDisplay.getPermissionChecker();
 
 		if (permissionChecker.isCompanyAdmin() ||
-			_groupPermission.contains(permissionChecker, ActionKeys.VIEW)) {
+			GroupPermissionUtil.contains(permissionChecker, ActionKeys.VIEW)) {
 
 			return false;
 		}
@@ -235,9 +235,6 @@ public class GroupSearchProvider {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;

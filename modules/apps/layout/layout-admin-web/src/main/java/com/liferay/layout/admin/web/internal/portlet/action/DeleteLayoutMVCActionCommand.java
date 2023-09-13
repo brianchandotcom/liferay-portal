@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -104,10 +104,10 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 		Group group = layout.getGroup();
 
 		if (group.isStagingGroup() &&
-			!_groupPermission.contains(
+			!GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), group,
 				ActionKeys.MANAGE_STAGING) &&
-			!_groupPermission.contains(
+			!GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), group,
 				ActionKeys.PUBLISH_STAGING)) {
 
@@ -167,9 +167,6 @@ public class DeleteLayoutMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 	}
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -10,7 +10,7 @@ import com.liferay.layout.utility.page.constants.LayoutUtilityPageActionKeys;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -68,7 +68,7 @@ public class ImportPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (_groupPermission.contains(
+		if (GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
 				LayoutUtilityPageActionKeys.ADD_LAYOUT_UTILITY_PAGE_ENTRY)) {
 
@@ -82,9 +82,6 @@ public class ImportPortletConfigurationIcon
 	protected ServletContext getServletContext() {
 		return _servletContext;
 	}
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private Language _language;

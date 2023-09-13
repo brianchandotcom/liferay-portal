@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 			long groupId, boolean ddmStructuresAvailable, int start, int end)
 		throws PortalException {
 
-		if (!_groupPermission.contains(
+		if (!GroupPermissionUtil.contains(
 				getPermissionChecker(), groupId, ActionKeys.VIEW)) {
 
 			return Collections.emptyList();
@@ -104,7 +104,7 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		if (!_groupPermission.contains(
+		if (!GroupPermissionUtil.contains(
 				permissionChecker, groupId, ActionKeys.VIEW)) {
 
 			return Collections.emptyList();
@@ -119,7 +119,7 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 			Group group = depotEntry.getGroup();
 
 			if (group.isCompany() ||
-				_groupPermission.contains(
+				GroupPermissionUtil.contains(
 					permissionChecker, group.getGroupId(), ActionKeys.VIEW) ||
 				permissionChecker.isGroupAdmin(group.getGroupId())) {
 
@@ -134,7 +134,7 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 	public int getGroupConnectedDepotEntriesCount(long groupId)
 		throws PortalException {
 
-		if (!_groupPermission.contains(
+		if (!GroupPermissionUtil.contains(
 				getPermissionChecker(), groupId, ActionKeys.VIEW)) {
 
 			return 0;
@@ -179,9 +179,6 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 	)
 	private volatile ModelResourcePermission<DepotEntry>
 		_depotEntryModelResourcePermission;
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

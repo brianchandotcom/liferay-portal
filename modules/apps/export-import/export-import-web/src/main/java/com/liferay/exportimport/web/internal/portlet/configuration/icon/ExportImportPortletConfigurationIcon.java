@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -87,7 +87,7 @@ public class ExportImportPortletConfigurationIcon
 		}
 
 		try {
-			return _groupPermission.contains(
+			return GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroup(),
 				ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
@@ -116,9 +116,6 @@ public class ExportImportPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportImportPortletConfigurationIcon.class);
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private Language _language;

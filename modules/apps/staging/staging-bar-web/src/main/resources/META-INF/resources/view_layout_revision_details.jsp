@@ -61,10 +61,23 @@ else {
 					<portlet:param name="workflowAction" value="<%= String.valueOf(layoutRevision.isIncomplete() ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
 				</portlet:actionURL>
 
+				<liferay-frontend:component
+					context='<%=
+						HashMapBuilder.<String, Object>put(
+							"currentURL", currentURL
+						).put(
+							"incomplete", layoutRevision.isIncomplete()
+						).put(
+							"publishURL", publishURL
+						).build()
+					%>'
+					module="js/PublishProcess"
+				/>
+
 				<c:choose>
 					<c:when test="<%= !layout.isTypeContent() && !layoutRevision.isIncomplete() && !workflowEnabled %>">
 						<span class="staging-bar-control-toggle">
-							<aui:input id="readyToggle" label="<%= StringPool.BLANK %>" labelOff="ready-for-publish-process" labelOn="ready-for-publish-process" name="readyToggle" onChange='<%= liferayPortletResponse.getNamespace() + "submitLayoutRevision('" + publishURL + "')" %>' type="toggle-switch" value="<%= false %>" />
+							<aui:input id="readyToggle" label="<%= StringPool.BLANK %>" labelOff="ready-for-publish-process" labelOn="ready-for-publish-process" name="readyToggle" type="toggle-switch" value="<%= false %>" />
 						</span>
 					</c:when>
 					<c:when test="<%= !workflowEnabled || pendingLayoutRevisions.isEmpty() %>">
@@ -81,9 +94,13 @@ else {
 						%>
 
 						<div class="btn-group-item">
-							<a class="btn btn-secondary btn-sm" href="javascript:Liferay.fire('<portlet:namespace />submit', {incomplete: <%= layoutRevision.isIncomplete() %>, publishURL: '<%= publishURL %>', currentURL: '<%= currentURL %>'}); void(0);" id="submitLink">
-								<liferay-ui:message key="<%= label %>" />
-							</a>
+							<clay:button
+								displayType="secondary"
+								id='<%= liferayPortletResponse.getNamespace() + "submitLink" %>'
+								label="<%= label %>"
+								small="<%= true %>"
+								type="button"
+							/>
 						</div>
 					</c:when>
 				</c:choose>
@@ -179,15 +196,3 @@ else {
 		</div>
 	</li>
 </ul>
-
-<aui:script>
-	function <portlet:namespace />submitLayoutRevision(publishURL) {
-		Liferay.fire('<portlet:namespace />submit', {
-			currentURL: '<%= currentURL %>',
-			incomplete: <%= layoutRevision.isIncomplete() %>,
-			publishURL: publishURL,
-		});
-
-		Liferay.Util.toggleDisabled('#<portlet:namespace />readyToggle', true);
-	}
-</aui:script>

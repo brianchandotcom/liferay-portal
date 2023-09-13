@@ -18,6 +18,7 @@ import com.liferay.object.rest.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -130,6 +131,26 @@ public class OpenAPIResourceTest {
 	}
 
 	@Test
+	public void testGetObjectRelationshipEndpoints() throws Exception {
+
+		// Active related object definition
+
+		_testGetObjectRelationshipEndpoints(
+			true, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_testGetObjectRelationshipEndpoints(
+			true, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		// Inactive related object definition
+
+		_testGetObjectRelationshipEndpoints(
+			false, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_testGetObjectRelationshipEndpoints(
+			false, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+	}
+
+	@Test
 	public void testGetOpenAPI() throws Exception {
 		_user = UserTestUtil.addUser(_company);
 
@@ -201,8 +222,55 @@ public class OpenAPIResourceTest {
 		}
 	}
 
+	private void _assertObjectRelationshipEndpoints(
+		boolean active, JSONObject jsonObject,
+		ObjectRelationship objectRelationship) {
+
+		if (active) {
+			Assert.assertNotNull(
+				jsonObject.getJSONObject(
+					StringBundler.concat(
+						"/{",
+						StringUtil.lowerCaseFirstLetter(
+							_objectDefinition1.getShortName()),
+						"Id}/", objectRelationship.getName(), "/{",
+						StringUtil.lowerCaseFirstLetter(
+							_objectDefinition2.getShortName()),
+						"Id}")));
+
+			Assert.assertNotNull(
+				jsonObject.getJSONObject(
+					StringBundler.concat(
+						"/{",
+						StringUtil.lowerCaseFirstLetter(
+							_objectDefinition1.getShortName()),
+						"Id}/", objectRelationship.getName())));
+		}
+		else {
+			Assert.assertNull(
+				jsonObject.getJSONObject(
+					StringBundler.concat(
+						"/{",
+						StringUtil.lowerCaseFirstLetter(
+							_objectDefinition1.getShortName()),
+						"Id}/", objectRelationship.getName(), "/{",
+						StringUtil.lowerCaseFirstLetter(
+							_objectDefinition2.getShortName()),
+						"Id}")));
+
+			Assert.assertNull(
+				jsonObject.getJSONObject(
+					StringBundler.concat(
+						"/{",
+						StringUtil.lowerCaseFirstLetter(
+							_objectDefinition1.getShortName()),
+						"Id}/", objectRelationship.getName())));
+		}
+	}
+
 	private String _getNestedEntitySchema(
-		JSONObject jsonObject, ObjectRelationship objectRelationship,
+		boolean active, JSONObject jsonObject,
+		ObjectRelationship objectRelationship,
 		ObjectDefinition objectDefinition) {
 
 		String nestedEntitySchema;
@@ -218,6 +286,10 @@ public class OpenAPIResourceTest {
 		).getJSONObject(
 			objectRelationship.getName()
 		);
+
+		if (!active && (nestedEntitySchemaJSONObject == null)) {
+			return null;
+		}
 
 		if (Objects.equals(
 				objectRelationship.getType(),
@@ -292,7 +364,7 @@ public class OpenAPIResourceTest {
 
 		Assert.assertEquals(
 			_getNestedEntitySchema(
-				jsonObject, objectRelationship, _objectDefinition1),
+				true, jsonObject, objectRelationship, _objectDefinition1),
 			_objectDefinition2.getShortName());
 
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
@@ -303,8 +375,59 @@ public class OpenAPIResourceTest {
 
 		Assert.assertEquals(
 			_getNestedEntitySchema(
-				jsonObject, objectRelationship, _objectDefinition2),
+				true, jsonObject, objectRelationship, _objectDefinition2),
 			_objectDefinition1.getShortName());
+	}
+
+	private void _testGetObjectRelationshipEndpoints(
+			boolean active, String objectRelationshipType)
+		throws Exception {
+
+		if (active) {
+			_objectDefinition2 =
+				ObjectDefinitionTestUtil.publishObjectDefinition(
+					Collections.singletonList(
+						ObjectFieldUtil.createObjectField(
+							"Text", "String", true, true, null,
+							RandomTestUtil.randomString(), _OBJECT_FIELD_NAME,
+							false)));
+		}
+		else {
+			_objectDefinition2 =
+				ObjectDefinitionTestUtil.addCustomObjectDefinition(
+					Collections.singletonList(
+						ObjectFieldUtil.createObjectField(
+							"Text", "String", true, true, null,
+							RandomTestUtil.randomString(), _OBJECT_FIELD_NAME,
+							false)));
+		}
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition1, _objectDefinition2,
+				TestPropsValues.getUserId(), objectRelationshipType);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, _objectDefinition1.getRESTContextPath() + "/openapi.json",
+			Http.Method.GET);
+
+		Assert.assertNotNull(jsonObject.getString("openapi"));
+
+		if (active) {
+			Assert.assertEquals(
+				_getNestedEntitySchema(
+					active, jsonObject, objectRelationship, _objectDefinition1),
+				_objectDefinition2.getShortName());
+		}
+		else {
+			Assert.assertNull(
+				_getNestedEntitySchema(
+					active, jsonObject, objectRelationship,
+					_objectDefinition1));
+		}
+
+		_assertObjectRelationshipEndpoints(
+			active, jsonObject.getJSONObject("paths"), objectRelationship);
 	}
 
 	private void _testGetOpenAPI(

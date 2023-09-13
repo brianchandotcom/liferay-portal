@@ -59,70 +59,6 @@ definition {
 		return ${managerId};
 	}
 
-	macro _createObjectDefinition {
-		Variables.assertDefined(parameterList = "${name},${en_US_plural_label}");
-
-		if (isSet(virtualHost)) {
-			if (!(isSet(port))) {
-				var port = 8080;
-			}
-
-			var portalURL = "http://${virtualHost}:${port}";
-		}
-		else {
-			var portalURL = JSONCompany.getPortalURL();
-		}
-
-		if (!(isSet(scope))) {
-			var scope = "company";
-		}
-
-		if (!(isSet(en_US_label))) {
-			var en_US_label = ${name};
-		}
-
-		if (!(isSet(requiredStringFieldName))) {
-			var requiredStringFieldName = "name";
-		}
-
-		var curl = '''
-			${portalURL}/o/object-admin/v1.0/object-definitions \
-				-u test@liferay.com:test \
-				-H Content-Type: application/json \
-				-d {
-					"active": true,
-					"label": {
-						"en_US": "${en_US_label}"
-					},
-					"name": "${name}",
-					"objectFields": [{
-						"businessType": "Text",
-						"indexed": true,
-						"indexedAsKeyword": true,
-						"label": {
-							"en_US": "${requiredStringFieldName}"
-						},
-						"name": "${requiredStringFieldName}",
-						"required": true,
-						"DBType": "String"
-					}],
-					"pluralLabel": {
-						"en_US": "${en_US_plural_label}"
-					},
-					"portlet": true,
-					"scope": "${scope}"
-				}
-		''';
-
-		if (isSet(token)) {
-			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
-		}
-
-		var objectDefinitionId = JSONCurlUtil.post(${curl}, "$.id");
-
-		return ${objectDefinitionId};
-	}
-
 	macro _createObjectEntryWithName {
 		Variables.assertDefined(parameterList = ${name});
 
@@ -634,7 +570,7 @@ definition {
 	}
 
 	macro createAndPublishObjectDefinition {
-		var objectDefinitionId = ObjectDefinitionAPI._createObjectDefinition(
+		var objectDefinitionId = ObjectDefinitionAPI.createObjectDefinition(
 			en_US_label = ${en_US_label},
 			en_US_plural_label = ${en_US_plural_label},
 			name = ${name},
@@ -684,6 +620,70 @@ definition {
 			expected = ${managerFirstname});
 
 		return ${managerId};
+	}
+
+	macro createObjectDefinition {
+		Variables.assertDefined(parameterList = "${name},${en_US_plural_label}");
+
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(scope))) {
+			var scope = "company";
+		}
+
+		if (!(isSet(en_US_label))) {
+			var en_US_label = ${name};
+		}
+
+		if (!(isSet(requiredStringFieldName))) {
+			var requiredStringFieldName = "name";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json \
+				-d {
+					"active": true,
+					"label": {
+						"en_US": "${en_US_label}"
+					},
+					"name": "${name}",
+					"objectFields": [{
+						"businessType": "Text",
+						"indexed": true,
+						"indexedAsKeyword": true,
+						"label": {
+							"en_US": "${requiredStringFieldName}"
+						},
+						"name": "${requiredStringFieldName}",
+						"required": true,
+						"DBType": "String"
+					}],
+					"pluralLabel": {
+						"en_US": "${en_US_plural_label}"
+					},
+					"portlet": true,
+					"scope": "${scope}"
+				}
+		''';
+
+		if (isSet(token)) {
+			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
+		}
+
+		var objectDefinitionId = JSONCurlUtil.post(${curl}, "$.id");
+
+		return ${objectDefinitionId};
 	}
 
 	macro createObjectDefinitionWithAllKindsOfFieldTypes {

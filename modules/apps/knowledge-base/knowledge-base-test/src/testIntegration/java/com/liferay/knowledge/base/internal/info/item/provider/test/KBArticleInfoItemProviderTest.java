@@ -31,8 +31,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
-import java.util.Date;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -74,7 +72,8 @@ public class KBArticleInfoItemProviderTest {
 			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(), null,
-			StringPool.BLANK, new Date(), null, null, null, _serviceContext);
+			StringPool.BLANK, RandomTestUtil.nextDate(), null, null, null,
+			_serviceContext);
 
 		_serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 

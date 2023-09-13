@@ -187,4 +187,13 @@ definition {
 		AntCommands.runCommand("build-test-s3-store.xml", "assert-no-document-in-bucket -DcompanyId=${companyId} -DgroupId=${groupId} -Ds3.bucket.id=${bucketId}");
 	}
 
+	@description = "This is a use case for LPS-127589."
+	@priority = 3
+	test S3ConnectionDoesNotLeakWhenServingFileAsStream {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		CloudStore.VerifyConnectionWhenServingFileAsStream();
+	}
+
 }

@@ -59,79 +59,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-166045. The site designer could see the usages of Collections from staging and live site."
-	@priority = 4
-	test ViewUsagesOfCollection {
-		task ("Given the site designer has a collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name (Staging)",
-				itemType = "All Types",
-				site = "false",
-				title = "Dynamic Collection");
-		}
-
-		task ("When the site designer select the dynamic collection on a Collection Display in staging site") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
-				layoutName = "Test Page Name",
-				site = "false",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name Staging");
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Collection Display");
-
-			PageEditor.editCollectionDisplay(
-				assetListName = "Dynamic Collection",
-				fragmentName = "Collection Display");
-
-			PageEditor.publish();
-		}
-
-		task ("Then the site designer could directly see usages on the dynamic collection in staging site") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
-
-			LexiconTable.viewTableEntryInfo(
-				columnName = "usages",
-				tableEntry = "Dynamic Collection",
-				tableEntryInfo = 2);
-
-			LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-			LexiconList.viewListEntrySubtitle(
-				listEntry = "Dynamic Collection",
-				listEntrySubtitle = "2 Usages");
-		}
-
-		task ("When the site designer publishes to live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
-
-			Staging.publishCustomPublication();
-		}
-
-		task ("Then the site designer could directly see usages on the dynamic collection in live site") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			LexiconList.viewListEntrySubtitle(
-				listEntry = "Dynamic Collection",
-				listEntrySubtitle = "2 Usages");
-
-			LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-			LexiconTable.viewTableEntryInfo(
-				columnName = "usages",
-				tableEntry = "Dynamic Collection",
-				tableEntryInfo = 2);
-		}
-	}
-
 	@description = "This is a use case for LPS-109102. User Segment specific Assets Lists should be correctly published to live site."
 	@priority = 4
-	test ViewUserSegmentAssetsListsInLivingView {
+	test FilterCollectionItemsByPersonalizedVariationsInLiveSite {
 		task ("Given a site administrator displays a collection with personalized variations on Asset Publisher in staging site") {
 			for (var pageName : list "home,admin") {
 				JSONLayout.addPublicLayout(
@@ -300,6 +230,76 @@ definition {
 			AssetPublisherPortlet.viewAssetNotPresentPG(
 				assetContent = "Content B",
 				assetTitle = "Content B");
+		}
+	}
+
+	@description = "This is a test for LPS-166045. The site designer could see the usages of Collections from staging and live site."
+	@priority = 4
+	test ViewUsagesOfCollection {
+		task ("Given the site designer has a collection") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name (Staging)",
+				itemType = "All Types",
+				site = "false",
+				title = "Dynamic Collection");
+		}
+
+		task ("When the site designer select the dynamic collection on a Collection Display in staging site") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the site designer could directly see usages on the dynamic collection in staging site") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
+
+			LexiconTable.viewTableEntryInfo(
+				columnName = "usages",
+				tableEntry = "Dynamic Collection",
+				tableEntryInfo = 2);
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "Dynamic Collection",
+				listEntrySubtitle = "2 Usages");
+		}
+
+		task ("When the site designer publishes to live") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Then the site designer could directly see usages on the dynamic collection in live site") {
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "Dynamic Collection",
+				listEntrySubtitle = "2 Usages");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+			LexiconTable.viewTableEntryInfo(
+				columnName = "usages",
+				tableEntry = "Dynamic Collection",
+				tableEntryInfo = 2);
 		}
 	}
 

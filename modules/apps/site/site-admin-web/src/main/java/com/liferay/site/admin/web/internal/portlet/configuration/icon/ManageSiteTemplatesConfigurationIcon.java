@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.PortalPermission;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
@@ -89,7 +89,7 @@ public class ManageSiteTemplatesConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (_portalPermission.contains(
+		if (PortalPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
 				ActionKeys.ADD_LAYOUT_SET_PROTOTYPE)) {
 
@@ -104,8 +104,5 @@ public class ManageSiteTemplatesConfigurationIcon
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private PortalPermission _portalPermission;
 
 }

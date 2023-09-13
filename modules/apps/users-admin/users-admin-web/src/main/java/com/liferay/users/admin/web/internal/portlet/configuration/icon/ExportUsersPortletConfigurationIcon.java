@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfig
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.PortalPermission;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -71,7 +71,7 @@ public class ExportUsersPortletConfigurationIcon
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (_portalPermission.contains(
+		if (PortalPermissionUtil.contains(
 				permissionChecker, ActionKeys.EXPORT_USER)) {
 
 			return true;
@@ -104,9 +104,6 @@ public class ExportUsersPortletConfigurationIcon
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private PortalPermission _portalPermission;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.users.admin.web)")
 	private ServletContext _servletContext;

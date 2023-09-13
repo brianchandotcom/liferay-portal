@@ -1,26 +1,15 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 /* eslint-disable no-undef */
-const primaryNav = fragmentElement.querySelector('.primary-nav');
 
-document.getElementById("searchInput")
-    .addEventListener("keypress", function(event) {
-    if (event.keyCode === 13) {
-			  event.preventDefault();
-        document.getElementById("searchSubmitBtn").click();
-    }
+document.getElementById('searchInput').addEventListener('keypress', (event) => {
+	if (event.keyCode === 13) {
+		event.preventDefault();
+		document.getElementById('searchSubmitBtn').click();
+	}
 });
 
 const searchSuggestionsInput = fragmentElement.querySelector(
@@ -37,8 +26,9 @@ const seeAllResultsLink = fragmentElement.querySelector(
 	'.search-suggestions-see-all-results-text'
 );
 
-const searchSuggestionItem =
-	searchSuggestionItemTemplate.content.querySelector('a');
+const searchSuggestionItem = searchSuggestionItemTemplate.content.querySelector(
+	'a'
+);
 
 function updateSearch() {
 	searchSuggestions.innerHTML = '';
@@ -135,14 +125,15 @@ function performSearch(query) {
 							suggestion.attributes.assetSearchSummary;
 
 						if (suggestionContentTextValue) {
-							suggestionContentTextValue =
-								suggestionContentTextValue.substring(0, 500);
+							suggestionContentTextValue = suggestionContentTextValue.substring(
+								0,
+								500
+							);
 
-							suggestionContent.innerHTML =
-								suggestionContentTextValue.replace(
-									searchTermRegExp,
-									`<b>$1</b>`
-								);
+							suggestionContent.innerHTML = suggestionContentTextValue.replace(
+								searchTermRegExp,
+								`<b>$1</b>`
+							);
 						}
 
 						const suggestionURL = suggestionLink.querySelector(

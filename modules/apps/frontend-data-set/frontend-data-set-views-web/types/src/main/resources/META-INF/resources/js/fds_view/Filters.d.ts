@@ -8,11 +8,13 @@
 import {FDSViewType} from '../FDSViews';
 import '../../css/Filters.scss';
 interface IProps {
+	fdsFilterClientExtensions: any;
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
 }
 declare function Filters({
+	fdsFilterClientExtensions,
 	fdsView,
 	fdsViewsURL,
 	namespace,

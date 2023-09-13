@@ -72,6 +72,22 @@ public class FDSViewsDisplayContext {
 			));
 	}
 
+	public JSONArray getFDSFilterCETsJSONArray() throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return JSONUtil.toJSONArray(
+			_cetManager.getCETs(
+				themeDisplay.getCompanyId(), null,
+				ClientExtensionEntryConstants.TYPE_FDS_FILTER,
+				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null),
+			fdsFilterCET -> JSONUtil.put(
+				"erc", fdsFilterCET.getExternalReferenceCode()
+			).put(
+				"name", fdsFilterCET.getName(themeDisplay.getLocale())
+			));
+	}
+
 	public String getFDSEntriesURL() {
 		return PortletURLBuilder.create(
 			PortletURLFactoryUtil.create(

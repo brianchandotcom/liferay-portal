@@ -189,7 +189,7 @@ public class ObjectDefinitionsDetailsDisplayContext
 		return keyValuePairs;
 	}
 
-	public JSONArray getStoragesJSONArray() throws Exception {
+	public JSONArray getStorageTypesJSONArray() throws Exception {
 		return JSONUtil.toJSONArray(
 			_objectEntryManagerRegistry.getObjectEntryManagers(
 				_objectRequestHelper.getCompanyId()),

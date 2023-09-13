@@ -54,7 +54,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 			).put(
 				"siteKeyValuePair", objectDefinitionsDetailsDisplayContext.getScopeKeyValuePairs("site")
 			).put(
-				"storageTypes", objectDefinitionsDetailsDisplayContext.getStoragesJSONArray()
+				"storageTypes", objectDefinitionsDetailsDisplayContext.getStorageTypesJSONArray()
 			).build()
 		%>'
 	/>

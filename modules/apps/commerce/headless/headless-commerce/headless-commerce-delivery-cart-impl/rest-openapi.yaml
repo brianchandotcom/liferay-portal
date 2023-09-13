@@ -297,15 +297,14 @@ components:
                 skuId:
                     format: int64
                     type: integer
+                skuUnitOfMeasure:
+                    $ref: "#/components/schemas/SkuUnitOfMeasure"
                 subscription:
                     example: true
                     readOnly: true
                     type: boolean
                 thumbnail:
                     readOnly: true
-                    type: string
-                unitOfMeasureKey:
-                    example: m
                     type: string
                 valid:
                     readOnly: true
@@ -445,6 +444,36 @@ components:
                     type: string
                 name:
                     type: string
+            type: object
+        SkuUnitOfMeasure:
+            properties:
+                incrementalOrderQuantity:
+                    example: 1.5
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                key:
+                    example: pl
+                    type: string
+                name:
+                    example: Pallet
+                    type: string
+                precision:
+                    example: 3
+                    type: integer
+                primary:
+                    example: true
+                    type: boolean
+                priority:
+                    example: 1.1
+                    format: double
+                    minimum: 0
+                    type: number
+                rate:
+                    example: 202.1
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
             type: object
         Status:
             properties:

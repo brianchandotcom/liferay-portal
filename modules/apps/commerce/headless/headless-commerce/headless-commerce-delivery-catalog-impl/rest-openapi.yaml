@@ -2427,11 +2427,11 @@ paths:
                       format: bigdecimal
                       type: number
                 - in: query
-                  name: unitOfMeasureKey
+                  name: skuUnitOfMeasureKey
                   required: false
                   schema:
                       description:
-                          Unit Of Measure Key
+                          Sku Unit Of Measure Key
                       type: string
             requestBody:
                 content:

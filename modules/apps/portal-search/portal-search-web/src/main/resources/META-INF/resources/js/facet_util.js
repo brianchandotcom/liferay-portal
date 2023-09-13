@@ -54,6 +54,19 @@ AUI.add(
 					return;
 				}
 
+				// Disable checkboxes across all facets to avoid multiple
+				// selections. Only the most recent selection will be added
+				// since the page needs to be reloaded before another selection
+				// can be made.
+
+				const allFacetTerms = document.querySelectorAll(
+					`.${FACET_TERM_CLASS}`
+				);
+
+				allFacetTerms.forEach((term) => {
+					Liferay.Util.toggleDisabled(term, true);
+				});
+
 				const currentSelectedTermId = _getTermId(event.currentTarget);
 
 				const facetTerms = document.querySelectorAll(

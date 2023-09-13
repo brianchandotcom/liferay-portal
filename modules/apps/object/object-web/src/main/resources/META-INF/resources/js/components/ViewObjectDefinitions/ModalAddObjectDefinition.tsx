@@ -26,28 +26,26 @@ import './ModalAddObjectDefinition.scss';
 import {normalizeName} from './objectDefinitionUtil';
 
 interface ModalAddObjectDefinitionProps {
-	apiURL: string;
 	handleOnClose: () => void;
+	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectFolderExternalReferenceCode?: string;
 	onAfterSubmit?: (value: ObjectDefinition) => void;
 	reload?: boolean;
-	storages: LabelValueObject[];
 }
 
 type TInitialValues = {
 	label: string;
 	name?: string;
 	pluralLabel: string;
-	storage: LabelValueObject;
+	storageType: LabelValueObject;
 };
 
 export function ModalAddObjectDefinition({
-	apiURL,
 	handleOnClose,
+	objectDefinitionsStorageTypes,
 	objectFolderExternalReferenceCode,
 	onAfterSubmit,
 	reload = true,
-	storages,
 }: ModalAddObjectDefinitionProps) {
 	const [error, setError] = useState<string>('');
 
@@ -55,35 +53,35 @@ export function ModalAddObjectDefinition({
 		onClose: () => handleOnClose(),
 	});
 
-	const storageSortedByLabel = [...storages].sort(
-		(firstStorage, secondStorage) => {
-			const firstLabel = firstStorage.label.toLowerCase();
-			const secondLabel = secondStorage.label.toLowerCase();
+	const objectDefinitionStorageTypesSortedByLabel = [
+		...objectDefinitionsStorageTypes,
+	].sort((firstStorage, secondStorage) => {
+		const firstLabel = firstStorage.label.toLowerCase();
+		const secondLabel = secondStorage.label.toLowerCase();
 
-			if (firstLabel < secondLabel) {
-				return -1;
-			}
-			else if (firstLabel > secondLabel) {
-				return 1;
-			}
-			else {
-				return 0;
-			}
+		if (firstLabel < secondLabel) {
+			return -1;
 		}
-	);
+		else if (firstLabel > secondLabel) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	});
 
 	const initialValues: TInitialValues = {
 		label: '',
 		name: undefined,
 		pluralLabel: '',
-		storage: storageSortedByLabel[0],
+		storageType: objectDefinitionStorageTypesSortedByLabel[0],
 	};
 
 	const onSubmit = async ({
 		label,
 		name,
 		pluralLabel,
-		storage,
+		storageType,
 	}: TInitialValues) => {
 		const objectDefinition: Partial<ObjectDefinition> = {
 			label: {
@@ -112,15 +110,12 @@ export function ModalAddObjectDefinition({
 		}
 
 		if (Liferay.FeatureFlags['LPS-135430']) {
-			objectDefinition.storageType = storage.value;
+			objectDefinition.storageType = storageType.value;
 		}
 		try {
-			const newObjectDefinition = ((await API.save({
-				item: objectDefinition,
-				method: 'POST',
-				returnValue: true,
-				url: apiURL,
-			})) as unknown) as ObjectDefinition;
+			const newObjectDefinition = await API.postObjectDefinition(
+				objectDefinition
+			);
 
 			onClose();
 
@@ -167,12 +162,16 @@ export function ModalAddObjectDefinition({
 		validate,
 	});
 
-	const selectedStorageType = (storageType: string) => {
-		const chooseStorage = storageSortedByLabel.find(
-			(currentStorage) => currentStorage.value === storageType
+	const selectedObjectDefinitionStorageTypes = (
+		objectDefinitionStorageType: string
+	) => {
+		const selectedObjectDefinitionStorageType = objectDefinitionStorageTypesSortedByLabel.find(
+			(currentObjectDefinitionStorageType) =>
+				currentObjectDefinitionStorageType.value ===
+				objectDefinitionStorageType
 		);
 
-		return chooseStorage?.value;
+		return selectedObjectDefinitionStorageType?.value;
 	};
 
 	return (
@@ -226,25 +225,27 @@ export function ModalAddObjectDefinition({
 									onChange={({target: {value}}) => {
 										setValues({
 											...values,
-											storage: storageSortedByLabel.find(
-												(storage) =>
-													storage.value === value
+											storageType: objectDefinitionStorageTypesSortedByLabel.find(
+												(storageType) =>
+													storageType.value === value
 											),
 										});
 									}}
-									options={storageSortedByLabel.map(
-										(storage) => {
+									options={objectDefinitionStorageTypesSortedByLabel.map(
+										(objectDefinitionStorageType) => {
 											return {
-												key: storage.value,
-												label: storage.label,
+												key:
+													objectDefinitionStorageType.value,
+												label:
+													objectDefinitionStorageType.label,
 											};
 										}
 									)}
 									tooltip={Liferay.Language.get(
 										'object-definition-storage-type-tooltip'
 									)}
-									value={selectedStorageType(
-										values.storage.value
+									value={selectedObjectDefinitionStorageTypes(
+										values.storageType.value
 									)}
 								/>
 

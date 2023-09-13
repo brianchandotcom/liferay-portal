@@ -21,34 +21,40 @@ import React, {useMemo, useState} from 'react';
 import {Node, useStore, useZoomPanHelper} from 'react-flow-renderer';
 
 import './LeftSidebar.scss';
-import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
-import {LeftSidebarDefinitionItemType, LeftSidebarItemType} from '../types';
+import {LeftSidebarItem, LeftSidebarObjectDefinitionItem} from '../types';
 
 const TYPES_TO_SYMBOLS = {
+	linkedObjectDefinition: 'link',
 	objectDefinition: 'catalog',
 	objectFolder: 'folder',
-	objectLink: 'link',
 };
 
 interface LeftSidebarProps {
-	selectedFolderName: string;
+	selectedObjectFolderName: string;
 	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
 }
 
 export default function LeftSidebar({
-	selectedFolderName,
+	selectedObjectFolderName,
 	setShowModal,
 }: LeftSidebarProps) {
 	const [query, setQuery] = useState('');
-	const [{leftSidebarItems, selectedFolder}, dispatch] = useFolderContext();
+	const [
+		{leftSidebarItems, selectedObjectFolder},
+		dispatch,
+	] = useObjectFolderContext();
 	const {setCenter} = useZoomPanHelper();
 	const store = useStore();
 
-	const changeNodeViewButton = (hiddenNode: boolean, dispatch: Function) => (
+	const changeObjectDefinitionNodeViewButton = (
+		hiddenObjectDefinitionNode: boolean,
+		dispatch: Function
+	) => (
 		<ClayButtonWithIcon
 			aria-label={
-				hiddenNode
+				hiddenObjectDefinitionNode
 					? Liferay.Language.get('hidden')
 					: Liferay.Language.get('show')
 			}
@@ -57,19 +63,22 @@ export default function LeftSidebar({
 				event.stopPropagation();
 				dispatch();
 			}}
-			symbol={hiddenNode ? 'hidden' : 'view'}
+			symbol={hiddenObjectDefinitionNode ? 'hidden' : 'view'}
 		/>
 	);
 
-	const filteredItems = useMemo(() => {
+	const filteredLeftSidebarItems = useMemo(() => {
 		return leftSidebarItems.map((sidebarItem) => {
-			if (!sidebarItem.objectDefinitions) {
+			if (!sidebarItem.leftSidebarObjectDefinitionItems) {
 				return sidebarItem;
 			}
 
-			const newObjectDefinitions = sidebarItem.objectDefinitions.filter(
-				(objectDefinition) =>
-					stringIncludesQuery(objectDefinition.name, query)
+			const newObjectDefinitions = sidebarItem.leftSidebarObjectDefinitionItems.filter(
+				(leftSidebarObjectDefinitionItem) =>
+					stringIncludesQuery(
+						leftSidebarObjectDefinitionItem.label,
+						query
+					)
 			);
 
 			return {
@@ -80,31 +89,31 @@ export default function LeftSidebar({
 	}, [query, leftSidebarItems]);
 
 	const handleMove = async ({
-		definitionId,
-		folderName,
+		objectDefinitionId,
+		objectFolderName,
 	}: {
-		definitionId: number;
-		folderName: string;
+		objectDefinitionId: number;
+		objectFolderName: string;
 	}) => {
-		const folderResponse = await API.getAllFolders();
+		const objectFolders = await API.getAllObjectFolders();
 
-		const currentFolder = folderResponse.find(
-			(folder) => folder.name === folderName
+		const currentObjectFolder = objectFolders.find(
+			(objectFolder) => objectFolder.name === objectFolderName
 		);
 
-		const folderDefinitions = await API.getObjectDefinitions(
-			`filter=objectFolderExternalReferenceCode eq '${currentFolder?.externalReferenceCode}'`
+		const objectDefinitionsFilteredByObjectFolder = await API.getObjectDefinitions(
+			`filter=objectFolderExternalReferenceCode eq '${currentObjectFolder?.externalReferenceCode}'`
 		);
 
-		const objectDefinition = folderDefinitions.find(
-			(definition) => definition.id === definitionId
+		const objectDefinition = objectDefinitionsFilteredByObjectFolder.find(
+			(objectDefinition) => objectDefinition.id === objectDefinitionId
 		) as ObjectDefinitionNodeData;
 
 		if (objectDefinition) {
 			const movedObjectDefinition: ObjectDefinitionNodeData = {
 				...objectDefinition,
 				objectFolderExternalReferenceCode:
-					selectedFolder.externalReferenceCode,
+					selectedObjectFolder.externalReferenceCode,
 			};
 
 			try {
@@ -118,18 +127,19 @@ export default function LeftSidebar({
 				dispatch({
 					payload: {
 						newObjectDefinition,
-						selectedFolderName,
+						selectedObjectFolderName,
 					},
-					type: TYPES.ADD_NEW_NODE_TO_FOLDER,
+					type: TYPES.ADD_OBJECT_DEFINITION_TO_OBJECT_FOLDER,
 				});
 
-				if (!objectDefinition.linkedDefinition) {
+				if (!objectDefinition.linkedObjectDefinition) {
 					dispatch({
 						payload: {
-							currentFolderName: currentFolder!.name,
-							deletedNodeName: newObjectDefinition.name,
+							currentObjectFolderName: currentObjectFolder!.name,
+							deletedObjectDefinitionName:
+								newObjectDefinition.name,
 						},
-						type: TYPES.DELETE_FOLDER_NODE,
+						type: TYPES.DELETE_OBJECT_DEFINITION,
 					});
 				}
 
@@ -149,52 +159,63 @@ export default function LeftSidebar({
 	};
 
 	const TreeViewComponent = ({showActions}: {showActions?: boolean}) => {
-		const otherFolders = filteredItems.filter(
-			(item) => item.folderName !== selectedFolderName
+		const leftSidebarOtherObjectFoldersItems = filteredLeftSidebarItems.filter(
+			(leftSidebarItem) =>
+				leftSidebarItem.objectFolderName !== selectedObjectFolderName
 		);
 
-		const selectedFolder = filteredItems.find(
-			(item) => item.folderName === selectedFolderName
-		) as LeftSidebarItemType;
+		const leftSidebarSelectedObjectFolderItem = filteredLeftSidebarItems.find(
+			(leftSidebarItem) =>
+				leftSidebarItem.objectFolderName === selectedObjectFolderName
+		) as LeftSidebarItem;
 
-		const linkedDefinitions = selectedFolder.objectDefinitions?.filter(
-			(definition) => definition.type === 'objectLink'
+		const linkedObjectDefinitions = leftSidebarSelectedObjectFolderItem.leftSidebarObjectDefinitionItems?.filter(
+			(leftSidebarObjectDefinitionItem) =>
+				leftSidebarObjectDefinitionItem.type ===
+				'linkedObjectDefinition'
 		);
 
-		const newOtherFolders = otherFolders.map((folder) => {
-			const definitions = folder.objectDefinitions?.map((definition) => {
-				const objectLinked = linkedDefinitions?.find(
-					(linkedDefinition) =>
-						linkedDefinition.definitionId ===
-						definition.definitionId
+		const newOtherObjectFolders = leftSidebarOtherObjectFoldersItems.map(
+			(leftSidebarOtherObjectFoldersItem) => {
+				const objectDefinitions = leftSidebarOtherObjectFoldersItem.leftSidebarObjectDefinitionItems?.map(
+					(leftSidebarObjectDefinitionItem) => {
+						const linkedObjectDefinition = linkedObjectDefinitions?.find(
+							(linkedObjectDefinition) =>
+								linkedObjectDefinition.id ===
+								leftSidebarObjectDefinitionItem.id
+						);
+						if (linkedObjectDefinition) {
+							return {
+								...leftSidebarObjectDefinitionItem,
+								linked: true,
+							};
+						}
+
+						return leftSidebarObjectDefinitionItem;
+					}
 				);
-				if (objectLinked) {
-					return {
-						...definition,
-						linked: true,
-					};
-				}
 
-				return definition;
-			});
-
-			return {
-				...folder,
-				objectDefinitions: definitions,
-			};
-		});
+				return {
+					...leftSidebarOtherObjectFoldersItem,
+					objectDefinitions,
+				};
+			}
+		);
 
 		return (
-			<TreeView<LeftSidebarItemType | LeftSidebarDefinitionItemType>
-				items={showActions ? newOtherFolders : [selectedFolder]}
+			<TreeView<LeftSidebarItem | LeftSidebarObjectDefinitionItem>
+				items={
+					showActions
+						? newOtherObjectFolders
+						: [leftSidebarSelectedObjectFolderItem]
+				}
 				nestedKey="objectDefinitions"
 				onSelect={(item) => {
 					if (
-						selectedFolder.objectDefinitions?.find(
-							(definition) =>
-								definition.definitionId ===
-								(item as LeftSidebarDefinitionItemType)
-									.definitionId
+						selectedObjectFolder.objectDefinitions?.find(
+							(objectDefinition) =>
+								objectDefinition.id ===
+								(item as LeftSidebarObjectDefinitionItem).id
 						)
 					) {
 						const {edges, nodes} = store.getState();
@@ -203,54 +224,59 @@ export default function LeftSidebar({
 							payload: {
 								edges,
 								nodes,
-								selectedObjectDefinitionId: (item as LeftSidebarDefinitionItemType).definitionId.toString(),
+								selectedObjectDefinitionId: (item as LeftSidebarObjectDefinitionItem).id.toString(),
 							},
-							type: TYPES.SET_SELECTED_NODE,
+							type: TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE,
 						});
 
-						const selectedNode = (nodes as Node<
+						const selectedObjectDefinitionNode = (nodes as Node<
 							ObjectDefinitionNodeData
 						>[]).find(
-							(definitionNode) =>
-								definitionNode.data?.name ===
-								(item as LeftSidebarDefinitionItemType)
-									.definitionName
+							(objectDefinitionNode) =>
+								objectDefinitionNode.data?.name ===
+								(item as LeftSidebarObjectDefinitionItem).name
 						);
 
-						if (selectedNode) {
+						if (selectedObjectDefinitionNode) {
 							const x =
-								selectedNode.__rf.position.x +
-								selectedNode.__rf.width / 2;
+								selectedObjectDefinitionNode.__rf.position.x +
+								selectedObjectDefinitionNode.__rf.width / 2;
 							const y =
-								selectedNode.__rf.position.y +
-								selectedNode.__rf.height / 2;
+								selectedObjectDefinitionNode.__rf.position.y +
+								selectedObjectDefinitionNode.__rf.height / 2;
 							setCenter(x, y, 1.2);
 						}
 					}
 				}}
 				showExpanderOnHover={false}
 			>
-				{(item: LeftSidebarItemType) => (
+				{(leftSidebarItem: LeftSidebarItem) => (
 					<TreeView.Item>
 						<TreeView.ItemStack>
-							<div className="lfr-objects__model-builder-left-sidebar-current-folder-container">
-								<div className="lfr-objects__model-builder-left-sidebar-current-folder-content">
+							<div className="lfr-objects__model-builder-left-sidebar-current-object-folder-container">
+								<div className="lfr-objects__model-builder-left-sidebar-current-object-folder-content">
 									<Icon
-										symbol={TYPES_TO_SYMBOLS[item.type]}
+										symbol={
+											TYPES_TO_SYMBOLS[
+												leftSidebarItem.type
+											]
+										}
 									/>
 
-									<Text weight="semi-bold">{item.name}</Text>
+									<Text weight="semi-bold">
+										{leftSidebarItem.name}
+									</Text>
 								</div>
 
 								{!showActions &&
-									changeNodeViewButton(
-										item.hiddenFolderNodes,
+									changeObjectDefinitionNodeViewButton(
+										leftSidebarItem.hiddenObjectFolderObjectDefinitionNodes,
 										() =>
 											dispatch({
 												payload: {
-													hiddenFolderNodes:
-														item.hiddenFolderNodes,
-													leftSidebarItem: item,
+													hiddenObjectFolderObjectDefinitionNodes:
+														leftSidebarItem.hiddenObjectFolderObjectDefinitionNodes,
+													leftSidebarItem,
 												},
 												type:
 													TYPES.BULK_CHANGE_NODE_VIEW,
@@ -259,11 +285,15 @@ export default function LeftSidebar({
 							</div>
 						</TreeView.ItemStack>
 
-						<TreeView.Group items={item.objectDefinitions}>
+						<TreeView.Group
+							items={
+								leftSidebarItem.leftSidebarObjectDefinitionItems
+							}
+						>
 							{({
-								definitionId,
-								definitionName,
-								hiddenNode,
+								hiddenObjectDefinitionNode,
+								id,
+								label,
 								linked,
 								name,
 								selected,
@@ -272,7 +302,8 @@ export default function LeftSidebar({
 								<TreeView.Item
 									actions={
 										showActions ? (
-											type === 'objectLink' ? (
+											type ===
+											'linkedObjectDefinition' ? (
 												<></>
 											) : (
 												<>
@@ -284,9 +315,9 @@ export default function LeftSidebar({
 																),
 																onClick: () =>
 																	handleMove({
-																		definitionId,
-																		folderName:
-																			item.folderName,
+																		objectDefinitionId: id,
+																		objectFolderName:
+																			leftSidebarItem.objectFolderName,
 																	}),
 																symbolLeft:
 																	'move-folder',
@@ -306,15 +337,15 @@ export default function LeftSidebar({
 												</>
 											)
 										) : (
-											changeNodeViewButton(
-												hiddenNode,
+											changeObjectDefinitionNodeViewButton(
+												hiddenObjectDefinitionNode,
 												() =>
 													dispatch({
 														payload: {
-															definitionId,
-															definitionName,
-															hiddenNode,
-															leftSidebarItem: item,
+															hiddenObjectDefinitionNode,
+															objectDefinitionId: id,
+															objectDefinitionName: name,
+															selectedSidebarItem: leftSidebarItem,
 														},
 														type:
 															TYPES.CHANGE_NODE_VIEW,
@@ -330,7 +361,7 @@ export default function LeftSidebar({
 								>
 									<Icon symbol={TYPES_TO_SYMBOLS[type]} />
 
-									{name}
+									{label}
 								</TreeView.Item>
 							)}
 						</TreeView.Group>

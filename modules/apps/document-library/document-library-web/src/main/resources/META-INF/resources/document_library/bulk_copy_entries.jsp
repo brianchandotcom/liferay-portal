@@ -20,15 +20,13 @@ dlCopyEntryDisplayContext.setViewAttributes();
 			HashMapBuilder.<String, Object>put(
 				"copyActionURL", dlCopyEntryDisplayContext.getCopyEntriesActionURL()
 			).put(
-				"itemType", "fileEntry"
-			).put(
 				"redirect", dlCopyEntryDisplayContext.getRedirect()
 			).put(
 				"selectedEntries", dlCopyEntryDisplayContext.getSelectedEntries()
 			).put(
 				"selectionModalURL", dlCopyEntryDisplayContext.getSelectFolderURL()
 			).put(
-				"sourceFileName", dlCopyEntryDisplayContext.getSourceFolderName()
+				"sourceRepositoryId", dlCopyEntryDisplayContext.getSourceRepositoryId()
 			).build()
 		%>'
 	/>

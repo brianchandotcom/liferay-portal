@@ -18,16 +18,11 @@ import React, {useEffect, useState} from 'react';
 
 const DLFolderSelector = ({
 	copyActionURL,
-	fileShortcutId,
-	itemType,
+	entryName,
 	portletNamespace,
 	redirect,
 	selectedEntries,
 	selectionModalURL,
-	sourceFileEntryId,
-	sourceFileName,
-	sourceFolderId,
-	sourceFolderName,
 	sourceRepositoryId,
 }) => {
 	const [copyButtonDisabled, setCopyButtonDisabled] = useState(true);
@@ -88,22 +83,12 @@ const DLFolderSelector = ({
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
-		const bodyContentObject = objectToFormData(
-			itemType === 'folder'
-				? {
-						[`${portletNamespace}sourceRepositoryId`]: sourceRepositoryId,
-						[`${portletNamespace}sourceFolderId`]: sourceFolderId,
-						[`${portletNamespace}destinationParentFolderId`]: destinationParentFolderId,
-						[`${portletNamespace}destinationRepositoryId`]: destinationRepositoryId,
-				  }
-				: {
-						[`${portletNamespace}selectedEntries`]: selectedEntries,
-						[`${portletNamespace}fileEntryId`]: sourceFileEntryId,
-						[`${portletNamespace}fileShortcutId`]: fileShortcutId,
-						[`${portletNamespace}destinationFolderId`]: destinationParentFolderId,
-						[`${portletNamespace}destinationRepositoryId`]: destinationRepositoryId,
-				  }
-		);
+		const bodyContentObject = objectToFormData({
+			[`${portletNamespace}selectedEntries`]: selectedEntries,
+			[`${portletNamespace}sourceRepositoryId`]: sourceRepositoryId,
+			[`${portletNamespace}destinationParentFolderId`]: destinationParentFolderId,
+			[`${portletNamespace}destinationRepositoryId`]: destinationRepositoryId,
+		});
 
 		fetch(copyActionURL, {
 			body: bodyContentObject,
@@ -150,7 +135,7 @@ const DLFolderSelector = ({
 					className="c-mb-3"
 					disabled
 					id={`${portletNamespace}copyFromInput`}
-					placeholder={sourceFolderName || sourceFileName}
+					placeholder={entryName}
 					type="text"
 				/>
 

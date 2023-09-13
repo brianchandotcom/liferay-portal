@@ -92,7 +92,7 @@ public class BulkCopyEntriesMVCActionCommand extends BaseMVCActionCommand {
 		int errorCount = 0;
 
 		long destinationFolderId = ParamUtil.getLong(
-			actionRequest, "destinationFolderId");
+			actionRequest, "destinationParentFolderId");
 
 		long destinationRepositoryId = ParamUtil.getLong(
 			actionRequest, "destinationRepositoryId");

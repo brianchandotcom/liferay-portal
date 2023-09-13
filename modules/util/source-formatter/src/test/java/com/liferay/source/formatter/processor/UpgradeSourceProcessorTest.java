@@ -416,6 +416,12 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradePortletDisplayCheck() throws Exception {
+		test("upgrade/UpgradeJavaPortletDisplayCheck.testjava");
+		test("upgrade/UpgradeJSPPortletDisplayCheck.testjsp");
+	}
+
+	@Test
 	public void testUpgradePortletFTLCheck() throws Exception {
 		test("upgrade/UpgradeFTLPortletFTLCheck.testftl");
 	}

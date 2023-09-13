@@ -7,53 +7,51 @@ import React from 'react';
 import {ReactFlowProvider} from 'react-flow-renderer';
 
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
-import {TDeletionType} from '../ObjectRelationship/EditRelationship';
 import EditObjectFolder from './EditObjectFolder';
-import {FolderContextProvider} from './ModelBuilderContext/objectFolderContext';
-interface ICustomFolderWrapperProps extends React.HTMLAttributes<HTMLElement> {
+import {ObjectFolderContextProvider} from './ModelBuilderContext/objectFolderContext';
+
+interface CustomObjectFolderWrapperProps {
 	baseResourceURL: string;
-	companyKeyValuePair: KeyValuePair[];
-	deletionTypes: TDeletionType[];
+	companyKeyValuePairs: KeyValuePair[];
 	editObjectDefinitionURL: string;
 	objectDefinitionPermissionsURL: string;
-	siteKeyValuePair: KeyValuePair[];
-	storages: LabelValueObject[];
-	viewApiURL: string;
+	objectDefinitionsStorageTypes: LabelValueObject[];
+	objectRelationshipDeletionTypes: LabelValueObject[];
+	siteKeyValuePairs: KeyValuePair[];
 }
 
-const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps> = ({
+export default function CustomObjectFolderWrapper({
 	baseResourceURL,
-	companyKeyValuePair,
-	deletionTypes,
+	companyKeyValuePairs,
 	editObjectDefinitionURL,
 	objectDefinitionPermissionsURL,
-	siteKeyValuePair,
-	storages,
-	viewApiURL,
-}) => {
-	const urlParams = new URLSearchParams(window.location.search);
-	const folderName = urlParams.get('folderName');
+	objectDefinitionsStorageTypes,
+	objectRelationshipDeletionTypes,
+	siteKeyValuePairs,
+}: CustomObjectFolderWrapperProps) {
+	const urlSearchParams = new URLSearchParams(window.location.search);
+
+	const objectFolderName = urlSearchParams.get('objectFolderName');
 
 	return (
 		<ReactFlowProvider>
-			<FolderContextProvider
+			<ObjectFolderContextProvider
 				value={{
 					baseResourceURL,
 					editObjectDefinitionURL,
 					objectDefinitionPermissionsURL,
-					storages,
-					viewApiURL,
+					objectDefinitionsStorageTypes,
 				}}
 			>
 				<EditObjectFolder
-					companyKeyValuePair={companyKeyValuePair}
-					deletionTypes={deletionTypes}
-					folderName={folderName ?? ''}
-					siteKeyValuePair={siteKeyValuePair}
+					companyKeyValuePairs={companyKeyValuePairs}
+					objectFolderName={objectFolderName ?? ''}
+					objectRelationshipDeletionTypes={
+						objectRelationshipDeletionTypes
+					}
+					siteKeyValuePairs={siteKeyValuePairs}
 				/>
-			</FolderContextProvider>
+			</ObjectFolderContextProvider>
 		</ReactFlowProvider>
 	);
-};
-
-export default CustomFolderWrapper;
+}

@@ -216,6 +216,34 @@ public class Plan implements Serializable {
 	protected String internalClassName;
 
 	@Schema
+	public String getInternalClassNameKey() {
+		return internalClassNameKey;
+	}
+
+	public void setInternalClassNameKey(String internalClassNameKey) {
+		this.internalClassNameKey = internalClassNameKey;
+	}
+
+	@JsonIgnore
+	public void setInternalClassNameKey(
+		UnsafeSupplier<String, Exception> internalClassNameKeyUnsafeSupplier) {
+
+		try {
+			internalClassNameKey = internalClassNameKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String internalClassNameKey;
+
+	@Schema
 	@Valid
 	public Mapping[] getMappings() {
 		return mappings;
@@ -532,6 +560,20 @@ public class Plan implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(internalClassName));
+
+			sb.append("\"");
+		}
+
+		if (internalClassNameKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"internalClassNameKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(internalClassNameKey));
 
 			sb.append("\"");
 		}

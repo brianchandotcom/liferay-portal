@@ -97,13 +97,13 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans/{internalClassName}/template'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans/{internalClassNameKey}/template'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "internalClassName"
+				name = "internalClassNameKey"
 			)
 		}
 	)
@@ -111,14 +111,14 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Plan")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/plans/{internalClassName}/template")
+	@javax.ws.rs.Path("/plans/{internalClassNameKey}/template")
 	@javax.ws.rs.Produces("application/octet-stream")
 	@Override
 	public Response getPlanTemplate(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("internalClassName")
-			String internalClassName)
+			@javax.ws.rs.PathParam("internalClassNameKey")
+			String internalClassNameKey)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();

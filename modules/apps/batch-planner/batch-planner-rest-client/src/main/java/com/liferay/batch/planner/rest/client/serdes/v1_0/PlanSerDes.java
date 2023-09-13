@@ -118,6 +118,20 @@ public class PlanSerDes {
 			sb.append("\"");
 		}
 
+		if (plan.getInternalClassNameKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"internalClassNameKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(plan.getInternalClassNameKey()));
+
+			sb.append("\"");
+		}
+
 		if (plan.getMappings() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -288,6 +302,15 @@ public class PlanSerDes {
 				String.valueOf(plan.getInternalClassName()));
 		}
 
+		if (plan.getInternalClassNameKey() == null) {
+			map.put("internalClassNameKey", null);
+		}
+		else {
+			map.put(
+				"internalClassNameKey",
+				String.valueOf(plan.getInternalClassNameKey()));
+		}
+
 		if (plan.getMappings() == null) {
 			map.put("mappings", null);
 		}
@@ -394,6 +417,13 @@ public class PlanSerDes {
 			else if (Objects.equals(jsonParserFieldName, "internalClassName")) {
 				if (jsonParserFieldValue != null) {
 					plan.setInternalClassName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "internalClassNameKey")) {
+
+				if (jsonParserFieldValue != null) {
+					plan.setInternalClassNameKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "mappings")) {

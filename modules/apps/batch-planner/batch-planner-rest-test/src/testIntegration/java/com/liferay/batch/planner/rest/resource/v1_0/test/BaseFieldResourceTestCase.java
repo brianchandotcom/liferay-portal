@@ -185,24 +185,24 @@ public abstract class BaseFieldResourceTestCase {
 	}
 
 	@Test
-	public void testGetPlanInternalClassNameFieldsPage() throws Exception {
-		String internalClassName =
-			testGetPlanInternalClassNameFieldsPage_getInternalClassName();
-		String irrelevantInternalClassName =
-			testGetPlanInternalClassNameFieldsPage_getIrrelevantInternalClassName();
+	public void testGetPlanInternalClassNameKeyFieldsPage() throws Exception {
+		String internalClassNameKey =
+			testGetPlanInternalClassNameKeyFieldsPage_getInternalClassNameKey();
+		String irrelevantInternalClassNameKey =
+			testGetPlanInternalClassNameKeyFieldsPage_getIrrelevantInternalClassNameKey();
 
-		Page<Field> page = fieldResource.getPlanInternalClassNameFieldsPage(
-			internalClassName, null);
+		Page<Field> page = fieldResource.getPlanInternalClassNameKeyFieldsPage(
+			internalClassNameKey, null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
-		if (irrelevantInternalClassName != null) {
+		if (irrelevantInternalClassNameKey != null) {
 			Field irrelevantField =
-				testGetPlanInternalClassNameFieldsPage_addField(
-					irrelevantInternalClassName, randomIrrelevantField());
+				testGetPlanInternalClassNameKeyFieldsPage_addField(
+					irrelevantInternalClassNameKey, randomIrrelevantField());
 
-			page = fieldResource.getPlanInternalClassNameFieldsPage(
-				irrelevantInternalClassName, null);
+			page = fieldResource.getPlanInternalClassNameKeyFieldsPage(
+				irrelevantInternalClassNameKey, null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -210,18 +210,18 @@ public abstract class BaseFieldResourceTestCase {
 				Arrays.asList(irrelevantField), (List<Field>)page.getItems());
 			assertValid(
 				page,
-				testGetPlanInternalClassNameFieldsPage_getExpectedActions(
-					irrelevantInternalClassName));
+				testGetPlanInternalClassNameKeyFieldsPage_getExpectedActions(
+					irrelevantInternalClassNameKey));
 		}
 
-		Field field1 = testGetPlanInternalClassNameFieldsPage_addField(
-			internalClassName, randomField());
+		Field field1 = testGetPlanInternalClassNameKeyFieldsPage_addField(
+			internalClassNameKey, randomField());
 
-		Field field2 = testGetPlanInternalClassNameFieldsPage_addField(
-			internalClassName, randomField());
+		Field field2 = testGetPlanInternalClassNameKeyFieldsPage_addField(
+			internalClassNameKey, randomField());
 
-		page = fieldResource.getPlanInternalClassNameFieldsPage(
-			internalClassName, null);
+		page = fieldResource.getPlanInternalClassNameKeyFieldsPage(
+			internalClassNameKey, null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -229,13 +229,13 @@ public abstract class BaseFieldResourceTestCase {
 			Arrays.asList(field1, field2), (List<Field>)page.getItems());
 		assertValid(
 			page,
-			testGetPlanInternalClassNameFieldsPage_getExpectedActions(
-				internalClassName));
+			testGetPlanInternalClassNameKeyFieldsPage_getExpectedActions(
+				internalClassNameKey));
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetPlanInternalClassNameFieldsPage_getExpectedActions(
-				String internalClassName)
+			testGetPlanInternalClassNameKeyFieldsPage_getExpectedActions(
+				String internalClassNameKey)
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
@@ -243,8 +243,8 @@ public abstract class BaseFieldResourceTestCase {
 		return expectedActions;
 	}
 
-	protected Field testGetPlanInternalClassNameFieldsPage_addField(
-			String internalClassName, Field field)
+	protected Field testGetPlanInternalClassNameKeyFieldsPage_addField(
+			String internalClassNameKey, Field field)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -252,7 +252,7 @@ public abstract class BaseFieldResourceTestCase {
 	}
 
 	protected String
-			testGetPlanInternalClassNameFieldsPage_getInternalClassName()
+			testGetPlanInternalClassNameKeyFieldsPage_getInternalClassNameKey()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -260,7 +260,7 @@ public abstract class BaseFieldResourceTestCase {
 	}
 
 	protected String
-			testGetPlanInternalClassNameFieldsPage_getIrrelevantInternalClassName()
+			testGetPlanInternalClassNameKeyFieldsPage_getIrrelevantInternalClassNameKey()
 		throws Exception {
 
 		return null;

@@ -47,13 +47,13 @@ public abstract class BaseSiteScopeResourceImpl implements SiteScopeResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans/{internalClassName}/site-scopes'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans/{internalClassNameKey}/site-scopes'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "internalClassName"
+				name = "internalClassNameKey"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -65,14 +65,14 @@ public abstract class BaseSiteScopeResourceImpl implements SiteScopeResource {
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "SiteScope")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/plans/{internalClassName}/site-scopes")
+	@javax.ws.rs.Path("/plans/{internalClassNameKey}/site-scopes")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<SiteScope> getPlanInternalClassNameSiteScopesPage(
+	public Page<SiteScope> getPlanInternalClassNameKeySiteScopesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("internalClassName")
-			String internalClassName,
+			@javax.ws.rs.PathParam("internalClassNameKey")
+			String internalClassNameKey,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("export")
 			Boolean export)

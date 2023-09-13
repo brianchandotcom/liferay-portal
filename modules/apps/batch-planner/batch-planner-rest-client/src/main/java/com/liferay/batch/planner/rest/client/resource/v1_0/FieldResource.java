@@ -31,13 +31,13 @@ public interface FieldResource {
 		return new Builder();
 	}
 
-	public Page<Field> getPlanInternalClassNameFieldsPage(
-			String internalClassName, Boolean export)
+	public Page<Field> getPlanInternalClassNameKeyFieldsPage(
+			String internalClassNameKey, Boolean export)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getPlanInternalClassNameFieldsPageHttpResponse(
-				String internalClassName, Boolean export)
+			getPlanInternalClassNameKeyFieldsPageHttpResponse(
+				String internalClassNameKey, Boolean export)
 		throws Exception;
 
 	public static class Builder {
@@ -144,13 +144,13 @@ public interface FieldResource {
 
 	public static class FieldResourceImpl implements FieldResource {
 
-		public Page<Field> getPlanInternalClassNameFieldsPage(
-				String internalClassName, Boolean export)
+		public Page<Field> getPlanInternalClassNameKeyFieldsPage(
+				String internalClassNameKey, Boolean export)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getPlanInternalClassNameFieldsPageHttpResponse(
-					internalClassName, export);
+				getPlanInternalClassNameKeyFieldsPageHttpResponse(
+					internalClassNameKey, export);
 
 			String content = httpResponse.getContent();
 
@@ -212,8 +212,8 @@ public interface FieldResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getPlanInternalClassNameFieldsPageHttpResponse(
-					String internalClassName, Boolean export)
+				getPlanInternalClassNameKeyFieldsPageHttpResponse(
+					String internalClassNameKey, Boolean export)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -244,9 +244,9 @@ public interface FieldResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/batch-planner/v1.0/plans/{internalClassName}/fields");
+						"/o/batch-planner/v1.0/plans/{internalClassNameKey}/fields");
 
-			httpInvoker.path("internalClassName", internalClassName);
+			httpInvoker.path("internalClassNameKey", internalClassNameKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

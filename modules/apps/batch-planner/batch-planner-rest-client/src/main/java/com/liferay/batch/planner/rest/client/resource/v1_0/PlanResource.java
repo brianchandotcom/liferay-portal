@@ -43,10 +43,10 @@ public interface PlanResource {
 	public HttpInvoker.HttpResponse postPlanHttpResponse(Plan plan)
 		throws Exception;
 
-	public void getPlanTemplate(String internalClassName) throws Exception;
+	public void getPlanTemplate(String internalClassNameKey) throws Exception;
 
 	public HttpInvoker.HttpResponse getPlanTemplateHttpResponse(
-			String internalClassName)
+			String internalClassNameKey)
 		throws Exception;
 
 	public void deletePlan(Long planId) throws Exception;
@@ -374,9 +374,11 @@ public interface PlanResource {
 			return httpInvoker.invoke();
 		}
 
-		public void getPlanTemplate(String internalClassName) throws Exception {
+		public void getPlanTemplate(String internalClassNameKey)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse = getPlanTemplateHttpResponse(
-				internalClassName);
+				internalClassNameKey);
 
 			String content = httpResponse.getContent();
 
@@ -427,7 +429,7 @@ public interface PlanResource {
 		}
 
 		public HttpInvoker.HttpResponse getPlanTemplateHttpResponse(
-				String internalClassName)
+				String internalClassNameKey)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -454,9 +456,9 @@ public interface PlanResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/batch-planner/v1.0/plans/{internalClassName}/template");
+						"/o/batch-planner/v1.0/plans/{internalClassNameKey}/template");
 
-			httpInvoker.path("internalClassName", internalClassName);
+			httpInvoker.path("internalClassNameKey", internalClassNameKey);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

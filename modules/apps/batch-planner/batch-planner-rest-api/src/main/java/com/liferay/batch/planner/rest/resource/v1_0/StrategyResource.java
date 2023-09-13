@@ -44,8 +44,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface StrategyResource {
 
-	public Page<Strategy> getPlanInternalClassNameStrategiesPage(
-			String internalClassName)
+	public Page<Strategy> getPlanInternalClassNameKeyStrategiesPage(
+			String internalClassNameKey)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

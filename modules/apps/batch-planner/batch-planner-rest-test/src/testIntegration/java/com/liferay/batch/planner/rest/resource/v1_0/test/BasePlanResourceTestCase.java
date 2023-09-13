@@ -175,6 +175,7 @@ public abstract class BasePlanResourceTestCase {
 		plan.setExternalType(regex);
 		plan.setExternalURL(regex);
 		plan.setInternalClassName(regex);
+		plan.setInternalClassNameKey(regex);
 		plan.setName(regex);
 		plan.setTaskItemDelegateName(regex);
 
@@ -187,6 +188,7 @@ public abstract class BasePlanResourceTestCase {
 		Assert.assertEquals(regex, plan.getExternalType());
 		Assert.assertEquals(regex, plan.getExternalURL());
 		Assert.assertEquals(regex, plan.getInternalClassName());
+		Assert.assertEquals(regex, plan.getInternalClassNameKey());
 		Assert.assertEquals(regex, plan.getName());
 		Assert.assertEquals(regex, plan.getTaskItemDelegateName());
 	}
@@ -458,6 +460,16 @@ public abstract class BasePlanResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"internalClassNameKey", additionalAssertFieldName)) {
+
+				if (plan.getInternalClassNameKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("mappings", additionalAssertFieldName)) {
 				if (plan.getMappings() == null) {
 					valid = false;
@@ -689,6 +701,19 @@ public abstract class BasePlanResourceTestCase {
 				if (!Objects.deepEquals(
 						plan1.getInternalClassName(),
 						plan2.getInternalClassName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"internalClassNameKey", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						plan1.getInternalClassNameKey(),
+						plan2.getInternalClassNameKey())) {
 
 					return false;
 				}
@@ -1027,6 +1052,52 @@ public abstract class BasePlanResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("internalClassNameKey")) {
+			Object object = plan.getInternalClassNameKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("mappings")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1204,6 +1275,8 @@ public abstract class BasePlanResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				internalClassName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				internalClassNameKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				size = RandomTestUtil.randomInt();

@@ -50,7 +50,8 @@ public interface PlanResource {
 
 	public Plan postPlan(Plan plan) throws Exception;
 
-	public Response getPlanTemplate(String internalClassName) throws Exception;
+	public Response getPlanTemplate(String internalClassNameKey)
+		throws Exception;
 
 	public void deletePlan(Long planId) throws Exception;
 

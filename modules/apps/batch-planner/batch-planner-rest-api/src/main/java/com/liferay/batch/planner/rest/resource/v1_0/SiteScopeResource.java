@@ -44,8 +44,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SiteScopeResource {
 
-	public Page<SiteScope> getPlanInternalClassNameSiteScopesPage(
-			String internalClassName, Boolean export)
+	public Page<SiteScope> getPlanInternalClassNameKeySiteScopesPage(
+			String internalClassNameKey, Boolean export)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

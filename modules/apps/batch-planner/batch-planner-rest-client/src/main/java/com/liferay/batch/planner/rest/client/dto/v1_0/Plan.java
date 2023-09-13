@@ -149,6 +149,27 @@ public class Plan implements Cloneable, Serializable {
 
 	protected String internalClassName;
 
+	public String getInternalClassNameKey() {
+		return internalClassNameKey;
+	}
+
+	public void setInternalClassNameKey(String internalClassNameKey) {
+		this.internalClassNameKey = internalClassNameKey;
+	}
+
+	public void setInternalClassNameKey(
+		UnsafeSupplier<String, Exception> internalClassNameKeyUnsafeSupplier) {
+
+		try {
+			internalClassNameKey = internalClassNameKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String internalClassNameKey;
+
 	public Mapping[] getMappings() {
 		return mappings;
 	}

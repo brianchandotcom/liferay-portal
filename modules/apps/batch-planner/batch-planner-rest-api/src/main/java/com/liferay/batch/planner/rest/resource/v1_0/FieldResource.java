@@ -44,8 +44,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FieldResource {
 
-	public Page<Field> getPlanInternalClassNameFieldsPage(
-			String internalClassName, Boolean export)
+	public Page<Field> getPlanInternalClassNameKeyFieldsPage(
+			String internalClassNameKey, Boolean export)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

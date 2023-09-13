@@ -47,13 +47,13 @@ public abstract class BaseStrategyResourceImpl implements StrategyResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans/{internalClassName}/strategies'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans/{internalClassNameKey}/strategies'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "internalClassName"
+				name = "internalClassNameKey"
 			)
 		}
 	)
@@ -61,14 +61,14 @@ public abstract class BaseStrategyResourceImpl implements StrategyResource {
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Strategy")}
 	)
 	@javax.ws.rs.GET
-	@javax.ws.rs.Path("/plans/{internalClassName}/strategies")
+	@javax.ws.rs.Path("/plans/{internalClassNameKey}/strategies")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<Strategy> getPlanInternalClassNameStrategiesPage(
+	public Page<Strategy> getPlanInternalClassNameKeyStrategiesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("internalClassName")
-			String internalClassName)
+			@javax.ws.rs.PathParam("internalClassNameKey")
+			String internalClassNameKey)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

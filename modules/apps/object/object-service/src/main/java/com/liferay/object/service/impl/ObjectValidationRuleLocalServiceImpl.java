@@ -541,9 +541,9 @@ public class ObjectValidationRuleLocalServiceImpl
 			if (!(objectValidationRuleSetting.compareName(
 					ObjectValidationRuleSettingConstants.
 						NAME_KEY_OBJECT_FIELD_ID) ||
-				objectValidationRuleSetting.compareName(
-					ObjectValidationRuleSettingConstants.
-						NAME_OUTPUT_OBJECT_FIELD_ID))) {
+				  objectValidationRuleSetting.compareName(
+					  ObjectValidationRuleSettingConstants.
+						  NAME_OUTPUT_OBJECT_FIELD_ID))) {
 
 				throw new ObjectValidationRuleSettingNameException.
 					NotAllowedName(objectValidationRuleSetting.getName());

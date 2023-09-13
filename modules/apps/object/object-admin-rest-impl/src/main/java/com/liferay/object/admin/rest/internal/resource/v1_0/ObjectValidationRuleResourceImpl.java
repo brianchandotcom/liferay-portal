@@ -19,6 +19,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.ObjectValidationRuleService;
 import com.liferay.object.service.ObjectValidationRuleSettingLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -261,6 +262,28 @@ public class ObjectValidationRuleResourceImpl
 					getObjectValidationRuleSettings()));
 	}
 
+	private com.liferay.object.model.ObjectValidationRuleSetting
+			_setObjectValidationRuleSettingProperties(
+				String nameObjectFieldId,
+				ObjectFieldLocalService objectFieldLocalService,
+				ObjectValidationRuleSetting objectValidationRuleSetting,
+				long objectDefinitionId,
+				com.liferay.object.model.ObjectValidationRuleSetting
+					serviceBuilderObjectValidationRuleSetting)
+		throws PortalException {
+
+		serviceBuilderObjectValidationRuleSetting.setName(nameObjectFieldId);
+
+		ObjectField objectField = objectFieldLocalService.getObjectField(
+			String.valueOf(objectValidationRuleSetting.getValue()),
+			objectDefinitionId);
+
+		serviceBuilderObjectValidationRuleSetting.setValue(
+			String.valueOf(objectField.getObjectFieldId()));
+
+		return serviceBuilderObjectValidationRuleSetting;
+	}
+
 	private ObjectValidationRule _toObjectValidationRule(
 			com.liferay.object.model.ObjectValidationRule
 				serviceBuilderObjectValidationRule)
@@ -315,43 +338,27 @@ public class ObjectValidationRuleResourceImpl
 				if (StringUtil.equals(
 						objectValidationRuleSetting.getName(),
 						ObjectValidationRuleSettingConstants.
-							NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE)) {
+							NAME_KEY_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE)) {
 
-					serviceBuilderObjectValidationRuleSetting.setName(
+					return _setObjectValidationRuleSettingProperties(
 						ObjectValidationRuleSettingConstants.
-							NAME_OUTPUT_OBJECT_FIELD_ID);
-
-					ObjectField objectField =
-						objectFieldLocalService.getObjectField(
-							String.valueOf(
-								objectValidationRuleSetting.getValue()),
-							objectDefinitionId);
-
-					serviceBuilderObjectValidationRuleSetting.setValue(
-						String.valueOf(objectField.getObjectFieldId()));
-
-					return serviceBuilderObjectValidationRuleSetting;
+							NAME_KEY_OBJECT_FIELD_ID,
+						objectFieldLocalService, objectValidationRuleSetting,
+						objectDefinitionId,
+						serviceBuilderObjectValidationRuleSetting);
 				}
 
 				if (StringUtil.equals(
-					objectValidationRuleSetting.getName(),
-					ObjectValidationRuleSettingConstants.
-						NAME_KEY_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE)) {
-
-					serviceBuilderObjectValidationRuleSetting.setName(
+						objectValidationRuleSetting.getName(),
 						ObjectValidationRuleSettingConstants.
-							NAME_KEY_OBJECT_FIELD_ID);
+							NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE)) {
 
-					ObjectField objectField =
-						objectFieldLocalService.getObjectField(
-							String.valueOf(
-								objectValidationRuleSetting.getValue()),
-							objectDefinitionId);
-
-					serviceBuilderObjectValidationRuleSetting.setValue(
-						String.valueOf(objectField.getObjectFieldId()));
-
-					return serviceBuilderObjectValidationRuleSetting;
+					return _setObjectValidationRuleSettingProperties(
+						ObjectValidationRuleSettingConstants.
+							NAME_OUTPUT_OBJECT_FIELD_ID,
+						objectFieldLocalService, objectValidationRuleSetting,
+						objectDefinitionId,
+						serviceBuilderObjectValidationRuleSetting);
 				}
 
 				serviceBuilderObjectValidationRuleSetting.setName(

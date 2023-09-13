@@ -6,11 +6,10 @@
 /// <reference types="react" />
 
 import './RightSidebarObjectRelationshipDetails.scss';
-import {TDeletionType} from '../../ObjectRelationship/EditRelationship';
 interface RightSidebarObjectRelationshipDetailsProps {
-	deletionTypes: TDeletionType[];
+	objectRelationshipDeletionTypes: LabelValueObject[];
 }
 export declare function RightSidebarObjectRelationshipDetails({
-	deletionTypes,
+	objectRelationshipDeletionTypes,
 }: RightSidebarObjectRelationshipDetailsProps): JSX.Element;
 export {};

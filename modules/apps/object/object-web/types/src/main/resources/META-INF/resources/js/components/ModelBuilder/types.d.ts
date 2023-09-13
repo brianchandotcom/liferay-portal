@@ -34,39 +34,39 @@ export declare type TAction =
 	| {
 			payload: {
 				newObjectDefinition: ObjectDefinition;
-				selectedFolderName: string;
+				selectedObjectFolderName: string;
 			};
-			type: TYPES.ADD_NEW_NODE_TO_FOLDER;
+			type: TYPES.ADD_OBJECT_DEFINITION_TO_OBJECT_FOLDER;
 	  }
 	| {
 			payload: {
-				hiddenFolderNodes: boolean;
-				leftSidebarItem: LeftSidebarItemType;
+				hiddenObjectFolderObjectDefinitionNodes: boolean;
+				leftSidebarItem: LeftSidebarItem;
 			};
 			type: TYPES.BULK_CHANGE_NODE_VIEW;
 	  }
 	| {
 			payload: {
-				definitionId: number;
-				definitionName: string;
-				hiddenNode: boolean;
-				leftSidebarItem: LeftSidebarItemType;
+				hiddenObjectDefinitionNode: boolean;
+				objectDefinitionId: number;
+				objectDefinitionName: string;
+				selectedSidebarItem: LeftSidebarItem;
 			};
 			type: TYPES.CHANGE_NODE_VIEW;
 	  }
 	| {
 			payload: {
 				objectFolders: ObjectFolder[];
-				selectedFolder: ObjectFolder;
+				selectedObjectFolder: ObjectFolder;
 			};
 			type: TYPES.CREATE_MODEL_BUILDER_STRUCTURE;
 	  }
 	| {
 			payload: {
-				currentFolderName: string;
-				deletedNodeName: string;
+				currentObjectFolderName: string;
+				deletedObjectDefinitionName: string;
 			};
-			type: TYPES.DELETE_FOLDER_NODE;
+			type: TYPES.DELETE_OBJECT_DEFINITION;
 	  }
 	| {
 			payload: {
@@ -78,17 +78,17 @@ export declare type TAction =
 			payload: {
 				edges: Edge<ObjectRelationshipEdgeData>[];
 				nodes: Node<ObjectDefinitionNodeData>[];
-				selectedObjectRelationshipId: string;
+				selectedObjectDefinitionId: string;
 			};
-			type: TYPES.SET_SELECTED_EDGE;
+			type: TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE;
 	  }
 	| {
 			payload: {
 				edges: Edge<ObjectRelationshipEdgeData>[];
 				nodes: Node<ObjectDefinitionNodeData>[];
-				selectedObjectDefinitionId: string;
+				selectedObjectRelationshipId: string;
 			};
-			type: TYPES.SET_SELECTED_NODE;
+			type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE;
 	  }
 	| {
 			payload: {
@@ -98,52 +98,50 @@ export declare type TAction =
 	  }
 	| {
 			payload: {
-				currentFolderName: string;
-				updatedNode: Partial<ObjectDefinition>;
+				currentObjectFolderName: string;
+				updatedObjectDefinitionNode: Partial<ObjectDefinition>;
 			};
-			type: TYPES.UPDATE_FOLDER_NODE;
+			type: TYPES.UPDATE_OBJECT_DEFINITION_NODE;
 	  };
 export declare type TState = {
 	baseResourceURL: string;
 	editObjectDefinitionURL: string;
 	elements: Elements<ObjectDefinitionNodeData | ObjectRelationshipEdgeData>;
-	leftSidebarItems: LeftSidebarItemType[];
+	leftSidebarItems: LeftSidebarItem[];
 	objectDefinitionPermissionsURL: string;
 	objectDefinitions: ObjectDefinition[];
+	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectFolders: ObjectFolder[];
 	rightSidebarType: RightSidebarType;
-	selectedDefinitionNode: Node<ObjectDefinitionNodeData>;
-	selectedFolder: ObjectFolder;
+	selectedObjectDefinitionNode: Node<ObjectDefinitionNodeData>;
+	selectedObjectFolder: ObjectFolder;
 	selectedObjectRelationship: ObjectRelationship;
 	showChangesSaved: boolean;
-	storages: LabelValueObject[];
-	viewApiURL: string;
 };
-export declare type LeftSidebarItemType = {
-	folderName: string;
-	hiddenFolderNodes: boolean;
+export interface LeftSidebarItem {
+	hiddenObjectFolderObjectDefinitionNodes: boolean;
+	leftSidebarObjectDefinitionItems?: LeftSidebarObjectDefinitionItem[];
 	name: string;
-	objectDefinitions?: LeftSidebarDefinitionItemType[];
+	objectFolderName: string;
 	type: 'objectFolder' | 'objectDefinition';
-};
-export declare type LeftSidebarDefinitionItemType = {
-	definitionId: number;
-	definitionName: string;
-	hiddenNode: boolean;
+}
+export interface LeftSidebarObjectDefinitionItem {
+	hiddenObjectDefinitionNode: boolean;
+	id: number;
+	label: string;
 	linked?: boolean;
 	name: string;
 	selected: boolean;
-	type: 'objectDefinition' | 'objectLink';
-};
-export declare type ObjectDefinitionNodeTypes = 'objectDefinition';
+	type: 'linkedObjectDefinition' | 'objectDefinition';
+}
 export interface ObjectRelationshipEdgeData {
 	defaultLanguageId?: Liferay.Language.Locale;
-	edgeSelected: boolean;
 	label: string;
 	markerEndId: string;
 	markerStartId: string;
 	objectRelationshipId: number;
-	selfRelationships?: ObjectRelationship[];
+	selected: boolean;
+	selfObjectRelationships?: ObjectRelationship[];
 	sourceY: number;
 	targetY: number;
 	type: string;

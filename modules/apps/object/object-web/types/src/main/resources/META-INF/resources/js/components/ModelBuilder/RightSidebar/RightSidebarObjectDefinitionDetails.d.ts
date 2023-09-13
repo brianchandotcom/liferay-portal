@@ -8,11 +8,11 @@
 import {KeyValuePair} from '../../ObjectDetails/EditObjectDetails';
 import './RightSidebarObjectDefinitionDetails.scss';
 interface RightSidebarObjectDefinitionDetailsProps {
-	companyKeyValuePair: KeyValuePair[];
-	siteKeyValuePair: KeyValuePair[];
+	companyKeyValuePairs: KeyValuePair[];
+	siteKeyValuePairs: KeyValuePair[];
 }
 export declare function RightSidebarObjectDefinitionDetails({
-	companyKeyValuePair,
-	siteKeyValuePair,
+	companyKeyValuePairs,
+	siteKeyValuePairs,
 }: RightSidebarObjectDefinitionDetailsProps): JSX.Element;
 export {};

@@ -8,7 +8,7 @@
 import {FormError} from '@liferay/object-js-components-web';
 interface EntryDisplayContainerProps {
 	errors: FormError<ObjectDefinition>;
-	linkedDefinition?: boolean;
+	isLinkedObjectDefinition?: boolean;
 	nonRelationshipObjectFieldsInfo: {
 		label: LocalizedValue<string>;
 		name: string;
@@ -19,7 +19,7 @@ interface EntryDisplayContainerProps {
 }
 export declare function EntryDisplayContainer({
 	errors,
-	linkedDefinition,
+	isLinkedObjectDefinition,
 	nonRelationshipObjectFieldsInfo,
 	objectFields,
 	setValues,

@@ -5,14 +5,14 @@
 
 /// <reference types="react" />
 
-import './NodeFields.scss';
-interface NodeFieldsProps {
+import './ObjectDefinitionNodeObjectFields.scss';
+interface ObjectDefinitionNodeFieldsProps {
 	defaultLanguageId: Liferay.Language.Locale;
 	objectFields: ObjectFieldNode[];
-	showAll: boolean;
+	showAllObjectFields: boolean;
 }
-export default function NodeFields({
+export default function ObjectDefinitionNodeFields({
 	objectFields,
-	showAll,
-}: NodeFieldsProps): JSX.Element;
+	showAllObjectFields,
+}: ObjectDefinitionNodeFieldsProps): JSX.Element;
 export {};

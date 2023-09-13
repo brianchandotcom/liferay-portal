@@ -3,18 +3,25 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React from 'react';
+/// <reference types="react" />
+
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
-import {TDeletionType} from '../ObjectRelationship/EditRelationship';
-interface ICustomFolderWrapperProps extends React.HTMLAttributes<HTMLElement> {
+interface CustomObjectFolderWrapperProps {
 	baseResourceURL: string;
-	companyKeyValuePair: KeyValuePair[];
-	deletionTypes: TDeletionType[];
+	companyKeyValuePairs: KeyValuePair[];
 	editObjectDefinitionURL: string;
 	objectDefinitionPermissionsURL: string;
-	siteKeyValuePair: KeyValuePair[];
-	storages: LabelValueObject[];
-	viewApiURL: string;
+	objectDefinitionsStorageTypes: LabelValueObject[];
+	objectRelationshipDeletionTypes: LabelValueObject[];
+	siteKeyValuePairs: KeyValuePair[];
 }
-declare const CustomFolderWrapper: React.FC<ICustomFolderWrapperProps>;
-export default CustomFolderWrapper;
+export default function CustomObjectFolderWrapper({
+	baseResourceURL,
+	companyKeyValuePairs,
+	editObjectDefinitionURL,
+	objectDefinitionPermissionsURL,
+	objectDefinitionsStorageTypes,
+	objectRelationshipDeletionTypes,
+	siteKeyValuePairs,
+}: CustomObjectFolderWrapperProps): JSX.Element;
+export {};

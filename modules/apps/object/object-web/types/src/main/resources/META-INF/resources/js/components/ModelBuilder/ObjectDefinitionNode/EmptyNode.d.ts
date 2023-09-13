@@ -5,8 +5,8 @@
 
 import React from 'react';
 import {NodeProps} from 'react-flow-renderer';
-import './DefinitionNode.scss';
 import './EmptyNode.scss';
+import './NodeContainer.scss';
 interface EmptyNodeProps {
 	setShowModal: (value: React.SetStateAction<ModelBuilderModals>) => void;
 }

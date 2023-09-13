@@ -5,13 +5,9 @@
 
 /// <reference types="react" />
 
-export declare type TDeletionType = {
-	label: string;
-	value: string;
-};
 interface EditRelationshipProps {
 	baseResourceURL: string;
-	deletionTypes: TDeletionType[];
+	deletionTypes: LabelValueObject[];
 	hasUpdateObjectDefinitionPermission: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	objectRelationship: ObjectRelationship;

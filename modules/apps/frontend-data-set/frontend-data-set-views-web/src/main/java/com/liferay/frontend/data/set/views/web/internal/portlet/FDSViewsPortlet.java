@@ -407,6 +407,40 @@ public class FDSViewsPortlet extends MVCPortlet {
 			"fdsViewFDSDynamicFilterRelationship",
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
+		ObjectDefinition fdsClientExtensionFilterObjectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"FDSClientExtensionFilter", userId, 0, "FDSClientExtensionFilter", "FDSClientExtensionFilter",
+				false, LocalizedMapUtil.getLocalizedMap("FDS Client Extension Filter"),
+				true, "FDSClientExtensionFilter", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap("FDS Client Extension Filters"),
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "field-name"), "fieldName", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "fds-filter-client-extension-erc"), "fdsFilterClientExtensionErc", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "name"), "name", true)));
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, fdsClientExtensionFilterObjectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			userId, fdsViewObjectDefinition.getObjectDefinitionId(),
+			fdsClientExtensionFilterObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap(
+				"FDSView FDSClientExtensionFilter"),
+			"fdsViewFDSClientExtensionFilter",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
 		ObjectDefinition fdsSortObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
 				"FDSSort", userId, 0, "FDSSort", "FDSSort", false,

@@ -33,11 +33,11 @@ describe('The ObjectFolderCardHeader component should', () => {
 
 		expect(screen.getAllByRole('menuitem')).toHaveLength(3);
 
+		expect(screen.getByText('delete-folder')).toBeInTheDocument();
+
 		expect(screen.getByText('edit-label-and-erc')).toBeInTheDocument();
 
 		expect(screen.getByText('folder-permissions')).toBeInTheDocument();
-
-		expect(screen.getByText('delete-folder')).toBeInTheDocument();
 	});
 
 	it('not render delete and edit object folder actions on uncategorized object folder', () => {

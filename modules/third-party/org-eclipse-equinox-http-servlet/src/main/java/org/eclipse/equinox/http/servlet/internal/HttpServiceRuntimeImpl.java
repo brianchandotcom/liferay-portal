@@ -112,13 +112,9 @@ public class HttpServiceRuntimeImpl
 		}
 		catch (HttpWhiteboardFailureException hwfe) {
 			parentServletContext.log(hwfe.getMessage(), hwfe);
-
-			recordFailedServletContextDTO(serviceReference, contextName, contextPath, hwfe.getFailureReason());
 		}
 		catch (Exception e) {
 			parentServletContext.log(e.getMessage(), e);
-
-			recordFailedServletContextDTO(serviceReference, contextName, contextPath, DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
 		}
 
 		return result;
@@ -174,12 +170,6 @@ public class HttpServiceRuntimeImpl
 
 		controllerMap.clear();
 		registeredObjects.clear();
-
-		failedFilterDTOs.clear();
-		failedListenerDTOs.clear();
-		failedResourceDTOs.clear();
-		failedServletContextDTOs.clear();
-		failedServletDTOs.clear();
 
 		attributes = null;
 		trackingContext = null;
@@ -250,11 +240,11 @@ public class HttpServiceRuntimeImpl
 		// TODO FailedErrorDTOs
 
 		runtimeDTO.failedErrorPageDTOs = null;
-		runtimeDTO.failedFilterDTOs = getFailedFilterDTOs();
-		runtimeDTO.failedListenerDTOs = getFailedListenerDTOs();
-		runtimeDTO.failedResourceDTOs = getFailedResourceDTOs();
-		runtimeDTO.failedServletContextDTOs = getFailedServletContextDTO();
-		runtimeDTO.failedServletDTOs = getFailedServletDTOs();
+		runtimeDTO.failedFilterDTOs = null;
+		runtimeDTO.failedListenerDTOs = null;
+		runtimeDTO.failedResourceDTOs = null;
+		runtimeDTO.failedServletContextDTOs = null;
+		runtimeDTO.failedServletDTOs = null;
 		runtimeDTO.servletContextDTOs = getServletContextDTOs();
 
 		return runtimeDTO;
@@ -321,7 +311,6 @@ public class HttpServiceRuntimeImpl
 			contextController.destroy();
 		}
 		controllerMap.remove(serviceReference);
-		failedServletContextDTOs.remove(serviceReference);
 		trackingContext.ungetService(serviceReference);
 	}
 
@@ -429,66 +418,6 @@ public class HttpServiceRuntimeImpl
 		while (true);
 
 		return null;
-	}
-
-	private FailedFilterDTO[] getFailedFilterDTOs() {
-		Collection<FailedFilterDTO> ffDTOs = failedFilterDTOs.values();
-
-		List<FailedFilterDTO> copies = new ArrayList<FailedFilterDTO>();
-
-		for (FailedFilterDTO failedFilterDTO : ffDTOs) {
-			copies.add(DTOUtil.clone(failedFilterDTO));
-		}
-
-		return copies.toArray(new FailedFilterDTO[copies.size()]);
-	}
-
-	private FailedListenerDTO[] getFailedListenerDTOs() {
-		Collection<FailedListenerDTO> flDTOs = failedListenerDTOs.values();
-
-		List<FailedListenerDTO> copies = new ArrayList<FailedListenerDTO>();
-
-		for (FailedListenerDTO failedListenerDTO : flDTOs) {
-			copies.add(DTOUtil.clone(failedListenerDTO));
-		}
-
-		return copies.toArray(new FailedListenerDTO[copies.size()]);
-	}
-
-	private FailedResourceDTO[] getFailedResourceDTOs() {
-		Collection<FailedResourceDTO> frDTOs = failedResourceDTOs.values();
-
-		List<FailedResourceDTO> copies = new ArrayList<FailedResourceDTO>();
-
-		for (FailedResourceDTO failedResourceDTO : frDTOs) {
-			copies.add(DTOUtil.clone(failedResourceDTO));
-		}
-
-		return copies.toArray(new FailedResourceDTO[copies.size()]);
-	}
-
-	private FailedServletContextDTO[] getFailedServletContextDTO() {
-		Collection<FailedServletContextDTO> fscDTOs = failedServletContextDTOs.values();
-
-		List<FailedServletContextDTO> copies = new ArrayList<FailedServletContextDTO>();
-
-		for (FailedServletContextDTO failedServletContextDTO : fscDTOs) {
-			copies.add(DTOUtil.clone(failedServletContextDTO));
-		}
-
-		return copies.toArray(new FailedServletContextDTO[copies.size()]);
-	}
-
-	private FailedServletDTO[] getFailedServletDTOs() {
-		Collection<FailedServletDTO> fsDTOs = failedServletDTOs.values();
-
-		List<FailedServletDTO> copies = new ArrayList<FailedServletDTO>();
-
-		for (FailedServletDTO failedServletDTO : fsDTOs) {
-			copies.add(DTOUtil.clone(failedServletDTO));
-		}
-
-		return copies.toArray(new FailedServletDTO[copies.size()]);
 	}
 
 	private ServletContextDTO[] getServletContextDTOs() {
@@ -873,95 +802,6 @@ public class HttpServiceRuntimeImpl
 		}
 	}
 
-	public void recordFailedFilterDTO(
-		ServiceReference<Filter> serviceReference,
-		FailedFilterDTO failedFilterDTO) {
-
-		if (failedFilterDTOs.containsKey(serviceReference)) {
-			return;
-		}
-
-		failedFilterDTOs.put(serviceReference, failedFilterDTO);
-	}
-
-	public void recordFailedListenerDTO(
-		ServiceReference<EventListener> serviceReference,
-		FailedListenerDTO failedListenerDTO) {
-
-		if (failedListenerDTOs.containsKey(serviceReference)) {
-			return;
-		}
-
-		failedListenerDTOs.put(serviceReference, failedListenerDTO);
-	}
-
-	public void recordFailedResourceDTO(
-		ServiceReference<Object> serviceReference, FailedResourceDTO failedResourceDTO) {
-
-		if (failedResourceDTOs.containsKey(serviceReference)) {
-			return;
-		}
-
-		failedResourceDTOs.put(serviceReference, failedResourceDTO);
-	}
-
-	private void recordFailedServletContextDTO(
-		ServiceReference<ServletContextHelper> serviceReference, String contextName,
-		String contextPath, int failureReason) {
-
-		FailedServletContextDTO failedServletContextDTO = new FailedServletContextDTO();
-
-		failedServletContextDTO.attributes = Collections.emptyMap();
-		failedServletContextDTO.contextPath = contextPath;
-		failedServletContextDTO.errorPageDTOs = new ErrorPageDTO[0];
-		failedServletContextDTO.failureReason = failureReason;
-		failedServletContextDTO.filterDTOs = new FilterDTO[0];
-		failedServletContextDTO.initParams = ServiceProperties.parseInitParams(
-			serviceReference, HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX);
-		failedServletContextDTO.listenerDTOs = new ListenerDTO[0];
-		failedServletContextDTO.name = contextName;
-		failedServletContextDTO.resourceDTOs = new ResourceDTO[0];
-		failedServletContextDTO.serviceId = (Long)serviceReference.getProperty(Constants.SERVICE_ID);
-		failedServletContextDTO.servletDTOs = new ServletDTO[0];
-
-		failedServletContextDTOs.put(serviceReference, failedServletContextDTO);
-	}
-
-	public void recordFailedServletDTO(
-		ServiceReference<Servlet> serviceReference,
-		FailedServletDTO failedServletDTO) {
-
-		if (failedServletDTOs.containsKey(serviceReference)) {
-			return;
-		}
-
-		failedServletDTOs.put(serviceReference, failedServletDTO);
-	}
-
-	public void removeFailedFilterDTO(
-		ServiceReference<Filter> serviceReference) {
-
-		failedFilterDTOs.remove(serviceReference);
-	}
-
-	public void removeFailedListenerDTO(
-		ServiceReference<EventListener> serviceReference) {
-
-		failedListenerDTOs.remove(serviceReference);
-	}
-
-	public void removeFailedResourceDTO(
-		ServiceReference<Object> serviceReference) {
-
-		failedResourceDTOs.remove(serviceReference);
-	}
-
-	public void removeFailedServletDTOs(
-		ServiceReference<Servlet> serviceReference) {
-
-		failedServletDTOs.remove(serviceReference);
-	}
-
 	public void fireSessionIdChanged(String oldSessionId) {
 		for (ContextController contextController : controllerMap.values()) {
 			contextController.fireSessionIdChanged(oldSessionId);
@@ -988,17 +828,6 @@ public class HttpServiceRuntimeImpl
 
 	private ConcurrentMap<ServiceReference<ServletContextHelper>, ContextController> controllerMap =
 		new ConcurrentHashMap<ServiceReference<ServletContextHelper>, ContextController>();
-
-	private final ConcurrentMap<ServiceReference<Filter>, FailedFilterDTO> failedFilterDTOs =
-		new ConcurrentHashMap<ServiceReference<Filter>, FailedFilterDTO>();
-	private final ConcurrentMap<ServiceReference<EventListener>, FailedListenerDTO> failedListenerDTOs =
-		new ConcurrentHashMap<ServiceReference<EventListener>, FailedListenerDTO>();
-	private final ConcurrentMap<ServiceReference<Object>, FailedResourceDTO> failedResourceDTOs =
-		new ConcurrentHashMap<ServiceReference<Object>, FailedResourceDTO>();
-	private final ConcurrentMap<ServiceReference<ServletContextHelper>, FailedServletContextDTO> failedServletContextDTOs =
-		new ConcurrentHashMap<ServiceReference<ServletContextHelper>, FailedServletContextDTO>();
-	private final ConcurrentMap<ServiceReference<Servlet>, FailedServletDTO> failedServletDTOs =
-		new ConcurrentHashMap<ServiceReference<Servlet>, FailedServletDTO>();
 
 	private AtomicLong legacyIdGenerator = new AtomicLong(0);
 

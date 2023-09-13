@@ -64,13 +64,9 @@ public class ContextFilterTrackerCustomizer
 		}
 		catch (HttpWhiteboardFailureException hwfe) {
 			httpServiceRuntime.log(hwfe.getMessage(), hwfe);
-
-			recordFailedFilterDTO(serviceReference, hwfe.getFailureReason());
 		}
 		catch (Exception e) {
 			httpServiceRuntime.log(e.getMessage(), e);
-
-			recordFailedFilterDTO(serviceReference, DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
 		}
 
 		return result;
@@ -95,35 +91,9 @@ public class ContextFilterTrackerCustomizer
 			// Destroy now ungets the object we are using
 			registration.destroy();
 		}
-
-		contextController.getHttpServiceRuntime().removeFailedFilterDTO(serviceReference);
-	}
-
-	private void recordFailedFilterDTO(
-		ServiceReference<Filter> serviceReference, int failureReason) {
-
-		FailedFilterDTO failedFilterDTO = new FailedFilterDTO();
-
-		failedFilterDTO.asyncSupported = BooleanPlus.from(
-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED), false);
-		failedFilterDTO.dispatcher = StringPlus.from(
-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER)).toArray(new String[0]);
-		failedFilterDTO.failureReason = failureReason;
-		failedFilterDTO.initParams = ServiceProperties.parseInitParams(
-			serviceReference, HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX);
-		failedFilterDTO.name = (String)serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME);
-		failedFilterDTO.patterns = StringPlus.from(
-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN)).toArray(new String[0]);
-		failedFilterDTO.regexs = StringPlus.from(
-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_REGEX)).toArray(new String[0]);
-		failedFilterDTO.serviceId = (Long)serviceReference.getProperty(Constants.SERVICE_ID);
-		failedFilterDTO.servletContextId = contextController.getServiceId();
-		failedFilterDTO.servletNames = StringPlus.from(
-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET)).toArray(new String[0]);
-
-		contextController.getHttpServiceRuntime().recordFailedFilterDTO(serviceReference, failedFilterDTO);
 	}
 
 	private ContextController contextController;
 
 }
+/* @generated */

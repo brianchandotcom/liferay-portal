@@ -62,13 +62,9 @@ public class ContextResourceTrackerCustomizer
 		}
 		catch (HttpWhiteboardFailureException hwfe) {
 			httpServiceRuntime.log(hwfe.getMessage(), hwfe);
-
-			recordFailedResourceDTO(serviceReference, hwfe.getFailureReason());
 		}
 		catch (Exception e) {
 			httpServiceRuntime.log(e.getMessage(), e);
-
-			recordFailedResourceDTO(serviceReference, DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
 		}
 
 		return result;
@@ -93,25 +89,9 @@ public class ContextResourceTrackerCustomizer
 			// destroy will unget the service object we were using
 			registration.destroy();
 		}
-
-		contextController.getHttpServiceRuntime().removeFailedResourceDTO(serviceReference);
-	}
-
-	private void recordFailedResourceDTO(
-		ServiceReference<Object> serviceReference, int failureReason) {
-
-		FailedResourceDTO failedResourceDTO = new FailedResourceDTO();
-
-		failedResourceDTO.failureReason = failureReason;
-		failedResourceDTO.patterns = StringPlus.from(
-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN)).toArray(new String[0]);
-		failedResourceDTO.prefix = (String)serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX);
-		failedResourceDTO.serviceId = (Long)serviceReference.getProperty(Constants.SERVICE_ID);
-		failedResourceDTO.servletContextId = contextController.getServiceId();
-
-		contextController.getHttpServiceRuntime().recordFailedResourceDTO(serviceReference, failedResourceDTO);
 	}
 
 	private ContextController contextController;
 
 }
+/* @generated */

@@ -77,13 +77,9 @@ public class ContextListenerTrackerCustomizer
 		}
 		catch (HttpWhiteboardFailureException hwfe) {
 			httpServiceRuntime.log(hwfe.getMessage(), hwfe);
-
-			recordFailedListenerDTO(serviceReference, hwfe.getFailureReason());
 		}
 		catch (Exception e) {
 			httpServiceRuntime.log(e.getMessage(), e);
-
-			recordFailedListenerDTO(serviceReference, DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
 		}
 
 		return result;
@@ -108,24 +104,9 @@ public class ContextListenerTrackerCustomizer
 			// Destroy now ungets the object we are using
 			listenerRegistration.destroy();
 		}
-
-		contextController.getHttpServiceRuntime().removeFailedListenerDTO(serviceReference);
-	}
-
-	private void recordFailedListenerDTO(
-		ServiceReference<EventListener> serviceReference, int failureReason) {
-
-		FailedListenerDTO failedListenerDTO = new FailedListenerDTO();
-
-		failedListenerDTO.failureReason = failureReason;
-		failedListenerDTO.serviceId = (Long)serviceReference.getProperty(Constants.SERVICE_ID);
-		failedListenerDTO.servletContextId = contextController.getServiceId();
-		failedListenerDTO.types = StringPlus.from(
-			serviceReference.getProperty(Constants.OBJECTCLASS)).toArray(new String[0]);
-
-		contextController.getHttpServiceRuntime().recordFailedListenerDTO(serviceReference, failedListenerDTO);
 	}
 
 	private ContextController contextController;
 
 }
+/* @generated */

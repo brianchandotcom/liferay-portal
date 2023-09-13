@@ -64,13 +64,9 @@ public class ContextServletTrackerCustomizer
 		}
 		catch (HttpWhiteboardFailureException hwfe) {
 			httpServiceRuntime.log(hwfe.getMessage(), hwfe);
-
-			recordFailedServletDTO(serviceReference, hwfe.getFailureReason());
 		}
 		catch (Exception e) {
 			httpServiceRuntime.log(e.getMessage(), e);
-
-			recordFailedServletDTO(serviceReference, DTOConstants.FAILURE_REASON_EXCEPTION_ON_INIT);
 		}
 
 		return result;
@@ -95,30 +91,9 @@ public class ContextServletTrackerCustomizer
 			// destroy will unget the service object we were using
 			registration.destroy();
 		}
-
-		contextController.getHttpServiceRuntime().removeFailedServletDTOs(serviceReference);
-	}
-
-	private void recordFailedServletDTO(
-		ServiceReference<Servlet> serviceReference, int failureReason) {
-
-		FailedServletDTO failedServletDTO = new FailedServletDTO();
-
-		failedServletDTO.asyncSupported = BooleanPlus.from(
-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED), false);
-		failedServletDTO.failureReason = failureReason;
-		failedServletDTO.initParams = ServiceProperties.parseInitParams(
-			serviceReference, HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX);
-		failedServletDTO.name = (String)serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME);
-		failedServletDTO.patterns = StringPlus.from(
-			serviceReference.getProperty(HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN)).toArray(new String[0]);
-		failedServletDTO.serviceId = (Long)serviceReference.getProperty(Constants.SERVICE_ID);
-		failedServletDTO.servletContextId = contextController.getServiceId();
-		failedServletDTO.servletInfo = Const.BLANK;
-
-		contextController.getHttpServiceRuntime().recordFailedServletDTO(serviceReference, failedServletDTO);
 	}
 
 	private ContextController contextController;
 
 }
+/* @generated */

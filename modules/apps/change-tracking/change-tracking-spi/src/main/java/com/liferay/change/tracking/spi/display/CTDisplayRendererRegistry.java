@@ -80,4 +80,7 @@ public interface CTDisplayRendererRegistry {
 	public <T extends BaseModel<T>> boolean isHideable(
 		T model, long modelClassNameId);
 
+	public <T extends BaseModel<T>> boolean isMovable(
+		T model, long modelClassNameId);
+
 }

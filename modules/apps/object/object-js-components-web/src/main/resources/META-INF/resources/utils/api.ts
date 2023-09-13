@@ -145,8 +145,16 @@ async function deleteItem(url: string) {
 	}
 }
 
-export function deleteFolder(id: number) {
-	return deleteItem(`/o/object-admin/v1.0/object-folders/${id}`);
+export async function addPickListItem({
+	id,
+	key,
+	name_i18n,
+}: Partial<PickListItem>) {
+	return await save({
+		item: {key, name_i18n},
+		method: 'POST',
+		url: `/o/headless-admin-list-type/v1.0/list-type-definitions/${id}/list-type-entries`,
+	});
 }
 
 export function deleteObjectDefinitions(id: number) {
@@ -155,6 +163,10 @@ export function deleteObjectDefinitions(id: number) {
 
 export function deleteObjectField(id: number) {
 	return deleteItem(`/o/object-admin/v1.0/object-fields/${id}`);
+}
+
+export function deleteObjectFolder(objectFolderId: number) {
+	return deleteItem(`/o/object-admin/v1.0/object-folders/${objectFolderId}`);
 }
 
 export function deleteObjectRelationships(id: number) {
@@ -179,10 +191,6 @@ export async function fetchJSON<T>(input: RequestInfo, init?: RequestInit) {
 	return (await result.json()) as T;
 }
 
-export async function getAllFolders() {
-	return await getList<ObjectFolder>('/o/object-admin/v1.0/object-folders');
-}
-
 export async function getAllObjectDefinitions() {
 	return await getList<ObjectDefinition>(
 		'/o/object-admin/v1.0/object-definitions?page=-1'
@@ -193,17 +201,6 @@ export async function getAllObjectFolders() {
 	return await getList<ObjectFolder>(
 		'/o/object-admin/v1.0/object-folders?pageSize=-1'
 	);
-}
-
-export async function getFolderByERC(folderERC: string) {
-	const folderResponse = await fetch(
-		`/o/object-admin/v1.0/object-folders/by-external-reference-code/${folderERC}`,
-		{method: 'GET'}
-	);
-
-	const folder = (await folderResponse.json()) as ObjectFolder;
-
-	return folder;
 }
 
 export async function getList<T>(url: string) {
@@ -282,6 +279,19 @@ export async function getObjectFieldsById(objectDefinitionId: number) {
 	);
 }
 
+export async function getObjectFolderByExternalReferenceCode(
+	objectFolderExternalReferenceCode: string
+) {
+	const objectFolderResponse = await fetch(
+		`/o/object-admin/v1.0/object-folders/by-external-reference-code/${objectFolderExternalReferenceCode}`,
+		{method: 'GET'}
+	);
+
+	const objectFolder = (await objectFolderResponse.json()) as ObjectFolder;
+
+	return objectFolder;
+}
+
 export async function getObjectRelationshipsByExternalReferenceCode(
 	externalReferenceCode: string
 ) {
@@ -325,39 +335,6 @@ export async function getPickLists() {
 export async function getRelationship<T>(objectRelationshipId: number) {
 	return fetchJSON<T>(
 		`/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`
-	);
-}
-
-export async function publishObjectDefinitionById(objectDefinitionId: number) {
-	return await fetch(
-		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/publish`,
-		{
-			method: 'POST',
-		}
-	);
-}
-
-export async function putObjectDefinitionByExternalReferenceCode(
-	values: Partial<ObjectDefinition>
-) {
-	return await fetch(
-		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${values.externalReferenceCode}`,
-		{
-			body: JSON.stringify(values),
-			headers,
-			method: 'PUT',
-		}
-	);
-}
-
-export async function putObjectFolderByERC(folder: Partial<ObjectFolder>) {
-	return await fetch(
-		`/o/object-admin/v1.0/object-folders/by-external-reference-code/${folder.externalReferenceCode}`,
-		{
-			body: JSON.stringify(folder),
-			headers,
-			method: 'PUT',
-		}
 	);
 }
 
@@ -409,16 +386,50 @@ export async function save({
 	}
 }
 
-export async function addPickListItem({
-	id,
-	key,
-	name_i18n,
-}: Partial<PickListItem>) {
+export async function postObjectDefinition(
+	objectDefinition: Partial<ObjectDefinition>
+) {
 	return await save({
-		item: {key, name_i18n},
+		item: objectDefinition,
 		method: 'POST',
-		url: `/o/headless-admin-list-type/v1.0/list-type-definitions/${id}/list-type-entries`,
+		returnValue: true,
+		url: `/o/object-admin/v1.0/object-definitions`,
 	});
+}
+
+export async function publishObjectDefinitionById(objectDefinitionId: number) {
+	return await fetch(
+		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/publish`,
+		{
+			method: 'POST',
+		}
+	);
+}
+
+export async function putObjectDefinitionByExternalReferenceCode(
+	values: Partial<ObjectDefinition>
+) {
+	return await fetch(
+		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${values.externalReferenceCode}`,
+		{
+			body: JSON.stringify(values),
+			headers,
+			method: 'PUT',
+		}
+	);
+}
+
+export async function putObjectFolderByExternalReferenceCode(
+	objectFolder: Partial<ObjectFolder>
+) {
+	return await fetch(
+		`/o/object-admin/v1.0/object-folders/by-external-reference-code/${objectFolder.externalReferenceCode}`,
+		{
+			body: JSON.stringify(objectFolder),
+			headers,
+			method: 'PUT',
+		}
+	);
 }
 
 export async function updatePickList({

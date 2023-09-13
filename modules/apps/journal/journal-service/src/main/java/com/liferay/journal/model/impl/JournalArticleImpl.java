@@ -265,17 +265,9 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public String getContentByLocale(String languageId) {
-		Map<String, String> tokens = new HashMap<>();
+		Document document = getDocumentByLocale(languageId);
 
-		DDMStructure ddmStructure = getDDMStructure();
-
-		if (ddmStructure != null) {
-			tokens.put(
-				"ddm_structure_id",
-				String.valueOf(ddmStructure.getStructureId()));
-		}
-
-		return getContentByLocale(getDocument(), languageId, tokens);
+		return document.asXML();
 	}
 
 	@Override

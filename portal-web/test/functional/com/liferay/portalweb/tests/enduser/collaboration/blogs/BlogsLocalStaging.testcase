@@ -1161,12 +1161,6 @@ definition {
 
 		Refresh();
 
-		DMNavigator.openToEditEntryInSite(
-			dmDocumentTitle = "Test YouTube Video",
-			groupName = "Site Name (Staging)",
-			site = "false",
-			siteURLKey = "site-name-staging");
-
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
 
 		LexiconEntry.gotoEntryMenuItem(

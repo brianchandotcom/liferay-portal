@@ -194,7 +194,7 @@ definition {
 			Alert.viewWarningSpecific(warningMessage = "The test has not gathered sufficient data to confidently determine a winner. However, variants can still be published.");
 		}
 
-		task ("Check that the Create New Test button") {
+		task ("Check that the create new test button is present") {
 			AssertElementPresent(
 				key_text = "Create New Test",
 				locator1 = "Button#ANY");

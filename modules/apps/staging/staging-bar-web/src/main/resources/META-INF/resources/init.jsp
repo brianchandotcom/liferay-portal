@@ -55,6 +55,7 @@ page import="com.liferay.portal.kernel.service.permission.LayoutPermissionUtil" 
 page import="com.liferay.portal.kernel.service.permission.LayoutSetBranchPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpComponentsUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
@@ -96,7 +97,7 @@ privateLayout = GetterUtil.getBoolean((String)renderRequest.getAttribute(WebKeys
 
 LayoutBranchDisplayContext layoutBranchDisplayContext = new LayoutBranchDisplayContext(request);
 LayoutSetBranchDisplayContext layoutSetBranchDisplayContext = new LayoutSetBranchDisplayContext(request);
-StagingBarDisplayContext stagingBarDisplayContext = new StagingBarDisplayContext(liferayPortletRequest, layout);
+StagingBarDisplayContext stagingBarDisplayContext = new StagingBarDisplayContext(liferayPortletRequest, liferayPortletResponse, layout);
 %>
 
 <%!

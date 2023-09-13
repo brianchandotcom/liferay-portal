@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.templateparser.TransformerListener;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -82,23 +81,6 @@ import java.util.TreeSet;
 @JSON(strict = true)
 public class JournalArticleImpl extends JournalArticleBaseImpl {
 
-	public static String getContentByLocale(
-		Document document, String languageId) {
-
-		return getContentByLocale(document, languageId, null);
-	}
-
-	public static String getContentByLocale(
-		Document document, String languageId, Map<String, String> tokens) {
-
-		if (_transformerListener != null) {
-			document = _transformerListener.onXml(
-				document.clone(), languageId, tokens);
-		}
-
-		return document.asXML();
-	}
-
 	public static void setDDMFormValuesToFieldsConverter(
 		DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter) {
 
@@ -107,12 +89,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	public static void setJournalConverter(JournalConverter journalConverter) {
 		_journalConverter = journalConverter;
-	}
-
-	public static void setTransformerListener(
-		TransformerListener transformerListener) {
-
-		_transformerListener = transformerListener;
 	}
 
 	@Override
@@ -852,7 +828,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	private static volatile DDMFormValuesToFieldsConverter
 		_ddmFormValuesToFieldsConverter;
 	private static volatile JournalConverter _journalConverter;
-	private static volatile TransformerListener _transformerListener;
 
 	private Map<Locale, String> _descriptionMap;
 	private Document _document;

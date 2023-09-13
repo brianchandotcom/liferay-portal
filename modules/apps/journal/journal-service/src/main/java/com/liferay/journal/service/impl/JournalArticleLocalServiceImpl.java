@@ -5884,7 +5884,6 @@ public class JournalArticleLocalServiceImpl
 		JournalArticleImpl.setDDMFormValuesToFieldsConverter(
 			_ddmFormValuesToFieldsConverter);
 		JournalArticleImpl.setJournalConverter(_journalConverter);
-		JournalArticleImpl.setTransformerListener(_transformerListener);
 
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, TransformerListener.class,
@@ -6227,7 +6226,6 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticleImpl.setDDMFormValuesToFieldsConverter(null);
 		JournalArticleImpl.setJournalConverter(null);
-		JournalArticleImpl.setTransformerListener(null);
 
 		_serviceTrackerList.close();
 	}
@@ -8180,11 +8178,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Reference
 	private SystemEventLocalService _systemEventLocalService;
-
-	@Reference(
-		target = "(component.name=com.liferay.journal.internal.transformer.LocaleTransformerListener)"
-	)
-	private TransformerListener _transformerListener;
 
 	@Reference
 	private TrashEntryLocalService _trashEntryLocalService;

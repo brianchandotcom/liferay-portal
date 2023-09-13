@@ -23,16 +23,22 @@ import {ALL} from './constants';
 
 const CartResource = ServiceProvider.DeliveryCartAPI('v1');
 
-function getQuantity(settings) {
+function getQuantity(settings, skuUnitOfMeasure) {
 	if (settings?.productConfiguration?.allowedOrderQuantities?.length) {
 		return Math.min(
 			...settings.productConfiguration.allowedOrderQuantities
 		);
 	}
 
-	return getMinQuantity(
-		settings?.productConfiguration?.minOrderQuantity,
-		settings?.productConfiguration?.multipleOrderQuantity
+	return Number(
+		getMinQuantity(
+			skuUnitOfMeasure
+				? settings?.productConfiguration?.minOrderQuantity
+				: Math.ceil(settings?.productConfiguration?.minOrderQuantity),
+			skuUnitOfMeasure?.incrementalOrderQuantity ||
+				settings?.productConfiguration?.multipleOrderQuantity,
+			skuUnitOfMeasure?.precision || 0
+		)
 	);
 }
 
@@ -58,7 +64,7 @@ function AddToCart({
 	);
 	const [cpInstance, setCpInstance] = useState({
 		...initialCpInstance,
-		quantity: getQuantity(settings),
+		quantity: getQuantity(settings, initialCpInstance.skuUnitOfMeasure),
 		validQuantity: true,
 	});
 	const inputRef = useRef(null);
@@ -80,7 +86,7 @@ function AddToCart({
 	useEffect(() => {
 		setCpInstance({
 			...initialCpInstance,
-			quantity: getQuantity(settings),
+			quantity: getQuantity(settings, initialCpInstance.skuUnitOfMeasure),
 			validQuantity: true,
 		});
 	}, [initialCpInstance, settings]);
@@ -253,6 +259,7 @@ function AddToCart({
 					ref={inputRef}
 					size={settings.size}
 					step={settings.productConfiguration?.multipleOrderQuantity}
+					unitOfMeasure={cpInstance.skuUnitOfMeasure}
 				/>
 
 				{Liferay.FeatureFlags['COMMERCE-11287'] &&

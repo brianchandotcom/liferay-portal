@@ -12,10 +12,12 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.frontend.model.ProductSettingsModel" %><%@
+page import="com.liferay.commerce.product.model.CPInstanceUnitOfMeasure" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.json.JSONSerializer" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <liferay-theme:defineObjects />
@@ -29,6 +31,7 @@ String commerceChannelId = (String)request.getAttribute("liferay-commerce:add-to
 String commerceCurrencyCode = (String)request.getAttribute("liferay-commerce:add-to-cart:commerceCurrencyCode");
 String commerceOrderId = (String)request.getAttribute("liferay-commerce:add-to-cart:commerceOrderId");
 String cpInstanceId = (String)request.getAttribute("liferay-commerce:add-to-cart:cpInstanceId");
+CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure = (CPInstanceUnitOfMeasure)request.getAttribute("liferay-commerce:add-to-cart:cpInstanceUnitOfMeasure");
 String iconOnly = (String)request.getAttribute("liferay-commerce:add-to-cart:iconOnly");
 String inCart = (String)request.getAttribute("liferay-commerce:add-to-cart:inCart");
 String inline = (String)request.getAttribute("liferay-commerce:add-to-cart:inline");

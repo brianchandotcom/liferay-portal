@@ -24,8 +24,10 @@ import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.content.helper.CPContentHelper;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPJSONUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
@@ -33,6 +35,7 @@ import com.liferay.commerce.service.CommerceOrderTypeLocalService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -135,6 +138,17 @@ public class AddToCartTag extends IncludeTag {
 
 					if (!commerceOrderItems.isEmpty()) {
 						_inCart = true;
+					}
+				}
+
+				if (FeatureFlagManagerUtil.isEnabled("COMMERCE-11287")) {
+					List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+						_cpInstanceUnitOfMeasureLocalService.
+							getActiveCPInstanceUnitOfMeasures(_cpInstanceId);
+
+					if (!cpInstanceUnitOfMeasures.isEmpty()) {
+						_cpInstanceUnitOfMeasure = cpInstanceUnitOfMeasures.get(
+							0);
 					}
 				}
 			}
@@ -264,10 +278,6 @@ public class AddToCartTag extends IncludeTag {
 		return _skuOptions;
 	}
 
-	public String getUnitOfMeasureKey() {
-		return _unitOfMeasureKey;
-	}
-
 	public void setAlignment(String alignment) {
 		_alignment = alignment;
 	}
@@ -290,6 +300,9 @@ public class AddToCartTag extends IncludeTag {
 			httpServletRequest, "commerceOrderId", _commerceOrderId);
 		setNamespacedAttribute(
 			httpServletRequest, "cpInstanceId", _cpInstanceId);
+		setNamespacedAttribute(
+			httpServletRequest, "cpInstanceUnitOfMeasure",
+			_cpInstanceUnitOfMeasure);
 		setNamespacedAttribute(httpServletRequest, "disabled", _disabled);
 		setNamespacedAttribute(httpServletRequest, "iconOnly", _iconOnly);
 		setNamespacedAttribute(httpServletRequest, "inCart", _inCart);
@@ -310,8 +323,6 @@ public class AddToCartTag extends IncludeTag {
 		setNamespacedAttribute(httpServletRequest, "skuOptions", _skuOptions);
 		setNamespacedAttribute(
 			httpServletRequest, "stockQuantity", _stockQuantity);
-		setNamespacedAttribute(
-			httpServletRequest, "unitOfMeasureKey", _unitOfMeasureKey);
 	}
 
 	public void setCPCatalogEntry(CPCatalogEntry cpCatalogEntry) {
@@ -356,6 +367,8 @@ public class AddToCartTag extends IncludeTag {
 		_cpContentHelper = ServletContextUtil.getCPContentHelper();
 		_cpDefinitionOptionRelLocalService =
 			ServletContextUtil.getCPDefinitionOptionRelLocalService();
+		_cpInstanceUnitOfMeasureLocalService =
+			ServletContextUtil.getCPInstanceUnitOfMeasureLocalService();
 		_productHelper = ServletContextUtil.getProductHelper();
 	}
 
@@ -375,10 +388,6 @@ public class AddToCartTag extends IncludeTag {
 
 	public void setSkuOptions(String skuOptions) {
 		_skuOptions = skuOptions;
-	}
-
-	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
-		_unitOfMeasureKey = unitOfMeasureKey;
 	}
 
 	@Override
@@ -402,6 +411,8 @@ public class AddToCartTag extends IncludeTag {
 		_cpContentHelper = null;
 		_cpDefinitionOptionRelLocalService = null;
 		_cpInstanceId = 0;
+		_cpInstanceUnitOfMeasure = null;
+		_cpInstanceUnitOfMeasureLocalService = null;
 		_disabled = false;
 		_iconOnly = false;
 		_inCart = false;
@@ -417,7 +428,6 @@ public class AddToCartTag extends IncludeTag {
 		_size = "md";
 		_skuOptions = null;
 		_stockQuantity = 0;
-		_unitOfMeasureKey = StringPool.BLANK;
 	}
 
 	@Override
@@ -471,6 +481,9 @@ public class AddToCartTag extends IncludeTag {
 	private CPDefinitionOptionRelLocalService
 		_cpDefinitionOptionRelLocalService;
 	private long _cpInstanceId;
+	private CPInstanceUnitOfMeasure _cpInstanceUnitOfMeasure;
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 	private boolean _disabled;
 	private boolean _iconOnly;
 	private boolean _inCart;
@@ -486,6 +499,5 @@ public class AddToCartTag extends IncludeTag {
 	private String _size = "md";
 	private String _skuOptions;
 	private int _stockQuantity;
-	private String _unitOfMeasureKey = StringPool.BLANK;
 
 }

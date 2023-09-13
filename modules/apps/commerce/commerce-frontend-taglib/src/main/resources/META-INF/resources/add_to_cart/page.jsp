@@ -58,6 +58,17 @@ if (alignment.equals("full-width")) {
 			skuId: <%= cpInstanceId %>,
 			skuOptions: <%= skuOptions %> || [],
 			stockQuantity: <%= stockQuantity %>,
+			<c:if test="<%= cpInstanceUnitOfMeasure != null %>">
+				skuUnitOfMeasure: {
+					incrementalOrderQuantity: <%= cpInstanceUnitOfMeasure.getIncrementalOrderQuantity() %>,
+					key: '<%= HtmlUtil.escapeJS(cpInstanceUnitOfMeasure.getKey()) %>',
+					name: '<%= HtmlUtil.escapeJS(cpInstanceUnitOfMeasure.getName()) %>',
+					precision: <%= cpInstanceUnitOfMeasure.getPrecision() %>,
+					primary: <%= cpInstanceUnitOfMeasure.isPrimary() %>,
+					priority: <%= cpInstanceUnitOfMeasure.getPriority() %>,
+					rate: <%= cpInstanceUnitOfMeasure.getRate() %>,
+				},
+			</c:if>
 		},
 		disabled: <%= disabled %>,
 		productId: <%= productId %>,

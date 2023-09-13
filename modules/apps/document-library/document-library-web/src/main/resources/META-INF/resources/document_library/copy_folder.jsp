@@ -20,11 +20,11 @@ dlCopyFolderDisplayContext.setViewAttributes(liferayPortletResponse);
 			HashMapBuilder.<String, Object>put(
 				"copyActionURL", dlCopyFolderDisplayContext.getActionURL()
 			).put(
+				"entryIds", new long[] {dlCopyFolderDisplayContext.getSourceFolderId()}
+			).put(
 				"entryName", dlCopyFolderDisplayContext.getSourceFolderName()
 			).put(
 				"redirect", dlCopyFolderDisplayContext.getRedirect()
-			).put(
-				"selectedEntries", new long[] {dlCopyFolderDisplayContext.getSourceFolderId()}
 			).put(
 				"selectionModalURL", dlCopyFolderDisplayContext.getSelectFolderURL()
 			).put(

@@ -72,6 +72,15 @@ public class DLCopyEntryDisplayContext {
 		).buildString();
 	}
 
+	public long[] getEntryIds() {
+		if (ArrayUtil.isEmpty(_entryIds)) {
+			_entryIds = ParamUtil.getLongValues(
+				_httpServletRequest, "entryIds");
+		}
+
+		return _entryIds;
+	}
+
 	public long getFileEntryId() {
 		if (_fileEntryId == null) {
 			_fileEntryId = ParamUtil.getLong(
@@ -120,15 +129,6 @@ public class DLCopyEntryDisplayContext {
 		_redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 
 		return _redirect;
-	}
-
-	public long[] getSelectedEntries() {
-		if (ArrayUtil.isEmpty(_selectedEntries)) {
-			_selectedEntries = ParamUtil.getLongValues(
-				_httpServletRequest, "selectedEntries");
-		}
-
-		return _selectedEntries;
 	}
 
 	public String getSelectFolderURL() throws PortalException {
@@ -260,13 +260,13 @@ public class DLCopyEntryDisplayContext {
 		return _sourceRepository;
 	}
 
+	private long[] _entryIds;
 	private Long _fileEntryId;
 	private String _fileName;
 	private Long _fileShortcutId;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
-	private long[] _selectedEntries;
 	private String _sourceFolderName;
 	private Repository _sourceRepository;
 	private final ThemeDisplay _themeDisplay;

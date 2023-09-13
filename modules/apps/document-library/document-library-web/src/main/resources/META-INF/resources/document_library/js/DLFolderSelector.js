@@ -18,10 +18,10 @@ import React, {useEffect, useState} from 'react';
 
 const DLFolderSelector = ({
 	copyActionURL,
+	entryIds,
 	entryName,
 	portletNamespace,
 	redirect,
-	selectedEntries,
 	selectionModalURL,
 	sourceRepositoryId,
 }) => {
@@ -84,7 +84,7 @@ const DLFolderSelector = ({
 		event.preventDefault();
 
 		const bodyContentObject = objectToFormData({
-			[`${portletNamespace}selectedEntries`]: selectedEntries,
+			[`${portletNamespace}entryIds`]: entryIds,
 			[`${portletNamespace}sourceRepositoryId`]: sourceRepositoryId,
 			[`${portletNamespace}destinationParentFolderId`]: destinationParentFolderId,
 			[`${portletNamespace}destinationRepositoryId`]: destinationRepositoryId,

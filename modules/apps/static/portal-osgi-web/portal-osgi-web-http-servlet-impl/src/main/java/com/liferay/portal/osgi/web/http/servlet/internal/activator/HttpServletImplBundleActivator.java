@@ -37,6 +37,8 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.http.runtime.HttpServiceRuntime;
 import org.osgi.service.http.runtime.HttpServiceRuntimeConstants;
+import org.osgi.service.http.runtime.dto.RequestInfoDTO;
+import org.osgi.service.http.runtime.dto.RuntimeDTO;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -183,7 +185,23 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 						httpServiceRuntimeImpl, servletConfig),
 					httpServletEndpoint.getProperties()),
 				_bundleContext.registerService(
-					HttpServiceRuntime.class, httpServiceRuntimeImpl,
+					HttpServiceRuntime.class,
+					new HttpServiceRuntime() {
+
+						@Override
+						public RequestInfoDTO calculateRequestInfoDTO(
+							String path) {
+
+							return httpServiceRuntimeImpl.
+								calculateRequestInfoDTO(path);
+						}
+
+						@Override
+						public RuntimeDTO getRuntimeDTO() {
+							return httpServiceRuntimeImpl.getRuntimeDTO();
+						}
+
+					},
 					HashMapDictionaryBuilder.putAll(
 						attributesMap
 					).build()));

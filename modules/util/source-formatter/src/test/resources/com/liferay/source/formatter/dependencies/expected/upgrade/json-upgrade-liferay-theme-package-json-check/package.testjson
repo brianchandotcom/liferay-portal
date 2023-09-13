@@ -1,0 +1,26 @@
+{
+	"devDependencies": {
+		"compass-mixins": "0.12.12",
+		"gulp": "4.0.2",
+		"liferay-font-awesome": "3.5.2",
+		"liferay-frontend-css-common": "6.0.8",
+		"liferay-frontend-theme-styled": "6.0.67",
+		"liferay-frontend-theme-unstyled": "6.0.55",
+		"liferay-theme-tasks": "^11.5.3"
+	},
+	"liferayTheme": {
+		"version": "7.4"
+	},
+	"scripts": {
+		"build": "gulp build",
+		"checkFormat": "liferay-npm-scripts check",
+		"deploy": "gulp deploy",
+		"extend": "gulp extend",
+		"format": "liferay-npm-scripts fix",
+		"init": "gulp init",
+		"kickstart": "gulp kickstart",
+		"status": "gulp status",
+		"upgrade": "gulp upgrade",
+		"watch": "gulp watch"
+	}
+}

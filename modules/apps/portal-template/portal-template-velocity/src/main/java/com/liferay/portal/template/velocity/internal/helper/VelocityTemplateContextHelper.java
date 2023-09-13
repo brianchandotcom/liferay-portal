@@ -9,7 +9,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.service.permission.RolePermission;
+import com.liferay.portal.kernel.service.permission.RolePermissionUtil_IW;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -192,7 +191,8 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 		// Permissions
 
 		try {
-			velocityContext.put("rolePermission", _rolePermission);
+			velocityContext.put(
+				"rolePermissionUtil", RolePermissionUtil_IW.getInstance());
 		}
 		catch (SecurityException securityException) {
 			_log.error(securityException);
@@ -204,8 +204,5 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 	private static volatile VelocityEngineConfiguration
 		_velocityEngineConfiguration;
-
-	@Reference
-	private RolePermission _rolePermission;
 
 }

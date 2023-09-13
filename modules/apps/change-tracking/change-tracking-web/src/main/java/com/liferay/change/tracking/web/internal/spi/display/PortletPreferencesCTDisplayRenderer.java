@@ -30,8 +30,6 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import javax.sound.sampled.Port;
-
 /**
  * @author David Truong
  */

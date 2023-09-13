@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.text.SimpleDateFormat;
 
@@ -218,6 +219,14 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 					throw new InfoFormException();
 				}
 
+				int status = ParamUtil.getInteger(
+					httpServletRequest, "status",
+					WorkflowConstants.STATUS_APPROVED);
+
+				if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+					status = WorkflowConstants.STATUS_APPROVED;
+				}
+
 				infoItem = infoItemCreator.createFromInfoItemFieldValues(
 					groupId,
 					InfoItemFieldValues.builder(
@@ -225,7 +234,8 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 						new ArrayList<>(infoFieldValues.values())
 					).infoItemReference(
 						new InfoItemReference(className, 0)
-					).build());
+					).build(),
+					status);
 			}
 
 			String displayPageURL = _getDisplayPageURL(

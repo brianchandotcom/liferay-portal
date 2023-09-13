@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.liferay.portal.tools.DBUpgrader;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -35,8 +36,7 @@ public class IndexStatusManagerImpl implements IndexStatusManager {
 	@Override
 	public boolean isIndexReadOnly() {
 		if (IndexStatusManagerThreadLocal.isIndexReadOnly() || _indexReadOnly ||
-			StartupHelperUtil.isUpgrading()) {
-
+			StartupHelperUtil.isUpgrading() || DBUpgrader.isUpgradeClient()) {
 			return true;
 		}
 

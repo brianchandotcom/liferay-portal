@@ -52,8 +52,8 @@ describe('The ObjectFoldersSidebar component should', () => {
 
 		expect(screen.getAllByRole('listitem')).toHaveLength(2);
 
-		expect(screen.getByText('Uncategorized')).toBeInTheDocument();
-
 		expect(screen.getByText('Ticket')).toBeInTheDocument();
+
+		expect(screen.getByText('Uncategorized')).toBeInTheDocument();
 	});
 });

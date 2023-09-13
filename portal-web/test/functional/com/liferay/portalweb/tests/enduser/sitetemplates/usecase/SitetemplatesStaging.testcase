@@ -24,8 +24,7 @@ definition {
 		}
 	}
 
-	@description = "User can enable local staging on site which is based on Masterclass site template. Blocked by LPS-176242."
-	@ignore = "true"
+	@description = "User can enable local staging on site which is based on Masterclass site template."
 	@priority = 4
 	test CanEnableLocalStagingOnMasterclassSiteTemplate {
 		property test.liferay.virtual.instance = "false";
@@ -49,17 +48,11 @@ definition {
 		task ("Then: User can publish the staging site") {
 			Navigator.openSiteURL(siteName = "Test Masterclass Site");
 
-			var key_tabName = "Staging";
+			Staging.openStagingAdmin(siteURLKey = "test-masterclass-site-staging");
 
-			while (IsElementNotPresent(locator1 = "StagingPublishToLive#TAB_NAME")) {
-				Refresh();
-			}
+			WaitForElementPresent(locator1 = "Staging#PROCESS_SUCCESSFUL");
 
-			Click(locator1 = "StagingPublishToLive#TAB_NAME");
-
-			Staging.gotoPublishToLive();
-
-			Staging.publishToLive();
+			Staging.publishCustomPublication();
 		}
 	}
 

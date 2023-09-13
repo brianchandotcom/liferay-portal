@@ -20,6 +20,20 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-195389"
+	@priority = 3
+	test AssertHighlightedSearchResultsWhenAdvancedSearchSyntaxIsEnabled {
+		SearchPortlets.configureEmbeddedSearchBar(useAdvancedSearchSyntax = "true");
+
+		SearchPortlets.searchEmbedded(searchTerm = "test");
+
+		AssertCssValue(
+			key_searchAssetTitle = "Test",
+			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_HIGHLIGHT",
+			locator2 = "background-color",
+			value1 = "rgba(252, 248, 227, 1)");
+	}
+
 	@description = "This is a use case for LPS-130227."
 	@priority = 4
 	test AssertPaginationURLforHTTPS {

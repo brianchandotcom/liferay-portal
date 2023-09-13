@@ -5,32 +5,22 @@
 
 package com.liferay.users.admin.kernel.util;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Address;
-import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Phone;
-import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.CountryServiceUtil;
-import com.liferay.portal.kernel.service.RegionServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.util.Accessor;
-import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
@@ -50,195 +40,6 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface UsersAdmin {
-
-	public static final String CUSTOM_QUESTION = "write-my-own-question";
-
-	public static final Accessor<Organization, String>
-		ORGANIZATION_COUNTRY_NAME_ACCESSOR =
-			new Accessor<Organization, String>() {
-
-				@Override
-				public String get(Organization organization) {
-					Address address = organization.getAddress();
-
-					Country country = address.getCountry();
-
-					String countryName = country.getName(
-						LocaleThreadLocal.getThemeDisplayLocale());
-
-					if (Validator.isNull(countryName)) {
-						country = CountryServiceUtil.fetchCountry(
-							organization.getCountryId());
-
-						if (country != null) {
-							countryName = country.getName(
-								LocaleThreadLocal.getThemeDisplayLocale());
-						}
-					}
-
-					return countryName;
-				}
-
-				@Override
-				public Class<String> getAttributeClass() {
-					return String.class;
-				}
-
-				@Override
-				public Class<Organization> getTypeClass() {
-					return Organization.class;
-				}
-
-			};
-
-	public static final Accessor<Organization, String>
-		ORGANIZATION_REGION_NAME_ACCESSOR =
-			new Accessor<Organization, String>() {
-
-				@Override
-				public String get(Organization organization) {
-					Address address = organization.getAddress();
-
-					Region region = address.getRegion();
-
-					String regionName = region.getName();
-
-					if (Validator.isNull(regionName)) {
-						region = RegionServiceUtil.fetchRegion(
-							organization.getRegionId());
-
-						if (region != null) {
-							regionName = LanguageUtil.get(
-								LocaleThreadLocal.getThemeDisplayLocale(),
-								region.getName());
-						}
-					}
-
-					return regionName;
-				}
-
-				@Override
-				public Class<String> getAttributeClass() {
-					return String.class;
-				}
-
-				@Override
-				public Class<Organization> getTypeClass() {
-					return Organization.class;
-				}
-
-			};
-
-	public static final Accessor<UserGroupGroupRole, Long>
-		USER_GROUP_GROUP_ROLE_ID_ACCESSOR =
-			new Accessor<UserGroupGroupRole, Long>() {
-
-				@Override
-				public Long get(UserGroupGroupRole userGroupGroupRole) {
-					Role role = RoleLocalServiceUtil.fetchRole(
-						userGroupGroupRole.getRoleId());
-
-					if (role == null) {
-						return 0L;
-					}
-
-					return role.getRoleId();
-				}
-
-				@Override
-				public Class<Long> getAttributeClass() {
-					return Long.class;
-				}
-
-				@Override
-				public Class<UserGroupGroupRole> getTypeClass() {
-					return UserGroupGroupRole.class;
-				}
-
-			};
-
-	public static final Accessor<UserGroupGroupRole, String>
-		USER_GROUP_GROUP_ROLE_TITLE_ACCESSOR =
-			new Accessor<UserGroupGroupRole, String>() {
-
-				@Override
-				public String get(UserGroupGroupRole userGroupGroupRole) {
-					Role role = RoleLocalServiceUtil.fetchRole(
-						userGroupGroupRole.getRoleId());
-
-					if (role == null) {
-						return StringPool.BLANK;
-					}
-
-					return role.getTitle(
-						LocaleThreadLocal.getThemeDisplayLocale());
-				}
-
-				@Override
-				public Class<String> getAttributeClass() {
-					return String.class;
-				}
-
-				@Override
-				public Class<UserGroupGroupRole> getTypeClass() {
-					return UserGroupGroupRole.class;
-				}
-
-			};
-
-	public static final Accessor<UserGroupRole, Long>
-		USER_GROUP_ROLE_ID_ACCESSOR = new Accessor<UserGroupRole, Long>() {
-
-			@Override
-			public Long get(UserGroupRole userGroupRole) {
-				Role role = RoleLocalServiceUtil.fetchRole(
-					userGroupRole.getRoleId());
-
-				if (role == null) {
-					return 0L;
-				}
-
-				return role.getRoleId();
-			}
-
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
-
-			@Override
-			public Class<UserGroupRole> getTypeClass() {
-				return UserGroupRole.class;
-			}
-
-		};
-
-	public static final Accessor<UserGroupRole, String>
-		USER_GROUP_ROLE_TITLE_ACCESSOR = new Accessor<UserGroupRole, String>() {
-
-			@Override
-			public String get(UserGroupRole userGroupRole) {
-				Role role = RoleLocalServiceUtil.fetchRole(
-					userGroupRole.getRoleId());
-
-				if (role == null) {
-					return StringPool.BLANK;
-				}
-
-				return role.getTitle(LocaleThreadLocal.getThemeDisplayLocale());
-			}
-
-			@Override
-			public Class<String> getAttributeClass() {
-				return String.class;
-			}
-
-			@Override
-			public Class<UserGroupRole> getTypeClass() {
-				return UserGroupRole.class;
-			}
-
-		};
 
 	public void addPortletBreadcrumbEntries(
 			Organization organization, HttpServletRequest httpServletRequest,

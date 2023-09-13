@@ -79,6 +79,7 @@ public class ObjectActionUtil {
 								serviceBuilderObjectAction.getStatus()));
 					}
 				};
+				system = serviceBuilderObjectAction.isSystem();
 			}
 		};
 

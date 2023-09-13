@@ -49,6 +49,8 @@ components:
                 status:
                     $ref: "#/components/schemas/Status"
                     readOnly: true
+                system:
+                    type: boolean
             type: object
         ObjectDefinition:
             properties:

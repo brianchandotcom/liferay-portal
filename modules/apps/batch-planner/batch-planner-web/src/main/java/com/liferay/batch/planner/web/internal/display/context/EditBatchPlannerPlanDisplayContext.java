@@ -197,9 +197,7 @@ public class EditBatchPlannerPlanDisplayContext {
 				new SelectOption(
 					String.format(
 						"%s (%s - %s)",
-						TaskItemUtil.getSimpleClassName(
-							internalClassNameKeyParts
-								[internalClassNameKeyParts.length - 1]),
+						TaskItemUtil.getSimpleClassName(internalClassNameKey),
 						internalClassNameKeyParts
 							[internalClassNameKeyParts.length - 2],
 						entry.getValue()),

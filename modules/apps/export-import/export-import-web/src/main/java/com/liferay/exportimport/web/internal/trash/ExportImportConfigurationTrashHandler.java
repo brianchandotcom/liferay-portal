@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -92,7 +92,7 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 			_exportImportConfigurationLocalService.getExportImportConfiguration(
 				classPK);
 
-		return _groupPermission.contains(
+		return GroupPermissionUtil.contains(
 			permissionChecker,
 			_groupLocalService.getGroup(exportImportConfiguration.getGroupId()),
 			actionId);
@@ -104,9 +104,6 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.exportimport.web)")
 	private ServletContext _servletContext;

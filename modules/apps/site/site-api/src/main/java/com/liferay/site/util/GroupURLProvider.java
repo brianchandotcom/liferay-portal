@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -126,7 +126,7 @@ public class GroupURLProvider {
 
 		if (includeStagingGroup && group.hasStagingGroup()) {
 			try {
-				if (_groupPermission.contains(
+				if (GroupPermissionUtil.contains(
 						themeDisplay.getPermissionChecker(), group,
 						ActionKeys.VIEW_STAGING)) {
 
@@ -183,9 +183,6 @@ public class GroupURLProvider {
 	private static final Snapshot<DepotEntryLocalService>
 		_depotEntryLocalServiceSnapshot = new Snapshot<>(
 			GroupURLProvider.class, DepotEntryLocalService.class, null, true);
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;

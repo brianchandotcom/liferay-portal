@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import javax.portlet.PortletException;
@@ -36,7 +36,7 @@ public class SaveGroupConfigurationMVCActionCommand
 	protected void checkPermission(ThemeDisplay themeDisplay)
 		throws PortalException, PortletException {
 
-		_groupPermission.check(
+		GroupPermissionUtil.check(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
 			ActionKeys.UPDATE);
 	}
@@ -54,8 +54,5 @@ public class SaveGroupConfigurationMVCActionCommand
 	@Reference
 	private AICreatorOpenAIConfigurationManager
 		_aiCreatorOpenAIConfigurationManager;
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 }

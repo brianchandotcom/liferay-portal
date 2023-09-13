@@ -10,10 +10,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jiaxu Wei
@@ -30,7 +29,7 @@ public class GroupModelResourcePermission
 			PermissionChecker permissionChecker, Group group, String actionId)
 		throws PortalException {
 
-		groupPermission.check(permissionChecker, group, actionId);
+		GroupPermissionUtil.check(permissionChecker, group, actionId);
 	}
 
 	@Override
@@ -38,7 +37,7 @@ public class GroupModelResourcePermission
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException {
 
-		groupPermission.check(permissionChecker, groupId, actionId);
+		GroupPermissionUtil.check(permissionChecker, groupId, actionId);
 	}
 
 	@Override
@@ -46,7 +45,7 @@ public class GroupModelResourcePermission
 			PermissionChecker permissionChecker, Group group, String actionId)
 		throws PortalException {
 
-		return groupPermission.contains(permissionChecker, group, actionId);
+		return GroupPermissionUtil.contains(permissionChecker, group, actionId);
 	}
 
 	@Override
@@ -54,7 +53,8 @@ public class GroupModelResourcePermission
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException {
 
-		return groupPermission.contains(permissionChecker, groupId, actionId);
+		return GroupPermissionUtil.contains(
+			permissionChecker, groupId, actionId);
 	}
 
 	@Override
@@ -66,8 +66,5 @@ public class GroupModelResourcePermission
 	public PortletResourcePermission getPortletResourcePermission() {
 		return null;
 	}
-
-	@Reference
-	protected GroupPermission groupPermission;
 
 }

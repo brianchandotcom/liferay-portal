@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -126,7 +126,7 @@ public class ConfigurationTemplatesPortletConfigurationIcon
 			themeDisplay.getPermissionChecker();
 
 		try {
-			if (!_groupPermission.contains(
+			if (!GroupPermissionUtil.contains(
 					permissionChecker, themeDisplay.getScopeGroupId(),
 					ActionKeys.MANAGE_ARCHIVED_SETUPS)) {
 
@@ -175,9 +175,6 @@ public class ConfigurationTemplatesPortletConfigurationIcon
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationTemplatesPortletConfigurationIcon.class);
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private Language _language;

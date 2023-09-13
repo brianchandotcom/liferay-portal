@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -55,7 +55,7 @@ public class CommerceChannelProductDisplayLayoutsScreenNavigationEntry
 	@Override
 	public boolean isVisible(User user, CommerceChannel commerceChannel) {
 		try {
-			if (!_groupPermission.contains(
+			if (!GroupPermissionUtil.contains(
 					PermissionThreadLocal.getPermissionChecker(),
 					commerceChannel.getSiteGroupId(), ActionKeys.ADD_LAYOUT)) {
 
@@ -117,9 +117,6 @@ public class CommerceChannelProductDisplayLayoutsScreenNavigationEntry
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private ItemSelector _itemSelector;

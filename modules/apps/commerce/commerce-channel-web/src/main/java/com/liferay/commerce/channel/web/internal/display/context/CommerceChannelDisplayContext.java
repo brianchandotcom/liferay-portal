@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
@@ -436,7 +437,7 @@ public class CommerceChannelDisplayContext
 	public boolean hasAddLayoutPermission() throws PortalException {
 		CommerceChannel commerceChannel = getCommerceChannel();
 
-		return _groupPermission.contains(
+		return GroupPermissionUtil.contains(
 			PermissionThreadLocal.getPermissionChecker(),
 			commerceChannel.getSiteGroupId(), ActionKeys.ADD_LAYOUT);
 	}

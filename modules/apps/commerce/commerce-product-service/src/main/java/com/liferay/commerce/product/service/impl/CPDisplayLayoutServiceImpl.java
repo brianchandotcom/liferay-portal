@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
@@ -47,7 +47,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 			String layoutPageTemplateEntryUuid, String layoutUuid)
 		throws PortalException {
 
-		_groupPermission.check(
+		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.ADD_LAYOUT);
 
 		_checkCPDisplayLayout(clazz.getName(), classPK, ActionKeys.VIEW);
@@ -64,7 +64,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 		CPDisplayLayout cpDisplayLayout =
 			cpDisplayLayoutLocalService.getCPDisplayLayout(cpDisplayLayoutId);
 
-		_groupPermission.check(
+		GroupPermissionUtil.check(
 			getPermissionChecker(), cpDisplayLayout.getGroupId(),
 			ActionKeys.ADD_LAYOUT);
 
@@ -103,7 +103,7 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 			String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
-		_groupPermission.check(
+		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.UPDATE);
 
 		return cpDisplayLayoutLocalService.searchCPDisplayLayout(
@@ -183,9 +183,6 @@ public class CPDisplayLayoutServiceImpl extends CPDisplayLayoutServiceBaseImpl {
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@Reference
-	private GroupPermission _groupPermission;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

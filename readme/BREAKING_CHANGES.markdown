@@ -1782,3 +1782,25 @@ If you are providing your own repository implementation via a hook, convert it t
 ### Why was this change made?
 
 External repositories deployed via hook don't support the same feature set as OSGi ones.
+
+---------------------------------------
+
+## Portal property `discussion.comments.always.editable.by.owner` moved to instance settings
+- **Date:** 2023-September-13
+- **JIRA Ticket:** [LPS-195006](https://liferay.atlassian.net/browse/LPS-195006)
+
+### What changed?
+
+The portal property `discussion.comments.always.editable.by.owner` can no longer be set from the `portal.properties` file.
+
+### Who is affected?
+
+This affects anyone using `discussion.comments.always.editable.by.owner` with a value different than the default.
+
+### How should I update my code?
+
+There's no need to update the code. Further changes to the property must be made through instance settings.
+
+### Why was this change made?
+
+Configuration options in portal properties are global. Product needs required it to be customizable at instance level.

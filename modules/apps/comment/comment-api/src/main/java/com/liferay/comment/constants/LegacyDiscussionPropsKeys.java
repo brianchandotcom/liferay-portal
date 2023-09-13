@@ -10,6 +10,9 @@ package com.liferay.comment.constants;
  */
 public class LegacyDiscussionPropsKeys {
 
+	public static final String DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER =
+		"discussion.comments.always.editable.by.owner";
+
 	public static final String DISCUSSION_SUBSCRIBE = "discussion.subscribe";
 
 }

@@ -29,6 +29,10 @@ public class DiscussionConfigurationUpgradeProcess extends UpgradeProcess {
 		_prefsPropsToConfigurationUpgradeHelper.mapConfigurations(
 			CommentGroupServiceConfiguration.class,
 			new KeyValuePair(
+				LegacyDiscussionPropsKeys.
+					DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER,
+				"alwaysEditableByOwner"),
+			new KeyValuePair(
 				LegacyDiscussionPropsKeys.DISCUSSION_SUBSCRIBE, "subscribe"));
 	}
 

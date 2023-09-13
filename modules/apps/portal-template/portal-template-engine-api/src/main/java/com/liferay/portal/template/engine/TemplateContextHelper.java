@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.CommonPermissionUtil;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil_IW;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PasswordPolicyPermissionUtil;
@@ -675,7 +675,7 @@ public class TemplateContextHelper {
 
 		try {
 			variables.put(
-				"groupPermission", GroupPermissionUtil.getGroupPermission());
+				"groupPermission", GroupPermissionUtil_IW.getInstance());
 		}
 		catch (SecurityException securityException) {
 			_log.error(securityException);

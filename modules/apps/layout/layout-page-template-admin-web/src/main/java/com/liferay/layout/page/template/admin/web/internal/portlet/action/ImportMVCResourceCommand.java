@@ -75,37 +75,18 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 		boolean validFile = true;
 
-		if (_featureFlagManager.isEnabled("LPS-174939") &&
-			Validator.isNull(importType)) {
-
+		if (Validator.isNull(importType)) {
 			validFile = _layoutsImporter.validateFile(
 				themeDisplay.getScopeGroupId(), layoutPageTemplateCollectionId,
 				file);
 		}
 
 		if (validFile) {
-			LayoutsImportStrategy layoutsImportStrategy;
+			LayoutsImportStrategy layoutsImportStrategy =
+				LayoutsImportStrategy.create(importType);
 
-			if (_featureFlagManager.isEnabled("LPS-174939")) {
-				layoutsImportStrategy = LayoutsImportStrategy.create(
-					importType);
-
-				if (layoutsImportStrategy == null) {
-					layoutsImportStrategy =
-						LayoutsImportStrategy.DO_NOT_OVERWRITE;
-				}
-			}
-			else {
-				boolean overwrite = ParamUtil.getBoolean(
-					resourceRequest, "overwrite", true);
-
-				if (overwrite) {
-					layoutsImportStrategy = LayoutsImportStrategy.OVERWRITE;
-				}
-				else {
-					layoutsImportStrategy =
-						LayoutsImportStrategy.DO_NOT_OVERWRITE;
-				}
+			if (layoutsImportStrategy == null) {
+				layoutsImportStrategy = LayoutsImportStrategy.DO_NOT_OVERWRITE;
 			}
 
 			jsonObject = _importFile(

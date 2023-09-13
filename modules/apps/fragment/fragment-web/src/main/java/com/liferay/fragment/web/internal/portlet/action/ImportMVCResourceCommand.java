@@ -74,37 +74,19 @@ public class ImportMVCResourceCommand extends BaseMVCResourceCommand {
 
 		boolean validFragmentEntries = true;
 
-		if (_featureFlagManager.isEnabled("LPS-174939") &&
-			Validator.isNull(importType)) {
-
+		if (Validator.isNull(importType)) {
 			validFragmentEntries = _fragmentsImporter.validateFragmentEntries(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				fragmentCollectionId, file);
 		}
 
 		if (validFragmentEntries) {
-			FragmentsImportStrategy fragmentsImportStrategy;
+			FragmentsImportStrategy fragmentsImportStrategy =
+				FragmentsImportStrategy.create(importType);
 
-			if (_featureFlagManager.isEnabled("LPS-174939")) {
-				fragmentsImportStrategy = FragmentsImportStrategy.create(
-					importType);
-
-				if (fragmentsImportStrategy == null) {
-					fragmentsImportStrategy =
-						FragmentsImportStrategy.DO_NOT_OVERWRITE;
-				}
-			}
-			else {
-				boolean overwrite = ParamUtil.getBoolean(
-					resourceRequest, "overwrite");
-
-				if (overwrite) {
-					fragmentsImportStrategy = FragmentsImportStrategy.OVERWRITE;
-				}
-				else {
-					fragmentsImportStrategy =
-						FragmentsImportStrategy.DO_NOT_OVERWRITE;
-				}
+			if (fragmentsImportStrategy == null) {
+				fragmentsImportStrategy =
+					FragmentsImportStrategy.DO_NOT_OVERWRITE;
 			}
 
 			jsonObject = _importFragmentEntries(

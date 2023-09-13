@@ -89,7 +89,7 @@ definition {
 				webContentTitle = "This is the title of a web article");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Content", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
-			echo("There is a Google network issue. Ending test.");
+			fail("There is a Google network issue. Ending test.");
 		}
 	}
 
@@ -157,7 +157,7 @@ definition {
 			Page.viewCurrentPage(pageName = "内容页面名称");
 		}
 		else if (IsTextEqual.isPartialText(locator1 = "Toolbar#FEEDBACK", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
-			echo("There is a Google network issue. Ending test.");
+			fail("There is a Google network issue. Ending test.");
 		}
 	}
 
@@ -233,7 +233,7 @@ definition {
 				text = "Überschrift");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "element-text", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
-			echo("There is a Google network issue. Ending test.");
+			fail("There is a Google network issue. Ending test.");
 		}
 	}
 
@@ -275,7 +275,7 @@ definition {
 				webContentTitle = "This is the title of a web article");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Description", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
-			echo("There is a Google network issue. Ending test.");
+			fail("There is a Google network issue. Ending test.");
 		}
 	}
 
@@ -360,7 +360,7 @@ definition {
 				webContentNumber = 10);
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Decimal", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
-			echo("There is a Google network issue. Ending test.");
+			fail("There is a Google network issue. Ending test.");
 		}
 	}
 
@@ -430,7 +430,7 @@ definition {
 				webContentTitle = "これはリッチテキストフィールドのタイトルです");
 		}
 		else if (IsTextEqual.isPartialText(key_fieldName = "Title", locator1 = "Message#SUCCESS_SPECIFIC_FORM_FIELD_REQUIRED", value1 = "There is a problem with the translation service. Please contact your administrator.")) {
-			echo("There is a Google network issue. Ending test.");
+			fail("There is a Google network issue. Ending test.");
 		}
 	}
 

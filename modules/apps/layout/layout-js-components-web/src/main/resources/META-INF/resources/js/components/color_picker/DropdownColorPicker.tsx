@@ -153,25 +153,23 @@ export function DropdownColorPicker({
 					ref={triggerElementRef}
 					size={small ? 'sm' : undefined}
 				>
-					<span className="c-inner" tabIndex={-1}>
+					<span
+						className={classNames(
+							'layout__dropdown-color-picker__selector-splotch rounded-circle',
+							{'lfr-portal-tooltip': fieldLabel}
+						)}
+						data-title={fieldLabel}
+						style={{background: `${value}`}}
+					/>
+
+					<span className="text-truncate">{label}</span>
+
+					{inherited ? (
 						<span
-							className={classNames(
-								'layout__dropdown-color-picker__selector-splotch rounded-circle',
-								{'lfr-portal-tooltip': fieldLabel}
-							)}
-							data-title={fieldLabel}
-							style={{background: `${value}`}}
-						/>
-
-						<span className="text-truncate">{label}</span>
-
-						{inherited ? (
-							<span
-								className="inherited"
-								title={Liferay.Language.get('inherited-value')}
-							></span>
-						) : null}
-					</span>
+							className="inherited"
+							title={Liferay.Language.get('inherited-value')}
+						></span>
+					) : null}
 				</ClayButton>
 			) : (
 				<ClayButtonWithIcon

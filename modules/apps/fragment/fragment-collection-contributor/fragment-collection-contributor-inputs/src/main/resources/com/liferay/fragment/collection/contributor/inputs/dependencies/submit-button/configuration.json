@@ -4,6 +4,25 @@
 			"fields": [
 				{
 					"dataType": "string",
+					"defaultValue": "approved",
+					"label": "submitted-entry-status",
+					"name": "submittedEntryStatus",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "approved",
+								"value": "0"
+							},
+							{
+								"label": "draft",
+								"value": "2"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
 					"defaultValue": "primary",
 					"label": "style",
 					"name": "buttonType",

@@ -5,14 +5,19 @@
 
 package com.liferay.search.experiences.rest.internal.jaxrs.exception;
 
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 import com.liferay.search.experiences.exception.DuplicateSXPElementExternalReferenceCodeException;
 
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Gustavo Lima
@@ -36,7 +41,17 @@ public class DuplicateSXPElementExternalReferenceCodeExceptionMapper
 		DuplicateSXPElementExternalReferenceCodeException
 			duplicateSXPElementExternalReferenceCodeException) {
 
-		return new Problem(duplicateSXPElementExternalReferenceCodeException);
+		return new Problem(
+			Response.Status.BAD_REQUEST,
+			_language.get(
+				_acceptLanguage.getPreferredLocale(),
+				"this-external-reference-code-is-already-in-use"));
 	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
+
+	@Reference
+	private Language _language;
 
 }

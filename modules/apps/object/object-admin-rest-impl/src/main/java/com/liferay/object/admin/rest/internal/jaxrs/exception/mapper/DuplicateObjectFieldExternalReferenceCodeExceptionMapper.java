@@ -6,12 +6,17 @@
 package com.liferay.object.admin.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.object.exception.DuplicateObjectFieldExternalReferenceCodeException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Guilherme Camacho
@@ -33,7 +38,17 @@ public class DuplicateObjectFieldExternalReferenceCodeExceptionMapper
 		DuplicateObjectFieldExternalReferenceCodeException
 			duplicateObjectFieldExternalReferenceCodeException) {
 
-		return new Problem(duplicateObjectFieldExternalReferenceCodeException);
+		return new Problem(
+			Response.Status.BAD_REQUEST,
+			_language.get(
+				_acceptLanguage.getPreferredLocale(),
+				"this-external-reference-code-is-already-in-use"));
 	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
+
+	@Reference
+	private Language _language;
 
 }

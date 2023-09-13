@@ -6,12 +6,17 @@
 package com.liferay.notification.rest.internal.jaxrs.exception.mapper;
 
 import com.liferay.notification.exception.DuplicateNotificationTemplateExternalReferenceCodeException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Artur Souza
@@ -34,7 +39,16 @@ public class DuplicateNotificationTemplateExternalReferenceCodeExceptionMapper
 			duplicateNotificationTemplateExternalReferenceCodeException) {
 
 		return new Problem(
-			duplicateNotificationTemplateExternalReferenceCodeException);
+			Response.Status.BAD_REQUEST,
+			_language.get(
+				_acceptLanguage.getPreferredLocale(),
+				"this-external-reference-code-is-already-in-use"));
 	}
+
+	@Context
+	private AcceptLanguage _acceptLanguage;
+
+	@Reference
+	private Language _language;
 
 }

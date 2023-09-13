@@ -152,15 +152,15 @@ definition {
 		}
 
 		task ("Add two Segments that contains two pages") {
-			for (var sgementName : list "HOME,ADMIN") {
+			for (var segmentName : list "HOME,ADMIN") {
 				JSONSegmentsentry.addSegment(
 					conditionType = "Session",
 					fieldName = "URL",
 					groupName = "Test Site Name (Staging)",
 					operator = "contains",
-					segmentName = ${sgementName},
+					segmentName = ${segmentName},
 					site = "false",
-					text = StringUtil.lowerCase(${sgementName}));
+					text = StringUtil.lowerCase(${segmentName}));
 			}
 		}
 

@@ -5,6 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
+import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -25,6 +26,21 @@ function Export({
 	const onButtonClick = useCallback(
 		(event) => {
 			event.preventDefault();
+
+			const isFieldChecked = document.querySelectorAll(
+				'#fieldsTableBody input[type=checkbox]:checked'
+			);
+
+			if (!isFieldChecked?.length) {
+				openToast({
+					message: Liferay.Language.get(
+						'please-select-at-least-one-field'
+					),
+					type: 'danger',
+				});
+
+				return;
+			}
 
 			setVisible(true);
 		},

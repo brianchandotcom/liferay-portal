@@ -134,7 +134,7 @@ function FieldsTable({portletNamespace}) {
 						</ClayTable.Row>
 					</ClayTable.Head>
 
-					<ClayTable.Body>
+					<ClayTable.Body id="fieldsTableBody">
 						{fields.map((field) => {
 							const included = selectedFields.some(
 								(selectedField) =>

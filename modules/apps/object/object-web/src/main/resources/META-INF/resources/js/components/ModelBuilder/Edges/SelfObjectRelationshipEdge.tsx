@@ -14,10 +14,13 @@ import {
 	useStoreState,
 } from 'react-flow-renderer';
 
-import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 import {ObjectRelationshipEdgeData} from '../types';
-import {getInitialEdgeStyle, getInitialLabelBgStyle} from './DefaultEdge';
+import {
+	getInitialLabelBgStyle,
+	getInitialObjectRelationshipEdgeStyle,
+} from './DefaultObjectRelationshipEdge';
 
 import './Edge.scss';
 
@@ -28,7 +31,7 @@ const labelStyle = {
 	fontWeight: 600,
 };
 
-export default function SelfEdge({
+export default function SelfObjectRelationshipEdge({
 	data,
 	id,
 	source,
@@ -40,22 +43,25 @@ export default function SelfEdge({
 }: EdgeProps<ObjectRelationshipEdgeData>) {
 	const {
 		defaultLanguageId,
-		edgeSelected,
 		label,
 		markerEndId,
 		markerStartId,
 		objectRelationshipId,
-		selfRelationships,
+		selected,
+		selfObjectRelationships,
 	} = data!;
 
-	const [_, dispatch] = useFolderContext();
+	const [_, dispatch] = useObjectFolderContext();
 	const [activePopover, setActivePopover] = useState(false);
-	const [edgeStyle, setEdgeStyle] = useState({
+	const [
+		objectRelationshipEdgeStyle,
+		setObjectRelationshipEdgeStyle,
+	] = useState({
 		...style,
-		...getInitialEdgeStyle(edgeSelected),
+		...getInitialObjectRelationshipEdgeStyle(selected),
 	});
 	const [labelBgStyle, setLabelBgStyle] = useState(
-		getInitialLabelBgStyle(edgeSelected)
+		getInitialLabelBgStyle(selected)
 	);
 	const {edges, nodes} = useStoreState((state) => state);
 
@@ -68,8 +74,8 @@ export default function SelfEdge({
 	const triggerElementRef = useRef<HTMLElement | null>(null);
 
 	useEffect(() => {
-		if (activePopover || edgeSelected) {
-			setEdgeStyle((style) => {
+		if (activePopover || selected) {
+			setObjectRelationshipEdgeStyle((style) => {
 				return {...style, stroke: '#0B5FFF'};
 			});
 			setLabelBgStyle((style) => {
@@ -80,7 +86,7 @@ export default function SelfEdge({
 			});
 		}
 		else {
-			setEdgeStyle((style) => {
+			setObjectRelationshipEdgeStyle((style) => {
 				return {...style, stroke: '#80ACFF'};
 			});
 			setLabelBgStyle((style) => {
@@ -90,27 +96,27 @@ export default function SelfEdge({
 				};
 			});
 		}
-	}, [activePopover, edgeSelected]);
+	}, [activePopover, selected]);
 
 	if (!sourceTargetNode) {
 		return null;
 	}
 
-	const hasManySelfRelationships =
-		selfRelationships && selfRelationships.length > 1;
+	const hasManySelfObjectRelationships =
+		selfObjectRelationships && selfObjectRelationships.length > 1;
 
 	const radiusX = (sourceX - targetX) * 0.6;
 	const radiusY = 150;
 
 	const edgePath = `M ${
-		sourceX - (hasManySelfRelationships ? 5 : 20)
+		sourceX - (hasManySelfObjectRelationships ? 5 : 20)
 	} ${sourceY} A ${radiusX} ${radiusY} 0 1 0 ${
-		targetX + (hasManySelfRelationships ? 2 : 8)
+		targetX + (hasManySelfObjectRelationships ? 2 : 8)
 	} ${targetY}`;
 
 	const [edgeCenterX, edgeCenterY] = getEdgeCenter({
 		sourceX,
-		sourceY: sourceY - (hasManySelfRelationships ? 0 : 45),
+		sourceY: sourceY - (hasManySelfObjectRelationships ? 0 : 45),
 		targetX,
 		targetY,
 	});
@@ -122,15 +128,19 @@ export default function SelfEdge({
 				d={edgePath}
 				id={id}
 				markerEnd={
-					!hasManySelfRelationships ? `url(#${markerEndId})` : ''
+					!hasManySelfObjectRelationships
+						? `url(#${markerEndId})`
+						: ''
 				}
 				markerStart={
-					!hasManySelfRelationships ? `url(#${markerStartId})` : ''
+					!hasManySelfObjectRelationships
+						? `url(#${markerStartId})`
+						: ''
 				}
-				style={edgeStyle}
+				style={objectRelationshipEdgeStyle}
 			/>
 
-			{hasManySelfRelationships ? (
+			{hasManySelfObjectRelationships ? (
 				<>
 					<EdgeText
 						label={label}
@@ -157,8 +167,8 @@ export default function SelfEdge({
 						ref={menuElementRef}
 					>
 						<ClayDropDown.ItemList>
-							{selfRelationships.map(
-								(selfRelationship, index) => (
+							{selfObjectRelationships.map(
+								(selfObjectRelationship, index) => (
 									<ClayDropDown.Item
 										key={index}
 										onClick={() => {
@@ -166,9 +176,10 @@ export default function SelfEdge({
 												payload: {
 													edges,
 													nodes,
-													selectedObjectRelationshipId: selfRelationship.id.toString(),
+													selectedObjectRelationshipId: selfObjectRelationship.id.toString(),
 												},
-												type: TYPES.SET_SELECTED_EDGE,
+												type:
+													TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,
 											});
 										}}
 									>
@@ -177,13 +188,15 @@ export default function SelfEdge({
 												<div>
 													{getLocalizableLabel(
 														defaultLanguageId!,
-														selfRelationship.label,
-														selfRelationship.name
+														selfObjectRelationship.label,
+														selfObjectRelationship.name
 													)}
 												</div>
 
 												<span className="text-small">
-													{selfRelationship.type}
+													{
+														selfObjectRelationship.type
+													}
 												</span>
 											</div>
 
@@ -210,7 +223,7 @@ export default function SelfEdge({
 								nodes,
 								selectedObjectRelationshipId: objectRelationshipId.toString(),
 							},
-							type: TYPES.SET_SELECTED_EDGE,
+							type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,
 						});
 					}}
 					x={edgeCenterX}

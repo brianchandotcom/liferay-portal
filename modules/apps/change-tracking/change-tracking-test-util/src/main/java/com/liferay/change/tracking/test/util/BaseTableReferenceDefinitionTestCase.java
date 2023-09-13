@@ -65,7 +65,7 @@ public abstract class BaseTableReferenceDefinitionTestCase {
 			Assert.assertNotNull(ctEntry);
 
 			Map<Long, List<CTEntry>> discardCTEntries =
-				_ctCollectionLocalService.getDiscardCTEntries(
+				_ctCollectionLocalService.getRelatedCTEntriesMap(
 					_ctCollection.getCtCollectionId(), modelClassNameId,
 					ctModel.getPrimaryKey());
 

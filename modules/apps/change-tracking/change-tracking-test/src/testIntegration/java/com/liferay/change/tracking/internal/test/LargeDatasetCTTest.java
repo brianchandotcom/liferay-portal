@@ -225,7 +225,7 @@ public class LargeDatasetCTTest {
 	@Test
 	public void testGetDiscardCTEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			_ctCollectionLocalService.getDiscardCTEntries(
+			_ctCollectionLocalService.getRelatedCTEntriesMap(
 				_ctCollection.getCtCollectionId(),
 				_portal.getClassNameId(Layout.class.getName()),
 				_layoutContent.getPrimaryKey());

@@ -156,8 +156,6 @@ page import="com.liferay.subscription.exception.NoSuchSubscriptionException" %><
 page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.wiki.model.WikiPage" %>
 
-<%@ page import="java.math.BigDecimal" %>
-
 <%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.ArrayList" %><%@

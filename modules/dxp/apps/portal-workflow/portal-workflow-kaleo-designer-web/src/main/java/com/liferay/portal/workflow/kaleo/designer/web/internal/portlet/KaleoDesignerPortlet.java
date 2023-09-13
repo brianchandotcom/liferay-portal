@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.RolePermission;
+import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -338,7 +338,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (Role role : roles) {
-			if (!_rolePermission.contains(
+			if (!RolePermissionUtil.contains(
 					themeDisplay.getPermissionChecker(), role.getRoleId(),
 					ActionKeys.VIEW)) {
 
@@ -506,9 +506,6 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private RolePermission _rolePermission;
 
 	@Reference
 	private UserLocalService _userLocalService;

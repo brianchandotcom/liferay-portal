@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.permission.RolePermission;
+import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
 
 import java.util.Objects;
 
@@ -130,7 +130,7 @@ public class AccountRoleModelResourcePermission
 				 _accountEntryModelResourcePermission.contains(
 					 permissionChecker, accountEntryId,
 					 AccountActionKeys.VIEW_ACCOUNT_ROLES)) ||
-				_rolePermission.contains(
+				RolePermissionUtil.contains(
 					permissionChecker, role.getRoleId(), ActionKeys.VIEW)) {
 
 				return true;
@@ -186,8 +186,5 @@ public class AccountRoleModelResourcePermission
 		target = "(resource.name=" + AccountConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private RolePermission _rolePermission;
 
 }

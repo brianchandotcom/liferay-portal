@@ -16,12 +16,9 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -42,19 +39,6 @@ public class ImportPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
 
 	@Override
-	public Map<String, Object> getContext(PortletRequest portletRequest) {
-		if (_featureFlagManager.isEnabled("LPS-174939")) {
-			return null;
-		}
-
-		return HashMapBuilder.<String, Object>put(
-			"action", getNamespace(portletRequest) + "import"
-		).put(
-			"globalAction", true
-		).build();
-	}
-
-	@Override
 	public String getIconCssClass() {
 		return "import";
 	}
@@ -73,36 +57,31 @@ public class ImportPortletConfigurationIcon
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		if (_featureFlagManager.isEnabled("LPS-174939")) {
-			return PortletURLBuilder.create(
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				portletRequest,
+				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/layout_page_template_admin/view_import"
+		).setBackURL(
+			PortletURLBuilder.create(
 				_portal.getControlPanelPortletURL(
 					portletRequest,
 					LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
 					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/layout_page_template_admin/view_import"
-			).setBackURL(
-				PortletURLBuilder.create(
-					_portal.getControlPanelPortletURL(
-						portletRequest,
-						LayoutPageTemplateAdminPortletKeys.
-							LAYOUT_PAGE_TEMPLATES,
-						PortletRequest.RENDER_PHASE)
-				).setTabs1(
-					ParamUtil.getString(portletRequest, "tabs1")
-				).setParameter(
-					"layoutPageTemplateCollectionId",
-					ParamUtil.getString(
-						portletRequest, "layoutPageTemplateCollectionId")
-				).buildString()
+			).setTabs1(
+				ParamUtil.getString(portletRequest, "tabs1")
 			).setParameter(
 				"layoutPageTemplateCollectionId",
 				ParamUtil.getString(
 					portletRequest, "layoutPageTemplateCollectionId")
-			).buildString();
-		}
-
-		return null;
+			).buildString()
+		).setParameter(
+			"layoutPageTemplateCollectionId",
+			ParamUtil.getString(
+				portletRequest, "layoutPageTemplateCollectionId")
+		).buildString();
 	}
 
 	@Override

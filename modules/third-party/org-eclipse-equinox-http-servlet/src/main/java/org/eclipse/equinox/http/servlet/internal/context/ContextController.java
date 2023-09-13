@@ -895,12 +895,9 @@ public class ContextController {
 		}
 
 		if (contextSelector == null) {
-			contextSelector = httpServiceRuntime.getDefaultContextSelectFilter(whiteBoardService);
-			if (contextSelector == null) {
-				contextSelector = "(" + //$NON-NLS-1$
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME + "=" //$NON-NLS-1$
-					+ HttpWhiteboardConstants.HTTP_WHITEBOARD_DEFAULT_CONTEXT_NAME + ")"; //$NON-NLS-1$
-			}
+			contextSelector = "(" + //$NON-NLS-1$
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME + "=" //$NON-NLS-1$
+				+ HttpWhiteboardConstants.HTTP_WHITEBOARD_DEFAULT_CONTEXT_NAME + ")"; //$NON-NLS-1$
 		}
 
 		if (contextSelector.startsWith(Const.OPEN_PAREN)) {

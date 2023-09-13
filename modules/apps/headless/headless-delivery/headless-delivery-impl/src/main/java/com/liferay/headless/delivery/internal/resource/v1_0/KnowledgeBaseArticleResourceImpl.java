@@ -61,7 +61,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
-import java.util.Date;
 import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
@@ -501,8 +500,8 @@ public class KnowledgeBaseArticleResourceImpl
 				knowledgeBaseArticle.getTitle(),
 				knowledgeBaseArticle.getFriendlyUrlPath(),
 				knowledgeBaseArticle.getArticleBody(),
-				knowledgeBaseArticle.getDescription(), null, null, new Date(),
-				null, null, null,
+				knowledgeBaseArticle.getDescription(), null, null,
+				knowledgeBaseArticle.getDatePublished(), null, null, null,
 				_createServiceContext(
 					knowledgeBaseArticle.getTaxonomyCategoryIds(),
 					knowledgeBaseArticle.getKeywords(), groupId,
@@ -677,7 +676,7 @@ public class KnowledgeBaseArticleResourceImpl
 				kbArticle.getResourcePrimKey(), knowledgeBaseArticle.getTitle(),
 				knowledgeBaseArticle.getArticleBody(),
 				knowledgeBaseArticle.getDescription(), null, null,
-				kbArticle.getDisplayDate(), null, null, null, null,
+				knowledgeBaseArticle.getDatePublished(), null, null, null, null,
 				_createServiceContext(
 					taxonomyCategoryIds,
 					GetterUtil.getStringValues(

@@ -38,13 +38,13 @@ interface LabelNameObject {
 }
 
 interface ViewObjectDefinitionsModals {
-	addFolder: boolean;
 	addObjectDefinition: boolean;
+	addObjectFolder: boolean;
 	bindToRootObjectDefinition: boolean;
-	deleteFolder: boolean;
 	deleteObjectDefinition: boolean;
+	deleteObjectFolder: boolean;
 	deletionNotAllowed: boolean;
-	editFolder: boolean;
+	editObjectFolder: boolean;
 	moveObjectDefinition: boolean;
 	unbindFromRootObjectDefinition: boolean;
 }
@@ -56,9 +56,9 @@ interface ModelBuilderModals
 		| 'deletionNotAllowed'
 		| 'unbindFromRootObjectDefinition'
 	> {
-	addRelationship: boolean;
-	editERC: boolean;
-	redirectEditObjectDefinition: boolean;
+	addObjectRelationship: boolean;
+	editObjectDefinitionExternalReferenceCode: boolean;
+	redirectToEditObjectDefinitionDetails: boolean;
 }
 
 interface NameValueObject {
@@ -345,11 +345,11 @@ interface ObjectFolder {
 	actions: Actions;
 	dateCreated: string;
 	dateModified: string;
-	definitions?: ObjectDefinitionNodeData[];
 	externalReferenceCode: string;
 	id: number;
 	label: LocalizedValue<string>;
 	name: string;
+	objectDefinitions?: ObjectDefinitionNodeData[];
 	objectFolderItems: ObjectFolderItem[];
 }
 
@@ -387,10 +387,10 @@ interface ObjectDefinitionNodeData
 	hasObjectDefinitionManagePermissionsResourcePermission: boolean;
 	hasObjectDefinitionUpdateResourcePermission: boolean;
 	hasObjectDefinitionViewResourcePermission: boolean;
-	hasSelfRelationships: boolean;
-	linkedDefinition: boolean;
-	nodeSelected: boolean;
+	hasSelfObjectRelationships: boolean;
+	linkedObjectDefinition: boolean;
 	objectFields: ObjectFieldNode[];
+	selected: boolean;
 }
 
 interface PickListItem {

@@ -14,27 +14,27 @@ import ReactFlow, {
 	addEdge,
 } from 'react-flow-renderer';
 
-import {DefinitionNode} from '../DefinitionNode/DefinitionNode';
-import {EmptyNode} from '../DefinitionNode/EmptyNode';
+import {EmptyNode} from '../ObjectDefinitionNode/EmptyNode';
+import {ObjectDefinitionNode} from '../ObjectDefinitionNode/ObjectDefinitionNode';
 
 import './Diagram.scss';
 
 import {API} from '@liferay/object-js-components-web';
 import React, {MouseEvent, useCallback} from 'react';
 
-import DefaultEdge from '../Edges/DefaultEdge';
-import SelfEdge from '../Edges/SelfEdge';
-import {useFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import DefaultObjectRelationshipEdge from '../Edges/DefaultObjectRelationshipEdge';
+import SelfObjectRelationshipEdge from '../Edges/SelfObjectRelationshipEdge';
+import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 
 const NODE_TYPES = {
 	emptyNode: EmptyNode,
-	objectDefinition: DefinitionNode,
+	objectDefinitionNode: ObjectDefinitionNode,
 };
 
 const EDGE_TYPES = {
-	default: DefaultEdge,
-	self: SelfEdge,
+	defaultObjectRelationshipEdge: DefaultObjectRelationshipEdge,
+	selfObjectRelationshipEdge: SelfObjectRelationshipEdge,
 };
 
 function DiagramBuilder({
@@ -43,9 +43,9 @@ function DiagramBuilder({
 	setShowModal: (value: ModelBuilderModals) => void;
 }) {
 	const [
-		{elements, selectedFolder, showChangesSaved},
+		{elements, selectedObjectFolder, showChangesSaved},
 		dispatch,
-	] = useFolderContext();
+	] = useObjectFolderContext();
 
 	const emptyNode = [
 		{
@@ -77,36 +77,36 @@ function DiagramBuilder({
 		event: MouseEvent,
 		node: Node<ObjectDefinitionNodeData>
 	) => {
-		const folder = await API.getFolderByERC(
-			selectedFolder.externalReferenceCode
+		const objectFolder = await API.getObjectFolderByExternalReferenceCode(
+			selectedObjectFolder.externalReferenceCode
 		);
 
-		const updatedObjectFolderItems = folder.objectFolderItems.map(
-			(folderItem) => {
+		const updatedObjectFolderItems = objectFolder.objectFolderItems.map(
+			(objectFolderItem) => {
 				if (
-					folderItem.objectDefinitionExternalReferenceCode ===
+					objectFolderItem.objectDefinitionExternalReferenceCode ===
 					node.data?.externalReferenceCode
 				) {
 					return {
-						...folderItem,
+						...objectFolderItem,
 						positionX: node.position.x,
 						positionY: node.position.y,
 					};
 				}
 
-				return folderItem;
+				return objectFolderItem;
 			}
 		);
 
-		const updatedFolder = {
-			externalReferenceCode: selectedFolder.externalReferenceCode,
-			id: selectedFolder.id,
-			label: selectedFolder.label,
-			name: selectedFolder.name,
+		const updatedObjectFolder = {
+			externalReferenceCode: selectedObjectFolder.externalReferenceCode,
+			id: selectedObjectFolder.id,
+			label: selectedObjectFolder.label,
+			name: selectedObjectFolder.name,
 			objectFolderItems: updatedObjectFolderItems,
 		};
 
-		API.putObjectFolderByERC(updatedFolder);
+		API.putObjectFolderByExternalReferenceCode(updatedObjectFolder);
 
 		if (!showChangesSaved) {
 			dispatch({

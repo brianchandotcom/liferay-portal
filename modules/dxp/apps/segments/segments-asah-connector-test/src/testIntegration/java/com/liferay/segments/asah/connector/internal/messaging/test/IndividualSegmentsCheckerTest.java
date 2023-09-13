@@ -7,6 +7,7 @@ package com.liferay.segments.asah.connector.internal.messaging.test;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
@@ -15,6 +16,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.scheduler.SchedulerJobConfiguration;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -39,7 +41,6 @@ import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -47,10 +48,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Mikel Lorza
@@ -74,29 +71,6 @@ public class IndividualSegmentsCheckerTest {
 	@Before
 	public void setUp() throws Exception {
 		_user = TestPropsValues.getUser();
-
-		Bundle bundle = FrameworkUtil.getBundle(
-			IndividualSegmentsCheckerTest.class);
-
-		_serviceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(),
-			FrameworkUtil.createFilter(
-				"(component.name=com.liferay.segments.asah.connector." +
-					"internal.messaging.IndividualSegmentsChecker)"),
-			null);
-
-		_serviceTracker.open();
-
-		_individualSegmentsChecker = _serviceTracker.getService();
-
-		Assert.assertNotNull(_individualSegmentsChecker);
-	}
-
-	@After
-	public void tearDown() {
-		if (_serviceTracker != null) {
-			_serviceTracker.close();
-		}
 	}
 
 	@Test
@@ -132,7 +106,8 @@ public class IndividualSegmentsCheckerTest {
 			context.put("segmentsAnonymousUserId", guestUserUuid);
 
 			Object asahFaroBackendClient = ReflectionTestUtil.getFieldValue(
-				_individualSegmentsChecker, "_asahFaroBackendClient");
+				_checkIndividualSegmentsSchedulerJobConfiguration,
+				"_asahFaroBackendClient");
 
 			ReflectionTestUtil.setFieldValue(
 				asahFaroBackendClient, "_http",
@@ -215,9 +190,11 @@ public class IndividualSegmentsCheckerTest {
 							).toString()
 						).build()));
 
-			ReflectionTestUtil.invoke(
-				_individualSegmentsChecker, "checkIndividualSegments",
-				new Class<?>[0]);
+			UnsafeRunnable<Exception> jobExecutorUnsafeRunnable =
+				_checkIndividualSegmentsSchedulerJobConfiguration.
+					getJobExecutorUnsafeRunnable();
+
+			jobExecutorUnsafeRunnable.run();
 
 			List<SegmentsEntry> segmentsEntries =
 				_segmentsEntryLocalService.getSegmentsEntriesBySource(
@@ -259,7 +236,11 @@ public class IndividualSegmentsCheckerTest {
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
-	private Object _individualSegmentsChecker;
+	@Inject(
+		filter = "component.name=com.liferay.segments.asah.connector.internal.scheduler.CheckIndividualSegmentsSchedulerJobConfiguration"
+	)
+	private SchedulerJobConfiguration
+		_checkIndividualSegmentsSchedulerJobConfiguration;
 
 	@Inject
 	private SegmentsEntryLocalService _segmentsEntryLocalService;
@@ -270,7 +251,6 @@ public class IndividualSegmentsCheckerTest {
 	@Inject
 	private SegmentsEntryRelLocalService _segmentsEntryRelLocalService;
 
-	private ServiceTracker<Object, Object> _serviceTracker;
 	private User _user;
 
 	@Inject

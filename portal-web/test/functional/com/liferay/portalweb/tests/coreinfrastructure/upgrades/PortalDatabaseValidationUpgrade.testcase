@@ -15,6 +15,7 @@ definition {
 		property database.bare.enabled = "true";
 		property database.partition.enabled = "true";
 		property skip.start.app.server = "true";
+		property testcase.url = "file:///opt/dev/projects/github/liferay-portal/";
 
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
 		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");

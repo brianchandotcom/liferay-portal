@@ -27,7 +27,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
-import org.eclipse.equinox.http.servlet.internal.Activator;
 import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
 import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionTracker;
 
@@ -150,7 +149,7 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 
 			Map<String, Object> attributesMap =
 				HashMapBuilder.<String, Object>put(
-					Activator.UNIQUE_SERVICE_ID, SecureRandomUtil.nextLong()
+					"http.servlet.endpoint.id", SecureRandomUtil.nextLong()
 				).put(
 					ListUtil.fromEnumeration(
 						servletConfig.getInitParameterNames()),

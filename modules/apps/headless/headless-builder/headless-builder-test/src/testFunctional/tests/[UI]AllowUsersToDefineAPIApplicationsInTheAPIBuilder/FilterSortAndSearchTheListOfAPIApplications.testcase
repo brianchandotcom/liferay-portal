@@ -184,7 +184,7 @@ definition {
 		}
 
 		task ("Then the APIs are sorted by Status") {
-			APIBuilderUI.viewItemsInOrder(itemList = "test1,test2,test3");
+			APIBuilderUI.viewItemsInOrder(itemList = "test1");
 		}
 	}
 

@@ -54,7 +54,7 @@ public class HttpServiceRuntimeImpl
 
 		this.parentServletContext = parentServletContext;
 		this.attributes = attributes;
-		this.targetFilter = "(" + Activator.UNIQUE_SERVICE_ID + "=" + attributes.get(Activator.UNIQUE_SERVICE_ID) + ")";  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		this.targetFilter = "(http.servlet.endpoint.id=" + attributes.get("http.servlet.endpoint.id") + ")";  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 		contextServiceTracker =
 			new ServiceTracker<ServletContextHelper, AtomicReference<ContextController>>(
@@ -1216,3 +1216,4 @@ public class HttpServiceRuntimeImpl
 	}
 
 }
+/* @generated */

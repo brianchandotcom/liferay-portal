@@ -24,6 +24,13 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testJSONUpgradeLiferayThemePackageJSONCheck() throws Exception {
+		test(
+			"upgrade/json-upgrade-liferay-theme-package-json-check/package." +
+				"testjson");
+	}
+
+	@Test
 	public void testPropertiesUpgradeLiferayPluginPackageFileCheck()
 		throws Exception {
 

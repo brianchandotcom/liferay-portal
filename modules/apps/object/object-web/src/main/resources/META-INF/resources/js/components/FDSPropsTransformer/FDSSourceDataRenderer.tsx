@@ -6,15 +6,15 @@
 import classNames from 'classnames';
 import React from 'react';
 
-interface fdsSourceDataRenderer {
+interface FDSSourceDataRendererProps {
 	itemData: {
 		system: boolean;
 	};
 }
 
-export default function fdsSourceDataRenderer({
+export default function FDSSourceDataRenderer({
 	itemData,
-}: fdsSourceDataRenderer) {
+}: FDSSourceDataRendererProps) {
 	return (
 		<strong
 			className={classNames(

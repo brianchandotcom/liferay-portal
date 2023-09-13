@@ -22,7 +22,7 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
-import fdsSourceDataRenderer from '../../utils/fdsSourceDataRenderer';
+import FDSSourceDataRenderer from '../FDSPropsTransformer/FDSSourceDataRenderer';
 
 interface ItemData {
 	active: boolean;
@@ -128,7 +128,7 @@ export default function Validations({
 
 	if (Liferay.FeatureFlags['LPS-193355']) {
 		fdsFields.push({
-			contentRenderer: 'fdsSourceDataRenderer',
+			contentRenderer: 'FDSSourceDataRenderer',
 			expand: false,
 			fieldName: 'system',
 			label: Liferay.Language.get('source'),
@@ -142,7 +142,7 @@ export default function Validations({
 		apiURL,
 		creationMenu,
 		customDataRenderers: {
-			fdsSourceDataRenderer,
+			FDSSourceDataRenderer,
 			objectFieldActiveDataRenderer,
 			objectFieldLabelDataRenderer,
 			objectFieldModifiedDateDataRenderer,

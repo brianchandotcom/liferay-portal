@@ -15,7 +15,7 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
-import fdsSourceDataRenderer from '../../utils/fdsSourceDataRenderer';
+import FDSSourceDataRenderer from '../FDSPropsTransformer/FDSSourceDataRenderer';
 import {ModalAddObjectField} from './ModalAddObjectField';
 import {ModalDeleteObjectField} from './ModalDeleteObjectField';
 import {deleteObjectField} from './deleteObjectFieldUtil';
@@ -117,7 +117,7 @@ export default function Fields({
 		apiURL,
 		creationMenu,
 		customDataRenderers: {
-			fdsSourceDataRenderer,
+			FDSSourceDataRenderer,
 			objectFieldLabelDataRenderer,
 			objectFieldMandatoryDataRenderer,
 		},
@@ -208,7 +208,7 @@ export default function Fields({
 							sortable: false,
 						},
 						{
-							contentRenderer: 'fdsSourceDataRenderer',
+							contentRenderer: 'FDSSourceDataRenderer',
 							expand: false,
 							fieldName: 'source',
 							label: Liferay.Language.get('source'),

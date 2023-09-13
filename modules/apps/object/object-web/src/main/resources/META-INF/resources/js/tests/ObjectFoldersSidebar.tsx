@@ -39,8 +39,8 @@ const uncategorizedObjectFolder = {
 	objectFolderItems: [],
 };
 
-describe('The FoldersListSidebar component should', () => {
-	it('render all the folders created', () => {
+describe('The ObjectFoldersSidebar component should', () => {
+	it('render all created object folders', () => {
 		render(
 			<ObjectFoldersSideBar
 				objectFolders={[uncategorizedObjectFolder, ticketObjectFolder]}

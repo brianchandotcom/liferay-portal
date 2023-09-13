@@ -9,12 +9,12 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import React from 'react';
 
-import './NodeHeader.scss';
+import './ObjectDefinitionNodeHeader.scss';
 import {DropDownItems} from '../types';
 
-interface NodeHeaderProps {
+interface ObjectDefinitionNodeHeaderProps {
 	dropDownItems: DropDownItems[];
-	isLinkedNode: boolean;
+	isLinkedObjectDefinition: boolean;
 	objectDefinitionLabel: string;
 	status: {
 		code: number;
@@ -24,19 +24,19 @@ interface NodeHeaderProps {
 	system: boolean;
 }
 
-export default function NodeHeader({
+export default function ObjectDefinitionNodeHeader({
 	dropDownItems,
-	isLinkedNode,
+	isLinkedObjectDefinition,
 	objectDefinitionLabel,
 	status,
 	system,
-}: NodeHeaderProps) {
+}: ObjectDefinitionNodeHeaderProps) {
 	return (
 		<>
 			<div className="lfr-objects__model-builder-node-header-container">
 				<div className="lfr-objects__model-builder-node-header-label-container">
 					<div className="lfr-objects__model-builder-node-header-label-title">
-						{isLinkedNode && (
+						{isLinkedObjectDefinition && (
 							<ClayIcon className="c-pt-1 text-4" symbol="link" />
 						)}
 

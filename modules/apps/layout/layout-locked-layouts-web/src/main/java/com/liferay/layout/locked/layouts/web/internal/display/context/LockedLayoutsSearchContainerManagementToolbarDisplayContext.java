@@ -10,6 +10,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.layout.constants.LockedLayoutType;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -61,6 +63,8 @@ public class LockedLayoutsSearchContainerManagementToolbarDisplayContext
 			getPortletURL()
 		).setKeywords(
 			StringPool.BLANK
+		).setParameter(
+			"type", StringPool.BLANK
 		).buildString();
 	}
 
@@ -81,6 +85,33 @@ public class LockedLayoutsSearchContainerManagementToolbarDisplayContext
 		}
 
 		return dropdownItemList;
+	}
+
+	@Override
+	public List<LabelItem> getFilterLabelItems() {
+		LockedLayoutType lockedLayoutType =
+			_lockedLayoutsDisplayContext.getLockedLayoutType();
+
+		if (lockedLayoutType == null) {
+			return null;
+		}
+
+		return LabelItemListBuilder.add(
+			() -> lockedLayoutType != null,
+			labelItem -> {
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"type", StringPool.BLANK
+					).buildString());
+				labelItem.setDismissible(true);
+				labelItem.setLabel(
+					LanguageUtil.get(
+						httpServletRequest, lockedLayoutType.getValue()));
+			}
+		).build();
 	}
 
 	@Override

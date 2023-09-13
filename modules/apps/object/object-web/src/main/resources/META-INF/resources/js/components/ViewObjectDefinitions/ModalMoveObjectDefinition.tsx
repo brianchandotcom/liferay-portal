@@ -24,22 +24,25 @@ import {defaultLanguageId} from '../../utils/constants';
 import './ModalMoveObjectDefinition.scss';
 
 interface ModalMoveObjectDefinitionProps {
-	foldersList: ObjectFolder[];
 	handleOnClose: () => void;
 	objectDefinition: ObjectDefinition;
-	selectedFolder: Partial<ObjectFolder>;
+	objectFolders: ObjectFolder[];
+	selectedObjectFolder: Partial<ObjectFolder>;
 	setMoveObjectDefinition: (value: ObjectDefinition | null) => void;
 }
 
 export function ModalMoveObjectDefinition({
-	foldersList,
 	handleOnClose,
 	objectDefinition,
-	selectedFolder,
+	objectFolders,
+	selectedObjectFolder,
 	setMoveObjectDefinition,
 }: ModalMoveObjectDefinitionProps) {
 	const [query, setQuery] = useState('');
-	const [selectedFolderERC, setSelectedFolderERC] = useState<string>('');
+	const [
+		selectedObjectFolderExternalReferenceCode,
+		setSelectedObjectFolderExternalReferenceCode,
+	] = useState<string>('');
 	const [error, setError] = useState<string>('');
 
 	const {observer, onClose} = useModal({
@@ -49,25 +52,26 @@ export function ModalMoveObjectDefinition({
 		},
 	});
 
-	const filteredFoldersList = foldersList.filter(
+	const filteredObjectFolders = objectFolders.filter(
 		(item) =>
-			item.externalReferenceCode !== selectedFolder.externalReferenceCode
+			item.externalReferenceCode !==
+			selectedObjectFolder.externalReferenceCode
 	);
 
-	const modalItems = useMemo(() => {
+	const modalObjectFolderItems = useMemo(() => {
 		const filteredItems = filterArrayByQuery({
-			array: filteredFoldersList,
+			array: filteredObjectFolders,
 			query,
 			str: 'label',
 		});
 
-		return query ? filteredItems : filteredFoldersList;
-	}, [query, filteredFoldersList]);
+		return query ? filteredItems : filteredObjectFolders;
+	}, [query, filteredObjectFolders]);
 
 	const handleMoveObject = async () => {
 		const movedObjectDefinition: ObjectDefinition = {
 			...objectDefinition,
-			objectFolderExternalReferenceCode: selectedFolderERC,
+			objectFolderExternalReferenceCode: selectedObjectFolderExternalReferenceCode,
 		};
 
 		try {
@@ -113,7 +117,7 @@ export function ModalMoveObjectDefinition({
 						<ClayAlert displayType="danger">{error}</ClayAlert>
 					)}
 
-					{!filteredFoldersList.length ? (
+					{!filteredObjectFolders.length ? (
 						<p>
 							{Liferay.Language.get(
 								'it-is-not-possible-to-move-this-object-definition-because-there-are-no-object-folders-available'
@@ -130,7 +134,7 @@ export function ModalMoveObjectDefinition({
 								</ManagementToolbar.ItemList>
 							</ManagementToolbar.Container>
 
-							{!modalItems.length && query ? (
+							{!modalObjectFolderItems.length && query ? (
 								<div className="lfr-object__object-web-view-modal-move-object-definition-empty-state">
 									<ClayEmptyState
 										description={Liferay.Language.get(
@@ -143,7 +147,7 @@ export function ModalMoveObjectDefinition({
 								</div>
 							) : (
 								<ClayList className="lfr-object__object-web-view-modal-move-object-definition-list">
-									{modalItems.map(
+									{modalObjectFolderItems.map(
 										({
 											externalReferenceCode,
 											label,
@@ -152,14 +156,14 @@ export function ModalMoveObjectDefinition({
 											<ClayList.Item
 												action
 												active={
-													selectedFolderERC ===
+													selectedObjectFolderExternalReferenceCode ===
 													externalReferenceCode
 												}
 												className="cursor-pointer lfr-object__object-web-view-modal-move-object-definition-list-item"
 												flex
 												key={name}
 												onClick={() => {
-													setSelectedFolderERC(
+													setSelectedObjectFolderExternalReferenceCode(
 														externalReferenceCode
 													);
 												}}
@@ -186,7 +190,7 @@ export function ModalMoveObjectDefinition({
 
 				<ClayModal.Footer
 					last={
-						!filteredFoldersList.length ? (
+						!filteredObjectFolders.length ? (
 							<ClayButton
 								displayType="secondary"
 								onClick={() => onClose()}

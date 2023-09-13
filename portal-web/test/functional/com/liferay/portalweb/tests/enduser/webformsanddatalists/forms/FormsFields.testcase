@@ -658,4 +658,49 @@ definition {
 			fieldValidationErrorMessage = "This field is required.");
 	}
 
+	@description = "LPS-182981 - Verify if when adding a new option in a field this option is added only in the chosen field "
+	@priority = 4
+	test ViewOptionAddedOnlyInTheChosenField {
+		task ("Given an created Form with a text field, a single selection field and a multiple selection field") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Form Test");
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "Text");
+
+			Form.closeSidebar();
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "Single Selection");
+
+			Form.closeSidebar();
+
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "Multiple Selection");
+
+			Form.closeSidebar();
+		}
+
+		task ("When the user add a new option on the single selection") {
+			Form.gotoFieldContainer(fieldName = "Single Selection");
+
+			FormFields.editOptionsRow(
+				optionName = "Option1",
+				optionValue = "Option 1",
+				rowNumber = 1);
+
+			FormFields.editOptionsRow(
+				optionName = "Option2",
+				optionValue = "Option 2",
+				rowNumber = 2);
+
+			Form.closeSidebar();
+		}
+
+		task ("Then the option is added only in the chosen field") {
+			FormFields.viewOptionRowNameNotPresent(
+				fieldName = "Multiple Selection",
+				optionName = "Option 2",
+				rowNumber = 1);
+		}
+	}
+
 }

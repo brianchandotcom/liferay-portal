@@ -39,6 +39,48 @@ definition {
 		}
 	}
 
+	@description = "Ignored due to LPS-186938"
+	@ignore = "true"
+	@priority = 4
+	test CanGenerateOpenAPIForObjectWithRelationshipToUnpublishedObject {
+		task ("And Given an unpublished custom object definition is created with post request") {
+			var objectDefinitionId = ObjectDefinitionAPI.createObjectDefinition(
+				en_US_label = "Student",
+				en_US_plural_label = "students",
+				name = "Student",
+				requiredStringFieldName = "name");
+		}
+
+		task ("And Given with post request a manyToMany relationship is set between a published object and an unpublished one") {
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "SubjectsStudents",
+				name = "subjectsStudents",
+				objectDefinitionId1 = ${staticSubjectObjectId},
+				objectDefinitionId2 = ${objectDefinitionId},
+				type = "manyToMany");
+		}
+
+		task ("When I expand 'Subject' schema in Subject API Explorer") {
+			APIExplorer.navigateToOpenAPI(
+				api = "c",
+				version = "subjects");
+
+			Click(
+				locator1 = "OpenAPI#SCHEMA_COLLAPSED",
+				schema = "Subject");
+		}
+
+		task ("Then the 'Subject' is shown without errors") {
+			AssertElementPresent.assertElementPresent(
+				field = "subjectsStudents",
+				locator1 = "OpenAPI#SCHEMA_TITLE",
+				schema = "Subject");
+
+			AssertElementNotPresent(locator1 = "OpenAPI#ERROR_WRAPPER");
+		}
+	}
+
 	@priority = 4
 	test CanIncludePropertiesInSchemasWithManyToManyRelationship {
 		property portal.acceptance = "true";

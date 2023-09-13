@@ -15,7 +15,7 @@ describe('The ObjectFolderCardHeader component should', () => {
 	it('render all object folder actions', () => {
 		render(
 			<ObjectFolderCardHeader
-				externalReferenceCode="ticketERC"
+				externalReferenceCode="ticket"
 				items={
 					getObjectFolderActions(1, '', () => {}, {
 						delete: {href: '', method: 'DELETE'},
@@ -45,7 +45,7 @@ describe('The ObjectFolderCardHeader component should', () => {
 			<ObjectFolderCardHeader
 				externalReferenceCode="uncategorized"
 				items={
-					getObjectFolderActions(1, '', () => {}, {
+					getObjectFolderActions(2, '', () => {}, {
 						get: {href: 'GET', method: ''},
 						permissions: {href: 'PATCH', method: ''},
 					}) as IItem[]

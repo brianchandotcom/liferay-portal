@@ -159,7 +159,6 @@ page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEn
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.users.admin.constants.UserScreenNavigationEntryConstants" %><%@
 page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %><%@
-page import="com.liferay.users.admin.kernel.util.UsersAdmin" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %><%@
 page import="com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys" %><%@
 page import="com.liferay.users.admin.web.internal.dao.search.OrganizationResultRowSplitter" %><%@

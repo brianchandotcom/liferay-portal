@@ -96,7 +96,7 @@ page import="com.liferay.site.memberships.web.internal.servlet.taglib.util.UserA
 page import="com.liferay.site.memberships.web.internal.servlet.taglib.util.UserGroupActionDropdownItemsProvider" %><%@
 page import="com.liferay.site.memberships.web.internal.util.GroupUtil" %><%@
 page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %><%@
-page import="com.liferay.users.admin.kernel.util.UsersAdmin" %>
+page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Date" %><%@

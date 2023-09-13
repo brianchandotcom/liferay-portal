@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.Locale;
 
@@ -115,7 +115,7 @@ public class UserGroupCTDisplayRenderer
 			() -> ListUtil.toString(
 				_userGroupGroupRoleLocalService.getUserGroupGroupRoles(
 					userGroup.getUserGroupId(), userGroup.getGroupId()),
-				UsersAdmin.USER_GROUP_GROUP_ROLE_TITLE_ACCESSOR,
+				UsersAdminUtil.USER_GROUP_GROUP_ROLE_TITLE_ACCESSOR,
 				StringPool.COMMA_AND_SPACE)
 		);
 	}

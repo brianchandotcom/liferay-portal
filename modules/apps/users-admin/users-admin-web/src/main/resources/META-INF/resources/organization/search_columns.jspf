@@ -29,8 +29,8 @@
 
 			<h6 class="text-default">
 				<%= HtmlUtil.escape(organization.getAddress().getCity()) %>
-				<%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>
-				<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>
+				<%= UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>
+				<%= UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>
 			</h6>
 		</liferay-ui:search-container-column-text>
 
@@ -86,13 +86,13 @@
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="region"
-				value="<%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
+				value="<%= UsersAdminUtil.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="country"
-				value="<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
+				value="<%= UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
 			/>
 		</c:if>
 

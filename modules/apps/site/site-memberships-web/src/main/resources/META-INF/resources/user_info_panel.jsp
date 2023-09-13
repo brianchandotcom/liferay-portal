@@ -122,7 +122,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 					<%
 					List<Team> teams = TeamLocalServiceUtil.getUserOrUserGroupTeams(siteMembershipsDisplayContext.getGroupId(), curUser.getUserId());
 
-					List<String> rolesAndTeamsNames = ListUtil.toList(UserGroupRoleLocalServiceUtil.getUserGroupRoles(curUser.getUserId(), siteMembershipsDisplayContext.getGroupId()), UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR);
+					List<String> rolesAndTeamsNames = ListUtil.toList(UserGroupRoleLocalServiceUtil.getUserGroupRoles(curUser.getUserId(), siteMembershipsDisplayContext.getGroupId()), UsersAdminUtil.USER_GROUP_ROLE_TITLE_ACCESSOR);
 
 					rolesAndTeamsNames.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 					%>

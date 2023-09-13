@@ -8,21 +8,21 @@ import ClayForm from '@clayui/form';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import React from 'react';
 
-interface RedirectModalProps {
+interface RedirectToEditObjectDetailsModalProps {
 	handleOnClose: () => void;
-	viewDetailsURL: string;
+	viewObjectDetailsURL: string;
 }
 
-export function RedirectModal({
+export function RedirectToEditObjectDetailsModal({
 	handleOnClose,
-	viewDetailsURL,
-}: RedirectModalProps) {
+	viewObjectDetailsURL,
+}: RedirectToEditObjectDetailsModalProps) {
 	const {observer, onClose} = useModal({
 		onClose: () => handleOnClose(),
 	});
 
 	const handleSubmit = () => {
-		window.open(viewDetailsURL, '_blank');
+		window.open(viewObjectDetailsURL, '_blank');
 	};
 
 	return (

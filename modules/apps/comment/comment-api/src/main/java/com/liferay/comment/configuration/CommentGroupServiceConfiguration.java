@@ -68,6 +68,12 @@ public interface CommentGroupServiceConfiguration {
 	public LocalizedValuesMap discussionEmailUpdatedSubject();
 
 	@Meta.AD(
+		deflt = "false", description = "always-editable-by-owner-description",
+		name = "always-editable-by-owner", required = false
+	)
+	public boolean alwaysEditableByOwner();
+
+	@Meta.AD(
 		deflt = "true", description = "subscribe-help", name = "subscribe",
 		required = false
 	)

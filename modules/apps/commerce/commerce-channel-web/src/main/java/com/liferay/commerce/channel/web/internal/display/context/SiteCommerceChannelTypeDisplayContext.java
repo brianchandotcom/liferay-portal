@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
@@ -50,7 +49,7 @@ public class SiteCommerceChannelTypeDisplayContext
 		ConfigurationProvider configurationProvider,
 		CPTaxCategoryLocalService cpTaxCategoryLocalService,
 		DLAppLocalService dlAppLocalService,
-		GroupLocalService groupLocalService, GroupPermission groupPermission,
+		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
 		Portal portal,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
@@ -61,7 +60,7 @@ public class SiteCommerceChannelTypeDisplayContext
 			commerceChannelModelResourcePermission, commerceChannelService,
 			commerceChannelTypeRegistry, commerceCurrencyLocalService,
 			configurationProvider, cpTaxCategoryLocalService, dlAppLocalService,
-			groupPermission, httpServletRequest, itemSelector, portal,
+			httpServletRequest, itemSelector, portal,
 			workflowDefinitionLinkLocalService, workflowDefinitionManager);
 
 		_dlAppLocalService = dlAppLocalService;

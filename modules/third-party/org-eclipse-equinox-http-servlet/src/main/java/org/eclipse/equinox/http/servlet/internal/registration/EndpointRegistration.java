@@ -55,7 +55,7 @@ public abstract class EndpointRegistration<D extends DTO>
 			Thread.currentThread().setContextClassLoader(classLoader);
 
 			contextController.getEndpointRegistrations().remove(this);
-			contextController.getHttpServiceRuntime().getRegisteredObjects().remove(this.getT());
+			contextController.getHttpServletEndpointController().getRegisteredObjects().remove(this.getT());
 			contextController.ungetServletContextHelper(servletHolder.getBundle());
 
 			super.destroy();
@@ -187,3 +187,4 @@ public abstract class EndpointRegistration<D extends DTO>
 
 	private String _toString;
 }
+/* @generated */

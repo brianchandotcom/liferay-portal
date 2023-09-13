@@ -91,7 +91,7 @@ public class FilterRegistration
 		ClassLoader original = Thread.currentThread().getContextClassLoader();
 		try {
 			Thread.currentThread().setContextClassLoader(classLoader);
-			contextController.getHttpServiceRuntime().getRegisteredObjects().remove(this.getT());
+			contextController.getHttpServletEndpointController().getRegisteredObjects().remove(this.getT());
 			contextController.getFilterRegistrations().remove(this);
 			contextController.ungetServletContextHelper(filterHolder.getBundle());
 			super.destroy();
@@ -271,3 +271,4 @@ public class FilterRegistration
 	}
 
 }
+/* @generated */

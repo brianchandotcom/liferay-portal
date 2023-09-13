@@ -11,7 +11,7 @@
 
 package org.eclipse.equinox.http.servlet.internal.customizer;
 
-import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
+import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -22,13 +22,14 @@ public abstract class RegistrationServiceTrackerCustomizer<S, T>
 	implements ServiceTrackerCustomizer<S, T> {
 
 	public RegistrationServiceTrackerCustomizer(
-		BundleContext bundleContext, HttpServiceRuntimeImpl httpServiceRuntime) {
+		BundleContext bundleContext, HttpServletEndpointController httpServletEndpointController) {
 
 		this.bundleContext = bundleContext;
-		this.httpServiceRuntime = httpServiceRuntime;
+		this.httpServletEndpointController = httpServletEndpointController;
 	}
 
 	protected BundleContext bundleContext;
-	protected HttpServiceRuntimeImpl httpServiceRuntime;
+	protected HttpServletEndpointController httpServletEndpointController;
 
 }
+/* @generated */

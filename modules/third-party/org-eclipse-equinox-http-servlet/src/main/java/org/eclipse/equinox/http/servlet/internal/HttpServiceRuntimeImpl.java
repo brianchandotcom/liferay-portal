@@ -42,7 +42,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class HttpServiceRuntimeImpl
 	implements
-		HttpServiceRuntime,
+		HttpServiceRuntime, HttpServletEndpointController,
 		ServiceTrackerCustomizer<ServletContextHelper, AtomicReference<ContextController>> {
 
 	public HttpServiceRuntimeImpl(
@@ -179,6 +179,16 @@ public class HttpServiceRuntimeImpl
 		registeredObjects = null;
 		contextServiceTracker = null;
 		contextPathCustomizerHolder = null;
+	}
+
+	@Override
+	public Collection<ContextController> getContextControllers() {
+		return controllerMap.values();
+	}
+
+	@Override
+	public DispatchTargets getDispatchTargets(String pathString) {
+		return getDispatchTargets(pathString, null);
 	}
 
 	public DispatchTargets getDispatchTargets(

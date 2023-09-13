@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 import javax.servlet.*;
 import javax.servlet.Filter;
 import javax.servlet.http.*;
-import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
+import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
 import org.eclipse.equinox.http.servlet.internal.customizer.*;
 import org.eclipse.equinox.http.servlet.internal.error.*;
 import org.eclipse.equinox.http.servlet.internal.registration.*;
@@ -108,7 +108,7 @@ public class ContextController {
 	public ContextController(
 		BundleContext trackingContextParam, BundleContext consumingContext,
 		ServiceReference<ServletContextHelper> servletContextHelperRef,
-		ProxyContext proxyContext, HttpServiceRuntimeImpl httpServiceRuntime,
+		ProxyContext proxyContext, HttpServletEndpointController httpServletEndpointController,
 		String contextName, String contextPath) {
 
 		validate(contextName, contextPath);
@@ -118,7 +118,7 @@ public class ContextController {
 		long serviceId = (Long)servletContextHelperRef.getProperty(Constants.SERVICE_ID);
 
 		this.proxyContext = proxyContext;
-		this.httpServiceRuntime = httpServiceRuntime;
+		this.httpServletEndpointController = httpServletEndpointController;
 		this.contextName = contextName;
 
 		if (contextPath.equals(Const.SLASH)) {
@@ -137,52 +137,52 @@ public class ContextController {
 		servletContextListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
 			trackingContext, ServletContextListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				trackingContext, httpServletEndpointController, this));
 
 		servletContextListenerServiceTracker.open();
 
 		servletContextAttributeListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
 			trackingContext, ServletContextAttributeListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				trackingContext, httpServletEndpointController, this));
 
 		servletContextAttributeListenerServiceTracker.open();
 
 		servletRequestListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
 			trackingContext, ServletRequestListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				trackingContext, httpServletEndpointController, this));
 
 		servletRequestListenerServiceTracker.open();
 
 		servletRequestAttributeListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
 			trackingContext, ServletRequestAttributeListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				trackingContext, httpServletEndpointController, this));
 
 		servletRequestAttributeListenerServiceTracker.open();
 
 		httpSessionListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
 			trackingContext, HttpSessionListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				trackingContext, httpServletEndpointController, this));
 
 		httpSessionListenerServiceTracker.open();
 
 		httpSessionAttributeListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
 			trackingContext, HttpSessionAttributeListener.class.getName(),
 			new ContextListenerTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				trackingContext, httpServletEndpointController, this));
 
 		httpSessionAttributeListenerServiceTracker.open();
 
-		ServletContext servletContext = httpServiceRuntime.getParentServletContext();
+		ServletContext servletContext = httpServletEndpointController.getParentServletContext();
 
 		if ((servletContext.getMajorVersion() >= 3) && (servletContext.getMinorVersion() > 0)) {
 			httpSessionIdListenerServiceTracker = new ServiceTracker<EventListener, AtomicReference<ListenerRegistration>>(
 				trackingContext, HttpSessionIdListener.class.getName(),
 				new ContextListenerTrackerCustomizer(
-					trackingContext, httpServiceRuntime, this));
+					trackingContext, httpServletEndpointController, this));
 
 			httpSessionIdListenerServiceTracker.open();
 		}
@@ -193,21 +193,21 @@ public class ContextController {
 		filterServiceTracker = new ServiceTracker<Filter, AtomicReference<FilterRegistration>>(
 			trackingContext, Filter.class,
 			new ContextFilterTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				trackingContext, httpServletEndpointController, this));
 
 		filterServiceTracker.open();
 
 		servletServiceTracker =  new ServiceTracker<Servlet, AtomicReference<ServletRegistration>>(
 			trackingContext, Servlet.class,
 			new ContextServletTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				trackingContext, httpServletEndpointController, this));
 
 		servletServiceTracker.open();
 
 		resourceServiceTracker = new ServiceTracker<Object, AtomicReference<ResourceRegistration>>(
 			trackingContext, Object.class,
 			new ContextResourceTrackerCustomizer(
-				trackingContext, httpServiceRuntime, this));
+				trackingContext, httpServletEndpointController, this));
 
 		resourceServiceTracker.open();
 	}
@@ -223,7 +223,7 @@ public class ContextController {
 			if (filter == null) {
 				throw new IllegalArgumentException("Filter cannot be null");
 			}
-			addedRegisteredObject = httpServiceRuntime.getRegisteredObjects().add(filter);
+			addedRegisteredObject = httpServletEndpointController.getRegisteredObjects().add(filter);
 			if (addedRegisteredObject) {
 				registration = doAddFilterRegistration(filterHolder, filterRef);
 			}
@@ -231,7 +231,7 @@ public class ContextController {
 			if (registration == null) {
 				filterHolder.release();
 				if (addedRegisteredObject) {
-					httpServiceRuntime.getRegisteredObjects().remove(filter);
+					httpServletEndpointController.getRegisteredObjects().remove(filter);
 				}
 			}
 		}
@@ -483,7 +483,7 @@ public class ContextController {
 			if (servlet == null) {
 				throw new IllegalArgumentException("Servlet cannot be null");
 			}
-			addedRegisteredObject = httpServiceRuntime.getRegisteredObjects().add(servlet);
+			addedRegisteredObject = httpServletEndpointController.getRegisteredObjects().add(servlet);
 			if (addedRegisteredObject) {
 				registration = doAddServletRegistration(servletHolder, servletRef);
 			}
@@ -491,7 +491,7 @@ public class ContextController {
 			if (registration == null) {
 				servletHolder.release();
 				if (addedRegisteredObject) {
-					httpServiceRuntime.getRegisteredObjects().remove(servlet);
+					httpServletEndpointController.getRegisteredObjects().remove(servlet);
 				}
 			}
 		}
@@ -831,7 +831,7 @@ public class ContextController {
 	}
 
 	public String getFullContextPath() {
-		List<String> endpoints = httpServiceRuntime.getHttpServiceEndpoints();
+		List<String> endpoints = httpServletEndpointController.getHttpServiceEndpoints();
 
 		if (endpoints.isEmpty()) {
 			return proxyContext.getServletPath().concat(contextPath);
@@ -847,8 +847,8 @@ public class ContextController {
 		return defaultEndpoint + contextPath;
 	}
 
-	public HttpServiceRuntimeImpl getHttpServiceRuntime() {
-		return httpServiceRuntime;
+	public HttpServletEndpointController getHttpServletEndpointController() {
+		return httpServletEndpointController;
 	}
 
 	public Map<String, String> getInitParams() {
@@ -1313,7 +1313,7 @@ public class ContextController {
 	private final Set<FilterRegistration> filterRegistrations = new ConcurrentSkipListSet<FilterRegistration>();
 	private final ConcurrentMap<String, HttpSessionAdaptor> activeSessions = new ConcurrentHashMap<String, HttpSessionAdaptor>();
 
-	private final HttpServiceRuntimeImpl httpServiceRuntime;
+	private final HttpServletEndpointController httpServletEndpointController;
 	private final Set<ListenerRegistration> listenerRegistrations = new HashSet<ListenerRegistration>();
 	private final ProxyContext proxyContext;
 	private final ServiceReference<ServletContextHelper> servletContextHelperRef;

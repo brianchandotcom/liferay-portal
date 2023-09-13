@@ -13,14 +13,13 @@ package org.eclipse.equinox.http.servlet.internal.customizer;
 
 import java.util.EventListener;
 import java.util.concurrent.atomic.AtomicReference;
-import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
+
+import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
 import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
 import org.eclipse.equinox.http.servlet.internal.registration.ListenerRegistration;
-import org.eclipse.equinox.http.servlet.internal.util.StringPlus;
 import org.osgi.framework.*;
 import org.osgi.service.http.runtime.dto.DTOConstants;
-import org.osgi.service.http.runtime.dto.FailedListenerDTO;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
@@ -30,10 +29,10 @@ public class ContextListenerTrackerCustomizer
 	extends RegistrationServiceTrackerCustomizer<EventListener,  AtomicReference<ListenerRegistration>> {
 
 	public ContextListenerTrackerCustomizer(
-		BundleContext bundleContext, HttpServiceRuntimeImpl httpServiceRuntime,
+		BundleContext bundleContext, HttpServletEndpointController httpServletEndpointController,
 		ContextController contextController) {
 
-		super(bundleContext, httpServiceRuntime);
+		super(bundleContext, httpServletEndpointController);
 
 		this.contextController = contextController;
 	}
@@ -50,7 +49,7 @@ public class ContextListenerTrackerCustomizer
 			return null;
 		}
 
-		if (!httpServiceRuntime.matches(serviceReference)) {
+		if (!httpServletEndpointController.matches(serviceReference)) {
 			return null;
 		}
 
@@ -76,10 +75,10 @@ public class ContextListenerTrackerCustomizer
 			result.set(contextController.addListenerRegistration(serviceReference));
 		}
 		catch (HttpWhiteboardFailureException hwfe) {
-			httpServiceRuntime.log(hwfe.getMessage(), hwfe);
+			httpServletEndpointController.log(hwfe.getMessage(), hwfe);
 		}
 		catch (Exception e) {
-			httpServiceRuntime.log(e.getMessage(), e);
+			httpServletEndpointController.log(e.getMessage(), e);
 		}
 
 		return result;

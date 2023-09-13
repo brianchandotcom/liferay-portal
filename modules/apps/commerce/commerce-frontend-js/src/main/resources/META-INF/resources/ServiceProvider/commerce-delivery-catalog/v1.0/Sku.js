@@ -13,11 +13,11 @@ function resolveSkusPath(
 	productId,
 	accountId,
 	quantity,
-	unitOfMeasureKey
+	skuUnitOfMeasureKey
 ) {
 	let path = `${basePath}${VERSION}/channels/${channelId}/products/${productId}/skus/by-sku-option`;
 
-	if (accountId || quantity || unitOfMeasureKey) {
+	if (accountId || quantity || skuUnitOfMeasureKey) {
 		path += `?`;
 
 		const params = new URLSearchParams();
@@ -30,8 +30,8 @@ function resolveSkusPath(
 			params.append('quantity', quantity);
 		}
 
-		if (unitOfMeasureKey) {
-			params.append('unitOfMeasureKey', unitOfMeasureKey);
+		if (skuUnitOfMeasureKey) {
+			params.append('skuUnitOfMeasureKey', skuUnitOfMeasureKey);
 		}
 
 		path += params.toString();
@@ -69,7 +69,7 @@ export default function Sku(basePath) {
 			productId,
 			accountId,
 			quantity,
-			unitOfMeasureKey,
+			skuUnitOfMeasureKey,
 			...params
 		) =>
 			AJAX.POST(
@@ -79,7 +79,7 @@ export default function Sku(basePath) {
 					productId,
 					accountId,
 					quantity,
-					unitOfMeasureKey
+					skuUnitOfMeasureKey
 				),
 				...params
 			),

@@ -104,22 +104,24 @@ function AddToCart({
 			}
 
 			if (cart.id) {
-				CartResource.getItemsByCartId(cart.id).then(({items}) => {
-					const inCart = items.some(
-						({skuId, unitOfMeasureKey}) =>
-							incomingCpInstance.skuId === skuId &&
-							incomingCpInstance.unitOfMeasureKey ===
-								unitOfMeasureKey
-					);
+				if (!Liferay.FeatureFlags['COMMERCE-11287']) {
+					CartResource.getItemsByCartId(cart.id).then(({items}) => {
+						const inCart = items.some(
+							({skuId}) => incomingCpInstance.skuId === skuId
+						);
 
-					updateInCartState(inCart);
-				});
+						updateInCartState(inCart);
+					});
+				}
+				else {
+					updateInCartState(cpInstance.inCart);
+				}
 			}
 			else {
 				updateInCartState(false);
 			}
 		},
-		[cart.id]
+		[cart.id, cpInstance]
 	);
 
 	useEffect(() => {
@@ -134,10 +136,41 @@ function AddToCart({
 		}
 
 		function handleUOMChanged({unitOfMeasure}) {
-			setCpInstance((cpInstance) => ({
-				...cpInstance,
-				unitOfMeasureKey: unitOfMeasure ? unitOfMeasure.key : null,
-			}));
+			if (cart.id) {
+				CartResource.getItemsByCartId(cart.id).then(({items}) => {
+					let inCart = false;
+
+					if (unitOfMeasure) {
+						inCart = items.some(
+							({skuId, skuUnitOfMeasure}) =>
+								cpInstance.skuId === skuId &&
+								skuUnitOfMeasure?.key &&
+								unitOfMeasure?.key === skuUnitOfMeasure?.key
+						);
+					}
+					else {
+						inCart = items.some(({skuId, skuUnitOfMeasure}) => {
+							return (
+								cpInstance.skuId === skuId &&
+								!skuUnitOfMeasure?.key
+							);
+						});
+					}
+
+					setCpInstance((cpInstance) => ({
+						...cpInstance,
+						inCart,
+						skuUnitOfMeasure: unitOfMeasure,
+					}));
+				});
+			}
+			else {
+				setCpInstance((cpInstance) => ({
+					...cpInstance,
+					inCart: false,
+					skuUnitOfMeasure: unitOfMeasure,
+				}));
+			}
 		}
 
 		Liferay.on(CART_PRODUCT_QUANTITY_CHANGED, handleQuantityChanged);
@@ -168,7 +201,7 @@ function AddToCart({
 				handleUOMChanged
 			);
 		};
-	}, [handleCPInstanceReplaced, settings]);
+	}, [cart.id, cpInstance.skuId, handleCPInstanceReplaced, settings]);
 
 	const spaceDirection = settings.inline ? 'ml' : 'mt';
 	let spacer = settings.size === 'sm' ? 1 : 3;
@@ -245,7 +278,10 @@ function AddToCart({
 				disabled={buttonDisabled}
 				notAllowed={!cpInstance.validQuantity}
 				onAdd={() => {
-					setCpInstance({...cpInstance, inCart: true});
+					setCpInstance((cpInstance) => ({
+						...cpInstance,
+						inCart: true,
+					}));
 				}}
 				onClick={
 					cpInstance.validQuantity
@@ -271,7 +307,6 @@ AddToCart.propTypes = {
 		skuId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
 			.isRequired,
 		skuOptions: PropTypes.array,
-		unitOfMeasureKey: PropTypes.string,
 	}),
 	disabled: PropTypes.bool,
 	productId: PropTypes.number,

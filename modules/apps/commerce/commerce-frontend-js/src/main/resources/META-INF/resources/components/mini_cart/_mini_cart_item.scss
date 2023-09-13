@@ -9,7 +9,7 @@
 	grid-template-areas:
 		'info quantity price delete'
 		'errors errors errors errors';
-	grid-template-columns: auto 90px minmax(min-content, 100px) min-content;
+	grid-template-columns: auto 120px minmax(min-content, 100px) min-content;
 	overflow: visible;
 	position: relative;
 	transition: height 0.2s ease-in, padding 0.1s ease-in;
@@ -226,5 +226,9 @@
 		span {
 			margin-left: 10px;
 		}
+	}
+
+	.quantity-selector {
+		max-width: 70px;
 	}
 }

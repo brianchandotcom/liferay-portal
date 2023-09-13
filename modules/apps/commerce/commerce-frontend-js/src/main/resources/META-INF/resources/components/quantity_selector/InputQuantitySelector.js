@@ -21,7 +21,7 @@ import RulesPopover from './RulesPopover';
 const getErrors = (value, min, max, step, precision = 0) => {
 	const errors = [];
 
-	if (getNumberOfDecimals(value) > getNumberOfDecimals(step)) {
+	if (getNumberOfDecimals(value) > precision) {
 		errors.push('decimals');
 	}
 
@@ -53,19 +53,41 @@ const InputQuantitySelector = forwardRef(
 			onUpdate,
 			quantity,
 			step,
+			unitOfMeasure,
 		},
 		inputRef
 	) => {
 		const [inputProperties, setInputProperties] = useState({
-			currentUnitOfMeasure: null,
-			max: getProductMaxQuantity(Math.ceil(max), Math.ceil(step)),
-			min: getMinQuantity(Math.ceil(min), Math.ceil(step)),
+			currentUnitOfMeasure: unitOfMeasure,
+			max: unitOfMeasure
+				? getProductMaxQuantity(
+						max,
+						unitOfMeasure.incrementalOrderQuantity,
+						unitOfMeasure.precision
+				  )
+				: getProductMaxQuantity(Math.ceil(max), Math.ceil(step)),
+			min: unitOfMeasure
+				? getMinQuantity(
+						min,
+						unitOfMeasure.incrementalOrderQuantity,
+						unitOfMeasure.precision
+				  )
+				: getMinQuantity(Math.ceil(min), Math.ceil(step)),
 			quantity,
-			step: Math.ceil(step),
+			step: unitOfMeasure
+				? unitOfMeasure.incrementalOrderQuantity
+				: Math.ceil(step),
 		});
 		const [showPopover, setShowPopover] = useState(false);
 		const [visibleErrors, setVisibleErrors] = useState(() =>
-			getErrors(quantity, Math.ceil(min), Math.ceil(max), Math.ceil(step))
+			getErrors(
+				quantity,
+				unitOfMeasure ? min : Math.ceil(min),
+				unitOfMeasure ? max : Math.ceil(max),
+				unitOfMeasure
+					? unitOfMeasure.incrementalOrderQuantity
+					: Math.ceil(step)
+			)
 		);
 		const isMounted = useIsMounted();
 		const debouncedSetVisibleErrorsRef = useRef(

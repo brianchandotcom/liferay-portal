@@ -24,6 +24,7 @@ const QuantitySelector = forwardRef(
 			quantity,
 			size,
 			step,
+			unitOfMeasure,
 		},
 		providedRef
 	) => {
@@ -51,6 +52,7 @@ const QuantitySelector = forwardRef(
 				quantity={quantity}
 				ref={providedRef || inputRef}
 				step={step}
+				unitOfMeasure={unitOfMeasure}
 			/>
 		);
 	}

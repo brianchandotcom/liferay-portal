@@ -36,7 +36,7 @@ const getSearchSKUsURL = (page, search, accountId, channelId) => {
 };
 
 export default function CartQuickAdd() {
-	const {cartState, setCartState} = useContext(MiniCartContext);
+	const {cartState} = useContext(MiniCartContext);
 
 	const keypressTimoutRef = useRef(null);
 	const paginatorCurrentPageRef = useRef(1);
@@ -123,8 +123,13 @@ export default function CartQuickAdd() {
 				productConfiguration: selectedConfiguration,
 				replacementSku: replacementSKUData,
 				sku: selectedSKU,
+				skuUnitOfMeasures,
 				urls,
 			} = selectedSKUData;
+
+			if (skuUnitOfMeasures && skuUnitOfMeasures.length) {
+				selectedSKUData.skuUnitOfMeasure = skuUnitOfMeasures[0];
+			}
 
 			if (
 				selectedSKUData.availability?.label !== 'available' &&
@@ -156,9 +161,16 @@ export default function CartQuickAdd() {
 				...selectedSKUData,
 				productURLs: urls,
 				quantity: getCorrectedQuantity(
-					selectedConfiguration,
+					{
+						...selectedConfiguration,
+						multipleOrderQuantity:
+							selectedSKUData.skuUnitOfMeasure
+								?.incrementalOrderQuantity ||
+							selectedConfiguration.multipleOrderQuantity,
+					},
 					selectedSKU,
-					cartItems
+					cartItems,
+					selectedSKUData.skuUnitOfMeasure?.precision || 1
 				),
 				settings: selectedConfiguration,
 				skuId: selectedId,
@@ -170,12 +182,18 @@ export default function CartQuickAdd() {
 		);
 
 		if (!unavailableSKU) {
-			setCartState((cartState) => ({
-				...cartState,
-				cartItems: cartItems.concat(readySKUs),
-			}));
-
-			addToCart(readySKUs, cartId, channel, accountId);
+			addToCart(readySKUs, cartId, channel, accountId)
+				.then(() => {})
+				.catch((error) => {
+					Liferay.Util.openToast({
+						message:
+							error.detail ||
+							Liferay.Language.get(
+								'an-unexpected-system-error-occurred'
+							),
+						type: 'danger',
+					});
+				});
 
 			setSelectedSKUs([]);
 		}

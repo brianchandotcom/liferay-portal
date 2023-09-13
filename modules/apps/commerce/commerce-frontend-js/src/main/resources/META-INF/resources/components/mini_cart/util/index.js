@@ -16,7 +16,12 @@ import {
 	PRODUCT_QUANTITY_NOT_VALID_ERROR,
 } from './constants';
 
-export function getCorrectedQuantity(productConfiguration, sku, cartItems) {
+export function getCorrectedQuantity(
+	productConfiguration,
+	sku,
+	cartItems,
+	precision = 0
+) {
 	const {
 		allowedOrderQuantities,
 		maxOrderQuantity,
@@ -179,7 +184,7 @@ export function getCorrectedQuantity(productConfiguration, sku, cartItems) {
 		});
 	}
 
-	return quantity;
+	return Number(quantity.toFixed(precision));
 }
 
 export function generateProductPageURL(

@@ -70,6 +70,7 @@ function CartItem({
 	skuId,
 	updateCartItem,
 	replacedSku,
+	skuUnitOfMeasure,
 }) {
 	const [itemState, setItemState] = useState(INITIAL_ITEM_STATE);
 	const [selectorQuantity, setSelectorQuantity] = useState(cartItemQuantity);
@@ -197,7 +198,7 @@ function CartItem({
 				</div>
 			</a>
 
-			<div className="mini-cart-item-quantity">
+			<div className="align-items-center d-flex mini-cart-item-quantity">
 				<QuantitySelector
 					alignment={index > 0 ? 'top' : 'bottom'}
 					allowedQuantities={settings.allowedQuantities}
@@ -238,9 +239,15 @@ function CartItem({
 							});
 					}}
 					quantity={selectorQuantity}
-					step={settings.multipleQuantity}
+					step={
+						skuUnitOfMeasure?.incrementalOrderQuantity ||
+						settings.multipleQuantity
+					}
 					{...settings}
+					unitOfMeasure={skuUnitOfMeasure}
 				/>
+
+				<div className="ml-2">{skuUnitOfMeasure?.key}</div>
 			</div>
 
 			<div className="mini-cart-item-price">

@@ -30,6 +30,7 @@ const UnitOfMeasureSelector = forwardRef(
 		size,
 	}) => {
 		const [inputProperties, setInputProperties] = useState({
+			fireEvent: false,
 			quantity: getMinQuantity(productConfiguration?.minOrderQuantity, 1),
 			resetQuantity: false,
 			unitOfMeasures: [],
@@ -43,13 +44,13 @@ const UnitOfMeasureSelector = forwardRef(
 		);
 
 		const postChannelProductSkuBySkuOption = useCallback(
-			(unitOfMeasureKey) => {
+			(skuUnitOfMeasureKey) => {
 				DeliveryCatalogAPIServiceProvider.postChannelProductSkuBySkuOption(
 					channelId,
 					productId,
 					accountId,
 					inputProperties.quantity,
-					unitOfMeasureKey,
+					skuUnitOfMeasureKey,
 					skuOptionsAtomState.skuOptions
 				).then((cpInstance) => {
 					cpInstance.skuOptions = skuOptionsAtomState.skuOptions;
@@ -83,6 +84,7 @@ const UnitOfMeasureSelector = forwardRef(
 
 					setInputProperties((inputProperties) => ({
 						...inputProperties,
+						fireEvent: true,
 						quantity: getMinQuantity(
 							productConfiguration?.minOrderQuantity,
 							skuUnitOfMeasures[0]?.incrementalOrderQuantity || 1,
@@ -92,6 +94,12 @@ const UnitOfMeasureSelector = forwardRef(
 						unitOfMeasures: skuUnitOfMeasures,
 						value: skuUnitOfMeasures[0]?.key || '',
 					}));
+
+					if (skuUnitOfMeasures[0]?.key) {
+						postChannelProductSkuBySkuOption(
+							skuUnitOfMeasures[0]?.key
+						);
+					}
 				});
 			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -107,6 +115,7 @@ const UnitOfMeasureSelector = forwardRef(
 
 			setInputProperties((inputProperties) => ({
 				...inputProperties,
+				fireEvent: true,
 				unitOfMeasures: skuUnitOfMeasures,
 				value: skuUnitOfMeasures[0]?.key || '',
 			}));
@@ -139,14 +148,17 @@ const UnitOfMeasureSelector = forwardRef(
 			});
 			setInputProperties((inputProperties) => ({
 				...inputProperties,
+				fireEvent: false,
 				resetQuantity: false,
 			}));
 		}, [inputProperties, namespace]);
 
 		useEffect(() => {
-			fireSelectorChangedEvent();
+			if (inputProperties.fireEvent) {
+				fireSelectorChangedEvent();
+			}
 			// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [inputProperties.value]);
+		}, [inputProperties.fireEvent]);
 
 		return (
 			!!inputProperties.unitOfMeasures.length && (
@@ -163,6 +175,7 @@ const UnitOfMeasureSelector = forwardRef(
 					onChange={({target}) => {
 						setInputProperties((inputProperties) => ({
 							...inputProperties,
+							fireEvent: true,
 							value: target.value,
 						}));
 

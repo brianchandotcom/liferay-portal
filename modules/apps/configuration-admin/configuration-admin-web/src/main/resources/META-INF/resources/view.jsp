@@ -34,6 +34,7 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = Configuratio
 
 <clay:container-fluid
 	cssClass="container-view"
+	fullWidth='<%= FeatureFlagManagerUtil.isEnabled("LPS-184404") %>'
 >
 	<c:if test="<%= configurationCategorySectionDisplays.isEmpty() %>">
 		<liferay-frontend:empty-result-message

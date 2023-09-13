@@ -10,7 +10,7 @@
 <%
 ResultRow resultRow = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-BatchPlannerPlan batchPlannerPlan = (BatchPlannerPlan)resultRow.getObject();
+BatchPlannerPlanTemplateDisplay batchPlannerPlanTemplateDisplay = (BatchPlannerPlanTemplateDisplay)resultRow.getObject();
 %>
 
 <liferay-ui:icon-menu
@@ -20,11 +20,11 @@ BatchPlannerPlan batchPlannerPlan = (BatchPlannerPlan)resultRow.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= BatchPlannerPlanPermission.contains(permissionChecker, batchPlannerPlan, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= BatchPlannerPlanPermission.contains(permissionChecker, batchPlannerPlanTemplateDisplay.getBatchPlannerPlanId(), ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= BatchPlannerPlan.class.getName() %>"
-			modelResourceDescription="<%= batchPlannerPlan.getName() %>"
-			resourcePrimKey="<%= String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()) %>"
+			modelResourceDescription="<%= batchPlannerPlanTemplateDisplay.getTitle() %>"
+			resourcePrimKey="<%= String.valueOf(batchPlannerPlanTemplateDisplay.getBatchPlannerPlanId()) %>"
 			var="permissionsURL"
 			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
@@ -37,11 +37,11 @@ BatchPlannerPlan batchPlannerPlan = (BatchPlannerPlan)resultRow.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= BatchPlannerPlanPermission.contains(permissionChecker, batchPlannerPlan, ActionKeys.DELETE) %>">
+	<c:if test="<%= BatchPlannerPlanPermission.contains(permissionChecker, batchPlannerPlanTemplateDisplay.getBatchPlannerPlanId(), ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/batch_planner/delete_batch_planner_plan_template" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="batchPlannerPlanId" value="<%= String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()) %>" />
+			<portlet:param name="batchPlannerPlanId" value="<%= String.valueOf(batchPlannerPlanTemplateDisplay.getBatchPlannerPlanId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete

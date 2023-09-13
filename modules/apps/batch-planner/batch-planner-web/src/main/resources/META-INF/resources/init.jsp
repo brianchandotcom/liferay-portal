@@ -21,6 +21,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.batch.planner.exception.BatchPlannerPlanInternalClassNameException" %><%@
 page import="com.liferay.batch.planner.model.BatchPlannerPlan" %><%@
 page import="com.liferay.batch.planner.web.internal.display.BatchPlannerPlanDisplay" %><%@
+page import="com.liferay.batch.planner.web.internal.display.BatchPlannerPlanTemplateDisplay" %><%@
 page import="com.liferay.batch.planner.web.internal.display.context.BatchPlannerPlanDisplayContext" %><%@
 page import="com.liferay.batch.planner.web.internal.display.context.BatchPlannerPlanManagementToolbarDisplayContext" %><%@
 page import="com.liferay.batch.planner.web.internal.display.context.BatchPlannerPlanTemplateDisplayContext" %><%@

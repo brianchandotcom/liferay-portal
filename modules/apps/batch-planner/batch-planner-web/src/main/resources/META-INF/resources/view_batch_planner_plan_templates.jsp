@@ -10,9 +10,9 @@
 <%
 BatchPlannerPlanTemplateDisplayContext batchPlannerPlanTemplateDisplayContext = (BatchPlannerPlanTemplateDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-SearchContainer<BatchPlannerPlan> batchPlannerPlanTemplateSearchContainer = batchPlannerPlanTemplateDisplayContext.getSearchContainer();
+SearchContainer<BatchPlannerPlanTemplateDisplay> batchPlannerPlanTemplateDisplaySearchContainer = batchPlannerPlanTemplateDisplayContext.getSearchContainer();
 
-BatchPlannerPlanTemplateManagementToolbarDisplayContext batchPlannerPlanTemplateManagementToolbarDisplayContext = new BatchPlannerPlanTemplateManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, batchPlannerPlanTemplateSearchContainer);
+BatchPlannerPlanTemplateManagementToolbarDisplayContext batchPlannerPlanTemplateManagementToolbarDisplayContext = new BatchPlannerPlanTemplateManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, batchPlannerPlanTemplateDisplaySearchContainer);
 %>
 
 <clay:navigation-bar
@@ -32,12 +32,12 @@ BatchPlannerPlanTemplateManagementToolbarDisplayContext batchPlannerPlanTemplate
 		<aui:input name="batchPlannerPlanIds" type="hidden" />
 
 		<liferay-ui:search-container
-			searchContainer="<%= batchPlannerPlanTemplateSearchContainer %>"
+			searchContainer="<%= batchPlannerPlanTemplateDisplaySearchContainer %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.batch.planner.model.BatchPlannerPlan"
+				className="com.liferay.batch.planner.web.internal.display.BatchPlannerPlanTemplateDisplay"
 				keyProperty="batchPlannerPlanId"
-				modelVar="batchPlannerPlan"
+				modelVar="batchPlannerPlanTemplateDisplay"
 			>
 
 				<%
@@ -50,38 +50,38 @@ BatchPlannerPlanTemplateManagementToolbarDisplayContext batchPlannerPlanTemplate
 				<liferay-ui:search-container-column-text
 					cssClass="code"
 					name="id"
-					value="<%= String.valueOf(batchPlannerPlan.getBatchPlannerPlanId()) %>"
+					value="<%= String.valueOf(batchPlannerPlanTemplateDisplay.getBatchPlannerPlanId()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="font-weight-bold"
 					name="name"
-					value="<%= HtmlUtil.escape(batchPlannerPlan.getName()) %>"
+					value="<%= HtmlUtil.escape(batchPlannerPlanTemplateDisplay.getTitle()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					name="create-date"
-					value="<%= dateFormatDateTime.format(batchPlannerPlan.getCreateDate()) %>"
+					value="<%= dateFormatDateTime.format(batchPlannerPlanTemplateDisplay.getCreateDate()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					name="action"
-					value='<%= LanguageUtil.get(request, batchPlannerPlan.isExport() ? "export" : "import") %>'
+					value='<%= LanguageUtil.get(request, batchPlannerPlanTemplateDisplay.isExport() ? "export" : "import") %>'
 				/>
 
 				<liferay-ui:search-container-column-text
 					name="type"
-					value="<%= batchPlannerPlanTemplateDisplayContext.getSimpleInternalClassName(batchPlannerPlan.getInternalClassName()) %>"
+					value="<%= batchPlannerPlanTemplateDisplayContext.getSimpleInternalClassName(batchPlannerPlanTemplateDisplay.getInternalClassNameKey()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					name="format"
-					value="<%= batchPlannerPlan.getExternalType() %>"
+					value="<%= batchPlannerPlanTemplateDisplay.getExternalType() %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					name="user"
-					value="<%= batchPlannerPlan.getUserName() %>"
+					value="<%= batchPlannerPlanTemplateDisplay.getUserName() %>"
 				/>
 
 				<liferay-ui:search-container-column-jsp

@@ -22,7 +22,7 @@ export default function propsTransformer({portletNamespace, ...otherProps}) {
 					);
 
 					const searchContainer = document.getElementById(
-						`${portletNamespace}batchPlannerPlanTemplateSearchContainer`
+						`${portletNamespace}batchPlannerPlanTemplateDisplaySearchContainer`
 					);
 
 					if (form && searchContainer) {

@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
+import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
+import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
 import org.eclipse.equinox.http.servlet.internal.servlet.HttpServletRequestWrapperImpl;
 
 /**
@@ -24,10 +25,10 @@ import org.eclipse.equinox.http.servlet.internal.servlet.HttpServletRequestWrapp
 public class HttpServletEndpointServlet extends HttpServlet {
 
 	public HttpServletEndpointServlet(
-		HttpServiceRuntimeImpl httpServiceRuntimeImpl,
+		HttpServletEndpointController httpServletEndpointController,
 		ServletConfig servletConfig) {
 
-		_httpServiceRuntimeImpl = httpServiceRuntimeImpl;
+		_httpServletEndpointController = httpServletEndpointController;
 		_servletConfig = servletConfig;
 	}
 
@@ -54,8 +55,13 @@ public class HttpServletEndpointServlet extends HttpServlet {
 			dispatchPathInfo = StringPool.SLASH;
 		}
 
-		if (_httpServiceRuntimeImpl.doDispatch(
-				httpServletRequest, httpServletResponse, dispatchPathInfo)) {
+		DispatchTargets dispatchTargets =
+			_httpServletEndpointController.getDispatchTargets(dispatchPathInfo);
+
+		if ((dispatchTargets != null) &&
+			dispatchTargets.doDispatch(
+				httpServletRequest, httpServletResponse, dispatchPathInfo,
+				httpServletRequest.getDispatcherType())) {
 
 			return;
 		}
@@ -64,7 +70,7 @@ public class HttpServletEndpointServlet extends HttpServlet {
 			HttpServletResponse.SC_NOT_FOUND, dispatchPathInfo);
 	}
 
-	private final HttpServiceRuntimeImpl _httpServiceRuntimeImpl;
+	private final HttpServletEndpointController _httpServletEndpointController;
 	private final ServletConfig _servletConfig;
 
 }

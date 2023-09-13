@@ -1,18 +1,17 @@
 [#assign current_time = dateUtil.newDate() the_year =
 current_time?date?string("yyyy")]
 
-<footer
-	class="f-navigation-footer"
-	data-swiftype-index="false"
-	id="footer"
-	role="contentinfo"
->
+<footer class="f-navigation-footer" data-swiftype-index="false" id="footer" role="contentinfo">
 	<div class="align-start flex footer-content justify-space-between max-nav">
 		<div class="flex flex-column footer-navigation">
-			[@liferay_ui["language"] ddmTemplateGroupId=(scopeGroupId)
-			ddmTemplateKey="FOOTER" displayCurrentLocale=true
-			languageIds=localeUtil.toLanguageIds(languageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()))
-			useNamespace=false /]
+
+			[@liferay_ui["language"]
+				ddmTemplateGroupId=(scopeGroupId)
+				ddmTemplateKey="FOOTER"
+				displayCurrentLocale=true
+				languageIds=localeUtil.toLanguageIds(languageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()))
+				useNamespace=false
+			/]
 
 			<lfr-drop-zone></lfr-drop-zone>
 		</div>

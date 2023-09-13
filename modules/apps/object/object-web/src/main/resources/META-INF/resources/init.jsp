@@ -23,6 +23,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.asset.kernel.model.AssetVocabularyConstants" %><%@
 page import="com.liferay.learn.LearnMessageUtil" %><%@
 page import="com.liferay.list.type.model.ListTypeDefinition" %><%@
+page import="com.liferay.object.constants.ObjectDefinitionConstants" %><%@
 page import="com.liferay.object.constants.ObjectFieldConstants" %><%@
 page import="com.liferay.object.constants.ObjectLayoutBoxConstants" %><%@
 page import="com.liferay.object.constants.ObjectWebKeys" %><%@

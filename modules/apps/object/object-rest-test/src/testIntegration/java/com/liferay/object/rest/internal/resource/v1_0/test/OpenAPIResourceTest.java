@@ -174,7 +174,9 @@ public class OpenAPIResourceTest {
 			"properties"
 		);
 
+		Assert.assertNull(propertiesJSONObject.getJSONObject("createDate"));
 		Assert.assertNotNull(propertiesJSONObject.getJSONObject("keywords"));
+		Assert.assertNull(propertiesJSONObject.getJSONObject("modifiedDate"));
 		Assert.assertNotNull(
 			propertiesJSONObject.getJSONObject("taxonomyCategoryBriefs"));
 		Assert.assertNotNull(

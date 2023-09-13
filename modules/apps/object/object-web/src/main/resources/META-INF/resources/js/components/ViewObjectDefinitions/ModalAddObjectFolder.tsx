@@ -21,7 +21,7 @@ import React, {useState} from 'react';
 import {defaultLanguageId} from '../../utils/constants';
 import {normalizeName} from './objectDefinitionUtil';
 
-interface ModalAddFolderProps {
+interface ModalAddObjectFolderProps {
 	handleOnClose: () => void;
 }
 
@@ -30,7 +30,9 @@ type TInitialValues = {
 	name?: string;
 };
 
-export function ModalAddFolder({handleOnClose}: ModalAddFolderProps) {
+export function ModalAddObjectFolder({
+	handleOnClose,
+}: ModalAddObjectFolderProps) {
 	const [error, setError] = useState<string>('');
 
 	const {observer, onClose} = useModal({
@@ -43,7 +45,7 @@ export function ModalAddFolder({handleOnClose}: ModalAddFolderProps) {
 	};
 
 	const onSubmit = async ({label, name}: TInitialValues) => {
-		const folder: Partial<ObjectFolder> = {
+		const objectFolder: Partial<ObjectFolder> = {
 			label: {
 				[defaultLanguageId]: label,
 			},
@@ -52,7 +54,7 @@ export function ModalAddFolder({handleOnClose}: ModalAddFolderProps) {
 
 		try {
 			await API.save({
-				item: folder,
+				item: objectFolder,
 				method: 'POST',
 				url: '/o/object-admin/v1.0/object-folders',
 			});
@@ -108,7 +110,6 @@ export function ModalAddFolder({handleOnClose}: ModalAddFolderProps) {
 
 						<Input
 							error={errors.label}
-							id="folderLabel"
 							label={Liferay.Language.get('label')}
 							name="label"
 							onChange={handleChange}
@@ -118,7 +119,6 @@ export function ModalAddFolder({handleOnClose}: ModalAddFolderProps) {
 
 						<Input
 							error={errors.name}
-							id="folderName"
 							label={Liferay.Language.get('name')}
 							name="name"
 							onChange={handleChange}

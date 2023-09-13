@@ -7,6 +7,7 @@ package com.liferay.layout.locked.layouts.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.layout.constants.LockedLayoutType;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.model.LockedLayout;
 import com.liferay.petra.string.StringPool;
@@ -171,7 +172,8 @@ public class LockedLayoutsDisplayContext {
 
 		_lockedLayouts = _layoutLockManager.getLockedLayouts(
 			_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
-			null);
+			LockedLayoutType.create(
+				ParamUtil.getString(_liferayPortletRequest, "type")));
 
 		return _lockedLayouts;
 	}

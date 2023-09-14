@@ -4087,7 +4087,7 @@ definition {
 	@description = "This test covers LPS-144687. It validates that a temp zip is not created if NoSuchFileException occurs during a download."
 	@priority = 4
 	test NoZipFileIsCreatedIfDownloadResultsInError {
-		DMDocument.deleteTempFolder(appServer = "tomcat-9.0.75");
+		DMDocument.deleteTempFolder(appServer = "tomcat-9.0.80");
 
 		for (var num : list "1,2,3") {
 			JSONDocument.addFileWithUploadedFile(
@@ -4107,7 +4107,7 @@ definition {
 		AssertConsoleTextPresent(value1 = "com.liferay.document.library.kernel.exception.NoSuchFileException");
 
 		DMDocument.assertNoZipFileFromTempFolder(
-			appServer = "tomcat-9.0.75",
+			appServer = "tomcat-9.0.80",
 			fileNamePattern = "*.zip");
 	}
 

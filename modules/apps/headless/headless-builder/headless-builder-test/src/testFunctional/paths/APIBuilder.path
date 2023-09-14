@@ -131,6 +131,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STATUS_LIST</td>
+	<td>xpath=(//span[(@class='label-item label-item-expand')])[${index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_LIST</td>
 	<td>xpath=(//div[(@class='table-list-title')])[${index}]</td>
 	<td></td>

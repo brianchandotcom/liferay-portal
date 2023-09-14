@@ -28,19 +28,19 @@ public class ContentSecurityPolicyNonceManager {
 
 		HttpSession httpSession = httpServletRequest.getSession();
 
-		String nonce = (String)httpSession.getAttribute(_NONCE_ATTR);
+		String nonce = (String)httpSession.getAttribute(_NONCE);
 
 		if (nonce != null) {
 			return nonce;
 		}
 
 		synchronized (httpSession) {
-			nonce = (String)httpSession.getAttribute(_NONCE_ATTR);
+			nonce = (String)httpSession.getAttribute(_NONCE);
 
 			if (nonce == null) {
 				nonce = _generateNonce();
 
-				httpSession.setAttribute(_NONCE_ATTR, nonce);
+				httpSession.setAttribute(_NONCE, nonce);
 			}
 		}
 
@@ -59,7 +59,7 @@ public class ContentSecurityPolicyNonceManager {
 		else {
 			HttpSession httpSession = httpServletRequest.getSession();
 
-			nonce = (String)httpSession.getAttribute(_NONCE_ATTR);
+			nonce = (String)httpSession.getAttribute(_NONCE);
 		}
 
 		if (nonce == null) {
@@ -87,8 +87,8 @@ public class ContentSecurityPolicyNonceManager {
 		return Base64.encode(bytes);
 	}
 
-	private static final String _NONCE_ATTR =
-		ContentSecurityPolicyNonceManager.class.getName() + ":nonce";
+	private static final String _NONCE =
+		ContentSecurityPolicyNonceManager.class.getName() + "#NONCE";
 
 	@Reference
 	private Portal _portal;

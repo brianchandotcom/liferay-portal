@@ -134,6 +134,9 @@ export declare function getNotificationTemplates(): Promise<
 export declare function getObjectDefinitionByExternalReferenceCode(
 	externalReferenceCode: string
 ): Promise<ObjectDefinition>;
+export declare function getObjectDefinitionByExternalReferenceCodeObjectFields(
+	externalReferenceCode: string
+): Promise<ObjectField[]>;
 export declare function getObjectDefinitionByExternalReferenceCodeObjectRelationships(
 	externalReferenceCode: string
 ): Promise<ObjectRelationship[]>;
@@ -149,9 +152,6 @@ export declare function getObjectDefinitions(
 export declare function getObjectField(
 	objectFieldId: number
 ): Promise<ObjectField>;
-export declare function getObjectFieldsByExternalReferenceCode(
-	externalReferenceCode: string
-): Promise<ObjectField[]>;
 export declare function getObjectFolderByExternalReferenceCode(
 	externalReferenceCode: string
 ): Promise<ObjectFolder>;

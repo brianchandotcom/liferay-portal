@@ -260,6 +260,7 @@ create table ObjectRelationship (
 	label STRING null,
 	name VARCHAR(75) null,
 	reverse BOOLEAN,
+	system_ BOOLEAN,
 	type_ VARCHAR(75) null
 );
 

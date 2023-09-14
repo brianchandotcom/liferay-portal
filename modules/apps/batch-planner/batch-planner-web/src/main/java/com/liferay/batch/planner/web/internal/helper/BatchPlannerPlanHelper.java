@@ -54,8 +54,6 @@ public class BatchPlannerPlanHelper {
 
 		String externalType = ParamUtil.getString(
 			portletRequest, "externalType");
-		String taskItemDelegateName = TaskItemUtil.getTaskItemDelegateName(
-			ParamUtil.getString(portletRequest, "internalClassNameKey"));
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
 
 		BatchPlannerPlan batchPlannerPlan =
@@ -64,7 +62,11 @@ public class BatchPlannerPlanHelper {
 				TaskItemUtil.getInternalClassName(
 					ParamUtil.getString(
 						portletRequest, "internalClassNameKey")),
-				name, 0, taskItemDelegateName, template);
+				name, 0,
+				TaskItemUtil.getTaskItemDelegateName(
+					ParamUtil.getString(
+						portletRequest, "internalClassNameKey")),
+				template);
 
 		_addBatchPlannerPolicies(
 			batchPlannerPlan.getBatchPlannerPlanId(),

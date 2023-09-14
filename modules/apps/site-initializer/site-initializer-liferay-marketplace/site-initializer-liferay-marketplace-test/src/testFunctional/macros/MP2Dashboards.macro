@@ -1,5 +1,15 @@
 definition {
 
+	macro clickBreadcrumb {
+		var key_accountTitle = ${accountTitle};
+
+		Click(locator1 = "MP2Dashboards#SVG_DROPDOWN");
+
+		Click(
+			key_accountTitle = ${accountTitle},
+			locator1 = "MP2Dashboards#SVG_DROPDOWN_LIST");
+	}
+
 	macro clickNewMemberButton {
 		Click(
 			key_buttonName = ${buttonName},

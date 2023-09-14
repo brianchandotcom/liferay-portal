@@ -21,6 +21,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SVG_DROPDOWN</td>
+	<td>//*[contains(@class, 'dashboard-navigation-header')]/following-sibling::div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SVG_DROPDOWN_LIST</td>
+	<td>//*[contains(@class, 'dropdown-item') and contains(text(), '${key_accountTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETUP_FIELDS</td>
 	<td>//label[contains(@class, 'control-label')]/parent::div//input[@id='${key_field}']</td>
 	<td></td>

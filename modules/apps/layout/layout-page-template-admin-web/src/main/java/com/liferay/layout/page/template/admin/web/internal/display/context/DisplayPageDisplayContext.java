@@ -211,17 +211,6 @@ public class DisplayPageDisplayContext {
 			renderResponse
 		).setMVCPath(
 			"/view_display_pages.jsp"
-		).setNavigation(
-			() -> {
-				String navigation = ParamUtil.getString(
-					_httpServletRequest, "navigation");
-
-				if (Validator.isNotNull(navigation)) {
-					return navigation;
-				}
-
-				return null;
-			}
 		).setTabs1(
 			"display-page-templates"
 		).buildPortletURL();

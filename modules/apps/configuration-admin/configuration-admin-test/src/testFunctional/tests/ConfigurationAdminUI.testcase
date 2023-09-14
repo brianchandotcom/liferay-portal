@@ -4,6 +4,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "System Settings";
+	property testray.component.name = "Configuration Admin UI";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -21,9 +22,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-194725 - This test asserts that the hyperlink is available within an anchor tag."
+	@description = "LPS-194725 - configuration admin UI can autogenerate a doc link"
 	@priority = 3
-	test AssertHyperlinkIsRendered {
+	test CanRenderADocLink {
 		task ("When navigate to Bundle Blacklist edit configuration page ") {
 			SystemSettings.openSystemSettingsAdmin();
 

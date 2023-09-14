@@ -288,12 +288,6 @@ export async function getObjectDefinitionByExternalReferenceCodeObjectRelationsh
 	);
 }
 
-export async function getObjectRelationshipsById(objectDefinitionId: number) {
-	return await getList<ObjectRelationship>(
-		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-relationships`
-	);
-}
-
 export async function getObjectValidationRuleById<T>(
 	objectValidationRuleId: number
 ) {

@@ -34,10 +34,6 @@ public class DateFormatFactoryUtil {
 		return getDate(LocaleUtil.getDefault(), timeZone);
 	}
 
-	public static DateFormatFactory getDateFormatFactory() {
-		return _fastDateFormatFactory;
-	}
-
 	public static DateFormat getDateTime(Locale locale) {
 		return getDateTime(locale, null);
 	}
@@ -103,11 +99,5 @@ public class DateFormatFactoryUtil {
 	public static DateFormat getTime(TimeZone timeZone) {
 		return getTime(LocaleUtil.getDefault(), timeZone);
 	}
-
-	public void setDateFormatFactory(DateFormatFactory fastDateFormatFactory) {
-		_fastDateFormatFactory = fastDateFormatFactory;
-	}
-
-	private static DateFormatFactory _fastDateFormatFactory;
 
 }

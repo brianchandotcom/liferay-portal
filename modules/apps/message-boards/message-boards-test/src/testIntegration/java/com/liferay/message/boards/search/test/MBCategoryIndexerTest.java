@@ -9,21 +9,18 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -58,10 +55,6 @@ public class MBCategoryIndexerTest {
 	@Before
 	public void setUp() throws Exception {
 		_indexer = IndexerRegistryUtil.getIndexer(MBCategory.class);
-
-		_company = CompanyTestUtil.addCompany();
-
-		_user = UserTestUtil.getAdminUser(_company.getCompanyId());
 	}
 
 	@Test
@@ -71,12 +64,12 @@ public class MBCategoryIndexerTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_LOG_NAME, LoggerTestUtil.DEBUG)) {
 
-			GroupTestUtil.addGroup(
-				_company.getCompanyId(), _user.getUserId(),
+			_group = GroupTestUtil.addGroup(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 			_indexer.reindex(
-				new String[] {String.valueOf(_company.getCompanyId())});
+				new String[] {String.valueOf(TestPropsValues.getCompanyId())});
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -89,18 +82,18 @@ public class MBCategoryIndexerTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_LOG_NAME, LoggerTestUtil.DEBUG)) {
 
-			Group group = GroupTestUtil.addGroup(
-				_company.getCompanyId(), _user.getUserId(),
+			_group = GroupTestUtil.addGroup(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 			MBCategory mbCategory = MBCategoryLocalServiceUtil.addCategory(
-				_user.getUserId(), 0, RandomTestUtil.randomString(),
+				TestPropsValues.getUserId(), 0, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), _user.getUserId()));
+					_group.getGroupId(), TestPropsValues.getUserId()));
 
 			_indexer.reindex(
-				new String[] {String.valueOf(_company.getCompanyId())});
+				new String[] {String.valueOf(TestPropsValues.getCompanyId())});
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -112,7 +105,7 @@ public class MBCategoryIndexerTest {
 				StringBundler.concat(
 					"Reindexing message boards categories for category ID ",
 					mbCategory.getCategoryId(), " and group ID ",
-					group.getGroupId()),
+					_group.getGroupId()),
 				logEntry.getMessage());
 		}
 	}
@@ -125,9 +118,8 @@ public class MBCategoryIndexerTest {
 			"contributor.MBCategoryModelIndexerWriterContributor";
 
 	@DeleteAfterTestRun
-	private Company _company;
+	private Group _group;
 
 	private Indexer<MBCategory> _indexer;
-	private User _user;
 
 }

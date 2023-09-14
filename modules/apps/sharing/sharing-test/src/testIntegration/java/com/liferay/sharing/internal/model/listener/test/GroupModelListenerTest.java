@@ -6,9 +6,7 @@
 package com.liferay.sharing.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -16,9 +14,9 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -54,13 +52,7 @@ public class GroupModelListenerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_user = UserTestUtil.addCompanyAdminUser(_company);
-
-		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+		_group = GroupTestUtil.addGroup();
 
 		_groupUser = UserTestUtil.addGroupUser(
 			_group, RoleConstants.POWER_USER);
@@ -71,12 +63,12 @@ public class GroupModelListenerTest {
 		long classPK = _group.getGroupId();
 
 		_sharingEntryLocalService.addSharingEntry(
-			_user.getUserId(), _groupUser.getUserId(),
+			TestPropsValues.getUserId(), _groupUser.getUserId(),
 			_classNameLocalService.getClassNameId(Group.class.getName()),
 			classPK, _group.getGroupId(), true,
 			Arrays.asList(SharingEntryAction.VIEW), null,
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId()));
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		List<SharingEntry> groupSharingEntries =
 			_sharingEntryLocalService.getGroupSharingEntries(
@@ -106,16 +98,16 @@ public class GroupModelListenerTest {
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId());
+					_group.getGroupId(), TestPropsValues.getUserId());
 
 			_sharingEntryLocalService.addSharingEntry(
-				_user.getUserId(), _groupUser.getUserId(), classNameId,
-				_group.getGroupId(), _group.getGroupId(), true,
+				TestPropsValues.getUserId(), _groupUser.getUserId(),
+				classNameId, _group.getGroupId(), _group.getGroupId(), true,
 				Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
 
 			_sharingEntryLocalService.addSharingEntry(
-				_user.getUserId(), _groupUser.getUserId(), classNameId,
-				group2.getGroupId(), group2.getGroupId(), true,
+				TestPropsValues.getUserId(), _groupUser.getUserId(),
+				classNameId, group2.getGroupId(), group2.getGroupId(), true,
 				Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
 
 			List<SharingEntry> groupSharingEntries1 =
@@ -161,8 +153,6 @@ public class GroupModelListenerTest {
 	private ClassNameLocalService _classNameLocalService;
 
 	@DeleteAfterTestRun
-	private Company _company;
-
 	private Group _group;
 
 	@Inject
@@ -172,7 +162,5 @@ public class GroupModelListenerTest {
 
 	@Inject
 	private SharingEntryLocalService _sharingEntryLocalService;
-
-	private User _user;
 
 }

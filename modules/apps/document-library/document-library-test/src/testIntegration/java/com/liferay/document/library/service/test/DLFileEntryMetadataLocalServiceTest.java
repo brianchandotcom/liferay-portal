@@ -28,7 +28,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -80,8 +78,6 @@ public class DLFileEntryMetadataLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
 		_group = GroupTestUtil.addGroup();
 
 		User user = TestPropsValues.getUser();
@@ -194,7 +190,7 @@ public class DLFileEntryMetadataLocalServiceTest {
 			_ddmStructure = _ddmStructureLocalService.fetchStructure(
 				_ddmStructure.getStructureId());
 
-			_ddmStructure.setCompanyId(_company.getCompanyId());
+			_ddmStructure.setCompanyId(0);
 
 			_ddmStructure = _ddmStructureLocalService.updateDDMStructure(
 				_ddmStructure);
@@ -322,9 +318,6 @@ public class DLFileEntryMetadataLocalServiceTest {
 
 	@Inject
 	private static GroupLocalService _groupLocalService;
-
-	@DeleteAfterTestRun
-	private Company _company;
 
 	@Inject(filter = "ddm.form.deserializer.type=xsd")
 	private DDMFormDeserializer _ddmFormDeserializer;

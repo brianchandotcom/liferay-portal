@@ -10,9 +10,7 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -21,18 +19,20 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -42,7 +42,6 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -61,32 +60,21 @@ public class BlogsEntryServiceTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_user = UserTestUtil.addCompanyAdminUser(_company);
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+		_group = GroupTestUtil.addGroup();
 
 		_groupUser = UserTestUtil.addGroupUser(
 			_group, RoleConstants.POWER_USER);
-
-		UserTestUtil.setUser(_user);
 	}
 
 	@Test
 	public void testAddEntryWithAddEntryPermission1() throws Exception {
 		Role siteMemberRole = RoleLocalServiceUtil.getRole(
-			_company.getCompanyId(), RoleConstants.SITE_MEMBER);
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 		ResourcePermissionLocalServiceUtil.addResourcePermission(
-			_company.getCompanyId(), "com.liferay.blogs",
+			TestPropsValues.getCompanyId(), "com.liferay.blogs",
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			siteMemberRole.getRoleId(), ActionKeys.ADD_ENTRY);
 
@@ -111,10 +99,10 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testAddEntryWithAddEntryPermission2() throws Exception {
 		Role siteMemberRole = RoleLocalServiceUtil.getRole(
-			_company.getCompanyId(), RoleConstants.SITE_MEMBER);
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 		ResourcePermissionLocalServiceUtil.addResourcePermission(
-			_company.getCompanyId(), "com.liferay.blogs",
+			TestPropsValues.getCompanyId(), "com.liferay.blogs",
 			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
 			siteMemberRole.getRoleId(), ActionKeys.ADD_ENTRY);
 
@@ -181,12 +169,13 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testDeleteEntryWithDeletePermission() throws Exception {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(),
 			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
+				_group, TestPropsValues.getUserId()));
 
 		Role siteMemberRole = RoleLocalServiceUtil.getRole(
-			_company.getCompanyId(), RoleConstants.SITE_MEMBER);
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 		ResourcePermissionLocalServiceUtil.addResourcePermission(
 			_group.getCompanyId(), "com.liferay.blogs.model.BlogsEntry",
@@ -206,9 +195,10 @@ public class BlogsEntryServiceTest {
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testDeleteEntryWithoutDeletePermission() throws Exception {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(),
 			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
+				_group, TestPropsValues.getUserId()));
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
@@ -223,22 +213,23 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testGetCompanyEntriesWithoutViewPermission() throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		BlogsEntry entry1 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry3 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			_company.getCompanyId());
+			TestPropsValues.getCompanyId());
 
 		for (Role role : roles) {
 			if (RoleConstants.OWNER.equals(role.getName())) {
@@ -246,7 +237,8 @@ public class BlogsEntryServiceTest {
 			}
 
 			ResourcePermissionLocalServiceUtil.removeResourcePermission(
-				_company.getCompanyId(), "com.liferay.blogs.model.BlogsEntry",
+				TestPropsValues.getCompanyId(),
+				"com.liferay.blogs.model.BlogsEntry",
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(entry2.getEntryId()), role.getRoleId(),
 				ActionKeys.VIEW);
@@ -259,7 +251,7 @@ public class BlogsEntryServiceTest {
 				_groupUser, permissionChecker)) {
 
 			List<BlogsEntry> entries = BlogsEntryServiceUtil.getCompanyEntries(
-				_company.getCompanyId(), new Date(),
+				TestPropsValues.getCompanyId(), new Date(),
 				WorkflowConstants.STATUS_APPROVED, 100);
 
 			Assert.assertEquals(entries.toString(), 2, entries.size());
@@ -274,30 +266,31 @@ public class BlogsEntryServiceTest {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.set(Calendar.YEAR, 2000);
 
 		BlogsEntry entry1 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 2);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 2);
 
 		BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			_company.getCompanyId());
+			TestPropsValues.getCompanyId());
 
 		for (Role role : roles) {
 			if (RoleConstants.OWNER.equals(role.getName())) {
@@ -305,7 +298,8 @@ public class BlogsEntryServiceTest {
 			}
 
 			ResourcePermissionLocalServiceUtil.removeResourcePermission(
-				_company.getCompanyId(), "com.liferay.blogs.model.BlogsEntry",
+				TestPropsValues.getCompanyId(),
+				"com.liferay.blogs.model.BlogsEntry",
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(entry2.getEntryId()), role.getRoleId(),
 				ActionKeys.VIEW);
@@ -324,7 +318,7 @@ public class BlogsEntryServiceTest {
 			calendar.add(Calendar.HOUR, 3);
 
 			List<BlogsEntry> entries = BlogsEntryServiceUtil.getCompanyEntries(
-				_company.getCompanyId(), calendar.getTime(),
+				TestPropsValues.getCompanyId(), calendar.getTime(),
 				WorkflowConstants.STATUS_APPROVED, 2);
 
 			Assert.assertEquals(entries.toString(), 1, entries.size());
@@ -338,22 +332,23 @@ public class BlogsEntryServiceTest {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		BlogsEntry entry1 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry3 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			_company.getCompanyId());
+			TestPropsValues.getCompanyId());
 
 		for (Role role : roles) {
 			if (RoleConstants.OWNER.equals(role.getName())) {
@@ -361,7 +356,8 @@ public class BlogsEntryServiceTest {
 			}
 
 			ResourcePermissionLocalServiceUtil.removeResourcePermission(
-				_company.getCompanyId(), "com.liferay.blogs.model.BlogsEntry",
+				TestPropsValues.getCompanyId(),
+				"com.liferay.blogs.model.BlogsEntry",
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(entry2.getEntryId()), role.getRoleId(),
 				ActionKeys.VIEW);
@@ -374,7 +370,7 @@ public class BlogsEntryServiceTest {
 				_groupUser, permissionChecker)) {
 
 			List<BlogsEntry> entries = BlogsEntryServiceUtil.getCompanyEntries(
-				_company.getCompanyId(), new Date(),
+				TestPropsValues.getCompanyId(), new Date(),
 				WorkflowConstants.STATUS_APPROVED, 2);
 
 			Assert.assertEquals(entries.toString(), 2, entries.size());
@@ -387,19 +383,20 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testGetCompanyEntriesWithViewPermission() throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		BlogsEntry entry1 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry3 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
@@ -408,7 +405,7 @@ public class BlogsEntryServiceTest {
 				_groupUser, permissionChecker)) {
 
 			List<BlogsEntry> entries = BlogsEntryServiceUtil.getCompanyEntries(
-				_company.getCompanyId(), new Date(),
+				TestPropsValues.getCompanyId(), new Date(),
 				WorkflowConstants.STATUS_APPROVED, 100);
 
 			Assert.assertEquals(entries.toString(), 3, entries.size());
@@ -424,26 +421,27 @@ public class BlogsEntryServiceTest {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.set(Calendar.YEAR, 2000);
 
 		BlogsEntry entry1 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 2);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 2);
 
 		BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		PermissionChecker permissionChecker =
@@ -459,7 +457,7 @@ public class BlogsEntryServiceTest {
 			calendar.add(Calendar.HOUR, 3);
 
 			List<BlogsEntry> entries = BlogsEntryServiceUtil.getCompanyEntries(
-				_company.getCompanyId(), calendar.getTime(),
+				TestPropsValues.getCompanyId(), calendar.getTime(),
 				WorkflowConstants.STATUS_APPROVED, 2);
 
 			Assert.assertEquals(entries.toString(), 2, entries.size());
@@ -474,19 +472,20 @@ public class BlogsEntryServiceTest {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry3 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
@@ -495,7 +494,7 @@ public class BlogsEntryServiceTest {
 				_groupUser, permissionChecker)) {
 
 			List<BlogsEntry> entries = BlogsEntryServiceUtil.getCompanyEntries(
-				_company.getCompanyId(), new Date(),
+				TestPropsValues.getCompanyId(), new Date(),
 				WorkflowConstants.STATUS_APPROVED, 2);
 
 			Assert.assertEquals(entries.toString(), 2, entries.size());
@@ -508,26 +507,27 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testGetEntriesPrevAndNext() throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.set(Calendar.YEAR, 2000);
 
 		BlogsEntry entry1 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 1);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 1);
 
 		BlogsEntry entry3 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
 			serviceContext);
 
 		BlogsEntry[] prevAndNext = BlogsEntryServiceUtil.getEntriesPrevAndNext(
@@ -553,20 +553,21 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testGetEntriesPrevAndNextWithOnlyNext() throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.set(Calendar.YEAR, 2000);
 
 		BlogsEntry entry1 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 1);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		BlogsEntry[] prevAndNext = BlogsEntryServiceUtil.getEntriesPrevAndNext(
@@ -591,20 +592,21 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testGetEntriesPrevAndNextWithOnlyPrev() throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.set(Calendar.YEAR, 2000);
 
 		BlogsEntry entry1 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 1);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		BlogsEntry[] prevAndNext = BlogsEntryServiceUtil.getEntriesPrevAndNext(
@@ -631,7 +633,8 @@ public class BlogsEntryServiceTest {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		serviceContext.setAddGroupPermissions(false);
 		serviceContext.setAddGuestPermissions(false);
@@ -641,19 +644,19 @@ public class BlogsEntryServiceTest {
 		calendar.set(Calendar.YEAR, 2000);
 
 		BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 1);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 1);
 
 		BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		PermissionChecker permissionChecker =
@@ -671,20 +674,21 @@ public class BlogsEntryServiceTest {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.set(Calendar.YEAR, 2000);
 
 		BlogsEntry entry1 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 1);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		serviceContext.setAddGroupPermissions(false);
@@ -693,7 +697,7 @@ public class BlogsEntryServiceTest {
 		calendar.add(Calendar.HOUR, 1);
 
 		BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		PermissionChecker permissionChecker =
@@ -728,7 +732,8 @@ public class BlogsEntryServiceTest {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		serviceContext.setAddGroupPermissions(false);
 		serviceContext.setAddGuestPermissions(false);
@@ -738,7 +743,7 @@ public class BlogsEntryServiceTest {
 		calendar.set(Calendar.YEAR, 2000);
 
 		BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		serviceContext.setAddGroupPermissions(true);
@@ -747,13 +752,13 @@ public class BlogsEntryServiceTest {
 		calendar.add(Calendar.HOUR, 1);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 1);
 
 		BlogsEntry entry3 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		PermissionChecker permissionChecker =
@@ -786,12 +791,13 @@ public class BlogsEntryServiceTest {
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testGetEntryWithoutViewPermission() throws Exception {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(),
 			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
+				_group, TestPropsValues.getUserId()));
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			_company.getCompanyId());
+			TestPropsValues.getCompanyId());
 
 		for (Role role : roles) {
 			if (RoleConstants.OWNER.equals(role.getName())) {
@@ -799,7 +805,8 @@ public class BlogsEntryServiceTest {
 			}
 
 			ResourcePermissionLocalServiceUtil.removeResourcePermission(
-				_company.getCompanyId(), "com.liferay.blogs.model.BlogsEntry",
+				TestPropsValues.getCompanyId(),
+				"com.liferay.blogs.model.BlogsEntry",
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(entry.getEntryId()), role.getRoleId(),
 				ActionKeys.VIEW);
@@ -818,12 +825,13 @@ public class BlogsEntryServiceTest {
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testGetEntryWithoutViewPermission2() throws Exception {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(),
 			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
+				_group, TestPropsValues.getUserId()));
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			_company.getCompanyId());
+			TestPropsValues.getCompanyId());
 
 		for (Role role : roles) {
 			if (RoleConstants.OWNER.equals(role.getName())) {
@@ -831,7 +839,8 @@ public class BlogsEntryServiceTest {
 			}
 
 			ResourcePermissionLocalServiceUtil.removeResourcePermission(
-				_company.getCompanyId(), "com.liferay.blogs.model.BlogsEntry",
+				TestPropsValues.getCompanyId(),
+				"com.liferay.blogs.model.BlogsEntry",
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(entry.getEntryId()), role.getRoleId(),
 				ActionKeys.VIEW);
@@ -851,9 +860,10 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testGetEntryWithViewPermission() throws Exception {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(),
 			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
+				_group, TestPropsValues.getUserId()));
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
@@ -868,9 +878,10 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testGetEntryWithViewPermission2() throws Exception {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(),
 			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
+				_group, TestPropsValues.getUserId()));
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
@@ -886,22 +897,23 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testGetGroupEntriesWithoutViewPermission() throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		BlogsEntry entry1 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry3 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			_company.getCompanyId());
+			TestPropsValues.getCompanyId());
 
 		for (Role role : roles) {
 			if (RoleConstants.OWNER.equals(role.getName())) {
@@ -909,7 +921,8 @@ public class BlogsEntryServiceTest {
 			}
 
 			ResourcePermissionLocalServiceUtil.removeResourcePermission(
-				_company.getCompanyId(), "com.liferay.blogs.model.BlogsEntry",
+				TestPropsValues.getCompanyId(),
+				"com.liferay.blogs.model.BlogsEntry",
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(entry2.getEntryId()), role.getRoleId(),
 				ActionKeys.VIEW);
@@ -937,30 +950,31 @@ public class BlogsEntryServiceTest {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.set(Calendar.YEAR, 2000);
 
 		BlogsEntry entry1 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 2);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 2);
 
 		BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			_company.getCompanyId());
+			TestPropsValues.getCompanyId());
 
 		for (Role role : roles) {
 			if (RoleConstants.OWNER.equals(role.getName())) {
@@ -968,7 +982,8 @@ public class BlogsEntryServiceTest {
 			}
 
 			ResourcePermissionLocalServiceUtil.removeResourcePermission(
-				_company.getCompanyId(), "com.liferay.blogs.model.BlogsEntry",
+				TestPropsValues.getCompanyId(),
+				"com.liferay.blogs.model.BlogsEntry",
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(entry2.getEntryId()), role.getRoleId(),
 				ActionKeys.VIEW);
@@ -1001,22 +1016,23 @@ public class BlogsEntryServiceTest {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		BlogsEntry entry1 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry3 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			_company.getCompanyId());
+			TestPropsValues.getCompanyId());
 
 		for (Role role : roles) {
 			if (RoleConstants.OWNER.equals(role.getName())) {
@@ -1024,7 +1040,8 @@ public class BlogsEntryServiceTest {
 			}
 
 			ResourcePermissionLocalServiceUtil.removeResourcePermission(
-				_company.getCompanyId(), "com.liferay.blogs.model.BlogsEntry",
+				TestPropsValues.getCompanyId(),
+				"com.liferay.blogs.model.BlogsEntry",
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(entry2.getEntryId()), role.getRoleId(),
 				ActionKeys.VIEW);
@@ -1050,19 +1067,20 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testGetGroupEntriesWithViewPermission() throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		BlogsEntry entry1 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry3 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
@@ -1087,26 +1105,27 @@ public class BlogsEntryServiceTest {
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.set(Calendar.YEAR, 2000);
 
 		BlogsEntry entry1 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 2);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		calendar.add(Calendar.HOUR, 2);
 
 		BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(),
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
 			calendar.getTime(), serviceContext);
 
 		PermissionChecker permissionChecker =
@@ -1135,19 +1154,20 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testGetGroupEntriesWithViewPermissionAndMax() throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
 
 		BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry2 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "2", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "2", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		BlogsEntry entry3 = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "3", RandomTestUtil.randomString(), new Date(),
-			serviceContext);
+			TestPropsValues.getUserId(), "3", RandomTestUtil.randomString(),
+			new Date(), serviceContext);
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
@@ -1169,12 +1189,13 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testMoveEntryToTrashWithDeletePermission() throws Exception {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(),
 			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
+				_group, TestPropsValues.getUserId()));
 
 		Role siteMemberRole = RoleLocalServiceUtil.getRole(
-			_company.getCompanyId(), RoleConstants.SITE_MEMBER);
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 		ResourcePermissionLocalServiceUtil.addResourcePermission(
 			_group.getCompanyId(), "com.liferay.blogs.model.BlogsEntry",
@@ -1194,9 +1215,10 @@ public class BlogsEntryServiceTest {
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testMoveEntryToTrashWithoutDeletePermission() throws Exception {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(),
 			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
+				_group, TestPropsValues.getUserId()));
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
@@ -1298,14 +1320,16 @@ public class BlogsEntryServiceTest {
 		throws Exception {
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(),
 			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
+				_group, TestPropsValues.getUserId()));
 
-		BlogsEntryLocalServiceUtil.moveEntryToTrash(_user.getUserId(), entry);
+		BlogsEntryLocalServiceUtil.moveEntryToTrash(
+			TestPropsValues.getUserId(), entry);
 
 		Role siteMemberRole = RoleLocalServiceUtil.getRole(
-			_company.getCompanyId(), RoleConstants.SITE_MEMBER);
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 		ResourcePermissionLocalServiceUtil.addResourcePermission(
 			_group.getCompanyId(), "com.liferay.blogs.model.BlogsEntry",
@@ -1327,11 +1351,13 @@ public class BlogsEntryServiceTest {
 		throws Exception {
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(),
 			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
+				_group, TestPropsValues.getUserId()));
 
-		BlogsEntryLocalServiceUtil.moveEntryToTrash(_user.getUserId(), entry);
+		BlogsEntryLocalServiceUtil.moveEntryToTrash(
+			TestPropsValues.getUserId(), entry);
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
@@ -1347,7 +1373,8 @@ public class BlogsEntryServiceTest {
 	public void testSubscribeEntryWithoutSubscribePermission()
 		throws Exception {
 
-		User user = UserTestUtil.addUser(_company);
+		User user = UserTestUtil.addUser(
+			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
@@ -1375,7 +1402,8 @@ public class BlogsEntryServiceTest {
 	public void testUnsubscribeEntryWithoutSubscribePermission()
 		throws Exception {
 
-		User user = UserTestUtil.addUser(_company);
+		User user = UserTestUtil.addUser(
+			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
@@ -1402,9 +1430,10 @@ public class BlogsEntryServiceTest {
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testUpdateEntryWithoutUpdatePermission1() throws Exception {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(),
 			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
+				_group, TestPropsValues.getUserId()));
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
@@ -1425,9 +1454,10 @@ public class BlogsEntryServiceTest {
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testUpdateEntryWithoutUpdatePermission2() throws Exception {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(),
 			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
+				_group, TestPropsValues.getUserId()));
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(_groupUser);
@@ -1449,12 +1479,13 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testUpdateEntryWithUpdatePermission1() throws Exception {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(),
 			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
+				_group, TestPropsValues.getUserId()));
 
 		Role siteMemberRole = RoleLocalServiceUtil.getRole(
-			_company.getCompanyId(), RoleConstants.SITE_MEMBER);
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 		ResourcePermissionLocalServiceUtil.addResourcePermission(
 			_group.getCompanyId(), "com.liferay.blogs.model.BlogsEntry",
@@ -1480,12 +1511,13 @@ public class BlogsEntryServiceTest {
 	@Test
 	public void testUpdateEntryWithUpdatePermission2() throws Exception {
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), "1", RandomTestUtil.randomString(), new Date(),
+			TestPropsValues.getUserId(), "1", RandomTestUtil.randomString(),
+			new Date(),
 			ServiceContextTestUtil.getServiceContext(
-				_group, _user.getUserId()));
+				_group, TestPropsValues.getUserId()));
 
 		Role siteMemberRole = RoleLocalServiceUtil.getRole(
-			_company.getCompanyId(), RoleConstants.SITE_MEMBER);
+			TestPropsValues.getCompanyId(), RoleConstants.SITE_MEMBER);
 
 		ResourcePermissionLocalServiceUtil.addResourcePermission(
 			_group.getCompanyId(), "com.liferay.blogs.model.BlogsEntry",
@@ -1509,12 +1541,12 @@ public class BlogsEntryServiceTest {
 		}
 	}
 
-	private static Company _company;
-
 	@DeleteAfterTestRun
 	private static Group _group;
 
 	private static User _groupUser;
-	private static User _user;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 }

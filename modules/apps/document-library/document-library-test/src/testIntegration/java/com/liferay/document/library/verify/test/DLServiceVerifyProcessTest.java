@@ -36,7 +36,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -46,7 +45,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -96,8 +94,6 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_company = CompanyTestUtil.addCompany();
-
 		_group = GroupTestUtil.addGroup();
 	}
 
@@ -114,7 +110,7 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 		DDMStructure ddmStructure = ddmStructures.get(0);
 
-		ddmStructure.setCompanyId(_company.getCompanyId());
+		ddmStructure.setCompanyId(0);
 
 		try {
 			ddmStructure = DDMStructureLocalServiceUtil.updateDDMStructure(
@@ -500,9 +496,6 @@ public class DLServiceVerifyProcessTest extends BaseVerifyProcessTestCase {
 		type = VerifyProcess.class
 	)
 	private static VerifyProcess _verifyProcess;
-
-	@DeleteAfterTestRun
-	private Company _company;
 
 	@Inject(filter = "ddm.form.deserializer.type=xsd")
 	private DDMFormDeserializer _ddmFormDeserializer;

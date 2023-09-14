@@ -12,10 +12,8 @@ import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -23,11 +21,10 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.log.LogCapture;
@@ -66,10 +63,6 @@ public class MBThreadIndexerTest {
 	@Before
 	public void setUp() throws Exception {
 		_indexer = IndexerRegistryUtil.getIndexer(MBThread.class);
-
-		_company1 = CompanyTestUtil.addCompany();
-
-		_user1 = UserTestUtil.getAdminUser(_company1.getCompanyId());
 	}
 
 	@Test
@@ -77,12 +70,12 @@ public class MBThreadIndexerTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_LOG_NAME, LoggerTestUtil.DEBUG)) {
 
-			GroupTestUtil.addGroup(
-				_company1.getCompanyId(), _user1.getUserId(),
+			_group = GroupTestUtil.addGroup(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 			_indexer.reindex(
-				new String[] {String.valueOf(_company1.getCompanyId())});
+				new String[] {String.valueOf(TestPropsValues.getCompanyId())});
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -95,21 +88,21 @@ public class MBThreadIndexerTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_LOG_NAME, LoggerTestUtil.DEBUG)) {
 
-			Group group = GroupTestUtil.addGroup(
-				_company1.getCompanyId(), _user1.getUserId(),
+			_group = GroupTestUtil.addGroup(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), _user1.getUserId());
+					_group.getGroupId(), TestPropsValues.getUserId());
 
 			CommentManagerUtil.addComment(
-				_user1.getUserId(), group.getGroupId(),
+				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
 				RandomTestUtil.randomString(), s -> serviceContext);
 
 			_indexer.reindex(
-				new String[] {String.valueOf(_company1.getCompanyId())});
+				new String[] {String.valueOf(TestPropsValues.getCompanyId())});
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -121,7 +114,7 @@ public class MBThreadIndexerTest {
 				StringBundler.concat(
 					"Reindexing message boards threads for message board ",
 					"category ID ", MBCategoryConstants.DISCUSSION_CATEGORY_ID,
-					" and group ID ", group.getGroupId()),
+					" and group ID ", _group.getGroupId()),
 				logEntry.getMessage());
 		}
 	}
@@ -131,20 +124,20 @@ public class MBThreadIndexerTest {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_LOG_NAME, LoggerTestUtil.DEBUG)) {
 
-			Group group = GroupTestUtil.addGroup(
-				_company1.getCompanyId(), _user1.getUserId(),
+			_group = GroupTestUtil.addGroup(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), _user1.getUserId());
+					_group.getGroupId(), TestPropsValues.getUserId());
 
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
 				Collections.emptyList();
 
 			MBMessageLocalServiceUtil.addMessage(
-				_user1.getUserId(), RandomTestUtil.randomString(),
-				group.getGroupId(),
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				_group.getGroupId(),
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, 0,
 				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
@@ -152,7 +145,7 @@ public class MBThreadIndexerTest {
 				false, serviceContext);
 
 			_indexer.reindex(
-				new String[] {String.valueOf(_company1.getCompanyId())});
+				new String[] {String.valueOf(TestPropsValues.getCompanyId())});
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -165,7 +158,7 @@ public class MBThreadIndexerTest {
 					"Reindexing message boards threads for message board ",
 					"category ID ",
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-					" and group ID ", group.getGroupId()),
+					" and group ID ", _group.getGroupId()),
 				logEntry.getMessage());
 		}
 	}
@@ -178,9 +171,8 @@ public class MBThreadIndexerTest {
 			"contributor.MBThreadModelIndexerWriterContributor";
 
 	@DeleteAfterTestRun
-	private Company _company1;
+	private Group _group;
 
 	private Indexer<MBThread> _indexer;
-	private User _user1;
 
 }

@@ -188,7 +188,7 @@ export default function EditObjectDetails({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const objectFieldsResponse = await API.getObjectFieldsByExternalReferenceCode(
+			const objectFieldsResponse = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
 				externalReferenceCode
 			);
 			const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(

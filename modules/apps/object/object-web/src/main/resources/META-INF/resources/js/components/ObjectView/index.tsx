@@ -67,7 +67,7 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				`/o/object-admin/v1.0/object-views/${objectViewId}`
 			);
 
-			const objectFields = await API.getObjectFieldsByExternalReferenceCode(
+			const objectFields = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
 				objectDefinitionExternalReferenceCode
 			);
 

@@ -149,7 +149,7 @@ export function AggregationFormBase({
 				);
 
 				if (currentRelatedObjectRelationship) {
-					const relatedFields = await API.getObjectFieldsByExternalReferenceCode(
+					const relatedFields = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
 						currentRelatedObjectRelationship.objectDefinitionExternalReferenceCode2
 					);
 
@@ -212,7 +212,7 @@ export function AggregationFormBase({
 			name: '',
 		});
 
-		const relatedFields = await API.getObjectFieldsByExternalReferenceCode(
+		const relatedFields = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
 			objectRelationship.objectDefinitionExternalReferenceCode2
 		);
 

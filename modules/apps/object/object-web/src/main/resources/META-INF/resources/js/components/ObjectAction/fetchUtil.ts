@@ -112,7 +112,7 @@ export async function fetchObjectDefinitionFields(
 	}
 
 	if (externalReferenceCode) {
-		const items = await API.getObjectFieldsByExternalReferenceCode(
+		const items = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
 			externalReferenceCode
 		);
 

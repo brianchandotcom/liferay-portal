@@ -8,11 +8,6 @@ import {fetch} from 'frontend-js-web';
 import {ERRORS} from './errors';
 import {stringToURLParameterFormat} from './string';
 
-interface HTTPMethod {
-	href: string;
-	method: string;
-}
-
 interface Actions {
 	delete: HTTPMethod;
 	get: HTTPMethod;
@@ -22,6 +17,31 @@ interface Actions {
 
 interface ErrorDetails extends Error {
 	detail?: string;
+}
+
+interface HTTPMethod {
+	href: string;
+	method: string;
+}
+
+interface ListTypeDefinition {
+	actions: Actions;
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	listTypeEntries: ListTypeEntry[];
+	name: string;
+	name_i18n: LocalizedValue<string>;
+	system: boolean;
+}
+
+interface ListTypeEntry {
+	externalReferenceCode: string;
+	id: number;
+	listTypeDefinitionId: number;
+	key: string;
+	name: string;
+	name_i18n: LocalizedValue<string>;
 }
 
 type NotificationTemplateType = 'email' | 'userNotification';
@@ -93,26 +113,6 @@ interface ObjectRelationship {
 	type: ObjectRelationshipType;
 }
 
-interface ListTypeEntry {
-	externalReferenceCode: string;
-	id: number;
-	listTypeDefinitionId: number;
-	key: string;
-	name: string;
-	name_i18n: LocalizedValue<string>;
-}
-
-interface ListTypeDefinition {
-	actions: Actions;
-	externalReferenceCode: string;
-	id: number;
-	key: string;
-	listTypeEntries: ListTypeEntry[];
-	name: string;
-	name_i18n: LocalizedValue<string>;
-	system: boolean;
-}
-
 interface saveProps {
 	item: unknown;
 	method?: 'PATCH' | 'POST' | 'PUT';
@@ -143,18 +143,6 @@ async function deleteItem(url: string) {
 
 		throw new Error(errorMessage);
 	}
-}
-
-export async function postListTypeEntry({
-	key,
-	listTypeDefinitionId,
-	name_i18n,
-}: Partial<ListTypeEntry>) {
-	return await save({
-		item: {key, name_i18n},
-		method: 'POST',
-		url: `/o/headless-admin-list-type/v1.0/list-type-definitions/${listTypeDefinitionId}/list-type-entries`,
-	});
 }
 
 export function deleteObjectDefinition(objectDefinitionId: number) {
@@ -201,6 +189,28 @@ export async function getList<T>(url: string) {
 	return items;
 }
 
+export async function getListTypeDefinition(
+	listTypeDefinitionId: number
+): Promise<ListTypeDefinition> {
+	return await fetchJSON<ListTypeDefinition>(
+		`/o/headless-admin-list-type/v1.0/list-type-definitions/${listTypeDefinitionId}`
+	);
+}
+
+export async function getListTypeDefinitionListTypeEntries(
+	listTypeDefinitionId: number
+) {
+	return await getList<ListTypeEntry>(
+		`/o/headless-admin-list-type/v1.0/list-type-definitions/${listTypeDefinitionId}/list-type-entries?pageSize=-1`
+	);
+}
+
+export async function getListTypeDefinitions() {
+	return await getList<ListTypeDefinition>(
+		'/o/headless-admin-list-type/v1.0/list-type-definitions?pageSize=-1'
+	);
+}
+
 export async function getNotificationTemplateByExternalReferenceCode(
 	externalReferenceCode: string
 ) {
@@ -231,9 +241,25 @@ export async function getObjectDefinitionByExternalReferenceCode(
 	);
 }
 
+export async function getObjectDefinitionByExternalReferenceCodeObjectRelationships(
+	externalReferenceCode: string
+) {
+	return await getList<ObjectRelationship>(
+		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${externalReferenceCode}/object-relationships`
+	);
+}
+
 export async function getObjectDefinitionById(objectDefinitionId: number) {
 	return await fetchJSON<ObjectDefinition>(
 		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}`
+	);
+}
+
+export async function getObjectDefinitionObjectFields(
+	objectDefinitionId: number
+) {
+	return await getList<ObjectField>(
+		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields?pageSize=-1`
 	);
 }
 
@@ -265,14 +291,6 @@ export async function getObjectFieldsByExternalReferenceCode(
 	);
 }
 
-export async function getObjectDefinitionObjectFields(
-	objectDefinitionId: number
-) {
-	return await getList<ObjectField>(
-		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields?pageSize=-1`
-	);
-}
-
 export async function getObjectFolderByExternalReferenceCode(
 	externalReferenceCode: string
 ) {
@@ -286,11 +304,9 @@ export async function getObjectFolderByExternalReferenceCode(
 	return objectFolder;
 }
 
-export async function getObjectDefinitionByExternalReferenceCodeObjectRelationships(
-	externalReferenceCode: string
-) {
-	return await getList<ObjectRelationship>(
-		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${externalReferenceCode}/object-relationships`
+export async function getObjectRelationship<T>(objectRelationshipId: number) {
+	return fetchJSON<T>(
+		`/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`
 	);
 }
 
@@ -302,80 +318,16 @@ export async function getObjectValidationRuleById<T>(
 	);
 }
 
-export async function getListTypeDefinition(
-	listTypeDefinitionId: number
-): Promise<ListTypeDefinition> {
-	return await fetchJSON<ListTypeDefinition>(
-		`/o/headless-admin-list-type/v1.0/list-type-definitions/${listTypeDefinitionId}`
-	);
-}
-
-export async function getListTypeDefinitionListTypeEntries(
-	listTypeDefinitionId: number
-) {
-	return await getList<ListTypeEntry>(
-		`/o/headless-admin-list-type/v1.0/list-type-definitions/${listTypeDefinitionId}/list-type-entries?pageSize=-1`
-	);
-}
-
-export async function getListTypeDefinitions() {
-	return await getList<ListTypeDefinition>(
-		'/o/headless-admin-list-type/v1.0/list-type-definitions?pageSize=-1'
-	);
-}
-
-export async function getObjectRelationship<T>(objectRelationshipId: number) {
-	return fetchJSON<T>(
-		`/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`
-	);
-}
-
-export async function save({
-	item,
-	method = 'PUT',
-	returnValue = false,
-	url,
-}: saveProps) {
-	const isFormData = item instanceof FormData;
-
-	const response = await fetch(url, {
-		body: isFormData ? item : JSON.stringify(item),
-		...(!isFormData && {headers}),
-		method,
+export async function postListTypeEntry({
+	key,
+	listTypeDefinitionId,
+	name_i18n,
+}: Partial<ListTypeEntry>) {
+	return await save({
+		item: {key, name_i18n},
+		method: 'POST',
+		url: `/o/headless-admin-list-type/v1.0/list-type-definitions/${listTypeDefinitionId}/list-type-entries`,
 	});
-
-	if (response.status === 401) {
-		window.location.reload();
-	}
-	else if (!response.ok) {
-		const {
-			detail,
-			title,
-			type,
-		}: {
-			detail?: string;
-			title?: string;
-			type?: string;
-		} = await response.json();
-
-		const errorMessage =
-			(type && ERRORS[type]) ??
-			title ??
-			Liferay.Language.get('an-error-occurred');
-
-		const ErrorDetails = () => {
-			return {
-				detail,
-				message: errorMessage,
-				name: '',
-			} as ErrorDetails;
-		};
-		throw ErrorDetails();
-	}
-
-	if (returnValue) {
-		return response.json();
-	}
 }
 
 export async function postObjectDefinition(
@@ -458,4 +410,52 @@ export async function putObjectRelationship({
 		method: 'PUT',
 		url: `/o/object-admin/v1.0/object-relationships/${id}`,
 	});
+}
+
+export async function save({
+   item,
+   method = 'PUT',
+   returnValue = false,
+   url,
+}: saveProps) {
+	const isFormData = item instanceof FormData;
+
+	const response = await fetch(url, {
+		body: isFormData ? item : JSON.stringify(item),
+		...(!isFormData && {headers}),
+		method,
+	});
+
+	if (response.status === 401) {
+		window.location.reload();
+	}
+	else if (!response.ok) {
+		const {
+			detail,
+			title,
+			type,
+		}: {
+			detail?: string;
+			title?: string;
+			type?: string;
+		} = await response.json();
+
+		const errorMessage =
+			(type && ERRORS[type]) ??
+			title ??
+			Liferay.Language.get('an-error-occurred');
+
+		const ErrorDetails = () => {
+			return {
+				detail,
+				message: errorMessage,
+				name: '',
+			} as ErrorDetails;
+		};
+		throw ErrorDetails();
+	}
+
+	if (returnValue) {
+		return response.json();
+	}
 }

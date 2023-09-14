@@ -21,6 +21,11 @@ import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -33,6 +38,7 @@ import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -58,6 +64,7 @@ import java.time.ZoneOffset;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -109,10 +116,14 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		JournalArticle journalArticle = _addJournalArticle(
 			assetCategory, assetTag);
 
+		ObjectDefinition objectDefinition =
+			_addObjectDefinitionWithObjectEntry();
+
 		_testPostSearchPageWithCategoryFacetConfiguration(assetCategory);
 		_testPostSearchPageWithCategoryTreeFacetConfiguration(assetCategory);
 		_testPostSearchPageWithCustomFacetConfiguration();
 		_testPostSearchPageWithDateRangeFacetConfiguration();
+		_testPostSearchPageWithEmbeddedNestedFields(objectDefinition);
 		_testPostSearchPageWithFolderFacetConfiguration(journalArticle);
 		_testPostSearchPageWithKeywords(journalArticle);
 		_testPostSearchPageWithNestedFacetConfiguration(ddmStructure);
@@ -185,7 +196,27 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			ddmStructure.getStructureId(), null, _serviceContext);
 	}
 
-	private void _assertFacetConfiguration(
+	private ObjectDefinition _addObjectDefinitionWithObjectEntry()
+		throws Exception {
+
+		ObjectField objectField = ObjectFieldUtil.createObjectField(
+			"Text", "String", true, true, null,
+			StringUtil.toLowerCase(RandomTestUtil.randomString()), "test",
+			false);
+
+		objectField.setExternalReferenceCode(RandomTestUtil.randomString());
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(objectField));
+
+		ObjectEntryTestUtil.addObjectEntry(
+			objectDefinition, "test", RandomTestUtil.randomString());
+
+		return objectDefinition;
+	}
+
+	private SearchPage<SearchResult> _assertFacetConfiguration(
 			boolean anyMatch, Map<String, Object> facetAttributes,
 			String facetName, Object facetValues, Object... expectedValues)
 		throws Exception {
@@ -434,6 +465,25 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			termJSONArray.getString(0));
 
 		Assert.assertEquals("1", termJSONObject.getString("displayName"));
+	}
+
+	private void _testPostSearchPageWithEmbeddedNestedFields(
+			ObjectDefinition objectDefinition)
+		throws Exception {
+
+		String entryClassName = objectDefinition.getClassName();
+
+		SearchPage<SearchResult> page = _postSearchPage(
+			entryClassName, null, objectDefinition.getUserName(), "embedded",
+			new SearchRequestBody());
+
+		Collection<SearchResult> items = page.getItems();
+
+		Assert.assertFalse(items.isEmpty());
+
+		for (SearchResult item : items) {
+			Assert.assertNotNull(item.getEmbedded());
+		}
 	}
 
 	private void _testPostSearchPageWithFolderFacetConfiguration(

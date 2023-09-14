@@ -18,7 +18,7 @@ export declare function useListTypeForm({
 };
 interface IUseListTypeForm {
 	initialValues: Partial<ListTypeDefinition>;
-	onSubmit: (picklist: ListTypeDefinition) => void;
+	onSubmit: (listTypeDefinition: ListTypeDefinition) => void;
 }
 export declare type ObjectValidationErrors = FormError<ListTypeDefinition>;
 export {};

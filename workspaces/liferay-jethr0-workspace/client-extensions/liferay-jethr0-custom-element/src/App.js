@@ -7,6 +7,7 @@ import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import HomePage from './pages/HomePage/HomePage';
 import JobPage from './pages/JobPage/JobPage';
+import JobsPage from './pages/JobsPage/JobsPage';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 
 import './App.css';
@@ -16,9 +17,8 @@ function App() {
 		<HashRouter>
 			<Routes>
 				<Route element={<HomePage />} path="/" />
-				<Route path="/jobs">
-					<Route element={<JobPage />} path=":id" />
-				</Route>
+				<Route path="/jobs" element={<JobsPage />} />
+				<Route path="/jobs/:id" element={<JobPage />} />
 				<Route element={<NotFoundPage />} path="*" />
 			</Routes>
 		</HashRouter>

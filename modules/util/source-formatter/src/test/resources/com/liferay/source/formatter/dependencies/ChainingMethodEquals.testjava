@@ -10,12 +10,15 @@ package com.liferay.source.formatter.dependencies;
  */
 public class ChainingMethodEquals {
 
-	public void testMethod(Boolean a) {
-		System.out.println(
-			a.toString(
-			).equals(
-				"true"
-			));
+	public boolean method1(Boolean b) {
+		return b.toString(
+		).equals(
+			"true"
+		);
+	}
+
+	public boolean method2(Object object) {
+		return toString().equals(object.toString());
 	}
 
 }

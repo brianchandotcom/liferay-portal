@@ -169,7 +169,7 @@ public class DDMFormAdminActionDropdownItemsProvider {
 				).buildString());
 			dropdownItem.setIcon("copy");
 			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "duplicate-form"));
+				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
 		};
 	}
 

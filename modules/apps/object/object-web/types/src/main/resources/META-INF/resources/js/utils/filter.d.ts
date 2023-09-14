@@ -19,7 +19,7 @@ export declare function getSystemFieldLabelFromEntry(
 	label: unknown;
 	value: string;
 };
-export declare function getCheckedRelationshipItems(
+export declare function getCheckedObjectRelationshipItems(
 	relatedEntries: ObjectEntry[],
 	titleFieldName: string,
 	systemField: boolean,

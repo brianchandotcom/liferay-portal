@@ -524,6 +524,11 @@
 			<property name="description" value="Checks that there are no unnecessary map iterations." />
 			<message key="entry.set.use" value="Use Map.entrySet() to retrieve values" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.MethodEqualsCheck">
+			<property name="category" value="Styling" />
+			<property name="description" value="Finds cases where `Objects.equals` should be used." />
+			<message key="objects.equals.use" value="Use ''Objects.equals'' instead of calling ''equals'' on chaining method" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.MethodNamingCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="checkSearchMethodNames" value="false" />

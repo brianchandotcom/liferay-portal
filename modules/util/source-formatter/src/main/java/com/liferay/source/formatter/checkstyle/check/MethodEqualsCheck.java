@@ -1,14 +1,14 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.source.formatter.checkstyle.check;
 
+import com.liferay.portal.kernel.util.StringUtil;
+
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-
-import java.util.Objects;
 
 /**
  * @author Qi Zhang
@@ -22,29 +22,25 @@ public class MethodEqualsCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		if (!StringUtil.equals(getMethodName(detailAST), "equals")) {
+			return;
+		}
+
 		DetailAST dotDetailAST = detailAST.findFirstToken(TokenTypes.DOT);
 
 		if (dotDetailAST == null) {
 			return;
 		}
 
-		DetailAST parentDetailAST = detailAST.getParent();
+		DetailAST childDetailAST = dotDetailAST.getFirstChild();
 
-		if (parentDetailAST.getType() != TokenTypes.DOT) {
+		if (childDetailAST.getType() != TokenTypes.METHOD_CALL) {
 			return;
 		}
 
-		parentDetailAST = parentDetailAST.getParent();
+		dotDetailAST = childDetailAST.findFirstToken(TokenTypes.DOT);
 
-		if (parentDetailAST.getType() != TokenTypes.METHOD_CALL) {
-			return;
-		}
-
-		DetailAST nextSiblingDetailAST = detailAST.getNextSibling();
-
-		if ((nextSiblingDetailAST.getType() != TokenTypes.IDENT) ||
-			!Objects.equals(nextSiblingDetailAST.getText(), "equals")) {
-
+		if (dotDetailAST == null) {
 			return;
 		}
 

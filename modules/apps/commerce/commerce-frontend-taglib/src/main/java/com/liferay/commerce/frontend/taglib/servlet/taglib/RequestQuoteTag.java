@@ -21,12 +21,15 @@ import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.content.helper.CPContentHelper;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
+import com.liferay.commerce.product.util.CPJSONUtil;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -92,6 +95,13 @@ public class RequestQuoteTag extends IncludeTag {
 					commerceContext, _cpInstanceId);
 
 				_priceOnApplication = priceModel.isPriceOnApplication();
+
+				JSONArray jsonArray = CPJSONUtil.toJSONArray(
+					_cpDefinitionOptionRelLocalService.
+						getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
+							_cpInstanceId));
+
+				_skuOptions = jsonArray.toString();
 			}
 			else {
 				int cpDefinitionInstancesCount =
@@ -189,6 +199,8 @@ public class RequestQuoteTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-commerce:request-quote:requestQuoteEnabled",
 			_requestQuoteEnabled);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:request-quote:skuOptions", _skuOptions);
 	}
 
 	public void setCpCatalogEntry(CPCatalogEntry cpCatalogEntry) {
@@ -213,6 +225,8 @@ public class RequestQuoteTag extends IncludeTag {
 			ServletContextUtil.getCommerceOrderPortletResourcePermission();
 		_configurationProvider = ServletContextUtil.getConfigurationProvider();
 		_cpContentHelper = ServletContextUtil.getCPContentHelper();
+		_cpDefinitionOptionRelLocalService =
+			ServletContextUtil.getCPDefinitionOptionRelLocalService();
 		_productHelper = ServletContextUtil.getProductHelper();
 	}
 
@@ -227,6 +241,7 @@ public class RequestQuoteTag extends IncludeTag {
 		_configurationProvider = null;
 		_cpCatalogEntry = null;
 		_cpContentHelper = null;
+		_cpDefinitionOptionRelLocalService = null;
 		_cpInstanceId = 0;
 		_disabled = false;
 		_namespace = StringPool.BLANK;
@@ -234,6 +249,7 @@ public class RequestQuoteTag extends IncludeTag {
 		_priceOnApplication = false;
 		_productHelper = null;
 		_requestQuoteEnabled = false;
+		_skuOptions = null;
 	}
 
 	@Override
@@ -315,6 +331,8 @@ public class RequestQuoteTag extends IncludeTag {
 	private ConfigurationProvider _configurationProvider;
 	private CPCatalogEntry _cpCatalogEntry;
 	private CPContentHelper _cpContentHelper;
+	private CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
 	private long _cpInstanceId;
 	private boolean _disabled;
 	private String _namespace = StringPool.BLANK;
@@ -322,5 +340,6 @@ public class RequestQuoteTag extends IncludeTag {
 	private boolean _priceOnApplication;
 	private ProductHelper _productHelper;
 	private boolean _requestQuoteEnabled;
+	private String _skuOptions;
 
 }

@@ -13,6 +13,7 @@ import ServiceProvider from '../../ServiceProvider/index';
 import {
 	CP_INSTANCE_CHANGED,
 	CP_QUANTITY_SELECTOR_CHANGED,
+	CP_UNIT_OF_MEASURE_SELECTOR_CHANGED,
 } from '../../utilities/eventsDefinitions';
 import {liferayNavigate} from '../../utilities/index';
 import {showErrorNotification} from '../../utilities/notifications';
@@ -72,6 +73,13 @@ function RequestQuote({
 		[updateCPInstance]
 	);
 
+	const handleUOMChanged = useCallback(
+		({unitOfMeasure}) => {
+			cpInstance.skuUnitOfMeasure = unitOfMeasure;
+		},
+		[cpInstance]
+	);
+
 	useEffect(() => {
 		if (cpDefinitionId) {
 			Liferay.on(
@@ -84,6 +92,11 @@ function RequestQuote({
 				handleCPInstanceReplaced
 			);
 
+			Liferay.on(
+				`${namespace}${CP_UNIT_OF_MEASURE_SELECTOR_CHANGED}`,
+				handleUOMChanged
+			);
+
 			return () => {
 				Liferay.detach(
 					`${namespace}${CP_QUANTITY_SELECTOR_CHANGED}`,
@@ -94,12 +107,18 @@ function RequestQuote({
 					`${namespace}${CP_INSTANCE_CHANGED}`,
 					handleCPInstanceReplaced
 				);
+
+				Liferay.detach(
+					`${namespace}${CP_UNIT_OF_MEASURE_SELECTOR_CHANGED}`,
+					handleCPInstanceReplaced
+				);
 			};
 		}
 	}, [
 		cpDefinitionId,
 		handleCPInstanceReplaced,
 		handleQuantityChanged,
+		handleUOMChanged,
 		namespace,
 	]);
 
@@ -130,10 +149,12 @@ function RequestQuote({
 						accountId,
 						cartItems: [
 							{
-								options:
-									cpInstance.skuOptions || JSON.stringify([]),
+								options: JSON.stringify(
+									cpInstance.skuOptions || JSON.stringify([])
+								),
 								quantity: cpInstance.quantity || 1,
 								skuId: cpInstance.skuId,
+								skuUnitOfMeasure: cpInstance.skuUnitOfMeasure,
 							},
 						],
 						currencyCode: channel.currencyCode,

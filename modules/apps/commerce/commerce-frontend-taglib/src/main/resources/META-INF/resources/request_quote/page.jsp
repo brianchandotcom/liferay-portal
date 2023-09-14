@@ -25,6 +25,7 @@
 			cpDefinitionId: <%= cpDefinitionId %>,
 			cpInstance: {
 				skuId: <%= cpInstanceId %>,
+				skuOptions: <%= skuOptions %> || [],
 				priceOnApplication: <%= priceOnApplication %>,
 			},
 			disabled: <%= disabled %>,

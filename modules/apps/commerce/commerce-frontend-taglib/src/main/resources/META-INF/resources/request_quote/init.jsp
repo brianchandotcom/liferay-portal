@@ -28,6 +28,7 @@ String namespace = (String)request.getAttribute("liferay-commerce:request-quote:
 String orderDetailURL = (String)request.getAttribute("liferay-commerce:request-quote:orderDetailURL");
 boolean priceOnApplication = (boolean)request.getAttribute("liferay-commerce:request-quote:priceOnApplication");
 boolean requestQuoteEnabled = (boolean)request.getAttribute("liferay-commerce:request-quote:requestQuoteEnabled");
+String skuOptions = (String)request.getAttribute("liferay-commerce:request-quote:skuOptions");
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib") + StringPool.UNDERLINE;
 

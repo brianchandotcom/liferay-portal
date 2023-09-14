@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CRITERIA_ELLIPSIS_OPTION_OPEN</td>
+	<td>xpath=(//div[contains(@class,'criterion')][.//div[contains(@class,'display-value')][normalize-space(.)='birthDate']]//button[contains(@class,'dropdown-toggle') and @aria-expanded='true'])</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEGMENT_TABLE_TOTAL_ACTIVITIES_NAME_AND_VALUE</td>
 	<td>//a[contains(text(),'${segmentName}')]//ancestor::tr//td[contains(@class,'table-column-text-end') and contains(text(),'${totalActivitiesNumber}')][2]]</td>
 	<td></td>

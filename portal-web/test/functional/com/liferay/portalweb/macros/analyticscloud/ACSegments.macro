@@ -246,10 +246,12 @@ definition {
 			var index = 1;
 		}
 
-		Click(
-			criteriaName = ${criteriaName},
-			index = ${index},
-			locator1 = "ACSegments#CRITERIA_ELLIPSIS");
+		if (IsElementNotPresent(locator1 = "ACSegments#CRITERIA_ELLIPSIS_OPTION_OPEN")) {
+			Click(
+				criteriaName = ${criteriaName},
+				index = ${index},
+				locator1 = "ACSegments#CRITERIA_ELLIPSIS");
+		}
 
 		MenuItem.click(menuItem = "Duplicate");
 	}

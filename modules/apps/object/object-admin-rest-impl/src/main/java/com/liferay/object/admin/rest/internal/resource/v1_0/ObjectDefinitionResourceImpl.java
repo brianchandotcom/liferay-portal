@@ -33,6 +33,7 @@ import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
 import com.liferay.object.model.ObjectFieldModel;
@@ -53,7 +54,6 @@ import com.liferay.object.service.ObjectViewService;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.object.system.util.SystemObjectDefinitionManagementChecker;
 import com.liferay.object.util.comparator.ObjectFieldCreateDateComparator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -560,7 +560,7 @@ public class ObjectDefinitionResourceImpl
 
 		if (serviceBuilderObjectDefinition.isModifiable() &&
 			serviceBuilderObjectDefinition.isSystem() &&
-			SystemObjectDefinitionManagementChecker.isInvokerBundleAllowed()) {
+			ObjectDefinitionUtil.isInvokerBundleAllowed()) {
 
 			objectFields.removeIf(
 				objectField -> !GetterUtil.getBoolean(objectField.getSystem()));

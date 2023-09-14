@@ -28,7 +28,7 @@ import {
 	getCheckedListTypeEntries,
 	getCheckedObjectRelationshipItems,
 	getCheckedWorkflowStatusItems,
-	getSystemFieldLabelFromEntry,
+	getSystemObjectFieldLabelFromEntry,
 } from '../utils/filter';
 
 import './ModalAddFilter.scss';
@@ -292,7 +292,7 @@ export function ModalAddFilter({
 							} as LabelValueObject;
 
 							if (titleField.system) {
-								return getSystemFieldLabelFromEntry(
+								return getSystemObjectFieldLabelFromEntry(
 									titleField.name,
 									entry,
 									newItemsObject

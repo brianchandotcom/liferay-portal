@@ -18,13 +18,13 @@ dlCopyEntryDisplayContext.setViewAttributes();
 		module="document_library/js/DLFolderSelector"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"copyActionURL", dlCopyEntryDisplayContext.getCopyEntriesActionURL()
+				"copyActionURL", dlCopyEntryDisplayContext.getActionURL()
 			).put(
 				"entryIds", dlCopyEntryDisplayContext.getEntryIds()
 			).put(
 				"redirect", dlCopyEntryDisplayContext.getRedirect()
 			).put(
-				"selectionModalURL", dlCopyEntryDisplayContext.getSelectFolderURL()
+				"selectionModalURL", dlCopyEntryDisplayContext.getSelectionModalURL()
 			).put(
 				"sourceRepositoryId", dlCopyEntryDisplayContext.getSourceRepositoryId()
 			).build()

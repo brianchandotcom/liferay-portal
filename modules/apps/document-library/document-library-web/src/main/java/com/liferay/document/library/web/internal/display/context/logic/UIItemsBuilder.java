@@ -927,6 +927,24 @@ public class UIItemsBuilder {
 
 				return _fileEntry.getFileEntryId();
 			}
+		).setParameter(
+			"sourceFolderId",
+			() -> {
+				if (_fileShortcut != null) {
+					return _fileShortcut.getFolderId();
+				}
+
+				return _fileEntry.getFolderId();
+			}
+		).setParameter(
+			"sourceRepositoryId",
+			() -> {
+				if (_fileShortcut != null) {
+					return _fileShortcut.getRepositoryId();
+				}
+
+				return _fileEntry.getRepositoryId();
+			}
 		).buildPortletURL();
 	}
 

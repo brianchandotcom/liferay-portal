@@ -2580,7 +2580,7 @@ public class ObjectEntryLocalServiceTest {
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService, objectFields);
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(

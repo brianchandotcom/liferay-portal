@@ -91,7 +91,7 @@ public class ObjectRelationshipLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition1 = ObjectDefinitionTestUtil.addObjectDefinition(
+		_objectDefinition1 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			false, _objectDefinitionLocalService,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
@@ -104,7 +104,7 @@ public class ObjectRelationshipLocalServiceTest {
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId());
 
-		_objectDefinition2 = ObjectDefinitionTestUtil.addObjectDefinition(
+		_objectDefinition2 = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			false, _objectDefinitionLocalService,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
@@ -654,7 +654,7 @@ public class ObjectRelationshipLocalServiceTest {
 		throws Exception {
 
 		ObjectDefinition relatedObjectDefinition =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(

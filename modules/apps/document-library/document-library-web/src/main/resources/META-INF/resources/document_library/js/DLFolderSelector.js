@@ -95,10 +95,10 @@ const DLFolderSelector = ({
 			method: 'POST',
 		})
 			.then((response) => response.json())
-			.then(({errorMessage}) => {
-				if (errorMessage) {
+			.then(({errorMessages}) => {
+				if (errorMessages) {
 					openToast({
-						message: errorMessage,
+						message: errorMessages[0],
 						title: Liferay.Language.get('error'),
 						type: 'danger',
 					});

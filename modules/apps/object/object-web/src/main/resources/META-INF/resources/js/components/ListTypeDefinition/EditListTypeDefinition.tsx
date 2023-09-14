@@ -19,7 +19,7 @@ import {useListTypeForm} from './ListTypeFormBase';
 import ListTypeTable from './ListTypeTable';
 import {fixLocaleKeys} from './utils';
 import {
-	getListTypeDefinition
+	getListTypeDefinition, putListTypeDefinition
 } from "@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api";
 
 export default function EditListTypeDefinition({
@@ -28,7 +28,7 @@ export default function EditListTypeDefinition({
 }: IProps) {
 	const onSubmit = async (values: PickList) => {
 		try {
-			await API.updatePickList({
+			await API.putListTypeDefinition({
 				externalReferenceCode: values.externalReferenceCode,
 				id: parseInt(listTypeDefinitionId, 10),
 				listTypeEntries: values.listTypeEntries,

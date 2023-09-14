@@ -2373,7 +2373,7 @@ public class ObjectEntryLocalServiceTest {
 		throws Exception {
 
 		return _objectValidationRuleLocalService.addObjectValidationRule(
-			TestPropsValues.getUserId(),
+			StringPool.BLANK, TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true, engine,
 			errorLabelMap,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

@@ -266,7 +266,7 @@ public class BatchEngineBrokerTest {
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectValidationRuleLocalService.addObjectValidationRule(
-			TestPropsValues.getUserId(),
+			StringPool.BLANK, TestPropsValues.getUserId(),
 			_objectDefinition1.getObjectDefinitionId(), true,
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

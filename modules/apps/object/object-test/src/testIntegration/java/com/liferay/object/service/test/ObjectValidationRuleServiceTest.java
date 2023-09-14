@@ -16,6 +16,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.service.ObjectValidationRuleService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -170,7 +171,8 @@ public class ObjectValidationRuleServiceTest {
 		throws Exception {
 
 		return _objectValidationRuleLocalService.addObjectValidationRule(
-			user.getUserId(), _objectDefinition.getObjectDefinitionId(), true,
+			StringPool.BLANK, user.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true,
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -196,7 +198,7 @@ public class ObjectValidationRuleServiceTest {
 
 			objectValidationRule =
 				_objectValidationRuleService.addObjectValidationRule(
-					objectDefinitionId, true,
+					StringPool.BLANK, objectDefinitionId, true,
 					ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
@@ -264,6 +266,7 @@ public class ObjectValidationRuleServiceTest {
 
 			objectValidationRule =
 				_objectValidationRuleService.updateObjectValidationRule(
+					RandomTestUtil.randomString(),
 					objectValidationRule.getObjectValidationRuleId(), false,
 					ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 					LocalizedMapUtil.getLocalizedMap(

@@ -729,7 +729,7 @@ public class OrganizationLocalServiceTest {
 				TestPropsValues.getCompanyId(), Organization.class.getName());
 
 		_objectValidationRuleLocalService.addObjectValidationRule(
-			TestPropsValues.getUserId(),
+			StringPool.BLANK, TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId(), true,
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap("This name is invalid."),

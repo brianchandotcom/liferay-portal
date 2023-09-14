@@ -285,7 +285,8 @@ public class ObjectValidationRuleLocalServiceTest {
 				"No ObjectValidationRule exists with the primary key %s",
 				randomId),
 			() -> _objectValidationRuleLocalService.updateObjectValidationRule(
-				randomId, false, ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+				RandomTestUtil.randomString(), randomId, false,
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
@@ -296,6 +297,7 @@ public class ObjectValidationRuleLocalServiceTest {
 
 		objectValidationRule =
 			_objectValidationRuleLocalService.updateObjectValidationRule(
+				RandomTestUtil.randomString(),
 				objectValidationRule.getObjectValidationRuleId(), true,
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				LocalizedMapUtil.getLocalizedMap("Field must be an URL"),
@@ -330,6 +332,7 @@ public class ObjectValidationRuleLocalServiceTest {
 			ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
 			"isURL(textObjectField)",
 			_objectValidationRuleLocalService.updateObjectValidationRule(
+				RandomTestUtil.randomString(),
 				objectValidationRule.getObjectValidationRuleId(), false,
 				objectValidationRule.getEngine(),
 				objectValidationRule.getErrorLabelMap(),
@@ -364,7 +367,7 @@ public class ObjectValidationRuleLocalServiceTest {
 		throws Exception {
 
 		return _objectValidationRuleLocalService.addObjectValidationRule(
-			TestPropsValues.getUserId(),
+			StringPool.BLANK, TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true, engine,
 			errorLabelMap, nameLabelMap, outputType, script, false,
 			objectValidationRuleSettings);

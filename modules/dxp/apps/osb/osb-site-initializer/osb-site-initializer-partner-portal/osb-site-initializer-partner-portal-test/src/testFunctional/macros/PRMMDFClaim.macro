@@ -132,10 +132,6 @@ definition {
 			var typeOfActivity = "Miscellaneous Marketing";
 		}
 
-		if (!(isSet(thirdInvoice))) {
-			var thirdInvoice = "Document_1.jpg";
-		}
-
 		if (!(isSet(telemarketingMetrics))) {
 			var telemarketingMetrics = "Metrics Description";
 		}
@@ -150,10 +146,6 @@ definition {
 
 		if (!(isSet(allContents))) {
 			var allContents = "Document_2.jpg";
-		}
-
-		if (!(isSet(listLeads))) {
-			var listLeads = "Document_1.xlsx";
 		}
 
 		WaitForElementPresent(

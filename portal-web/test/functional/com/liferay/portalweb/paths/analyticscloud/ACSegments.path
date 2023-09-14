@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>CRITERIA_ELLIPSIS_OPTION_OPEN</td>
-	<td>xpath=(//div[contains(@class,'criterion')][.//div[contains(@class,'display-value')][normalize-space(.)='birthDate']]//button[contains(@class,'dropdown-toggle') and @aria-expanded='true'])</td>
+	<td>xpath=(//div[contains(@class,'criterion')][.//div[contains(@class,'display-value')][normalize-space(.)='${criteriaName}']]//button[contains(@class,'dropdown-toggle') and @aria-expanded='true'])</td>
 	<td></td>
 </tr>
 <tr>

@@ -389,7 +389,7 @@ definition {
 			KeyPress(
 				key_menuItem = "Page Design",
 				locator1 = "MenuItem#ANY_MENU_ITEM",
-				value1 = "\DOWN");
+				value1 = "\UP");
 
 			KeyPress(
 				key_menuItem = "Content Editing",

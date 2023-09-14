@@ -23,9 +23,6 @@ import org.osgi.service.component.annotations.Reference;
 public class ContentSecurityPolicyNonceManager {
 
 	public String ensureNonce(HttpServletRequest httpServletRequest) {
-
-		// Unwrap request as some wrappers hide attributes from request/session
-
 		httpServletRequest = _portal.getOriginalServletRequest(
 			httpServletRequest);
 

@@ -14,6 +14,7 @@ interface SelectProps {
 	options: SelectOption[];
 	placeholder?: string;
 	required?: boolean;
+	searchable?: boolean;
 	selectedOption?: SelectOption;
 	triggerAriaLabel?: string;
 }
@@ -26,6 +27,7 @@ export declare function Select({
 	options,
 	placeholder,
 	required,
+	searchable,
 	selectedOption,
 	triggerAriaLabel,
 }: SelectProps): JSX.Element;

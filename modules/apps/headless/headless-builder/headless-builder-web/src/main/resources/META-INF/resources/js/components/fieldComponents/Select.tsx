@@ -18,6 +18,7 @@ interface SelectProps {
 	options: SelectOption[];
 	placeholder?: string;
 	required?: boolean;
+	searchable?: boolean;
 	selectedOption?: SelectOption;
 	triggerAriaLabel?: string;
 }
@@ -31,6 +32,7 @@ export function Select({
 	options,
 	placeholder,
 	required,
+	searchable,
 	selectedOption,
 	triggerAriaLabel,
 }: SelectProps) {
@@ -71,14 +73,14 @@ export function Select({
 	};
 
 	useEffect(() => {
-		if (disabled && options && selectedOption) {
+		if (options && selectedOption) {
 			const selectedObjectLabel = selectedOption.label;
 
 			if (selectedObjectLabel) {
 				setTriggerLabel(selectedObjectLabel);
 			}
 		}
-	}, [disabled, options, selectedOption]);
+	}, [options, selectedOption]);
 
 	useEffect(() => {
 		const trigger = document.getElementById('selectTrigger');
@@ -134,10 +136,12 @@ export function Select({
 				</div>
 			}
 		>
-			<DropDown.Search
-				aria-label={dropDownSearchAriaLabel}
-				placeholder={Liferay.Language.get('search')}
-			/>
+			{searchable && (
+				<DropDown.Search
+					aria-label={dropDownSearchAriaLabel}
+					placeholder={Liferay.Language.get('search')}
+				/>
+			)}
 
 			<DropDown.ItemList items={options}>
 				{(item: SelectOption) => (

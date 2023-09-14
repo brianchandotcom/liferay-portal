@@ -11,13 +11,11 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.DateFormatFactoryImpl;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 
 import java.util.Locale;
@@ -42,7 +40,6 @@ public class DateDDMFormFieldValueRendererTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		setUpDateFormatFactoryUtil();
 		setUpFastDateFormatFactoryUtil();
 
 		ReflectionTestUtil.setFieldValue(
@@ -158,13 +155,6 @@ public class DateDDMFormFieldValueRendererTest {
 		_assertRenderValues(
 			_getSingleValueExpectedValuesMap("01/25/2015 01:00 AM"),
 			"2015-01-25 1:00");
-	}
-
-	protected static void setUpDateFormatFactoryUtil() {
-		DateFormatFactoryUtil dateFormatFactoryUtil =
-			new DateFormatFactoryUtil();
-
-		dateFormatFactoryUtil.setDateFormatFactory(new DateFormatFactoryImpl());
 	}
 
 	protected static void setUpFastDateFormatFactoryUtil() {

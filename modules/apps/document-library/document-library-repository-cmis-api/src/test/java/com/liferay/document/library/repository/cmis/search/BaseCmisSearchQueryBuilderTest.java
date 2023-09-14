@@ -20,12 +20,8 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.DateFormatFactory;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import java.text.SimpleDateFormat;
 
 import java.util.Collections;
 
@@ -54,7 +50,8 @@ public class BaseCmisSearchQueryBuilderTest {
 	public void setUp() throws Exception {
 		setUpPropsUtil();
 
-		setUpDateFormatFactoryUtil();
+		PropsTestUtil.setProps(
+			PropsKeys.INDEX_DATE_FORMAT_PATTERN, "yyyyMMddHHmmss");
 
 		_cmisSearchQueryBuilder = new BaseCmisSearchQueryBuilder(
 			createRepositoryEntryLocalService(),
@@ -372,16 +369,6 @@ public class BaseCmisSearchQueryBuilderTest {
 			searchContext, getFullQuery(searchContext));
 	}
 
-	protected DateFormatFactory createDateFormatFactory(String pattern) {
-		DateFormatFactory dateFormatFactory = Mockito.mock(
-			DateFormatFactory.class);
-
-		setUpPattern(dateFormatFactory, pattern);
-		setUpPattern(dateFormatFactory, "yyyy-MM-dd'T'HH:mm:ss.000'Z'");
-
-		return dateFormatFactory;
-	}
-
 	protected RepositoryEntry createRepositoryEntry() {
 		RepositoryEntry repositoryEntry = Mockito.mock(RepositoryEntry.class);
 
@@ -455,37 +442,11 @@ public class BaseCmisSearchQueryBuilderTest {
 		return searchContext;
 	}
 
-	protected void setUpDateFormatFactoryUtil() {
-		String pattern = _INDEX_DATE_FORMAT_PATTERN;
-
-		PropsTestUtil.setProps(PropsKeys.INDEX_DATE_FORMAT_PATTERN, pattern);
-
-		DateFormatFactoryUtil dateFormatFactoryUtil =
-			new DateFormatFactoryUtil();
-
-		dateFormatFactoryUtil.setDateFormatFactory(
-			createDateFormatFactory(pattern));
-	}
-
-	protected void setUpPattern(
-		DateFormatFactory dateFormatFactory, String pattern) {
-
-		Mockito.doReturn(
-			new SimpleDateFormat(pattern)
-		).when(
-			dateFormatFactory
-		).getSimpleDateFormat(
-			pattern
-		);
-	}
-
 	protected void setUpPropsUtil() {
 		PropsTestUtil.setProps(Collections.emptyMap());
 	}
 
 	private static final long _DL_FOLDER_ID = RandomTestUtil.randomLong();
-
-	private static final String _INDEX_DATE_FORMAT_PATTERN = "yyyyMMddHHmmss";
 
 	private static final String _MAPPED_ID = "1000";
 

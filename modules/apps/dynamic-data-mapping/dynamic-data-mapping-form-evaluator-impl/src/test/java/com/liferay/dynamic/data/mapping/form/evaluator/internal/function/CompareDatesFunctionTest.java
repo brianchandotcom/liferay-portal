@@ -5,15 +5,12 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.internal.function;
 
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.DateFormatFactoryImpl;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,11 +41,6 @@ public class CompareDatesFunctionTest {
 			});
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		_setUpDateFormatFactoryUtil();
-	}
-
 	@Test
 	public void testApply() {
 		Assert.assertEquals(
@@ -63,13 +55,6 @@ public class CompareDatesFunctionTest {
 
 	@Parameterized.Parameter(2)
 	public boolean expectedResult;
-
-	private void _setUpDateFormatFactoryUtil() {
-		DateFormatFactoryUtil dateFormatFactoryUtil =
-			new DateFormatFactoryUtil();
-
-		dateFormatFactoryUtil.setDateFormatFactory(new DateFormatFactoryImpl());
-	}
 
 	private final CompareDatesFunction _compareDatesFunction =
 		new CompareDatesFunction();

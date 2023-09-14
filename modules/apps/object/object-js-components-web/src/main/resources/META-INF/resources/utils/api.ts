@@ -296,9 +296,9 @@ export async function getObjectValidationRuleById<T>(
 	);
 }
 
-export async function getPickList(pickListId: number): Promise<ListTypeDefinition> {
+export async function getListTypeDefinition(listTypeDefinitionId: number): Promise<ListTypeDefinition> {
 	return await fetchJSON<ListTypeDefinition>(
-		`/o/headless-admin-list-type/v1.0/list-type-definitions/${pickListId}`
+		`/o/headless-admin-list-type/v1.0/list-type-definitions/${listTypeDefinitionId}`
 	);
 }
 

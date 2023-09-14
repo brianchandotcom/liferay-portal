@@ -18,6 +18,9 @@ import React, {useEffect} from 'react';
 import {useListTypeForm} from './ListTypeFormBase';
 import ListTypeTable from './ListTypeTable';
 import {fixLocaleKeys} from './utils';
+import {
+	getListTypeDefinition
+} from "@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api";
 
 export default function EditListTypeDefinition({
 	listTypeDefinitionId,
@@ -52,7 +55,7 @@ export default function EditListTypeDefinition({
 	});
 
 	useEffect(() => {
-		API.getPickList(parseInt(listTypeDefinitionId, 10)).then((response) => {
+		API.getListTypeDefinition(parseInt(listTypeDefinitionId, 10)).then((response) => {
 			response.name_i18n = fixLocaleKeys(response.name_i18n);
 			response.listTypeEntries = response.listTypeEntries.map((item) => ({
 				...item,

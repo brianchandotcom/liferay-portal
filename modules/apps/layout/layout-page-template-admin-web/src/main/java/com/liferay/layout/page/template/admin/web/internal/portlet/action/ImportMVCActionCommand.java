@@ -9,6 +9,8 @@ import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
+import com.liferay.layout.page.template.util.CheckUnlockedLayoutThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,6 +27,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -84,10 +87,17 @@ public class ImportMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
-				_layoutsImporter.importFile(
+				new ArrayList<>();
+
+			try (SafeCloseable safeCloseable =
+					CheckUnlockedLayoutThreadLocal.setWithSafeCloseable(
+						false)) {
+
+				layoutsImporterResultEntries = _layoutsImporter.importFile(
 					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 					layoutPageTemplateCollectionId, file,
 					layoutsImportStrategy);
+			}
 
 			if (ListUtil.isEmpty(layoutsImporterResultEntries)) {
 				return;

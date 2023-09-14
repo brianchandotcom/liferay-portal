@@ -69,7 +69,7 @@ export async function deleteObjectDefinitionToast(
 	id: number,
 	objectDefinitionName: string
 ) {
-	await API.deleteObjectDefinitions(Number(id)).then(() => {
+	await API.deleteObjectDefinition(Number(id)).then(() => {
 		Liferay.Util.openToast({
 			message: sub(
 				Liferay.Language.get('x-was-deleted-successfully'),
@@ -119,7 +119,7 @@ export async function deleteObjectDefinition({
 
 export async function deleteRelationship(id: number) {
 	try {
-		await API.deleteObjectRelationships(id);
+		await API.deleteObjectRelationship(id);
 
 		Liferay.Util.openToast({
 			message: Liferay.Language.get(

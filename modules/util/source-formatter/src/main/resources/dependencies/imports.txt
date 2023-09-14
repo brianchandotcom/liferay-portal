@@ -282,6 +282,7 @@ com.liferay.portal.kernel.bi.rules.RulesEngineUtil=com.liferay.portal.rules.engi
 com.liferay.portal.kernel.bi.rules.RulesLanguage=com.liferay.portal.rules.engine.RulesLanguage
 com.liferay.portal.kernel.bi.rules.RulesResourceRetriever=com.liferay.portal.rules.engine.RulesResourceRetriever
 com.liferay.portal.kernel.cache.BlockingPortalCache=com.liferay.portal.cache.BlockingPortalCache
+com.liferay.portal.kernel.captcha.CaptchaUtil=com.liferay.captcha.util.CaptchaUtil
 com.liferay.portal.kernel.comment.CommentConstants=com.liferay.comment.constants.CommentConstants
 com.liferay.portal.kernel.display.context.util.BaseRequestHelper=com.liferay.portal.kernel.display.context.helper.BaseRequestHelper
 com.liferay.portal.kernel.display.context.util.BaseStrutsRequestHelper=com.liferay.portal.kernel.display.context.helper.BaseStrutsRequestHelper

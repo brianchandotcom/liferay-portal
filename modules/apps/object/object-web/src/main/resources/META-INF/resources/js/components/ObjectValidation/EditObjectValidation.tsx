@@ -140,7 +140,7 @@ export default function EditObjectValidation({
 							: validationResponseJSON.script,
 				};
 
-				const fieldsResponseJSON = await API.getObjectFieldsById(
+				const fieldsResponseJSON = await API.getObjectDefinitionObjectFields(
 					objectDefinitionId
 				);
 

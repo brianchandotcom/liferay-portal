@@ -261,7 +261,7 @@ export async function getObjectFieldsByExternalReferenceCode(
 	);
 }
 
-export async function getObjectFieldsById(objectDefinitionId: number) {
+export async function getObjectDefinitionObjectFields(objectDefinitionId: number) {
 	return await getList<ObjectField>(
 		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields?pageSize=-1`
 	);

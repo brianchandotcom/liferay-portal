@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -82,6 +81,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -568,6 +568,8 @@ public class DDMFormDisplayContextTest {
 			false, false, true);
 
 		Assert.assertTrue(ddmFormDisplayContext.isShowConfigurationIcon());
+
+		_portletPermissionUtilMockedStatic.close();
 	}
 
 	@Test
@@ -883,22 +885,17 @@ public class DDMFormDisplayContextTest {
 	}
 
 	private void _mockPortletPermissionUtil() throws Exception {
-		PortletPermissionUtil portletPermissionUtil =
-			new PortletPermissionUtil();
+		_portletPermissionUtilMockedStatic = Mockito.mockStatic(
+			PortletPermissionUtil.class);
 
-		PortletPermission portletPermission = Mockito.mock(
-			PortletPermission.class);
-
-		Mockito.when(
-			portletPermission.contains(
+		_portletPermissionUtilMockedStatic.when(
+			() -> PortletPermissionUtil.contains(
 				Mockito.nullable(PermissionChecker.class),
 				Mockito.nullable(Layout.class), Mockito.anyString(),
 				Mockito.anyString())
 		).thenReturn(
 			true
 		);
-
-		portletPermissionUtil.setPortletPermission(portletPermission);
 	}
 
 	private MockRenderRequest _mockRenderRequest() throws PortalException {
@@ -1070,6 +1067,8 @@ public class DDMFormDisplayContextTest {
 		new MockHttpServletRequest();
 	private final MockHttpServletRequest _mockHttpServletRequest2 =
 		Mockito.mock(MockHttpServletRequest.class);
+	private MockedStatic<PortletPermissionUtil>
+		_portletPermissionUtilMockedStatic;
 	private final WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService = Mockito.mock(
 			WorkflowDefinitionLinkLocalService.class);

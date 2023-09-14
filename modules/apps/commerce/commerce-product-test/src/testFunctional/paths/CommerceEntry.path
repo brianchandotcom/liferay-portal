@@ -461,6 +461,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRIMARY_UNIT_OF_MEASURE_LABEL_ON_MODAL</td>
+	<td>//div[contains(@class,'form-group') and contains(.,'${key_unitOfMeasureName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SKU_FIELD</td>
 	<td>//div/input[contains(@id,'sku')]</td>
 	<td></td>
@@ -888,6 +893,11 @@
 <tr>
 	<td>LABEL_TOOLTIP_TEXT</td>
 	<td>//label[(contains(.,'${key_label}')) or (contains(@for,'${key_label}'))]//span[(contains(@class,'lfr-portal-tooltip')) and (@data-restore-title='${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LABEL_TOOLTIP_TEXT_WITH_TITLE</td>
+	<td>//label[(contains(.,'${key_label}')) or (contains(@for,'${key_label}'))]//span[(contains(@class,'lfr-portal-tooltip')) and (@title='${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

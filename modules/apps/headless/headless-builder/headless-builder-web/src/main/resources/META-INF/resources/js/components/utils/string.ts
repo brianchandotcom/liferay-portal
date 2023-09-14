@@ -46,6 +46,26 @@ export function makeURLPathString(str: string) {
 }
 
 /**
+ * Make valid url path string with forward slashes in between (Only numbers, low case letters, dashes).
+ */
+export function makeURLPathStringWithForwardSlashes(str: string) {
+	return removeLeadingForwardSlash(replaceSpacesWithDash(str))
+		.toLowerCase()
+		.replace(/[^0-9a-z/-]|(\/+)/g, '/');
+}
+
+/**
+ * If string starts with a forward slash, remove it.
+ */
+export function removeLeadingForwardSlash(str: string) {
+	if (Array.from(str)[0] === '/') {
+		str = str.substring(1);
+	}
+
+	return str;
+}
+
+/**
  * Replace blank spaces in string with dash.
  */
 export function replaceSpacesWithDash(str: string) {

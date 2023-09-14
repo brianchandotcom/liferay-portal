@@ -27,6 +27,18 @@ export declare function limitStringInputLengh(
 export declare function makeURLPathString(str: string): string;
 
 /**
+ * Make valid url path string with forward slashes in between (Only numbers, low case letters, dashes).
+ */
+export declare function makeURLPathStringWithForwardSlashes(
+	str: string
+): string;
+
+/**
+ * If string starts with a forward slash, remove it.
+ */
+export declare function removeLeadingForwardSlash(str: string): string;
+
+/**
  * Replace blank spaces in string with dash.
  */
 export declare function replaceSpacesWithDash(str: string): string;

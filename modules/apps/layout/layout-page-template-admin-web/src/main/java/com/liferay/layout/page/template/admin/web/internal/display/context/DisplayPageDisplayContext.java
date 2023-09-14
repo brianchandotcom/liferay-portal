@@ -204,9 +204,6 @@ public class DisplayPageDisplayContext {
 	public List<BreadcrumbEntry> getLayoutPageTemplateBreadcrumbEntries(
 		RenderResponse renderResponse) {
 
-		long curLayoutPageTemplateCollectionId =
-			_getLayoutPageTemplateCollectionId();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			renderResponse
 		).setMVCPath(
@@ -215,7 +212,7 @@ public class DisplayPageDisplayContext {
 			"display-page-templates"
 		).buildPortletURL();
 
-		if (curLayoutPageTemplateCollectionId ==
+		if (_getLayoutPageTemplateCollectionId() ==
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT) {
 
@@ -228,14 +225,10 @@ public class DisplayPageDisplayContext {
 		LayoutPageTemplateCollection currentLayoutPageTemplateCollection =
 			LayoutPageTemplateCollectionLocalServiceUtil.
 				fetchLayoutPageTemplateCollection(
-					curLayoutPageTemplateCollectionId);
-
-		List<LayoutPageTemplateCollection>
-			ancestorsLayoutPageTemplateCollectionList =
-				currentLayoutPageTemplateCollection.getAncestors();
+					_getLayoutPageTemplateCollectionId());
 
 		TransformUtil.transform(
-			ancestorsLayoutPageTemplateCollectionList,
+			currentLayoutPageTemplateCollection.getAncestors(),
 			ancestor -> breadcrumbEntries.add(
 				_createBreadCrumbEntry(portletURL, ancestor)));
 

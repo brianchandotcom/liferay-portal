@@ -80,6 +80,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -923,6 +924,110 @@ public class ObjectFieldLocalServiceTest {
 	}
 
 	@Test
+	public void testAddOrUpdateSystemObjectField() throws Exception {
+		ObjectDefinition modifiableSystemObjectDefinition =
+			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
+				_objectDefinitionLocalService, Collections.emptyList());
+
+		ObjectField systemObjectField =
+			_objectFieldLocalService.addOrUpdateSystemObjectField(
+				null, TestPropsValues.getUserId(), 0L,
+				modifiableSystemObjectDefinition.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT, null, null,
+				ObjectFieldConstants.DB_TYPE_STRING, false, false, "",
+				LocalizedMapUtil.getLocalizedMap("Able"), "able",
+				ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
+				Collections.emptyList());
+
+		Assert.assertEquals("able", systemObjectField.getDBColumnName());
+		Assert.assertEquals(
+			ObjectFieldConstants.DB_TYPE_STRING, systemObjectField.getDBType());
+		Assert.assertFalse(systemObjectField.isIndexed());
+		Assert.assertFalse(systemObjectField.isIndexedAsKeyword());
+		Assert.assertEquals(
+			StringPool.BLANK, systemObjectField.getIndexedLanguageId());
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Able"),
+			systemObjectField.getLabelMap());
+		Assert.assertEquals("able", systemObjectField.getName());
+		Assert.assertFalse(systemObjectField.isRequired());
+		Assert.assertTrue(systemObjectField.isSystem());
+
+		systemObjectField =
+			_objectFieldLocalService.addOrUpdateSystemObjectField(
+				systemObjectField.getExternalReferenceCode(),
+				TestPropsValues.getUserId(), 0L,
+				modifiableSystemObjectDefinition.getObjectDefinitionId(),
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				ObjectFieldConstants.DB_TYPE_STRING, true, true, "",
+				LocalizedMapUtil.getLocalizedMap("Baker"), "able",
+				ObjectFieldConstants.READ_ONLY_FALSE, null, true, false,
+				Collections.emptyList());
+
+		Assert.assertEquals("able_", systemObjectField.getDBColumnName());
+		Assert.assertEquals(
+			ObjectFieldConstants.DB_TYPE_STRING, systemObjectField.getDBType());
+		Assert.assertTrue(systemObjectField.isIndexed());
+		Assert.assertTrue(systemObjectField.isIndexedAsKeyword());
+		Assert.assertEquals(
+			StringPool.BLANK, systemObjectField.getIndexedLanguageId());
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("Baker"),
+			systemObjectField.getLabelMap());
+		Assert.assertEquals("able", systemObjectField.getName());
+		Assert.assertTrue(systemObjectField.isRequired());
+		Assert.assertTrue(systemObjectField.isSystem());
+
+		// Requests from forbidden bundles can only update the label
+
+		String liferayMode = SystemProperties.get("liferay.mode");
+
+		SystemProperties.clear("liferay.mode");
+
+		try {
+			systemObjectField =
+				_objectFieldLocalService.addOrUpdateSystemObjectField(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					0L,
+					modifiableSystemObjectDefinition.getObjectDefinitionId(),
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(),
+					ObjectFieldConstants.DB_TYPE_STRING, false, false, "",
+					LocalizedMapUtil.getLocalizedMap("Charlie"), "able",
+					ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
+					Collections.emptyList());
+
+			Assert.assertEquals("able_", systemObjectField.getDBColumnName());
+			Assert.assertEquals(
+				ObjectFieldConstants.DB_TYPE_STRING,
+				systemObjectField.getDBType());
+			Assert.assertTrue(systemObjectField.isIndexed());
+			Assert.assertTrue(systemObjectField.isIndexedAsKeyword());
+			Assert.assertEquals(
+				StringPool.BLANK, systemObjectField.getIndexedLanguageId());
+			Assert.assertEquals(
+				LocalizedMapUtil.getLocalizedMap("Charlie"),
+				systemObjectField.getLabelMap());
+			Assert.assertEquals("able", systemObjectField.getName());
+			Assert.assertTrue(systemObjectField.isRequired());
+			Assert.assertTrue(systemObjectField.isSystem());
+		}
+		finally {
+			SystemProperties.set("liferay.mode", liferayMode);
+		}
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			modifiableSystemObjectDefinition);
+	}
+
+	@Test
 	public void testAddSystemObjectField() throws Exception {
 		List<ObjectFieldBusinessType> objectFieldBusinessTypes =
 			_objectFieldBusinessTypeRegistry.getObjectFieldBusinessTypes();
@@ -1048,15 +1153,8 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldNameException.MustNotBeDuplicate.class,
 			"Duplicate name able",
-			() -> _objectFieldLocalService.addSystemObjectField(
-				null, TestPropsValues.getUserId(), 0,
-				objectDefinition.getObjectDefinitionId(),
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
-				LocalizedMapUtil.getLocalizedMap("Able"), "able",
-				ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
-				null));
+			() -> _addSystemObjectField(
+				objectDefinition.getObjectDefinitionId(), "able", null));
 		AssertUtils.assertFailure(
 			ObjectFieldNameException.MustNotBeNull.class, "Name is null",
 			() -> _addUnmodifiableSystemObjectDefinition(
@@ -1078,6 +1176,22 @@ public class ObjectFieldLocalServiceTest {
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, "abl-e")));
 
+		ObjectDefinition modifiableSystemObjectDefinition =
+			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
+				_objectDefinitionLocalService, Collections.emptyList());
+
+		AssertUtils.assertFailure(
+			ObjectFieldSystemException.class, false,
+			"Only allowed bundles can add system object fields",
+			() -> _addSystemObjectField(
+				modifiableSystemObjectDefinition.getObjectDefinitionId(),
+				"able", Collections.emptyList()));
+
 		String objectDefinitionName = "A" + RandomTestUtil.randomString();
 
 		String pkObjectFieldName = TextFormatter.format(
@@ -1091,6 +1205,9 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, pkObjectFieldName)));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			modifiableSystemObjectDefinition);
 	}
 
 	@Test
@@ -1266,6 +1383,55 @@ public class ObjectFieldLocalServiceTest {
 			customObjectDefinition);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			systemObjectDefinition);
+
+		// Delete system object field from modifiable system object definition
+
+		ObjectDefinition modifiableSystemObjectDefinition =
+			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
+				TestPropsValues.getUserId(), null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"Test", null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
+				_objectDefinitionLocalService, Collections.emptyList());
+
+		ObjectField systemObjectField1 = _addSystemObjectField(
+			modifiableSystemObjectDefinition.getObjectDefinitionId(),
+			StringUtil.randomId(), Collections.emptyList());
+
+		AssertUtils.assertFailure(
+			ObjectFieldSystemException.class, false,
+			"Only allowed bundles can delete system object fields",
+			() -> _objectFieldLocalService.deleteObjectField(
+				systemObjectField1));
+
+		_assertDeleteObjectField(
+			false, modifiableSystemObjectDefinition,
+			systemObjectField1.getName());
+
+		ObjectField systemObjectField2 = _addSystemObjectField(
+			modifiableSystemObjectDefinition.getObjectDefinitionId(),
+			StringUtil.randomId(), Collections.emptyList());
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			TestPropsValues.getUserId(),
+			modifiableSystemObjectDefinition.getObjectDefinitionId());
+
+		AssertUtils.assertFailure(
+			RequiredObjectFieldException.class,
+			"At least one object field must be added",
+			() -> _objectFieldLocalService.deleteObjectField(
+				systemObjectField2));
+
+		_addSystemObjectField(
+			modifiableSystemObjectDefinition.getObjectDefinitionId(), "able",
+			Collections.emptyList());
+
+		_assertDeleteObjectField(
+			true, modifiableSystemObjectDefinition, "able");
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			modifiableSystemObjectDefinition);
 	}
 
 	@Test
@@ -1795,6 +1961,20 @@ public class ObjectFieldLocalServiceTest {
 			).build());
 	}
 
+	private ObjectField _addSystemObjectField(
+			long objectDefinitionId, String name,
+			List<ObjectFieldSetting> objectFieldSettings)
+		throws Exception {
+
+		return _objectFieldLocalService.addSystemObjectField(
+			null, TestPropsValues.getUserId(), 0L, objectDefinitionId,
+			ObjectFieldConstants.BUSINESS_TYPE_TEXT, null, null,
+			ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
+			LocalizedMapUtil.getLocalizedMap(name), name,
+			ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
+			objectFieldSettings);
+	}
+
 	private ObjectDefinition _addUnmodifiableSystemObjectDefinition(
 			ObjectField... objectFields)
 		throws Exception {
@@ -2127,6 +2307,8 @@ public class ObjectFieldLocalServiceTest {
 				_getReadOnlyTextObjectField(
 					objectDefinition1.getObjectDefinitionId(),
 					ObjectFieldConstants.READ_ONLY_TRUE, null)));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 	}
 
 	private void _testAddOrUpdateCustomObjectField(

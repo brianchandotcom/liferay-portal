@@ -4,77 +4,32 @@
  */
 
 import ClayBreadcrumb from '@clayui/breadcrumb';
-import ClayButton from '@clayui/button';
-import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import ClayPanel from '@clayui/panel';
 import ClayTabs from '@clayui/tabs';
-import {InputLocalized} from 'frontend-js-components-web';
-import {fetch} from 'frontend-js-web';
+import {fetch, openModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
 import {IFDSViewSectionInterface} from '../FDSView';
+import ActionCreationForm from '../components/ActionCreationForm';
 import OrderableTable from '../components/OrderableTable';
-import RequiredMark from '../components/RequiredMark';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
-
-const MESSAGE_TYPES = [
-	{
-		label: Liferay.Language.get('info'),
-		value: 'info',
-	},
-	{
-		label: Liferay.Language.get('secondary'),
-		value: 'secondary',
-	},
-	{
-		label: Liferay.Language.get('success'),
-		value: 'success',
-	},
-	{
-		label: Liferay.Language.get('danger'),
-		value: 'danger',
-	},
-	{
-		label: Liferay.Language.get('warning'),
-		value: 'warning',
-	},
-];
 
 const SECTIONS = {
 	ACTIONS: 'actions',
 	NEW_ITEM_ACTION: 'new-item-action',
 };
 
-const TYPES = [
-	{
-		label: Liferay.Language.get('asynchronous'),
-		value: 'async',
-	},
-	{
-		label: Liferay.Language.get('headless'),
-		value: 'headless',
-	},
-	{
-		label: Liferay.Language.get('link'),
-		value: 'link',
-	},
-	{
-		label: Liferay.Language.get('modal'),
-		value: 'modal',
-	},
-	{
-		label: Liferay.Language.get('side-panel'),
-		value: 'side-panel',
-	},
-];
-
 interface IFDSAction {
 	[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION]: any;
+	actions: {
+		delete: {
+			href: string;
+			method: string;
+		};
+	};
 	icon: string;
 	id: number;
 	type: string;
@@ -86,23 +41,9 @@ const noop = () => {};
 const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 	const [activeSection, setActiveSection] = useState(SECTIONS.ACTIONS);
 	const [activeTab, setActiveTab] = useState(0);
-	const [availableIconSymbols, setAvailableIconSymbols] = useState<
-		Array<{label: string; value: string}>
-	>([]);
-	const [confirmationMessage, setConfirmationMessage] = useState('');
-	const [
-		confirmationMessageTranslations,
-		setConfirmationMessageTranslations,
-	] = useState({});
 	const [fdsActions, setFDSActions] = useState<Array<IFDSAction>>([]);
-	const [iconSymbol, setIconSymbol] = useState('bolt');
-	const [label, setLabel] = useState('');
-	const [labelTranslations, setLabelTranslations] = useState({});
 	const [loading, setLoading] = useState(true);
 	const [newActionsOrder, setNewActionsOrder] = useState<string>('');
-	const [type, setType] = useState('link');
-	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
-	const [url, setURL] = useState('');
 
 	const getFDSActions = async () => {
 		setLoading(true);
@@ -152,51 +93,39 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 		setLoading(false);
 	};
 
-	const saveFDSAction = async () => {
-		setSaveButtonDisabled(true);
+	const deleteFDSAction = ({item}: {item: IFDSAction}) => {
+		openModal({
+			bodyHTML: Liferay.Language.get(
+				'are-you-sure-you-want-to-delete-this-action'
+			),
+			buttons: [
+				{
+					autoFocus: true,
+					displayType: 'secondary',
+					label: Liferay.Language.get('cancel'),
+					type: 'cancel',
+				},
+				{
+					displayType: 'danger',
+					label: Liferay.Language.get('delete'),
+					onClick: ({processClose}: {processClose: Function}) => {
+						processClose();
 
-		const body = {
-			[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_ID]: fdsView.id,
-			icon: iconSymbol,
-			type,
-			url,
-		} as any;
+						fetch(item.actions.delete.href, {
+							method: item.actions.delete.method,
+						})
+							.then(() => {
+								openDefaultSuccessToast();
 
-		if (Liferay.FeatureFlags['LPS-172017']) {
-			body.confirmationMessage_i18n = confirmationMessageTranslations;
-			body.label_i18n = labelTranslations;
-		}
-		else {
-			body.confirmationMessage = confirmationMessage;
-			body.label = labelTranslations;
-		}
-
-		const response = await fetch(API_URL.FDS_ACTIONS, {
-			body: JSON.stringify(body),
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-			},
-			method: 'POST',
+								getFDSActions();
+							})
+							.catch(() => openDefaultFailureToast());
+					},
+				},
+			],
+			status: 'danger',
+			title: Liferay.Language.get('delete-action'),
 		});
-
-		if (!response.ok) {
-			setSaveButtonDisabled(false);
-
-			openDefaultFailureToast();
-
-			return;
-		}
-
-		await response.json();
-
-		setSaveButtonDisabled(false);
-
-		openDefaultSuccessToast();
-
-		setActiveSection(SECTIONS.ACTIONS);
-
-		getFDSActions();
 	};
 
 	const updateFDSActionsOrder = async () => {
@@ -239,91 +168,6 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
-	useEffect(() => {
-		const getIcons = async () => {
-			const response = await fetch(spritemap);
-
-			const responseText = await response.text();
-
-			if (responseText.length) {
-				const spritemapDocument = new DOMParser().parseFromString(
-					responseText,
-					'text/xml'
-				);
-
-				const symbolElements = spritemapDocument.querySelectorAll(
-					'symbol'
-				);
-
-				const iconSymbols = Array.from(symbolElements!).map(
-					(element) => ({
-						label: element.id,
-						value: element.id,
-					})
-				);
-
-				setAvailableIconSymbols(iconSymbols);
-			}
-		};
-
-		getIcons();
-	}, [spritemap]);
-
-	const labelFormElementId = `${namespace}Label`;
-	const iconFormElementId = `${namespace}Icon`;
-	const typeFormElementId = `${namespace}Type`;
-	const urlFormElementId = `${namespace}URL`;
-	const confirmationMessageFormElementId = `${namespace}ConfirmationMessage`;
-	const confirmationMessageTypeFormElementId = `${namespace}ConfirmationMessageType`;
-
-	const ConfirmationMessageRow = () => (
-		<ClayLayout.Row>
-			<ClayLayout.Col size={8}>
-				<ClayForm.Group>
-					{Liferay.FeatureFlags['LPS-172017'] ? (
-						<InputLocalized
-							label={Liferay.Language.get('confirmation-message')}
-							onChange={setConfirmationMessageTranslations}
-							placeholder={Liferay.Language.get(
-								'add-a-message-here'
-							)}
-							translations={confirmationMessageTranslations}
-						/>
-					) : (
-						<ClayForm.Group>
-							<label htmlFor={confirmationMessageFormElementId}>
-								{Liferay.Language.get('confirmation-message')}
-							</label>
-
-							<ClayInput
-								id={confirmationMessageFormElementId}
-								onChange={(event) =>
-									setConfirmationMessage(event.target.value)
-								}
-								type="text"
-								value={label}
-							/>
-						</ClayForm.Group>
-					)}
-				</ClayForm.Group>
-			</ClayLayout.Col>
-
-			<ClayLayout.Col size={4}>
-				<ClayForm.Group>
-					<label htmlFor={confirmationMessageTypeFormElementId}>
-						{Liferay.Language.get('message-type')}
-					</label>
-
-					<ClaySelectWithOption
-						defaultValue="info"
-						id={confirmationMessageTypeFormElementId}
-						options={MESSAGE_TYPES}
-					/>
-				</ClayForm.Group>
-			</ClayLayout.Col>
-		</ClayLayout.Row>
-	);
 
 	if (loading) {
 		return <ClayLoadingIndicator />;
@@ -375,6 +219,16 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 								)}
 							>
 								<OrderableTable
+									actions={[
+										{
+											icon: 'trash',
+											label: Liferay.Language.get(
+												'delete'
+											),
+											onClick: deleteFDSAction,
+										},
+									]}
+									className="mt-0 p-1"
 									creationMenuItems={[
 										{
 											label: Liferay.Language.get(
@@ -441,165 +295,14 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 				)}
 
 				{activeSection === SECTIONS.NEW_ITEM_ACTION && (
-					<>
-						<h2 className="mb-0 p-4">
-							{Liferay.Language.get('new-item-action')}
-						</h2>
-
-						<ClayPanel
-							collapsable
-							defaultExpanded
-							displayTitle={Liferay.Language.get(
-								'display-options'
-							)}
-						>
-							<ClayPanel.Body>
-								<ClayLayout.Row>
-									<ClayLayout.Col size={8}>
-										{Liferay.FeatureFlags['LPS-172017'] ? (
-											<InputLocalized
-												label={Liferay.Language.get(
-													'label'
-												)}
-												onChange={setLabelTranslations}
-												placeholder={Liferay.Language.get(
-													'action-name'
-												)}
-												required
-												translations={labelTranslations}
-											/>
-										) : (
-											<ClayForm.Group>
-												<label
-													htmlFor={labelFormElementId}
-												>
-													{Liferay.Language.get(
-														'label'
-													)}
-												</label>
-
-												<ClayInput
-													id={labelFormElementId}
-													onChange={(event) =>
-														setLabel(
-															event.target.value
-														)
-													}
-													type="text"
-													value={label}
-												/>
-											</ClayForm.Group>
-										)}
-									</ClayLayout.Col>
-
-									<ClayLayout.Col
-										className="align-items-center d-flex justify-content-center"
-										size={4}
-									>
-										<ClayIcon
-											className="mr-4"
-											symbol={iconSymbol}
-										/>
-
-										<ClayForm.Group>
-											<label htmlFor={iconFormElementId}>
-												{Liferay.Language.get('icon')}
-											</label>
-
-											<ClaySelectWithOption
-												id={iconFormElementId}
-												onChange={(event) =>
-													setIconSymbol(
-														event.target.value
-													)
-												}
-												options={availableIconSymbols}
-												value={iconSymbol}
-											/>
-										</ClayForm.Group>
-									</ClayLayout.Col>
-								</ClayLayout.Row>
-							</ClayPanel.Body>
-						</ClayPanel>
-
-						<ClayPanel
-							collapsable
-							defaultExpanded
-							displayTitle={Liferay.Language.get(
-								'action-behavior'
-							)}
-						>
-							<ClayPanel.Body>
-								<ClayLayout.Row justify="start">
-									<ClayLayout.Col size={4}>
-										<ClayForm.Group>
-											<label htmlFor={typeFormElementId}>
-												{Liferay.Language.get('type')}
-
-												<RequiredMark />
-											</label>
-
-											<ClaySelectWithOption
-												id={typeFormElementId}
-												onChange={(event) =>
-													setType(event.target.value)
-												}
-												options={TYPES}
-												placeholder={Liferay.Language.get(
-													'please-select-an-option'
-												)}
-												value={type}
-											/>
-										</ClayForm.Group>
-									</ClayLayout.Col>
-								</ClayLayout.Row>
-
-								<ClayLayout.Row justify="start">
-									<ClayLayout.Col lg>
-										<ClayForm.Group>
-											<label htmlFor={urlFormElementId}>
-												{Liferay.Language.get('url')}
-
-												<RequiredMark />
-											</label>
-
-											<ClayInput
-												component="textarea"
-												id={urlFormElementId}
-												onChange={(event) =>
-													setURL(event.target.value)
-												}
-												placeholder={Liferay.Language.get(
-													'add-a-url-here'
-												)}
-												value={url}
-											/>
-										</ClayForm.Group>
-
-										<ConfirmationMessageRow />
-									</ClayLayout.Col>
-								</ClayLayout.Row>
-							</ClayPanel.Body>
-						</ClayPanel>
-
-						<ClayButton.Group className="pb-4 px-4" spaced>
-							<ClayButton
-								disabled={saveButtonDisabled}
-								onClick={saveFDSAction}
-							>
-								{Liferay.Language.get('save')}
-							</ClayButton>
-
-							<ClayButton
-								displayType="secondary"
-								onClick={() =>
-									setActiveSection(SECTIONS.ACTIONS)
-								}
-							>
-								{Liferay.Language.get('cancel')}
-							</ClayButton>
-						</ClayButton.Group>
-					</>
+					<ActionCreationForm
+						fdsView={fdsView}
+						getFDSActions={getFDSActions}
+						namespace={namespace}
+						sections={SECTIONS}
+						setActiveSection={setActiveSection}
+						spritemap={spritemap}
+					/>
 				)}
 			</ClayLayout.ContainerFluid>
 		</ClayLayout.ContainerFluid>

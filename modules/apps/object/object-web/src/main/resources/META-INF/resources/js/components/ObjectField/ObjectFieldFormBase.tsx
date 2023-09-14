@@ -118,17 +118,17 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 
 async function getFieldSettingsByBusinessType(
 	objectRelationshipId: number,
+	setListTypeDefinitions: (value: PickList[]) => void,
 	setOneToManyRelationship: (value: TObjectRelationship) => void,
-	setPickLists: (value: PickList[]) => void,
 	setSelectedOutput: (value: string) => void,
 	values: Partial<ObjectField>
 ) {
 	const {businessType, objectFieldSettings} = values;
 
 	if (businessType === 'Picklist' || businessType === 'MultiselectPicklist') {
-		const picklistData = await API.getListTypeDefinitions();
+		const listTypeDefinitions = await API.getListTypeDefinitions();
 
-		setPickLists(picklistData);
+		setListTypeDefinitions(listTypeDefinitions);
 	}
 
 	if (businessType === 'Formula') {
@@ -183,7 +183,7 @@ export default function ObjectFieldFormBase({
 		return businessTypeMap;
 	}, [objectFieldTypes]);
 
-	const [pickLists, setPickLists] = useState<Partial<PickList>[]>([]);
+	const [listTypeDefinitions, setListTypeDefinitions] = useState<Partial<PickList>[]>([]);
 	const [picklistQuery, setPicklistQuery] = useState<string>('');
 
 	const [oneToManyRelationship, setOneToManyRelationship] = useState<
@@ -196,14 +196,14 @@ export default function ObjectFieldFormBase({
 		values.listTypeDefinitionId !== 0;
 
 	const filteredPicklist = useMemo(() => {
-		return pickLists.filter(({name}) => {
+		return listTypeDefinitions.filter(({name}) => {
 			return stringIncludesQuery(name as string, picklistQuery);
 		});
-	}, [picklistQuery, pickLists]);
+	}, [picklistQuery, listTypeDefinitions]);
 
 	const selectedPicklist = useMemo(() => {
-		return pickLists.find(({id}) => values.listTypeDefinitionId === id);
-	}, [pickLists, values.listTypeDefinitionId]);
+		return listTypeDefinitions.find(({id}) => values.listTypeDefinitionId === id);
+	}, [listTypeDefinitions, values.listTypeDefinitionId]);
 
 	const handleTypeChange = async (option: ObjectFieldType) => {
 		const objectFieldSettings: ObjectFieldSetting[] =
@@ -267,8 +267,8 @@ export default function ObjectFieldFormBase({
 		const makeFetch = async () => {
 			await getFieldSettingsByBusinessType(
 				objectRelationshipId as number,
+				setListTypeDefinitions,
 				setOneToManyRelationship,
-				setPickLists,
 				setSelectedOutput,
 				values
 			);

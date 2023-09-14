@@ -5,6 +5,7 @@
 
 import React, {Dispatch, SetStateAction, useState} from 'react';
 
+import EditAPIEndpoint from '../components/EditAPIEndpoint';
 import APIEndpointsTable from '../components/FDS/APIEndpointsTable';
 
 interface EndpointsContentProps {
@@ -46,6 +47,17 @@ export default function EndpointsContent({
 				/>
 			) : (
 				mainEndpointNav.edit && (
+					<EditAPIEndpoint
+						apiApplicationBaseURL={apiApplicationData.baseURL}
+						apiURLPaths={apiURLPaths}
+						basePath={basePath}
+						currentAPIApplicationId={currentAPIApplicationId}
+						endpointId={mainEndpointNav.edit}
+						setMainEndpointNav={setMainEndpointNav}
+						setManagementButtonsProps={setManagementButtonsProps}
+						setStatus={setStatus}
+						setTitle={setTitle}
+					/>
 				)
 			)}
 		</>

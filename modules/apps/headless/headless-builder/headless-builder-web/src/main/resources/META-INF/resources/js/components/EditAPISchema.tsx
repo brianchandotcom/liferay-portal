@@ -391,7 +391,7 @@ export default function EditAPISchema({
 				<div className="edit-schema">
 					<div className="container-fluid container-fluid-max-xl edit-schema-child mt-3">
 						<ClayBreadcrumb
-							className="api-builder-navigation-breadcrum"
+							className="api-builder-navigation-breadcrumb"
 							items={[
 								{
 									label: Liferay.Language.get('schemas'),

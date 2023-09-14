@@ -27,18 +27,18 @@ public class FaroChannelDisplay {
 	public FaroChannelDisplay(Channel channel, FaroChannel faroChannel) {
 		this(faroChannel);
 
-		_commerceChannelIdCount = 0;
-		_groupIdCount = 0;
+		_commerceChannelsCount = 0;
+		_groupsCount = 0;
 
 		for (Map<String, Object> dataSource : channel.getDataSources()) {
 			List<String> commerceChannelIds = (List)dataSource.get(
 				"commerceChannelIds");
 
-			_commerceChannelIdCount += commerceChannelIds.size();
+			_commerceChannelsCount += commerceChannelIds.size();
 
 			List<String> groupIds = (List)dataSource.get("groupIds");
 
-			_groupIdCount += groupIds.size();
+			_groupsCount += groupIds.size();
 		}
 
 		Map<String, Object> embeddedResources = channel.getEmbeddedResources();
@@ -73,9 +73,9 @@ public class FaroChannelDisplay {
 		_permissionType = faroChannel.getPermissionType();
 	}
 
-	private int _commerceChannelIdCount;
+	private int _commerceChannelsCount;
 	private long _createTime;
-	private int _groupIdCount;
+	private int _groupsCount;
 	private String _id;
 	private String _name;
 	private int _permissionType;

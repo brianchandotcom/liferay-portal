@@ -198,10 +198,10 @@ export async function getList<T>(url: string) {
 }
 
 export async function getNotificationTemplateByExternalReferenceCode(
-	notificationTemplateExternalReferenceCode: string
+	externalReferenceCode: string
 ) {
 	return await fetchJSON<NotificationTemplate>(
-		`/o/notification/v1.0/notification-templates/by-external-reference-code/${notificationTemplateExternalReferenceCode}`
+		`/o/notification/v1.0/notification-templates/by-external-reference-code/${externalReferenceCode}`
 	);
 }
 
@@ -220,10 +220,10 @@ export async function getNotificationTemplates() {
 }
 
 export async function getObjectDefinitionByExternalReferenceCode(
-	objectDefinitionExternalReferenceCode: string
+	externalReferenceCode: string
 ) {
 	return await fetchJSON<ObjectDefinition>(
-		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectDefinitionExternalReferenceCode}`
+		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${externalReferenceCode}`
 	);
 }
 

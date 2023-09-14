@@ -8,6 +8,7 @@ import { useState } from 'react';
 
 import { getSiteURL } from '../../components/InviteMemberModal/services';
 import { Liferay } from '../../liferay/liferay';
+import { NextStepPage } from '../NextStepPage/NextStepPage';
 import { StepType } from './enums/stepType';
 
 type StepComponent = {
@@ -51,39 +52,39 @@ const GetAPPFlow = () => {
   };
 
   const StepFormComponent: StepComponent = {
-    [StepType.ACCOUNT]: <h1>aaa</h1>,
+    [StepType.ACCOUNT]: <NextStepPage></NextStepPage>,
     [StepType.LICENSES]: <h1>AAAAAAAAA</h1>,
   };
 
   return (
-    <div className="border d-flex justify-content-center p-5 rounded">
-      <div className="">
+    <div className="border d-flex flex-column justify-content-center p-5 rounded">
+      <div className="align-items-center d-flex flex-column">
         <div className="h1 mb-6">{sectionProperties[step].title}</div>
         <div>{StepFormComponent[step]}</div>
-        <div className="d-flex justify-content-between mt-5">
-          <ClayButton displayType="unstyled" onClick={() => onCancel()}>
-            Cancel
-          </ClayButton>
-          <div>
-            {sectionProperties[step].backStep !== step && (
-              <ClayButton
-                displayType="secondary"
-                onClick={() => onPrevious(sectionProperties[step].backStep)}
-              >
-                Back
-              </ClayButton>
-            )}
-            {sectionProperties[step].nextStep && (
-              <ClayButton
-                className="ml-5"
-                onClick={() => {
-                  onContinue(sectionProperties[step].nextStep);
-                }}
-              >
-                Continue
-              </ClayButton>
-            )}
-          </div>
+      </div>
+      <div className="d-flex justify-content-between mt-5 pt-2">
+        <ClayButton displayType={null} onClick={() => onCancel()}>
+          Cancel
+        </ClayButton>
+        <div className="align-self-end">
+          {sectionProperties[step].backStep !== step && (
+            <ClayButton
+              displayType="secondary"
+              onClick={() => onPrevious(sectionProperties[step].backStep)}
+            >
+              Back
+            </ClayButton>
+          )}
+          {sectionProperties[step].nextStep && (
+            <ClayButton
+              className="ml-5"
+              onClick={() => {
+                onContinue(sectionProperties[step].nextStep);
+              }}
+            >
+              Continue
+            </ClayButton>
+          )}
         </div>
       </div>
     </div>

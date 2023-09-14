@@ -22,6 +22,8 @@ dlCopyEntryDisplayContext.setViewAttributes();
 			).put(
 				"entryIds", dlCopyEntryDisplayContext.getEntryIds()
 			).put(
+				"entryName", dlCopyEntryDisplayContext.getEntryName()
+			).put(
 				"redirect", dlCopyEntryDisplayContext.getRedirect()
 			).put(
 				"selectionModalURL", dlCopyEntryDisplayContext.getSelectionModalURL()

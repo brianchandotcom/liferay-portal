@@ -48,11 +48,11 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/bulk_copy_entries"
+		"mvc.command.name=/document_library/copy_entries"
 	},
 	service = MVCActionCommand.class
 )
-public class BulkCopyEntriesMVCActionCommand extends BaseMVCActionCommand {
+public class CopyEntriesMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -209,7 +209,7 @@ public class BulkCopyEntriesMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BulkCopyEntriesMVCActionCommand.class);
+		CopyEntriesMVCActionCommand.class);
 
 	@Reference
 	private DLAppService _dlAppService;

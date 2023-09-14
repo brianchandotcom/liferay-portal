@@ -5,6 +5,8 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.ArrayList;
@@ -145,7 +147,7 @@ public class HttpServletEndpointControllerImpl
 
 	@Override
 	public void log(String message, Throwable throwable) {
-		_parentServletContext.log(message, throwable);
+		_log.error(message, throwable);
 	}
 
 	@Override
@@ -268,6 +270,8 @@ public class HttpServletEndpointControllerImpl
 		return null;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(HttpServletEndpointControllerImpl.class.getName());
+
 	private final Map<String, Object> _attributesMap;
 	private final BundleContext _bundleContext;
 	private final ConcurrentMap
@@ -352,15 +356,8 @@ public class HttpServletEndpointControllerImpl
 
 				return contextController;
 			}
-			catch (HttpWhiteboardFailureException
-						httpWhiteboardFailureException) {
-
-				_parentServletContext.log(
-					httpWhiteboardFailureException.getMessage(),
-					httpWhiteboardFailureException);
-			}
 			catch (Exception exception) {
-				_parentServletContext.log(exception.getMessage(), exception);
+				_log.error(exception.getMessage(), exception);
 			}
 
 			return null;

@@ -173,7 +173,7 @@ public class ObjectEntryHelper {
 		return objectEntries.get(0);
 	}
 
-	public ObjectEntry getObjectEntryByExternalReferenceCode(
+	public ObjectEntry getObjectEntry(
 			long companyId, List<String> nestedFields,
 			String objectDefinitionExternalReferenceCode,
 			String objetEntryExternalReferenceCode, String scopeKey)

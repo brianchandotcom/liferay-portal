@@ -58,7 +58,7 @@ public class EndpointHelper {
 		}
 
 		return _getResponseEntityMap(
-			_objectEntryHelper.getObjectEntryByExternalReferenceCode(
+			_objectEntryHelper.getObjectEntry(
 				companyId, ListUtil.fromCollection(relationshipsNames),
 				schema.getMainObjectDefinitionExternalReferenceCode(),
 				pathParameterValue, scopeKey),

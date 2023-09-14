@@ -157,20 +157,20 @@ export async function postListTypeEntry({
 	});
 }
 
-export function deleteObjectDefinitions(id: number) {
-	return deleteItem(`/o/object-admin/v1.0/object-definitions/${id}`);
+export function deleteObjectDefinition(objectDefinitionId: number) {
+	return deleteItem(`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}`);
 }
 
-export function deleteObjectField(id: number) {
-	return deleteItem(`/o/object-admin/v1.0/object-fields/${id}`);
+export function deleteObjectField(objectFieldId: number) {
+	return deleteItem(`/o/object-admin/v1.0/object-fields/${objectFieldId}`);
 }
 
 export function deleteObjectFolder(objectFolderId: number) {
 	return deleteItem(`/o/object-admin/v1.0/object-folders/${objectFolderId}`);
 }
 
-export function deleteObjectRelationships(id: number) {
-	return deleteItem(`/o/object-admin/v1.0/object-relationships/${id}`);
+export function deleteObjectRelationship(objectRelationshipId: number) {
+	return deleteItem(`/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`);
 }
 
 export async function deletePickList(pickListId: number) {

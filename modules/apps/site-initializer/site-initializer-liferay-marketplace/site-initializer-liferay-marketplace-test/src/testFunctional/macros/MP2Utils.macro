@@ -16,6 +16,33 @@ definition {
 		}
 	}
 
+	macro firstLoginMKT {
+		MockMock._gotoMailMessage(
+			asset = ${asset},
+			recipient = ${recipient});
+
+		var userPassword = selenium.getText("MP2Utils#MOCKMOCK_HTML_BODY_FORMATTED");
+		var key_bodyLink = ${bodyLink};
+
+		AssertClick(
+			locator1 = "MockMock#MOCKMOCK_HTML_BODY_LINK",
+			value1 = ${bodyLink});
+
+		Type(
+			locator1 = "TextInput#EMAIL_ADDRESS",
+			value1 = ${userEmailAddress});
+
+		Type(
+			locator1 = "TextInput#PASSWORD",
+			value1 = ${userPassword});
+
+		Click(locator1 = "MP2Utils#SIGN_IN_BUTTON");
+
+		User.acceptEndUserLicenseAgreement();
+
+		User.answerPasswordReminder();
+	}
+
 	macro selectCheckbox {
 		if (isSet(checkboxName)) {
 			Check.checkNotVisible(

@@ -25,7 +25,7 @@ import React, {
 } from 'react';
 
 import {
-	getCheckedPickListItems,
+	getCheckedListTypeEntries,
 	getCheckedRelationshipItems,
 	getCheckedWorkflowStatusItems,
 	getSystemFieldLabelFromEntry,
@@ -199,7 +199,7 @@ export function ModalAddFilter({
 
 						if (editingFilter) {
 							setItems(
-								getCheckedPickListItems(
+								getCheckedListTypeEntries(
 									items,
 									setEditingFilterType
 								)

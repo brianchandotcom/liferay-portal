@@ -28,7 +28,7 @@ export function getCheckedWorkflowStatusItems(
 	return newItemsValues;
 }
 
-export function getCheckedPickListItems(
+export function getCheckedListTypeEntries(
 	itemValues: ListTypeEntry[],
 	setEditingFilterType: () => number[] | string[] | null
 ): IItem[] {

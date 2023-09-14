@@ -414,7 +414,7 @@ export async function putObjectFolderByExternalReferenceCode(
 	);
 }
 
-export async function updatePickList({
+export async function putListTypeDefinition({
 	externalReferenceCode,
 	id,
 	listTypeEntries,

@@ -80,7 +80,7 @@ public class ObjectEntryPerformanceTest {
 
 		Files.deleteIfExists(_logFilePath);
 
-		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			false, _objectDefinitionLocalService,
 			Collections.singletonList(
 				ObjectFieldUtil.createObjectField(

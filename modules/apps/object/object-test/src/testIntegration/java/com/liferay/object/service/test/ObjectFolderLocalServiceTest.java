@@ -172,10 +172,10 @@ public class ObjectFolderLocalServiceTest {
 
 			objectFolder = _addObjectFolder(user);
 
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				objectFolder.getObjectFolderId(),
 				_objectDefinitionLocalService);
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				objectFolder.getObjectFolderId(),
 				_objectDefinitionLocalService);
 
@@ -212,9 +212,9 @@ public class ObjectFolderLocalServiceTest {
 
 		ObjectFolder objectFolder = _addObjectFolder(TestPropsValues.getUser());
 
-		ObjectDefinitionTestUtil.addObjectDefinition(
+		ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			objectFolder.getObjectFolderId(), _objectDefinitionLocalService);
-		ObjectDefinitionTestUtil.addObjectDefinition(
+		ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			objectFolder.getObjectFolderId(), _objectDefinitionLocalService);
 
 		int uncategorizedObjectFolderObjectDefinitionsCount =

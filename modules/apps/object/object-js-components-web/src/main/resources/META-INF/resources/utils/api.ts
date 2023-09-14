@@ -314,7 +314,7 @@ export async function getListTypeDefinitions() {
 	);
 }
 
-export async function getRelationship<T>(objectRelationshipId: number) {
+export async function getObjectRelationship<T>(objectRelationshipId: number) {
 	return fetchJSON<T>(
 		`/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`
 	);

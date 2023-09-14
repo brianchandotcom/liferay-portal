@@ -13,7 +13,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.layout.constants.LockedLayoutType;
+import com.liferay.layout.model.LockedLayoutOrder;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -64,6 +66,11 @@ public class LockedLayoutsSearchContainerManagementToolbarDisplayContext
 		).setKeywords(
 			StringPool.BLANK
 		).setParameter(
+			"orderByCol",
+			LockedLayoutOrder.LockedLayoutOrderType.LAST_AUTOSAVE.getValue()
+		).setParameter(
+			"orderByType", "desc"
+		).setParameter(
 			"type", StringPool.BLANK
 		).buildString();
 	}
@@ -75,6 +82,12 @@ public class LockedLayoutsSearchContainerManagementToolbarDisplayContext
 				dropdownGroupItem.setDropdownItems(_getFilterDropdownItems());
 				dropdownGroupItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "filter-by-type"));
+			}
+		).addGroup(
+			() -> !FeatureFlagManagerUtil.isEnabled("LPS-144527"),
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(_getOrderDropdownItems());
+				dropdownGroupItem.setLabel(getOrderByDropdownItemsLabel());
 			}
 		).build();
 
@@ -115,13 +128,29 @@ public class LockedLayoutsSearchContainerManagementToolbarDisplayContext
 	}
 
 	@Override
+	public List<DropdownItem> getOrderDropdownItems() {
+		return _getOrderDropdownItems();
+	}
+
+	@Override
 	public String getSearchContainerId() {
 		return "lockedLayoutsSearchContainer";
 	}
 
 	@Override
+	public String getSortingOrder() {
+		return _lockedLayoutsDisplayContext.getOrderByType();
+	}
+
+	@Override
 	public String getSortingURL() {
-		return null;
+		return PortletURLBuilder.create(
+			getPortletURL()
+		).setParameter(
+			"orderByCol", _lockedLayoutsDisplayContext.getOrderByCol()
+		).setParameter(
+			"orderByType", _getReverseOrderByType()
+		).buildString();
 	}
 
 	@Override
@@ -154,6 +183,47 @@ public class LockedLayoutsSearchContainerManagementToolbarDisplayContext
 		}
 
 		return dropdownItems;
+	}
+
+	private List<DropdownItem> _getOrderDropdownItems() {
+		LockedLayoutOrder lockedLayoutOrder =
+			_lockedLayoutsDisplayContext.getLockedLayoutOrder();
+
+		return new DropdownItemList() {
+			{
+				for (LockedLayoutOrder.LockedLayoutOrderType
+						lockedLayoutOrderType :
+							LockedLayoutOrder.LockedLayoutOrderType.values()) {
+
+					add(
+						dropdownItem -> {
+							dropdownItem.setActive(
+								Objects.equals(
+									lockedLayoutOrderType,
+									lockedLayoutOrder.
+										getLockedLayoutOrderType()));
+							dropdownItem.setHref(
+								getPortletURL(), "orderByCol",
+								lockedLayoutOrderType.getValue(), "orderByType",
+								_lockedLayoutsDisplayContext.getOrderByType());
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									httpServletRequest,
+									lockedLayoutOrderType.getValue()));
+						});
+				}
+			}
+		};
+	}
+
+	private String _getReverseOrderByType() {
+		if (Objects.equals(
+				_lockedLayoutsDisplayContext.getOrderByType(), "asc")) {
+
+			return "desc";
+		}
+
+		return "asc";
 	}
 
 	private final LockedLayoutsDisplayContext _lockedLayoutsDisplayContext;

@@ -10,7 +10,7 @@ import com.liferay.petra.lang.CentralizedThreadLocal;
 /**
  * @author Gabriel Albuquerque
  */
-public class BatchEngineThreadLocal {
+public class BatchEngineUnitThreadLocal {
 
 	public static String getInvokerBundleNamespace() {
 		return _invokerBundleNamespaceThreadLocal.get();
@@ -24,7 +24,7 @@ public class BatchEngineThreadLocal {
 
 	private static final ThreadLocal<String>
 		_invokerBundleNamespaceThreadLocal = new CentralizedThreadLocal<>(
-			BatchEngineThreadLocal.class +
-				"._invokerBundleNamespaceThreadLocal");
+		BatchEngineUnitThreadLocal.class +
+		"._invokerBundleNamespaceThreadLocal");
 
 }

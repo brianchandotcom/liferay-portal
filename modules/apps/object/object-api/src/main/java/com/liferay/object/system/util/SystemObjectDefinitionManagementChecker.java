@@ -5,7 +5,7 @@
 
 package com.liferay.object.system.util;
 
-import com.liferay.batch.engine.unit.BatchEngineThreadLocal;
+import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -23,7 +23,7 @@ public class SystemObjectDefinitionManagementChecker {
 		return ArrayUtil.exists(
 			_ALLOWED_INVOKER_BUNDLE_SYMBOLIC_NAMES,
 			allowedInvokerBundleSymbolicName -> StringUtil.startsWith(
-				BatchEngineThreadLocal.getInvokerBundleNamespace(),
+				BatchEngineUnitThreadLocal.getInvokerBundleNamespace(),
 				allowedInvokerBundleSymbolicName));
 	}
 

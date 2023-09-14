@@ -5,11 +5,18 @@
 
 import ClayLayout from '@clayui/layout';
 
+import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 
 function NotFoundPage() {
+	const breadcrumbs = [
+		{active: false, link: '/', name: 'Home'},
+		{active: false, link: '/not-found', name: 'Not Found'},
+	];
+
 	return (
 		<ClayLayout.Container>
+			<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
 			<Jethr0Card>
 				<div>404 - Not Found</div>
 			</Jethr0Card>

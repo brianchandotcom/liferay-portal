@@ -6,7 +6,7 @@
 import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
 
-import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
+import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import JobQueue from '../../components/JobQueue/JobQueue';
 
@@ -16,7 +16,7 @@ function Home() {
 	return (
 		<ClayLayout.Container>
 			<Jethr0Card>
-				<Breadcrumbs breadcrumbs={breadcrumbs} />
+				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
 				<Heading level={3} weight="lighter">
 					Job Queue
 				</Heading>

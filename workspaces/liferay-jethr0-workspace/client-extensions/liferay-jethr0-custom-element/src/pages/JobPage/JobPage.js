@@ -8,7 +8,7 @@ import ClayLayout from '@clayui/layout';
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 
-import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs';
+import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import JobBuilds from '../../components/JobBuilds/JobBuilds';
 import JobInformation from '../../components/JobInformation/JobInformation';
@@ -38,7 +38,7 @@ function JobPage() {
 	return (
 		<ClayLayout.Container>
 			<Jethr0Card>
-				<Breadcrumbs breadcrumbs={breadcrumbs} />
+				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
 				<Heading level={3} weight="lighter">
 					{jobName}
 				</Heading>

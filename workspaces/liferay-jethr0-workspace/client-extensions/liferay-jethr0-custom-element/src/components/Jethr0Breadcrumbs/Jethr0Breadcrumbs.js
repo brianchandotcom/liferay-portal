@@ -5,7 +5,7 @@
 
 import {Link} from 'react-router-dom';
 
-function Breadcrumbs({breadcrumbs}) {
+function Jethr0Breadcrumbs({breadcrumbs}) {
 	return (
 		<ol className="breadcrumb">
 			{breadcrumbs &&
@@ -41,4 +41,4 @@ function Breadcrumbs({breadcrumbs}) {
 	);
 }
 
-export default Breadcrumbs;
+export default Jethr0Breadcrumbs;

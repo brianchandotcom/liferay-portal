@@ -69,6 +69,9 @@ public class ObjectValidationRuleDTOConverter
 					serviceBuilderObjectValidationRule.getEngine());
 				errorLabel = LocalizedMapUtil.getLanguageIdMap(
 					serviceBuilderObjectValidationRule.getErrorLabelMap());
+				externalReferenceCode =
+					serviceBuilderObjectValidationRule.
+						getExternalReferenceCode();
 				id =
 					serviceBuilderObjectValidationRule.
 						getObjectValidationRuleId();

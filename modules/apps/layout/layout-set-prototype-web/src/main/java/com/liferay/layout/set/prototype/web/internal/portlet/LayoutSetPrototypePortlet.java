@@ -6,7 +6,6 @@
 package com.liferay.layout.set.prototype.web.internal.portlet;
 
 import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.layout.set.prototype.configuration.LayoutSetPrototypeConfiguration;
@@ -256,7 +255,7 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			panelAppRegistry, panelCategoryRegistry);
+			panelAppRegistry);
 
 		renderRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY_HELPER, panelCategoryHelper);
@@ -305,9 +304,6 @@ public class LayoutSetPrototypePortlet extends MVCPortlet {
 
 	@Reference
 	protected PanelAppRegistry panelAppRegistry;
-
-	@Reference
-	protected PanelCategoryRegistry panelCategoryRegistry;
 
 	private void _addSessionMessages(
 		ActionRequest actionRequest, boolean oldReadyForPropagation,

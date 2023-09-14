@@ -6,7 +6,6 @@
 package com.liferay.product.navigation.taglib.internal.servlet;
 
 import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.product.navigation.control.menu.manager.ProductNavigationControlMenuManager;
 import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuCategoryRegistry;
@@ -21,10 +20,6 @@ public class ServletContextUtil {
 
 	public static PanelAppRegistry getPanelAppRegistry() {
 		return _panelAppRegistrySnapshot.get();
-	}
-
-	public static PanelCategoryRegistry getPanelCategoryRegistry() {
-		return _panelCategoryRegistrySnapshot.get();
 	}
 
 	public static ProductNavigationControlMenuCategoryRegistry
@@ -51,9 +46,6 @@ public class ServletContextUtil {
 
 	private static final Snapshot<PanelAppRegistry> _panelAppRegistrySnapshot =
 		new Snapshot<>(ServletContextUtil.class, PanelAppRegistry.class);
-	private static final Snapshot<PanelCategoryRegistry>
-		_panelCategoryRegistrySnapshot = new Snapshot<>(
-			ServletContextUtil.class, PanelCategoryRegistry.class);
 	private static final Snapshot<ProductNavigationControlMenuCategoryRegistry>
 		_productNavigationControlMenuCategoryRegistrySnapshot = new Snapshot<>(
 			ServletContextUtil.class,

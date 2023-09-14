@@ -6,7 +6,6 @@
 package com.liferay.commerce.theme.minium.internal.helper;
 
 import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.commerce.constants.CommercePortletKeys;
@@ -62,7 +61,7 @@ public class CommerceThemeMiniumHttpHelper {
 
 	public int getNotificationsCount(ThemeDisplay themeDisplay) {
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
+			_panelAppRegistry);
 
 		return panelCategoryHelper.getNotificationsCount(
 			PanelCategoryKeys.USER_MY_ACCOUNT,
@@ -168,9 +167,6 @@ public class CommerceThemeMiniumHttpHelper {
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;
-
-	@Reference
-	private PanelCategoryRegistry _panelCategoryRegistry;
 
 	@Reference
 	private Portal _portal;

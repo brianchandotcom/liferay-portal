@@ -8,8 +8,8 @@ package com.liferay.product.navigation.applications.menu.web.internal.util;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.application.list.util.PanelCategoryRegistryUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,19 +25,17 @@ import java.util.List;
 public class ApplicationsMenuUtil {
 
 	public static boolean hasChildPanelApps(
-		PanelAppRegistry panelAppRegistry,
-		PanelCategoryRegistry panelCategoryRegistry,
-		ThemeDisplay themeDisplay) {
+		PanelAppRegistry panelAppRegistry, ThemeDisplay themeDisplay) {
 
 		List<PanelCategory> applicationsMenuPanelCategories =
-			panelCategoryRegistry.getChildPanelCategories(
+			PanelCategoryRegistryUtil.getChildPanelCategories(
 				PanelCategoryKeys.APPLICATIONS_MENU,
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroup());
 
 		for (PanelCategory panelCategory : applicationsMenuPanelCategories) {
 			List<PanelCategory> childPanelCategories =
-				panelCategoryRegistry.getChildPanelCategories(
+				PanelCategoryRegistryUtil.getChildPanelCategories(
 					panelCategory.getKey(), themeDisplay.getPermissionChecker(),
 					themeDisplay.getScopeGroup());
 

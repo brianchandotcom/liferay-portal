@@ -14,9 +14,9 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ page import="com.liferay.application.list.PanelApp" %><%@
 page import="com.liferay.application.list.PanelAppRegistry" %><%@
 page import="com.liferay.application.list.PanelCategory" %><%@
-page import="com.liferay.application.list.PanelCategoryRegistry" %><%@
 page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
 page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
+page import="com.liferay.application.list.util.PanelCategoryRegistryUtil" %><%@
 page import="com.liferay.product.navigation.simulation.constants.ProductNavigationSimulationConstants" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 

@@ -6,7 +6,6 @@
 package com.liferay.roles.admin.web.internal.portlet;
 
 import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
@@ -620,14 +619,10 @@ public class RolesAdminPortlet extends MVCPortlet {
 			ApplicationListWebKeys.PANEL_APP_REGISTRY, _panelAppRegistry);
 
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
+			_panelAppRegistry);
 
 		portletRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY_HELPER, panelCategoryHelper);
-
-		portletRequest.setAttribute(
-			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY,
-			_panelCategoryRegistry);
 
 		PersonalMenuEntryHelper personalMenuEntryHelper =
 			new PersonalMenuEntryHelper(
@@ -743,7 +738,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 		throws Exception {
 
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
+			_panelAppRegistry);
 
 		String selResource = null;
 		String actionId = null;
@@ -809,9 +804,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;
-
-	@Reference
-	private PanelCategoryRegistry _panelCategoryRegistry;
 
 	@Reference
 	private PanelCategoryRoleTypeMapperRegistry

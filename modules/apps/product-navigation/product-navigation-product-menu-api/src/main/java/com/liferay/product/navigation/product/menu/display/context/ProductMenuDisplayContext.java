@@ -7,10 +7,10 @@ package com.liferay.product.navigation.product.menu.display.context;
 
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.application.list.util.PanelCategoryRegistryUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
@@ -47,9 +47,6 @@ public class ProductMenuDisplayContext {
 			ApplicationListWebKeys.PANEL_APP_REGISTRY);
 		_panelCategoryHelper = (PanelCategoryHelper)portletRequest.getAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
-		_panelCategoryRegistry =
-			(PanelCategoryRegistry)portletRequest.getAttribute(
-				ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 		_themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -59,16 +56,17 @@ public class ProductMenuDisplayContext {
 			return _childPanelCategories;
 		}
 
-		_childPanelCategories = _panelCategoryRegistry.getChildPanelCategories(
-			PanelCategoryKeys.ROOT, _themeDisplay.getPermissionChecker(),
-			_themeDisplay.getScopeGroup());
+		_childPanelCategories =
+			PanelCategoryRegistryUtil.getChildPanelCategories(
+				PanelCategoryKeys.ROOT, _themeDisplay.getPermissionChecker(),
+				_themeDisplay.getScopeGroup());
 
 		if (_isEnableApplicationsMenu()) {
 			return _childPanelCategories;
 		}
 
 		List<PanelCategory> applicationsMenuChildPanelCategories =
-			_panelCategoryRegistry.getChildPanelCategories(
+			PanelCategoryRegistryUtil.getChildPanelCategories(
 				PanelCategoryKeys.APPLICATIONS_MENU,
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroup());
@@ -103,11 +101,10 @@ public class ProductMenuDisplayContext {
 
 			if (Validator.isNotNull(_themeDisplay.getPpid())) {
 				PanelCategoryHelper panelCategoryHelper =
-					new PanelCategoryHelper(
-						_panelAppRegistry, _panelCategoryRegistry);
+					new PanelCategoryHelper(_panelAppRegistry);
 
 				for (PanelCategory panelCategory :
-						_panelCategoryRegistry.getChildPanelCategories(
+						PanelCategoryRegistryUtil.getChildPanelCategories(
 							PanelCategoryKeys.ROOT)) {
 
 					if (panelCategoryHelper.containsPortlet(
@@ -126,7 +123,7 @@ public class ProductMenuDisplayContext {
 				}
 
 				for (PanelCategory panelCategory :
-						_panelCategoryRegistry.getChildPanelCategories(
+						PanelCategoryRegistryUtil.getChildPanelCategories(
 							PanelCategoryKeys.APPLICATIONS_MENU)) {
 
 					if (panelCategoryHelper.containsPortlet(
@@ -258,7 +255,6 @@ public class ProductMenuDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final PanelAppRegistry _panelAppRegistry;
 	private final PanelCategoryHelper _panelCategoryHelper;
-	private final PanelCategoryRegistry _panelCategoryRegistry;
 	private String _rootPanelCategoryKey;
 	private final ThemeDisplay _themeDisplay;
 

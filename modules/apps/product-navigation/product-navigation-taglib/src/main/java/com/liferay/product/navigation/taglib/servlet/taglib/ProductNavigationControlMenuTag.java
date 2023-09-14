@@ -88,8 +88,7 @@ public class ProductNavigationControlMenuTag extends IncludeTag {
 		}
 
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			ServletContextUtil.getPanelAppRegistry(),
-			ServletContextUtil.getPanelCategoryRegistry());
+			ServletContextUtil.getPanelAppRegistry());
 
 		if (!panelCategoryHelper.isApplicationsMenuApp(
 				themeDisplay.getPpid())) {

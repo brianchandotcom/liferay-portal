@@ -8,9 +8,9 @@ package com.liferay.product.navigation.applications.menu.web.internal.portlet.ac
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.application.list.util.PanelCategoryRegistryUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -105,7 +105,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 			_jsonFactory.createJSONArray();
 
 		List<PanelCategory> childPanelCategories =
-			_panelCategoryRegistry.getChildPanelCategories(
+			PanelCategoryRegistryUtil.getChildPanelCategories(
 				key, themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroup());
 
@@ -192,7 +192,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 		JSONArray panelCategoriesJSONArray = _jsonFactory.createJSONArray();
 
 		List<PanelCategory> applicationsMenuPanelCategories =
-			_panelCategoryRegistry.getChildPanelCategories(
+			PanelCategoryRegistryUtil.getChildPanelCategories(
 				PanelCategoryKeys.APPLICATIONS_MENU,
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroup());
@@ -345,7 +345,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 			resourceRequest, "selectedPortletId");
 
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
+			_panelAppRegistry);
 
 		if (Validator.isNull(selectedPortletId) ||
 			!panelCategoryHelper.isApplicationsMenuApp(selectedPortletId)) {
@@ -370,9 +370,6 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;
-
-	@Reference
-	private PanelCategoryRegistry _panelCategoryRegistry;
 
 	@Reference
 	private Portal _portal;

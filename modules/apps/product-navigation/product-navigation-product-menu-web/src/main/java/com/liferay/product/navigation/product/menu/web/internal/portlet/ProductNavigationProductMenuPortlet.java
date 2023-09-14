@@ -7,7 +7,6 @@ package com.liferay.product.navigation.product.menu.web.internal.portlet;
 
 import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.layout.util.LayoutsTree;
@@ -80,10 +79,7 @@ public class ProductNavigationProductMenuPortlet extends MVCPortlet {
 			ApplicationListWebKeys.PANEL_APP_REGISTRY, _panelAppRegistry);
 		renderRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY_HELPER,
-			new PanelCategoryHelper(_panelAppRegistry, _panelCategoryRegistry));
-		renderRequest.setAttribute(
-			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY,
-			_panelCategoryRegistry);
+			new PanelCategoryHelper(_panelAppRegistry));
 		renderRequest.setAttribute(
 			LayoutsTreeDisplayContext.class.getName(),
 			new LayoutsTreeDisplayContext(
@@ -113,9 +109,6 @@ public class ProductNavigationProductMenuPortlet extends MVCPortlet {
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;
-
-	@Reference
-	private PanelCategoryRegistry _panelCategoryRegistry;
 
 	@Reference
 	private Portal _portal;

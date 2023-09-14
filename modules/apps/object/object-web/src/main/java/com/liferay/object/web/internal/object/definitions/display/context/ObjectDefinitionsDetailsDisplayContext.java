@@ -6,8 +6,8 @@
 package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.application.list.PanelCategory;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.application.list.util.PanelCategoryRegistryUtil;
 import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectWebKeys;
@@ -55,15 +55,13 @@ public class ObjectDefinitionsDetailsDisplayContext
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
-		ObjectScopeProviderRegistry objectScopeProviderRegistry,
-		PanelCategoryRegistry panelCategoryRegistry) {
+		ObjectScopeProviderRegistry objectScopeProviderRegistry) {
 
 		super(httpServletRequest, objectDefinitionModelResourcePermission);
 
 		_configurationProvider = configurationProvider;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
-		_panelCategoryRegistry = panelCategoryRegistry;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
@@ -166,10 +164,10 @@ public class ObjectDefinitionsDetailsDisplayContext
 			}
 
 			PanelCategory panelCategory =
-				_panelCategoryRegistry.getPanelCategory(panelCategoryKey);
+				PanelCategoryRegistryUtil.getPanelCategory(panelCategoryKey);
 
 			List<PanelCategory> childPanelCategories =
-				_panelCategoryRegistry.getChildPanelCategories(
+				PanelCategoryRegistryUtil.getChildPanelCategories(
 					panelCategoryKey);
 
 			JSONArray itemsJSONArray = JSONFactoryUtil.createJSONArray();
@@ -233,6 +231,5 @@ public class ObjectDefinitionsDetailsDisplayContext
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectRequestHelper _objectRequestHelper;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
-	private final PanelCategoryRegistry _panelCategoryRegistry;
 
 }

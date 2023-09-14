@@ -5,7 +5,6 @@
 
 package com.liferay.object.web.internal.object.definitions.frontend.taglib.servlet.taglib;
 
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
@@ -56,8 +55,7 @@ public class DetailsObjectDefinitionsScreenNavigationEntry
 			new ObjectDefinitionsDetailsDisplayContext(
 				_configurationProvider, httpServletRequest,
 				_objectDefinitionModelResourcePermission,
-				_objectEntryManagerRegistry, _objectScopeProviderRegistry,
-				_panelCategoryRegistry));
+				_objectEntryManagerRegistry, _objectScopeProviderRegistry));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
@@ -76,8 +74,5 @@ public class DetailsObjectDefinitionsScreenNavigationEntry
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
-
-	@Reference
-	private PanelCategoryRegistry _panelCategoryRegistry;
 
 }

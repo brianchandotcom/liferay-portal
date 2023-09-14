@@ -12,9 +12,8 @@ List<PanelCategory> childPanelCategories = (List<PanelCategory>)request.getAttri
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-application-list:panel:panelCategory");
 
 PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
-PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 
-PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategoryRegistry);
+PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry);
 %>
 
 <ul aria-orientation="vertical" class="m-1 p-0" id="<portlet:namespace /><%= panelCategory.getKey() %>_panel" role="menubar">

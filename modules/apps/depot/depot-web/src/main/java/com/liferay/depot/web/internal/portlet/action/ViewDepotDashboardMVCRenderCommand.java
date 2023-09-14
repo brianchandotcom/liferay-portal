@@ -6,7 +6,6 @@
 package com.liferay.depot.web.internal.portlet.action;
 
 import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
@@ -51,8 +50,8 @@ public class ViewDepotDashboardMVCRenderCommand implements MVCRenderCommand {
 				new DepotAdminViewDepotDashboardDisplayContext(
 					_getGroup(renderRequest),
 					_portal.getHttpServletRequest(renderRequest),
-					_panelAppRegistry, _panelCategoryRegistry,
-					_getPermissionChecker(renderRequest), _portal));
+					_panelAppRegistry, _getPermissionChecker(renderRequest),
+					_portal));
 
 			return "/view_depot_dashboard.jsp";
 		}
@@ -84,9 +83,6 @@ public class ViewDepotDashboardMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;
-
-	@Reference
-	private PanelCategoryRegistry _panelCategoryRegistry;
 
 	@Reference
 	private Portal _portal;

@@ -13,10 +13,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
+import com.liferay.application.list.util.PanelCategoryRegistryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -77,9 +77,6 @@ public class EditRolePermissionsNavigationDisplayContext {
 		_role = role;
 		_accountRoleGroupScope = accountRoleGroupScope;
 
-		_panelCategoryRegistry =
-			(PanelCategoryRegistry)httpServletRequest.getAttribute(
-				ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 		_panelAppRegistry = (PanelAppRegistry)httpServletRequest.getAttribute(
 			ApplicationListWebKeys.PANEL_APP_REGISTRY);
 		_personalMenuEntryHelper =
@@ -232,7 +229,7 @@ public class EditRolePermissionsNavigationDisplayContext {
 		List<NavigationItem> navigationItems = new ArrayList<>();
 
 		for (PanelCategory panelCategory :
-				_panelCategoryRegistry.getChildPanelCategories(
+				PanelCategoryRegistryUtil.getChildPanelCategories(
 					panelCategoryKey)) {
 
 			NavigationItem panelCategoryNavigationItem =
@@ -273,7 +270,7 @@ public class EditRolePermissionsNavigationDisplayContext {
 		List<NavigationItem> navigationItems = new ArrayList<>();
 
 		for (PanelCategory panelCategory :
-				_panelCategoryRegistry.getChildPanelCategories(
+				PanelCategoryRegistryUtil.getChildPanelCategories(
 					PanelCategoryKeys.SITE_ADMINISTRATION)) {
 
 			NavigationItem navigationItem =
@@ -380,7 +377,7 @@ public class EditRolePermissionsNavigationDisplayContext {
 
 				NavigationItem panelCategoryNavigationItem =
 					_getPanelCategoryNavigationItem(
-						_panelCategoryRegistry.getPanelCategory(
+						PanelCategoryRegistryUtil.getPanelCategory(
 							panelCategoryKey),
 						excludedPanelAppKeys);
 
@@ -412,10 +409,10 @@ public class EditRolePermissionsNavigationDisplayContext {
 			List<PanelCategory> panelCategories = new ArrayList<>();
 
 			panelCategories.addAll(
-				_panelCategoryRegistry.getChildPanelCategories(
+				PanelCategoryRegistryUtil.getChildPanelCategories(
 					PanelCategoryKeys.APPLICATIONS_MENU));
 			panelCategories.addAll(
-				_panelCategoryRegistry.getChildPanelCategories(
+				PanelCategoryRegistryUtil.getChildPanelCategories(
 					PanelCategoryKeys.ROOT));
 
 			for (PanelCategory panelCategory : panelCategories) {
@@ -505,7 +502,6 @@ public class EditRolePermissionsNavigationDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final Locale _locale;
 	private final PanelAppRegistry _panelAppRegistry;
-	private final PanelCategoryRegistry _panelCategoryRegistry;
 	private final PersonalMenuEntryHelper _personalMenuEntryHelper;
 	private String _portletResource;
 	private final RenderResponse _renderResponse;

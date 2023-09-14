@@ -18,11 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Represents the root panel category for all implemented categories in the
- * {@link PanelCategoryRegistry}.
+ * {@link PanelCategoryRegistryUtil}.
  *
  * @author Adolfo Pérez
  * @see    PanelCategory
- * @see    PanelCategoryRegistry
+ * @see    PanelCategoryRegistryUtil
  */
 public class RootPanelCategory implements PanelCategory {
 

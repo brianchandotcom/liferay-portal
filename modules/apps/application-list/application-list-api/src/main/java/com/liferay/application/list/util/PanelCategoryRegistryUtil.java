@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.application.list;
+package com.liferay.application.list.util;
 
+import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
@@ -22,10 +23,9 @@ import com.liferay.portal.kernel.util.ListUtil;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * Provides methods for retrieving application category instances defined by
@@ -35,16 +35,15 @@ import org.osgi.service.component.annotations.Deactivate;
  *
  * @author Adolfo Pérez
  */
-@Component(service = PanelCategoryRegistry.class)
-public class PanelCategoryRegistry {
+public class PanelCategoryRegistryUtil {
 
-	public List<PanelCategory> getChildPanelCategories(
+	public static List<PanelCategory> getChildPanelCategories(
 		PanelCategory panelCategory) {
 
 		return getChildPanelCategories(panelCategory.getKey());
 	}
 
-	public List<PanelCategory> getChildPanelCategories(
+	public static List<PanelCategory> getChildPanelCategories(
 		PanelCategory panelCategory, PermissionChecker permissionChecker,
 		Group group) {
 
@@ -52,7 +51,7 @@ public class PanelCategoryRegistry {
 			panelCategory.getKey(), permissionChecker, group);
 	}
 
-	public List<PanelCategory> getChildPanelCategories(
+	public static List<PanelCategory> getChildPanelCategories(
 		String panelCategoryKey) {
 
 		List<PanelCategory> childPanelCategories =
@@ -65,7 +64,7 @@ public class PanelCategoryRegistry {
 		return childPanelCategories;
 	}
 
-	public List<PanelCategory> getChildPanelCategories(
+	public static List<PanelCategory> getChildPanelCategories(
 		String panelCategoryKey, PermissionChecker permissionChecker,
 		Group group) {
 
@@ -90,7 +89,7 @@ public class PanelCategoryRegistry {
 			});
 	}
 
-	public int getChildPanelCategoriesNotificationsCount(
+	public static int getChildPanelCategoriesNotificationsCount(
 		PanelCategoryHelper panelCategoryHelper, String panelCategoryKey,
 		PermissionChecker permissionChecker, Group group, User user) {
 
@@ -117,7 +116,7 @@ public class PanelCategoryRegistry {
 		return count;
 	}
 
-	public PanelCategory getFirstChildPanelCategory(
+	public static PanelCategory getFirstChildPanelCategory(
 		String panelCategoryKey, PermissionChecker permissionChecker,
 		Group group) {
 
@@ -138,7 +137,7 @@ public class PanelCategoryRegistry {
 		return null;
 	}
 
-	public PanelCategory getPanelCategory(String panelCategoryKey) {
+	public static PanelCategory getPanelCategory(String panelCategoryKey) {
 		PanelCategory panelCategory =
 			_panelCategoryServiceTrackerMap.getService(panelCategoryKey);
 
@@ -150,8 +149,20 @@ public class PanelCategoryRegistry {
 		return panelCategory;
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
+	private static final Log _log = LogFactoryUtil.getLog(
+		PanelCategoryRegistryUtil.class);
+
+	private static final ServiceTrackerMap<String, List<PanelCategory>>
+		_childPanelCategoriesServiceTrackerMap;
+	private static final ServiceTrackerMap<String, PanelCategory>
+		_panelCategoryServiceTrackerMap;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			PanelCategoryRegistryUtil.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
 		_childPanelCategoriesServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, PanelCategory.class, null,
@@ -166,19 +177,5 @@ public class PanelCategoryRegistry {
 				ServiceReferenceMapperFactory.createFromFunction(
 					bundleContext, PanelCategory::getKey));
 	}
-
-	@Deactivate
-	protected void deactivate() {
-		_childPanelCategoriesServiceTrackerMap.close();
-		_panelCategoryServiceTrackerMap.close();
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PanelCategoryRegistry.class);
-
-	private ServiceTrackerMap<String, List<PanelCategory>>
-		_childPanelCategoriesServiceTrackerMap;
-	private ServiceTrackerMap<String, PanelCategory>
-		_panelCategoryServiceTrackerMap;
 
 }

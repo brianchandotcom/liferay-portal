@@ -8,8 +8,8 @@ package com.liferay.depot.web.internal.display.context;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.application.list.util.PanelCategoryRegistryUtil;
 import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
@@ -47,14 +47,12 @@ public class DepotAdminViewDepotDashboardDisplayContext {
 
 	public DepotAdminViewDepotDashboardDisplayContext(
 		Group group, HttpServletRequest httpServletRequest,
-		PanelAppRegistry panelAppRegistry,
-		PanelCategoryRegistry panelCategoryRegistry,
-		PermissionChecker permissionChecker, Portal portal) {
+		PanelAppRegistry panelAppRegistry, PermissionChecker permissionChecker,
+		Portal portal) {
 
 		_group = group;
 		_httpServletRequest = httpServletRequest;
 		_panelAppRegistry = panelAppRegistry;
-		_panelCategoryRegistry = panelCategoryRegistry;
 		_permissionChecker = permissionChecker;
 		_portal = portal;
 	}
@@ -79,7 +77,7 @@ public class DepotAdminViewDepotDashboardDisplayContext {
 
 		for (String panelCategoryKey : _PANEL_CATEGORY_KEYS) {
 			PanelCategory panelCategory =
-				_panelCategoryRegistry.getPanelCategory(panelCategoryKey);
+				PanelCategoryRegistryUtil.getPanelCategory(panelCategoryKey);
 
 			if ((panelCategory != null) &&
 				panelCategory.isShow(_permissionChecker, _group)) {
@@ -153,7 +151,6 @@ public class DepotAdminViewDepotDashboardDisplayContext {
 	private final Group _group;
 	private final HttpServletRequest _httpServletRequest;
 	private final PanelAppRegistry _panelAppRegistry;
-	private final PanelCategoryRegistry _panelCategoryRegistry;
 	private final PermissionChecker _permissionChecker;
 	private final Portal _portal;
 

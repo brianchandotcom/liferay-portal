@@ -6,7 +6,6 @@
 package com.liferay.marketplace.app.manager.web.internal.portlet;
 
 import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.marketplace.app.manager.web.internal.constants.MarketplaceAppManagerPortletKeys;
@@ -383,14 +382,10 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 			ApplicationListWebKeys.PANEL_APP_REGISTRY, _panelAppRegistry);
 
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
+			_panelAppRegistry);
 
 		renderRequest.setAttribute(
 			ApplicationListWebKeys.PANEL_CATEGORY_HELPER, panelCategoryHelper);
-
-		renderRequest.setAttribute(
-			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY,
-			_panelCategoryRegistry);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}
@@ -512,9 +507,6 @@ public class MarketplaceAppManagerPortlet extends MVCPortlet {
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;
-
-	@Reference
-	private PanelCategoryRegistry _panelCategoryRegistry;
 
 	@Reference
 	private PluginSettingLocalService _pluginSettingLocalService;

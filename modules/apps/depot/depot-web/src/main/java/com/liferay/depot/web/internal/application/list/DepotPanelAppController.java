@@ -7,7 +7,6 @@ package com.liferay.depot.web.internal.application.list;
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.depot.web.internal.application.controller.DepotApplicationController;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
@@ -42,8 +41,7 @@ public class DepotPanelAppController {
 
 	@Activate
 	protected void activate() {
-		_panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
+		_panelCategoryHelper = new PanelCategoryHelper(_panelAppRegistry);
 	}
 
 	private boolean _isAlwaysShow(String portletId) {
@@ -65,8 +63,5 @@ public class DepotPanelAppController {
 	private PanelAppRegistry _panelAppRegistry;
 
 	private PanelCategoryHelper _panelCategoryHelper;
-
-	@Reference
-	private PanelCategoryRegistry _panelCategoryRegistry;
 
 }

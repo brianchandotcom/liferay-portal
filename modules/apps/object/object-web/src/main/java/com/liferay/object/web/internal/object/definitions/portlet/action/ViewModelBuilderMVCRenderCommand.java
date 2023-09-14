@@ -5,7 +5,6 @@
 
 package com.liferay.object.web.internal.object.definitions.portlet.action;
 
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.constants.ObjectWebKeys;
@@ -55,8 +54,7 @@ public class ViewModelBuilderMVCRenderCommand implements MVCRenderCommand {
 				_configurationProvider,
 				_portal.getHttpServletRequest(renderRequest),
 				_objectDefinitionModelResourcePermission,
-				_objectEntryManagerRegistry, _objectScopeProviderRegistry,
-				_panelCategoryRegistry));
+				_objectEntryManagerRegistry, _objectScopeProviderRegistry));
 		renderRequest.setAttribute(
 			ObjectWebKeys.OBJECT_DEFINITIONS_FIELD_DISPLAY_CONTEXT,
 			new ObjectDefinitionsFieldsDisplayContext(
@@ -105,9 +103,6 @@ public class ViewModelBuilderMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
-
-	@Reference
-	private PanelCategoryRegistry _panelCategoryRegistry;
 
 	@Reference
 	private Portal _portal;

@@ -6,7 +6,6 @@
 package com.liferay.commerce.taglib.servlet.taglib.internal.servlet;
 
 import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
@@ -64,10 +63,6 @@ public class ServletContextUtil {
 		return _panelAppRegistrySnapshot.get();
 	}
 
-	public static PanelCategoryRegistry getPanelCategoryRegistry() {
-		return _panelCategoryRegistrySnapshot.get();
-	}
-
 	public static ServletContext getServletContext() {
 		return _servletContextSnapshot.get();
 	}
@@ -97,9 +92,6 @@ public class ServletContextUtil {
 			ServletContextUtil.class, ConfigurationProvider.class);
 	private static final Snapshot<PanelAppRegistry> _panelAppRegistrySnapshot =
 		new Snapshot<>(ServletContextUtil.class, PanelAppRegistry.class);
-	private static final Snapshot<PanelCategoryRegistry>
-		_panelCategoryRegistrySnapshot = new Snapshot<>(
-			ServletContextUtil.class, PanelCategoryRegistry.class);
 	private static final Snapshot<ServletContext> _servletContextSnapshot =
 		new Snapshot<>(
 			ServletContextUtil.class, ServletContext.class,

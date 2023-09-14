@@ -6,7 +6,6 @@
 package com.liferay.application.list.display.context.logic.test;
 
 import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.display.context.logic.test.constants.ApplicationsMenuTestPortletKeys;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
@@ -34,7 +33,7 @@ public class PanelCategoryHelperTest {
 	@Test
 	public void testIsApplicationsMenuApp() {
 		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
+			_panelAppRegistry);
 
 		Assert.assertTrue(
 			panelCategoryHelper.isApplicationsMenuApp(
@@ -44,8 +43,5 @@ public class PanelCategoryHelperTest {
 
 	@Inject
 	private PanelAppRegistry _panelAppRegistry;
-
-	@Inject
-	private PanelCategoryRegistry _panelCategoryRegistry;
 
 }

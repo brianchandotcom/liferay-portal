@@ -268,6 +268,44 @@
 		</fail>
 	</target>
 
+	<target name="check-upgrade-client-gogoshell-failed-connection-error">
+		<get-database-upgrade-client-paths />
+
+		<if>
+			<not>
+				<available file="${selenium.output.dir.name}" type="dir" />
+			</not>
+			<then>
+				<mkdir dir="${selenium.output.dir.name}" />
+			</then>
+		</if>
+
+		<execute dir="${db.upgrade.client.home}">
+			db_upgrade_client${file.suffix.bat} run > ${selenium.output.dir.name}/gogoshell.failed.connection.output
+		</execute>
+
+		<loadfile
+			property="upgrade.gogoshell.failed.connection.output"
+			srcFile="${selenium.output.dir.name}/gogoshell.failed.connection.output"
+		/>
+
+		<echo>${upgrade.gogoshell.failed.connection.output}</echo>
+
+		<if>
+			<not>
+				<and>
+					<contains string="${upgrade.gogoshell.failed.connection.output}" substring="Connecting to Gogo shell because the upgrade failed or is incomplete" />
+					<contains string="${upgrade.gogoshell.failed.connection.output}" substring="java.net.ConnectException: Connection refused" />
+				</and>
+			</not>
+			<then>
+				<fail message="The upgrade client failed to print out the exception." />
+			</then>
+		</if>
+
+		<echo>The upgrade client printed out the exception successfully.</echo>
+	</target>
+
 	<target name="check-upgrade-client-gogoshell-failed-upgrade">
 		<get-database-upgrade-client-paths />
 

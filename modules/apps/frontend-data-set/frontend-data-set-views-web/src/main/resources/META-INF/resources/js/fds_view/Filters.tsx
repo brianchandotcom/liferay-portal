@@ -220,7 +220,7 @@ function AddFDSFilterModalContent({
 
 		openDefaultSuccessToast();
 
-		onSave({...responseJSON, displayType});
+		onSave({...responseJSON, displayType, filterType});
 
 		closeModal();
 	};
@@ -428,8 +428,11 @@ function AddFDSFilterModalContent({
 						<ClayButton
 							disabled={
 								!selectedField ||
+								(filterType === EFilterType.CLIENT_EXTENSION &&
+									!selectedClientExtension) ||
 								(!multiple && preselectedValues.length > 1) ||
-								!isValidDateRange ||
+								(filterType === EFilterType.DATE_RANGE &&
+									!isValidDateRange) ||
 								saveButtonDisabled
 							}
 							onClick={handleFilterSave}
@@ -677,8 +680,11 @@ function Filters({
 						processClose();
 
 						const url = `${
-							item.type === 'date-time'
+							item.filterType === EFilterType.DATE_RANGE
 								? API_URL.FDS_DATE_FILTERS
+								: item.filterType ===
+								  EFilterType.CLIENT_EXTENSION
+								? API_URL.FDS_CLIENT_EXTENSION_FILTERS
 								: API_URL.FDS_DYNAMIC_FILTERS
 						}/${item.id}`;
 

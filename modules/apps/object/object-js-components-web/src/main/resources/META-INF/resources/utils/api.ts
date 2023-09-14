@@ -413,10 +413,10 @@ export async function putObjectRelationship({
 }
 
 export async function save({
-   item,
-   method = 'PUT',
-   returnValue = false,
-   url,
+	item,
+	method = 'PUT',
+	returnValue = false,
+	url,
 }: saveProps) {
 	const isFormData = item instanceof FormData;
 

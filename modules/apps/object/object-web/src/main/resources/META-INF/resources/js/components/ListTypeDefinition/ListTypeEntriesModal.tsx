@@ -136,7 +136,9 @@ function ListTypeEntriesModal() {
 		setAPIError('');
 	}, [APIError]);
 
-	const validate = (entry: Partial<ListTypeEntry>): ObjectValidationErrors => {
+	const validate = (
+		entry: Partial<ListTypeEntry>
+	): ObjectValidationErrors => {
 		const errors: ObjectValidationErrors = {};
 		const externalReferenceCode = entry.externalReferenceCode;
 		const key = entry.key;

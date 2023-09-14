@@ -13,7 +13,7 @@ import {
 	formatDateObject,
 	formatDateRangeObject,
 	getDateFromDateString,
-} from '../../../utils/dates';
+} from '../../../../utils/dates';
 
 const getIsoString = ({direction, entityFieldType, objectDate}) => {
 	const timestamp = Date.UTC(
@@ -66,7 +66,6 @@ const getOdataString = ({entityFieldType, id, selectedData}) => {
 };
 
 const DateRangeFilter = ({
-	entityFieldType,
 	id,
 	max,
 	min,
@@ -156,7 +155,7 @@ const DateRangeFilter = ({
 					disabled={submitDisabled}
 					onClick={() => {
 						if (actionType === 'delete') {
-							setFilter({active: false, id});
+							setFilter({active: false});
 						}
 						else {
 							const newSelectedData = {
@@ -170,16 +169,7 @@ const DateRangeFilter = ({
 
 							setFilter({
 								active: true,
-								id,
-								odataFilterString: getOdataString({
-									entityFieldType,
-									id,
-									selectedData: newSelectedData,
-								}),
 								selectedData: newSelectedData,
-								selectedItemsLabel: getSelectedItemsLabel({
-									selectedData: newSelectedData,
-								}),
 							});
 						}
 					}}
@@ -215,5 +205,8 @@ DateRangeFilter.propTypes = {
 	}),
 };
 
-export {getSelectedItemsLabel, getOdataString};
-export default DateRangeFilter;
+export default {
+	Component: DateRangeFilter,
+	getOdataString,
+	getSelectedItemsLabel,
+};

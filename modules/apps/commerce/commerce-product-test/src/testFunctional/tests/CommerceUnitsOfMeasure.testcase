@@ -1,0 +1,611 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11287=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Product Info Management";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp();
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-12335. As admin, I can create the first UOM for an SKU verifying the info message, obligatory fields and tooltip messages on the modal."
+	@priority = 5
+	test CanAddTheFirstUOMAndVerifyInfoOnModal {
+		property portal.acceptance = "true";
+
+		task ("Given a new simple product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				price = 25,
+				productName = "Simple Product",
+				productType = "simple",
+				sku = "TESTSKU");
+		}
+
+		task ("And admin reaches the new product's SKUs tab") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+		}
+
+		task ("And goes to the Units of Measure (UOM) tab") {
+			CommerceNavigator.gotoEntry(entryName = "TESTSKU");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Units of Measure (UOM)");
+		}
+
+		task ("When clicks the plus button to add the first Unit of Measure") {
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then can verify that the info message for the first UOM and it cannot be added without entering name and key") {
+			AssertElementPresent(
+				key_infoMessage = "By creating the first Unit of Measure for this SKU, all existing SKU Stock and Pricing (if any) will be mapped to the first Unit of Measure created. If you wish to continue selling this SKU by the unit, it is recommended to create this Unit of Measure first. Otherwise you can continue and any existing stock and pricing will be mapped to this Unit of Measure.",
+				locator1 = "Message#INFO_SPECIFIC");
+
+			Button.clickAdd();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			AssertTextEquals.assertText(
+				key_alertMessage = "The Unit of Measure field is required.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "The Unit of Measure field is required.");
+
+			AssertTextEquals.assertText(
+				key_alertMessage = "The Key field is required.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "The Key field is required.");
+
+			Type(
+				key_fieldLabel = "Unit of Measure",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Bottle");
+
+			Type(
+				locator1 = "CommerceEntry#KEY_FIELD",
+				value1 = "bt");
+		}
+
+		task ("And can verify default values for other fields") {
+			AssertElementPresent(
+				key_fieldLabel = "Decimal Allowed",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = 0);
+
+			AssertElementPresent(
+				key_fieldLabel = "Base Unit Quantity",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = 1);
+
+			MouseOver(
+				key_label = "Base Unit Quantity",
+				locator1 = "CommerceEntry#LABEL_TOOLTIP_ICON");
+
+			VerifyElementPresent(
+				key_label = "Base Unit Quantity",
+				key_text = "Buyers can only purchase in increments of the base unit quantity.",
+				locator1 = "CommerceEntry#LABEL_TOOLTIP_TEXT_WITH_TITLE");
+
+			AssertElementPresent(
+				key_text = "Base Price",
+				locator1 = "TextInput#ANY",
+				value1 = "25.00");
+
+			Type(
+				key_text = "Base Price",
+				locator1 = "TextInput#ANY",
+				value1 = 3);
+
+			AssertElementPresent(
+				key_text = "Promotion Price",
+				locator1 = "TextInput#ANY",
+				value1 = "0.00");
+
+			Type(
+				key_text = "Promotion Price",
+				locator1 = "TextInput#ANY",
+				value1 = 2);
+		}
+
+		task ("And can verify the tooltip message on the Priority field is present and the Purchasable checkbox is checked by default") {
+			MouseOver(
+				key_label = "Priority",
+				locator1 = "CommerceEntry#LABEL_TOOLTIP_ICON");
+
+			VerifyElementPresent(
+				key_label = "Priority",
+				key_text = "This determines which UOM gets set as the default in the shopping experience. The closer to zero, the higher the priority in choosing the default.",
+				locator1 = "CommerceEntry#LABEL_TOOLTIP_TEXT_WITH_TITLE");
+
+			Type(
+				key_fieldLabel = "Priority",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = 1);
+
+			AssertChecked(
+				key_toggleSwitchLabel = "Purchasable",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickAdd();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		}
+
+		task ("And can verify the first UOM is populated on the table") {
+			CommerceEntry.viewUOMEntry(uomRowList = "UOM:Bottle,Key:bt,Decimal Allowed:0,Base Unit Quantity:1,Conversion Rate:1,Purchasable:Yes,Primary:Yes");
+		}
+	}
+
+	@description = "COMMERCE-12336. As admin, I can create the second UOM for an SKU verifying various fields on the modal."
+	@priority = 5
+	test CanAddTheSecondUOMAndVerifyInfoOnModal {
+		property portal.acceptance = "true";
+
+		task ("Given a new simple product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				price = 25,
+				productName = "Simple Product",
+				productType = "simple",
+				sku = "TESTSKU");
+		}
+
+		task ("And admin reaches the new product's SKUs tab") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+		}
+
+		task ("And creates the first Unit of Measure") {
+			CommerceNavigator.gotoEntry(entryName = "TESTSKU");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Units of Measure (UOM)");
+
+			// Check if it's possible to use API for the creation of the UOM
+
+			CommerceEntry.addUOMEntry(
+				basePrice = "1.75",
+				baseUnitQuantity = "0.75",
+				decimalAllowed = 2,
+				priority = 1,
+				unitOfMeasureKey = "lt",
+				unitOfMeasureName = "Liter");
+		}
+
+		task ("When clicks the plus button to add the second Unit of Measure") {
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then can verify 'Set as Primary UOM' toggle is disabled by default and the Primay UOM info is shown on the modal") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Set as Primary UOM",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			AssertElementPresent(
+				key_unitOfMeasureName = "Liter",
+				locator1 = "CommerceEntry#PRIMARY_UNIT_OF_MEASURE_LABEL_ON_MODAL");
+		}
+
+		task ("When enters a name and the same key of the previous UOM for the second Unit of Measure") {
+			Type(
+				key_fieldLabel = "Unit of Measure",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Bottle");
+
+			Type(
+				locator1 = "CommerceEntry#KEY_FIELD",
+				value1 = "lt");
+
+			Button.clickAdd();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then can verify the error alert on the modal") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "There is another unit of measure with the same key.");
+		}
+
+		task ("When enters the Conversion Rate as 0 for the second Unit of Measure") {
+			ScrollWebElementIntoView(
+				key_fieldLabel = "Conversion Rate",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT");
+
+			Type(
+				key_fieldLabel = "Conversion Rate",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = 0);
+
+			KeyPress(
+				key_fieldLabel = "Conversion Rate",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "\ENTER");
+		}
+
+		task ("Then can verify the error alert to enter a valid conversion rate") {
+			AssertTextEquals.assertText(
+				key_alertMessage = "Please enter a value greater than 0.",
+				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
+				value1 = "Please enter a value greater than 0.");
+		}
+
+		task ("When creates the second Unit of Measure") {
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.addUOMEntry(
+				basePrice = "3.50",
+				baseUnitQuantity = "1.50",
+				conversionRate = 2,
+				decimalAllowed = 2,
+				priority = 2,
+				unitOfMeasureKey = "bt",
+				unitOfMeasureName = "Bottle");
+		}
+
+		task ("Then can view the second UOM entry is populated on the table") {
+			CommerceEntry.viewUOMEntry(uomRowList = "UOM:Bottle,Key:bt,Decimal Allowed:2,Base Unit Quantity:1.5,Conversion Rate:2,Purchasable:Yes,Primary:No");
+		}
+	}
+
+	@description = "COMMERCE-12337. As admin, I can edit and delete the Units of Measure entries."
+	@priority = 5
+	test CanEditAndDeleteUOM {
+		property portal.acceptance = "true";
+
+		task ("Given a new simple product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				price = 25,
+				productName = "Simple Product",
+				productType = "simple",
+				sku = "TESTSKU");
+		}
+
+		task ("And admin reaches the new product's SKUs tab") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+		}
+
+		task ("And creates two Units of Measure") {
+			CommerceNavigator.gotoEntry(entryName = "TESTSKU");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Units of Measure (UOM)");
+
+			// Check if it's possible to use API for the creation of the UOM
+
+			CommerceEntry.addUOMEntry(
+				basePrice = "1.75",
+				baseUnitQuantity = "0.75",
+				decimalAllowed = 2,
+				priority = 1,
+				unitOfMeasureKey = "lt",
+				unitOfMeasureName = "Liter");
+
+			CommerceEntry.addUOMEntry(
+				basePrice = "3.50",
+				baseUnitQuantity = "1.50",
+				conversionRate = 2,
+				decimalAllowed = 2,
+				priority = 2,
+				unitOfMeasureKey = "bt",
+				unitOfMeasureName = "Bottle");
+		}
+
+		task ("When edits the Decimal Allowed and Base Unit Quantity fields of the first UOM entry") {
+			Click(
+				key_value = "Liter",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			ClickNoError(
+				key_selectAction = "Edit",
+				locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Type(
+				key_fieldLabel = "Decimal Allowed",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = 0);
+
+			Type(
+				key_fieldLabel = "Base Unit Quantity",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "1.70");
+
+			Button.clickSave();
+		}
+
+		task ("Then an error alert is shown to enter the valid value for Decimal Allowed field") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "Error:Decimals Allowed cannot be less than the number of decimals in the Base Unit Quantity.");
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		}
+
+		task ("When edits the second UOM entry and sets it as the Primary UOM") {
+			CommerceEntry.editUOMEntry(
+				baseUnitQuantity = 1,
+				conversionRate = 12,
+				decimalAllowed = 0,
+				entryName = "Bottle",
+				purchasable = "false",
+				setAsPrimaryUOM = "true",
+				unitOfMeasureKey = "cr",
+				unitOfMeasureNewName = "Crate");
+		}
+
+		task ("Then can verify the fields are updated on the table") {
+			CommerceEntry.viewUOMEntry(uomRowList = "UOM:Crate,Key:cr,Decimal Allowed:0,Base Unit Quantity:1,Conversion Rate:12,Purchasable:No,Primary:Yes");
+		}
+
+		task ("And can also delete one of the Units of Measure entries") {
+			Click(
+				key_value = "Liter",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			ClickNoError(
+				key_selectAction = "Delete",
+				locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+
+			Alert.viewSuccessMessage();
+
+			AssertElementNotPresent(
+				key_firstRowValue = "UOM",
+				key_secondRowValue = "Liter",
+				locator1 = "CommerceEntry#GENERIC_TABLE_ROW_VALUE");
+		}
+	}
+
+	@description = "COMMERCE-12339. As admin, I can verify how the language settings work for the Units of Measure entries."
+	@priority = 4
+	test CanVerifyHowLanguageSettingsWorkForUOM {
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And admin creates the first UOM") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Premium Brake Fluid");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93017");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Units of Measure (UOM)");
+
+			// Check if it's possible to use API for the creation of the UOM
+
+			CommerceEntry.addUOMEntry(
+				basePrice = 75,
+				baseUnitQuantity = 2,
+				decimalAllowed = 0,
+				priority = 1,
+				promoPrice = 70,
+				unitOfMeasureKey = "cr",
+				unitOfMeasureName = "Crate");
+		}
+
+		task ("When admin translates in Spanish the name of the UOM") {
+			CommerceEntry.editUOMEntry(
+				changeLocale = "true",
+				entryName = "Crate",
+				locale = "es-ES",
+				localizedName = "Caja");
+		}
+
+		task ("And changes the Catalog Language into Spanish") {
+			CommerceCatalog.openCatalogsAdmin();
+
+			CommerceCatalog.editCatalogEntry(
+				catalogLanguage = "Spanish (Spain)",
+				catalogName = "Minium");
+		}
+
+		task ("Then can verify the UOM name is shown in Spanish when it's opened and es-ES is shown as the displayed language") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Premium Brake Fluid");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93017");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Units of Measure (UOM)");
+
+			Click(
+				key_value = "Crate",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			ClickNoError(
+				key_selectAction = "Edit",
+				locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertTextEquals(
+				key_fieldLabel = "Unit of Measure",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Caja");
+
+			AssertTextEquals(
+				locator1 = "Button#LOCALIZATION_GENERIC",
+				value1 = "es-ES");
+		}
+	}
+
+	@description = "COMMERCE-12338. As admin, I can verify how the product pricing is affected by the Units of Measure entries."
+	@priority = 5
+	test CanVerifyHowProductPricingIsAffectedByUOM {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And admin reaches the Premium Brake Fluid's SKU tab") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Premium Brake Fluid");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+		}
+
+		task ("When clicks the plus button to create the first Unit of Measure") {
+			CommerceNavigator.gotoEntry(entryName = "MIN93017");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Units of Measure (UOM)");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then can verify the Minium Base and Promo Price Lists prices are shown as default for the first Unit of Measure") {
+			ScrollWebElementIntoView(
+				key_text = "Base Price",
+				locator1 = "TextInput#ANY");
+
+			AssertElementPresent(
+				key_text = "Base Price",
+				locator1 = "TextInput#ANY",
+				value1 = "100.00");
+
+			AssertElementPresent(
+				key_text = "Promotion Price",
+				locator1 = "TextInput#ANY",
+				value1 = "90.00");
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		}
+
+		task ("When creates the first Unit of Measure and updates the base and promo prices") {
+
+			// Check if it's possible to use API for the creation of the UOM
+
+			CommerceEntry.addUOMEntry(
+				basePrice = 75,
+				baseUnitQuantity = 2,
+				decimalAllowed = 0,
+				priority = 1,
+				promoPrice = 70,
+				unitOfMeasureKey = "cr",
+				unitOfMeasureName = "Crate");
+		}
+
+		task ("Then can verify the base and the promo price lists prices in details tab is updated according to the first UOM pricing") {
+			CommerceEntry.gotoMenuTab(menuTab = "Details");
+
+			AssertElementPresent(
+				key_text = "Base Price",
+				locator1 = "TextInput#ANY",
+				value1 = 75);
+
+			AssertElementPresent(
+				key_text = "Promotion Price",
+				locator1 = "TextInput#ANY",
+				value1 = 70);
+		}
+
+		task ("And can verify the Minium Base Price and the Minium Promotion prices in Pricing tab are also updated according to the first UOM") {
+			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+
+			AssertElementPresent(
+				key_entryTitle = "Minium Base Price List",
+				key_index = 2,
+				key_value = "$ 75.00",
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+
+			AssertElementPresent(
+				key_entryTitle = "Minium Base Promotion",
+				key_index = 2,
+				key_value = "$ 70.00",
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
+
+		task ("And can verify the Minium Base Price and the Minium Promotion prices in Price Lists are also updated according to the first UOM") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93017");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertElementPresent(
+				key_text = "Base Price",
+				locator1 = "TextInput#ANY",
+				value1 = 75);
+
+			CommercePromotions.openPromotionsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Promotion");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93017");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertElementPresent(
+				key_text = "Promotion Price",
+				locator1 = "TextInput#ANY",
+				value1 = 70);
+		}
+	}
+
+}

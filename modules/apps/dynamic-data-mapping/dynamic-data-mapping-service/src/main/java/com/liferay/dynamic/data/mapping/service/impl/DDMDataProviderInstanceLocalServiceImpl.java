@@ -11,7 +11,6 @@ import com.liferay.dynamic.data.mapping.exception.DataProviderInstanceURLExcepti
 import com.liferay.dynamic.data.mapping.exception.DuplicateDataProviderInstanceInputParameterNameException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchDataProviderInstanceException;
 import com.liferay.dynamic.data.mapping.exception.RequiredDataProviderInstanceException;
-import com.liferay.dynamic.data.mapping.internal.data.provider.configuration.activator.DDMDataProviderConfigurationActivator;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeRequest;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesSerializerSerializeResponse;
@@ -23,6 +22,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -52,15 +52,16 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Leonardo Barros
  */
 @Component(
+	configurationPid = "com.liferay.dynamic.data.mapping.data.provider.configuration.DDMDataProviderConfiguration",
 	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance",
 	service = AopService.class
 )
@@ -312,6 +313,13 @@ public class DDMDataProviderInstanceLocalServiceImpl
 		return ddmDataProviderInstancePersistence.update(dataProviderInstance);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ddmDataProviderConfiguration = ConfigurableUtil.createConfigurable(
+			DDMDataProviderConfiguration.class, properties);
+	}
+
 	private void _addDataProviderInstanceResources(
 			DDMDataProviderInstance dataProviderInstance,
 			boolean addGroupPermissions, boolean addGuestPermissions)
@@ -378,11 +386,7 @@ public class DDMDataProviderInstanceLocalServiceImpl
 				"Name is null for locale " + locale.getDisplayName());
 		}
 
-		DDMDataProviderConfiguration ddmDataProviderConfiguration =
-			_ddmDataProviderConfigurationActivator.
-				getDDMDataProviderConfiguration();
-
-		if (!ddmDataProviderConfiguration.accessLocalNetwork()) {
+		if (!_ddmDataProviderConfiguration.accessLocalNetwork()) {
 			_validateLocalNetworkURL(ddmFormValues);
 		}
 
@@ -465,12 +469,7 @@ public class DDMDataProviderInstanceLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMDataProviderInstanceLocalServiceImpl.class);
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile DDMDataProviderConfigurationActivator
-		_ddmDataProviderConfigurationActivator;
+	private volatile DDMDataProviderConfiguration _ddmDataProviderConfiguration;
 
 	@Reference
 	private DDMDataProviderInstanceLinkPersistence

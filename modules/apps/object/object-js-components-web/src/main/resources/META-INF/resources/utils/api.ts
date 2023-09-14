@@ -173,18 +173,6 @@ export function deleteObjectRelationship(objectRelationshipId: number) {
 	return deleteItem(`/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`);
 }
 
-export async function deletePickList(pickListId: number) {
-	return await deleteItem(
-		`/o/headless-admin-list-type/v1.0/list-type-definitions/${pickListId}`
-	);
-}
-
-export async function deletePickListItem(id: number) {
-	return await deleteItem(
-		`/o/headless-admin-list-type/v1.0/list-type-entries/${id}`
-	);
-}
-
 export async function fetchJSON<T>(input: RequestInfo, init?: RequestInit) {
 	const result = await fetch(input, {headers, method: 'GET', ...init});
 

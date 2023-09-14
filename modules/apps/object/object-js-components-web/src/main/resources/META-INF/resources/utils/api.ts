@@ -38,8 +38,8 @@ interface ListTypeDefinition {
 interface ListTypeEntry {
 	externalReferenceCode: string;
 	id: number;
-	listTypeDefinitionId: number;
 	key: string;
+	listTypeDefinitionId: number;
 	name: string;
 	name_i18n: LocalizedValue<string>;
 }

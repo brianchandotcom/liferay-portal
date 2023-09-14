@@ -24,6 +24,9 @@ import './ObjectDetails.scss';
 import {AccountRestrictionContainer} from './AccountRestrictionContainer';
 import {ExternalDataSourceContainer} from './ExternalDataSourceContainer';
 import {TranslationsContainer} from './TranslationsContainer';
+import {
+	postObjectDefinitionPublish
+} from "@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api";
 
 export type KeyValuePair = {
 	key: string;
@@ -145,7 +148,7 @@ export default function EditObjectDetails({
 			}
 
 			if (!draft) {
-				const publishResponse = await API.publishObjectDefinitionById(
+				const publishResponse = await API.postObjectDefinitionPublish(
 					values.id as number
 				);
 

@@ -47,7 +47,7 @@ export function RightSidebarObjectRelationshipDetails({
 	useEffect(() => {
 		const makeFetch = async () => {
 			if (selectedObjectRelationshipEdge) {
-				const selectedObjectRelationshipResponse = (await API.getRelationship(
+				const selectedObjectRelationshipResponse = (await API.getObjectRelationship(
 					selectedObjectRelationshipEdge.data!.objectRelationshipId
 				)) as ObjectRelationship;
 

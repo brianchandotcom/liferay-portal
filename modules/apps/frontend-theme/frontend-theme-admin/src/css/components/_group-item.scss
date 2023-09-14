@@ -34,20 +34,6 @@
 		width: 12.5%;
 	}
 
-	.controls-visible.open & {
-		@include media-breakpoint-up(md) {
-			width: 50%;
-		}
-
-		@include media-breakpoint-up(lg) {
-			width: 25%;
-		}
-
-		@include media-breakpoint-up(xl) {
-			width: 16.6%;
-		}
-	}
-
 	a {
 		color: $secondary;
 		display: block;

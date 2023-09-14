@@ -5,24 +5,25 @@
 
 /// <reference types="react" />
 
-interface PickListItem {
+interface ListTypeEntry {
 	externalReferenceCode: string;
 	id: number;
 	key: string;
+	listTypeDefinitionId: number;
 	name: string;
 	name_i18n: LocalizedValue<string>;
 }
-interface PicklistEntryBaseFieldProps {
+interface ListTypeEntryBaseFieldProps {
 	creationLanguageId?: Liferay.Language.Locale;
 	error?: string;
 	label: string;
-	onChange: (selected: PickListItem | undefined) => void;
-	picklistItems: PickListItem[];
+	onChange: (selected: ListTypeEntry | undefined) => void;
+	picklistItems: ListTypeEntry[];
 	placeholder?: string;
 	required?: boolean;
 	selectedPicklistItemKey?: string;
 }
-export declare function PicklistEntryBaseField({
+export declare function ListTypeEntryBaseField({
 	creationLanguageId,
 	error,
 	label,
@@ -31,5 +32,5 @@ export declare function PicklistEntryBaseField({
 	placeholder,
 	required,
 	selectedPicklistItemKey,
-}: PicklistEntryBaseFieldProps): JSX.Element;
+}: ListTypeEntryBaseFieldProps): JSX.Element;
 export {};

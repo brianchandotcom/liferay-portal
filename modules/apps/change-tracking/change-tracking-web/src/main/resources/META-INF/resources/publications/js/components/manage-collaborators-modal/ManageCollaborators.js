@@ -688,32 +688,33 @@ const ManageCollaborators = ({
 			return '';
 		}
 
-		if (showShareLinkTab) {
-			return (
-				<ClayModal
-					className="publications-invite-users-modal"
-					observer={observer}
-					size="lg"
-					spritemap={spritemap}
-				>
-					<ClayModal.Header>
-						<div className="autofit-row">
-							<div className="autofit-col">
-								<div className="modal-title">
-									{Liferay.Language.get('share-access')}
-								</div>
-							</div>
-						</div>
-					</ClayModal.Header>
+		const headers = [];
 
-					{renderTabs()}
-
-					<div className="inline-scroller modal-body publications-invite-users-modal-body">
-						{renderForm()}
-					</div>
-				</ClayModal>
+		if (!showShareLinkTab) {
+			headers.push(
+				<div className="autofit-col">
+					<ClaySticker
+						className="sticker-use-icon user-icon-color-0"
+						displayType="secondary"
+						shape="circle"
+					>
+						<ClayIcon symbol="users" />
+					</ClaySticker>
+				</div>
 			);
 		}
+
+		headers.push(
+			<div className="autofit-col">
+				<div className="modal-title">
+					{showShareLinkTab
+						? Liferay.Language.get('share-access')
+						: readOnly
+						? Liferay.Language.get('view-collaborators')
+						: Liferay.Language.get('invite-users')}
+				</div>
+			</div>
+		);
 
 		return (
 			<ClayModal
@@ -723,26 +724,10 @@ const ManageCollaborators = ({
 				spritemap={spritemap}
 			>
 				<ClayModal.Header>
-					<div className="autofit-row">
-						<div className="autofit-col">
-							<ClaySticker
-								className="sticker-use-icon user-icon-color-0"
-								displayType="secondary"
-								shape="circle"
-							>
-								<ClayIcon symbol="users" />
-							</ClaySticker>
-						</div>
-
-						<div className="autofit-col">
-							<div className="modal-title">
-								{readOnly
-									? Liferay.Language.get('view-collaborators')
-									: Liferay.Language.get('invite-users')}
-							</div>
-						</div>
-					</div>
+					<div className="autofit-row">{headers}</div>
 				</ClayModal.Header>
+
+				{showShareLinkTab ? renderTabs() : ''}
 
 				<div className="inline-scroller modal-body publications-invite-users-modal-body">
 					{renderForm()}

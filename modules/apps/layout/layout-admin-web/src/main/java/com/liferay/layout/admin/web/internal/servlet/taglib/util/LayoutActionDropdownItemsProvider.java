@@ -279,7 +279,7 @@ public class LayoutActionDropdownItemsProvider {
 
 			dropdownContextItem.setIcon("copy");
 			dropdownContextItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "copy"));
+				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
 		};
 	}
 

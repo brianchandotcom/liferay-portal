@@ -225,7 +225,7 @@ public class DisplayPageActionDropdownItemsProvider {
 				).buildString());
 			dropdownItem.setIcon("copy");
 			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "copy"));
+				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
 		};
 	}
 

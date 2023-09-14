@@ -24,6 +24,7 @@
 		"@clayui/progress-bar": "3.65.0",
 		"@clayui/sticker": "3.65.0",
 		"@clayui/table": "3.56.0",
+		"@clayui/tabs": "3.104.0",
 		"@clayui/time-picker": "3.105.0",
 		"@clayui/toolbar": "3.104.0",
 		"@clayui/tooltip": "3.104.0",

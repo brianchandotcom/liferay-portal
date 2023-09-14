@@ -11,13 +11,13 @@
 
 <tbody>
 <tr>
-	<td>CARD_DETAILS</td>
-	<td>//div[contains(@class, 'detailed-card-container')]//h2[contains(text(),'${key_text}')]</td>
+	<td>ANY_DASHBOARD_BUTTON</td>
+	<td>//*[contains(@class, 'dashboard-page') and contains(text(), '${key_buttonName}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ANY_DASHBOARD_BUTTON</td>
-	<td>//*[contains(@class, 'dashboard-page') and contains(text(), '${key_buttonName}')]</td>
+	<td>CARD_DETAILS</td>
+	<td>//div[contains(@class, 'detailed-card-container')]//h2[contains(text(),'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

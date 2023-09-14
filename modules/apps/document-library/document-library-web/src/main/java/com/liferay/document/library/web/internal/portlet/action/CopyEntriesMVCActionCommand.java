@@ -31,7 +31,9 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -59,19 +61,15 @@ public class CopyEntriesMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		List<String> errorMessages = _copyEntries(actionRequest);
 
-		int errorCount = _copyEntries(actionRequest);
-
-		if (errorCount > 0) {
+		if (!errorMessages.isEmpty()) {
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse,
 				JSONUtil.put(
-					"errorMessage",
-					_language.get(
-						themeDisplay.getLocale(),
-						"some-documents-folders-could-not-be-copied")));
+					"errorMessages",
+					JSONUtil.toJSONArray(
+						errorMessages, errorMessage -> errorMessage)));
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
@@ -112,8 +110,13 @@ public class CopyEntriesMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private int _copyEntries(ActionRequest actionRequest) throws Exception {
-		int errorCount = 0;
+	private List<String> _copyEntries(ActionRequest actionRequest)
+		throws Exception {
+
+		List<String> errorMessages = new ArrayList<>();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		long destinationFolderId = ParamUtil.getLong(
 			actionRequest, "destinationParentFolderId");
@@ -182,11 +185,12 @@ public class CopyEntriesMVCActionCommand extends BaseMVCActionCommand {
 					_log.debug(portalException);
 				}
 
-				errorCount++;
+				errorMessages.add(
+					themeDisplay.translate(portalException.getMessage()));
 			}
 		}
 
-		return errorCount;
+		return errorMessages;
 	}
 
 	private Map<Long, Long> _getFileEntryTypeIds(long groupId, long folderId)

@@ -88,7 +88,6 @@ interface ObjectRelationship {
 	objectDefinitionId1: number;
 	objectDefinitionId2: number;
 	readonly objectDefinitionName2: string;
-	objectRelationshipId: number;
 	parameterObjectFieldId?: number;
 	reverse: boolean;
 	type: ObjectRelationshipType;
@@ -441,12 +440,12 @@ export async function putListTypeEntry({
 }
 
 export async function putObjectRelationship({
-	objectRelationshipId,
+	id,
 	...others
 }: ObjectRelationship) {
 	return await save({
 		item: others,
 		method: 'PUT',
-		url: `/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`,
+		url: `/o/object-admin/v1.0/object-relationships/${id}`,
 	});
 }

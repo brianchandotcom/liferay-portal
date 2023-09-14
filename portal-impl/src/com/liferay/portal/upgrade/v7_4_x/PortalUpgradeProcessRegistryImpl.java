@@ -337,7 +337,7 @@ public class PortalUpgradeProcessRegistryImpl
 				ActionKeys.VIEW_SITE_ADMINISTRATION));
 
 		upgradeVersionTreeMap.put(
-			new Version(29, 0, 0), new UpgradePartitionedListType());
+			new Version(29, 0, 0), new UpgradeListTypeCompanyId());
 	}
 
 }

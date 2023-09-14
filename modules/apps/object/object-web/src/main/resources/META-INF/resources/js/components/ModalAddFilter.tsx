@@ -28,7 +28,7 @@ import {
 	getCheckedListTypeEntries,
 	getCheckedObjectRelationshipItems,
 	getCheckedWorkflowStatusItems,
-	getSystemObjectFieldLabelFromEntry,
+	getSystemObjectFieldLabelFromObjectEntry,
 } from '../utils/filter';
 
 import './ModalAddFilter.scss';
@@ -257,16 +257,16 @@ export function ModalAddFilter({
 						`filter=name eq '${value}'`
 					);
 
-					const titleField = objectFields.find(
+					const titleObjectField = objectFields.find(
 						(objectField) =>
 							objectField.name === titleObjectFieldName
 					) as ObjectField;
 
-					const relatedEntries = await API.getList<ObjectEntry>(
+					const relatedObjectEntries = await API.getList<ObjectEntry>(
 						`${restContextPath}`
 					);
 
-					if (!relatedEntries) {
+					if (!relatedObjectEntries) {
 						setItems([]);
 
 						return;
@@ -275,36 +275,36 @@ export function ModalAddFilter({
 					if (editingFilter) {
 						setItems(
 							getCheckedObjectRelationshipItems(
-								relatedEntries,
-								titleField.name,
-								titleField.system as boolean,
+								relatedObjectEntries,
+								titleObjectField.name,
+								titleObjectField.system as boolean,
 								system,
 								setEditingFilterType
 							)
 						);
 					}
 					else {
-						const newItems = relatedEntries.map((entry) => {
+						const newItems = relatedObjectEntries.map((objectEntry) => {
 							const newItemsObject = {
 								value: system
-									? String(entry.id)
-									: entry.externalReferenceCode,
+									? String(objectEntry.id)
+									: objectEntry.externalReferenceCode,
 							} as LabelValueObject;
 
-							if (titleField.system) {
-								return getSystemObjectFieldLabelFromEntry(
-									titleField.name,
-									entry,
+							if (titleObjectField.system) {
+								return getSystemObjectFieldLabelFromObjectEntry(
+									titleObjectField.name,
+									objectEntry,
 									newItemsObject
 								) as LabelValueObject;
 							}
 
-							let label = entry[titleField?.name] as string;
+							let label = objectEntry[titleObjectField?.name] as string;
 
-							if (titleField.businessType === 'Attachment') {
-								label = (entry as {
+							if (titleObjectField.businessType === 'Attachment') {
+								label = (objectEntry as {
 									[key: string]: AttachmentEntry;
-								})[titleField.name].name;
+								})[titleObjectField.name].name;
 							}
 
 							return {

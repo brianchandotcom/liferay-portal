@@ -159,21 +159,6 @@ public class ObjectEntryHelper {
 	}
 
 	public ObjectEntry getObjectEntry(
-			long companyId, String filterString,
-			String objectDefinitionExternalReferenceCode)
-		throws Exception {
-
-		List<ObjectEntry> objectEntries = getObjectEntries(
-			companyId, filterString, objectDefinitionExternalReferenceCode);
-
-		if (ListUtil.isEmpty(objectEntries)) {
-			return null;
-		}
-
-		return objectEntries.get(0);
-	}
-
-	public ObjectEntry getObjectEntry(
 			long companyId, List<String> nestedFields,
 			String objectDefinitionExternalReferenceCode,
 			String objetEntryExternalReferenceCode, String scopeKey)
@@ -201,6 +186,21 @@ public class ObjectEntryHelper {
 					objetEntryExternalReferenceCode, objectDefinition,
 					scopeKey);
 			});
+	}
+
+	public ObjectEntry getObjectEntry(
+			long companyId, String filterString,
+			String objectDefinitionExternalReferenceCode)
+		throws Exception {
+
+		List<ObjectEntry> objectEntries = getObjectEntries(
+			companyId, filterString, objectDefinitionExternalReferenceCode);
+
+		if (ListUtil.isEmpty(objectEntries)) {
+			return null;
+		}
+
+		return objectEntries.get(0);
 	}
 
 	public ObjectDefinition getPropertyObjectDefinition(

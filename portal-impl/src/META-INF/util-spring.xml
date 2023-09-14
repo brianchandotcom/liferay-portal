@@ -125,12 +125,6 @@
 			<bean class="com.liferay.portal.util.CustomJspRegistryImpl" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.util.DateFormatFactoryImpl" id="com.liferay.portal.kernel.util.DateFormatFactory" />
-	<bean class="com.liferay.portal.kernel.util.DateFormatFactoryUtil" id="com.liferay.portal.kernel.util.DateFormatFactoryUtil">
-		<property name="dateFormatFactory">
-			<bean class="com.liferay.portal.util.DateFormatFactoryImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.util.DigesterUtil" id="com.liferay.portal.kernel.util.DigesterUtil">
 		<property name="digester">
 			<bean class="com.liferay.portal.util.DigesterImpl" />

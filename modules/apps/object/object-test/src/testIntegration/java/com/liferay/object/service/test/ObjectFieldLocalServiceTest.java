@@ -29,6 +29,7 @@ import com.liferay.object.exception.ObjectFieldRequiredException;
 import com.liferay.object.exception.ObjectFieldSettingNameException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.exception.ObjectFieldStateException;
+import com.liferay.object.exception.ObjectFieldSystemException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.builder.AggregationObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
@@ -1157,20 +1158,6 @@ public class ObjectFieldLocalServiceTest {
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, "Able")));
 		AssertUtils.assertFailure(
-			ObjectFieldNameException.MustOnlyContainLettersAndDigits.class,
-			"Name must only contain letters and digits",
-			() -> _addUnmodifiableSystemObjectDefinition(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, "abl e")));
-		AssertUtils.assertFailure(
-			ObjectFieldNameException.MustOnlyContainLettersAndDigits.class,
-			"Name must only contain letters and digits",
-			() -> _addUnmodifiableSystemObjectDefinition(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, "abl-e")));
-		AssertUtils.assertFailure(
 			ObjectFieldNameException.MustNotBeDuplicate.class,
 			"Duplicate name able",
 			() -> _objectFieldLocalService.addSystemObjectField(
@@ -1188,6 +1175,20 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, "Able", "")));
+		AssertUtils.assertFailure(
+			ObjectFieldNameException.MustOnlyContainLettersAndDigits.class,
+			"Name must only contain letters and digits",
+			() -> _addUnmodifiableSystemObjectDefinition(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, "abl e")));
+		AssertUtils.assertFailure(
+			ObjectFieldNameException.MustOnlyContainLettersAndDigits.class,
+			"Name must only contain letters and digits",
+			() -> _addUnmodifiableSystemObjectDefinition(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, "abl-e")));
 
 		String objectDefinitionName = "A" + RandomTestUtil.randomString();
 

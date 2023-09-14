@@ -6,6 +6,7 @@
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 
+import Jethr0Table from '../Jethr0Table/Jethr0Table';
 import useSpringBootData from '../../services/useSpringBootData';
 
 function JobQueue() {
@@ -22,7 +23,7 @@ function JobQueue() {
 	}
 
 	return (
-		<table className="table table-bordered table-hover table-sm">
+		<Jethr0Table>
 			<thead>
 				<tr>
 					<th>Position</th>
@@ -84,7 +85,7 @@ function JobQueue() {
 						);
 					})}
 			</tbody>
-		</table>
+		</Jethr0Table>
 	);
 }
 

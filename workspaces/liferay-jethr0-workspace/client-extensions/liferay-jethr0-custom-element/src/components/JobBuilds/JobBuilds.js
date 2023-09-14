@@ -6,6 +6,7 @@
 import ClayPanel from '@clayui/panel';
 import {useState} from 'react';
 
+import Jethr0Table from '../Jethr0Table/Jethr0Table';
 import useSpringBootData from '../../services/useSpringBootData';
 
 function JobBuilds({jobId}) {
@@ -30,7 +31,7 @@ function JobBuilds({jobId}) {
 			showCollapseIcon={true}
 		>
 			<ClayPanel.Body>
-				<table className="table table-bordered table-hover table-sm">
+				<Jethr0Table>
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -71,7 +72,7 @@ function JobBuilds({jobId}) {
 								);
 							})}
 					</tbody>
-				</table>
+				</Jethr0Table>
 			</ClayPanel.Body>
 		</ClayPanel>
 	);

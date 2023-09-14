@@ -393,23 +393,23 @@ interface ObjectDefinitionNodeData
 	selected: boolean;
 }
 
-interface PickListItem {
-	externalReferenceCode: string;
-	id: number;
-	key: string;
-	name: string;
-	name_i18n: LocalizedValue<string>;
-}
-
-interface PickList {
+interface ListTypeDefinition {
 	actions: Actions;
 	externalReferenceCode: string;
 	id: number;
 	key: string;
-	listTypeEntries: PickListItem[];
+	listTypeEntries: ListTypeEntry[];
 	name: string;
 	name_i18n: LocalizedValue<string>;
 	system: boolean;
+}
+
+interface ListTypeEntry {
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	name: string;
+	name_i18n: LocalizedValue<string>;
 }
 
 type NotificationTemplate = {

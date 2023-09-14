@@ -10,15 +10,15 @@ export declare function useListTypeForm({
 	initialValues,
 	onSubmit,
 }: IUseListTypeForm): {
-	errors: FormError<PickList>;
+	errors: FormError<ListTypeDefinition>;
 	handleChange: import('react').ChangeEventHandler<HTMLInputElement>;
 	handleSubmit: import('react').FormEventHandler<HTMLFormElement>;
-	setValues: (values: Partial<PickList>) => void;
-	values: Partial<PickList>;
+	setValues: (values: Partial<ListTypeDefinition>) => void;
+	values: Partial<ListTypeDefinition>;
 };
 interface IUseListTypeForm {
-	initialValues: Partial<PickList>;
-	onSubmit: (picklist: PickList) => void;
+	initialValues: Partial<ListTypeDefinition>;
+	onSubmit: (picklist: ListTypeDefinition) => void;
 }
-export declare type ObjectValidationErrors = FormError<PickList>;
+export declare type ObjectValidationErrors = FormError<ListTypeDefinition>;
 export {};

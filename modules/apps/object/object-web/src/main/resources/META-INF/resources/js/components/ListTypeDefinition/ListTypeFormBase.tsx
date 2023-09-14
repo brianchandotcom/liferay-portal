@@ -13,7 +13,7 @@ import {
 import {defaultLanguageId} from '../../utils/constants';
 
 export function useListTypeForm({initialValues, onSubmit}: IUseListTypeForm) {
-	const validate = (picklist: Partial<PickList>) => {
+	const validate = (picklist: Partial<ListTypeDefinition>) => {
 		const errors: ObjectValidationErrors = {};
 		const label = picklist.name_i18n?.[defaultLanguageId];
 
@@ -28,7 +28,7 @@ export function useListTypeForm({initialValues, onSubmit}: IUseListTypeForm) {
 	};
 
 	const {errors, handleChange, handleSubmit, setValues, values} = useForm<
-		PickList
+		ListTypeDefinition
 	>({
 		initialValues,
 		onSubmit,
@@ -38,8 +38,8 @@ export function useListTypeForm({initialValues, onSubmit}: IUseListTypeForm) {
 	return {errors, handleChange, handleSubmit, setValues, values};
 }
 interface IUseListTypeForm {
-	initialValues: Partial<PickList>;
-	onSubmit: (picklist: PickList) => void;
+	initialValues: Partial<ListTypeDefinition>;
+	onSubmit: (picklist: ListTypeDefinition) => void;
 }
 
-export type ObjectValidationErrors = FormError<PickList>;
+export type ObjectValidationErrors = FormError<ListTypeDefinition>;

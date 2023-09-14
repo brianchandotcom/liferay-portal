@@ -18,18 +18,18 @@ import StateDefinition from './StateManager/StateDefinition';
 import {getListTypeDefinitionListTypeEntries} from '@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api';
 
 export default function EditObjectStateField({objectField, readOnly}: IProps) {
-	const [pickListItems, setPickListItems] = useState<PickListItem[]>([]);
+	const [listTypeEntries, setListTypeEntries] = useState<ListTypeEntry[]>([]);
 
 	useEffect(() => {
 		if (objectField?.listTypeDefinitionId) {
 			API.getListTypeDefinitionListTypeEntries(
 				objectField.listTypeDefinitionId
-			).then(setPickListItems);
+			).then(setListTypeEntries);
 		}
 	}, [
 		objectField.listTypeDefinitionId,
 		objectField.listTypeDefinitionExternalReferenceCode,
-		setPickListItems,
+		setListTypeEntries,
 	]);
 
 	const isStateOptionChecked = ({
@@ -98,12 +98,12 @@ export default function EditObjectStateField({objectField, readOnly}: IProps) {
 			} ${Liferay.Language.get('settings')}`}
 		>
 			<Card title={Liferay.Language.get('select-the-state-flow')}>
-				{pickListItems?.map(({key, name}, index) => (
+				{listTypeEntries?.map(({key, name}, index) => (
 					<StateDefinition
 						currentKey={key}
 						disabled={readOnly}
 						index={index}
-						initialValues={pickListItems
+						initialValues={listTypeEntries
 							.filter((item) => item.name !== name)
 							.map((item) => {
 								return {

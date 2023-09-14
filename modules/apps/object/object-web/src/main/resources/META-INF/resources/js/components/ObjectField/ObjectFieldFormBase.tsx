@@ -118,7 +118,7 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 
 async function getFieldSettingsByBusinessType(
 	objectRelationshipId: number,
-	setListTypeDefinitions: (value: PickList[]) => void,
+	setListTypeDefinitions: (value: ListTypeDefinition[]) => void,
 	setOneToManyRelationship: (value: TObjectRelationship) => void,
 	setSelectedOutput: (value: string) => void,
 	values: Partial<ObjectField>
@@ -183,7 +183,7 @@ export default function ObjectFieldFormBase({
 		return businessTypeMap;
 	}, [objectFieldTypes]);
 
-	const [listTypeDefinitions, setListTypeDefinitions] = useState<Partial<PickList>[]>([]);
+	const [listTypeDefinitions, setListTypeDefinitions] = useState<Partial<ListTypeDefinition>[]>([]);
 	const [picklistQuery, setPicklistQuery] = useState<string>('');
 
 	const [oneToManyRelationship, setOneToManyRelationship] = useState<
@@ -407,7 +407,7 @@ export default function ObjectFieldFormBase({
 
 			{(values.businessType === 'Picklist' ||
 				values.businessType === 'MultiselectPicklist') && (
-				<AutoComplete<Partial<PickList>>
+				<AutoComplete<Partial<ListTypeDefinition>>
 					disabled={disabled}
 					emptyStateMessage={Liferay.Language.get('option-not-found')}
 					error={errors.listTypeDefinitionId}

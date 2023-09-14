@@ -27,7 +27,7 @@ export default function EditListTypeDefinition({
 	listTypeDefinitionId,
 	readOnly,
 }: IProps) {
-	const onSubmit = async (values: PickList) => {
+	const onSubmit = async (values: ListTypeDefinition) => {
 		try {
 			await API.putListTypeDefinition({
 				externalReferenceCode: values.externalReferenceCode,

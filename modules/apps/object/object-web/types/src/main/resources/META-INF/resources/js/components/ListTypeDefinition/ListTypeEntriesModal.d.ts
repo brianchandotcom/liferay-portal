@@ -5,7 +5,7 @@
 
 /// <reference types="react" />
 
-export interface IModalState extends Partial<PickListItem> {
+export interface IModalState extends Partial<ListTypeEntry> {
 	header?: string;
 	itemExternalReferenceCode?: string;
 	itemId?: number;

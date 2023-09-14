@@ -29,14 +29,14 @@ export function getCheckedWorkflowStatusItems(
 }
 
 export function getCheckedPickListItems(
-	itemValues: PickListItem[],
+	itemValues: ListTypeEntry[],
 	setEditingFilterType: () => number[] | string[] | null
 ): IItem[] {
 	let newItemsValues: IItem[] = [];
 
 	const valuesArray = setEditingFilterType() as string[];
 
-	newItemsValues = (itemValues as PickListItem[]).map((itemValue) => {
+	newItemsValues = (itemValues as ListTypeEntry[]).map((itemValue) => {
 		const item = {
 			checked: false,
 			label: itemValue.name,

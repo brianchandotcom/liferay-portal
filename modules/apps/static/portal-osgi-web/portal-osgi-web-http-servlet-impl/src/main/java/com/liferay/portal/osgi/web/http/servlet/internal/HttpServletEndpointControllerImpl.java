@@ -9,11 +9,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -106,25 +106,35 @@ public class HttpServletEndpointControllerImpl
 	public DispatchTargets getDispatchTargets(String pathString) {
 		Path path = new Path(pathString);
 
-		String queryString = path.getQueryString();
 		String requestURI = path.getRequestURI();
 
+		List<ContextController> contextControllers = _getContextControllers(
+			requestURI);
+
+		if (ListUtil.isEmpty(contextControllers)) {
+			return null;
+		}
+
+		String queryString = path.getQueryString();
+
 		DispatchTargets dispatchTargets = _getDispatchTargets(
-			requestURI, null, queryString, Match.EXACT);
+			contextControllers, requestURI, null, queryString, Match.EXACT);
 
 		if (dispatchTargets == null) {
 			dispatchTargets = _getDispatchTargets(
-				requestURI, path.getExtension(), queryString, Match.EXTENSION);
+				contextControllers, requestURI, path.getExtension(),
+				queryString, Match.EXTENSION);
 		}
 
 		if (dispatchTargets == null) {
 			dispatchTargets = _getDispatchTargets(
-				requestURI, null, queryString, Match.REGEX);
+				contextControllers, requestURI, null, queryString, Match.REGEX);
 		}
 
 		if (dispatchTargets == null) {
 			dispatchTargets = _getDispatchTargets(
-				requestURI, null, queryString, Match.DEFAULT_SERVLET);
+				contextControllers, requestURI, null, queryString,
+				Match.DEFAULT_SERVLET);
 		}
 
 		return dispatchTargets;
@@ -175,9 +185,7 @@ public class HttpServletEndpointControllerImpl
 		return false;
 	}
 
-	private Collection<ContextController> _getContextControllers(
-		String requestURI) {
-
+	private List<ContextController> _getContextControllers(String requestURI) {
 		int pos = requestURI.lastIndexOf('/');
 
 		while (true) {
@@ -212,18 +220,10 @@ public class HttpServletEndpointControllerImpl
 	}
 
 	private DispatchTargets _getDispatchTargets(
-		String requestURI, String extension, String queryString, Match match) {
+		List<ContextController> contextControllers, String requestURI,
+		String extension, String queryString, Match match) {
 
-		Collection<ContextController> contextControllers =
-			_getContextControllers(requestURI);
-
-		if ((contextControllers == null) || contextControllers.isEmpty()) {
-			return null;
-		}
-
-		Iterator<ContextController> iterator = contextControllers.iterator();
-
-		ContextController firstContextController = iterator.next();
+		ContextController firstContextController = contextControllers.get(0);
 
 		String contextPath = firstContextController.getContextPath();
 

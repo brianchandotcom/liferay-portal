@@ -7,6 +7,7 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.importer.LayoutsImportStrategy;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
@@ -88,8 +89,12 @@ public class ImportMVCResourceCommandTest {
 
 		_layoutPageTemplateCollectionLocalService.
 			addLayoutPageTemplateCollection(
-				TestPropsValues.getUserId(), _group.getGroupId(), "imported",
-				StringPool.BLANK, _serviceContext);
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				"imported", StringPool.BLANK,
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				_serviceContext);
 
 		_assertImportResultsJSONObject(
 			1, 3, _importFile(LayoutsImportStrategy.DO_NOT_IMPORT));
@@ -97,7 +102,8 @@ public class ImportMVCResourceCommandTest {
 		Assert.assertNull(
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
-					_group.getGroupId(), "imported-(1)"));
+					_group.getGroupId(), "imported-(1)",
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC));
 	}
 
 	@Test
@@ -134,8 +140,12 @@ public class ImportMVCResourceCommandTest {
 
 		_layoutPageTemplateCollectionLocalService.
 			addLayoutPageTemplateCollection(
-				TestPropsValues.getUserId(), _group.getGroupId(), "imported",
-				StringPool.BLANK, _serviceContext);
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				"imported", StringPool.BLANK,
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+				_serviceContext);
 
 		_assertImportResultsJSONObject(
 			1, 3, _importFile(LayoutsImportStrategy.KEEP_BOTH));
@@ -143,7 +153,8 @@ public class ImportMVCResourceCommandTest {
 		Assert.assertNotNull(
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollection(
-					_group.getGroupId(), "imported-(1)"));
+					_group.getGroupId(), "imported-(1)",
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC));
 	}
 
 	@Test

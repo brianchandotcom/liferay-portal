@@ -29,7 +29,7 @@ export default function ScheduleModal({
 		});
 	};
 
-	const handleScheduleButtonClick = () => {
+	const handleScheduleButtonOnClick = () => {
 		const openerWindow = getOpener();
 
 		const displayDateInput = openerWindow.document.getElementById(
@@ -38,6 +38,11 @@ export default function ScheduleModal({
 		displayDateInput.value = displayDate;
 
 		openerWindow.Liferay.fire(SCHEDULE_EVENT_NAME);
+		closeModal();
+	};
+
+	const publisNowButtonOnClick = () => {
+		getOpener().Liferay.fire(SCHEDULE_EVENT_NAME);
 		closeModal();
 	};
 
@@ -89,16 +94,26 @@ export default function ScheduleModal({
 				<div className="modal-item-last">
 					<ClayButton.Group spaced>
 						<ClayButton
+							borderless="<%= true %>"
 							displayType="secondary"
 							onClick={closeModal}
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
+						{isScheduled && (
+							<ClayButton
+								displayType="secondary"
+								onClick={publisNowButtonOnClick}
+							>
+								{Liferay.Language.get('publish-now')}
+							</ClayButton>
+						)}
+
 						<ClayButton
 							disabled={invalidDate || !displayDate}
 							displayType="primary"
-							onClick={handleScheduleButtonClick}
+							onClick={handleScheduleButtonOnClick}
 						>
 							{Liferay.Language.get('schedule')}
 						</ClayButton>

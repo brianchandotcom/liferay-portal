@@ -105,6 +105,14 @@ public class ProductNavigationControlMenuManagerImpl
 		try {
 			User user = _portal.getUser(httpServletRequest);
 
+			if (user == null) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				user = themeDisplay.getUser();
+			}
+
 			if ((user == null) || user.isGuestUser()) {
 				return true;
 			}

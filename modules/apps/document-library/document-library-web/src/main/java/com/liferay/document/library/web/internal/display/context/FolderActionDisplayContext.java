@@ -96,7 +96,13 @@ public class FolderActionDisplayContext {
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "edit"));
 						}
-					).add(
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
 						this::_isMoveFolderActionVisible,
 						dropdownItem -> {
 							dropdownItem.setHref(_getMoveFolderURL());

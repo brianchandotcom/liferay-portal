@@ -26,7 +26,7 @@ import React, {
 
 import {
 	getCheckedListTypeEntries,
-	getCheckedRelationshipItems,
+	getCheckedObjectRelationshipItems,
 	getCheckedWorkflowStatusItems,
 	getSystemFieldLabelFromEntry,
 } from '../utils/filter';
@@ -274,7 +274,7 @@ export function ModalAddFilter({
 
 					if (editingFilter) {
 						setItems(
-							getCheckedRelationshipItems(
+							getCheckedObjectRelationshipItems(
 								relatedEntries,
 								titleField.name,
 								titleField.system as boolean,

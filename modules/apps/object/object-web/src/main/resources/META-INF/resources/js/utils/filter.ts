@@ -96,7 +96,7 @@ export function getSystemFieldLabelFromEntry(
 	};
 }
 
-export function getCheckedRelationshipItems(
+export function getCheckedObjectRelationshipItems(
 	relatedEntries: ObjectEntry[],
 	titleFieldName: string,
 	systemField: boolean,

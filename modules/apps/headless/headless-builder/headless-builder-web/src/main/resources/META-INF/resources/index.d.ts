@@ -5,6 +5,11 @@
 
 type ActiveNav = 'details' | 'endpoints' | 'schemas';
 
+interface APIListType {
+	key: string;
+	name?: string;
+}
+
 interface APIURLPaths {
 	applications: string;
 	endpoints: string;
@@ -14,16 +19,16 @@ interface APIURLPaths {
 	sorts: string;
 }
 
-interface HTTPMethod {
+interface Action {
 	href: string;
 	method: string;
 }
 
 interface Actions {
-	delete: HTTPMethod;
-	get: HTTPMethod;
-	permissions: HTTPMethod;
-	update: HTTPMethod;
+	delete: Action;
+	get: Action;
+	permissions: Action;
+	update: Action;
 }
 
 type voidReturn = () => void;
@@ -44,6 +49,10 @@ interface FetchedData {
 	apiApplication?: APIApplicationItem;
 	apiEndpoint?: APIEndpointItem;
 	apiSchema?: APISchemaItem;
+}
+
+interface FetchedListType {
+	listTypeEntries: APIListType[];
 }
 
 interface BaseItem {
@@ -78,11 +87,18 @@ type APIApplicationUIData = Pick<
 >;
 
 interface APIEndpointItem extends BaseItem {
-	name: string;
+	httpMethod: APIListType;
 	path: string;
+	r_apiApplicationToAPIEndpoints_c_apiApplicationId: string;
+	scope: APIListType;
 }
 
-interface APIPropertiy {
+type APIEndpointUIData = Pick<
+	APIEndpointItem,
+	'description' | 'path' | 'scope'
+>;
+
+interface APIProperty {
 	description?: string;
 	name: string;
 	objectFieldERC: string;
@@ -90,7 +106,7 @@ interface APIPropertiy {
 }
 
 interface APISchemaItem extends BaseItem {
-	apiSchemaToAPIProperties?: APIPropertiy[];
+	apiSchemaToAPIProperties?: APIProperty[];
 	mainObjectDefinitionERC: string;
 	name: string;
 	r_apiApplicationToAPISchemas_c_apiApplicationId?: string;
@@ -131,6 +147,8 @@ type IncludesFilterOperator = {
 };
 
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
+
+type MainEndpointNav = 'list' | {edit: number};
 
 type MainSchemaNav = 'list' | {edit: number};
 

@@ -352,7 +352,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				"version", _article.getVersion());
 			dropdownItem.setIcon("copy");
 			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "copy"));
+				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
 		};
 	}
 
@@ -420,7 +420,7 @@ public class JournalArticleActionDropdownItemsProvider {
 					).buildString());
 				dropdownItem.setIcon("copy");
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "copy"));
+					LanguageUtil.get(_httpServletRequest, "make-a-copy"));
 			};
 		}
 

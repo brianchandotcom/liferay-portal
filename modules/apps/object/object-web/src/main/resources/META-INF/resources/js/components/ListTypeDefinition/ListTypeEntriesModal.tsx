@@ -20,9 +20,7 @@ import {defaultLanguageId} from '../../utils/constants';
 import {specialCharactersInString, toCamelCase} from '../../utils/string';
 import {ObjectValidationErrors} from './ListTypeFormBase';
 import {fixLocaleKeys} from './utils';
-import {
-	putListTypeEntry
-} from "@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api";
+import {putListTypeEntry} from '@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api';
 
 export interface IModalState extends Partial<PickListItem> {
 	header?: string;

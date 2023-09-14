@@ -36,8 +36,9 @@ import {FORMULA_OUTPUT_OPTIONS, FormulaOutput} from './formulaFieldUtil';
 
 import './ObjectFieldFormBase.scss';
 import {
-	getListTypeDefinitions, getObjectRelationship
-} from "@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api";
+	getListTypeDefinitions,
+	getObjectRelationship,
+} from '@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api';
 
 interface ObjectFieldFormBaseProps {
 	children?: ReactNode;
@@ -145,9 +146,9 @@ async function getFieldSettingsByBusinessType(
 	}
 
 	if (businessType === 'Relationship' && objectRelationshipId) {
-		const relationshipData = await API.getObjectRelationship<TObjectRelationship>(
-			objectRelationshipId!
-		);
+		const relationshipData = await API.getObjectRelationship<
+			TObjectRelationship
+		>(objectRelationshipId!);
 
 		if (relationshipData.id) {
 			setOneToManyRelationship(relationshipData);

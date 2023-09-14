@@ -533,15 +533,15 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		cpInstancePersistence.remove(cpInstance);
 
-		_cpInstanceUnitOfMeasurePersistence.removeByCPInstanceId(
-			cpInstance.getCPInstanceId());
-
 		_cpInstanceOptionValueRelPersistence.removeByCPInstanceId(
 			cpInstance.getCPInstanceId());
 
 		_cpDefinitionOptionValueRelLocalService.
 			resetCPInstanceCPDefinitionOptionValueRels(
 				cpInstance.getCPInstanceUuid());
+
+		_cpInstanceUnitOfMeasurePersistence.removeByCPInstanceId(
+			cpInstance.getCPInstanceId());
 
 		// Expando
 

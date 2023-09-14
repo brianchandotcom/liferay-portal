@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -89,8 +88,7 @@ public class DateFacetPortlet extends MVCPortlet {
 		RenderRequest renderRequest) {
 
 		DateFacetDisplayContextBuilder dateFacetDisplayContextBuilder =
-			_createDateFacetDisplayContextBuilder(
-				_dateFormatFactory, renderRequest);
+			_createDateFacetDisplayContextBuilder(renderRequest);
 
 		dateFacetDisplayContextBuilder.setCurrentURL(
 			_portal.getCurrentURL(renderRequest));
@@ -148,12 +146,10 @@ public class DateFacetPortlet extends MVCPortlet {
 	}
 
 	private DateFacetDisplayContextBuilder
-		_createDateFacetDisplayContextBuilder(
-			DateFormatFactory dateFormatFactory, RenderRequest renderRequest) {
+		_createDateFacetDisplayContextBuilder(RenderRequest renderRequest) {
 
 		try {
-			return new DateFacetDisplayContextBuilder(
-				dateFormatFactory, renderRequest);
+			return new DateFacetDisplayContextBuilder(renderRequest);
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);
@@ -191,9 +187,6 @@ public class DateFacetPortlet extends MVCPortlet {
 
 		return themeDisplaySupplier.getThemeDisplay();
 	}
-
-	@Reference
-	private DateFormatFactory _dateFormatFactory;
 
 	@Reference
 	private Portal _portal;

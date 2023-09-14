@@ -95,17 +95,13 @@ public class DateRangeFactoryUtil {
 		for (int i = 0; i < rangesJSONArray.length(); i++) {
 			JSONObject rangeJSONObject = rangesJSONArray.getJSONObject(i);
 
-			JSONObject normalizedJSONObject =
-				JSONFactoryUtil.createJSONObject();
-
-			normalizedJSONObject.put(
-				"label", rangeJSONObject.getString("label")
-			).put(
-				"range",
-				replaceAliases(rangeJSONObject.getString("range"), calendar)
-			);
-
-			normalizedRangesJSONArray.put(normalizedJSONObject);
+			normalizedRangesJSONArray.put(
+				JSONUtil.put(
+					"label", rangeJSONObject.getString("label")
+				).put(
+					"range",
+					replaceAliases(rangeJSONObject.getString("range"), calendar)
+				));
 		}
 
 		return normalizedRangesJSONArray;

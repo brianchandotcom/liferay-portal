@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.DateFormatFactory;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,11 +46,8 @@ import javax.portlet.RenderRequest;
  */
 public class ModifiedFacetDisplayContextBuilder implements Serializable {
 
-	public ModifiedFacetDisplayContextBuilder(
-			DateFormatFactory dateFormatFactory, RenderRequest renderRequest)
+	public ModifiedFacetDisplayContextBuilder(RenderRequest renderRequest)
 		throws ConfigurationException {
-
-		_dateFormatFactory = dateFormatFactory;
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -67,10 +64,8 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		modifiedFacetDisplayContext.setCalendarDisplayContext(
 			_buildCalendarDisplayContext());
 
-		if (_dateFormatFactory != null) {
-			modifiedFacetDisplayContext.setCustomRangeBucketDisplayContext(
-				_buildCustomRangeBucketDisplayContext());
-		}
+		modifiedFacetDisplayContext.setCustomRangeBucketDisplayContext(
+			_buildCustomRangeBucketDisplayContext());
 
 		modifiedFacetDisplayContext.setBucketDisplayContexts(
 			_buildBucketDisplayContexts());
@@ -309,7 +304,7 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 	}
 
 	private String _getCustomRangeURL() {
-		DateFormat format = _dateFormatFactory.getSimpleDateFormat(
+		DateFormat format = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd");
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(_timeZone);
@@ -365,7 +360,6 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 	}
 
 	private String _currentURL;
-	private final DateFormatFactory _dateFormatFactory;
 	private Facet _facet;
 	private boolean _frequenciesVisible;
 	private int _frequencyThreshold;

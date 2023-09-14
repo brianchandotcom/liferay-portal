@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.web.internal.date.facet.portlet.action;
 
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -13,14 +12,13 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.date.facet.constants.DateFacetPortletKeys;
 import com.liferay.portal.search.web.internal.date.facet.display.context.builder.DateFacetDisplayContextBuilder;
-import com.liferay.portal.search.web.internal.date.range.DateRangeFactory;
+import com.liferay.portal.search.web.internal.util.DateRangeFactoryUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -31,7 +29,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Petteri Karttunen
@@ -80,10 +77,7 @@ public class DateFacetPortletConfigurationAction
 		String ranges = unicodeProperties.getProperty("ranges");
 
 		try {
-			DateRangeFactory dateRangeFactory = new DateRangeFactory(
-				DateFormatFactoryUtil.getDateFormatFactory(), _jsonFactory);
-
-			dateRangeFactory.validateRangeSyntax(ranges);
+			DateRangeFactoryUtil.validateRangeSyntax(ranges);
 		}
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, "unparsableSyntax");
@@ -101,7 +95,7 @@ public class DateFacetPortletConfigurationAction
 
 		try {
 			DateFacetDisplayContextBuilder dateFacetDisplayContextBuilder =
-				new DateFacetDisplayContextBuilder(null, renderRequest);
+				new DateFacetDisplayContextBuilder(renderRequest);
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
@@ -121,8 +115,5 @@ public class DateFacetPortletConfigurationAction
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DateFacetPortletConfigurationAction.class);
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

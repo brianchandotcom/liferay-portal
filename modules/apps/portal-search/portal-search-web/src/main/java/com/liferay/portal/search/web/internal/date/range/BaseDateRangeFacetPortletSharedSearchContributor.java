@@ -6,14 +6,13 @@
 package com.liferay.portal.search.web.internal.date.range;
 
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.web.internal.util.DateRangeFactoryUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
 import java.util.ArrayList;
@@ -22,18 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Petteri Karttunen
  */
 public abstract class BaseDateRangeFacetPortletSharedSearchContributor {
-
-	@Activate
-	protected void activate() {
-		dateRangeFactory = new DateRangeFactory(dateFormatFactory, jsonFactory);
-	}
 
 	protected void addCustomRange(
 		JSONArray rangesJSONArray, String selectedCustomRangeString,
@@ -52,11 +43,12 @@ public abstract class BaseDateRangeFacetPortletSharedSearchContributor {
 	protected JSONArray getRangesJSONArray(
 		Calendar calendar, JSONArray rangesJSONArray) {
 
-		JSONArray unAliasedRangesJSONArray = dateRangeFactory.replaceAliases(
-			rangesJSONArray, CalendarFactoryUtil.getCalendar());
+		JSONArray unAliasedRangesJSONArray =
+			DateRangeFactoryUtil.replaceAliases(
+				rangesJSONArray, CalendarFactoryUtil.getCalendar());
 
 		if (unAliasedRangesJSONArray == null) {
-			return dateRangeFactory.getDefaultRangesJSONArray(calendar);
+			return DateRangeFactoryUtil.getDefaultRangesJSONArray(calendar);
 		}
 
 		return unAliasedRangesJSONArray;
@@ -78,7 +70,7 @@ public abstract class BaseDateRangeFacetPortletSharedSearchContributor {
 			SearchContext searchContext =
 				portletSharedSearchSettings.getSearchContext();
 
-			return dateRangeFactory.getRangeString(
+			return DateRangeFactoryUtil.getRangeString(
 				customRangeFrom, customRangeTo, searchContext.getTimeZone());
 		}
 
@@ -107,21 +99,13 @@ public abstract class BaseDateRangeFacetPortletSharedSearchContributor {
 			}
 			else {
 				selectedRangeStrings.add(
-					dateRangeFactory.getRangeString(
+					DateRangeFactoryUtil.getRangeString(
 						selectedRange, CalendarFactoryUtil.getCalendar()));
 			}
 		}
 
 		return selectedRangeStrings;
 	}
-
-	@Reference
-	protected DateFormatFactory dateFormatFactory;
-
-	protected volatile DateRangeFactory dateRangeFactory;
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 	private Map<String, String> _getRangesMap(JSONArray rangesJSONArray) {
 		Map<String, String> rangesMap = new HashMap<>();

@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.DateFormatFactory;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,11 +46,8 @@ import javax.portlet.RenderRequest;
  */
 public class DateFacetDisplayContextBuilder implements Serializable {
 
-	public DateFacetDisplayContextBuilder(
-			DateFormatFactory dateFormatFactory, RenderRequest renderRequest)
+	public DateFacetDisplayContextBuilder(RenderRequest renderRequest)
 		throws ConfigurationException {
-
-		_dateFormatFactory = dateFormatFactory;
 
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -67,10 +64,8 @@ public class DateFacetDisplayContextBuilder implements Serializable {
 		dateFacetDisplayContext.setCalendarDisplayContext(
 			_buildCalendarDisplayContext());
 
-		if (_dateFormatFactory != null) {
-			dateFacetDisplayContext.setCustomRangeBucketDisplayContext(
-				_buildCustomRangeBucketDisplayContext());
-		}
+		dateFacetDisplayContext.setCustomRangeBucketDisplayContext(
+			_buildCustomRangeBucketDisplayContext());
 
 		dateFacetDisplayContext.setBucketDisplayContexts(
 			_buildBucketDisplayContexts());
@@ -333,7 +328,7 @@ public class DateFacetDisplayContextBuilder implements Serializable {
 	}
 
 	private String _getCustomRangeURL() {
-		DateFormat format = _dateFormatFactory.getSimpleDateFormat(
+		DateFormat format = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd");
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(_timeZone);
@@ -394,7 +389,6 @@ public class DateFacetDisplayContextBuilder implements Serializable {
 	private String _customDisplayCaption;
 	private final DateFacetPortletInstanceConfiguration
 		_dateFacetPortletInstanceConfiguration;
-	private final DateFormatFactory _dateFormatFactory;
 	private Facet _facet;
 	private String _fieldToAggregate;
 	private boolean _frequenciesVisible;

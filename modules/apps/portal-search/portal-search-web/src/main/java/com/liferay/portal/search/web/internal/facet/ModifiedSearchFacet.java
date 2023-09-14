@@ -13,13 +13,12 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
 import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
 import com.liferay.portal.search.web.facet.SearchFacet;
-import com.liferay.portal.search.web.internal.date.range.DateRangeFactory;
+import com.liferay.portal.search.web.internal.util.DateRangeFactoryUtil;
 
 import javax.portlet.ActionRequest;
 
@@ -153,10 +152,7 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 	}
 
 	private JSONArray _replaceAliases(JSONArray rangesJSONArray) {
-		DateRangeFactory dateRangeFactory = new DateRangeFactory(
-			_dateFormatFactory, _jsonFactory);
-
-		return dateRangeFactory.replaceAliases(
+		return DateRangeFactoryUtil.replaceAliases(
 			rangesJSONArray, CalendarFactoryUtil.getCalendar());
 	}
 
@@ -168,9 +164,6 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 		"[past-hour TO *]", "[past-24-hours TO *]", "[past-week TO *]",
 		"[past-month TO *]", "[past-year TO *]"
 	};
-
-	@Reference
-	private DateFormatFactory _dateFormatFactory;
 
 	@Reference
 	private JSONFactory _jsonFactory;

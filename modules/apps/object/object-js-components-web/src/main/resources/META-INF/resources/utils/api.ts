@@ -94,7 +94,7 @@ interface ObjectRelationship {
 	type: ObjectRelationshipType;
 }
 
-interface PickListItem {
+interface ListTypeEntry {
 	externalReferenceCode: string;
 	id: number;
 	key: string;
@@ -102,12 +102,12 @@ interface PickListItem {
 	name_i18n: LocalizedValue<string>;
 }
 
-interface PickList {
+interface ListTypeDefinition {
 	actions: Actions;
 	externalReferenceCode: string;
 	id: number;
 	key: string;
-	listTypeEntries: PickListItem[];
+	listTypeEntries: ListTypeEntry[];
 	name: string;
 	name_i18n: LocalizedValue<string>;
 	system: boolean;
@@ -149,7 +149,7 @@ export async function addPickListItem({
 	id,
 	key,
 	name_i18n,
-}: Partial<PickListItem>) {
+}: Partial<ListTypeEntry>) {
 	return await save({
 		item: {key, name_i18n},
 		method: 'POST',
@@ -314,20 +314,20 @@ export async function getObjectValidationRuleById<T>(
 	);
 }
 
-export async function getPickList(pickListId: number): Promise<PickList> {
-	return await fetchJSON<PickList>(
+export async function getPickList(pickListId: number): Promise<ListTypeDefinition> {
+	return await fetchJSON<ListTypeDefinition>(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions/${pickListId}`
 	);
 }
 
 export async function getPickListItems(pickListId: number) {
-	return await getList<PickListItem>(
+	return await getList<ListTypeEntry>(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions/${pickListId}/list-type-entries?pageSize=-1`
 	);
 }
 
 export async function getPickLists() {
-	return await getList<PickList>(
+	return await getList<ListTypeDefinition>(
 		'/o/headless-admin-list-type/v1.0/list-type-definitions?pageSize=-1'
 	);
 }
@@ -437,7 +437,7 @@ export async function updatePickList({
 	id,
 	listTypeEntries,
 	name_i18n,
-}: Partial<PickList>) {
+}: Partial<ListTypeDefinition>) {
 	return await save({
 		item: {externalReferenceCode, listTypeEntries, name_i18n},
 		method: 'PUT',
@@ -449,7 +449,7 @@ export async function updatePickListItem({
 	externalReferenceCode,
 	id,
 	name_i18n,
-}: Partial<PickListItem>) {
+}: Partial<ListTypeEntry>) {
 	return await save({
 		item: {externalReferenceCode, name_i18n},
 		method: 'PUT',

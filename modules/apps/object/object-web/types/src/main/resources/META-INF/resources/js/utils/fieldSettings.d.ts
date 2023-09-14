@@ -15,7 +15,7 @@ export declare function normalizeFieldSettings(
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
-	acceptedFileExtensions?:
+	defaultValue?:
 		| string
 		| number
 		| boolean
@@ -24,7 +24,7 @@ export declare function normalizeFieldSettings(
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
-	defaultValue?:
+	acceptedFileExtensions?:
 		| string
 		| number
 		| boolean

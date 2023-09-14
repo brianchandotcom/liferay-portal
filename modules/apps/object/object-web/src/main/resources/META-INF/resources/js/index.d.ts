@@ -275,12 +275,12 @@ type ObjectFieldFilterSetting = {
 	filterType?: string;
 	json:
 		| {
-		[key: string]:
-			| string
-			| string[]
-			| ObjectFieldDateRangeFilterSettings
-			| undefined;
-	}
+				[key: string]:
+					| string
+					| string[]
+					| ObjectFieldDateRangeFilterSettings
+					| undefined;
+		  }
 		| ExcludesFilterOperator
 		| IncludesFilterOperator
 		| string;

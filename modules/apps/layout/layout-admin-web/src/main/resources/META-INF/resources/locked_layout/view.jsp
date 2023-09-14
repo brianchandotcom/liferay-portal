@@ -18,7 +18,7 @@
 			<clay:content-col
 				cssClass="c-mb-3"
 			>
-				<img src="<%= lockedLayoutDisplayContext.getImagesPath() %>/blocked_page.png" />
+				<img alt="" src="<%= lockedLayoutDisplayContext.getImagesPath() %>/blocked_page.png" />
 			</clay:content-col>
 		</clay:content-row>
 

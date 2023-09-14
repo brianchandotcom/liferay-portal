@@ -67,7 +67,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 				TestPropsValues.getCompanyId(), "C_AAA");
 
 		ObjectDefinition objectDefinitionAAAA =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				"AAAA", _objectDefinitionLocalService);
 
 		ObjectRelationship objectRelationshipAAA_AAAA =
@@ -185,7 +185,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 		// Object definition, not hierarchical structure
 
 		ObjectDefinition objectDefinitionBBB =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				"BBB", _objectDefinitionLocalService);
 
 		ObjectRelationship objectRelationshipBBB_AAAA =

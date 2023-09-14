@@ -74,7 +74,7 @@ public class ObjectLayoutLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			_objectDefinitionLocalService);
 	}
 
@@ -119,7 +119,7 @@ public class ObjectLayoutLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
 
-		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			_objectDefinitionLocalService);
 
 		_objectDefinition.setStorageType(RandomTestUtil.randomString());
@@ -155,7 +155,7 @@ public class ObjectLayoutLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
 
-		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			_objectDefinitionLocalService);
 
 		_objectDefinition.setEnableCategorization(false);
@@ -190,7 +190,7 @@ public class ObjectLayoutLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
 
-		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			_objectDefinitionLocalService);
 
 		AssertUtils.assertFailure(
@@ -225,7 +225,7 @@ public class ObjectLayoutLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
 
-		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			_objectDefinitionLocalService);
 
 		AssertUtils.assertFailure(
@@ -286,7 +286,7 @@ public class ObjectLayoutLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
 
-		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			_objectDefinitionLocalService);
 
 		AssertUtils.assertFailure(

@@ -224,7 +224,8 @@ public class DisplayPageDisplayContext {
 
 		List<BreadcrumbEntry> breadcrumbEntries = TransformUtil.transform(
 			curLayoutPageTemplateCollection.getAncestors(),
-			ancestor -> _createBreadcrumbEntry(ancestor, portletURL));
+			layoutPageTemplateCollection -> _createBreadcrumbEntry(
+				layoutPageTemplateCollection, portletURL));
 
 		breadcrumbEntries.add(_getRootBreadcrumbEntry(portletURL));
 

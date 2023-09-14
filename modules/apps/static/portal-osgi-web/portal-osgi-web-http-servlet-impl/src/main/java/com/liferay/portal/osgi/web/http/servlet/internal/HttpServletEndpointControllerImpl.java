@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.atomic.AtomicReference;
 
 import javax.servlet.ServletContext;
 
@@ -279,9 +278,8 @@ public class HttpServletEndpointControllerImpl
 		new ConcurrentHashMap<>());
 	private final ServiceRegistration<ServletContextHelper>
 		_serviceRegistration;
-	private final ServiceTracker
-		<ServletContextHelper, AtomicReference<ContextController>>
-			_servletContextHelperServiceTracker;
+	private final ServiceTracker<ServletContextHelper, ContextController>
+		_servletContextHelperServiceTracker;
 
 	private static class DefaultServletContextHelper
 		extends ServletContextHelper {
@@ -314,16 +312,14 @@ public class HttpServletEndpointControllerImpl
 
 	private class ServletContextHelperServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
-			<ServletContextHelper, AtomicReference<ContextController>> {
+			<ServletContextHelper, ContextController> {
 
 		@Override
-		public AtomicReference<ContextController> addingService(
+		public ContextController addingService(
 			ServiceReference<ServletContextHelper> serviceReference) {
 
-			AtomicReference<ContextController> result = new AtomicReference<>();
-
 			if (!matches(serviceReference)) {
-				return result;
+				return null;
 			}
 
 			String contextName = (String)serviceReference.getProperty(
@@ -354,7 +350,7 @@ public class HttpServletEndpointControllerImpl
 
 				_contextControllersMap.put(serviceReference, contextController);
 
-				result.set(contextController);
+				return contextController;
 			}
 			catch (HttpWhiteboardFailureException
 						httpWhiteboardFailureException) {
@@ -367,28 +363,19 @@ public class HttpServletEndpointControllerImpl
 				_parentServletContext.log(exception.getMessage(), exception);
 			}
 
-			return result;
+			return null;
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<ServletContextHelper> serviceReference,
-			AtomicReference<ContextController> atomicReference) {
-
-			removedService(serviceReference, atomicReference);
-
-			AtomicReference<ContextController> added = addingService(
-				serviceReference);
-
-			atomicReference.set(added.get());
+			ContextController contextController) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<ServletContextHelper> serviceReference,
-			AtomicReference<ContextController> atomicReference) {
-
-			ContextController contextController = atomicReference.get();
+			ContextController contextController) {
 
 			if (contextController != null) {
 				contextController.destroy();

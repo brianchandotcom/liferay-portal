@@ -98,7 +98,7 @@ public class DLViewDisplayContext {
 		return PortletURLBuilder.createRenderURL(
 			_renderResponse
 		).setMVCRenderCommandName(
-			"/document_library/bulk_copy_entries"
+			"/document_library/copy_entries"
 		).setRedirect(
 			_getRedirect()
 		).setParameter(

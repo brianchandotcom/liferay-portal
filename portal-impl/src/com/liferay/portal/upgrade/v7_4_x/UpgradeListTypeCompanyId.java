@@ -75,7 +75,7 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 			List<ListTypeEntry> listTypeEntries, long companyId)
 		throws Exception {
 
-		HashMap<Long, Long> listTypeIdChanges = new HashMap<>();
+		HashMap<Long, Long> listTypeIds = new HashMap<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"insert into ListType (companyId, listTypeId, mvccVersion, " +
@@ -90,18 +90,17 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 				preparedStatement.setString(4, listTypeEntry.getName());
 				preparedStatement.setString(5, listTypeEntry.getType());
 
-				listTypeIdChanges.put(
-					listTypeEntry.getListTypeId(), newListTypeId);
+				listTypeIds.put(listTypeEntry.getListTypeId(), newListTypeId);
 
 				preparedStatement.execute();
 			}
 		}
 
-		return listTypeIdChanges;
+		return listTypeIds;
 	}
 
-	private void _updateListTypeIdReferences(
-			HashMap<Long, Long> listTypeIdChanges, long companyId)
+	private void _updateListTypeReferences(
+			HashMap<Long, Long> listTypeIds, long companyId)
 		throws Exception {
 
 		for (Map.Entry<String, List<String>> listTypeReference :
@@ -118,12 +117,12 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 								" = ? where ", column,
 								" = ? and companyId = ?"))) {
 
-					for (Map.Entry<Long, Long> listTypeIdChange :
-							listTypeIdChanges.entrySet()) {
+					for (Map.Entry<Long, Long> listTypeIdEntry :
+							listTypeIds.entrySet()) {
 
 						preparedStatement.setLong(
-							1, listTypeIdChange.getValue());
-						preparedStatement.setLong(2, listTypeIdChange.getKey());
+							1, listTypeIdEntry.getValue());
+						preparedStatement.setLong(2, listTypeIdEntry.getKey());
 						preparedStatement.setLong(3, companyId);
 
 						preparedStatement.executeUpdate();
@@ -144,10 +143,10 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 
 		for (long companyId : companyIds) {
 			if (companyId != defaultCompanyId) {
-				HashMap<Long, Long> listTypeIdChanges = _insertListTypes(
+				HashMap<Long, Long> listTypeIds = _insertListTypes(
 					listTypeEntries, companyId);
 
-				_updateListTypeIdReferences(listTypeIdChanges, companyId);
+				_updateListTypeReferences(listTypeIds, companyId);
 			}
 		}
 	}

@@ -177,9 +177,9 @@ function ListTypeEntriesModal() {
 			setErrors({});
 			try {
 				if (modalType === 'add') {
-					await API.addPickListItem({
-						id: pickListId,
+					await API.postListTypeEntry({
 						key: itemKey,
+						listTypeDefinitionId: pickListId,
 						name_i18n,
 					});
 					openToast({

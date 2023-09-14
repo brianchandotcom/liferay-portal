@@ -23,7 +23,7 @@ public class SystemObjectDefinitionManagementChecker {
 		return ArrayUtil.exists(
 			_ALLOWED_INVOKER_BUNDLE_SYMBOLIC_NAMES,
 			allowedInvokerBundleSymbolicName -> StringUtil.startsWith(
-				BatchEngineUnitThreadLocal.getInvokerBundleNamespace(),
+				BatchEngineUnitThreadLocal.getFileName(),
 				allowedInvokerBundleSymbolicName));
 	}
 

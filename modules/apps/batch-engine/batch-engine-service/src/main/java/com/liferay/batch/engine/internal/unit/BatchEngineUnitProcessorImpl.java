@@ -195,7 +195,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				batchEngineTaskItemDelegate);
 
 		try {
-			BatchEngineUnitThreadLocal.setInvokerBundleNamespace(
+			BatchEngineUnitThreadLocal.setFileName(
 				batchEngineUnit.getFileName());
 
 			_batchEngineImportTaskExecutor.execute(
@@ -203,7 +203,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				batchEngineUnitConfiguration.isCheckPermissions());
 		}
 		finally {
-			BatchEngineUnitThreadLocal.setInvokerBundleNamespace(StringPool.BLANK);
+			BatchEngineUnitThreadLocal.setFileName(StringPool.BLANK);
 		}
 
 		if (_log.isInfoEnabled()) {

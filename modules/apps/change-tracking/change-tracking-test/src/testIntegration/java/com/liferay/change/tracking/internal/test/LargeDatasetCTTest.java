@@ -30,25 +30,28 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
@@ -107,7 +110,11 @@ public class LargeDatasetCTTest {
 
 		_dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
-		try (SafeCloseable safeCloseable1 =
+		for (int i = 0; i < _COUNT_ORGANIZATIONS; i++) {
+			OrganizationTestUtil.addOrganization();
+		}
+
+		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
@@ -147,11 +154,45 @@ public class LargeDatasetCTTest {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
+	@Test
+	public void testAssignOrganization() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				"Assigning orgs in production")) {
+
+			long[] organizationIds = ListUtil.toLongArray(
+				_organizationLocalService.getOrganizations(
+					0, _COUNT_ORGANIZATIONS / 2),
+				Organization.ORGANIZATION_ID_ACCESSOR);
+
+			System.out.println(organizationIds.length);
+
+			_organizationLocalService.addUserOrganizations(
+				TestPropsValues.getUserId(), organizationIds);
+		}
+
+		try (LoggingTimer loggingTimer = new LoggingTimer(
+				"Assigning orgs in publication");
+			SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			long[] organizationIds = ListUtil.toLongArray(
+				_organizationLocalService.getOrganizations(
+					_COUNT_ORGANIZATIONS / 2, _COUNT_ORGANIZATIONS),
+				Organization.ORGANIZATION_ID_ACCESSOR);
+
+			System.out.println(organizationIds.length);
+
+			_organizationLocalService.addUserOrganizations(
+				TestPropsValues.getUserId(), organizationIds);
+		}
+	}
+
 	@Ignore
 	@Test
 	public void testBuildSiteMap() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			SafeCloseable safeCloseable1 =
+			SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
@@ -198,7 +239,7 @@ public class LargeDatasetCTTest {
 	@Test
 	public void testIncludeLayoutContent() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			SafeCloseable safeCloseable1 =
+			SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {
 
@@ -400,6 +441,8 @@ public class LargeDatasetCTTest {
 
 	private static final int _COUNT_LAYOUT_PORTLET = 1;
 
+	private static final int _COUNT_ORGANIZATIONS = 1;
+
 	private static final boolean _SITE_INITIALIZER = false;
 
 	@Inject
@@ -441,10 +484,8 @@ public class LargeDatasetCTTest {
 	@DeleteAfterTestRun
 	private Layout _layoutContent;
 
-	@Inject(
-		filter = "mvc.command.name=/fragment/propagate_group_fragment_entry_changes"
-	)
-	private MVCActionCommand _mvcActionCommand;
+	@Inject
+	private OrganizationLocalService _organizationLocalService;
 
 	@Inject
 	private Portal _portal;

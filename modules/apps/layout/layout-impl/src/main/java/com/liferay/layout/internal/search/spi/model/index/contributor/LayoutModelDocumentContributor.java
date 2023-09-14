@@ -53,7 +53,9 @@ public class LayoutModelDocumentContributor
 			_layoutLocalizationLocalService.getLayoutLocalizations(
 				layout.getPlid());
 
-		if (layoutLocalizations.isEmpty() && layout.isPublished()) {
+		if (layout.isTypeContent() && layoutLocalizations.isEmpty() &&
+			layout.isPublished()) {
+
 			try (AutoCloseable autoCloseable =
 					_layoutServiceContextHelper.getServiceContextAutoCloseable(
 						layout)) {

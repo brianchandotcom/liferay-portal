@@ -309,6 +309,9 @@ definition {
 		if (isSet(copyDuplicatedDocument)) {
 			Alert.viewErrorMessage(errorMessage = "A folder already exists with name ${dmFolderName}");
 		}
+		else if (isSet(copyToUnconnectedSite)) {
+			Alert.viewErrorMessage(errorMessage = "The item is not copied because the site and asset library are not connected.");
+		}
 		else {
 			Alert.viewSuccessMessage();
 		}

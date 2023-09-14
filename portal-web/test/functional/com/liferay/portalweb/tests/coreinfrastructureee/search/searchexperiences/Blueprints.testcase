@@ -720,6 +720,66 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-192211."
+	@priority = 3
+	test AssertGlobalCategoryVisibleInHideContentAssetCategory {
+		task ("Add a global vocabulary and with a category") {
+			JSONCategory.addVocabulary(
+				groupName = "Global",
+				title = "Test Vocabulary");
+
+			var categoryID = JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Test Category",
+				vocabularyName = "Test Vocabulary");
+		}
+
+		task ("Create a blueprint and add the 'Hide Contents in a Category' element") {
+			Blueprints.openBlueprintsAdmin();
+
+			Blueprints.createBlueprint(title = "Test Blueprint");
+
+			Blueprints.addElementViaDescription(
+				element = "Hide contents in the given category.",
+				searchTerm = "Hide Contents in a Category");
+		}
+
+		task ("Assert that the global category is present when searching in the text field") {
+			Type(
+				key_elementName = "Hide Contents in a Category",
+				key_fieldLabel = "Asset Category Name (ID)",
+				locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
+				value1 = "Test");
+
+			AssertElementPresent(
+				key_assetCategory = "Test Category (ID: ${categoryID})",
+				locator1 = "Blueprints#BLUEPRINTS_ASSET_CATEGORY_FIELD_AUTOCOMPLETE_DROPDOWN_ITEM");
+		}
+
+		task ("Assert that the global category is present when opening the select modal frame") {
+			Click(locator1 = "Button#SELECT");
+
+			SelectFrameTop();
+
+			Click(
+				key_dropdownName = "Select Site",
+				locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_GENERIC_DROPDOWN");
+
+			Click.clickNoMouseOver(
+				key_dropdownName = "Select Site",
+				key_option = "Global",
+				locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_GENERIC_DROPDOWN_OPTION");
+
+			Click(
+				key_treeItem = "Test Vocabulary",
+				locator1 = "Blueprints#BLUEPRINTS_ASSET_CATEGORY_TREE_VIEW_ITEM");
+
+			AssertElementPresent(
+				key_treeItem = "Test Category (ID: ${categoryID})",
+				locator1 = "Blueprints#BLUEPRINTS_ASSET_CATEGORY_TREE_VIEW_ITEM_SELECT");
+		}
+	}
+
 	@priority = 3
 	test AssertLocalizedFieldsAddLocaleDropdown {
 		Blueprints.openBlueprintsAdmin();

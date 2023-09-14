@@ -42,21 +42,6 @@ export default withRouter(
 			},
 		});
 
-		const BuildTitleButton = () => {
-			if (context.trustedUser && !context.showFeatureRequestText) {
-				return Liferay.Language.get('update-your-question');
-			}
-
-			if (
-				Liferay.FeatureFlags['LPS-185892'] &&
-				context.showFeatureRequestText
-			) {
-				return Liferay.Language.get('update-your-request');
-			}
-
-			return Liferay.Language.get('submit-for-workflow');
-		};
-
 		useEffect(() => {
 			if (data.messageBoardThreadByFriendlyUrlPath) {
 				editorRef.current.setContent(
@@ -83,7 +68,11 @@ export default withRouter(
 			<section className="c-mt-5 questions-section questions-section-edit">
 				<div className="questions-container row">
 					<div className="c-mx-auto col-xl-10">
-						<h1>{Liferay.Language.get('edit-question')}</h1>
+						<h1>
+							{Liferay.FeatureFlags['LPS-185892']
+								? context.editQuestionText
+								: Liferay.Language.get('edit-question')}
+						</h1>
 
 						<ClayForm>
 							<ClayForm.Group className="c-mt-4">
@@ -172,7 +161,15 @@ export default withRouter(
 									).then(() => history.goBack());
 								}}
 							>
-								<BuildTitleButton />
+								{context.trustedUser
+									? Liferay.FeatureFlags['LPS-185892']
+										? context.updateYourQuestionText
+										: Liferay.Language.get(
+												'update-your-question'
+										  )
+									: Liferay.Language.get(
+											'submit-for-workflow'
+									  )}
 							</ClayButton>
 
 							<Link

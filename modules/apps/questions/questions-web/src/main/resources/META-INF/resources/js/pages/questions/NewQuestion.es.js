@@ -170,7 +170,11 @@ export default withRouter(
 			<section className="c-mt-5 questions-section questions-section-new">
 				<div className="questions-container row">
 					<div className="c-mx-auto col-xl-10">
-						<h1>{Liferay.Language.get('new-question')}</h1>
+						<h1>
+							{Liferay.FeatureFlags['LPS-185892']
+								? context.newQuestionText
+								: Liferay.Language.get('ask-question')}
+						</h1>
 
 						<ClayForm className="c-mt-5">
 							<ClayForm.Group>
@@ -254,11 +258,13 @@ export default withRouter(
 							<ClayButton
 								aria-label={
 									context.trustedUser
-										? Liferay.Language.get(
-												'post-your-question'
-										  )
+										? Liferay.FeatureFlags['LPS-185892']
+											? context.postYourQuestionText
+											: Liferay.Language.get(
+													'post-your-question'
+											  )
 										: Liferay.Language.get(
-												'submit-for-publication'
+												'submit-for-workflow'
 										  )
 								}
 								className="c-mt-4 c-mt-sm-0"
@@ -269,7 +275,11 @@ export default withRouter(
 								}}
 							>
 								{context.trustedUser
-									? Liferay.Language.get('post-your-question')
+									? Liferay.FeatureFlags['LPS-185892']
+										? context.postYourQuestionText
+										: Liferay.Language.get(
+												'post-your-question'
+										  )
 									: Liferay.Language.get(
 											'submit-for-workflow'
 									  )}

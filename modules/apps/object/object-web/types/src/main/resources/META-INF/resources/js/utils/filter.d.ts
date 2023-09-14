@@ -11,7 +11,7 @@ export declare function getCheckedListTypeEntries(
 	itemValues: ListTypeEntry[],
 	setEditingFilterType: () => number[] | string[] | null
 ): IItem[];
-export declare function getSystemFieldLabelFromEntry(
+export declare function getSystemObjectFieldLabelFromObjectEntry(
 	titleFieldName: string,
 	entry: ObjectEntry,
 	itemObject: LabelValueObject

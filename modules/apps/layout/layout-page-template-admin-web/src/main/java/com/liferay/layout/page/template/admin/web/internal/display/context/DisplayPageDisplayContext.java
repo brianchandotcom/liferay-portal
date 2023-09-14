@@ -224,7 +224,7 @@ public class DisplayPageDisplayContext {
 
 		List<BreadcrumbEntry> breadcrumbEntries = TransformUtil.transform(
 			currentLayoutPageTemplateCollection.getAncestors(),
-			ancestor -> _createBreadCrumbEntry(portletURL, ancestor));
+			ancestor -> _createBreadcrumbEntry(portletURL, ancestor));
 
 		breadcrumbEntries.add(_getRootBreadcrumbEntry(portletURL));
 
@@ -322,7 +322,7 @@ public class DisplayPageDisplayContext {
 		return false;
 	}
 
-	private BreadcrumbEntry _createBreadCrumbEntry(
+	private BreadcrumbEntry _createBreadcrumbEntry(
 		PortletURL portletURL,
 		LayoutPageTemplateCollection layoutPageTemplateCollection) {
 

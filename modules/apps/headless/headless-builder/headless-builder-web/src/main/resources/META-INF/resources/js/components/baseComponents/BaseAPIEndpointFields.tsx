@@ -85,6 +85,11 @@ export default function BaseAPIEndpointFields({
 		'add-a-short-description-that-describes-this-endpoint'
 	);
 
+	const endpointPathHostTextPreview =
+		selectedScope?.value === 'group'
+			? `${window.location.origin}${basePath}${apiApplicationBaseURL}/sites/{siteId}`
+			: `${window.location.origin}${basePath}${apiApplicationBaseURL}`;
+	const endpointPathLabel = Liferay.Language.get('enter-path');
 
 	return (
 		<ClayForm>
@@ -159,7 +164,7 @@ export default function BaseAPIEndpointFields({
 				</label>
 
 				<Text as="p" id="hostTextPreview" size={2} weight="lighter">
-					{`${window.location.origin}${basePath}${apiApplicationBaseURL}`}
+					{endpointPathHostTextPreview}
 				</Text>
 
 				<ClayInput.Group

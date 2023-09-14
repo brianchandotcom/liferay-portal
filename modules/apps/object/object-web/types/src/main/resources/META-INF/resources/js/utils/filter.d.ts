@@ -7,7 +7,7 @@ export declare function getCheckedWorkflowStatusItems(
 	itemValues: LabelValueObject[],
 	setEditingFilterType: () => number[] | string[] | null
 ): IItem[];
-export declare function getCheckedPickListItems(
+export declare function getCheckedListTypeEntries(
 	itemValues: ListTypeEntry[],
 	setEditingFilterType: () => number[] | string[] | null
 ): IItem[];

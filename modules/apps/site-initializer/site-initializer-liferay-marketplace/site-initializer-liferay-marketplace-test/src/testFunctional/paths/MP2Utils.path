@@ -11,8 +11,28 @@
 
 <tbody>
 <tr>
+	<td>EMAIL_ADDRESS_FIELD</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_login']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOCKMOCK_HTML_BODY_FORMATTED</td>
+	<td>//div[@name='bodyHTML_Formatted']//main//span[@data-userpassword]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD_FIELD</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_password']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESPONSIVE_TABLE</td>
 	<td>//div[@class='table-responsive']//td[contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_IN_BUTTON</td>
+	<td>//button[contains(.,'Sign In')] | //input[@value='Sign In']</td>
 	<td></td>
 </tr>
 

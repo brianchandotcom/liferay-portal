@@ -87,7 +87,7 @@ definition {
 		if (!(isSet(catalogName))) {
 			var catalogName = "MKT Catalog";
 		}
-		
+
 		JSONMP2.addCatalog();
 
 		var accountId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountName});

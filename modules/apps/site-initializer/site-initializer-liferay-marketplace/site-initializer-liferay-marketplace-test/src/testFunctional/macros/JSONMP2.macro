@@ -7,7 +7,7 @@ definition {
 
 		CommerceJSONCatalogsAPI._addCatalog(catalogName = ${catalogName});
 	}
-	
+
 	macro updateAccount {
 		if (!(isSet(accountName))) {
 			var accountName = "QA Development";
@@ -39,4 +39,5 @@ definition {
 			roleTitle = "Administrator",
 			userEmailAddress = StringUtil.toLowerCase("da@administrator.com"));
 	}
+
 }

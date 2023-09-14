@@ -45,7 +45,7 @@ import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
-import com.liferay.object.internal.definition.util.ObjectDefinitionUtil;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.internal.deployer.InactiveObjectDefinitionDeployerImpl;
 import com.liferay.object.internal.deployer.ObjectDefinitionDeployerImpl;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;

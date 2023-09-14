@@ -6,7 +6,7 @@
 package com.liferay.object.model.impl;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.internal.definition.util.ObjectDefinitionUtil;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;

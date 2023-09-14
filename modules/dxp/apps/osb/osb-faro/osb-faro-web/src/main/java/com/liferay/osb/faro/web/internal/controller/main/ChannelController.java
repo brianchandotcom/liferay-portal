@@ -308,10 +308,20 @@ public class ChannelController extends BaseFaroController {
 			groupId, query, startAndEnd[0], startAndEnd[1],
 			new FaroChannelComparator(orderByFields));
 
+		if ((cur == -1) && (delta == -1)) {
+			return new FaroResultsDisplay<>(
+				TransformUtil.transform(faroChannels, FaroChannelDisplay::new),
+				_faroChannelLocalService.searchCount(groupId, query));
+		}
+
+		if (faroChannels.isEmpty()) {
+			return new FaroResultsDisplay<>();
+		}
+
 		Results<Channel> channelsResult = contactsEngineClient.getChannels(
-			faroProjectLocalService.getFaroProjectByGroupId(groupId),
-			ListUtil.toList(faroChannels, FaroChannel::getChannelId), cur,
-			delta, null);
+			faroProjectLocalService.getFaroProjectByGroupId(groupId), cur,
+			delta, ListUtil.toList(faroChannels, FaroChannel::getChannelId),
+			null);
 
 		List<Channel> channels = channelsResult.getItems();
 

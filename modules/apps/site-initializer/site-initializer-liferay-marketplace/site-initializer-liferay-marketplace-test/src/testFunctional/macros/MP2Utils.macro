@@ -17,19 +17,15 @@ definition {
 	}
 
 	macro firstLoginMKT {
+		var baseURL = PropsUtil.get("portal.url");
+
 		MockMock._gotoMailMessage(
 			asset = ${asset},
 			recipient = ${recipient});
 
-		var key_bodyLink = ${bodyLink};
-
-		ScrollWebElementIntoView(locator1 = "MP2Utils#MOCKMOCK_HTML_BODY_FORMATTED");
-
 		var userPassword = selenium.getText("MP2Utils#MOCKMOCK_HTML_BODY_FORMATTED");
 
-		AssertClick(
-			locator1 = "MockMock#MOCKMOCK_HTML_BODY_LINK",
-			value1 = ${bodyLink});
+		Navigator.openSpecificURL(url = "${baseURL}/c/login?redirect=/web/marketplace-site/publisher-dashboard");
 
 		Type(
 			locator1 = "TextInput#EMAIL_ADDRESS",

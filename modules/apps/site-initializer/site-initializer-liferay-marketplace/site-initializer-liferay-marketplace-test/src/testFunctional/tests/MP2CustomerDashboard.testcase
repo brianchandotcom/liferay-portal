@@ -45,6 +45,8 @@ definition {
 		}
 
 		task ("When the admin user invites a new member") {
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Development");
+
 			MP2Navigator.gotoNavItem(navItem = "Members");
 
 			MP2Dashboards.inviteNewMember(
@@ -70,6 +72,8 @@ definition {
 		}
 
 		task ("When the user invites a new member") {
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Development");
+
 			MP2Navigator.gotoNavItem(navItem = "Members");
 
 			MP2Dashboards.inviteNewMember(
@@ -103,6 +107,8 @@ definition {
 		}
 
 		task ("When the user tries to invite a new member") {
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Development");
+
 			MP2Navigator.gotoNavItem(navItem = "Members");
 		}
 
@@ -119,6 +125,8 @@ definition {
 		}
 
 		task ("When the admin user invites a new member") {
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Development");
+
 			MP2Navigator.gotoNavItem(navItem = "Members");
 
 			MP2Dashboards.inviteNewMember(

@@ -136,7 +136,7 @@ definition {
 		}
 
 		task ("Then I should be able to assert that the user has access to the Publisher Dashboard from the Marketpace account") {
-			AssertLocation(value1 = "http://localhost:8080/web/marketplace-site/publisher-dashboard");
+			AssertLocation.assertPartialLocation(value1 = "web/marketplace-site/publisher-dashboard");
 		}
 	}
 

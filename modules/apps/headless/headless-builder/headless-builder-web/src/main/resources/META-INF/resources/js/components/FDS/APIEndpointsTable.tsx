@@ -5,9 +5,10 @@
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-web';
-import React, {useContext, useEffect} from 'react';
+import React, {Dispatch, SetStateAction, useContext, useEffect} from 'react';
 
 import {EditAPIApplicationContext} from '../EditAPIApplicationContext';
+import {CreateAPIEndpointModalContent} from '../modals/CreateAPIEndpointModalContent';
 import {DeleteAPIEndpointModalContent} from '../modals/DeleteAPIEndpointModalContent';
 import {getFilterRelatedItemURL} from '../utils/urlUtil';
 import {getAPIEndpointsFDSProps} from './fdsUtils/endpointsFDSProps';
@@ -15,21 +16,42 @@ import {getAPIEndpointsFDSProps} from './fdsUtils/endpointsFDSProps';
 interface APIApplicationsTableProps {
 	apiApplicationBaseURL: string;
 	apiURLPaths: APIURLPaths;
+	basePath: string;
 	currentAPIApplicationId: string | null;
 	portletId: string;
 	readOnly: boolean;
+	setMainEndpointNav: Dispatch<SetStateAction<MainEndpointNav>>;
 }
 
 export default function APIEndpointsTable({
 	apiApplicationBaseURL,
 	apiURLPaths,
+	basePath,
 	currentAPIApplicationId,
 	portletId,
+	setMainEndpointNav,
 }: APIApplicationsTableProps) {
 	const {setHideManagementButtons} = useContext(EditAPIApplicationContext);
 
 	const createAPIEndpoint = {
 		label: Liferay.Language.get('add-api-endpoint'),
+		onClick: ({loadData}: {loadData: voidReturn}) => {
+			openModal({
+				center: true,
+				contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
+					CreateAPIEndpointModalContent({
+						apiApplicationBaseURL,
+						apiEndpointsURLPath: apiURLPaths.endpoints,
+						basePath,
+						closeModal,
+						currentAPIApplicationId,
+						loadData,
+						setMainEndpointNav,
+					}),
+				id: 'createAPIEndpointModal',
+				size: 'md',
+			});
+		},
 	};
 
 	const endpointAPIURLPath = getFilterRelatedItemURL({

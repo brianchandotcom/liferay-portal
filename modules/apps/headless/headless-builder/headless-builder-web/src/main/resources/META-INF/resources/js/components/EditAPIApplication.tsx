@@ -12,7 +12,7 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import {localStorage, openModal, openToast} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import APIEndpointsTable from '../components/FDS/APIEndpointsTable';
+import EndpointsContent from '../components/EndpointsContent';
 import SchemasContent from '../components/SchemasContent';
 import {APIApplicationManagementToolbar} from './APIApplicationManagementToolbar';
 import {EditAPIApplicationContext} from './EditAPIApplicationContext';
@@ -395,12 +395,15 @@ export default function EditAPIApplication({
 					</ClayLayout.Container>
 				)}
 				{activeNav === 'endpoints' && (
-					<APIEndpointsTable
-						apiApplicationBaseURL={localUIData.baseURL}
+					<EndpointsContent
+						apiApplicationData={localUIData}
 						apiURLPaths={apiURLPaths}
+						basePath={basePath}
 						currentAPIApplicationId={currentAPIApplicationId}
 						portletId={portletId}
-						readOnly={false}
+						setManagementButtonsProps={setManagementButtonsProps}
+						setStatus={setStatus}
+						setTitle={setTitle}
 					/>
 				)}
 				{activeNav === 'schemas' && (

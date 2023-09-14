@@ -284,34 +284,41 @@ export function ModalAddFilter({
 						);
 					}
 					else {
-						const newItems = relatedObjectEntries.map((objectEntry) => {
-							const newItemsObject = {
-								value: system
-									? String(objectEntry.id)
-									: objectEntry.externalReferenceCode,
-							} as LabelValueObject;
+						const newItems = relatedObjectEntries.map(
+							(objectEntry) => {
+								const newItemsObject = {
+									value: system
+										? String(objectEntry.id)
+										: objectEntry.externalReferenceCode,
+								} as LabelValueObject;
 
-							if (titleObjectField.system) {
-								return getSystemObjectFieldLabelFromObjectEntry(
-									titleObjectField.name,
-									objectEntry,
-									newItemsObject
-								) as LabelValueObject;
+								if (titleObjectField.system) {
+									return getSystemObjectFieldLabelFromObjectEntry(
+										titleObjectField.name,
+										objectEntry,
+										newItemsObject
+									) as LabelValueObject;
+								}
+
+								let label = objectEntry[
+									titleObjectField?.name
+								] as string;
+
+								if (
+									titleObjectField.businessType ===
+									'Attachment'
+								) {
+									label = (objectEntry as {
+										[key: string]: AttachmentEntry;
+									})[titleObjectField.name].name;
+								}
+
+								return {
+									...newItemsObject,
+									label,
+								};
 							}
-
-							let label = objectEntry[titleObjectField?.name] as string;
-
-							if (titleObjectField.businessType === 'Attachment') {
-								label = (objectEntry as {
-									[key: string]: AttachmentEntry;
-								})[titleObjectField.name].name;
-							}
-
-							return {
-								...newItemsObject,
-								label,
-							};
-						});
+						);
 
 						setItems(newItems);
 					}

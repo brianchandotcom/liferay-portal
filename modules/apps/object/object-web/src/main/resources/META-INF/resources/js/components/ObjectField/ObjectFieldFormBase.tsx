@@ -36,7 +36,6 @@ import {FORMULA_OUTPUT_OPTIONS, FormulaOutput} from './formulaFieldUtil';
 
 import './ObjectFieldFormBase.scss';
 
-
 interface ObjectFieldFormBaseProps {
 	children?: ReactNode;
 	creationLanguageId2?: Liferay.Language.Locale;
@@ -180,7 +179,9 @@ export default function ObjectFieldFormBase({
 		return businessTypeMap;
 	}, [objectFieldTypes]);
 
-	const [listTypeDefinitions, setListTypeDefinitions] = useState<Partial<ListTypeDefinition>[]>([]);
+	const [listTypeDefinitions, setListTypeDefinitions] = useState<
+		Partial<ListTypeDefinition>[]
+	>([]);
 	const [picklistQuery, setPicklistQuery] = useState<string>('');
 
 	const [oneToManyRelationship, setOneToManyRelationship] = useState<
@@ -199,7 +200,9 @@ export default function ObjectFieldFormBase({
 	}, [picklistQuery, listTypeDefinitions]);
 
 	const selectedPicklist = useMemo(() => {
-		return listTypeDefinitions.find(({id}) => values.listTypeDefinitionId === id);
+		return listTypeDefinitions.find(
+			({id}) => values.listTypeDefinitionId === id
+		);
 	}, [listTypeDefinitions, values.listTypeDefinitionId]);
 
 	const handleTypeChange = async (option: ObjectFieldType) => {

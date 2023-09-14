@@ -197,6 +197,18 @@ typeSettings=&#91;&quot;friendlyURLMapping=vanilla&quot;,&quot;instanceable=true
 		</sequential>
 	</macrodef>
 
+	<macrodef name="create-fds-cell-renderer-client-extension">
+		<sequential>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.client.extension.type.configuration.CETConfiguration~fdsCellRenderer.config">
+baseURL=&quot;&quot;
+description=&quot;Liferay Sample Frontend Data Set Cell Renderer Description&quot;
+name=&quot;Liferay Sample Frontend Data Set Cell Renderer&quot;
+sourceCodeURL=&quot;&quot;
+type=&quot;fdsCellRenderer&quot;
+typeSettings=&#91;&quot;url=https:&#47;&#47;liferay.github.io&#47;liferay-frontend-projects&#47;index.html&quot;&#93;</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="create-iframe-client-extension">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.client.extension.type.configuration.CETConfiguration~iframe.config">
@@ -11728,6 +11740,15 @@ ${update.properties}</echo>
 			<equals arg1="${custom.element.client.extension.created}" arg2="true" />
 			<then>
 				<create-custom-element-client-extension />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="fds.cell.renderer.client.extension.created" />
+
+		<if>
+			<equals arg1="${fds.cell.renderer.client.extension.created}" arg2="true" />
+			<then>
+				<create-fds-cell-renderer-client-extension />
 			</then>
 		</if>
 

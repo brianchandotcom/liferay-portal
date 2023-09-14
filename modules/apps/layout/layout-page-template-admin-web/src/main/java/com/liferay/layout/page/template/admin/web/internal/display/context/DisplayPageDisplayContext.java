@@ -217,7 +217,7 @@ public class DisplayPageDisplayContext {
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT) {
 
 			return Collections.singletonList(
-				_getRootBreadcrumbEntry(_httpServletRequest, portletURL));
+				_getRootBreadcrumbEntry(portletURL));
 		}
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
@@ -232,8 +232,7 @@ public class DisplayPageDisplayContext {
 			ancestor -> breadcrumbEntries.add(
 				_createBreadCrumbEntry(portletURL, ancestor)));
 
-		breadcrumbEntries.add(
-			_getRootBreadcrumbEntry(_httpServletRequest, portletURL));
+		breadcrumbEntries.add(_getRootBreadcrumbEntry(portletURL));
 
 		Collections.reverse(breadcrumbEntries);
 
@@ -377,13 +376,11 @@ public class DisplayPageDisplayContext {
 		return null;
 	}
 
-	private BreadcrumbEntry _getRootBreadcrumbEntry(
-		HttpServletRequest httpServletRequest, PortletURL portletURL) {
-
+	private BreadcrumbEntry _getRootBreadcrumbEntry(PortletURL portletURL) {
 		BreadcrumbEntry homeBreadcrumbEntry = new BreadcrumbEntry();
 
 		homeBreadcrumbEntry.setTitle(
-			LanguageUtil.get(httpServletRequest, "home"));
+			LanguageUtil.get(_httpServletRequest, "home"));
 
 		portletURL.setParameter(
 			"layoutPageTemplateCollectionId", String.valueOf(0));

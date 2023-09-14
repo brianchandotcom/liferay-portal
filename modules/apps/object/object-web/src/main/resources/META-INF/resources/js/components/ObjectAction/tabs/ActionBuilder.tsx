@@ -44,6 +44,7 @@ const triggerKeys = [
 	'onAfterAdd',
 	'onAfterAttachmentDownload',
 	'onAfterDelete',
+	'onAfterRootUpdate',
 	'onAfterUpdate',
 ];
 

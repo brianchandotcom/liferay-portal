@@ -268,10 +268,10 @@ export async function getObjectDefinitionObjectFields(objectDefinitionId: number
 }
 
 export async function getObjectFolderByExternalReferenceCode(
-	objectFolderExternalReferenceCode: string
+	externalReferenceCode: string
 ) {
 	const objectFolderResponse = await fetch(
-		`/o/object-admin/v1.0/object-folders/by-external-reference-code/${objectFolderExternalReferenceCode}`,
+		`/o/object-admin/v1.0/object-folders/by-external-reference-code/${externalReferenceCode}`,
 		{method: 'GET'}
 	);
 

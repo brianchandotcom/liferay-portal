@@ -1,0 +1,43 @@
+definition {
+
+	macro getCurrentDisplayDate {
+		var displayDate = selenium.getAttribute("//input[contains(@id,'displayDate')]@value");
+
+		echo("Current display date is: ${displayDate}");
+
+		return ${displayDate};
+	}
+
+	macro getCurrentDisplayTime {
+		var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
+		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
+
+		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
+
+		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
+		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
+
+		var currentTime = "${displayDateHour}:${displayDateMinute} ${displayDateAmpm}";
+
+		echo("Current display time is: ${currentTime}");
+
+		return ${currentTime};
+	}
+
+	macro increaseDisplayTime {
+		var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
+		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
+
+		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
+
+		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
+		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
+
+		var displayDateMinuteFuture = ${displayDateMinute} + ${minuteIncreaseValue};
+
+		var displayTime = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAmpm}";
+
+		return ${displayTime};
+	}
+
+}

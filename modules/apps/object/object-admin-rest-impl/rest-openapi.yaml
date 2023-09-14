@@ -488,6 +488,8 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                externalReferenceCode:
+                    type: string
                 id:
                     format: int64
                     readOnly: true

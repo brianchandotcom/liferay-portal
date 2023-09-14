@@ -85,18 +85,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testChainingMethodEquals() throws Exception {
-		test(
-			SourceProcessorTestParameters.create(
-				"ChainingMethodEquals.testjava"
-			).addExpectedMessage(
-				"Use 'Objects.equals' instead of calling 'equals' on method", 15
-			).addExpectedMessage(
-				"Use 'Objects.equals' instead of calling 'equals' on method", 21
-			));
-	}
-
-	@Test
 	public void testChainPutForOrgJSONObject() throws Exception {
 		test(
 			"ChainPutForOrgJSONObject.testjava",
@@ -482,6 +470,18 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testMapBuilderGenerics() throws Exception {
 		test("MapBuilderGenerics.testjava");
+	}
+
+	@Test
+	public void testMethodEquals() throws Exception {
+		test(
+			SourceProcessorTestParameters.create(
+				"MethodEquals.testjava"
+			).addExpectedMessage(
+				"Use 'Objects.equals' instead of calling 'equals' on method", 15
+			).addExpectedMessage(
+				"Use 'Objects.equals' instead of calling 'equals' on method", 21
+			));
 	}
 
 	@Test

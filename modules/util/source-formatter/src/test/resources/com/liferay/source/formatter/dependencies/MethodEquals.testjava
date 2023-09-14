@@ -8,7 +8,7 @@ package com.liferay.source.formatter.dependencies;
 /**
  * @author Qi Zhang
  */
-public class ChainingMethodEquals {
+public class MethodEquals {
 
 	public boolean method1(Boolean b) {
 		return b.toString(

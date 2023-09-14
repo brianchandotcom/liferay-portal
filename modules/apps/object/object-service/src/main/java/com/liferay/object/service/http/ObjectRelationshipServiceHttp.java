@@ -47,7 +47,7 @@ public class ObjectRelationshipServiceHttp {
 				long objectDefinitionId2, long parameterObjectFieldId,
 				String deletionType,
 				java.util.Map<java.util.Locale, String> labelMap, String name,
-				String type)
+				boolean system, String type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -57,7 +57,8 @@ public class ObjectRelationshipServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, objectDefinitionId1, objectDefinitionId2,
-				parameterObjectFieldId, deletionType, labelMap, name, type);
+				parameterObjectFieldId, deletionType, labelMap, name, system,
+				type);
 
 			Object returnObj = null;
 
@@ -344,7 +345,7 @@ public class ObjectRelationshipServiceHttp {
 	private static final Class<?>[] _addObjectRelationshipParameterTypes0 =
 		new Class[] {
 			long.class, long.class, long.class, String.class,
-			java.util.Map.class, String.class, String.class
+			java.util.Map.class, String.class, boolean.class, String.class
 		};
 	private static final Class<?>[]
 		_addObjectRelationshipMappingTableValuesParameterTypes1 = new Class[] {

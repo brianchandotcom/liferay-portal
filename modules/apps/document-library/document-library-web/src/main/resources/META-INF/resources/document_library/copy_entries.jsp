@@ -8,9 +8,9 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-DLCopyEntryDisplayContext dlCopyEntryDisplayContext = new DLCopyEntryDisplayContext(request, liferayPortletResponse, themeDisplay);
+DLCopyEntriesDisplayContext dlCopyEntriesDisplayContext = new DLCopyEntriesDisplayContext(request, liferayPortletResponse, themeDisplay);
 
-dlCopyEntryDisplayContext.setViewAttributes();
+dlCopyEntriesDisplayContext.setViewAttributes();
 %>
 
 <div class="c-mt-3 sheet sheet-lg">
@@ -18,17 +18,17 @@ dlCopyEntryDisplayContext.setViewAttributes();
 		module="document_library/js/DLFolderSelector"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"copyActionURL", dlCopyEntryDisplayContext.getActionURL()
+				"copyActionURL", dlCopyEntriesDisplayContext.getActionURL()
 			).put(
-				"entryIds", dlCopyEntryDisplayContext.getEntryIds()
+				"entryIds", dlCopyEntriesDisplayContext.getEntryIds()
 			).put(
-				"entryName", dlCopyEntryDisplayContext.getEntryName()
+				"entryName", dlCopyEntriesDisplayContext.getEntryName()
 			).put(
-				"redirect", dlCopyEntryDisplayContext.getRedirect()
+				"redirect", dlCopyEntriesDisplayContext.getRedirect()
 			).put(
-				"selectionModalURL", dlCopyEntryDisplayContext.getSelectionModalURL()
+				"selectionModalURL", dlCopyEntriesDisplayContext.getSelectionModalURL()
 			).put(
-				"sourceRepositoryId", dlCopyEntryDisplayContext.getSourceRepositoryId()
+				"sourceRepositoryId", dlCopyEntriesDisplayContext.getSourceRepositoryId()
 			).build()
 		%>'
 	/>

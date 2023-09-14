@@ -81,9 +81,7 @@
 
 		<prepare-database-upgrade-properties />
 
-		<execute dir="${db.upgrade.client.home}">
-			db_upgrade_client${file.suffix.bat} run
-		</execute>
+		<antcall inheritAll="false" target="run-upgrade-client" />
 
 		<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.not.failed">
 			<resourcecontains
@@ -306,20 +304,6 @@
 		<echo>The upgrade client printed out the exception successfully.</echo>
 	</target>
 
-	<target name="check-upgrade-client-gogoshell-failed-upgrade">
-		<get-database-upgrade-client-paths />
-
-		<sql classpath="${app.server.shielded-container-lib.portal.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="output.txt" password="${database.mysql.password}" print="true" url="${database.mysql.url}" userid="${database.mysql.username}">
-			<![CDATA[
-				ALTER TABLE JournalArticle DROP type_;
-			]]>
-		</sql>
-
-		<execute dir="${db.upgrade.client.home}">
-			db_upgrade_client${file.suffix.bat} run
-		</execute>
-	</target>
-
 	<target name="check-upgrade-client-gogoshell-help-output">
 		<get-database-upgrade-client-paths />
 
@@ -499,17 +483,6 @@
 				<fail if="upgrade.failed" message="Upgrade has failed." />
 			</sequential>
 		</parallel>
-	</target>
-
-	<target name="check-upgrade-client-upgrade-core-only">
-		<get-database-upgrade-client-paths />
-
-		<echo append="true" file="${db.upgrade.client.home}/portal-upgrade-ext.properties">
-upgrade.database.auto.run=false</echo>
-
-		<execute dir="${db.upgrade.client.home}">
-			db_upgrade_client${file.suffix.bat} run
-		</execute>
 	</target>
 
 	<target name="check-upgrade-client-zip-content">
@@ -706,5 +679,13 @@ upgrade.database.auto.run=false</echo>
 			expect.file="execute-all-pending-upgrades-from-gogo-shell.expect"
 			file.suffix.bat="${file.suffix.bat}"
 		/>
+	</target>
+
+	<target name="run-upgrade-client">
+		<get-database-upgrade-client-paths />
+
+		<execute dir="${db.upgrade.client.home}">
+			db_upgrade_client${file.suffix.bat} run
+		</execute>
 	</target>
 </project>

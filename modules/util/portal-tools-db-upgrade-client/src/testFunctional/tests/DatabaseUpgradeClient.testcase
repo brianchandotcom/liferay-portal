@@ -60,11 +60,12 @@ definition {
 	@description = "LPS-158522: Upgrade client can connect to Gogo Shell with a failed upgrade"
 	@priority = 4
 	test CheckUpgradeClientGogoShellFailedUpgrade {
+		property custom.mysql.sql.statement = "ALTER TABLE JournalArticle DROP type_;";
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
 		property timeout.explicit.wait = "490";
 
-		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-gogoshell-failed-upgrade");
+		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "run-upgrade-client");
 
 		WaitForConsoleTextPresent(value1 = "Failed upgrade process for module com.liferay.journal.service");
 
@@ -116,11 +117,12 @@ definition {
 	@description = "LPS-158522: Upgrade client only upgrades core"
 	@priority = 2
 	test CheckUpgradeClientUpgradeCoreOnly {
+		property custom.upgrade.properties = "upgrade.database.auto.run=false";
 		property skip.get.testcase.database.properties = "true";
 		property skip.upgrade-legacy-database = "true";
 		property timeout.explicit.wait = "490";
 
-		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-upgrade-core-only");
+		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "run-upgrade-client");
 
 		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-unresolved-upgrade-log");
 

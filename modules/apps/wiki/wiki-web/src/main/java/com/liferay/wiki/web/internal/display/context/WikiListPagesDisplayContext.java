@@ -142,7 +142,7 @@ public class WikiListPagesDisplayContext {
 				dropdownItem.setIcon("copy");
 				dropdownItem.setKey(WikiUIItemKeys.COPY);
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "copy"));
+					LanguageUtil.get(_httpServletRequest, "make-a-copy"));
 			}
 		).add(
 			() -> _isCopyPasteEnabled(wikiPage),

@@ -1233,9 +1233,14 @@ public class DefaultObjectEntryManagerImpl
 				relatedObjectDefinition, objectRelationship,
 				objectDefinition)) {
 
-			return Collections.singletonList(
-				_getManyToOneRelatedModel(
-					objectRelationship, primaryKey, relatedObjectDefinition));
+			BaseModel<?> baseModel = _getManyToOneRelatedModel(
+				objectRelationship, primaryKey, relatedObjectDefinition);
+
+			if (baseModel == null) {
+				return new ArrayList<>();
+			}
+
+			return Collections.singletonList(baseModel);
 		}
 
 		ObjectRelatedModelsProvider<?> objectRelatedModelsProvider =

@@ -383,7 +383,10 @@ public class DisplayPageDisplayContext {
 			LanguageUtil.get(_httpServletRequest, "home"));
 
 		portletURL.setParameter(
-			"layoutPageTemplateCollectionId", String.valueOf(0));
+			"layoutPageTemplateCollectionId",
+			String.valueOf(
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT));
 
 		homeBreadcrumbEntry.setURL(portletURL.toString());
 

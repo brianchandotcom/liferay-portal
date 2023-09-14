@@ -60,7 +60,7 @@ LockedLayoutsDisplayContext lockedLayoutsDisplayContext = (LockedLayoutsDisplayC
 						name="name"
 					>
 						<clay:link
-							aria-lable="<%= name %>"
+							aria-label="<%= name %>"
 							href="<%= lockedLayoutsDisplayContext.getLayoutURL(lockedLayout) %>"
 							label="<%= name %>"
 							target="_blank"

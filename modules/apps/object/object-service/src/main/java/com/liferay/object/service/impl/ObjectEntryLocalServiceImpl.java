@@ -2162,11 +2162,10 @@ public class ObjectEntryLocalServiceImpl
 					objectFieldSettingsValues.get("objectFieldName")));
 
 			if (selfObjectRelationship) {
-				if (column.getTable(
-					).getTableName(
-					).equals(
-						relatedDynamicObjectDefinitionTable.getTableName()
-					)) {
+				if (Objects.equals(
+						column.getTable(
+						).getTableName(),
+						relatedDynamicObjectDefinitionTable.getTableName())) {
 
 					column = relatedDynamicObjectDefinitionTable.getColumn(
 						column.getName());

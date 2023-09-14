@@ -6,9 +6,10 @@
 /// <reference types="react" />
 
 import {FDSViewType} from '../FDSViews';
+import {IFDSFilterClientExtension} from '../types.d';
 import '../../css/Filters.scss';
 interface IProps {
-	fdsFilterClientExtensions: any;
+	fdsFilterClientExtensions: IFDSFilterClientExtension[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;

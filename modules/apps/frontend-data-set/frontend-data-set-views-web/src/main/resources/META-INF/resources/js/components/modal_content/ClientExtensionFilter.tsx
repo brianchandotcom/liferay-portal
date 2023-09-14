@@ -9,23 +9,39 @@ import ClayForm from '@clayui/form';
 import classNames from 'classnames';
 import React from 'react';
 
+import {IFDSFilterClientExtension} from '../../types';
+
 function Header() {
 	return <>{Liferay.Language.get('new-client-extension-filter')}</>;
 }
 
-function Body({fdsFilterClientExtensions, namespace, onSelectedClientExtensionChange, selectedClientExtension}: any) {
-	const fdsFilterClientExtensionFormElementId = `${namespace}FDSFilterClientExtensionERC`;
+interface IBodyProps {
+	fdsFilterClientExtensions: IFDSFilterClientExtension[];
+	namespace: string;
+	onSelectedClientExtensionChange: (val: IFDSFilterClientExtension) => void;
+	selectedClientExtension?: IFDSFilterClientExtension;
+}
+
+function Body({
+	fdsFilterClientExtensions,
+	namespace,
+	onSelectedClientExtensionChange,
+	selectedClientExtension,
+}: IBodyProps) {
+	const fdsFilterClientExtensionFormElementId = `${namespace}fdsFilterClientExtensionERC`;
 
 	return (
 		<ClayForm.Group className="form-group-autofit">
-			<div
-				className={classNames('form-group-item')}
-			>
+			<div className={classNames('form-group-item')}>
 				<label htmlFor={fdsFilterClientExtensionFormElementId}>
 					{Liferay.Language.get('client-extension')}
 				</label>
 
-				<input name={fdsFilterClientExtensionFormElementId} type="hidden" value={selectedClientExtension?.erc} />
+				<input
+					name={fdsFilterClientExtensionFormElementId}
+					type="hidden"
+					value={selectedClientExtension?.erc}
+				/>
 
 				<ClayDropDown
 					closeOnClick
@@ -38,21 +54,34 @@ function Body({fdsFilterClientExtensions, namespace, onSelectedClientExtensionCh
 							className="form-control form-control-select form-control-select-secondary"
 							displayType="secondary"
 						>
-							{selectedClientExtension ? selectedClientExtension.name : Liferay.Language.get('select')}
+							{selectedClientExtension
+								? selectedClientExtension.name
+								: Liferay.Language.get('select')}
 						</ClayButton>
 					}
 				>
-					<ClayDropDown.ItemList items={fdsFilterClientExtensions} role="listbox">
-						{fdsFilterClientExtensions.map((filterClientExtension: any) => (
-							<ClayDropDown.Item
-								className="align-items-center d-flex justify-content-between"
-								key={filterClientExtension.name}
-								onClick={() => onSelectedClientExtensionChange(filterClientExtension)}
-								roleItem="option"
-							>
-								{filterClientExtension.name}
-							</ClayDropDown.Item>
-						))}
+					<ClayDropDown.ItemList
+						items={fdsFilterClientExtensions}
+						role="listbox"
+					>
+						{fdsFilterClientExtensions.map(
+							(
+								filterClientExtension: IFDSFilterClientExtension
+							) => (
+								<ClayDropDown.Item
+									className="align-items-center d-flex justify-content-between"
+									key={filterClientExtension.name}
+									onClick={() =>
+										onSelectedClientExtensionChange(
+											filterClientExtension
+										)
+									}
+									roleItem="option"
+								>
+									{filterClientExtension.name}
+								</ClayDropDown.Item>
+							)
+						)}
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
 			</div>

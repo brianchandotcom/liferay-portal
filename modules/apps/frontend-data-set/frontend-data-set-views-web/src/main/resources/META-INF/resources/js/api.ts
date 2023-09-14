@@ -7,6 +7,7 @@ import {fetch} from 'frontend-js-web';
 
 import {OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
+import {IField, IPickList} from './types';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 
 const LOCALIZABLE_PROPERTY_SUFFIX = '_i18n';
@@ -17,13 +18,6 @@ const NOT_ALLOWED_KEYS_AS_FIELD_NAME = [
 	'x-class-name',
 	'x-schema-name',
 ];
-
-interface IField {
-	format: string;
-	label: string;
-	name: string;
-	type: string;
-}
 
 function getValidFields(properties: any): Array<IField> {
 	const fields: Array<IField> = [];
@@ -87,26 +81,6 @@ export async function getFields(fdsView: FDSViewType) {
 	const fieldsArray: Array<IField> = getValidFields(properties);
 
 	return fieldsArray;
-}
-
-export interface IPickList {
-	externalReferenceCode: string;
-	id: string;
-	listTypeEntries: IListTypeEntry[];
-	name: string;
-	name_i18n: {
-		[key: string]: string;
-	};
-}
-
-interface IListTypeEntry {
-	externalReferenceCode: string;
-	id: number;
-	key: string;
-	name: string;
-	name_i18n: {
-		[key: string]: string;
-	};
 }
 
 export async function getAllPicklists(

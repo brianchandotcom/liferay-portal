@@ -17,6 +17,7 @@ import Fields from './fds_view/Fields';
 import Filters from './fds_view/Filters';
 import Pagination from './fds_view/Pagination';
 import Sorting from './fds_view/Sorting';
+import {IFDSFilterClientExtension} from './types.d';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 
 let NAVIGATION_BAR_ITEMS = [
@@ -62,9 +63,9 @@ NAVIGATION_BAR_ITEMS = [
 	},
 ];
 
-interface IFDSViewSectionInterface {
+interface IFDSViewSectionProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
-	fdsFilterClientExtensions: any[];
+	fdsFilterClientExtensions: IFDSFilterClientExtension[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
@@ -73,9 +74,9 @@ interface IFDSViewSectionInterface {
 	spritemap: string;
 }
 
-interface IFDSViewInterface {
+interface IFDSViewProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
-	fdsFilterClientExtensions: any;
+	fdsFilterClientExtensions: IFDSFilterClientExtension[];
 	fdsViewId: string;
 	fdsViewsURL: string;
 	namespace: string;
@@ -91,7 +92,7 @@ const FDSView = ({
 	namespace,
 	saveFDSFieldsURL,
 	spritemap,
-}: IFDSViewInterface) => {
+}: IFDSViewProps) => {
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [fdsView, setFDSView] = useState<FDSViewType>();
 	const [loading, setLoading] = useState(true);
@@ -165,5 +166,5 @@ const FDSView = ({
 	);
 };
 
-export {IFDSViewSectionInterface};
+export {IFDSViewSectionProps};
 export default FDSView;

@@ -5,7 +5,7 @@
 
 /// <reference types="react" />
 
-import {IPickList} from '../../api';
+import {IPickList} from '../../types';
 declare function Header(): JSX.Element;
 interface IBodyProps {
 	includeMode: string;

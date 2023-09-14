@@ -7,9 +7,10 @@
 
 import {IClientExtensionRenderer} from 'frontend-js-web';
 import {FDSViewType} from './FDSViews';
-interface IFDSViewSectionInterface {
+import {IFDSFilterClientExtension} from './types.d';
+interface IFDSViewSectionProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
-	fdsFilterClientExtensions: any[];
+	fdsFilterClientExtensions: IFDSFilterClientExtension[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
@@ -17,9 +18,9 @@ interface IFDSViewSectionInterface {
 	saveFDSFieldsURL: string;
 	spritemap: string;
 }
-interface IFDSViewInterface {
+interface IFDSViewProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
-	fdsFilterClientExtensions: any;
+	fdsFilterClientExtensions: IFDSFilterClientExtension[];
 	fdsViewId: string;
 	fdsViewsURL: string;
 	namespace: string;
@@ -34,6 +35,6 @@ declare const FDSView: ({
 	namespace,
 	saveFDSFieldsURL,
 	spritemap,
-}: IFDSViewInterface) => JSX.Element;
-export {IFDSViewSectionInterface};
+}: IFDSViewProps) => JSX.Element;
+export {IFDSViewSectionProps};
 export default FDSView;

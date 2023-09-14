@@ -17,66 +17,35 @@ import React, {useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
 import {FDSViewType} from '../FDSViews';
-import {IPickList, getAllPicklists, getFields} from '../api';
+import {getAllPicklists, getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
 import ValidationFeedback from '../components/ValidationFeedback';
 import ClientExtensionFilterModalContent from '../components/modal_content/ClientExtensionFilter';
 import DateRangeFilterModalContent from '../components/modal_content/DateRangeFilter';
 import SelectionFilterModalContent from '../components/modal_content/SelectionFilter';
+import {
+	EFieldFormat,
+	EFilterType,
+	IClientExtensionFilter,
+	IDateFilter,
+	IFDSFilterClientExtension,
+	IField,
+	IFilter,
+	IPickList,
+	ISelectionFilter,
+} from '../types.d';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 
 import '../../css/Filters.scss';
 
-enum EFilterType {
-	CLIENT_EXTENSION = 'CLIENT_EXTENSION',
-	DATE_RANGE = 'DATE_RANGE',
-	SELECTION = 'SELECTION',
-}
-
-enum EFieldFormat {
-	DATE = 'date',
-	DATE_TIME = 'date-time',
-	STRING = 'string',
-}
-
-interface IField {
-	format: EFieldFormat;
-	label: string;
-	name: string;
-	type: string;
-}
-
-interface IFilter {
-	fieldName: string;
-	filterType?: EFilterType;
-	id: number;
-	label: string;
-	name: string;
-	type: string;
-}
-
-interface IClientExtensionFilter extends IFilter {
-	fdsFilterClientExtensionErc: string;
-}
-
-interface IDateFilter extends IFilter {
-	from: string;
-	to: string;
-}
-
-interface ISelectionFilter extends IFilter {
-	include: boolean;
-	listTypeDefinitionId: string;
-	multiple: boolean;
-	preselectedValues: string;
-}
-
-type FilterCollection = Array<IClientExtensionFilter | IDateFilter | ISelectionFilter>;
+type FilterCollection = Array<
+	IClientExtensionFilter | IDateFilter | ISelectionFilter
+>;
 
 interface IPropsAddFDSFilterModalContent {
 	closeModal: Function;
-	fdsFilterClientExtensions?: any;
+	fdsFilterClientExtensions?: IFDSFilterClientExtension[];
 	fdsView: FDSViewType;
 	fieldNames?: string[];
 	fields: IField[];
@@ -88,7 +57,7 @@ interface IPropsAddFDSFilterModalContent {
 
 function AddFDSFilterModalContent({
 	closeModal,
-	fdsFilterClientExtensions,
+	fdsFilterClientExtensions = [],
 	fdsView,
 	fieldNames,
 	fields,
@@ -97,12 +66,17 @@ function AddFDSFilterModalContent({
 	namespace,
 	onSave,
 }: IPropsAddFDSFilterModalContent) {
-	const [selectedClientExtension, setSelectedClientExtension] = useState<any>(
-		filter &&
-		filterType === EFilterType.CLIENT_EXTENSION &&
-		fdsFilterClientExtensions.find(
-			(cx: any) => cx.erc === (filter as IClientExtensionFilter).fdsFilterClientExtensionErc
-		)
+	const [selectedClientExtension, setSelectedClientExtension] = useState<
+		IFDSFilterClientExtension | undefined
+	>(
+		filter && filterType === EFilterType.CLIENT_EXTENSION
+			? fdsFilterClientExtensions.find(
+					(cx: IFDSFilterClientExtension) =>
+						cx.erc ===
+						(filter as IClientExtensionFilter)
+							.fdsFilterClientExtensionERC
+			  )
+			: undefined
 	);
 	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
 		boolean
@@ -174,9 +148,7 @@ function AddFDSFilterModalContent({
 		let displayType: string = '';
 		let url: string = '';
 
-		if (
-			filterType === EFilterType.DATE_RANGE
-		) {
+		if (filterType === EFilterType.DATE_RANGE) {
 			url = API_URL.FDS_DATE_FILTERS;
 
 			body = {
@@ -203,13 +175,18 @@ function AddFDSFilterModalContent({
 			};
 
 			displayType = Liferay.Language.get('dynamic-filter');
-		} else if (filterType === EFilterType.CLIENT_EXTENSION) {
+		}
+		else if (
+			filterType === EFilterType.CLIENT_EXTENSION &&
+			selectedClientExtension
+		) {
 			url = API_URL.FDS_CLIENT_EXTENSION_FILTERS;
 
 			body = {
 				...body,
-				fdsFilterClientExtensionErc: selectedClientExtension.erc,
-				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER_ID]: fdsView.id,
+				fdsFilterClientExtensionERC: selectedClientExtension.erc,
+				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER_ID]:
+					fdsView.id,
 			};
 
 			displayType = Liferay.Language.get('client-extension-filter');
@@ -402,11 +379,16 @@ function AddFDSFilterModalContent({
 					<>
 						{filterType === EFilterType.CLIENT_EXTENSION && (
 							<ClientExtensionFilterModalContent.Body
-								fdsFilterClientExtensions={fdsFilterClientExtensions}
-								filter={filter}
+								fdsFilterClientExtensions={
+									fdsFilterClientExtensions
+								}
 								namespace={namespace}
-								onSelectedClientExtensionChange={setSelectedClientExtension}
-								selectedClientExtension={selectedClientExtension}
+								onSelectedClientExtensionChange={
+									setSelectedClientExtension
+								}
+								selectedClientExtension={
+									selectedClientExtension
+								}
 							/>
 						)}
 
@@ -470,13 +452,18 @@ function AddFDSFilterModalContent({
 }
 
 interface IProps {
-	fdsFilterClientExtensions: any;
+	fdsFilterClientExtensions: IFDSFilterClientExtension[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
 }
 
-function Filters({fdsFilterClientExtensions,fdsView, fdsViewsURL, namespace}: IProps) {
+function Filters({
+	fdsFilterClientExtensions,
+	fdsView,
+	fdsViewsURL,
+	namespace,
+}: IProps) {
 	const [fields, setFields] = useState<IField[]>([]);
 	const [filters, setFilters] = useState<IFilter[]>([]);
 	const [newFiltersOrder, setNewFiltersOrder] = useState<string>('');
@@ -488,7 +475,6 @@ function Filters({fdsFilterClientExtensions,fdsView, fdsViewsURL, namespace}: IP
 			);
 
 			const responseJSON = await response.json();
-
 
 			const clientExtensionFiltersOrderer = responseJSON[
 				OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER
@@ -503,18 +489,20 @@ function Filters({fdsFilterClientExtensions,fdsView, fdsViewsURL, namespace}: IP
 			let filtersOrdered: FilterCollection = [
 				...clientExtensionFiltersOrderer.map((item) => ({
 					...item,
-					displayType: Liferay.Language.get('client-extension-filter'),
-					filterType: EFilterType.CLIENT_EXTENSION
+					displayType: Liferay.Language.get(
+						'client-extension-filter'
+					),
+					filterType: EFilterType.CLIENT_EXTENSION,
 				})),
 				...dateFiltersOrderer.map((item) => ({
 					...item,
 					displayType: Liferay.Language.get('date-filter'),
-					filterType: EFilterType.DATE_RANGE
+					filterType: EFilterType.DATE_RANGE,
 				})),
 				...dynamicFiltersOrderer.map((item) => ({
 					...item,
 					displayType: Liferay.Language.get('dynamic-filter'),
-					filterType: EFilterType.SELECTION
+					filterType: EFilterType.SELECTION,
 				})),
 			];
 
@@ -590,8 +578,11 @@ function Filters({fdsFilterClientExtensions,fdsView, fdsViewsURL, namespace}: IP
 		const availableFields = fields.filter(
 			(item) =>
 				filterType === EFilterType.CLIENT_EXTENSION ||
-				(filterType === EFilterType.SELECTION && item.format === EFieldFormat.STRING) ||
-				(filterType === EFilterType.DATE_RANGE && (item.format === EFieldFormat.DATE_TIME || item.format === EFieldFormat.DATE))
+				(filterType === EFilterType.SELECTION &&
+					item.format === EFieldFormat.STRING) ||
+				(filterType === EFilterType.DATE_RANGE &&
+					(item.format === EFieldFormat.DATE_TIME ||
+						item.format === EFieldFormat.DATE))
 		);
 
 		if (!availableFields.length) {
@@ -634,7 +625,12 @@ function Filters({fdsFilterClientExtensions,fdsView, fdsViewsURL, namespace}: IP
 		}
 	};
 
-	const handleEdit = ({item}: {item: IClientExtensionFilter | IDateFilter | ISelectionFilter}) => openModal({
+	const handleEdit = ({
+		item,
+	}: {
+		item: IClientExtensionFilter | IDateFilter | ISelectionFilter;
+	}) =>
+		openModal({
 			className: 'overflow-auto',
 			contentComponent: ({closeModal}: {closeModal: Function}) => (
 				<AddFDSFilterModalContent

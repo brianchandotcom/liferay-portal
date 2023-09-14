@@ -395,7 +395,7 @@ public class ObjectViewLocalServiceTest {
 		objectField.setListTypeDefinitionId(
 			listTypeDefinition.getListTypeDefinitionId());
 
-		return ObjectDefinitionTestUtil.addObjectDefinition(
+		return ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			false, _objectDefinitionLocalService,
 			Arrays.asList(
 				objectField,
@@ -640,7 +640,7 @@ public class ObjectViewLocalServiceTest {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		ObjectDefinition objectDefinition1 =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(

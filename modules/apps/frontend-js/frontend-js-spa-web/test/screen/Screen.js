@@ -10,11 +10,11 @@ import Surface from '../../src/main/resources/META-INF/resources/surface/Surface
 
 describe('Screen', () => {
 	beforeAll(() => {
-		window.Liferay.DOMTaskRunner = {
-			runTasks: jest.fn(),
-		};
 		window.Liferay.CSP = {
 			nonce: '',
+		};
+		window.Liferay.DOMTaskRunner = {
+			runTasks: jest.fn(),
 		};
 	});
 

@@ -5,10 +5,16 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/graphql \
-				-u test@liferay.com:test \
 				-H Content-Type: application/json \
 				-d {"query":"${query}"}
 		''';
+
+		if (isSet(token)) {
+			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
+		}
+		else {
+			var curl = StringUtil.add(${curl}, " -u test@liferay.com:test", "");
+		}
 
 		var response = JSONCurlUtil.post(${curl});
 

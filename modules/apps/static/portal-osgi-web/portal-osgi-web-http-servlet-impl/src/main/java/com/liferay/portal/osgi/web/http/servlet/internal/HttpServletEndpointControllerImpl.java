@@ -5,6 +5,7 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -12,8 +13,10 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -24,7 +27,6 @@ import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
 import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
 import org.eclipse.equinox.http.servlet.internal.context.ProxyContext;
-import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextNameException;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextPathException;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
@@ -178,16 +180,14 @@ public class HttpServletEndpointControllerImpl
 
 		int pos = requestURI.lastIndexOf('/');
 
-		do {
+		while (true) {
 			List<ContextController> contextControllers = new ArrayList<>();
 
 			for (ContextController contextController :
 					_contextControllersMap.values()) {
 
-				if (contextController.getContextPath(
-					).equals(
-						requestURI
-					)) {
+				if (Objects.equals(
+						contextController.getContextPath(), requestURI)) {
 
 					contextControllers.add(contextController);
 				}
@@ -199,6 +199,7 @@ public class HttpServletEndpointControllerImpl
 
 			if (pos > -1) {
 				requestURI = requestURI.substring(0, pos);
+
 				pos = requestURI.lastIndexOf('/');
 
 				continue;
@@ -206,7 +207,6 @@ public class HttpServletEndpointControllerImpl
 
 			break;
 		}
-		while (true);
 
 		return null;
 	}
@@ -221,9 +221,11 @@ public class HttpServletEndpointControllerImpl
 			return null;
 		}
 
-		String contextPath = contextControllers.iterator(
-		).next(
-		).getContextPath();
+		Iterator<ContextController> iterator = contextControllers.iterator();
+
+		ContextController firstContextController = iterator.next();
+
+		String contextPath = firstContextController.getContextPath();
 
 		requestURI = requestURI.substring(contextPath.length());
 
@@ -235,10 +237,10 @@ public class HttpServletEndpointControllerImpl
 
 		if (match == Match.DEFAULT_SERVLET) {
 			pathInfo = servletPath;
-			servletPath = Const.SLASH;
+			servletPath = StringPool.SLASH;
 		}
 
-		do {
+		while (true) {
 			for (ContextController contextController : contextControllers) {
 				DispatchTargets dispatchTargets =
 					contextController.getDispatchTargets(
@@ -255,9 +257,10 @@ public class HttpServletEndpointControllerImpl
 			}
 
 			if (pos > -1) {
-				String newServletPath = requestURI.substring(0, pos);
+				servletPath = requestURI.substring(0, pos);
+
 				pathInfo = requestURI.substring(pos);
-				servletPath = newServletPath;
+
 				pos = servletPath.lastIndexOf('/');
 
 				continue;
@@ -265,12 +268,12 @@ public class HttpServletEndpointControllerImpl
 
 			break;
 		}
-		while (true);
 
 		return null;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(HttpServletEndpointControllerImpl.class.getName());
+	private static final Log _log = LogFactoryUtil.getLog(
+		HttpServletEndpointControllerImpl.class.getName());
 
 	private final Map<String, Object> _attributesMap;
 	private final BundleContext _bundleContext;
@@ -357,7 +360,7 @@ public class HttpServletEndpointControllerImpl
 				return contextController;
 			}
 			catch (Exception exception) {
-				_log.error(exception.getMessage(), exception);
+				_log.error(exception);
 			}
 
 			return null;

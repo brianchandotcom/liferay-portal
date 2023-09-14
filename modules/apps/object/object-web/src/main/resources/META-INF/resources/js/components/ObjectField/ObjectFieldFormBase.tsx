@@ -35,6 +35,9 @@ import {UniqueValues} from './UniqueValues';
 import {FORMULA_OUTPUT_OPTIONS, FormulaOutput} from './formulaFieldUtil';
 
 import './ObjectFieldFormBase.scss';
+import {
+	getListTypeDefinitions
+} from "@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api";
 
 interface ObjectFieldFormBaseProps {
 	children?: ReactNode;
@@ -122,7 +125,7 @@ async function getFieldSettingsByBusinessType(
 	const {businessType, objectFieldSettings} = values;
 
 	if (businessType === 'Picklist' || businessType === 'MultiselectPicklist') {
-		const picklistData = await API.getPickLists();
+		const picklistData = await API.getListTypeDefinitions();
 
 		setPickLists(picklistData);
 	}

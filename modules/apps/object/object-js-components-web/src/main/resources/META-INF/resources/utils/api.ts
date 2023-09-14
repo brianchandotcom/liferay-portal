@@ -308,7 +308,7 @@ export async function getListTypeDefinitionListTypeEntries(listTypeDefinitionId:
 	);
 }
 
-export async function getPickLists() {
+export async function getListTypeDefinitions() {
 	return await getList<ListTypeDefinition>(
 		'/o/headless-admin-list-type/v1.0/list-type-definitions?pageSize=-1'
 	);

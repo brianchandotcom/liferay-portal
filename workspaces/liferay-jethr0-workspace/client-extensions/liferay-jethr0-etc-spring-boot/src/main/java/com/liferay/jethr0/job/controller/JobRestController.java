@@ -8,6 +8,7 @@ package com.liferay.jethr0.job.controller;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.job.JobEntity;
+import com.liferay.jethr0.job.dalo.JobEntityDALO;
 import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 
@@ -125,6 +126,20 @@ public class JobRestController {
 
 		return new ResponseEntity<>(jobsJSONArray.toString(), HttpStatus.OK);
 	}
+
+	@GetMapping
+	public ResponseEntity<String> jobs(@AuthenticationPrincipal Jwt jwt) {
+		JSONArray jobsJSONArray = new JSONArray();
+
+		for (JobEntity jobEntity : _jobEntityDALO.getAll()) {
+			jobsJSONArray.put(jobEntity.getJSONObject());
+		}
+
+		return new ResponseEntity<>(jobsJSONArray.toString(), HttpStatus.OK);
+	}
+
+	@Autowired
+	private JobEntityDALO _jobEntityDALO;
 
 	@Autowired
 	private JobEntityRepository _jobEntityRepository;

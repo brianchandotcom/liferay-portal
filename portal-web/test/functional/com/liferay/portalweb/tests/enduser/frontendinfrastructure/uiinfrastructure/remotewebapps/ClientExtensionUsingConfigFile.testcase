@@ -37,6 +37,34 @@ definition {
 		}
 	}
 
+	@description = "LPS-175155. Provisioning client extensions from external systems - Frontend Data Set Cell Renderer"
+	@priority = 4
+	test CanCreateCellRendererViaOSGI {
+		property fds.cell.renderer.client.extension.created = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given creating a Cell Renderer via OSGI") {
+			ClientExtension.createGlobalVariableClientExtensionType(type = "fdsCellRenderer");
+
+			ClientExtension.checkConfigFileCreatedProperly();
+		}
+
+		task ("When access Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("Then only the cell renderer created by OSGI is displayed") {
+			ClientExtensionGeneral.viewTableEntries(
+				entryName = "Liferay Sample Frontend Data Set Cell Renderer",
+				entryType = "Frontend Data Set Cell Renderer");
+
+			ClientExtensionGeneral.viewTableEntryType(entryType = "Workspace");
+
+			Pagination.viewResults(results = "Showing 1 to 1 of 1 entries.");
+		}
+	}
+
 	@description = "LPS-154274. Provisioning client extensions from external systems - Iframe"
 	@priority = 5
 	test CanUseOsgiClientExtensionIframeAsPortlet {

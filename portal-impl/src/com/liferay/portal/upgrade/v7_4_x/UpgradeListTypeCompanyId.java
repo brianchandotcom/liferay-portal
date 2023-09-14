@@ -19,6 +19,7 @@ import com.liferay.portal.util.PortalInstances;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,22 +53,18 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 		};
 	}
 
-	private List<ListTypeEntry> _getListTypes(long companyId) throws Exception {
+	private List<ListTypeEntry> _getListTypes() throws Exception {
 		List<ListTypeEntry> listTypeEntries = new ArrayList<>();
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select listTypeId, mvccVersion, name, type_ from ListType " +
-					"where companyId = ?")) {
+		try (Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
+				"select listTypeId, mvccVersion, name, type_ from ListType")) {
 
-			preparedStatement.setLong(1, companyId);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					listTypeEntries.add(
-						new ListTypeEntry(
-							resultSet.getLong(1), resultSet.getLong(2),
-							resultSet.getString(3), resultSet.getString(4)));
-				}
+			while (resultSet.next()) {
+				listTypeEntries.add(
+					new ListTypeEntry(
+						resultSet.getLong(1), resultSet.getLong(2),
+						resultSet.getString(3), resultSet.getString(4)));
 			}
 		}
 
@@ -143,7 +140,7 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 
 		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
 
-		List<ListTypeEntry> listTypeEntries = _getListTypes(defaultCompanyId);
+		List<ListTypeEntry> listTypeEntries = _getListTypes();
 
 		for (long companyId : companyIds) {
 			if (companyId != defaultCompanyId) {

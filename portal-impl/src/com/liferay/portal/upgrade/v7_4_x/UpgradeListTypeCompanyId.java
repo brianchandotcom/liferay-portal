@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * @author Luis Ortiz
  */
-public class UpgradePartitionedListType extends UpgradeProcess {
+public class UpgradeListTypeCompanyId extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

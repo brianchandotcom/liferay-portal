@@ -6,7 +6,7 @@
 /// <reference types="react" />
 
 import {FDSViewType} from '../FDSViews';
-import {IFDSFilterClientExtension} from '../types.d';
+import {IFDSFilterClientExtension} from '../types';
 import '../../css/Filters.scss';
 interface IProps {
 	fdsFilterClientExtensions: IFDSFilterClientExtension[];

@@ -33,7 +33,7 @@ import {
 	IFilter,
 	IPickList,
 	ISelectionFilter,
-} from '../types.d';
+} from '../types';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 

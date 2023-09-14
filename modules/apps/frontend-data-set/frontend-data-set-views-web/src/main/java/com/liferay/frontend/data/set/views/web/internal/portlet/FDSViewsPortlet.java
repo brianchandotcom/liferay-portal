@@ -398,10 +398,12 @@ public class FDSViewsPortlet extends MVCPortlet {
 
 		ObjectDefinition fdsClientExtensionFilterObjectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
-				"FDSClientExtensionFilter", userId, 0, "FDSClientExtensionFilter", "FDSClientExtensionFilter",
-				false, LocalizedMapUtil.getLocalizedMap("FDS Client Extension Filter"),
+				"FDSClientExtensionFilter", userId, 0,
+				"FDSClientExtensionFilter", "FDSClientExtensionFilter", false,
+				LocalizedMapUtil.getLocalizedMap("FDS Client Extension Filter"),
 				true, "FDSClientExtensionFilter", null, null, null, null,
-				LocalizedMapUtil.getLocalizedMap("FDS Client Extension Filters"),
+				LocalizedMapUtil.getLocalizedMap(
+					"FDS Client Extension Filters"),
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_DRAFT,
 				Arrays.asList(
@@ -412,14 +414,17 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "fds-filter-client-extension-erc"), "fdsFilterClientExtensionERC", true),
+						_language.get(
+							locale, "fds-filter-client-extension-erc"),
+						"fdsFilterClientExtensionERC", true),
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 						_language.get(locale, "name"), "name", true)));
 
 		_objectDefinitionLocalService.publishSystemObjectDefinition(
-			userId, fdsClientExtensionFilterObjectDefinition.getObjectDefinitionId());
+			userId,
+			fdsClientExtensionFilterObjectDefinition.getObjectDefinitionId());
 
 		_objectRelationshipLocalService.addObjectRelationship(
 			userId, fdsViewObjectDefinition.getObjectDefinitionId(),

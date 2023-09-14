@@ -440,12 +440,13 @@ export async function putListTypeEntry({
 	});
 }
 
-export async function updateRelationship({
+export async function putObjectRelationship({
 	objectRelationshipId,
 	...others
 }: ObjectRelationship) {
 	return await save({
 		item: others,
+		method: 'PUT',
 		url: `/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`,
 	});
 }

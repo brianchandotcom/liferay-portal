@@ -113,7 +113,7 @@ export function AggregationFormBase({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const objectRelationshipsData = await API.getObjectRelationshipsByExternalReferenceCode(
+			const objectRelationshipsData = await API.getObjectDefinitionByExternalReferenceCodeObjectRelationships(
 				objectDefinitionExternalReferenceCode
 			);
 

@@ -678,15 +678,7 @@ public class GetEntryRenderDataMVCResourceCommand
 						SegmentsExperienceTable.INSTANCE
 					).where(
 						SegmentsExperienceTable.INSTANCE.plid.eq(
-							ctEntry.getModelClassPK()
-						).and(
-							SegmentsExperienceTable.INSTANCE.ctCollectionId.eq(
-								CTConstants.CT_COLLECTION_ID_PRODUCTION
-							).or(
-								SegmentsExperienceTable.INSTANCE.ctCollectionId.
-									eq(ctEntry.getCtCollectionId())
-							)
-						)
+							ctEntry.getModelClassPK())
 					));
 
 			JSONArray segmentsExperienceJSONArray =

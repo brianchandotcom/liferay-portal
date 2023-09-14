@@ -398,12 +398,12 @@
 </tr>
 <tr>
 	<td>TIME_INPUT_CRITERION_CONJUNCTION</td>
-	<td>xpath=(//select[@data-testid='conjunction-input'])[${key_indexField}]</td>
+	<td>xpath=(//button[@data-testid='conjunction-input'])[${key_indexField}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TIME_INPUT_CRITERION</td>
-	<td>xpath=(//select[@data-testid='clay-select'])[${key_indexField}]</td>
+	<td>xpath=(//button[@data-testid='clay-select'])[${key_indexField}]</td>
 	<td></td>
 </tr>
 <tr>

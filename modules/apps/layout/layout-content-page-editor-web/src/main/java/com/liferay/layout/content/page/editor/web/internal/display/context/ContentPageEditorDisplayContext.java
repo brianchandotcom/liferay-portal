@@ -454,6 +454,9 @@ public class ContentPageEditorDisplayContext {
 				_getResourceURL(
 					"/layout_content_page_editor/get_file_entry_url")
 			).put(
+				"getFormConfigURL",
+				_getResourceURL("/layout_content_page_editor/get_form_config")
+			).put(
 				"getFormFieldsURL",
 				_getResourceURL("/layout_content_page_editor/get_form_fields")
 			).put(

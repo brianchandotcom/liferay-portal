@@ -9,6 +9,24 @@ import serviceFetch from './serviceFetch';
 export default {
 
 	/**
+	 * Get form config
+	 * @param {object} options
+	 * @param {string} options.classNameId Form classNameId
+	 * @param {function} options.onNetworkStatus
+	 */
+	getFormConfig({classNameId, onNetworkStatus = () => {}}) {
+		return serviceFetch(
+			config.getFormFieldsURL,
+			{
+				body: {
+					classNameId,
+				},
+			},
+			onNetworkStatus
+		);
+	},
+
+	/**
 	 * Get available form mapping fields
 	 * @param {object} options
 	 * @param {string} options.classNameId Form classNameId

@@ -121,6 +121,7 @@ export interface Config {
 	getCollectionSupportedFiltersURL: string;
 	getCollectionWarningMessageURL: string;
 	getExperienceDataURL: string;
+	getFormConfigURL: string;
 	getIframeContentCssURL: string;
 	getIframeContentURL: string;
 	getInfoItemActionErrorMessageURL: string;

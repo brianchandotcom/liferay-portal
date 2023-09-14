@@ -5,7 +5,7 @@
 
 package com.liferay.object.system.util;
 
-import com.liferay.batch.engine.util.BatchEngineThreadLocal;
+import com.liferay.batch.engine.unit.BatchEngineThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;

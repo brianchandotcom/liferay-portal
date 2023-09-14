@@ -1428,6 +1428,10 @@ public class LayoutStagedModelDataHandler
 			Layout layout, PortletDataContext portletDataContext)
 		throws Exception {
 
+		if (!layout.isTypeContent()) {
+			return;
+		}
+
 		List<LayoutLocalization> layoutLocalizations =
 			_layoutLocalizationLocalService.getLayoutLocalizations(
 				layout.getPlid());
@@ -2167,6 +2171,10 @@ public class LayoutStagedModelDataHandler
 	private void _importLayoutLocalizations(
 			Layout layout, PortletDataContext portletDataContext)
 		throws Exception {
+
+		if (!layout.isTypeContent()) {
+			return;
+		}
 
 		List<Element> layoutLocalizationsElements =
 			portletDataContext.getReferenceDataElements(

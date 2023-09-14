@@ -384,7 +384,6 @@ export async function putListTypeDefinition({
 }: Partial<ListTypeDefinition>) {
 	return await save({
 		item: {externalReferenceCode, listTypeEntries, name_i18n},
-		method: 'PUT',
 		url: `/o/headless-admin-list-type/v1.0/list-type-definitions/${id}`,
 	});
 }
@@ -396,7 +395,6 @@ export async function putListTypeEntry({
 }: Partial<ListTypeEntry>) {
 	return await save({
 		item: {externalReferenceCode, name_i18n},
-		method: 'PUT',
 		url: `/o/headless-admin-list-type/v1.0/list-type-entries/${id}`,
 	});
 }
@@ -407,7 +405,6 @@ export async function putObjectRelationship({
 }: ObjectRelationship) {
 	return await save({
 		item: others,
-		method: 'PUT',
 		url: `/o/object-admin/v1.0/object-relationships/${id}`,
 	});
 }

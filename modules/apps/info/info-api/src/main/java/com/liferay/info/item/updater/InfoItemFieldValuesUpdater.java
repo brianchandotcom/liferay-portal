@@ -16,4 +16,11 @@ public interface InfoItemFieldValuesUpdater<T> {
 			T t, InfoItemFieldValues infoItemFieldValues)
 		throws Exception;
 
+	public default T updateFromInfoItemFieldValues(
+			T t, InfoItemFieldValues infoItemFieldValues, int status)
+		throws Exception {
+
+		return updateFromInfoItemFieldValues(t, infoItemFieldValues);
+	}
+
 }

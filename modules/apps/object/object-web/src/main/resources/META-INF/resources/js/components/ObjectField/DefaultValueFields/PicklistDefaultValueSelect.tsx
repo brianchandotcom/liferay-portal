@@ -9,7 +9,6 @@ import React, {useEffect, useState} from 'react';
 import {getUpdatedDefaultValueFieldSettings} from '../../../utils/defaultValues';
 import {fixLocaleKeys} from '../../ListTypeDefinition/utils';
 import {InputAsValueFieldComponentProps} from '../Tabs/Advanced/DefaultValueContainer';
-import {getListTypeDefinitionListTypeEntries} from '@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api';
 
 const PicklistDefaultValueSelect: React.FC<InputAsValueFieldComponentProps> = ({
 	creationLanguageId,

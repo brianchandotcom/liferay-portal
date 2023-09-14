@@ -23,7 +23,6 @@ import {
 	useObjectRelationshipForm,
 } from './ObjectRelationshipFormBase';
 import SelectRelationship from './SelectRelationship';
-import {putObjectRelationship} from '@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api';
 
 interface EditRelationshipProps {
 	baseResourceURL: string;

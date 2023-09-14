@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -218,17 +217,14 @@ public class DisplayPageDisplayContext {
 				_getRootBreadcrumbEntry(portletURL));
 		}
 
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
-
 		LayoutPageTemplateCollection currentLayoutPageTemplateCollection =
 			LayoutPageTemplateCollectionLocalServiceUtil.
 				fetchLayoutPageTemplateCollection(
 					_getLayoutPageTemplateCollectionId());
 
-		TransformUtil.transform(
+		List<BreadcrumbEntry> breadcrumbEntries = TransformUtil.transform(
 			currentLayoutPageTemplateCollection.getAncestors(),
-			ancestor -> breadcrumbEntries.add(
-				_createBreadCrumbEntry(portletURL, ancestor)));
+			ancestor -> _createBreadCrumbEntry(portletURL, ancestor));
 
 		breadcrumbEntries.add(_getRootBreadcrumbEntry(portletURL));
 

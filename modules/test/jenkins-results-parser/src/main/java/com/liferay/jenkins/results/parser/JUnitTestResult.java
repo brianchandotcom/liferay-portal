@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
 import java.util.Date;
+import java.util.Objects;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
@@ -56,7 +57,7 @@ public class JUnitTestResult extends BaseTestResult {
 		Element downstreamBuildListItemElement = Dom4JUtil.getNewElement(
 			"div", null);
 
-		if (getStatus().equals("UNTESTED")) {
+		if (Objects.equals(getStatus(), "UNTESTED")) {
 			downstreamBuildListItemElement.addText(
 				getDisplayName() + " - UNTESTED");
 		}

@@ -713,7 +713,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		Boolean active = !getCheckboxStatus().equals("unchecked");
+		Boolean active = !Objects.equals(getCheckboxStatus(), "unchecked");
 
 		jspWriter.write("<nav class=\"management-bar navbar navbar-expand-md");
 

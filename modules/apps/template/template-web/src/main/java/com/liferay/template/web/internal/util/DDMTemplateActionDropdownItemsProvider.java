@@ -135,7 +135,7 @@ public class DDMTemplateActionDropdownItemsProvider {
 				).buildPortletURL());
 			dropdownItem.setIcon("copy");
 			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "copy"));
+				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
 		};
 	}
 

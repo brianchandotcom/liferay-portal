@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>DELETE_SEGMENT</td>
-	<td>//div[contains(@class,'dropdown')]/button[contains(@class,'item')]</td>
+	<td>//div[contains(@class,'dropdown')]//button[contains(@class,'item') and text()='Delete']</td>
 	<td></td>
 </tr>
 <tr>

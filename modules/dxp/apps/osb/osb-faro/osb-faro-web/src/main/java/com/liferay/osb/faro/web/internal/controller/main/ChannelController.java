@@ -318,12 +318,12 @@ public class ChannelController extends BaseFaroController {
 			return new FaroResultsDisplay<>();
 		}
 
+		Map<String, Channel> channelsById = new HashMap<>();
+
 		Results<Channel> channelsResult = contactsEngineClient.getChannels(
 			faroProjectLocalService.getFaroProjectByGroupId(groupId), cur,
 			delta, ListUtil.toList(faroChannels, FaroChannel::getChannelId),
 			null);
-
-		Map<String, Channel> channelsById = new HashMap<>();
 
 		for (Channel channel : channelsResult.getItems()) {
 			channelsById.put(channel.getId(), channel);

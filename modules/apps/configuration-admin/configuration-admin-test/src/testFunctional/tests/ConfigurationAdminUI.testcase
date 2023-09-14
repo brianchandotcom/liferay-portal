@@ -36,16 +36,16 @@ definition {
 
 		task ("Then hyperlink is available within an anchor tag") {
 			AssertElementPresent(
-				key_href = "blacklisting-apps",
+				key_href = "https://learn.liferay.com/dxp/latest/en/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps.html",
 				key_text = "How does bundle",
-				locator1 = "Link#ANY_HREF_2");
+				locator1 = "Link#ANY_HREF");
 		}
 
 		task ("And Then text of hyperlink says “How does bundle blacklisting work?") {
 			AssertVisible(
-				key_href = "https://learn.liferay.com/dxp/latest/en/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps.html",
+				key_href = "blacklisting-apps",
 				key_text = "How does bundle blacklisting work?",
-				locator1 = "Link#ANY_HREF");
+				locator1 = "Link#ANY_HREF_2");
 		}
 	}
 }

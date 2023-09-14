@@ -5,6 +5,8 @@
 
 package com.liferay.object.definition.util;
 
+import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,6 +51,22 @@ public class ObjectDefinitionUtil {
 			_allowedUnmodifiableSystemObjectDefinitionNames.get(name),
 			externalReferenceCode);
 	}
+
+	public static boolean isInvokerBundleAllowed() {
+		if (PortalRunMode.isTestMode()) {
+			return true;
+		}
+
+		return ArrayUtil.exists(
+			_ALLOWED_INVOKER_BUNDLE_SYMBOLIC_NAMES,
+			allowedInvokerBundleSymbolicName -> StringUtil.startsWith(
+				BatchEngineUnitThreadLocal.getFileName(),
+				allowedInvokerBundleSymbolicName));
+	}
+
+	private static final String[] _ALLOWED_INVOKER_BUNDLE_SYMBOLIC_NAMES = {
+		"com.liferay.headless.builder.impl", "com.liferay.object.service"
+	};
 
 	private static final Map<String, String>
 		_allowedModifiableSystemObjectDefinitionNames = HashMapBuilder.put(

@@ -61,7 +61,7 @@ export function Attachments({setValues, values}: IProps) {
 	const getAttachmentFields = async function fetchObjectFields(
 		objectDefinitionExternalReferenceCode: string
 	) {
-		const items = await API.getObjectFieldsByExternalReferenceCode(
+		const items = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
 			objectDefinitionExternalReferenceCode
 		);
 

@@ -100,7 +100,7 @@ export function AggregationFilterContainer({
 	useEffect(() => {
 		if (objectDefinitionExternalReferenceCode2) {
 			const makeFetch = async () => {
-				const items = await API.getObjectFieldsByExternalReferenceCode(
+				const items = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
 					objectDefinitionExternalReferenceCode2!
 				);
 

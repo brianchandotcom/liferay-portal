@@ -60,7 +60,7 @@ export default function SelectRelationship({
 	useEffect(() => {
 		if (objectDefinitionExternalReferenceCode) {
 			const makeFetch = async () => {
-				const items = await API.getObjectFieldsByExternalReferenceCode(
+				const items = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
 					objectDefinitionExternalReferenceCode
 				);
 

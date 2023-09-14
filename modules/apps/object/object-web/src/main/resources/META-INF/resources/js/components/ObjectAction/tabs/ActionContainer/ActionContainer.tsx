@@ -116,7 +116,7 @@ export function ActionContainer({
 			if (object?.related) {
 				parameters.relatedObjectEntries = false;
 			}
-			const items = await API.getObjectFieldsByExternalReferenceCode(
+			const items = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
 				externalReferenceCode
 			);
 

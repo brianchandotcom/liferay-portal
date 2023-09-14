@@ -241,6 +241,14 @@ export async function getObjectDefinitionByExternalReferenceCode(
 	);
 }
 
+export async function getObjectDefinitionByExternalReferenceCodeObjectFields(
+	externalReferenceCode: string
+) {
+	return await getList<ObjectField>(
+		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${externalReferenceCode}/object-fields?pageSize=-1`
+	);
+}
+
 export async function getObjectDefinitionByExternalReferenceCodeObjectRelationships(
 	externalReferenceCode: string
 ) {
@@ -280,14 +288,6 @@ export async function getObjectDefinitions(parameters?: string) {
 export async function getObjectField(objectFieldId: number) {
 	return await fetchJSON<ObjectField>(
 		`/o/object-admin/v1.0/object-fields/${objectFieldId}`
-	);
-}
-
-export async function getObjectFieldsByExternalReferenceCode(
-	externalReferenceCode: string
-) {
-	return await getList<ObjectField>(
-		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${externalReferenceCode}/object-fields?pageSize=-1`
 	);
 }
 

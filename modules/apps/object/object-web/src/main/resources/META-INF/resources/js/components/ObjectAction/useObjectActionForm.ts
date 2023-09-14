@@ -132,7 +132,7 @@ export function useObjectActionForm({
 	useEffect(() => {
 		if (values.parameters?.objectDefinitionExternalReferenceCode) {
 			const makeFetch = async () => {
-				const response = await API.getObjectFieldsByExternalReferenceCode(
+				const response = await API.getObjectDefinitionByExternalReferenceCodeObjectFields(
 					values.parameters
 						?.objectDefinitionExternalReferenceCode as string
 				);

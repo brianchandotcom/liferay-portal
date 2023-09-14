@@ -161,8 +161,9 @@ public class CommercePriceEntryLocalServiceUtil {
 	}
 
 	public static void deleteCommercePriceEntries(
-		String cpInstanceUuid, java.math.BigDecimal quantity,
-		String unitOfMeasureKey) {
+			String cpInstanceUuid, java.math.BigDecimal quantity,
+			String unitOfMeasureKey)
+		throws PortalException {
 
 		getService().deleteCommercePriceEntries(
 			cpInstanceUuid, quantity, unitOfMeasureKey);

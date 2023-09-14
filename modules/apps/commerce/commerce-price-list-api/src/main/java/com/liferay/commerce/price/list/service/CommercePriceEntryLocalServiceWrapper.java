@@ -173,8 +173,9 @@ public class CommercePriceEntryLocalServiceWrapper
 
 	@Override
 	public void deleteCommercePriceEntries(
-		String cpInstanceUuid, java.math.BigDecimal quantity,
-		String unitOfMeasureKey) {
+			String cpInstanceUuid, java.math.BigDecimal quantity,
+			String unitOfMeasureKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_commercePriceEntryLocalService.deleteCommercePriceEntries(
 			cpInstanceUuid, quantity, unitOfMeasureKey);

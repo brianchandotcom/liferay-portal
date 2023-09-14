@@ -148,7 +148,8 @@ public interface CommercePriceEntryLocalService
 		throws PortalException;
 
 	public void deleteCommercePriceEntries(
-		String cpInstanceUuid, BigDecimal quantity, String unitOfMeasureKey);
+			String cpInstanceUuid, BigDecimal quantity, String unitOfMeasureKey)
+		throws PortalException;
 
 	/**
 	 * Deletes the commerce price entry from the database. Also notifies the appropriate model listeners.

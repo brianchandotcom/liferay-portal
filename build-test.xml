@@ -14187,6 +14187,16 @@ company.default.web.id=www.able.com</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="custom.upgrade.properties" />
+
+		<if>
+			<isset property="custom.upgrade.properties" />
+			<then>
+				<echo append="true" file="${liferay.home}/tools/portal-tools-db-upgrade-client/portal-upgrade-ext.properties">
+${custom.upgrade.properties}</echo>
+			</then>
+		</if>
+
 		<get-test-app-server-lib-portal-dir />
 
 		<if>

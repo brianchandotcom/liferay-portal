@@ -48,9 +48,6 @@ public class ContentSecurityPolicyNonceManager {
 	}
 
 	public String getNonce(HttpServletRequest httpServletRequest) {
-
-		// Unwrap request as some wrappers hide attributes from request/session
-
 		httpServletRequest = _portal.getOriginalServletRequest(
 			httpServletRequest);
 

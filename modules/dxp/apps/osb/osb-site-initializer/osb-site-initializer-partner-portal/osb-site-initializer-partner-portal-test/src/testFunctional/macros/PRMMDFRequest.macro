@@ -490,7 +490,7 @@ definition {
 			Type(
 				key_fieldName = "activities[${activityIndex}].activityDescription.quantity",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",
-				value1 = "Quantity Merchandise");
+				value1 = "5");
 		}
 
 		if ((${typeOfActivity} == "Miscellaneous Marketing") && (${tactic} == "Direct Mail")) {
@@ -502,7 +502,7 @@ definition {
 			Type(
 				key_fieldName = "activities[${activityIndex}].activityDescription.targetOfSends",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",
-				value1 = "Target Of Sends");
+				value1 = "5");
 
 			Type(
 				key_fieldName = "activities[${activityIndex}].activityDescription.cta",
@@ -571,7 +571,7 @@ definition {
 			Type(
 				key_fieldName = "activities[${activityIndex}].activityDescription.targetOfLeads",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",
-				value1 = "Target Of Leads");
+				value1 = "03");
 
 			for (var leadFollowUp : list ${leadFollowUpList}) {
 				Click.clickAtNotVisible(
@@ -625,7 +625,7 @@ definition {
 			Type(
 				key_fieldName = "activities[${activityIndex}].activityDescription.targetOfLeads",
 				locator1 = "PRMMDFRequest#TEXT_FIELD",
-				value1 = "Target Of Leads");
+				value1 = "03");
 
 			for (var leadFollowUp : list ${leadFollowUpList}) {
 				Click.clickAtNotVisible(

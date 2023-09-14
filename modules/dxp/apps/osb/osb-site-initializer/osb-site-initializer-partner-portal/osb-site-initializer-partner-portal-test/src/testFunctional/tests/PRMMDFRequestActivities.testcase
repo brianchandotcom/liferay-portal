@@ -313,7 +313,8 @@ definition {
 				tactic = "Broadcast Advertising",
 				targetMarketOptions = "Education",
 				targetRolesOptions = "Administrator",
-				typeOfActivity = "Miscellaneous Marketing");
+				typeOfActivity = "Miscellaneous Marketing",
+				ofWeek = "10");
 		}
 
 		task ("When the PMU goes to the created MDF") {
@@ -376,7 +377,7 @@ definition {
 			var tacticFieldsList = '''
 				Marketing activity: Activity Description,
 				What type of merchandise?: Type Merchandise,
-				Quantity: Quantity Merchandise
+				Quantity: 5
 			''';
 
 			var tacticFields = ListUtil.newListFromString(${tacticFieldsList});
@@ -419,7 +420,7 @@ definition {
 
 			var tacticFieldsList = '''
 				Marketing activity: Activity Description,
-				Target Of Sends: Target Of Sends,
+				Target # of sends: 5,
 				CTA: Activity CTA,
 			''';
 

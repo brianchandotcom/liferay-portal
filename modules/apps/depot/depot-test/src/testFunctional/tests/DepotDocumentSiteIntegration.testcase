@@ -182,10 +182,42 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This ensures that a document in a depot can be copied to the site folder."
+	@description = "This ensures that a document in a connected site can be copied to the depot."
 	@priority = 5
-	test CanCopyDocumentFromDepotToSite {
+	test CanCopyDocumentFromConnectedSiteToDepot {
 		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpeg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMDocument.copy(
+			depotName = "Test Depot Name",
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+	}
+
+	@description = "This ensures that a document in a depot can be copied to the connected site."
+	@priority = 5
+	test CanCopyDocumentFromDepotToConnectedSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -210,10 +242,54 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
 	}
 
-	@description = "This ensures that a folder in a depot can be copied to the site folder."
+	@description = "This ensures that a folder in a connected site can be copied to the depot."
 	@priority = 5
-	test CanCopyFolderFromDepotToSite {
+	test CanCopyFolderFromConnectedSiteToDepot {
 		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Site Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMFolder.copy(
+			depotName = "Test Depot Name",
+			dmFolderName = "DM Folder Name",
+			homeFolder = "true");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Folder Name");
+
+		DepotNavigator.openToDMFolder(
+			depotName = "Test Depot Name",
+			folderName = "DM Folder Name");
+
+		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+	}
+
+	@description = "This ensures that a folder in a depot can be copied to the connected site."
+	@priority = 5
+	test CanCopyFolderFromDepotToConnectedSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONDepot.connectSite(
+			depotName = "Test Depot Name",
+			groupName = "Site Name");
 
 		JSONFolder.addFolder(
 			dmFolderDescription = "DM Folder Description",
@@ -249,6 +325,102 @@ definition {
 			siteURLKey = "site-name");
 
 		LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+	}
+
+	@description = "This ensures that a document in a depot can not be copied to an unconnected site."
+	@priority = 4
+	test CannotCopyDocumentFromDepotToUnconnectedSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Test Depot Name",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.copy(
+			copyToUnconnectedSite = "true",
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.viewNoEntry(rowEntry = "DM Document Title");
+	}
+
+	@description = "This ensures that a document in a site can not be copied to the unconnected depot."
+	@priority = 4
+	test CannotCopyDocumentFromUnconnectedSiteToDepot {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpeg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Copy To",
+			rowEntry = "DM Document Title");
+
+		Button.clickSelect();
+
+		ItemSelector.changeWorkspaces(workspacesType = "Asset Library");
+
+		LexiconCard.viewCardNotPresent(card = "Test Depot Name");
+	}
+
+	@description = "This ensures that a folder in a depot can not be copied to an unconnected site."
+	@priority = 4
+	test CannotCopyFolderFromDepotToUnconnectedSite {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Test Depot Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMFolder.copy(
+			copyToUnconnectedSite = "true",
+			dmFolderName = "DM Folder Name",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.viewNoEntry(rowEntry = "DM Folder Name");
+	}
+
+	@description = "This ensures that a folder in a site can not be copied to the unconnected depot."
+	@priority = 4
+	test CannotCopyFolderFromUnconnectedSiteToDepot {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Copy To",
+			rowEntry = "DM Folder Nam");
+
+		Button.clickSelect();
+
+		ItemSelector.changeWorkspaces(workspacesType = "Asset Library");
+
+		LexiconCard.viewCardNotPresent(card = "Test Depot Name");
 	}
 
 	@description = "This ensures that a document using a type stored in AL can be removed on a connected site."

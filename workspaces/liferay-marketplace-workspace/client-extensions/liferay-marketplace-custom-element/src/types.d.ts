@@ -457,7 +457,7 @@ type OrderInfo = {
 	specifications?: ProductSpecification[];
 };
 
-type RadioOption = {
+type RadioOption<T> = {
 	index: number;
-	value: Account;
+	value: T;
 };

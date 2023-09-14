@@ -136,6 +136,13 @@ const AccountSubscriptionCard = ({
 		accountSubscription?.name
 	);
 
+	const accountSubscriptionGroupName =
+		selectedAccountSubscriptionGroup?.name.includes('Analytics Cloud') ||
+		selectedAccountSubscriptionGroup?.name.includes(
+			'Liferay Experience Cloud'
+		) ||
+		selectedAccountSubscriptionGroup?.name.includes('LXC - SM');
+
 	return (
 		<ClayCard
 			className={classNames(
@@ -223,7 +230,9 @@ const AccountSubscriptionCard = ({
 					{keysProvisionedContent && (
 						<div className="cp-account-subscription-card-info-bottom mb-0">
 							<p className="title-info-bottom">{`${i18n.translate(
-								'keys-provisioned'
+								accountSubscriptionGroupName
+									? 'purchased'
+									: 'keys-provisioned'
 							)}`}</p>
 
 							<p className="description-info-bottom">

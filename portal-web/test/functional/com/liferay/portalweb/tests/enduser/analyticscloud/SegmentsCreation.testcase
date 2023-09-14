@@ -707,9 +707,7 @@ definition {
 
 		ACSegments.addSegmentField(segmentField = "givenName");
 
-		ACSegments.editFormControlCriterion(
-			criterionName = "givenName",
-			option = "is unknown");
+		ACSegments.selectOperator(operator = "is unknown");
 
 		ACSegments.saveSegment();
 
@@ -933,9 +931,7 @@ definition {
 
 			ACSegments.addSegmentField(segmentField = "givenName");
 
-			ACSegments.editFormControlCriterion(
-				criterionName = "givenName",
-				option = "is unknown");
+			ACSegments.selectOperator(operator = "is unknown");
 		}
 
 		task ("Save the segment") {

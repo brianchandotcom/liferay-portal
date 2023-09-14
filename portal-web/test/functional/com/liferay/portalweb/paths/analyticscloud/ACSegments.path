@@ -382,16 +382,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_CONTROL_CRITERION</td>
-	<td>//div[contains(@class,'form-group-item')and text()='${key_criterion}']/..//select[contains(@class,'form-control')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FORM_CONTROL_CRITERION_OPTION</td>
-	<td>//div[contains(@class,'form-group-item')and text()='${key_criterion}']/..//select[contains(@class,'form-control')]//option[text()='${key_option}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ACTIVITIES_CRITERION</td>
 	<td>xpath=(//div[contains(@class,'criteria-statement')]//select[contains(@class,'form-control')])[${key_indexField}]</td>
 	<td></td>

@@ -467,9 +467,7 @@ definition {
 
 			ACSegments.addSegmentField(segmentField = "givenName");
 
-			ACSegments.editFormControlCriterion(
-				criterionName = "givenName",
-				option = "is unknown");
+			ACSegments.selectOperator(operator = "is unknown");
 		}
 
 		task ("View members of preview segment") {

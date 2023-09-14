@@ -286,14 +286,6 @@ definition {
 			locator1 = "ACSegments#DAY_CALENDAR_OPTION");
 	}
 
-	macro editFormControlCriterion {
-		var key_criterion = ${criterionName};
-
-		Select(
-			locator1 = "ACSegments#FORM_CONTROL_CRITERION",
-			value1 = ${option});
-	}
-
 	macro editNumberCriterion {
 		if (!(isSet(index))) {
 			var index = 1;

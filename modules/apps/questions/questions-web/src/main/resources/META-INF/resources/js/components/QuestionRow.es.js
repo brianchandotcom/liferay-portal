@@ -57,8 +57,8 @@ export default function QuestionRow({
 				}),
 		  };
 
+	const isContentReviewer = context?.isContentReviewer;
 	const isRowSelected = question.friendlyUrlPath === rowSelected;
-	const isContentReviewerUser = context?.contentReviewerUser;
 
 	return (
 		<div
@@ -204,7 +204,7 @@ export default function QuestionRow({
 						</strong>
 
 						{Liferay.FeatureFlags['LPS-185892'] &&
-							!!isContentReviewerUser &&
+							!!isContentReviewer &&
 							creatorInformation.userGroups?.map(
 								(userGroup, index) => (
 									<ClayLabel

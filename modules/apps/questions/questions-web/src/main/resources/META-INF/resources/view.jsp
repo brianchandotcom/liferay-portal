@@ -21,8 +21,6 @@
 			HashMapBuilder.<String, Object>put(
 				"companyName", renderRequest.getAttribute(QuestionsWebKeys.COMPANY_NAME)
 			).put(
-				"contentReviewerUser", renderRequest.getAttribute(QuestionsWebKeys.CONTENT_REVIEWER_USER)
-			).put(
 				"defaultRank", renderRequest.getAttribute(QuestionsWebKeys.DEFAULT_RANK)
 			).put(
 				"flagsProperties", renderRequest.getAttribute(QuestionsWebKeys.FLAGS_PROPERTIES)
@@ -34,6 +32,8 @@
 				"imageBrowseURL", renderRequest.getAttribute(QuestionsWebKeys.IMAGE_BROWSE_URL)
 			).put(
 				"includeContextPath", renderRequest.getAttribute("javax.servlet.include.context_path")
+			).put(
+				"isContentReviewer", permissionChecker.isContentReviewer(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())
 			).put(
 				"isOmniAdmin", permissionChecker.isOmniadmin()
 			).put(

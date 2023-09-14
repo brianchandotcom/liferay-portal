@@ -6,6 +6,7 @@
 package com.liferay.batch.engine.unit;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Gabriel Albuquerque
@@ -22,6 +23,7 @@ public class BatchEngineUnitThreadLocal {
 
 	private static final ThreadLocal<String> _batchEngineUnitThreadLocal =
 		new CentralizedThreadLocal<>(
-			BatchEngineUnitThreadLocal.class + "._batchEngineUnitThreadLocal");
+			BatchEngineUnitThreadLocal.class + "._batchEngineUnitThreadLocal",
+			() -> StringPool.BLANK);
 
 }

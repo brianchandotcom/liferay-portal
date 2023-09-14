@@ -186,7 +186,7 @@ public class HttpServletEndpointControllerImpl
 	}
 
 	private List<ContextController> _getContextControllers(String requestURI) {
-		int pos = requestURI.lastIndexOf('/');
+		int index = requestURI.lastIndexOf('/');
 
 		while (true) {
 			List<ContextController> contextControllers = new ArrayList<>();
@@ -205,15 +205,13 @@ public class HttpServletEndpointControllerImpl
 				return contextControllers;
 			}
 
-			if (pos > -1) {
-				requestURI = requestURI.substring(0, pos);
-
-				pos = requestURI.lastIndexOf('/');
-
-				continue;
+			if (index == -1) {
+				break;
 			}
 
-			break;
+			requestURI = requestURI.substring(0, index);
+
+			index = requestURI.lastIndexOf('/');
 		}
 
 		return null;
@@ -229,7 +227,7 @@ public class HttpServletEndpointControllerImpl
 
 		requestURI = requestURI.substring(contextPath.length());
 
-		int pos = requestURI.lastIndexOf('/');
+		int index = requestURI.lastIndexOf('/');
 
 		String servletPath = requestURI;
 
@@ -252,21 +250,15 @@ public class HttpServletEndpointControllerImpl
 				}
 			}
 
-			if (match == Match.EXACT) {
+			if ((match == Match.EXACT) || (index == -1)) {
 				break;
 			}
 
-			if (pos > -1) {
-				servletPath = requestURI.substring(0, pos);
+			servletPath = requestURI.substring(0, index);
 
-				pathInfo = requestURI.substring(pos);
+			pathInfo = requestURI.substring(index);
 
-				pos = servletPath.lastIndexOf('/');
-
-				continue;
-			}
-
-			break;
+			index = servletPath.lastIndexOf('/');
 		}
 
 		return null;

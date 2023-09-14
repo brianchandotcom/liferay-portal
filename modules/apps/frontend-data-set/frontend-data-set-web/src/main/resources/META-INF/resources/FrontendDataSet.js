@@ -22,10 +22,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import FrontendDataSetContext from './FrontendDataSetContext';
 import ManagementBar from './management_bar/ManagementBar';
 import CreationMenu from './management_bar/components/CreationMenu';
-import {
-	getFilterSelectedItemsLabel,
-	getOdataFilterString,
-} from './management_bar/components/filters/Filter';
+import {FILTER_IMPLEMENTATIONS} from './management_bar/components/filters/Filter';
 import Modal from './modal/Modal';
 import SidePanel from './side_panel/SidePanel';
 import filterCreationActions from './utils/actionItems/filterCreationActions';
@@ -150,8 +147,13 @@ const FrontendDataSet = ({
 						filter.active = true;
 						filter.selectedData = preloadedData;
 
-						filter.odataFilterString = getOdataFilterString(filter);
-						filter.selectedItemsLabel = getFilterSelectedItemsLabel(
+						const filterimplementation =
+							FILTER_IMPLEMENTATIONS[filter.type];
+
+						filter.odataFilterString = filterimplementation.getOdataString(
+							filter
+						);
+						filter.selectedItemsLabel = filterimplementation.getSelectedItemsLabel(
 							filter
 						);
 					}

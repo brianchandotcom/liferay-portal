@@ -7,15 +7,15 @@ import {ClientExtension} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-const getSelectedItemsLabel = () => {
-	return '';
+const getSelectedItemsLabel = ({odataFilterString}) => {
+	return odataFilterString;
 };
 
-const getOdataString = () => {
-	return '';
+const getOdataString = ({odataFilterString}) => {
+	return odataFilterString;
 };
 
-function ClientExtensionFilter({cxFilterURL, id, selectedData, setFilter}) {
+function ClientExtensionFilter({cxFilterURL, selectedData, setFilter}) {
 	const [htmlElementBuilder, setHTMLElementBuilder] = useState(() => () =>
 		document.createElement('div')
 	);
@@ -38,18 +38,12 @@ function ClientExtensionFilter({cxFilterURL, id, selectedData, setFilter}) {
 				filter: {
 					selectedData,
 				},
-				setFilter: ({
-					odataFilterString,
-					selectedData,
-					selectedItemsLabel,
-				}) =>
+				setFilter: ({odataFilterString, selectedData}) =>
 					setFilter({
 						active: true,
-						id,
 						...{
 							odataFilterString,
 							selectedData,
-							selectedItemsLabel,
 						},
 					}),
 			}}
@@ -65,5 +59,8 @@ ClientExtensionFilter.propTypes = {
 	setFilter: PropTypes.func.isRequired,
 };
 
-export {getSelectedItemsLabel, getOdataString};
-export default ClientExtensionFilter;
+export default {
+	Component: ClientExtensionFilter,
+	getOdataString,
+	getSelectedItemsLabel,
+};

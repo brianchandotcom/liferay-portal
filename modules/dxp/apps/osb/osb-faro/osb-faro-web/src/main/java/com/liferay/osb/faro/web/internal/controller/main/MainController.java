@@ -6,12 +6,16 @@
 package com.liferay.osb.faro.web.internal.controller.main;
 
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
-import com.liferay.osb.faro.web.internal.controller.FaroControllerRegistry;
+import com.liferay.osb.faro.web.internal.controller.FaroController;
 import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
 import com.liferay.osb.faro.web.internal.param.FaroParam;
 import com.liferay.osb.faro.web.internal.search.FaroSearchContext;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -27,8 +31,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Matthew Kong
@@ -47,8 +53,7 @@ public class MainController extends BaseFaroController {
 				faroSearchContextsFaroParam)
 		throws Exception {
 
-		return _faroControllerRegistry.search(
-			groupId, faroSearchContextsFaroParam.getValue());
+		return _search(groupId, faroSearchContextsFaroParam.getValue());
 	}
 
 	@Path("/entities/search")
@@ -74,7 +79,43 @@ public class MainController extends BaseFaroController {
 		}
 	}
 
-	@Reference
-	private FaroControllerRegistry _faroControllerRegistry;
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, FaroController.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
+	}
+
+	private FaroResultsDisplay _getFaroResultsDisplay(
+			long groupId, FaroSearchContext faroSearchContext)
+		throws Exception {
+
+		for (FaroController faroController : _serviceTrackerList) {
+			if (ArrayUtil.contains(
+					faroController.getEntityTypes(),
+					faroSearchContext.getType())) {
+
+				return faroController.search(groupId, faroSearchContext);
+			}
+		}
+
+		return new FaroResultsDisplay();
+	}
+
+	private List<FaroResultsDisplay> _search(
+			long groupId, List<FaroSearchContext> faroSearchContexts)
+		throws Exception {
+
+		return TransformUtil.transform(
+			faroSearchContexts,
+			faroSearchContext -> _getFaroResultsDisplay(
+				groupId, faroSearchContext));
+	}
+
+	private ServiceTrackerList<FaroController> _serviceTrackerList;
 
 }

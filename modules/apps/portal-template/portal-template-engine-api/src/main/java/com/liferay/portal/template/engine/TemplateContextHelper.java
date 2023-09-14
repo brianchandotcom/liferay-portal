@@ -43,7 +43,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil_IW;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil_IW;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil_IW;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil_IW;
 import com.liferay.portal.kernel.service.permission.RolePermissionUtil_IW;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil_IW;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
@@ -717,8 +717,7 @@ public class TemplateContextHelper {
 
 		try {
 			variables.put(
-				"portletPermission",
-				PortletPermissionUtil.getPortletPermission());
+				"portletPermission", PortletPermissionUtil_IW.getInstance());
 		}
 		catch (SecurityException securityException) {
 			_log.error(securityException);

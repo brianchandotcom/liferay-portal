@@ -7,8 +7,10 @@ package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
@@ -72,21 +74,31 @@ public class DLCopyEntryDisplayContext {
 
 		if (ArrayUtil.isEmpty(entryIds) || (entryIds.length > 1)) {
 			_entryName = StringPool.BLANK;
-		}
-		else {
-			DLFileShortcut dlFileShortcut =
-				DLFileShortcutLocalServiceUtil.fetchDLFileShortcut(entryIds[0]);
 
-			if (dlFileShortcut != null) {
-				_entryName = dlFileShortcut.getToTitle();
-			}
-			else {
-				DLFileEntry dlFileEntry =
-					DLFileEntryLocalServiceUtil.getDLFileEntry(entryIds[0]);
-
-				_entryName = dlFileEntry.getTitle();
-			}
+			return _entryName;
 		}
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.fetchDLFileEntry(
+			entryIds[0]);
+
+		if (dlFileEntry != null) {
+			_entryName = dlFileEntry.getTitle();
+
+			return _entryName;
+		}
+
+		DLFolder dlFolder = DLFolderLocalServiceUtil.fetchDLFolder(entryIds[0]);
+
+		if (dlFolder != null) {
+			_entryName = dlFolder.getName();
+
+			return _entryName;
+		}
+
+		DLFileShortcut dlFileShortcut =
+			DLFileShortcutLocalServiceUtil.getDLFileShortcut(entryIds[0]);
+
+		_entryName = dlFileShortcut.getToTitle();
 
 		return _entryName;
 	}

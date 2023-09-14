@@ -26,7 +26,6 @@ page import="com.liferay.document.library.web.internal.bulk.selection.BulkSelect
 page import="com.liferay.document.library.web.internal.display.context.DLAccessFromDesktopDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLCopyEntryDisplayContext" %><%@
-page import="com.liferay.document.library.web.internal.display.context.DLCopyFolderDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLEditFileEntryTypeDataEngineDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLEditFileShortcutDisplayContext" %><%@
 page import="com.liferay.document.library.web.internal.display.context.DLEditFolderDisplayContext" %><%@

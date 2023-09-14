@@ -7,6 +7,7 @@ import {sub} from 'frontend-js-web';
 
 export const FORM_ERROR_TYPES = {
 	deletedFragment: 'deletedFragment',
+	draftNotAvailable: 'draftNotAvailable',
 	hiddenFields: 'hiddenFields',
 	hiddenFragment: 'hiddenFragment',
 	missingFields: 'missingFields',
@@ -24,6 +25,17 @@ export function getFormErrorDescription({name = null, type}) {
 					),
 					name
 				),
+			};
+
+		case FORM_ERROR_TYPES.draftNotAvailable:
+			return {
+				message: sub(
+					Liferay.Language.get(
+						'x-form-does-not-allow-to-create-entries-as-draft'
+					),
+					name
+				),
+				title: Liferay.Language.get('save-as-draft-not-available'),
 			};
 
 		case FORM_ERROR_TYPES.hiddenFields:

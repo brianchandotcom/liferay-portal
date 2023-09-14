@@ -15,6 +15,7 @@ import {CACHE_KEYS, getCacheItem, getCacheKey} from './cache';
 import {getDescendantIds} from './getDescendantIds';
 import {FORM_ERROR_TYPES} from './getFormErrorDescription';
 import getLayoutDataItemUniqueClassName from './getLayoutDataItemUniqueClassName';
+import hasDraftSubmitChild from './hasDraftSubmitChild';
 import hasRequiredInputChild from './hasRequiredInputChild';
 import hasVisibleSubmitChild from './hasVisibleSubmitChild';
 import {isLayoutDataItemDeleted} from './isLayoutDataItemDeleted';
@@ -85,12 +86,28 @@ export default function useCheckFormsValidity() {
 						itemId,
 				  }));
 
-			return promise;
+			return promise.then(({fields, itemId}) => {
+				return FormService.getFormConfig({classNameId}).then(
+					(config) => ({
+						config,
+						fields,
+						itemId,
+					})
+				);
+			});
 		});
 
 		return Promise.all(promises).then((forms) => {
-			forms.forEach(({fields, itemId}) => {
+			forms.forEach(({config, fields, itemId}) => {
 				const formItem = layoutData.items[itemId];
+
+				if (!config.supportStatus && hasDraftSubmitChild(itemId)) {
+					addError(
+						validations,
+						formItem,
+						FORM_ERROR_TYPES.draftNotAvailable
+					);
+				}
 
 				if (
 					hasRequiredInputChild({

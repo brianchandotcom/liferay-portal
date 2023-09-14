@@ -56,10 +56,10 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
+		printWriter.write("<script data-senna-track=\"temporary\"");
+
 		String nonce = _contentSecurityPolicyNonceProvider.getNonce(
 			httpServletRequest);
-
-		printWriter.write("<script data-senna-track=\"temporary\"");
 
 		if (Validator.isNotNull(nonce)) {
 			printWriter.write(" nonce=\"");

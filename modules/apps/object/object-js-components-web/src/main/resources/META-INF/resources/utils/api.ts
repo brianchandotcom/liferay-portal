@@ -96,7 +96,7 @@ interface ObjectRelationship {
 
 interface ListTypeEntry {
 	externalReferenceCode: string;
-	id: number;
+	listTypeDefinitionId: number;
 	key: string;
 	name: string;
 	name_i18n: LocalizedValue<string>;
@@ -145,15 +145,15 @@ async function deleteItem(url: string) {
 	}
 }
 
-export async function addPickListItem({
-	id,
+export async function postListTypeEntry({
 	key,
+	listTypeDefinitionId,
 	name_i18n,
 }: Partial<ListTypeEntry>) {
 	return await save({
 		item: {key, name_i18n},
 		method: 'POST',
-		url: `/o/headless-admin-list-type/v1.0/list-type-definitions/${id}/list-type-entries`,
+		url: `/o/headless-admin-list-type/v1.0/list-type-definitions/${listTypeDefinitionId}/list-type-entries`,
 	});
 }
 
@@ -447,13 +447,13 @@ export async function updatePickList({
 
 export async function updatePickListItem({
 	externalReferenceCode,
-	id,
+	listTypeDefinitionId,
 	name_i18n,
 }: Partial<ListTypeEntry>) {
 	return await save({
 		item: {externalReferenceCode, name_i18n},
 		method: 'PUT',
-		url: `/o/headless-admin-list-type/v1.0/list-type-entries/${id}`,
+		url: `/o/headless-admin-list-type/v1.0/list-type-entries/${listTypeDefinitionId}`,
 	});
 }
 

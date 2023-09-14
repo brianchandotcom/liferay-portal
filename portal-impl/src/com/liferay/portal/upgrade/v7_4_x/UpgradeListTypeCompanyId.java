@@ -58,13 +58,13 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 
 		try (Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(
-				"select listTypeId, mvccVersion, name, type_ from ListType")) {
+				"select listTypeId, name, type_ from ListType")) {
 
 			while (resultSet.next()) {
 				listTypeEntries.add(
 					new ListTypeEntry(
-						resultSet.getLong(1), resultSet.getLong(2),
-						resultSet.getString(3), resultSet.getString(4)));
+						resultSet.getLong(1), resultSet.getString(2),
+						resultSet.getString(3)));
 			}
 		}
 
@@ -78,15 +78,15 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 		HashMap<Long, Long> listTypeIds = new HashMap<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"insert into ListType (companyId, listTypeId, mvccVersion, " +
+				"insert into ListType (mvccVersion, listTypeId, companyId, " +
 					"name, type_) values (?, ?, ?, ?, ?)")) {
 
 			for (ListTypeEntry listTypeEntry : listTypeEntries) {
 				long newListTypeId = increment(ListType.class.getName());
 
-				preparedStatement.setLong(1, companyId);
+				preparedStatement.setLong(1, 0);
 				preparedStatement.setLong(2, newListTypeId);
-				preparedStatement.setLong(3, listTypeEntry.getMvccVersion());
+				preparedStatement.setLong(3, companyId);
 				preparedStatement.setString(4, listTypeEntry.getName());
 				preparedStatement.setString(5, listTypeEntry.getType());
 
@@ -191,21 +191,14 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 
 	private static class ListTypeEntry {
 
-		public ListTypeEntry(
-			long listTypeId, long mvccVersion, String name, String type) {
-
+		public ListTypeEntry(long listTypeId, String name, String type) {
 			_listTypeId = listTypeId;
-			_mvccVersion = mvccVersion;
 			_name = name;
 			_type = type;
 		}
 
 		public long getListTypeId() {
 			return _listTypeId;
-		}
-
-		public long getMvccVersion() {
-			return _mvccVersion;
 		}
 
 		public String getName() {
@@ -217,7 +210,6 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 		}
 
 		private final long _listTypeId;
-		private final long _mvccVersion;
 		private final String _name;
 		private final String _type;
 

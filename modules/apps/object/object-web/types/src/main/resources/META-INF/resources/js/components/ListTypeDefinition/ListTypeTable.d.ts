@@ -8,8 +8,8 @@
 interface IProps {
 	pickListId: number;
 	readOnly: boolean;
-	setValues: (values: Partial<PickList>) => void;
-	values: Partial<PickList>;
+	setValues: (values: Partial<ListTypeDefinition>) => void;
+	values: Partial<ListTypeDefinition>;
 }
 export default function ListTypeTable({
 	pickListId,

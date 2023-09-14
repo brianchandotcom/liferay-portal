@@ -22,7 +22,7 @@ import {ObjectValidationErrors} from './ListTypeFormBase';
 import {fixLocaleKeys} from './utils';
 import {putListTypeEntry} from '@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api';
 
-export interface IModalState extends Partial<PickListItem> {
+export interface IModalState extends Partial<ListTypeEntry> {
 	header?: string;
 	itemExternalReferenceCode?: string;
 	itemId?: number;
@@ -137,7 +137,7 @@ function ListTypeEntriesModal() {
 		setAPIError('');
 	}, [APIError]);
 
-	const validate = (entry: Partial<PickListItem>): ObjectValidationErrors => {
+	const validate = (entry: Partial<ListTypeEntry>): ObjectValidationErrors => {
 		const errors: ObjectValidationErrors = {};
 		const externalReferenceCode = entry.externalReferenceCode;
 		const key = entry.key;

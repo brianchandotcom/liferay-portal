@@ -17,8 +17,8 @@ import {IModalState} from './ListTypeEntriesModal';
 interface IProps {
 	pickListId: number;
 	readOnly: boolean;
-	setValues: (values: Partial<PickList>) => void;
-	values: Partial<PickList>;
+	setValues: (values: Partial<ListTypeDefinition>) => void;
+	values: Partial<ListTypeDefinition>;
 }
 
 interface ItemData {
@@ -83,8 +83,8 @@ function getDataSetProps(
 	fireModal: (modalProps: IModalState) => void,
 	pickListId: number,
 	readOnly: boolean,
-	setValues: (values: Partial<PickList>) => void,
-	values: Partial<PickList>
+	setValues: (values: Partial<ListTypeDefinition>) => void,
+	values: Partial<ListTypeDefinition>
 ): IFrontendDataSetProps {
 	const onActionDropdownItemClick = ({action, itemData}: fdsItem) => {
 		if (action.id === 'addListTypeEntry') {
@@ -108,7 +108,7 @@ function getDataSetProps(
 
 			setValues({
 				...values,
-				listTypeEntries: newListTypeEntries as PickListItem[],
+				listTypeEntries: newListTypeEntries as ListTypeEntry[],
 			});
 		}
 	};

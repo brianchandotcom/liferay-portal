@@ -20,9 +20,9 @@ const PicklistDefaultValueSelect: React.FC<InputAsValueFieldComponentProps> = ({
 	setValues,
 	values,
 }: InputAsValueFieldComponentProps) => {
-	const [picklistItems, setPicklistItems] = useState<PickListItem[]>();
+	const [listTypeEntries, setListTypeEntries] = useState<ListTypeEntry[]>();
 
-	const handleChange = (selected?: PickListItem) => {
+	const handleChange = (selected?: ListTypeEntry) => {
 		if (selected) {
 			setValues({
 				objectFieldSettings: getUpdatedDefaultValueFieldSettings(
@@ -40,7 +40,7 @@ const PicklistDefaultValueSelect: React.FC<InputAsValueFieldComponentProps> = ({
 				values.listTypeDefinitionId
 			).then((items) => {
 				if (items.length) {
-					setPicklistItems(
+					setListTypeEntries(
 						items.map((item) => ({
 							...item,
 							name_i18n: fixLocaleKeys(item.name_i18n),
@@ -53,13 +53,13 @@ const PicklistDefaultValueSelect: React.FC<InputAsValueFieldComponentProps> = ({
 
 	return (
 		<>
-			{picklistItems && values.listTypeDefinitionId && (
+			{listTypeEntries && values.listTypeDefinitionId && (
 				<PicklistEntryBaseField
 					creationLanguageId={creationLanguageId}
 					error={error}
 					label={label}
 					onChange={handleChange}
-					picklistItems={picklistItems}
+					picklistItems={listTypeEntries}
 					placeholder={Liferay.Language.get('choose-an-option')}
 					required={required}
 					selectedPicklistItemKey={defaultValue as string | undefined}

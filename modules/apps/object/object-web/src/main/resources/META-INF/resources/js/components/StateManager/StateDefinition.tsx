@@ -101,7 +101,7 @@ export default function StateDefinition({
 	);
 }
 
-interface IOption extends PickListItem {
+interface IOption extends ListTypeEntry {
 	checked: boolean;
 }
 

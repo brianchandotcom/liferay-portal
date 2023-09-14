@@ -15,7 +15,7 @@ export default function StateDefinition({
 	stateName,
 	values,
 }: IProps): JSX.Element;
-interface IOption extends PickListItem {
+interface IOption extends ListTypeEntry {
 	checked: boolean;
 }
 interface IProps {

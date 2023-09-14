@@ -8,7 +8,7 @@ export declare function getCheckedWorkflowStatusItems(
 	setEditingFilterType: () => number[] | string[] | null
 ): IItem[];
 export declare function getCheckedPickListItems(
-	itemValues: PickListItem[],
+	itemValues: ListTypeEntry[],
 	setEditingFilterType: () => number[] | string[] | null
 ): IItem[];
 export declare function getSystemFieldLabelFromEntry(

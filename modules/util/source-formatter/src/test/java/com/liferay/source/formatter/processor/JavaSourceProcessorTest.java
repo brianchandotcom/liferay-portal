@@ -87,10 +87,17 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testChainingMethodEquals() throws Exception {
 		test(
-			"ChainingMethodEquals.testjava",
-			"Use 'Objects.equals' instead of calling 'equals' on chaining " +
-				"method",
-			16);
+			SourceProcessorTestParameters.create(
+				"ChainingMethodEquals.testjava"
+			).addExpectedMessage(
+				"Use 'Objects.equals' instead of calling 'equals' on " +
+					"chaining method",
+				15
+			).addExpectedMessage(
+				"Use 'Objects.equals' instead of calling 'equals' on " +
+					"chaining method",
+				21
+			));
 	}
 
 	@Test

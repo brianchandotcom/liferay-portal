@@ -7,7 +7,7 @@
 
 import {IClientExtensionRenderer} from 'frontend-js-web';
 import {FDSViewType} from './FDSViews';
-import {IFDSFilterClientExtension} from './types.d';
+import {IFDSFilterClientExtension} from './types';
 interface IFDSViewSectionProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
 	fdsFilterClientExtensions: IFDSFilterClientExtension[];

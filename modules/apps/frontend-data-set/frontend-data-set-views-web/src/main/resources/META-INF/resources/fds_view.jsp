@@ -20,9 +20,9 @@ renderResponse.setTitle(ParamUtil.getString(request, "fdsViewLabel"));
 	module="js/FDSView"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
-			"fdsFilterClientExtensions", fdsViewsDisplayContext.getFDSFilterCETsJSONArray()
-		).put(
 			"fdsClientExtensionCellRenderers", fdsViewsDisplayContext.getFDSCellRendererCETsJSONArray()
+		).put(
+			"fdsFilterClientExtensions", fdsViewsDisplayContext.getFDSFilterCETsJSONArray()
 		).put(
 			"fdsViewId", ParamUtil.getString(request, "fdsViewId")
 		).put(

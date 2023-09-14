@@ -17,7 +17,7 @@ import Fields from './fds_view/Fields';
 import Filters from './fds_view/Filters';
 import Pagination from './fds_view/Pagination';
 import Sorting from './fds_view/Sorting';
-import {IFDSFilterClientExtension} from './types.d';
+import {IFDSFilterClientExtension} from './types';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 
 let NAVIGATION_BAR_ITEMS = [

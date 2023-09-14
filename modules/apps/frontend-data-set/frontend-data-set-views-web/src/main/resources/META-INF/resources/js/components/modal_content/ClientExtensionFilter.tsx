@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
@@ -29,6 +30,14 @@ function Body({
 	selectedClientExtension,
 }: IBodyProps) {
 	const fdsFilterClientExtensionFormElementId = `${namespace}fdsFilterClientExtensionERC`;
+
+	if (!fdsFilterClientExtensions.length) {
+		return (
+			<ClayAlert displayType="info" title="Info">
+				{Liferay.Language.get('no-client-extentions-available')}
+			</ClayAlert>
+		);
+	}
 
 	return (
 		<ClayForm.Group className="form-group-autofit">

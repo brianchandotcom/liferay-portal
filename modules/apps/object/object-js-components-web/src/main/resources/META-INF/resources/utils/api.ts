@@ -389,12 +389,12 @@ export async function postObjectDefinitionPublish(objectDefinitionId: number) {
 }
 
 export async function putObjectDefinitionByExternalReferenceCode(
-	values: Partial<ObjectDefinition>
+	objectDefinition: Partial<ObjectDefinition>
 ) {
 	return await fetch(
-		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${values.externalReferenceCode}`,
+		`/o/object-admin/v1.0/object-definitions/by-external-reference-code/${objectDefinition.externalReferenceCode}`,
 		{
-			body: JSON.stringify(values),
+			body: JSON.stringify(objectDefinition),
 			headers,
 			method: 'PUT',
 		}

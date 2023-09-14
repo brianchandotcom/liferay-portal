@@ -236,7 +236,6 @@ interface ObjectRelationship {
 	objectDefinitionId1: number;
 	objectDefinitionId2: number;
 	readonly objectDefinitionName2: string;
-	objectRelationshipId: number;
 	parameterObjectFieldName?: string;
 	reverse: boolean;
 	type: ObjectRelationshipType;

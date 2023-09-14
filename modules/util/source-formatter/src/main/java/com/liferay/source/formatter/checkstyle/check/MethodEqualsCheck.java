@@ -26,21 +26,23 @@ public class MethodEqualsCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST dotDetailAST = detailAST.findFirstToken(TokenTypes.DOT);
+		DetailAST firstChildDetailAST = detailAST.findFirstToken(
+			TokenTypes.DOT);
 
-		if (dotDetailAST == null) {
+		if (firstChildDetailAST == null) {
 			return;
 		}
 
-		DetailAST childDetailAST = dotDetailAST.getFirstChild();
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-		if (childDetailAST.getType() != TokenTypes.METHOD_CALL) {
+		if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
 			return;
 		}
 
-		dotDetailAST = childDetailAST.findFirstToken(TokenTypes.DOT);
+		firstChildDetailAST = firstChildDetailAST.findFirstToken(
+			TokenTypes.DOT);
 
-		if (dotDetailAST == null) {
+		if (firstChildDetailAST == null) {
 			return;
 		}
 

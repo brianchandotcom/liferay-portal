@@ -223,6 +223,8 @@ public class DisplayPageDisplayContext {
 				_getRootBreadcrumbEntry(_httpServletRequest, portletURL));
 		}
 
+		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
+
 		LayoutPageTemplateCollection currentLayoutPageTemplateCollection =
 			LayoutPageTemplateCollectionLocalServiceUtil.
 				fetchLayoutPageTemplateCollection(
@@ -231,8 +233,6 @@ public class DisplayPageDisplayContext {
 		List<LayoutPageTemplateCollection>
 			ancestorsLayoutPageTemplateCollectionList =
 				currentLayoutPageTemplateCollection.getAncestors();
-
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
 		TransformUtil.transform(
 			ancestorsLayoutPageTemplateCollectionList,

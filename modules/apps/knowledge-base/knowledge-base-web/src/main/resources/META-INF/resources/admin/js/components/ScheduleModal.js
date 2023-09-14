@@ -69,7 +69,10 @@ export default function ScheduleModal({
 				</p>
 
 				<div className={classnames({'has-error': invalidDate})}>
+					<label>{Liferay.Language.get('date-and-time')}</label>
+
 					<ClayDatePicker
+						firstDayOfWeek={1}
 						onChange={setDisplayDate}
 						placeholder="YYYY-MM-DD HH:mm"
 						time

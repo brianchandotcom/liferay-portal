@@ -64,7 +64,7 @@ export default function EditKBArticle({
 		const modalEventHandlers = [];
 
 		openModal({
-			height: '60vh',
+			height: '65vh',
 			id: 'scheduleKBArticleDialog',
 			iframeBodyCssClass: '',
 			onClose: () => {

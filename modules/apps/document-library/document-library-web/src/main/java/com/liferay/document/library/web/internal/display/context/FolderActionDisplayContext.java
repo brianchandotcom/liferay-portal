@@ -376,6 +376,13 @@ public class FolderActionDisplayContext {
 		).setParameter(
 			"entryIds", _getFolderId()
 		).setParameter(
+			"sourceFolderId",
+			() -> {
+				Folder folder = _getFolder();
+
+				return folder.getParentFolderId();
+			}
+		).setParameter(
 			"sourceRepositoryId", _getRepositoryId()
 		).buildString();
 	}

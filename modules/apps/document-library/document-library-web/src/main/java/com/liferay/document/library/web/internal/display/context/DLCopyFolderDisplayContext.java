@@ -10,6 +10,7 @@ import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FolderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.folder.criterion.FolderItemSelectorCriterion;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.RenderResponse;
@@ -50,6 +52,34 @@ public class DLCopyFolderDisplayContext {
 		).buildString();
 	}
 
+	public long[] getEntryIds() {
+		if (ArrayUtil.isEmpty(_entryIds)) {
+			_entryIds = ParamUtil.getLongValues(
+				_httpServletRequest, "entryIds");
+		}
+
+		return _entryIds;
+	}
+
+	public String getEntryName() throws PortalException {
+		if (_entryName != null) {
+			return _entryName;
+		}
+
+		long[] entryIds = getEntryIds();
+
+		if (ArrayUtil.isEmpty(entryIds) || (entryIds.length > 1)) {
+			_entryName = StringPool.BLANK;
+		}
+		else {
+			DLFolder folder = DLFolderLocalServiceUtil.getFolder(entryIds[0]);
+
+			_entryName = folder.getName();
+		}
+
+		return _entryName;
+	}
+
 	public String getRedirect() {
 		if (_redirect != null) {
 			return _redirect;
@@ -60,7 +90,7 @@ public class DLCopyFolderDisplayContext {
 		return _redirect;
 	}
 
-	public String getSelectFolderURL() throws PortalException {
+	public String getSelectionModalURL() throws PortalException {
 		ItemSelector itemSelector =
 			(ItemSelector)_httpServletRequest.getAttribute(
 				ItemSelector.class.getName());
@@ -71,55 +101,29 @@ public class DLCopyFolderDisplayContext {
 				_getGroup(getSourceRepositoryId()),
 				_themeDisplay.getScopeGroupId(), _getItemSelectedEventName(),
 				_getFolderItemSelectorCriterion(
-					getSourceFolderId(), getSourceRepositoryId())));
-	}
-
-	public long getSourceFolderId() {
-		if (_sourceFolderId < 0) {
-			_sourceFolderId = ParamUtil.getLong(
-				_httpServletRequest, "sourceFolderId");
-		}
-
-		return _sourceFolderId;
-	}
-
-	public String getSourceFolderName() {
-		if (_sourceFolderName != null) {
-			return _sourceFolderName;
-		}
-
-		_sourceFolderName = LanguageUtil.get(_httpServletRequest, "home");
-
-		DLFolder folder = DLFolderLocalServiceUtil.fetchFolder(
-			getSourceFolderId());
-
-		if (folder != null) {
-			_sourceFolderName = folder.getName();
-		}
-
-		return _sourceFolderName;
+					_getSourceFolderId(), getSourceRepositoryId())));
 	}
 
 	public long getSourceRepositoryId() {
-		if (_sourceRepositoryId < 0) {
-			_sourceRepositoryId = ParamUtil.getLong(
-				_httpServletRequest, "sourceRepositoryId");
+		if (_sourceRepositoryId != 0) {
+			return _sourceRepositoryId;
 		}
+
+		_sourceRepositoryId = ParamUtil.getLong(
+			_httpServletRequest, "sourceRepositoryId");
 
 		return _sourceRepositoryId;
 	}
 
-	public void setViewAttributes(
-		LiferayPortletResponse liferayPortletResponse) {
-
+	public void setViewAttributes() {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(getRedirect());
 
-		if (liferayPortletResponse instanceof RenderResponse) {
+		if (_liferayPortletResponse instanceof RenderResponse) {
 			RenderResponse renderResponse =
-				(RenderResponse)liferayPortletResponse;
+				(RenderResponse)_liferayPortletResponse;
 
 			renderResponse.setTitle(
 				LanguageUtil.get(_httpServletRequest, "copy-to"));
@@ -162,12 +166,22 @@ public class DLCopyFolderDisplayContext {
 		return portletDisplay.getNamespace() + "folderSelected";
 	}
 
+	private long _getSourceFolderId() {
+		if (_sourceFolderId < 0) {
+			_sourceFolderId = ParamUtil.getLong(
+				_httpServletRequest, "sourceFolderId");
+		}
+
+		return _sourceFolderId;
+	}
+
+	private long[] _entryIds;
+	private String _entryName;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
-	private long _sourceFolderId = -1;
-	private String _sourceFolderName;
-	private long _sourceRepositoryId = -1;
+	private long _sourceFolderId;
+	private long _sourceRepositoryId;
 	private final ThemeDisplay _themeDisplay;
 
 }

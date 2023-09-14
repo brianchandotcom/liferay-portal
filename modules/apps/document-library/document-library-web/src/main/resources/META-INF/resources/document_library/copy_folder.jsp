@@ -10,7 +10,7 @@
 <%
 DLCopyFolderDisplayContext dlCopyFolderDisplayContext = new DLCopyFolderDisplayContext(request, liferayPortletResponse, themeDisplay);
 
-dlCopyFolderDisplayContext.setViewAttributes(liferayPortletResponse);
+dlCopyFolderDisplayContext.setViewAttributes();
 %>
 
 <div class="c-mt-3 sheet sheet-lg">
@@ -20,13 +20,13 @@ dlCopyFolderDisplayContext.setViewAttributes(liferayPortletResponse);
 			HashMapBuilder.<String, Object>put(
 				"copyActionURL", dlCopyFolderDisplayContext.getActionURL()
 			).put(
-				"entryIds", new long[] {dlCopyFolderDisplayContext.getSourceFolderId()}
+				"entryIds", dlCopyFolderDisplayContext.getEntryIds()
 			).put(
-				"entryName", dlCopyFolderDisplayContext.getSourceFolderName()
+				"entryName", dlCopyFolderDisplayContext.getEntryName()
 			).put(
 				"redirect", dlCopyFolderDisplayContext.getRedirect()
 			).put(
-				"selectionModalURL", dlCopyFolderDisplayContext.getSelectFolderURL()
+				"selectionModalURL", dlCopyFolderDisplayContext.getSelectionModalURL()
 			).put(
 				"sourceRepositoryId", dlCopyFolderDisplayContext.getSourceRepositoryId()
 			).build()

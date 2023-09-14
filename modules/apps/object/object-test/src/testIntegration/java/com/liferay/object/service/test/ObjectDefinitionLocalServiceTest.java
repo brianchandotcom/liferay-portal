@@ -1253,10 +1253,10 @@ public class ObjectDefinitionLocalServiceTest {
 		// Bind object definitions creating a new hierarchical structure
 
 		ObjectDefinition objectDefinitionA =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				"A", _objectDefinitionLocalService);
 		ObjectDefinition objectDefinitionAA =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				"AA", _objectDefinitionLocalService);
 
 		ObjectRelationship objectRelationshipA_AA =
@@ -1269,7 +1269,7 @@ public class ObjectDefinitionLocalServiceTest {
 			Arrays.asList(
 				ObjectRelationshipTestUtil.addObjectRelationship(
 					_objectRelationshipLocalService, objectDefinitionAA,
-					ObjectDefinitionTestUtil.addObjectDefinition(
+					ObjectDefinitionTestUtil.addCustomObjectDefinition(
 						"AAA", _objectDefinitionLocalService)),
 				objectRelationshipA_AA));
 
@@ -1291,7 +1291,7 @@ public class ObjectDefinitionLocalServiceTest {
 			Arrays.asList(
 				ObjectRelationshipTestUtil.addObjectRelationship(
 					_objectRelationshipLocalService, objectDefinitionAA,
-					ObjectDefinitionTestUtil.addObjectDefinition(
+					ObjectDefinitionTestUtil.addCustomObjectDefinition(
 						"AAB", _objectDefinitionLocalService)),
 				objectRelationshipA_AA));
 
@@ -1903,11 +1903,11 @@ public class ObjectDefinitionLocalServiceTest {
 	@Test
 	public void testUpdateRootObjectDefinitionId() throws Exception {
 		ObjectDefinition objectDefinition1 =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				_objectDefinitionLocalService);
 
 		ObjectDefinition objectDefinition2 =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				_objectDefinitionLocalService);
 
 		AssertUtils.assertFailure(
@@ -2093,7 +2093,7 @@ public class ObjectDefinitionLocalServiceTest {
 	@Test
 	public void testUpdateTitleObjectFieldId() throws Exception {
 		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				_objectDefinitionLocalService);
 
 		try {
@@ -2515,7 +2515,7 @@ public class ObjectDefinitionLocalServiceTest {
 		throws Exception {
 
 		ObjectDefinition objectDefinition2 =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(

@@ -45,7 +45,7 @@ public class ObjectFieldSettingLocalServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			_objectDefinitionLocalService);
 
 		_objectField = ObjectFieldUtil.addCustomObjectField(

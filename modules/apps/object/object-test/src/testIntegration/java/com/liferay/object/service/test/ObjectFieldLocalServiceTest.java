@@ -133,7 +133,7 @@ public class ObjectFieldLocalServiceTest {
 	public void testAddCustomObjectField() throws Exception {
 		AssertUtils.assertFailure(
 			ObjectDefinitionEnableLocalizationException.class, null,
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
@@ -234,7 +234,7 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldListTypeDefinitionIdException.class,
 			"List type definition ID is 0",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new MultiselectPicklistObjectFieldBuilder(
@@ -247,7 +247,7 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldLocalizedException.class,
 			"Localized object fields must not be required",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				true, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
@@ -265,7 +265,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldLocalizedException.class,
 			"Only LongText,RichText and Text business types support " +
 				"localization",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new DateObjectFieldBuilder(
@@ -289,7 +289,7 @@ public class ObjectFieldLocalServiceTest {
 			AssertUtils.assertFailure(
 				ObjectFieldNameException.MustNotBeReserved.class,
 				"Reserved name " + reservedName,
-				() -> ObjectDefinitionTestUtil.addObjectDefinition(
+				() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 					false, _objectDefinitionLocalService,
 					Arrays.asList(
 						new TextObjectFieldBuilder(
@@ -307,7 +307,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingValueException.InvalidValue.class,
 			"The value " + defaultValue +
 				" of setting defaultValue is invalid for object field picklist",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new PicklistObjectFieldBuilder(
@@ -341,7 +341,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingValueException.InvalidValue.class,
 			"The value " + uniqueValues +
 				" of setting uniqueValues is invalid for object field text",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
@@ -364,7 +364,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingValueException.InvalidValue.class,
 			"The value expressionBuilder of setting defaultValueType is " +
 				"invalid for object field picklist",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new PicklistObjectFieldBuilder(
@@ -401,7 +401,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingValueException.MissingRequiredValues.class,
 			"The settings acceptedFileExtensions, fileSource, " +
 				"maximumFileSize are required for object field upload",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new AttachmentObjectFieldBuilder(
@@ -415,7 +415,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingValueException.MissingRequiredValues.class,
 			"The settings defaultValue, defaultValueType are required for " +
 				"object field picklist",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new PicklistObjectFieldBuilder(
@@ -434,7 +434,7 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.MissingRequiredValues.class,
 			"The settings maxLength are required for object field text",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
@@ -455,7 +455,7 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.MissingRequiredValues.class,
 			"The settings timeStorage are required for object field datetime",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Collections.singletonList(
 					new ObjectFieldBuilder(
@@ -474,7 +474,7 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldSettingNameException.NotAllowedNames.class,
 			"The settings anySetting are not allowed for object field text",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
@@ -502,7 +502,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingNameException.NotAllowedNames.class,
 			"The settings defaultValue, defaultValueType are not allowed for " +
 				"object field text",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
@@ -536,7 +536,7 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldSettingNameException.NotAllowedNames.class,
 			"The settings maxLength are not allowed for object field text",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
@@ -557,7 +557,7 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldSettingNameException.NotAllowedNames.class,
 			"The settings maxLength are not allowed for object field text",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new TextObjectFieldBuilder(
@@ -584,7 +584,7 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldStateException.class,
 			"Object field must be required when the state is true",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					new PicklistObjectFieldBuilder(
@@ -623,7 +623,7 @@ public class ObjectFieldLocalServiceTest {
 			new LongIntegerObjectFieldBuilder();
 
 		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					objectFieldBuilder.userId(
@@ -772,7 +772,7 @@ public class ObjectFieldLocalServiceTest {
 
 		// Object field read only
 
-		objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+		objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			false, _objectDefinitionLocalService, Collections.emptyList());
 
 		objectField = _addCustomObjectField(
@@ -806,7 +806,7 @@ public class ObjectFieldLocalServiceTest {
 				finalObjectField, invalidReadOnly, null));
 
 		ObjectDefinition relatedObjectDefinition =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					_getIntegerObjectField(0, Collections.emptyList())));
@@ -831,8 +831,9 @@ public class ObjectFieldLocalServiceTest {
 
 		// Object field relationship
 
-		relatedObjectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
-			_objectDefinitionLocalService);
+		relatedObjectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				_objectDefinitionLocalService);
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
@@ -994,7 +995,7 @@ public class ObjectFieldLocalServiceTest {
 				"a123456789a123456789a123456789a1234567891"));
 
 		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
@@ -1070,7 +1071,7 @@ public class ObjectFieldLocalServiceTest {
 		// Delete object field from custom object definition
 
 		ObjectDefinition customObjectDefinition =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
@@ -1245,7 +1246,7 @@ public class ObjectFieldLocalServiceTest {
 		// Business type attachment
 
 		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
@@ -1932,7 +1933,7 @@ public class ObjectFieldLocalServiceTest {
 
 	private ObjectDefinition _publishCustomObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
@@ -1949,7 +1950,7 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldReadOnlyConditionExpressionException.class,
 			"Read only condition expression is required",
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					_getReadOnlyTextObjectField(
@@ -1960,7 +1961,7 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldReadOnlyConditionExpressionException.class,
 			"Syntax error in: " + invalidDDMScript,
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					_getReadOnlyTextObjectField(
@@ -1972,13 +1973,13 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldReadOnlyException.class,
 			"Unknown read only: " + invalidReadOnly,
-			() -> ObjectDefinitionTestUtil.addObjectDefinition(
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					_getReadOnlyTextObjectField(0, invalidReadOnly, null))));
 
 		ObjectDefinition objectDefinition1 =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService, Collections.emptyList());
 
 		for (String objectFieldName : _readOnlyObjectFieldNames) {
@@ -2042,7 +2043,7 @@ public class ObjectFieldLocalServiceTest {
 				RandomTestUtil.randomString(), null));
 
 		ObjectDefinition objectDefinition2 =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				false, _objectDefinitionLocalService,
 				Arrays.asList(
 					_getIntegerObjectField(0, Collections.emptyList())));

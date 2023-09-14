@@ -112,7 +112,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 
 						return {
 							...leftSidebarItem,
-							newLeftSidebarItems: newLeftSidebarObjectDefinitionItem
+							leftSidebarObjectDefinitionItems: newLeftSidebarObjectDefinitionItem
 								? [
 										...updatedObjectDefinitions!,
 										newLeftSidebarObjectDefinitionItem,
@@ -676,7 +676,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 					...objectRelationshipEdge,
 					data: {
 						...objectRelationshipEdge.data,
-						edgeSelected:
+						selected:
 							objectRelationshipEdge.data?.objectRelationshipId.toString() ===
 							selectedObjectRelationshipId,
 					},

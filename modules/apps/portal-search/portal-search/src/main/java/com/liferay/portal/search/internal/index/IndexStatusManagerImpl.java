@@ -13,13 +13,13 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
 import com.liferay.portal.search.configuration.IndexStatusManagerConfiguration;
 import com.liferay.portal.search.index.IndexStatusManager;
+import com.liferay.portal.tools.DBUpgrader;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.liferay.portal.tools.DBUpgrader;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -37,6 +37,7 @@ public class IndexStatusManagerImpl implements IndexStatusManager {
 	public boolean isIndexReadOnly() {
 		if (IndexStatusManagerThreadLocal.isIndexReadOnly() || _indexReadOnly ||
 			StartupHelperUtil.isUpgrading() || DBUpgrader.isUpgradeClient()) {
+
 			return true;
 		}
 

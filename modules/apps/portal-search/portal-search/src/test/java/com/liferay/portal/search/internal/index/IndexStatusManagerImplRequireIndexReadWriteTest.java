@@ -7,8 +7,8 @@ package com.liferay.portal.search.internal.index;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
 import com.liferay.portal.tools.DBUpgrader;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -101,8 +101,7 @@ public class IndexStatusManagerImplRequireIndexReadWriteTest {
 		Assert.assertFalse(indexStatusManagerImpl.isIndexReadOnly());
 
 		ReflectionTestUtil.setFieldValue(
-			DBUpgrader.class, "_upgradeClient",
-			originalUpgradeClientValue);
+			DBUpgrader.class, "_upgradeClient", originalUpgradeClientValue);
 	}
 
 	@Rule

@@ -3,15 +3,33 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-interface HTTPMethod {
-	href: string;
-	method: string;
-}
 interface Actions {
 	delete: HTTPMethod;
 	get: HTTPMethod;
 	permissions: HTTPMethod;
 	update: HTTPMethod;
+}
+interface HTTPMethod {
+	href: string;
+	method: string;
+}
+interface ListTypeDefinition {
+	actions: Actions;
+	externalReferenceCode: string;
+	id: number;
+	key: string;
+	listTypeEntries: ListTypeEntry[];
+	name: string;
+	name_i18n: LocalizedValue<string>;
+	system: boolean;
+}
+interface ListTypeEntry {
+	externalReferenceCode: string;
+	id: number;
+	listTypeDefinitionId: number;
+	key: string;
+	name: string;
+	name_i18n: LocalizedValue<string>;
 }
 declare type NotificationTemplateType = 'email' | 'userNotification';
 declare type RecipientType = 'role' | 'term' | 'user';
@@ -74,35 +92,12 @@ interface ObjectRelationship {
 	reverse: boolean;
 	type: ObjectRelationshipType;
 }
-interface ListTypeEntry {
-	externalReferenceCode: string;
-	id: number;
-	listTypeDefinitionId: number;
-	key: string;
-	name: string;
-	name_i18n: LocalizedValue<string>;
-}
-interface ListTypeDefinition {
-	actions: Actions;
-	externalReferenceCode: string;
-	id: number;
-	key: string;
-	listTypeEntries: ListTypeEntry[];
-	name: string;
-	name_i18n: LocalizedValue<string>;
-	system: boolean;
-}
 interface saveProps {
 	item: unknown;
 	method?: 'PATCH' | 'POST' | 'PUT';
 	returnValue?: boolean;
 	url: string;
 }
-export declare function postListTypeEntry({
-	key,
-	listTypeDefinitionId,
-	name_i18n,
-}: Partial<ListTypeEntry>): Promise<any>;
 export declare function deleteObjectDefinition(
 	objectDefinitionId: number
 ): Promise<void>;
@@ -120,6 +115,13 @@ export declare function fetchJSON<T>(
 export declare function getAllObjectDefinitions(): Promise<ObjectDefinition[]>;
 export declare function getAllObjectFolders(): Promise<ObjectFolder[]>;
 export declare function getList<T>(url: string): Promise<T[]>;
+export declare function getListTypeDefinition(
+	listTypeDefinitionId: number
+): Promise<ListTypeDefinition>;
+export declare function getListTypeDefinitionListTypeEntries(
+	listTypeDefinitionId: number
+): Promise<ListTypeEntry[]>;
+export declare function getListTypeDefinitions(): Promise<ListTypeDefinition[]>;
 export declare function getNotificationTemplateByExternalReferenceCode(
 	externalReferenceCode: string
 ): Promise<NotificationTemplate>;
@@ -132,9 +134,15 @@ export declare function getNotificationTemplates(): Promise<
 export declare function getObjectDefinitionByExternalReferenceCode(
 	externalReferenceCode: string
 ): Promise<ObjectDefinition>;
+export declare function getObjectDefinitionByExternalReferenceCodeObjectRelationships(
+	externalReferenceCode: string
+): Promise<ObjectRelationship[]>;
 export declare function getObjectDefinitionById(
 	objectDefinitionId: number
 ): Promise<ObjectDefinition>;
+export declare function getObjectDefinitionObjectFields(
+	objectDefinitionId: number
+): Promise<ObjectField[]>;
 export declare function getObjectDefinitions(
 	parameters?: string
 ): Promise<ObjectDefinition[]>;
@@ -144,34 +152,20 @@ export declare function getObjectField(
 export declare function getObjectFieldsByExternalReferenceCode(
 	externalReferenceCode: string
 ): Promise<ObjectField[]>;
-export declare function getObjectDefinitionObjectFields(
-	objectDefinitionId: number
-): Promise<ObjectField[]>;
 export declare function getObjectFolderByExternalReferenceCode(
 	externalReferenceCode: string
 ): Promise<ObjectFolder>;
-export declare function getObjectDefinitionByExternalReferenceCodeObjectRelationships(
-	externalReferenceCode: string
-): Promise<ObjectRelationship[]>;
-export declare function getObjectValidationRuleById<T>(
-	objectValidationRuleId: number
-): Promise<T>;
-export declare function getListTypeDefinition(
-	listTypeDefinitionId: number
-): Promise<ListTypeDefinition>;
-export declare function getListTypeDefinitionListTypeEntries(
-	listTypeDefinitionId: number
-): Promise<ListTypeEntry[]>;
-export declare function getListTypeDefinitions(): Promise<ListTypeDefinition[]>;
 export declare function getObjectRelationship<T>(
 	objectRelationshipId: number
 ): Promise<T>;
-export declare function save({
-	item,
-	method,
-	returnValue,
-	url,
-}: saveProps): Promise<any>;
+export declare function getObjectValidationRuleById<T>(
+	objectValidationRuleId: number
+): Promise<T>;
+export declare function postListTypeEntry({
+	key,
+	listTypeDefinitionId,
+	name_i18n,
+}: Partial<ListTypeEntry>): Promise<any>;
 export declare function postObjectDefinition(
 	objectDefinition: Partial<ObjectDefinition>
 ): Promise<any>;
@@ -199,4 +193,10 @@ export declare function putObjectRelationship({
 	id,
 	...others
 }: ObjectRelationship): Promise<any>;
+export declare function save({
+	item,
+	method,
+	returnValue,
+	url,
+}: saveProps): Promise<any>;
 export {};

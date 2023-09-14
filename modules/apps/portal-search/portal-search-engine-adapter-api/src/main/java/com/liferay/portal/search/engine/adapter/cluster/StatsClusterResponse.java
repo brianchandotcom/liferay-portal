@@ -20,7 +20,7 @@ public class StatsClusterResponse implements ClusterResponse {
 		_totalSpace = totalSpace;
 	}
 
-	public long getAvailableSpace() {
+	public long getAvailableSpaceInBytes() {
 		return _availableSpace;
 	}
 
@@ -32,11 +32,11 @@ public class StatsClusterResponse implements ClusterResponse {
 		return _statsMessage;
 	}
 
-	public long getTotalSpace() {
+	public long getTotalSpaceInBytes() {
 		return _totalSpace;
 	}
 
-	public long getUsedSpace() {
+	public long getUsedSpaceInBytes() {
 		return _totalSpace - _availableSpace;
 	}
 

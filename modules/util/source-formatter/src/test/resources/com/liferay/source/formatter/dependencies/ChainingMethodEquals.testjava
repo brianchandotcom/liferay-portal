@@ -8,7 +8,7 @@ package com.liferay.source.formatter.dependencies;
 /**
  * @author Qi Zhang
  */
-public class UseObjectsEqualsOnChaining {
+public class ChainingMethodEquals {
 
 	public void testMethod(Boolean a) {
 		System.out.println(

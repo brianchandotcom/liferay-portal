@@ -85,6 +85,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testChainingMethodEquals() throws Exception {
+		test(
+			"ChainingMethodEquals.testjava",
+			"Use 'Objects.equals' instead of calling 'equals' on chaining " +
+				"method",
+			16);
+	}
+
+	@Test
 	public void testChainPutForOrgJSONObject() throws Exception {
 		test(
 			"ChainPutForOrgJSONObject.testjava",
@@ -900,15 +909,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			"No need to use if-statement to wrap 'alterColumn*' and " +
 				"'alterTable*' calls",
 			17);
-	}
-
-	@Test
-	public void testUseObjectsEqualsOnChaining() throws Exception {
-		test(
-			"UseObjectsEqualsOnChaining.testjava",
-			"Use 'Objects.equals' instead of calling 'equals' on chaining " +
-				"method",
-			15);
 	}
 
 	@Test

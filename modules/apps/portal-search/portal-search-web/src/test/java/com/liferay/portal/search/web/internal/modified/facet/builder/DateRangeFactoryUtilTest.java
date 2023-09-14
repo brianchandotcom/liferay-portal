@@ -5,11 +5,9 @@
 
 package com.liferay.portal.search.web.internal.modified.facet.builder;
 
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
-import com.liferay.portal.search.web.internal.date.range.DateRangeFactory;
+import com.liferay.portal.search.web.internal.util.DateRangeFactoryUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.util.DateFormatFactoryImpl;
 
 import java.text.ParseException;
 
@@ -24,7 +22,7 @@ import org.junit.Test;
 /**
  * @author Adam Brandizzi
  */
-public class DateRangeFactoryTest {
+public class DateRangeFactoryUtilTest {
 
 	@ClassRule
 	@Rule
@@ -35,25 +33,25 @@ public class DateRangeFactoryTest {
 	public void testBoundedRange() {
 		Assert.assertEquals(
 			"[20180131000000 TO 20180228235959]",
-			_dateRangeFactory.getRangeString(
+			DateRangeFactoryUtil.getRangeString(
 				"2018-01-31", "2018-02-28", TimeZoneUtil.GMT));
 	}
 
 	@Test(expected = ParseException.class)
 	public void testDateFormatShouldBeyyyyMMddHHmmss() throws Exception {
-		_dateRangeFactory.validateRange(
+		DateRangeFactoryUtil.validateRange(
 			"[{\"label\":\"past-hour\", \"range\":\"20190908 TO *\"}]");
 	}
 
 	@Test(expected = ParseException.class)
 	public void testInvalidRangeAliases() throws Exception {
-		_dateRangeFactory.validateRange(
+		DateRangeFactoryUtil.validateRange(
 			"[{\"label\":\"past-hour\", \"range\":\"[past-test TO *]\"}]");
 	}
 
 	@Test(expected = ParseException.class)
 	public void testInvalidRangeWithoutBrackets() throws Exception {
-		_dateRangeFactory.validateRange(
+		DateRangeFactoryUtil.validateRange(
 			"[{\"label\":\"past-hour\", \"range\":\"past-hour TO *\"}]");
 	}
 
@@ -64,10 +62,10 @@ public class DateRangeFactoryTest {
 
 		Assert.assertEquals(
 			"[20180301153042 TO 20180301163042]",
-			_dateRangeFactory.getRangeString("past-hour", calendar));
+			DateRangeFactoryUtil.getRangeString("past-hour", calendar));
 		Assert.assertEquals(
 			"[20180228163042 TO 20180301163042]",
-			_dateRangeFactory.getRangeString("past-24-hours", calendar));
+			DateRangeFactoryUtil.getRangeString("past-24-hours", calendar));
 	}
 
 	@Test
@@ -77,7 +75,7 @@ public class DateRangeFactoryTest {
 
 		Assert.assertEquals(
 			"[20180514235959 TO 20180515225959]",
-			_dateRangeFactory.replaceAliases(
+			DateRangeFactoryUtil.replaceAliases(
 				"[past-24-hours TO past-hour]", calendar));
 	}
 
@@ -88,7 +86,7 @@ public class DateRangeFactoryTest {
 
 		Assert.assertEquals(
 			"[20180515225959 TO 20180515235959]",
-			_dateRangeFactory.replaceAliases("[past-hour TO *]", calendar));
+			DateRangeFactoryUtil.replaceAliases("[past-hour TO *]", calendar));
 	}
 
 	@Test
@@ -98,7 +96,7 @@ public class DateRangeFactoryTest {
 
 		Assert.assertEquals(
 			"[20180415235959 TO 20180508235959]",
-			_dateRangeFactory.replaceAliases(
+			DateRangeFactoryUtil.replaceAliases(
 				"[past-month TO past-week]", calendar));
 	}
 
@@ -109,7 +107,7 @@ public class DateRangeFactoryTest {
 
 		Assert.assertEquals(
 			"[20180508235959 TO 20180514235959]",
-			_dateRangeFactory.replaceAliases(
+			DateRangeFactoryUtil.replaceAliases(
 				"[past-week TO past-24-hours]", calendar));
 	}
 
@@ -120,11 +118,8 @@ public class DateRangeFactoryTest {
 
 		Assert.assertEquals(
 			"[20170515235959 TO 20180415235959]",
-			_dateRangeFactory.replaceAliases(
+			DateRangeFactoryUtil.replaceAliases(
 				"[past-year TO past-month]", calendar));
 	}
-
-	private final DateRangeFactory _dateRangeFactory = new DateRangeFactory(
-		new DateFormatFactoryImpl(), new JSONFactoryImpl());
 
 }

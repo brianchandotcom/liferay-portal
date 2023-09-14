@@ -995,7 +995,7 @@ public class ObjectEntryDisplayContextImpl
 	private DDMFormValues _getDDMFormValues(
 		DDMForm ddmForm, ObjectEntry objectEntry) {
 
-		Map<String, Object> values = _getObjectEntryValues(objectEntry);
+		Map<String, Object> values = _getValues(objectEntry);
 
 		if (values.isEmpty()) {
 			return null;
@@ -1116,7 +1116,30 @@ public class ObjectEntryDisplayContextImpl
 		return _objectEntry;
 	}
 
-	private Map<String, Object> _getObjectEntryValues(ObjectEntry objectEntry) {
+	private Object _getValue(
+		DDMFormField ddmFormField, Map<String, Object> values) {
+
+		try {
+			ObjectField objectField = _objectFieldLocalService.getObjectField(
+				GetterUtil.getLong(ddmFormField.getProperty("objectFieldId")));
+
+			ObjectFieldBusinessType objectFieldBusinessType =
+				_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
+					objectField.getBusinessType());
+
+			return objectFieldBusinessType.getDisplayContextValue(
+				objectField, _objectRequestHelper.getUserId(), values);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return null;
+		}
+	}
+
+	private Map<String, Object> _getValues(ObjectEntry objectEntry) {
 		Map<String, Object> values = objectEntry.getProperties();
 
 		Date dateCreated = objectEntry.getDateCreated();
@@ -1148,29 +1171,6 @@ public class ObjectEntryDisplayContextImpl
 		}
 
 		return values;
-	}
-
-	private Object _getValue(
-		DDMFormField ddmFormField, Map<String, Object> values) {
-
-		try {
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				GetterUtil.getLong(ddmFormField.getProperty("objectFieldId")));
-
-			ObjectFieldBusinessType objectFieldBusinessType =
-				_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
-					objectField.getBusinessType());
-
-			return objectFieldBusinessType.getDisplayContextValue(
-				objectField, _objectRequestHelper.getUserId(), values);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-
-			return null;
-		}
 	}
 
 	private boolean _isActive(ObjectField objectField) throws PortalException {

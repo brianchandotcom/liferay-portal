@@ -13,7 +13,9 @@ KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(ParamUtil.getLong(
 String displayDateString = StringPool.BLANK;
 
 if (kbArticle.getDisplayDate() != null) {
-	displayDateString = dateFormatDateTime.format(kbArticle.getDisplayDate());
+	Format displayFormatDate = FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm", locale, timeZone);
+
+	displayDateString = displayFormatDate.format(kbArticle.getDisplayDate());
 }
 %>
 

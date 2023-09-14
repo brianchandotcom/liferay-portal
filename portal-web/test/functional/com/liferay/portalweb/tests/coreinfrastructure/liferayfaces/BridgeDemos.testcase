@@ -979,6 +979,67 @@ definition {
 			state = "FL");
 	}
 
+	@description = "This is a usecase for LPS-159239. Verify a 3.0 portlet with cdi can be deployed to a content page."
+	@priority = 3
+	test PrimeFacesCDIApplicantPortletContentPageSmoke {
+		property liferay.faces = "false";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given a 3.0 portlet with cdi") {
+			task ("Upgrade existing 2.0 portlet to 3.0") {
+				var facesBridgeImplDir = PropsUtil.get("liferay.faces.bridge.impl.dir");
+
+				var portletDir = "${facesBridgeImplDir}/demo/primefaces-applicant-portlet";
+
+				FileUtil.replaceStringInFile("${portletDir}/pom.xml", "4.3.0", "6.0.0");
+
+				FileUtil.replaceStringInFile("${portletDir}/src/main/webapp/WEB-INF/portlet.xml", "http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd", "http://xmlns.jcp.org/xml/ns/portlet");
+
+				FileUtil.replaceStringInFile("${portletDir}/src/main/webapp/WEB-INF/portlet.xml", "2.0", "3.0");
+			}
+
+			task ("Enable cdi on the portlet") {
+				FileUtil.replaceStringInFile("${portletDir}/src/main/webapp/WEB-INF/portlet.xml", "portlet\">", "portlet/portlet-app_3_0.xsd\">");
+
+				var content = '''
+-cdiannotations:''';
+
+				File.regexReplace(
+					content = ${content},
+					fileName = "${portletDir}/src/main/webapp/WEB-INF/liferay-plugin-package.properties",
+					regex = "\z");
+			}
+
+			task ("Deploy the portlet") {
+				AntCommands.runCommand("build-test.xml", "deploy-maven-module -Dbuild.profiles=liferay -Dmodule.base.dir=${portletDir}");
+
+				WaitForConsoleTextPresent(value1 = "STARTED com.liferay.faces.demo.primefaces.applicant.portlet");
+			}
+		}
+
+		task ("When the portlet is added to a page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Bridge Demos",
+				layoutName = "primefaces-applicant",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "primefaces-applicant",
+				siteName = "Bridge Demos");
+
+			PageEditor.addWidget(portletName = "primefaces-applicant");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the portlet should be added successfully") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/bridge-demos/primefaces-applicant");
+
+			BridgeDemos.viewApplication();
+		}
+	}
+
 	@priority = 5
 	test PrimeFacesCDIApplicantPortletSmoke {
 		JSONLayout.addPublicLayout(

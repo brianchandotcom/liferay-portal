@@ -280,7 +280,7 @@ export async function getObjectFolderByExternalReferenceCode(
 	return objectFolder;
 }
 
-export async function getObjectRelationshipsByExternalReferenceCode(
+export async function getObjectDefinitionByExternalReferenceCodeObjectRelationships(
 	externalReferenceCode: string
 ) {
 	return await getList<ObjectRelationship>(

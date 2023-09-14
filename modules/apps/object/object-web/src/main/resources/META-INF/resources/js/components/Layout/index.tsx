@@ -126,7 +126,7 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				objectDefinitionExternalReferenceCode
 			);
 
-			const objectRelationships = await API.getObjectRelationshipsByExternalReferenceCode(
+			const objectRelationships = await API.getObjectDefinitionByExternalReferenceCodeObjectRelationships(
 				objectDefinitionExternalReferenceCode
 			);
 

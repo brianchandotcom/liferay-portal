@@ -11,6 +11,7 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
@@ -20,6 +21,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 /**
@@ -43,6 +45,17 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 	@Override
 	public ObjectEntry updateFromInfoItemFieldValues(
 			ObjectEntry objectEntry, InfoItemFieldValues infoItemFieldValues)
+		throws Exception {
+
+		return updateFromInfoItemFieldValues(
+			objectEntry, infoItemFieldValues,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	public ObjectEntry updateFromInfoItemFieldValues(
+			ObjectEntry objectEntry, InfoItemFieldValues infoItemFieldValues,
+			int status)
 		throws InfoFormException {
 
 		ServiceContext serviceContext =
@@ -53,6 +66,8 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
+
+		int objectEntryStatus = status;
 
 		try {
 			return ObjectEntryUtil.toObjectEntry(
@@ -70,6 +85,12 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 								infoItemFieldValues);
 							taxonomyCategoryIds = ArrayUtil.toLongArray(
 								serviceContext.getAssetCategoryIds());
+
+							status = new Status() {
+								{
+									code = objectEntryStatus;
+								}
+							};
 						}
 					},
 					ObjectEntryUtil.getScopeKey(

@@ -184,6 +184,14 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 			InfoItemIdentifier infoItemIdentifier = _getInfoItemIdentifier(
 				httpServletRequest);
 
+			int status = ParamUtil.getInteger(
+				httpServletRequest, "status",
+				WorkflowConstants.STATUS_APPROVED);
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+				status = WorkflowConstants.STATUS_APPROVED;
+			}
+
 			if ((infoItemIdentifier != null) &&
 				FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
 
@@ -208,7 +216,8 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 							new ArrayList<>(infoFieldValues.values())
 						).infoItemReference(
 							new InfoItemReference(className, 0)
-						).build());
+						).build(),
+						status);
 			}
 			else {
 				InfoItemCreator<Object> infoItemCreator =
@@ -217,14 +226,6 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 
 				if (infoItemCreator == null) {
 					throw new InfoFormException();
-				}
-
-				int status = ParamUtil.getInteger(
-					httpServletRequest, "status",
-					WorkflowConstants.STATUS_APPROVED);
-
-				if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
-					status = WorkflowConstants.STATUS_APPROVED;
 				}
 
 				infoItem = infoItemCreator.createFromInfoItemFieldValues(

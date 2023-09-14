@@ -8,6 +8,7 @@ package com.liferay.commerce.price;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;
@@ -65,6 +66,11 @@ public interface CommerceProductPriceCalculation {
 			long cpInstanceId, BigDecimal quantity,
 			CommerceCurrency commerceCurrency, boolean secure,
 			String unitOfMeasureKey, CommerceContext commerceContext)
+		throws PortalException;
+
+	public CommercePriceEntry getUnitCommercePriceEntry(
+			CommerceContext commerceContext, long cpInstanceId,
+			String unitOfMeasureKey)
 		throws PortalException;
 
 	public CommerceMoney getUnitMaxPrice(

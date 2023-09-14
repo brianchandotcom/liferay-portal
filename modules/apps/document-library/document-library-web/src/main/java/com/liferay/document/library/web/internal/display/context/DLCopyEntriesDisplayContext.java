@@ -36,9 +36,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Marco Galluzzi
  */
-public class DLCopyEntryDisplayContext {
+public class DLCopyEntriesDisplayContext {
 
-	public DLCopyEntryDisplayContext(
+	public DLCopyEntriesDisplayContext(
 		HttpServletRequest httpServletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		ThemeDisplay themeDisplay) {

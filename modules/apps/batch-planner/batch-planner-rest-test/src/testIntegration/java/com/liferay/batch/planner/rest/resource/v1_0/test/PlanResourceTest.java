@@ -6,6 +6,7 @@
 package com.liferay.batch.planner.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.planner.batch.engine.task.TaskItemUtil;
 import com.liferay.batch.planner.rest.client.dto.v1_0.Plan;
 import com.liferay.batch.planner.rest.client.http.HttpInvoker;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -62,6 +63,40 @@ public class PlanResourceTest extends BasePlanResourceTestCase {
 			httpResponse.getContent(), System.lineSeparator());
 
 		Assert.assertTrue(StringUtil.contains(lines[0], fieldName));
+	}
+
+	@Override
+	@Test
+	public void testPostPlan() throws Exception {
+		super.testPostPlan();
+
+		Plan randomPlan = randomPlan();
+
+		randomPlan.setTaskItemDelegateName(RandomTestUtil.randomString());
+
+		Plan postPlan = testPostPlan_addPlan(randomPlan);
+
+		assertEquals(randomPlan, postPlan);
+		assertValid(postPlan);
+
+		randomPlan = randomPlan();
+
+		randomPlan.setTaskItemDelegateName("DEFAULT");
+
+		postPlan = testPostPlan_addPlan(randomPlan);
+
+		assertEquals(randomPlan, postPlan);
+		assertValid(postPlan);
+	}
+
+	@Override
+	protected void assertEquals(Plan plan1, Plan plan2) {
+		super.assertEquals(plan1, plan2);
+
+		Assert.assertEquals(
+			TaskItemUtil.getInternalClassNameKey(
+				plan1.getInternalClassName(), plan1.getTaskItemDelegateName()),
+			plan2.getInternalClassNameKey());
 	}
 
 	@Override

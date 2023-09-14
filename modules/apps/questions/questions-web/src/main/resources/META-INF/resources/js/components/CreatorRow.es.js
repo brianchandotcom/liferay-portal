@@ -13,10 +13,10 @@ import UserPopover from './UserPopover.es';
 
 export default withRouter(
 	({
+		isContentReviewer,
 		match: {
 			params: {sectionTitle},
 		},
-		contentReviewerUser,
 		question: {creator = {}, creatorStatistics, dateCreated},
 	}) => (
 		<Link
@@ -42,7 +42,7 @@ export default withRouter(
 				</p>
 
 				{Liferay.FeatureFlags['LPS-185892'] &&
-					contentReviewerUser &&
+					isContentReviewer &&
 					creator.userGroupInformations
 						?.map(
 							(userGroupInformation) => userGroupInformation.name

@@ -117,12 +117,6 @@ definition {
 		User.firstLoginPG();
 
 		var companyWebId = JSONCompany.getWebId();
-		var liferayHome = PropsUtil.get("liferay.home.dir.name");
-		var moduleBaseDir = "workspaces/liferay-marketplace-workspace";
-		var projectDir = PropsUtil.get("project.dir");
-
-		FileUtil.replaceStringInFile("${projectDir}/${moduleBaseDir}/gradle.properties", "liferay.workspace.home.dir=", "liferay.workspace.home.dir=${liferayHome}");
-
 		var clientExtension = "liferay-marketplace-custom-element";
 
 		AntCommands.runCommand("build-test-workspace.xml", "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtension}");

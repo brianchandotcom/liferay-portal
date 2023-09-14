@@ -21,4 +21,15 @@ definition {
 		FileUtil.write(${fileName}, ${newFileContent});
 	}
 
+	@description = "Replace all occurences of ${regex} in ${fileName} with ${content}"
+	macro regexReplaceAll {
+		Variables.assertDefined(parameterList = "${fileName},${regex},${content}");
+
+		var fileContent = FileUtil.read(${fileName});
+
+		var newFileContent = StringUtil.regexReplaceAll(${fileContent}, ${regex}, ${content});
+
+		FileUtil.write(${fileName}, ${newFileContent});
+	}
+
 }

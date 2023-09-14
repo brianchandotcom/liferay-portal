@@ -203,8 +203,6 @@ public class DisplayPageDisplayContext {
 	public List<BreadcrumbEntry> getLayoutPageTemplateBreadcrumbEntries() {
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			_renderResponse
-		).setMVCPath(
-			"/view_display_pages.jsp"
 		).setTabs1(
 			"display-page-templates"
 		).buildPortletURL();

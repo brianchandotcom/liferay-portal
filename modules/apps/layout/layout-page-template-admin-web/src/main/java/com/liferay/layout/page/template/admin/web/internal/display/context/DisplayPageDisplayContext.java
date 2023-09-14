@@ -201,11 +201,9 @@ public class DisplayPageDisplayContext {
 		return _keywords;
 	}
 
-	public List<BreadcrumbEntry> getLayoutPageTemplateBreadcrumbEntries(
-		RenderResponse renderResponse) {
-
+	public List<BreadcrumbEntry> getLayoutPageTemplateBreadcrumbEntries() {
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			renderResponse
+			_renderResponse
 		).setMVCPath(
 			"/view_display_pages.jsp"
 		).setTabs1(

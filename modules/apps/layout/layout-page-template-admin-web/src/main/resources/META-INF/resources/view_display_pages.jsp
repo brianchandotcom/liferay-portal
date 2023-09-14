@@ -38,7 +38,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 
 	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-189856") %>'>
 		<liferay-site-navigation:breadcrumb
-			breadcrumbEntries="<%= displayPageDisplayContext.getLayoutPageTemplateBreadcrumbEntries(renderResponse) %>"
+			breadcrumbEntries="<%= displayPageDisplayContext.getLayoutPageTemplateBreadcrumbEntries() %>"
 		/>
 	</c:if>
 

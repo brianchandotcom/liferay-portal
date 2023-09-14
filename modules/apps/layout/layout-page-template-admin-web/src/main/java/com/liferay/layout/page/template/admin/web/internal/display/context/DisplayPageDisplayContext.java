@@ -323,15 +323,18 @@ public class DisplayPageDisplayContext {
 	}
 
 	private BreadcrumbEntry _createBreadCrumbEntry(
-		PortletURL portletURL, LayoutPageTemplateCollection ancestor) {
+		PortletURL portletURL,
+		LayoutPageTemplateCollection layoutPageTemplateCollection) {
 
 		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
-		breadcrumbEntry.setTitle(ancestor.getName());
+		breadcrumbEntry.setTitle(layoutPageTemplateCollection.getName());
 
 		portletURL.setParameter(
 			"layoutPageTemplateCollectionId",
-			String.valueOf(ancestor.getLayoutPageTemplateCollectionId()));
+			String.valueOf(
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId()));
 
 		breadcrumbEntry.setURL(portletURL.toString());
 

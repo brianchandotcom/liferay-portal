@@ -104,6 +104,7 @@ MarkdownFileExtensionCheck | .markdown or .md | Finds `markdown` files with `.md
 MarkdownStylingCheck | .markdown or .md | Applies rules to enforce consistency in code style. |
 MarkdownWhitespaceCheck | .markdown or .md | Finds missing and unnecessary whitespace in `.markdown` files. |
 MethodCallsOrderCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Sorts method calls for certain object (for example, `put` calls in `java.util.HashMap`). |
+MethodEqualsCheck | .java | Finds cases where `Objects.equals` should be used. |
 [MethodParamPadCheck](https://checkstyle.sourceforge.io/config_whitespace.html#MethodParamPad) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks the padding between the identifier of a method definition, constructor definition, method call, or constructor invocation; and the left parenthesis of the parameter list. |
 [MissingEmptyLineCheck](check/missing_empty_line_check.markdown#missingemptylinecheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for missing line breaks around variable declarations. |
 MissingParenthesesCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds missing parentheses in conditional statement. |

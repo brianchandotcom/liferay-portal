@@ -30,15 +30,17 @@ public class ContentSecurityPolicyNonceManager {
 
 		String nonce = (String)httpSession.getAttribute(_NONCE_ATTR);
 
-		if (nonce == null) {
-			synchronized (httpSession) {
-				nonce = (String)httpSession.getAttribute(_NONCE_ATTR);
+		if (nonce != null) {
+			return nonce;
+		}
 
-				if (nonce == null) {
-					nonce = _generateNonce();
+		synchronized (httpSession) {
+			nonce = (String)httpSession.getAttribute(_NONCE_ATTR);
 
-					httpSession.setAttribute(_NONCE_ATTR, nonce);
-				}
+			if (nonce == null) {
+				nonce = _generateNonce();
+
+				httpSession.setAttribute(_NONCE_ATTR, nonce);
 			}
 		}
 

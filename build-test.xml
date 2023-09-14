@@ -12689,6 +12689,16 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<isset property="liferay.faces" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					liferay.faces.bridge.impl.dir=${liferay.faces.bridge.impl.dir}
+					liferay.faces.portal.dir=${liferay.faces.portal.dir}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="object.storage.salesforce.consumer.key" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">

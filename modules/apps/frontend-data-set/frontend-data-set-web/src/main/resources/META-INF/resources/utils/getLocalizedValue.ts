@@ -42,10 +42,11 @@ export function getLocalizedValue(
 	if (
 		typeof fieldName === 'string' &&
 		item[fieldName] &&
-		item[fieldName][getLanguageKey(item)]
+		item[fieldName][getLanguageKey(item[fieldName])]
 	) {
 		valuePath.push(fieldName);
-		navigatedValue = navigatedValue[fieldName][getLanguageKey(item)];
+		navigatedValue =
+			navigatedValue[fieldName][getLanguageKey(item[fieldName])];
 	}
 	else if (Array.isArray(fieldName)) {
 		fieldName.forEach((property) => {

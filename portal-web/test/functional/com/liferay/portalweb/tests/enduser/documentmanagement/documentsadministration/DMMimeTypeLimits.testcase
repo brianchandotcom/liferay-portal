@@ -33,6 +33,7 @@ definition {
 		property test.run.type = "single";
 
 		DMDocument.updateMimeTypeSizeLimit(
+			checkPortletTitle = "true",
 			maximumFileSizeValue = 40960,
 			mimeTypeValue = "image/jpeg");
 

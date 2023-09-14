@@ -48,7 +48,70 @@ catch (Exception exception) {
 		>
 			<aui:input name="preferences--showCardsForTopicNavigation--" type="checkbox" value="<%= questionsConfiguration.showCardsForTopicNavigation() %>" />
 
-			<aui:input name="preferences--showFeatureRequestText--" type="checkbox" value="<%= questionsConfiguration.showFeatureRequestText() %>" />
+			<div class="form-group">
+				<label>
+					<liferay-ui:message key="ask-question-button-text" />
+				</label>
+
+				<liferay-ui:input-localized
+					fieldPrefix="preferences"
+					fieldPrefixSeparator="--"
+					name="askQuestionButtonTextAsLocalizedXML"
+					xml="<%= questionsConfiguration.askQuestionButtonTextAsLocalizedXML() %>"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label>
+					<liferay-ui:message key="edit-question-page-title" />
+				</label>
+
+				<liferay-ui:input-localized
+					fieldPrefix="preferences"
+					fieldPrefixSeparator="--"
+					name="editQuestionPageTitleAsLocalizedXML"
+					xml="<%= questionsConfiguration.editQuestionPageTitleAsLocalizedXML() %>"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label>
+					<liferay-ui:message key="new-question-page-title" />
+				</label>
+
+				<liferay-ui:input-localized
+					fieldPrefix="preferences"
+					fieldPrefixSeparator="--"
+					name="newQuestionPageTitleAsLocalizedXML"
+					xml="<%= questionsConfiguration.newQuestionPageTitleAsLocalizedXML() %>"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label>
+					<liferay-ui:message key="post-your-question-button-text" />
+				</label>
+
+				<liferay-ui:input-localized
+					fieldPrefix="preferences"
+					fieldPrefixSeparator="--"
+					name="postYourQuestionButtonTextAsLocalizedXML"
+					xml="<%= questionsConfiguration.postYourQuestionButtonTextAsLocalizedXML() %>"
+				/>
+			</div>
+
+			<div class="form-group">
+				<label>
+					<liferay-ui:message key="update-your-question-button-text" />
+				</label>
+
+				<liferay-ui:input-localized
+					fieldPrefix="preferences"
+					fieldPrefixSeparator="--"
+					name="updateYourQuestionButtonTextAsLocalizedXML"
+					xml="<%= questionsConfiguration.updateYourQuestionButtonTextAsLocalizedXML() %>"
+				/>
+			</div>
 
 			<div class="form-group">
 				<aui:input label="root-topic-id" name="rootTopicName" type="resource" value="<%= rootTopicName %>" />

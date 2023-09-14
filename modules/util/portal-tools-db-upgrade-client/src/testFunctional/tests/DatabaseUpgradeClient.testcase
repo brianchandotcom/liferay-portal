@@ -31,6 +31,20 @@ definition {
 		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-custom-log");
 	}
 
+	@description = "LPS-195984:  Upgrade client throws error when Gogo Shell is unable to connect."
+	@priority = 2
+	test CheckUpgradeClientFailedGogoShellReturnsError {
+		property custom.mysql.sql.statement = "ALTER TABLE JournalArticle DROP type_;";
+		property custom.upgrade.properties = "module.framework.properties.osgi.console=80";
+		property skip.get.testcase.database.properties = "true";
+		property skip.upgrade-legacy-database = "true";
+		property timeout.explicit.wait = "490";
+
+		task ("Assert error is printed when the Gogo Shell fails to connect") {
+			AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-gogoshell-failed-connection-error");
+		}
+	}
+
 	@description = "LPS-158522: Upgrade client can connect to Gogo Shell"
 	@priority = 3
 	test CheckUpgradeClientGogoShell {

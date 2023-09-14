@@ -217,13 +217,13 @@ public class DisplayPageDisplayContext {
 				_getRootBreadcrumbEntry(portletURL));
 		}
 
-		LayoutPageTemplateCollection currentLayoutPageTemplateCollection =
+		LayoutPageTemplateCollection curLayoutPageTemplateCollection =
 			LayoutPageTemplateCollectionLocalServiceUtil.
 				fetchLayoutPageTemplateCollection(
 					_getLayoutPageTemplateCollectionId());
 
 		List<BreadcrumbEntry> breadcrumbEntries = TransformUtil.transform(
-			currentLayoutPageTemplateCollection.getAncestors(),
+			curLayoutPageTemplateCollection.getAncestors(),
 			ancestor -> _createBreadcrumbEntry(portletURL, ancestor));
 
 		breadcrumbEntries.add(_getRootBreadcrumbEntry(portletURL));

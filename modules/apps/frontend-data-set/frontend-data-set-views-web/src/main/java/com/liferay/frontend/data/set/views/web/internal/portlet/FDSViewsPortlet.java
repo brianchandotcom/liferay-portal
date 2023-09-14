@@ -412,7 +412,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
-						_language.get(locale, "fds-filter-client-extension-erc"), "fdsFilterClientExtensionErc", true),
+						_language.get(locale, "fds-filter-client-extension-erc"), "fdsFilterClientExtensionERC", true),
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,

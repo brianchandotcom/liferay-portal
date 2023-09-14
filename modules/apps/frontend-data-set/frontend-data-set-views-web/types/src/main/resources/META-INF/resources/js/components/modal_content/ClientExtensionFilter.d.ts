@@ -5,13 +5,20 @@
 
 /// <reference types="react" />
 
+import {IFDSFilterClientExtension} from '../../types';
 declare function Header(): JSX.Element;
+interface IBodyProps {
+	fdsFilterClientExtensions: IFDSFilterClientExtension[];
+	namespace: string;
+	onSelectedClientExtensionChange: (val: IFDSFilterClientExtension) => void;
+	selectedClientExtension?: IFDSFilterClientExtension;
+}
 declare function Body({
 	fdsFilterClientExtensions,
 	namespace,
 	onSelectedClientExtensionChange,
 	selectedClientExtension,
-}: any): JSX.Element;
+}: IBodyProps): JSX.Element;
 declare const _default: {
 	Body: typeof Body;
 	Header: typeof Header;

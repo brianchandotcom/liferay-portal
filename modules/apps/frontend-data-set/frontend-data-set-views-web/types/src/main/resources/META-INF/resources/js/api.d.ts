@@ -4,33 +4,9 @@
  */
 
 import {FDSViewType} from './FDSViews';
-interface IField {
-	format: string;
-	label: string;
-	name: string;
-	type: string;
-}
+import {IField, IPickList} from './types';
 export declare function getFields(fdsView: FDSViewType): Promise<IField[]>;
-export interface IPickList {
-	externalReferenceCode: string;
-	id: string;
-	listTypeEntries: IListTypeEntry[];
-	name: string;
-	name_i18n: {
-		[key: string]: string;
-	};
-}
-interface IListTypeEntry {
-	externalReferenceCode: string;
-	id: number;
-	key: string;
-	name: string;
-	name_i18n: {
-		[key: string]: string;
-	};
-}
 export declare function getAllPicklists(
 	page?: number,
 	items?: IPickList[]
 ): Promise<IPickList[]>;
-export {};

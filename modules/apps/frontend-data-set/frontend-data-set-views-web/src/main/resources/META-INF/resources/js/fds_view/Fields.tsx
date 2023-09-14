@@ -23,7 +23,7 @@ import fuzzy from 'fuzzy';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP} from '../Constants';
-import {IFDSViewSectionInterface} from '../FDSView';
+import {IFDSViewSectionProps} from '../FDSView';
 import {FDSViewType} from '../FDSViews';
 import {getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
@@ -663,7 +663,7 @@ const Fields = ({
 	fdsViewsURL,
 	namespace,
 	saveFDSFieldsURL,
-}: IFDSViewSectionInterface) => {
+}: IFDSViewSectionProps) => {
 	const [fdsFields, setFDSFields] = useState<Array<IFDSField> | null>(null);
 
 	const fdsFieldsOrderRef = useRef('');

@@ -13,6 +13,16 @@ function Header() {
 	return <>{Liferay.Language.get('new-date-range-filter')}</>;
 }
 
+interface IBodyProps {
+	from: string;
+	isValidDateRange: boolean;
+	namespace: string;
+	onFromChange: (val: string) => void;
+	onToChange: (val: string) => void;
+	onValidDateChange: (val: boolean) => void;
+	to: string;
+}
+
 function Body({
 	from,
 	isValidDateRange,
@@ -21,7 +31,7 @@ function Body({
 	onToChange,
 	onValidDateChange,
 	to,
-}: any) {
+}: IBodyProps) {
 	const fromFormElementId = `${namespace}From`;
 	const toFormElementId = `${namespace}To`;
 

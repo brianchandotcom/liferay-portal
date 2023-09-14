@@ -6,6 +6,15 @@
 /// <reference types="react" />
 
 declare function Header(): JSX.Element;
+interface IBodyProps {
+	from: string;
+	isValidDateRange: boolean;
+	namespace: string;
+	onFromChange: (val: string) => void;
+	onToChange: (val: string) => void;
+	onValidDateChange: (val: boolean) => void;
+	to: string;
+}
 declare function Body({
 	from,
 	isValidDateRange,
@@ -14,7 +23,7 @@ declare function Body({
 	onToChange,
 	onValidDateChange,
 	to,
-}: any): JSX.Element;
+}: IBodyProps): JSX.Element;
 declare const _default: {
 	Body: typeof Body;
 	Header: typeof Header;

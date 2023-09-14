@@ -27,19 +27,22 @@ import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Sku;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.converter.SkuDTOConverterContext;
 import com.liferay.headless.commerce.delivery.catalog.resource.v1_0.SkuResource;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +62,45 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 @CTAware
 public class SkuResourceImpl extends BaseSkuResourceImpl {
+
+	@Override
+	public Sku getChannelProductSku(
+			Long channelId, Long productId, Long skuId, Long accountId)
+		throws Exception {
+
+		CPDefinition cpDefinition =
+			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(productId);
+
+		if (cpDefinition == null) {
+			throw new NoSuchCProductException();
+		}
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(channelId);
+
+		CommerceContext commerceContext = _getCommerceContext(
+			accountId, commerceChannel);
+
+		AccountEntry accountEntry = commerceContext.getAccountEntry();
+
+		_commerceProductViewPermission.check(
+			PermissionCheckerFactoryUtil.create(contextUser),
+			accountEntry.getAccountEntryId(), commerceChannel.getGroupId(),
+			cpDefinition.getCPDefinitionId());
+
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(skuId);
+
+		if (cpInstance == null) {
+			throw new NoSuchCPInstanceException();
+		}
+
+		return _skuDTOConverter.toDTO(
+			new SkuDTOConverterContext(
+				commerceContext, contextCompany.getCompanyId(), cpDefinition,
+				contextAcceptLanguage.getPreferredLocale(), BigDecimal.ONE,
+				cpInstance.getCPInstanceId(), StringPool.BLANK, contextUriInfo,
+				contextUser));
+	}
 
 	@NestedField(parentClass = Product.class, value = "skus")
 	@Override
@@ -126,7 +168,7 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 	@Override
 	public Sku postChannelProductSku(
-		Long channelId, Long productId, Long accountId, Integer quantity,
+		Long channelId, Long productId, Long accountId, BigDecimal quantity,
 		DDMOption[] ddmOptions) {
 
 		throw new UnsupportedOperationException();
@@ -134,8 +176,8 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 	@Override
 	public Sku postChannelProductSkuBySkuOption(
-			Long channelId, Long productId, Long accountId, Integer quantity,
-			SkuOption[] skuOptions)
+			Long channelId, Long productId, Long accountId, BigDecimal quantity,
+			String unitOfMeasureKey, SkuOption[] skuOptions)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -173,8 +215,9 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			new SkuDTOConverterContext(
 				commerceContext, contextCompany.getCompanyId(), cpDefinition,
 				contextAcceptLanguage.getPreferredLocale(),
-				GetterUtil.getInteger(quantity, 1),
-				cpInstance.getCPInstanceId(), contextUriInfo, contextUser));
+				BigDecimalUtil.get(quantity, BigDecimal.ONE),
+				cpInstance.getCPInstanceId(), unitOfMeasureKey, contextUriInfo,
+				contextUser));
 	}
 
 	private CommerceContext _getCommerceContext(
@@ -228,9 +271,9 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 					new SkuDTOConverterContext(
 						_getCommerceContext(accountId, commerceChannel),
 						contextCompany.getCompanyId(), cpDefinition,
-						contextAcceptLanguage.getPreferredLocale(), 1,
-						cpInstance.getCPInstanceId(), contextUriInfo,
-						contextUser)));
+						contextAcceptLanguage.getPreferredLocale(),
+						BigDecimal.ONE, cpInstance.getCPInstanceId(),
+						StringPool.BLANK, contextUriInfo, contextUser)));
 		}
 
 		return skus;

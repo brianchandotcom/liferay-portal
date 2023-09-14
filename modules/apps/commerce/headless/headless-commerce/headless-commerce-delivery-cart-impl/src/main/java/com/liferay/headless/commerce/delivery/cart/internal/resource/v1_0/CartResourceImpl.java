@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.DummyHttpServletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLCodec;
@@ -387,9 +388,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		_commerceOrderItemService.addOrUpdateCommerceOrderItem(
 			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
 			cartItem.getOptions(),
-			BigDecimal.valueOf(GetterUtil.get(cartItem.getQuantity(), 1)),
+			BigDecimalUtil.get(cartItem.getQuantity(), BigDecimal.ONE),
 			GetterUtil.getLong(cartItem.getReplacedSkuId()), BigDecimal.ZERO,
-			StringPool.BLANK, commerceContext, serviceContext);
+			cartItem.getUnitOfMeasureKey(), commerceContext, serviceContext);
 	}
 
 	private void _addOrUpdateNestedResources(

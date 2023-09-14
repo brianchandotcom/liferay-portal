@@ -82,7 +82,29 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testGraphQLGetChannelProductSku() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLGetChannelProductSkuNotFound() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testPostChannelProductSku() {
+	}
+
+	@Override
+	protected Sku testGetChannelProductSku_addSku() throws Exception {
+		return _addCPInstance(randomSku());
+	}
+
+	@Override
+	protected Long testGetChannelProductSku_getChannelId() throws Exception {
+		return _commerceChannel.getCommerceChannelId();
 	}
 
 	@Override
@@ -105,6 +127,13 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		throws Exception {
 
 		return _cpDefinition.getCProductId();
+	}
+
+	@Override
+	protected Long testGraphQLGetChannelProductSku_getChannelId()
+		throws Exception {
+
+		return _commerceChannel.getCommerceChannelId();
 	}
 
 	@Override
@@ -159,6 +188,7 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 				maxOrderQuantity = BigDecimal.ZERO;
 				minOrderQuantity = BigDecimal.ZERO;
 				neverExpire = true;
+				productId = _cpDefinition.getCProductId();
 				published = cpInstance.isPublished();
 				purchasable = cpInstance.isPurchasable();
 				sku = cpInstance.getSku();

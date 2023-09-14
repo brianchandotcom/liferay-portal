@@ -10,6 +10,8 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
+import java.math.BigDecimal;
+
 import java.util.Locale;
 
 import javax.ws.rs.core.UriInfo;
@@ -22,8 +24,9 @@ public class SkuDTOConverterContext extends DefaultDTOConverterContext {
 
 	public SkuDTOConverterContext(
 		CommerceContext commerceContext, long companyId,
-		CPDefinition cpDefinition, Locale locale, int quantity,
-		long resourcePrimKey, UriInfo uriInfo, User user) {
+		CPDefinition cpDefinition, Locale locale, BigDecimal quantity,
+		long resourcePrimKey, String unitOfMeasureKey, UriInfo uriInfo,
+		User user) {
 
 		super(resourcePrimKey, locale, uriInfo, user);
 
@@ -31,6 +34,7 @@ public class SkuDTOConverterContext extends DefaultDTOConverterContext {
 		_companyId = companyId;
 		_cpDefinition = cpDefinition;
 		_quantity = quantity;
+		_unitOfMeasureKey = unitOfMeasureKey;
 	}
 
 	public CommerceContext getCommerceContext() {
@@ -45,13 +49,18 @@ public class SkuDTOConverterContext extends DefaultDTOConverterContext {
 		return _cpDefinition;
 	}
 
-	public int getQuantity() {
+	public BigDecimal getQuantity() {
 		return _quantity;
+	}
+
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
 	}
 
 	private final CommerceContext _commerceContext;
 	private final long _companyId;
 	private final CPDefinition _cpDefinition;
-	private final int _quantity;
+	private final BigDecimal _quantity;
+	private final String _unitOfMeasureKey;
 
 }

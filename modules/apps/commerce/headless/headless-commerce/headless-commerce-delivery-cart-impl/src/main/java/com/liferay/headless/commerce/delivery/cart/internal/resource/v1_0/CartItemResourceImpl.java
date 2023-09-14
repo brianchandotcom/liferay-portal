@@ -17,7 +17,6 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.converter.CartItemDTOConverterContext;
 import com.liferay.headless.commerce.delivery.cart.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartItemResource;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -137,7 +136,7 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 				cartItem.getOptions(),
 				BigDecimal.valueOf(GetterUtil.get(cartItem.getQuantity(), 1)),
 				GetterUtil.getLong(cartItem.getReplacedSkuId()),
-				BigDecimal.ZERO, StringPool.BLANK,
+				BigDecimal.ZERO, cartItem.getUnitOfMeasureKey(),
 				_commerceContextFactory.create(
 					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
 					contextUser.getUserId(), cartId,

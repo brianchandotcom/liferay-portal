@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -183,14 +182,6 @@ public class QuestionsPortlet extends MVCPortlet {
 			_getTagSelectorURL(renderRequest, renderResponse));
 		renderRequest.setAttribute(
 			QuestionsWebKeys.TRUSTED_USER, _isTrustedUser(renderRequest));
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		renderRequest.setAttribute(
-			QuestionsWebKeys.CONTENT_REVIEWER_USER,
-			permissionChecker.isContentReviewer(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId()));
 
 		super.doView(renderRequest, renderResponse);
 	}

@@ -49,13 +49,14 @@ export default function Tabs({segments, tabs}) {
 			</ClayTabs>
 
 			<ClayTabs.Content activeIndex={activeTab} fade>
-				{tabs.map((tab) => {
+				{tabs.map((tab, index) => {
 					const Component = TAB_COMPONENTS[tab.id];
 
 					return (
 						<ClayTabs.TabPane
 							aria-labelledby={`tab-${tab.id}`}
 							className="p-3"
+							id={`tabpanel-${index}`}
 							key={tab.id}
 						>
 							<Component url={tab.url} />

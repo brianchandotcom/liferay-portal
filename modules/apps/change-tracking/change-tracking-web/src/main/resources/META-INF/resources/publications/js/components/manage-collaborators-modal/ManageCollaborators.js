@@ -451,6 +451,147 @@ const ManageCollaborators = ({
 		);
 	};
 
+	const renderCollaboratorsTrigger = () => {
+		if (!collaborators || !collaborators.length) {
+			return (
+				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('invite-users')}
+					className="rounded-circle"
+					data-tooltip-align="top"
+					displayType="secondary"
+					onClick={() => {
+						setTab(TABS.collaborators);
+
+						setShowModal(true);
+					}}
+					small
+					symbol="plus"
+					title={Liferay.Language.get('invite-users')}
+				/>
+			);
+		}
+
+		const columns = [];
+
+		if (!readOnly) {
+			columns.push(
+				<div className="autofit-col" key="invite-users">
+					<ClaySticker
+						className="sticker-user-icon user-icon-color-0"
+						data-tooltip-align="top"
+						size="md"
+						title={Liferay.Language.get('invite-users')}
+					>
+						<ClayIcon symbol="plus" />
+					</ClaySticker>
+				</div>
+			);
+		}
+
+		const users = collaborators.sort((a, b) => {
+			if (a.isOwner) {
+				return -1;
+			}
+			else if (b.isOwner) {
+				return 1;
+			}
+
+			if (a.isCurrentUser) {
+				return -1;
+			}
+			else if (b.isCurrentUser) {
+				return 1;
+			}
+
+			if (a.emailAddress < b.emailAddress) {
+				return -1;
+			}
+
+			return 1;
+		});
+
+		for (let i = 0; i < 3 && i < users.length; i++) {
+			const user = users[i];
+
+			columns.push(
+				<div className="autofit-col" key={user.userId}>
+					<ClaySticker
+						className={`sticker-user-icon ${
+							user.portraitURL
+								? ''
+								: 'user-icon-color-' + (user.userId % 10)
+						}`}
+						data-tooltip-align="top"
+						size="md"
+						title={user.fullName}
+					>
+						{user.portraitURL ? (
+							<div className="sticker-overlay">
+								<img
+									className="sticker-img"
+									src={user.portraitURL}
+								/>
+							</div>
+						) : (
+							<ClayIcon symbol="user" />
+						)}
+					</ClaySticker>
+				</div>
+			);
+		}
+
+		if (!users.length) {
+			columns.push(
+				<div className="autofit-col" key="collaborators">
+					<ClaySticker
+						className="sticker-user-icon user-icon-color-0"
+						data-tooltip-align="top"
+						size="md"
+						title={
+							readOnly
+								? Liferay.Language.get('view-collaborators')
+								: Liferay.Language.get('invite-users')
+						}
+					>
+						<ClayIcon symbol="users" />
+					</ClaySticker>
+				</div>
+			);
+		}
+		else if (users.length > 3) {
+			columns.push(
+				<div className="autofit-col" key="collaborators">
+					<ClaySticker
+						className="btn-secondary"
+						data-tooltip-align="top"
+						size="md"
+						title={
+							readOnly
+								? Liferay.Language.get('view-collaborators')
+								: Liferay.Language.get('invite-users')
+						}
+					>
+						{'+' + (users.length - 3)}
+					</ClaySticker>
+				</div>
+			);
+		}
+
+		return (
+			<ClayButton
+				aria-label={Liferay.Language.get('view-collaborators')}
+				displayType="unstyled"
+				onClick={() => {
+					setTab(TABS.collaborators);
+
+					setShowModal(true);
+				}}
+			>
+				<div className="autofit-row">{columns}</div>
+			</ClayButton>
+		);
+	};
+
 	const renderForm = () => {
 		if (tab === TABS.link) {
 			return (
@@ -800,6 +941,35 @@ const ManageCollaborators = ({
 		);
 	};
 
+	const renderShareLinkTrigger = () => {
+		if (!showShareLinkTab) {
+			return '';
+		}
+
+		return (
+			<ClayButtonWithIcon
+				className="sticker-user-icon user-icon-color-0"
+				data-tooltip-align="top"
+				displayType="unstyled"
+				onClick={() => {
+					setTab(TABS.link);
+
+					setShowModal(true);
+				}}
+				small
+				style={{
+					opacity: sharePublicationLinkVisible ? 1 : 0.4,
+				}}
+				symbol="link"
+				title={
+					sharePublicationLinkVisible
+						? Liferay.Language.get('publication-sharing-enabled')
+						: Liferay.Language.get('publication-sharing-disabled')
+				}
+			/>
+		);
+	};
+
 	const renderSubmit = () => {
 		return (
 			<ClayButton
@@ -855,143 +1025,12 @@ const ManageCollaborators = ({
 			return trigger;
 		}
 
-		if (!collaborators || !collaborators.length) {
-			return (
-				<ClayButtonWithIcon
-					aria-label={Liferay.Language.get('invite-users')}
-					className="rounded-circle"
-					data-tooltip-align="top"
-					displayType="secondary"
-					onClick={() => setShowModal(true)}
-					small
-					symbol={showShareLinkTab ? 'link' : 'plus'}
-					title={
-						showShareLinkTab
-							? Liferay.Language.get('share-access')
-							: Liferay.Language.get('invite-users')
-					}
-				/>
-			);
-		}
-
-		const columns = [];
-
-		if (!readOnly) {
-			columns.push(
-				<div className="autofit-col" key="invite-users">
-					<ClaySticker
-						className="sticker-user-icon user-icon-color-0"
-						data-tooltip-align="top"
-						size="md"
-						title={
-							showShareLinkTab
-								? Liferay.Language.get('share-access')
-								: Liferay.Language.get('invite-users')
-						}
-					>
-						<ClayIcon symbol={showShareLinkTab ? 'link' : 'plus'} />
-					</ClaySticker>
-				</div>
-			);
-		}
-
-		const users = collaborators.sort((a, b) => {
-			if (a.isOwner) {
-				return -1;
-			}
-			else if (b.isOwner) {
-				return 1;
-			}
-
-			if (a.isCurrentUser) {
-				return -1;
-			}
-			else if (b.isCurrentUser) {
-				return 1;
-			}
-
-			if (a.emailAddress < b.emailAddress) {
-				return -1;
-			}
-
-			return 1;
-		});
-
-		for (let i = 0; i < 3 && i < users.length; i++) {
-			const user = users[i];
-
-			columns.push(
-				<div className="autofit-col" key={user.userId}>
-					<ClaySticker
-						className={`sticker-user-icon ${
-							user.portraitURL
-								? ''
-								: 'user-icon-color-' + (user.userId % 10)
-						}`}
-						data-tooltip-align="top"
-						size="md"
-						title={user.fullName}
-					>
-						{user.portraitURL ? (
-							<div className="sticker-overlay">
-								<img
-									className="sticker-img"
-									src={user.portraitURL}
-								/>
-							</div>
-						) : (
-							<ClayIcon symbol="user" />
-						)}
-					</ClaySticker>
-				</div>
-			);
-		}
-
-		if (!users.length) {
-			columns.push(
-				<div className="autofit-col" key="collaborators">
-					<ClaySticker
-						className="sticker-user-icon user-icon-color-0"
-						data-tooltip-align="top"
-						size="md"
-						title={
-							readOnly
-								? Liferay.Language.get('view-collaborators')
-								: Liferay.Language.get('invite-users')
-						}
-					>
-						<ClayIcon symbol="users" />
-					</ClaySticker>
-				</div>
-			);
-		}
-		else if (users.length > 3) {
-			columns.push(
-				<div className="autofit-col" key="collaborators">
-					<ClaySticker
-						className="btn-secondary"
-						data-tooltip-align="top"
-						size="md"
-						title={
-							readOnly
-								? Liferay.Language.get('view-collaborators')
-								: Liferay.Language.get('invite-users')
-						}
-					>
-						{'+' + (users.length - 3)}
-					</ClaySticker>
-				</div>
-			);
-		}
-
 		return (
-			<ClayButton
-				aria-label={Liferay.Language.get('view-collaborators')}
-				displayType="unstyled"
-				onClick={() => setShowModal(true)}
-			>
-				<div className="autofit-row">{columns}</div>
-			</ClayButton>
+			<ClayButton.Group spaced>
+				{renderCollaboratorsTrigger()}
+
+				{renderShareLinkTrigger()}
+			</ClayButton.Group>
 		);
 	};
 

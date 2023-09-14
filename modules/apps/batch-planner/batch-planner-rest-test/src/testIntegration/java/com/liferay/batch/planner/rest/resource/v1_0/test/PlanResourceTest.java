@@ -65,9 +65,19 @@ public class PlanResourceTest extends BasePlanResourceTestCase {
 	}
 
 	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {
+			"active", "externalType", "externalURL", "internalClassName",
+			"name", "template"
+		};
+	}
+
+	@Override
 	protected Plan randomPatchPlan() {
 		Plan plan = randomPlan();
 
+		plan.setActive(true);
+		plan.setExternalURL(_plan.getExternalURL());
 		plan.setTemplate(true);
 
 		return plan;
@@ -77,7 +87,7 @@ public class PlanResourceTest extends BasePlanResourceTestCase {
 	protected Plan randomPlan() {
 		return new Plan() {
 			{
-				active = RandomTestUtil.randomBoolean();
+				active = true;
 				export = RandomTestUtil.randomBoolean();
 				externalType = "JSON";
 				externalURL = StringUtil.toLowerCase(
@@ -92,35 +102,37 @@ public class PlanResourceTest extends BasePlanResourceTestCase {
 
 	@Override
 	protected Plan testDeletePlan_addPlan() throws Exception {
-		return _addPlan();
+		return _addPlan(randomPlan());
 	}
 
 	@Override
 	protected Plan testGetPlan_addPlan() throws Exception {
-		return _addPlan();
+		return _addPlan(randomPlan());
 	}
 
 	@Override
 	protected Plan testGetPlansPage_addPlan(Plan plan) throws Exception {
-		return planResource.postPlan(plan);
+		return _addPlan(plan);
 	}
 
 	@Override
 	protected Plan testPatchPlan_addPlan() throws Exception {
-		Plan plan = randomPlan();
+		_plan = randomPlan();
 
-		plan.setTemplate(true);
+		_plan.setTemplate(true);
 
-		return planResource.postPlan(plan);
+		return _addPlan(_plan);
 	}
 
 	@Override
 	protected Plan testPostPlan_addPlan(Plan plan) throws Exception {
-		return _addPlan();
+		return _addPlan(plan);
 	}
 
-	private Plan _addPlan() throws Exception {
-		return planResource.postPlan(randomPlan());
+	private Plan _addPlan(Plan plan) throws Exception {
+		return planResource.postPlan(plan);
 	}
+
+	private Plan _plan;
 
 }

@@ -180,7 +180,7 @@ function List({ItemComponent, items}) {
 
 	return (
 		<>
-			<ClayList>
+			<ClayList className="c-mb-0">
 				{items.slice(0, shownItems).map((item, index) => (
 					<ItemComponent item={item} key={index} />
 				))}

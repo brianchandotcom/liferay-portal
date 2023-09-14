@@ -39,13 +39,6 @@ public class MethodEqualsCheck extends BaseCheck {
 			return;
 		}
 
-		firstChildDetailAST = firstChildDetailAST.findFirstToken(
-			TokenTypes.DOT);
-
-		if (firstChildDetailAST == null) {
-			return;
-		}
-
 		log(detailAST, _MSG_USE_OBJECTS_EQUALS);
 	}
 

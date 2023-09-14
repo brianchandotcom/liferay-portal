@@ -49,7 +49,7 @@ export default function EditObjectAction({
 			objectDefinitionsRelationshipsURL={
 				objectDefinitionsRelationshipsURL
 			}
-			readOnly={readOnly}
+			readOnly={readOnly || values.system}
 			requestParams={{
 				method: 'PUT',
 				url: `/o/object-admin/v1.0/object-actions/${id}`,

@@ -176,6 +176,8 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		).put(
 			"reverse", objectRelationship.isReverse()
 		).put(
+			"system", objectRelationship.isSystem()
+		).put(
 			"type", objectRelationship.getType()
 		);
 	}

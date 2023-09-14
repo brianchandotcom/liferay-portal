@@ -22,18 +22,18 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/bulk_copy_entries"
+		"mvc.command.name=/document_library/copy_entries"
 	},
 	service = MVCRenderCommand.class
 )
-public class BulkCopyEntriesMVCRenderCommand implements MVCRenderCommand {
+public class CopyEntriesMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/document_library/bulk_copy_entries.jsp";
+		return "/document_library/copy_entries.jsp";
 	}
 
 }

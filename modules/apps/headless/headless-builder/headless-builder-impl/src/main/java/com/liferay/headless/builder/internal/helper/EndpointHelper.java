@@ -35,9 +35,9 @@ import org.osgi.service.component.annotations.Reference;
 public class EndpointHelper {
 
 	public Map<String, Object> getResponseEntityMap(
-			long companyId, APIApplication.Schema schema,
-			APIApplication.Endpoint.PathParameter pathParameter,
-			String pathParameterValue, String scopeKey)
+			long companyId, APIApplication.Endpoint.PathParameter pathParameter,
+			String pathParameterValue, APIApplication.Schema schema,
+			String scopeKey)
 		throws Exception {
 
 		Set<String> relationshipsNames = new HashSet<>();

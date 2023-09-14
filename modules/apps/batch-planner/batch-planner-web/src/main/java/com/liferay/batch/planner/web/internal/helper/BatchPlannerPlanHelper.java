@@ -54,7 +54,7 @@ public class BatchPlannerPlanHelper {
 
 		String externalType = ParamUtil.getString(
 			portletRequest, "externalType");
-		String taskItemDelegateName = TaskItemUtil.getDelegateName(
+		String taskItemDelegateName = TaskItemUtil.getTaskItemDelegateName(
 			ParamUtil.getString(portletRequest, "internalClassNameKey"));
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
 
@@ -93,7 +93,7 @@ public class BatchPlannerPlanHelper {
 			portletRequest, "externalType", "CSV");
 		String internalClassName = TaskItemUtil.getInternalClassName(
 			ParamUtil.getString(portletRequest, "internalClassNameKey"));
-		String taskItemDelegateName = TaskItemUtil.getDelegateName(
+		String taskItemDelegateName = TaskItemUtil.getTaskItemDelegateName(
 			ParamUtil.getString(portletRequest, "internalClassNameKey"));
 		boolean template = ParamUtil.getBoolean(portletRequest, "template");
 

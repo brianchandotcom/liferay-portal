@@ -14,24 +14,14 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class TaskItemUtil {
 
-	public static String getDelegateName(String internalClassName) {
-		int idx = internalClassName.indexOf(StringPool.POUND);
+	public static String getInternalClassName(String internalClassNameKey) {
+		int idx = internalClassNameKey.indexOf(StringPool.POUND);
 
 		if (idx < 0) {
-			return "DEFAULT";
+			return internalClassNameKey;
 		}
 
-		return internalClassName.substring(idx + 1);
-	}
-
-	public static String getInternalClassName(String internalClassName) {
-		int idx = internalClassName.indexOf(StringPool.POUND);
-
-		if (idx < 0) {
-			return internalClassName;
-		}
-
-		return internalClassName.substring(0, idx);
+		return internalClassNameKey.substring(0, idx);
 	}
 
 	public static String getInternalClassNameKey(
@@ -54,7 +44,17 @@ public class TaskItemUtil {
 				internalClassNameKey, StringPool.PERIOD);
 		}
 
-		return getDelegateName(internalClassNameKey);
+		return getTaskItemDelegateName(internalClassNameKey);
+	}
+
+	public static String getTaskItemDelegateName(String internalClassNameKey) {
+		int idx = internalClassNameKey.indexOf(StringPool.POUND);
+
+		if (idx < 0) {
+			return "DEFAULT";
+		}
+
+		return internalClassNameKey.substring(idx + 1);
 	}
 
 }

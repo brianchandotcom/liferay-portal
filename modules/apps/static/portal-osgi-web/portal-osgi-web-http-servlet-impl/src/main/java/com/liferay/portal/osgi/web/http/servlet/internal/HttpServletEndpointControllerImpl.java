@@ -57,12 +57,12 @@ public class HttpServletEndpointControllerImpl
 	implements HttpServletEndpointController {
 
 	public HttpServletEndpointControllerImpl(
-		BundleContext bundleContext, ServletContext parentServletContext,
-		Map<String, Object> attributesMap) {
+		Map<String, Object> attributesMap, BundleContext bundleContext,
+		ServletContext parentServletContext) {
 
+		_attributesMap = attributesMap;
 		_bundleContext = bundleContext;
 		_parentServletContext = parentServletContext;
-		_attributesMap = attributesMap;
 
 		String targetFilter =
 			"(http.servlet.endpoint.id=" +

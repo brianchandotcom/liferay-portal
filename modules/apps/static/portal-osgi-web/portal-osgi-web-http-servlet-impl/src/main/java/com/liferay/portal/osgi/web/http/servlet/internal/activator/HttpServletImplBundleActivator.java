@@ -176,8 +176,8 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 
 			HttpServletEndpointController httpServletEndpointController =
 				new HttpServletEndpointControllerImpl(
-					_bundleContext, servletContext,
-					Collections.unmodifiableMap(attributesMap));
+					Collections.unmodifiableMap(attributesMap), _bundleContext,
+					servletContext);
 
 			return new ServiceRegistrationsBag(
 				httpServletEndpointController,

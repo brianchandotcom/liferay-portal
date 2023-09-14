@@ -6,12 +6,14 @@
 package com.liferay.portal.instance.lifecycle;
 
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.servlet.InitialRequestSyncUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 
@@ -87,7 +89,9 @@ public abstract class InitialRequestPortalInstanceLifecycleListener
 
 		InitialRequestSyncUtil.registerSyncCallable(
 			() -> {
-				try {
+				try (SafeCloseable safeCloseable =
+						CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+
 					doPortalInstanceRegistered(companyId);
 				}
 				finally {

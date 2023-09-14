@@ -5,20 +5,47 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal;
 
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 import javax.servlet.ServletContext;
 
-import org.eclipse.equinox.http.servlet.internal.HttpServiceRuntimeImpl;
 import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
 import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
+import org.eclipse.equinox.http.servlet.internal.context.ProxyContext;
+import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
+import org.eclipse.equinox.http.servlet.internal.error.IllegalContextNameException;
+import org.eclipse.equinox.http.servlet.internal.error.IllegalContextPathException;
+import org.eclipse.equinox.http.servlet.internal.servlet.Match;
+import org.eclipse.equinox.http.servlet.internal.util.Const;
+import org.eclipse.equinox.http.servlet.internal.util.Path;
+import org.eclipse.equinox.http.servlet.internal.util.StringPlus;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.Filter;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.http.context.ServletContextHelper;
+import org.osgi.service.http.runtime.HttpServiceRuntimeConstants;
+import org.osgi.service.http.runtime.dto.DTOConstants;
+import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Dante Wang
@@ -27,54 +54,350 @@ public class HttpServletEndpointControllerImpl
 	implements HttpServletEndpointController {
 
 	public HttpServletEndpointControllerImpl(
-		BundleContext bundleContext, ServletContext servletContext,
+		BundleContext bundleContext, ServletContext parentServletContext,
 		Map<String, Object> attributesMap) {
 
-		_equinoxHttpServletEndpointController = new HttpServiceRuntimeImpl(
-			bundleContext, bundleContext, servletContext, attributesMap);
+		_bundleContext = bundleContext;
+		_parentServletContext = parentServletContext;
+		_attributesMap = attributesMap;
+
+		String targetFilter =
+			"(http.servlet.endpoint.id=" +
+				attributesMap.get("http.servlet.endpoint.id") + ")";
+
+		_servletContextHelperServiceTracker = new ServiceTracker<>(
+			bundleContext, ServletContextHelper.class,
+			new ServletContextHelperServiceTrackerCustomizer());
+
+		_servletContextHelperServiceTracker.open();
+
+		_serviceRegistration = bundleContext.registerService(
+			ServletContextHelper.class,
+			new DefaultServletContextHelperFactory(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				Constants.SERVICE_RANKING, Integer.MIN_VALUE
+			).put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME,
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_DEFAULT_CONTEXT_NAME
+			).put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH,
+				Const.SLASH
+			).put(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET, targetFilter
+			).build());
 	}
 
 	@Override
 	public void destroy() {
-		_equinoxHttpServletEndpointController.destroy();
+		_serviceRegistration.unregister();
+
+		_servletContextHelperServiceTracker.close();
 	}
 
 	@Override
 	public Collection<ContextController> getContextControllers() {
-		return _equinoxHttpServletEndpointController.getContextControllers();
+		return _contextControllersMap.values();
 	}
 
 	@Override
-	public DispatchTargets getDispatchTargets(String s) {
-		return _equinoxHttpServletEndpointController.getDispatchTargets(s);
+	public DispatchTargets getDispatchTargets(String pathString) {
+		Path path = new Path(pathString);
+
+		String queryString = path.getQueryString();
+		String requestURI = path.getRequestURI();
+
+		DispatchTargets dispatchTargets = _getDispatchTargets(
+			requestURI, null, queryString, Match.EXACT);
+
+		if (dispatchTargets == null) {
+			dispatchTargets = _getDispatchTargets(
+				requestURI, path.getExtension(), queryString, Match.EXTENSION);
+		}
+
+		if (dispatchTargets == null) {
+			dispatchTargets = _getDispatchTargets(
+				requestURI, null, queryString, Match.REGEX);
+		}
+
+		if (dispatchTargets == null) {
+			dispatchTargets = _getDispatchTargets(
+				requestURI, null, queryString, Match.DEFAULT_SERVLET);
+		}
+
+		return dispatchTargets;
 	}
 
 	@Override
 	public List<String> getHttpServiceEndpoints() {
-		return _equinoxHttpServletEndpointController.getHttpServiceEndpoints();
+		return StringPlus.from(
+			_attributesMap.get(
+				HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT));
 	}
 
 	@Override
 	public ServletContext getParentServletContext() {
-		return _equinoxHttpServletEndpointController.getParentServletContext();
+		return _parentServletContext;
 	}
 
 	@Override
 	public Set<Object> getRegisteredObjects() {
-		return _equinoxHttpServletEndpointController.getRegisteredObjects();
+		return _registeredObjects;
 	}
 
 	@Override
-	public void log(String s, Throwable throwable) {
-		_equinoxHttpServletEndpointController.log(s, throwable);
+	public void log(String message, Throwable throwable) {
+		_parentServletContext.log(message, throwable);
 	}
 
 	@Override
 	public boolean matches(ServiceReference<?> serviceReference) {
-		return _equinoxHttpServletEndpointController.matches(serviceReference);
+		String target = (String)serviceReference.getProperty(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_TARGET);
+
+		if (target == null) {
+			return true;
+		}
+
+		try {
+			Filter targetFilter = FrameworkUtil.createFilter(target);
+
+			if (targetFilter.matches(_attributesMap)) {
+				return true;
+			}
+		}
+		catch (InvalidSyntaxException invalidSyntaxException) {
+			throw new IllegalArgumentException(invalidSyntaxException);
+		}
+
+		return false;
 	}
 
-	private final HttpServletEndpointController
-		_equinoxHttpServletEndpointController;
+	private Collection<ContextController> _getContextControllers(
+		String requestURI) {
+
+		int pos = requestURI.lastIndexOf('/');
+
+		do {
+			List<ContextController> contextControllers = new ArrayList<>();
+
+			for (ContextController contextController :
+					_contextControllersMap.values()) {
+
+				if (contextController.getContextPath(
+					).equals(
+						requestURI
+					)) {
+
+					contextControllers.add(contextController);
+				}
+			}
+
+			if (!contextControllers.isEmpty()) {
+				return contextControllers;
+			}
+
+			if (pos > -1) {
+				requestURI = requestURI.substring(0, pos);
+				pos = requestURI.lastIndexOf('/');
+
+				continue;
+			}
+
+			break;
+		}
+		while (true);
+
+		return null;
+	}
+
+	private DispatchTargets _getDispatchTargets(
+		String requestURI, String extension, String queryString, Match match) {
+
+		Collection<ContextController> contextControllers =
+			_getContextControllers(requestURI);
+
+		if ((contextControllers == null) || contextControllers.isEmpty()) {
+			return null;
+		}
+
+		String contextPath = contextControllers.iterator(
+		).next(
+		).getContextPath();
+
+		requestURI = requestURI.substring(contextPath.length());
+
+		int pos = requestURI.lastIndexOf('/');
+
+		String servletPath = requestURI;
+
+		String pathInfo = null;
+
+		if (match == Match.DEFAULT_SERVLET) {
+			pathInfo = servletPath;
+			servletPath = Const.SLASH;
+		}
+
+		do {
+			for (ContextController contextController : contextControllers) {
+				DispatchTargets dispatchTargets =
+					contextController.getDispatchTargets(
+						null, requestURI, servletPath, pathInfo, extension,
+						queryString, match, null);
+
+				if (dispatchTargets != null) {
+					return dispatchTargets;
+				}
+			}
+
+			if (match == Match.EXACT) {
+				break;
+			}
+
+			if (pos > -1) {
+				String newServletPath = requestURI.substring(0, pos);
+				pathInfo = requestURI.substring(pos);
+				servletPath = newServletPath;
+				pos = servletPath.lastIndexOf('/');
+
+				continue;
+			}
+
+			break;
+		}
+		while (true);
+
+		return null;
+	}
+
+	private final Map<String, Object> _attributesMap;
+	private final BundleContext _bundleContext;
+	private final ConcurrentMap
+		<ServiceReference<ServletContextHelper>, ContextController>
+			_contextControllersMap = new ConcurrentHashMap<>();
+	private final ServletContext _parentServletContext;
+	private final Set<Object> _registeredObjects = Collections.newSetFromMap(
+		new ConcurrentHashMap<>());
+	private final ServiceRegistration<ServletContextHelper>
+		_serviceRegistration;
+	private final ServiceTracker
+		<ServletContextHelper, AtomicReference<ContextController>>
+			_servletContextHelperServiceTracker;
+
+	private static class DefaultServletContextHelper
+		extends ServletContextHelper {
+
+		public DefaultServletContextHelper(Bundle bundle) {
+			super(bundle);
+		}
+
+	}
+
+	private static class DefaultServletContextHelperFactory
+		implements ServiceFactory<ServletContextHelper> {
+
+		@Override
+		public ServletContextHelper getService(
+			Bundle bundle,
+			ServiceRegistration<ServletContextHelper> serviceRegistration) {
+
+			return new DefaultServletContextHelper(bundle);
+		}
+
+		@Override
+		public void ungetService(
+			Bundle bundle,
+			ServiceRegistration<ServletContextHelper> serviceRegistration,
+			ServletContextHelper servletContextHelper) {
+		}
+
+	}
+
+	private class ServletContextHelperServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<ServletContextHelper, AtomicReference<ContextController>> {
+
+		@Override
+		public AtomicReference<ContextController> addingService(
+			ServiceReference<ServletContextHelper> serviceReference) {
+
+			AtomicReference<ContextController> result = new AtomicReference<>();
+
+			if (!matches(serviceReference)) {
+				return result;
+			}
+
+			String contextName = (String)serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME);
+			String contextPath = (String)serviceReference.getProperty(
+				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH);
+
+			try {
+				if (contextName == null) {
+					throw new IllegalContextNameException(
+						HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME +
+							" is null. Ignoring!",
+						DTOConstants.FAILURE_REASON_VALIDATION_FAILED);
+				}
+
+				if (contextPath == null) {
+					throw new IllegalContextPathException(
+						HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_PATH +
+							" is null. Ignoring!",
+						DTOConstants.FAILURE_REASON_VALIDATION_FAILED);
+				}
+
+				ContextController contextController = new ContextController(
+					_bundleContext, _bundleContext, serviceReference,
+					new ProxyContext(contextName, _parentServletContext),
+					HttpServletEndpointControllerImpl.this, contextName,
+					contextPath);
+
+				_contextControllersMap.put(serviceReference, contextController);
+
+				result.set(contextController);
+			}
+			catch (HttpWhiteboardFailureException
+						httpWhiteboardFailureException) {
+
+				_parentServletContext.log(
+					httpWhiteboardFailureException.getMessage(),
+					httpWhiteboardFailureException);
+			}
+			catch (Exception exception) {
+				_parentServletContext.log(exception.getMessage(), exception);
+			}
+
+			return result;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<ServletContextHelper> serviceReference,
+			AtomicReference<ContextController> atomicReference) {
+
+			removedService(serviceReference, atomicReference);
+
+			AtomicReference<ContextController> added = addingService(
+				serviceReference);
+
+			atomicReference.set(added.get());
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<ServletContextHelper> serviceReference,
+			AtomicReference<ContextController> atomicReference) {
+
+			ContextController contextController = atomicReference.get();
+
+			if (contextController != null) {
+				contextController.destroy();
+			}
+
+			_contextControllersMap.remove(serviceReference);
+			_bundleContext.ungetService(serviceReference);
+		}
+
+	}
 
 }

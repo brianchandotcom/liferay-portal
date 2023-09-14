@@ -323,11 +323,9 @@ public class ChannelController extends BaseFaroController {
 			delta, ListUtil.toList(faroChannels, FaroChannel::getChannelId),
 			null);
 
-		List<Channel> channels = channelsResult.getItems();
-
 		Map<String, Channel> channelsById = new HashMap<>();
 
-		for (Channel channel : channels) {
+		for (Channel channel : channelsResult.getItems()) {
 			channelsById.put(channel.getId(), channel);
 		}
 

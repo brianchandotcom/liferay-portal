@@ -9,6 +9,9 @@ import React, {useEffect, useState} from 'react';
 import {getUpdatedDefaultValueFieldSettings} from '../../../utils/defaultValues';
 import {fixLocaleKeys} from '../../ListTypeDefinition/utils';
 import {InputAsValueFieldComponentProps} from '../Tabs/Advanced/DefaultValueContainer';
+import {
+	getListTypeDefinitionListTypeEntries
+} from "@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api";
 
 const PicklistDefaultValueSelect: React.FC<InputAsValueFieldComponentProps> = ({
 	creationLanguageId,
@@ -35,7 +38,7 @@ const PicklistDefaultValueSelect: React.FC<InputAsValueFieldComponentProps> = ({
 
 	useEffect(() => {
 		if (values.listTypeDefinitionId) {
-			API.getPickListItems(values.listTypeDefinitionId).then((items) => {
+			API.getListTypeDefinitionListTypeEntries(values.listTypeDefinitionId).then((items) => {
 				if (items.length) {
 					setPicklistItems(
 						items.map((item) => ({

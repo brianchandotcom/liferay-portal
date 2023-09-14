@@ -32,6 +32,9 @@ import {
 } from '../utils/filter';
 
 import './ModalAddFilter.scss';
+import {
+	getListTypeDefinitionListTypeEntries
+} from "@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api";
 interface IProps {
 	aggregationFilter?: boolean;
 	creationLanguageId?: Liferay.Language.Locale;
@@ -192,7 +195,7 @@ export function ModalAddFilter({
 			) {
 				const makeFetch = async () => {
 					if (objectField.listTypeDefinitionId) {
-						const items = await API.getPickListItems(
+						const items = await API.getListTypeDefinitionListTypeEntries(
 							objectField.listTypeDefinitionId
 						);
 

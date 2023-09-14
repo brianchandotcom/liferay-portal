@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -72,11 +72,11 @@ public class PublicationsPanelApp extends BasePanelApp {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (_portletPermission.contains(
+		if (PortletPermissionUtil.contains(
 				permissionChecker, CTPortletKeys.PUBLICATIONS,
 				ActionKeys.CONFIGURATION) ||
 			(_ctSettingsConfigurationHelper.isEnabled(group.getCompanyId()) &&
-			 _portletPermission.contains(
+			 PortletPermissionUtil.contains(
 				 permissionChecker, CTPortletKeys.PUBLICATIONS,
 				 ActionKeys.VIEW))) {
 
@@ -93,8 +93,5 @@ public class PublicationsPanelApp extends BasePanelApp {
 		target = "(javax.portlet.name=" + CTPortletKeys.PUBLICATIONS + ")"
 	)
 	private Portlet _portlet;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 }

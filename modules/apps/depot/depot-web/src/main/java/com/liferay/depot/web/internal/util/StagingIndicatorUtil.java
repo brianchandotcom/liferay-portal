@@ -8,7 +8,7 @@ package com.liferay.depot.web.internal.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.staging.constants.StagingProcessesPortletKeys;
@@ -21,8 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 public class StagingIndicatorUtil {
 
 	public static boolean isShowStagingIndicator(
-			HttpServletRequest httpServletRequest,
-			PortletPermission portletPermission)
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -32,7 +31,7 @@ public class StagingIndicatorUtil {
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		if (scopeGroup.isDepot() && scopeGroup.isStaged() &&
-			portletPermission.contains(
+			PortletPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),
 				StagingProcessesPortletKeys.STAGING_PROCESSES,
 				ActionKeys.VIEW)) {

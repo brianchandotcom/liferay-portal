@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -66,7 +66,7 @@ public class SXPBlueprintOptionsPortlet extends MVCPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			return _portletPermission.contains(
+			return PortletPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
 				_portal.getPortletId(renderRequest), ActionKeys.CONFIGURATION);
 		}
@@ -82,8 +82,5 @@ public class SXPBlueprintOptionsPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 }

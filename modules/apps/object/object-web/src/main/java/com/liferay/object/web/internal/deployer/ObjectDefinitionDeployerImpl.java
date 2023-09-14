@@ -114,7 +114,6 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -183,7 +182,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		InfoPermissionProvider infoPermissionProvider =
 			new ObjectEntryInfoPermissionProvider(
-				objectDefinition, _portletLocalService, _portletPermission,
+				objectDefinition, _portletLocalService,
 				portletResourcePermission);
 
 		List<ServiceRegistration<?>> serviceRegistrations = ListUtil.fromArray(
@@ -681,9 +680,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 	@Reference
 	private RESTContextPathResolverRegistry _restContextPathResolverRegistry;

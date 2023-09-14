@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,10 +61,10 @@ public class LoginPostAction extends Action {
 				PermissionThreadLocal.setPermissionChecker(permissionChecker);
 			}
 
-			if (!_portletPermission.contains(
+			if (!PortletPermissionUtil.contains(
 					permissionChecker, CTPortletKeys.PUBLICATIONS,
 					ActionKeys.ACCESS_IN_CONTROL_PANEL) ||
-				!_portletPermission.contains(
+				!PortletPermissionUtil.contains(
 					permissionChecker, CTPortletKeys.PUBLICATIONS,
 					ActionKeys.VIEW)) {
 
@@ -100,9 +100,6 @@ public class LoginPostAction extends Action {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 	@Reference
 	private SandboxHelper _sandboxHelper;

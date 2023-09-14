@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -128,14 +128,14 @@ public class VerifyEmailAddressMVCResourceCommand
 						PermissionChecker permissionChecker =
 							PermissionCheckerFactoryUtil.create(user);
 
-						return _portletPermission.contains(
+						return PortletPermissionUtil.contains(
 							permissionChecker, PortletKeys.PORTAL,
 							ActionKeys.VIEW_CONTROL_PANEL) &&
-							   _portletPermission.contains(
+							   PortletPermissionUtil.contains(
 								   permissionChecker,
 								   CTPortletKeys.PUBLICATIONS,
 								   ActionKeys.ACCESS_IN_CONTROL_PANEL) &&
-							   _portletPermission.contains(
+							   PortletPermissionUtil.contains(
 								   permissionChecker,
 								   CTPortletKeys.PUBLICATIONS, ActionKeys.VIEW);
 					}
@@ -155,9 +155,6 @@ public class VerifyEmailAddressMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 	@Reference
 	private UserLocalService _userLocalService;

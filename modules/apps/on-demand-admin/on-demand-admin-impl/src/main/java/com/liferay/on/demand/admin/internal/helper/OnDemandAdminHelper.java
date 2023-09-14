@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortalInstances;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,7 +42,7 @@ public class OnDemandAdminHelper {
 				"Request can only be made from the default company");
 		}
 
-		if (!_portletPermission.contains(
+		if (!PortletPermissionUtil.contains(
 				PermissionCheckerFactoryUtil.create(user),
 				GroupConstants.DEFAULT_LIVE_GROUP_ID,
 				LayoutConstants.DEFAULT_PLID,
@@ -53,9 +53,6 @@ public class OnDemandAdminHelper {
 				userId, OnDemandAdminActionKeys.REQUEST_ADMINISTRATOR_ACCESS);
 		}
 	}
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 	@Reference
 	private UserLocalService _userLocalService;

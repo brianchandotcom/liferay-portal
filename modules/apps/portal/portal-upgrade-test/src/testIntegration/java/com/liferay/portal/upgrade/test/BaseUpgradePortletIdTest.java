@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -203,7 +203,7 @@ public class BaseUpgradePortletIdTest extends BasePortletIdUpgradeProcess {
 
 			addPortletPreferences(layout, portletId);
 
-			String portletPrimaryKey = _portletPermission.getPrimaryKey(
+			String portletPrimaryKey = PortletPermissionUtil.getPrimaryKey(
 				layout.getPlid(), portletId);
 
 			_resourcePermissionLocalService.setResourcePermissions(
@@ -276,9 +276,9 @@ public class BaseUpgradePortletIdTest extends BasePortletIdUpgradeProcess {
 					": ", StringUtil.merge(layoutTypePortlet.getPortletIds())),
 				portletIds.contains(newPortletId));
 
-			String oldPortletPrimaryKey = _portletPermission.getPrimaryKey(
+			String oldPortletPrimaryKey = PortletPermissionUtil.getPrimaryKey(
 				layout.getPlid(), oldPortletId);
-			String newPortletPrimaryKey = _portletPermission.getPrimaryKey(
+			String newPortletPrimaryKey = PortletPermissionUtil.getPrimaryKey(
 				layout.getPlid(), newPortletId);
 
 			ResourcePermission resourcePermission =
@@ -388,9 +388,6 @@ public class BaseUpgradePortletIdTest extends BasePortletIdUpgradeProcess {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private PortletPermission _portletPermission;
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

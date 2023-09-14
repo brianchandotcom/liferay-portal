@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -171,7 +171,7 @@ public class WidgetInstanceDefinitionDTOConverterTest {
 			}
 		).build();
 
-		String resourcePrimKey = _portletPermission.getPrimaryKey(
+		String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
 			layout.getPlid(), testPortletId);
 
 		_resourcePermissionService.setIndividualResourcePermissions(
@@ -248,9 +248,6 @@ public class WidgetInstanceDefinitionDTOConverterTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private PortletPermission _portletPermission;
 
 	@Inject
 	private PortletPreferencesPortletConfigurationImporter

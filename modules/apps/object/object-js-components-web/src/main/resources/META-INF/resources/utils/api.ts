@@ -302,9 +302,9 @@ export async function getListTypeDefinition(listTypeDefinitionId: number): Promi
 	);
 }
 
-export async function getPickListItems(pickListId: number) {
+export async function getListTypeDefinitionListTypeEntries(listTypeDefinitionId: number) {
 	return await getList<ListTypeEntry>(
-		`/o/headless-admin-list-type/v1.0/list-type-definitions/${pickListId}/list-type-entries?pageSize=-1`
+		`/o/headless-admin-list-type/v1.0/list-type-definitions/${listTypeDefinitionId}/list-type-entries?pageSize=-1`
 	);
 }
 

@@ -8,7 +8,9 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+		task ("Given signed into portal as admin") {
+			User.firstLoginPG();
+		}
 	}
 
 	tearDown {
@@ -22,15 +24,8 @@ definition {
 	@description = "LPS-194725 - This test asserts that the hyperlink is available within an anchor tag."
 	@priority = 3
 	test AssertHyperlinkIsRendered {
-		task ("Given signed into portal as admin") {
-			Navigator.openURL();
-		}
-
 		task ("When navigate to Bundle Blacklist edit configuration page ") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "System Settings");
+			SystemSettings.openSystemSettingsAdmin();
 
 			SystemSettings.gotoConfiguration(
 				configurationCategory = "Module Container",
@@ -40,15 +35,16 @@ definition {
 
 		task ("Then hyperlink is available within an anchor tag") {
 			AssertElementPresent(
-				key_text = "How does bundle blacklisting work?",
-				locator1 = "Link#ANY");
+				key_href = "blacklisting-apps",
+				key_text = "How does bundle",
+				locator1 = "Link#ANY_HREF_2");
 		}
 
 		task ("And Then text of hyperlink says “How does bundle blacklisting work?") {
-			AssertTextEquals(
+			AssertVisible(
+				key_href = "https://learn.liferay.com/dxp/latest/en/system-administration/installing-and-managing-apps/managing-apps/blacklisting-apps.html",
 				key_text = "How does bundle blacklisting work?",
-				locator1 = "Link#ANY",
-				value1 = ${key_text});
+				locator1 = "Link#ANY_HREF");
 		}
 	}
 

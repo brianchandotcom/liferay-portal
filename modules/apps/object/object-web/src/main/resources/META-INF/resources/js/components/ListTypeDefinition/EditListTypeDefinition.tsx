@@ -18,10 +18,6 @@ import React, {useEffect} from 'react';
 import {useListTypeForm} from './ListTypeFormBase';
 import ListTypeTable from './ListTypeTable';
 import {fixLocaleKeys} from './utils';
-import {
-	getListTypeDefinition,
-	putListTypeDefinition,
-} from '@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api';
 
 export default function EditListTypeDefinition({
 	listTypeDefinitionId,

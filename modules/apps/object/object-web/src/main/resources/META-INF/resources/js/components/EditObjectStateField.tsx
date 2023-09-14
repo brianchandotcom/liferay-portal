@@ -15,7 +15,6 @@ import React, {useEffect, useState} from 'react';
 import {defaultLanguageId} from '../utils/constants';
 import {useObjectFieldForm} from './ObjectField/useObjectFieldForm';
 import StateDefinition from './StateManager/StateDefinition';
-import {getListTypeDefinitionListTypeEntries} from '@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api';
 
 export default function EditObjectStateField({objectField, readOnly}: IProps) {
 	const [listTypeEntries, setListTypeEntries] = useState<ListTypeEntry[]>([]);

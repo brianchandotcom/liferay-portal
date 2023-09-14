@@ -35,10 +35,7 @@ import {UniqueValues} from './UniqueValues';
 import {FORMULA_OUTPUT_OPTIONS, FormulaOutput} from './formulaFieldUtil';
 
 import './ObjectFieldFormBase.scss';
-import {
-	getListTypeDefinitions,
-	getObjectRelationship,
-} from '@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api';
+
 
 interface ObjectFieldFormBaseProps {
 	children?: ReactNode;

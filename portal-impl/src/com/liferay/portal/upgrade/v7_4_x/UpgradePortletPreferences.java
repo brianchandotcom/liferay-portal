@@ -95,8 +95,15 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 		for (Preference preference : preferenceMap.values()) {
 			String[] values = preference.getValues();
 
+			outerLoop:
 			for (int i = 0; i < values.length; i++) {
 				String value = values[i];
+
+				for (int j = 0; j < i; j++) {
+					if (values[j].equals(value)) {
+						continue outerLoop;
+					}
+				}
 
 				String largeValue = null;
 				String smallValue = null;

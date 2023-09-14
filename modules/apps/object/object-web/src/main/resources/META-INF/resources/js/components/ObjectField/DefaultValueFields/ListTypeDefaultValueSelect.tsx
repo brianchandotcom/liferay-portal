@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {API, PicklistEntryBaseField} from '@liferay/object-js-components-web';
+import {API, ListTypeEntryBaseField} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {getUpdatedDefaultValueFieldSettings} from '../../../utils/defaultValues';
 import {fixLocaleKeys} from '../../ListTypeDefinition/utils';
 import {InputAsValueFieldComponentProps} from '../Tabs/Advanced/DefaultValueContainer';
 
-const PicklistDefaultValueSelect: React.FC<InputAsValueFieldComponentProps> = ({
+const ListTypeDefaultValueSelect: React.FC<InputAsValueFieldComponentProps> = ({
 	creationLanguageId,
 	defaultValue,
 	error,
@@ -53,7 +53,7 @@ const PicklistDefaultValueSelect: React.FC<InputAsValueFieldComponentProps> = ({
 	return (
 		<>
 			{listTypeEntries && values.listTypeDefinitionId && (
-				<PicklistEntryBaseField
+				<ListTypeEntryBaseField
 					creationLanguageId={creationLanguageId}
 					error={error}
 					label={label}
@@ -68,4 +68,4 @@ const PicklistDefaultValueSelect: React.FC<InputAsValueFieldComponentProps> = ({
 	);
 };
 
-export default PicklistDefaultValueSelect;
+export default ListTypeDefaultValueSelect;

@@ -13,25 +13,26 @@ type SelectedPicklistOption = {
 	value: string;
 };
 
-interface PickListItem {
+interface ListTypeEntry {
 	externalReferenceCode: string;
 	id: number;
 	key: string;
+	listTypeDefinitionId: number;
 	name: string;
 	name_i18n: LocalizedValue<string>;
 }
-interface PicklistEntryBaseFieldProps {
+interface ListTypeEntryBaseFieldProps {
 	creationLanguageId?: Liferay.Language.Locale;
 	error?: string;
 	label: string;
-	onChange: (selected: PickListItem | undefined) => void;
-	picklistItems: PickListItem[];
+	onChange: (selected: ListTypeEntry | undefined) => void;
+	picklistItems: ListTypeEntry[];
 	placeholder?: string;
 	required?: boolean;
 	selectedPicklistItemKey?: string;
 }
 
-export function PicklistEntryBaseField({
+export function ListTypeEntryBaseField({
 	creationLanguageId,
 	error,
 	label,
@@ -40,7 +41,7 @@ export function PicklistEntryBaseField({
 	placeholder,
 	required,
 	selectedPicklistItemKey,
-}: PicklistEntryBaseFieldProps) {
+}: ListTypeEntryBaseFieldProps) {
 	const handleChange = (selectedPicklistOption: SelectedPicklistOption) => {
 		onChange(
 			picklistItems.find(

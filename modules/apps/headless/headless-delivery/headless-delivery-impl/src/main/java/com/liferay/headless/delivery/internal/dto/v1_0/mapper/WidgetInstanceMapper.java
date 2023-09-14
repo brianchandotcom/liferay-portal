@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.TeamLocalService;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -124,7 +124,7 @@ public class WidgetInstanceMapper {
 			return null;
 		}
 
-		String resourcePrimKey = _portletPermission.getPrimaryKey(
+		String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
 			plid, portletId);
 
 		List<ResourcePermission> resourcePermissions =
@@ -209,9 +209,6 @@ public class WidgetInstanceMapper {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 	@Reference
 	private PortletPreferencesPortletConfigurationExporter

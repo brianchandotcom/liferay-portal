@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -117,11 +117,11 @@ public class CTOnDemandUserTicketGeneratorTest {
 			_ctCollectionModelResourcePermission.contains(
 				permissionChecker, ctCollection, ActionKeys.VIEW));
 		Assert.assertTrue(
-			_portletPermission.contains(
+			PortletPermissionUtil.contains(
 				permissionChecker, CTPortletKeys.PUBLICATIONS,
 				ActionKeys.ACCESS_IN_CONTROL_PANEL));
 		Assert.assertTrue(
-			_portletPermission.contains(
+			PortletPermissionUtil.contains(
 				permissionChecker, CTPortletKeys.PUBLICATIONS,
 				ActionKeys.VIEW));
 	}
@@ -146,9 +146,6 @@ public class CTOnDemandUserTicketGeneratorTest {
 
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;
-
-	@Inject
-	private PortletPermission _portletPermission;
 
 	@Inject
 	private TicketLocalService _ticketLocalService;

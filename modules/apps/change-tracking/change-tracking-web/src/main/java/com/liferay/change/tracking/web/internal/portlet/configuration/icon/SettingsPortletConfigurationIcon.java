@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -55,7 +55,7 @@ public class SettingsPortletConfigurationIcon
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
 		try {
-			return _portletPermission.contains(
+			return PortletPermissionUtil.contains(
 				PermissionThreadLocal.getPermissionChecker(),
 				CTPortletKeys.PUBLICATIONS, ActionKeys.CONFIGURATION);
 		}
@@ -73,8 +73,5 @@ public class SettingsPortletConfigurationIcon
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 }

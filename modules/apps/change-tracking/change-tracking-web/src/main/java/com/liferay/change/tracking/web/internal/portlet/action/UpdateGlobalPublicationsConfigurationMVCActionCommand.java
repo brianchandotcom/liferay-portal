@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -64,7 +64,7 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 			actionRequest, "enableUnapprovedChanges");
 
 		try {
-			_portletPermission.check(
+			PortletPermissionUtil.check(
 				themeDisplay.getPermissionChecker(), CTPortletKeys.PUBLICATIONS,
 				ActionKeys.CONFIGURATION);
 
@@ -128,8 +128,5 @@ public class UpdateGlobalPublicationsConfigurationMVCActionCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 }

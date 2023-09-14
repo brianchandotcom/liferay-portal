@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -118,7 +118,7 @@ public class PortletPermissionsImporterHelper {
 		}
 
 		if (MapUtil.isNotEmpty(roleIdsToActionIds)) {
-			String resourcePrimKey = _portletPermission.getPrimaryKey(
+			String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
 				plid, portletId);
 
 			_resourcePermissionService.setIndividualResourcePermissions(
@@ -176,9 +176,6 @@ public class PortletPermissionsImporterHelper {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

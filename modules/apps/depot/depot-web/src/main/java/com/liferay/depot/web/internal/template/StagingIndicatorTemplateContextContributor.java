@@ -9,7 +9,6 @@ import com.liferay.depot.web.internal.util.StagingIndicatorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -18,7 +17,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Evan Thibodeau
@@ -37,7 +35,7 @@ public class StagingIndicatorTemplateContextContributor
 
 		try {
 			if (StagingIndicatorUtil.isShowStagingIndicator(
-					httpServletRequest, _portletPermission)) {
+					httpServletRequest)) {
 
 				contextObjects.put(
 					"bodyCssClass",
@@ -52,8 +50,5 @@ public class StagingIndicatorTemplateContextContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagingIndicatorTemplateContextContributor.class);
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 }

@@ -44,7 +44,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.settings.ArchivedSettings;
@@ -765,7 +765,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		String portletResource = ParamUtil.getString(
 			request, "portletResource");
 
-		_portletPermission.check(
+		PortletPermissionUtil.check(
 			themeDisplay.getPermissionChecker(), resourceGroupId,
 			PortletConfigurationLayoutUtil.getLayout(themeDisplay),
 			portletResource, ActionKeys.PERMISSIONS);
@@ -1129,9 +1129,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

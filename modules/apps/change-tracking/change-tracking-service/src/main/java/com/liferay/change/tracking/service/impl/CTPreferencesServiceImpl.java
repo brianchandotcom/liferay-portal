@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
@@ -91,7 +91,7 @@ public class CTPreferencesServiceImpl extends CTPreferencesServiceBaseImpl {
 	public CTPreferences enablePublications(long companyId, boolean enable)
 		throws PortalException {
 
-		_portletPermission.check(
+		PortletPermissionUtil.check(
 			getPermissionChecker(), CTPortletKeys.PUBLICATIONS,
 			ActionKeys.CONFIGURATION);
 
@@ -150,8 +150,5 @@ public class CTPreferencesServiceImpl extends CTPreferencesServiceBaseImpl {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 }

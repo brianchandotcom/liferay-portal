@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -73,7 +73,7 @@ public class SandboxHelper {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 		}
 
-		if (_portletPermission.contains(
+		if (PortletPermissionUtil.contains(
 				permissionChecker, CTPortletKeys.PUBLICATIONS,
 				CTActionKeys.WORK_ON_PRODUCTION)) {
 
@@ -199,9 +199,6 @@ public class SandboxHelper {
 
 	@Reference
 	private PermissionCheckerFactory _permissionCheckerFactory;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 	@Reference
 	private UserLocalService _userLocalService;

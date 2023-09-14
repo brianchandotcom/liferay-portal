@@ -12,7 +12,7 @@ import com.liferay.change.tracking.web.internal.display.context.PublicationsConf
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.PortletException;
@@ -40,7 +40,7 @@ public class ViewSettingsMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			_portletPermission.check(
+			PortletPermissionUtil.check(
 				PermissionThreadLocal.getPermissionChecker(),
 				CTPortletKeys.PUBLICATIONS, ActionKeys.CONFIGURATION);
 		}
@@ -67,8 +67,5 @@ public class ViewSettingsMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletPermission _portletPermission;
 
 }

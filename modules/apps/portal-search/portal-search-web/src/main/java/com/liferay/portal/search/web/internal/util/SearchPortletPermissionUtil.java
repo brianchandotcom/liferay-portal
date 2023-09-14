@@ -9,7 +9,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.PortletPermission;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.web.internal.display.context.PortletRequestThemeDisplaySupplier;
@@ -23,8 +23,7 @@ import javax.portlet.RenderRequest;
 public class SearchPortletPermissionUtil {
 
 	public static boolean containsConfiguration(
-		PortletPermission portletPermission, RenderRequest renderRequest,
-		Portal portal) {
+		RenderRequest renderRequest, Portal portal) {
 
 		ThemeDisplaySupplier themeDisplaySupplier =
 			new PortletRequestThemeDisplaySupplier(renderRequest);
@@ -32,7 +31,7 @@ public class SearchPortletPermissionUtil {
 		ThemeDisplay themeDisplay = themeDisplaySupplier.getThemeDisplay();
 
 		try {
-			return portletPermission.contains(
+			return PortletPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
 				portal.getPortletId(renderRequest), ActionKeys.CONFIGURATION);
 		}

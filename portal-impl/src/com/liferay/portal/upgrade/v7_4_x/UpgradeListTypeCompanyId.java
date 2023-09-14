@@ -34,47 +34,15 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		dropIndexes("ListType", "name");
-
 		long defaultCompanyId = PortalInstances.getDefaultCompanyIdBySQL();
 
-		boolean defaultCompany = false;
-
-		if ((CompanyThreadLocal.getCompanyId() == defaultCompanyId) ||
-			(CompanyThreadLocal.getCompanyId() == CompanyConstants.SYSTEM)) {
-
-			defaultCompany = true;
-		}
-
-		if (!DBPartition.isPartitionEnabled() || defaultCompany) {
-			runSQL("update ListType set companyId = " + defaultCompanyId);
-		}
-
-		if (DBPartition.isPartitionEnabled() && !defaultCompany) {
-			DBPartitionUtil.replaceByTable(connection, "ListType");
-
-			runSQL(
-				"update ListType set companyId = " +
-					CompanyThreadLocal.getCompanyId());
+		if (DBPartition.isPartitionEnabled()) {
+			_upgradeDBPartition(defaultCompanyId);
 
 			return;
 		}
 
-		if (!DBPartition.isPartitionEnabled()) {
-			long[] companyIds = PortalInstances.getCompanyIdsBySQL();
-
-			List<ListTypeEntry> listTypeEntries = _getListTypes(
-				defaultCompanyId);
-
-			for (long companyId : companyIds) {
-				if (companyId != defaultCompanyId) {
-					HashMap<Long, Long> listTypeIdChanges = _insertListTypes(
-						listTypeEntries, companyId);
-
-					_updateListTypeIdReferences(listTypeIdChanges, companyId);
-				}
-			}
-		}
+		_upgrade(defaultCompanyId);
 	}
 
 	@Override
@@ -165,6 +133,46 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 					}
 				}
 			}
+		}
+	}
+
+	private void _upgrade(long defaultCompanyId) throws Exception {
+		dropIndexes("ListType", "name");
+
+		runSQL("update ListType set companyId = " + defaultCompanyId);
+
+		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+
+		List<ListTypeEntry> listTypeEntries = _getListTypes(defaultCompanyId);
+
+		for (long companyId : companyIds) {
+			if (companyId != defaultCompanyId) {
+				HashMap<Long, Long> listTypeIdChanges = _insertListTypes(
+					listTypeEntries, companyId);
+
+				_updateListTypeIdReferences(listTypeIdChanges, companyId);
+			}
+		}
+	}
+
+	private void _upgradeDBPartition(long defaultCompanyId) throws Exception {
+		boolean defaultCompany = false;
+
+		if ((CompanyThreadLocal.getCompanyId() == defaultCompanyId) ||
+			(CompanyThreadLocal.getCompanyId() == CompanyConstants.SYSTEM)) {
+
+			defaultCompany = true;
+		}
+
+		if (defaultCompany) {
+			runSQL("update ListType set companyId = " + defaultCompanyId);
+		}
+		else {
+			DBPartitionUtil.replaceByTable(connection, "ListType");
+
+			runSQL(
+				"update ListType set companyId = " +
+					CompanyThreadLocal.getCompanyId());
 		}
 	}
 

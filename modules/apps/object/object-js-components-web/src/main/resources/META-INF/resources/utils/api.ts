@@ -158,7 +158,9 @@ export async function postListTypeEntry({
 }
 
 export function deleteObjectDefinition(objectDefinitionId: number) {
-	return deleteItem(`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}`);
+	return deleteItem(
+		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}`
+	);
 }
 
 export function deleteObjectField(objectFieldId: number) {
@@ -170,7 +172,9 @@ export function deleteObjectFolder(objectFolderId: number) {
 }
 
 export function deleteObjectRelationship(objectRelationshipId: number) {
-	return deleteItem(`/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`);
+	return deleteItem(
+		`/o/object-admin/v1.0/object-relationships/${objectRelationshipId}`
+	);
 }
 
 export async function fetchJSON<T>(input: RequestInfo, init?: RequestInit) {
@@ -261,7 +265,9 @@ export async function getObjectFieldsByExternalReferenceCode(
 	);
 }
 
-export async function getObjectDefinitionObjectFields(objectDefinitionId: number) {
+export async function getObjectDefinitionObjectFields(
+	objectDefinitionId: number
+) {
 	return await getList<ObjectField>(
 		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/object-fields?pageSize=-1`
 	);
@@ -296,13 +302,17 @@ export async function getObjectValidationRuleById<T>(
 	);
 }
 
-export async function getListTypeDefinition(listTypeDefinitionId: number): Promise<ListTypeDefinition> {
+export async function getListTypeDefinition(
+	listTypeDefinitionId: number
+): Promise<ListTypeDefinition> {
 	return await fetchJSON<ListTypeDefinition>(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions/${listTypeDefinitionId}`
 	);
 }
 
-export async function getListTypeDefinitionListTypeEntries(listTypeDefinitionId: number) {
+export async function getListTypeDefinitionListTypeEntries(
+	listTypeDefinitionId: number
+) {
 	return await getList<ListTypeEntry>(
 		`/o/headless-admin-list-type/v1.0/list-type-definitions/${listTypeDefinitionId}/list-type-entries?pageSize=-1`
 	);

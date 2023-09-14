@@ -15,18 +15,16 @@ import React, {useEffect, useState} from 'react';
 import {defaultLanguageId} from '../utils/constants';
 import {useObjectFieldForm} from './ObjectField/useObjectFieldForm';
 import StateDefinition from './StateManager/StateDefinition';
-import {
-	getListTypeDefinitionListTypeEntries
-} from "@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api";
+import {getListTypeDefinitionListTypeEntries} from '@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api';
 
 export default function EditObjectStateField({objectField, readOnly}: IProps) {
 	const [pickListItems, setPickListItems] = useState<PickListItem[]>([]);
 
 	useEffect(() => {
 		if (objectField?.listTypeDefinitionId) {
-			API.getListTypeDefinitionListTypeEntries(objectField.listTypeDefinitionId).then(
-				setPickListItems
-			);
+			API.getListTypeDefinitionListTypeEntries(
+				objectField.listTypeDefinitionId
+			).then(setPickListItems);
 		}
 	}, [
 		objectField.listTypeDefinitionId,

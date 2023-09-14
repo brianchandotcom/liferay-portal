@@ -70,24 +70,24 @@ interface ObjectRelationship {
 	objectDefinitionId1: number;
 	objectDefinitionId2: number;
 	readonly objectDefinitionName2: string;
-	objectRelationshipId: number;
 	parameterObjectFieldId?: number;
 	reverse: boolean;
 	type: ObjectRelationshipType;
 }
-interface PickListItem {
+interface ListTypeEntry {
 	externalReferenceCode: string;
 	id: number;
+	listTypeDefinitionId: number;
 	key: string;
 	name: string;
 	name_i18n: LocalizedValue<string>;
 }
-interface PickList {
+interface ListTypeDefinition {
 	actions: Actions;
 	externalReferenceCode: string;
 	id: number;
 	key: string;
-	listTypeEntries: PickListItem[];
+	listTypeEntries: ListTypeEntry[];
 	name: string;
 	name_i18n: LocalizedValue<string>;
 	system: boolean;
@@ -98,19 +98,21 @@ interface saveProps {
 	returnValue?: boolean;
 	url: string;
 }
-export declare function addPickListItem({
-	id,
+export declare function postListTypeEntry({
 	key,
+	listTypeDefinitionId,
 	name_i18n,
-}: Partial<PickListItem>): Promise<any>;
-export declare function deleteObjectDefinitions(id: number): Promise<void>;
-export declare function deleteObjectField(id: number): Promise<void>;
+}: Partial<ListTypeEntry>): Promise<any>;
+export declare function deleteObjectDefinition(
+	objectDefinitionId: number
+): Promise<void>;
+export declare function deleteObjectField(objectFieldId: number): Promise<void>;
 export declare function deleteObjectFolder(
 	objectFolderId: number
 ): Promise<void>;
-export declare function deleteObjectRelationships(id: number): Promise<void>;
-export declare function deletePickList(pickListId: number): Promise<void>;
-export declare function deletePickListItem(id: number): Promise<void>;
+export declare function deleteObjectRelationship(
+	objectRelationshipId: number
+): Promise<void>;
 export declare function fetchJSON<T>(
 	input: RequestInfo,
 	init?: RequestInit
@@ -119,7 +121,7 @@ export declare function getAllObjectDefinitions(): Promise<ObjectDefinition[]>;
 export declare function getAllObjectFolders(): Promise<ObjectFolder[]>;
 export declare function getList<T>(url: string): Promise<T[]>;
 export declare function getNotificationTemplateByExternalReferenceCode(
-	notificationTemplateExternalReferenceCode: string
+	externalReferenceCode: string
 ): Promise<NotificationTemplate>;
 export declare function getNotificationTemplateById(
 	notificationTemplateId: number
@@ -128,7 +130,7 @@ export declare function getNotificationTemplates(): Promise<
 	NotificationTemplate[]
 >;
 export declare function getObjectDefinitionByExternalReferenceCode(
-	objectDefinitionExternalReferenceCode: string
+	externalReferenceCode: string
 ): Promise<ObjectDefinition>;
 export declare function getObjectDefinitionById(
 	objectDefinitionId: number
@@ -142,27 +144,26 @@ export declare function getObjectField(
 export declare function getObjectFieldsByExternalReferenceCode(
 	externalReferenceCode: string
 ): Promise<ObjectField[]>;
-export declare function getObjectFieldsById(
+export declare function getObjectDefinitionObjectFields(
 	objectDefinitionId: number
 ): Promise<ObjectField[]>;
 export declare function getObjectFolderByExternalReferenceCode(
-	objectFolderExternalReferenceCode: string
-): Promise<ObjectFolder>;
-export declare function getObjectRelationshipsByExternalReferenceCode(
 	externalReferenceCode: string
-): Promise<ObjectRelationship[]>;
-export declare function getObjectRelationshipsById(
-	objectDefinitionId: number
+): Promise<ObjectFolder>;
+export declare function getObjectDefinitionByExternalReferenceCodeObjectRelationships(
+	externalReferenceCode: string
 ): Promise<ObjectRelationship[]>;
 export declare function getObjectValidationRuleById<T>(
 	objectValidationRuleId: number
 ): Promise<T>;
-export declare function getPickList(pickListId: number): Promise<PickList>;
-export declare function getPickListItems(
-	pickListId: number
-): Promise<PickListItem[]>;
-export declare function getPickLists(): Promise<PickList[]>;
-export declare function getRelationship<T>(
+export declare function getListTypeDefinition(
+	listTypeDefinitionId: number
+): Promise<ListTypeDefinition>;
+export declare function getListTypeDefinitionListTypeEntries(
+	listTypeDefinitionId: number
+): Promise<ListTypeEntry[]>;
+export declare function getListTypeDefinitions(): Promise<ListTypeDefinition[]>;
+export declare function getObjectRelationship<T>(
 	objectRelationshipId: number
 ): Promise<T>;
 export declare function save({
@@ -174,28 +175,28 @@ export declare function save({
 export declare function postObjectDefinition(
 	objectDefinition: Partial<ObjectDefinition>
 ): Promise<any>;
-export declare function publishObjectDefinitionById(
+export declare function postObjectDefinitionPublish(
 	objectDefinitionId: number
 ): Promise<Response>;
 export declare function putObjectDefinitionByExternalReferenceCode(
-	values: Partial<ObjectDefinition>
+	objectDefinition: Partial<ObjectDefinition>
 ): Promise<Response>;
 export declare function putObjectFolderByExternalReferenceCode(
 	objectFolder: Partial<ObjectFolder>
 ): Promise<Response>;
-export declare function updatePickList({
+export declare function putListTypeDefinition({
 	externalReferenceCode,
 	id,
 	listTypeEntries,
 	name_i18n,
-}: Partial<PickList>): Promise<any>;
-export declare function updatePickListItem({
+}: Partial<ListTypeDefinition>): Promise<any>;
+export declare function putListTypeEntry({
 	externalReferenceCode,
 	id,
 	name_i18n,
-}: Partial<PickListItem>): Promise<any>;
-export declare function updateRelationship({
-	objectRelationshipId,
+}: Partial<ListTypeEntry>): Promise<any>;
+export declare function putObjectRelationship({
+	id,
 	...others
 }: ObjectRelationship): Promise<any>;
 export {};

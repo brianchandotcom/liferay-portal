@@ -32,9 +32,7 @@ import {
 } from '../utils/filter';
 
 import './ModalAddFilter.scss';
-import {
-	getListTypeDefinitionListTypeEntries
-} from "@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api";
+import {getListTypeDefinitionListTypeEntries} from '@liferay/object-js-components-web/types/src/main/resources/META-INF/resources/utils/api';
 interface IProps {
 	aggregationFilter?: boolean;
 	creationLanguageId?: Liferay.Language.Locale;

@@ -53,7 +53,7 @@ export function getCheckedListTypeEntries(
 	return newItemsValues;
 }
 
-export function getSystemObjectFieldLabelFromEntry(
+export function getSystemObjectFieldLabelFromObjectEntry(
 	titleFieldName: string,
 	entry: ObjectEntry,
 	itemObject: LabelValueObject
@@ -116,7 +116,7 @@ export function getCheckedObjectRelationshipItems(
 		} as IItem;
 
 		if (systemField) {
-			item = getSystemObjectFieldLabelFromEntry(
+			item = getSystemObjectFieldLabelFromObjectEntry(
 				titleFieldName,
 				entry,
 				item

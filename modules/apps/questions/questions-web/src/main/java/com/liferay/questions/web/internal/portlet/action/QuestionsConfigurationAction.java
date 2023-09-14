@@ -5,13 +5,27 @@
 
 package com.liferay.questions.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.questions.web.internal.constants.QuestionsPortletKeys;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Javier Gamarra
@@ -27,5 +41,49 @@ public class QuestionsConfigurationAction
 	public String getJspPath(HttpServletRequest httpServletRequest) {
 		return "/configuration.jsp";
 	}
+
+	@Override
+	public void processAction(
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
+		throws Exception {
+
+		Settings settings = getSettings(actionRequest);
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		String[] fieldNames = {
+			"askQuestionButtonTextAsLocalizedXML",
+			"editQuestionPageTitleAsLocalizedXML",
+			"newQuestionPageTitleAsLocalizedXML",
+			"postYourQuestionButtonTextAsLocalizedXML",
+			"updateYourQuestionButtonTextAsLocalizedXML"
+		};
+
+		for (String fieldName : fieldNames) {
+			UnicodeProperties unicodeProperties =
+				PropertiesParamUtil.getProperties(
+					actionRequest, "preferences--" + fieldName + "_");
+
+			Map<String, String> properties = new HashMap<>();
+
+			for (Map.Entry<String, String> entry :
+					unicodeProperties.entrySet()) {
+
+				properties.put(entry.getKey(), entry.getValue());
+			}
+
+			String xml = _localization.getXml(
+				properties, StringPool.BLANK, fieldName);
+
+			modifiableSettings.setValue(fieldName, xml);
+		}
+
+		modifiableSettings.store();
+	}
+
+	@Reference
+	private Localization _localization;
 
 }

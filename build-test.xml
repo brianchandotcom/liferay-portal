@@ -9992,8 +9992,20 @@ org.apache.catalina.tribes.level = FINE]]>
 	</target>
 
 	<target name="deploy-maven-module">
+		<if>
+			<not>
+				<isset property="build.profiles" />
+			</not>
+			<then>
+				<var name="build.profiles" value="" />
+			</then>
+			<else>
+				<var name="build.profiles" value="-P ${build.profiles}" />
+			</else>
+		</if>
+
 		<execute dir="${module.base.dir}">
-			mvn clean package
+			mvn clean package ${build.profiles}
 		</execute>
 
 		<copy

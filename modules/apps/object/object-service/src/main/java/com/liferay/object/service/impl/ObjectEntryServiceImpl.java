@@ -13,13 +13,19 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.definition.security.permission.resource.ObjectDefinitionPortletResourcePermissionRegistryUtil;
+import com.liferay.object.definition.tree.Edge;
+import com.liferay.object.definition.tree.Node;
+import com.liferay.object.definition.tree.Tree;
+import com.liferay.object.definition.tree.TreeFactory;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
 import com.liferay.object.exception.ObjectEntryCountException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.base.ObjectEntryServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -55,6 +61,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
@@ -434,8 +441,49 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		if (!objectDefinition.isAccountEntryRestricted()) {
+		if (!objectDefinition.isAccountEntryRestricted() &&
+			!objectDefinition.isRootDescendantNode()) {
+
 			return;
+		}
+
+		if (objectDefinition.isRootDescendantNode()) {
+			ObjectDefinition rootObjectDefinition =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectDefinition.getRootObjectDefinitionId());
+
+			if (!rootObjectDefinition.isAccountEntryRestricted()) {
+				return;
+			}
+
+			Tree tree = _treeFactory.create(
+				rootObjectDefinition.getObjectDefinitionId());
+
+			Node node = tree.getNode(objectDefinition.getObjectDefinitionId());
+
+			objectDefinition = rootObjectDefinition;
+
+			Edge edge = node.getEdge();
+
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.getObjectRelationship(
+					edge.getObjectRelationshipId());
+
+			ObjectField objectField = _objectFieldLocalService.getObjectField(
+				objectRelationship.getObjectFieldId2());
+
+			ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
+				MapUtil.getLong(values, objectField.getName()));
+
+			if (!Objects.equals(
+					objectEntry.getObjectEntryId(),
+					objectEntry.getRootObjectEntryId())) {
+
+				objectEntry = objectEntryLocalService.getObjectEntry(
+					objectEntry.getRootObjectEntryId());
+			}
+
+			values = objectEntry.getValues();
 		}
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
@@ -591,10 +639,16 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference
 	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private TreeFactory _treeFactory;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

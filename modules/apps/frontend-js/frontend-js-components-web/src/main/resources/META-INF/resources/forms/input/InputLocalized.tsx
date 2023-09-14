@@ -28,6 +28,7 @@ interface InputLocalizedProps {
 	required?: boolean;
 	resultFormatter?: (value: string) => React.ReactNode;
 	selectedLocale?: Liferay.Language.Locale;
+	tooltip?: string;
 	translations: Liferay.Language.LocalizedValue<string>;
 }
 
@@ -58,6 +59,7 @@ export default function InputLocalized({
 	required,
 	resultFormatter = () => null,
 	selectedLocale,
+	tooltip,
 	translations,
 	...otherProps
 }: InputLocalizedProps) {
@@ -86,6 +88,7 @@ export default function InputLocalized({
 			id={id}
 			label={label}
 			required={required}
+			tooltip={tooltip}
 		>
 			<ClayLocalizedInput
 				{...otherProps}

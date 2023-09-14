@@ -22,6 +22,7 @@ interface InputLocalizedProps {
 	required?: boolean;
 	resultFormatter?: (value: string) => React.ReactNode;
 	selectedLocale?: Liferay.Language.Locale;
+	tooltip?: string;
 	translations: Liferay.Language.LocalizedValue<string>;
 }
 interface InputLocale {
@@ -41,6 +42,7 @@ export default function InputLocalized({
 	required,
 	resultFormatter,
 	selectedLocale,
+	tooltip,
 	translations,
 	...otherProps
 }: InputLocalizedProps): JSX.Element;

@@ -26,8 +26,8 @@ definition {
 
 		task ("Login with the created user and go to Marketplace") {
 			User.logoutAndLoginPG(
-				userLoginEmailAddress = "taqa@acme.com",
-				userLoginFullName = "Test Account QA");
+				userLoginEmailAddress = "da@administrator.com",
+				userLoginFullName = "Dashboard Administrator");
 
 			MP2Navigator.gotoMP2();
 		}

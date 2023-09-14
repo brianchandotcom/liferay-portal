@@ -26,7 +26,7 @@ definition {
 		}
 
 		task ("Then I should be able to assert that Account Users was created") {
-			for (var accountName : list "Steven Acme,Jane Acme,Ryan administrator,Clark Customer,Marie developer,John developer") {
+			for (var accountName : list "Jane Acme,Dashboard Administrator,Customer Account Buyer,Publisher App Editor,MKT Account Administrator Regular") {
 				LexiconEntry.viewEntryName(rowEntry = ${accountName});
 			}
 		}

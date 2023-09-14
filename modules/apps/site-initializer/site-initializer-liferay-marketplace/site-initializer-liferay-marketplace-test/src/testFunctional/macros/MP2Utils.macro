@@ -21,8 +21,11 @@ definition {
 			asset = ${asset},
 			recipient = ${recipient});
 
-		var userPassword = selenium.getText("MP2Utils#MOCKMOCK_HTML_BODY_FORMATTED");
 		var key_bodyLink = ${bodyLink};
+
+		ScrollWebElementIntoView(locator1 = "MP2Utils#MOCKMOCK_HTML_BODY_FORMATTED");
+
+		var userPassword = selenium.getText("MP2Utils#MOCKMOCK_HTML_BODY_FORMATTED");
 
 		AssertClick(
 			locator1 = "MockMock#MOCKMOCK_HTML_BODY_LINK",

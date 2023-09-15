@@ -130,10 +130,13 @@ public abstract class ListTypeEntryLocalServiceBaseImpl
 	 *
 	 * @param listTypeEntry the list type entry
 	 * @return the list type entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public ListTypeEntry deleteListTypeEntry(ListTypeEntry listTypeEntry) {
+	public ListTypeEntry deleteListTypeEntry(ListTypeEntry listTypeEntry)
+		throws PortalException {
+
 		return listTypeEntryPersistence.remove(listTypeEntry);
 	}
 

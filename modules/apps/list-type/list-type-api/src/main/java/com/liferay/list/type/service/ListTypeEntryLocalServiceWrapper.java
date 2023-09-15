@@ -90,10 +90,12 @@ public class ListTypeEntryLocalServiceWrapper
 	 *
 	 * @param listTypeEntry the list type entry
 	 * @return the list type entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.list.type.model.ListTypeEntry deleteListTypeEntry(
-		com.liferay.list.type.model.ListTypeEntry listTypeEntry) {
+			com.liferay.list.type.model.ListTypeEntry listTypeEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _listTypeEntryLocalService.deleteListTypeEntry(listTypeEntry);
 	}
@@ -119,7 +121,8 @@ public class ListTypeEntryLocalServiceWrapper
 
 	@Override
 	public void deleteListTypeEntryByListTypeDefinitionId(
-		long listTypeDefinitionId) {
+			long listTypeDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_listTypeEntryLocalService.deleteListTypeEntryByListTypeDefinitionId(
 			listTypeDefinitionId);

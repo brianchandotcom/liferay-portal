@@ -1554,6 +1554,8 @@ definition {
 
 			MastersPageTemplates.propagateChange();
 
+			Navigator.gotoBack();
+
 			WebContentDisplayPortlet.viewMessage();
 		}
 

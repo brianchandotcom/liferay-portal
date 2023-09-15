@@ -53,7 +53,7 @@ public class ListTypeEntryLocalServiceImpl
 				listTypeDefinitionId);
 
 		ListTypeDefinitionUtil.validateInvokerBundle(
-			"create", listTypeDefinition.isSystem());
+			"create", listTypeDefinition.isSystem(), true);
 
 		User user = _userLocalService.getUser(userId);
 
@@ -88,7 +88,7 @@ public class ListTypeEntryLocalServiceImpl
 				listTypeEntry.getListTypeDefinitionId());
 
 		ListTypeDefinitionUtil.validateInvokerBundle(
-			"delete", listTypeDefinition.isSystem());
+			"delete", listTypeDefinition.isSystem(), true);
 
 		return listTypeEntryPersistence.remove(listTypeEntry);
 	}

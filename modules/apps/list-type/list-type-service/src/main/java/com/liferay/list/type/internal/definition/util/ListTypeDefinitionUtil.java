@@ -7,6 +7,7 @@ package com.liferay.list.type.internal.definition.util;
 
 import com.liferay.list.type.exception.ListTypeDefinitionSystemException;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -14,12 +15,21 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ListTypeDefinitionUtil {
 
-	public static void validateInvokerBundle(String action, boolean system)
+	public static void validateInvokerBundle(
+			String action, boolean system, boolean entry)
 		throws PortalException {
 
 		if (system && !ObjectDefinitionUtil.isInvokerBundleAllowed()) {
+			String finalSentence = "";
+
+			if (entry) {
+				finalSentence = " entries";
+			}
+
 			throw new ListTypeDefinitionSystemException(
-				"Only allowed bundles can " + action + " system picklists");
+				StringBundler.concat(
+					"Only allowed bundles can ", action, " system picklists",
+					finalSentence));
 		}
 	}
 

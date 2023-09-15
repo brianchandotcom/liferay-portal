@@ -73,7 +73,7 @@ public class ListTypeDefinitionLocalServiceImpl
 			List<ListTypeEntry> listTypeEntries)
 		throws PortalException {
 
-		ListTypeDefinitionUtil.validateInvokerBundle("create", system);
+		ListTypeDefinitionUtil.validateInvokerBundle("create", system, false);
 
 		_validateName(nameMap, LocaleUtil.getSiteDefault());
 
@@ -99,7 +99,7 @@ public class ListTypeDefinitionLocalServiceImpl
 		throws PortalException {
 
 		ListTypeDefinitionUtil.validateInvokerBundle(
-			"delete", listTypeDefinition.isSystem());
+			"delete", listTypeDefinition.isSystem(), false);
 
 		int count =
 			_objectFieldLocalService.getObjectFieldsCountByListTypeDefinitionId(

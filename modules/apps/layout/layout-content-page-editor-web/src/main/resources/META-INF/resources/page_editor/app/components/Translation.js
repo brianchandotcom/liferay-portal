@@ -201,6 +201,10 @@ export default function Translation({
 	const Trigger = React.forwardRef((otherProps, ref) => (
 		<ClayButton
 			{...otherProps}
+			aria-label={sub(
+				Liferay.Language.get('select-a-language.-current-language-x'),
+				w3cLanguageId
+			)}
 			className=""
 			data-title={sub(
 				Liferay.Language.get('select-x'),
@@ -212,15 +216,6 @@ export default function Translation({
 			size="sm"
 		>
 			<ClayIcon symbol={languageIcon} />
-
-			<span className="sr-only">
-				{sub(
-					Liferay.Language.get(
-						'select-a-language.-current-language-x'
-					),
-					w3cLanguageId
-				)}
-			</span>
 		</ClayButton>
 	));
 

@@ -7,6 +7,7 @@ import {Dispatch, SetStateAction, createContext} from 'react';
 
 interface APIBuilderContext {
 	fetchedData: FetchedData;
+	isDataUnsaved: boolean;
 	setFetchedData: Dispatch<SetStateAction<FetchedData>>;
 	setHideManagementButtons: Dispatch<SetStateAction<boolean>>;
 	setIsDataUnsaved: Dispatch<SetStateAction<boolean>>;
@@ -14,7 +15,22 @@ interface APIBuilderContext {
 
 export const EditAPIApplicationContext = createContext<APIBuilderContext>({
 	fetchedData: {},
+	isDataUnsaved: false,
 	setFetchedData: () => {},
 	setHideManagementButtons: () => {},
 	setIsDataUnsaved: () => {},
+});
+
+interface APISchemaContext {
+	apiSchemaId: number;
+	fetchedSchemaData: FetchedSchemaData;
+	objectDefinitionBasePath: string;
+	setFetchedSchemaData: Dispatch<SetStateAction<FetchedSchemaData>>;
+}
+
+export const EditSchemaContext = createContext<APISchemaContext>({
+	apiSchemaId: 0,
+	fetchedSchemaData: {},
+	objectDefinitionBasePath: '',
+	setFetchedSchemaData: () => {},
 });

@@ -335,6 +335,7 @@ export default function EditAPIApplication({
 		<EditAPIApplicationContext.Provider
 			value={{
 				fetchedData,
+				isDataUnsaved,
 				setFetchedData,
 				setHideManagementButtons,
 				setIsDataUnsaved,

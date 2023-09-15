@@ -11,8 +11,8 @@ describe('DeleteConfirmationModal', () => {
 		const {container} = render(
 			<DeleteConfirmationModal
 				DeleteConfirmationText='Test delete confirm text'
-				onCloseFn={jest.fn()}
-				onSubmitFn={jest.fn()}
+				onClose={jest.fn()}
+				onSubmit={jest.fn()}
 				title='Test title'
 			>
 				<p>{'I am child'}</p>
@@ -28,8 +28,8 @@ describe('DeleteConfirmationModal', () => {
 		const {getByText} = render(
 			<DeleteConfirmationModal
 				deleteButtonLabel='Custom Delete Button'
-				onCloseFn={jest.fn()}
-				onSubmitFn={jest.fn()}
+				onClose={jest.fn()}
+				onSubmit={jest.fn()}
 				title='Test title'
 			/>
 		);
@@ -44,8 +44,8 @@ describe('DeleteConfirmationModal', () => {
 			<DeleteConfirmationModal
 				deleteButtonLabel='Custom Delete Button'
 				disabled
-				onCloseFn={jest.fn()}
-				onSubmitFn={jest.fn()}
+				onClose={jest.fn()}
+				onSubmit={jest.fn()}
 				title='Test title'
 			/>
 		);

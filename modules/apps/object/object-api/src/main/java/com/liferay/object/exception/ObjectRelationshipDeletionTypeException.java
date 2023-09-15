@@ -12,21 +12,35 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ObjectRelationshipDeletionTypeException extends PortalException {
 
-	public ObjectRelationshipDeletionTypeException() {
-	}
-
-	public ObjectRelationshipDeletionTypeException(String msg) {
-		super(msg);
+	public ObjectRelationshipDeletionTypeException(String message) {
+		super(message);
 	}
 
 	public ObjectRelationshipDeletionTypeException(
-		String msg, Throwable throwable) {
+		String message, String messageKey) {
 
-		super(msg, throwable);
+		super(message);
+
+		_messageKey = messageKey;
 	}
 
-	public ObjectRelationshipDeletionTypeException(Throwable throwable) {
-		super(throwable);
+	public String getMessageKey() {
+		return _messageKey;
 	}
+
+	public static class MustHaveCascadeDeletionType
+		extends ObjectRelationshipDeletionTypeException {
+
+		public MustHaveCascadeDeletionType() {
+			super(
+				"Object relationship that belongs to a hierarchical " +
+					"structure must have cascade deletion type",
+				"object-relationship-that-belongs-to-a-hierarchical-" +
+					"structure-must-have-cascade-deletion-type");
+		}
+
+	}
+
+	private String _messageKey;
 
 }

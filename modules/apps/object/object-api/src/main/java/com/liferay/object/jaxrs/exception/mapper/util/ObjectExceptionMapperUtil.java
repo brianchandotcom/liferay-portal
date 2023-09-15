@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.admin.rest.internal.jaxrs.exception.mapper.util;
+package com.liferay.object.jaxrs.exception.mapper.util;
 
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Validator;

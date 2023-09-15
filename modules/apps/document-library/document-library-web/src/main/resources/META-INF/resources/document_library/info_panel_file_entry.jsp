@@ -106,7 +106,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 					%>
 
 					<clay:content-col>
-						<liferay-ui:user-portrait
+						<liferay-user:user-portrait
 							user="<%= owner %>"
 						/>
 					</clay:content-col>

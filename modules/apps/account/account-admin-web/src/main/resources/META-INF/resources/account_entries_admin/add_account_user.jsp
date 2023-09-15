@@ -111,7 +111,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 				<aui:validator name="email" />
 			</aui:input>
 
-			<liferay-ui:user-name-fields />
+			<liferay-user:user-name-fields />
 		</clay:sheet-section>
 	</liferay-frontend:edit-form-body>
 

@@ -5,6 +5,7 @@
 
 package com.liferay.object.model.impl;
 
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -47,7 +48,7 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 
 	@Override
 	public boolean isDeletionAllowed() throws PortalException {
-		if (isSystem() || Validator.isNotNull(getRelationshipType())) {
+		if (Validator.isNotNull(getRelationshipType())) {
 			return false;
 		}
 
@@ -60,13 +61,11 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 			return false;
 		}
 
-		if (objectDefinition.isApproved() && objectDefinition.isModifiable() &&
-			objectDefinition.isSystem()) {
-
-			return false;
-		}
-
 		return true;
+	}
+
+	public boolean isMetadata() {
+		return ObjectFieldUtil.isMetadata(getName());
 	}
 
 	@Override

@@ -5,6 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
@@ -66,6 +67,58 @@ function TableHeadCell({
 		});
 	}
 
+	const content = Liferay.FeatureFlags['LPS-193005'] ? (
+		<ClayLink
+			className="inline-item text-truncate-inline"
+			href="#"
+			onClick={handleSortingCellClick}
+		>
+			{!hideColumnLabel && <span className="text-truncate">{label}</span>}
+
+			{sortingMatch && (
+				<span className="inline-item inline-item-after">
+					<ClayIcon
+						draggable
+						symbol={
+							sortingMatch?.direction === 'asc'
+								? 'order-arrow-up'
+								: 'order-arrow-down'
+						}
+					/>
+				</span>
+			)}
+		</ClayLink>
+	) : (
+		<ClayButton
+			className="btn-sorting inline-item text-nowrap text-truncate-inline"
+			displayType="unstyled"
+			onClick={handleSortingCellClick}
+			size="sm"
+		>
+			{!hideColumnLabel && label}
+
+			<span className="inline-item inline-item-after sorting-icons-wrapper">
+				<ClayIcon
+					className={classNames(
+						'sorting-icon',
+						sortingMatch?.direction === 'asc' && 'active'
+					)}
+					draggable
+					symbol="order-arrow-up"
+				/>
+
+				<ClayIcon
+					className={classNames(
+						'sorting-icon',
+						sortingMatch?.direction === 'desc' && 'active'
+					)}
+					draggable
+					symbol="order-arrow-down"
+				/>
+			</span>
+		</ClayButton>
+	);
+
 	return (
 		<Cell
 			className={classNames({
@@ -75,38 +128,7 @@ function TableHeadCell({
 			heading
 			resizable
 		>
-			{sortable ? (
-				<ClayButton
-					className="btn-sorting inline-item text-nowrap text-truncate-inline"
-					displayType="unstyled"
-					onClick={handleSortingCellClick}
-					small
-				>
-					{!hideColumnLabel && label}
-
-					<span className="inline-item inline-item-after sorting-icons-wrapper">
-						<ClayIcon
-							className={classNames(
-								'sorting-icon',
-								sortingMatch?.direction === 'asc' && 'active'
-							)}
-							draggable
-							symbol="order-arrow-up"
-						/>
-
-						<ClayIcon
-							className={classNames(
-								'sorting-icon',
-								sortingMatch?.direction === 'desc' && 'active'
-							)}
-							draggable
-							symbol="order-arrow-down"
-						/>
-					</span>
-				</ClayButton>
-			) : (
-				!hideColumnLabel && label
-			)}
+			{sortable ? content : !hideColumnLabel && label}
 		</Cell>
 	);
 }

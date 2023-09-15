@@ -57,7 +57,7 @@ public class DateObjectFieldBusinessType implements ObjectFieldBusinessType {
 			return StringPool.BLANK;
 		}
 
-		return value.replaceAll(" [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}.[0-9]", "");
+		return value.replaceAll(" [0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}.*", "");
 	}
 
 	@Override

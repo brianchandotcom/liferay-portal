@@ -150,7 +150,8 @@ public class ObjectValidationRuleLocalServiceTest {
 			ObjectValidationRuleSettingNameException.MissingRequiredName.class,
 			String.format(
 				"The object validation rule setting \"%s\" is required",
-				ObjectValidationRuleSettingConstants.NAME_OBJECT_FIELD_ID),
+				ObjectValidationRuleSettingConstants.
+					NAME_OUTPUT_OBJECT_FIELD_ID),
 			() -> _addObjectValidationRule(
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
 				nameLabelMap,
@@ -160,7 +161,8 @@ public class ObjectValidationRuleLocalServiceTest {
 			ObjectValidationRuleSettingNameException.NotAllowedName.class,
 			String.format(
 				"The object validation rule setting \"%s\" is not allowed",
-				ObjectValidationRuleSettingConstants.NAME_OBJECT_FIELD_ID),
+				ObjectValidationRuleSettingConstants.
+					NAME_OUTPUT_OBJECT_FIELD_ID),
 			() -> _addObjectValidationRule(
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
 				nameLabelMap,
@@ -170,7 +172,7 @@ public class ObjectValidationRuleLocalServiceTest {
 					new ObjectValidationRuleSettingBuilder(
 					).name(
 						ObjectValidationRuleSettingConstants.
-							NAME_OBJECT_FIELD_ID
+							NAME_OUTPUT_OBJECT_FIELD_ID
 					).value(
 						RandomTestUtil.randomString()
 					).build())));
@@ -183,7 +185,8 @@ public class ObjectValidationRuleLocalServiceTest {
 				"The value \"%s\" of the object validation rule setting " +
 					"\"%s\" is invalid",
 				objectValidationRuleSettingValue,
-				ObjectValidationRuleSettingConstants.NAME_OBJECT_FIELD_ID),
+				ObjectValidationRuleSettingConstants.
+					NAME_OUTPUT_OBJECT_FIELD_ID),
 			() -> _addObjectValidationRule(
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
 				nameLabelMap,
@@ -193,7 +196,7 @@ public class ObjectValidationRuleLocalServiceTest {
 					new ObjectValidationRuleSettingBuilder(
 					).name(
 						ObjectValidationRuleSettingConstants.
-							NAME_OBJECT_FIELD_ID
+							NAME_OUTPUT_OBJECT_FIELD_ID
 					).value(
 						objectValidationRuleSettingValue
 					).build())));
@@ -230,7 +233,8 @@ public class ObjectValidationRuleLocalServiceTest {
 			Collections.singletonList(
 				new ObjectValidationRuleSettingBuilder(
 				).name(
-					ObjectValidationRuleSettingConstants.NAME_OBJECT_FIELD_ID
+					ObjectValidationRuleSettingConstants.
+						NAME_OUTPUT_OBJECT_FIELD_ID
 				).value(
 					String.valueOf(objectField.getObjectFieldId())
 				).build()));
@@ -304,7 +308,7 @@ public class ObjectValidationRuleLocalServiceTest {
 					new ObjectValidationRuleSettingBuilder(
 					).name(
 						ObjectValidationRuleSettingConstants.
-							NAME_OBJECT_FIELD_ID
+							NAME_OUTPUT_OBJECT_FIELD_ID
 					).value(
 						String.valueOf(textObjectField.getObjectFieldId())
 					).build()));
@@ -338,7 +342,7 @@ public class ObjectValidationRuleLocalServiceTest {
 					new ObjectValidationRuleSettingBuilder(
 					).name(
 						ObjectValidationRuleSettingConstants.
-							NAME_OBJECT_FIELD_ID
+							NAME_OUTPUT_OBJECT_FIELD_ID
 					).value(
 						String.valueOf(dateObjectField.getObjectFieldId())
 					).build())));
@@ -419,7 +423,7 @@ public class ObjectValidationRuleLocalServiceTest {
 				if (StringUtil.equals(
 						objectValidationRuleSetting.getName(),
 						ObjectValidationRuleSettingConstants.
-							NAME_OBJECT_FIELD_ID)) {
+							NAME_OUTPUT_OBJECT_FIELD_ID)) {
 
 					Assert.assertEquals(
 						expectedObjectFieldId,

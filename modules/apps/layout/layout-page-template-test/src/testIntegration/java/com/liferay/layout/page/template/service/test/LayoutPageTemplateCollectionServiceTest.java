@@ -18,7 +18,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -284,76 +283,62 @@ public class LayoutPageTemplateCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		Group group = GroupTestUtil.addGroup();
-
-		try {
-			LayoutPageTemplateCollection layoutPageTemplateCollection =
-				_layoutPageTemplateCollectionService.
-					addLayoutPageTemplateCollection(
-						group.getGroupId(),
-						LayoutPageTemplateConstants.
-							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-						"AA Page Template Collection", null,
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-						serviceContext);
-
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					group.getGroupId(),
+					_group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					"AB Page Template Collection", null,
+					"AA Page Template Collection", null,
 					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 					serviceContext);
 
+		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
+			_group.getGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			"AB Page Template Collection", null,
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, serviceContext);
+
+		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
+			_group.getGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			"AC Page Template Collection", null,
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, serviceContext);
+
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator =
+			new LayoutPageTemplateCollectionNameComparator(true);
+
+		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
 			_layoutPageTemplateCollectionService.
-				addLayoutPageTemplateCollection(
-					group.getGroupId(),
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					"AC Page Template Collection", null,
+				getLayoutPageTemplateCollections(
+					_group.getGroupId(),
 					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-					serviceContext);
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
 
-			OrderByComparator<LayoutPageTemplateCollection> orderByComparator =
-				new LayoutPageTemplateCollectionNameComparator(true);
+		LayoutPageTemplateCollection firstLayoutPageTemplateCollection =
+			layoutPageTemplateCollections.get(0);
 
-			List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
-				_layoutPageTemplateCollectionService.
-					getLayoutPageTemplateCollections(
-						group.getGroupId(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						orderByComparator);
+		Assert.assertEquals(
+			firstLayoutPageTemplateCollection, layoutPageTemplateCollection);
 
-			LayoutPageTemplateCollection firstLayoutPageTemplateCollection =
-				layoutPageTemplateCollections.get(0);
+		orderByComparator = new LayoutPageTemplateCollectionNameComparator(
+			false);
 
-			Assert.assertEquals(
-				firstLayoutPageTemplateCollection,
-				layoutPageTemplateCollection);
+		layoutPageTemplateCollections =
+			_layoutPageTemplateCollectionService.
+				getLayoutPageTemplateCollections(
+					_group.getGroupId(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
 
-			orderByComparator = new LayoutPageTemplateCollectionNameComparator(
-				false);
+		LayoutPageTemplateCollection lastLayoutPageTemplateCollection =
+			layoutPageTemplateCollections.get(
+				layoutPageTemplateCollections.size() - 1);
 
-			layoutPageTemplateCollections =
-				_layoutPageTemplateCollectionService.
-					getLayoutPageTemplateCollections(
-						group.getGroupId(),
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						orderByComparator);
-
-			LayoutPageTemplateCollection lastLayoutPageTemplateCollection =
-				layoutPageTemplateCollections.get(
-					layoutPageTemplateCollections.size() - 1);
-
-			Assert.assertEquals(
-				lastLayoutPageTemplateCollection, layoutPageTemplateCollection);
-		}
-		finally {
-			GroupLocalServiceUtil.deleteGroup(group);
-		}
+		Assert.assertEquals(
+			lastLayoutPageTemplateCollection, layoutPageTemplateCollection);
 	}
 
 	@Test
@@ -403,76 +388,62 @@ public class LayoutPageTemplateCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		Group group = GroupTestUtil.addGroup();
+		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
+			_group.getGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			"AA Fjord Collection", null,
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, serviceContext);
 
-		try {
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					group.getGroupId(),
+					_group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					"AA Fjord Collection", null,
+					"AB Theme Collection", null,
 					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
 					serviceContext);
 
-			LayoutPageTemplateCollection layoutPageTemplateCollection =
-				_layoutPageTemplateCollectionService.
-					addLayoutPageTemplateCollection(
-						group.getGroupId(),
-						LayoutPageTemplateConstants.
-							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-						"AB Theme Collection", null,
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-						serviceContext);
+		_layoutPageTemplateCollectionService.addLayoutPageTemplateCollection(
+			_group.getGroupId(),
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+			"AC Theme Collection", null,
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, serviceContext);
 
+		OrderByComparator<LayoutPageTemplateCollection> orderByComparator =
+			new LayoutPageTemplateCollectionNameComparator(true);
+
+		List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
 			_layoutPageTemplateCollectionService.
-				addLayoutPageTemplateCollection(
-					group.getGroupId(),
-					LayoutPageTemplateConstants.
-						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					"AC Theme Collection", null,
+				getLayoutPageTemplateCollections(
+					_group.getGroupId(), "Theme",
 					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-					serviceContext);
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
 
-			OrderByComparator<LayoutPageTemplateCollection> orderByComparator =
-				new LayoutPageTemplateCollectionNameComparator(true);
+		LayoutPageTemplateCollection firstLayoutPageTemplateCollection =
+			layoutPageTemplateCollections.get(0);
 
-			List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
-				_layoutPageTemplateCollectionService.
-					getLayoutPageTemplateCollections(
-						group.getGroupId(), "Theme",
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						orderByComparator);
+		Assert.assertEquals(
+			firstLayoutPageTemplateCollection, layoutPageTemplateCollection);
 
-			LayoutPageTemplateCollection firstLayoutPageTemplateCollection =
-				layoutPageTemplateCollections.get(0);
+		orderByComparator = new LayoutPageTemplateCollectionNameComparator(
+			false);
 
-			Assert.assertEquals(
-				firstLayoutPageTemplateCollection,
-				layoutPageTemplateCollection);
+		layoutPageTemplateCollections =
+			_layoutPageTemplateCollectionService.
+				getLayoutPageTemplateCollections(
+					_group.getGroupId(), "Theme",
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator);
 
-			orderByComparator = new LayoutPageTemplateCollectionNameComparator(
-				false);
+		LayoutPageTemplateCollection lastLayoutPageTemplateCollection =
+			layoutPageTemplateCollections.get(
+				layoutPageTemplateCollections.size() - 1);
 
-			layoutPageTemplateCollections =
-				_layoutPageTemplateCollectionService.
-					getLayoutPageTemplateCollections(
-						group.getGroupId(), "Theme",
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						orderByComparator);
-
-			LayoutPageTemplateCollection lastLayoutPageTemplateCollection =
-				layoutPageTemplateCollections.get(
-					layoutPageTemplateCollections.size() - 1);
-
-			Assert.assertEquals(
-				lastLayoutPageTemplateCollection, layoutPageTemplateCollection);
-		}
-		finally {
-			GroupLocalServiceUtil.deleteGroup(group);
-		}
+		Assert.assertEquals(
+			lastLayoutPageTemplateCollection, layoutPageTemplateCollection);
 	}
 
 	@Test
@@ -481,45 +452,38 @@ public class LayoutPageTemplateCollectionServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		Group group = GroupTestUtil.addGroup();
+		LayoutPageTemplateCollection layoutPageTemplateCollection1 =
+			_layoutPageTemplateCollectionService.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					"Layout Page Template Collection 1", null,
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					serviceContext);
 
-		try {
-			LayoutPageTemplateCollection layoutPageTemplateCollection1 =
-				_layoutPageTemplateCollectionService.
-					addLayoutPageTemplateCollection(
-						group.getGroupId(),
-						LayoutPageTemplateConstants.
-							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-						"Layout Page Template Collection 1", null,
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-						serviceContext);
+		LayoutPageTemplateCollection layoutPageTemplateCollection2 =
+			_layoutPageTemplateCollectionService.
+				addLayoutPageTemplateCollection(
+					_group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					"Layout Page Template Collection 2", null,
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					serviceContext);
 
-			LayoutPageTemplateCollection layoutPageTemplateCollection2 =
-				_layoutPageTemplateCollectionService.
-					addLayoutPageTemplateCollection(
-						group.getGroupId(),
-						LayoutPageTemplateConstants.
-							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-						"Layout Page Template Collection 2", null,
-						LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
-						serviceContext);
+		List<LayoutPageTemplateCollection> actualLayoutPageTemplateCollections =
+			_layoutPageTemplateCollectionService.
+				getLayoutPageTemplateCollections(
+					_group.getGroupId(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 2, 0);
 
-			List<LayoutPageTemplateCollection>
-				actualLayoutPageTemplateCollections =
-					_layoutPageTemplateCollectionService.
-						getLayoutPageTemplateCollections(
-							group.getGroupId(), 0, 2, 0);
-
-			Assert.assertTrue(
-				actualLayoutPageTemplateCollections.contains(
-					layoutPageTemplateCollection1));
-			Assert.assertTrue(
-				actualLayoutPageTemplateCollections.contains(
-					layoutPageTemplateCollection2));
-		}
-		finally {
-			GroupLocalServiceUtil.deleteGroup(group);
-		}
+		Assert.assertTrue(
+			actualLayoutPageTemplateCollections.contains(
+				layoutPageTemplateCollection1));
+		Assert.assertTrue(
+			actualLayoutPageTemplateCollections.contains(
+				layoutPageTemplateCollection2));
 	}
 
 	@Test

@@ -11,6 +11,11 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
@@ -22,6 +27,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -209,6 +215,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					fragmentRendererContext, httpServletRequest));
 		}
 		catch (Exception exception) {
+			_log.error("Unable to render frontend data set view", exception);
+
 			throw new IOException(exception);
 		}
 	}
@@ -257,7 +265,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			).put(
 				"filters",
 				_getFiltersJSONArray(
-					fdsViewObjectDefinition, fdsViewObjectEntry)
+					fdsViewObjectDefinition, fdsViewObjectEntry,
+					httpServletRequest)
 			).put(
 				"id", "FDS_" + fragmentRendererContext.getFragmentElementId()
 			).put(
@@ -331,16 +340,15 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			ObjectEntry fdsViewObjectEntry)
 		throws Exception {
 
-		List<Long> ids = ListUtil.toList(
-			ListUtil.fromString(
-				MapUtil.getString(
-					fdsViewObjectEntry.getProperties(), "fdsFieldsOrder"),
-				StringPool.COMMA),
-			Long::parseLong);
-
 		Set<ObjectEntry> fdsFieldObjectEntries = new TreeSet<>(
-			Comparator.comparing(
-				ObjectEntry::getId, Comparator.comparingInt(ids::indexOf)));
+			new ObjectEntryComparator(
+				ListUtil.toList(
+					ListUtil.fromString(
+						MapUtil.getString(
+							fdsViewObjectEntry.getProperties(),
+							"fdsFieldsOrder"),
+						StringPool.COMMA),
+					Long::parseLong)));
 
 		fdsFieldObjectEntries.addAll(
 			_getRelatedObjectEntries(
@@ -397,19 +405,19 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 	private JSONArray _getFiltersJSONArray(
 			ObjectDefinition fdsViewObjectDefinition,
-			ObjectEntry fdsViewObjectEntry)
+			ObjectEntry fdsViewObjectEntry,
+			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		List<Long> ids = ListUtil.toList(
-			ListUtil.fromString(
-				MapUtil.getString(
-					fdsViewObjectEntry.getProperties(), "fdsFiltersOrder"),
-				StringPool.COMMA),
-			Long::parseLong);
-
 		Set<ObjectEntry> fdsFilterObjectEntries = new TreeSet<>(
-			Comparator.comparing(
-				ObjectEntry::getId, Comparator.comparingInt(ids::indexOf)));
+			new ObjectEntryComparator(
+				ListUtil.toList(
+					ListUtil.fromString(
+						MapUtil.getString(
+							fdsViewObjectEntry.getProperties(),
+							"fdsFiltersOrder"),
+						StringPool.COMMA),
+					Long::parseLong)));
 
 		fdsFilterObjectEntries.addAll(
 			_getRelatedObjectEntries(
@@ -426,25 +434,81 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				Map<String, Object> properties =
 					fdsFilterObjectEntry.getProperties();
 
-				if (!Objects.equals(
-						MapUtil.getString(properties, "type"), "date")) {
+				String type = MapUtil.getString(properties, "type");
 
-					return null;
+				if (Objects.equals(type, "date")) {
+					return JSONUtil.put(
+						"entityFieldType", FDSEntityFieldTypes.DATE
+					).put(
+						"id", properties.get("fieldName")
+					).put(
+						"label", properties.get("name")
+					).put(
+						"max", _getDateJSONObject(properties.get("to"))
+					).put(
+						"min", _getDateJSONObject(properties.get("from"))
+					).put(
+						"type", "dateRange"
+					);
 				}
 
-				return JSONUtil.put(
-					"entityFieldType", properties.get("type")
-				).put(
-					"id", properties.get("fieldName")
-				).put(
-					"label", properties.get("name")
-				).put(
-					"max", _getDateJSONObject(properties.get("to"))
-				).put(
-					"min", _getDateJSONObject(properties.get("from"))
-				).put(
-					"type", "dateRange"
-				);
+				String listTypeDefinitionId = MapUtil.getString(
+					properties, "listTypeDefinitionId");
+
+				if (Validator.isNotNull(listTypeDefinitionId)) {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)httpServletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					ListTypeDefinition listTypeDefinition =
+						_listTypeDefinitionLocalService.
+							getListTypeDefinitionByExternalReferenceCode(
+								listTypeDefinitionId,
+								themeDisplay.getCompanyId());
+
+					List<ListTypeEntry> listTypeEntries =
+						_listTypeEntryLocalService.getListTypeEntries(
+							listTypeDefinition.getListTypeDefinitionId());
+
+					return JSONUtil.put(
+						"autocompleteEnabled", true
+					).put(
+						"entityFieldType", FDSEntityFieldTypes.STRING
+					).put(
+						"id", properties.get("fieldName")
+					).put(
+						"items",
+						JSONUtil.toJSONArray(
+							listTypeEntries,
+							listTypeEntry -> JSONUtil.put(
+								"key", listTypeEntry.getKey()
+							).put(
+								"label",
+								listTypeEntry.getName(themeDisplay.getLocale())
+							).put(
+								"value", listTypeEntry.getKey()
+							))
+					).put(
+						"label", properties.get("name")
+					).put(
+						"multiple", properties.get("multiple")
+					).put(
+						"selectedData",
+						JSONUtil.put(
+							"exclude", false
+						).put(
+							"selectedItems",
+							_getSelectedItemsJSONArray(
+								listTypeEntries, themeDisplay.getLocale(),
+								MapUtil.getString(
+									properties, "preselectedValues"))
+						)
+					).put(
+						"type", "selection"
+					);
+				}
+
+				return null;
 			});
 	}
 
@@ -511,6 +575,36 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return relatedObjectEntriesPage.getItems();
 	}
 
+	private JSONArray _getSelectedItemsJSONArray(
+			List<ListTypeEntry> listTypeEntries, Locale locale,
+			String preselectedValues)
+		throws JSONException {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		JSONArray preselectedValuesJSONArray = _jsonFactory.createJSONArray(
+			preselectedValues);
+
+		for (int i = 0; i < preselectedValuesJSONArray.length(); i++) {
+			String key = preselectedValuesJSONArray.getString(i);
+
+			for (ListTypeEntry listTypeEntry : listTypeEntries) {
+				if (Objects.equals(listTypeEntry.getKey(), key)) {
+					jsonArray.put(
+						JSONUtil.put(
+							"label", listTypeEntry.getName(locale)
+						).put(
+							"value", listTypeEntry.getKey()
+						));
+
+					break;
+				}
+			}
+		}
+
+		return jsonArray;
+	}
+
 	private String _interpolateURL(
 		String apiUrl, HttpServletRequest httpServletRequest) {
 
@@ -549,6 +643,12 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	private Language _language;
 
 	@Reference
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
@@ -556,5 +656,39 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private ReactRenderer _reactRenderer;
+
+	private static class ObjectEntryComparator
+		implements Comparator<ObjectEntry> {
+
+		public ObjectEntryComparator(List<Long> ids) {
+			_ids = ids;
+		}
+
+		@Override
+		public int compare(ObjectEntry objectEntry1, ObjectEntry objectEntry2) {
+			long id1 = objectEntry1.getId();
+			long id2 = objectEntry2.getId();
+
+			int index1 = _ids.indexOf(id1);
+			int index2 = _ids.indexOf(id2);
+
+			if ((index1 == -1) && (index2 == -1)) {
+				return Long.compare(id1, id2);
+			}
+
+			if (index1 == -1) {
+				return 1;
+			}
+
+			if (index2 == -1) {
+				return -1;
+			}
+
+			return Long.compare(index1, index2);
+		}
+
+		private final List<Long> _ids;
+
+	}
 
 }

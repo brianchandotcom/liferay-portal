@@ -11,6 +11,7 @@ interface ObjectManagementToolbarProps {
 	hasPublishObjectPermission: boolean;
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
+	isRootDescendantNode: boolean;
 	label: string;
 	objectDefinitionId: number;
 	onSubmit: (draft: boolean) => void;
@@ -25,6 +26,7 @@ export default function ObjectManagementToolbar({
 	hasPublishObjectPermission,
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
+	isRootDescendantNode,
 	label,
 	objectDefinitionId,
 	onSubmit,

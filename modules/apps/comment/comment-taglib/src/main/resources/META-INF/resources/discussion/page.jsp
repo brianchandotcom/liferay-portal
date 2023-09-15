@@ -125,7 +125,7 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 											<clay:content-col
 												cssClass="lfr-discussion-details"
 											>
-												<liferay-ui:user-portrait
+												<liferay-user:user-portrait
 													user="<%= user %>"
 												/>
 											</clay:content-col>

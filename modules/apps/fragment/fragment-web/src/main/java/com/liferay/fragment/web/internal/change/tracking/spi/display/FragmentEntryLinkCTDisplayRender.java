@@ -64,6 +64,11 @@ public class FragmentEntryLinkCTDisplayRender
 	}
 
 	@Override
+	public boolean isMovable(FragmentEntryLink fragmentEntryLink) {
+		return false;
+	}
+
+	@Override
 	public String renderPreview(
 			DisplayContext<FragmentEntryLink> displayContext)
 		throws Exception {

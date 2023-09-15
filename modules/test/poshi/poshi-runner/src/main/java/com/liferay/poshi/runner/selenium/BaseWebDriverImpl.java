@@ -212,8 +212,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void assertAccessible() throws Exception {
-		assertElementAccessible(null);
+	public void assertAccessible(List<String> ignorableImpacts)
+		throws Exception {
+
+		assertElementAccessible(null, ignorableImpacts);
 	}
 
 	@Override
@@ -341,7 +343,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void assertElementAccessible(String locator) throws Exception {
+	public void assertElementAccessible(
+			String locator, List<String> ignorableImpacts)
+		throws Exception {
+
 		AxeBuilder axeBuilder = new AxeBuilder();
 
 		axeBuilder.withTags(
@@ -359,11 +364,30 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		List<Rule> violations = results.getViolations();
 
-		if (!violations.isEmpty()) {
-			AxeReporter.getReadableAxeResults("analyze", this, violations);
+		if (violations.isEmpty()) {
+			System.out.println("No accessiblity violations were found");
 
-			throw new Exception(AxeReporter.getAxeResultString());
+			return;
 		}
+
+		List<Rule> rules = new ArrayList<>();
+
+		if (ignorableImpacts == null) {
+			rules.addAll(violations);
+		}
+		else {
+			for (Rule violation : violations) {
+				if (ignorableImpacts.contains(violation.getImpact())) {
+					continue;
+				}
+
+				rules.add(violation);
+			}
+		}
+
+		AxeReporter.getReadableAxeResults("analyze", this, rules);
+
+		throw new Exception(AxeReporter.getAxeResultString());
 	}
 
 	@Override

@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import ClayNavigationBar from '@clayui/navigation-bar';
 import ClayTabs from '@clayui/tabs';
 import {openToast} from 'frontend-js-web';
 import {PropTypes} from 'prop-types';
@@ -12,7 +14,7 @@ import React, {Component} from 'react';
 import ThemeContext from '../ThemeContext.es';
 import FormValueDebugger from '../utils/FormValueDebugger.es';
 import {fetchDocuments, fetchResponse} from '../utils/api.es';
-import {DEFAULT_DELTA} from '../utils/constants.es';
+import {DEFAULT_DELTA, SCOPE_TYPES} from '../utils/constants.es';
 import {
 	isNil,
 	move,
@@ -23,10 +25,16 @@ import {
 import PageToolbar from './PageToolbar.es';
 import Alias from './alias/Alias.es';
 import List from './list/List.es';
+import Scope from './scope/Scope.es';
 import ErrorBoundary from './shared/ErrorBoundary.es';
 import HiddenInputs from './shared/HiddenInputs.es';
 
 const DELTA = DEFAULT_DELTA.label;
+
+const QUERY_TABS = {
+	ALIAS: 'alias',
+	SCOPE: 'scope',
+};
 
 class ResultRankingsForm extends Component {
 	static contextType = ThemeContext;
@@ -38,7 +46,9 @@ class ResultRankingsForm extends Component {
 		fetchDocumentsVisibleUrl: PropTypes.string.isRequired,
 		formName: PropTypes.string.isRequired,
 		initialAliases: PropTypes.arrayOf(String),
+		initialGroupExternalReferenceCode: PropTypes.string,
 		initialInactive: PropTypes.bool,
+		initialSXPBlueprintExternalReferenceCode: PropTypes.string,
 		resultsRankingUid: PropTypes.string,
 		searchQuery: PropTypes.string.isRequired,
 		validateFormUrl: PropTypes.string.isRequired,
@@ -55,6 +65,12 @@ class ResultRankingsForm extends Component {
 		 * @type {number}
 		 */
 		activeTabKeyValue: 0,
+
+		/**
+		 * Number of the active tab for alias or scope.
+		 * @type {String}
+		 */
+		activeTabQueryValue: QUERY_TABS.ALIAS,
 
 		/**
 		 * A list of strings of aliases.
@@ -139,6 +155,25 @@ class ResultRankingsForm extends Component {
 		resultIdsPinned: [],
 
 		/**
+		 * Scope of the Result Ranking. Includes type of scope (everywhere,
+		 * sites, blueprint) + value + touched, if applicable
+		 * @type {Object}
+		 */
+		scope: this.props.initialGroupExternalReferenceCode
+			? {
+					type: SCOPE_TYPES.SITE,
+					value: this.props.initialGroupExternalReferenceCode,
+			  }
+			: this.props.initialSXPBlueprintExternalReferenceCode
+			? {
+					type: SCOPE_TYPES.SXP_BLUEPRINT,
+					value: this.props.initialSXPBlueprintExternalReferenceCode,
+			  }
+			: {
+					type: SCOPE_TYPES.EVERYWHERE,
+			  },
+
+		/**
 		 * Toggles on and off the debugger form.
 		 * @type {boolean}
 		 */
@@ -182,6 +217,17 @@ class ResultRankingsForm extends Component {
 	}
 
 	/**
+	 * Shapes the scope data into what is expected for form or endpoint
+	 * submission.
+	 */
+	_formatScopeSubmission = (scope, prefix = '') =>
+		scope.type === SCOPE_TYPES.EVERYWHERE
+			? {}
+			: scope.type === SCOPE_TYPES.SITE
+			? {[`${prefix}groupExternalReferenceCode`]: scope.value}
+			: {[`${prefix}sxpBlueprintExternalReferenceCode`]: scope.value};
+
+	/**
 	 * Gets the added changes in hidden from the initial and current states.
 	 */
 	_getHiddenAdded = () =>
@@ -220,6 +266,18 @@ class ResultRankingsForm extends Component {
 		this.setState((state) => ({
 			inactive: !state.inactive,
 		}));
+	};
+
+	/**
+	 * Handles what happens when switching the active tab under query terms.
+	 * Changes the state between alias or scope.
+	 */
+	_handleActiveTabQueryValueChange = (activeTabQueryValue) => (event) => {
+		event.preventDefault();
+
+		this.setState({
+			activeTabQueryValue,
+		});
 	};
 
 	/**
@@ -280,6 +338,7 @@ class ResultRankingsForm extends Component {
 			[`${namespace}from`]: DELTA * this.state.visibleCur,
 			[`${namespace}keywords`]: this.props.searchQuery,
 			[`${namespace}size`]: DELTA,
+			...this._formatScopeSubmission(this.state.scope, namespace),
 		})
 			.then(({items, total}) => {
 				const fetchedItems = items || {};
@@ -382,6 +441,7 @@ class ResultRankingsForm extends Component {
 			[`${namespace}from`]: DELTA * this.state.hiddenCur,
 			[`${namespace}keywords`]: this.props.searchQuery,
 			[`${namespace}size`]: DELTA,
+			...this._formatScopeSubmission(this.state.scope, namespace),
 		})
 			.then(({items, total}) => {
 				const fetchedItems = items || {};
@@ -474,11 +534,28 @@ class ResultRankingsForm extends Component {
 	_handlePublish = () => {
 		const {namespace} = this.context;
 
+		if (
+			this.state.scope.type !== SCOPE_TYPES.EVERYWHERE &&
+			!this.state.scope.value
+		) {
+			this._handleScopeChange({touched: true});
+
+			openToast({
+				message: Liferay.Language.get(
+					'please-fill-out-all-required-fields'
+				),
+				type: 'danger',
+			});
+
+			return;
+		}
+
 		fetchResponse(this.props.validateFormUrl, {
 			[`${namespace}aliases`]: this.state.aliases,
 			[`${namespace}inactive`]: this.state.inactive,
 			[`${namespace}keywords`]: this.props.searchQuery,
 			[`${namespace}resultsRankingUid`]: this.props.resultsRankingUid,
+			...this._formatScopeSubmission(this.state.scope, namespace),
 		}).then((response) => {
 			if (response.errors.length) {
 				response.errors.forEach((message) => {
@@ -501,6 +578,45 @@ class ResultRankingsForm extends Component {
 			}
 		});
 	};
+
+	/**
+	 * Handles updating the results of search. This gets called when changing
+	 * the scope.
+	 */
+	_handleResultsUpdate = () => {
+		this.setState({
+			dataLoadIndex: {
+				pinned: {
+					end: 0,
+					start: 0,
+				},
+			},
+			dataMap: {},
+			hiddenCur: 1,
+			resultIds: [],
+			resultIdsHidden: [],
+			resultIdsPinned: [],
+			visibleCur: 1,
+		});
+
+		this._initialResultIdsHidden = [];
+		this._initialResultIdsPinned = [];
+
+		this._handleFetchResultsDataVisible();
+		this._handleFetchResultsDataHidden();
+	};
+
+	/**
+	 * Handles changing any part (type, value, touched) of the scope value.
+	 * @param {Object} item
+	 */
+	_handleScopeChange = (item) =>
+		this.setState((state) => ({
+			scope: {
+				...state.scope,
+				...item,
+			},
+		}));
 
 	/**
 	 * Handles updating the alias list.
@@ -643,10 +759,17 @@ class ResultRankingsForm extends Component {
 	render() {
 		const {namespace} = this.context;
 
-		const {cancelUrl, fetchDocumentsSearchUrl, searchQuery} = this.props;
+		const {
+			cancelUrl,
+			fetchDocumentsSearchUrl,
+			initialGroupExternalReferenceCode,
+			initialSXPBlueprintExternalReferenceCode,
+			searchQuery,
+		} = this.props;
 
 		const {
 			activeTabKeyValue,
+			activeTabQueryValue,
 			aliases,
 			dataLoadIndex,
 			dataLoadingHidden,
@@ -658,6 +781,7 @@ class ResultRankingsForm extends Component {
 			inactive,
 			resultIdsHidden,
 			resultIdsPinned,
+			scope,
 			showDebugger,
 			totalResultsHiddenCount,
 			totalResultsVisibleCount,
@@ -677,6 +801,7 @@ class ResultRankingsForm extends Component {
 						pinnedIdsEndIndex: dataLoadIndex.pinned.end,
 						pinnedIdsStartIndex: dataLoadIndex.pinned.start,
 						workflowAction,
+						...this._formatScopeSubmission(scope),
 					}}
 				/>
 
@@ -696,15 +821,98 @@ class ResultRankingsForm extends Component {
 
 						<h2 className="sheet-title">{`${searchQuery}`}</h2>
 
-						<ErrorBoundary
-							component={Liferay.Language.get('aliases')}
-							toast
-						>
-							<Alias
-								keywords={aliases}
-								onChange={this._handleUpdateAliases}
-							/>
-						</ErrorBoundary>
+						{Liferay.FeatureFlags['LPS-157988'] ||
+						Liferay.FeatureFlags['LPS-159650'] ? (
+							<>
+								<ClayNavigationBar
+									triggerLabel={activeTabQueryValue}
+								>
+									<ClayNavigationBar.Item
+										active={
+											activeTabQueryValue ===
+											QUERY_TABS.ALIAS
+										}
+									>
+										<ClayButton
+											onClick={this._handleActiveTabQueryValueChange(
+												QUERY_TABS.ALIAS
+											)}
+										>
+											{Liferay.Language.get('alias')}
+										</ClayButton>
+									</ClayNavigationBar.Item>
+
+									<ClayNavigationBar.Item
+										active={
+											activeTabQueryValue ===
+											QUERY_TABS.SCOPE
+										}
+									>
+										<ClayButton
+											href="#"
+											onClick={this._handleActiveTabQueryValueChange(
+												QUERY_TABS.SCOPE
+											)}
+										>
+											{Liferay.Language.get('scope')}
+										</ClayButton>
+									</ClayNavigationBar.Item>
+								</ClayNavigationBar>
+
+								<ClayLayout.ContainerFluid
+									className="c-pb-0"
+									view
+								>
+									{activeTabQueryValue ===
+									QUERY_TABS.SCOPE ? (
+										<Scope
+											disabled={
+												!!(
+													initialGroupExternalReferenceCode ||
+													initialSXPBlueprintExternalReferenceCode
+												)
+											}
+											initialGroupExternalReferenceCode={
+												initialGroupExternalReferenceCode
+											}
+											initialSxpBlueprintExternalReferenceCode={
+												initialSXPBlueprintExternalReferenceCode
+											}
+											onChange={this._handleScopeChange}
+											onResultsUpdate={
+												this._handleResultsUpdate
+											}
+											selectedType={scope.type}
+											touched={scope.touched}
+										/>
+									) : (
+										<ErrorBoundary
+											component={Liferay.Language.get(
+												'aliases'
+											)}
+											toast
+										>
+											<Alias
+												keywords={aliases}
+												onChange={
+													this._handleUpdateAliases
+												}
+											/>
+										</ErrorBoundary>
+									)}
+								</ClayLayout.ContainerFluid>
+							</>
+						) : (
+							<ErrorBoundary
+								component={Liferay.Language.get('aliases')}
+								toast
+							>
+								<Alias
+									keywords={aliases}
+									onChange={this._handleUpdateAliases}
+								/>
+							</ErrorBoundary>
+						)}
 					</ClayLayout.Sheet>
 
 					<ClayLayout.Sheet className="form-section-body">
@@ -835,6 +1043,13 @@ class ResultRankingsForm extends Component {
 							{
 								name: `${namespace}workflowAction`,
 								value: workflowAction,
+							},
+							scope.type !== SCOPE_TYPES.EVERYWHERE && {
+								name:
+									scope.type === SCOPE_TYPES.SITE
+										? `${namespace}groupExternalReferenceCode`
+										: `${namespace}sxpBlueprintExternalReferenceCode`,
+								value: scope.value,
 							},
 						]}
 					/>

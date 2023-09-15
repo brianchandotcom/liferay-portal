@@ -13,7 +13,10 @@ import javax.servlet.jsp.tagext.VariableInfo;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.user.taglib.servlet.taglib.UserDisplayTei}
  */
+@Deprecated
 public class UserDisplayTei extends TagExtraInfo {
 
 	@Override

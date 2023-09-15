@@ -69,7 +69,7 @@ public class SharepointRepositoryAuthorizationCapability
 	@Override
 	public boolean hasCustomRedirectFlow(
 			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws IOException, PortalException {
+		throws PortalException {
 
 		if (_hasAuthorizationGrant(
 				PortalUtil.getHttpServletRequest(portletRequest))) {

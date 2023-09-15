@@ -5,8 +5,7 @@
 
 package com.liferay.feature.flag.web.internal.jaxrs.application;
 
-import com.liferay.feature.flag.web.internal.company.feature.flags.CompanyFeatureFlagsProvider;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.feature.flag.web.internal.feature.flag.FeatureFlagsBagProvider;
 
 import java.util.Collections;
 import java.util.Set;
@@ -44,10 +43,10 @@ public class FeatureFlagApplication extends Application {
 	public Response confirm(
 		@Context HttpServletRequest httpServletRequest,
 		@Context HttpServletResponse httpServletResponse,
+		@FormParam("companyId") long companyId,
 		@FormParam("enabled") boolean enabled, @FormParam("key") String key) {
 
-		_companyFeatureFlagsProvider.setEnabled(
-			_portal.getCompanyId(httpServletRequest), key, enabled);
+		_featureFlagsBagProvider.setEnabled(companyId, key, enabled);
 
 		return Response.ok(
 		).build();
@@ -58,9 +57,6 @@ public class FeatureFlagApplication extends Application {
 	}
 
 	@Reference
-	private CompanyFeatureFlagsProvider _companyFeatureFlagsProvider;
-
-	@Reference
-	private Portal _portal;
+	private FeatureFlagsBagProvider _featureFlagsBagProvider;
 
 }

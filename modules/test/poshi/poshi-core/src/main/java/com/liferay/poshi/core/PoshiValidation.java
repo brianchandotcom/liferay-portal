@@ -1034,18 +1034,11 @@ public class PoshiValidation {
 
 		validateHasNoAttributes(poshiElement);
 
-		String fileName = filePath.substring(filePath.lastIndexOf(".") + 1);
-
 		List<PoshiElement> childPoshiElements = poshiElement.toPoshiElements(
 			poshiElement.elements());
 
 		List<String> conditionTags = Arrays.asList(
 			"and", "condition", "contains", "equals", "isset", "not", "or");
-
-		if (fileName.equals("function")) {
-			conditionTags = Arrays.asList(
-				"and", "condition", "contains", "not", "or");
-		}
 
 		validateElseElement(poshiElement);
 		validateThenElement(poshiElement);

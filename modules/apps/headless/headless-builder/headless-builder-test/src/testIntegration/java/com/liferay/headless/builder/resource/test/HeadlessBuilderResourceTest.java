@@ -223,6 +223,40 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 					).has(
 						"/c/" + _BASE_URL_1
 					));
+
+				String externalReferenceCode = RandomTestUtil.randomString();
+
+				assertSuccessfulHttpCode(
+					JSONUtil.put(
+						"applicationStatus", "published"
+					).put(
+						"baseURL", _BASE_URL_1
+					).put(
+						"externalReferenceCode", externalReferenceCode
+					).put(
+						"title", "test-app"
+					).toString(),
+					"headless-builder/applications", Http.Method.POST);
+
+				Assert.assertTrue(
+					HTTPTestUtil.invokeToJSONObject(
+						null, "openapi", Http.Method.GET
+					).has(
+						"/c/" + _BASE_URL_1
+					));
+
+				assertSuccessfulHttpCode(
+					null,
+					"headless-builder/applications/by-external-reference-code" +
+						"/" + externalReferenceCode,
+					Http.Method.DELETE);
+
+				Assert.assertFalse(
+					HTTPTestUtil.invokeToJSONObject(
+						null, "openapi", Http.Method.GET
+					).has(
+						"/c/" + _BASE_URL_1
+					));
 			}
 		);
 	}

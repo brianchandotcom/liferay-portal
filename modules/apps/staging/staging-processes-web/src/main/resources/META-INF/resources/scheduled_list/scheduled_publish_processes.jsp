@@ -31,10 +31,7 @@ ScheduledPublishProcessesDisplayContext scheduledPublishProcessesDisplayContext 
 				ExportImportConfiguration exportImportConfiguration = ExportImportConfigurationLocalServiceUtil.getExportImportConfiguration(GetterUtil.getLong(message.getPayload()));
 				%>
 
-				<liferay-ui:user-display
-					displayStyle="3"
-					showUserDetails="<%= false %>"
-					showUserName="<%= false %>"
+				<liferay-user:user-portrait
 					userId="<%= exportImportConfiguration.getUserId() %>"
 				/>
 			</liferay-ui:search-container-column-text>

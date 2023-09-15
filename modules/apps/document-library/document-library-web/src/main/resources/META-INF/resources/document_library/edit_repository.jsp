@@ -61,7 +61,7 @@ renderResponse.setTitle(headerTitle);
 							<aui:select id="repositoryTypes" label="repository-type" name="className">
 
 								<%
-								for (RepositoryClassDefinition repositoryClassDefinition : RepositoryClassDefinitionCatalogUtil.getExternalRepositoryClassDefinitions()) {
+								for (RepositoryClassDefinition repositoryClassDefinition : RepositoryClassDefinitionCatalogUtil.getExternalRepositoryClassDefinitions(themeDisplay.getCompanyId())) {
 								%>
 
 									<aui:option label="<%= HtmlUtil.escape(repositoryClassDefinition.getRepositoryTypeLabel(locale)) %>" value="<%= HtmlUtil.escapeAttribute(repositoryClassDefinition.getClassName()) %>" />
@@ -77,7 +77,7 @@ renderResponse.setTitle(headerTitle);
 						<c:otherwise>
 
 							<%
-							RepositoryClassDefinition repositoryClassDefinition = RepositoryClassDefinitionCatalogUtil.getRepositoryClassDefinition(repository.getClassName());
+							RepositoryClassDefinition repositoryClassDefinition = RepositoryClassDefinitionCatalogUtil.getRepositoryClassDefinition(repository.getCompanyId(), repository.getClassName());
 							%>
 
 							<div class="repository-settings-display">
@@ -135,7 +135,7 @@ renderResponse.setTitle(headerTitle);
 	<div class="hide" id="<portlet:namespace />settingsSupported">
 
 		<%
-		for (RepositoryClassDefinition repositoryClassDefinition : RepositoryClassDefinitionCatalogUtil.getExternalRepositoryClassDefinitions()) {
+		for (RepositoryClassDefinition repositoryClassDefinition : RepositoryClassDefinitionCatalogUtil.getExternalRepositoryClassDefinitions(themeDisplay.getCompanyId())) {
 			try {
 		%>
 

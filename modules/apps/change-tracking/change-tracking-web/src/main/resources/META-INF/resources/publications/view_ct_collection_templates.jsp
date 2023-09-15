@@ -40,7 +40,7 @@ portletDisplay.setShowBackIcon(true);
 				<c:when test='<%= Objects.equals(publicationsDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-text>
 						<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(ctCollectionTemplate.getUserName()) %>">
-							<liferay-ui:user-portrait
+							<liferay-user:user-portrait
 								userId="<%= ctCollectionTemplate.getUserId() %>"
 							/>
 						</span>
@@ -125,7 +125,7 @@ portletDisplay.setShowBackIcon(true);
 						name="owner"
 					>
 						<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(ctCollectionTemplate.getUserName()) %>">
-							<liferay-ui:user-portrait
+							<liferay-user:user-portrait
 								userId="<%= ctCollectionTemplate.getUserId() %>"
 							/>
 						</span>

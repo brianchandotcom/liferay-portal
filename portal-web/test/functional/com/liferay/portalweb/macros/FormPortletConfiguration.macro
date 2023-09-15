@@ -45,6 +45,16 @@ definition {
 			value1 = "Displaying Form: ${formName} (Modified)");
 	}
 
+	macro selectFormOnAPage {
+		Navigator.gotoPage(pageName = ${pageName});
+
+		FormPortletNavigator.gotoSelectForm();
+
+		FormPortletConfiguration.selectForm(formTitle = ${formTitle});
+
+		PortletEntry.save();
+	}
+
 	macro viewTranslationLanguage {
 		AssertElementPresent(
 			key_language = ${language},

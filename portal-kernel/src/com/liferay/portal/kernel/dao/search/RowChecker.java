@@ -269,12 +269,13 @@ public class RowChecker {
 			sb.append("checked ");
 		}
 
+		sb.append("class=\"");
+		sb.append(_cssClass);
+
 		if (disabled) {
 			sb.append("disabled ");
 		}
 
-		sb.append("class=\"");
-		sb.append(_cssClass);
 		sb.append("\" name=\"");
 		sb.append(name);
 		sb.append("\" title=\"");

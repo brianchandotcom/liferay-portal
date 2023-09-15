@@ -211,7 +211,8 @@ public class ObjectValidationRuleLocalServiceImpl
 			ObjectValidationRuleSetting objectValidationRuleSetting =
 				_objectValidationRuleSettingPersistence.fetchByOVRI_N_V(
 					objectValidationRule.getObjectValidationRuleId(),
-					ObjectValidationRuleSettingConstants.NAME_OBJECT_FIELD_ID,
+					ObjectValidationRuleSettingConstants.
+						NAME_OUTPUT_OBJECT_FIELD_ID,
 					String.valueOf(objectField.getObjectFieldId()));
 
 			if (objectValidationRuleSetting == null) {
@@ -223,7 +224,8 @@ public class ObjectValidationRuleLocalServiceImpl
 
 			int count = _objectValidationRuleSettingPersistence.countByOVRI_N(
 				objectValidationRule.getObjectValidationRuleId(),
-				ObjectValidationRuleSettingConstants.NAME_OBJECT_FIELD_ID);
+				ObjectValidationRuleSettingConstants.
+					NAME_OUTPUT_OBJECT_FIELD_ID);
 
 			if (count == 0) {
 				objectValidationRule.setOutputType(
@@ -377,7 +379,7 @@ public class ObjectValidationRuleLocalServiceImpl
 						_objectValidationRuleSettingPersistence.findByOVRI_N(
 							objectValidationRule.getObjectValidationRuleId(),
 							ObjectValidationRuleSettingConstants.
-								NAME_OBJECT_FIELD_ID)) {
+								NAME_OUTPUT_OBJECT_FIELD_ID)) {
 
 					ObjectField objectField =
 						_objectFieldPersistence.fetchByPrimaryKey(
@@ -529,7 +531,8 @@ public class ObjectValidationRuleLocalServiceImpl
 
 			throw new ObjectValidationRuleSettingNameException.
 				MissingRequiredName(
-					ObjectValidationRuleSettingConstants.NAME_OBJECT_FIELD_ID);
+					ObjectValidationRuleSettingConstants.
+						NAME_OUTPUT_OBJECT_FIELD_ID);
 		}
 
 		for (ObjectValidationRuleSetting objectValidationRuleSetting :
@@ -541,7 +544,7 @@ public class ObjectValidationRuleLocalServiceImpl
 						OUTPUT_TYPE_FULL_VALIDATION) ||
 				!objectValidationRuleSetting.compareName(
 					ObjectValidationRuleSettingConstants.
-						NAME_OBJECT_FIELD_ID)) {
+						NAME_OUTPUT_OBJECT_FIELD_ID)) {
 
 				throw new ObjectValidationRuleSettingNameException.
 					NotAllowedName(objectValidationRuleSetting.getName());

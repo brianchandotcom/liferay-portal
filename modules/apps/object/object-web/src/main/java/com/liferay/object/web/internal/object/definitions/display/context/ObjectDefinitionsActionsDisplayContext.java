@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -219,10 +218,14 @@ public class ObjectDefinitionsActionsDisplayContext
 				_objectActionTriggerRegistry.getObjectActionTriggers(
 					objectDefinition.getClassName())) {
 
-			if (Objects.equals(
+			if ((StringUtil.equals(
+					objectActionTrigger.getKey(),
+					ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE) &&
+				 !objectDefinition.isRootNode()) ||
+				(StringUtil.equals(
 					objectActionTrigger.getKey(),
 					ObjectActionTriggerConstants.KEY_STANDALONE) &&
-				objectDefinition.isUnmodifiableSystemObject()) {
+				 objectDefinition.isUnmodifiableSystemObject())) {
 
 				continue;
 			}

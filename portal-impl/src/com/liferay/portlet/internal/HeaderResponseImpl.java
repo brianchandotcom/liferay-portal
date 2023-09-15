@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.xml.StAXReaderUtil;
+import com.liferay.portal.kernel.xml.StAXReaderUtil;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;

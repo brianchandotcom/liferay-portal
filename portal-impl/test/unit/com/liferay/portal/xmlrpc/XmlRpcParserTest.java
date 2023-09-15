@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.xmlrpc.Fault;
 import com.liferay.portal.kernel.xmlrpc.Response;
 import com.liferay.portal.kernel.xmlrpc.Success;
-import com.liferay.portal.kernel.xmlrpc.XmlRpcUtil;
+import com.liferay.portal.kernel.xmlrpc.XmlRpcParser;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -41,15 +41,11 @@ public class XmlRpcParserTest {
 
 		secureXMLFactoryProviderUtil.setSecureXMLFactoryProvider(
 			new SecureXMLFactoryProviderImpl());
-
-		XmlRpcUtil xmlRpcUtil = new XmlRpcUtil();
-
-		xmlRpcUtil.setXmlRpc(new XmlRpcImpl());
 	}
 
 	@Test
 	public void testFaultResponseGenerator() throws Exception {
-		Fault fault = new FaultImpl(1234, "Fault");
+		Fault fault = new Fault(1234, "Fault");
 
 		Response response = XmlRpcParser.parseResponse(fault.toXml());
 
@@ -125,7 +121,7 @@ public class XmlRpcParserTest {
 
 	@Test
 	public void testSuccessResponseGenerator() throws Exception {
-		Success success = new SuccessImpl("Success");
+		Success success = new Success("Success");
 
 		Response response = XmlRpcParser.parseResponse(success.toXml());
 

@@ -10,3 +10,6 @@ export const HEADERS = new Headers({
 	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 	'Content-Type': 'application/json',
 });
+
+export const NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE =
+	'outputObjectFieldExternalReferenceCode';

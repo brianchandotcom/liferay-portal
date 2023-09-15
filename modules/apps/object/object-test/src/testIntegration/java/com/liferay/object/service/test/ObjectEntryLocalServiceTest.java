@@ -847,7 +847,8 @@ public class ObjectEntryLocalServiceTest {
 			Collections.singletonList(
 				new ObjectValidationRuleSettingBuilder(
 				).name(
-					ObjectValidationRuleSettingConstants.NAME_OBJECT_FIELD_ID
+					ObjectValidationRuleSettingConstants.
+						NAME_OUTPUT_OBJECT_FIELD_ID
 				).value(
 					String.valueOf(objectField.getObjectFieldId())
 				).build()));

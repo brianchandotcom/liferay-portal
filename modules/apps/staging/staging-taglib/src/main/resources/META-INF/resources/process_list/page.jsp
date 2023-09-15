@@ -40,7 +40,7 @@ ProcessListDisplayContext processListDisplayContext = new ProcessListDisplayCont
 					<liferay-ui:search-container-column-text
 						valign="top"
 					>
-						<liferay-ui:user-portrait
+						<liferay-user:user-portrait
 							userId="<%= backgroundTask.getUserId() %>"
 						/>
 					</liferay-ui:search-container-column-text>
@@ -64,7 +64,7 @@ ProcessListDisplayContext processListDisplayContext = new ProcessListDisplayCont
 						cssClass="table-cell-expand table-cell-minw-200 table-title"
 						name="title"
 					>
-						<liferay-ui:user-portrait
+						<liferay-user:user-portrait
 							userId="<%= backgroundTask.getUserId() %>"
 						/>
 

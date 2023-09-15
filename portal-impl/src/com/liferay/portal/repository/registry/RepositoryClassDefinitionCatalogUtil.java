@@ -5,9 +5,6 @@
 
 package com.liferay.portal.repository.registry;
 
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.repository.util.ExternalRepositoryFactory;
-
 import java.util.Collection;
 
 /**
@@ -16,44 +13,24 @@ import java.util.Collection;
 public class RepositoryClassDefinitionCatalogUtil {
 
 	public static Iterable<RepositoryClassDefinition>
-		getExternalRepositoryClassDefinitions() {
+		getExternalRepositoryClassDefinitions(long companyId) {
 
 		return _repositoryClassDefinitionCatalog.
-			getExternalRepositoryClassDefinitions();
+			getExternalRepositoryClassDefinitions(companyId);
 	}
 
-	public static Collection<String> getExternalRepositoryClassNames() {
+	public static Collection<String> getExternalRepositoryClassNames(
+		long companyId) {
+
 		return _repositoryClassDefinitionCatalog.
-			getExternalRepositoryClassNames();
+			getExternalRepositoryClassNames(companyId);
 	}
 
 	public static RepositoryClassDefinition getRepositoryClassDefinition(
-		String repositoryTypeKey) {
+		long companyId, String repositoryTypeKey) {
 
 		return _repositoryClassDefinitionCatalog.getRepositoryClassDefinition(
-			repositoryTypeKey);
-	}
-
-	public static RepositoryClassDefinitionCatalog
-		getRepositoryClassDefinitionCatalog() {
-
-		return _repositoryClassDefinitionCatalog;
-	}
-
-	public static void registerLegacyExternalRepositoryFactory(
-		String className, ExternalRepositoryFactory externalRepositoryFactory,
-		ResourceBundleLoader resourceBundleLoader) {
-
-		_repositoryClassDefinitionCatalog.
-			registerLegacyExternalRepositoryFactory(
-				className, externalRepositoryFactory, resourceBundleLoader);
-	}
-
-	public static void unregisterLegacyExternalRepositoryFactory(
-		String className) {
-
-		_repositoryClassDefinitionCatalog.
-			unregisterLegacyExternalRepositoryFactory(className);
+			companyId, repositoryTypeKey);
 	}
 
 	public void setRepositoryClassDefinitionCatalog(

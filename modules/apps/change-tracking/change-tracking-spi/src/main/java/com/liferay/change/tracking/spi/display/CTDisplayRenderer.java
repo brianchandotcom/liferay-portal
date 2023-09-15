@@ -162,6 +162,10 @@ public interface CTDisplayRenderer<T> {
 		return false;
 	}
 
+	public default boolean isMovable(T model) {
+		return !isHideable(model);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */

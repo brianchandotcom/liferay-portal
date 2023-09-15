@@ -60,3 +60,9 @@ export const FETCH_OPTIONS = {
  * @see https://github.com/liferay/liferay-portal/blob/b7681ff418ef34e735c4e31aff6fd06bbfceae67/portal-web/docroot/html/common/themes/bottom_js.jspf#L123
  */
 export const PORTAL_TOOLTIP_TRIGGER_CLASS = 'lfr-portal-tooltip';
+
+export const SCOPE_TYPES = {
+	EVERYWHERE: 'everywhere',
+	SITE: 'site',
+	SXP_BLUEPRINT: 'sxpBlueprint',
+};

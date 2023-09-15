@@ -54,7 +54,7 @@ if (portletTitleBasedNavigation) {
 	<div id="<portlet:namespace /><%= entry.getEntryId() %>">
 		<div class="autofit-padded autofit-row">
 			<div class="autofit-col">
-				<liferay-ui:user-portrait
+				<liferay-user:user-portrait
 					userId="<%= entry.getUserId() %>"
 				/>
 			</div>

@@ -33,14 +33,6 @@ public class MessageBusUtil {
 		_messageBus.sendMessage(destinationName, message);
 	}
 
-	public static void shutdown() {
-		_messageBus.shutdown();
-	}
-
-	public static void shutdown(boolean force) {
-		_messageBus.shutdown(force);
-	}
-
 	private static volatile MessageBus _messageBus =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			MessageBus.class, MessageBusUtil.class, "_messageBus", true);

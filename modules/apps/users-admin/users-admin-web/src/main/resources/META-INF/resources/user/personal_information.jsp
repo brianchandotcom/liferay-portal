@@ -36,7 +36,7 @@ if (Validator.isNull(organizationIdsString)) {
 	<clay:col
 		md="6"
 	>
-		<liferay-ui:user-name-fields
+		<liferay-user:user-name-fields
 			contact="<%= selContact %>"
 			user="<%= selUser %>"
 		/>

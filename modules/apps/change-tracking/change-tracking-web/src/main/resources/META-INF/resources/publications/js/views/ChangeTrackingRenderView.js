@@ -132,6 +132,7 @@ export default function ChangeTrackingRenderView({
 	getCache,
 	handleNavigation,
 	handleShowHideable,
+	moveChangesURL,
 	parentEntries,
 	showDropdown,
 	showHeader = true,
@@ -848,6 +849,14 @@ export default function ChangeTrackingRenderView({
 						state.renderData.editInProduction.confirmationMessage
 					),
 				symbolLeft: 'pencil',
+			});
+		}
+
+		if (moveChangesURL !== null) {
+			dropdownItems.push({
+				label: Liferay.Language.get('move-changes'),
+				onClick: () => navigate(moveChangesURL),
+				symbolLeft: 'move-folder',
 			});
 		}
 

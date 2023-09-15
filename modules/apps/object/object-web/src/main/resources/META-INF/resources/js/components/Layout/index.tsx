@@ -157,7 +157,9 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			dispatch({
 				payload: {
 					objectFields: normalizeObjectFields({
-						objectFields: filteredObjectFields,
+						objectFields: Liferay.FeatureFlags['LPS-193355']
+							? objectFields
+							: filteredObjectFields,
 						objectLayout,
 					}),
 				},

@@ -15,7 +15,7 @@ Object[] objArray = (Object[])row.getObject();
 BlogsStatsUser statsUser = (BlogsStatsUser)objArray[0];
 %>
 
-<liferay-ui:user-display
+<liferay-user:user-display
 	url="<%= (String)objArray[1] %>"
 	userId="<%= statsUser.getStatsUserId() %>"
 >
@@ -37,4 +37,4 @@ BlogsStatsUser statsUser = (BlogsStatsUser)objArray[0];
 	<div class="blogger-date">
 		<span><liferay-ui:message key="date" />:</span> <%= dateFormatDate.format(statsUser.getLastPostDate()) %>
 	</div>
-</liferay-ui:user-display>
+</liferay-user:user-display>

@@ -15,6 +15,7 @@ import {
 import {InputLocalized} from 'frontend-js-components-web';
 import React, {useMemo, useState} from 'react';
 
+import {NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE} from '../../utils/constants';
 import {TriggerEventContainer} from './TriggerEventContainer';
 import {TabProps} from './useObjectValidationForm';
 
@@ -169,8 +170,7 @@ export function BasicInfo({
 										setValues({
 											objectValidationRuleSettings: [
 												{
-													name:
-														'objectFieldExternalReferenceCode',
+													name: NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE,
 													value: item.externalReferenceCode as string,
 												},
 											],

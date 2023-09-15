@@ -26,7 +26,7 @@ EditAccountEntryAccountUserDisplayContext editAccountEntryAccountUserDisplayCont
 	</clay:sheet-header>
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:user-name-fields
+		<liferay-user:user-name-fields
 			contact="<%= editAccountEntryAccountUserDisplayContext.getSelectedAccountUserContact() %>"
 			user="<%= editAccountEntryAccountUserDisplayContext.getSelectedAccountUser() %>"
 		/>

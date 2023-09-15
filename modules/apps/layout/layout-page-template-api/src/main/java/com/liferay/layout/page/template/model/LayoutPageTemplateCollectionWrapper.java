@@ -173,6 +173,16 @@ public class LayoutPageTemplateCollectionWrapper
 		return wrap(model.cloneWithOriginalValues());
 	}
 
+	@Override
+	public LayoutPageTemplateCollection getAncestor() {
+		return model.getAncestor();
+	}
+
+	@Override
+	public java.util.List<LayoutPageTemplateCollection> getAncestors() {
+		return model.getAncestors();
+	}
+
 	/**
 	 * Returns the company ID of this layout page template collection.
 	 *

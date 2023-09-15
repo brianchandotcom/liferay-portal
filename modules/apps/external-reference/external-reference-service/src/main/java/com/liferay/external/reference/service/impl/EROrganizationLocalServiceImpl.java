@@ -45,8 +45,8 @@ public class EROrganizationLocalServiceImpl
 
 		if (organization == null) {
 			organization = _organizationLocalService.addOrganization(
-				userId, parentOrganizationId, name, type, regionId, countryId,
-				statusId, comments, site, serviceContext);
+				null, userId, parentOrganizationId, name, type, regionId,
+				countryId, statusId, comments, site, serviceContext);
 
 			organization.setExternalReferenceCode(externalReferenceCode);
 
@@ -61,9 +61,10 @@ public class EROrganizationLocalServiceImpl
 		}
 		else {
 			_organizationLocalService.updateOrganization(
-				user.getCompanyId(), organization.getOrganizationId(),
-				parentOrganizationId, name, type, regionId, countryId, statusId,
-				comments, hasLogo, logoBytes, site, serviceContext);
+				organization.getExternalReferenceCode(), user.getCompanyId(),
+				organization.getOrganizationId(), parentOrganizationId, name,
+				type, regionId, countryId, statusId, comments, hasLogo,
+				logoBytes, site, serviceContext);
 		}
 
 		return organization;

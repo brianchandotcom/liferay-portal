@@ -17,11 +17,13 @@ import com.liferay.frontend.data.set.taglib.internal.jaxrs.context.provider.Them
 import com.liferay.frontend.data.set.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.HashSet;
@@ -154,9 +156,10 @@ public class FDSApplication extends Application {
 	public Set<Object> getSingletons() {
 		Set<Object> singletons = new HashSet<>();
 
-		singletons.add(_paginationContextProvider);
-		singletons.add(_sortContextProvider);
-		singletons.add(_themeDisplayContextProvider);
+		singletons.add(new PaginationContextProvider());
+		singletons.add(new SortContextProvider());
+		singletons.add(
+			new ThemeDisplayContextProvider(_language, _layoutLocalService));
 		singletons.add(this);
 
 		return singletons;
@@ -321,12 +324,9 @@ public class FDSApplication extends Application {
 	private JSONFactory _jsonFactory;
 
 	@Reference
-	private PaginationContextProvider _paginationContextProvider;
+	private Language _language;
 
 	@Reference
-	private SortContextProvider _sortContextProvider;
-
-	@Reference
-	private ThemeDisplayContextProvider _themeDisplayContextProvider;
+	private LayoutLocalService _layoutLocalService;
 
 }

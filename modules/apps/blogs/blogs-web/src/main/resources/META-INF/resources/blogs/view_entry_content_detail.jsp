@@ -123,8 +123,8 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						<clay:content-col
 							cssClass="inline-item-before"
 						>
-							<liferay-ui:user-portrait
-								cssClass="sticker-lg"
+							<liferay-user:user-portrait
+								size="lg"
 								user="<%= entryUser %>"
 							/>
 						</clay:content-col>

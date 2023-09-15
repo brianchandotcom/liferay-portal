@@ -19,6 +19,7 @@ import com.liferay.object.definition.tree.Edge;
 import com.liferay.object.definition.tree.Node;
 import com.liferay.object.definition.tree.Tree;
 import com.liferay.object.definition.tree.TreeFactory;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.deployer.InactiveObjectDefinitionDeployer;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.exception.NoSuchObjectFieldException;
@@ -43,8 +44,8 @@ import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.RequiredObjectDefinitionException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
-import com.liferay.object.internal.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.internal.deployer.InactiveObjectDefinitionDeployerImpl;
 import com.liferay.object.internal.deployer.ObjectDefinitionDeployerImpl;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionLocalizationTableFactory;
@@ -122,12 +123,12 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalRunMode;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
@@ -297,8 +298,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 		for (ObjectField oldObjectField : oldObjectFields) {
 			if (oldObjectField.isSystem() &&
-				!_defaultSystemObjectFieldNames.contains(
-					oldObjectField.getName()) &&
+				!ObjectFieldUtil.isMetadata(oldObjectField.getName()) &&
 				!_hasObjectField(newObjectFields, oldObjectField)) {
 
 				_objectFieldPersistence.remove(oldObjectField);
@@ -712,14 +712,6 @@ public class ObjectDefinitionLocalServiceImpl
 	@Override
 	public List<ObjectDefinition> getCustomObjectDefinitions(int status) {
 		return objectDefinitionPersistence.findByS_S(false, status);
-	}
-
-	@Override
-	public List<ObjectDefinition> getModifiableObjectDefinitions(
-		long companyId, boolean active, int status) {
-
-		return objectDefinitionPersistence.findByC_A_M_S(
-			companyId, active, true, status);
 	}
 
 	@Override
@@ -1719,10 +1711,11 @@ public class ObjectDefinitionLocalServiceImpl
 			long userId, ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		int count = _objectFieldPersistence.countByODI_S(
-			objectDefinition.getObjectDefinitionId(), false);
+		if (!ListUtil.exists(
+				_objectFieldPersistence.findByObjectDefinitionId(
+					objectDefinition.getObjectDefinitionId()),
+				objectField -> !objectField.isMetadata())) {
 
-		if (count == 0) {
 			throw new RequiredObjectFieldException();
 		}
 
@@ -2321,13 +2314,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private CurrentConnection _currentConnection;
-
-	private final Set<String> _defaultSystemObjectFieldNames =
-		SetUtil.fromArray(
-			new String[] {
-				"creator", "createDate", "externalReferenceCode", "id",
-				"modifiedDate", "status"
-			});
 
 	@Reference
 	private DynamicQueryBatchIndexingActionableFactory

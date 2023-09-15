@@ -22,6 +22,7 @@ import {
 } from 'frontend-js-components-web';
 import React, {useMemo, useState} from 'react';
 
+import {NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE} from '../../utils/constants';
 import {TabProps} from './useObjectValidationForm';
 
 interface ConditionsProps extends TabProps {
@@ -200,8 +201,7 @@ export function Conditions({
 									setValues({
 										objectValidationRuleSettings: [
 											{
-												name:
-													'objectFieldExternalReferenceCode',
+												name: NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE,
 												value: item.externalReferenceCode as string,
 											},
 										],

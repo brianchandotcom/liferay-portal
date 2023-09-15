@@ -36,7 +36,7 @@ if (Validator.isNotNull(backURL)) {
 		%>
 
 		<liferay-ui:search-container-column-text>
-			<liferay-ui:user-portrait
+			<liferay-user:user-portrait
 				userId="<%= curBackgroundTask.getUserId() %>"
 			/>
 		</liferay-ui:search-container-column-text>

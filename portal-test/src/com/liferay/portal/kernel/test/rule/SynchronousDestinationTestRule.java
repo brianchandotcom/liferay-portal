@@ -27,14 +27,16 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule.SyncHa
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.runner.Description;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.Filter;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
@@ -165,9 +167,6 @@ public class SynchronousDestinationTestRule
 				segmentsEntryReindexFilter, subscrpitionSenderFilter,
 				tensorflowModelDownloadFilter, videoProcessorFilter);
 
-			_destinations = ReflectionTestUtil.getFieldValue(
-				MessageBusUtil.getMessageBus(), "_destinations");
-
 			_bufferedIncrementForceSyncSafeCloseable =
 				BufferedIncrementThreadLocal.setWithSafeCloseable(true);
 
@@ -203,30 +202,31 @@ public class SynchronousDestinationTestRule
 				}
 			}
 
-			_schedulerDestination = _destinations.get(
+			Destination schedulerDestination = MessageBusUtil.getDestination(
 				DestinationNames.SCHEDULER_DISPATCH);
 
-			if (_schedulerDestination == null) {
+			if (schedulerDestination == null) {
 				return;
 			}
 
-			Destination dummySchedulerDestination =
+			_registerDestination(
 				new TestSynchronousDestination() {
+
+					@Override
+					public String getName() {
+						return DestinationNames.SCHEDULER_DISPATCH;
+					}
 
 					@Override
 					public void send(Message message) {
 					}
 
-				};
-
-			_destinations.put(
-				DestinationNames.SCHEDULER_DISPATCH, dummySchedulerDestination);
+				});
 		}
 
 		public void replaceDestination(String destinationName) {
-			Destination destination = _destinations.get(destinationName);
-
-			boolean asyncDestination = false;
+			Destination destination = MessageBusUtil.getDestination(
+				destinationName);
 
 			if (destination != null) {
 				try {
@@ -234,26 +234,14 @@ public class SynchronousDestinationTestRule
 						destination.getClass(),
 						"_noticeableThreadPoolExecutor");
 
-					asyncDestination = true;
+					_registerDestination(
+						createSynchronousDestination(destinationName));
 				}
 				catch (Exception exception) {
 				}
 			}
-
-			if (asyncDestination) {
-				_asyncServiceDestinations.add(destination);
-
-				Destination synchronousDestination =
-					createSynchronousDestination(destinationName);
-
-				_destinations.put(destinationName, synchronousDestination);
-			}
-
-			if (destination == null) {
-				_absentDestinationNames.add(destinationName);
-
-				_destinations.put(
-					destinationName,
+			else {
+				_registerDestination(
 					createSynchronousDestination(destinationName));
 			}
 		}
@@ -263,20 +251,13 @@ public class SynchronousDestinationTestRule
 				_bufferedIncrementForceSyncSafeCloseable.close();
 			}
 
-			if (_schedulerDestination != null) {
-				_destinations.put(
-					DestinationNames.SCHEDULER_DISPATCH, _schedulerDestination);
+			for (ServiceRegistration<Destination> serviceRegistration :
+					_serviceRegistrations) {
+
+				serviceRegistration.unregister();
 			}
 
-			for (Destination destination : _asyncServiceDestinations) {
-				_destinations.put(destination.getName(), destination);
-			}
-
-			_asyncServiceDestinations.clear();
-
-			for (String absentDestinationName : _absentDestinationNames) {
-				_destinations.remove(absentDestinationName);
-			}
+			_serviceRegistrations.clear();
 
 			_serviceTracker.close();
 		}
@@ -290,6 +271,17 @@ public class SynchronousDestinationTestRule
 
 		public void setSync(Sync sync) {
 			_sync = sync;
+		}
+
+		private void _registerDestination(Destination destination) {
+			_serviceRegistrations.add(
+				_bundleContext.registerService(
+					Destination.class, destination,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"destination.name", destination.getName()
+					).put(
+						"service.ranking", Integer.MAX_VALUE - 500
+					).build()));
 		}
 
 		private Filter _registerDestinationFilter(String destinationName) {
@@ -332,12 +324,9 @@ public class SynchronousDestinationTestRule
 			}
 		}
 
-		private final List<String> _absentDestinationNames = new ArrayList<>();
-		private final List<Destination> _asyncServiceDestinations =
-			new ArrayList<>();
 		private SafeCloseable _bufferedIncrementForceSyncSafeCloseable;
-		private Map<String, Destination> _destinations;
-		private Destination _schedulerDestination;
+		private final List<ServiceRegistration<Destination>>
+			_serviceRegistrations = new ArrayList<>();
 		private final ServiceTracker
 			<MessageListenerRegistry, MessageListenerRegistry> _serviceTracker =
 				new ServiceTracker<>(
@@ -383,6 +372,8 @@ public class SynchronousDestinationTestRule
 		return syncHandler;
 	}
 
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
 	private static final TransactionConfig _transactionConfig;
 
 	static {

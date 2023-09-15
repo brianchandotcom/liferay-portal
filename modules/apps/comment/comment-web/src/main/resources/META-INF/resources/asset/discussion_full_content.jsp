@@ -29,10 +29,8 @@ if (comment instanceof WorkflowableComment) {
 	</tr>
 	<tr>
 		<td class="align-top text-center">
-			<liferay-ui:user-display
-				displayStyle="2"
+			<liferay-user:user-display
 				userId="<%= comment.getUserId() %>"
-				userName="<%= HtmlUtil.escape(comment.getUserName()) %>"
 			/>
 		</td>
 		<td class="align-top table-cell-expand">

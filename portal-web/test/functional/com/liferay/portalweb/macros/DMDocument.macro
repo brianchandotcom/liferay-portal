@@ -2993,6 +2993,13 @@ definition {
 			DMNavigator.openToConfigInSystemSettings(portlet = "Documents and Media Size Limits");
 		}
 
+		if (isSet(checkPortletTitle)) {
+			AssertTextEquals(
+				key_portletTitle = "File Upload Limits",
+				locator1 = "DocumentsAndMedia#PORTLET_TITLE",
+				value1 = "File Upload Limits");
+		}
+
 		if (${indexNumber} == 2) {
 			Click(locator1 = "Button#DUPLICATE");
 

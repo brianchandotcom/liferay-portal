@@ -31,7 +31,7 @@ long segmentsEntryId = ParamUtil.getLong(request, "segmentsEntryId");
 			modelVar="user2"
 		>
 			<liferay-ui:search-container-column-text>
-				<liferay-ui:user-portrait
+				<liferay-user:user-portrait
 					userId="<%= user2.getUserId() %>"
 				/>
 			</liferay-ui:search-container-column-text>

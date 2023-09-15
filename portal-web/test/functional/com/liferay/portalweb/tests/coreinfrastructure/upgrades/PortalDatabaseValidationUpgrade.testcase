@@ -7,6 +7,7 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.liferay.virtual.instance = "false";
+	property test.run.type = "single";
 	property testray.main.component.name = "Database Upgrade Framework";
 
 	@priority = 4
@@ -14,6 +15,7 @@ definition {
 		property database.bare.enabled = "true";
 		property database.partition.enabled = "true";
 		property skip.start.app.server = "true";
+		property testcase.url = "file:///opt/dev/projects/github/liferay-portal/";
 
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
 		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");

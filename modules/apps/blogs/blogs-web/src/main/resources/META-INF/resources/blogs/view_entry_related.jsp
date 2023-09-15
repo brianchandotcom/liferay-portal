@@ -74,7 +74,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					%>
 
 					<clay:content-col>
-						<liferay-ui:user-portrait
+						<liferay-user:user-portrait
 							user="<%= blogsEntryUser %>"
 						/>
 					</clay:content-col>

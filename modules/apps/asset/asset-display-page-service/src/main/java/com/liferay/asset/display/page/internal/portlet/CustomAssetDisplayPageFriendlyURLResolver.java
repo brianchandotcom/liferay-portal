@@ -12,9 +12,11 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
@@ -26,6 +28,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -35,6 +39,26 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = FriendlyURLResolver.class)
 public class CustomAssetDisplayPageFriendlyURLResolver
 	extends BaseAssetDisplayPageFriendlyURLResolver {
+
+	@Override
+	public String getActualURL(
+			long companyId, long groupId, boolean privateLayout,
+			String mainPath, String friendlyURL, Map<String, String[]> params,
+			Map<String, Object> requestContext)
+		throws PortalException {
+
+		String actualURL = super.getActualURL(
+			companyId, groupId, privateLayout, mainPath, friendlyURL, params,
+			requestContext);
+
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)requestContext.get("request");
+
+		httpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.DEFAULT_LAYOUT_DISPLAY, Boolean.FALSE);
+
+		return actualURL;
+	}
 
 	@Override
 	public String getURLSeparator() {

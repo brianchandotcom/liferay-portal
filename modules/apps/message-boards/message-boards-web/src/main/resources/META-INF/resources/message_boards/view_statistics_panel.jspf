@@ -83,7 +83,7 @@
 
 			<c:if test="<%= topUser != null %>">
 				<liferay-ui:search-container-column-text>
-					<liferay-ui:user-portrait
+					<liferay-user:user-portrait
 						userId="<%= userId %>"
 					/>
 				</liferay-ui:search-container-column-text>

@@ -17,7 +17,10 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.user.taglib.servlet.taglib.UserDisplayTag}
  */
+@Deprecated
 public class UserDisplayTag extends TagSupport {
 
 	@Override

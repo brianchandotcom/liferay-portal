@@ -630,6 +630,152 @@ definition {
 			fieldValue = "United States");
 	}
 
+	@description = "Verify that the data in the fields where the rules are set will be saved if a data provider is assigned on a list box"
+	@priority = 4
+	test CanSaveFormFieldEntryWithRestDataProvider {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given that Access Local Network and Trust Self Signed Certificates is enabled") {
+			FormsAdminNavigator.enableLocalNetworkDataProvider();
+
+			Click(
+				key_checkboxOption = "Trust Self Signed Certificates",
+				locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
+
+			PortletEntry.update();
+		}
+
+		task ("and Given a REST data provider") {
+			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+
+			Navigator.gotoNavItem(navItem = "Data Providers");
+
+			FormsAdminNavigator.gotoAddDataProvider();
+
+			var portalURL = PropsUtil.get("portal.url");
+
+			FormsAdmin.editDataProviderLocalNetwork(
+				name = "Get Countries",
+				outputParameterLabel = "Country Names",
+				outputParameterPath = "$..nameCurrentValue",
+				outputParameterType = "List",
+				timeout = 1000,
+				url = "${portalURL}/api/jsonws/country/get-countries");
+
+			FormsAdmin.saveDataProvider();
+		}
+
+		task ("and Given a new form with a Data Provider Field and a Text Field") {
+			FormsAdmin.addForm();
+
+			Form.editName(formName = "Select country");
+
+			Form.gotoAddField(
+				fieldPositionNumber = 0,
+				fieldType = "Select from List");
+
+			var fieldNameSelectFromList = FormFields.getFieldName();
+
+			FormFields.enableSwitch(fieldName = "Required Field");
+
+			Form.editFieldLabelMetal(fieldValue = "Country");
+
+			SetWindowSize.maximizeWindow();
+
+			Form.editFieldDataProvider(
+				dataProvider = "Get Countries",
+				dataProviderOutput = "Country Names");
+
+			Form.closeSidebar();
+
+			Form.addTextField(fieldPositionNumber = 1);
+
+			var fieldNameTextField = FormFields.getFieldName();
+
+			Form.editFieldLabelMetal(fieldValue = "Postal Code");
+
+			Form.save();
+		}
+
+		task ("and Given that a rule is added") {
+			FormsAdminNavigator.gotoRules();
+
+			FormRules.addRule();
+
+			FormRules.configureConditionOptions(
+				conditionField = "Country",
+				conditionOperator = "Is Equal To",
+				conditionRowNumber = 1,
+				conditionValueField = "United States",
+				conditionValueType = "Value");
+
+			for (var actionTypeAndPosition : list "Show-1,Enable-2") {
+				var actionType = StringUtil.extractFirst(${actionTypeAndPosition}, "-");
+				var position = StringUtil.extractLast(${actionTypeAndPosition}, "-");
+
+				FormRules.configureActionOptions(
+					action = ${actionType},
+					actionRowNumber = ${position},
+					actionTarget = "Postal Code");
+
+				FormRules.addAction();
+			}
+
+			FormRules.configureActionOptions(
+				action = "Require",
+				actionRowNumber = 3,
+				actionTarget = "Postal Code");
+
+			FormRules.save();
+
+			FormsAdminNavigator.gotoFormBuilder();
+
+			Form.publishForm();
+		}
+
+		task ("and Given that a form page is created and the form is selected") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Form Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "Form Page",
+				widgetName = "Form");
+
+			FormPortletConfiguration.selectFormOnAPage(
+				formTitle = "Select country",
+				pageName = "Form Page");
+
+			Navigator.gotoPage(pageName = "Form Page");
+		}
+
+		task ("When an entry is submitted immediately") {
+			FormFields.selectSelectOption(
+				fieldName = ${fieldNameSelectFromList},
+				selectOption = "United States");
+
+			FormFields.editText(
+				fieldName = ${fieldNameTextField},
+				fieldValue = 91765);
+
+			FormPortlet.submitSuccessfully();
+		}
+
+		task ("Then the entry is saved") {
+			FormsAdmin.openFormsAdmin(siteURLKey = "guest");
+
+			FormsAdminNavigator.gotoEditFormByName(formName = "Select country");
+
+			FormsAdminNavigator.gotoEntries();
+
+			AssertElementPresent(
+				key_entryName = 91765,
+				locator1 = "FormViewBuilder#ENTRY_NAME");
+		}
+	}
+
 	@description = "Verify that changes to a Field can be canceled"
 	@ignore = "Test Stub"
 	@priority = 4

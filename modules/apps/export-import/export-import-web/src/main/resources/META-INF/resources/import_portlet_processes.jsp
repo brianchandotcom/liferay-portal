@@ -51,10 +51,7 @@ else {
 				cssClass="table-cell-expand"
 				name="user"
 			>
-				<liferay-ui:user-display
-					displayStyle="3"
-					showUserDetails="<%= false %>"
-					showUserName="<%= false %>"
+				<liferay-user:user-portrait
 					userId="<%= backgroundTask.getUserId() %>"
 				/>
 			</liferay-ui:search-container-column-text>

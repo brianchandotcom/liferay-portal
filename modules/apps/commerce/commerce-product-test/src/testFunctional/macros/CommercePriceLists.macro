@@ -219,6 +219,33 @@ definition {
 		SelectFrameTop();
 	}
 
+	macro editTierPriceEntryDirectlyInsideProductSKU {
+		SelectFrame.selectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(
+			key_panel = "Details",
+			locator1 = "Panel#PANEL_COLLAPSED");
+
+		CommerceEntry.gotoMenuTab(menuTab = "Tier Price Entries");
+
+		CommerceEntry.clickEntryDropdownMenuItem(
+			entryName = ${entryName},
+			menuItem = "Edit");
+
+		SelectFrame.selectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		CommerceSKUs.addPriceToSKU(price = ${price});
+
+		Type(
+			key_fieldLabel = "Minimum Quantity",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${quantity});
+
+		Button.clickSubmitButton();
+	}
+
 	macro openPriceListsAdmin {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},

@@ -95,67 +95,45 @@ export function parseAssignments(node) {
 
 export function parseReassignments(node) {
 	const assignments = {};
-	const autoCreateValues = [];
-	const roleKeys = [];
-	const roleTypes = [];
-	const users = [];
-	const typeUser = Object.keys(node.assignments[0])[0];
 
 	node.assignments.forEach((item) => {
-		const itemKeys = Object.keys(item);
-		if (itemKeys.includes('resource-action')) {
+		if (item['resource-actions']) {
 			assignments.assignmentType = ['resourceActions'];
-			assignments.resourceAction = item['resource-action'];
+			assignments.resourceAction =
+				item['resource-actions'][0]['resource-action'];
 		}
-		else if (itemKeys.includes('role')) {
-			assignments.assignmentType = ['roleId'];
-			assignments.roleId = parseInt(item['role'], 10);
+		else if (item['roles']) {
+			if (item['roles'][2]?.['role-type']) {
+				assignments.assignmentType = ['roleType'];
+				assignments.autoCreate = [item['roles'][0]['auto-create']];
+				assignments.roleKey = [item['roles'][1]['name']];
+				assignments.roleType = [item['roles'][2]['role-type']];
+			}
+			else {
+				assignments.assignmentType = ['roleId'];
+				assignments.roleId = parseInt(item['roles'][0]['role'], 10);
+			}
 		}
-		else if (itemKeys.includes('role-type')) {
-			assignments.assignmentType = ['roleType'];
-			autoCreateValues.push(item['auto-create']);
-			roleKeys.push(item.name);
-			roleTypes.push(item['role-type']);
-		}
-		else if (itemKeys.includes('script')) {
+		else if (item['scripted-assignment']) {
 			assignments.assignmentType = ['scriptedAssignment'];
-			assignments.script = [item.script];
-			assignments.scriptLanguage = item['script-language'];
+			assignments.script = [item['scripted-assignment'][0].script];
+			assignments.scriptLanguage =
+				item['scripted-assignment'][1]['script-language'];
 		}
-		else if (itemKeys.includes('user')) {
+		else if (item['user'] !== undefined) {
 			assignments.assignmentType = ['user'];
-		}
-		else if (itemKeys.includes('email-address')) {
-			assignments.assignmentType = ['user'];
-			users.push(item['email-address']);
-		}
-		else if (itemKeys.includes('user-id')) {
-			assignments.assignmentType = ['user'];
-			users.push(item['user-id']);
-		}
-		else if (itemKeys.includes('screen-name')) {
-			assignments.assignmentType = ['user'];
-			users.push(item['screen-name']);
+
+			if (item['user'][0]?.['email-address']) {
+				assignments.emailAddress = [item['user'][0]['email-address']];
+			}
+			else if (item['user'][0]?.['user-id']) {
+				assignments.userId = [item['user'][0]['user-id']];
+			}
+			else if (item['user'][0]?.['screen-name']) {
+				assignments.screenName = [item['user'][0]['screen-name']];
+			}
 		}
 	});
-
-	if (users.length) {
-		if (typeUser === 'email-address') {
-			assignments.emailAddress = users;
-		}
-		if (typeUser === 'user-id') {
-			assignments.userId = users;
-		}
-		if (typeUser === 'screen-name') {
-			assignments.screenName = users;
-		}
-	}
-
-	if (assignments.assignmentType[0] === 'roleType') {
-		assignments.autoCreate = autoCreateValues[0];
-		assignments.roleKey = roleKeys[0];
-		assignments.roleType = roleTypes[0];
-	}
 
 	return assignments;
 }
@@ -163,17 +141,23 @@ export function parseReassignments(node) {
 export function parseNotifications(node) {
 	const notifications = {notificationTypes: [], recipients: []};
 
+	if (node.nodeName !== 'timer-notification') {
+		node.notifications.forEach((item) => {
+			notifications.executionType = parseProperty(
+				notifications,
+				item,
+				'execution-type'
+			);
+		});
+	}
+
 	node.notifications.forEach((item, index) => {
 		notifications.description = parseProperty(
 			notifications,
 			item,
 			'description'
 		);
-		notifications.executionType = parseProperty(
-			notifications,
-			item,
-			'execution-type'
-		);
+
 		notifications.name = parseProperty(notifications, item, 'name');
 
 		let notificationTypes = parseProperty(
@@ -380,11 +364,7 @@ export function parseNotifications(node) {
 			if (item.receptionType) {
 				notifications.recipients[index].push({
 					assignmentType: ['user'],
-					receptionType: [
-						item.receptionType[
-							notifications.recipients[index].length
-						],
-					],
+					receptionType: [item.receptionType],
 				});
 			}
 			else {
@@ -445,7 +425,15 @@ export function parseTimers(node) {
 				  })
 				: {}
 		);
-		taskTimers.timerNotifications.push({});
+		taskTimers.timerNotifications.push(
+			node.taskTimers[index]['timer-notification']
+				? parseNotifications({
+						nodeName: 'timer-notification',
+						notifications:
+							node.taskTimers[index]['timer-notification'],
+				  })
+				: {}
+		);
 		taskTimers.name = parseProperty(taskTimers, item, 'name');
 		taskTimers.description = parseProperty(taskTimers, item, 'description');
 		taskTimers.blocking = parseProperty(taskTimers, item, 'blocking');

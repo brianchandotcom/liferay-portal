@@ -5,3 +5,5 @@
 
 export declare const defaultLanguageId: Liferay.Language.Locale;
 export declare const HEADERS: Headers;
+export declare const NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE =
+	'outputObjectFieldExternalReferenceCode';

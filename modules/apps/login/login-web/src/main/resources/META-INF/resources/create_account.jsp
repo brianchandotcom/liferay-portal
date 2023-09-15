@@ -183,7 +183,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 					<clay:col
 						md="6"
 					>
-						<liferay-ui:user-name-fields />
+						<liferay-user:user-name-fields />
 					</clay:col>
 
 					<clay:col

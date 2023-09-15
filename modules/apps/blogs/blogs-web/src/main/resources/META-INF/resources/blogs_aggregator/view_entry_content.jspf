@@ -34,7 +34,7 @@
 			<div class="entry-body">
 				<c:choose>
 					<c:when test='<%= displayStyle.endsWith("image") %>'>
-						<liferay-ui:user-portrait
+						<liferay-user:user-portrait
 							userId="<%= entry.getUserId() %>"
 						/>
 

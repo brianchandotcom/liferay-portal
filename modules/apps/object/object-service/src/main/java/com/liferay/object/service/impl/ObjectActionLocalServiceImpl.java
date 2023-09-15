@@ -39,6 +39,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -482,7 +483,20 @@ public class ObjectActionLocalServiceImpl
 			ObjectDefinition objectDefinition)
 		throws PortalException {
 
-		if (Objects.equals(
+		if (FeatureFlagManagerUtil.isEnabled("LPS-187142") &&
+			StringUtil.equals(
+				objectActionTriggerKey,
+				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE) &&
+			!objectDefinition.isRootNode()) {
+
+			throw new ObjectActionTriggerKeyException(
+				StringBundler.concat(
+					"The object action trigger key ",
+					ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
+					" can only be used by a root object definition"));
+		}
+
+		if (StringUtil.equals(
 				objectActionTriggerKey,
 				ObjectActionTriggerConstants.KEY_STANDALONE)) {
 

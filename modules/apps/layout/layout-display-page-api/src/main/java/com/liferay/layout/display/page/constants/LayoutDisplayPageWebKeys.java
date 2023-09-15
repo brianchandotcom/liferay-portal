@@ -10,6 +10,8 @@ package com.liferay.layout.display.page.constants;
  */
 public interface LayoutDisplayPageWebKeys {
 
+	public String DEFAULT_LAYOUT_DISPLAY = "DEFAULT_LAYOUT_DISPLAY";
+
 	public String LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER =
 		"LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER";
 

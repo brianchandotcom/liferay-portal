@@ -95,7 +95,9 @@ public class RepositoryCTDisplayRenderer
 			() -> {
 				RepositoryClassDefinition repositoryClassDefinition =
 					RepositoryClassDefinitionCatalogUtil.
-						getRepositoryClassDefinition(repository.getClassName());
+						getRepositoryClassDefinition(
+							repository.getCompanyId(),
+							repository.getClassName());
 
 				return repositoryClassDefinition.getRepositoryTypeLabel(
 					displayBuilder.getLocale());

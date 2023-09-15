@@ -19,12 +19,9 @@ import javax.ws.rs.ext.Provider;
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Marco Leo
  */
-@Component(service = SortContextProvider.class)
 @Provider
 public class SortContextProvider implements ContextProvider<Sort> {
 

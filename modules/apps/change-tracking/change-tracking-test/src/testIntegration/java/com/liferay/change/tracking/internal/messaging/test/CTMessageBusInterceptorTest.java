@@ -18,17 +18,16 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.DestinationWrapper;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
-import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -37,6 +36,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Tina Tian
@@ -51,20 +53,19 @@ public class CTMessageBusInterceptorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_originalDestination = _messageBus.getDestination(
-			DestinationNames.SUBSCRIPTION_SENDER);
-
 		_testDestination = new TestDestination(
 			_destinationFactory.createDestination(
 				new DestinationConfiguration(
 					DestinationConfiguration.DESTINATION_TYPE_SYNCHRONOUS,
 					DestinationNames.SUBSCRIPTION_SENDER)));
 
-		_destinationsMap = ReflectionTestUtil.getFieldValue(
-			_messageBus, "_destinations");
-
-		_destinationsMap.put(
-			DestinationNames.SUBSCRIPTION_SENDER, _testDestination);
+		_serviceRegistration = _bundleContext.registerService(
+			Destination.class, _testDestination,
+			HashMapDictionaryBuilder.<String, Object>put(
+				"destination.name", DestinationNames.SUBSCRIPTION_SENDER
+			).put(
+				"service.ranking", Integer.MAX_VALUE
+			).build());
 
 		_ctCollection = _ctCollectionLocalService.addCTCollection(
 			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
@@ -73,8 +74,11 @@ public class CTMessageBusInterceptorTest {
 
 	@After
 	public void tearDown() {
-		_destinationsMap.put(
-			DestinationNames.SUBSCRIPTION_SENDER, _originalDestination);
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+
+			_serviceRegistration = null;
+		}
 	}
 
 	@Test
@@ -178,6 +182,9 @@ public class CTMessageBusInterceptorTest {
 		_ctCollection = null;
 	}
 
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;
 
@@ -190,14 +197,10 @@ public class CTMessageBusInterceptorTest {
 	@Inject
 	private static DestinationFactory _destinationFactory;
 
-	@Inject
-	private static MessageBus _messageBus;
-
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
 
-	private Map<String, Destination> _destinationsMap;
-	private Destination _originalDestination;
+	private ServiceRegistration<Destination> _serviceRegistration;
 	private TestDestination _testDestination;
 
 	private static class TestDestination extends DestinationWrapper {

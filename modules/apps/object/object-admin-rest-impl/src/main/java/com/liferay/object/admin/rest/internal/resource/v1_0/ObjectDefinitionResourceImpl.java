@@ -33,8 +33,10 @@ import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
+import com.liferay.object.model.ObjectFieldModel;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionService;
@@ -65,6 +67,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -548,43 +551,61 @@ public class ObjectDefinitionResourceImpl
 					objectDefinition.getScope());
 		}
 
+		List<ObjectField> objectFields = ListUtil.fromArray(
+			objectDefinition.getObjectFields());
+
 		List<com.liferay.object.model.ObjectField> serviceBuilderObjectFields =
 			new ArrayList<>(
-				_objectFieldLocalService.getObjectFields(
-					objectDefinitionId, false));
+				_objectFieldLocalService.getObjectFields(objectDefinitionId));
 
-		if (objectDefinition.getObjectFields() != null) {
-			for (ObjectField objectField : objectDefinition.getObjectFields()) {
-				long listTypeDefinitionId =
-					ObjectFieldUtil.getListTypeDefinitionId(
-						serviceBuilderObjectDefinition.getCompanyId(),
-						_listTypeDefinitionLocalService, objectField);
+		if (serviceBuilderObjectDefinition.isModifiable() &&
+			serviceBuilderObjectDefinition.isSystem() &&
+			ObjectDefinitionUtil.isInvokerBundleAllowed()) {
 
-				_objectFieldLocalService.updateObjectField(
-					objectField.getExternalReferenceCode(),
-					GetterUtil.getLong(objectField.getId()),
-					contextUser.getUserId(), listTypeDefinitionId,
-					objectDefinitionId, objectField.getBusinessTypeAsString(),
-					null, null, objectField.getDBTypeAsString(),
-					objectField.getIndexed(), objectField.getIndexedAsKeyword(),
-					objectField.getIndexedLanguageId(),
-					LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
-					GetterUtil.getBoolean(objectField.getLocalized()),
-					objectField.getName(), objectField.getReadOnlyAsString(),
-					objectField.getReadOnlyConditionExpression(),
-					objectField.getRequired(),
-					GetterUtil.getBoolean(objectField.getState()),
-					objectField.getSystem(),
-					ObjectFieldSettingUtil.toObjectFieldSettings(
-						listTypeDefinitionId, objectField,
-						_objectFieldSettingLocalService,
-						_objectFilterLocalService));
+			objectFields.removeIf(
+				objectField -> !GetterUtil.getBoolean(objectField.getSystem()));
 
-				serviceBuilderObjectFields.removeIf(
-					serviceBuilderObjectField -> Objects.equals(
-						serviceBuilderObjectField.getName(),
-						objectField.getName()));
-			}
+			serviceBuilderObjectFields.removeIf(
+				serviceBuilderObjectField ->
+					serviceBuilderObjectField.isMetadata() ||
+					!serviceBuilderObjectField.isSystem());
+		}
+		else {
+			objectFields.removeIf(
+				objectField -> GetterUtil.getBoolean(objectField.getSystem()));
+
+			serviceBuilderObjectFields.removeIf(ObjectFieldModel::isSystem);
+		}
+
+		for (ObjectField objectField : objectFields) {
+			long listTypeDefinitionId = ObjectFieldUtil.getListTypeDefinitionId(
+				serviceBuilderObjectDefinition.getCompanyId(),
+				_listTypeDefinitionLocalService, objectField);
+
+			_objectFieldLocalService.updateObjectField(
+				objectField.getExternalReferenceCode(),
+				GetterUtil.getLong(objectField.getId()),
+				contextUser.getUserId(), listTypeDefinitionId,
+				objectDefinitionId, objectField.getBusinessTypeAsString(), null,
+				null, objectField.getDBTypeAsString(), objectField.getIndexed(),
+				objectField.getIndexedAsKeyword(),
+				objectField.getIndexedLanguageId(),
+				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
+				GetterUtil.getBoolean(objectField.getLocalized()),
+				objectField.getName(), objectField.getReadOnlyAsString(),
+				objectField.getReadOnlyConditionExpression(),
+				objectField.getRequired(),
+				GetterUtil.getBoolean(objectField.getState()),
+				objectField.getSystem(),
+				ObjectFieldSettingUtil.toObjectFieldSettings(
+					listTypeDefinitionId, objectField,
+					_objectFieldSettingLocalService,
+					_objectFilterLocalService));
+
+			serviceBuilderObjectFields.removeIf(
+				serviceBuilderObjectField -> Objects.equals(
+					serviceBuilderObjectField.getName(),
+					objectField.getName()));
 		}
 
 		for (com.liferay.object.model.ObjectField serviceBuilderObjectField :

@@ -54,4 +54,8 @@ public interface LayoutPageTemplateCollection
 
 			};
 
+	public LayoutPageTemplateCollection getAncestor();
+
+	public java.util.List<LayoutPageTemplateCollection> getAncestors();
+
 }

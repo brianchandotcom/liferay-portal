@@ -66,6 +66,7 @@ function TableHead({
 				<DndTable.Cell
 					className="item-actions"
 					columnName="item-actions"
+					defaultWidth="44px"
 					heading
 				>
 					<FieldsSelectorDropdown fields={schema.fields} />

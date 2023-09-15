@@ -57,6 +57,7 @@ import com.liferay.osb.faro.engine.client.util.FilterBuilder;
 import com.liferay.osb.faro.engine.client.util.FilterUtil;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.osb.faro.model.FaroUser;
 import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
@@ -411,12 +412,20 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
-	public void clearChannel(FaroProject faroProject, List<String> ids)
+	public void clearChannel(
+			FaroProject faroProject, FaroUser faroUser, List<String> ids)
 		throws FaroEngineClientException {
 
 		post(
-			faroProject, Rels.CHANNEL_CLEAR, ids, Void.class,
-			getUriVariables(faroProject));
+			faroProject, Rels.CHANNEL_CLEAR,
+			HashMapBuilder.<String, Object>put(
+				"channelIds", ids
+			).put(
+				"userId", faroUser.getUserId()
+			).put(
+				"userName", faroUser.getUserName()
+			).build(),
+			Void.class, getUriVariables(faroProject));
 	}
 
 	@Override
@@ -427,8 +436,18 @@ public class ContactsEngineClientImpl
 	}
 
 	@Override
-	public void deleteChannels(FaroProject faroProject, List<String> ids) {
-		delete(faroProject, Rels.CHANNELS, ids);
+	public void deleteChannels(
+		FaroProject faroProject, FaroUser faroUser, List<String> ids) {
+
+		delete(
+			faroProject, Rels.CHANNELS,
+			HashMapBuilder.<String, Object>put(
+				"channelIds", ids
+			).put(
+				"userId", faroUser.getUserId()
+			).put(
+				"userName", faroUser.getUserName()
+			).build());
 	}
 
 	@Override

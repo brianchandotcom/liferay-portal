@@ -6,6 +6,7 @@
 /// <reference types="react" />
 
 interface IProps {
+	companyId: number;
 	disabled: boolean;
 	featureFlagKey: string;
 	inputName: string;
@@ -14,6 +15,7 @@ interface IProps {
 	toggled: boolean;
 }
 declare const FeatureFlagToggle: ({
+	companyId,
 	disabled: initialDisabled,
 	featureFlagKey,
 	inputName,

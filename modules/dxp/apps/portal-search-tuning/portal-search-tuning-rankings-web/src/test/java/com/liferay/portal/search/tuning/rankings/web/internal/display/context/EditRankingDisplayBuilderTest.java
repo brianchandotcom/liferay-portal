@@ -5,7 +5,9 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.search.tuning.rankings.web.internal.BaseRankingsWebTestCase;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -21,6 +23,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -36,6 +39,7 @@ public class EditRankingDisplayBuilderTest extends BaseRankingsWebTestCase {
 	@Before
 	public void setUp() throws Exception {
 		_setUpHttpServletRequest();
+		_setUpLearnMessages();
 
 		_editRankingDisplayBuilder = new EditRankingDisplayBuilder(
 			httpServletRequest, rankingIndexNameBuilder, _rankingIndexReader,
@@ -45,7 +49,7 @@ public class EditRankingDisplayBuilderTest extends BaseRankingsWebTestCase {
 	@Test
 	public void testBuild() throws Exception {
 		_setUpRenderResponse();
-		_setUpThemDisplay();
+		_setUpThemeDisplay();
 
 		setUpHttpServletRequestParamValue(
 			httpServletRequest, "backURL", "backURL");
@@ -92,6 +96,25 @@ public class EditRankingDisplayBuilderTest extends BaseRankingsWebTestCase {
 		);
 	}
 
+	private void _setUpLearnMessages() {
+		MockedStatic<WebCachePoolUtil> mockedStatic = Mockito.mockStatic(
+			WebCachePoolUtil.class);
+
+		mockedStatic.when(
+			() -> WebCachePoolUtil.get(Mockito.anyString(), Mockito.any())
+		).thenReturn(
+			JSONUtil.put(
+				"result-rankings",
+				JSONUtil.put(
+					"en_US",
+					JSONUtil.put(
+						"message", "Learn more."
+					).put(
+						"url", "https://learn.liferay.com"
+					)))
+		);
+	}
+
 	private void _setUpRenderResponse() {
 		Mockito.doReturn(
 			Mockito.mock(ResourceURL.class)
@@ -100,7 +123,7 @@ public class EditRankingDisplayBuilderTest extends BaseRankingsWebTestCase {
 		).createResourceURL();
 	}
 
-	private void _setUpThemDisplay() {
+	private void _setUpThemeDisplay() {
 		Mockito.doReturn(
 			111L
 		).when(

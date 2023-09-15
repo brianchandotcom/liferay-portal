@@ -22,13 +22,7 @@ String tagsNavigation = _buildTagsNavigation(scopeGroupId, tag, classNameId, dis
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(tagsNavigation) %>">
-		<liferay-ui:panel-container
-			cssClass="taglib-asset-tags-navigation"
-			extended="<%= true %>"
-			persistState="<%= true %>"
-		>
-			<%= tagsNavigation %>
-		</liferay-ui:panel-container>
+		<%= tagsNavigation %>
 	</c:when>
 	<c:otherwise>
 

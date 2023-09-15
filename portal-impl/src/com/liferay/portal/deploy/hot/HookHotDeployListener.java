@@ -38,9 +38,6 @@ import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.portlet.ControlPanelEntry;
-import com.liferay.portal.kernel.resource.bundle.CacheResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
-import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.security.auth.AuthFailure;
@@ -93,9 +90,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.language.LiferayResourceBundle;
-import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil;
-import com.liferay.portal.repository.util.ExternalRepositoryFactory;
-import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
 import com.liferay.portal.security.auth.AuthVerifierPipeline;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.servlet.taglib.ui.DeprecatedFormNavigatorEntry;
@@ -162,9 +156,8 @@ public class HookHotDeployListener
 		"company.settings.form.miscellaneous", "company.settings.form.social",
 		"control.panel.entry.class.default", "default.landing.page.path",
 		"default.regular.color.scheme.id", "default.regular.theme.id",
-		"dl.file.entry.drafts.enabled", "dl.repository.impl",
-		"dl.store.antivirus.enabled", "dl.store.antivirus.impl",
-		"dl.store.impl",
+		"dl.file.entry.drafts.enabled", "dl.store.antivirus.enabled",
+		"dl.store.antivirus.impl", "dl.store.impl",
 		"field.enable.com.liferay.portal.kernel.model.Contact.birthday",
 		"field.enable.com.liferay.portal.kernel.model.Contact.male",
 		"field.enable.com.liferay.portal.kernel.model.Organization.status",
@@ -344,13 +337,6 @@ public class HookHotDeployListener
 		}
 
 		resetPortalProperties(servletContextName, portalProperties, false);
-
-		if (portalProperties.containsKey(PropsKeys.DL_REPOSITORY_IMPL)) {
-			DLRepositoryContainer dlRepositoryContainer =
-				_dlRepositoryContainerMap.remove(servletContextName);
-
-			dlRepositoryContainer.unregisterRepositoryFactories();
-		}
 
 		if (portalProperties.containsKey(PropsKeys.DL_STORE_IMPL)) {
 			PropsValues.DL_STORE_IMPL = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
@@ -1285,32 +1271,6 @@ public class HookHotDeployListener
 				1000);
 		}
 
-		if (portalProperties.containsKey(PropsKeys.DL_REPOSITORY_IMPL)) {
-			String[] dlRepositoryClassNames = StringUtil.split(
-				portalProperties.getProperty(PropsKeys.DL_REPOSITORY_IMPL));
-
-			DLRepositoryContainer dlRepositoryContainer =
-				new DLRepositoryContainer();
-
-			_dlRepositoryContainerMap.put(
-				servletContextName, dlRepositoryContainer);
-
-			for (String dlRepositoryClassName : dlRepositoryClassNames) {
-				ExternalRepositoryFactory externalRepositoryFactory =
-					new ExternalRepositoryFactoryImpl(
-						dlRepositoryClassName, portletClassLoader);
-
-				ResourceBundleLoader resourceBundleLoader =
-					new CacheResourceBundleLoader(
-						new ClassResourceBundleLoader(
-							"content.Language", portletClassLoader));
-
-				dlRepositoryContainer.registerRepositoryFactory(
-					dlRepositoryClassName, externalRepositoryFactory,
-					resourceBundleLoader);
-			}
-		}
-
 		if (portalProperties.containsKey(PropsKeys.DL_STORE_IMPL)) {
 			PropsValues.DL_STORE_IMPL = portalProperties.getProperty(
 				PropsKeys.DL_STORE_IMPL);
@@ -2195,8 +2155,6 @@ public class HookHotDeployListener
 		_strutsActionProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
 			StrutsAction.class);
 
-	private final Map<String, DLRepositoryContainer> _dlRepositoryContainerMap =
-		new HashMap<>();
 	private final Map<String, HotDeployListenersContainer>
 		_hotDeployListenersContainerMap = new HashMap<>();
 	private final Map<String, StringArraysContainer>
@@ -2212,33 +2170,6 @@ public class HookHotDeployListener
 	private final Map<String, Map<Object, ServiceRegistration<?>>>
 		_serviceRegistrations = newMap();
 	private final Set<String> _servletContextNames = new HashSet<>();
-
-	private static class DLRepositoryContainer {
-
-		public void registerRepositoryFactory(
-			String className,
-			ExternalRepositoryFactory externalRepositoryFactory,
-			ResourceBundleLoader resourceBundleLoader) {
-
-			RepositoryClassDefinitionCatalogUtil.
-				registerLegacyExternalRepositoryFactory(
-					className, externalRepositoryFactory, resourceBundleLoader);
-
-			_classNames.add(className);
-		}
-
-		public void unregisterRepositoryFactories() {
-			for (String className : _classNames) {
-				RepositoryClassDefinitionCatalogUtil.
-					unregisterLegacyExternalRepositoryFactory(className);
-			}
-
-			_classNames.clear();
-		}
-
-		private final List<String> _classNames = new ArrayList<>();
-
-	}
 
 	private static class HotDeployListenersContainer {
 

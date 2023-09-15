@@ -431,20 +431,19 @@ definition {
 		}
 	}
 
-	macro viewFragmentText {
-		if (!(isSet(id))) {
-			var id = "element-text";
+	macro viewMappedFragmentsText {
+		if (!(isSet(index))) {
+			var index = 1;
 		}
 
-		AssertElementPresent(
-			key_fragmentText = ${fragmentText},
-			key_id = ${id},
-			locator1 = "CommerceEntry#ASSERT_FRAGMENTS_TEXT_IN_SF");
-	}
-
-	macro viewMappedFragmentsText {
 		for (var fragmentText : list ${fragmentsTextList}) {
-			CommerceDisplayPageTemplates.viewFragmentText(fragmentText = ${fragmentText});
+			AssertElementPresent(
+				index = ${index},
+				key_fragmentText = ${fragmentText},
+				key_id = "element-text",
+				locator1 = "CommerceEntry#ASSERT_FRAGMENTS_TEXT_IN_SF_N");
+
+			var index = ${index} + 1;
 		}
 	}
 

@@ -482,4 +482,73 @@ definition {
 			webContentTitle = "Web Content Name");
 	}
 
+	@description = "LPS-190808 - Verify if the image added in the Web Content appears when the user enters the notification"
+	@priority = 4
+	test ViewLargeImageAddedByNotification {
+		task ("Given a Structure created with a JSON file") {
+			NavItem.gotoStructures();
+
+			WebContentStructures.importStructure(
+				structureName = "WC Structure Name",
+				uploadFileName = "structure_about_us_section.json");
+		}
+
+		task ("and Given a Template created using that structure") {
+			WebContentNavigator.gotoManageTemplatesViaStructures(structureName = "WC Structure Name");
+
+			WebContentTemplates.addCP(
+				structureName = "WC Structure Name",
+				templateDescription = "WC Template Description",
+				templateFieldNames = "Image",
+				templateName = "WC Template Name");
+		}
+
+		task ("and Given a created Folder based on this structure and assigned a Single Approver Workflow") {
+			NavItem.click(navItem = "Web Content");
+
+			WebContentFolder.addCP(
+				folderDescription = "WC Folder Description",
+				folderName = "WC Folder Name");
+
+			DMFolder.configureWorkflowCP(
+				dmFolderName = "WC Folder Name",
+				workflowDefinition = "Single Approver",
+				workflowRestriction = "Default Workflow");
+		}
+
+		task ("When the user create a Web Content inside the Folder using the Structure") {
+			WebContentFolder.gotoCP(
+				folderName = "WC Folder Name",
+				webContentTitle = "WC Folder Name");
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+		}
+
+		task ("and When the user attach an larger image on the created Web Content") {
+			WebContent.addWithStructureCP(
+				navTab = "Web Content Images",
+				webContentImage = "tree.png",
+				webContentTitle = "WC Title");
+
+			Button.click(button = "Submit for Workflow");
+		}
+
+		task ("and When entering the notification and the user clicks the view button") {
+			UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+			Notifications.clickOnTheNotificationTitle(key_notificationsTitle = "Test Test sent you a Web Content Article for review in the workflow.");
+
+			Click(locator1 = "WorkflowSubmissionsTask#PREVIEW_VIEW");
+		}
+
+		task ("Then the image appears in the new tab and should be seen without being overflowed") {
+			SelectWindow(locator1 = "WC Title - Liferay DXP");
+
+			OcularAssertElementImage(
+				locator1 = "PageEditor#CONTENT_PAGE_WEB_CONTENT_CONTENT",
+				value1 = "tree.png",
+				value2 = 80);
+		}
+	}
+
 }

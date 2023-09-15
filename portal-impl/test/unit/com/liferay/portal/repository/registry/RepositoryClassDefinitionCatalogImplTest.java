@@ -6,6 +6,7 @@
 package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.repository.RepositoryConfigurationBuilder;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
@@ -72,12 +73,13 @@ public class RepositoryClassDefinitionCatalogImplTest {
 	}
 
 	@Test
-	public void testGetExternalRepositoryClassDefinitions() {
+	public void testGetExternalRepositoryClassDefinitions() throws Exception {
 		Collection<RepositoryClassDefinition>
 			externalRepositoryClassDefinitions =
 				(Collection<RepositoryClassDefinition>)
 					_repositoryClassDefinitionCatalogImpl.
-						getExternalRepositoryClassDefinitions();
+						getExternalRepositoryClassDefinitions(
+							CompanyConstants.SYSTEM);
 
 		Assert.assertTrue(
 			_EXTERNAL_REPOSITORY_DEFINER_CLASS_NAME + " not found in " +
@@ -89,10 +91,10 @@ public class RepositoryClassDefinitionCatalogImplTest {
 	}
 
 	@Test
-	public void testGetExternalRepositoryClassNames() {
+	public void testGetExternalRepositoryClassNames() throws Exception {
 		Collection<String> externalRepositoryClassNames =
 			_repositoryClassDefinitionCatalogImpl.
-				getExternalRepositoryClassNames();
+				getExternalRepositoryClassNames(CompanyConstants.SYSTEM);
 
 		Assert.assertTrue(
 			externalRepositoryClassNames.toString(),
@@ -101,7 +103,7 @@ public class RepositoryClassDefinitionCatalogImplTest {
 	}
 
 	@Test
-	public void testGetRepositoryClassDefinition() {
+	public void testGetRepositoryClassDefinition() throws Exception {
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		ServiceRegistration<?> serviceRegistration =
@@ -114,6 +116,7 @@ public class RepositoryClassDefinitionCatalogImplTest {
 			RepositoryClassDefinition repositoryClassDefinition =
 				_repositoryClassDefinitionCatalogImpl.
 					getRepositoryClassDefinition(
+						CompanyConstants.SYSTEM,
 						_REPOSITORY_DEFINER_CLASS_NAME);
 
 			Assert.assertEquals(
@@ -123,6 +126,7 @@ public class RepositoryClassDefinitionCatalogImplTest {
 			RepositoryClassDefinition repositoryExternalClassDefinition =
 				_repositoryClassDefinitionCatalogImpl.
 					getRepositoryClassDefinition(
+						CompanyConstants.SYSTEM,
 						_EXTERNAL_REPOSITORY_DEFINER_CLASS_NAME);
 
 			Assert.assertEquals(

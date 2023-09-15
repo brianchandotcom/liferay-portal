@@ -87,7 +87,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 				<clay:content-col
 					cssClass="inline-item-before"
 				>
-					<liferay-ui:user-portrait
+					<liferay-user:user-portrait
 						user="<%= entryUser %>"
 					/>
 				</clay:content-col>

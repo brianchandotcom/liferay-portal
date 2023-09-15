@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
@@ -57,6 +58,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
@@ -108,10 +110,13 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.taglib.servlet.PipingServletResponseFactory;
 
+import java.sql.Timestamp;
+
 import java.text.DecimalFormat;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -753,10 +758,10 @@ public class ObjectEntryDisplayContextImpl
 			JSONArray rowsJSONArray = JSONFactoryUtil.createJSONArray();
 
 			for (ObjectField objectField :
-					_objectFieldLocalService.getCustomObjectFields(
+					_objectFieldLocalService.getObjectFields(
 						objectDefinition.getObjectDefinitionId())) {
 
-				if (!_isActive(objectField)) {
+				if (!_isActive(objectField) || objectField.isMetadata()) {
 					continue;
 				}
 
@@ -795,7 +800,7 @@ public class ObjectEntryDisplayContextImpl
 		Map<Long, ObjectField> objectFieldsMap = new HashMap<>();
 
 		ListUtil.isNotEmptyForEach(
-			_objectFieldLocalService.getCustomObjectFields(
+			_objectFieldLocalService.getObjectFields(
 				objectDefinition.getObjectDefinitionId()),
 			objectField -> objectFieldsMap.put(
 				objectField.getObjectFieldId(), objectField));
@@ -990,7 +995,7 @@ public class ObjectEntryDisplayContextImpl
 	private DDMFormValues _getDDMFormValues(
 		DDMForm ddmForm, ObjectEntry objectEntry) {
 
-		Map<String, Object> values = objectEntry.getProperties();
+		Map<String, Object> values = _getValues(objectEntry);
 
 		if (values.isEmpty()) {
 			return null;
@@ -1132,6 +1137,40 @@ public class ObjectEntryDisplayContextImpl
 
 			return null;
 		}
+	}
+
+	private Map<String, Object> _getValues(ObjectEntry objectEntry) {
+		Map<String, Object> values = objectEntry.getProperties();
+
+		Date dateCreated = objectEntry.getDateCreated();
+
+		if (dateCreated != null) {
+			values.put("createDate", new Timestamp(dateCreated.getTime()));
+		}
+
+		Creator creator = objectEntry.getCreator();
+
+		if (creator != null) {
+			values.put("creator", creator.getName());
+		}
+
+		values.put(
+			"externalReferenceCode", objectEntry.getExternalReferenceCode());
+		values.put("id", objectEntry.getId());
+
+		Date dateModified = objectEntry.getDateModified();
+
+		if (dateModified != null) {
+			values.put("modifiedDate", new Timestamp(dateModified.getTime()));
+		}
+
+		Status status = objectEntry.getStatus();
+
+		if (status != null) {
+			values.put("status", status.getLabel());
+		}
+
+		return values;
 	}
 
 	private boolean _isActive(ObjectField objectField) throws PortalException {

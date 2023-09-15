@@ -26,8 +26,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSERT_FRAGMENTS_TEXT_IN_SF</td>
-	<td>//h1[(contains(@class,"component-heading")) and (contains(@data-lfr-editable-id,"${key_id}"))][contains(text(),"${key_fragmentText}")] | //h1[(contains(@class,"component-heading")) and (contains(@data-lfr-editable-id,"${key_id}"))]/p[contains(text(),"${key_fragmentText}")]</td>
+	<td>ASSERT_FRAGMENTS_TEXT_IN_SF_N</td>
+	<td>xpath=(//h1[(contains(@class,"component-heading")) and (contains(@data-lfr-editable-id,"${key_id}"))])[${index}][contains(text(),"${key_fragmentText}")]</td>
 	<td></td>
 </tr>
 <tr>
@@ -1334,6 +1334,11 @@
 <tr>
 	<td>LAST_CURRENCY_PRIORITY_ELEMENT</td>
 	<td>xpath=(//tr[contains(@data-qa-id,'row') and not(contains(@class, 'd-none'))])[last()]//td//a[text()='${key_entryName}']//..//..//td[contains(@class,"lfr-priority-column")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECK_PRICE_LIST_CURRENCY</td>
+	<td>//div[@class ="input-group-append input-group-item-shrink"]//span[contains(@class,'input-group-text') and contains(text(),'${key_currency}')]</td>
 	<td></td>
 </tr>
 <tr>

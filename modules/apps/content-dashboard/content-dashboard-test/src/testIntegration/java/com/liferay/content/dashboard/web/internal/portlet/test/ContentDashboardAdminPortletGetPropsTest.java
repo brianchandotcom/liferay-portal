@@ -15,12 +15,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -30,7 +26,6 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -49,10 +44,8 @@ import java.util.Map;
 import javax.portlet.Portlet;
 import javax.portlet.PortletPreferences;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -69,35 +62,13 @@ public class ContentDashboardAdminPortletGetPropsTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
-
-		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
-
-		_user = UserTestUtil.getAdminUser(_company.getCompanyId());
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user));
-
-		_originalName = PrincipalThreadLocal.getName();
-
-		PrincipalThreadLocal.setName(_user.getUserId());
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
-
-		_companyLocalService.deleteCompany(_company);
-
-		PrincipalThreadLocal.setName(_originalName);
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup(
-			_company.getCompanyId(), _user.getUserId(), 0);
+		UserTestUtil.setUser(TestPropsValues.getUser());
+
+		_group = GroupTestUtil.addGroup();
+
+		_company = _companyLocalService.fetchCompany(_group.getCompanyId());
 	}
 
 	@Test
@@ -122,7 +93,7 @@ public class ContentDashboardAdminPortletGetPropsTest {
 			JournalTestUtil.addArticle(
 				_group.getGroupId(), 0,
 				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId(),
+					_group.getGroupId(), TestPropsValues.getUserId(),
 					new long[] {
 						assetCategory1.getCategoryId(),
 						assetCategory2.getCategoryId()
@@ -130,7 +101,7 @@ public class ContentDashboardAdminPortletGetPropsTest {
 			JournalTestUtil.addArticle(
 				_group.getGroupId(), 0,
 				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId(),
+					_group.getGroupId(), TestPropsValues.getUserId(),
 					new long[] {assetCategory2.getCategoryId()}));
 
 			Map<String, Object> data = _getData(
@@ -206,7 +177,7 @@ public class ContentDashboardAdminPortletGetPropsTest {
 			JournalTestUtil.addArticle(
 				_group.getGroupId(), 0,
 				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId(),
+					_group.getGroupId(), TestPropsValues.getUserId(),
 					new long[] {
 						assetCategory.getCategoryId(),
 						childAssetCategory1.getCategoryId(),
@@ -215,7 +186,7 @@ public class ContentDashboardAdminPortletGetPropsTest {
 			JournalTestUtil.addArticle(
 				_group.getGroupId(), 0,
 				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId(),
+					_group.getGroupId(), TestPropsValues.getUserId(),
 					new long[] {
 						assetCategory.getCategoryId(),
 						childAssetCategory2.getCategoryId()
@@ -305,12 +276,12 @@ public class ContentDashboardAdminPortletGetPropsTest {
 			JournalTestUtil.addArticle(
 				_group.getGroupId(), 0,
 				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId(),
+					_group.getGroupId(), TestPropsValues.getUserId(),
 					new long[] {assetCategory.getCategoryId()}));
 			JournalTestUtil.addArticle(
 				_group.getGroupId(), 0,
 				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId(),
+					_group.getGroupId(), TestPropsValues.getUserId(),
 					new long[] {
 						assetCategory.getCategoryId(),
 						childAssetCategory.getCategoryId()
@@ -398,7 +369,7 @@ public class ContentDashboardAdminPortletGetPropsTest {
 			JournalTestUtil.addArticle(
 				_group.getGroupId(), 0,
 				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId(),
+					_group.getGroupId(), TestPropsValues.getUserId(),
 					new long[] {childAssetCategory.getCategoryId()}));
 
 			Map<String, Object> data = _getData(
@@ -455,7 +426,7 @@ public class ContentDashboardAdminPortletGetPropsTest {
 			JournalTestUtil.addArticle(
 				_group.getGroupId(), 0,
 				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId(),
+					_group.getGroupId(), TestPropsValues.getUserId(),
 					new long[] {assetCategory.getCategoryId()}));
 
 			Map<String, Object> data = _getData(
@@ -517,7 +488,7 @@ public class ContentDashboardAdminPortletGetPropsTest {
 			JournalTestUtil.addArticle(
 				_group.getGroupId(), 0,
 				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId(),
+					_group.getGroupId(), TestPropsValues.getUserId(),
 					new long[] {
 						assetCategory.getCategoryId(),
 						childAssetCategory.getCategoryId()
@@ -525,7 +496,7 @@ public class ContentDashboardAdminPortletGetPropsTest {
 			JournalTestUtil.addArticle(
 				_group.getGroupId(), 0,
 				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId(),
+					_group.getGroupId(), TestPropsValues.getUserId(),
 					new long[] {childAssetCategory.getCategoryId()}));
 
 			Map<String, Object> data = _getData(
@@ -663,20 +634,16 @@ public class ContentDashboardAdminPortletGetPropsTest {
 		return themeDisplay;
 	}
 
-	private static Company _company;
-
 	@Inject
 	private static CompanyLocalService _companyLocalService;
-
-	private static String _originalName;
-	private static PermissionChecker _permissionChecker;
-	private static User _user;
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	private Company _company;
 
 	@DeleteAfterTestRun
 	private Group _group;

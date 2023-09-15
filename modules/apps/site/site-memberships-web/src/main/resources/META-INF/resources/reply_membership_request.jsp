@@ -66,7 +66,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "reply-membership-request-f
 					</p>
 				</c:if>
 
-				<liferay-ui:user-portrait
+				<liferay-user:user-portrait
 					userId="<%= membershipRequest.getUserId() %>"
 				/>
 

@@ -118,12 +118,17 @@ public abstract class Base${schemaName}ResourceImpl
 
 	<#assign
 		generateGetPermissionCheckerMethods = false
+		generateMultipartBodyClasses = []
 		generatePatchMethods = false
 		getParentBatchJavaMethodSignatures = []
 		postParentBatchJavaMethodSignatures = []
 	/>
 
 	<#list javaMethodSignatures as javaMethodSignature>
+		<#if javaMethodSignature.requestBodyMediaTypes?seq_contains("multipart/form-data") && freeMarkerTool.getMultipartBodySchemas(javaMethodSignature)??>
+			<#assign generateMultipartBodyClasses = generateMultipartBodyClasses + [javaMethodSignature] />
+		</#if>
+
 		<#assign
 			parentSchemaName = javaMethodSignature.parentSchemaName!
 		/>
@@ -1370,6 +1375,26 @@ public abstract class Base${schemaName}ResourceImpl
 	</#if>
 
 	private static final com.liferay.portal.kernel.log.Log _log = LogFactoryUtil.getLog(Base${schemaName}ResourceImpl.class);
+
+	<#if generateMultipartBodyClasses?has_content>
+		<#list generateMultipartBodyClasses as javaMethodSignatureWithMultipartBody>
+			private class ${stringUtil.upperCaseFirstLetter(javaMethodSignatureWithMultipartBody.methodName)}RequestBody {
+				<#assign multipartBodySchemas = freeMarkerTool.getMultipartBodySchemas(javaMethodSignatureWithMultipartBody) />
+
+				<#list multipartBodySchemas as schemaName, propertySchema>
+					<#if stringUtil.equals(propertySchema.format, "binary") && stringUtil.equals(propertySchema.type, "string")>
+						@io.swagger.v3.oas.annotations.media.Schema(
+							description = "${stringUtil.upperCaseFirstLetter(schemaName)}", format = "binary", type = "string"
+						)
+						public String ${schemaName};
+					<#else>
+						public ${stringUtil.upperCaseFirstLetter(schemaName)} ${schemaName};
+					</#if>
+				</#list>
+
+			}
+		</#list>
+	</#if>
 
 }
 

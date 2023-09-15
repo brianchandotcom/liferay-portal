@@ -122,7 +122,7 @@ portletDisplay.setURLBack(backURL);
 					<clay:col
 						md="6"
 					>
-						<liferay-ui:user-name-fields />
+						<liferay-user:user-name-fields />
 					</clay:col>
 
 					<clay:col

@@ -50,7 +50,7 @@ KBArticleItemSelectorViewDisplayContext kbArticleItemSelectorViewDisplayContext 
 			<c:choose>
 				<c:when test="<%= curKBArticle != null %>">
 					<liferay-ui:search-container-column-text>
-						<liferay-ui:user-portrait
+						<liferay-user:user-portrait
 							userId="<%= curKBArticle.getUserId() %>"
 						/>
 					</liferay-ui:search-container-column-text>

@@ -56,7 +56,7 @@ ViewScheduledDisplayContext viewScheduledDisplayContext = (ViewScheduledDisplayC
 						<c:when test='<%= Objects.equals(publicationsDisplayContext.getDisplayStyle(), "descriptive") %>'>
 							<liferay-ui:search-container-column-text>
 								<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(ctCollection.getUserName()) %>">
-									<liferay-ui:user-portrait
+									<liferay-user:user-portrait
 										userId="<%= ctCollection.getUserId() %>"
 									/>
 								</span>
@@ -124,7 +124,7 @@ ViewScheduledDisplayContext viewScheduledDisplayContext = (ViewScheduledDisplayC
 								name="owner"
 							>
 								<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(ctCollection.getUserName()) %>">
-									<liferay-ui:user-portrait
+									<liferay-user:user-portrait
 										userId="<%= ctCollection.getUserId() %>"
 									/>
 								</span>

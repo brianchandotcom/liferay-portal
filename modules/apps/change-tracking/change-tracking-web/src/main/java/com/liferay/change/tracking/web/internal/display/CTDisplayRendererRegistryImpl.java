@@ -410,6 +410,16 @@ public class CTDisplayRendererRegistryImpl
 		return ctDisplayRenderer.isHideable(model);
 	}
 
+	@Override
+	public <T extends BaseModel<T>> boolean isMovable(
+		T model, long modelClassNameId) {
+
+		CTDisplayRenderer<T> ctDisplayRenderer = getCTDisplayRenderer(
+			modelClassNameId);
+
+		return ctDisplayRenderer.isMovable(model);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_ctDisplayServiceTrackerMap =

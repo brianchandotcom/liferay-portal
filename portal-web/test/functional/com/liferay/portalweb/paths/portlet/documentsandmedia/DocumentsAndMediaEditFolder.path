@@ -15,7 +15,7 @@
 
 <tr>
 	<td>WORKFLOW_DOCUMENT_TYPE_RESTRICTIONS_TOGGLE</td>
-	<td>//a[contains(.,'Document Type Restrictions and Workflow')]</td>
+	<td>//a[contains(.,'Document Type Restrictions and Workflow')] | //a[contains(.,'Structure Restrictions and Workflow')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -148,6 +148,10 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro goToPriceListAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet");
+	}
+
 	macro gotoProductDetails {
 		var productName = CommerceUtilities.convertStringToKey(string = ${productName});
 
@@ -202,6 +206,10 @@ definition {
 
 	macro goToWishLists {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/lists");
+	}
+
+	macro openCommerceCatalogueAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet");
 	}
 
 	macro openCommerceCountriesAdmin {

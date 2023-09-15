@@ -16,6 +16,7 @@ const HiddenInputs = ({valueMap = {}}) => {
 			id={`${namespace}${key}`}
 			key={key}
 			name={`${namespace}${key}`}
+			readOnly
 			type="hidden"
 			value={valueMap[key]}
 		/>

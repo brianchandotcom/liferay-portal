@@ -29,6 +29,7 @@ interface ManagementToolbarProps {
 	hasUpdatePermission: boolean;
 	helpMessage: string;
 	isApproved?: boolean;
+	isRootDescendantNode?: boolean;
 	label: string;
 	onExternalReferenceCodeChange?: (value: string) => void;
 	onGetEntity: () => Promise<Entity>;
@@ -51,6 +52,7 @@ export function ManagementToolbar({
 	hasUpdatePermission,
 	helpMessage,
 	isApproved,
+	isRootDescendantNode,
 	label,
 	onExternalReferenceCodeChange,
 	onGetEntity,
@@ -155,7 +157,9 @@ export function ManagementToolbar({
 							<ClayButton
 								disabled={!hasUpdatePermission}
 								displayType={
-									isApproved || isApproved === undefined
+									isApproved ||
+									isApproved === undefined ||
+									isRootDescendantNode
 										? 'primary'
 										: 'secondary'
 								}
@@ -166,16 +170,20 @@ export function ManagementToolbar({
 								{Liferay.Language.get('save')}
 							</ClayButton>
 
-							{isApproved !== undefined && !isApproved && (
-								<ClayButton
-									disabled={!hasUpdatePermission || disabled}
-									id={`${portletNamespace}publish`}
-									name="publish"
-									onClick={() => onPublish()}
-								>
-									{Liferay.Language.get('publish')}
-								</ClayButton>
-							)}
+							{isApproved !== undefined &&
+								!isApproved &&
+								!isRootDescendantNode && (
+									<ClayButton
+										disabled={
+											!hasUpdatePermission || disabled
+										}
+										id={`${portletNamespace}publish`}
+										name="publish"
+										onClick={() => onPublish()}
+									>
+										{Liferay.Language.get('publish')}
+									</ClayButton>
+								)}
 						</ClayButton.Group>
 					</ClayManagementToolbar.ItemList>
 				)}

@@ -5,16 +5,19 @@
 
 package com.liferay.portal.upgrade.test;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -34,6 +37,9 @@ import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -440,26 +446,22 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testSchemaVersion() throws Exception {
-		Release release = _releaseLocalService.getRelease(1);
+		int initialBuildNumber;
+		Version initialSchemaVersion;
 
-		int initialBuildNumber = release.getBuildNumber();
-		String initialSchemaVersion = release.getSchemaVersion();
+		try (Connection connection = DataAccess.getConnection()) {
+			initialBuildNumber = PortalUpgradeProcess.getCurrentBuildNumber(
+				connection);
+			initialSchemaVersion = PortalUpgradeProcess.getCurrentSchemaVersion(
+				connection);
+		}
 
-		release = _releaseLocalService.getRelease(1);
-
-		release.setSchemaVersion("1.0.0");
-		release.setBuildNumber(ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
-
-		_releaseLocalService.updateRelease(release);
+		_updatePortalRelease(
+			new Version(1, 0, 0), ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
 
 		_appender.start();
 
-		release = _releaseLocalService.getRelease(1);
-
-		release.setSchemaVersion(initialSchemaVersion);
-		release.setBuildNumber(initialBuildNumber);
-
-		_releaseLocalService.updateRelease(release);
+		_updatePortalRelease(initialSchemaVersion, initialBuildNumber);
 
 		_appender.stop();
 
@@ -618,6 +620,27 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		return () -> ReflectionTestUtil.getAndSetFieldValue(
 			PropsValues.class, "UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT",
 			originalUpgradeReportDLStorageSizeTimeout);
+	}
+
+	private void _updatePortalRelease(Version schemaVersion, int buildNumber)
+		throws Exception {
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				"update Release_ set schemaVersion = ?, buildNumber = ? " +
+					"where releaseId = ?")) {
+
+			preparedStatement.setString(1, schemaVersion.toString());
+			preparedStatement.setInt(2, buildNumber);
+			preparedStatement.setLong(3, ReleaseConstants.DEFAULT_ID);
+
+			preparedStatement.executeUpdate();
+		}
+
+		DCLSingleton<?> dclSingleton = ReflectionTestUtil.getFieldValue(
+			PortalUpgradeProcess.class, "_currentPortalReleaseDTODCLSingleton");
+
+		dclSingleton.destroy(null);
 	}
 
 	private static DB _db;

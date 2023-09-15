@@ -315,9 +315,9 @@ definition {
 
 		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
 
-		KBDisplayWidget.moveArticleViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
-
-		KBDisplayWidget.selectParentViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+		KBDisplayWidget.moveArticleViaKBDisplayPG(
+			destinationItem = "Knowledge Base Article Parent Title 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
 
 		KBDisplayWidget.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
 

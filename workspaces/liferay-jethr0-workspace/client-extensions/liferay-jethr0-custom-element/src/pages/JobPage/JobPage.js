@@ -10,6 +10,7 @@ import {useParams} from 'react-router-dom';
 
 import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
+import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import JobBuilds from '../../components/JobBuilds/JobBuilds';
 import JobInformation from '../../components/JobInformation/JobInformation';
 import useSpringBootData from '../../services/useSpringBootData';
@@ -38,6 +39,7 @@ function JobPage() {
 	return (
 		<ClayLayout.Container>
 			<Jethr0Card>
+				<Jethr0NavigationBar active="Jobs" />
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
 				<Heading level={3} weight="lighter">
 					{jobName}

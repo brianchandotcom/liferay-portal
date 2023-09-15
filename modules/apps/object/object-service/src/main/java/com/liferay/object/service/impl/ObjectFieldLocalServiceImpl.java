@@ -24,6 +24,7 @@ import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldReadOnlyConditionExpressionException;
 import com.liferay.object.exception.ObjectFieldReadOnlyException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
+import com.liferay.object.exception.ObjectFieldRequiredException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.exception.ObjectFieldStateException;
 import com.liferay.object.exception.ObjectFieldSystemException;
@@ -1172,6 +1173,7 @@ public class ObjectFieldLocalServiceImpl
 		_validateLocalized(
 			businessType, localized, oldObjectField.getObjectDefinition(),
 			required);
+		_validateRequired(objectFieldId, businessType, required);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
@@ -1550,6 +1552,25 @@ public class ObjectFieldLocalServiceImpl
 				throw new ObjectFieldReadOnlyConditionExpressionException(
 					"Syntax error in: " + readOnlyConditionExpression);
 			}
+		}
+	}
+
+	private void _validateRequired(
+			long objectFieldId, String businessType, boolean required)
+		throws PortalException {
+
+		if (!StringUtil.equals(
+				businessType,
+				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+			return;
+		}
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipPersistence.findByObjectFieldId2(objectFieldId);
+
+		if (objectRelationship.isEdge() && !required) {
+			throw new ObjectFieldRequiredException();
 		}
 	}
 

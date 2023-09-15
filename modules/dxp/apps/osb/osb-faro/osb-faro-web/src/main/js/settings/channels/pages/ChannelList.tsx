@@ -7,6 +7,7 @@ import ListComponent from 'shared/hoc/ListComponent';
 import Nav from 'shared/components/Nav';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React from 'react';
+import RowActions from 'shared/components/RowActions';
 import TextTruncate from 'shared/components/TextTruncate';
 import URLConstants from 'shared/util/url-constants';
 import {
@@ -30,6 +31,7 @@ import {Link} from 'react-router-dom';
 import {RootState} from 'shared/store';
 import {Routes, toRoute} from 'shared/util/router';
 import {setBackURL} from 'shared/actions/settings';
+import {Sizes} from 'shared/util/constants';
 import {UNAUTHORIZED_ACCESS} from 'shared/util/request';
 import {updateDefaultChannelId} from 'shared/actions/preferences';
 import {useQueryPagination, useRequest} from 'shared/hooks';
@@ -351,6 +353,39 @@ const ChannelList: React.FC<IChannelListProps> = ({
 
 	const authorized: boolean = currentUser.isAdmin();
 
+	const renderRowActions = ({
+		data: {commerceChannelsCount, groupsCount, id, name}
+	}) => {
+		const actions = [
+			{
+				iconSymbol: 'magic',
+				label: Liferay.Language.get('clear-data'),
+				onClick: () => handleClearData([id], name)
+			},
+			{
+				iconSymbol: 'trash',
+				label: Liferay.Language.get('delete'),
+				onClick: () => {
+					if (!commerceChannelsCount && !groupsCount) {
+						handleDeleteChannel([id], name);
+					} else {
+						handleUnableToDeleteProperty();
+					}
+				}
+			}
+		];
+
+		return (
+			<RowActions
+				actions={actions.map(({label, onClick}) => ({
+					label,
+					onClick
+				}))}
+				quickActions={actions}
+			/>
+		);
+	};
+
 	return (
 		<BasePage
 			groupId={groupId}
@@ -388,17 +423,20 @@ const ChannelList: React.FC<IChannelListProps> = ({
 							label: Liferay.Language.get('property-name')
 						},
 						{
-							accessor: 'groupIdCount',
+							accessor: 'groupsCount',
+							className: 'text-right',
 							label: Liferay.Language.get('sites'),
 							sortable: false
 						},
 						{
-							accessor: 'commerceChannelIdCount',
+							accessor: 'commerceChannelsCount',
+							className: 'text-right',
 							label: Liferay.Language.get('channels'),
 							sortable: false
 						},
 						{
 							accessor: 'id',
+							className: 'text-right',
 							label: Liferay.Language.get('property-id'),
 							sortable: false
 						},
@@ -456,6 +494,7 @@ const ChannelList: React.FC<IChannelListProps> = ({
 					page={page}
 					query={query}
 					renderNav={authorized ? renderNav : null}
+					renderRowActions={renderRowActions}
 					rowIdentifier='id'
 					showCheckbox={authorized}
 					total={data?.total}

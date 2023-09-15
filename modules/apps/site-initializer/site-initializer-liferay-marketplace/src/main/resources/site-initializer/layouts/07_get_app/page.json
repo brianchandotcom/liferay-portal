@@ -1,0 +1,13 @@
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
+	"friendlyURL": "/get-app",
+	"hidden": true,
+	"name": "Get App",
+	"name_i18n": {
+		"en_US": "Get App"
+	},
+	"private": false,
+	"system": false,
+	"type": "content"
+}

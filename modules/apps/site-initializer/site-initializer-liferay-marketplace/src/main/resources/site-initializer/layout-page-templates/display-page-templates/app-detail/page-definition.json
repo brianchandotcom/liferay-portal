@@ -308,17 +308,23 @@
 									{
 										"definition": {
 											"fragment": {
-												"key": "BASIC_COMPONENT-html"
+												"key": "get-app-button",
+												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
+												"productId": {
+													"href": ""
+												}
 											},
 											"fragmentFields": [
 												{
-													"id": "element-html",
+													"id": "productID",
 													"value": {
-														"html": {
+														"fragmentLink": {
+														},
+														"text": {
 															"mapping": {
-																"fieldKey": "ddmTemplate__ddmTemplate_[$TEMPLATE_ENTRY_ID:marketplace_get_app_button$]",
+																"fieldKey": "CPDefinition_cProductId",
 																"itemReference": {
 																	"contextSource": "DisplayPageItem"
 																}

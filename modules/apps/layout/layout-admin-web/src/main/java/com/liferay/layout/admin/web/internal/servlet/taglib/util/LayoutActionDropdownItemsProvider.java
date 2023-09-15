@@ -12,7 +12,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
+import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -80,9 +82,7 @@ public class LayoutActionDropdownItemsProvider {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() ->
-							(_layoutsAdminDisplayContext.isConversionDraft(
-								layout) ||
-							 layout.isTypeContent()) &&
+							_isEditable(layout) &&
 							_layoutActionsHelper.isShowConfigureAction(layout),
 						_getEditLayoutActionUnsafeConsumer(layout)
 					).add(
@@ -143,7 +143,18 @@ public class LayoutActionDropdownItemsProvider {
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.addContext(
+					DropdownItemListBuilder.add(
+						() -> _isShowConvertToPageTemplateAction(layout),
+						dropdownItem -> {
+							dropdownItem.putData(
+								"action", "convertToPageTemplate");
+							dropdownItem.setIcon("page-template");
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest,
+									"convert-to-page-template"));
+						}
+					).addContext(
 						_getCopyLayoutWithPermissionsActionUnsafeConsumer(
 							layout)
 					).add(
@@ -677,6 +688,32 @@ public class LayoutActionDropdownItemsProvider {
 		}
 
 		return draftLayout.hasScopeGroup();
+	}
+
+	private boolean _isEditable(Layout layout) {
+		if (_layoutsAdminDisplayContext.isConversionDraft(layout) ||
+			layout.isTypeContent()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isShowConvertToPageTemplateAction(Layout layout) {
+		if (_isEditable(layout) &&
+			LayoutPageTemplatePermission.contains(
+				_themeDisplay.getPermissionChecker(), layout.getGroupId(),
+				LayoutPageTemplateActionKeys.
+					ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) &&
+			LayoutPageTemplatePermission.contains(
+				_themeDisplay.getPermissionChecker(), layout.getGroupId(),
+				LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private final HttpServletRequest _httpServletRequest;

@@ -505,7 +505,8 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService);
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AA", "C_AAA", "C_AAB", "C_AB"});
 	}
 
 	@Test
@@ -1267,18 +1268,10 @@ public class ObjectDefinitionLocalServiceTest {
 		ObjectRelationship objectRelationshipA_AA =
 			ObjectRelationshipTestUtil.addObjectRelationship(
 				_objectRelationshipLocalService, objectDefinitionA,
-				objectDefinitionAA);
+				objectDefinitionAA,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
 
-		TreeTestUtil.bind(
-			_objectDefinitionLocalService,
-			Arrays.asList(
-				ObjectRelationshipTestUtil.addObjectRelationship(
-					_objectRelationshipLocalService, objectDefinitionAA,
-					ObjectDefinitionTestUtil.addCustomObjectDefinition(
-						"AAA", _objectDefinitionLocalService)),
-				objectRelationshipA_AA));
-
-		TreeTestUtil.assertTree(
+		_testBindObjectDefinitions(
 			LinkedHashMapBuilder.put(
 				"A", new String[] {"AA"}
 			).put(
@@ -1286,21 +1279,18 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AAA", new String[0]
 			).build(),
-			_treeFactory.create(objectDefinitionA.getObjectDefinitionId()),
-			_objectDefinitionLocalService);
-
-		// Bind one object definition to an existing hierarchical structure
-
-		TreeTestUtil.bind(
-			_objectDefinitionLocalService,
 			Arrays.asList(
 				ObjectRelationshipTestUtil.addObjectRelationship(
 					_objectRelationshipLocalService, objectDefinitionAA,
 					ObjectDefinitionTestUtil.addCustomObjectDefinition(
-						"AAB", _objectDefinitionLocalService)),
-				objectRelationshipA_AA));
+						"AAA", _objectDefinitionLocalService),
+					ObjectRelationshipConstants.DELETION_TYPE_PREVENT),
+				objectRelationshipA_AA),
+			objectDefinitionA.getObjectDefinitionId());
 
-		TreeTestUtil.assertTree(
+		// Bind one object definition to an existing hierarchical structure
+
+		_testBindObjectDefinitions(
 			LinkedHashMapBuilder.put(
 				"A", new String[] {"AA"}
 			).put(
@@ -1310,11 +1300,18 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AAB", new String[0]
 			).build(),
-			_treeFactory.create(objectDefinitionA.getObjectDefinitionId()),
-			_objectDefinitionLocalService);
+			Arrays.asList(
+				ObjectRelationshipTestUtil.addObjectRelationship(
+					_objectRelationshipLocalService, objectDefinitionAA,
+					ObjectDefinitionTestUtil.addCustomObjectDefinition(
+						"AAB", _objectDefinitionLocalService),
+					ObjectRelationshipConstants.DELETION_TYPE_PREVENT),
+				objectRelationshipA_AA),
+			objectDefinitionA.getObjectDefinitionId());
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService);
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AA", "C_AAA", "C_AAB"});
 	}
 
 	@Test
@@ -1675,7 +1672,8 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(0, objectDefinition.getRootObjectDefinitionId());
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService);
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AA", "C_AAA", "C_AAB", "C_AB"});
 	}
 
 	@Test
@@ -2346,7 +2344,37 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectFolderLocalService.deleteObjectFolder(objectFolder);
 	}
 
-	private void _testSystemObjectFields(ObjectDefinition objectDefinition) {
+	private void _testBindObjectDefinitions(
+			Map<String, String[]> expectedMap,
+			List<ObjectRelationship> objectRelationships,
+			long rootObjectDefinitionId)
+		throws Exception {
+
+		TreeTestUtil.bind(_objectDefinitionLocalService, objectRelationships);
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			ObjectField objectField2 = _objectFieldLocalService.getObjectField(
+				objectRelationship.getObjectFieldId2());
+
+			Assert.assertTrue(objectField2.isRequired());
+
+			objectRelationship =
+				_objectRelationshipLocalService.getObjectRelationship(
+					objectRelationship.getObjectRelationshipId());
+
+			Assert.assertEquals(
+				objectRelationship.getDeletionType(),
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE);
+		}
+
+		TreeTestUtil.assertTree(
+			expectedMap, _treeFactory.create(rootObjectDefinitionId),
+			_objectDefinitionLocalService);
+	}
+
+	private void _testSystemObjectFields(ObjectDefinition objectDefinition)
+		throws Exception {
+
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
 				objectDefinition.getObjectDefinitionId());

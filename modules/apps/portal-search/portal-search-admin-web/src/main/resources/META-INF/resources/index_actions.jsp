@@ -49,6 +49,10 @@ page import="java.util.Map" %>
 	<portlet:param name="tabs1" value="index-actions" />
 </portlet:renderURL>
 
+<%
+SearchAdminDisplayContext searchAdminDisplayContext = (SearchAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+%>
+
 <aui:form
 	action='<%=
 		PortletURLBuilder.createRenderURL(
@@ -80,7 +84,6 @@ page import="java.util.Map" %>
 	}
 
 	IndexActionsDisplayContext indexActionsDisplayContext = (IndexActionsDisplayContext)request.getAttribute(SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT);
-	SearchAdminDisplayContext searchAdminDisplayContext = (SearchAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 	%>
 
 	<clay:container-fluid
@@ -347,11 +350,6 @@ page import="java.util.Map" %>
 </aui:form>
 
 <aui:script use="liferay-admin">
-
-	<%
-	SearchAdminDisplayContext searchAdminDisplayContext = (SearchAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-	%>
-
 	new Liferay.Portlet.Admin({
 		controlMenuCategoryKey:
 			'<%= ProductNavigationControlMenuCategoryKeys.TOOLS %>',

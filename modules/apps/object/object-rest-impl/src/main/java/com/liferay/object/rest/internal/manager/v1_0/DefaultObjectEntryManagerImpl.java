@@ -906,7 +906,7 @@ public class DefaultObjectEntryManagerImpl
 
 					_relateNestedObjectEntry(
 						objectDefinition, objectRelationship, primaryKey,
-						nestedObjectEntryId);
+						nestedObjectEntryId, new ServiceContext());
 
 					nestedExternalReferenceCodes.add(
 						systemObjectDefinitionManager.
@@ -948,7 +948,10 @@ public class DefaultObjectEntryManagerImpl
 					if (!manyToOneObjectRelationship) {
 						_relateNestedObjectEntry(
 							objectDefinition, objectRelationship, primaryKey,
-							nestedObjectEntry.getId());
+							nestedObjectEntry.getId(),
+							_createServiceContext(
+								nestedObjectEntry,
+								dtoConverterContext.getUserId()));
 					}
 
 					nestedExternalReferenceCodes.add(
@@ -1025,6 +1028,13 @@ public class DefaultObjectEntryManagerImpl
 					Long::parseLong));
 		}
 
+		if (properties.get("taxonomyCategoryIds") != null) {
+			serviceContext.setAssetCategoryIds(
+				ListUtil.toLongArray(
+					(List<Integer>)properties.get("taxonomyCategoryIds"),
+					Long::valueOf));
+		}
+
 		if (Validator.isNotNull(objectEntry.getKeywords())) {
 			serviceContext.setAssetTagNames(objectEntry.getKeywords());
 		}
@@ -1033,6 +1043,12 @@ public class DefaultObjectEntryManagerImpl
 			serviceContext.setAssetTagNames(
 				ArrayUtil.toStringArray(
 					(List<String>)properties.get("tagNames")));
+		}
+
+		if (properties.get("keywords") != null) {
+			serviceContext.setAssetTagNames(
+				ArrayUtil.toStringArray(
+					(List<String>)properties.get("keywords")));
 		}
 
 		serviceContext.setUserId(userId);
@@ -1462,7 +1478,7 @@ public class DefaultObjectEntryManagerImpl
 	private void _relateNestedObjectEntry(
 			ObjectDefinition objectDefinition,
 			ObjectRelationship objectRelationship, long primaryKey,
-			long relatedPrimaryKey)
+			long relatedPrimaryKey, ServiceContext serviceContext)
 		throws Exception {
 
 		long primaryKey1 = relatedPrimaryKey;
@@ -1477,7 +1493,7 @@ public class DefaultObjectEntryManagerImpl
 
 		_objectRelationshipService.addObjectRelationshipMappingTableValues(
 			objectRelationship.getObjectRelationshipId(), primaryKey1,
-			primaryKey2, new ServiceContext());
+			primaryKey2, serviceContext);
 	}
 
 	private Date _toDate(Locale locale, String valueString) {

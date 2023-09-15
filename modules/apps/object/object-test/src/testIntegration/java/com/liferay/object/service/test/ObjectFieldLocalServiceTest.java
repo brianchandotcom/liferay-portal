@@ -25,6 +25,7 @@ import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldReadOnlyConditionExpressionException;
 import com.liferay.object.exception.ObjectFieldReadOnlyException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
+import com.liferay.object.exception.ObjectFieldRequiredException;
 import com.liferay.object.exception.ObjectFieldSettingNameException;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.exception.ObjectFieldStateException;
@@ -56,6 +57,8 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.service.test.util.ObjectFieldTestUtil;
+import com.liferay.object.service.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.service.test.util.TreeTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -638,28 +641,28 @@ public class ObjectFieldLocalServiceTest {
 						"able"
 					).build()));
 
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+		ObjectField objectField1 = _objectFieldLocalService.fetchObjectField(
 			objectDefinition.getObjectDefinitionId(), "able");
 
-		Assert.assertEquals("able_", objectField.getDBColumnName());
+		Assert.assertEquals("able_", objectField1.getDBColumnName());
 		Assert.assertEquals(
-			ObjectFieldConstants.DB_TYPE_LONG, objectField.getDBType());
-		Assert.assertFalse(objectField.isIndexed());
-		Assert.assertTrue(objectField.isIndexedAsKeyword());
-		Assert.assertEquals("", objectField.getIndexedLanguageId());
+			ObjectFieldConstants.DB_TYPE_LONG, objectField1.getDBType());
+		Assert.assertFalse(objectField1.isIndexed());
+		Assert.assertTrue(objectField1.isIndexedAsKeyword());
+		Assert.assertEquals("", objectField1.getIndexedLanguageId());
 		Assert.assertEquals(
 			LocalizedMapUtil.getLocalizedMap("able"),
-			objectField.getLabelMap());
-		Assert.assertEquals("able", objectField.getName());
-		Assert.assertFalse(objectField.isRequired());
+			objectField1.getLabelMap());
+		Assert.assertEquals("able", objectField1.getName());
+		Assert.assertFalse(objectField1.isRequired());
 
 		_testAddOrUpdateCustomObjectField(
 			objectFieldBuilder.dbColumnName(
-				objectField.getDBColumnName()
+				objectField1.getDBColumnName()
 			).objectFieldId(
-				objectField.getObjectFieldId()
+				objectField1.getObjectFieldId()
 			).externalReferenceCode(
-				objectField.getExternalReferenceCode()
+				objectField1.getExternalReferenceCode()
 			).build());
 
 		_testAddOrUpdateCustomObjectField(
@@ -719,7 +722,7 @@ public class ObjectFieldLocalServiceTest {
 			TestPropsValues.getUserId(),
 			objectDefinition.getObjectDefinitionId());
 
-		objectField = _addOrUpdateCustomObjectField(
+		objectField1 = _addOrUpdateCustomObjectField(
 			objectFieldBuilder.businessType(
 				ObjectFieldConstants.BUSINESS_TYPE_INTEGER
 			).dbType(
@@ -736,18 +739,18 @@ public class ObjectFieldLocalServiceTest {
 				"charlie"
 			).build());
 
-		Assert.assertEquals("baker_", objectField.getDBColumnName());
+		Assert.assertEquals("baker_", objectField1.getDBColumnName());
 		Assert.assertEquals(
-			ObjectFieldConstants.DB_TYPE_STRING, objectField.getDBType());
-		Assert.assertFalse(objectField.isIndexed());
-		Assert.assertTrue(objectField.isIndexedAsKeyword());
+			ObjectFieldConstants.DB_TYPE_STRING, objectField1.getDBType());
+		Assert.assertFalse(objectField1.isIndexed());
+		Assert.assertTrue(objectField1.isIndexedAsKeyword());
 		Assert.assertEquals(
-			StringPool.BLANK, objectField.getIndexedLanguageId());
+			StringPool.BLANK, objectField1.getIndexedLanguageId());
 		Assert.assertEquals(
-			objectField.getLabelMap(),
+			objectField1.getLabelMap(),
 			LocalizedMapUtil.getLocalizedMap("charlie"));
-		Assert.assertEquals("baker", objectField.getName());
-		Assert.assertTrue(objectField.isRequired());
+		Assert.assertEquals("baker", objectField1.getName());
+		Assert.assertTrue(objectField1.isRequired());
 
 		// Object field label needs to be replicated when there is an update
 		// with another default language
@@ -758,10 +761,10 @@ public class ObjectFieldLocalServiceTest {
 			LocaleUtil.GERMANY.getLanguage(), LocaleUtil.GERMANY.getCountry(),
 			LocaleUtil.GERMANY.getVariant());
 
-		objectField = _addOrUpdateCustomObjectField(
-			objectField, objectField.getObjectFieldSettings());
+		objectField1 = _addOrUpdateCustomObjectField(
+			objectField1, objectField1.getObjectFieldSettings());
 
-		Map<Locale, String> labelMap = objectField.getLabelMap();
+		Map<Locale, String> labelMap = objectField1.getLabelMap();
 
 		Assert.assertEquals(
 			labelMap.get(LocaleUtil.GERMANY), labelMap.get(LocaleUtil.US));
@@ -775,11 +778,11 @@ public class ObjectFieldLocalServiceTest {
 		objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			false, _objectDefinitionLocalService, Collections.emptyList());
 
-		objectField = _addCustomObjectField(
+		objectField1 = _addCustomObjectField(
 			_getReadOnlyTextObjectField(
 				objectDefinition.getObjectDefinitionId(), null, null));
 
-		ObjectField finalObjectField = objectField;
+		ObjectField finalObjectField = objectField1;
 
 		AssertUtils.assertFailure(
 			ObjectFieldReadOnlyConditionExpressionException.class,
@@ -892,6 +895,29 @@ public class ObjectFieldLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			relatedObjectDefinition);
+
+		objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectRelationshipLocalService,
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				"A", _objectDefinitionLocalService),
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				"AA", _objectDefinitionLocalService));
+
+		TreeTestUtil.bind(
+			_objectDefinitionLocalService,
+			Collections.singletonList(objectRelationship));
+
+		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		objectField2.setRequired(false);
+
+		AssertUtils.assertFailure(
+			ObjectFieldRequiredException.class, null,
+			() -> _addOrUpdateCustomObjectField(objectField2));
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService, new String[] {"C_A", "C_AA"});
 	}
 
 	@Test

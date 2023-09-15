@@ -328,12 +328,6 @@ public class SearchContainerRowTag<R>
 					FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
 						String.valueOf(rowIdObject));
 			}
-
-			HttpServletRequest httpServletRequest = getRequest();
-
-			httpServletRequest.setAttribute(
-				"liferay-ui:search-container-row:rowIdProperty",
-				_rowIdProperty);
 		}
 
 		_resultRow = new com.liferay.taglib.search.ResultRow(

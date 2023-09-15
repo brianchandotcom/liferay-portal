@@ -573,7 +573,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.shipping.engine.fedex.jar!org.apache.axis.jar</file-name>
-				<version>1.4.LIFERAY-PATCHED-6</version>
+				<version>1.4.LIFERAY-PATCHED-7</version>
 				<project-name>org.apache.axis</project-name>
 				<licenses>
 					<license>

@@ -123,7 +123,7 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 	}
 
 	@Test
-	public void testCopyFileShouldCopyDocumentTypeToRelatedGroupWhenDDMStructuresAvailable()
+	public void testCopyFileEntryShouldCopyDLFileEntryTypeWhenDLFileEntryTypeAvailable()
 		throws Exception {
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
@@ -160,7 +160,7 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 	}
 
 	@Test
-	public void testCopyFileShouldNotCopyDocumentTypeFromRelatedGroupUnlessDDMStructuresAvailable()
+	public void testCopyFileEntryShouldNotCopyDLFileEntryTypeUnlessDLFileEntryTypeAvailable()
 		throws Exception {
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
@@ -207,7 +207,7 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 	}
 
 	@Test
-	public void testCopyFileShouldNotCopyDocumentTypeFromUnrelatedGroup()
+	public void testCopyFileEntryShouldNotCopyDLFileEntryTypeFromUnrelatedGroup()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -251,7 +251,7 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 	}
 
 	@Test
-	public void testCopyFileShouldNotCopyDocumentTypeToRelatedGroupUnlessDDMStructuresAvailable()
+	public void testCopyFileEntryShouldNotCopyDLFileEntryTypeFromRelatedGroupUnlessDLFileEntryTypeAvailable()
 		throws Exception {
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
@@ -296,7 +296,7 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 	}
 
 	@Test
-	public void testCopyFileShouldNotCopyDocumentTypeToUnrelatedGroup()
+	public void testCopyFileEntryShouldNotCopyDLFileEntryTypeToUnrelatedGroup()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -338,7 +338,7 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 	}
 
 	@Test(expected = InvalidFileEntryTypeException.class)
-	public void testCopyFileThrowsExceptionWhenCopyDocumentTypeFromRelatedGroupWhenDDMStructuresAvailable()
+	public void testCopyFileEntryFailsUnlessDLFileEntryTypeAvailable()
 		throws Exception {
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(

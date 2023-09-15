@@ -102,7 +102,7 @@ public class DLAppServiceWhenCopyingWithDocumentTypesTest
 	}
 
 	@Test
-	public void testCopyFileShouldCopyBasicDocumentTypeWhenCopyDocumentTypesInDifferentGroup()
+	public void testCopyFileEntryShouldNotCopyDLFileEntryTypeUnlessDLFileEntryTypeAvailable()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -141,7 +141,7 @@ public class DLAppServiceWhenCopyingWithDocumentTypesTest
 	}
 
 	@Test
-	public void testCopyFileShouldCopyDocumentTypesFromParentGroup()
+	public void testCopyFileEntryShouldCopyDLFileEntryTypeFromParentGroup()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -179,7 +179,7 @@ public class DLAppServiceWhenCopyingWithDocumentTypesTest
 	}
 
 	@Test
-	public void testCopyFileShouldCopyDocumentTypesFromSameGroup()
+	public void testCopyFileEntryShouldCopyDLFileEntryTypeFromSameGroup()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -218,7 +218,7 @@ public class DLAppServiceWhenCopyingWithDocumentTypesTest
 	}
 
 	@Test(expected = InvalidFileEntryTypeException.class)
-	public void testCopyFileThrowsExceptionWhenCopyDocumentTypesFromDifferentGroup()
+	public void testCopyFileEntryFailsWhenDLFileEntryTypeFromUnrelatedGroup()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -251,7 +251,7 @@ public class DLAppServiceWhenCopyingWithDocumentTypesTest
 	}
 
 	@Test
-	public void testCopyFolderShouldCopyBasicDocumentTypeWhenCopyDocumentTypesFromDifferentGroup()
+	public void testCopyFolderShouldNotCopyDLFileEntryTypeFromUnrelatedGroup()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -294,7 +294,7 @@ public class DLAppServiceWhenCopyingWithDocumentTypesTest
 	}
 
 	@Test
-	public void testCopyFolderShouldCopyDocumentTypesFromParentGroup()
+	public void testCopyFolderShouldCopyDLFileEntryTypeFromParentGroup()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -337,7 +337,7 @@ public class DLAppServiceWhenCopyingWithDocumentTypesTest
 	}
 
 	@Test(expected = InvalidFileEntryTypeException.class)
-	public void testCopyFolderThrowsExceptionWhenCopyDocumentTypesFromDifferentGroup()
+	public void testCopyFolderFailesWhenDLFileEntryTypeFromUnrelatedGroup()
 		throws Exception {
 
 		ServiceContext serviceContext =

@@ -30,8 +30,13 @@ import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
@@ -48,12 +53,26 @@ import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.model.ObjectViewColumn;
+import com.liferay.object.model.ObjectViewFilterColumn;
+import com.liferay.object.model.ObjectViewSortColumn;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
+import com.liferay.object.service.ObjectFolderItemLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
+import com.liferay.object.service.ObjectLayoutLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.ObjectValidationRuleLocalService;
+import com.liferay.object.service.ObjectViewLocalService;
+import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
+import com.liferay.object.service.persistence.ObjectViewFilterColumnPersistence;
+import com.liferay.object.service.persistence.ObjectViewSortColumnPersistence;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -73,6 +92,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -131,8 +151,19 @@ public class BatchEngineBrokerTest {
 
 	@Test
 	public void testExportCompanyScopeObjectEntry() throws Exception {
+		_objectMapper.setFilterProvider(
+			new SimpleFilterProvider() {
+				{
+					addFilter(
+						"Liferay.Vulcan",
+						VulcanPropertyFilter.of(
+							new HashSet<>(_objectEntryFieldNames), null));
+				}
+			});
+
 		_objectDefinition1 = _publishObjectDefinition(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUser());
+			TestPropsValues.getCompanyId(), "TestObject",
+			TestPropsValues.getUser());
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			TestPropsValues.getCompanyId(),
@@ -146,7 +177,7 @@ public class BatchEngineBrokerTest {
 		User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
 
 		_objectDefinition2 = _publishObjectDefinition(
-			_company2.getCompanyId(), user);
+			_company2.getCompanyId(), "TestObject", user);
 
 		_addObjectEntry(
 			_company2.getCompanyId(),
@@ -159,7 +190,7 @@ public class BatchEngineBrokerTest {
 				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
 				RandomTestUtil.randomString(), 0, "C_TestObject", false);
 
-		for (String fieldName : _fieldNames) {
+		for (String fieldName : _objectEntryFieldNames) {
 			_batchPlannerMappingLocalService.addBatchPlannerMapping(
 				TestPropsValues.getUserId(),
 				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
@@ -183,7 +214,121 @@ public class BatchEngineBrokerTest {
 		Assert.assertTrue(jsonNode.isArray());
 		Assert.assertEquals(1, jsonNode.size());
 
-		_assertEquals(expectedJsonNode, jsonNode.get(0));
+		_assertEquals(
+			expectedJsonNode, _objectEntryFieldNames, jsonNode.get(0));
+	}
+
+	@Test
+	public void testExportObjectDefinition() throws Exception {
+		_objectMapper.setFilterProvider(
+			new SimpleFilterProvider() {
+				{
+					addFilter(
+						"Liferay.Vulcan",
+						VulcanPropertyFilter.of(
+							new HashSet<>(_objectDefinitionFieldNames), null));
+				}
+			});
+
+		_objectDefinition1 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), "TestObject1",
+			TestPropsValues.getUser());
+
+		_objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(), true, StringPool.BLANK,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY,
+			ObjectActionTriggerConstants.KEY_STANDALONE,
+			new UnicodeProperties());
+
+		ObjectFolder objectFolder = _objectFolderLocalService.addObjectFolder(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString());
+
+		_objectFolderItemLocalService.addObjectFolderItem(
+			TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(),
+			objectFolder.getObjectFolderId(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextInt());
+
+		_objectLayoutLocalService.addObjectLayout(
+			TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(), false,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			Collections.emptyList());
+
+		_objectDefinition2 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), "TestObject2",
+			TestPropsValues.getUser());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(),
+			_objectDefinition2.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"a" + RandomTestUtil.randomString(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectValidationRuleLocalService.addObjectValidationRule(
+			TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(), true,
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
+			"isEmailAddress(textObjectField)", Collections.emptyList());
+
+		_objectViewLocalService.addObjectView(
+			TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(), true,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			Arrays.asList(_createObjectViewColumn("createDate")),
+			Arrays.asList(_createObjectViewFilterColumn("createDate")),
+			Arrays.asList(_createObjectViewSortColumn("createDate", "asc")));
+
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanLocalService.addBatchPlannerPlan(
+				TestPropsValues.getUserId(), true,
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON, StringPool.SLASH,
+				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+				RandomTestUtil.randomString(), 0, null, false);
+
+		for (String fieldName : _objectDefinitionFieldNames) {
+			_batchPlannerMappingLocalService.addBatchPlannerMapping(
+				TestPropsValues.getUserId(),
+				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
+				fieldName, "String", StringPool.BLANK);
+		}
+
+		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+
+		BatchEngineExportTask batchEngineExportTask =
+			_getFinishedBatchEngineExportTask(
+				batchPlannerPlan.getBatchPlannerPlanId());
+
+		JsonNode expectedJsonNode = _getExpectedJsonNode(_objectDefinition1);
+
+		JsonNode jsonNode = _objectMapper.readTree(
+			_getZipInputStream(
+				_batchEngineExportTaskLocalService.openContentInputStream(
+					batchEngineExportTask.getBatchEngineExportTaskId())));
+
+		Assert.assertTrue(jsonNode.isArray());
+		Assert.assertTrue(jsonNode.size() >= 2);
+
+		JsonNode actualJsonNode = _getActualJsonNode(jsonNode, "TestObject1");
+
+		Assert.assertNotNull(
+			"TestObject1 object definition is not exported", actualJsonNode);
+
+		_assertEquals(
+			expectedJsonNode, _objectDefinitionFieldNames, actualJsonNode);
 	}
 
 	private ObjectEntry _addObjectEntry(
@@ -232,8 +377,10 @@ public class BatchEngineBrokerTest {
 		Assert.assertTrue(!jsonNode.isEmpty());
 	}
 
-	private void _assertEquals(JsonNode expectedJsonNode, JsonNode jsonNode) {
-		for (String fieldName : _fieldNames) {
+	private void _assertEquals(
+		JsonNode expectedJsonNode, List<String> fieldNames, JsonNode jsonNode) {
+
+		for (String fieldName : fieldNames) {
 			JsonNode expectedFieldJsonNode = expectedJsonNode.get(fieldName);
 
 			JsonNode fieldJsonNode = jsonNode.get(fieldName);
@@ -245,6 +392,12 @@ public class BatchEngineBrokerTest {
 				_assertActions(fieldJsonNode, "update");
 			}
 			else {
+				if ((expectedFieldJsonNode == null) &&
+					(fieldJsonNode == null)) {
+
+					continue;
+				}
+
 				Assert.assertEquals(
 					expectedFieldJsonNode.toString(), fieldJsonNode.toString());
 			}
@@ -261,6 +414,58 @@ public class BatchEngineBrokerTest {
 		objectFieldSetting.setValue(value);
 
 		return objectFieldSetting;
+	}
+
+	private ObjectViewColumn _createObjectViewColumn(String objectFieldName)
+		throws Exception {
+
+		ObjectViewColumn objectViewColumn = _objectViewColumnPersistence.create(
+			0);
+
+		objectViewColumn.setLabelMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
+		objectViewColumn.setObjectFieldName(objectFieldName);
+		objectViewColumn.setPriority(0);
+
+		return objectViewColumn;
+	}
+
+	private ObjectViewFilterColumn _createObjectViewFilterColumn(
+		String objectFieldName) {
+
+		ObjectViewFilterColumn objectViewFilterColumn =
+			_objectViewFilterColumnPersistence.create(0);
+
+		objectViewFilterColumn.setFilterType(null);
+		objectViewFilterColumn.setJSON(null);
+		objectViewFilterColumn.setObjectFieldName(objectFieldName);
+
+		return objectViewFilterColumn;
+	}
+
+	private ObjectViewSortColumn _createObjectViewSortColumn(
+		String objectFieldName, String sortOrder) {
+
+		ObjectViewSortColumn objectViewSortColumn =
+			_objectViewSortColumnPersistence.create(0);
+
+		objectViewSortColumn.setObjectFieldName(objectFieldName);
+		objectViewSortColumn.setPriority(0);
+		objectViewSortColumn.setSortOrder(sortOrder);
+
+		return objectViewSortColumn;
+	}
+
+	private JsonNode _getActualJsonNode(JsonNode arrayJsonNode, String name) {
+		for (JsonNode jsonNode : arrayJsonNode) {
+			JsonNode nameJsonNode = jsonNode.get("name");
+
+			if (Objects.equals(name, nameJsonNode.textValue())) {
+				return jsonNode;
+			}
+		}
+
+		return null;
 	}
 
 	private Long _getAttachmentFieldValue() throws Exception {
@@ -282,6 +487,22 @@ public class BatchEngineBrokerTest {
 				TestPropsValues.getGroupId()));
 
 		return dlFileEntry.getFileEntryId();
+	}
+
+	private JsonNode _getExpectedJsonNode(ObjectDefinition objectDefinition)
+		throws Exception {
+
+		ObjectDefinitionResource.Builder builder =
+			_objectDefinitionResourceFactory.create();
+
+		ObjectDefinitionResource objectDefinitionResource = builder.user(
+			TestPropsValues.getUser()
+		).build();
+
+		return _objectMapper.convertValue(
+			objectDefinitionResource.getObjectDefinition(
+				objectDefinition.getObjectDefinitionId()),
+			JsonNode.class);
 	}
 
 	private JsonNode _getExpectedJsonNode(
@@ -338,7 +559,8 @@ public class BatchEngineBrokerTest {
 		return zipInputStream;
 	}
 
-	private ObjectDefinition _publishObjectDefinition(long companyId, User user)
+	private ObjectDefinition _publishObjectDefinition(
+			long companyId, String name, User user)
 		throws Exception {
 
 		String originalName = PrincipalThreadLocal.getName();
@@ -379,7 +601,7 @@ public class BatchEngineBrokerTest {
 					false,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
-					"TestObject", null, null,
+					name, null, null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					false, ObjectDefinitionConstants.SCOPE_COMPANY,
@@ -506,7 +728,20 @@ public class BatchEngineBrokerTest {
 		}
 	}
 
-	private static final List<String> _fieldNames = Arrays.asList(
+	private static final List<String> _objectDefinitionFieldNames =
+		Arrays.asList(
+			"accountEntryRestricted", "accountEntryRestrictedObjectFieldName",
+			"active", "dateCreated", "dateModified", "defaultLanguageId",
+			"enableCategorization", "enableComments", "enableLocalization",
+			"enableObjectEntryHistory", "externalReferenceCode", "id", "label",
+			"modifiable", "name", "objectActions", "objectFields",
+			"objectFolderExternalReferenceCode", "objectLayouts",
+			"objectRelationships", "objectValidationRules", "objectViews",
+			"panelAppOrder", "panelCategoryKey", "parameterRequired",
+			"pluralLabel", "portlet", "restContextPath",
+			"rootObjectDefinitionExternalReferenceCode", "scope", "status",
+			"storageType", "system", "titleObjectFieldName");
+	private static final List<String> _objectEntryFieldNames = Arrays.asList(
 		"actions", "dateCreated", "dateModified", "externalReferenceCode", "id",
 		"testAttachmentField", "testBooleanField", "testDateField",
 		"testDateTimeField", "testDecimalField", "testIntegerField",
@@ -520,15 +755,6 @@ public class BatchEngineBrokerTest {
 			enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY);
 			enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS);
 			setDateFormat(new ISO8601DateFormat());
-			setFilterProvider(
-				new SimpleFilterProvider() {
-					{
-						addFilter(
-							"Liferay.Vulcan",
-							VulcanPropertyFilter.of(
-								new HashSet<>(_fieldNames), null));
-					}
-				});
 			setSerializationInclusion(JsonInclude.Include.NON_NULL);
 		}
 	};
@@ -557,11 +783,17 @@ public class BatchEngineBrokerTest {
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
+	@Inject
+	private ObjectActionLocalService _objectActionLocalService;
+
 	private ObjectDefinition _objectDefinition1;
 	private ObjectDefinition _objectDefinition2;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
@@ -571,5 +803,33 @@ public class BatchEngineBrokerTest {
 
 	@Inject
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
+
+	@Inject
+	private ObjectFolderItemLocalService _objectFolderItemLocalService;
+
+	@Inject
+	private ObjectFolderLocalService _objectFolderLocalService;
+
+	@Inject
+	private ObjectLayoutLocalService _objectLayoutLocalService;
+
+	@Inject
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
+
+	@Inject
+	private ObjectViewColumnPersistence _objectViewColumnPersistence;
+
+	@Inject
+	private ObjectViewFilterColumnPersistence
+		_objectViewFilterColumnPersistence;
+
+	@Inject
+	private ObjectViewLocalService _objectViewLocalService;
+
+	@Inject
+	private ObjectViewSortColumnPersistence _objectViewSortColumnPersistence;
 
 }

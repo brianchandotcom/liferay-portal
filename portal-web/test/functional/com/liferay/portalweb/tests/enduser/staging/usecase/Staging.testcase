@@ -271,6 +271,337 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-189238 TC-7 TC-8. Verify Instance level settings overwrite System level settings when configure the advanced staging configration checkbox."
+	@priority = 5
+	test AssertInstanceLevelOverwriteSystemSettingForAdvancedStagingConfiguration {
+		property custom.properties = "feature.flag.LPS-189187=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Enable local staging with advanced staging configration checkbox unchecked in system setting.") {
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Export/Import, Staging",
+				configurationScope = "Virtual Instance Scope");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_settingFieldName = "Show Advanced Staging Configuration by Default",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+		}
+
+		task ("When: Enable advanced staging configration checkbox in instance setting") {
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Export/Import, Staging",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.configureSystemSetting(
+				enableSetting = "true",
+				settingFieldName = "Show Advanced Staging Configuration by Default");
+		}
+
+		task ("Then: Verify the configuration of advanced staging process is displayed.") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+
+			AssertTextEquals(
+				locator1 = "StagingPublishToLive#SWITCH_TO_SIMPLE_PUBLICATION",
+				value1 = "Switch to Simple Publish Process");
+		}
+	}
+
+	@description = "This is a test for LPS-189238 TC-11. Verify osgi configs with companyID can setup show Advanced Staging Configuration."
+	@priority = 5
+	test CanEnableAdvancedStagingConfigurationByCompanyId {
+		property custom.properties = "feature.flag.LPS-189187=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Place a config file into osgi folder to configure Show Advanced Staging Configuration") {
+			var companyId = JSONCompany.getCompanyId();
+
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.exportimport.configuration.ExportImportServiceConfiguration.scoped~companyId.config",
+				osgiConfigs = "companyId=L\"${companyId}\",showAdvancedStagingConfigurationByDefault=B\"true\"");
+
+			OSGiConfig.waitForOSGiConfig();
+		}
+
+		task ("When: Go to instance settings") {
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Export/Import, Staging",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("Then: Verify the configuration of advanced staging process is enabled.") {
+			AssertChecked.assertCheckedNotVisible(
+				key_settingFieldName = "Show Advanced Staging Configuration by Default",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+		}
+	}
+
+	@description = "This is a test for LPS-189238 TC-9. Verify can enable advanced staging configration checkbox for remote staging."
+	@priority = 4
+	test CanEnableAdvancedStagingConfigurationForRemoteStaging {
+		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}feature.flag.LPS-189187=true${line.separator}tunneling.servlet.shared.secret=1234567890123456";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Enable remote staging with advanced staging configration checkbox unchecked in system setting.") {
+			Staging.remoteStagingSetUpViaJson(groupName = "Site Name");
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Export/Import, Staging",
+				configurationScope = "Virtual Instance Scope");
+		}
+
+		task ("When: Enable advanced staging configration checkbox") {
+			SystemSettings.configureSystemSetting(
+				enableSetting = "true",
+				settingFieldName = "Show Advanced Staging Configuration by Default");
+		}
+
+		task ("Then: Verify the configuration of advanced staging process is displayed.") {
+			Navigator.openSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+
+			AssertTextEquals(
+				locator1 = "StagingPublishToLive#SWITCH_TO_SIMPLE_PUBLICATION",
+				value1 = "Switch to Simple Publish Process");
+		}
+	}
+
+	@description = "This is a test for LPS-189238 TC-10. Verify can enable advanced staging configration checkbox for virtual instance."
+	@priority = 4
+	test CanEnableAdvancedStagingConfigurationForVirtualInstance {
+		property custom.properties = "feature.flag.LPS-189187=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Enable local staging with advanced staging configration checkbox unchecked in instance setting.") {
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Export/Import, Staging",
+				configurationScope = "Virtual Instance Scope");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_settingFieldName = "Show Advanced Staging Configuration by Default",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+
+			AssertTextEquals(
+				locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION",
+				value1 = "Switch to Advanced Publish Process");
+		}
+
+		task ("And: Add site in virtual instance enable local site staging.") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.logoutPG();
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			ProductMenu.gotoPortlet(
+				category = "Publishing",
+				portlet = "Staging");
+
+			Staging.activateStagingCP(siteName = "www.able.com");
+		}
+
+		task ("When: Enable advanced staging configration checkbox in virtual instance") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Export/Import, Staging",
+				configurationScope = "Virtual Instance Scope");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_settingFieldName = "Show Advanced Staging Configuration by Default",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			SystemSettings.configureSystemSetting(
+				enableSetting = "true",
+				settingFieldName = "Show Advanced Staging Configuration by Default");
+		}
+
+		task ("Then: Verify the configuration of advanced staging process is displayed.") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080/web/guest-staging/home");
+
+			Staging.gotoPublishToLive();
+
+			AssertTextEquals(
+				locator1 = "StagingPublishToLive#SWITCH_TO_SIMPLE_PUBLICATION",
+				value1 = "Switch to Simple Publish Process");
+		}
+	}
+
+	@description = "This is a test for LPS-189238 TC-2 TC-5 TC-6. Verify there is advanced staging configration checkbox with description in Instance Setting,the configration checkbox can be enabled."
+	@priority = 5
+	test CanEnableAdvancedStagingConfigurationInInstanceSetting {
+		property custom.properties = "feature.flag.LPS-189187=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Enable local staging with advanced staging configration checkbox unchecked in instance setting.") {
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Export/Import, Staging",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.viewTextLabel(fieldLabel = "Show Advanced Staging Configuration by Default");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_settingFieldName = "Show Advanced Staging Configuration by Default",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			SystemSettings.viewSettingsText(settingsText = "If checked, then the advanced publication configuration screen will be displayed by default when publishing pages.");
+		}
+
+		task ("When: Enable advanced staging configration checkbox") {
+			SystemSettings.configureSystemSetting(
+				enableSetting = "true",
+				settingFieldName = "Show Advanced Staging Configuration by Default");
+		}
+
+		task ("Then: Verify the configuration of advanced staging process is displayed.") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+
+			AssertTextEquals(
+				locator1 = "StagingPublishToLive#SWITCH_TO_SIMPLE_PUBLICATION",
+				value1 = "Switch to Simple Publish Process");
+		}
+	}
+
+	@description = "This is a test for LPS-189238 TC-1 TC-3 TC-4. Verify there is advanced staging configration checkbox with description in System Setting,the configration checkbox can be enabled."
+	@priority = 5
+	test CanEnableAdvancedStagingConfigurationInSystemSetting {
+		property custom.properties = "feature.flag.LPS-189187=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Enable local staging with advanced staging configration checkbox unchecked in system setting.") {
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "System Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Infrastructure",
+				configurationName = "Export/Import, Staging",
+				configurationScope = "Virtual Instance Scope");
+
+			SystemSettings.viewTextLabel(fieldLabel = "Show Advanced Staging Configuration by Default");
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_settingFieldName = "Show Advanced Staging Configuration by Default",
+				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
+
+			SystemSettings.viewSettingsText(settingsText = "If checked, then the advanced publication configuration screen will be displayed by default when publishing pages.");
+		}
+
+		task ("When: Enable advanced staging configration checkbox") {
+			SystemSettings.configureSystemSetting(
+				enableSetting = "true",
+				settingFieldName = "Show Advanced Staging Configuration by Default");
+		}
+
+		task ("Then: Verify the configuration of advanced staging process is displayed.") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+
+			AssertTextEquals(
+				locator1 = "StagingPublishToLive#SWITCH_TO_SIMPLE_PUBLICATION",
+				value1 = "Switch to Simple Publish Process");
+		}
+	}
+
 	@description = "This is a test for LPS-146160. Verify Admin can enable local staging on the inherited site even site template propagation is disabled. The testcase is blocked by LPS-146160."
 	@ignore = "true"
 	@priority = 4

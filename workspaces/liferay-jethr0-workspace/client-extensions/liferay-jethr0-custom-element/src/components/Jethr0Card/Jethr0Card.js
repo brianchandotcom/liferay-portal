@@ -8,11 +8,7 @@ import ClayCard from '@clayui/card';
 import './Jethr0Card.css';
 
 function Jethr0Card({children}) {
-	return (
-		<ClayCard className="jethr0-card">
-			{children}
-		</ClayCard>
-	);
+	return <ClayCard className="jethr0-card">{children}</ClayCard>;
 }
 
 export default Jethr0Card;

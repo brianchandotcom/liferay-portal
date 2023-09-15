@@ -6,8 +6,8 @@
 import ClayPanel from '@clayui/panel';
 import {useState} from 'react';
 
-import Jethr0Table from '../Jethr0Table/Jethr0Table';
 import useSpringBootData from '../../services/useSpringBootData';
+import Jethr0Table from '../Jethr0Table/Jethr0Table';
 
 function JobBuilds({jobId}) {
 	const [jobBuilds, setJobBuilds] = useState(null);

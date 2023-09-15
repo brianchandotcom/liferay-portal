@@ -5,14 +5,11 @@
 
 import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
-import {useState} from 'react';
-import {useParams} from 'react-router-dom';
 
 import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import Jobs from '../../components/Jobs/Jobs';
-import useSpringBootData from '../../services/useSpringBootData';
 
 function JobsPage() {
 	const breadcrumbs = [
@@ -25,7 +22,9 @@ function JobsPage() {
 			<Jethr0Card>
 				<Jethr0NavigationBar active="Jobs" />
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
-				<Heading level={3} weight="lighter">Jobs</Heading>
+				<Heading level={3} weight="lighter">
+					Jobs
+				</Heading>
 				<Jobs />
 			</Jethr0Card>
 		</ClayLayout.Container>

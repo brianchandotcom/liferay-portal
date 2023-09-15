@@ -6,8 +6,8 @@
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 
-import Jethr0Table from '../Jethr0Table/Jethr0Table';
 import useSpringBootData from '../../services/useSpringBootData';
+import Jethr0Table from '../Jethr0Table/Jethr0Table';
 
 function JobQueue() {
 	const [jobQueue, setJobQueue] = useState(null);

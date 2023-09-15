@@ -87,27 +87,28 @@ export default function useSubmitLXCEnvironment(
 		if (!alreadySubmitted) {
 			try {
 				handleLoadingSubmitButton(true);
-
-				await Promise.all(
-					removeHighPriorityContactList?.map(async (item) => {
-						removeContactRole(
-							item,
-							project,
-							sessionId,
-							provisioningServerAPI
-						);
-					})
-				);
-				await Promise.all(
-					addHighPriorityContactList?.map(async (item) => {
-						return associateContactRole(
-							item,
-							project,
-							sessionId,
-							provisioningServerAPI
-						);
-					})
-				);
+				if (featureFlags.includes('LPS-191300')) {
+					await Promise.all(
+						removeHighPriorityContactList?.map(async (item) => {
+							removeContactRole(
+								item,
+								project,
+								sessionId,
+								provisioningServerAPI
+							);
+						})
+					);
+					await Promise.all(
+						addHighPriorityContactList?.map(async (item) => {
+							return associateContactRole(
+								item,
+								project,
+								sessionId,
+								provisioningServerAPI
+							);
+						})
+					);
+				}
 				const {data} = await createLiferayExperienceCloudEnvironment({
 					variables: {
 						LiferayExperienceCloudEnvironment: {
@@ -159,26 +160,26 @@ export default function useSubmitLXCEnvironment(
 							}
 						)
 					);
-
-					await Promise.all(
-						removeHighPriorityContactList?.map((item) => {
-							return removeHighPriorityContactsList(
-								client,
-								item,
-								project
-							);
-						})
-					);
-					await Promise.all(
-						addHighPriorityContactList?.map((item) => {
-							return addHighPriorityContactsList(
-								client,
-								item,
-								project
-							);
-						})
-					);
-
+					if (featureFlags.includes('LPS-191300')) {
+						await Promise.all(
+							removeHighPriorityContactList?.map((item) => {
+								return removeHighPriorityContactsList(
+									client,
+									item,
+									project
+								);
+							})
+						);
+						await Promise.all(
+							addHighPriorityContactList?.map((item) => {
+								return addHighPriorityContactsList(
+									client,
+									item,
+									project
+								);
+							})
+						);
+					}
 					if (featureFlags.includes('LPS-181031')) {
 						const adminInfo = lxcActivationFields?.admins?.map(
 							({email, fullName}) => {

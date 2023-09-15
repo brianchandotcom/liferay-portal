@@ -160,7 +160,7 @@ definition {
 		task ("Then a tooltip message will be displayed") {
 			AssertTextEquals(
 				locator1 = "Message#TOOLTIP",
-				value1 = "Reverse Order Direction");
+				value1 = "Reverse Sort Direction");
 		}
 	}
 

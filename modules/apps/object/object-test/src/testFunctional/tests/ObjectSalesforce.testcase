@@ -261,38 +261,38 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Last Name",
-				text = "New Entry LPS-185429");
+				text = "Last Name LPS-185429");
 
 			CreateObject.saveObject();
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "New Entry LPS-185429",
+				key_entry = "Last Name LPS-185429",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to update entries") {
-			ObjectPortlet.viewEntryDetails(entry = "New Entry LPS-185429");
+			ObjectPortlet.viewEntryDetails(entry = "Last Name LPS-185429");
 
 			PortletEntry.inputText(
 				fieldLabel = "Last Name",
-				text = "Entry Updated LPS-185429");
+				text = "Last Name Updated LPS-185429");
 
 			CreateObject.saveObject();
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "Entry 185429 Updated",
+				key_entry = "Last Name Updated LPS-185429",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to delete entries") {
-			ObjectPortlet.deleteEntry(entry = "Entry Updated LPS-185429");
+			ObjectPortlet.deleteEntry(entry = "Last Name Updated LPS-185429");
 
 			AssertElementNotPresent(
-				key_entry = "Entry Updated LPS-185429",
+				key_entry = "Last Name Updated LPS-185429",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 	}
@@ -468,38 +468,38 @@ definition {
 
 			PortletEntry.inputText(
 				fieldLabel = "Last Name",
-				text = "New Entry LPS-185428");
+				text = "Last Name LPS-185428");
 
 			CreateObject.saveObject();
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "New Entry LPS-185428",
+				key_entry = "Last Name LPS-185428",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to update entries") {
-			ObjectPortlet.viewEntryDetails(entry = "New Entry LPS-185428");
+			ObjectPortlet.viewEntryDetails(entry = "Last Name LPS-185428");
 
 			PortletEntry.inputText(
 				fieldLabel = "Last Name",
-				text = "Entry Updated LPS-185428");
+				text = "Last Name Updated LPS-185428");
 
 			CreateObject.saveObject();
 
 			Navigator.gotoBack();
 
 			AssertElementPresent(
-				key_entry = "Entry Updated LPS-185428",
+				key_entry = "Last Name Updated LPS-185428",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 
 		task ("And then the user is able to delete entries") {
-			ObjectPortlet.deleteEntry(entry = "Entry Updated LPS-185428");
+			ObjectPortlet.deleteEntry(entry = "Last Name Updated LPS-185428");
 
 			AssertElementNotPresent(
-				key_entry = "Entry Updated LPS-185428",
+				key_entry = "Last Name Updated LPS-185428",
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 	}

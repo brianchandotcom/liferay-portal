@@ -12,7 +12,7 @@ buildPluginDescriptor {
 
 dependencies {
 	api group: "axis", name: "axis-wsdl4j", version: "1.5.1"
-	api group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-6"
+	api group: "com.liferay", name: "org.apache.axis", version: "1.4.LIFERAY-PATCHED-7"
 	api group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"
 	api group: "com.liferay", name: "org.apache.logging.log4j.core", version: "2.17.1.LIFERAY-PATCHED-1"
 	api group: "com.sun.mail", name: "jakarta.mail", version: "1.6.6"

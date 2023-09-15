@@ -151,41 +151,6 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	public List<LockedLayout> getLockedLayouts(
 		long companyId, long groupId, LockedLayoutType lockedLayoutType) {
 
-		String layoutType = null;
-		Integer layoutPageTemplateEntryType = null;
-
-		if (lockedLayoutType != null) {
-			if (Objects.equals(
-					lockedLayoutType, LockedLayoutType.COLLECTION_PAGE)) {
-
-				layoutType = LayoutConstants.TYPE_COLLECTION;
-			}
-			else if (Objects.equals(
-						lockedLayoutType, LockedLayoutType.CONTENT_PAGE)) {
-
-				layoutType = LayoutConstants.TYPE_CONTENT;
-			}
-			else if (Objects.equals(
-						lockedLayoutType,
-						LockedLayoutType.CONTENT_PAGE_TEMPLATE)) {
-
-				layoutPageTemplateEntryType =
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC;
-			}
-			else if (Objects.equals(
-						lockedLayoutType,
-						LockedLayoutType.DISPLAY_PAGE_TEMPLATE)) {
-
-				layoutType = LayoutConstants.TYPE_ASSET_DISPLAY;
-			}
-			else if (Objects.equals(
-						lockedLayoutType, LockedLayoutType.MASTER_PAGE)) {
-
-				layoutPageTemplateEntryType =
-					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT;
-			}
-		}
-
 		List<Object[]> results = _layoutLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
 			).from(
@@ -215,9 +180,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 					_getLayoutUtilityPageEntryTableLeftJoin(
 						groupId, lockedLayoutType)
 				).where(
-					_getWherePredicate(
-						groupId, layoutType, layoutPageTemplateEntryType,
-						lockedLayoutType)
+					_getWherePredicate(groupId, lockedLayoutType)
 				).orderBy(
 					orderByStep -> orderByStep.orderBy(
 						LockTable.INSTANCE.createDate.descending())
@@ -438,6 +401,23 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		);
 	}
 
+	private Integer _getLayoutPageTemplateEntryType(
+		LockedLayoutType lockedLayoutType) {
+
+		if (Objects.equals(
+				lockedLayoutType, LockedLayoutType.CONTENT_PAGE_TEMPLATE)) {
+
+			return LayoutPageTemplateEntryTypeConstants.TYPE_BASIC;
+		}
+		else if (Objects.equals(
+					lockedLayoutType, LockedLayoutType.MASTER_PAGE)) {
+
+			return LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT;
+		}
+
+		return null;
+	}
+
 	private String _getLayoutPageTemplateEntryTypeLabel(
 		LayoutPageTemplateEntry layoutPageTemplateEntry, Locale locale) {
 
@@ -463,6 +443,26 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private String _getLayoutType(LockedLayoutType lockedLayoutType) {
+		if (Objects.equals(
+				lockedLayoutType, LockedLayoutType.COLLECTION_PAGE)) {
+
+			return LayoutConstants.TYPE_COLLECTION;
+		}
+		else if (Objects.equals(
+					lockedLayoutType, LockedLayoutType.CONTENT_PAGE)) {
+
+			return LayoutConstants.TYPE_CONTENT;
+		}
+		else if (Objects.equals(
+					lockedLayoutType, LockedLayoutType.DISPLAY_PAGE_TEMPLATE)) {
+
+			return LayoutConstants.TYPE_ASSET_DISPLAY;
+		}
+
+		return null;
 	}
 
 	private Predicate _getLayoutUtilityPageEntryTableLeftJoin(
@@ -498,8 +498,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	}
 
 	private Predicate _getWherePredicate(
-		long groupId, String layoutType, Integer layoutPageTemplateEntryType,
-		LockedLayoutType lockedLayoutType) {
+		long groupId, LockedLayoutType lockedLayoutType) {
 
 		Predicate wherePredicate = LayoutTable.INSTANCE.groupId.eq(
 			groupId
@@ -523,11 +522,16 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 					}));
 		}
 
+		Integer layoutPageTemplateEntryType = _getLayoutPageTemplateEntryType(
+			lockedLayoutType);
+
 		if (layoutPageTemplateEntryType != null) {
 			return wherePredicate.and(
 				LayoutPageTemplateEntryTable.INSTANCE.type.eq(
 					layoutPageTemplateEntryType));
 		}
+
+		String layoutType = _getLayoutType(lockedLayoutType);
 
 		if (layoutType != null) {
 			return wherePredicate.and(

@@ -245,9 +245,11 @@ public class DefaultObjectEntryManagerImpl
 				relatedObjectDefinition),
 			BaseModel::getPrimaryKeyObj);
 
-		_disassociateRelatedModels(
-			objectDefinition, objectRelationship, primaryKey,
-			relatedPrimaryKeys, relatedObjectDefinition, userId);
+		if (relatedPrimaryKeys.length > 0) {
+			_disassociateRelatedModels(
+				objectDefinition, objectRelationship, primaryKey,
+				relatedPrimaryKeys, relatedObjectDefinition, userId);
+		}
 	}
 
 	@Override

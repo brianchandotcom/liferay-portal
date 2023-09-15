@@ -21,6 +21,7 @@ patch {
 	}
 
 	fileNames "org/apache/axis/AxisEngine.java"
+	fileNames "org/apache/axis/client/ServiceFactory.java"
 	fileNames "org/apache/axis/description/JavaServiceDesc.java"
 	fileNames "org/apache/axis/encoding/ser/MapDeserializer.java"
 	fileNames "org/apache/axis/EngineConfiguration.java"

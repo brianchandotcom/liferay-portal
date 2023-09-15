@@ -230,6 +230,12 @@ public class ObjectRelationshipResourceImpl
 			Long objectRelationshipId, ObjectRelationship objectRelationship)
 		throws Exception {
 
+		if (Validator.isNotNull(objectRelationship.getEdge()) &&
+			!FeatureFlagManagerUtil.isEnabled("LPS-187142")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		if (Validator.isNotNull(
 				objectRelationship.getParameterObjectFieldName())) {
 

@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.site.navigation.exception.DuplicateSiteNavigationMenuItemExternalReferenceCodeException;
 import com.liferay.site.navigation.exception.NoSuchMenuItemException;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -4768,7 +4768,7 @@ public class SiteNavigationMenuItemPersistenceImpl
 		siteNavigationMenuItem.setNew(true);
 		siteNavigationMenuItem.setPrimaryKey(siteNavigationMenuItemId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		siteNavigationMenuItem.setUuid(uuid);
 
@@ -4897,7 +4897,7 @@ public class SiteNavigationMenuItemPersistenceImpl
 			(SiteNavigationMenuItemModelImpl)siteNavigationMenuItem;
 
 		if (Validator.isNull(siteNavigationMenuItem.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			siteNavigationMenuItem.setUuid(uuid);
 		}
@@ -5747,8 +5747,5 @@ public class SiteNavigationMenuItemPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

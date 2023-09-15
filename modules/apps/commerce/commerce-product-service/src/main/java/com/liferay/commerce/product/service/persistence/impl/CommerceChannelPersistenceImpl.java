@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -4586,7 +4586,7 @@ public class CommerceChannelPersistenceImpl
 		commerceChannel.setNew(true);
 		commerceChannel.setPrimaryKey(commerceChannelId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		commerceChannel.setUuid(uuid);
 
@@ -4708,7 +4708,7 @@ public class CommerceChannelPersistenceImpl
 			(CommerceChannelModelImpl)commerceChannel;
 
 		if (Validator.isNull(commerceChannel.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			commerceChannel.setUuid(uuid);
 		}
@@ -5497,8 +5497,5 @@ public class CommerceChannelPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

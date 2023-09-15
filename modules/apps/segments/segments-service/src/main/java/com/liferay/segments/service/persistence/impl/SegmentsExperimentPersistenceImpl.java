@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.segments.exception.NoSuchExperimentException;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentTable;
@@ -3727,7 +3727,7 @@ public class SegmentsExperimentPersistenceImpl
 		segmentsExperiment.setNew(true);
 		segmentsExperiment.setPrimaryKey(segmentsExperimentId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		segmentsExperiment.setUuid(uuid);
 
@@ -3854,7 +3854,7 @@ public class SegmentsExperimentPersistenceImpl
 			(SegmentsExperimentModelImpl)segmentsExperiment;
 
 		if (Validator.isNull(segmentsExperiment.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			segmentsExperiment.setUuid(uuid);
 		}
@@ -4639,8 +4639,5 @@ public class SegmentsExperimentPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

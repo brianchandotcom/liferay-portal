@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -4600,7 +4600,7 @@ public class OAuth2ApplicationPersistenceImpl
 		oAuth2Application.setNew(true);
 		oAuth2Application.setPrimaryKey(oAuth2ApplicationId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		oAuth2Application.setUuid(uuid);
 
@@ -4723,7 +4723,7 @@ public class OAuth2ApplicationPersistenceImpl
 			(OAuth2ApplicationModelImpl)oAuth2Application;
 
 		if (Validator.isNull(oAuth2Application.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			oAuth2Application.setUuid(uuid);
 		}
@@ -5285,8 +5285,5 @@ public class OAuth2ApplicationPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

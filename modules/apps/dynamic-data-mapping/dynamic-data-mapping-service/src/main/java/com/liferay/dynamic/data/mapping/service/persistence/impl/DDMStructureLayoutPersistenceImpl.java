@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -4512,7 +4512,7 @@ public class DDMStructureLayoutPersistenceImpl
 		ddmStructureLayout.setNew(true);
 		ddmStructureLayout.setPrimaryKey(structureLayoutId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		ddmStructureLayout.setUuid(uuid);
 
@@ -4639,7 +4639,7 @@ public class DDMStructureLayoutPersistenceImpl
 			(DDMStructureLayoutModelImpl)ddmStructureLayout;
 
 		if (Validator.isNull(ddmStructureLayout.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			ddmStructureLayout.setUuid(uuid);
 		}
@@ -5441,8 +5441,5 @@ public class DDMStructureLayoutPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

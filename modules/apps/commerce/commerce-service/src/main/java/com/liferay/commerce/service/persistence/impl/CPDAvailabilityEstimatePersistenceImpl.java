@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -2101,7 +2101,7 @@ public class CPDAvailabilityEstimatePersistenceImpl
 		cpdAvailabilityEstimate.setNew(true);
 		cpdAvailabilityEstimate.setPrimaryKey(CPDAvailabilityEstimateId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		cpdAvailabilityEstimate.setUuid(uuid);
 
@@ -2228,7 +2228,7 @@ public class CPDAvailabilityEstimatePersistenceImpl
 			(CPDAvailabilityEstimateModelImpl)cpdAvailabilityEstimate;
 
 		if (Validator.isNull(cpdAvailabilityEstimate.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			cpdAvailabilityEstimate.setUuid(uuid);
 		}
@@ -2719,8 +2719,5 @@ public class CPDAvailabilityEstimatePersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

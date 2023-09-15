@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -2411,7 +2411,7 @@ public class MBMailingListPersistenceImpl
 		mbMailingList.setNew(true);
 		mbMailingList.setPrimaryKey(mailingListId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		mbMailingList.setUuid(uuid);
 
@@ -2532,7 +2532,7 @@ public class MBMailingListPersistenceImpl
 			(MBMailingListModelImpl)mbMailingList;
 
 		if (Validator.isNull(mbMailingList.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			mbMailingList.setUuid(uuid);
 		}
@@ -3256,8 +3256,5 @@ public class MBMailingListPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

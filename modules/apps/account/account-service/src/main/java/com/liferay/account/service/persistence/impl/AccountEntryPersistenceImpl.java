@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -5275,7 +5275,7 @@ public class AccountEntryPersistenceImpl
 		accountEntry.setNew(true);
 		accountEntry.setPrimaryKey(accountEntryId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		accountEntry.setUuid(uuid);
 
@@ -5394,7 +5394,7 @@ public class AccountEntryPersistenceImpl
 			(AccountEntryModelImpl)accountEntry;
 
 		if (Validator.isNull(accountEntry.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			accountEntry.setUuid(uuid);
 		}
@@ -5957,8 +5957,5 @@ public class AccountEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

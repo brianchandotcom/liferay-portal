@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -1545,7 +1545,7 @@ public class ObjectStateFlowPersistenceImpl
 		objectStateFlow.setNew(true);
 		objectStateFlow.setPrimaryKey(objectStateFlowId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		objectStateFlow.setUuid(uuid);
 
@@ -1665,7 +1665,7 @@ public class ObjectStateFlowPersistenceImpl
 			(ObjectStateFlowModelImpl)objectStateFlow;
 
 		if (Validator.isNull(objectStateFlow.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			objectStateFlow.setUuid(uuid);
 		}
@@ -2124,8 +2124,5 @@ public class ObjectStateFlowPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

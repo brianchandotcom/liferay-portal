@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -5778,7 +5778,7 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 		deDataDefinitionFieldLink.setNew(true);
 		deDataDefinitionFieldLink.setPrimaryKey(deDataDefinitionFieldLinkId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		deDataDefinitionFieldLink.setUuid(uuid);
 
@@ -5909,7 +5909,7 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			(DEDataDefinitionFieldLinkModelImpl)deDataDefinitionFieldLink;
 
 		if (Validator.isNull(deDataDefinitionFieldLink.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			deDataDefinitionFieldLink.setUuid(uuid);
 		}
@@ -6759,8 +6759,5 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

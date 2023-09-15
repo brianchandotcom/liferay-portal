@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.tools.service.builder.test.sequence.exception.NoSuchSequenceEntryException;
 import com.liferay.portal.tools.service.builder.test.sequence.model.SequenceEntry;
 import com.liferay.portal.tools.service.builder.test.sequence.model.SequenceEntryTable;
@@ -1306,7 +1306,7 @@ public class SequenceEntryPersistenceImpl
 		sequenceEntry.setNew(true);
 		sequenceEntry.setPrimaryKey(sequenceEntryId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		sequenceEntry.setUuid(uuid);
 
@@ -1425,7 +1425,7 @@ public class SequenceEntryPersistenceImpl
 			(SequenceEntryModelImpl)sequenceEntry;
 
 		if (Validator.isNull(sequenceEntry.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			sequenceEntry.setUuid(uuid);
 		}
@@ -1845,8 +1845,5 @@ public class SequenceEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

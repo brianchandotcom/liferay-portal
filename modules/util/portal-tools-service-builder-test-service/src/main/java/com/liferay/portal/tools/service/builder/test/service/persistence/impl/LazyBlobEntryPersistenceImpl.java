@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLazyBlobEntryException;
 import com.liferay.portal.tools.service.builder.test.model.LazyBlobEntry;
@@ -979,7 +979,7 @@ public class LazyBlobEntryPersistenceImpl
 		lazyBlobEntry.setNew(true);
 		lazyBlobEntry.setPrimaryKey(lazyBlobEntryId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		lazyBlobEntry.setUuid(uuid);
 
@@ -1096,7 +1096,7 @@ public class LazyBlobEntryPersistenceImpl
 			(LazyBlobEntryModelImpl)lazyBlobEntry;
 
 		if (Validator.isNull(lazyBlobEntry.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			lazyBlobEntry.setUuid(uuid);
 		}
@@ -1487,8 +1487,5 @@ public class LazyBlobEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@ServiceReference(type = PortalUUID.class)
-	private PortalUUID _portalUUID;
 
 }

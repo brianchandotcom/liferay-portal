@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -13332,7 +13332,7 @@ public class FragmentEntryLinkPersistenceImpl
 		fragmentEntryLink.setNew(true);
 		fragmentEntryLink.setPrimaryKey(fragmentEntryLinkId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		fragmentEntryLink.setUuid(uuid);
 
@@ -13457,7 +13457,7 @@ public class FragmentEntryLinkPersistenceImpl
 			(FragmentEntryLinkModelImpl)fragmentEntryLink;
 
 		if (Validator.isNull(fragmentEntryLink.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			fragmentEntryLink.setUuid(uuid);
 		}
@@ -14595,8 +14595,5 @@ public class FragmentEntryLinkPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

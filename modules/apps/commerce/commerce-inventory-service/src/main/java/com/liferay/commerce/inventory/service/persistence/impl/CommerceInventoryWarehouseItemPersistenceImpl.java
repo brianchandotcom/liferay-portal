@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -3738,7 +3738,7 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 		commerceInventoryWarehouseItem.setPrimaryKey(
 			commerceInventoryWarehouseItemId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		commerceInventoryWarehouseItem.setUuid(uuid);
 
@@ -3872,7 +3872,7 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 					commerceInventoryWarehouseItem;
 
 		if (Validator.isNull(commerceInventoryWarehouseItem.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			commerceInventoryWarehouseItem.setUuid(uuid);
 		}
@@ -4474,8 +4474,5 @@ public class CommerceInventoryWarehouseItemPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

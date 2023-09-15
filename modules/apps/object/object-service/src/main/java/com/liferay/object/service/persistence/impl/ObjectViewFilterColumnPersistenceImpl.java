@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -2437,7 +2437,7 @@ public class ObjectViewFilterColumnPersistenceImpl
 		objectViewFilterColumn.setNew(true);
 		objectViewFilterColumn.setPrimaryKey(objectViewFilterColumnId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		objectViewFilterColumn.setUuid(uuid);
 
@@ -2564,7 +2564,7 @@ public class ObjectViewFilterColumnPersistenceImpl
 			(ObjectViewFilterColumnModelImpl)objectViewFilterColumn;
 
 		if (Validator.isNull(objectViewFilterColumn.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			objectViewFilterColumn.setUuid(uuid);
 		}
@@ -3055,8 +3055,5 @@ public class ObjectViewFilterColumnPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

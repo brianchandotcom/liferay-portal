@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -4037,7 +4037,7 @@ public class KBFolderPersistenceImpl
 		kbFolder.setNew(true);
 		kbFolder.setPrimaryKey(kbFolderId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		kbFolder.setUuid(uuid);
 
@@ -4152,7 +4152,7 @@ public class KBFolderPersistenceImpl
 		KBFolderModelImpl kbFolderModelImpl = (KBFolderModelImpl)kbFolder;
 
 		if (Validator.isNull(kbFolder.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			kbFolder.setUuid(uuid);
 		}
@@ -4957,8 +4957,5 @@ public class KBFolderPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

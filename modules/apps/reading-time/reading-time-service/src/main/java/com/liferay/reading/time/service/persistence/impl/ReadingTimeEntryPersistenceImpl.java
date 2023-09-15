@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.reading.time.exception.NoSuchEntryException;
 import com.liferay.reading.time.model.ReadingTimeEntry;
 import com.liferay.reading.time.model.ReadingTimeEntryTable;
@@ -1939,7 +1939,7 @@ public class ReadingTimeEntryPersistenceImpl
 		readingTimeEntry.setNew(true);
 		readingTimeEntry.setPrimaryKey(readingTimeEntryId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		readingTimeEntry.setUuid(uuid);
 
@@ -2061,7 +2061,7 @@ public class ReadingTimeEntryPersistenceImpl
 			(ReadingTimeEntryModelImpl)readingTimeEntry;
 
 		if (Validator.isNull(readingTimeEntry.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			readingTimeEntry.setUuid(uuid);
 		}
@@ -2761,8 +2761,5 @@ public class ReadingTimeEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

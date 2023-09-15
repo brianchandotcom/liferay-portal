@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -4079,7 +4079,7 @@ public class DDLRecordSetPersistenceImpl
 		ddlRecordSet.setNew(true);
 		ddlRecordSet.setPrimaryKey(recordSetId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		ddlRecordSet.setUuid(uuid);
 
@@ -4200,7 +4200,7 @@ public class DDLRecordSetPersistenceImpl
 			(DDLRecordSetModelImpl)ddlRecordSet;
 
 		if (Validator.isNull(ddlRecordSet.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			ddlRecordSet.setUuid(uuid);
 		}
@@ -4965,8 +4965,5 @@ public class DDLRecordSetPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -2916,7 +2916,7 @@ public class CommerceOrderNotePersistenceImpl
 		commerceOrderNote.setNew(true);
 		commerceOrderNote.setPrimaryKey(commerceOrderNoteId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		commerceOrderNote.setUuid(uuid);
 
@@ -3039,7 +3039,7 @@ public class CommerceOrderNotePersistenceImpl
 			(CommerceOrderNoteModelImpl)commerceOrderNote;
 
 		if (Validator.isNull(commerceOrderNote.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			commerceOrderNote.setUuid(uuid);
 		}
@@ -3578,8 +3578,5 @@ public class CommerceOrderNotePersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.site.navigation.exception.NoSuchMenuException;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuTable;
@@ -7360,7 +7360,7 @@ public class SiteNavigationMenuPersistenceImpl
 		siteNavigationMenu.setNew(true);
 		siteNavigationMenu.setPrimaryKey(siteNavigationMenuId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		siteNavigationMenu.setUuid(uuid);
 
@@ -7487,7 +7487,7 @@ public class SiteNavigationMenuPersistenceImpl
 			(SiteNavigationMenuModelImpl)siteNavigationMenu;
 
 		if (Validator.isNull(siteNavigationMenu.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			siteNavigationMenu.setUuid(uuid);
 		}
@@ -8303,8 +8303,5 @@ public class SiteNavigationMenuPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

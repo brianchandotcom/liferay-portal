@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -5642,7 +5642,7 @@ public class CTCollectionPersistenceImpl
 		ctCollection.setNew(true);
 		ctCollection.setPrimaryKey(ctCollectionId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		ctCollection.setUuid(uuid);
 
@@ -5761,7 +5761,7 @@ public class CTCollectionPersistenceImpl
 			(CTCollectionModelImpl)ctCollection;
 
 		if (Validator.isNull(ctCollection.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			ctCollection.setUuid(uuid);
 		}
@@ -6328,8 +6328,5 @@ public class CTCollectionPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

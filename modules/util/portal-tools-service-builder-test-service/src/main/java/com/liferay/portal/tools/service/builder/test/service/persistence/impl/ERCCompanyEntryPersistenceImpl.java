@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.DuplicateERCCompanyEntryExternalReferenceCodeException;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchERCCompanyEntryException;
@@ -1578,7 +1578,7 @@ public class ERCCompanyEntryPersistenceImpl
 		ercCompanyEntry.setNew(true);
 		ercCompanyEntry.setPrimaryKey(ercCompanyEntryId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		ercCompanyEntry.setUuid(uuid);
 
@@ -1698,7 +1698,7 @@ public class ERCCompanyEntryPersistenceImpl
 			(ERCCompanyEntryModelImpl)ercCompanyEntry;
 
 		if (Validator.isNull(ercCompanyEntry.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			ercCompanyEntry.setUuid(uuid);
 		}
@@ -2135,8 +2135,5 @@ public class ERCCompanyEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@ServiceReference(type = PortalUUID.class)
-	private PortalUUID _portalUUID;
 
 }

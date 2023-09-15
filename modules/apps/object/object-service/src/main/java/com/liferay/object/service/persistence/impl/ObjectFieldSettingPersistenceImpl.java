@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -2102,7 +2102,7 @@ public class ObjectFieldSettingPersistenceImpl
 		objectFieldSetting.setNew(true);
 		objectFieldSetting.setPrimaryKey(objectFieldSettingId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		objectFieldSetting.setUuid(uuid);
 
@@ -2227,7 +2227,7 @@ public class ObjectFieldSettingPersistenceImpl
 			(ObjectFieldSettingModelImpl)objectFieldSetting;
 
 		if (Validator.isNull(objectFieldSetting.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			objectFieldSetting.setUuid(uuid);
 		}
@@ -2706,8 +2706,5 @@ public class ObjectFieldSettingPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

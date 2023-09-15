@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -2907,7 +2907,7 @@ public class MBThreadFlagPersistenceImpl
 		mbThreadFlag.setNew(true);
 		mbThreadFlag.setPrimaryKey(threadFlagId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		mbThreadFlag.setUuid(uuid);
 
@@ -3028,7 +3028,7 @@ public class MBThreadFlagPersistenceImpl
 			(MBThreadFlagModelImpl)mbThreadFlag;
 
 		if (Validator.isNull(mbThreadFlag.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			mbThreadFlag.setUuid(uuid);
 		}
@@ -3750,8 +3750,5 @@ public class MBThreadFlagPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

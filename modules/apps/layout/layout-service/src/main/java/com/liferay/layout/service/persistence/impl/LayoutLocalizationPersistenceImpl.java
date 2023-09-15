@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -2772,7 +2772,7 @@ public class LayoutLocalizationPersistenceImpl
 		layoutLocalization.setNew(true);
 		layoutLocalization.setPrimaryKey(layoutLocalizationId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		layoutLocalization.setUuid(uuid);
 
@@ -2899,7 +2899,7 @@ public class LayoutLocalizationPersistenceImpl
 			(LayoutLocalizationModelImpl)layoutLocalization;
 
 		if (Validator.isNull(layoutLocalization.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			layoutLocalization.setUuid(uuid);
 		}
@@ -3634,8 +3634,5 @@ public class LayoutLocalizationPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

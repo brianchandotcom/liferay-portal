@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.segments.exception.NoSuchEntryException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsEntryTable;
@@ -10846,7 +10846,7 @@ public class SegmentsEntryPersistenceImpl
 		segmentsEntry.setNew(true);
 		segmentsEntry.setPrimaryKey(segmentsEntryId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		segmentsEntry.setUuid(uuid);
 
@@ -10967,7 +10967,7 @@ public class SegmentsEntryPersistenceImpl
 			(SegmentsEntryModelImpl)segmentsEntry;
 
 		if (Validator.isNull(segmentsEntry.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			segmentsEntry.setUuid(uuid);
 		}
@@ -11880,8 +11880,5 @@ public class SegmentsEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

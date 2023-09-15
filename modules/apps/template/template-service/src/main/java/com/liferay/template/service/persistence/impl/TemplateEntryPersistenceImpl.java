@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.template.exception.NoSuchTemplateEntryException;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.model.TemplateEntryTable;
@@ -4356,7 +4356,7 @@ public class TemplateEntryPersistenceImpl
 		templateEntry.setNew(true);
 		templateEntry.setPrimaryKey(templateEntryId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		templateEntry.setUuid(uuid);
 
@@ -4477,7 +4477,7 @@ public class TemplateEntryPersistenceImpl
 			(TemplateEntryModelImpl)templateEntry;
 
 		if (Validator.isNull(templateEntry.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			templateEntry.setUuid(uuid);
 		}
@@ -5255,8 +5255,5 @@ public class TemplateEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

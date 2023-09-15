@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -2422,7 +2422,7 @@ public class CProductPersistenceImpl
 		cProduct.setNew(true);
 		cProduct.setPrimaryKey(CProductId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		cProduct.setUuid(uuid);
 
@@ -2537,7 +2537,7 @@ public class CProductPersistenceImpl
 		CProductModelImpl cProductModelImpl = (CProductModelImpl)cProduct;
 
 		if (Validator.isNull(cProduct.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			cProduct.setUuid(uuid);
 		}
@@ -3265,8 +3265,5 @@ public class CProductPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

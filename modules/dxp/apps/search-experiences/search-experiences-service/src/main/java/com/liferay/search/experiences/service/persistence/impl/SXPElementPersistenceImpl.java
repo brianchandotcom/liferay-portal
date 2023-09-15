@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.search.experiences.exception.DuplicateSXPElementExternalReferenceCodeException;
 import com.liferay.search.experiences.exception.NoSuchSXPElementException;
 import com.liferay.search.experiences.model.SXPElement;
@@ -6149,7 +6149,7 @@ public class SXPElementPersistenceImpl
 		sxpElement.setNew(true);
 		sxpElement.setPrimaryKey(sxpElementId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		sxpElement.setUuid(uuid);
 
@@ -6267,7 +6267,7 @@ public class SXPElementPersistenceImpl
 			(SXPElementModelImpl)sxpElement;
 
 		if (Validator.isNull(sxpElement.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			sxpElement.setUuid(uuid);
 		}
@@ -6880,8 +6880,5 @@ public class SXPElementPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

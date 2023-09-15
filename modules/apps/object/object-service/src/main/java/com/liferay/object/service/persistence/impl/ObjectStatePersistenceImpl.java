@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -2580,7 +2580,7 @@ public class ObjectStatePersistenceImpl
 		objectState.setNew(true);
 		objectState.setPrimaryKey(objectStateId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		objectState.setUuid(uuid);
 
@@ -2698,7 +2698,7 @@ public class ObjectStatePersistenceImpl
 			(ObjectStateModelImpl)objectState;
 
 		if (Validator.isNull(objectState.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			objectState.setUuid(uuid);
 		}
@@ -3189,8 +3189,5 @@ public class ObjectStatePersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.segments.exception.NoSuchExperienceException;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperienceTable;
@@ -10393,7 +10393,7 @@ public class SegmentsExperiencePersistenceImpl
 		segmentsExperience.setNew(true);
 		segmentsExperience.setPrimaryKey(segmentsExperienceId);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		segmentsExperience.setUuid(uuid);
 
@@ -10520,7 +10520,7 @@ public class SegmentsExperiencePersistenceImpl
 			(SegmentsExperienceModelImpl)segmentsExperience;
 
 		if (Validator.isNull(segmentsExperience.getUuid())) {
-			String uuid = _portalUUID.generate();
+			String uuid = PortalUUIDUtil.generate();
 
 			segmentsExperience.setUuid(uuid);
 		}
@@ -11448,8 +11448,5 @@ public class SegmentsExperiencePersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

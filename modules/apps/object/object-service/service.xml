@@ -1006,6 +1006,7 @@
 		<exception>ObjectFieldReadOnly</exception>
 		<exception>ObjectFieldReadOnlyConditionExpression</exception>
 		<exception>ObjectFieldRelationshipType</exception>
+		<exception>ObjectFieldRequired</exception>
 		<exception>ObjectFieldSettingName</exception>
 		<exception>ObjectFieldSettingValue</exception>
 		<exception>ObjectFieldState</exception>

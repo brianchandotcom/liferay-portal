@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.plugin.Version;
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -52,7 +53,7 @@ public class ModuleId implements Serializable {
 
 		ModuleId moduleId = (ModuleId)object;
 
-		return toString().equals(moduleId.toString());
+		return Objects.equals(toString(), moduleId.toString());
 	}
 
 	public String getArtifactId() {

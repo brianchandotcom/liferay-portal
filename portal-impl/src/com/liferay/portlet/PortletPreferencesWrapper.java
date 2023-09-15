@@ -10,6 +10,7 @@ import java.io.Serializable;
 
 import java.util.Enumeration;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
@@ -38,7 +39,8 @@ public class PortletPreferencesWrapper
 		PortletPreferencesWrapper portletPreferencesWrapper =
 			(PortletPreferencesWrapper)object;
 
-		if (getPortletPreferencesImpl().equals(
+		if (Objects.equals(
+				getPortletPreferencesImpl(),
 				portletPreferencesWrapper.getPortletPreferencesImpl())) {
 
 			return true;

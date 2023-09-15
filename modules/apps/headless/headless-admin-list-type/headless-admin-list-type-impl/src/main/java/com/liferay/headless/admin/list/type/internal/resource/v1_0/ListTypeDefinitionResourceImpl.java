@@ -273,9 +273,14 @@ public class ListTypeDefinitionResourceImpl
 				name_i18n = LocalizedMapUtil.getI18nMap(
 					serviceBuilderListTypeDefinition.getNameMap());
 
-				if (FeatureFlagManagerUtil.isEnabled("LPS-193355")) {
-					system = serviceBuilderListTypeDefinition.getSystem();
-				}
+				setSystem(
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPS-193355")) {
+							return null;
+						}
+
+						return serviceBuilderListTypeDefinition.getSystem();
+					});
 			}
 		};
 	}

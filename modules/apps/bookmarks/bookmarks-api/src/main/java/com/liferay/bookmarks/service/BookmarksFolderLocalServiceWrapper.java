@@ -5,8 +5,11 @@
 
 package com.liferay.bookmarks.service;
 
+import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link BookmarksFolderLocalService}.
@@ -40,14 +43,12 @@ public class BookmarksFolderLocalServiceWrapper
 	 * @return the bookmarks folder that was added
 	 */
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder addBookmarksFolder(
-		com.liferay.bookmarks.model.BookmarksFolder bookmarksFolder) {
-
+	public BookmarksFolder addBookmarksFolder(BookmarksFolder bookmarksFolder) {
 		return _bookmarksFolderLocalService.addBookmarksFolder(bookmarksFolder);
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder addFolder(
+	public BookmarksFolder addFolder(
 			long userId, long parentFolderId, String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -63,9 +64,7 @@ public class BookmarksFolderLocalServiceWrapper
 	 * @return the new bookmarks folder
 	 */
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder createBookmarksFolder(
-		long folderId) {
-
+	public BookmarksFolder createBookmarksFolder(long folderId) {
 		return _bookmarksFolderLocalService.createBookmarksFolder(folderId);
 	}
 
@@ -91,8 +90,8 @@ public class BookmarksFolderLocalServiceWrapper
 	 * @return the bookmarks folder that was removed
 	 */
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder deleteBookmarksFolder(
-		com.liferay.bookmarks.model.BookmarksFolder bookmarksFolder) {
+	public BookmarksFolder deleteBookmarksFolder(
+		BookmarksFolder bookmarksFolder) {
 
 		return _bookmarksFolderLocalService.deleteBookmarksFolder(
 			bookmarksFolder);
@@ -110,25 +109,22 @@ public class BookmarksFolderLocalServiceWrapper
 	 * @throws PortalException if a bookmarks folder with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder deleteBookmarksFolder(
-			long folderId)
+	public BookmarksFolder deleteBookmarksFolder(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksFolderLocalService.deleteBookmarksFolder(folderId);
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder deleteFolder(
-			com.liferay.bookmarks.model.BookmarksFolder folder)
+	public BookmarksFolder deleteFolder(BookmarksFolder folder)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksFolderLocalService.deleteFolder(folder);
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder deleteFolder(
-			com.liferay.bookmarks.model.BookmarksFolder folder,
-			boolean includeTrashedEntries)
+	public BookmarksFolder deleteFolder(
+			BookmarksFolder folder, boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksFolderLocalService.deleteFolder(
@@ -136,15 +132,14 @@ public class BookmarksFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder deleteFolder(
-			long folderId)
+	public BookmarksFolder deleteFolder(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksFolderLocalService.deleteFolder(folderId);
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder deleteFolder(
+	public BookmarksFolder deleteFolder(
 			long folderId, boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -275,9 +270,7 @@ public class BookmarksFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder fetchBookmarksFolder(
-		long folderId) {
-
+	public BookmarksFolder fetchBookmarksFolder(long folderId) {
 		return _bookmarksFolderLocalService.fetchBookmarksFolder(folderId);
 	}
 
@@ -289,8 +282,8 @@ public class BookmarksFolderLocalServiceWrapper
 	 * @return the matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
 	 */
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder
-		fetchBookmarksFolderByUuidAndGroupId(String uuid, long groupId) {
+	public BookmarksFolder fetchBookmarksFolderByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return _bookmarksFolderLocalService.
 			fetchBookmarksFolderByUuidAndGroupId(uuid, groupId);
@@ -311,8 +304,7 @@ public class BookmarksFolderLocalServiceWrapper
 	 * @throws PortalException if a bookmarks folder with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder getBookmarksFolder(
-			long folderId)
+	public BookmarksFolder getBookmarksFolder(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksFolderLocalService.getBookmarksFolder(folderId);
@@ -327,8 +319,8 @@ public class BookmarksFolderLocalServiceWrapper
 	 * @throws PortalException if a matching bookmarks folder could not be found
 	 */
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder
-			getBookmarksFolderByUuidAndGroupId(String uuid, long groupId)
+	public BookmarksFolder getBookmarksFolderByUuidAndGroupId(
+			String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksFolderLocalService.getBookmarksFolderByUuidAndGroupId(
@@ -347,8 +339,8 @@ public class BookmarksFolderLocalServiceWrapper
 	 * @return the range of bookmarks folders
 	 */
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
-		getBookmarksFolders(int start, int end) {
+	public java.util.List<BookmarksFolder> getBookmarksFolders(
+		int start, int end) {
 
 		return _bookmarksFolderLocalService.getBookmarksFolders(start, end);
 	}
@@ -361,7 +353,7 @@ public class BookmarksFolderLocalServiceWrapper
 	 * @return the matching bookmarks folders, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
+	public java.util.List<BookmarksFolder>
 		getBookmarksFoldersByUuidAndCompanyId(String uuid, long companyId) {
 
 		return _bookmarksFolderLocalService.
@@ -379,12 +371,11 @@ public class BookmarksFolderLocalServiceWrapper
 	 * @return the range of matching bookmarks folders, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
+	public java.util.List<BookmarksFolder>
 		getBookmarksFoldersByUuidAndCompanyId(
 			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.bookmarks.model.BookmarksFolder>
-					orderByComparator) {
+			com.liferay.portal.kernel.util.OrderByComparator<BookmarksFolder>
+				orderByComparator) {
 
 		return _bookmarksFolderLocalService.
 			getBookmarksFoldersByUuidAndCompanyId(
@@ -402,8 +393,8 @@ public class BookmarksFolderLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
-		getCompanyFolders(long companyId, int start, int end) {
+	public java.util.List<BookmarksFolder> getCompanyFolders(
+		long companyId, int start, int end) {
 
 		return _bookmarksFolderLocalService.getCompanyFolders(
 			companyId, start, end);
@@ -425,38 +416,35 @@ public class BookmarksFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder getFolder(long folderId)
+	public BookmarksFolder getFolder(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksFolderLocalService.getFolder(folderId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
-		getFolders(long groupId) {
-
+	public java.util.List<BookmarksFolder> getFolders(long groupId) {
 		return _bookmarksFolderLocalService.getFolders(groupId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
-		getFolders(long groupId, long parentFolderId) {
+	public java.util.List<BookmarksFolder> getFolders(
+		long groupId, long parentFolderId) {
 
 		return _bookmarksFolderLocalService.getFolders(groupId, parentFolderId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
-		getFolders(long groupId, long parentFolderId, int start, int end) {
+	public java.util.List<BookmarksFolder> getFolders(
+		long groupId, long parentFolderId, int start, int end) {
 
 		return _bookmarksFolderLocalService.getFolders(
 			groupId, parentFolderId, start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
-		getFolders(
-			long groupId, long parentFolderId, int status, int start, int end) {
+	public java.util.List<BookmarksFolder> getFolders(
+		long groupId, long parentFolderId, int status, int start, int end) {
 
 		return _bookmarksFolderLocalService.getFolders(
 			groupId, parentFolderId, status, start, end);
@@ -524,9 +512,7 @@ public class BookmarksFolderLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
-		getNoAssetFolders() {
-
+	public java.util.List<BookmarksFolder> getNoAssetFolders() {
 		return _bookmarksFolderLocalService.getNoAssetFolders();
 	}
 
@@ -567,8 +553,7 @@ public class BookmarksFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder moveFolder(
-			long folderId, long parentFolderId)
+	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksFolderLocalService.moveFolder(
@@ -576,7 +561,7 @@ public class BookmarksFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder moveFolderFromTrash(
+	public BookmarksFolder moveFolderFromTrash(
 			long userId, long folderId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -585,8 +570,7 @@ public class BookmarksFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder moveFolderToTrash(
-			long userId, long folderId)
+	public BookmarksFolder moveFolderToTrash(long userId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksFolderLocalService.moveFolderToTrash(userId, folderId);
@@ -610,8 +594,7 @@ public class BookmarksFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder restoreFolderFromTrash(
-			long userId, long folderId)
+	public BookmarksFolder restoreFolderFromTrash(long userId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksFolderLocalService.restoreFolderFromTrash(
@@ -635,9 +618,8 @@ public class BookmarksFolderLocalServiceWrapper
 
 	@Override
 	public void updateAsset(
-			long userId, com.liferay.bookmarks.model.BookmarksFolder folder,
-			long[] assetCategoryIds, String[] assetTagNames,
-			long[] assetLinkEntryIds, Double priority)
+			long userId, BookmarksFolder folder, long[] assetCategoryIds,
+			String[] assetTagNames, long[] assetLinkEntryIds, Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_bookmarksFolderLocalService.updateAsset(
@@ -656,15 +638,15 @@ public class BookmarksFolderLocalServiceWrapper
 	 * @return the bookmarks folder that was updated
 	 */
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder updateBookmarksFolder(
-		com.liferay.bookmarks.model.BookmarksFolder bookmarksFolder) {
+	public BookmarksFolder updateBookmarksFolder(
+		BookmarksFolder bookmarksFolder) {
 
 		return _bookmarksFolderLocalService.updateBookmarksFolder(
 			bookmarksFolder);
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(
+	public BookmarksFolder updateFolder(
 			long userId, long folderId, long parentFolderId, String name,
 			String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -676,9 +658,8 @@ public class BookmarksFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder updateStatus(
-			long userId, com.liferay.bookmarks.model.BookmarksFolder folder,
-			int status)
+	public BookmarksFolder updateStatus(
+			long userId, BookmarksFolder folder, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksFolderLocalService.updateStatus(
@@ -688,6 +669,26 @@ public class BookmarksFolderLocalServiceWrapper
 	@Override
 	public BasePersistence<?> getBasePersistence() {
 		return _bookmarksFolderLocalService.getBasePersistence();
+	}
+
+	@Override
+	public CTPersistence<BookmarksFolder> getCTPersistence() {
+		return _bookmarksFolderLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<BookmarksFolder> getModelClass() {
+		return _bookmarksFolderLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<BookmarksFolder>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _bookmarksFolderLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

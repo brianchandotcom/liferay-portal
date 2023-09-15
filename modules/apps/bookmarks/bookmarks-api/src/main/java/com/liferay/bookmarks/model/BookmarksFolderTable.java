@@ -26,6 +26,9 @@ public class BookmarksFolderTable extends BaseTable<BookmarksFolderTable> {
 
 	public final Column<BookmarksFolderTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<BookmarksFolderTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<BookmarksFolderTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<BookmarksFolderTable, Long> folderId = createColumn(

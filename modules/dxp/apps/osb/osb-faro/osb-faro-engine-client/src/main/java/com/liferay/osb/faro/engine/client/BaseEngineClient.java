@@ -216,6 +216,18 @@ public abstract class BaseEngineClient {
 	}
 
 	protected void delete(
+			FaroProject faroProject, Object object, String type,
+			Map<String, Object> uriVariables)
+		throws FaroEngineClientException {
+
+		RestTemplate restTemplate = getRestTemplate(faroProject);
+
+		restTemplate.exchange(
+			getTemplatedURL(faroProject, type), HttpMethod.DELETE,
+			new HttpEntity<>(object), String.class, uriVariables);
+	}
+
+	protected void delete(
 			FaroProject faroProject, String type, List<String> ids)
 		throws FaroEngineClientException {
 

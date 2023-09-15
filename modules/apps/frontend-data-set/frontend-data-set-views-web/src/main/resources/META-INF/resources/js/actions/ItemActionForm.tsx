@@ -50,7 +50,7 @@ const TYPES = [
 ];
 
 interface IFDSItemActionFormProps {
-	activeSection: string;
+	editing?: boolean;
 	fdsView: FDSViewType;
 	initialValues?: IFDSAction;
 	loadFDSActions: () => void;
@@ -65,7 +65,7 @@ interface IFDSItemActionFormProps {
 }
 
 const ItemActionForm = ({
-	activeSection,
+	editing = false,
 	fdsView,
 	initialValues,
 	loadFDSActions,
@@ -125,7 +125,7 @@ const ItemActionForm = ({
 		let fetchURL = API_URL.FDS_ACTIONS;
 		let fetchMethod = 'POST';
 
-		if (activeSection === sections.EDIT_ITEM_ACTION) {
+		if (editing) {
 			fetchURL = `${API_URL.FDS_ACTIONS}/${initialValues?.id}`;
 			fetchMethod = 'PUT';
 		}
@@ -189,9 +189,9 @@ const ItemActionForm = ({
 	return (
 		<>
 			<h2 className="mb-0 p-4">
-				{activeSection === sections.NEW_ITEM_ACTION
-					? Liferay.Language.get('new-item-action')
-					: initialValues?.label}
+				{editing
+					? initialValues?.label
+					: Liferay.Language.get('new-item-action')}
 			</h2>
 
 			<ClayPanel
@@ -289,10 +289,7 @@ const ItemActionForm = ({
 								</label>
 
 								<ClaySelectWithOption
-									disabled={
-										activeSection ===
-										sections.EDIT_ITEM_ACTION
-									}
+									disabled={editing}
 									id={typeFormElementId}
 									onChange={(event) =>
 										setActionData({

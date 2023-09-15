@@ -333,7 +333,6 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 
 				{activeSection === SECTIONS.NEW_ITEM_ACTION && (
 					<ItemActionForm
-						activeSection={activeSection}
 						fdsView={fdsView}
 						loadFDSActions={loadFDSActions}
 						namespace={namespace}
@@ -345,7 +344,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 
 				{activeSection === SECTIONS.EDIT_ITEM_ACTION && (
 					<ItemActionForm
-						activeSection={activeSection}
+						editing
 						fdsView={fdsView}
 						initialValues={initialActionFormValues}
 						loadFDSActions={loadFDSActions}

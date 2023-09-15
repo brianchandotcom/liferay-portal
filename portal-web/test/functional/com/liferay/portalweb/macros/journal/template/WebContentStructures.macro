@@ -137,7 +137,7 @@ definition {
 
 		Click(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS");
 
-		MenuItem.click(menuItem = "Copy");
+		MenuItem.click(menuItem = "Make a Copy");
 
 		if (isSet(structureCopyName)) {
 			PortletEntry.inputName(name = ${structureCopyName});
@@ -157,7 +157,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Button#COPY",
-			value1 = "Copy");
+			value1 = "Make a Copy");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}

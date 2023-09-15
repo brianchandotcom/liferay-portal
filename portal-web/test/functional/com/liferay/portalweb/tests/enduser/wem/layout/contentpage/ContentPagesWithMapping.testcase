@@ -3149,7 +3149,7 @@ definition {
 				PagesAdmin.openPagesAdmin(siteURLKey = ${siteURLKey});
 
 				PagesAdmin.gotoPageEllipsisMenuItem(
-					menuItem = "Copy",
+					menuItem = "Make a Copy",
 					pageName = "Contact");
 
 				MenuItem.click(menuItem = "Page");

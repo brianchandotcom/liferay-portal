@@ -124,14 +124,14 @@ definition {
 
 		task ("When the Web Content admin makes a copy of new structure") {
 			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Copy",
+				menuItem = "Make a Copy",
 				rowEntry = "WC Structure Name");
 
 			PortletEntry.inputName(name = "WC Structure Name Copy");
 
 			AssertClick(
 				locator1 = "Button#COPY",
-				value1 = "Copy");
+				value1 = "Make a Copy");
 		}
 
 		task ("Then the Web Content admin should see both structures") {

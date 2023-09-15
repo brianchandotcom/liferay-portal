@@ -308,7 +308,7 @@ definition {
 
 	macro duplicate {
 		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Duplicate Form",
+			menuItem = "Make a Copy",
 			rowEntry = ${formName});
 	}
 

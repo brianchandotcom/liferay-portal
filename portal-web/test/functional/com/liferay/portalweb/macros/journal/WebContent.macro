@@ -925,7 +925,7 @@ definition {
 	macro copyCP {
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = ${webContentTitle},
-			menuItem = "Copy");
+			menuItem = "Make a Copy");
 
 		Alert.viewSuccessMessage();
 	}

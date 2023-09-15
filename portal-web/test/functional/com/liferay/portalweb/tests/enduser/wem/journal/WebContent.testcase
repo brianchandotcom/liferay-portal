@@ -1305,7 +1305,7 @@ definition {
 		task ("Copy the Web Content") {
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "WC WebContent 1",
-				menuItem = "Copy");
+				menuItem = "Make a Copy");
 		}
 
 		task ("Add the second web content and select the display page template in web content") {

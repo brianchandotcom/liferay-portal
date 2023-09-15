@@ -699,7 +699,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "guest");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Copy",
+				menuItem = "Make a Copy",
 				pageName = "Home");
 
 			MenuItem.click(menuItem = "Page");

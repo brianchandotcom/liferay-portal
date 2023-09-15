@@ -132,7 +132,7 @@ definition {
 
 	macro copyCP {
 		WebContentTemplates.gotoTemplateEllipsisItem(
-			item = "Copy",
+			item = "Make a Copy",
 			templateName = ${templateName});
 
 		if (isSet(templateCopyName)) {

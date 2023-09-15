@@ -1881,7 +1881,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Copy",
+				menuItem = "Make a Copy",
 				pageName = "Test Content Page Name");
 
 			DropdownMenuItem.click(menuItem = "Page With Permissions");
@@ -1945,7 +1945,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${randomSiteName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Copy",
+				menuItem = "Make a Copy",
 				pageName = "Test Widget Page Name");
 
 			DropdownMenuItem.click(menuItem = "Page With Permissions");
@@ -2016,7 +2016,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${organizationName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Copy",
+				menuItem = "Make a Copy",
 				pageName = "Test Content Page Name");
 
 			DropdownMenuItem.click(menuItem = "Page With Permissions");
@@ -2065,7 +2065,7 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = ${organizationName});
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Copy",
+				menuItem = "Make a Copy",
 				pageName = "Test Widget Page Name");
 
 			DropdownMenuItem.click(menuItem = "Page With Permissions");
@@ -2548,7 +2548,7 @@ definition {
 
 		task ("When the page designer creates a copy of this page with permissions") {
 			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "Copy",
+				menuItem = "Make a Copy",
 				pageName = "Test Content Page Name");
 
 			DropdownMenuItem.click(menuItem = "Page With Permissions");

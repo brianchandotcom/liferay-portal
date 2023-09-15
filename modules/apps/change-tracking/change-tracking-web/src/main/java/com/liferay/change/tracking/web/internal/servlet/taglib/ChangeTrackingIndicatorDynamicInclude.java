@@ -20,6 +20,7 @@ import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.spi.history.CTCollectionHistoryProvider;
+import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTPermission;
 import com.liferay.change.tracking.web.internal.timeline.CTCollectionHistoryDataProvider;
@@ -30,6 +31,8 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -39,6 +42,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -48,11 +52,14 @@ import com.liferay.portal.kernel.service.permission.PortletPermission;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
@@ -80,12 +87,16 @@ import javax.servlet.jsp.JspException;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Samuel Trong Tran
  */
-@Component(service = DynamicInclude.class)
+@Component(
+	configurationPid = "com.liferay.change.tracking.web.internal.configuration.CTConfiguration",
+	service = DynamicInclude.class
+)
 public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 	@Override
@@ -160,6 +171,30 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					ctPreferences.getCtCollectionId());
 			}
 
+			CTConfiguration ctConfiguration = _getCTConfiguration(
+				themeDisplay.getCompanyId());
+
+			String portletId = ParamUtil.getString(
+				httpServletRequest, "p_p_id");
+
+			boolean productionOnlyApplication = false;
+
+			if (Validator.isNotNull(portletId) &&
+				ArrayUtil.contains(
+					ctConfiguration.productionOnlyApplication(), portletId)) {
+
+				productionOnlyApplication = true;
+			}
+
+			boolean unsupportedApplication = false;
+
+			if (Validator.isNotNull(portletId) &&
+				ArrayUtil.contains(
+					ctConfiguration.unsupportedApplication(), portletId)) {
+
+				unsupportedApplication = true;
+			}
+
 			if (ctCollection == null) {
 				writer.write(
 					_language.get(themeDisplay.getLocale(), "production"));
@@ -181,9 +216,10 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				new ComponentDescriptor(module, componentId, null, true),
 				_getReactData(
 					httpServletRequest, ctCollection, ctPreferences,
+					productionOnlyApplication,
 					_ctSettingsConfigurationHelper.isSandboxEnabled(
 						themeDisplay.getCompanyId()),
-					themeDisplay),
+					themeDisplay, unsupportedApplication),
 				httpServletRequest, writer);
 
 			writer.write("</div>");
@@ -223,6 +259,13 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 		_defaultCTCollectionHistoryProvider =
 			new DefaultCTCollectionHistoryProvider<>();
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_defaultCTConfiguration = ConfigurableUtil.createConfigurable(
+			CTConfiguration.class, properties);
 	}
 
 	private void _getConflictIconData(
@@ -294,10 +337,23 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		}
 	}
 
+	private CTConfiguration _getCTConfiguration(long companyId) {
+		try {
+			return _configurationProvider.getCompanyConfiguration(
+				CTConfiguration.class, companyId);
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException);
+		}
+
+		return _defaultCTConfiguration;
+	}
+
 	private Map<String, Object> _getReactData(
 			HttpServletRequest httpServletRequest, CTCollection ctCollection,
-			CTPreferences ctPreferences, boolean sandboxOnlyEnabled,
-			ThemeDisplay themeDisplay)
+			CTPreferences ctPreferences, boolean productionOnlyApplication,
+			boolean sandboxOnlyEnabled, ThemeDisplay themeDisplay,
+			boolean unsupportedApplication)
 		throws PortalException {
 
 		PortletURL checkoutURL = PortletURLBuilder.create(
@@ -360,18 +416,60 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 
 		if (ctCollection != null) {
 			ctCollectionId = ctCollection.getCtCollectionId();
-		}
 
-		if (ctCollection == null) {
+			data.put("iconClass", "change-tracking-indicator-icon-publication");
+			data.put("iconName", "radio-button");
+
+			if (productionOnlyApplication) {
+				data.put(
+					"title",
+					StringBundler.concat(
+						ctCollection.getName(), " (",
+						_language.get(
+							themeDisplay.getLocale(), "production-only-title"),
+						")"));
+				data.put(
+					"warningHeader",
+					_language.get(
+						themeDisplay.getLocale(), "production-only-title"));
+				data.put(
+					"warningBody",
+					_language.get(
+						themeDisplay.getLocale(), "production-only-message"));
+				data.put("warningLearnLink", null);
+				data.put("warningButton", false);
+			}
+			else if (unsupportedApplication) {
+				data.put(
+					"title",
+					StringBundler.concat(
+						ctCollection.getName(), " (",
+						_language.get(
+							themeDisplay.getLocale(),
+							"unsupported-application-title"),
+						")"));
+				data.put(
+					"warningHeader",
+					_language.get(
+						themeDisplay.getLocale(),
+						"unsupported-application-title"));
+				data.put(
+					"warningBody",
+					_language.get(
+						themeDisplay.getLocale(),
+						"unsupported-application-message"));
+				data.put("warningLearnLink", null);
+				data.put("warningButton", true);
+			}
+			else {
+				data.put("title", ctCollection.getName());
+			}
+		}
+		else {
 			data.put("iconClass", "change-tracking-indicator-icon-production");
 			data.put("iconName", "simple-circle");
 			data.put(
 				"title", _language.get(themeDisplay.getLocale(), "production"));
-		}
-		else {
-			data.put("iconClass", "change-tracking-indicator-icon-publication");
-			data.put("iconName", "radio-button");
-			data.put("title", ctCollection.getName());
 		}
 
 		if (ctPreferences != null) {
@@ -607,6 +705,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
 	private ServiceTrackerMap<Long, CTCollectionHistoryProvider<?>>
 		_ctCollectionHistoryProviderServiceTrackerMap;
 
@@ -626,6 +727,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 	private CTSettingsConfigurationHelper _ctSettingsConfigurationHelper;
 
 	private CTCollectionHistoryProvider<?> _defaultCTCollectionHistoryProvider;
+	private volatile CTConfiguration _defaultCTConfiguration;
 
 	@Reference
 	private FastDateFormatFactory _fastDateFormatFactory;

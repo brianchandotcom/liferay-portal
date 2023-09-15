@@ -9,6 +9,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClayModal, {useModal} from '@clayui/modal';
+import ClayPopover from '@clayui/popover';
 import ClaySticker from '@clayui/sticker';
 import {navigate as navigateUtil, openConfirmModal} from 'frontend-js-web';
 import React, {useState} from 'react';
@@ -35,6 +36,10 @@ export default function ChangeTrackingIndicator({
 	timelineIconName,
 	timelineItems,
 	title,
+	warningBody,
+	warningButton,
+	warningHeader,
+	warningLearnLink,
 }) {
 	const COLUMN_MODIFIED_DATE = 'modifiedDate';
 	const COLUMN_NAME = 'name';
@@ -44,6 +49,9 @@ export default function ChangeTrackingIndicator({
 		orderByColumn === COLUMN_NAME ? COLUMN_NAME : COLUMN_MODIFIED_DATE
 	);
 	const [showModal, setShowModal] = useState(false);
+	const [showWarning, setShowWarning] = useState(
+		warningBody || warningHeader
+	);
 
 	const navigate = (url, action) => {
 		AUI().use('liferay-portlet-url', () => {
@@ -350,6 +358,111 @@ export default function ChangeTrackingIndicator({
 		}
 	};
 
+	const renderDropdown = () => {
+		return (
+			<ClayDropDownWithItems
+				alignmentPosition={Align.BottomCenter}
+				items={dropdownItems}
+				trigger={renderTrigger}
+			/>
+		);
+	};
+
+	const renderWarning = () => {
+		return (
+			<ClayPopover
+				alignPosition="bottom"
+				closeOnClickOutside={true}
+				disableScroll={true}
+				header={
+					<ClayLayout.ContentRow verticalAlign="center">
+						<ClayLayout.ContentCol expand>
+							{warningHeader}
+						</ClayLayout.ContentCol>
+
+						<ClayLayout.ContentCol>
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('close')}
+								displayType="unstyled"
+								onClick={() => {
+									setShowWarning(false);
+								}}
+								size="xs"
+								symbol="times"
+								title={Liferay.Language.get('close')}
+							/>
+						</ClayLayout.ContentCol>
+					</ClayLayout.ContentRow>
+				}
+				onShowChange={setShowWarning}
+				show={showWarning}
+				size="lg"
+				trigger={renderTrigger}
+			>
+				<ClayLayout.ContainerFluid>
+					<ClayLayout.Row style={{paddingBottom: '20px'}}>
+						<ClayLayout.Col>
+							<span>{warningBody}</span>
+
+							{warningLearnLink && (
+								<a href={warningLearnLink}>Learn More</a>
+							)}
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+
+					<ClayLayout.Row>
+						<ClayLayout.Col>
+							{warningButton && checkoutDropdownItem && (
+								<ClayButton
+									displayType="secondary"
+									onClick={() => {
+										if (
+											!checkoutDropdownItem.confirmationMessage
+										) {
+											navigate(
+												checkoutDropdownItem.href,
+												true
+											);
+										}
+										else {
+											openConfirmModal({
+												message:
+													checkoutDropdownItem.confirmationMessage,
+												onConfirm: (isConfirmed) => {
+													if (isConfirmed) {
+														navigate(
+															checkoutDropdownItem.href,
+															true
+														);
+													}
+												},
+											});
+										}
+									}}
+									size="xs"
+								>
+									{Liferay.Language.get(
+										'work-on-publication'
+									)}
+								</ClayButton>
+							)}
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+				</ClayLayout.ContainerFluid>
+			</ClayPopover>
+		);
+	};
+
+	const renderTrigger = (
+		<button className="change-tracking-indicator-button">
+			<ClayIcon className={iconClass} symbol={iconName} />
+
+			<span className="change-tracking-indicator-title">{title}</span>
+
+			<ClayIcon symbol="caret-bottom" />
+		</button>
+	);
+
 	const renderTimeline = () => {
 		if (timelineItems) {
 			return (
@@ -394,24 +507,7 @@ export default function ChangeTrackingIndicator({
 				</ClayLayout.ContentCol>
 
 				<ClayLayout.ContentCol>
-					<ClayDropDownWithItems
-						alignmentPosition={Align.BottomCenter}
-						items={dropdownItems}
-						trigger={
-							<button className="change-tracking-indicator-button">
-								<ClayIcon
-									className={iconClass}
-									symbol={iconName}
-								/>
-
-								<span className="change-tracking-indicator-title">
-									{title}
-								</span>
-
-								<ClayIcon symbol="caret-bottom" />
-							</button>
-						}
-					/>
+					{showWarning ? renderWarning() : renderDropdown()}
 				</ClayLayout.ContentCol>
 
 				<ClayLayout.ContentCol>

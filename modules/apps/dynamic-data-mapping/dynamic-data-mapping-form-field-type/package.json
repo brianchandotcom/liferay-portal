@@ -1,12 +1,12 @@
 {
 	"dependencies": {
-		"@clayui/autocomplete": "3.104.0",
+		"@clayui/autocomplete": "3.105.0",
 		"@clayui/button": "3.100.0",
-		"@clayui/card": "3.104.0",
-		"@clayui/color-picker": "3.104.0",
+		"@clayui/card": "3.105.0",
+		"@clayui/color-picker": "3.105.0",
 		"@clayui/data-provider": "3.104.0",
-		"@clayui/date-picker": "3.104.0",
-		"@clayui/drop-down": "3.104.0",
+		"@clayui/date-picker": "3.105.0",
+		"@clayui/drop-down": "3.105.0",
 		"@clayui/form": "3.104.0",
 		"@clayui/icon": "3.56.0",
 		"@clayui/label": "3.88.0",

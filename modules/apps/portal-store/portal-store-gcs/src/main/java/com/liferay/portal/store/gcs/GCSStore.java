@@ -575,7 +575,7 @@ public class GCSStore implements Store, StoreAreaProcessor {
 		String lastVisitedBlobName = startOffset;
 		StorageBatch storageBatch = _gcsStore.batch();
 
-		int pageSize = evictedBlobQuota * 2;
+		int pageSize = Math.max(evictedBlobQuota * 2, 10);
 		int visitedPageLimit = Math.max(evictedBlobQuota / 10, 10);
 
 		while ((evictedBlobQuota > 0) && (visitedPageLimit > 0)) {

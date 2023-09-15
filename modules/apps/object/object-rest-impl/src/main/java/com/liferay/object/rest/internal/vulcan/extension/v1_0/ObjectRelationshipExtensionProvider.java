@@ -11,7 +11,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.object.rest.dto.v1_0.Status;
+import com.liferay.object.rest.internal.util.ServiceContextUtil;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -24,12 +24,8 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
@@ -235,9 +231,6 @@ public class ObjectRelationshipExtensionProvider
 				relatedObjectDefinition, userId);
 
 			for (ObjectEntry nestedObjectEntry : nestedObjectEntries) {
-				ServiceContext serviceContext = _createServiceContext(
-					nestedObjectEntry, userId);
-
 				nestedObjectEntry = objectEntryManager.updateObjectEntry(
 					objectDefinition.getCompanyId(),
 					_getDefaultDTOConverterContext(
@@ -248,67 +241,13 @@ public class ObjectRelationshipExtensionProvider
 
 				_relateNestedObjectEntry(
 					objectDefinition, objectRelationship, primaryKey,
-					nestedObjectEntry.getId(), serviceContext);
+					nestedObjectEntry.getId(),
+					ServiceContextUtil.createServiceContext(
+						nestedObjectEntry, userId));
 			}
 
 			NestedFieldsSupplier.addFieldName(entry.getKey());
 		}
-	}
-
-	private ServiceContext _createServiceContext(
-		ObjectEntry objectEntry, long userId) {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		if (Validator.isNotNull(objectEntry.getTaxonomyCategoryIds())) {
-			serviceContext.setAssetCategoryIds(
-				ArrayUtil.toArray(objectEntry.getTaxonomyCategoryIds()));
-			serviceContext.setAssetTagNames(objectEntry.getKeywords());
-		}
-
-		Map<String, Object> properties = objectEntry.getProperties();
-
-		if (properties.get("categoryIds") != null) {
-			serviceContext.setAssetCategoryIds(
-				ListUtil.toLongArray(
-					(List<String>)properties.get("categoryIds"),
-					Long::parseLong));
-		}
-
-		if (properties.get("taxonomyCategoryIds") != null) {
-			serviceContext.setAssetCategoryIds(
-				ListUtil.toLongArray(
-					(List<Integer>)properties.get("taxonomyCategoryIds"),
-					Long::valueOf));
-		}
-
-		if (Validator.isNotNull(objectEntry.getKeywords())) {
-			serviceContext.setAssetTagNames(objectEntry.getKeywords());
-		}
-
-		if (properties.get("tagNames") != null) {
-			serviceContext.setAssetTagNames(
-				ArrayUtil.toStringArray(
-					(List<String>)properties.get("tagNames")));
-		}
-
-		if (properties.get("keywords") != null) {
-			serviceContext.setAssetTagNames(
-				ArrayUtil.toStringArray(
-					(List<String>)properties.get("keywords")));
-		}
-
-		serviceContext.setUserId(userId);
-
-		if (_isObjectEntryDraft(objectEntry.getStatus())) {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-		}
-
-		return serviceContext;
 	}
 
 	private DefaultDTOConverterContext _getDefaultDTOConverterContext(
@@ -355,16 +294,6 @@ public class ObjectRelationshipExtensionProvider
 				relatedObjectDefinition.getObjectDefinitionId()) &&
 			(objectRelationship.getObjectDefinitionId2() ==
 				objectDefinition.getObjectDefinitionId())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isObjectEntryDraft(Status status) {
-		if ((status != null) &&
-			(status.getCode() == WorkflowConstants.STATUS_DRAFT)) {
 
 			return true;
 		}

@@ -32,6 +32,7 @@ import com.liferay.object.rest.internal.petra.sql.dsl.expression.OrderByExpressi
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryRelatedObjectsResourceImpl;
 import com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl;
 import com.liferay.object.rest.internal.util.ObjectEntryValuesUtil;
+import com.liferay.object.rest.internal.util.ServiceContextUtil;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
@@ -72,12 +73,10 @@ import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.filter.expression.Expression;
@@ -145,7 +144,7 @@ public class DefaultObjectEntryManagerImpl
 				_toObjectValues(
 					dtoConverterContext.getUserId(), objectDefinition,
 					objectEntry, dtoConverterContext.getLocale()),
-				_createServiceContext(
+				ServiceContextUtil.createServiceContext(
 					objectEntry, dtoConverterContext.getUserId()));
 
 		return _toObjectEntry(
@@ -783,7 +782,7 @@ public class DefaultObjectEntryManagerImpl
 			_toObjectValues(
 				dtoConverterContext.getUserId(), objectDefinition, objectEntry,
 				dtoConverterContext.getLocale()),
-			_createServiceContext(
+			ServiceContextUtil.createServiceContext(
 				objectEntry, dtoConverterContext.getUserId()));
 
 		return _toObjectEntry(
@@ -806,7 +805,7 @@ public class DefaultObjectEntryManagerImpl
 
 		long groupId = getGroupId(objectDefinition, scopeKey);
 
-		ServiceContext serviceContext = _createServiceContext(
+		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
 			objectEntry, dtoConverterContext.getUserId());
 
 		serviceContext.setCompanyId(companyId);
@@ -949,7 +948,7 @@ public class DefaultObjectEntryManagerImpl
 						_relateNestedObjectEntry(
 							objectDefinition, objectRelationship, primaryKey,
 							nestedObjectEntry.getId(),
-							_createServiceContext(
+							ServiceContextUtil.createServiceContext(
 								nestedObjectEntry,
 								dtoConverterContext.getUserId()));
 					}
@@ -1003,62 +1002,6 @@ public class DefaultObjectEntryManagerImpl
 
 			throw new NoSuchObjectEntryException();
 		}
-	}
-
-	private ServiceContext _createServiceContext(
-		ObjectEntry objectEntry, long userId) {
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-
-		if (Validator.isNotNull(objectEntry.getTaxonomyCategoryIds())) {
-			serviceContext.setAssetCategoryIds(
-				ArrayUtil.toArray(objectEntry.getTaxonomyCategoryIds()));
-			serviceContext.setAssetTagNames(objectEntry.getKeywords());
-		}
-
-		Map<String, Object> properties = objectEntry.getProperties();
-
-		if (properties.get("categoryIds") != null) {
-			serviceContext.setAssetCategoryIds(
-				ListUtil.toLongArray(
-					(List<String>)properties.get("categoryIds"),
-					Long::parseLong));
-		}
-
-		if (properties.get("taxonomyCategoryIds") != null) {
-			serviceContext.setAssetCategoryIds(
-				ListUtil.toLongArray(
-					(List<Integer>)properties.get("taxonomyCategoryIds"),
-					Long::valueOf));
-		}
-
-		if (Validator.isNotNull(objectEntry.getKeywords())) {
-			serviceContext.setAssetTagNames(objectEntry.getKeywords());
-		}
-
-		if (properties.get("tagNames") != null) {
-			serviceContext.setAssetTagNames(
-				ArrayUtil.toStringArray(
-					(List<String>)properties.get("tagNames")));
-		}
-
-		if (properties.get("keywords") != null) {
-			serviceContext.setAssetTagNames(
-				ArrayUtil.toStringArray(
-					(List<String>)properties.get("keywords")));
-		}
-
-		serviceContext.setUserId(userId);
-
-		if (_isObjectEntryDraft(objectEntry.getStatus())) {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-		}
-
-		return serviceContext;
 	}
 
 	private void _disassociateRelatedModels(

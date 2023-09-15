@@ -5,6 +5,7 @@
 
 package com.liferay.bookmarks.service;
 
+import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -28,7 +29,7 @@ public class BookmarksFolderServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder addFolder(
+	public BookmarksFolder addFolder(
 			long parentFolderId, String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -52,7 +53,7 @@ public class BookmarksFolderServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder getFolder(long folderId)
+	public BookmarksFolder getFolder(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksFolderService.getFolder(folderId);
@@ -66,31 +67,28 @@ public class BookmarksFolderServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
-		getFolders(long groupId) {
-
+	public java.util.List<BookmarksFolder> getFolders(long groupId) {
 		return _bookmarksFolderService.getFolders(groupId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
-		getFolders(long groupId, long parentFolderId) {
+	public java.util.List<BookmarksFolder> getFolders(
+		long groupId, long parentFolderId) {
 
 		return _bookmarksFolderService.getFolders(groupId, parentFolderId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
-		getFolders(long groupId, long parentFolderId, int start, int end) {
+	public java.util.List<BookmarksFolder> getFolders(
+		long groupId, long parentFolderId, int start, int end) {
 
 		return _bookmarksFolderService.getFolders(
 			groupId, parentFolderId, start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.bookmarks.model.BookmarksFolder>
-		getFolders(
-			long groupId, long parentFolderId, int status, int start, int end) {
+	public java.util.List<BookmarksFolder> getFolders(
+		long groupId, long parentFolderId, int status, int start, int end) {
 
 		return _bookmarksFolderService.getFolders(
 			groupId, parentFolderId, status, start, end);
@@ -179,15 +177,14 @@ public class BookmarksFolderServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder moveFolder(
-			long folderId, long parentFolderId)
+	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksFolderService.moveFolder(folderId, parentFolderId);
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder moveFolderFromTrash(
+	public BookmarksFolder moveFolderFromTrash(
 			long folderId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -196,8 +193,7 @@ public class BookmarksFolderServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder moveFolderToTrash(
-			long folderId)
+	public BookmarksFolder moveFolderToTrash(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _bookmarksFolderService.moveFolderToTrash(folderId);
@@ -225,7 +221,7 @@ public class BookmarksFolderServiceWrapper
 	}
 
 	@Override
-	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(
+	public BookmarksFolder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

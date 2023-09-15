@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -30,8 +31,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface BookmarksEntryModel
-	extends BaseModel<BookmarksEntry>, MVCCModel, ShardedModel,
-			StagedGroupedModel, TrashedModel, WorkflowedModel {
+	extends BaseModel<BookmarksEntry>, CTModel<BookmarksEntry>, MVCCModel,
+			ShardedModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -44,6 +45,7 @@ public interface BookmarksEntryModel
 	 *
 	 * @return the primary key of this bookmarks entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -51,6 +53,7 @@ public interface BookmarksEntryModel
 	 *
 	 * @param primaryKey the primary key of this bookmarks entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -68,6 +71,22 @@ public interface BookmarksEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this bookmarks entry.
+	 *
+	 * @return the ct collection ID of this bookmarks entry
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this bookmarks entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this bookmarks entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this bookmarks entry.

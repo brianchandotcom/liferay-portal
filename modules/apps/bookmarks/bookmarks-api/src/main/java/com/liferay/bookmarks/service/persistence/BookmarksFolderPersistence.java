@@ -8,6 +8,7 @@ package com.liferay.bookmarks.service.persistence;
 import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -24,7 +25,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface BookmarksFolderPersistence
-	extends BasePersistence<BookmarksFolder> {
+	extends BasePersistence<BookmarksFolder>, CTPersistence<BookmarksFolder> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

@@ -68,10 +68,12 @@ public class BookmarksEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", entryId=");
@@ -120,6 +122,7 @@ public class BookmarksEntryCacheModel
 		BookmarksEntryImpl bookmarksEntryImpl = new BookmarksEntryImpl();
 
 		bookmarksEntryImpl.setMvccVersion(mvccVersion);
+		bookmarksEntryImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			bookmarksEntryImpl.setUuid("");
@@ -218,6 +221,8 @@ public class BookmarksEntryCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		entryId = objectInput.readLong();
@@ -250,6 +255,8 @@ public class BookmarksEntryCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -324,6 +331,7 @@ public class BookmarksEntryCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long entryId;
 	public long groupId;

@@ -98,19 +98,6 @@ public interface OrganizationLocalService
 		throws PortalException;
 
 	/**
-	 * Adds the organization to the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param organization the organization
-	 * @return the organization that was added
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Organization addOrganization(Organization organization);
-
-	/**
 	 * Adds an organization.
 	 *
 	 * <p>
@@ -137,11 +124,23 @@ public interface OrganizationLocalService
 	 * @return the organization
 	 */
 	public Organization addOrganization(
-			String externalReferenceCode, long userId,
-			long parentOrganizationId, String name, String type, long regionId,
-			long countryId, long statusListTypeId, String comments,
-			boolean site, ServiceContext serviceContext)
+			long userId, long parentOrganizationId, String name, String type,
+			long regionId, long countryId, long statusListTypeId,
+			String comments, boolean site, ServiceContext serviceContext)
 		throws PortalException;
+
+	/**
+	 * Adds the organization to the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param organization the organization
+	 * @return the organization that was added
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public Organization addOrganization(Organization organization);
 
 	/**
 	 * Adds a resource for each type of permission available on the
@@ -1287,19 +1286,6 @@ public interface OrganizationLocalService
 		throws PortalException;
 
 	/**
-	 * Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param organization the organization
-	 * @return the organization that was updated
-	 */
-	@Indexable(type = IndexableType.REINDEX)
-	public Organization updateOrganization(Organization organization);
-
-	/**
 	 * Updates the organization.
 	 *
 	 * @param companyId the primary key of the organization's company
@@ -1323,12 +1309,24 @@ public interface OrganizationLocalService
 	 * @return the organization
 	 */
 	public Organization updateOrganization(
-			String externalReferenceCode, long companyId, long organizationId,
-			long parentOrganizationId, String name, String type, long regionId,
-			long countryId, long statusListTypeId, String comments,
-			boolean hasLogo, byte[] logoBytes, boolean site,
-			ServiceContext serviceContext)
+			long companyId, long organizationId, long parentOrganizationId,
+			String name, String type, long regionId, long countryId,
+			long statusListTypeId, String comments, boolean hasLogo,
+			byte[] logoBytes, boolean site, ServiceContext serviceContext)
 		throws PortalException;
+
+	/**
+	 * Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect OrganizationLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param organization the organization
+	 * @return the organization that was updated
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	public Organization updateOrganization(Organization organization);
 
 	@Override
 	@Transactional(enabled = false)

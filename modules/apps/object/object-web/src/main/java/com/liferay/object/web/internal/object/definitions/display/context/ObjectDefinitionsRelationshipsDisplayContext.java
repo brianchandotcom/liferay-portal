@@ -136,6 +136,8 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 		return JSONUtil.put(
 			"deletionType", objectRelationship.getDeletionType()
 		).put(
+			"id", Long.valueOf(objectRelationship.getObjectRelationshipId())
+		).put(
 			"label", objectRelationship.getLabelMap()
 		).put(
 			"name", objectRelationship.getName()
@@ -153,9 +155,6 @@ public class ObjectDefinitionsRelationshipsDisplayContext
 			Long.valueOf(objectRelationship.getObjectDefinitionId2())
 		).put(
 			"objectDefinitionName2", objectDefinition2.getShortName()
-		).put(
-			"objectRelationshipId",
-			Long.valueOf(objectRelationship.getObjectRelationshipId())
 		).put(
 			"parameterObjectFieldId",
 			objectRelationship.getParameterObjectFieldId()

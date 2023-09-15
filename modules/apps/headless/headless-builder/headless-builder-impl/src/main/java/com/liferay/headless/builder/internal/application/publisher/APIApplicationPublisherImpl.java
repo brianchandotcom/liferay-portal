@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -95,7 +96,8 @@ public class APIApplicationPublisherImpl
 					add(_registerAPIApplication(apiApplication));
 					add(
 						_registerResource(
-							apiApplication, HeadlessBuilderResourceImpl.class,
+							apiApplication, new HashMapDictionary<>(),
+							HeadlessBuilderResourceImpl.class,
 							() -> new HeadlessBuilderResourceImpl(
 								_endpointHelper,
 								companyId -> _endpointMatchersMap.get(
@@ -104,7 +106,15 @@ public class APIApplicationPublisherImpl
 										companyId)))));
 					add(
 						_registerResource(
-							apiApplication, OpenAPIResourceImpl.class,
+							apiApplication,
+							HashMapDictionaryBuilder.<String, Object>put(
+								"openapi.resource", "true"
+							).put(
+								"openapi.resource.path",
+								HeadlessBuilderConstants.BASE_PATH_SUFFIX +
+									apiApplication.getBaseURL()
+							).build(),
+							OpenAPIResourceImpl.class,
 							() -> new OpenAPIResourceImpl(_openAPIResource)));
 				}
 			});
@@ -220,8 +230,8 @@ public class APIApplicationPublisherImpl
 	}
 
 	private <T> ServiceRegistration<T> _registerResource(
-		APIApplication apiApplication, Class<T> resourceClass,
-		Supplier<T> resourceSupplier) {
+		APIApplication apiApplication, Dictionary<String, Object> properties,
+		Class<T> resourceClass, Supplier<T> resourceSupplier) {
 
 		return _bundleContext.registerService(
 			resourceClass,
@@ -248,6 +258,8 @@ public class APIApplicationPublisherImpl
 				"(osgi.jaxrs.name=" + apiApplication.getBaseURL() + ")"
 			).put(
 				"osgi.jaxrs.resource", "true"
+			).putAll(
+				properties
 			).build());
 	}
 

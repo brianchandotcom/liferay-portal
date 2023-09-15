@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder;
@@ -452,17 +453,26 @@ public class UpgradeReport {
 	}
 
 	private File _getReportFile() {
-		File reportsDir;
+		File reportsDir = null;
 
-		if (DBUpgrader.isUpgradeClient()) {
-			reportsDir = new File(".", "reports");
-		}
-		else {
-			reportsDir = new File(PropsValues.LIFERAY_HOME, "reports");
-		}
+		if (!Validator.isBlank(PropsValues.UPGRADE_REPORT_DIRECTORY)) {
+			reportsDir = new File(PropsValues.UPGRADE_REPORT_DIRECTORY);
 
-		if ((reportsDir != null) && !reportsDir.exists()) {
-			reportsDir.mkdirs();
+			if ((reportsDir != null) && !reportsDir.exists()) {
+				reportsDir.mkdirs();
+			}
+
+		}
+		if((reportsDir != null && !reportsDir.exists())) {
+			if (DBUpgrader.isUpgradeClient()) {
+				reportsDir = new File(".", "reports");
+			}
+			else {
+				reportsDir = new File(PropsValues.LIFERAY_HOME, "reports");
+			}
+			if ((reportsDir != null) && !reportsDir.exists()) {
+				reportsDir.mkdirs();
+			}
 		}
 
 		File reportFile = new File(reportsDir, "upgrade_report.info");

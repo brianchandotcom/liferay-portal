@@ -93,9 +93,9 @@ public class ObjectEntryModelResourcePermission
 
 		if (!contains(permissionChecker, objectEntryId, actionId)) {
 			_throwPrincipalException(
-				permissionChecker,
+				actionId,
 				_objectEntryLocalService.getObjectEntry(objectEntryId),
-				actionId);
+				permissionChecker);
 		}
 	}
 
@@ -106,7 +106,7 @@ public class ObjectEntryModelResourcePermission
 		throws PortalException {
 
 		if (!contains(permissionChecker, objectEntry, actionId)) {
-			_throwPrincipalException(permissionChecker, objectEntry, actionId);
+			_throwPrincipalException(actionId, objectEntry, permissionChecker);
 		}
 	}
 
@@ -295,8 +295,8 @@ public class ObjectEntryModelResourcePermission
 	}
 
 	private void _throwPrincipalException(
-			PermissionChecker permissionChecker, ObjectEntry objectEntry,
-			String actionId)
+			String actionId, ObjectEntry objectEntry,
+			PermissionChecker permissionChecker)
 		throws PortalException {
 
 		objectEntry = _getRootNodeObjectEntry(objectEntry);

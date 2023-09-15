@@ -649,6 +649,118 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"osgi.jaxrs.resource", "true"
 					).build())));
 
+		String applicationName =
+			jaxRsApplicationDescriptor.getApplicationName();
+
+		_serviceRegistrationsMap.computeIfAbsent(
+			jaxRsApplicationDescriptor.getRESTContextPath(),
+			key -> Arrays.asList(
+				_bundleContext.registerService(
+					ExceptionMapper.class,
+					new ObjectAssetCategoryExceptionMapper(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"osgi.jaxrs.application.select",
+						"(osgi.jaxrs.name=" + applicationName + ")"
+					).put(
+						"osgi.jaxrs.extension", "true"
+					).put(
+						"osgi.jaxrs.name",
+						objectDefinition.getOSGiJaxRsName(
+							"ObjectAssetCategoryExceptionMapper")
+					).build()),
+				_bundleContext.registerService(
+					ExceptionMapper.class,
+					new ObjectEntryManagerHttpExceptionMapper(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"osgi.jaxrs.application.select",
+						"(osgi.jaxrs.name=" + applicationName + ")"
+					).put(
+						"osgi.jaxrs.extension", "true"
+					).put(
+						"osgi.jaxrs.name",
+						objectDefinition.getOSGiJaxRsName(
+							"ObjectEntryManagerHttpExceptionMapper")
+					).build()),
+				_bundleContext.registerService(
+					ExceptionMapper.class,
+					new ObjectEntryStatusExceptionMapper(_language),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"osgi.jaxrs.application.select",
+						"(osgi.jaxrs.name=" + applicationName + ")"
+					).put(
+						"osgi.jaxrs.extension", "true"
+					).put(
+						"osgi.jaxrs.name",
+						objectDefinition.getOSGiJaxRsName(
+							"ObjectEntryStatusExceptionMapper")
+					).build()),
+				_bundleContext.registerService(
+					ExceptionMapper.class,
+					new ObjectEntryValuesExceptionMapper(_language),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"osgi.jaxrs.application.select",
+						"(osgi.jaxrs.name=" + applicationName + ")"
+					).put(
+						"osgi.jaxrs.extension", "true"
+					).put(
+						"osgi.jaxrs.name",
+						objectDefinition.getOSGiJaxRsName(
+							"ObjectEntryValuesExceptionMapper")
+					).build()),
+				_bundleContext.registerService(
+					ExceptionMapper.class,
+					new ObjectRelationshipDeletionTypeExceptionMapper(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"osgi.jaxrs.application.select",
+						"(osgi.jaxrs.name=" + applicationName + ")"
+					).put(
+						"osgi.jaxrs.extension", "true"
+					).put(
+						"osgi.jaxrs.name",
+						objectDefinition.getOSGiJaxRsName(
+							"ObjectRelationshipDeletionTypeExceptionMapper")
+					).build()),
+				_bundleContext.registerService(
+					ExceptionMapper.class,
+					new ObjectValidationRuleEngineExceptionMapper(
+						_jsonFactory, _language),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"osgi.jaxrs.application.select",
+						"(osgi.jaxrs.name=" + applicationName + ")"
+					).put(
+						"osgi.jaxrs.extension", "true"
+					).put(
+						"osgi.jaxrs.name",
+						objectDefinition.getOSGiJaxRsName(
+							"ObjectValidationRuleEngineExceptionMapper")
+					).build()),
+				_bundleContext.registerService(
+					ExceptionMapper.class,
+					new RequiredObjectRelationshipExceptionMapper(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"osgi.jaxrs.application.select",
+						"(osgi.jaxrs.name=" + applicationName + ")"
+					).put(
+						"osgi.jaxrs.extension", "true"
+					).put(
+						"osgi.jaxrs.name",
+						objectDefinition.getOSGiJaxRsName(
+							"RequiredObjectRelationshipExceptionMapper")
+					).build()),
+				_bundleContext.registerService(
+					ExceptionMapper.class,
+					new UnsupportedOperationExceptionMapper(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"osgi.jaxrs.application.select",
+						"(osgi.jaxrs.name=" + applicationName + ")"
+					).put(
+						"osgi.jaxrs.extension", "true"
+					).put(
+						"osgi.jaxrs.name",
+						objectDefinition.getOSGiJaxRsName(
+							"UnsupportedOperationExceptionMapper")
+					).build())));
+
 		_scopedServiceRegistrationsMap.compute(
 			jaxRsApplicationDescriptor.getRESTContextPath(),
 			(key1, serviceRegistrationsMap) -> {

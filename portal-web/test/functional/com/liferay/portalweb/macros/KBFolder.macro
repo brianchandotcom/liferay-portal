@@ -128,7 +128,32 @@ definition {
 			locator1 = "KnowledgeBase#FOLDER_SELECT_DROPDOWN",
 			value1 = ${kbFolderName});
 	}
-	
+
+	macro moveFolder {
+		if (isSet(navigationPane)) {
+			KBFolder.gotoMenuItemViaNavigationPane(
+				kbFolderName = ${kbFolderName},
+				menuItem = "Move");
+		}
+		else {
+			Click(
+				key_rowEntry = ${kbFolderName},
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Move");
+		}
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_nodeName = ${destinationItem},
+			locator1 = "Treeview#NODE_ITEM");
+
+		SelectFrameTop();
+
+		Button.clickSave();
+	}
+
 	macro tearDownCP {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 

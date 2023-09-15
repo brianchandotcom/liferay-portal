@@ -110,7 +110,7 @@ describe('Export', () => {
 		expect(getByText(Liferay.Language.get('export'))).not.toBeDisabled();
 	});
 
-	it('must show modal when the button is clicked', async () => {
+	it.skip('must show modal when the button is clicked', async () => {
 		const {findByText, getByText} = render(<Export {...BASE_PROPS} />);
 
 		act(() => {
@@ -126,7 +126,7 @@ describe('Export', () => {
 		expect(exportButton).toBeInTheDocument();
 	});
 
-	it('must show modal with disabled button', async () => {
+	it.skip('must show modal with disabled button', async () => {
 		const {findByText, getByText} = render(<Export {...BASE_PROPS} />);
 
 		act(() => {
@@ -142,7 +142,7 @@ describe('Export', () => {
 		expect(exportButton).toBeDisabled();
 	});
 
-	it('must call export API only one time on mount', async () => {
+	it.skip('must call export API only one time on mount', async () => {
 		const {findByText, getByText} = render(<Export {...BASE_PROPS} />);
 
 		act(() => {

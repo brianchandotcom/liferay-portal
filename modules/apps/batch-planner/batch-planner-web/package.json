@@ -17,10 +17,10 @@
 	},
 	"jest": {
 		"setupFiles": [
-			"<rootDir>test/setup.js"
+			"<rootDir>/test/setup.js"
 		],
 		"testPathIgnorePatterns": [
-			"setup.js"
+			"<rootDir>/test/setup.js"
 		]
 	},
 	"name": "@liferay/batch-planner-web",

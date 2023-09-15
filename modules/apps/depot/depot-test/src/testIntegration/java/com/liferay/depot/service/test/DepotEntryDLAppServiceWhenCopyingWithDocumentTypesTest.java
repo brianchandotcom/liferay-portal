@@ -122,6 +122,36 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 
+	@Test(expected = InvalidFileEntryTypeException.class)
+	public void testCopyFileEntryFailsUnlessDLFileEntryTypeAvailable()
+		throws Exception {
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			true, _depotEntry.getDepotEntryId(), _group.getGroupId(), false);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAttribute(
+			"fileEntryTypeId", _dlFileEntryType.getFileEntryTypeId());
+
+		FileEntry fileEntry1 = _dlAppService.addFileEntry(
+			RandomTestUtil.randomString(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _FILE_NAME,
+			ContentTypes.TEXT_PLAIN, _FILE_NAME, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, new byte[0], null, null,
+			serviceContext);
+
+		_dlAppService.copyFileEntry(
+			fileEntry1.getFileEntryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_depotGroup.getGroupId(), _dlFileEntryType.getFileEntryTypeId(),
+			_siteConnectedGroupGroupProvider.
+				getCurrentAndAncestorSiteAndDepotGroupIds(
+					_depotGroup.getGroupId()),
+			ServiceContextTestUtil.getServiceContext(_depotGroup.getGroupId()));
+	}
+
 	@Test
 	public void testCopyFileEntryShouldCopyDLFileEntryTypeWhenDLFileEntryTypeAvailable()
 		throws Exception {
@@ -160,20 +190,20 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 	}
 
 	@Test
-	public void testCopyFileEntryShouldNotCopyDLFileEntryTypeUnlessDLFileEntryTypeAvailable()
+	public void testCopyFileEntryShouldNotCopyDLFileEntryTypeFromRelatedGroupUnlessDLFileEntryTypeAvailable()
 		throws Exception {
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
 			_depotEntry.getDepotEntryId(), _group.getGroupId());
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(_depotGroup.getGroupId());
 
 		serviceContext.setAttribute(
-			"fileEntryTypeId", _dlFileEntryType.getFileEntryTypeId());
+			"fileEntryTypeId", _depotDLFileEntryType.getFileEntryTypeId());
 
 		FileEntry fileEntry1 = _dlAppService.addFileEntry(
-			RandomTestUtil.randomString(), _group.getGroupId(),
+			RandomTestUtil.randomString(), _depotGroup.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _FILE_NAME,
 			ContentTypes.TEXT_PLAIN, _FILE_NAME, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, new byte[0], null, null,
@@ -182,7 +212,7 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 		DLFileEntry dlFileEntry1 = (DLFileEntry)fileEntry1.getModel();
 
 		Assert.assertEquals(
-			_dlFileEntryType.getFileEntryTypeId(),
+			_depotDLFileEntryType.getFileEntryTypeId(),
 			dlFileEntry1.getFileEntryTypeId());
 
 		Assert.assertNotEquals(
@@ -191,13 +221,11 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 
 		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			_depotGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _group.getGroupId(),
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			_siteConnectedGroupGroupProvider.
-				getCurrentAndAncestorSiteAndDepotGroupIds(
-					_depotGroup.getGroupId()),
-			ServiceContextTestUtil.getServiceContext(_depotGroup.getGroupId()));
+				getCurrentAndAncestorSiteAndDepotGroupIds(_group.getGroupId()),
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		DLFileEntry dlFileEntry2 = (DLFileEntry)fileEntry2.getModel();
 
@@ -251,51 +279,6 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 	}
 
 	@Test
-	public void testCopyFileEntryShouldNotCopyDLFileEntryTypeFromRelatedGroupUnlessDLFileEntryTypeAvailable()
-		throws Exception {
-
-		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			_depotEntry.getDepotEntryId(), _group.getGroupId());
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_depotGroup.getGroupId());
-
-		serviceContext.setAttribute(
-			"fileEntryTypeId", _depotDLFileEntryType.getFileEntryTypeId());
-
-		FileEntry fileEntry1 = _dlAppService.addFileEntry(
-			RandomTestUtil.randomString(), _depotGroup.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _FILE_NAME,
-			ContentTypes.TEXT_PLAIN, _FILE_NAME, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, new byte[0], null, null,
-			serviceContext);
-
-		DLFileEntry dlFileEntry1 = (DLFileEntry)fileEntry1.getModel();
-
-		Assert.assertEquals(
-			_depotDLFileEntryType.getFileEntryTypeId(),
-			dlFileEntry1.getFileEntryTypeId());
-
-		Assert.assertNotEquals(
-			DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT,
-			dlFileEntry1.getFileEntryTypeId());
-
-		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
-			fileEntry1.getFileEntryId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _group.getGroupId(),
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			_siteConnectedGroupGroupProvider.
-				getCurrentAndAncestorSiteAndDepotGroupIds(_group.getGroupId()),
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		DLFileEntry dlFileEntry2 = (DLFileEntry)fileEntry2.getModel();
-
-		Assert.assertEquals(
-			DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT,
-			dlFileEntry2.getFileEntryTypeId());
-	}
-
-	@Test
 	public void testCopyFileEntryShouldNotCopyDLFileEntryTypeToUnrelatedGroup()
 		throws Exception {
 
@@ -337,12 +320,12 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 			dlFileEntry2.getFileEntryTypeId());
 	}
 
-	@Test(expected = InvalidFileEntryTypeException.class)
-	public void testCopyFileEntryFailsUnlessDLFileEntryTypeAvailable()
+	@Test
+	public void testCopyFileEntryShouldNotCopyDLFileEntryTypeUnlessDLFileEntryTypeAvailable()
 		throws Exception {
 
 		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			true, _depotEntry.getDepotEntryId(), _group.getGroupId(), false);
+			_depotEntry.getDepotEntryId(), _group.getGroupId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
@@ -357,14 +340,31 @@ public class DepotEntryDLAppServiceWhenCopyingWithDocumentTypesTest {
 			StringPool.BLANK, StringPool.BLANK, new byte[0], null, null,
 			serviceContext);
 
-		_dlAppService.copyFileEntry(
+		DLFileEntry dlFileEntry1 = (DLFileEntry)fileEntry1.getModel();
+
+		Assert.assertEquals(
+			_dlFileEntryType.getFileEntryTypeId(),
+			dlFileEntry1.getFileEntryTypeId());
+
+		Assert.assertNotEquals(
+			DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT,
+			dlFileEntry1.getFileEntryTypeId());
+
+		FileEntry fileEntry2 = _dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			_depotGroup.getGroupId(), _dlFileEntryType.getFileEntryTypeId(),
+			_depotGroup.getGroupId(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			_siteConnectedGroupGroupProvider.
 				getCurrentAndAncestorSiteAndDepotGroupIds(
 					_depotGroup.getGroupId()),
 			ServiceContextTestUtil.getServiceContext(_depotGroup.getGroupId()));
+
+		DLFileEntry dlFileEntry2 = (DLFileEntry)fileEntry2.getModel();
+
+		Assert.assertEquals(
+			DLFileEntryTypeConstants.COMPANY_ID_BASIC_DOCUMENT,
+			dlFileEntry2.getFileEntryTypeId());
 	}
 
 	private static final String _FILE_NAME = "Title.txt";

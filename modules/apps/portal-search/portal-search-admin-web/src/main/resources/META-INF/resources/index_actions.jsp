@@ -347,9 +347,18 @@ page import="java.util.Map" %>
 </aui:form>
 
 <aui:script use="liferay-admin">
+
+	<%
+	SearchAdminDisplayContext searchAdminDisplayContext = (SearchAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+	%>
+
 	new Liferay.Portlet.Admin({
 		controlMenuCategoryKey:
 			'<%= ProductNavigationControlMenuCategoryKeys.TOOLS %>',
+		elasticSearchDiskSpace: {
+			availableDiskSpace: <%= searchAdminDisplayContext.getAvailableDiskSpace() %>,
+			currentDiskSpaceUsed: <%= searchAdminDisplayContext.getCurrentDiskSpaceUsed() %>,
+		},
 		form: document.<portlet:namespace />fm,
 		indexActionWrapperSelector: '.index-action-wrapper',
 		indexActionsPanel:

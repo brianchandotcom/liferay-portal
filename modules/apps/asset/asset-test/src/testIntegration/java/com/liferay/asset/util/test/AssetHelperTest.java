@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -166,6 +168,8 @@ public class AssetHelperTest {
 				RandomTestUtil.randomString(),
 				ServiceContextTestUtil.getServiceContext(group2.getGroupId()));
 
+			_reindex();
+
 			AssetEntryQuery assetEntryQuery1 = new AssetEntryQuery();
 
 			assetEntryQuery1.setGroupIds(new long[] {group1.getGroupId()});
@@ -222,6 +226,8 @@ public class AssetHelperTest {
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
+		_reindex();
+
 		AssetEntryQuery assetEntryQuery1 = new AssetEntryQuery();
 
 		assetEntryQuery1.setGroupIds(new long[] {_group.getGroupId()});
@@ -257,6 +263,8 @@ public class AssetHelperTest {
 			TimeZone timeZone, long userId)
 		throws Exception {
 
+		_reindex();
+
 		BaseModelSearchResult<AssetEntry> baseModelSearchResult =
 			_assetHelper.searchAssetEntries(
 				assetEntryQuery, assetCategoryIds, assetTagNames, attributes,
@@ -266,6 +274,13 @@ public class AssetHelperTest {
 		Assert.assertEquals(
 			baseModelSearchResult.toString(), expectedCount,
 			baseModelSearchResult.getLength());
+	}
+
+	private void _reindex() throws Exception {
+		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AssetEntry.class.getName());
+
+		indexer.reindex(new String[] {String.valueOf(_group.getCompanyId())});
 	}
 
 	@Inject

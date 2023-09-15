@@ -53,6 +53,10 @@ public class CTMessageBusInterceptorTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, CTMessageBusInterceptorTest.class.getSimpleName(), null);
+
 		_testDestination = new TestDestination(
 			_destinationFactory.createDestination(
 				new DestinationConfiguration(
@@ -66,10 +70,6 @@ public class CTMessageBusInterceptorTest {
 			).put(
 				"service.ranking", Integer.MAX_VALUE
 			).build());
-
-		_ctCollection = _ctCollectionLocalService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, CTMessageBusInterceptorTest.class.getSimpleName(), null);
 	}
 
 	@After

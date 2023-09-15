@@ -13,12 +13,14 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -98,6 +100,29 @@ public class MultiselectPicklistObjectFieldBusinessType
 	@Override
 	public PropertyDefinition.PropertyType getPropertyType() {
 		return PropertyDefinition.PropertyType.TEXT;
+	}
+
+	@Override
+	public Object getValue(
+			ObjectField objectField, long userId, Map<String, Object> values)
+		throws PortalException {
+
+		Object picklistValues = values.get(objectField.getName());
+
+		if (picklistValues instanceof List) {
+			List<?> list = (List)picklistValues;
+
+			if (!list.isEmpty() && (list.get(0) instanceof Map)) {
+				values.put(
+					objectField.getName(),
+					TransformUtil.transform(
+						(List<Map<String, String>>)list,
+						map -> map.get("key")));
+			}
+		}
+
+		return ObjectFieldBusinessType.super.getValue(
+			objectField, userId, values);
 	}
 
 	@Reference

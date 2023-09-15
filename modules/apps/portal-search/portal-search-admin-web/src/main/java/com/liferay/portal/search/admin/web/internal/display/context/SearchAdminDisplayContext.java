@@ -16,6 +16,14 @@ import java.util.Map;
  */
 public class SearchAdminDisplayContext {
 
+	public double getAvailableDiskSpace() {
+		return _availableDiskSpace;
+	}
+
+	public double getCurrentDiskSpaceUsed() {
+		return _currentDiskSpaceUsed;
+	}
+
 	public Map<String, List<Indexer<?>>> getIndexersMap() {
 		return _indexersMap;
 	}
@@ -30,6 +38,14 @@ public class SearchAdminDisplayContext {
 
 	public String getSelectedTab() {
 		return _selectedTab;
+	}
+
+	public void setAvailableDiskSpace(double availableDiskSpace) {
+		_availableDiskSpace = availableDiskSpace;
+	}
+
+	public void setCurrentDiskSpaceUsed(double currentDiskSpaceUsed) {
+		_currentDiskSpaceUsed = currentDiskSpaceUsed;
 	}
 
 	public void setIndexersMap(Map<String, List<Indexer<?>>> indexersMap) {
@@ -50,6 +66,8 @@ public class SearchAdminDisplayContext {
 		_selectedTab = selectedTab;
 	}
 
+	private double _availableDiskSpace;
+	private double _currentDiskSpaceUsed;
 	private Map<String, List<Indexer<?>>> _indexersMap;
 	private List<String> _indexReindexerClassNames;
 	private NavigationItemList _navigationItemList;

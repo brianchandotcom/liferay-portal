@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext;
+import com.liferay.portal.search.cluster.StatsClusterInformation;
 import com.liferay.portal.search.index.IndexInformation;
 
 import java.util.ArrayList;
@@ -56,6 +57,13 @@ public class SearchAdminDisplayContextBuilder {
 		searchAdminDisplayContext.setIndexReindexerClassNames(
 			_indexReindexerClassNames);
 
+		String[] nodeIds = {};
+
+		searchAdminDisplayContext.setAvailableDiskSpace(
+			_statsClusterInformation.getAvailableDiskSpace(nodeIds));
+		searchAdminDisplayContext.setCurrentDiskSpaceUsed(
+			_statsClusterInformation.getUsedDiskSpace(nodeIds));
+
 		NavigationItemList navigationItemList = new NavigationItemList();
 		String selectedTab = getSelectedTab();
 
@@ -84,6 +92,12 @@ public class SearchAdminDisplayContextBuilder {
 		List<String> indexReindexerClassNames) {
 
 		_indexReindexerClassNames = indexReindexerClassNames;
+	}
+
+	public void setStatsClusterInformation(
+		StatsClusterInformation statsClusterInformation) {
+
+		_statsClusterInformation = statsClusterInformation;
 	}
 
 	protected Map<String, List<Indexer<?>>> getIndexersMap() {
@@ -189,5 +203,6 @@ public class SearchAdminDisplayContextBuilder {
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private StatsClusterInformation _statsClusterInformation;
 
 }

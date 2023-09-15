@@ -9,8 +9,7 @@ import {
 	// @ts-ignore
 
 } from '@liferay/frontend-data-set-web';
-import {API} from '@liferay/object-js-components-web';
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import {
 	IFDSTableProps,
@@ -30,20 +29,9 @@ export default function Views({
 	formName,
 	id,
 	items,
-	objectDefinitionExternalReferenceCode,
 	style,
 	url,
 }: IFDSTableProps) {
-	useEffect(() => {
-		const makeFetch = async () => {
-			await API.getObjectDefinitionByExternalReferenceCode(
-				objectDefinitionExternalReferenceCode
-			);
-		};
-
-		makeFetch();
-	}, [objectDefinitionExternalReferenceCode]);
-
 	function objectLayoutLabelDataRenderer({
 		itemData,
 		openSidePanel,

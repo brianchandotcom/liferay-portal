@@ -12,7 +12,6 @@ export default function Actions({
 	formName,
 	id,
 	items,
-	objectDefinitionExternalReferenceCode,
 	style,
 	url,
 }: IFDSTableProps): JSX.Element;

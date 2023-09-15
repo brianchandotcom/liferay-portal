@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.permission.GroupPermission;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -27,6 +26,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -53,10 +53,8 @@ public class DepotAdminMembershipsDisplayContextTest {
 			_user
 		);
 
-		GroupPermissionUtil groupPermissionUtil = new GroupPermissionUtil();
-
-		groupPermissionUtil.setGroupPermission(
-			Mockito.mock(GroupPermission.class));
+		_groupPermissionUtilMockedStatic = Mockito.mockStatic(
+			GroupPermissionUtil.class);
 	}
 
 	@Test
@@ -278,8 +276,8 @@ public class DepotAdminMembershipsDisplayContextTest {
 			false
 		);
 
-		Mockito.when(
-			GroupPermissionUtil.contains(
+		_groupPermissionUtilMockedStatic.when(
+			() -> GroupPermissionUtil.contains(
 				Mockito.any(PermissionChecker.class), Mockito.any(Group.class),
 				Mockito.anyString())
 		).thenReturn(
@@ -302,8 +300,8 @@ public class DepotAdminMembershipsDisplayContextTest {
 			false
 		);
 
-		Mockito.when(
-			GroupPermissionUtil.contains(
+		_groupPermissionUtilMockedStatic.when(
+			() -> GroupPermissionUtil.contains(
 				Mockito.any(PermissionChecker.class), Mockito.any(Group.class),
 				Mockito.anyString())
 		).thenReturn(
@@ -325,6 +323,8 @@ public class DepotAdminMembershipsDisplayContextTest {
 		return group;
 	}
 
+	private static MockedStatic<GroupPermissionUtil>
+		_groupPermissionUtilMockedStatic;
 	private static User _user;
 
 	private static class ThemeDisplayBuilder {

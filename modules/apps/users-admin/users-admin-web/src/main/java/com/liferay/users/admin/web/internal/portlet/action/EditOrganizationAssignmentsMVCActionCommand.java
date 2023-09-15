@@ -100,7 +100,7 @@ public class EditOrganizationAssignmentsMVCActionCommand
 			Group organizationGroup = organization.getGroup();
 
 			_organizationService.updateOrganization(
-				organization.getExternalReferenceCode(), removeOrganizationId,
+				removeOrganizationId,
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 				organization.getName(), organization.getType(),
 				organization.getRegionId(), organization.getCountryId(),

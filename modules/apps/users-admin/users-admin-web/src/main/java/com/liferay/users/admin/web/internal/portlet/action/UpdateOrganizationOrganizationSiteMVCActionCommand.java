@@ -98,13 +98,12 @@ public class UpdateOrganizationOrganizationSiteMVCActionCommand
 			Organization.class.getName(), organizationId);
 
 		organization = _organizationService.updateOrganization(
-			organization.getExternalReferenceCode(), organizationId,
-			organization.getParentOrganizationId(), organization.getName(),
-			organization.getType(), organization.getRegionId(),
-			organization.getCountryId(), organization.getStatusListTypeId(),
-			organization.getComments(), true, null, site,
-			organization.getAddresses(), emailAddresses, orgLabors, phones,
-			websites, null);
+			organizationId, organization.getParentOrganizationId(),
+			organization.getName(), organization.getType(),
+			organization.getRegionId(), organization.getCountryId(),
+			organization.getStatusListTypeId(), organization.getComments(),
+			true, null, site, organization.getAddresses(), emailAddresses,
+			orgLabors, phones, websites, null);
 
 		Group organizationGroup = organization.getGroup();
 

@@ -207,8 +207,8 @@ public class EditOrganizationMVCActionCommand
 			// Add organization
 
 			organization = _organizationService.addOrganization(
-				null, parentOrganizationId, name, type, regionId, countryId,
-				statusId, comments, false, Collections.emptyList(),
+				parentOrganizationId, name, type, regionId, countryId, statusId,
+				comments, false, Collections.emptyList(),
 				Collections.emptyList(), Collections.emptyList(),
 				Collections.emptyList(), Collections.emptyList(),
 				serviceContext);
@@ -230,10 +230,10 @@ public class EditOrganizationMVCActionCommand
 			Group organizationGroup = organization.getGroup();
 
 			organization = _organizationService.updateOrganization(
-				organization.getExternalReferenceCode(), organizationId,
-				parentOrganizationId, name, type, regionId, countryId, statusId,
-				comments, !deleteLogo, logoBytes, organizationGroup.isSite(),
-				null, null, null, null, null, serviceContext);
+				organizationId, parentOrganizationId, name, type, regionId,
+				countryId, statusId, comments, !deleteLogo, logoBytes,
+				organizationGroup.isSite(), null, null, null, null, null,
+				serviceContext);
 		}
 
 		return organization;

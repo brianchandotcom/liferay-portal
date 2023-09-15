@@ -245,7 +245,7 @@ public class SetupWizardSampleDataUtil {
 
 			Organization organization =
 				OrganizationLocalServiceUtil.addOrganization(
-					null, guestUser.getUserId(),
+					guestUser.getUserId(),
 					parentOrganization.getOrganizationId(), name, type,
 					regionId, countryId,
 					ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,

@@ -172,14 +172,13 @@ public class OrganizationStagedModelDataHandler
 			serviceContext.setUuid(organization.getUuid());
 
 			importedOrganization = _organizationLocalService.addOrganization(
-				null, userId, parentOrganizationId, organization.getName(),
+				userId, parentOrganizationId, organization.getName(),
 				organization.getType(), organization.getRegionId(),
 				organization.getCountryId(), organization.getStatusListTypeId(),
 				organization.getComments(), false, serviceContext);
 		}
 		else {
 			importedOrganization = _organizationLocalService.updateOrganization(
-				existingOrganization.getExternalReferenceCode(),
 				portletDataContext.getCompanyId(),
 				existingOrganization.getOrganizationId(), parentOrganizationId,
 				organization.getName(), organization.getType(),

@@ -1,4 +1,5 @@
 @component-name = "portal-frontend-infrastructure"
+@ignore = "true"
 definition {
 
 	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-188645=true${line.separator}feature.flag.LPS-167253=true";

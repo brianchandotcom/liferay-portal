@@ -8,7 +8,7 @@
 import {FDSViewType} from '../FDSViews';
 import {IFDSAction} from '../fds_view/Actions';
 interface IFDSItemActionFormProps {
-	activeSection: string;
+	editing?: boolean;
 	fdsView: FDSViewType;
 	initialValues?: IFDSAction;
 	loadFDSActions: () => void;
@@ -22,7 +22,7 @@ interface IFDSItemActionFormProps {
 	spritemap: string;
 }
 declare const ItemActionForm: ({
-	activeSection,
+	editing,
 	fdsView,
 	initialValues,
 	loadFDSActions,

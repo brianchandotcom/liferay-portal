@@ -259,33 +259,15 @@ definition {
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Move");
 
-		AssertTextEquals(
-			locator1 = "ControlMenu#HEADING",
-			value1 = ${kbArticleTitle});
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_CURRENT_PARENT_TITLE_LABEL",
-			value1 = "Current Parent");
+		Click(
+			key_nodeName = ${destinationItem},
+			locator1 = "Treeview#NODE_ITEM");
 
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_CURRENT_PARENT_TITLE_FIELD",
-			value1 = "Home");
+		SelectFrameTop();
 
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_CURRENT_PARENT_PRIORITY_LABEL",
-			value1 = "Priority");
-
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_NEW_PARENT_TITLE_LABEL",
-			value1 = "New Parent");
-
-		AssertTextEquals(
-			locator1 = "KnowledgeBase#MOVE_NEW_PARENT_PRIORITY_LABEL",
-			value1 = "Priority");
-
-		AssertClick(
-			locator1 = "Button#SELECT",
-			value1 = "Select");
+		Button.clickSave();
 	}
 
 	macro selectParentViaKBDisplayPG {

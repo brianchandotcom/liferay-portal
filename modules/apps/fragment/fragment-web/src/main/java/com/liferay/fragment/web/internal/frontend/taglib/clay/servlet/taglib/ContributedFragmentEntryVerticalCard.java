@@ -92,9 +92,13 @@ public class ContributedFragmentEntryVerticalCard
 	public List<LabelItem> getLabels() {
 		return LabelItemListBuilder.add(
 			fragmentEntry::isCacheable,
-			labelItem -> labelItem.setLabel(
-				LanguageUtil.get(
-					PortalUtil.getHttpServletRequest(_renderRequest), "cached"))
+			labelItem -> {
+				labelItem.setDisplayType("info");
+				labelItem.setLabel(
+					LanguageUtil.get(
+						PortalUtil.getHttpServletRequest(_renderRequest),
+						"cached"));
+			}
 		).build();
 	}
 

@@ -104,8 +104,11 @@ public class BasicFragmentEntryVerticalCard
 				labelItem -> labelItem.setStatus(WorkflowConstants.STATUS_DRAFT)
 			).add(
 				fragmentEntry::isCacheable,
-				labelItem -> labelItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "cached"))
+				labelItem -> {
+					labelItem.setDisplayType("info");
+					labelItem.setLabel(
+						LanguageUtil.get(_httpServletRequest, "cached"));
+				}
 			).build();
 		}
 
@@ -120,8 +123,11 @@ public class BasicFragmentEntryVerticalCard
 			}
 		).add(
 			fragmentEntry::isCacheable,
-			labelItem -> labelItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "cached"))
+			labelItem -> {
+				labelItem.setDisplayType("info");
+				labelItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "cached"));
+			}
 		).build();
 	}
 

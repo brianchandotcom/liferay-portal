@@ -8,6 +8,7 @@ package com.liferay.server.admin.web.internal.portlet.action;
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversion;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.AudioProcessor;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessor;
@@ -71,6 +72,7 @@ import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPo
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
@@ -212,7 +214,7 @@ public class EditServerMVCActionCommand
 			redirect = _convertProcess(actionRequest, actionResponse, cmd);
 		}
 		else if (cmd.equals("dlDeletePreviews")) {
-			DLPreviewableProcessor.deleteFiles();
+			_deleteFiles();
 		}
 		else if (cmd.equals("dlGenerateAudioPreviews")) {
 			_audioProcessor.generatePreviews();
@@ -596,6 +598,19 @@ public class EditServerMVCActionCommand
 		return null;
 	}
 
+	private void _deleteFiles() {
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				_store.deleteDirectory(
+					companyId, DLPreviewableProcessor.REPOSITORY_ID,
+					DLPreviewableProcessor.PREVIEW_PATH);
+
+				_store.deleteDirectory(
+					companyId, DLPreviewableProcessor.REPOSITORY_ID,
+					DLPreviewableProcessor.THUMBNAIL_PATH);
+			});
+	}
+
 	private void _gc() throws Exception {
 		Runtime runtime = Runtime.getRuntime();
 
@@ -927,6 +942,9 @@ public class EditServerMVCActionCommand
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
 
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
 	@Reference(target = "(type=" + DLProcessorConstants.PDF_PROCESSOR + ")")
 	private DLProcessor _dlProcessor;
 
@@ -981,6 +999,9 @@ public class EditServerMVCActionCommand
 
 	@Reference
 	private SiteMembershipPolicyFactory _siteMembershipPolicyFactory;
+
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 	@Reference
 	private UserGroupMembershipPolicyFactory _userGroupMembershipPolicyFactory;

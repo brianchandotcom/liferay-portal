@@ -2389,6 +2389,9 @@ public class PropsValues {
 	public static final boolean UPGRADE_REPORT_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.UPGRADE_REPORT_ENABLED));
 
+	public static final String UPGRADE_REPORT_DIRECTORY = GetterUtil.getString(
+		PropsUtil.get(PropsKeys.UPGRADE_REPORT_DIRECTORY));
+
 	public static boolean USER_GROUPS_NAME_ALLOW_NUMERIC =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.USER_GROUPS_NAME_ALLOW_NUMERIC));

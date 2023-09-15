@@ -2722,6 +2722,9 @@ public interface PropsKeys {
 	public static final String UPGRADE_REPORT_ENABLED =
 		"upgrade.report.enabled";
 
+	public static final String UPGRADE_REPORT_DIRECTORY =
+		"upgrade.report.directory";
+
 	public static final String USER_GROUPS_NAME_ALLOW_NUMERIC =
 		"user.groups.name.allow.numeric";
 

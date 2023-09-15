@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -81,15 +80,6 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		DECRYPT_TMP_PATH = TMP_PATH.concat(DECRYPT_PATH);
 		PREVIEW_TMP_PATH = TMP_PATH.concat(PREVIEW_PATH);
 		THUMBNAIL_TMP_PATH = TMP_PATH.concat(THUMBNAIL_PATH);
-	}
-
-	public static void deleteFiles() {
-		CompanyLocalServiceUtil.forEachCompanyId(
-			companyId -> {
-				store.deleteDirectory(companyId, REPOSITORY_ID, PREVIEW_PATH);
-
-				store.deleteDirectory(companyId, REPOSITORY_ID, THUMBNAIL_PATH);
-			});
 	}
 
 	@Override

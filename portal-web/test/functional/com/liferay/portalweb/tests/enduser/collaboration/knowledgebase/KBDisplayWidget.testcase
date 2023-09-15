@@ -242,7 +242,33 @@ definition {
 			print = "false",
 			subscribe = "false");
 	}
-	
+
+	@priority = 4
+	@refactordone
+	test CanMoveArticle {
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Parent Content 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1");
+
+		JSONKnowledgeBase.addkBArticle(
+			groupName = "Guest",
+			kbArticleContent = "Knowledge Base Article Parent Content 1 Child 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
+
+		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
+
+		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
+
+		KBDisplayWidget.moveArticleViaKBDisplayPG(
+			destinationItem = "Knowledge Base Article Parent Title 1",
+			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
+
+		KBDisplayWidget.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
+
+		KBDisplayWidget.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
+	}
+
 	@priority = 3
 	@refactordone
 	test CanSaveChildArticleAsDraft {
@@ -270,32 +296,6 @@ definition {
 			kbArticleContent = "Knowledge Base Child Article Content",
 			kbArticleTitle = "Knowledge Base Child Article Title",
 			kbStatus = "Draft");
-	}
-
-	@priority = 4
-	@refactordone
-	test CanSelectParentArticle {
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
-			kbArticleContent = "Knowledge Base Article Parent Content 1",
-			kbArticleTitle = "Knowledge Base Article Parent Title 1");
-
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
-			kbArticleContent = "Knowledge Base Article Parent Content 1 Child 1",
-			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
-
-		KBDisplayWidget.moveArticleViaKBDisplayPG(
-			destinationItem = "Knowledge Base Article Parent Title 1",
-			kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
-
-		KBDisplayWidget.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
-
-		KBDisplayWidget.viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 	}
 
 	@priority = 4

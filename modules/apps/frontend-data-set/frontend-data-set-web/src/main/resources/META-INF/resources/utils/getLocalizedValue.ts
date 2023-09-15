@@ -14,13 +14,19 @@ const BCP47LanguageId = Liferay.ThemeDisplay.getBCP47LanguageId();
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 function getLanguageKey(data: any): string {
-	let languageKey = defaultLanguageId as string;
+	let languageKey = '';
 
 	if (data[languageId]) {
 		languageKey = languageId as string;
 	}
-	else if (data[BCP47LanguageId]) {
-		languageKey = BCP47LanguageId;
+	else if (data[defaultLanguageId]) {
+		languageKey = defaultLanguageId as string;
+	}
+	else if (data['en_US']) {
+		languageKey = 'en_US';
+	}
+	else {
+		languageKey = Object.keys(data)[0];
 	}
 
 	return languageKey;
@@ -39,21 +45,20 @@ export function getLocalizedValue(
 	let navigatedValue = item;
 	const valuePath = [];
 
-	if (
-		typeof fieldName === 'string' &&
-		item[fieldName] &&
-		item[fieldName][getLanguageKey(item[fieldName])]
-	) {
-		valuePath.push(fieldName);
-		navigatedValue =
-			navigatedValue[fieldName][getLanguageKey(item[fieldName])];
-	}
-	else if (Array.isArray(fieldName)) {
+	if (Array.isArray(fieldName)) {
 		fieldName.forEach((property) => {
 			let formattedProperty = property;
 
 			if (property === 'LANG') {
-				formattedProperty = getLanguageKey(navigatedValue);
+				if (navigatedValue[languageId]) {
+					formattedProperty = languageId;
+				}
+				else if (navigatedValue[BCP47LanguageId]) {
+					formattedProperty = BCP47LanguageId;
+				}
+				else {
+					formattedProperty = defaultLanguageId;
+				}
 			}
 
 			valuePath.push(formattedProperty);
@@ -62,6 +67,17 @@ export function getLocalizedValue(
 				navigatedValue = navigatedValue[formattedProperty];
 			}
 		});
+	}
+	else if (
+		typeof fieldName === 'string' &&
+		item[fieldName] &&
+		Object.keys(Liferay.Language.available).includes(
+			Object.keys(item[fieldName])[0]
+		)
+	) {
+		valuePath.push(fieldName);
+		navigatedValue =
+			navigatedValue[fieldName][getLanguageKey(item[fieldName])];
 	}
 	else {
 		valuePath.push(fieldName);

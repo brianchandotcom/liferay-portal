@@ -9,6 +9,7 @@ import {
 	// @ts-ignore
 
 } from '@liferay/frontend-data-set-web';
+
 // @ts-ignore
 
 import moment from 'moment/min/moment-with-locales';

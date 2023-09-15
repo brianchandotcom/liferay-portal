@@ -7,6 +7,7 @@ import {ClayRadio} from '@clayui/form';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 
+import './RadioCard.scss';
 import emptyPictureIcon from '../../../assets/icons/avatar.svg';
 
 interface RadioCardProps<T> {
@@ -35,7 +36,7 @@ const NewRadioCard = <T extends unknown>({
 			className={classNames(
 				'align-items-center d-flex justify-content-between form-control mb-5 cursor-pointer py-4 px-0',
 				{
-					fieldchecked: activeRadio?.index === index,
+					radioSelected: activeRadio?.index === index,
 				}
 			)}
 			key={index}

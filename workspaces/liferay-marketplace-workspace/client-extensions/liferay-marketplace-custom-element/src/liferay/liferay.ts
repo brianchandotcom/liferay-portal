@@ -19,8 +19,8 @@ interface ILiferay {
 		isSignedIn: () => boolean;
 	};
 	Util: {
-		navigate: (path:string) => void;
-	}
+		navigate: (path: string) => void;
+	};
 	authToken: string;
 	detach: Function;
 	on: Function;

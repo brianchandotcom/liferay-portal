@@ -57,6 +57,7 @@ import java.io.Writer;
 
 import java.sql.Timestamp;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Comparator;
@@ -211,7 +212,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 			printWriter.write(
 				_buildFragmentHTML(
-					fdsViewObjectEntry, fdsViewObjectDefinition,
+					fdsViewObjectDefinition, fdsViewObjectEntry, 
 					fragmentRendererContext, httpServletRequest));
 		}
 		catch (Exception exception) {
@@ -222,8 +223,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private String _buildFragmentHTML(
-			ObjectEntry fdsViewObjectEntry,
 			ObjectDefinition fdsViewObjectDefinition,
+			ObjectEntry fdsViewObjectEntry,
 			FragmentRendererContext fragmentRendererContext,
 			HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -273,6 +274,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				"namespace", fragmentRendererContext.getFragmentElementId()
 			).put(
 				"pagination", _getPaginationJSONObject(fdsViewObjectEntry)
+			).put(
+				"sorting", _getSortingsJSONArray(fdsViewObjectDefinition, fdsViewObjectEntry)
 			).put(
 				"style", "fluid"
 			).put(
@@ -575,34 +578,40 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return relatedObjectEntriesPage.getItems();
 	}
 
-	private JSONArray _getSelectedItemsJSONArray(
-			List<ListTypeEntry> listTypeEntries, Locale locale,
-			String preselectedValues)
-		throws JSONException {
+	private JSONArray _getSortingsJSONArray(
+		ObjectDefinition fdsViewObjectDefinition, ObjectEntry fdsViewObjectEntry) {
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
+		try {
+			List<ObjectEntry> fdsSortingObjectEntries = new ArrayList<>(
+				_getRelatedObjectEntries(
+					fdsViewObjectDefinition, fdsViewObjectEntry, "fdsViewFDSSortRelationship"));
 
-		JSONArray preselectedValuesJSONArray = _jsonFactory.createJSONArray(
-			preselectedValues);
-
-		for (int i = 0; i < preselectedValuesJSONArray.length(); i++) {
-			String key = preselectedValuesJSONArray.getString(i);
-
-			for (ListTypeEntry listTypeEntry : listTypeEntries) {
-				if (Objects.equals(listTypeEntry.getKey(), key)) {
-					jsonArray.put(
-						JSONUtil.put(
-							"label", listTypeEntry.getName(locale)
-						).put(
-							"value", listTypeEntry.getKey()
-						));
-
-					break;
-				}
+			if (ListUtil.isEmpty(fdsSortingObjectEntries)) {
+				return _jsonFactory.createJSONArray();
 			}
-		}
 
-		return jsonArray;
+			return JSONUtil.toJSONArray(
+				fdsSortingObjectEntries,
+				(ObjectEntry fdsSortingObjectEntry) -> _getSortingsJSONObject(
+					fdsSortingObjectEntry));
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to create frontend data set sort from frontend data set view", exception);
+			}
+			return _jsonFactory.createJSONArray();
+		}
+	}
+
+	private JSONObject _getSortingsJSONObject(ObjectEntry fdsSortingObjectEntry) {
+		Map<String, Object> fdsSortingProperties = fdsSortingObjectEntry.getProperties();
+
+		return JSONUtil.put(
+			"direction", fdsSortingProperties.get("sortingDirection")
+		).put(
+			"key", fdsSortingProperties.get("fieldName")
+		);
 	}
 
 	private String _interpolateURL(

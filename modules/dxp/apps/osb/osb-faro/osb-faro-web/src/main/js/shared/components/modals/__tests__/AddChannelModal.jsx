@@ -12,7 +12,7 @@ describe('AddChannelModal', () => {
 	it('renders', () => {
 		const {container} = render(
 			<StaticRouter>
-				<AddChannelModal onCloseFn={noop} onSubmitFn={noop} />
+				<AddChannelModal onClose={noop} onSubmit={noop} />
 			</StaticRouter>
 		);
 

@@ -18,7 +18,7 @@ describe('DeleteChannelModal', () => {
 
 		const {container} = render(
 			<StaticRouter>
-				<DeleteChannelModal onCloseFn={noop} onSubmitFn={noop} />
+				<DeleteChannelModal onClose={noop} onSubmit={noop} />
 			</StaticRouter>
 		);
 
@@ -30,7 +30,7 @@ describe('DeleteChannelModal', () => {
 	it('should render with data source alert message', () => {
 		const {getByText} = render(
 			<StaticRouter>
-				<DeleteChannelModal onCloseFn={noop} onSubmitFn={noop} />
+				<DeleteChannelModal onClose={noop} onSubmit={noop} />
 			</StaticRouter>
 		);
 

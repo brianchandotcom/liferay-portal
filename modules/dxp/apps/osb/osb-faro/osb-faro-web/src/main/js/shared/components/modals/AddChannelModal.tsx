@@ -10,26 +10,26 @@ import React from 'react';
 import {Modal as ModalTypes} from 'shared/types';
 import {sequence} from 'shared/util/promise';
 
-interface IAddChannelModalProps extends React.HTMLAttributes<HTMLElement> {
-	onCloseFn: ModalTypes.close;
-	onSubmitFn: (value: {name: string}) => void;
+interface IAddChannelModalProps {
+	onClose: ModalTypes.close;
+	onSubmit: (value: {name: string}) => void;
 }
 
 const AddChannelModal: React.FC<IAddChannelModalProps> = ({
-	onCloseFn,
-	onSubmitFn
+	onClose,
+	onSubmit
 }) => (
 	<Modal className='add-channel-modal'>
 		<Form
 			initialValues={{
 				name: ''
 			}}
-			onSubmit={onSubmitFn}
+			onSubmit={onSubmit}
 		>
 			{({handleSubmit, isSubmitting, isValid}) => (
 				<Form.Form onSubmit={handleSubmit}>
 					<Modal.Header
-						onClose={onCloseFn}
+						onClose={onClose}
 						title={Liferay.Language.get('new-property')}
 					/>
 
@@ -50,7 +50,7 @@ const AddChannelModal: React.FC<IAddChannelModalProps> = ({
 						<ClayButton
 							className='button-root'
 							displayType='secondary'
-							onClick={onCloseFn}
+							onClick={onClose}
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>

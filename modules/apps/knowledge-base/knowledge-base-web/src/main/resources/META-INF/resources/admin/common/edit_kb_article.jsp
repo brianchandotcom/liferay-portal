@@ -10,8 +10,6 @@
 <%
 EditKBArticleDisplayContext editKBArticleDisplayContext = new EditKBArticleDisplayContext(kbGroupServiceConfiguration, liferayPortletRequest, liferayPortletResponse, portletConfig);
 
-KBArticle kbArticle = editKBArticleDisplayContext.getKBArticle();
-
 if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(editKBArticleDisplayContext.getRedirect());
@@ -62,16 +60,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 						<c:choose>
 							<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-188060") %>'>
 								<c:choose>
-									<c:when test="<%= kbArticle.isScheduled() %>">
-
-										<%
-										String displayDateString = StringPool.BLANK;
-
-										if (kbArticle.getDisplayDate() != null) {
-											displayDateString = dateFormatDateTime.format(kbArticle.getDisplayDate());
-										}
-										%>
-
+									<c:when test="<%= editKBArticleDisplayContext.isScheduled() %>">
 										<span class="lfr-portal-tooltip">
 											<clay:button
 												cssClass="c-mr-3"
@@ -80,7 +69,7 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 												id='<%= liferayPortletResponse.getNamespace() + "scheduledButton" %>'
 												label="scheduled"
 												small="<%= true %>"
-												title='<%= LanguageUtil.format(request, "this-article-will-be-published-on-x", displayDateString) %>'
+												title='<%= LanguageUtil.format(request, "this-article-will-be-published-on-x", editKBArticleDisplayContext.getUserFormattedDisplayDate()) %>'
 												type="button"
 											/>
 										</span>
@@ -371,7 +360,8 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 </aui:form>
 
 <portlet:renderURL var="scheduleModalURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+	<portlet:param name="displayDate" value="<%= editKBArticleDisplayContext.getDatePickerFormattedDisplayDate() %>" />
+	<portlet:param name="isScheduled" value="<%= String.valueOf(editKBArticleDisplayContext.isScheduled()) %>" />
 	<portlet:param name="mvcPath" value="/admin/common/schedule_modal.jsp" />
 </portlet:renderURL>
 

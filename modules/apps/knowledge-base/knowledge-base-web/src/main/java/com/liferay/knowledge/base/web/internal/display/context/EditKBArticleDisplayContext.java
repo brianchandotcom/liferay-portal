@@ -37,11 +37,15 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FastDateFormatConstants;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.text.Format;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -105,6 +109,20 @@ public class EditKBArticleDisplayContext {
 		return BeanParamUtil.getString(
 			getKBArticle(), _liferayPortletRequest, "content",
 			BeanPropertiesUtil.getString(_getKBTemplate(), "content"));
+	}
+
+	public String getDatePickerFormattedDisplayDate() {
+		KBArticle kbArticle = getKBArticle();
+
+		if (kbArticle == null) {
+			return StringPool.BLANK;
+		}
+
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd HH:mm", _themeDisplay.getLocale(),
+			_themeDisplay.getTimeZone());
+
+		return dateTimeFormat.format(kbArticle.getDisplayDate());
 	}
 
 	public List<DropdownItem> getEditKBArticleActionDropdownItems() {
@@ -330,6 +348,20 @@ public class EditKBArticleDisplayContext {
 		return StringUtil.shorten(sb.toString(), 40) + StringPool.SLASH;
 	}
 
+	public String getUserFormattedDisplayDate() {
+		KBArticle kbArticle = getKBArticle();
+
+		if (kbArticle == null) {
+			return StringPool.BLANK;
+		}
+
+		Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
+			FastDateFormatConstants.LONG, FastDateFormatConstants.SHORT,
+			_themeDisplay.getLocale(), _themeDisplay.getTimeZone());
+
+		return dateTimeFormat.format(kbArticle.getDisplayDate());
+	}
+
 	public boolean hasKBArticleSections() throws ConfigurationException {
 		KBSectionPortletInstanceConfiguration
 			kbSectionPortletInstanceConfiguration =
@@ -442,6 +474,16 @@ public class EditKBArticleDisplayContext {
 	public boolean isPortletTitleBasedNavigation() {
 		return GetterUtil.getBoolean(
 			_portletConfig.getInitParameter("portlet-title-based-navigation"));
+	}
+
+	public boolean isScheduled() {
+		KBArticle kbArticle = getKBArticle();
+
+		if ((kbArticle != null) && kbArticle.isScheduled()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isSourceURLEnabled() {

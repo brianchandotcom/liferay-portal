@@ -7,26 +7,14 @@
 
 <%@ include file="/admin/common/init.jsp" %>
 
-<%
-KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(ParamUtil.getLong(request, "resourcePrimKey"), WorkflowConstants.STATUS_ANY);
-
-String displayDateString = StringPool.BLANK;
-
-if (kbArticle.getDisplayDate() != null) {
-	Format displayFormatDate = FastDateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd HH:mm", locale, timeZone);
-
-	displayDateString = displayFormatDate.format(kbArticle.getDisplayDate());
-}
-%>
-
 <div>
 	<react:component
 		module="admin/js/components/ScheduleModal"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"displayDate", displayDateString
+				"displayDate", ParamUtil.getString(request, "displayDate")
 			).put(
-				"isScheduled", kbArticle.isScheduled()
+				"isScheduled", ParamUtil.getBoolean(request, "isScheduled")
 			).build()
 		%>'
 	/>

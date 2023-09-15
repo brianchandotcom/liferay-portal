@@ -640,7 +640,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				).build()),
 			_bundleContext.registerService(
 				ExceptionMapper.class,
-				new ObjectRelationshipDeletionTypeExceptionMapper(),
+				new ObjectRelationshipDeletionTypeExceptionMapper(_language),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"osgi.jaxrs.application.select",
 					"(osgi.jaxrs.name=" + jaxRsApplicationName + ")"

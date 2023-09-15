@@ -6,7 +6,6 @@ definition {
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property minimum.slave.ram = "24";
 	property portal.release = "true";
-	property portal.suite.search.engine = "elasticsearch7,solr";
 	property portal.upstream = "true";
 	property skip.start.app.server = "true";
 	property test.assert.warning.exceptions = "true";
@@ -16,6 +15,8 @@ definition {
 
 	@priority = 5
 	test ViewSearchPortletsConfiguration {
+		property portal.suite.search.engine = "elasticsearch7,solr";
+
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
 		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
 
@@ -96,6 +97,8 @@ definition {
 
 	@priority = 5
 	test ViewSXPBlueprintsAndElements {
+		property portal.suite.search.engine = "elasticsearch7";
+
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
 		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
 

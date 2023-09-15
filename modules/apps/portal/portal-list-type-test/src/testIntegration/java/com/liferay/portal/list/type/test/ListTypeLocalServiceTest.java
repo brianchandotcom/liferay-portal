@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.PortalInstances;
 
 import java.util.List;
 
@@ -48,12 +48,12 @@ public class ListTypeLocalServiceTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
-		_defaultCompanyId = PortalInstances.getDefaultCompanyIdBySQL();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		UserTestUtil.setUser(UserTestUtil.getAdminUser(_defaultCompanyId));
+		UserTestUtil.setUser(
+			UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId()));
 
 		CompanyLocalServiceUtil.deleteCompany(_company.getCompanyId());
 	}
@@ -104,7 +104,7 @@ public class ListTypeLocalServiceTest {
 
 			try (SafeCloseable safeCloseable2 =
 					CompanyThreadLocal.setWithSafeCloseable(
-						_defaultCompanyId)) {
+						PortalUtil.getDefaultCompanyId())) {
 
 				Assert.assertNull(
 					_listTypeLocalService.getListType(
@@ -142,7 +142,7 @@ public class ListTypeLocalServiceTest {
 
 			try (SafeCloseable safeCloseable2 =
 					CompanyThreadLocal.setWithSafeCloseable(
-						_defaultCompanyId)) {
+						PortalUtil.getDefaultCompanyId())) {
 
 				listTypes = _listTypeLocalService.getListTypes(_LIST_TYPE_TYPE);
 
@@ -171,8 +171,6 @@ public class ListTypeLocalServiceTest {
 
 	@Inject
 	private static CompanyLocalService _companyLocalService;
-
-	private static long _defaultCompanyId;
 
 	@Inject
 	private JSONFactory _jsonFactory;

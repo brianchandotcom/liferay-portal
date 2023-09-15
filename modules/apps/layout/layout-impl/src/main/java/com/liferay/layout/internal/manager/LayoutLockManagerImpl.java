@@ -9,6 +9,7 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.constants.LockedLayoutType;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.model.LockedLayout;
+import com.liferay.layout.model.LockedLayoutOrder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
@@ -23,6 +24,7 @@ import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -149,7 +151,8 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	@Override
 	public List<LockedLayout> getLockedLayouts(
-		long companyId, long groupId, LockedLayoutType lockedLayoutType) {
+		long companyId, long groupId, LockedLayoutOrder lockedLayoutOrder,
+		LockedLayoutType lockedLayoutType) {
 
 		List<Object[]> results = _layoutLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -182,8 +185,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				).where(
 					_getWherePredicate(groupId, lockedLayoutType)
 				).orderBy(
-					orderByStep -> orderByStep.orderBy(
-						LockTable.INSTANCE.createDate.descending())
+					_getOrderByExpression(lockedLayoutOrder)
 				).as(
 					"LockedLayoutsTable", LockedLayoutsTable.INSTANCE
 				)
@@ -495,6 +497,42 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		}
 
 		return layoutUtilityPageEntryViewRenderer.getLabel(locale);
+	}
+
+	private OrderByExpression _getOrderByExpression(
+		LockedLayoutOrder lockedLayoutOrder) {
+
+		if (lockedLayoutOrder == null) {
+			return LockTable.INSTANCE.createDate.descending();
+		}
+
+		if (Objects.equals(
+				lockedLayoutOrder.getLockedLayoutOrderType(),
+				LockedLayoutOrder.LockedLayoutOrderType.LAST_AUTOSAVE)) {
+
+			if (lockedLayoutOrder.isAscending()) {
+				return LockTable.INSTANCE.createDate.ascending();
+			}
+
+			return LockTable.INSTANCE.createDate.descending();
+		}
+
+		if (Objects.equals(
+				lockedLayoutOrder.getLockedLayoutOrderType(),
+				LockedLayoutOrder.LockedLayoutOrderType.USER)) {
+
+			if (lockedLayoutOrder.isAscending()) {
+				return LockTable.INSTANCE.userName.ascending();
+			}
+
+			return LockTable.INSTANCE.userName.descending();
+		}
+
+		if (lockedLayoutOrder.isAscending()) {
+			return LockTable.INSTANCE.createDate.ascending();
+		}
+
+		return LockTable.INSTANCE.createDate.descending();
 	}
 
 	private Predicate _getWherePredicate(

@@ -183,7 +183,7 @@ public class LockedLayoutsDisplayContext {
 
 		_lockedLayouts = _layoutLockManager.getLockedLayouts(
 			_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
-			getLockedLayoutType());
+			null, getLockedLayoutType());
 
 		return _lockedLayouts;
 	}

@@ -38,7 +38,7 @@ definition {
 		}
 
 		task ("Conect DXP to AC") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Test Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloudWithTryAgain(siteName = "Test Site Name");
 		}
 
 		task ("Navigate to Page and Blog") {

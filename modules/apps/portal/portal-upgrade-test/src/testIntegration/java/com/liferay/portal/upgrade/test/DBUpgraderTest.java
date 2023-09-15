@@ -43,8 +43,12 @@ public class DBUpgraderTest {
 
 	@BeforeClass
 	public static void setUpClass() throws SQLException {
-		_currentBuildNumber = _getReleaseColumnValue("buildNumber");
-		_currentState = _getReleaseColumnValue("state_");
+		try (Connection connection = DataAccess.getConnection()) {
+			_currentBuildNumber = PortalUpgradeProcess.getCurrentBuildNumber(
+				connection);
+
+			_currentState = PortalUpgradeProcess.getCurrentState(connection);
+		}
 
 		_upgrading = ReflectionTestUtil.getAndSetFieldValue(
 			StartupHelperUtil.class, "_upgrading", true);
@@ -92,12 +96,6 @@ public class DBUpgraderTest {
 			ReleaseConstants.STATE_UPGRADE_FAILURE);
 
 		DBUpgrader.upgradePortal();
-	}
-
-	private static int _getReleaseColumnValue(String columnName) {
-		return ReflectionTestUtil.invoke(
-			DBUpgrader.class, "_getReleaseColumnValue",
-			new Class<?>[] {String.class}, columnName);
 	}
 
 	private void _updateRelease(int buildNumber, int state) throws Exception {

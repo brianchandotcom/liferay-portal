@@ -702,7 +702,7 @@ definition {
 				conditionValueField = "United States",
 				conditionValueType = "Value");
 
-			for (var actionTypeAndPosition : list "Show-1,Enable-2") {
+			for (var actionTypeAndPosition : list "Show-1,Enable-2,Require-3") {
 				var actionType = StringUtil.extractFirst(${actionTypeAndPosition}, "-");
 				var position = StringUtil.extractLast(${actionTypeAndPosition}, "-");
 
@@ -714,10 +714,7 @@ definition {
 				FormRules.addAction();
 			}
 
-			FormRules.configureActionOptions(
-				action = "Require",
-				actionRowNumber = 3,
-				actionTarget = "Postal Code");
+			FormRules.deleteActions(rowNumber = 4);
 
 			FormRules.save();
 
@@ -860,7 +857,7 @@ definition {
 				conditionValueField = "United States",
 				conditionValueType = "Value");
 
-			for (var actionTypeAndPosition : list "Show-1,Enable-2") {
+			for (var actionTypeAndPosition : list "Show-1,Enable-2,Require-3") {
 				var actionType = StringUtil.extractFirst(${actionTypeAndPosition}, "-");
 				var position = StringUtil.extractLast(${actionTypeAndPosition}, "-");
 
@@ -872,10 +869,7 @@ definition {
 				FormRules.addAction();
 			}
 
-			FormRules.configureActionOptions(
-				action = "Require",
-				actionRowNumber = 3,
-				actionTarget = "US Postal Code");
+			FormRules.deleteActions(rowNumber = 4);
 
 			FormRules.save();
 
@@ -888,7 +882,7 @@ definition {
 				conditionValueField = "United States",
 				conditionValueType = "Value");
 
-			for (var actionTypeAndPosition : list "Show-1,Enable-2") {
+			for (var actionTypeAndPosition : list "Show-1,Enable-2,Require-3") {
 				var actionType = StringUtil.extractFirst(${actionTypeAndPosition}, "-");
 				var position = StringUtil.extractLast(${actionTypeAndPosition}, "-");
 
@@ -900,10 +894,7 @@ definition {
 				FormRules.addAction();
 			}
 
-			FormRules.configureActionOptions(
-				action = "Require",
-				actionRowNumber = 3,
-				actionTarget = "Non-US Postal Code");
+			FormRules.deleteActions(rowNumber = 4);
 
 			FormRules.save();
 

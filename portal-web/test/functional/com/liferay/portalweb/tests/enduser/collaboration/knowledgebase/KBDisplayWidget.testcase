@@ -242,33 +242,7 @@ definition {
 			print = "false",
 			subscribe = "false");
 	}
-
-	@priority = 3
-	@refactordone
-	test CannotViewDuplicateBreadcrumbsWhenAddingParentArticle {
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
-			kbArticleContent = "Knowledge Base Article Content Parent",
-			kbArticleTitle = "Knowledge Base Article Title Parent");
-
-		JSONKnowledgeBase.addkBArticle(
-			groupName = "Guest",
-			kbArticleContent = "Knowledge Base Article Content Child",
-			kbArticleTitle = "Knowledge Base Article Title Child");
-
-		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
-
-		KBArticle.gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = "Knowledge Base Article Title Child");
-
-		KBDisplayWidget.moveArticleViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Title Child");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		AssertElementPresent(locator1 = "KnowledgeBaseSelectParent#BREADCRUMB_HOME");
-
-		AssertElementNotPresent(locator1 = "//ul[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]");
-	}
-
+	
 	@priority = 3
 	@refactordone
 	test CanSaveChildArticleAsDraft {

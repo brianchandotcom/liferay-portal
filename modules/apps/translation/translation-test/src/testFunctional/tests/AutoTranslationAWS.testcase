@@ -156,7 +156,7 @@ definition {
 		Translations.autoTranslate();
 
 		Translations.viewTargetFields(
-			webContentContent = "Contenido de WC",
+			webContentContent = "Contenido del WC",
 			webContentDescription = "Descripción del WC",
 			webContentTitle = "Título del artículo");
 
@@ -170,7 +170,7 @@ definition {
 			webContentTitle = "Article title");
 
 		Translations.viewTargetFields(
-			webContentContent = "Contenido de WC",
+			webContentContent = "Contenido del WC",
 			webContentDescription = "Descripción del WC",
 			webContentTitle = "Título del artículo");
 	}

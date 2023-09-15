@@ -6,7 +6,7 @@
 package com.liferay.portal.security.content.security.policy.internal.servlet.taglib;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.security.csp.ContentSecurityPolicyNonceProvider;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProvider;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.Validator;
 

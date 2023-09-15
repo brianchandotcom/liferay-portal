@@ -2382,15 +2382,15 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.UPGRADE_LOG_CONTEXT_ENABLED));
 
+	public static final String UPGRADE_REPORT_DIRECTORY = GetterUtil.getString(
+		PropsUtil.get(PropsKeys.UPGRADE_REPORT_DIRECTORY));
+
 	public static final long UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT =
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.UPGRADE_REPORT_DL_STORAGE_SIZE_TIMEOUT));
 
 	public static final boolean UPGRADE_REPORT_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.UPGRADE_REPORT_ENABLED));
-
-	public static final String UPGRADE_REPORT_DIRECTORY = GetterUtil.getString(
-		PropsUtil.get(PropsKeys.UPGRADE_REPORT_DIRECTORY));
 
 	public static boolean USER_GROUPS_NAME_ALLOW_NUMERIC =
 		GetterUtil.getBoolean(

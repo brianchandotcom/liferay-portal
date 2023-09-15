@@ -807,6 +807,38 @@ definition {
 		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple Pie Site Name");
 	}
 
+	@description = "This is a use case for LPS-192650 - HTML seen in search suggestions widget."
+	@priority = 2
+	test ViewSearchSuggestionsWidgetDontDisplayHTML {
+		property test.liferay.virtual.instance = "false";
+
+		task ("Add Suggestions Widget, go to Search Page and configure it to enable the 'Display Did you mean: ...'") {
+			SearchPortlets.addWidgets(searchPortletList = "Suggestions");
+
+			Search.openSearchPage();
+
+			SearchPortlets.gotoConfigureSuggestionsOptions(portletOption = "Configuration");
+
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+			FormFields.enableCheckbox(fieldName = "Did you mean: ...");
+
+			PortletEntry.save();
+
+			IFrame.closeFrame();
+		}
+
+		task ("Reindex Reindex Spell-Check Dictionaries, go to Home Page, search for 'lifewayz' and assert 'lifewai' is shown") {
+			SearchAdministration.executeReindex(action = "Reindex Spell-Check Dictionaries");
+
+			Navigator.openURL();
+
+			SearchPortlets.searchEmbedded(searchTerm = "lifewayz");
+
+			AssertElementPresent(locator1 = "//div[contains(@class, 'search-suggested-spelling')]//*[contains(text(),'lifewai')]");
+		}
+	}
+
 	@description = "This is a use case for LPS-190910."
 	@priority = 3
 	test ViewSuggestionsLocalizedDescription {

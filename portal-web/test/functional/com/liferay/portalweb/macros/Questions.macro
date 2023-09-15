@@ -1034,10 +1034,9 @@ definition {
 
 	macro viewSubscribedTag {
 		if (isSet(subscribedTag)) {
-			AssertTextEquals(
+			AssertElementPresent(
 				key_subscribedTag = ${subscribedTag},
-				locator1 = "Questions#SUBSCRIBED_TAG",
-				value1 = ${subscribedTag});
+				locator1 = "Questions#SUBSCRIBED_TAG");
 		}
 		else if (isSet(noSubscribedTag)) {
 			AssertTextEquals(

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -206,23 +207,24 @@ public class Version implements Comparable<Version>, Serializable {
 	}
 
 	public boolean includes(Version version) {
-		if (equals(version) || getMajor().equals(StringPool.STAR)) {
+		if (equals(version) || Objects.equals(getMajor(), StringPool.STAR)) {
 			return true;
 		}
 
-		if (getMajor().equals(version.getMajor())) {
-			if (getMinor().equals(StringPool.STAR)) {
+		if (Objects.equals(getMajor(), version.getMajor())) {
+			if (Objects.equals(getMinor(), StringPool.STAR)) {
 				return true;
 			}
 
-			if (getMinor().equals(version.getMinor())) {
-				if (getBugFix().equals(StringPool.STAR)) {
+			if (Objects.equals(getMinor(), version.getMinor())) {
+				if (Objects.equals(getBugFix(), StringPool.STAR)) {
 					return true;
 				}
 
-				if (getBugFix().equals(version.getBugFix())) {
-					if (getBuildNumber().equals(StringPool.STAR) ||
-						getBuildNumber().equals(version.getBuildNumber())) {
+				if (Objects.equals(getBugFix(), version.getBugFix())) {
+					if (Objects.equals(getBuildNumber(), StringPool.STAR) ||
+						Objects.equals(
+							getBuildNumber(), version.getBuildNumber())) {
 
 						return true;
 					}

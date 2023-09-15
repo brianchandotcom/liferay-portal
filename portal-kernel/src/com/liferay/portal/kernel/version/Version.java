@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -142,7 +143,7 @@ public class Version implements Comparable<Version> {
 
 	@Override
 	public String toString() {
-		if (getQualifier().equals(StringPool.BLANK)) {
+		if (Objects.equals(getQualifier(), StringPool.BLANK)) {
 			return StringBundler.concat(
 				_major, StringPool.PERIOD, _minor, StringPool.PERIOD, _micro);
 		}

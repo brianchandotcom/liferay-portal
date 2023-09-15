@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.model.ColorScheme;
 
 import java.io.IOException;
 
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -82,7 +83,9 @@ public class ColorSchemeFactoryUtil {
 
 			ColorScheme colorScheme = (ColorScheme)object;
 
-			if (getColorSchemeId().equals(colorScheme.getColorSchemeId())) {
+			if (Objects.equals(
+					getColorSchemeId(), colorScheme.getColorSchemeId())) {
+
 				return true;
 			}
 

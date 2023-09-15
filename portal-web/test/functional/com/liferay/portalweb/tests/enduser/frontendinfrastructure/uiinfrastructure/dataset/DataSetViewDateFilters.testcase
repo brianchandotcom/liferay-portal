@@ -239,7 +239,7 @@ definition {
 				locator1 = "DataSet#DATEPICKER_BUTTON");
 
 			Select(
-				key_type = "month",
+				key_number = 1,
 				locator1 = "DataSet#SELECT_MONTH",
 				value1 = "April");
 
@@ -257,7 +257,7 @@ definition {
 				locator1 = "DataSet#DATEPICKER_BUTTON");
 
 			Select(
-				key_type = "month",
+				key_number = 2,
 				locator1 = "DataSet#SELECT_MONTH",
 				value1 = "May");
 

@@ -271,14 +271,14 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-189238 TC-7 TC-8. Verify Instance level settings overwrite System level settings when configure the advanced staging configration checkbox."
+	@description = "This is a test for LPS-189238 TC-7 TC-8. Verify Instance level settings overwrite System level settings when configuring the advanced staging configuration checkbox."
 	@priority = 5
 	test AssertInstanceLevelOverwriteSystemSettingForAdvancedStagingConfiguration {
 		property custom.properties = "feature.flag.LPS-189187=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given: Enable local staging with advanced staging configration checkbox unchecked in system setting.") {
+		task ("Given: Enable local staging with advanced staging configuration checkbox unchecked in system setting.") {
 			JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 			Navigator.openURL();
@@ -298,7 +298,7 @@ definition {
 				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 		}
 
-		task ("When: Enable advanced staging configration checkbox in instance setting") {
+		task ("When: Enable advanced staging configuration checkbox in instance setting") {
 			Navigator.openURL();
 
 			ApplicationsMenu.gotoPortlet(
@@ -316,7 +316,7 @@ definition {
 				settingFieldName = "Show Advanced Staging Configuration by Default");
 		}
 
-		task ("Then: Verify the configuration of advanced staging process is displayed.") {
+		task ("Then: Verify the configuration of the advanced staging process is displayed.") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Staging Test Page",
 				siteName = "Site Name");
@@ -329,14 +329,14 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-189238 TC-11. Verify osgi configs with companyID can setup show Advanced Staging Configuration."
+	@description = "This is a test for LPS-189238 TC-11. Verify OSGi configs with companyID can setup show Advanced Staging Configuration."
 	@priority = 5
 	test CanEnableAdvancedStagingConfigurationByCompanyId {
 		property custom.properties = "feature.flag.LPS-189187=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given: Place a config file into osgi folder to configure Show Advanced Staging Configuration") {
+		task ("Given: Place a config file into OSGi folder to configure Show Advanced Staging Configuration") {
 			var companyId = JSONCompany.getCompanyId();
 
 			OSGiConfig.deployOSGiConfigFile(
@@ -360,21 +360,21 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 		}
 
-		task ("Then: Verify the configuration of advanced staging process is enabled.") {
+		task ("Then: Verify the configuration of the advanced staging process is enabled.") {
 			AssertChecked.assertCheckedNotVisible(
 				key_settingFieldName = "Show Advanced Staging Configuration by Default",
 				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 		}
 	}
 
-	@description = "This is a test for LPS-189238 TC-9. Verify can enable advanced staging configration checkbox for remote staging."
+	@description = "This is a test for LPS-189238 TC-9. Verify can enable advanced staging configuration checkbox for remote staging."
 	@priority = 4
 	test CanEnableAdvancedStagingConfigurationForRemoteStaging {
 		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}feature.flag.LPS-189187=true${line.separator}tunneling.servlet.shared.secret=1234567890123456";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given: Enable remote staging with advanced staging configration checkbox unchecked in system setting.") {
+		task ("Given: Enable remote staging with advanced staging configuration checkbox unchecked in system setting.") {
 			Staging.remoteStagingSetUpViaJson(groupName = "Site Name");
 
 			Navigator.openURL();
@@ -390,13 +390,13 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 		}
 
-		task ("When: Enable advanced staging configration checkbox") {
+		task ("When: Enable advanced staging configuration checkbox") {
 			SystemSettings.configureSystemSetting(
 				enableSetting = "true",
 				settingFieldName = "Show Advanced Staging Configuration by Default");
 		}
 
-		task ("Then: Verify the configuration of advanced staging process is displayed.") {
+		task ("Then: Verify the configuration of the advanced staging process is displayed.") {
 			Navigator.openSitePage(
 				pageName = "Staging Test Page",
 				siteName = "Site Name");
@@ -409,14 +409,14 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-189238 TC-10. Verify can enable advanced staging configration checkbox for virtual instance."
+	@description = "This is a test for LPS-189238 TC-10. Verify can enable advanced staging configuration checkbox for virtual instance."
 	@priority = 4
 	test CanEnableAdvancedStagingConfigurationForVirtualInstance {
 		property custom.properties = "feature.flag.LPS-189187=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given: Enable local staging with advanced staging configration checkbox unchecked in instance setting.") {
+		task ("Given: Enable local staging with advanced staging configuration checkbox unchecked in instance setting.") {
 			JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 			HeadlessPortalInstanceAPI.addPortalInstance(
@@ -471,7 +471,7 @@ definition {
 			Staging.activateStagingCP(siteName = "www.able.com");
 		}
 
-		task ("When: Enable advanced staging configration checkbox in virtual instance") {
+		task ("When: Enable advanced staging configuration checkbox in virtual instance") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
@@ -491,7 +491,7 @@ definition {
 				settingFieldName = "Show Advanced Staging Configuration by Default");
 		}
 
-		task ("Then: Verify the configuration of advanced staging process is displayed.") {
+		task ("Then: Verify the configuration of the advanced staging process is displayed.") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080/web/guest-staging/home");
 
 			Staging.gotoPublishToLive();
@@ -502,14 +502,14 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-189238 TC-2 TC-5 TC-6. Verify there is advanced staging configration checkbox with description in Instance Setting,the configration checkbox can be enabled."
+	@description = "This is a test for LPS-189238 TC-2 TC-5 TC-6. Verify there is advanced staging configuration checkbox with description in Instance Setting,the configuration checkbox can be enabled."
 	@priority = 5
 	test CanEnableAdvancedStagingConfigurationInInstanceSetting {
 		property custom.properties = "feature.flag.LPS-189187=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given: Enable local staging with advanced staging configration checkbox unchecked in instance setting.") {
+		task ("Given: Enable local staging with advanced staging configuration checkbox unchecked in instance setting.") {
 			JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 			Navigator.openURL();
@@ -533,13 +533,13 @@ definition {
 			SystemSettings.viewSettingsText(settingsText = "If checked, then the advanced publication configuration screen will be displayed by default when publishing pages.");
 		}
 
-		task ("When: Enable advanced staging configration checkbox") {
+		task ("When: Enable advanced staging configuration checkbox") {
 			SystemSettings.configureSystemSetting(
 				enableSetting = "true",
 				settingFieldName = "Show Advanced Staging Configuration by Default");
 		}
 
-		task ("Then: Verify the configuration of advanced staging process is displayed.") {
+		task ("Then: Verify the configuration of the advanced staging process is displayed.") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Staging Test Page",
 				siteName = "Site Name");
@@ -552,14 +552,14 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-189238 TC-1 TC-3 TC-4. Verify there is advanced staging configration checkbox with description in System Setting,the configration checkbox can be enabled."
+	@description = "This is a test for LPS-189238 TC-1 TC-3 TC-4. Verify there is advanced staging configuration checkbox with description in System Setting,the configuration checkbox can be enabled."
 	@priority = 5
 	test CanEnableAdvancedStagingConfigurationInSystemSetting {
 		property custom.properties = "feature.flag.LPS-189187=true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given: Enable local staging with advanced staging configration checkbox unchecked in system setting.") {
+		task ("Given: Enable local staging with advanced staging configuration checkbox unchecked in system setting.") {
 			JSONStaging.enableLocalStaging(groupName = "Site Name");
 
 			Navigator.openURL();
@@ -583,13 +583,13 @@ definition {
 			SystemSettings.viewSettingsText(settingsText = "If checked, then the advanced publication configuration screen will be displayed by default when publishing pages.");
 		}
 
-		task ("When: Enable advanced staging configration checkbox") {
+		task ("When: Enable advanced staging configuration checkbox") {
 			SystemSettings.configureSystemSetting(
 				enableSetting = "true",
 				settingFieldName = "Show Advanced Staging Configuration by Default");
 		}
 
-		task ("Then: Verify the configuration of advanced staging process is displayed.") {
+		task ("Then: Verify the configuration of the advanced staging process is displayed.") {
 			Navigator.gotoStagedSitePage(
 				pageName = "Staging Test Page",
 				siteName = "Site Name");
@@ -609,7 +609,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given: Create a site with new site template with disable llow site administrators to modify pages associated with this site template, even when propagation of changes is enabled and Ready for Propagation,the testcase is blocked by LPS-146160.") {
+		task ("Given: Create a site with new site template with disable allow site administrators to modify pages associated with this site template, even when propagation of changes is enabled and Ready for Propagation,the testcase is blocked by LPS-146160.") {
 			SiteTemplates.addCP(
 				disableChanges = "true",
 				disablePropagation = "true",
@@ -1189,13 +1189,13 @@ definition {
 			uploadFrom = "dependencies");
 	}
 
-	@description = "This is a use case for LPS-189191. TC-2 and TC-4: Verify that the instance setting is able to overwrite the system setting via osgi file to ignore previews and thumbnails during the local staging publish process."
+	@description = "This is a use case for LPS-189191. TC-2 and TC-4: Verify that the instance setting can overwrite the system setting via OSGi file to ignore previews and thumbnails during the local staging publish process."
 	@priority = 4
 	test InstanceSettingOfPreviewsAndThumbnailsCanOverwriteSystemSetting {
 		property custom.properties = "feature.flag.LPS-189187=true";
 		property test.liferay.virtual.instance = "false";
 
-		task ("Given: Instance setting overwrite system setting via osgi file") {
+		task ("Given: Instance setting overwrite system setting via OSGi file") {
 			var companyId = JSONCompany.getCompanyId();
 
 			OSGiConfig.deployOSGiConfigFile(
@@ -1505,7 +1505,7 @@ definition {
 			searchAssetType = "Web Content");
 	}
 
-	@description = "This is a test for LPS-149374. TC-4: Verify if Publish Displayed Content by Default is set to false, DDL content will not be published via portlet if content is unchecked in the staging process."
+	@description = "This is a test for LPS-149374. TC-4: Verify if Publish Displayed Content by Default is set to false, DDL content will not be published via portlet if the content is unchecked in the staging process."
 	@priority = 4
 	test PublishDDLViaPortletWithoutContent {
 		property test.liferay.virtual.instance = "false";
@@ -1944,7 +1944,7 @@ definition {
 			publishTemplateName = "Publish Template Name");
 	}
 
-	@description = "This is a use case for LPS-131578 and LPS-149374. User can configure the portal to exclude displayed contents from publishing."
+	@description = "This is a use case for LPS-131578 and LPS-149374. Users can configure the portal to exclude displayed contents from publishing."
 	@priority = 4
 	test PublishViaPortletWithoutContent {
 		property test.liferay.virtual.instance = "false";
@@ -3052,7 +3052,7 @@ definition {
 			PagesAdmin.editName(pageNameEdit = "Staging Test Page Edit");
 		}
 
-		task ("Then: Assert the HTML Title and Description are display in SEO") {
+		task ("Then: Assert the HTML Title and Description are displayed in SEO") {
 			Navigator.openToGroupPagesPortlet(
 				groupName = "Site Name (Staging)",
 				layoutName = "Staging Test Page",

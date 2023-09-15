@@ -118,8 +118,6 @@ definition {
 			DataSetAdmin.goToTab(tabName = "Fields");
 
 			DataSetAdmin.addFields(key_fieldList = ${key_fieldList});
-
-			Button.clickSave();
 		}
 
 		if (isSet(key_ListItemsPerPage)) {

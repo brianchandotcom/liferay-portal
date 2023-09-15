@@ -986,7 +986,7 @@ definition {
 			searchAssetTitle = "Test Blog",
 			searchAssetType = "Blogs Entry");
 
-		Search.gotoResultAssetViaTitle(searchAssetTitle = "Test Blog");
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "Test Blog");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blog Entry Content.",
@@ -1047,7 +1047,7 @@ definition {
 			searchAssetTitle = "Test Blog",
 			searchAssetType = "Blogs Entry");
 
-		Search.gotoResultAssetViaTitle(searchAssetTitle = "Test Blog");
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "Test Blog");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blog Entry Content.",
@@ -1139,7 +1139,7 @@ definition {
 			searchAssetTitle = "Test Blog",
 			searchAssetType = "Blogs Entry");
 
-		Search.gotoResultAssetViaTitle(searchAssetTitle = "Test Blog");
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "Test Blog");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blog Entry Content.",
@@ -1189,7 +1189,7 @@ definition {
 			searchAssetTitle = "Test Blog",
 			searchAssetType = "Blogs Entry");
 
-		Search.gotoResultAssetViaTitle(searchAssetTitle = "Test Blog");
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "Test Blog");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blog Entry Content.",

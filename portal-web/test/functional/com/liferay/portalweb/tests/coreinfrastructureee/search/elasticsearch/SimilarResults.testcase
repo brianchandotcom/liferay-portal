@@ -417,7 +417,7 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "DM Document Title");
 
-		Search.gotoResultAssetViaTitle(searchAssetTitle = "DM Document Title 1");
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "DM Document Title 1");
 
 		for (var count : list "2,3") {
 			AssertElementPresent(

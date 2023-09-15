@@ -247,7 +247,7 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "Example Page");
 
-		Search.gotoResultAssetViaTitle(searchAssetTitle = "Example Page");
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "Example Page");
 
 		AssertElementNotPresent(locator1 = "Portlet#ERROR");
 
@@ -274,7 +274,7 @@ definition {
 		task ("Search for the DOCX and PDF files and assert 'Download' Button is Present") {
 			SearchPortlets.searchEmbedded(searchTerm = "File");
 
-			Search.gotoResultAssetViaTitle(searchAssetTitle = "DOCX File");
+			SearchPortlets.gotoResultDetails(searchAssetTitle = "DOCX File");
 
 			Click(locator1 = "Icon#INFO_DM");
 
@@ -288,7 +288,7 @@ definition {
 
 			Click(locator1 = "SearchResults#PREVIEW_BACK_BUTTON");
 
-			Search.gotoResultAssetViaTitle(searchAssetTitle = "PDF File");
+			SearchPortlets.gotoResultDetails(searchAssetTitle = "PDF File");
 
 			Click(locator1 = "Icon#INFO_DM");
 

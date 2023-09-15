@@ -6,13 +6,6 @@ definition {
 		AssertElementNotPresent(locator1 = "Search#SEARCH_INFO");
 	}
 
-	macro gotoResultAssetViaTitle {
-		AssertClick(
-			key_searchAssetTitle = ${searchAssetTitle},
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
-			value1 = ${searchAssetTitle});
-	}
-
 	macro openSearchPage {
 		if (!(isSet(siteURLKey))) {
 			var siteURLKey = "guest";

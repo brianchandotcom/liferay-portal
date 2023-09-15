@@ -134,15 +134,9 @@ definition {
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm(formName = "Form 1");
-
-		PortletEntry.save();
-
-		FormPortletNavigator.exitWidgetModal();
+		FormPortletConfiguration.selectFormOnAPage(
+			formName = "Form 1",
+			pageName = "Form Page");
 
 		FormFields.editText(
 			fieldName = ${textFieldName},
@@ -248,15 +242,7 @@ definition {
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm();
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
+		FormPortletConfiguration.selectFormOnAPage(pageName = "Form Page");
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 
@@ -369,15 +355,7 @@ definition {
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm();
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
+		FormPortletConfiguration.selectFormOnAPage(pageName = "Form Page");
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 
@@ -1143,13 +1121,7 @@ definition {
 			pageName = "Form Page 1",
 			portletName = "Form");
 
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm();
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page 1");
+		FormPortletConfiguration.selectFormOnAPage(pageName = "Form Page 1");
 
 		FormFields.editText(
 			fieldName = "Text",
@@ -1764,15 +1736,7 @@ definition {
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm();
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
+		FormPortletConfiguration.selectFormOnAPage(pageName = "Form Page");
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 
@@ -2023,15 +1987,7 @@ definition {
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm();
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
+		FormPortletConfiguration.selectFormOnAPage(pageName = "Form Page");
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 

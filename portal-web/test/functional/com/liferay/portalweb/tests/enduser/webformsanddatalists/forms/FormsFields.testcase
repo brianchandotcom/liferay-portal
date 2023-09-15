@@ -300,15 +300,7 @@ definition {
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm();
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
+		FormPortletConfiguration.selectFormOnAPage(pageName = "Form Page");
 
 		FormPortlet.waitFormRenderer(text = "Next");
 
@@ -422,15 +414,9 @@ definition {
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm(formTitle = "Form");
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
+		FormPortletConfiguration.selectFormOnAPage(
+			formName = "Form",
+			pageName = "Form Page");
 
 		FormFields.viewFieldHelpText(
 			fieldHelpText = "<script>alert(123)</script>",
@@ -467,15 +453,9 @@ definition {
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm(formTitle = "Form");
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
+		FormPortletConfiguration.selectFormOnAPage(
+			formName = "Form",
+			pageName = "Form Page");
 
 		FormFields.viewTextField(
 			fieldLabel = "<script>alert(123)</script>",
@@ -510,15 +490,9 @@ definition {
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm(formTitle = "Form");
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
+		FormPortletConfiguration.selectFormOnAPage(
+			formName = "Form",
+			pageName = "Form Page");
 
 		FormFields.viewFieldPlaceholderText(
 			fieldName = ${textFieldName},
@@ -553,15 +527,9 @@ definition {
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm(formTitle = "Form");
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
+		FormPortletConfiguration.selectFormOnAPage(
+			formName = "Form",
+			pageName = "Form Page");
 
 		AssertTextEquals(
 			key_fieldName = "Text",

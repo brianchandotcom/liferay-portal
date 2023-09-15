@@ -951,15 +951,7 @@ definition {
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm();
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
+		FormPortletConfiguration.selectFormOnAPage(pageName = "Form Page");
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 
@@ -1167,15 +1159,9 @@ definition {
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm(formName = "Test Form");
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
+		FormPortletConfiguration.selectFormOnAPage(
+			formName = "Test Form",
+			pageName = "Form Page");
 
 		Alert.viewWarningSpecific(warningMessage = "This form is not available or it was not published.");
 	}
@@ -1976,15 +1962,9 @@ definition {
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm(formName = "Test Form");
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
+		FormPortletConfiguration.selectFormOnAPage(
+			formName = "Test Form",
+			pageName = "Form Page");
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 
@@ -2137,15 +2117,7 @@ definition {
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm();
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
+		FormPortletConfiguration.selectFormOnAPage(pageName = "Form Page");
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 

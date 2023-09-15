@@ -734,7 +734,7 @@ definition {
 				widgetName = "Form");
 
 			FormPortletConfiguration.selectFormOnAPage(
-				formTitle = "Select country",
+				formName = "Select country",
 				pageName = "Form Page");
 
 			Navigator.gotoPage(pageName = "Form Page");
@@ -913,15 +913,9 @@ definition {
 				layoutName = "Form Page",
 				widgetName = "Form");
 
-			Navigator.gotoPage(pageName = "Form Page");
-
-			FormPortletNavigator.gotoSelectForm();
-
-			FormPortletConfiguration.selectForm(formName = "Select country");
-
-			PortletEntry.save();
-
-			Navigator.gotoPage(pageName = "Form Page");
+			FormPortletConfiguration.selectFormOnAPage(
+				formName = "Select country",
+				pageName = "Form Page");
 		}
 
 		task ("When an entry is automatically saved and a new tab is opened") {

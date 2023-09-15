@@ -107,6 +107,7 @@ public interface OrganizationLocalService
 	 * #addOrganizationResources(long, Organization)}.
 	 * </p>
 	 *
+	 * @param externalReferenceCode External Reference Code of the organization
 	 * @param userId the primary key of the creator/owner of the organization
 	 * @param parentOrganizationId the primary key of the organization's parent
 	 organization
@@ -1288,6 +1289,7 @@ public interface OrganizationLocalService
 	/**
 	 * Updates the organization.
 	 *
+	 * @param externalReferenceCode External Reference Code of the organization
 	 * @param companyId the primary key of the organization's company
 	 * @param organizationId the primary key of the organization
 	 * @param parentOrganizationId the primary key of organization's parent

@@ -1,0 +1,30 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "productType == \"Cloud app\"",
+		"description": "",
+		"errorMessage": {
+		},
+		"externalReferenceCode": "CLOUD-APP-NOTIFICATION",
+		"label": {
+			"en_US": "Cloud APP Notification"
+		},
+		"name": "Cloud APP Notification",
+		"objectActionExecutorKey": "notification",
+		"objectActionTriggerKey": "onAfterAdd",
+		"parameters": {
+			"objectDefinitionExternalReferenceCode": "ORDERNOTIFICATION",
+			"predefinedValues": [
+				{
+					"businessType": "Text",
+					"inputAsValue": true,
+					"label": {
+						"en_US": "productType"
+					},
+					"name": "productType",
+					"value": "\"Cloud App\""
+				}
+			]
+		}
+	}
+]

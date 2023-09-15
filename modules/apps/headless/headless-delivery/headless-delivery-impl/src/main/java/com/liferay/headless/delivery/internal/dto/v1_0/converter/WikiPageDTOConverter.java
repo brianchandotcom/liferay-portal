@@ -67,7 +67,7 @@ public class WikiPageDTOConverter
 						wikiPage.getResourcePrimKey()));
 				content = wikiPage.getContent();
 				creator = CreatorUtil.toCreator(
-					_portal, dtoConverterContext.getUriInfo(),
+					dtoConverterContext, _portal,
 					_userLocalService.fetchUser(wikiPage.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),

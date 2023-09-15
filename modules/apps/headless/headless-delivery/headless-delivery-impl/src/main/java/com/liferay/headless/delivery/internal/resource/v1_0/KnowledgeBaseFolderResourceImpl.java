@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -287,8 +288,9 @@ public class KnowledgeBaseFolderResourceImpl
 						ActionKeys.UPDATE, kbFolder, "putKnowledgeBaseFolder")
 				).build();
 				creator = CreatorUtil.toCreator(
-					_portal, contextUriInfo,
-					_userLocalService.fetchUser(kbFolder.getUserId()));
+					new DefaultDTOConverterContext(
+						null, null, null, contextUriInfo, null),
+					_portal, _userLocalService.fetchUser(kbFolder.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					contextAcceptLanguage.isAcceptAllLanguages(),
 					KBFolder.class.getName(), kbFolder.getKbFolderId(),

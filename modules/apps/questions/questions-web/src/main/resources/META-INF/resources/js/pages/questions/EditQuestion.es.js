@@ -68,7 +68,11 @@ export default withRouter(
 			<section className="c-mt-5 questions-section questions-section-edit">
 				<div className="questions-container row">
 					<div className="c-mx-auto col-xl-10">
-						<h1>{Liferay.Language.get('edit-question')}</h1>
+						<h1>
+							{Liferay.FeatureFlags['LPS-185892']
+								? context.editQuestionText
+								: Liferay.Language.get('edit-question')}
+						</h1>
 
 						<ClayForm>
 							<ClayForm.Group className="c-mt-4">
@@ -158,9 +162,11 @@ export default withRouter(
 								}}
 							>
 								{context.trustedUser
-									? Liferay.Language.get(
-											'update-your-question'
-									  )
+									? Liferay.FeatureFlags['LPS-185892']
+										? context.updateYourQuestionText
+										: Liferay.Language.get(
+												'update-your-question'
+										  )
 									: Liferay.Language.get(
 											'submit-for-workflow'
 									  )}

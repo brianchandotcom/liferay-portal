@@ -6,21 +6,25 @@
 package com.liferay.headless.delivery.dto.v1_0.util;
 
 import com.liferay.headless.delivery.dto.v1_0.Creator;
+import com.liferay.headless.delivery.dto.v1_0.UserGroupInformation;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.UriInfo;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 /**
  * @author Cristina González
  */
 public class CreatorUtil {
 
-	public static Creator toCreator(Portal portal, UriInfo uriInfo, User user) {
+	public static Creator toCreator(
+		DTOConverterContext dtoConverterContext, Portal portal, User user) {
+
 		if ((user == null) || user.isGuestUser()) {
 			return null;
 		}
@@ -31,6 +35,7 @@ public class CreatorUtil {
 				contentType = "UserAccount";
 				familyName = user.getLastName();
 				givenName = user.getFirstName();
+
 				id = user.getUserId();
 				name = user.getFullName();
 
@@ -50,18 +55,9 @@ public class CreatorUtil {
 					});
 				setProfileURL(
 					() -> {
-						if (uriInfo == null) {
-							return null;
-						}
-
-						MultivaluedMap<String, String> queryParameters =
-							uriInfo.getQueryParameters();
-
-						String nestedFields = queryParameters.getFirst(
-							"nestedFields");
-
-						if ((nestedFields == null) ||
-							!nestedFields.contains("profileURL")) {
+						if ((dtoConverterContext == null) ||
+							!dtoConverterContext.containsNestedFieldsValue(
+								"profileURL")) {
 
 							return null;
 						}
@@ -76,6 +72,29 @@ public class CreatorUtil {
 						};
 
 						return group.getDisplayURL(themeDisplay);
+					});
+				setUserGroupInformations(
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPS-185892") ||
+							(dtoConverterContext == null) ||
+							!(GetterUtil.getBoolean(
+								dtoConverterContext.getAttribute(
+									"userGroupInformations")) ||
+							  dtoConverterContext.containsNestedFieldsValue(
+								  "userGroupInformations"))) {
+
+							return null;
+						}
+
+						return TransformUtil.transformToArray(
+							user.getUserGroups(),
+							userGroup -> new UserGroupInformation() {
+								{
+									id = userGroup.getUserGroupId();
+									name = userGroup.getName();
+								}
+							},
+							UserGroupInformation.class);
 					});
 			}
 		};

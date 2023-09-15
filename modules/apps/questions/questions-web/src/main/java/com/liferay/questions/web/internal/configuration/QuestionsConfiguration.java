@@ -56,4 +56,39 @@ public interface QuestionsConfiguration {
 	)
 	public long rootTopicId();
 
+	@Meta.AD(
+		deflt = "ask-question",
+		description = "define-a-new-language-key-to-override-the-default",
+		name = "ask-question-language-key", required = false
+	)
+	public String askQuestionLanguageKey();
+
+	@Meta.AD(
+		deflt = "edit-question",
+		description = "define-a-new-language-key-to-override-the-default",
+		name = "edit-question-language-key", required = false
+	)
+	public String editQuestionLanguageKey();
+
+	@Meta.AD(
+		deflt = "new-question",
+		description = "define-a-new-language-key-to-override-the-default",
+		name = "new-question-language-key", required = false
+	)
+	public String newQuestionLanguageKey();
+
+	@Meta.AD(
+		deflt = "post-your-question",
+		description = "define-a-new-language-key-to-override-the-default",
+		name = "post-your-question-language-key", required = false
+	)
+	public String postYourQuestionLanguageKey();
+
+	@Meta.AD(
+		deflt = "update-your-question",
+		description = "define-a-new-language-key-to-override-the-default",
+		name = "update-your-question-language-key", required = false
+	)
+	public String updateYourQuestionLanguageKey();
+
 }

@@ -73,7 +73,7 @@ public class KnowledgeBaseArticleDTOConverter
 						kbArticle.getResourcePrimKey()));
 				articleBody = kbArticle.getContent();
 				creator = CreatorUtil.toCreator(
-					_portal, dtoConverterContext.getUriInfo(),
+					dtoConverterContext, _portal,
 					_userLocalService.fetchUser(kbArticle.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(
 					dtoConverterContext.isAcceptAllLanguages(),

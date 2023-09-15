@@ -28,7 +28,7 @@ public class CommentUtil {
 		return new Comment() {
 			{
 				creator = CreatorUtil.toCreator(
-					portal, null, comment.getUser());
+					null, portal, comment.getUser());
 				dateCreated = comment.getCreateDate();
 				dateModified = comment.getModifiedDate();
 				externalReferenceCode = comment.getExternalReferenceCode();

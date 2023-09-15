@@ -13,6 +13,7 @@ import UserPopover from './UserPopover.es';
 
 export default withRouter(
 	({
+		isContentReviewer,
 		match: {
 			params: {sectionTitle},
 		},
@@ -39,6 +40,14 @@ export default withRouter(
 							'anonymous-user-configuration-name'
 						)}
 				</p>
+
+				{Liferay.FeatureFlags['LPS-185892'] &&
+					isContentReviewer &&
+					creator.userGroupInformations
+						?.map(
+							(userGroupInformation) => userGroupInformation.name
+						)
+						.join(', ')}
 			</div>
 
 			<UserPopover creator={creator} statistics={creatorStatistics} />

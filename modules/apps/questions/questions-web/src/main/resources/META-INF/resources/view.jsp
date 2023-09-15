@@ -19,9 +19,13 @@
 		module="js/index.es"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"askQuestionText", LanguageUtil.get(request, questionsConfiguration.askQuestionLanguageKey())
+			).put(
 				"companyName", renderRequest.getAttribute(QuestionsWebKeys.COMPANY_NAME)
 			).put(
 				"defaultRank", renderRequest.getAttribute(QuestionsWebKeys.DEFAULT_RANK)
+			).put(
+				"editQuestionText", LanguageUtil.get(request, questionsConfiguration.editQuestionLanguageKey())
 			).put(
 				"flagsProperties", renderRequest.getAttribute(QuestionsWebKeys.FLAGS_PROPERTIES)
 			).put(
@@ -33,9 +37,15 @@
 			).put(
 				"includeContextPath", renderRequest.getAttribute("javax.servlet.include.context_path")
 			).put(
+				"isContentReviewer", permissionChecker.isContentReviewer(themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId())
+			).put(
 				"isOmniAdmin", permissionChecker.isOmniadmin()
 			).put(
+				"newQuestionText", LanguageUtil.get(request, questionsConfiguration.newQuestionLanguageKey())
+			).put(
 				"npmResolvedPackageName", npmResolvedPackageName
+			).put(
+				"postYourQuestionText", LanguageUtil.get(request, questionsConfiguration.postYourQuestionLanguageKey())
 			).put(
 				"redirectToLogin", questionsConfiguration.enableRedirectToLogin()
 			).put(
@@ -48,6 +58,8 @@
 				"tagSelectorURL", renderRequest.getAttribute(QuestionsWebKeys.TAG_SELECTOR_URL)
 			).put(
 				"trustedUser", renderRequest.getAttribute(QuestionsWebKeys.TRUSTED_USER)
+			).put(
+				"updateYourQuestionText", LanguageUtil.get(request, questionsConfiguration.updateYourQuestionLanguageKey())
 			).put(
 				"userId", String.valueOf(themeDisplay.getUserId())
 			).put(

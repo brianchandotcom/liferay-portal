@@ -48,6 +48,16 @@ catch (Exception exception) {
 		>
 			<aui:input name="preferences--showCardsForTopicNavigation--" type="checkbox" value="<%= questionsConfiguration.showCardsForTopicNavigation() %>" />
 
+			<aui:input label="ask-question-language-key" name="preferences--askQuestionLanguageKey--" type="input" value="<%= questionsConfiguration.askQuestionLanguageKey() %>" />
+
+			<aui:input label="edit-question-language-key" name="preferences--editQuestionLanguageKey--" type="input" value="<%= questionsConfiguration.editQuestionLanguageKey() %>" />
+
+			<aui:input label="new-question-language-key" name="preferences--newQuestionLanguageKey--" type="input" value="<%= questionsConfiguration.newQuestionLanguageKey() %>" />
+
+			<aui:input label="post-your-question-language-key" name="preferences--postYourQuestionLanguageKey--" type="input" value="<%= questionsConfiguration.postYourQuestionLanguageKey() %>" />
+
+			<aui:input label="update-your-question-language-key" name="preferences--updateYourQuestionLanguageKey--" type="input" value="<%= questionsConfiguration.updateYourQuestionLanguageKey() %>" />
+
 			<div class="form-group">
 				<aui:input label="root-topic-id" name="rootTopicName" type="resource" value="<%= rootTopicName %>" />
 

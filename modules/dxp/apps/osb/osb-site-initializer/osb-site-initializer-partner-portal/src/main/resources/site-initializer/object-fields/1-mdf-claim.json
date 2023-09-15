@@ -326,6 +326,30 @@
 			"name": "submitted",
 			"required": false,
 			"type": "Boolean"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Aggregation",
+			"externalReferenceCode": "bae66d68-c947-4534-84e5-aafd380842b1",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "MDF Claim Activities Count"
+			},
+			"name": "mdfClaimActivitiesCount",
+			"objectFieldSettings": [
+				{
+					"name": "objectRelationshipName",
+					"value": "mdfClmToMDFClmActs"
+				},
+				{
+					"name": "function",
+					"value": "COUNT"
+				}
+			],
+			"required": false,
+			"state": false,
+			"system": false
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFClaim$]"

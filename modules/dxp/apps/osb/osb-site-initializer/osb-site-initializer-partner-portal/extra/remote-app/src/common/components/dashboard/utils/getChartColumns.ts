@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import formatCurrency from './formatCurrency';
-
 export default function getChartColumns(
 	mdfCurrency: any,
 	mdfRequests: any,
@@ -28,8 +26,8 @@ export default function getChartColumns(
 	expiringSoonTotalActivities(mdfRequests, chartColumns);
 
 	expiredTotalActivites(mdfRequests, chartColumns);
-	setValueChart(formatCurrency(totalMDFActivitiesAmount, mdfCurrency));
-	setTitleChart('Total MDF');
+	setValueChart(totalMDFActivitiesAmount);
+	setTitleChart('Total MDF ');
 	setColumnsMDFChart(chartColumns);
 }
 
@@ -113,7 +111,26 @@ function totalMDFRequestToClaims(mdfRequests: any, chartColumns: any) {
 			acc + parseFloat(value.totalClaimedRequest || 0),
 		0
 	);
-	chartColumns.push(['Claimed', totalClaimedRequestsAmount]);
+
+	const claimedRequests = mdfRequests?.items
+		?.map((claim: any) =>
+			claim.mdfReqToMDFClms.filter(
+				(request: any) => request.mdfClaimStatus.key === 'claimPaid'
+			)
+		)
+		.flat();
+
+	const totalClaimedActivites = claimedRequests.reduce(
+		(acc: any, value: any) =>
+			acc + parseFloat(value.mdfClaimActivitiesCount),
+		0
+	);
+
+	chartColumns.push([
+		'Claimed',
+		totalClaimedRequestsAmount,
+		totalClaimedActivites,
+	]);
 }
 
 function totalMDFActivities(mdfRequests: any, chartColumns: any) {

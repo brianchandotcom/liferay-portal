@@ -105,7 +105,7 @@ const DonutChart = ({
 											([key]: any) => key === data[0].id
 										);
 
-										if (titleChart === 'Total MDF') {
+										if (titleChart === 'Total MDF ') {
 											return `<div class="bg-neutral-0 d-flex flex-column rounded-sm">
 											<span class="font-weight-light w-100 text-primary">
 											${chartColumnsData[0]}</span>

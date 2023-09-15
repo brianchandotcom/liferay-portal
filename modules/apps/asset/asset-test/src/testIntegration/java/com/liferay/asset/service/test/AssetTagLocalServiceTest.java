@@ -208,7 +208,7 @@ public class AssetTagLocalServiceTest {
 		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
 
 		_organization = OrganizationLocalServiceUtil.addOrganization(
-			null, TestPropsValues.getUserId(),
+			TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(),
 			OrganizationConstants.TYPE_ORGANIZATION, 0, 0,

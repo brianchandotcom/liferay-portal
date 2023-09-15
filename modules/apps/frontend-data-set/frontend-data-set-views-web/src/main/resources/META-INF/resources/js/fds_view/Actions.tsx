@@ -12,7 +12,7 @@ import React, {useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
 import {IFDSViewSectionInterface} from '../FDSView';
-import ActionCreationForm from '../components/ActionCreationForm';
+import ItemActionForm from '../actions/ItemActionForm';
 import OrderableTable from '../components/OrderableTable';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
@@ -45,7 +45,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 	const [loading, setLoading] = useState(true);
 	const [newActionsOrder, setNewActionsOrder] = useState<string>('');
 
-	const getFDSActions = async () => {
+	const loadFDSActions = async () => {
 		setLoading(true);
 
 		const response = await fetch(
@@ -117,7 +117,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 							.then(() => {
 								openDefaultSuccessToast();
 
-								getFDSActions();
+								loadFDSActions();
 							})
 							.catch(() => openDefaultFailureToast());
 					},
@@ -164,7 +164,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 	};
 
 	useEffect(() => {
-		getFDSActions();
+		loadFDSActions();
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -295,9 +295,9 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 				)}
 
 				{activeSection === SECTIONS.NEW_ITEM_ACTION && (
-					<ActionCreationForm
+					<ItemActionForm
 						fdsView={fdsView}
-						getFDSActions={getFDSActions}
+						loadFDSActions={loadFDSActions}
 						namespace={namespace}
 						sections={SECTIONS}
 						setActiveSection={setActiveSection}

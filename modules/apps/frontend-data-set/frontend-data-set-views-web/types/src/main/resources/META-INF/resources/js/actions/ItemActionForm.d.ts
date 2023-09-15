@@ -6,9 +6,9 @@
 /// <reference types="react" />
 
 import {FDSViewType} from '../FDSViews';
-interface IFDSActionCreationFormInterface {
+interface IFDSItemActionFormProps {
 	fdsView: FDSViewType;
-	getFDSActions: () => void;
+	loadFDSActions: () => void;
 	namespace: string;
 	sections: {
 		ACTIONS: string;
@@ -17,12 +17,12 @@ interface IFDSActionCreationFormInterface {
 	setActiveSection: (arg: string) => void;
 	spritemap: string;
 }
-declare const ActionCreationForm: ({
+declare const ItemActionForm: ({
 	fdsView,
-	getFDSActions,
+	loadFDSActions,
 	namespace,
 	sections,
 	setActiveSection,
 	spritemap,
-}: IFDSActionCreationFormInterface) => JSX.Element;
-export default ActionCreationForm;
+}: IFDSItemActionFormProps) => JSX.Element;
+export default ItemActionForm;

@@ -48,9 +48,9 @@ const TYPES = [
 	},
 ];
 
-interface IFDSActionCreationFormInterface {
+interface IFDSItemActionFormProps {
 	fdsView: FDSViewType;
-	getFDSActions: () => void;
+	loadFDSActions: () => void;
 	namespace: string;
 	sections: {
 		ACTIONS: string;
@@ -60,14 +60,14 @@ interface IFDSActionCreationFormInterface {
 	spritemap: string;
 }
 
-const ActionCreationForm = ({
+const ItemActionForm = ({
 	fdsView,
-	getFDSActions,
+	loadFDSActions,
 	namespace,
 	sections,
 	setActiveSection,
 	spritemap,
-}: IFDSActionCreationFormInterface) => {
+}: IFDSItemActionFormProps) => {
 	const labelFormElementId = `${namespace}Label`;
 	const iconFormElementId = `${namespace}Icon`;
 	const typeFormElementId = `${namespace}Type`;
@@ -131,15 +131,13 @@ const ActionCreationForm = ({
 			return;
 		}
 
-		await response.json();
-
 		setSaveButtonDisabled(false);
 
 		openDefaultSuccessToast();
 
 		setActiveSection(sections.ACTIONS);
 
-		getFDSActions();
+		loadFDSActions();
 	};
 
 	useEffect(() => {
@@ -416,4 +414,4 @@ const ActionCreationForm = ({
 	);
 };
 
-export default ActionCreationForm;
+export default ItemActionForm;

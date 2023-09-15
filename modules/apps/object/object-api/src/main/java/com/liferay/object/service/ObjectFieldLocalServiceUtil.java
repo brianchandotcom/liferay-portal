@@ -89,31 +89,31 @@ public class ObjectFieldLocalServiceUtil {
 	}
 
 	public static ObjectField addOrUpdateSystemObjectField(
-			long userId, long objectDefinitionId, String businessType,
-			String dbColumnName, String dbTableName, String dbType,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			Map<java.util.Locale, String> labelMap, String name,
-			boolean required, boolean state)
+			long userId, long listTypeDefinitionId, long objectDefinitionId,
+			String businessType, String dbColumnName, String dbTableName,
+			String dbType, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
+			String name, boolean required, boolean state)
 		throws PortalException {
 
 		return getService().addOrUpdateSystemObjectField(
-			userId, objectDefinitionId, businessType, dbColumnName, dbTableName,
-			dbType, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
-			name, required, state);
+			userId, listTypeDefinitionId, objectDefinitionId, businessType,
+			dbColumnName, dbTableName, dbType, indexed, indexedAsKeyword,
+			indexedLanguageId, labelMap, name, required, state);
 	}
 
 	public static ObjectField addSystemObjectField(
-			long userId, long objectDefinitionId, String businessType,
-			String dbColumnName, String dbTableName, String dbType,
-			boolean indexed, boolean indexedAsKeyword, String indexedLanguageId,
-			Map<java.util.Locale, String> labelMap, String name,
-			boolean required, boolean state)
+			long userId, long listTypeDefinitionId, long objectDefinitionId,
+			String businessType, String dbColumnName, String dbTableName,
+			String dbType, boolean indexed, boolean indexedAsKeyword,
+			String indexedLanguageId, Map<java.util.Locale, String> labelMap,
+			String name, boolean required, boolean state)
 		throws PortalException {
 
 		return getService().addSystemObjectField(
-			userId, objectDefinitionId, businessType, dbColumnName, dbTableName,
-			dbType, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
-			name, required, state);
+			userId, listTypeDefinitionId, objectDefinitionId, businessType,
+			dbColumnName, dbTableName, dbType, indexed, indexedAsKeyword,
+			indexedLanguageId, labelMap, name, required, state);
 	}
 
 	/**

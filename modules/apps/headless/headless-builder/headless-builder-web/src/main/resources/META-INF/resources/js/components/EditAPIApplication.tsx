@@ -149,6 +149,7 @@ export default function EditAPIApplication({
 						description: localUIData.description,
 						title: localUIData.title,
 					},
+					method: 'PATCH',
 					onError: (error: string) => {
 						openToast({
 							message: error,

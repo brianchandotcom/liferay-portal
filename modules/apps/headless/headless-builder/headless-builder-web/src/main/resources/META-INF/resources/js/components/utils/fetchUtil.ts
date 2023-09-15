@@ -51,11 +51,13 @@ export async function getItems<T>({url}: {url: string}) {
 
 export async function updateData<T>({
 	dataToUpdate,
+	method,
 	onError,
 	onSuccess,
 	url,
 }: {
 	dataToUpdate: Partial<T>;
+	method: 'PATCH' | 'PUT';
 	onError: (error: string) => void;
 	onSuccess: (responseJSON: T) => void;
 	url: string;
@@ -63,7 +65,7 @@ export async function updateData<T>({
 	fetch(url, {
 		body: JSON.stringify(dataToUpdate),
 		headers,
-		method: 'PATCH',
+		method,
 	})
 		.then((response) => {
 			if (response.ok) {

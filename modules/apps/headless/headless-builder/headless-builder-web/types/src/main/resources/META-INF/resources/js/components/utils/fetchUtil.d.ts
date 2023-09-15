@@ -15,11 +15,13 @@ export declare function getAllItems<T>({url}: {url: string}): Promise<T[]>;
 export declare function getItems<T>({url}: {url: string}): Promise<T[]>;
 export declare function updateData<T>({
 	dataToUpdate,
+	method,
 	onError,
 	onSuccess,
 	url,
 }: {
 	dataToUpdate: Partial<T>;
+	method: 'PATCH' | 'PUT';
 	onError: (error: string) => void;
 	onSuccess: (responseJSON: T) => void;
 	url: string;

@@ -112,7 +112,7 @@ public class LockedLayoutsDisplayContext {
 		}
 
 		_lockedLayoutOrder = new LockedLayoutOrder(
-			Objects.equals(getOrderByType(), "desc"),
+			Objects.equals(getOrderByType(), "desc"), _themeDisplay.getLocale(),
 			LockedLayoutOrder.LockedLayoutOrderType.create(getOrderByCol()));
 
 		return _lockedLayoutOrder;

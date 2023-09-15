@@ -6,16 +6,26 @@
 package com.liferay.layout.model;
 
 import com.liferay.portal.kernel.util.Validator;
-import java.util.Objects; /**
+
+import java.util.Locale;
+import java.util.Objects;
+
+/**
  * @author Mikel Lorza
  */
 public class LockedLayoutOrder {
 
 	public LockedLayoutOrder(
-		boolean ascending, LockedLayoutOrderType lockedLayoutOrderType) {
+		boolean ascending, Locale locale,
+		LockedLayoutOrderType lockedLayoutOrderType) {
 
 		_ascending = ascending;
+		_locale = locale;
 		_lockedLayoutOrderType = lockedLayoutOrderType;
+	}
+
+	public Locale getLocale() {
+		return _locale;
 	}
 
 	public LockedLayoutOrderType getLockedLayoutOrderType() {
@@ -57,6 +67,7 @@ public class LockedLayoutOrder {
 	}
 
 	private final boolean _ascending;
+	private final Locale _locale;
 	private final LockedLayoutOrderType _lockedLayoutOrderType;
 
 }

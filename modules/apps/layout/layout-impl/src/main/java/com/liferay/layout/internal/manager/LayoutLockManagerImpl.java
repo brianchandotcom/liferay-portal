@@ -14,6 +14,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.util.comparator.LayoutNameComparator;
 import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
 import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRendererRegistryUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
@@ -24,6 +25,8 @@ import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.LimitStep;
+import com.liferay.petra.sql.dsl.query.OrderByStep;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
@@ -185,7 +188,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				).where(
 					_getWherePredicate(groupId, lockedLayoutType)
 				).orderBy(
-					_getOrderByExpression(lockedLayoutOrder)
+					orderByStep -> _getLimitStep(lockedLayoutOrder, orderByStep)
 				).as(
 					"LockedLayoutsTable", LockedLayoutsTable.INSTANCE
 				)
@@ -499,12 +502,30 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		return layoutUtilityPageEntryViewRenderer.getLabel(locale);
 	}
 
-	private OrderByExpression _getOrderByExpression(
-		LockedLayoutOrder lockedLayoutOrder) {
+	private LimitStep _getLimitStep(
+		LockedLayoutOrder lockedLayoutOrder, OrderByStep orderByStep) {
 
 		if (lockedLayoutOrder == null) {
-			return LockTable.INSTANCE.createDate.descending();
+			return orderByStep.orderBy(
+				LockTable.INSTANCE.createDate.descending());
 		}
+
+		if (Objects.equals(
+				lockedLayoutOrder.getLockedLayoutOrderType(),
+				LockedLayoutOrder.LockedLayoutOrderType.NAME)) {
+
+			return orderByStep.orderBy(
+				LayoutTable.INSTANCE,
+				new LayoutNameComparator(
+					lockedLayoutOrder.isAscending(),
+					lockedLayoutOrder.getLocale()));
+		}
+
+		return orderByStep.orderBy(_getOrderByExpression(lockedLayoutOrder));
+	}
+
+	private OrderByExpression _getOrderByExpression(
+		LockedLayoutOrder lockedLayoutOrder) {
 
 		if (Objects.equals(
 				lockedLayoutOrder.getLockedLayoutOrderType(),

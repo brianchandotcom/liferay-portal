@@ -406,7 +406,7 @@ public class ObjectDefinitionLocalServiceImpl
 			_objectRelationshipLocalService.updateObjectRelationship(
 				objectRelationship.getObjectRelationshipId(),
 				objectRelationship.getParameterObjectFieldId(),
-				objectRelationship.getDeletionType(), true,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
 				objectRelationship.getLabelMap());
 
 			ObjectDefinition objectDefinition1 =
@@ -426,6 +426,9 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinitionLocalService.updateRootObjectDefinitionId(
 				objectDefinition2.getObjectDefinitionId(),
 				rootObjectDefinitionId);
+
+			_objectFieldLocalService.updateRequired(
+				objectRelationship.getObjectFieldId2(), true);
 		}
 	}
 

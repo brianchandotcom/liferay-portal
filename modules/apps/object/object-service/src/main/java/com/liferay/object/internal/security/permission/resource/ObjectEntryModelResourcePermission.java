@@ -129,7 +129,7 @@ public class ObjectEntryModelResourcePermission
 
 		User user = permissionChecker.getUser();
 
-		objectEntry = _getRootNodeObjectEntry(objectEntry);
+		objectEntry = _getContextObjectEntry(objectEntry);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -258,7 +258,7 @@ public class ObjectEntryModelResourcePermission
 		return _portletResourcePermission;
 	}
 
-	private ObjectEntry _getRootNodeObjectEntry(ObjectEntry objectEntry)
+	private ObjectEntry _getContextObjectEntry(ObjectEntry objectEntry)
 		throws PortalException {
 
 		ObjectDefinition objectDefinition =
@@ -299,7 +299,7 @@ public class ObjectEntryModelResourcePermission
 			PermissionChecker permissionChecker)
 		throws PortalException {
 
-		objectEntry = _getRootNodeObjectEntry(objectEntry);
+		objectEntry = _getContextObjectEntry(objectEntry);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(

@@ -7,17 +7,21 @@ import {Button} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {memo, useCallback, useEffect, useState} from 'react';
+import {IconBreadcrumbs} from '~/common/icons';
 import i18n from '../../../../common/I18n';
 import Skeleton from '../../../../common/components/Skeleton';
 import useCurrentKoroneikiAccount from '../../../../common/hooks/useCurrentKoroneikiAccount';
 import useDebounce from '../../../../common/hooks/useDebounce';
 import useIntersectionObserver from '../../../../common/hooks/useIntersectionObserver';
 import useKoroneikiAccounts from '../../../../common/hooks/useKoroneikiAccounts';
+import {getTooltipContentRenderer} from '../../containers/ActivationKeysTable/utils/getTooltipContentRenderer';
+import PopoverIcon from '../ActivationStatus/DXPCloud/components/PopoverIcon';
 
 const DELAY_TYPING_TIME = 500;
-const MAX_ITEM_BEFORE_FILTER = 9;
+const MAX_ITEM_BEFORE_FILTER = 5;
 
 const Search = memo(({setSearchTerm}) => {
 	const [value, setValue] = useState('');
@@ -64,33 +68,6 @@ const Search = memo(({setSearchTerm}) => {
 	);
 });
 
-const AllProjectButton = memo(({onClick}) => {
-	const [isHover, setIsHover] = useState(false);
-
-	return (
-		<a
-			className="align-items-center d-flex dropdown-item font-weight-semi-bold pl-3 pr-5 py-1 text-decoration-none text-paragraph-sm"
-			href={Liferay.ThemeDisplay.getCanonicalURL().replace(
-				'/project',
-				''
-			)}
-			onClick={onClick}
-			onMouseEnter={() => setIsHover(true)}
-			onMouseLeave={() => setIsHover(false)}
-		>
-			<span
-				className={classNames('inline-item inline-item-before', {
-					'invisible ml-n3': !isHover,
-				})}
-			>
-				<ClayIcon symbol="angle-left" />
-			</span>
-
-			{i18n.translate('all-projects')}
-		</a>
-	);
-});
-
 const Dropdown = memo(
 	({
 		fetching,
@@ -103,7 +80,6 @@ const Dropdown = memo(
 		totalCount,
 	}) => {
 		const [active, setActive] = useState(false);
-
 		const [trackedRef, isIntersecting] = useIntersectionObserver();
 
 		useEffect(() => {
@@ -121,6 +97,31 @@ const Dropdown = memo(
 			return `${Liferay.ThemeDisplay.getLayoutURL()}/${hashLocation}`;
 		}, []);
 
+		const PROJECT_NAME_LIMIT = 16;
+		const abbreviationProjectName = useCallback((selectedLabel) => {
+			if (selectedLabel.length > PROJECT_NAME_LIMIT) {
+				const splittedProjectName = selectedLabel.split(
+					'',
+					PROJECT_NAME_LIMIT
+				);
+
+				const truncateProjectName = splittedProjectName.join('');
+
+				return (
+					<ClayTooltipProvider
+						contentRenderer={({title}) =>
+							getTooltipContentRenderer(title)
+						}
+						delay={100}
+					>
+						<span>{truncateProjectName}...</span>
+					</ClayTooltipProvider>
+				);
+			}
+
+			return selectedLabel;
+		}, []);
+
 		const getDropDownItems = useCallback(
 			() =>
 				koroneikiAccounts?.map((koroneikiAccount, index) => {
@@ -131,7 +132,7 @@ const Dropdown = memo(
 					return (
 						<ClayDropDown.Item
 							active={isSelected}
-							className="align-items-center d-flex font-weight-semi-bold pl-3 pr-5 py-1 text-paragraph-sm"
+							className="align-items-center cp-breadcrumbs-dropdown-item d-flex font-weight-semi-bold pl-3 pr-5 text-paragraph"
 							href={
 								!isSelected
 									? getHref(koroneikiAccount.accountKey)
@@ -140,40 +141,71 @@ const Dropdown = memo(
 							key={`${koroneikiAccount.code}-${index}`}
 							symbolRight={isSelected ? 'check' : ''}
 						>
-							{koroneikiAccount.name}
+							<div>
+								<IconBreadcrumbs height={25} width={25} />
+							</div>
+
+							<div
+								className="pl-2"
+								title={koroneikiAccount?.name}
+							>
+								{abbreviationProjectName(
+									koroneikiAccount?.name
+								)}
+							</div>
 						</ClayDropDown.Item>
 					);
 				}),
-			[getHref, koroneikiAccounts, selectedKoroneikiAccount?.accountKey]
+			[
+				getHref,
+				koroneikiAccounts,
+				selectedKoroneikiAccount?.accountKey,
+				abbreviationProjectName,
+			]
 		);
+
+		const dropdownProjectsExceeded =
+			initialTotalCount > MAX_ITEM_BEFORE_FILTER;
 
 		return (
 			<ClayDropDown
 				active={active}
-				alignmentPosition={['tl', 'br']}
+				alignmentPosition={['br', 'tl']}
 				closeOnClickOutside
 				hasRightSymbols
 				menuElementAttrs={{
-					className: 'cp-project-breadcrumbs-menu p-0',
+					className: classNames('cp-project-breadcrumbs-menu p-0', {
+						'cp-extended-dropdown': dropdownProjectsExceeded,
+						'cp-short-dropdown': !dropdownProjectsExceeded,
+					}),
 				}}
 				onActiveChange={setActive}
 				trigger={
-					<Button className="align-items-center bg-white cp-project-breadcrumbs-toggle d-flex p-0">
-						<div className="font-weight-bold h5 m-0 text-neutral-9">
-							{selectedKoroneikiAccount?.name}
+					<Button className="align-items-center bg-transparent cp-project-breadcrumbs-toggle d-flex p-0">
+						<div
+							className="font-weight-bold h5 m-0 text-neutral-9"
+							title={selectedKoroneikiAccount?.name}
+						>
+							{abbreviationProjectName(
+								selectedKoroneikiAccount?.name
+							)}
 						</div>
 
 						<span className="inline-item-after position-absolute text-brand-primary">
-							<ClayIcon symbol="caret-bottom" />
+							<ClayIcon
+								symbol={active ? 'caret-top' : 'caret-bottom'}
+							/>
 						</span>
 					</Button>
 				}
 			>
-				{initialTotalCount > MAX_ITEM_BEFORE_FILTER && (
+				{
 					<div className="dropdown-section px-3">
-						<Search setSearchTerm={onSearch} />
+						{dropdownProjectsExceeded && (
+							<Search setSearchTerm={onSearch} />
+						)}
 					</div>
-				)}
+				}
 
 				{searching && !koroneikiAccounts && (
 					<ClayDropDown.Section className="px-3">
@@ -194,7 +226,7 @@ const Dropdown = memo(
 					)}
 
 				{!!koroneikiAccounts?.length && initialTotalCount > 1 && (
-					<ClayDropDown.ItemList className="overflow-auto">
+					<ClayDropDown.ItemList>
 						{getDropDownItems()}
 
 						{koroneikiAccounts?.length < totalCount && !fetching && (
@@ -209,8 +241,6 @@ const Dropdown = memo(
 						)}
 					</ClayDropDown.ItemList>
 				)}
-
-				<AllProjectButton onClick={() => setActive(false)} />
 			</ClayDropDown>
 		);
 	}
@@ -218,6 +248,7 @@ const Dropdown = memo(
 
 const ProjectBreadcrumb = () => {
 	const [initialTotalCount, setInitialTotalCount] = useState(0);
+	const [projectStatus, setProjectStatus] = useState('');
 
 	const {
 		data: currentKoroneikiAccountData,
@@ -241,30 +272,60 @@ const ProjectBreadcrumb = () => {
 	useEffect(() => {
 		if (data?.c.koroneikiAccounts.totalCount > initialTotalCount) {
 			setInitialTotalCount(data.c.koroneikiAccounts.totalCount);
+			setProjectStatus(selectedKoroneikiAccount?.status);
 		}
-	}, [data?.c.koroneikiAccounts.totalCount, initialTotalCount]);
+	}, [
+		data?.c.koroneikiAccounts.totalCount,
+		initialTotalCount,
+		selectedKoroneikiAccount?.status,
+	]);
 
 	if (currentKoroneikiAccountLoading || loading) {
 		return <Skeleton height={30} width={264} />;
 	}
 
 	return (
-		<Dropdown
-			fetching={fetching}
-			initialTotalCount={initialTotalCount}
-			koroneikiAccounts={data?.c.koroneikiAccounts.items}
-			onIntersecting={() =>
-				fetchMore({
-					variables: {
-						page: data?.c.koroneikiAccounts.page + 1,
-					},
-				})
-			}
-			onSearch={onSearch}
-			searching={searching}
-			selectedKoroneikiAccount={selectedKoroneikiAccount}
-			totalCount={data?.c.koroneikiAccounts.totalCount}
-		/>
+		<div className="align-items-center bg-neutral-1 cp-breadcrumbs-container d-flex justify-content-between mb-3 p-3">
+			<div>
+				<IconBreadcrumbs />
+			</div>
+
+			<div className="cp-breadcrumbs-dropdown">
+				<Dropdown
+					fetching={fetching}
+					initialTotalCount={initialTotalCount}
+					koroneikiAccounts={data?.c.koroneikiAccounts.items}
+					onIntersecting={() =>
+						fetchMore({
+							variables: {
+								page: data?.c.koroneikiAccounts.page + 1,
+							},
+						})
+					}
+					onSearch={onSearch}
+					searching={searching}
+					selectedKoroneikiAccount={selectedKoroneikiAccount}
+					totalCount={data?.c.koroneikiAccounts.totalCount}
+				/>
+
+				<div
+					className={classNames('cp-breadcrumbs-popover', {
+						[`cp-breadcrumbs-popover-${projectStatus?.toLowerCase()}`]: projectStatus,
+					})}
+				>
+					<PopoverIcon
+						symbol="simple-circle"
+						title={i18n.translate(`${projectStatus}`)}
+					/>
+
+					{projectStatus && (
+						<span className="cp-breadcrumbs-status text-paragraph-sm">
+							{i18n.translate(`${projectStatus}`)}
+						</span>
+					)}
+				</div>
+			</div>
+		</div>
 	);
 };
 

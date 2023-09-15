@@ -24,7 +24,7 @@ const Layout = () => {
 
 	return (
 		<>
-			<div className="align-items-center cp-layout-header d-flex justify-content-between ml-4">
+			<div className="align-items-center cp-layout-header d-flex justify-content-between ml-4 mt-4">
 				<ProjectBreadcrumb />
 			</div>
 

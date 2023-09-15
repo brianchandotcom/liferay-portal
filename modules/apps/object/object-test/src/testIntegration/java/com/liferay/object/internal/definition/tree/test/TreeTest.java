@@ -77,7 +77,8 @@ public class TreeTest {
 			tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService);
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"});
 	}
 
 	private void _testIterator(

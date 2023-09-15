@@ -102,12 +102,11 @@ public class TreeTestUtil {
 	}
 
 	public static void deleteObjectDefinitionHierarchy(
-			ObjectDefinitionLocalService objectDefinitionLocalService)
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			String[] objectDefinitionNames)
 		throws Exception {
 
-		for (String objectDefinitionName :
-				new String[] {"C_A", "C_AA", "C_AAA", "C_AAB", "C_AB"}) {
-
+		for (String objectDefinitionName : objectDefinitionNames) {
 			ObjectDefinition objectDefinition =
 				objectDefinitionLocalService.fetchObjectDefinition(
 					TestPropsValues.getCompanyId(), objectDefinitionName);

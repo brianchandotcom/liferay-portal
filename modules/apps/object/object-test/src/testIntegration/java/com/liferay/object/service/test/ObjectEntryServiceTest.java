@@ -134,7 +134,8 @@ public class ObjectEntryServiceTest {
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService);
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"});
 	}
 
 	@Test

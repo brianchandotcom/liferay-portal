@@ -38,9 +38,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredCompanyException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.instance.lifecycle.PortalInstanceLifecycleManager;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -80,7 +77,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
-import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
@@ -271,8 +267,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			if (webId.equals("liferay.net")) {
 				_addDemoSettings(company);
 			}
-
-			_addDefaultListTypes();
 
 			company = _checkCompany(company);
 
@@ -1823,34 +1817,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 	}
 
-	private void _addDefaultListTypes() throws PortalException {
-		try {
-			JSONArray listTypesJSONArray = _jsonFactory.createJSONArray(
-				StringUtil.read(
-					getClassLoader(),
-					"com/liferay/portal/tools/json/dependencies" +
-						"/portal-list-type.json",
-					false));
-
-			for (int i = 0; i < listTypesJSONArray.length(); i++) {
-				JSONObject listTypeJSONObject =
-					listTypesJSONArray.getJSONObject(i);
-
-				try {
-					_listTypeLocalService.addListType(
-						listTypeJSONObject.getString("name"),
-						listTypeJSONObject.getString("type"));
-				}
-				catch (Exception exception) {
-					_log.error(exception);
-				}
-			}
-		}
-		catch (Exception exception) {
-			throw new PortalException(exception);
-		}
-	}
-
 	private void _addDemoSettings(Company company) throws PortalException {
 		updateVirtualHostname(company.getCompanyId(), "demo.liferay.net");
 
@@ -2193,17 +2159,11 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	@BeanReference(type = ImageLocalService.class)
 	private ImageLocalService _imageLocalService;
 
-	@BeanReference(type = JSONFactory.class)
-	private JSONFactory _jsonFactory;
-
 	@BeanReference(type = LayoutPrototypeLocalService.class)
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
 
 	@BeanReference(type = LayoutSetPrototypeLocalService.class)
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
-
-	@BeanReference(type = ListTypeLocalService.class)
-	private ListTypeLocalService _listTypeLocalService;
 
 	@BeanReference(type = OrganizationLocalService.class)
 	private OrganizationLocalService _organizationLocalService;

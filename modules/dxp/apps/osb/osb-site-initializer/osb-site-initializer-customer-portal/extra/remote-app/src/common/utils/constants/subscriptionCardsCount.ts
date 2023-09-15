@@ -4,7 +4,7 @@
  */
 
 export const SUBSCRIPTION_TYPES = {
-	Blank: ['Partnership', 'Others'],
+	Blank: ['Partnership'],
 	Purchased: [
 		'Enterprise Search',
 		'LXC - SM',
@@ -12,6 +12,7 @@ export const SUBSCRIPTION_TYPES = {
 		'Commerce for Cloud',
 		'Commerce',
 		'Liferay Experience Cloud',
+		'Other',
 	],
 	PurchasedAndProvisioned: ['Portal', 'DXP'],
 } as const;
@@ -23,9 +24,28 @@ export const PRODUCT_DISPLAY_EXCEPTION = {
 		'Pro',
 		'Business',
 		'Enterprise',
+		'Developer Services',
+		'Developer Subscription',
+		'Developer Support',
+		'Developer Tools',
+		'Maintenance Services',
+		'Managed Services',
+		'Managed Services - Developer Support',
+		'Managed Services - Standard',
+		'CSP - Custom User Tier',
+		'CSP - Up to 100 Users',
+		'CSP - Up to 10K Users',
+		'CSP - Up to 1K Users',
+		'CSP - Up to 20K Users',
+		'CSP - Up to 500 Users',
+		'CSP - Up to 5K Users',
 	],
 	nonBlankProducts: ['Contact', 'Mobile Device'],
-	purchasedProduct: ['Extended Premium Support'],
+	purchasedProduct: [
+		'Extended Premium Support',
+		'Extended Premium Support - Liferay DXP 7.1',
+		'Extended Premium Support - DXP 7.0',
+	],
 } as const;
 
 export const PRODUCT_DISPLAY_EXCEPTION_INSTANCE_SIZE = {

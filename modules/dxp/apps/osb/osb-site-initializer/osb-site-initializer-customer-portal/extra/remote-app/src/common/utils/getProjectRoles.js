@@ -17,7 +17,7 @@ export function getRolesFiltered(items, project) {
 		project?.slaCurrent?.includes(SLA_TYPES.gold) ||
 		project?.slaCurrent?.includes(SLA_TYPES.platinum);
 
-	const isProjectPartner = project.partner;
+	const isProjectPartner = project?.partner;
 
 	if (items) {
 		const roles = items?.reduce((rolesAccumulator, role) => {

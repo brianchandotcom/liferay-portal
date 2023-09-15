@@ -175,7 +175,7 @@ const SetupAnalyticsCloudPage = ({
 		if (!alreadySubmitted) {
 			try {
 				setIsLoadingSubmitButton(true);
-				if (featureFlags.includes('LPS-191300')) {
+				if (featureFlags.includes('LPS-159127')) {
 					await Promise.all(
 						removeHighPriorityContactList?.map(async (item) => {
 							removeContactRole(
@@ -265,7 +265,7 @@ const SetupAnalyticsCloudPage = ({
 						)
 					);
 
-					if (featureFlags.includes('LPS-191300')) {
+					if (featureFlags.includes('LPS-159127')) {
 						await Promise.all(
 							removeHighPriorityContactList?.map((item) => {
 								return removeHighPriorityContactsList(
@@ -346,7 +346,7 @@ const SetupAnalyticsCloudPage = ({
 		setIsMultiSelectEmpty(error);
 	};
 
-	return featureFlags.includes('LPS-191300') ? (
+	return featureFlags.includes('LPS-159127') ? (
 		<>
 			<Layout
 				className="pt-1 px-3"

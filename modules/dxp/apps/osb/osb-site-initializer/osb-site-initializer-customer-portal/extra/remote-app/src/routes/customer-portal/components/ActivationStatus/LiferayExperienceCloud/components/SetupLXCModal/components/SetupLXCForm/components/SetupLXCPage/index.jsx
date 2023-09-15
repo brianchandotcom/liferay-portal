@@ -140,7 +140,7 @@ const SetupLiferayExperienceCloudPage = ({
 		return Object.values(inputErrors).some((error) => !!error);
 	};
 
-	return featureFlags.includes('LPS-191300') ? (
+	return featureFlags.includes('LPS-159127') ? (
 		<Layout
 			className="pt-1 px-3"
 			footerProps={{

@@ -87,7 +87,7 @@ export default function useSubmitLXCEnvironment(
 		if (!alreadySubmitted) {
 			try {
 				handleLoadingSubmitButton(true);
-				if (featureFlags.includes('LPS-191300')) {
+				if (featureFlags.includes('LPS-159127')) {
 					await Promise.all(
 						removeHighPriorityContactList?.map(async (item) => {
 							removeContactRole(
@@ -160,7 +160,7 @@ export default function useSubmitLXCEnvironment(
 							}
 						)
 					);
-					if (featureFlags.includes('LPS-191300')) {
+					if (featureFlags.includes('LPS-159127')) {
 						await Promise.all(
 							removeHighPriorityContactList?.map((item) => {
 								return removeHighPriorityContactsList(

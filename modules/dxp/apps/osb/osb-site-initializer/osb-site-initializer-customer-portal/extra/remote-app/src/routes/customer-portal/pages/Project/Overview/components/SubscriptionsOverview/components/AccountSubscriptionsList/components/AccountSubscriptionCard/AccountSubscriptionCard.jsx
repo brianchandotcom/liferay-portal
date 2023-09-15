@@ -77,7 +77,6 @@ const AccountSubscriptionCard = ({
 		const isPurchased = SUBSCRIPTION_TYPES.Purchased.includes(
 			subscriptionType
 		);
-
 		if (isPurchasedAndProvisioned) {
 			return PRODUCT_DISPLAY_EXCEPTION.purchasedProduct.includes(
 				productName
@@ -87,7 +86,10 @@ const AccountSubscriptionCard = ({
 		}
 
 		if (isPurchased) {
-			if (subscriptionType === 'Liferay Experience Cloud') {
+			if (
+				subscriptionType === 'Liferay Experience Cloud' ||
+				subscriptionType === 'Other'
+			) {
 				return PRODUCT_DISPLAY_EXCEPTION.blankProducts.includes(
 					productName
 				)

@@ -191,7 +191,7 @@ const SetupDXPCloudPage = ({
 
 		if (!alreadySubmitted && dxp) {
 			try {
-				if (featureFlags.includes('LPS-191300')) {
+				if (featureFlags.includes('LPS-159127')) {
 					await Promise.all(
 						removeHighPriorityContactList?.map(async (item) => {
 							removeContactRole(
@@ -279,7 +279,7 @@ const SetupDXPCloudPage = ({
 							id: subscriptionGroupId,
 						},
 					});
-					if (featureFlags.includes('LPS-191300')) {
+					if (featureFlags.includes('LPS-159127')) {
 						await Promise.all(
 							removeHighPriorityContactList?.map((item) => {
 								return removeHighPriorityContactsList(
@@ -359,7 +359,7 @@ const SetupDXPCloudPage = ({
 		setIsMultiSelectEmpty(error);
 	};
 
-	return featureFlags.includes('LPS-191300') ? (
+	return featureFlags.includes('LPS-159127') ? (
 		<Layout
 			className="pt-1 px-3"
 			footerProps={{

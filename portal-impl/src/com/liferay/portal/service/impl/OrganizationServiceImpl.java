@@ -98,12 +98,12 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	 */
 	@Override
 	public Organization addOrganization(
-			String externalReferenceCode, long parentOrganizationId,
-			String name, String type, long regionId, long countryId,
-			long statusListTypeId, String comments, boolean site,
-			List<Address> addresses, List<EmailAddress> emailAddresses,
-			List<OrgLabor> orgLabors, List<Phone> phones,
-			List<Website> websites, ServiceContext serviceContext)
+			long parentOrganizationId, String name, String type, long regionId,
+			long countryId, long statusListTypeId, String comments,
+			boolean site, List<Address> addresses,
+			List<EmailAddress> emailAddresses, List<OrgLabor> orgLabors,
+			List<Phone> phones, List<Website> websites,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean indexingEnabled = true;
@@ -116,9 +116,8 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 
 		try {
 			Organization organization = addOrganization(
-				externalReferenceCode, parentOrganizationId, name, type,
-				regionId, countryId, statusListTypeId, comments, site,
-				serviceContext);
+				parentOrganizationId, name, type, regionId, countryId,
+				statusListTypeId, comments, site, serviceContext);
 
 			UsersAdminUtil.updateAddresses(
 				Organization.class.getName(), organization.getOrganizationId(),
@@ -180,10 +179,9 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	 */
 	@Override
 	public Organization addOrganization(
-			String externalReferenceCode, long parentOrganizationId,
-			String name, String type, long regionId, long countryId,
-			long statusListTypeId, String comments, boolean site,
-			ServiceContext serviceContext)
+			long parentOrganizationId, String name, String type, long regionId,
+			long countryId, long statusListTypeId, String comments,
+			boolean site, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (parentOrganizationId ==
@@ -199,9 +197,8 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 		}
 
 		Organization organization = organizationLocalService.addOrganization(
-			externalReferenceCode, getUserId(), parentOrganizationId, name,
-			type, regionId, countryId, statusListTypeId, comments, site,
-			serviceContext);
+			getUserId(), parentOrganizationId, name, type, regionId, countryId,
+			statusListTypeId, comments, site, serviceContext);
 
 		OrganizationMembershipPolicyUtil.verifyPolicy(organization);
 
@@ -715,7 +712,6 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	/**
 	 * Updates the organization with additional parameters.
 	 *
-	 * @param  externalReferenceCode External Reference Code of the organization
 	 * @param  organizationId the primary key of the organization
 	 * @param  parentOrganizationId the primary key of the organization's parent
 	 *         organization
@@ -742,10 +738,9 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	 */
 	@Override
 	public Organization updateOrganization(
-			String externalReferenceCode, long organizationId,
-			long parentOrganizationId, String name, String type, long regionId,
-			long countryId, long statusListTypeId, String comments,
-			boolean hasLogo, byte[] logoBytes, boolean site,
+			long organizationId, long parentOrganizationId, String name,
+			String type, long regionId, long countryId, long statusListTypeId,
+			String comments, boolean hasLogo, byte[] logoBytes, boolean site,
 			List<Address> addresses, List<EmailAddress> emailAddresses,
 			List<OrgLabor> orgLabors, List<Phone> phones,
 			List<Website> websites, ServiceContext serviceContext)
@@ -812,10 +807,9 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			oldExpandoBridge.getAttributes();
 
 		organization = organizationLocalService.updateOrganization(
-			externalReferenceCode, user.getCompanyId(), organizationId,
-			parentOrganizationId, name, type, regionId, countryId,
-			statusListTypeId, comments, hasLogo, logoBytes, site,
-			serviceContext);
+			user.getCompanyId(), organizationId, parentOrganizationId, name,
+			type, regionId, countryId, statusListTypeId, comments, hasLogo,
+			logoBytes, site, serviceContext);
 
 		OrganizationMembershipPolicyUtil.verifyPolicy(
 			organization, oldOrganization, oldAssetCategories, oldAssetTags,
@@ -827,7 +821,6 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	/**
 	 * Updates the organization.
 	 *
-	 * @param  externalReferenceCode External Reference Code of the organization
 	 * @param  organizationId the primary key of the organization
 	 * @param  parentOrganizationId the primary key of the organization's parent
 	 *         organization
@@ -847,16 +840,15 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	 */
 	@Override
 	public Organization updateOrganization(
-			String externalReferenceCode, long organizationId,
-			long parentOrganizationId, String name, String type, long regionId,
-			long countryId, long statusListTypeId, String comments,
-			boolean site, ServiceContext serviceContext)
+			long organizationId, long parentOrganizationId, String name,
+			String type, long regionId, long countryId, long statusListTypeId,
+			String comments, boolean site, ServiceContext serviceContext)
 		throws PortalException {
 
 		return updateOrganization(
-			externalReferenceCode, organizationId, parentOrganizationId, name,
-			type, regionId, countryId, statusListTypeId, comments, true, null,
-			site, null, null, null, null, null, serviceContext);
+			organizationId, parentOrganizationId, name, type, regionId,
+			countryId, statusListTypeId, comments, true, null, site, null, null,
+			null, null, null, serviceContext);
 	}
 
 	@BeanReference(type = AssetCategoryLocalService.class)

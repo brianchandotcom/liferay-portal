@@ -36,8 +36,8 @@ const RadioCardList = <T extends unknown>({
 	};
 
 	return (
-		<div className="d-flex justify-content-between">
-			<div className="form-group mb-0 pr-3 w-100">
+		<div className="d-flex flex-column w-100">
+			<div className="mb-0 pr-3 w-100">
 				{contentList.map((content, index) => (
 					<RadioCard
 						activeRadio={radio}

@@ -5,16 +5,10 @@
 
 /// <reference types="react" />
 
-import {FDSViewType} from '../FDSViews';
+import {IFDSViewSectionInterface} from '../FDSView';
 import '../../css/Filters.scss';
-interface IProps {
-	fdsView: FDSViewType;
-	fdsViewsURL: string;
-	namespace: string;
-}
 declare function Filters({
 	fdsView,
-	fdsViewsURL,
 	namespace,
-}: IProps): JSX.Element;
+}: IFDSViewSectionInterface): JSX.Element;
 export default Filters;

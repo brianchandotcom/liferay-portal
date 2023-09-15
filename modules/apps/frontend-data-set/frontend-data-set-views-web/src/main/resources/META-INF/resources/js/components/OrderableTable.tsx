@@ -21,6 +21,8 @@ import Search from './Search';
 
 import '../../css/OrderableTable.scss';
 
+const ROW_DRAGGABLE = 'rowDraggable';
+
 interface IAction {
 	icon: string;
 	label: string;
@@ -44,23 +46,21 @@ interface IField {
 	name: string;
 }
 
-interface IOrderableTableRowProps {
-	actions?: Array<IAction>;
-	fields: Array<IField>;
-	index: number;
-	item: any;
-	onOrderChange: Function;
-	query: string;
-}
-
-const OrderableTableRow = ({
+const Row = ({
 	actions,
 	fields,
 	index,
 	item,
-	onOrderChange,
+	onDragCrossover,
 	query,
-}: IOrderableTableRowProps) => {
+}: {
+	actions?: Array<IAction>;
+	fields: Array<IField>;
+	index: number;
+	item: any;
+	onDragCrossover: Function;
+	query: string;
+}) => {
 	const tableRowRef = useRef<HTMLTableRowElement>(null);
 
 	const [{isDragging}, dragRef] = useDrag({
@@ -69,14 +69,14 @@ const OrderableTableRow = ({
 		}),
 		item: {
 			index,
-			type: 'FIELD',
+			type: ROW_DRAGGABLE,
 		},
 	});
 
 	const [, dropRef] = useDrop({
-		accept: 'FIELD',
+		accept: ROW_DRAGGABLE,
 		hover(item: {index: number; type: string}, monitor) {
-			if (!tableRowRef.current || !onOrderChange) {
+			if (!tableRowRef.current || !onDragCrossover) {
 				return;
 			}
 
@@ -108,7 +108,7 @@ const OrderableTableRow = ({
 				return;
 			}
 
-			onOrderChange({draggedIndex, targetIndex});
+			onDragCrossover({draggedIndex, targetIndex});
 
 			item.index = targetIndex;
 		},
@@ -121,7 +121,6 @@ const OrderableTableRow = ({
 			className={classNames('orderable-table-row', {
 				dragging: isDragging,
 			})}
-			key={index}
 			ref={tableRowRef}
 		>
 			<ClayTable.Cell className="drag-handle-cell">
@@ -217,6 +216,61 @@ const OrderableTableRow = ({
 	);
 };
 
+const Table = ({
+	actions,
+	fields,
+	items,
+	onDragCrossover,
+	onDrop,
+	query,
+}: {
+	actions?: Array<IAction>;
+	fields: Array<IField>;
+	items: Array<any>;
+	onDragCrossover: Function;
+	onDrop: Function;
+	query: string;
+}) => {
+	const [, dropRef] = useDrop({
+		accept: ROW_DRAGGABLE,
+		drop() {
+			onDrop();
+		},
+	});
+
+	return (
+		<ClayTable className="orderable-table" ref={dropRef}>
+			<ClayTable.Head>
+				<ClayTable.Row>
+					<ClayTable.Cell className="drag-handle-cell" />
+
+					{fields.map((field) => (
+						<ClayTable.Cell headingCell key={field.name}>
+							{field.label}
+						</ClayTable.Cell>
+					))}
+
+					{actions && <ClayTable.Cell className="actions-cell" />}
+				</ClayTable.Row>
+			</ClayTable.Head>
+
+			<ClayTable.Body>
+				{items.map((item, index) => (
+					<Row
+						actions={actions}
+						fields={fields}
+						index={index}
+						item={item}
+						key={item.id || index}
+						onDragCrossover={onDragCrossover}
+						query={query}
+					/>
+				))}
+			</ClayTable.Body>
+		</ClayTable>
+	);
+};
+
 interface IOrderableTableProps {
 	actions?: Array<IAction>;
 	className?: string;
@@ -224,15 +278,12 @@ interface IOrderableTableProps {
 		typeof ClayDropDownWithItems
 	>['items'];
 	creationMenuLabel?: string;
-	disableSave?: boolean;
 	fields: Array<IField>;
 	items: Array<any>;
 	noItemsButtonLabel: string;
 	noItemsDescription: string;
 	noItemsTitle: string;
-	onCancelButtonClick: Function;
-	onOrderChange: (args: {orderedItems: any[]}) => void;
-	onSaveButtonClick: Function;
+	onOrderChange: (args: {order: string}) => void;
 	title?: string;
 }
 
@@ -241,18 +292,18 @@ const OrderableTable = ({
 	className,
 	creationMenuItems,
 	creationMenuLabel = Liferay.Language.get('add'),
-	disableSave,
 	fields,
 	items: initialItems,
 	noItemsButtonLabel,
 	noItemsDescription,
 	noItemsTitle,
-	onCancelButtonClick,
 	onOrderChange,
-	onSaveButtonClick,
 	title,
 }: IOrderableTableProps) => {
 	const [items, setItems] = useState(initialItems);
+	const [order, setOrder] = useState(
+		initialItems.map((item) => item.id).join(',')
+	);
 	const [query, setQuery] = useState('');
 
 	useEffect(() => setItems(initialItems), [initialItems]);
@@ -277,26 +328,6 @@ const OrderableTable = ({
 				  ) || []
 				: initialItems
 		);
-	};
-
-	const handleOnOrderChange = ({
-		draggedIndex,
-		targetIndex,
-	}: {
-		draggedIndex: number;
-		targetIndex: number;
-	}) => {
-		const orderedItems = items.slice(0);
-
-		orderedItems.splice(draggedIndex, 1);
-
-		orderedItems.splice(targetIndex, 0, items[draggedIndex]);
-
-		setItems(orderedItems);
-
-		onOrderChange({
-			orderedItems,
-		});
 	};
 
 	return (
@@ -351,42 +382,44 @@ const OrderableTable = ({
 				</ManagementToolbar.Container>
 
 				{items.length ? (
-					<ClayTable className="orderable-table">
-						<ClayTable.Head>
-							<ClayTable.Row>
-								<ClayTable.Cell className="drag-handle-cell" />
+					<DndProvider backend={HTML5Backend}>
+						<Table
+							actions={actions}
+							fields={fields}
+							items={items}
+							onDragCrossover={({
+								draggedIndex,
+								targetIndex,
+							}: {
+								draggedIndex: number;
+								targetIndex: number;
+							}) => {
+								const orderedItems = [...items];
 
-								{fields.map((field) => (
-									<ClayTable.Cell
-										headingCell
-										key={field.name}
-									>
-										{field.label}
-									</ClayTable.Cell>
-								))}
+								orderedItems.splice(draggedIndex, 1);
 
-								{actions && (
-									<ClayTable.Cell className="actions-cell" />
-								)}
-							</ClayTable.Row>
-						</ClayTable.Head>
+								orderedItems.splice(
+									targetIndex,
+									0,
+									items[draggedIndex]
+								);
 
-						<ClayTable.Body>
-							<DndProvider backend={HTML5Backend}>
-								{items.map((item, index) => (
-									<OrderableTableRow
-										actions={actions}
-										fields={fields}
-										index={index}
-										item={item}
-										key={item.id || index}
-										onOrderChange={handleOnOrderChange}
-										query={query}
-									/>
-								))}
-							</DndProvider>
-						</ClayTable.Body>
-					</ClayTable>
+								setItems(orderedItems);
+							}}
+							onDrop={() => {
+								const newOrder = items
+									.map((item) => item.id)
+									.join(',');
+
+								if (newOrder !== order) {
+									setOrder(newOrder);
+
+									onOrderChange({order: newOrder});
+								}
+							}}
+							query={query}
+						/>
+					</DndProvider>
 				) : query ? (
 					<ClayEmptyState
 						description={Liferay.Language.get(
@@ -424,26 +457,6 @@ const OrderableTable = ({
 					</ClayEmptyState>
 				)}
 			</ClayLayout.SheetSection>
-
-			{!!items.length && (
-				<ClayLayout.SheetFooter>
-					<ClayButton.Group spaced>
-						<ClayButton
-							disabled={disableSave}
-							onClick={() => onSaveButtonClick()}
-						>
-							{Liferay.Language.get('save')}
-						</ClayButton>
-
-						<ClayButton
-							displayType="secondary"
-							onClick={() => onCancelButtonClick()}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-					</ClayButton.Group>
-				</ClayLayout.SheetFooter>
-			)}
 		</ClayLayout.Sheet>
 	);
 };

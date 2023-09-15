@@ -19,11 +19,12 @@ import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {format, getYear, isBefore, isEqual} from 'date-fns';
-import {fetch, navigate, openModal, sub} from 'frontend-js-web';
+import {fetch, openModal, sub} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
+import {IFDSViewSectionInterface} from '../FDSView';
 import {FDSViewType} from '../FDSViews';
 import {IPickList, getAllPicklists, getFields} from '../api';
 import CheckboxMultiSelect from '../components/CheckboxMultiSelect';
@@ -721,16 +722,9 @@ function AddFDSFilterModalContent({
 	);
 }
 
-interface IProps {
-	fdsView: FDSViewType;
-	fdsViewsURL: string;
-	namespace: string;
-}
-
-function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
+function Filters({fdsView, namespace}: IFDSViewSectionInterface) {
 	const [fields, setFields] = useState<IField[]>([]);
 	const [filters, setFilters] = useState<IFilter[]>([]);
-	const [newFiltersOrder, setNewFiltersOrder] = useState<string>('');
 
 	useEffect(() => {
 		const getFilters = async () => {
@@ -791,12 +785,16 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 		getFilters();
 	}, [fdsView]);
 
-	const updateFDSFiltersOrder = async () => {
+	const updateFDSFiltersOrder = async ({
+		fdsFiltersOrder,
+	}: {
+		fdsFiltersOrder: string;
+	}) => {
 		const response = await fetch(
 			`${API_URL.FDS_VIEWS}/by-external-reference-code/${fdsView.externalReferenceCode}`,
 			{
 				body: JSON.stringify({
-					fdsFiltersOrder: newFiltersOrder,
+					fdsFiltersOrder,
 				}),
 				headers: {
 					'Accept': 'application/json',
@@ -814,12 +812,13 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 
 		const responseJSON = await response.json();
 
-		const fdsFiltersOrder = responseJSON?.fdsFiltersOrder;
+		const storedFDSFiltersOrder = responseJSON?.fdsFiltersOrder;
 
-		if (fdsFiltersOrder && fdsFiltersOrder === newFiltersOrder) {
+		if (
+			storedFDSFiltersOrder &&
+			storedFDSFiltersOrder === fdsFiltersOrder
+		) {
 			openDefaultSuccessToast();
-
-			setNewFiltersOrder('');
 		}
 		else {
 			openDefaultFailureToast();
@@ -975,7 +974,6 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 							onCreationButtonClick(EFilterType.SELECTION),
 					},
 				]}
-				disableSave={!newFiltersOrder.length}
 				fields={[
 					{
 						label: Liferay.Language.get('name'),
@@ -998,13 +996,9 @@ function Filters({fdsView, fdsViewsURL, namespace}: IProps) {
 				noItemsTitle={Liferay.Language.get(
 					'no-default-filters-were-created'
 				)}
-				onCancelButtonClick={() => navigate(fdsViewsURL)}
-				onOrderChange={({orderedItems}: {orderedItems: IFilter[]}) => {
-					setNewFiltersOrder(
-						orderedItems.map((filter) => filter.id).join(',')
-					);
+				onOrderChange={({order}: {order: string}) => {
+					updateFDSFiltersOrder({fdsFiltersOrder: order});
 				}}
-				onSaveButtonClick={updateFDSFiltersOrder}
 				title={Liferay.Language.get('filters')}
 			/>
 		</ClayLayout.ContainerFluid>

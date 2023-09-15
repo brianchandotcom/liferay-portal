@@ -16,7 +16,6 @@ import {
 	IClientExtensionRenderer,
 	IInternalRenderer,
 	fetch,
-	navigate,
 	openModal,
 } from 'frontend-js-web';
 import fuzzy from 'fuzzy';
@@ -660,13 +659,10 @@ const EditFDSFieldModalContent = ({
 const Fields = ({
 	fdsClientExtensionCellRenderers,
 	fdsView,
-	fdsViewsURL,
 	namespace,
 	saveFDSFieldsURL,
 }: IFDSViewSectionInterface) => {
 	const [fdsFields, setFDSFields] = useState<Array<IFDSField> | null>(null);
-
-	const fdsFieldsOrderRef = useRef('');
 
 	const getFDSFields = async () => {
 		const response = await fetch(
@@ -694,8 +690,6 @@ const Fields = ({
 				?.fdsFieldsOrder;
 
 		if (fdsFieldsOrder) {
-			fdsFieldsOrderRef.current = fdsFieldsOrder;
-
 			const storedOrderedFDSFieldIds = fdsFieldsOrder.split(',');
 
 			const orderedFDSFields: Array<IFDSField> = [];
@@ -718,15 +712,9 @@ const Fields = ({
 				}
 			});
 
-			fdsFieldsOrderRef.current = orderedFDSFieldIds.join(',');
-
 			setFDSFields(orderedFDSFields);
 		}
 		else {
-			fdsFieldsOrderRef.current = storedFDSFields
-				.map((storedFDSField: IFDSField) => storedFDSField.id)
-				.join(',');
-
 			setFDSFields(storedFDSFields);
 		}
 	};
@@ -778,9 +766,13 @@ const Fields = ({
 		});
 	};
 
-	const updateFDSFieldsOrder = async () => {
+	const updateFDSFieldsOrder = async ({
+		fdsFieldsOrder,
+	}: {
+		fdsFieldsOrder: string;
+	}) => {
 		const body = {
-			fdsFieldsOrder: fdsFieldsOrderRef.current,
+			fdsFieldsOrder,
 		};
 
 		const response = await fetch(
@@ -803,9 +795,9 @@ const Fields = ({
 
 		const responseJSON = await response.json();
 
-		const fdsFieldsOrder = responseJSON?.fdsFieldsOrder;
+		const storedFDSFieldsOrder = responseJSON?.fdsFieldsOrder;
 
-		if (fdsFieldsOrder && fdsFieldsOrder === fdsFieldsOrderRef.current) {
+		if (storedFDSFieldsOrder && storedFDSFieldsOrder === fdsFieldsOrder) {
 			openDefaultSuccessToast();
 		}
 		else {
@@ -951,17 +943,11 @@ const Fields = ({
 						'add-fields-to-show-in-your-view'
 					)}
 					noItemsTitle={Liferay.Language.get('no-fields-added-yet')}
-					onCancelButtonClick={() => navigate(fdsViewsURL)}
-					onOrderChange={({
-						orderedItems,
-					}: {
-						orderedItems: Array<IFDSField>;
-					}) => {
-						fdsFieldsOrderRef.current = orderedItems
-							.map((item) => item.id)
-							.join(',');
+					onOrderChange={({order}: {order: string}) => {
+						updateFDSFieldsOrder({
+							fdsFieldsOrder: order,
+						});
 					}}
-					onSaveButtonClick={() => updateFDSFieldsOrder()}
 					title={Liferay.Language.get('fields')}
 				/>
 			) : (

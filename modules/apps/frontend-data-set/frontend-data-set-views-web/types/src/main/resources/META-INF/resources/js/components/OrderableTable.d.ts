@@ -32,15 +32,12 @@ interface IOrderableTableProps {
 		typeof ClayDropDownWithItems
 	>['items'];
 	creationMenuLabel?: string;
-	disableSave?: boolean;
 	fields: Array<IField>;
 	items: Array<any>;
 	noItemsButtonLabel: string;
 	noItemsDescription: string;
 	noItemsTitle: string;
-	onCancelButtonClick: Function;
-	onOrderChange: (args: {orderedItems: any[]}) => void;
-	onSaveButtonClick: Function;
+	onOrderChange: (args: {order: string}) => void;
 	title?: string;
 }
 declare const OrderableTable: ({
@@ -48,15 +45,12 @@ declare const OrderableTable: ({
 	className,
 	creationMenuItems,
 	creationMenuLabel,
-	disableSave,
 	fields,
 	items: initialItems,
 	noItemsButtonLabel,
 	noItemsDescription,
 	noItemsTitle,
-	onCancelButtonClick,
 	onOrderChange,
-	onSaveButtonClick,
 	title,
 }: IOrderableTableProps) => JSX.Element;
 export default OrderableTable;

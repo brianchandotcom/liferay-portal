@@ -10,7 +10,6 @@ import '../../css/Fields.scss';
 declare const Fields: ({
 	fdsClientExtensionCellRenderers,
 	fdsView,
-	fdsViewsURL,
 	namespace,
 	saveFDSFieldsURL,
 }: IFDSViewSectionInterface) => JSX.Element;

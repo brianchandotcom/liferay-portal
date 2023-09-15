@@ -9,7 +9,7 @@ import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
-import {fetch, navigate, openModal} from 'frontend-js-web';
+import {fetch, openModal} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
@@ -351,15 +351,10 @@ const EditFDSSortModalContent = ({
 	);
 };
 
-const Sorting = ({
-	fdsView,
-	fdsViewsURL,
-	namespace,
-}: IFDSViewSectionInterface) => {
+const Sorting = ({fdsView, namespace}: IFDSViewSectionInterface) => {
 	const [fields, setFields] = React.useState<IField[]>([]);
 	const [fdsSorts, setFDSSorts] = useState<Array<IFDSSort>>([]);
 	const [loading, setLoading] = useState(true);
-	const [newFDSSortsOrder, setNewFDSSortsOrder] = React.useState<string>('');
 
 	useEffect(() => {
 		const getFDSSort = async () => {
@@ -491,12 +486,16 @@ const Sorting = ({
 		});
 	};
 
-	const handleSave = async () => {
+	const updateFDSSortsOrder = async ({
+		fdsSortsOrder,
+	}: {
+		fdsSortsOrder: string;
+	}) => {
 		const response = await fetch(
 			`${API_URL.FDS_VIEWS}/by-external-reference-code/${fdsView.externalReferenceCode}`,
 			{
 				body: JSON.stringify({
-					fdsSortsOrder: newFDSSortsOrder,
+					fdsSortsOrder,
 				}),
 				headers: {
 					'Accept': 'application/json',
@@ -514,12 +513,10 @@ const Sorting = ({
 
 		const responseJSON = await response.json();
 
-		const fdsSortsOrder = responseJSON?.fdsSortsOrder;
+		const storedFDSSortsOrder = responseJSON?.fdsSortsOrder;
 
-		if (fdsSortsOrder && fdsSortsOrder === newFDSSortsOrder) {
+		if (storedFDSSortsOrder && storedFDSSortsOrder === fdsSortsOrder) {
 			openDefaultSuccessToast();
-
-			setNewFDSSortsOrder('');
 		}
 		else {
 			openDefaultFailureToast();
@@ -557,7 +554,6 @@ const Sorting = ({
 								onClick: handleCreation,
 							},
 						]}
-						disableSave={!newFDSSortsOrder.length}
 						fields={[
 							{
 								headingTitle: true,
@@ -583,19 +579,9 @@ const Sorting = ({
 						noItemsTitle={Liferay.Language.get(
 							'no-default-sort-created-yet'
 						)}
-						onCancelButtonClick={() => navigate(fdsViewsURL)}
-						onOrderChange={({
-							orderedItems,
-						}: {
-							orderedItems: IFDSSort[];
-						}) => {
-							setNewFDSSortsOrder(
-								orderedItems
-									.map((fdsSort) => fdsSort.id)
-									.join(',')
-							);
+						onOrderChange={({order}: {order: string}) => {
+							updateFDSSortsOrder({fdsSortsOrder: order});
 						}}
-						onSaveButtonClick={handleSave}
 						title={Liferay.Language.get('sorting')}
 					/>
 				</>

@@ -45,14 +45,11 @@ interface IFDSAction {
 	url: string;
 }
 
-const noop = () => {};
-
 const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 	const [activeSection, setActiveSection] = useState(SECTIONS.ACTIONS);
 	const [activeTab, setActiveTab] = useState(0);
 	const [fdsActions, setFDSActions] = useState<Array<IFDSAction>>([]);
 	const [loading, setLoading] = useState(true);
-	const [newActionsOrder, setNewActionsOrder] = useState<string>('');
 	const [initialActionFormValues, setInitialActionFormValues] = useState<
 		IFDSAction
 	>();
@@ -175,12 +172,16 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 		setActiveSection(SECTIONS.EDIT_ITEM_ACTION);
 	};
 
-	const updateFDSActionsOrder = async () => {
+	const updateFDSActionsOrder = async ({
+		fdsActionsOrder,
+	}: {
+		fdsActionsOrder: string;
+	}) => {
 		const response = await fetch(
 			`${API_URL.FDS_VIEWS}/by-external-reference-code/${fdsView.externalReferenceCode}`,
 			{
 				body: JSON.stringify({
-					fdsActionsOrder: newActionsOrder,
+					fdsActionsOrder,
 				}),
 				headers: {
 					'Accept': 'application/json',
@@ -198,12 +199,13 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 
 		const responseJSON = await response.json();
 
-		const fdsFiltersOrder = responseJSON?.fdsActionsOrder;
+		const storedFDSActionsOrder = responseJSON?.fdsActionsOrder;
 
-		if (fdsFiltersOrder && fdsFiltersOrder === newActionsOrder) {
+		if (
+			storedFDSActionsOrder &&
+			storedFDSActionsOrder === fdsActionsOrder
+		) {
 			openDefaultSuccessToast();
-
-			setNewActionsOrder('');
 		}
 		else {
 			openDefaultFailureToast();
@@ -303,19 +305,15 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
 									noItemsTitle={Liferay.Language.get(
 										'no-actions-were-created'
 									)}
-									onCancelButtonClick={noop}
 									onOrderChange={({
-										orderedItems,
+										order,
 									}: {
-										orderedItems: IFDSAction[];
+										order: string;
 									}) => {
-										setNewActionsOrder(
-											orderedItems
-												.map((filter) => filter.id)
-												.join(',')
-										);
+										updateFDSActionsOrder({
+											fdsActionsOrder: order,
+										});
 									}}
-									onSaveButtonClick={updateFDSActionsOrder}
 								/>
 							</ClayTabs.TabPane>
 

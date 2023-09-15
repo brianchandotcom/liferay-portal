@@ -93,9 +93,9 @@ public class XMLDTDVersionCheck extends BaseFileCheck {
 		"release.properties";
 
 	private static final Pattern _doctypePattern = Pattern.compile(
-		"(<!DOCTYPE .+ PUBLIC \"-//Liferay//DTD .+ )" +
-			"([0-9]+\\.[0-9]+\\.[0-9]+)(//EN\" \"http://www.liferay.com/dtd/" +
-				".+_)([0-9]+_[0-9]+_[0-9]+)(\\.dtd\">)");
+		"(<!DOCTYPE .+ PUBLIC \"-//Liferay//DTD .+ )([0-9]+\\.[0-9]+" +
+			"\\.[0-9]+)(//EN\"\\s*\"http://www.liferay.com/dtd/.+_)([0-9]" +
+				"+_[0-9]+_[0-9]+)(\\.dtd\">)");
 
 	private Properties _releaseProperties;
 

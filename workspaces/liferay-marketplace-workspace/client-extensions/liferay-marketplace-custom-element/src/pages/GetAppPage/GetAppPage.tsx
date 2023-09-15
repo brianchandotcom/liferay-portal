@@ -45,7 +45,7 @@ const GetAPPFlow = () => {
   const [step, setStep] = useState<StepType>(StepType.ACCOUNT);
   const [showAccount, setShowAccount] = useState<Boolean>(false);
 
-  const {getValues, setValue } = useForm<getAppProps>({
+  const { getValues, setValue } = useForm<getAppProps>({
     defaultValues: {
       product: undefined,
       selectedAccount: undefined,
@@ -84,7 +84,8 @@ const GetAPPFlow = () => {
     <>
       <ProductCard
         productId={Number(getUrlParam('productId'))}
-		selectedAccount={getValues('selectedAccount')}
+        selectedAccount={getValues('selectedAccount')}
+        setProductToForm={(product: Product) => setValue('product', product)}
         showAccount={showAccount}
       ></ProductCard>
       <div className="border d-flex flex-column mt-7 p-5 rounded">

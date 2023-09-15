@@ -5,17 +5,22 @@
 
 import ClayBadge from '@clayui/badge';
 import { useEffect, useState } from 'react';
-import { object } from 'zod';
 
 import { getProductById } from '../../../utils/api';
 
 interface ProductCardProps {
   productId: number | null;
   selectedAccount?: Account;
+  setProductToForm: (product: Product) => void;
   showAccount: Boolean;
 }
 
-const ProductCard = ({ productId,selectedAccount, showAccount }: ProductCardProps) => {
+const ProductCard = ({
+  productId,
+  selectedAccount,
+  setProductToForm,
+  showAccount,
+}: ProductCardProps) => {
   const [product, setProduct] = useState<Product[]>([]);
 
   const getProdut = async () => {
@@ -25,7 +30,10 @@ const ProductCard = ({ productId,selectedAccount, showAccount }: ProductCardProp
         getProductById({
           nestedFields: 'skus',
           productId,
-        }).then((item: Product) => setProduct([item]));
+        }).then((item: Product) => {
+          setProduct([item]);
+          setProductToForm(item);
+        });
     }
   };
 
@@ -93,7 +101,9 @@ const ProductCard = ({ productId,selectedAccount, showAccount }: ProductCardProp
 
           <div className="d-flex justify-content-between mt-4">
             <div className="col-6 d-flex ml-3">
-              <p className="text-3">{selectedAccount && selectedAccount.name}</p>
+              <p className="text-3">
+                {selectedAccount && selectedAccount.name}
+              </p>
             </div>
 
             <div className="col-6 d-flex flex-row justify-content-between">

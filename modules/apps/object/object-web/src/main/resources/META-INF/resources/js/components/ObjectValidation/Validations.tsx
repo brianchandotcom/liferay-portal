@@ -9,12 +9,10 @@ import {
 	// @ts-ignore
 
 } from '@liferay/frontend-data-set-web';
-import {API} from '@liferay/object-js-components-web';
-
 // @ts-ignore
 
 import moment from 'moment/min/moment-with-locales';
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import {
 	IFDSTableProps,
@@ -37,20 +35,9 @@ export default function Validations({
 	formName,
 	id,
 	items,
-	objectDefinitionExternalReferenceCode,
 	style,
 	url,
 }: IFDSTableProps) {
-	useEffect(() => {
-		const makeFetch = async () => {
-			await API.getObjectDefinitionByExternalReferenceCode(
-				objectDefinitionExternalReferenceCode
-			);
-		};
-
-		makeFetch();
-	}, [objectDefinitionExternalReferenceCode]);
-
 	function objectFieldActiveDataRenderer({itemData}: {itemData: ItemData}) {
 		return itemData.active
 			? Liferay.Language.get('yes')

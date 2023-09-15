@@ -12,7 +12,6 @@ export default function Layouts({
 	formName,
 	id,
 	items,
-	objectDefinitionExternalReferenceCode,
 	style,
 	url,
 }: IFDSTableProps): JSX.Element;

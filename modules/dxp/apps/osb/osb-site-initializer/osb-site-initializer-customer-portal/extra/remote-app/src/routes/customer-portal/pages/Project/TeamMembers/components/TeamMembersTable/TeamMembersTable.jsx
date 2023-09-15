@@ -8,6 +8,7 @@ import ClayIcon from '@clayui/icon';
 import {useCallback, useEffect, useState} from 'react';
 import SearchBuilder from '~/common/core/SearchBuilder';
 import {getHighPriorityContacts} from '~/common/services/liferay/api';
+import {getRolesFiltered} from '~/common/utils/getProjectRoles';
 import i18n from '../../../../../../../common/I18n';
 import StatusTag from '../../../../../../../common/components/StatusTag';
 import Table from '../../../../../../../common/components/Table';
@@ -192,8 +193,10 @@ const TeamMembersTable = ({
 		!loggedUserAccount?.selectedAccountSummary.hasAdministratorRole
 	);
 
-	const availableAccountRoles =
-		accountRolesData?.accountAccountRolesByExternalReferenceCode.items;
+	const availableAccountRoles = getRolesFiltered(
+		accountRolesData?.accountAccountRolesByExternalReferenceCode.items,
+		koroneikiAccount
+	);
 
 	const loading =
 		myUserAccountLoading || userAccountsLoading || accountRolesLoading;

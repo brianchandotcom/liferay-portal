@@ -6,18 +6,54 @@
 import {getAccountRoles} from '../services/liferay/graphql/queries';
 import {ROLE_TYPES, SLA_TYPES} from './constants';
 
-export default async function getProjectRoles(client, project) {
+const getCurrentRoleType = (roleKey) => {
+	const roleValues = Object.values(ROLE_TYPES);
+
+	return roleValues.find((roleType) => roleType.key === roleKey);
+};
+
+export function getRolesFiltered(items, project) {
 	const projectHasSLAGoldPlatinum =
 		project?.slaCurrent?.includes(SLA_TYPES.gold) ||
 		project?.slaCurrent?.includes(SLA_TYPES.platinum);
 
-	const getCurrentRoleType = (roleKey) => {
-		const roleValues = Object.values(ROLE_TYPES);
-
-		return roleValues.find((roleType) => roleType.key === roleKey);
-	};
-
 	const isProjectPartner = project.partner;
+
+	if (items) {
+		const roles = items?.reduce((rolesAccumulator, role) => {
+			let isValidRole = true;
+
+			const roleType = getCurrentRoleType(role.name);
+
+			if (roleType?.raysourceName) {
+				if (!projectHasSLAGoldPlatinum) {
+					isValidRole = role.name !== ROLE_TYPES.requester.key;
+				}
+
+				if (!isProjectPartner) {
+					isValidRole =
+						role.name !== ROLE_TYPES.partnerManager.key &&
+						role.name !== ROLE_TYPES.partnerMember.key;
+				}
+
+				if (isValidRole) {
+					rolesAccumulator.push({
+						...role,
+						key: roleType?.key,
+						name: roleType?.name,
+						raysourceName: roleType?.raysourceName,
+					});
+				}
+			}
+
+			return rolesAccumulator;
+		}, []);
+
+		return roles;
+	}
+}
+
+export default async function getProjectRoles(client, project) {
 	const {data} = await client.query({
 		fetchPolicy: 'network-only',
 		query: getAccountRoles,
@@ -27,38 +63,6 @@ export default async function getProjectRoles(client, project) {
 	});
 
 	if (data) {
-		const roles = data.accountAccountRoles?.items?.reduce(
-			(rolesAccumulator, role) => {
-				let isValidRole = true;
-
-				const roleType = getCurrentRoleType(role.name);
-
-				if (roleType?.raysourceName) {
-					if (!projectHasSLAGoldPlatinum) {
-						isValidRole = role.name !== ROLE_TYPES.requester.key;
-					}
-
-					if (!isProjectPartner) {
-						isValidRole =
-							role.name !== ROLE_TYPES.partnerManager.key &&
-							role.name !== ROLE_TYPES.partnerMember.key;
-					}
-
-					if (isValidRole) {
-						rolesAccumulator.push({
-							...role,
-							key: roleType?.key,
-							name: roleType?.name,
-							raysourceName: roleType?.raysourceName,
-						});
-					}
-				}
-
-				return rolesAccumulator;
-			},
-			[]
-		);
-
-		return roles;
+		return getRolesFiltered(data.accountAccountRoles.items ?? [], project);
 	}
 }

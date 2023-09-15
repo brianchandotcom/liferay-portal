@@ -146,7 +146,7 @@ public class OrganizationODataRetrieverTest {
 		Region region = regions.get(0);
 
 		Organization organization1 = _organizationLocalService.addOrganization(
-			null, TestPropsValues.getUserId(),
+			TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(),
 			OrganizationConstants.TYPE_ORGANIZATION, region.getRegionId(),
@@ -190,7 +190,7 @@ public class OrganizationODataRetrieverTest {
 		Region region = regions.get(0);
 
 		Organization organization = _organizationLocalService.addOrganization(
-			null, TestPropsValues.getUserId(),
+			TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(),
 			OrganizationConstants.TYPE_ORGANIZATION, region.getRegionId(),

@@ -1157,7 +1157,7 @@ public class OrganizationODataRetrieverCustomFieldsTest {
 			).build());
 
 		return OrganizationLocalServiceUtil.addOrganization(
-			null, TestPropsValues.getUserId(),
+			TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(),
 			_organizationLocalService.getTypes()[0], 0, 0,

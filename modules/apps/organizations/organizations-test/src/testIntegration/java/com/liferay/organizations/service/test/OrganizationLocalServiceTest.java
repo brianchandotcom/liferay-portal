@@ -365,7 +365,7 @@ public class OrganizationLocalServiceTest {
 		}
 
 		Organization organizationA = _organizationLocalService.addOrganization(
-			null, TestPropsValues.getUserId(),
+			TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(),
 			OrganizationConstants.TYPE_ORGANIZATION, 0, 0,
@@ -373,7 +373,7 @@ public class OrganizationLocalServiceTest {
 			false, new ServiceContext());
 
 		Organization organizationB = _organizationLocalService.addOrganization(
-			null, TestPropsValues.getUserId(),
+			TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, "Test2",
 			OrganizationConstants.TYPE_ORGANIZATION, 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
@@ -559,8 +559,7 @@ public class OrganizationLocalServiceTest {
 			"Organization B", false);
 
 		organizationAA = _organizationLocalService.updateOrganization(
-			null, organizationAA.getCompanyId(),
-			organizationAA.getOrganizationId(),
+			organizationAA.getCompanyId(), organizationAA.getOrganizationId(),
 			organizationB.getOrganizationId(), organizationAA.getName(),
 			organizationAA.getType(), organizationAA.getRegionId(),
 			organizationAA.getCountryId(), organizationAA.getStatusListTypeId(),
@@ -597,8 +596,7 @@ public class OrganizationLocalServiceTest {
 			"Organization B", true);
 
 		organizationAA = _organizationLocalService.updateOrganization(
-			null, organizationAA.getCompanyId(),
-			organizationAA.getOrganizationId(),
+			organizationAA.getCompanyId(), organizationAA.getOrganizationId(),
 			organizationB.getOrganizationId(), organizationAA.getName(),
 			organizationAA.getType(), organizationAA.getRegionId(),
 			organizationAA.getCountryId(), organizationAA.getStatusListTypeId(),
@@ -635,8 +633,7 @@ public class OrganizationLocalServiceTest {
 			"Organization B", false);
 
 		organizationAA = _organizationLocalService.updateOrganization(
-			null, organizationAA.getCompanyId(),
-			organizationAA.getOrganizationId(),
+			organizationAA.getCompanyId(), organizationAA.getOrganizationId(),
 			organizationB.getOrganizationId(), organizationAA.getName(),
 			organizationAA.getType(), organizationAA.getRegionId(),
 			organizationAA.getCountryId(), organizationAA.getStatusListTypeId(),
@@ -673,8 +670,7 @@ public class OrganizationLocalServiceTest {
 			"Organization B", true);
 
 		organizationAA = _organizationLocalService.updateOrganization(
-			null, organizationAA.getCompanyId(),
-			organizationAA.getOrganizationId(),
+			organizationAA.getCompanyId(), organizationAA.getOrganizationId(),
 			organizationB.getOrganizationId(), organizationAA.getName(),
 			organizationAA.getType(), organizationAA.getRegionId(),
 			organizationAA.getCountryId(), organizationAA.getStatusListTypeId(),
@@ -1084,7 +1080,7 @@ public class OrganizationLocalServiceTest {
 		Group organizationGroup = organization.getGroup();
 
 		return _organizationLocalService.updateOrganization(
-			null, organization.getCompanyId(), organization.getOrganizationId(),
+			organization.getCompanyId(), organization.getOrganizationId(),
 			organization.getParentOrganizationId(), organization.getName(),
 			organization.getType(), organization.getRegionId(),
 			organization.getCountryId(), organization.getStatusListTypeId(),

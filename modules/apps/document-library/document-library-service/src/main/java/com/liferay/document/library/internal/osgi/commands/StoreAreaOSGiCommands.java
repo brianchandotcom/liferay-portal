@@ -7,16 +7,19 @@ package com.liferay.document.library.internal.osgi.commands;
 
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.store.StoreAreaProcessor;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.util.PropsValues;
 
 import java.time.Duration;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Adolfo Pérez
@@ -30,7 +33,9 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class StoreAreaOSGiCommands {
 
 	public void cleanUp(long companyId) {
-		if (_storeAreaProcessor == null) {
+		StoreAreaProcessor storeAreaProcessor = _serviceTracker.getService();
+
+		if (storeAreaProcessor == null) {
 			System.out.println(
 				"Do nothing because the selected store " +
 					PropsValues.DL_STORE_IMPL +
@@ -39,14 +44,34 @@ public class StoreAreaOSGiCommands {
 			return;
 		}
 
-		_storeAreaProcessor.cleanUpDeletedStoreArea(
+		storeAreaProcessor.cleanUpDeletedStoreArea(
 			companyId, Integer.MAX_VALUE,
 			name -> !_isDLFileVersionReferenced(companyId, name),
 			StringPool.BLANK, Duration.ofSeconds(1));
-		_storeAreaProcessor.cleanUpNewStoreArea(
+		storeAreaProcessor.cleanUpNewStoreArea(
 			companyId, Integer.MAX_VALUE,
 			name -> !_isDLFileVersionReferenced(companyId, name),
 			StringPool.BLANK, Duration.ofSeconds(1));
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
+
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext,
+			bundleContext.createFilter(
+				StringBundler.concat(
+					"(&(objectClass=", StoreAreaProcessor.class.getName(),
+					")(store.type=", PropsValues.DL_STORE_IMPL, "))")),
+			null);
+
+		_serviceTracker.open();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTracker.close();
 	}
 
 	private boolean _isDLFileVersionReferenced(Long companyId, String name) {
@@ -69,11 +94,7 @@ public class StoreAreaOSGiCommands {
 	@Reference
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY, target = "(default=true)"
-	)
-	private volatile StoreAreaProcessor _storeAreaProcessor;
+	private ServiceTracker<StoreAreaProcessor, StoreAreaProcessor>
+		_serviceTracker;
 
 }

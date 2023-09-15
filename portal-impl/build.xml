@@ -806,16 +806,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</copy>
 
 		<copy
-			preservelastmodified="true"
-			todir="${portal-impl.classes.dir}/com/liferay/portal/tools/json/dependencies"
-		>
-			<fileset
-				dir="${project.dir}/sql"
-				includes="portal-list-type.json"
-			/>
-		</copy>
-
-		<copy
 			file="${project.dir}/classes/log4j2.properties"
 			preservelastmodified="true"
 			todir="${portal-impl.classes.dir}"

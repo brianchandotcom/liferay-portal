@@ -122,7 +122,10 @@ export default function EditRelationship({
 				/>
 
 				<SingleSelect
-					disabled={readOnly || values.edge}
+					disabled={
+						readOnly ||
+						(Liferay.FeatureFlags['LPS-187142'] && values.edge)
+					}
 					label={Liferay.Language.get('deletion-type')}
 					onChange={(deletionType) =>
 						setValues({deletionType: deletionType.value})

@@ -11,6 +11,7 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
+import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
 import com.liferay.object.exception.ObjectRelationshipEdgeException;
 import com.liferay.object.exception.ObjectRelationshipNameException;
 import com.liferay.object.exception.ObjectRelationshipParameterObjectFieldIdException;
@@ -741,6 +742,7 @@ public class ObjectRelationshipLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId2()),
 			parameterObjectFieldId, objectRelationship.getType());
+		_validateDeletionType(deletionType, edge);
 		_validateEdge(edge, objectRelationship);
 
 		if (Objects.equals(
@@ -1070,6 +1072,19 @@ public class ObjectRelationshipLocalServiceImpl
 		objectRelationship.setLabelMap(labelMap);
 
 		return objectRelationshipPersistence.update(objectRelationship);
+	}
+
+	private void _validateDeletionType(String deletionType, boolean edge)
+		throws PortalException {
+
+		if (edge &&
+			!StringUtil.equals(
+				deletionType,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE)) {
+
+			throw new ObjectRelationshipDeletionTypeException.
+				MustHaveCascadeDeletionType();
+		}
 	}
 
 	private void _validateEdge(

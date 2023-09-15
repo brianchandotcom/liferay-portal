@@ -19,18 +19,20 @@ public class ListTypeDefinitionUtil {
 			String action, boolean system, boolean entry)
 		throws PortalException {
 
-		if (system && !ObjectDefinitionUtil.isInvokerBundleAllowed()) {
-			String finalSentence = "";
-
-			if (entry) {
-				finalSentence = " entries";
-			}
-
-			throw new ListTypeDefinitionSystemException(
-				StringBundler.concat(
-					"Only allowed bundles can ", action, " system picklists",
-					finalSentence));
+		if (!system || ObjectDefinitionUtil.isInvokerBundleAllowed()) {
+			return;
 		}
+
+		String finalSentence = "";
+
+		if (entry) {
+			finalSentence = " entries";
+		}
+
+		throw new ListTypeDefinitionSystemException(
+			StringBundler.concat(
+				"Only allowed bundles can ", action, " system picklists",
+				finalSentence));
 	}
 
 }

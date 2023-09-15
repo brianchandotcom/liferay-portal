@@ -4,113 +4,124 @@
  */
 
 import ClayButton from '@clayui/button';
-import {useState} from 'react';
-import {useForm} from 'react-hook-form';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-import {getSiteURL} from '../../components/InviteMemberModal/services';
-import {Liferay} from '../../liferay/liferay';
+import { getSiteURL } from '../../components/InviteMemberModal/services';
+import { Liferay } from '../../liferay/liferay';
+import { getUrlParam } from '../../utils/getUrlParam';
 import AccountSelection from './components/AccountSelection';
-import {StepType} from './enums/stepType';
+import ProductCard from './components/ProductCard';
+import { StepType } from './enums/stepType';
 
 type StepComponent = {
-	[key in StepType]?: JSX.Element;
+  [key in StepType]?: JSX.Element;
 };
 
 type getAppProps = {
-	product?: Product;
-	selectedAccount?: Account;
+  product?: Product;
+  selectedAccount?: Account;
 };
 
 const sectionProperties = {
-	[StepType.ACCOUNT]: {
-		backStep: StepType.ACCOUNT,
-		nextStep: StepType.LICENSES,
-		title: 'Account Selection',
-	},
-	[StepType.LICENSES]: {
-		backStep: StepType.ACCOUNT,
-		nextStep: StepType.PAYMENT,
-		title: 'License Selection',
-	},
-	[StepType.PAYMENT]: {
-		backStep: StepType.LICENSES,
-		nextStep: StepType.PAYMENT,
-		title: 'Payment Method',
-	},
+  [StepType.ACCOUNT]: {
+    backStep: StepType.ACCOUNT,
+    nextStep: StepType.LICENSES,
+    title: 'Account Selection',
+  },
+  [StepType.LICENSES]: {
+    backStep: StepType.ACCOUNT,
+    nextStep: StepType.PAYMENT,
+    title: 'License Selection',
+  },
+  [StepType.PAYMENT]: {
+    backStep: StepType.LICENSES,
+    nextStep: StepType.PAYMENT,
+    title: 'Payment Method',
+  },
 };
 
 const GetAPPFlow = () => {
-	const [step, setStep] = useState<StepType>(StepType.ACCOUNT);
+  const [step, setStep] = useState<StepType>(StepType.ACCOUNT);
+  const [showAccount, setShowAccount] = useState<Boolean>(false);
 
-	const {getValues ,setValue} = useForm<getAppProps>({
-		defaultValues: {
-			product: undefined,
-			selectedAccount: undefined,
-		},
-	});
+  const {getValues, setValue } = useForm<getAppProps>({
+    defaultValues: {
+      product: undefined,
+      selectedAccount: undefined,
+    },
+  });
 
-	const onCancel = () => {
-		Liferay.Util.navigate(getSiteURL());
-	};
+  const onCancel = () => {
+    Liferay.Util.navigate(getSiteURL());
+  };
 
-	const onContinue = async (nextStep: StepType) => {
-		setStep(nextStep);
+  const onContinue = async (nextStep: StepType) => {
+    setStep(nextStep);
 
-		return;
-	};
+    return;
+  };
 
-	const onPrevious = async (previousStep: StepType) => {
-		setStep(previousStep);
+  const onPrevious = async (previousStep: StepType) => {
+    setStep(previousStep);
 
-		return;
-	};
+    return;
+  };
 
-	const StepFormComponent: StepComponent = {
-		[StepType.ACCOUNT]: (
-			<AccountSelection
-				onSelectAccount={(account: Account) => {
-					setValue('selectedAccount', account);
-				}}
-			/>
-		),
-		[StepType.LICENSES]: <h1>AAAAAAAAA</h1>,
-	};
+  const StepFormComponent: StepComponent = {
+    [StepType.ACCOUNT]: (
+      <AccountSelection
+        onSelectAccount={(account: Account) => {
+          setValue('selectedAccount', account);
+          setShowAccount(true);
+        }}
+      />
+    ),
+    [StepType.LICENSES]: <h1>ss</h1>,
+  };
 
-	return (
-		<div className="border d-flex flex-column justify-content-center p-5 rounded">
-			<div className="align-items-center d-flex flex-column">
-				<div className="h1 mb-6">{sectionProperties[step].title}</div>
-				<div>{StepFormComponent[step]}</div>
-			</div>
-			<div className="d-flex justify-content-between mt-5 pt-2">
-				<ClayButton displayType={null} onClick={() => onCancel()}>
-					Cancel
-				</ClayButton>
-				<div className="align-self-end">
-					{sectionProperties[step].backStep !== step && (
-						<ClayButton
-							displayType="secondary"
-							onClick={() =>
-								onPrevious(sectionProperties[step].backStep)
-							}
-						>
-							Back
-						</ClayButton>
-					)}
-					{sectionProperties[step].nextStep && (
-						<ClayButton
-							className="ml-5"
-							onClick={() => {
-								onContinue(sectionProperties[step].nextStep);
-							}}
-						>
-							Continue
-						</ClayButton>
-					)}
-				</div>
-			</div>
-		</div>
-	);
+  return (
+    <>
+      <ProductCard
+        productId={Number(getUrlParam('productId'))}
+		selectedAccount={getValues('selectedAccount')}
+        showAccount={showAccount}
+      ></ProductCard>
+      <div className="border d-flex flex-column mt-7 p-5 rounded">
+        <div className="d-flex flex-column">
+          <div className="align-self-center h1 mb-6">
+            {sectionProperties[step].title}
+          </div>
+          <div>{StepFormComponent[step]}</div>
+        </div>
+        <div className="d-flex justify-content-between mt-5 pt-2">
+          <ClayButton displayType={null} onClick={() => onCancel()}>
+            Cancel
+          </ClayButton>
+          <div className="align-self-end">
+            {sectionProperties[step].backStep !== step && (
+              <ClayButton
+                displayType="secondary"
+                onClick={() => onPrevious(sectionProperties[step].backStep)}
+              >
+                Back
+              </ClayButton>
+            )}
+            {sectionProperties[step].nextStep && (
+              <ClayButton
+                className="ml-5"
+                onClick={() => {
+                  onContinue(sectionProperties[step].nextStep);
+                }}
+              >
+                Continue
+              </ClayButton>
+            )}
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default GetAPPFlow;

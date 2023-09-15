@@ -475,9 +475,13 @@ export async function getProduct({
 	return (await response.json()) as Product;
 }
 
-export async function getProductById(productId: number) {
-	const url = `${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}`;
-
+export async function getProductById({productId, nestedFields}: {nestedFields: string ,productId: number}) {
+	
+	let url = `${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}`;
+	
+	if(nestedFields){
+		url =  `${url}?nestedFields=${nestedFields}`;
+	}
 	const response = await fetch(url, {
 		headers,
 		method: 'GET',

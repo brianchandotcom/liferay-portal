@@ -311,6 +311,7 @@ interface Product {
 	productId: number;
 	productStatus: number;
 	productType: string;
+	skus: sku[];
 	thumbnail: string;
 	version: number;
 	workflowStatusInfo: {

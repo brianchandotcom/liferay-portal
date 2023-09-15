@@ -6,8 +6,8 @@
 package com.liferay.list.type.service.impl;
 
 import com.liferay.list.type.exception.ListTypeDefinitionNameException;
-import com.liferay.list.type.exception.ListTypeDefinitionSystemException;
 import com.liferay.list.type.exception.RequiredListTypeDefinitionException;
+import com.liferay.list.type.internal.definition.util.ListTypeDefinitionUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
@@ -73,7 +73,8 @@ public class ListTypeDefinitionLocalServiceImpl
 			List<ListTypeEntry> listTypeEntries)
 		throws PortalException {
 
-		_validateInvokerBundle("create", system);
+		ListTypeDefinitionUtil.validateInvokerBundle("create", system);
+
 		_validateName(nameMap, LocaleUtil.getSiteDefault());
 
 		ListTypeDefinition listTypeDefinition =
@@ -97,7 +98,8 @@ public class ListTypeDefinitionLocalServiceImpl
 			ListTypeDefinition listTypeDefinition)
 		throws PortalException {
 
-		_validateInvokerBundle("delete", listTypeDefinition.isSystem());
+		ListTypeDefinitionUtil.validateInvokerBundle(
+			"delete", listTypeDefinition.isSystem());
 
 		int count =
 			_objectFieldLocalService.getObjectFieldsCountByListTypeDefinitionId(
@@ -240,15 +242,6 @@ public class ListTypeDefinitionLocalServiceImpl
 		for (ListTypeEntry listTypeEntry : existingListTypeEntries) {
 			_listTypeEntryLocalService.deleteListTypeEntry(
 				listTypeEntry.getListTypeEntryId());
-		}
-	}
-
-	private void _validateInvokerBundle(String action, boolean system)
-		throws PortalException {
-
-		if (system && !ObjectDefinitionUtil.isInvokerBundleAllowed()) {
-			throw new ListTypeDefinitionSystemException(
-				"Only allowed bundles can " + action + " system picklists");
 		}
 	}
 

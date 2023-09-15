@@ -7,9 +7,9 @@ package com.liferay.list.type.service.impl;
 
 import com.liferay.list.type.exception.DuplicateListTypeEntryException;
 import com.liferay.list.type.exception.DuplicateListTypeEntryExternalReferenceCodeException;
-import com.liferay.list.type.exception.ListTypeDefinitionSystemException;
 import com.liferay.list.type.exception.ListTypeEntryKeyException;
 import com.liferay.list.type.exception.ListTypeEntryNameException;
+import com.liferay.list.type.internal.definition.util.ListTypeDefinitionUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.base.ListTypeEntryLocalServiceBaseImpl;
@@ -48,7 +48,12 @@ public class ListTypeEntryLocalServiceImpl
 			long listTypeDefinitionId, String key, Map<Locale, String> nameMap)
 		throws PortalException {
 
-		_validateInvokerBundle("create", listTypeDefinitionId);
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionPersistence.findByPrimaryKey(
+				listTypeDefinitionId);
+
+		ListTypeDefinitionUtil.validateInvokerBundle(
+			"create", listTypeDefinition.isSystem());
 
 		User user = _userLocalService.getUser(userId);
 
@@ -78,8 +83,12 @@ public class ListTypeEntryLocalServiceImpl
 	public ListTypeEntry deleteListTypeEntry(ListTypeEntry listTypeEntry)
 		throws PortalException {
 
-		_validateInvokerBundle(
-			"delete", listTypeEntry.getListTypeDefinitionId());
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionPersistence.findByPrimaryKey(
+				listTypeEntry.getListTypeDefinitionId());
+
+		ListTypeDefinitionUtil.validateInvokerBundle(
+			"delete", listTypeDefinition.isSystem());
 
 		return listTypeEntryPersistence.remove(listTypeEntry);
 	}
@@ -212,23 +221,6 @@ public class ListTypeEntryLocalServiceImpl
 
 			throw new DuplicateListTypeEntryExternalReferenceCodeException(
 				"Duplicate external reference code " + externalReferenceCode);
-		}
-	}
-
-	private void _validateInvokerBundle(
-			String action, long listTypeDefinitionId)
-		throws PortalException {
-
-		ListTypeDefinition listTypeDefinition =
-			_listTypeDefinitionPersistence.findByPrimaryKey(
-				listTypeDefinitionId);
-
-		if (listTypeDefinition.isSystem() &&
-			!ObjectDefinitionUtil.isInvokerBundleAllowed()) {
-
-			throw new ListTypeDefinitionSystemException(
-				"Only allowed bundles can " + action +
-					" system picklists entries");
 		}
 	}
 

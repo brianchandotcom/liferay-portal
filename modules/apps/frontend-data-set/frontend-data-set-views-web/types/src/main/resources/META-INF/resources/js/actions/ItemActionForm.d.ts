@@ -6,19 +6,25 @@
 /// <reference types="react" />
 
 import {FDSViewType} from '../FDSViews';
+import {IFDSAction} from '../fds_view/Actions';
 interface IFDSItemActionFormProps {
+	activeSection: string;
 	fdsView: FDSViewType;
+	initialValues?: IFDSAction;
 	loadFDSActions: () => void;
 	namespace: string;
 	sections: {
 		ACTIONS: string;
+		EDIT_ITEM_ACTION: string;
 		NEW_ITEM_ACTION: string;
 	};
 	setActiveSection: (arg: string) => void;
 	spritemap: string;
 }
 declare const ItemActionForm: ({
+	activeSection,
 	fdsView,
+	initialValues,
 	loadFDSActions,
 	namespace,
 	sections,

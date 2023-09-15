@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchAdminDisplayContextBuilder;
+import com.liferay.portal.search.cluster.StatsClusterInformation;
 import com.liferay.portal.search.index.IndexInformation;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
@@ -53,6 +54,9 @@ public class SearchAdminDisplayContextTest {
 		searchAdminDisplayContextBuilder.setIndexInformation(
 			Mockito.mock(IndexInformation.class));
 
+		searchAdminDisplayContextBuilder.setStatsClusterInformation(
+			Mockito.mock(StatsClusterInformation.class));
+
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
 
@@ -71,6 +75,9 @@ public class SearchAdminDisplayContextTest {
 				new MockRenderResponse());
 
 		searchAdminDisplayContextBuilder.setIndexInformation(null);
+
+		searchAdminDisplayContextBuilder.setStatsClusterInformation(
+			Mockito.mock(StatsClusterInformation.class));
 
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
@@ -93,6 +100,9 @@ public class SearchAdminDisplayContextTest {
 		searchAdminDisplayContextBuilder.setIndexInformation(
 			Mockito.mock(IndexInformation.class));
 
+		searchAdminDisplayContextBuilder.setStatsClusterInformation(
+			Mockito.mock(StatsClusterInformation.class));
+
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
 
@@ -109,6 +119,9 @@ public class SearchAdminDisplayContextTest {
 
 		searchAdminDisplayContextBuilder.setIndexInformation(
 			Mockito.mock(IndexInformation.class));
+
+		searchAdminDisplayContextBuilder.setStatsClusterInformation(
+			Mockito.mock(StatsClusterInformation.class));
 
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
@@ -128,6 +141,9 @@ public class SearchAdminDisplayContextTest {
 		searchAdminDisplayContextBuilder.setIndexInformation(
 			Mockito.mock(IndexInformation.class));
 
+		searchAdminDisplayContextBuilder.setStatsClusterInformation(
+			Mockito.mock(StatsClusterInformation.class));
+
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
 
@@ -144,6 +160,9 @@ public class SearchAdminDisplayContextTest {
 				new MockRenderResponse());
 
 		searchAdminDisplayContextBuilder.setIndexInformation(null);
+
+		searchAdminDisplayContextBuilder.setStatsClusterInformation(
+			Mockito.mock(StatsClusterInformation.class));
 
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
@@ -163,6 +182,9 @@ public class SearchAdminDisplayContextTest {
 		searchAdminDisplayContextBuilder.setIndexInformation(
 			Mockito.mock(IndexInformation.class));
 
+		searchAdminDisplayContextBuilder.setStatsClusterInformation(
+			Mockito.mock(StatsClusterInformation.class));
+
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
 
@@ -180,6 +202,9 @@ public class SearchAdminDisplayContextTest {
 
 		searchAdminDisplayContextBuilder.setIndexInformation(
 			Mockito.mock(IndexInformation.class));
+
+		searchAdminDisplayContextBuilder.setStatsClusterInformation(
+			Mockito.mock(StatsClusterInformation.class));
 
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();

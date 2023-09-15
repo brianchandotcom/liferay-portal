@@ -7,7 +7,6 @@ package com.liferay.portal.upgrade.v7_4_x;
 
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.kernel.db.partition.DBPartition;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -152,15 +151,7 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 	}
 
 	private void _upgradeDBPartition(long defaultCompanyId) throws Exception {
-		boolean defaultCompany = false;
-
-		if ((CompanyThreadLocal.getCompanyId() == defaultCompanyId) ||
-			(CompanyThreadLocal.getCompanyId() == CompanyConstants.SYSTEM)) {
-
-			defaultCompany = true;
-		}
-
-		if (defaultCompany) {
+		if (CompanyThreadLocal.getCompanyId() == defaultCompanyId) {
 			runSQL("update ListType set companyId = " + defaultCompanyId);
 		}
 		else {

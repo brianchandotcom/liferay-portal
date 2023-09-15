@@ -93,7 +93,7 @@ definition {
 				leadFollowUpList = "Other",
 				leadList = "No",
 				tactic = "Other",
-				targetOfLeads = "03",
+				targetOfLeads = 03,
 				typeOfActivity = "Miscellaneous Marketing");
 
 			Button.click(button = "Continue");
@@ -107,7 +107,7 @@ definition {
 				leadFollowUpList = "Other",
 				leadList = "No",
 				tactic = "Other",
-				targetOfLeads = "03",
+				targetOfLeads = 03,
 				typeOfActivity = "Miscellaneous Marketing");
 
 			Button.click(button = "Continue");
@@ -431,7 +431,7 @@ definition {
 				leadFollowUpList = "Other",
 				leadList = "No",
 				tactic = "Other",
-				targetOfLeads = "03",
+				targetOfLeads = 03,
 				typeOfActivity = "Miscellaneous Marketing");
 		}
 
@@ -505,7 +505,7 @@ definition {
 				leadList = "No",
 				tactic = "Other",
 				targetMarketOptions = "Education,Energy",
-				targetOfLeads = "03",
+				targetOfLeads = 03,
 				targetRolesOptions = "Administrator",
 				typeOfActivity = "Miscellaneous Marketing");
 		}
@@ -537,7 +537,7 @@ definition {
 			var activityDescription = "Activity Description";
 			var leadFollowUpList = "Other";
 			var tactic = "Other";
-			var targetOfLeads = "03";
+			var targetOfLeads = 03;
 			var typeOfActivity = "Miscellaneous Marketing";
 			var startDate = DateUtil.getFormattedDate("+2", "yyyy-MM-dd");
 			var endDate = DateUtil.getFormattedDate("+3", "yyyy-MM-dd");
@@ -927,7 +927,7 @@ definition {
 				leadList = "No",
 				tactic = "Other",
 				targetMarketOptions = "Education,Energy",
-				targetOfLeads = "03",
+				targetOfLeads = 03,
 				targetRolesOptions = "Administrator",
 				typeOfActivity = "Miscellaneous Marketing");
 		}
@@ -966,7 +966,7 @@ definition {
 				leadList = "No",
 				tactic = "Other",
 				targetMarketOptions = "Education,Energy",
-				targetOfLeads = "03",
+				targetOfLeads = 03,
 				targetRolesOptions = "Administrator",
 				typeOfActivity = "Miscellaneous Marketing");
 		}
@@ -1127,7 +1127,7 @@ definition {
 				leadList = "No",
 				tactic = "Other",
 				targetMarketOptions = "Education,Energy",
-				targetOfLeads = "03",
+				targetOfLeads = 03,
 				targetRolesOptions = "Administrator",
 				typeOfActivity = "Miscellaneous Marketing");
 		}
@@ -1166,7 +1166,7 @@ definition {
 				leadList = "No",
 				tactic = "Other",
 				targetMarketOptions = "Education,Energy",
-				targetOfLeads = "03",
+				targetOfLeads = 03,
 				targetRolesOptions = "Administrator",
 				typeOfActivity = "Miscellaneous Marketing");
 		}

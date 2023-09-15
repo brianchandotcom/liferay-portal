@@ -310,11 +310,11 @@ definition {
 				goalsOptions = "Lead generation",
 				leadFollowUpList = "Other",
 				leadList = "No",
+				ofWeek = 10,
 				tactic = "Broadcast Advertising",
 				targetMarketOptions = "Education",
 				targetRolesOptions = "Administrator",
-				typeOfActivity = "Miscellaneous Marketing",
-				ofWeek = "10");
+				typeOfActivity = "Miscellaneous Marketing");
 		}
 
 		task ("When the PMU goes to the created MDF") {

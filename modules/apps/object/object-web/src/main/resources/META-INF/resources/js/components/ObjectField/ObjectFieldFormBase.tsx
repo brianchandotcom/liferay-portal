@@ -58,6 +58,7 @@ interface ObjectFieldFormBaseProps {
 
 type TObjectRelationship = {
 	deletionType: string;
+	edge: boolean;
 	id: number;
 	label: LocalizedValue<string>;
 	name: string;
@@ -249,7 +250,7 @@ export default function ObjectFieldFormBase({
 			oneToManyRelationship &&
 			oneToManyRelationship.deletionType !== 'disassociate'
 		) {
-			return false;
+			return oneToManyRelationship.edge;
 		}
 
 		if (values.readOnly === 'true' || values.readOnly === 'conditional') {

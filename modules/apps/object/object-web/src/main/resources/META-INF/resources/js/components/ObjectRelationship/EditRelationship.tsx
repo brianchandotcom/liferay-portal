@@ -122,7 +122,7 @@ export default function EditRelationship({
 				/>
 
 				<SingleSelect
-					disabled={readOnly}
+					disabled={readOnly || values.edge}
 					label={Liferay.Language.get('deletion-type')}
 					onChange={(deletionType) =>
 						setValues({deletionType: deletionType.value})

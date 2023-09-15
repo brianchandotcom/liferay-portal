@@ -173,7 +173,7 @@ definition {
 	@description = "Verify that the user can add and edit Nodes into diagram by drag&drop: End"
 	@priority = 5
 	test CanAddAndEditEndNode {
-		property test.liferay.virtual.instance = "true";
+		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
@@ -4947,7 +4947,8 @@ definition {
 	@description = "LPS-129928 - Verify that the Publish button turns unavailable after the Workflow is published"
 	@priority = 3
 	test PublishButtonTurnsUnavailableAfterPublish {
-		property test.liferay.virtual.instance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		Workflow.openWorkflowListView();
 
@@ -4967,7 +4968,8 @@ definition {
 	@description = "Verify that a role name containing multi-byte characters can be used in the workflow"
 	@priority = 4
 	test RoleNameContainingMultibyteCharactersCanBeUsedInWorkflow {
-		property test.liferay.virtual.instance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		task ("Given a regular role with multi-byte characters in the title") {
 			JSONRole.addRegularRole(

@@ -349,9 +349,9 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 2");
 
-		JSONMBMessage.moveThreadToTrash(
-			groupName = "Site Name",
-			threadSubject = "MB Thread Message Subject");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
+
+		MessageboardsThread.deletePG(threadSubject = "MB Thread Message Subject");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 1");
 

@@ -49,7 +49,6 @@ interface FetchedData {
 interface BaseItem {
 	actions: Actions;
 	createDate: string;
-	creator: string;
 	dateCreated: string;
 	dateModified: string;
 	description: string;
@@ -58,7 +57,6 @@ interface BaseItem {
 	keywords: string[];
 	modifiedDate: string;
 	scopeKey: string;
-	status: string;
 }
 
 type ApplicationStatusKeys = 'published' | 'unpublished';
@@ -84,16 +82,55 @@ interface APIEndpointItem extends BaseItem {
 	path: string;
 }
 
-interface APISchemaItem extends BaseItem {
-	mainObjectDefinitionERC: string;
+interface APIPropertiy {
+	description?: string;
 	name: string;
-	r_apiApplicationToAPISchemas_c_apiApplicationId: string;
+	objectFieldERC: string;
+	objectRelationshipNames?: string;
 }
 
-type APISchemaUIData = Pick<
-	APISchemaItem,
-	'description' | 'name' | 'mainObjectDefinitionERC'
->;
+interface APISchemaItem extends BaseItem {
+	apiSchemaToAPIProperties?: APIPropertiy[];
+	mainObjectDefinitionERC: string;
+	name: string;
+	r_apiApplicationToAPISchemas_c_apiApplicationId?: string;
+}
+
+interface APISchemaPropertyItem {
+	actions: Actions;
+	apiSchemaToAPIPropertiesERC: string;
+	dateCreated: string;
+	dateModified: string;
+	description?: string;
+	externalReferenceCode: string;
+	id: number;
+	keywords: string[];
+	name: string;
+	objectFieldERC: string;
+	objectFieldId: number;
+	objectRelationshipNames: string;
+	r_apiSchemaToAPIProperties_c_apiSchemaERC: string;
+	r_apiSchemaToAPIProperties_c_apiSchemaId: number;
+}
+
+interface APISchemaUIData {
+	description: string;
+	mainObjectDefinitionERC: string;
+	name: string;
+	schemaProperties?: TreeViewItemData[];
+}
+
+type ExcludesFilterOperator = {
+	not: {
+		in: string[] | number[];
+	};
+};
+
+type IncludesFilterOperator = {
+	in: string[] | number[];
+};
+
+type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
 type MainSchemaNav = 'list' | {edit: number};
 
@@ -106,6 +143,17 @@ interface ManagementButtonsProps {
 	cancel: ManagementButton;
 	publish: ManagementButton;
 	save: ManagementButton;
+}
+
+interface NameValueObject {
+	name: string;
+	value: string;
+}
+
+interface ObjectRelationship {
+	name: string;
+	objectDefinitionExternalReferenceCode2: string;
+	objectDefinitionId2: number;
 }
 
 interface ObjectDefinition {
@@ -123,11 +171,14 @@ interface ObjectDefinition {
 	enableObjectEntryHistory: boolean;
 	externalReferenceCode: string;
 	id: number;
+	label: LocalizedValue<string>;
 	modifiable?: boolean;
 	name: string;
 	objectActions: [];
+	objectFields: ObjectField[];
 	objectLayouts: [];
-	objectRelationships: [];
+	objectRelationshipName?: string;
+	objectRelationships: ObjectRelationship[];
 	objectViews: [];
 	panelCategoryKey: string;
 	parameterRequired?: boolean;
@@ -145,7 +196,149 @@ interface ObjectDefinition {
 	titleObjectFieldName: string;
 }
 
+interface AddedObjectDefinition extends ObjectDefinition {
+	aggregatedObjectRelationshipNames?: string;
+}
+
+type ObjectFieldBusinessType =
+	| 'Aggregation'
+	| 'Attachment'
+	| 'Date'
+	| 'DateTime'
+	| 'Decimal'
+	| 'Encrypted'
+	| 'Formula'
+	| 'Integer'
+	| 'LongInteger'
+	| 'LongText'
+	| 'MultiselectPicklist'
+	| 'Picklist'
+	| 'PrecisionDecimal'
+	| 'Relationship'
+	| 'RichText'
+	| 'Text'
+	| 'Workflow Status';
+
+interface ObjectField {
+	DBType: string;
+	businessType: ObjectFieldBusinessType;
+	defaultValue?: string;
+	externalReferenceCode: string;
+	id: number;
+	indexed: boolean;
+	indexedAsKeyword: boolean;
+	indexedLanguageId: Liferay.Language.Locale | null;
+	label: LocalizedValue<string>;
+	listTypeDefinitionExternalReferenceCode: string;
+	listTypeDefinitionId?: number;
+	localized: boolean;
+	name: string;
+	objectFieldSettings?: ObjectFieldSetting[];
+	readOnly: ReadOnlyFieldValue;
+	readOnlyConditionExpression: string;
+	relationshipId?: number;
+	relationshipType?: unknown;
+	required: boolean;
+	state: boolean;
+	system?: boolean;
+}
+
+interface ObjectFieldSetting {
+	name: ObjectFieldSettingName;
+	objectFieldId?: number;
+	value: ObjectFieldSettingValue;
+}
+
+type ObjectFieldDateRangeFilterSettings = {
+	[key: string]: string;
+};
+
+type ObjectFieldFilterSetting = {
+	filterBy?: string;
+	filterType?: string;
+	json:
+		| {
+				[key: string]:
+					| string
+					| string[]
+					| ObjectFieldDateRangeFilterSettings
+					| undefined;
+		  }
+		| ExcludesFilterOperator
+		| IncludesFilterOperator
+		| string;
+};
+
+type ObjectFieldSettingName =
+	| 'acceptedFileExtensions'
+	| 'defaultValue'
+	| 'defaultValueType'
+	| 'fileSource'
+	| 'filters'
+	| 'function'
+	| 'maxLength'
+	| 'maximumFileSize'
+	| 'objectDefinition1ShortName'
+	| 'objectFieldName'
+	| 'objectRelationshipName'
+	| 'output'
+	| 'script'
+	| 'showCounter'
+	| 'showFilesInDocumentsAndMedia'
+	| 'stateFlow'
+	| 'storageDLFolderPath'
+	| 'timeStorage'
+	| 'uniqueValues'
+	| 'uniqueValuesErrorMessage';
+
+type ObjectFieldSettingValue =
+	| LocalizedValue<string>
+	| NameValueObject[]
+	| ObjectFieldFilterSetting[]
+	| ObjectFieldPicklistSetting
+	| boolean
+	| number
+	| string;
+
+type ObjectFieldPicklistSetting = {
+	id: number;
+	objectStates: ObjectState[];
+};
+
+interface ObjectState {
+	key: string;
+	objectStateTransitions: {key: string}[];
+}
+
+interface ObjectDefinitionsRelationshipTree {
+	definition: AddedObjectDefinition;
+	relatedDefinitions?: ObjectDefinitionsRelationshipTree[];
+}
+
+type FetchedSchemaData = {
+	apiSchema?: APISchemaItem;
+	objectDefinitions?: ObjectDefinitionsRelationshipTree;
+	schemaProperties?: APISchemaPropertyItem[];
+};
+
+type ReadOnlyFieldValue = '' | 'conditional' | 'false' | 'true';
+
 interface SelectOption {
 	label: string;
 	value: string;
+}
+
+interface TreeViewItemData {
+	businessType: ObjectFieldBusinessType;
+	children?: TreeViewItemData[];
+	description?: string;
+	id?: number;
+	name: string;
+	objectDefinitionName: string;
+	objectFieldERC: string;
+	objectFieldId: number;
+	objectFieldName: string;
+	objectRelationshipNames?: string;
+	r_apiSchemaToAPIProperties_c_apiSchemaId: number;
+	type: string;
 }

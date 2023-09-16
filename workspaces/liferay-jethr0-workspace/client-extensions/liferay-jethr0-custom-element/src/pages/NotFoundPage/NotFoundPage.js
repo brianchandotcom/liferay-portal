@@ -11,7 +11,7 @@ import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 function NotFoundPage() {
 	const breadcrumbs = [
 		{active: false, link: '/', name: 'Home'},
-		{active: false, link: '/not-found', name: 'Not Found'},
+		{active: true, link: '/not-found', name: 'Not Found'},
 	];
 
 	return (

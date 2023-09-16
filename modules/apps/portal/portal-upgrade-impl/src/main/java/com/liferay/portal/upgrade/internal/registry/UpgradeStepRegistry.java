@@ -24,10 +24,6 @@ import org.osgi.framework.Version;
  */
 public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 
-	public UpgradeStepRegistry(int buildNumber) {
-		_buildNumber = buildNumber;
-	}
-
 	public List<UpgradeStep> getReleaseCreationUpgradeSteps() {
 		return _releaseCreationUpgradeSteps;
 	}
@@ -36,16 +32,14 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 		if (_initialization && portalUpgraded) {
 			if (_upgradeInfos.isEmpty()) {
 				return Arrays.asList(
-					new UpgradeInfo(
-						"0.0.0", "1.0.0", _buildNumber,
-						new DummyUpgradeStep()));
+					new UpgradeInfo("0.0.0", "1.0.0", new DummyUpgradeStep()));
 			}
 
 			return ListUtil.concat(
 				Arrays.asList(
 					new UpgradeInfo(
 						"0.0.0", _getFinalSchemaVersion(_upgradeInfos),
-						_buildNumber, new DummyUpgradeStep())),
+						new DummyUpgradeStep())),
 				_upgradeInfos);
 		}
 
@@ -58,8 +52,7 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 		UpgradeStep... upgradeSteps) {
 
 		_createUpgradeInfos(
-			fromSchemaVersionString, toSchemaVersionString, _buildNumber,
-			upgradeSteps);
+			fromSchemaVersionString, toSchemaVersionString, upgradeSteps);
 	}
 
 	@Override
@@ -76,7 +69,7 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 
 	private void _createUpgradeInfos(
 		String fromSchemaVersionString, String toSchemaVersionString,
-		int buildNumber, UpgradeStep... upgradeSteps) {
+		UpgradeStep... upgradeSteps) {
 
 		if (ArrayUtil.isEmpty(upgradeSteps)) {
 			return;
@@ -102,13 +95,13 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 		if (upgradeStepsList.size() == 1) {
 			_upgradeInfos.add(
 				new UpgradeInfo(
-					fromSchemaVersionString, toSchemaVersionString, buildNumber,
+					fromSchemaVersionString, toSchemaVersionString,
 					upgradeStepsList.get(0)));
 		}
 		else {
 			_upgradeInfos.add(
 				new UpgradeInfo(
-					fromSchemaVersionString, toSchemaVersionString, buildNumber,
+					fromSchemaVersionString, toSchemaVersionString,
 					() -> {
 						for (UpgradeStep upgradeStep : upgradeStepsList) {
 							upgradeStep.upgrade();
@@ -137,7 +130,6 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 		return finalSchemaVersion.toString();
 	}
 
-	private final int _buildNumber;
 	private boolean _initialization;
 	private final List<UpgradeStep> _releaseCreationUpgradeSteps =
 		new ArrayList<>();

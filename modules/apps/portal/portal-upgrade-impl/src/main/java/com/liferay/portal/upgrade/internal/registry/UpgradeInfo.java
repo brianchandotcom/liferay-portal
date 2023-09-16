@@ -19,11 +19,10 @@ public class UpgradeInfo {
 
 	public UpgradeInfo(
 		String fromSchemaVersionString, String toSchemaVersionString,
-		int buildNumber, UpgradeStep upgradeStep) {
+		UpgradeStep upgradeStep) {
 
 		_fromSchemaVersionString = fromSchemaVersionString;
 		_toSchemaVersionString = toSchemaVersionString;
-		_buildNumber = buildNumber;
 		_upgradeStep = upgradeStep;
 	}
 
@@ -50,10 +49,6 @@ public class UpgradeInfo {
 		}
 
 		return false;
-	}
-
-	public int getBuildNumber() {
-		return _buildNumber;
 	}
 
 	public String getFromSchemaVersionString() {
@@ -86,7 +81,6 @@ public class UpgradeInfo {
 			", upgradeStep=", _upgradeStep, "}");
 	}
 
-	private final int _buildNumber;
 	private final String _fromSchemaVersionString;
 	private final String _toSchemaVersionString;
 	private final UpgradeStep _upgradeStep;

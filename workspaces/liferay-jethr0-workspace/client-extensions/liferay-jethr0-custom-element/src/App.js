@@ -5,6 +5,7 @@
 
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
+import AddJobPage from './pages/AddJobPage/AddJobPage';
 import HomePage from './pages/HomePage/HomePage';
 import JobPage from './pages/JobPage/JobPage';
 import JobsPage from './pages/JobsPage/JobsPage';
@@ -16,6 +17,7 @@ function App() {
 	return (
 		<HashRouter>
 			<Routes>
+				<Route element={<AddJobPage />} path="/jobs/add" />
 				<Route element={<HomePage />} path="/" />
 				<Route element={<JobPage />} path="/jobs/:id" />
 				<Route element={<JobsPage />} path="/jobs" />

@@ -16,7 +16,10 @@ import javax.servlet.http.HttpServletRequest;
  * @author Bruno Basto
  * @author Nathan Cavanaugh
  * @author Julio Camarero
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.frontend.taglib.clay.servlet.taglib.AlertTag}
  */
+@Deprecated
 public class AlertTag extends BaseAlertTag {
 
 	@Override

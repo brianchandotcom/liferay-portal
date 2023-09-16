@@ -29,7 +29,10 @@ import javax.servlet.jsp.JspWriter;
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.frontend.taglib.clay.servlet.taglib.LinkTag}
  */
+@Deprecated
 public class ATag extends BaseATag {
 
 	@Override

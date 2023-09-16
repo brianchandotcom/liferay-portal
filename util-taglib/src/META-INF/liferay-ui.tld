@@ -12,6 +12,7 @@
 	<short-name>liferay-ui</short-name>
 	<uri>http://liferay.com/tld/ui</uri>
 	<tag>
+		<description>Deprecated as of 7.4.0, replaced by the <![CDATA[<code>liferay-frontend:logo-selector</code>]]> tag.</description>
 		<name>empty-result-message</name>
 		<tag-class>com.liferay.taglib.ui.EmptyResultMessageTag</tag-class>
 		<body-content>JSP</body-content>
@@ -1862,7 +1863,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a collapsible panel for housing content.</description>
+		<description>Creates a collapsible panel for housing content. Deprecated as of 7.4.0, replaced by the <![CDATA[<code>clay:panel</code>]]> tag.</description>
 		<name>panel</name>
 		<tag-class>com.liferay.taglib.ui.PanelTag</tag-class>
 		<body-content>JSP</body-content>
@@ -1943,7 +1944,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a collapsible container to house <![CDATA[<code>liferay-ui:panel</code>]]> components.</description>
+		<description>Creates a collapsible container to house <![CDATA[<code>liferay-ui:panel</code>]]> components. Deprecated as of 7.4.0, replaced by the <![CDATA[<code>clay:panel-group</code>]]> tag.</description>
 		<name>panel-container</name>
 		<tag-class>com.liferay.taglib.ui.PanelContainerTag</tag-class>
 		<body-content>JSP</body-content>

@@ -17,7 +17,10 @@ import javax.servlet.jsp.JspException;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.frontend.taglib.clay.servlet.taglib.PanelTag}
  */
+@Deprecated
 public class PanelTag extends IncludeTag {
 
 	@Override

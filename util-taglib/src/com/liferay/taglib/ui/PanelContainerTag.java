@@ -17,7 +17,10 @@ import javax.servlet.jsp.tagext.BodyTag;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.frontend.taglib.clay.servlet.taglib.PanelGroupTag}
  */
+@Deprecated
 public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 
 	@Override

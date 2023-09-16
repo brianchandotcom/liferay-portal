@@ -24,7 +24,9 @@ import javax.servlet.jsp.JspWriter;
  * @author Julio Camarero
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class FieldsetTag extends BaseFieldsetTag {
 
 	@Override

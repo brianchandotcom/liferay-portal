@@ -16,7 +16,10 @@ import javax.servlet.jsp.tagext.BodyTag;
  * @author Julio Camarero
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.frontend.taglib.clay.servlet.taglib.ButtonTag}
  */
+@Deprecated
 public class ButtonTag extends BaseButtonTag implements BodyTag {
 
 	@Override

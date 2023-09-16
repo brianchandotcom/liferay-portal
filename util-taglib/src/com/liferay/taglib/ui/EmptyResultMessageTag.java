@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.frontend.taglib.servlet.taglib.EmptyResultMessageTag}
  */
+@Deprecated
 public class EmptyResultMessageTag extends IncludeTag {
 
 	public String getMessage() {

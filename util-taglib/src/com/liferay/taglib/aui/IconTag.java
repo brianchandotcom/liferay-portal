@@ -26,7 +26,10 @@ import javax.servlet.jsp.PageContext;
  * @author Bruno Basto
  * @author Nathan Cavanaugh
  * @author Julio Camarero
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.frontend.taglib.clay.servlet.taglib.IconTag}
  */
+@Deprecated
 public class IconTag extends BaseIconTag {
 
 	@Override

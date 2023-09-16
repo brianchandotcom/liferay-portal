@@ -390,18 +390,19 @@ public class ObjectDefinitionLocalServiceTest {
 		TreeTestUtil.unsafeForEachRemaining(
 			_objectDefinitionLocalService, tree,
 			nodeObjectDefinition -> {
-				if (nodeObjectDefinition.isRootDescendantNode()) {
-					AssertUtils.assertFailure(
-						ObjectDefinitionStatusException.class,
-						"Nonroot object definitions within a hierarchical " +
-							"structure are ineligible for publication",
-						() ->
-							_objectDefinitionLocalService.
-								publishCustomObjectDefinition(
-									TestPropsValues.getUserId(),
-									nodeObjectDefinition.
-										getObjectDefinitionId()));
+				if (nodeObjectDefinition.isRootNode()) {
+					return;
 				}
+
+				AssertUtils.assertFailure(
+					ObjectDefinitionStatusException.class,
+					"Nonroot object definitions within a hierarchical " +
+						"structure are ineligible for publication",
+					() ->
+						_objectDefinitionLocalService.
+							publishCustomObjectDefinition(
+								TestPropsValues.getUserId(),
+								nodeObjectDefinition.getObjectDefinitionId()));
 			});
 
 		ObjectDefinition rootObjectDefinition =

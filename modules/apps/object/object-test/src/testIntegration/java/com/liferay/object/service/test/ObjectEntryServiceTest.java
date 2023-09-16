@@ -190,19 +190,19 @@ public class ObjectEntryServiceTest {
 		TreeTestUtil.unsafeForEachRemaining(
 			_objectDefinitionLocalService, tree,
 			objectDefinition -> {
-				if (objectDefinition.isRootDescendantNode()) {
-					_resourcePermissionLocalService.addResourcePermission(
-						TestPropsValues.getCompanyId(),
-						objectDefinition.getResourceName(),
-						ResourceConstants.SCOPE_COMPANY,
-						String.valueOf(TestPropsValues.getCompanyId()),
-						guestRole.getRoleId(),
-						ObjectActionKeys.ADD_OBJECT_ENTRY);
-
-					_assertPrincipalException(
-						ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition,
-						null);
+				if (objectDefinition.isRootNode()) {
+					return;
 				}
+
+				_resourcePermissionLocalService.addResourcePermission(
+					TestPropsValues.getCompanyId(),
+					objectDefinition.getResourceName(),
+					ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(TestPropsValues.getCompanyId()),
+					guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+				_assertPrincipalException(
+					ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, null);
 			});
 
 		ObjectDefinition rootObjectDefinition =

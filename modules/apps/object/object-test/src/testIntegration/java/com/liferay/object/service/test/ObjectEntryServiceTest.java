@@ -133,7 +133,7 @@ public class ObjectEntryServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _adminUser.getUserId())));
 
-		Tree tree = _createTreeAndPublishObjectDefinitions();
+		Tree tree = _createTreeAndPublishRootObjectDefinition();
 
 		TreeTestUtil.unsafeForEachRemaining(
 			_objectDefinitionLocalService, tree,
@@ -274,7 +274,7 @@ public class ObjectEntryServiceTest {
 		_testDeleteObjectEntry(_adminUser, _adminUser);
 		_testDeleteObjectEntry(_user, _user);
 
-		Tree tree = _createTreeAndPublishObjectDefinitions();
+		Tree tree = _createTreeAndPublishRootObjectDefinition();
 
 		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
@@ -460,7 +460,7 @@ public class ObjectEntryServiceTest {
 			_objectEntryService.getObjectEntry(
 				adminObjectEntry.getObjectEntryId()));
 
-		Tree tree = _createTreeAndPublishObjectDefinitions();
+		Tree tree = _createTreeAndPublishRootObjectDefinition();
 
 		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
@@ -796,7 +796,7 @@ public class ObjectEntryServiceTest {
 		return objectEntries;
 	}
 
-	private Tree _createTreeAndPublishObjectDefinitions() throws Exception {
+	private Tree _createTreeAndPublishRootObjectDefinition() throws Exception {
 		Tree tree = TreeTestUtil.createTree(
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			_treeFactory);

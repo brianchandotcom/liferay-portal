@@ -440,7 +440,7 @@ public class ContactsEngineClientImpl
 		FaroProject faroProject, FaroUser faroUser, List<String> ids) {
 
 		delete(
-			faroProject,
+			faroProject, Rels.CHANNELS,
 			HashMapBuilder.<String, Object>put(
 				"channelIds", ids
 			).put(
@@ -448,7 +448,7 @@ public class ContactsEngineClientImpl
 			).put(
 				"userName", faroUser.getUserName()
 			).build(),
-			Rels.CHANNELS, getUriVariables(faroProject));
+			getUriVariables(faroProject));
 	}
 
 	@Override

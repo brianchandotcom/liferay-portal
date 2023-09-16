@@ -132,7 +132,7 @@ public class EntityExtensionTest {
 
 		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
-					"WebApplicationExceptionMapper",
+					"ExceptionMapper",
 				LoggerTestUtil.ERROR);
 			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.vulcan.internal.jaxrs.container.response." +

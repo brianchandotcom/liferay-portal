@@ -2166,7 +2166,7 @@ definition {
 
 		task ("And a new default Commerce Product type display page template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
 		}

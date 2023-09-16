@@ -37,7 +37,7 @@ definition {
 
 		task ("When a new Commerce Product type Display Page Template is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
 		}
@@ -101,7 +101,7 @@ definition {
 
 		task ("Given a new default Commerce Product type display page template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
 		}
@@ -178,7 +178,7 @@ definition {
 
 		task ("Given a new Commerce Product type display page template marked as default") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
 
@@ -267,7 +267,7 @@ definition {
 
 		task ("Given a new Commerce Product type display page template marked as default") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
 
@@ -393,7 +393,7 @@ definition {
 
 		task ("And a new Commerce Product type Display Page Template is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
 		}
@@ -486,7 +486,7 @@ definition {
 
 		task ("And a new Display Page Template for Commerce Product is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Product DPT",
 				groupName = "Minium");
 		}
@@ -576,7 +576,7 @@ definition {
 
 		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Basic Information fields") {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageName = "Test Commerce Product Display Page Template",
 				fieldsList = "Availability Status,Description,Final Price,Inventory,Name,Product Type,Short Description,SKU,Author Name",
 				fragmentName = "Heading",
@@ -686,7 +686,7 @@ definition {
 
 		task ("And a new Commerce Product type Display Page Template is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
 		}
@@ -744,7 +744,7 @@ definition {
 
 		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Delivery Subscription related fields") {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageName = "Test Commerce Product Display Page Template",
 				fieldsList = "Delivery Subscription Enabled,Delivery Subscription Length,Delivery Subscription Type,Delivery Subscription Type Settings",
 				fragmentName = "Heading",
@@ -810,7 +810,7 @@ definition {
 
 		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Detailed Information fields") {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageName = "Test Commerce Product Display Page Template",
 				fieldsList = "Account Group Filter Enabled,Channel Filter Enabled,Create Date,Status,Tax Exempt,Telco or Electronics,Version",
 				fragmentName = "Heading",
@@ -862,7 +862,7 @@ definition {
 
 		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Display Page and Schedule related fields") {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageName = "Test Commerce Product Display Page Template",
 				fieldsList = "Display Page URL,Display Date,Expiration Date",
 				fragmentName = "Heading",
@@ -900,7 +900,7 @@ definition {
 
 		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Payment Subscription related fields") {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageName = "Test Commerce Product Display Page Template",
 				fieldsList = "Subscription Enabled,Subscription Length,Subscription Type,Subscription Type Settings",
 				fragmentName = "Heading",
@@ -967,7 +967,7 @@ definition {
 
 		task ("And a new Commerce Product type Display Page Template is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
 		}
@@ -1047,7 +1047,7 @@ definition {
 			CustomFields.addCP(
 				customFieldName = ${customField1Name},
 				customFieldType = "Text Area",
-				resourceName = "Commerce Product");
+				resourceName = "Product");
 
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -1057,7 +1057,7 @@ definition {
 			CustomFields.addCP(
 				customFieldName = ${customField2Name},
 				customFieldType = "Text Area",
-				resourceName = "Commerce Product");
+				resourceName = "Product");
 		}
 
 		task ("And add 'Test Commerce Product Custom Field' inside the text area for the custom field for ABS Sensor") {
@@ -1084,7 +1084,7 @@ definition {
 
 		task ("When a new Commerce Product type Display Page Template is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
 		}
@@ -1166,7 +1166,7 @@ definition {
 
 		task ("And a new Commerce Product type Display Page Template is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
 		}
@@ -1254,7 +1254,7 @@ definition {
 
 		task ("And a new Display Page Template for Commerce Product is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
 		}
@@ -1365,7 +1365,7 @@ definition {
 
 		task ("Given a new Commerce Product type display page template with fragment created and mapped with the Shipping related fields") {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageName = "Test Commerce Product Display Page Template",
 				fieldsList = "Free Shipping,Shippable,Shipping Extra Price,Ship Separately,Depth,Height,Weight,Width",
 				fragmentName = "Heading",
@@ -1399,7 +1399,7 @@ definition {
 
 		task ("Given a new Commerce Product type display page template is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
 		}
@@ -1498,7 +1498,7 @@ definition {
 
 		task ("Given a Commerce Product type display page template with fragments is created and mapped with fields") {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageName = "Test Commerce Product DPT",
 				fieldsList = "Availability Status,Inventory,Name",
 				fragmentName = "Heading",
@@ -1508,7 +1508,7 @@ definition {
 
 		task ("And a second Commerce Product type display page template with fragments created and mapped with fields and marked as default") {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageName = "New Commerce Product DPT",
 				fieldsList = "Name,SKU",
 				fragmentName = "Heading",
@@ -1569,7 +1569,7 @@ definition {
 
 		task ("Given a new Commerce Product type display page template with fragments created with mapped fields") {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageName = "Test Commerce Product DPT",
 				fieldsList = "Availability Status,Inventory,Name",
 				fragmentName = "Heading",
@@ -1633,7 +1633,7 @@ definition {
 
 		task ("Given a new Commerce Product type display page template with fragments created with mapped fields") {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageName = "Test Commerce Product DPT",
 				fieldsList = "Availability Status,Inventory,Name",
 				fragmentName = "Heading",
@@ -1741,7 +1741,7 @@ definition {
 
 		task ("Given a new default Commerce Product type display page template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
 		}

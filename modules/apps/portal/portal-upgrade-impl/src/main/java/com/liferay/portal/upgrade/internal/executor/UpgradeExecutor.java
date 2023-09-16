@@ -153,7 +153,10 @@ public class UpgradeExecutor {
 	}
 
 	public List<UpgradeInfo> getUpgradeInfos(String bundleSymbolicName) {
-		return _serviceTrackerMap.getService(bundleSymbolicName);
+		UpgradeStepRegistry upgradeStepRegistry = _serviceTrackerMap.getService(
+			bundleSymbolicName);
+
+		return upgradeStepRegistry.getUpgradeInfos(_portalUpgraded);
 	}
 
 	@Activate
@@ -282,14 +285,14 @@ public class UpgradeExecutor {
 	@Reference
 	private ReleasePublisher _releasePublisher;
 
-	private ServiceTrackerMap<String, List<UpgradeInfo>> _serviceTrackerMap;
+	private ServiceTrackerMap<String, UpgradeStepRegistry> _serviceTrackerMap;
 
 	private class UpgradeStepRegistratorServiceTrackerCustomizer
 		implements EagerServiceTrackerCustomizer
-			<UpgradeStepRegistrator, List<UpgradeInfo>> {
+			<UpgradeStepRegistrator, UpgradeStepRegistry> {
 
 		@Override
-		public List<UpgradeInfo> addingService(
+		public UpgradeStepRegistry addingService(
 			ServiceReference<UpgradeStepRegistrator> serviceReference) {
 
 			Bundle bundle = serviceReference.getBundle();
@@ -301,16 +304,15 @@ public class UpgradeExecutor {
 
 			upgradeStepRegistrator.register(upgradeStepRegistry);
 
-			List<UpgradeStep> releaseUpgradeSteps =
-				upgradeStepRegistry.getReleaseCreationUpgradeSteps();
-
 			String bundleSymbolicName = bundle.getSymbolicName();
 
 			Release release = _releaseLocalService.fetchRelease(
 				bundleSymbolicName);
 
-			if (!releaseUpgradeSteps.isEmpty() && (release == null)) {
-				for (UpgradeStep releaseUpgradeStep : releaseUpgradeSteps) {
+			if (release == null) {
+				for (UpgradeStep releaseUpgradeStep :
+						upgradeStepRegistry.getReleaseCreationUpgradeSteps()) {
+
 					try {
 						UpgradeLogContext.setContext(bundleSymbolicName);
 
@@ -325,14 +327,13 @@ public class UpgradeExecutor {
 				}
 			}
 
-			List<UpgradeInfo> upgradeInfos =
-				upgradeStepRegistry.getUpgradeInfos(_portalUpgraded);
-
 			if (DBUpgrader.isUpgradeDatabaseAutoRunEnabled() ||
 				(release == null)) {
 
 				try {
-					execute(bundle, upgradeInfos);
+					execute(
+						bundle,
+						upgradeStepRegistry.getUpgradeInfos(_portalUpgraded));
 				}
 				catch (Throwable throwable) {
 					_log.error(
@@ -342,19 +343,19 @@ public class UpgradeExecutor {
 				}
 			}
 
-			return upgradeInfos;
+			return upgradeStepRegistry;
 		}
 
 		@Override
 		public void modifiedService(
 			ServiceReference<UpgradeStepRegistrator> serviceReference,
-			List<UpgradeInfo> upgradeInfos) {
+			UpgradeStepRegistry upgradeStepRegistry) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<UpgradeStepRegistrator> serviceReference,
-			List<UpgradeInfo> upgradeInfos) {
+			UpgradeStepRegistry upgradeStepRegistry) {
 		}
 
 	}

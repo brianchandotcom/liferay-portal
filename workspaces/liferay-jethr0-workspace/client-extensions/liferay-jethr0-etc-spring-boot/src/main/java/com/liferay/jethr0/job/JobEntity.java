@@ -149,11 +149,9 @@ public interface JobEntity extends Entity {
 
 	public enum Type {
 
-		DEFAULT_JOB("defaultJob", "Default Job"),
-		MAINTENANCE_JOB("maintenanceJob", "Maintenance Job"),
-		PULL_REQUEST_JOB("pullRequestJob", "Pull Request Job"),
-		UPSTREAM_JOB("upstreamJob", "Upstream Job"),
-		VERIFICATION_JOB("verificationJob", "Verification Job");
+		DEFAULT("default", "Default"),
+		PORTAL_PULL_REQUEST("portalPullRequest", "Portal Pull Request"),
+		PORTAL_PULL_REQUEST_SF("portalPullRequestSF", "Portal Pull Request SF");
 
 		public static Type get(JSONObject jsonObject) {
 			return getByKey(jsonObject.getString("key"));

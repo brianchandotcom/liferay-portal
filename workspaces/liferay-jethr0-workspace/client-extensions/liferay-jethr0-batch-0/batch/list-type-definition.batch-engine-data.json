@@ -230,43 +230,27 @@
 			"externalReferenceCode": "jobType",
 			"listTypeEntries": [
 				{
-					"externalReferenceCode": "defaultJob",
-					"key": "defaultJob",
-					"name": "Default Job",
+					"externalReferenceCode": "default",
+					"key": "default",
+					"name": "Default",
 					"name_i18n": {
-						"en-US": "Default Job"
+						"en-US": "Default"
 					}
 				},
 				{
-					"externalReferenceCode": "maintenanceJob",
-					"key": "maintenanceJob",
-					"name": "Maintenance Job",
+					"externalReferenceCode": "portalPullRequest",
+					"key": "portalPullRequest",
+					"name": "Portal Pull Request",
 					"name_i18n": {
-						"en-US": "Maintenance Job"
+						"en-US": "Portal Pull Request"
 					}
 				},
 				{
-					"externalReferenceCode": "pullRequestJob",
-					"key": "pullRequestJob",
-					"name": "Pull Request Job",
+					"externalReferenceCode": "portalPullRequestSF",
+					"key": "portalPullRequestSF",
+					"name": "Portal Pull Request SF",
 					"name_i18n": {
-						"en-US": "Pull Request Job"
-					}
-				},
-				{
-					"externalReferenceCode": "upstreamJob",
-					"key": "upstreamJob",
-					"name": "Upstream Job",
-					"name_i18n": {
-						"en-US": "Upstream Job"
-					}
-				},
-				{
-					"externalReferenceCode": "verificationJob",
-					"key": "verificationJob",
-					"name": "Verification Job",
-					"name_i18n": {
-						"en-US": "Verification Job"
+						"en-US": "Portal Pull Request SF"
 					}
 				}
 			],

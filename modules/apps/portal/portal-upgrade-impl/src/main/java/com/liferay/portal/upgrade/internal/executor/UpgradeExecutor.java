@@ -13,8 +13,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.index.IndexUpdaterUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -24,7 +22,6 @@ import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.DBUpgrader;
@@ -41,13 +38,11 @@ import java.sql.SQLException;
 
 import java.util.Dictionary;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
-import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -191,7 +186,6 @@ public class UpgradeExecutor {
 	private void _executeUpgradeInfos(
 		Bundle bundle, List<UpgradeInfo> upgradeInfos) {
 
-		int buildNumber = 0;
 		int state = ReleaseConstants.STATE_GOOD;
 
 		String bundleSymbolicName = bundle.getSymbolicName();
@@ -207,8 +201,6 @@ public class UpgradeExecutor {
 				_releaseLocalService.updateRelease(
 					bundleSymbolicName, upgradeInfo.getToSchemaVersionString(),
 					upgradeInfo.getFromSchemaVersionString());
-
-				buildNumber = upgradeInfo.getBuildNumber();
 			}
 		}
 		catch (Exception exception) {
@@ -221,10 +213,6 @@ public class UpgradeExecutor {
 				bundleSymbolicName);
 
 			if (release != null) {
-				if (buildNumber > 0) {
-					release.setBuildNumber(buildNumber);
-				}
-
 				release.setVerified(_isInitialRelease(upgradeInfos));
 				release.setState(state);
 
@@ -304,30 +292,12 @@ public class UpgradeExecutor {
 		public List<UpgradeInfo> addingService(
 			ServiceReference<UpgradeStepRegistrator> serviceReference) {
 
-			int buildNumber = 0;
-
 			Bundle bundle = serviceReference.getBundle();
-
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-			ClassLoader classLoader = bundleWiring.getClassLoader();
-
-			if (classLoader.getResource("service.properties") != null) {
-				Configuration configuration =
-					ConfigurationFactoryUtil.getConfiguration(
-						classLoader, "service");
-
-				Properties properties = configuration.getProperties();
-
-				buildNumber = GetterUtil.getInteger(
-					properties.getProperty("build.number"));
-			}
 
 			UpgradeStepRegistrator upgradeStepRegistrator =
 				_bundleContext.getService(serviceReference);
 
-			UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(
-				buildNumber);
+			UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry();
 
 			upgradeStepRegistrator.register(upgradeStepRegistry);
 

@@ -15,9 +15,14 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactory;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -128,6 +133,21 @@ public class DynamicQueryTest {
 			classNames.toString(), classNames.contains(className1));
 		Assert.assertTrue(
 			classNames.toString(), classNames.contains(className2));
+	}
+
+	@Test
+	public void testLikeEscapeSQLRestriction() throws Exception {
+		_role = RoleTestUtil.addRole("Role%Name", RoleConstants.TYPE_REGULAR);
+
+		DynamicQuery dynamicQuery = _roleLocalService.dynamicQuery();
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.sqlRestriction(
+				"name like 'Role=%%' ESCAPE '=' and roleId > 0"));
+
+		List<Role> roles = _roleLocalService.dynamicQuery(dynamicQuery);
+
+		Assert.assertTrue(roles.contains(_role));
 	}
 
 	@Test
@@ -296,5 +316,11 @@ public class DynamicQueryTest {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@DeleteAfterTestRun
+	private Role _role;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

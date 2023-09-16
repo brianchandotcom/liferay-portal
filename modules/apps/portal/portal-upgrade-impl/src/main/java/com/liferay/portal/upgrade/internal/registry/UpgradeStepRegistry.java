@@ -24,12 +24,16 @@ import org.osgi.framework.Version;
  */
 public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 
+	public UpgradeStepRegistry(boolean portalUpgraded) {
+		_portalUpgraded = portalUpgraded;
+	}
+
 	public List<UpgradeStep> getReleaseCreationUpgradeSteps() {
 		return _releaseCreationUpgradeSteps;
 	}
 
-	public List<UpgradeInfo> getUpgradeInfos(boolean portalUpgraded) {
-		if (_initialization && portalUpgraded) {
+	public List<UpgradeInfo> getUpgradeInfos() {
+		if (_initialization && _portalUpgraded) {
 			if (_upgradeInfos.isEmpty()) {
 				return Arrays.asList(
 					new UpgradeInfo("0.0.0", "1.0.0", new DummyUpgradeStep()));
@@ -123,6 +127,7 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 	}
 
 	private boolean _initialization;
+	private final boolean _portalUpgraded;
 	private final List<UpgradeStep> _releaseCreationUpgradeSteps =
 		new ArrayList<>();
 	private final List<UpgradeInfo> _upgradeInfos = new ArrayList<>();

@@ -156,7 +156,7 @@ public class UpgradeExecutor {
 		UpgradeStepRegistry upgradeStepRegistry = _serviceTrackerMap.getService(
 			bundleSymbolicName);
 
-		return upgradeStepRegistry.getUpgradeInfos(_portalUpgraded);
+		return upgradeStepRegistry.getUpgradeInfos();
 	}
 
 	@Activate
@@ -300,7 +300,8 @@ public class UpgradeExecutor {
 			UpgradeStepRegistrator upgradeStepRegistrator =
 				_bundleContext.getService(serviceReference);
 
-			UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry();
+			UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(
+				_portalUpgraded);
 
 			upgradeStepRegistrator.register(upgradeStepRegistry);
 
@@ -331,9 +332,7 @@ public class UpgradeExecutor {
 				(release == null)) {
 
 				try {
-					execute(
-						bundle,
-						upgradeStepRegistry.getUpgradeInfos(_portalUpgraded));
+					execute(bundle, upgradeStepRegistry.getUpgradeInfos());
 				}
 				catch (Throwable throwable) {
 					_log.error(

@@ -51,26 +51,6 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 		String fromSchemaVersionString, String toSchemaVersionString,
 		UpgradeStep... upgradeSteps) {
 
-		_createUpgradeInfos(
-			fromSchemaVersionString, toSchemaVersionString, upgradeSteps);
-	}
-
-	@Override
-	public void registerInitialization() {
-		_initialization = true;
-	}
-
-	@Override
-	public void registerReleaseCreationUpgradeSteps(
-		UpgradeStep... upgradeSteps) {
-
-		Collections.addAll(_releaseCreationUpgradeSteps, upgradeSteps);
-	}
-
-	private void _createUpgradeInfos(
-		String fromSchemaVersionString, String toSchemaVersionString,
-		UpgradeStep... upgradeSteps) {
-
 		if (ArrayUtil.isEmpty(upgradeSteps)) {
 			return;
 		}
@@ -108,6 +88,18 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 						}
 					}));
 		}
+	}
+
+	@Override
+	public void registerInitialization() {
+		_initialization = true;
+	}
+
+	@Override
+	public void registerReleaseCreationUpgradeSteps(
+		UpgradeStep... upgradeSteps) {
+
+		Collections.addAll(_releaseCreationUpgradeSteps, upgradeSteps);
 	}
 
 	private String _getFinalSchemaVersion(List<UpgradeInfo> upgradeInfos) {

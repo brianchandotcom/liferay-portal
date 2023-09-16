@@ -1,0 +1,35 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {useEffect} from 'react';
+import {Navigate} from 'react-router-dom';
+
+let oAuth2Client;
+
+try {
+	oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
+		'liferay-jethr0-etc-spring-boot-oauth-application-user-agent'
+	);
+}
+catch (error) {
+	console.error(error);
+}
+
+function postSpringBootData({data, redirect, urlPath}) {
+	oAuth2Client
+		?.fetch(urlPath, {method: 'POST', body: JSON.stringify(data)})
+		.then((response) => response.text())
+		.then((data) => {
+			if (redirect !== null) {
+				redirect(data);
+			}
+		})
+		.catch((error) => {
+			// eslint-disable-next-line no-console
+			console.log(error);
+		});
+}
+
+export default postSpringBootData;

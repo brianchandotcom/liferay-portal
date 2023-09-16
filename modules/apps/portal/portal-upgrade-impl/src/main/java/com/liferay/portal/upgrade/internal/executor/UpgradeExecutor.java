@@ -295,15 +295,10 @@ public class UpgradeExecutor {
 		public UpgradeStepRegistry addingService(
 			ServiceReference<UpgradeStepRegistrator> serviceReference) {
 
-			Bundle bundle = serviceReference.getBundle();
-
-			UpgradeStepRegistrator upgradeStepRegistrator =
-				_bundleContext.getService(serviceReference);
-
 			UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(
-				_portalUpgraded);
+				_bundleContext, _portalUpgraded, serviceReference);
 
-			upgradeStepRegistrator.register(upgradeStepRegistry);
+			Bundle bundle = serviceReference.getBundle();
 
 			String bundleSymbolicName = bundle.getSymbolicName();
 
@@ -355,6 +350,8 @@ public class UpgradeExecutor {
 		public void removedService(
 			ServiceReference<UpgradeStepRegistrator> serviceReference,
 			UpgradeStepRegistry upgradeStepRegistry) {
+
+			upgradeStepRegistry.destroy();
 		}
 
 	}

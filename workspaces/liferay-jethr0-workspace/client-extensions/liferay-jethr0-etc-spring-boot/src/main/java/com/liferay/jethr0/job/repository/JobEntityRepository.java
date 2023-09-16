@@ -36,9 +36,17 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 			"name", name
 		).put(
 			"priority", priority
-		).put(
-			"startDate", StringUtil.toString(startDate)
-		).put(
+		);
+
+		if (startDate != null) {
+			jsonObject.put("startDate", StringUtil.toString(startDate));
+		}
+
+		if (state == null) {
+			state = JobEntity.State.OPENED;
+		}
+
+		jsonObject.put(
 			"state", state.getJSONObject()
 		).put(
 			"type", type.getJSONObject()

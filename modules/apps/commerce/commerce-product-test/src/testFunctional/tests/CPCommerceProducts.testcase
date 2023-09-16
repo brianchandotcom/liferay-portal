@@ -750,7 +750,7 @@ definition {
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Commerce Product");
+			workflowResourceValue = "Product");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",
@@ -773,7 +773,7 @@ definition {
 
 			Workflow.configureWorkflow(
 				workflowDefinition = "No Workflow",
-				workflowResourceValue = "Commerce Product");
+				workflowResourceValue = "Product");
 		}
 	}
 

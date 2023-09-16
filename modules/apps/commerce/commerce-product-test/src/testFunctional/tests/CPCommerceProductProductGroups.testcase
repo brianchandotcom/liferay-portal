@@ -113,7 +113,7 @@ definition {
 			customFieldName = "Custom Field",
 			customFieldType = "Input Field",
 			customInputDataType = "Text",
-			resourceName = "Commerce Product Group");
+			resourceName = "Product Group");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

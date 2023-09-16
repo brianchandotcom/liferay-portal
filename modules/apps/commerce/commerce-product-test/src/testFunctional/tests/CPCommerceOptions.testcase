@@ -31,7 +31,7 @@ definition {
 				customFieldName = "Test Custom Input Field",
 				customFieldType = "Input Field",
 				customInputDataType = "Text",
-				resourceName = "Commerce Product Option Value");
+				resourceName = "Product Option Value");
 		}
 
 		task ("And a new select from list option is created with an option value") {

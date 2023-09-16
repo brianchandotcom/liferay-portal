@@ -118,7 +118,7 @@ definition {
 
 		task ("And creates a new DPT with 'Commerce Product' as content type") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
 		}
@@ -260,7 +260,7 @@ definition {
 
 		task ("And creates a new DPT with 'Commerce Product' as content type") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Test Commerce Product Display Page Template",
 				groupName = "Minium");
 		}

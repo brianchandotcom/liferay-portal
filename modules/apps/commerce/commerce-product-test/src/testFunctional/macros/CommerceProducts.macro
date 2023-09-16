@@ -600,7 +600,7 @@ definition {
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "No Workflow",
-			workflowResourceValue = "Commerce Product");
+			workflowResourceValue = "Product");
 	}
 
 	macro discontinueSKU {
@@ -679,7 +679,7 @@ definition {
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Commerce Product");
+			workflowResourceValue = "Product");
 	}
 
 	macro isProductIdsEqual {

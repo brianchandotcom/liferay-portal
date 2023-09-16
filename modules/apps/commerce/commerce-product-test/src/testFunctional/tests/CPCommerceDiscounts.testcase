@@ -499,7 +499,7 @@ definition {
 
 			Workflow.configureWorkflow(
 				workflowDefinition = "Single Approver",
-				workflowResourceValue = "Commerce Discount");
+				workflowResourceValue = "Discount");
 		}
 
 		task ("When a new discount is created") {

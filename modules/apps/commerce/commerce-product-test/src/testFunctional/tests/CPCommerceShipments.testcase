@@ -770,7 +770,7 @@ definition {
 				customFieldName = "Shipments Input Custom Field",
 				customFieldType = "Input Field",
 				customInputDataType = "Text",
-				resourceName = "Commerce Shipment");
+				resourceName = "Shipment");
 		}
 
 		task ("And given the buyer places an order") {
@@ -875,7 +875,7 @@ definition {
 
 			CustomFields.deleteCP(
 				customFieldName = "Shipments Input Custom Field",
-				resourceName = "Commerce Shipment");
+				resourceName = "Shipment");
 
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
@@ -924,7 +924,7 @@ definition {
 			CustomFields.addCP(
 				customFieldName = "Shipments Text Area",
 				customFieldType = "Text Area",
-				resourceName = "Commerce Shipment");
+				resourceName = "Shipment");
 		}
 
 		task ("And given the buyer places an order") {

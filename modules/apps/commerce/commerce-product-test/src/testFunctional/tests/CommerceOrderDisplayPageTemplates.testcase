@@ -59,7 +59,7 @@ definition {
 
 		task ("And a new Display Page Template for Commerce Order is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Order",
+				contentType = "Order",
 				displayPageTemplateEntryName = "Test Commerce Order Display Page Template",
 				groupName = "Minium");
 		}
@@ -165,7 +165,7 @@ definition {
 
 		task ("And a new Display Page Template for Commerce Order is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Order",
+				contentType = "Order",
 				displayPageTemplateEntryName = "Test Commerce Order Display Page Template",
 				groupName = "Minium");
 		}
@@ -279,7 +279,7 @@ definition {
 
 		task ("And a new Display Page Template for Commerce Order is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Order",
+				contentType = "Order",
 				displayPageTemplateEntryName = "Test Commerce Order Display Page Template",
 				groupName = "Minium");
 		}
@@ -378,7 +378,7 @@ definition {
 
 		task ("And a new Display Page Template for Commerce Order is created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Order",
+				contentType = "Order",
 				displayPageTemplateEntryName = "Test Commerce Order Display Page Template",
 				groupName = "Minium");
 		}
@@ -461,7 +461,7 @@ definition {
 
 		task ("And a new Commerce Order type display page template with fragments is created and mapped with the order related fields") {
 			CommerceDisplayPageTemplates.addMappedDisplayPageTemplateEntry(
-				contentType = "Commerce Order",
+				contentType = "Order",
 				displayPageName = "Test Commerce Order Display Page Template",
 				fieldsList = "Account Name,Order Status,User Name,Formatted Total Amount,Approved",
 				fragmentName = "Heading",

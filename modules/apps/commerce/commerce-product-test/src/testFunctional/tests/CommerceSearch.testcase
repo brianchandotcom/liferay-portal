@@ -383,12 +383,12 @@ definition {
 
 		AssertElementPresent(
 			key_contentName = "U-Joint",
-			key_contentType = "Commerce Product",
+			key_contentType = "Product",
 			locator1 = "Search#SEARCH_RESULT_WIDGET");
 
 		AssertElementPresent(
 			key_contentName = "Ball Joint",
-			key_contentType = "Commerce Product",
+			key_contentType = "Product",
 			locator1 = "Search#SEARCH_RESULT_WIDGET");
 	}
 

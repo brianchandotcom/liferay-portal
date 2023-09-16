@@ -271,7 +271,7 @@ definition {
 			customFieldName = "Custom Field",
 			customFieldType = "Text",
 			customInputDataType = "Text",
-			resourceName = "Commerce Product Attachment");
+			resourceName = "Product Attachment");
 
 		CommerceNavigator.gotoPortlet(
 			category = "Product Management",

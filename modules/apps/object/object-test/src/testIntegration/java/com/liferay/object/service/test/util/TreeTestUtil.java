@@ -139,7 +139,20 @@ public class TreeTestUtil {
 			edge.getObjectRelationshipId());
 	}
 
-	public static void iterateNodeObjectDefinitions(
+	public static void unbind(
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			String objectDefinitionName)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), objectDefinitionName);
+
+		objectDefinitionLocalService.unbindObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
+	}
+
+	public static void unsafeForEachRemaining(
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			Tree tree,
 			UnsafeConsumer<ObjectDefinition, Exception> unsafeConsumer)
@@ -154,19 +167,6 @@ public class TreeTestUtil {
 				objectDefinitionLocalService.getObjectDefinition(
 					node.getObjectDefinitionId()));
 		}
-	}
-
-	public static void unbind(
-			ObjectDefinitionLocalService objectDefinitionLocalService,
-			String objectDefinitionName)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(), objectDefinitionName);
-
-		objectDefinitionLocalService.unbindObjectDefinition(
-			objectDefinition.getObjectDefinitionId());
 	}
 
 	private static String _getShortName(

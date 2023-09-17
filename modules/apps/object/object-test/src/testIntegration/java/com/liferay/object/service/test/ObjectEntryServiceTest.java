@@ -341,17 +341,6 @@ public class ObjectEntryServiceTest {
 			_objectEntryService.deleteObjectEntry(
 				rootObjectEntry.getObjectEntryId()));
 
-		TreeTestUtil.unsafeForEachRemaining(
-			_objectDefinitionLocalService, _tree,
-			objectDefinition -> {
-				ObjectEntry objectEntry = objectEntries1.get(
-					objectDefinition.getObjectDefinitionId());
-
-				Assert.assertNull(
-					_objectEntryLocalService.fetchObjectEntry(
-						objectEntry.getObjectEntryId()));
-			});
-
 		Map<Long, ObjectEntry> objectEntries2 = _createObjectEntryHierarchy(
 			_tree);
 

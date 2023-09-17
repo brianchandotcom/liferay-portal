@@ -84,7 +84,7 @@ Calendar cal = CalendarFactoryUtil.getCalendar(timeZone, locale);
 	</aui:field-wrapper>
 </aui:fieldset>
 
-<liferay-ui:input-repeat />
+<liferay-util:include page="/admin/report/input_repeat.jsp" servletContext="<%= application %>" />
 
 <aui:script>
 	function <portlet:namespace />showTable(id) {

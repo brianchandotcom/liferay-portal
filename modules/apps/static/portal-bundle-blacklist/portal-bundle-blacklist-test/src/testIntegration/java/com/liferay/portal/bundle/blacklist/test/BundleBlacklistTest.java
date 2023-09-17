@@ -25,7 +25,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
 
@@ -148,7 +150,7 @@ public class BundleBlacklistTest {
 		Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
 
 		Collection<String> blacklistBundleSymbolicNames =
-			_bundleBlacklistManager.getBlacklistBundleSymbolicNames();
+			_getBlacklistBundleSymbolicNames();
 
 		Assert.assertFalse(
 			_SYMBOLIC_NAME + " should not be blacklisted",
@@ -162,8 +164,7 @@ public class BundleBlacklistTest {
 				_SYMBOLIC_NAME.equals(curBundle.getSymbolicName()));
 		}
 
-		blacklistBundleSymbolicNames =
-			_bundleBlacklistManager.getBlacklistBundleSymbolicNames();
+		blacklistBundleSymbolicNames = _getBlacklistBundleSymbolicNames();
 
 		Assert.assertTrue(
 			_SYMBOLIC_NAME + " should be blacklisted",
@@ -175,8 +176,7 @@ public class BundleBlacklistTest {
 
 		Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
 
-		blacklistBundleSymbolicNames =
-			_bundleBlacklistManager.getBlacklistBundleSymbolicNames();
+		blacklistBundleSymbolicNames = _getBlacklistBundleSymbolicNames();
 
 		Assert.assertFalse(
 			_SYMBOLIC_NAME + " should not be blacklisted",
@@ -342,6 +342,26 @@ public class BundleBlacklistTest {
 		}
 
 		return bundle;
+	}
+
+	private Collection<String> _getBlacklistBundleSymbolicNames()
+		throws Exception {
+
+		Configuration configuration = OSGiServiceUtil.callService(
+			_bundleContext, ConfigurationAdmin.class,
+			configurationAdmin -> configurationAdmin.getConfiguration(
+				_CONFIG_NAME, StringPool.QUESTION));
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		String[] blacklistBundleSymbolicNames = (String[])properties.get(
+			_PROP_KEY);
+
+		if (blacklistBundleSymbolicNames == null) {
+			return Collections.emptyList();
+		}
+
+		return Arrays.asList(blacklistBundleSymbolicNames);
 	}
 
 	private void _updateConfiguration(Dictionary<String, Object> dictionary)

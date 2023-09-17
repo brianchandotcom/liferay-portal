@@ -7,8 +7,6 @@ package com.liferay.portal.bundle.blacklist;
 
 import java.io.IOException;
 
-import java.util.Collection;
-
 /**
  * @author Preston Crary
  */
@@ -16,8 +14,6 @@ public interface BundleBlacklistManager {
 
 	public void addToBlacklistAndUninstall(String... bundleSymbolicNames)
 		throws IOException;
-
-	public Collection<String> getBlacklistBundleSymbolicNames();
 
 	public void removeFromBlacklistAndInstall(String... bundleSymbolicNames)
 		throws IOException;

@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Set;
@@ -58,11 +57,6 @@ public class BundleBlacklistManagerImpl implements BundleBlacklistManager {
 
 				return blacklistBundleSymbolicNamesSet.toArray(new String[0]);
 			});
-	}
-
-	@Override
-	public Collection<String> getBlacklistBundleSymbolicNames() {
-		return _bundleBlacklist.getBlacklistBundleSymbolicNames();
 	}
 
 	@Override

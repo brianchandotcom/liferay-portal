@@ -13,6 +13,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
+import com.liferay.object.definition.tree.Edge;
 import com.liferay.object.definition.tree.Node;
 import com.liferay.object.definition.tree.Tree;
 import com.liferay.object.definition.tree.TreeFactory;
@@ -749,21 +750,6 @@ public class ObjectEntryServiceTest {
 				continue;
 			}
 
-			ObjectRelationship objectRelationship =
-				_objectRelationshipLocalService.getObjectRelationship(
-					node.getEdge(
-					).getObjectRelationshipId());
-
-			ObjectDefinition parentObjectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectRelationship.getObjectDefinitionId1());
-
-			ObjectEntry objectEntry = objectEntries.get(
-				parentObjectDefinition.getName());
-
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				objectRelationship.getObjectFieldId2());
-
 			objectEntries.put(
 				objectDefinition.getName(),
 				_objectEntryLocalService.addObjectEntry(
@@ -772,7 +758,33 @@ public class ObjectEntryServiceTest {
 					HashMapBuilder.<String, Serializable>put(
 						"able", RandomStringUtils.randomAlphabetic(5)
 					).put(
-						objectField.getName(), objectEntry.getObjectEntryId()
+						() -> {
+							Edge edge = node.getEdge();
+
+							ObjectRelationship objectRelationship =
+								_objectRelationshipLocalService.
+									getObjectRelationship(
+										edge.getObjectRelationshipId());
+
+							ObjectField objectField =
+								_objectFieldLocalService.getObjectField(
+									objectRelationship.getObjectFieldId2());
+
+							return objectField.getName();
+						},
+						() -> {
+							Node parentNode = node.getParentNode();
+
+							ObjectDefinition parentObjectDefinition =
+								_objectDefinitionLocalService.
+									getObjectDefinition(
+										parentNode.getObjectDefinitionId());
+
+							ObjectEntry objectEntry = objectEntries.get(
+								parentObjectDefinition.getName());
+
+							return objectEntry.getObjectEntryId();
+						}
 					).build(),
 					ServiceContextTestUtil.getServiceContext(
 						TestPropsValues.getGroupId(), _adminUser.getUserId())));

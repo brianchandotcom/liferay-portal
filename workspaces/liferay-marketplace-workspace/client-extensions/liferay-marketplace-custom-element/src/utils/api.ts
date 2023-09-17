@@ -58,7 +58,7 @@ export function createApp({
 			active: true,
 			catalogId,
 			categories: appCategories,
-			configuration: {allowBackOrder: true, maxOrderQuantity: 1},
+			productConfiguration: {allowBackOrder: true, maxOrderQuantity: 1},
 			description: {en_US: appDescription},
 			name: {en_US: appName},
 			productChannels,
@@ -882,8 +882,7 @@ export async function postTrialProductOption(
 			body: JSON.stringify([
 				{
 					description: {
-						en_US:
-							'Specifies if a trial exists for a given app or solution submission.',
+						en_US: 'Specifies if a trial exists for a given app or solution submission.',
 					},
 					facetable: true,
 					fieldType: 'radio',

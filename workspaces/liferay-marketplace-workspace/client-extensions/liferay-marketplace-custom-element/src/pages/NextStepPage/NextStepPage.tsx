@@ -96,7 +96,7 @@ export function NextStepPage({
 								<AccountAndAppCard
 									category="Application"
 									logo={
-										!appLogo
+										appLogo
 											? showAppImage(
 													appLogo as string
 											  ).replace(
@@ -131,7 +131,7 @@ export function NextStepPage({
 							description={
 								header?.description ?? (
 									<>
-										Congratulations on the purchase of
+										Congratulations on the purchase of&nbsp;
 										<b>{appName}</b>. You will now need to
 										configure the app in the Cloud Console.
 										To access the Cloud Console, click the

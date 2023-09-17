@@ -49,7 +49,9 @@ export function AccountSelector({
 			setActiveAccounts(filteredAccounts);
 		};
 
-		getAccountInfos();
+		if (accounts) {
+			getAccountInfos();
+		}
 	}, [accounts, setActiveAccounts, setSelectedAccount]);
 
 	return (

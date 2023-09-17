@@ -5,24 +5,20 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/input_repeat/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-repeat:cssClass"));
-
-Recurrence recurrence = null;
-
-int recurrenceType = ParamUtil.getInteger(request, "recurrenceType", Recurrence.NO_RECURRENCE);
 int dailyType = ParamUtil.getInteger(request, "dailyType");
 int monthlyType = ParamUtil.getInteger(request, "monthlyType");
-int yearlyType = ParamUtil.getInteger(request, "yearlyType");
-int yearlyMonth0 = ParamUtil.getInteger(request, "yearlyMonth0", Calendar.JANUARY);
-int yearlyPos = ParamUtil.getInteger(request, "yearlyPos", 1);
+int recurrenceType = ParamUtil.getInteger(request, "recurrenceType", Recurrence.NO_RECURRENCE);
 int yearlyDay1 = ParamUtil.getInteger(request, "yearlyDay1", Calendar.SUNDAY);
+int yearlyMonth0 = ParamUtil.getInteger(request, "yearlyMonth0", Calendar.JANUARY);
 int yearlyMonth1 = ParamUtil.getInteger(request, "yearlyMonth1", Calendar.JANUARY);
+int yearlyPos = ParamUtil.getInteger(request, "yearlyPos", 1);
+int yearlyType = ParamUtil.getInteger(request, "yearlyType");
 %>
 
-<aui:fieldset cssClass='<%= "taglib-input-repeat " + cssClass %>'>
+<aui:fieldset cssClass="taglib-input-repeat">
 	<div class="col-md-3" id="<portlet:namespace />eventsContainer">
 		<aui:field-wrapper label="repeat" name="recurrenceType">
 			<aui:input checked="<%= recurrenceType == Recurrence.NO_RECURRENCE %>" id="recurrenceTypeNever" label="never" name="recurrenceType" type="radio" value="<%= Recurrence.NO_RECURRENCE %>" />
@@ -59,25 +55,25 @@ int yearlyMonth1 = ParamUtil.getInteger(request, "yearlyMonth1", Calendar.JANUAR
 
 			<div class="clearfix pt-3 row weekdays">
 				<div class="col-md-3">
-					<aui:input inlineLabel="right" label="<%= days[0] %>" name='<%= "weeklyDayPos" + Calendar.SUNDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.SUNDAY, recurrence) %>" />
+					<aui:input inlineLabel="right" label="<%= days[0] %>" name='<%= "weeklyDayPos" + Calendar.SUNDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.SUNDAY) %>" />
 
-					<aui:input inlineLabel="right" label="<%= days[4] %>" name='<%= "weeklyDayPos" + Calendar.THURSDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.THURSDAY, recurrence) %>" />
+					<aui:input inlineLabel="right" label="<%= days[4] %>" name='<%= "weeklyDayPos" + Calendar.THURSDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.THURSDAY) %>" />
 				</div>
 
 				<div class="col-md-3">
-					<aui:input inlineLabel="right" label="<%= days[1] %>" name='<%= "weeklyDayPos" + Calendar.MONDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.MONDAY, recurrence) %>" />
+					<aui:input inlineLabel="right" label="<%= days[1] %>" name='<%= "weeklyDayPos" + Calendar.MONDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.MONDAY) %>" />
 
-					<aui:input inlineLabel="right" label="<%= days[5] %>" name='<%= "weeklyDayPos" + Calendar.FRIDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.FRIDAY, recurrence) %>" />
+					<aui:input inlineLabel="right" label="<%= days[5] %>" name='<%= "weeklyDayPos" + Calendar.FRIDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.FRIDAY) %>" />
 				</div>
 
 				<div class="col-md-3">
-					<aui:input inlineLabel="right" label="<%= days[2] %>" name='<%= "weeklyDayPos" + Calendar.TUESDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.TUESDAY, recurrence) %>" />
+					<aui:input inlineLabel="right" label="<%= days[2] %>" name='<%= "weeklyDayPos" + Calendar.TUESDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.TUESDAY) %>" />
 
-					<aui:input inlineLabel="right" label="<%= days[6] %>" name='<%= "weeklyDayPos" + Calendar.SATURDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.SATURDAY, recurrence) %>" />
+					<aui:input inlineLabel="right" label="<%= days[6] %>" name='<%= "weeklyDayPos" + Calendar.SATURDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.SATURDAY) %>" />
 				</div>
 
 				<div class="col-md-3">
-					<aui:input inlineLabel="right" label="<%= days[3] %>" name='<%= "weeklyDayPos" + Calendar.WEDNESDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.WEDNESDAY, recurrence) %>" />
+					<aui:input inlineLabel="right" label="<%= days[3] %>" name='<%= "weeklyDayPos" + Calendar.WEDNESDAY %>' type="checkbox" value="<%= _getWeeklyDayPos(request, Calendar.WEDNESDAY) %>" />
 				</div>
 			</div>
 		</div>
@@ -215,7 +211,7 @@ int yearlyMonth1 = ParamUtil.getInteger(request, "yearlyMonth1", Calendar.JANUAR
 </aui:script>
 
 <%!
-private boolean _getWeeklyDayPos(HttpServletRequest req, int day, Recurrence recurrence) {
+private boolean _getWeeklyDayPos(HttpServletRequest req, int day) {
 	return ParamUtil.getBoolean(req, "weeklyDayPos" + day);
 }
 %>

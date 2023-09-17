@@ -226,9 +226,6 @@ definition {
 	macro _getUserIdByEmailAddress {
 		Variables.assertDefined(parameterList = ${userEmailAddress});
 
-		var creatorEmailAddress = JSONUtil2.getSuperAdminUserEmail();
-		var creatorPassword = JSONUtil2.getSuperAdminUserPassword();
-
 		var companyId = JSONCompany.getCompanyIdNoSelenium(
 			creatorEmailAddress = ${creatorEmailAddress},
 			creatorPassword = ${creatorPassword},
@@ -238,7 +235,20 @@ definition {
 			var portalURL = ${specificURL};
 		}
 		else {
-			var portalURL = JSONCompany.getDefaultPortalURL();
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(creatorEmailAddress))) {
+			if (isSet(specificURL)) {
+				var creatorEmailAddress = ${userEmailAddress};
+			}
+			else {
+				var creatorEmailAddress = JSONUtil2.getSuperAdminUserEmail();
+			}
+		}
+
+		if (!(isSet(creatorPassword))) {
+			var creatorPassword = JSONUtil2.getSuperAdminUserPassword();
 		}
 
 		var curl = '''

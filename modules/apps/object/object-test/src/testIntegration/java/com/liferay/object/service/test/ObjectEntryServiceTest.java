@@ -281,14 +281,14 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_user);
 
-		Map<String, ObjectEntry> objectEntries1 = _createObjectEntryHierarchy(
+		Map<Long, ObjectEntry> objectEntries1 = _createObjectEntryHierarchy(
 			_tree);
 
 		TreeTestUtil.unsafeForEachRemaining(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries1.get(
-					objectDefinition.getName());
+					objectDefinition.getObjectDefinitionId());
 
 				if (objectDefinition.isRootDescendantNode()) {
 					_resourcePermissionLocalService.addModelResourcePermissions(
@@ -320,13 +320,13 @@ public class ObjectEntryServiceTest {
 				}
 
 				ObjectEntry objectEntry = objectEntries1.get(
-					objectDefinition.getName());
+					objectDefinition.getObjectDefinitionId());
 
 				_assertPrincipalException(ActionKeys.DELETE, null, objectEntry);
 			});
 
 		ObjectEntry rootObjectEntry = objectEntries1.get(
-			_rootObjectDefinition.getName());
+			_rootObjectDefinition.getObjectDefinitionId());
 
 		_resourcePermissionLocalService.addModelResourcePermissions(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
@@ -346,17 +346,18 @@ public class ObjectEntryServiceTest {
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries1.get(
-					objectDefinition.getName());
+					objectDefinition.getObjectDefinitionId());
 
 				Assert.assertNull(
 					_objectEntryLocalService.fetchObjectEntry(
 						objectEntry.getObjectEntryId()));
 			});
 
-		Map<String, ObjectEntry> objectEntries2 = _createObjectEntryHierarchy(
+		Map<Long, ObjectEntry> objectEntries2 = _createObjectEntryHierarchy(
 			_tree);
 
-		rootObjectEntry = objectEntries2.get(_rootObjectDefinition.getName());
+		rootObjectEntry = objectEntries2.get(
+			_rootObjectDefinition.getObjectDefinitionId());
 
 		_resourcePermissionLocalService.addModelResourcePermissions(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
@@ -374,7 +375,7 @@ public class ObjectEntryServiceTest {
 			_objectEntryService.deleteObjectEntry(
 				rootObjectEntry.getObjectEntryId()));
 
-		Map<String, ObjectEntry> objectEntries3 = _createObjectEntryHierarchy(
+		Map<Long, ObjectEntry> objectEntries3 = _createObjectEntryHierarchy(
 			_tree);
 
 		_resourcePermissionLocalService.addResourcePermission(
@@ -384,7 +385,8 @@ public class ObjectEntryServiceTest {
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ActionKeys.DELETE);
 
-		rootObjectEntry = objectEntries3.get(_rootObjectDefinition.getName());
+		rootObjectEntry = objectEntries3.get(
+			_rootObjectDefinition.getObjectDefinitionId());
 
 		Assert.assertNotNull(
 			_objectEntryService.deleteObjectEntry(
@@ -394,19 +396,20 @@ public class ObjectEntryServiceTest {
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries3.get(
-					objectDefinition.getName());
+					objectDefinition.getObjectDefinitionId());
 
 				Assert.assertNull(
 					_objectEntryLocalService.fetchObjectEntry(
 						objectEntry.getObjectEntryId()));
 			});
 
-		Map<String, ObjectEntry> objectEntries4 = _createObjectEntryHierarchy(
+		Map<Long, ObjectEntry> objectEntries4 = _createObjectEntryHierarchy(
 			_tree);
 
 		_assertDeleteBoundedObjectEntries(objectEntries4, _tree);
 
-		rootObjectEntry = objectEntries4.get(_rootObjectDefinition.getName());
+		rootObjectEntry = objectEntries4.get(
+			_rootObjectDefinition.getObjectDefinitionId());
 
 		Assert.assertNotNull(
 			_objectEntryService.deleteObjectEntry(
@@ -459,14 +462,14 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_user);
 
-		Map<String, ObjectEntry> objectEntries1 = _createObjectEntryHierarchy(
+		Map<Long, ObjectEntry> objectEntries1 = _createObjectEntryHierarchy(
 			_tree);
 
 		TreeTestUtil.unsafeForEachRemaining(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries1.get(
-					objectDefinition.getName());
+					objectDefinition.getObjectDefinitionId());
 
 				if (objectDefinition.isRootDescendantNode()) {
 					_resourcePermissionLocalService.addModelResourcePermissions(
@@ -498,13 +501,13 @@ public class ObjectEntryServiceTest {
 				}
 
 				ObjectEntry objectEntry = objectEntries1.get(
-					objectDefinition.getName());
+					objectDefinition.getObjectDefinitionId());
 
 				_assertPrincipalException(ActionKeys.VIEW, null, objectEntry);
 			});
 
 		ObjectEntry rootObjectEntry = objectEntries1.get(
-			_rootObjectDefinition.getName());
+			_rootObjectDefinition.getObjectDefinitionId());
 
 		_resourcePermissionLocalService.addModelResourcePermissions(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
@@ -516,20 +519,21 @@ public class ObjectEntryServiceTest {
 				).build(),
 				_rootObjectDefinition.getClassName()));
 
-		Map<String, ObjectEntry> objectEntries2 = _createObjectEntryHierarchy(
+		Map<Long, ObjectEntry> objectEntries2 = _createObjectEntryHierarchy(
 			_tree);
 
 		TreeTestUtil.unsafeForEachRemaining(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries1.get(
-					objectDefinition.getName());
+					objectDefinition.getObjectDefinitionId());
 
 				Assert.assertNotNull(
 					_objectEntryService.getObjectEntry(
 						objectEntry.getObjectEntryId()));
 
-				objectEntry = objectEntries2.get(objectDefinition.getName());
+				objectEntry = objectEntries2.get(
+					objectDefinition.getObjectDefinitionId());
 
 				_assertPrincipalException(ActionKeys.VIEW, null, objectEntry);
 			});
@@ -545,7 +549,7 @@ public class ObjectEntryServiceTest {
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries2.get(
-					objectDefinition.getName());
+					objectDefinition.getObjectDefinitionId());
 
 				Assert.assertNotNull(
 					_objectEntryService.getObjectEntry(
@@ -655,7 +659,7 @@ public class ObjectEntryServiceTest {
 	}
 
 	private void _assertDeleteBoundedObjectEntries(
-			Map<String, ObjectEntry> objectEntries, Tree tree)
+			Map<Long, ObjectEntry> objectEntries, Tree tree)
 		throws Exception {
 
 		for (int depth = 2; depth > 1; depth--) {
@@ -669,7 +673,7 @@ public class ObjectEntryServiceTest {
 
 					if (node.getDepth() == finalDepth) {
 						ObjectEntry objectEntry = objectEntries.get(
-							objectDefinition.getName());
+							objectDefinition.getObjectDefinitionId());
 
 						Assert.assertNotNull(
 							_objectEntryService.deleteObjectEntry(
@@ -720,26 +724,21 @@ public class ObjectEntryServiceTest {
 		}
 	}
 
-	private Map<String, ObjectEntry> _createObjectEntryHierarchy(Tree tree)
+	private Map<Long, ObjectEntry> _createObjectEntryHierarchy(Tree tree)
 		throws Exception {
 
 		Iterator<Node> iterator = tree.iterator();
 
-		Map<String, ObjectEntry> objectEntries = new HashMap<>();
+		Map<Long, ObjectEntry> objectEntries = new HashMap<>();
 
 		while (iterator.hasNext()) {
 			Node node = iterator.next();
 
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					node.getObjectDefinitionId());
-
 			if (node.isRoot()) {
 				objectEntries.put(
-					objectDefinition.getName(),
+					node.getObjectDefinitionId(),
 					_objectEntryLocalService.addObjectEntry(
-						_adminUser.getUserId(), 0,
-						objectDefinition.getObjectDefinitionId(),
+						_adminUser.getUserId(), 0, node.getObjectDefinitionId(),
 						HashMapBuilder.<String, Serializable>put(
 							"able", RandomStringUtils.randomAlphabetic(5)
 						).build(),
@@ -751,10 +750,9 @@ public class ObjectEntryServiceTest {
 			}
 
 			objectEntries.put(
-				objectDefinition.getName(),
+				node.getObjectDefinitionId(),
 				_objectEntryLocalService.addObjectEntry(
-					_adminUser.getUserId(), 0,
-					objectDefinition.getObjectDefinitionId(),
+					_adminUser.getUserId(), 0, node.getObjectDefinitionId(),
 					HashMapBuilder.<String, Serializable>put(
 						"able", RandomStringUtils.randomAlphabetic(5)
 					).put(
@@ -781,7 +779,7 @@ public class ObjectEntryServiceTest {
 										parentNode.getObjectDefinitionId());
 
 							ObjectEntry objectEntry = objectEntries.get(
-								parentObjectDefinition.getName());
+								parentObjectDefinition.getObjectDefinitionId());
 
 							return objectEntry.getObjectEntryId();
 						}

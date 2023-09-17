@@ -733,8 +733,6 @@ public class ObjectEntryServiceTest {
 				_objectDefinitionLocalService.getObjectDefinition(
 					node.getObjectDefinitionId());
 
-			ObjectEntry objectEntry = null;
-
 			if (node.isRoot()) {
 				objectEntries.put(
 					objectDefinition.getName(),
@@ -760,7 +758,8 @@ public class ObjectEntryServiceTest {
 				_objectDefinitionLocalService.getObjectDefinition(
 					objectRelationship.getObjectDefinitionId1());
 
-			objectEntry = objectEntries.get(parentObjectDefinition.getName());
+			ObjectEntry objectEntry = objectEntries.get(
+				parentObjectDefinition.getName());
 
 			ObjectField objectField = _objectFieldLocalService.getObjectField(
 				objectRelationship.getObjectFieldId2());

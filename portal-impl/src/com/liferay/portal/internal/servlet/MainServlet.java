@@ -392,21 +392,6 @@ public class MainServlet extends HttpServlet {
 
 		_registerPortalInitialized();
 
-		if ((_releaseManager != null) && _log.isWarnEnabled()) {
-			String message = _releaseManager.getShortStatusMessage(true);
-
-			if (Validator.isNotNull(message)) {
-				_log.warn(message);
-			}
-			else if (_log.isInfoEnabled()) {
-				message = _releaseManager.getShortStatusMessage(false);
-
-				if (Validator.isNotNull(message)) {
-					_log.info(message);
-				}
-			}
-		}
-
 		if (StartupHelperUtil.isDBNew() &&
 			PropsValues.SETUP_WIZARD_ADD_SAMPLE_DATA) {
 

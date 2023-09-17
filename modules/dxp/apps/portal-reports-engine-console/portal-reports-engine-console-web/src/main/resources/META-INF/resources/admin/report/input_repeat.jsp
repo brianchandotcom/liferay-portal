@@ -211,7 +211,7 @@ int yearlyType = ParamUtil.getInteger(request, "yearlyType");
 </aui:script>
 
 <%!
-private boolean _getWeeklyDayPos(HttpServletRequest req, int day) {
-	return ParamUtil.getBoolean(req, "weeklyDayPos" + day);
+private boolean _getWeeklyDayPos(HttpServletRequest httpServletRequest, int day) {
+	return ParamUtil.getBoolean(httpServletRequest, "weeklyDayPos" + day);
 }
 %>

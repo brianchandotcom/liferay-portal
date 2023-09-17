@@ -61,7 +61,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.io.Serializable;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -729,25 +728,22 @@ public class ObjectEntryServiceTest {
 
 		Iterator<Node> iterator = tree.iterator();
 
-		Map<Long, ObjectEntry> objectEntries = new HashMap<>();
+		Node rootNode = iterator.next();
+
+		Map<Long, ObjectEntry> objectEntries =
+			HashMapBuilder.<Long, ObjectEntry>put(
+				rootNode.getObjectDefinitionId(),
+				_objectEntryLocalService.addObjectEntry(
+					_adminUser.getUserId(), 0, rootNode.getObjectDefinitionId(),
+					HashMapBuilder.<String, Serializable>put(
+						"able", RandomStringUtils.randomAlphabetic(5)
+					).build(),
+					ServiceContextTestUtil.getServiceContext(
+						TestPropsValues.getGroupId(), _adminUser.getUserId()))
+			).build();
 
 		while (iterator.hasNext()) {
 			Node node = iterator.next();
-
-			if (node.isRoot()) {
-				objectEntries.put(
-					node.getObjectDefinitionId(),
-					_objectEntryLocalService.addObjectEntry(
-						_adminUser.getUserId(), 0, node.getObjectDefinitionId(),
-						HashMapBuilder.<String, Serializable>put(
-							"able", RandomStringUtils.randomAlphabetic(5)
-						).build(),
-						ServiceContextTestUtil.getServiceContext(
-							TestPropsValues.getGroupId(),
-							_adminUser.getUserId())));
-
-				continue;
-			}
 
 			objectEntries.put(
 				node.getObjectDefinitionId(),
@@ -773,13 +769,8 @@ public class ObjectEntryServiceTest {
 						() -> {
 							Node parentNode = node.getParentNode();
 
-							ObjectDefinition parentObjectDefinition =
-								_objectDefinitionLocalService.
-									getObjectDefinition(
-										parentNode.getObjectDefinitionId());
-
 							ObjectEntry objectEntry = objectEntries.get(
-								parentObjectDefinition.getObjectDefinitionId());
+								parentNode.getObjectDefinitionId());
 
 							return objectEntry.getObjectEntryId();
 						}

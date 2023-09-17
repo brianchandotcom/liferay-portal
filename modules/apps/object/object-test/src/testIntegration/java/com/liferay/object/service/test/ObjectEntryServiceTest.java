@@ -280,7 +280,7 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_user);
 
-		Map<String, ObjectEntry> objectEntries1 = _createBoundedObjectEntries(
+		Map<String, ObjectEntry> objectEntries1 = _createObjectEntryHierarchy(
 			_tree);
 
 		TreeTestUtil.unsafeForEachRemaining(
@@ -352,7 +352,7 @@ public class ObjectEntryServiceTest {
 						objectEntry.getObjectEntryId()));
 			});
 
-		Map<String, ObjectEntry> objectEntries2 = _createBoundedObjectEntries(
+		Map<String, ObjectEntry> objectEntries2 = _createObjectEntryHierarchy(
 			_tree);
 
 		rootObjectEntry = objectEntries2.get(_rootObjectDefinition.getName());
@@ -373,7 +373,7 @@ public class ObjectEntryServiceTest {
 			_objectEntryService.deleteObjectEntry(
 				rootObjectEntry.getObjectEntryId()));
 
-		Map<String, ObjectEntry> objectEntries3 = _createBoundedObjectEntries(
+		Map<String, ObjectEntry> objectEntries3 = _createObjectEntryHierarchy(
 			_tree);
 
 		_resourcePermissionLocalService.addResourcePermission(
@@ -400,7 +400,7 @@ public class ObjectEntryServiceTest {
 						objectEntry.getObjectEntryId()));
 			});
 
-		Map<String, ObjectEntry> objectEntries4 = _createBoundedObjectEntries(
+		Map<String, ObjectEntry> objectEntries4 = _createObjectEntryHierarchy(
 			_tree);
 
 		_assertDeleteBoundedObjectEntries(objectEntries4, _tree);
@@ -458,7 +458,7 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_user);
 
-		Map<String, ObjectEntry> objectEntries1 = _createBoundedObjectEntries(
+		Map<String, ObjectEntry> objectEntries1 = _createObjectEntryHierarchy(
 			_tree);
 
 		TreeTestUtil.unsafeForEachRemaining(
@@ -515,7 +515,7 @@ public class ObjectEntryServiceTest {
 				).build(),
 				_rootObjectDefinition.getClassName()));
 
-		Map<String, ObjectEntry> objectEntries2 = _createBoundedObjectEntries(
+		Map<String, ObjectEntry> objectEntries2 = _createObjectEntryHierarchy(
 			_tree);
 
 		TreeTestUtil.unsafeForEachRemaining(
@@ -719,7 +719,7 @@ public class ObjectEntryServiceTest {
 		}
 	}
 
-	private Map<String, ObjectEntry> _createBoundedObjectEntries(Tree tree)
+	private Map<String, ObjectEntry> _createObjectEntryHierarchy(Tree tree)
 		throws Exception {
 
 		Iterator<Node> iterator = tree.iterator();

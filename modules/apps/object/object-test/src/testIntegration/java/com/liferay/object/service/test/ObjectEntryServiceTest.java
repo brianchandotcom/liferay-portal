@@ -112,12 +112,22 @@ public class ObjectEntryServiceTest {
 
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+
+		_tree = TreeTestUtil.createTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			_treeFactory);
+
+		_rootObjectDefinition = _publishRootObjectDefinition();
+
 		_user = UserTestUtil.addUser();
 	}
 
 	@After
-	public void tearDown() {
+	public void tearDown() throws Exception {
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService);
 	}
 
 	@Test
@@ -133,10 +143,8 @@ public class ObjectEntryServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _adminUser.getUserId())));
 
-		Tree tree = _createTreeAndPublishRootObjectDefinition();
-
 		TreeTestUtil.unsafeForEachRemaining(
-			_objectDefinitionLocalService, tree,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> Assert.assertNotNull(
 				_objectEntryService.addObjectEntry(
 					0, objectDefinition.getObjectDefinitionId(),
@@ -153,7 +161,7 @@ public class ObjectEntryServiceTest {
 			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition, null);
 
 		TreeTestUtil.unsafeForEachRemaining(
-			_objectDefinitionLocalService, tree,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> _assertPrincipalException(
 				ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, null));
 
@@ -163,7 +171,7 @@ public class ObjectEntryServiceTest {
 			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition, null);
 
 		TreeTestUtil.unsafeForEachRemaining(
-			_objectDefinitionLocalService, tree,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> _assertPrincipalException(
 				ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, null));
 
@@ -188,7 +196,7 @@ public class ObjectEntryServiceTest {
 					TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
 		TreeTestUtil.unsafeForEachRemaining(
-			_objectDefinitionLocalService, tree,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				if (objectDefinition.isRootNode()) {
 					return;
@@ -205,19 +213,15 @@ public class ObjectEntryServiceTest {
 					ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, null);
 			});
 
-		ObjectDefinition rootObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_A");
-
 		_resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(),
-			rootObjectDefinition.getResourceName(),
+			_rootObjectDefinition.getResourceName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()),
 			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
 
 		TreeTestUtil.unsafeForEachRemaining(
-			_objectDefinitionLocalService, tree,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> Assert.assertNotNull(
 				_objectEntryService.addObjectEntry(
 					0, objectDefinition.getObjectDefinitionId(),
@@ -240,7 +244,7 @@ public class ObjectEntryServiceTest {
 					TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
 		TreeTestUtil.unsafeForEachRemaining(
-			_objectDefinitionLocalService, tree,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> Assert.assertNotNull(
 				_objectEntryService.addObjectEntry(
 					0, objectDefinition.getObjectDefinitionId(),
@@ -250,9 +254,6 @@ public class ObjectEntryServiceTest {
 					ServiceContextTestUtil.getServiceContext(
 						TestPropsValues.getGroupId(),
 						_guestUser.getUserId()))));
-
-		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService);
 	}
 
 	@Test
@@ -274,18 +275,16 @@ public class ObjectEntryServiceTest {
 		_testDeleteObjectEntry(_adminUser, _adminUser);
 		_testDeleteObjectEntry(_user, _user);
 
-		Tree tree = _createTreeAndPublishRootObjectDefinition();
-
 		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
 
 		_setUser(_user);
 
 		Map<String, ObjectEntry> objectEntries1 = _createBoundedObjectEntries(
-			tree);
+			_tree);
 
 		TreeTestUtil.unsafeForEachRemaining(
-			_objectDefinitionLocalService, tree,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries1.get(
 					objectDefinition.getName());
@@ -308,7 +307,7 @@ public class ObjectEntryServiceTest {
 			});
 
 		TreeTestUtil.unsafeForEachRemaining(
-			_objectDefinitionLocalService, tree,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				if (objectDefinition.isRootDescendantNode()) {
 					_resourcePermissionLocalService.addResourcePermission(
@@ -325,29 +324,25 @@ public class ObjectEntryServiceTest {
 				_assertPrincipalException(ActionKeys.DELETE, null, objectEntry);
 			});
 
-		ObjectDefinition rootObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_A");
-
 		ObjectEntry rootObjectEntry = objectEntries1.get(
-			rootObjectDefinition.getName());
+			_rootObjectDefinition.getName());
 
 		_resourcePermissionLocalService.addModelResourcePermissions(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			_user.getUserId(), rootObjectDefinition.getClassName(),
+			_user.getUserId(), _rootObjectDefinition.getClassName(),
 			String.valueOf(rootObjectEntry.getObjectEntryId()),
 			ModelPermissionsFactory.create(
 				HashMapBuilder.put(
 					RoleConstants.USER, new String[] {ActionKeys.DELETE}
 				).build(),
-				rootObjectDefinition.getClassName()));
+				_rootObjectDefinition.getClassName()));
 
 		Assert.assertNotNull(
 			_objectEntryService.deleteObjectEntry(
 				rootObjectEntry.getObjectEntryId()));
 
 		TreeTestUtil.unsafeForEachRemaining(
-			_objectDefinitionLocalService, tree,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries1.get(
 					objectDefinition.getName());
@@ -358,43 +353,44 @@ public class ObjectEntryServiceTest {
 			});
 
 		Map<String, ObjectEntry> objectEntries2 = _createBoundedObjectEntries(
-			tree);
+			_tree);
 
-		rootObjectEntry = objectEntries2.get(rootObjectDefinition.getName());
+		rootObjectEntry = objectEntries2.get(_rootObjectDefinition.getName());
 
 		_resourcePermissionLocalService.addModelResourcePermissions(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			_user.getUserId(), rootObjectDefinition.getClassName(),
+			_user.getUserId(), _rootObjectDefinition.getClassName(),
 			String.valueOf(rootObjectEntry.getObjectEntryId()),
 			ModelPermissionsFactory.create(
 				HashMapBuilder.put(
 					RoleConstants.USER, new String[] {ActionKeys.DELETE}
 				).build(),
-				rootObjectDefinition.getClassName()));
+				_rootObjectDefinition.getClassName()));
 
-		_assertDeleteBoundedObjectEntries(objectEntries2, tree);
+		_assertDeleteBoundedObjectEntries(objectEntries2, _tree);
 
 		Assert.assertNotNull(
 			_objectEntryService.deleteObjectEntry(
 				rootObjectEntry.getObjectEntryId()));
 
 		Map<String, ObjectEntry> objectEntries3 = _createBoundedObjectEntries(
-			tree);
+			_tree);
 
 		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(), rootObjectDefinition.getClassName(),
+			TestPropsValues.getCompanyId(),
+			_rootObjectDefinition.getClassName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ActionKeys.DELETE);
 
-		rootObjectEntry = objectEntries3.get(rootObjectDefinition.getName());
+		rootObjectEntry = objectEntries3.get(_rootObjectDefinition.getName());
 
 		Assert.assertNotNull(
 			_objectEntryService.deleteObjectEntry(
 				rootObjectEntry.getObjectEntryId()));
 
 		TreeTestUtil.unsafeForEachRemaining(
-			_objectDefinitionLocalService, tree,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries3.get(
 					objectDefinition.getName());
@@ -405,18 +401,15 @@ public class ObjectEntryServiceTest {
 			});
 
 		Map<String, ObjectEntry> objectEntries4 = _createBoundedObjectEntries(
-			tree);
+			_tree);
 
-		_assertDeleteBoundedObjectEntries(objectEntries4, tree);
+		_assertDeleteBoundedObjectEntries(objectEntries4, _tree);
 
-		rootObjectEntry = objectEntries4.get(rootObjectDefinition.getName());
+		rootObjectEntry = objectEntries4.get(_rootObjectDefinition.getName());
 
 		Assert.assertNotNull(
 			_objectEntryService.deleteObjectEntry(
 				rootObjectEntry.getObjectEntryId()));
-
-		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService);
 	}
 
 	@Test
@@ -460,18 +453,16 @@ public class ObjectEntryServiceTest {
 			_objectEntryService.getObjectEntry(
 				adminObjectEntry.getObjectEntryId()));
 
-		Tree tree = _createTreeAndPublishRootObjectDefinition();
-
 		Role role = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
 
 		_setUser(_user);
 
 		Map<String, ObjectEntry> objectEntries1 = _createBoundedObjectEntries(
-			tree);
+			_tree);
 
 		TreeTestUtil.unsafeForEachRemaining(
-			_objectDefinitionLocalService, tree,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries1.get(
 					objectDefinition.getName());
@@ -494,7 +485,7 @@ public class ObjectEntryServiceTest {
 			});
 
 		TreeTestUtil.unsafeForEachRemaining(
-			_objectDefinitionLocalService, tree,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				if (objectDefinition.isRootDescendantNode()) {
 					_resourcePermissionLocalService.addResourcePermission(
@@ -511,28 +502,24 @@ public class ObjectEntryServiceTest {
 				_assertPrincipalException(ActionKeys.VIEW, null, objectEntry);
 			});
 
-		ObjectDefinition rootObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_A");
-
 		ObjectEntry rootObjectEntry = objectEntries1.get(
-			rootObjectDefinition.getName());
+			_rootObjectDefinition.getName());
 
 		_resourcePermissionLocalService.addModelResourcePermissions(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			_user.getUserId(), rootObjectDefinition.getClassName(),
+			_user.getUserId(), _rootObjectDefinition.getClassName(),
 			String.valueOf(rootObjectEntry.getObjectEntryId()),
 			ModelPermissionsFactory.create(
 				HashMapBuilder.put(
 					RoleConstants.USER, new String[] {ActionKeys.VIEW}
 				).build(),
-				rootObjectDefinition.getClassName()));
+				_rootObjectDefinition.getClassName()));
 
 		Map<String, ObjectEntry> objectEntries2 = _createBoundedObjectEntries(
-			tree);
+			_tree);
 
 		TreeTestUtil.unsafeForEachRemaining(
-			_objectDefinitionLocalService, tree,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries1.get(
 					objectDefinition.getName());
@@ -547,13 +534,14 @@ public class ObjectEntryServiceTest {
 			});
 
 		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(), rootObjectDefinition.getClassName(),
+			TestPropsValues.getCompanyId(),
+			_rootObjectDefinition.getClassName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ActionKeys.VIEW);
 
 		TreeTestUtil.unsafeForEachRemaining(
-			_objectDefinitionLocalService, tree,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries2.get(
 					objectDefinition.getName());
@@ -562,9 +550,6 @@ public class ObjectEntryServiceTest {
 					_objectEntryService.getObjectEntry(
 						objectEntry.getObjectEntryId()));
 			});
-
-		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService);
 	}
 
 	@Test
@@ -796,20 +781,14 @@ public class ObjectEntryServiceTest {
 		return objectEntries;
 	}
 
-	private Tree _createTreeAndPublishRootObjectDefinition() throws Exception {
-		Tree tree = TreeTestUtil.createTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			_treeFactory);
-
+	private ObjectDefinition _publishRootObjectDefinition() throws Exception {
 		ObjectDefinition rootObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				TestPropsValues.getCompanyId(), "C_A");
 
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
+		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			_adminUser.getUserId(),
 			rootObjectDefinition.getObjectDefinitionId());
-
-		return tree;
 	}
 
 	private void _setUser(User user) throws Exception {
@@ -874,6 +853,9 @@ public class ObjectEntryServiceTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	private ObjectDefinition _rootObjectDefinition;
+	private Tree _tree;
 
 	@Inject
 	private TreeFactory _treeFactory;

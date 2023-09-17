@@ -736,16 +736,17 @@ public class ObjectEntryServiceTest {
 			ObjectEntry objectEntry = null;
 
 			if (node.isRoot()) {
-				objectEntry = _objectEntryLocalService.addObjectEntry(
-					_adminUser.getUserId(), 0,
-					objectDefinition.getObjectDefinitionId(),
-					HashMapBuilder.<String, Serializable>put(
-						"able", RandomStringUtils.randomAlphabetic(5)
-					).build(),
-					ServiceContextTestUtil.getServiceContext(
-						TestPropsValues.getGroupId(), _adminUser.getUserId()));
-
-				objectEntries.put(objectDefinition.getName(), objectEntry);
+				objectEntries.put(
+					objectDefinition.getName(),
+					_objectEntryLocalService.addObjectEntry(
+						_adminUser.getUserId(), 0,
+						objectDefinition.getObjectDefinitionId(),
+						HashMapBuilder.<String, Serializable>put(
+							"able", RandomStringUtils.randomAlphabetic(5)
+						).build(),
+						ServiceContextTestUtil.getServiceContext(
+							TestPropsValues.getGroupId(),
+							_adminUser.getUserId())));
 
 				continue;
 			}

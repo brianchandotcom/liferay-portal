@@ -687,12 +687,12 @@ public class ObjectEntryServiceTest {
 			PermissionThreadLocal.getPermissionChecker();
 
 		try {
-			if (Objects.equals(action, ActionKeys.VIEW)) {
-				_objectEntryService.getObjectEntry(
+			if (Objects.equals(action, ActionKeys.DELETE)) {
+				_objectEntryService.deleteObjectEntry(
 					objectEntry.getObjectEntryId());
 			}
-			else if (Objects.equals(action, ActionKeys.DELETE)) {
-				_objectEntryService.deleteObjectEntry(
+			else if (Objects.equals(action, ActionKeys.VIEW)) {
+				_objectEntryService.getObjectEntry(
 					objectEntry.getObjectEntryId());
 			}
 			else {

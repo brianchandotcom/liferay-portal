@@ -735,7 +735,7 @@ public class ObjectEntryServiceTest {
 
 			ObjectEntry objectEntry = null;
 
-			if (!objectDefinition.isRootDescendantNode()) {
+			if (node.isRoot()) {
 				objectEntry = _objectEntryLocalService.addObjectEntry(
 					_adminUser.getUserId(), 0,
 					objectDefinition.getObjectDefinitionId(),

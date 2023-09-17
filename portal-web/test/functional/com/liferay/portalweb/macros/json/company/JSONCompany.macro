@@ -99,8 +99,13 @@ definition {
 			var portalURL = JSONCompany.getDefaultPortalURL();
 		}
 
-		var creatorEmailAddress = JSONUtil2.getSuperAdminUserEmail();
-		var creatorPassword = JSONUtil2.getSuperAdminUserPassword();
+		if (!(isSet(creatorEmailAddress))) {
+			var creatorEmailAddress = JSONUtil2.getDefaultUserEmail();
+		}
+
+		if (!(isSet(creatorPassword))) {
+			var creatorPassword = JSONUtil2.getDefaultUserPassword();
+		}
 
 		var curl = '''
 			${portalURL}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \

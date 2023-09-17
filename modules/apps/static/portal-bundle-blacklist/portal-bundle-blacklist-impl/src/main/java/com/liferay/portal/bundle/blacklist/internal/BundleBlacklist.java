@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration",
-	service = BundleBlacklist.class
+	service = {}
 )
 public class BundleBlacklist {
 

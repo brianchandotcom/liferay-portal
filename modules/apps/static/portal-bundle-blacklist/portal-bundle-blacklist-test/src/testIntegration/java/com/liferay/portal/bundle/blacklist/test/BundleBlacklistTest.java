@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
 import org.junit.After;
@@ -43,10 +44,10 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceEvent;
-import org.osgi.framework.ServiceListener;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.cm.ConfigurationListener;
 import org.osgi.util.tracker.BundleTracker;
 
 /**
@@ -369,27 +370,17 @@ public class BundleBlacklistTest {
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
-		ServiceListener serviceListener = new ServiceListener() {
+		ServiceRegistration<?> serviceRegistration =
+			_bundleContext.registerService(
+				ConfigurationListener.class,
+				configurationEvent -> {
+					if (Objects.equals(
+							_CONFIG_NAME, configurationEvent.getPid())) {
 
-			@Override
-			public void serviceChanged(ServiceEvent serviceEvent) {
-				if (serviceEvent.getType() != ServiceEvent.MODIFIED) {
-					return;
-				}
-
-				Object service = _bundleContext.getService(
-					serviceEvent.getServiceReference());
-
-				Class<?> clazz = service.getClass();
-
-				if (_CLASS_NAME.equals(clazz.getName())) {
-					countDownLatch.countDown();
-				}
-			}
-
-		};
-
-		_bundleContext.addServiceListener(serviceListener);
+						countDownLatch.countDown();
+					}
+				},
+				null);
 
 		try {
 			if (dictionary == null) {
@@ -402,12 +393,9 @@ public class BundleBlacklistTest {
 			countDownLatch.await();
 		}
 		finally {
-			_bundleContext.removeServiceListener(serviceListener);
+			serviceRegistration.unregister();
 		}
 	}
-
-	private static final String _CLASS_NAME =
-		"com.liferay.portal.bundle.blacklist.internal.BundleBlacklist";
 
 	private static final String _CONFIG_NAME =
 		"com.liferay.portal.bundle.blacklist.internal.configuration." +

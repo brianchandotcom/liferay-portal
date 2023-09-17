@@ -18,6 +18,7 @@ import java.io.IOException;
 
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Function;
@@ -25,11 +26,10 @@ import java.util.function.Function;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceEvent;
-import org.osgi.framework.ServiceListener;
-import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.cm.ConfigurationListener;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -90,29 +90,18 @@ public class BundleBlacklistManagerImpl implements BundleBlacklistManager {
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
-		ServiceListener serviceListener = new ServiceListener() {
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				ConfigurationListener.class,
+				configurationEvent -> {
+					if (Objects.equals(
+							BundleBlacklistConfiguration.class.getName(),
+							configurationEvent.getPid())) {
 
-			@Override
-			public void serviceChanged(ServiceEvent serviceEvent) {
-				if (serviceEvent.getType() != ServiceEvent.MODIFIED) {
-					return;
-				}
-
-				ServiceReference<?> serviceReference =
-					serviceEvent.getServiceReference();
-
-				Object service = bundleContext.getService(serviceReference);
-
-				if (_bundleBlacklist == service) {
-					countDownLatch.countDown();
-				}
-
-				bundleContext.ungetService(serviceReference);
-			}
-
-		};
-
-		bundleContext.addServiceListener(serviceListener);
+						countDownLatch.countDown();
+					}
+				},
+				null);
 
 		try {
 			configuration.update(properties);
@@ -125,7 +114,7 @@ public class BundleBlacklistManagerImpl implements BundleBlacklistManager {
 			}
 		}
 		finally {
-			bundleContext.removeServiceListener(serviceListener);
+			serviceRegistration.unregister();
 		}
 	}
 

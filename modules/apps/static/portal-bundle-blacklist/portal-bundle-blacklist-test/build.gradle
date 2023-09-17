@@ -7,7 +7,6 @@ dependencies {
 
 	testIntegrationImplementation group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
 	testIntegrationImplementation project(":apps:static:osgi:osgi-util")
-	testIntegrationImplementation project(":apps:static:portal-bundle-blacklist:portal-bundle-blacklist-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }
 

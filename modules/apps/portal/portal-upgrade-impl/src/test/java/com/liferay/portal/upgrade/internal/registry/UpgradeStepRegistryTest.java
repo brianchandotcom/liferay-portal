@@ -5,12 +5,14 @@
 
 package com.liferay.portal.upgrade.internal.registry;
 
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +21,9 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Carlos Sierra Andrés
@@ -32,7 +37,8 @@ public class UpgradeStepRegistryTest {
 
 	@Test
 	public void testCreateUpgradeInfos() {
-		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+		UpgradeStepRegistry upgradeStepRegistry = _createUpgradeStepRegistry(
+			true);
 
 		TestUpgradeStep testUpgradeStep = new TestUpgradeStep();
 
@@ -40,8 +46,7 @@ public class UpgradeStepRegistryTest {
 			"0.0.0", "1.0.0", testUpgradeStep, testUpgradeStep, testUpgradeStep,
 			testUpgradeStep);
 
-		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
-			true);
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
 
 		Assert.assertEquals(upgradeInfos.toString(), 1, upgradeInfos.size());
 
@@ -59,30 +64,30 @@ public class UpgradeStepRegistryTest {
 
 	@Test
 	public void testCreateUpgradeInfosWithNoSteps() {
-		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+		UpgradeStepRegistry upgradeStepRegistry = _createUpgradeStepRegistry(
+			true);
 
 		upgradeStepRegistry.register("0.0.0", "1.0.0");
 
-		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
-			true);
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
 
 		Assert.assertTrue(upgradeInfos.toString(), upgradeInfos.isEmpty());
 	}
 
 	@Test
 	public void testCreateUpgradeInfosWithOneStep() {
-		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+		UpgradeStepRegistry upgradeStepRegistry = _createUpgradeStepRegistry(
+			true);
 
 		TestUpgradeStep testUpgradeStep = new TestUpgradeStep();
 
 		upgradeStepRegistry.register("0.0.0", "1.0.0", testUpgradeStep);
 
-		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
-			true);
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
 
 		Assert.assertEquals(upgradeInfos.toString(), 1, upgradeInfos.size());
 		Assert.assertEquals(
-			new UpgradeInfo("0.0.0", "1.0.0", 0, testUpgradeStep),
+			new UpgradeInfo("0.0.0", "1.0.0", testUpgradeStep),
 			upgradeInfos.get(0));
 	}
 
@@ -109,12 +114,12 @@ public class UpgradeStepRegistryTest {
 
 	@Test
 	public void testGetInitializationStep() {
-		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+		UpgradeStepRegistry upgradeStepRegistry = _createUpgradeStepRegistry(
+			true);
 
 		upgradeStepRegistry.registerInitialization();
 
-		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
-			true);
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
 
 		Assert.assertEquals(upgradeInfos.toString(), 1, upgradeInfos.size());
 
@@ -128,14 +133,14 @@ public class UpgradeStepRegistryTest {
 
 	@Test
 	public void testGetInitializationStepWhenAnUpgradeProcessIsRegistered() {
-		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+		UpgradeStepRegistry upgradeStepRegistry = _createUpgradeStepRegistry(
+			true);
 
 		upgradeStepRegistry.registerInitialization();
 
 		upgradeStepRegistry.register("1.0.0", "2.0.0", new TestUpgradeStep());
 
-		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
-			true);
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
 
 		Assert.assertEquals(upgradeInfos.toString(), 2, upgradeInfos.size());
 
@@ -149,7 +154,8 @@ public class UpgradeStepRegistryTest {
 
 	@Test
 	public void testSkipInitializationStepWhenAnUpgradeProcessIsRegisteredAndPortalNotUpgraded() {
-		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+		UpgradeStepRegistry upgradeStepRegistry = _createUpgradeStepRegistry(
+			false);
 
 		upgradeStepRegistry.registerInitialization();
 
@@ -157,25 +163,40 @@ public class UpgradeStepRegistryTest {
 
 		upgradeStepRegistry.register("1.0.0", "2.0.0", testUpgradeStep);
 
-		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
-			false);
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
 
 		Assert.assertEquals(upgradeInfos.toString(), 1, upgradeInfos.size());
 		Assert.assertEquals(
-			new UpgradeInfo("1.0.0", "2.0.0", 0, testUpgradeStep),
+			new UpgradeInfo("1.0.0", "2.0.0", testUpgradeStep),
 			upgradeInfos.get(0));
 	}
 
 	@Test
 	public void testSkipInitializationStepWhenPortalNotUpgraded() {
-		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+		UpgradeStepRegistry upgradeStepRegistry = _createUpgradeStepRegistry(
+			false);
 
 		upgradeStepRegistry.registerInitialization();
 
-		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
-			false);
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
 
 		Assert.assertEquals(upgradeInfos.toString(), 0, upgradeInfos.size());
+	}
+
+	private UpgradeStepRegistry _createUpgradeStepRegistry(
+		boolean portalUpgraded) {
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		ServiceRegistration<UpgradeStepRegistrator> serviceRegistration =
+			bundleContext.registerService(
+				UpgradeStepRegistrator.class,
+				registry -> {
+				},
+				null);
+
+		return new UpgradeStepRegistry(
+			bundleContext, portalUpgraded, serviceRegistration.getReference());
 	}
 
 	private void _registerAndCheckPreAndPostUpgradeSteps(
@@ -199,7 +220,8 @@ public class UpgradeStepRegistryTest {
 
 		};
 
-		UpgradeStepRegistry upgradeStepRegistry = new UpgradeStepRegistry(0);
+		UpgradeStepRegistry upgradeStepRegistry = _createUpgradeStepRegistry(
+			true);
 
 		upgradeStepRegistry.register("0.0.0", "1.0.0", upgradeProcess);
 
@@ -207,8 +229,7 @@ public class UpgradeStepRegistryTest {
 			preUpgradeSteps, new UpgradeStep[] {upgradeProcess},
 			postUpgradeSteps);
 
-		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos(
-			true);
+		List<UpgradeInfo> upgradeInfos = upgradeStepRegistry.getUpgradeInfos();
 
 		Assert.assertEquals(upgradeInfos.toString(), 1, upgradeInfos.size());
 

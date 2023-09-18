@@ -249,7 +249,7 @@ public class ReleaseGraphManagerTest {
 
 	private UpgradeInfo _createUpgradeInfo(String from, String to) {
 		return new UpgradeInfo(
-			from, to, 0, new TestUpgradeStep(from + " -> " + to));
+			from, to, new TestUpgradeStep(from + " -> " + to));
 	}
 
 	private static class TestUpgradeStep implements UpgradeStep {

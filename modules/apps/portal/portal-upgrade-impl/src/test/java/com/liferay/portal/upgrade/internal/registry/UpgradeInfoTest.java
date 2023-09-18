@@ -28,7 +28,7 @@ public class UpgradeInfoTest {
 		UpgradeStep upgradeStep = new TestUpgradeStep();
 
 		UpgradeInfo upgradeInfo = new UpgradeInfo(
-			"1.0.0", "2.0.0", 0, upgradeStep);
+			"1.0.0", "2.0.0", upgradeStep);
 
 		Assert.assertNotEquals(upgradeInfo, "");
 	}
@@ -36,9 +36,9 @@ public class UpgradeInfoTest {
 	@Test
 	public void testEqualsReturnsFalseComparingDifferentSchemaVersion() {
 		UpgradeInfo upgradeInfo1 = new UpgradeInfo(
-			"1.0.0", "2.0.0", 0, new TestUpgradeStep());
+			"1.0.0", "2.0.0", new TestUpgradeStep());
 		UpgradeInfo upgradeInfo2 = new UpgradeInfo(
-			"2.0.0", "3.0.0", 0, new TestUpgradeStep());
+			"2.0.0", "3.0.0", new TestUpgradeStep());
 
 		Assert.assertNotEquals(upgradeInfo1, upgradeInfo2);
 	}
@@ -46,9 +46,9 @@ public class UpgradeInfoTest {
 	@Test
 	public void testEqualsReturnsFalseComparingSameSchemaVersion() {
 		UpgradeInfo upgradeInfo1 = new UpgradeInfo(
-			"1.0.0", "2.0.0", 0, new TestUpgradeStep());
+			"1.0.0", "2.0.0", new TestUpgradeStep());
 		UpgradeInfo upgradeInfo2 = new UpgradeInfo(
-			"1.0.0", "2.0.0", 0, new TestUpgradeStep());
+			"1.0.0", "2.0.0", new TestUpgradeStep());
 
 		Assert.assertNotEquals(upgradeInfo1, upgradeInfo2);
 	}
@@ -56,7 +56,7 @@ public class UpgradeInfoTest {
 	@Test
 	public void testEqualsReturnsTrueComparingSameInstance() {
 		UpgradeInfo upgradeInfo = new UpgradeInfo(
-			"1.0.0", "2.0.0", 0, new TestUpgradeStep());
+			"1.0.0", "2.0.0", new TestUpgradeStep());
 
 		Assert.assertEquals(upgradeInfo, upgradeInfo);
 	}
@@ -66,9 +66,9 @@ public class UpgradeInfoTest {
 		UpgradeStep upgradeStep = new TestUpgradeStep();
 
 		UpgradeInfo upgradeInfo1 = new UpgradeInfo(
-			"1.0.0", "2.0.0", 0, upgradeStep);
+			"1.0.0", "2.0.0", upgradeStep);
 		UpgradeInfo upgradeInfo2 = new UpgradeInfo(
-			"1.0.0", "2.0.0", 0, upgradeStep);
+			"1.0.0", "2.0.0", upgradeStep);
 
 		Assert.assertEquals(upgradeInfo1, upgradeInfo2);
 	}

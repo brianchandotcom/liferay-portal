@@ -47,7 +47,11 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.auth.Authenticator;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -55,6 +59,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -1257,6 +1262,48 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
+	protected UserAccount testGetUserAccountsByStatusPage_addUserAccount(
+			String status, UserAccount userAccount)
+		throws Exception {
+
+		UserAccount postUserAccount = testPostAccountUserAccount_addUserAccount(
+			userAccount);
+
+		if (StringUtil.equalsIgnoreCase(
+				status,
+				com.liferay.headless.admin.user.dto.v1_0.UserAccount.Status.
+					INACTIVE.toString())) {
+
+			PermissionChecker originalPermissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			String originalName = PrincipalThreadLocal.getName();
+
+			try {
+				PermissionThreadLocal.setPermissionChecker(
+					PermissionCheckerFactoryUtil.create(
+						TestPropsValues.getUser()));
+
+				PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
+				_userService.updateStatus(
+					postUserAccount.getId(), WorkflowConstants.STATUS_INACTIVE,
+					ServiceContextTestUtil.getServiceContext(
+						testCompany.getCompanyId(), testGroup.getGroupId(),
+						_testUser.getUserId()));
+			}
+			finally {
+				PermissionThreadLocal.setPermissionChecker(
+					originalPermissionChecker);
+
+				PrincipalThreadLocal.setName(originalName);
+			}
+		}
+
+		return postUserAccount;
+	}
+
+	@Override
 	protected String testGetUserAccountsByStatusPage_getStatus()
 		throws Exception {
 
@@ -1740,6 +1787,9 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Inject
 	private UserLocalService _userLocalService;
+
+	@Inject
+	private UserService _userService;
 
 	private class TestSimpleCaptchaImpl extends SimpleCaptchaImpl {
 

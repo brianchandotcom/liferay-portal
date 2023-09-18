@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -227,6 +228,22 @@ public class UserResourceDTOConverter
 
 						return _toRoleBriefs(
 							dtoConverterContext, userBag.getRoles());
+					});
+				setStatus(
+					() -> {
+						if (user.getStatus() ==
+								WorkflowConstants.STATUS_APPROVED) {
+
+							return Status.ACTIVE;
+						}
+
+						if (user.getStatus() ==
+								WorkflowConstants.STATUS_INACTIVE) {
+
+							return Status.INACTIVE;
+						}
+
+						return null;
 					});
 			}
 		};

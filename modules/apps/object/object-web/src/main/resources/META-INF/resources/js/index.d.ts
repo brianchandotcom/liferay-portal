@@ -206,6 +206,7 @@ interface ObjectDefinitionNodeData
 }
 
 interface ObjectEntry {
+	actions: Actions;
 	creator: {
 		additionalName: string;
 		contentType: string;

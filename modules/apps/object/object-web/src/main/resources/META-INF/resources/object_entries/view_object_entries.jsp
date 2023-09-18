@@ -27,9 +27,20 @@ ObjectDefinition objectDefinition = viewObjectEntriesDisplayContext.getObjectDef
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= liferayPortletResponse.createRenderURL() %>"
-			propsTransformer="js/components/FDSPropsTransformer/MultiselectPicklistFDSPropsTransformer"
+			propsTransformer="js/components/FDSPropsTransformer/ViewObjectEntriesFDSPropsTransformer"
 			style="fluid"
 		/>
+
+		<div>
+			<react:component
+				module="js/components/ModalDeleteObjectEntry"
+				props='<%=
+					HashMapBuilder.<String, Object>put(
+						"objectEntryBaseAPIURL", viewObjectEntriesDisplayContext.getAPIURL()
+					).build()
+				%>'
+			/>
+		</div>
 	</c:when>
 	<c:otherwise>
 		<clay:alert

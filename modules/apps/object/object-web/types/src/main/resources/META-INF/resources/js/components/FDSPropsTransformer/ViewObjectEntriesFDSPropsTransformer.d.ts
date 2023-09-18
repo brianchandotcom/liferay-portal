@@ -11,7 +11,7 @@ interface MultiselectPicklistDataRendererProps {
 		name_i18n: string;
 	}[];
 }
-export default function MultiselectPicklistFDSPropsTransformer({
+export default function ViewObjectEntriesFDSPropsTransformer({
 	...otherProps
 }: {
 	[x: string]: any;
@@ -22,5 +22,16 @@ export default function MultiselectPicklistFDSPropsTransformer({
 		}: MultiselectPicklistDataRendererProps) => string;
 		sourceDataRenderer: typeof SourceDataRenderer;
 	};
+	onActionDropdownItemClick({
+		action,
+		itemData,
+	}: {
+		action: {
+			data: {
+				id: string;
+			};
+		};
+		itemData: any;
+	}): void;
 };
 export {};

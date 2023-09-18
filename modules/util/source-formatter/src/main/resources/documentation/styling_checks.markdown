@@ -123,9 +123,9 @@ OperatorOrderCheck | .java | Verifies that when an operator has a literal string
 [OperatorWrapCheck](https://checkstyle.sourceforge.io/config_whitespace.html#OperatorWrap) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks the policy on how to wrap lines on operators. |
 PlusStatementCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Performs several checks to statements where `+` is used for concatenation. |
 PoshiAntCommandParametersOrderCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Sorts parameters in AntCommand call in Poshi Script files. |
-PoshiFeatureFlagsOrderCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Sort feature flags in `custom.properties` attribute. |
 PoshiImportsCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Sorts and groups imports in Poshi Script files. |
 PoshiIndentationCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Finds incorrect indentation in Poshi Script files. |
+PoshiPropertyOrderCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Sort feature flags in `custom.properties` attribute. |
 PoshiStylingCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Applies rules to enforce consistency in code style. |
 PoshiVariableNameCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Checks variable names for correct use of `camelCase`. |
 PoshiWhitespaceCheck | .function, .jar, .lar, .macro, .path, .testcase, .war or .zip | Finds missing and unnecessary whitespace. |

@@ -4,12 +4,6 @@ definition {
 		For searches that do not use the search portlet (e.g. searches within the product menu), use the macros within Search.macro instead.'Embedded' refers to the search bar in the page header whereas 'Widget' refers to the search bar within the page.
 	 */
 
-	macro _clickAddPortlet {
-		Click.clickNoWaitForVisible(
-			key_portletName = ${portletName},
-			locator1 = "Search#ADD_PORTLET_LINK");
-	}
-
 	macro addSortOption {
 		Click(
 			key_text = "Add Option",
@@ -65,7 +59,9 @@ definition {
 			value1 = "search");
 
 		for (var portletName : list ${searchPortletList}) {
-			SearchPortlets._clickAddPortlet(portletName = ${portletName});
+			Click.clickNoWaitForVisible(
+				key_portletName = ${portletName},
+				locator1 = "Search#ADD_PORTLET_LINK");
 
 			var key_portletName = ${portletName};
 

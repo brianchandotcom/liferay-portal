@@ -36,6 +36,12 @@ public interface CTConfiguration {
 	public boolean contextViewIncludeProduction();
 
 	@Meta.AD(
+		description = "hidden-applications-help", name = "hidden-applications",
+		required = false
+	)
+	public String[] hiddenApplications();
+
+	@Meta.AD(
 		deflt = "true", description = "show-all-items-enabled-help",
 		name = "show-all-items-enabled", required = false
 	)

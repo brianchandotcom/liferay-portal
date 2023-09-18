@@ -588,10 +588,13 @@ definition {
 			var index = 1;
 		}
 
-		Select(
+		Click(
 			key_indexField = ${index},
-			locator1 = "ACSegments#ACTIVITIES_CRITERION",
-			value1 = ${operator});
+			locator1 = "ACSegments#ACTIVITIES_CRITERION");
+
+		Click(
+			locator1 = "ACSegments#ACTIVITIES_CRITERION_DROPDOWN",
+			operator = ${operator});
 	}
 
 	macro selectSegmentType {

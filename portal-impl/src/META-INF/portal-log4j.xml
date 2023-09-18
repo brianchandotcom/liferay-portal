@@ -225,6 +225,7 @@
 		<Logger level="ERROR" name="org.hibernate.util.JDBCExceptionReporter" />
 		<Logger level="ERROR" name="org.jabsorb" />
 		<Logger level="ERROR" name="org.jgroups" />
+		<Logger level="ERROR" name="org.mariadb.jdbc.message.server.ErrorPacket" />
 		<Logger level="ERROR" name="org.openid4java" />
 		<Logger level="INFO" name="org.pdfbox" />
 		<Logger level="INFO" name="org.portletbridge" />

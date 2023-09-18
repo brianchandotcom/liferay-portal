@@ -64,7 +64,11 @@ public class LayoutDesignScreenNavigationEntry
 
 	@Override
 	public String getStatusLabel(Locale locale, Layout layout) {
-		Layout draftLayout = layout.fetchDraftLayout();
+		Layout draftLayout = layout;
+
+		if (!layout.isDraftLayout()) {
+			draftLayout = layout.fetchDraftLayout();
+		}
 
 		if (draftLayout == null) {
 			return null;

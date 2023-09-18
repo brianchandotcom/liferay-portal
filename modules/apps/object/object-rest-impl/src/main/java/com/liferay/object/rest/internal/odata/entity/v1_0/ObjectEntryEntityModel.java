@@ -48,7 +48,8 @@ public class ObjectEntryEntityModel implements EntityModel {
 			ObjectDefinition objectDefinition, List<ObjectField> objectFields)
 		throws Exception {
 
-		_entityFieldsMap = _getStringEntityFieldsMap(objectFields);
+		_entityFieldsMap = _getStringEntityFieldsMap(
+			objectDefinition, objectFields);
 
 		List<ObjectRelationship> objectRelationships =
 			ObjectRelationshipLocalServiceUtil.getAllObjectRelationships(
@@ -155,6 +156,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 		Map<String, EntityField> relatedObjectDefinitionEntityFieldsMap =
 			_getStringEntityFieldsMap(
+				objectDefinition,
 				ObjectFieldLocalServiceUtil.getObjectFields(
 					relatedObjectDefinition.getObjectDefinitionId()));
 
@@ -198,7 +200,7 @@ public class ObjectEntryEntityModel implements EntityModel {
 	}
 
 	private Map<String, EntityField> _getStringEntityFieldsMap(
-		List<ObjectField> objectFields) {
+		ObjectDefinition objectDefinition, List<ObjectField> objectFields) {
 
 		Map<String, EntityField> entityFieldsMap =
 			HashMapBuilder.<String, EntityField>put(
@@ -249,7 +251,10 @@ public class ObjectEntryEntityModel implements EntityModel {
 			).build();
 
 		for (ObjectField objectField : objectFields) {
-			if (objectField.isSystem()) {
+			if (objectField.isSystem() &&
+				!(objectDefinition.isSystem() &&
+				  objectDefinition.isModifiable())) {
+
 				continue;
 			}
 

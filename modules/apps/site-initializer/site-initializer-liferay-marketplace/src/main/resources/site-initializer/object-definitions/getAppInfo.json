@@ -1,0 +1,67 @@
+{
+	"externalReferenceCode": "GETAPPINFORMATION",
+	"label": {
+		"en_US": "Get App Information"
+	},
+	"name": "GetAppInformation",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Order ID"
+			},
+			"name": "orderID",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Price Model"
+			},
+			"name": "priceModel",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Product Type"
+			},
+			"name": "productType",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Project Name"
+			},
+			"name": "projectName",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Dashboard Link"
+			},
+			"name": "dashboardLink",
+			"required": false
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Get App Information"
+	},
+	"scope": "company"
+}

@@ -9,6 +9,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectRelationshipElementsParser;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -61,14 +62,8 @@ public abstract class BaseObjectRelationshipElementsParserImpl<T>
 	protected ObjectEntry toObjectEntry(
 		Map<String, Object> nestedObjectEntryProperties) {
 
-		ObjectEntry objectEntry = new ObjectEntry();
-
-		objectEntry.setExternalReferenceCode(
-			(String)nestedObjectEntryProperties.remove(
-				"externalReferenceCode"));
-		objectEntry.setProperties(nestedObjectEntryProperties);
-
-		return objectEntry;
+		return ObjectMapperUtil.readValue(
+			ObjectEntry.class, nestedObjectEntryProperties);
 	}
 
 	protected void validateOne(Object object) {

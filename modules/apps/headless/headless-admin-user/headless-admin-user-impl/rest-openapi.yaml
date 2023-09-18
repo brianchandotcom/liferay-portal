@@ -4557,6 +4557,25 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
             tags: ["UserAccount"]
+    "/user-accounts/by-email-address/{emailAddress}":
+        get:
+            operationId: getUserAccountByEmailAddress
+            parameters:
+                - in: path
+                  name: emailAddress
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/UserAccount"
+            tags: ["UserAccount"]
     "/user-accounts/by-external-reference-code/{externalReferenceCode}":
         delete:
             operationId: deleteUserAccountByExternalReferenceCode

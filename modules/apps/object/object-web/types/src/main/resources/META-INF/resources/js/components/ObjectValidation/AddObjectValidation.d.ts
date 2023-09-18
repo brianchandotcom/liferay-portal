@@ -7,7 +7,7 @@
 
 interface AddObjectValidationProps {
 	apiURL: string;
-	objectValidationRuleEngines: ObjectValidationType[];
+	objectValidationRuleEngines: LabelNameObject[];
 }
 export default function AddObjectValidation({
 	apiURL,

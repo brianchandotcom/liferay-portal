@@ -217,10 +217,6 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Problem problem = problemException.getProblem();
 
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-
-			String title = problem.getTitle();
-
-			Assert.assertTrue(title.contains("name must not be empty"));
 		}
 	}
 

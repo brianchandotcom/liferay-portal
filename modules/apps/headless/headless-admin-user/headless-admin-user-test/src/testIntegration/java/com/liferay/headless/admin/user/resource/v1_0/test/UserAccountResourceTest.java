@@ -406,6 +406,25 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	@Test
+	public void testGetUserAccountByEmailAddress() throws Exception {
+		super.testGetUserAccountByEmailAddress();
+
+		UserAccount postUserAccount =
+			testGetUserAccountsByStatusPage_addUserAccount(
+				com.liferay.headless.admin.user.dto.v1_0.UserAccount.Status.
+					INACTIVE.toString(),
+				randomUserAccount());
+
+		UserAccount getUserAccount =
+			userAccountResource.getUserAccountByEmailAddress(
+				postUserAccount.getEmailAddress());
+
+		assertEquals(postUserAccount, getUserAccount);
+		assertValid(getUserAccount);
+	}
+
+	@Override
+	@Test
 	public void testGetUserAccountsPage() throws Exception {
 		UserAccount userAccount1 = testGetUserAccountsPage_addUserAccount(
 			randomUserAccount());

@@ -88,8 +88,6 @@ public class EntityCacheImpl
 
 	@Override
 	public void dispose() {
-		_notifyFinderCache(null, null, true);
-
 		_portalCaches.clear();
 	}
 
@@ -205,8 +203,6 @@ public class EntityCacheImpl
 		if (portalCacheName.startsWith(_GROUP_KEY_PREFIX)) {
 			cacheName = portalCacheName.substring(_GROUP_KEY_PREFIX.length());
 		}
-
-		_notifyFinderCache(cacheName, null, true);
 
 		_portalCaches.remove(cacheName);
 	}
@@ -331,12 +327,7 @@ public class EntityCacheImpl
 			finderCacheImpl.removeByEntityCache(className, baseModel);
 		}
 		else if (removePortalCache) {
-			if (className == null) {
-				finderCacheImpl.dispose();
-			}
-			else {
-				finderCacheImpl.removeCacheByEntityCache(className);
-			}
+			finderCacheImpl.removeCacheByEntityCache(className);
 		}
 		else {
 			if (className == null) {

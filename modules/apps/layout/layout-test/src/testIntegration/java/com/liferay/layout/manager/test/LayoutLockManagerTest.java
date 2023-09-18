@@ -210,6 +210,29 @@ public class LayoutLockManagerTest {
 		Assert.assertEquals(draftLayout.getPlid(), lockedLayout.getPlid());
 	}
 
+	@Test
+	public void testGetLockedLayoutsFilterByMasterPage() throws Exception {
+		Layout draftLayout = _getDraftLayout();
+
+		_addLayoutPageTemplateEntry(
+			draftLayout.getClassPK(),
+			LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
+
+		_lockLayout(draftLayout, _user);
+
+		_lockLayout(_getDraftLayout(), _user);
+
+		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
+			TestPropsValues.getCompanyId(), _group.getGroupId(), null,
+			LockedLayoutType.MASTER_PAGE);
+
+		Assert.assertEquals(lockedLayouts.toString(), 1, lockedLayouts.size());
+
+		LockedLayout lockedLayout = lockedLayouts.get(0);
+
+		Assert.assertEquals(draftLayout.getPlid(), lockedLayout.getPlid());
+	}
+
 	@Test(expected = LockedLayoutException.class)
 	public void testGetLockWithDifferentUser() throws Exception {
 		Layout draftLayout = _getDraftLayout();

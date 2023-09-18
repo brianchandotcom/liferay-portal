@@ -75,6 +75,11 @@ public class ListTypeLocalServiceWrapper
 		return _listTypeLocalService.createPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void deleteCompanyListTypes(long companyId) {
+		_listTypeLocalService.deleteCompanyListTypes(companyId);
+	}
+
 	/**
 	 * Deletes the list type from the database. Also notifies the appropriate model listeners.
 	 *

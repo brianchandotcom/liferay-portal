@@ -223,6 +223,9 @@ public class UpgradeKaleoDefinitionVersionTest {
 			});
 	}
 
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	private DB _db;
 	private DBInspector _dbInspector;
 
@@ -236,8 +239,6 @@ public class UpgradeKaleoDefinitionVersionTest {
 	private UpgradeProcess _kaleoDefinitionVersionUpgradeProcess;
 	private String _name;
 	private Timestamp _timestamp;
-	@Inject
-	private CompanyLocalService _companyLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.workflow.kaleo.internal.upgrade.registry.KaleoServiceUpgradeStepRegistrator"

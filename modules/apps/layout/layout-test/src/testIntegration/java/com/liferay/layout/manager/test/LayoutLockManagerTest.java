@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -54,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import org.junit.Assert;
@@ -265,6 +267,44 @@ public class LayoutLockManagerTest {
 					false, LocaleUtil.getDefault(),
 					LockedLayoutOrder.LockedLayoutOrderType.LAST_AUTOSAVE),
 				null));
+	}
+
+	@Test
+	public void testGetLockedLayoutsOrderByNameAscending() throws Exception {
+		List<String> names = new ArrayList<>();
+
+		Locale locale = LocaleUtil.getDefault();
+
+		for (int i = 0; i < 5; i++) {
+			Layout draftLayout = _getDraftLayout();
+
+			_lockLayout(draftLayout, _user);
+
+			names.add(
+				LocalizationUtil.getLocalization(
+					draftLayout.getName(), locale.getLanguage()));
+		}
+
+		Collections.sort(names, String.CASE_INSENSITIVE_ORDER);
+
+		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
+			TestPropsValues.getCompanyId(), _group.getGroupId(),
+			new LockedLayoutOrder(
+				true, LocaleUtil.getDefault(),
+				LockedLayoutOrder.LockedLayoutOrderType.NAME),
+			null);
+
+		Assert.assertEquals(
+			lockedLayouts.toString(), names.size(), lockedLayouts.size());
+
+		for (int i = 0; i < names.size(); i++) {
+			LockedLayout lockedLayout = lockedLayouts.get(i);
+
+			Assert.assertEquals(
+				names.get(i),
+				LocalizationUtil.getLocalization(
+					lockedLayout.getName(), locale.getLanguage()));
+		}
 	}
 
 	@Test(expected = LockedLayoutException.class)

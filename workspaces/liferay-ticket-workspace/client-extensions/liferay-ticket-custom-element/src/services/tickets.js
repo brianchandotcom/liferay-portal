@@ -29,11 +29,13 @@ function getRandomElement(array) {
 export async function fetchTickets({queryKey}) {
 	const [, {filter, page, pageSize, search}] = queryKey;
 
-	var filterString = '';
-	var searchString = '';
+	let filterString = '';
+	let searchString = '';
 
 	if (filter?.field && filter?.value) {
-		filterString = '&filter=' + encodeURIComponent(`${filter.field} eq '${filter.value}'`);
+		filterString =
+			'&filter=' +
+			encodeURIComponent(`${filter.field} eq '${filter.value}'`);
 	}
 
 	if (search) {

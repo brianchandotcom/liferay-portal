@@ -44,7 +44,7 @@
 						<liferay-ui:language
 							formAction="<%= updateLanguageFormAction %>"
 							languageId="<%= themeDisplay.getLanguageId() %>"
-							languageIds="<%= LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId())) %>"
+							languageIds="<%= LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales(themeDisplay.getCompanyGroupId())) %>"
 						/>
 					</div>
 				</div>

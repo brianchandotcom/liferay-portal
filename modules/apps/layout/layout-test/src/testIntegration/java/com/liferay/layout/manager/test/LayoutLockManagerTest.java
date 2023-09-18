@@ -98,7 +98,7 @@ public class LayoutLockManagerTest {
 		LayoutTestUtil.addTypeContentLayout(_group);
 
 		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
-			TestPropsValues.getCompanyId(), _group.getGroupId());
+			TestPropsValues.getCompanyId(), _group.getGroupId(), null);
 
 		Assert.assertEquals(lockedLayouts.toString(), 2, lockedLayouts.size());
 

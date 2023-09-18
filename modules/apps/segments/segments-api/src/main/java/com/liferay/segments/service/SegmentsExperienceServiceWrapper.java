@@ -105,6 +105,15 @@ public class SegmentsExperienceServiceWrapper
 	}
 
 	@Override
+	public SegmentsExperience getSegmentsExperience(
+			long groupId, String segmentsExperienceKey, long plid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperienceService.getSegmentsExperience(
+			groupId, segmentsExperienceKey, plid);
+	}
+
+	@Override
 	public java.util.List<SegmentsExperience> getSegmentsExperiences(
 			long groupId, long plid, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {

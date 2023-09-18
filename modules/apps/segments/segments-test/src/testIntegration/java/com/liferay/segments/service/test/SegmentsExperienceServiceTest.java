@@ -613,6 +613,11 @@ public class SegmentsExperienceServiceTest {
 
 			_segmentsExperienceService.getSegmentsExperience(
 				segmentsExperience.getSegmentsExperienceId());
+
+			_segmentsExperienceService.getSegmentsExperience(
+				segmentsExperience.getGroupId(),
+				segmentsExperience.getSegmentsExperienceKey(),
+				segmentsExperience.getPlid());
 		}
 	}
 

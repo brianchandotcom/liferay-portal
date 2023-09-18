@@ -41,7 +41,7 @@ public class LayoutOpenGraphScreenNavigationEntry
 				return false;
 			}
 
-			if (layout.isDraftLayout() && layout.isTypeAssetDisplay()) {
+			if (layout.isTypeAssetDisplay()) {
 				return true;
 			}
 

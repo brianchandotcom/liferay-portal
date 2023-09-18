@@ -5,7 +5,8 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
-import com.liferay.headless.builder.application.provider.APIApplicationProvider;
+import com.liferay.headless.builder.application.APIApplication;
+import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.ObjectEntryValuesException;
@@ -92,8 +93,10 @@ public class APIEndpointRelevantObjectEntryModelListener
 			long companyId, String pathParameter, long responseAPISchemaId)
 		throws Exception {
 
-		if (Objects.equals(pathParameter, "id") ||
-			Objects.equals(pathParameter, "externalReferenceCode")) {
+		if (Objects.equals(
+				pathParameter, HeadlessBuilderConstants.PATH_PARAMETER_ID) ||
+			Objects.equals(
+				pathParameter, HeadlessBuilderConstants.PATH_PARAMETER_ERC)) {
 
 			return true;
 		}
@@ -140,8 +143,10 @@ public class APIEndpointRelevantObjectEntryModelListener
 				_validateAPISchema(apiApplicationId, responseAPISchemaId);
 			}
 
-			if (StringUtil.equals(
-					(String)values.get("retrieveType"), "singleElement")) {
+			if (Objects.equals(
+					APIApplication.Endpoint.RetrieveType.parse(
+						(String)values.get("retrieveType")),
+					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT)) {
 
 				_validateSingleElementPath(
 					objectEntry, (String)values.get("pathParameter"),
@@ -275,8 +280,11 @@ public class APIEndpointRelevantObjectEntryModelListener
 				responseAPISchemaId)) {
 
 			throw new ObjectEntryValuesException.InvalidObjectField(
-				null, "Path parameter must be a valid field name",
-				"path-parameter-must-be-a-valid-field-name");
+				null,
+				"Path parameter must be an id, external reference code or " +
+					"unique field",
+				"path-parameter-must-be-an-id-external-reference-code-or-" +
+					"unique-field");
 		}
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
@@ -289,6 +297,21 @@ public class APIEndpointRelevantObjectEntryModelListener
 				Arrays.asList(objectField.getLabel(user.getLocale()), "\"/\""),
 				"%s must start with the \"/\" character",
 				"x-must-start-with-the-x-character");
+		}
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		if (Objects.equals(
+				APIApplication.Endpoint.Scope.parse(
+					(String)values.get("scope")),
+				APIApplication.Endpoint.Scope.GROUP) &&
+			Objects.equals(
+				pathParameter, HeadlessBuilderConstants.PATH_PARAMETER_ID)) {
+
+			throw new ObjectEntryValuesException.InvalidObjectField(
+				Arrays.asList(objectField.getLabel(user.getLocale())),
+				"Single element ID endpoint can not be scoped by group",
+				"single-element-id-endpoint-can-not-be-scoped-by-group");
 		}
 
 		Matcher singleElementPathMatcher = _singleElementPathPattern.matcher(
@@ -313,17 +336,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 				"%s must contain a path parameter between curly braces",
 				"x-must-contain-a-path-parameter-between-curly-braces");
 		}
-
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		if (Objects.equals(values.get("scope"), "group") &&
-			Objects.equals(pathParameter, "id")) {
-
-			throw new ObjectEntryValuesException.InvalidObjectField(
-				Arrays.asList(objectField.getLabel(user.getLocale())),
-				"Single element ID endpoint can not be scoped by group",
-				"single-element-id-endpoint-can-not-be-scoped-by-group");
-		}
 	}
 
 	private static final Pattern _curlyBracePattern = Pattern.compile(
@@ -332,9 +344,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 		"/[a-zA-Z0-9][a-zA-Z0-9-/]{1,253}");
 	private static final Pattern _singleElementPathPattern = Pattern.compile(
 		"/[a-zA-Z0-9][a-zA-Z0-9-/-{\\-}]{1,253}");
-
-	@Reference
-	private APIApplicationProvider _apiApplicationProvider;
 
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"

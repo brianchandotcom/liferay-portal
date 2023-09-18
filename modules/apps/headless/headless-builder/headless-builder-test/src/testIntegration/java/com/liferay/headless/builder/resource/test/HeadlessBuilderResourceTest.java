@@ -6,6 +6,7 @@
 package com.liferay.headless.builder.resource.test;
 
 import com.liferay.headless.builder.application.APIApplication;
+import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
 import com.liferay.headless.delivery.client.resource.v1_0.DocumentResource;
@@ -178,7 +179,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, null, "collection",
+			_API_APPLICATION_PATH_1, null,
+			APIApplication.Endpoint.RetrieveType.COLLECTION.getValue(),
 			APIApplication.Endpoint.Scope.COMPANY);
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -261,12 +263,42 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
+	public void testGetIndividualObjectEntryByUniqueField() throws Exception {
+		_addAPIApplication(
+			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
+			_objectDefinition1.getExternalReferenceCode(),
+			_objectRelationship1.getName(), _objectRelationship2.getName(),
+			_API_APPLICATION_PATH_1, "textUniqueField",
+			APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.getValue(),
+			APIApplication.Endpoint.Scope.COMPANY);
+
+		_publishAPIApplication(_API_APPLICATION_ERC_1);
+
+		_addCustomObjectEntry(
+			1, null, _objectDefinition1, "value1", "valueUnique");
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"textUniqueProperty", "valueUnique"
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				StringBundler.concat(
+					"c/", _BASE_URL_1, _API_APPLICATION_PATH_1, "/valueUnique"),
+				Http.Method.GET
+			).toString(),
+			JSONCompareMode.LENIENT);
+	}
+
+	@Test
 	public void testGetSingleElementByExternalReferenceCode() throws Exception {
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, "externalReferenceCode", "singleElement",
+			_API_APPLICATION_PATH_1,
+			HeadlessBuilderConstants.PATH_PARAMETER_ERC,
+			APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.getValue(),
 			APIApplication.Endpoint.Scope.COMPANY);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
@@ -296,7 +328,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, "id", "singleElement",
+			_API_APPLICATION_PATH_1, HeadlessBuilderConstants.PATH_PARAMETER_ID,
+			APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.getValue(),
 			APIApplication.Endpoint.Scope.COMPANY);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
@@ -320,39 +353,13 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 	}
 
 	@Test
-	public void testGetIndividualObjectEntryByUniqueField() throws Exception {
-		_addAPIApplication(
-			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
-			_objectDefinition1.getExternalReferenceCode(),
-			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, "textUniqueField", "singleElement",
-			APIApplication.Endpoint.Scope.COMPANY);
-
-		_publishAPIApplication(_API_APPLICATION_ERC_1);
-
-		_addCustomObjectEntry(
-			1, null, _objectDefinition1, "value1", "valueUnique");
-
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"textUniqueProperty", "valueUnique"
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				StringBundler.concat(
-					"c/", _BASE_URL_1, _API_APPLICATION_PATH_1, "/valueUnique"),
-				Http.Method.GET
-			).toString(),
-			JSONCompareMode.LENIENT);
-	}
-
-	@Test
 	public void testGetWithAPIFilter() throws Exception {
 		_addAPIApplication(
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, null, "collection",
+			_API_APPLICATION_PATH_1, null,
+			APIApplication.Endpoint.RetrieveType.COLLECTION.getValue(),
 			APIApplication.Endpoint.Scope.COMPANY);
 
 		_addAPIFilter(
@@ -418,7 +425,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, null, "collection",
+			_API_APPLICATION_PATH_1, null,
+			APIApplication.Endpoint.RetrieveType.COLLECTION.getValue(),
 			APIApplication.Endpoint.Scope.COMPANY);
 
 		_addAPISort(_API_ENDPOINT_ERC_1, String.format("%s:asc", "textField"));
@@ -602,7 +610,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, null, "collection",
+			_API_APPLICATION_PATH_1, null,
+			APIApplication.Endpoint.RetrieveType.COLLECTION.getValue(),
 			APIApplication.Endpoint.Scope.COMPANY);
 
 		_addAPISort(_API_ENDPOINT_ERC_1, String.format("%s:desc", "textField"));
@@ -786,13 +795,15 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, null, "collection",
+			_API_APPLICATION_PATH_1, null,
+			APIApplication.Endpoint.RetrieveType.COLLECTION.getValue(),
 			APIApplication.Endpoint.Scope.COMPANY);
 		_addAPIApplication(
 			_API_APPLICATION_ERC_2, _API_ENDPOINT_ERC_2, _BASE_URL_2,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_2, null, "collection",
+			_API_APPLICATION_PATH_2, null,
+			APIApplication.Endpoint.RetrieveType.COLLECTION.getValue(),
 			APIApplication.Endpoint.Scope.COMPANY);
 
 		String endpoint1 = "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1;
@@ -924,7 +935,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, null, "collection",
+			_API_APPLICATION_PATH_1, null,
+			APIApplication.Endpoint.RetrieveType.COLLECTION.getValue(),
 			APIApplication.Endpoint.Scope.COMPANY);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
@@ -969,7 +981,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_API_APPLICATION_ERC_1, _API_ENDPOINT_ERC_1, _BASE_URL_1,
 			_objectDefinition1.getExternalReferenceCode(),
 			_objectRelationship1.getName(), _objectRelationship2.getName(),
-			_API_APPLICATION_PATH_1, null, "collection",
+			_API_APPLICATION_PATH_1, null,
+			APIApplication.Endpoint.RetrieveType.COLLECTION.getValue(),
 			APIApplication.Endpoint.Scope.COMPANY);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
@@ -1148,7 +1161,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_siteScopedObjectDefinition1.getExternalReferenceCode(),
 			_siteScopedObjectRelationship1.getName(),
 			_siteScopedObjectRelationship2.getName(), _API_APPLICATION_PATH_1,
-			null, "collection", APIApplication.Endpoint.Scope.GROUP);
+			null, APIApplication.Endpoint.RetrieveType.COLLECTION.getValue(),
+			APIApplication.Endpoint.Scope.GROUP);
 
 		String endpointPath = "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1;
 		String scopedEndpointPath = StringBundler.concat(
@@ -1252,7 +1266,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_siteScopedObjectDefinition1.getExternalReferenceCode(),
 			_siteScopedObjectRelationship1.getName(),
 			_siteScopedObjectRelationship2.getName(), _API_APPLICATION_PATH_1,
-			"externalReferenceCode", "singleElement",
+			HeadlessBuilderConstants.PATH_PARAMETER_ERC,
+			APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.getValue(),
 			APIApplication.Endpoint.Scope.GROUP);
 
 		String scopedEndpointPath = StringBundler.concat(
@@ -1288,7 +1303,8 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_siteScopedObjectDefinition1.getExternalReferenceCode(),
 			_siteScopedObjectRelationship1.getName(),
 			_siteScopedObjectRelationship2.getName(), _API_APPLICATION_PATH_1,
-			"textUniqueField", "singleElement",
+			"textUniqueField",
+			APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.getValue(),
 			APIApplication.Endpoint.Scope.GROUP);
 
 		String scopedEndpointPath = StringBundler.concat(
@@ -1389,7 +1405,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 								"name", "textUniqueProperty"
 							).put(
 								"objectFieldERC",
-								_API_SCHEMA_UNIQUE_TEXT_FIELD_ERC
+								_API_SCHEMA_UNIQUE_TEXT_FIELD_ERC + 1
 							),
 							JSONUtil.put(
 								"description", "description"
@@ -1748,7 +1764,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				).build(),
 				new TextObjectFieldBuilder(
 				).externalReferenceCode(
-					_API_SCHEMA_UNIQUE_TEXT_FIELD_ERC
+					_API_SCHEMA_UNIQUE_TEXT_FIELD_ERC + index
 				).labelMap(
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString())
@@ -1802,7 +1818,10 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 		String pathParameter, String retrieveType,
 		APIApplication.Endpoint.Scope scope) {
 
-		if (Objects.equals(retrieveType, "singleElement") &&
+		if (Objects.equals(
+				retrieveType,
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
+					getValue()) &&
 			(pathParameter != null)) {
 
 			return JSONUtil.put(

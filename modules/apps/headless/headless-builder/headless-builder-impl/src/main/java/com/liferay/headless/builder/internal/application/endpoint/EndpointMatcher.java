@@ -6,6 +6,7 @@
 package com.liferay.headless.builder.internal.application.endpoint;
 
 import com.liferay.headless.builder.application.APIApplication;
+import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
 import com.liferay.petra.string.StringPool;
 
 import java.util.HashMap;
@@ -72,7 +73,10 @@ public class EndpointMatcher {
 
 		endpointPath = endpointPath + StringPool.FORWARD_SLASH;
 
-		if (Objects.equals(endpoint.getPathParameter(), "id")) {
+		if (Objects.equals(
+				endpoint.getPathParameter(),
+				HeadlessBuilderConstants.PATH_PARAMETER_ID)) {
+
 			return endpointPath + "\\d+";
 		}
 

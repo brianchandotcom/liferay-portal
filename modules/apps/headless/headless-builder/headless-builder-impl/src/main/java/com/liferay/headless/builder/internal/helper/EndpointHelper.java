@@ -6,6 +6,8 @@
 package com.liferay.headless.builder.internal.helper;
 
 import com.liferay.headless.builder.application.APIApplication;
+import com.liferay.headless.builder.constants.HeadlessBuilderConstants;
+import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -23,8 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
-import javax.ws.rs.NotFoundException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,13 +50,18 @@ public class EndpointHelper {
 			relationshipsNames.addAll(property.getObjectRelationshipNames());
 		}
 
-		if (Objects.equals(pathParameter, "id")) {
+		if (Objects.equals(
+				pathParameter, HeadlessBuilderConstants.PATH_PARAMETER_ID)) {
+
 			objectEntry = _objectEntryHelper.getObjectEntry(
 				companyId, ListUtil.fromCollection(relationshipsNames),
 				GetterUtil.getLong(pathParameterValue),
 				schema.getMainObjectDefinitionExternalReferenceCode());
 		}
-		else if (Objects.equals(pathParameter, "externalReferenceCode")) {
+		else if (Objects.equals(
+					pathParameter,
+					HeadlessBuilderConstants.PATH_PARAMETER_ERC)) {
+
 			objectEntry =
 				_objectEntryHelper.getObjectEntry(
 					companyId, ListUtil.fromCollection(relationshipsNames),
@@ -74,7 +79,10 @@ public class EndpointHelper {
 					scopeKey);
 
 			if (objectEntries.isEmpty()) {
-				throw new NotFoundException();
+				throw new NoSuchObjectEntryException(
+					StringBundler.concat(
+						"No ObjectEntry exists with the key {", pathParameter,
+						"=", pathParameterValue, "}"));
 			}
 
 			objectEntry = objectEntries.get(0);

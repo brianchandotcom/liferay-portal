@@ -262,10 +262,10 @@
 				"type": "object"
 			},
 			"SingleElementSiteScopedSchemaName": {
-				"description": "description",
+				"description": "site scoped description",
 				"properties": {
 					"singleElementSiteScopedTextProperty": {
-						"description": "description",
+						"description": "singleElementSiteScopedTextProperty description",
 						"type": "string"
 					}
 				},

@@ -137,6 +137,13 @@ public class ListTypePersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
 	public void testCountByC_T() throws Exception {
 		_persistence.countByC_T(RandomTestUtil.nextLong(), "");
 

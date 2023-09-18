@@ -5,15 +5,20 @@
 
 package com.liferay.portal.search.internal.index;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.tools.DBUpgrader;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 /**
  * @author André de Oliveira
@@ -24,6 +29,19 @@ public class IndexStatusManagerImplRequireIndexReadWriteTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		_dbUpgraderMockedStatic = Mockito.mockStatic(DBUpgrader.class);
+		_startupHelperUtilMockedStatic = Mockito.mockStatic(
+			StartupHelperUtil.class);
+	}
+
+	@After
+	public void tearDown() {
+		_dbUpgraderMockedStatic.close();
+		_startupHelperUtilMockedStatic.close();
+	}
 
 	@Test
 	public void testBookendsLikeSetupAndTeardown() {
@@ -87,21 +105,56 @@ public class IndexStatusManagerImplRequireIndexReadWriteTest {
 
 	@Test
 	public void testReadOnlyUsingUpgradeTool() {
-		boolean originalUpgradeClientValue = ReflectionTestUtil.getFieldValue(
-			DBUpgrader.class, "_upgradeClient");
+		_dbUpgraderMockedStatic.when(
+			() -> DBUpgrader.isUpgradeClient()
+		).thenReturn(
+			true
+		);
 
-		ReflectionTestUtil.setFieldValue(
-			DBUpgrader.class, "_upgradeClient", true);
+		_startupHelperUtilMockedStatic.when(
+			() -> StartupHelperUtil.isUpgrading()
+		).thenReturn(
+			false
+		);
+
+		indexStatusManagerImpl.setIndexReadOnly(false);
 
 		Assert.assertTrue(indexStatusManagerImpl.isIndexReadOnly());
 
-		ReflectionTestUtil.setFieldValue(
-			DBUpgrader.class, "_upgradeClient", false);
+		_dbUpgraderMockedStatic.when(
+			() -> DBUpgrader.isUpgradeClient()
+		).thenReturn(
+			false
+		);
 
 		Assert.assertFalse(indexStatusManagerImpl.isIndexReadOnly());
+	}
 
-		ReflectionTestUtil.setFieldValue(
-			DBUpgrader.class, "_upgradeClient", originalUpgradeClientValue);
+	@Test
+	public void testReadOnlyWhenStartupHelperUtilIsUpgrading() {
+		_dbUpgraderMockedStatic.when(
+			() -> DBUpgrader.isUpgradeClient()
+		).thenReturn(
+			false
+		);
+
+		_startupHelperUtilMockedStatic.when(
+			() -> StartupHelperUtil.isUpgrading()
+		).thenReturn(
+			true
+		);
+
+		indexStatusManagerImpl.setIndexReadOnly(false);
+
+		Assert.assertTrue(indexStatusManagerImpl.isIndexReadOnly());
+
+		_startupHelperUtilMockedStatic.when(
+			() -> StartupHelperUtil.isUpgrading()
+		).thenReturn(
+			false
+		);
+
+		Assert.assertFalse(indexStatusManagerImpl.isIndexReadOnly());
 	}
 
 	@Rule
@@ -109,5 +162,8 @@ public class IndexStatusManagerImplRequireIndexReadWriteTest {
 
 	protected IndexStatusManagerImpl indexStatusManagerImpl =
 		new IndexStatusManagerImpl();
+
+	private MockedStatic<DBUpgrader> _dbUpgraderMockedStatic;
+	private MockedStatic<StartupHelperUtil> _startupHelperUtilMockedStatic;
 
 }

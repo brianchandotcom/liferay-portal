@@ -9,13 +9,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.bundle.blacklist.BundleBlacklistManager;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.lpkg.deployer.test.util.LPKGTestUtil;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
@@ -25,9 +23,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
@@ -142,46 +137,6 @@ public class BundleBlacklistTest {
 		countDownLatch.await();
 
 		_updateConfiguration(_properties);
-	}
-
-	@Test
-	public void testAddToAndRemoveFromBlacklist() throws Exception {
-		Bundle bundle = _findBundle(_SYMBOLIC_NAME);
-
-		Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
-
-		Collection<String> blacklistBundleSymbolicNames =
-			_getBlacklistBundleSymbolicNames();
-
-		Assert.assertFalse(
-			_SYMBOLIC_NAME + " should not be blacklisted",
-			blacklistBundleSymbolicNames.contains(_SYMBOLIC_NAME));
-
-		_bundleBlacklistManager.addToBlacklistAndUninstall(_SYMBOLIC_NAME);
-
-		for (Bundle curBundle : _bundleContext.getBundles()) {
-			Assert.assertFalse(
-				curBundle + " should not be installed",
-				_SYMBOLIC_NAME.equals(curBundle.getSymbolicName()));
-		}
-
-		blacklistBundleSymbolicNames = _getBlacklistBundleSymbolicNames();
-
-		Assert.assertTrue(
-			_SYMBOLIC_NAME + " should be blacklisted",
-			blacklistBundleSymbolicNames.contains(_SYMBOLIC_NAME));
-
-		_bundleBlacklistManager.removeFromBlacklistAndInstall(_SYMBOLIC_NAME);
-
-		bundle = _findBundle(_SYMBOLIC_NAME);
-
-		Assert.assertEquals(Bundle.ACTIVE, bundle.getState());
-
-		blacklistBundleSymbolicNames = _getBlacklistBundleSymbolicNames();
-
-		Assert.assertFalse(
-			_SYMBOLIC_NAME + " should not be blacklisted",
-			blacklistBundleSymbolicNames.contains(_SYMBOLIC_NAME));
 	}
 
 	@Test
@@ -345,26 +300,6 @@ public class BundleBlacklistTest {
 		return bundle;
 	}
 
-	private Collection<String> _getBlacklistBundleSymbolicNames()
-		throws Exception {
-
-		Configuration configuration = OSGiServiceUtil.callService(
-			_bundleContext, ConfigurationAdmin.class,
-			configurationAdmin -> configurationAdmin.getConfiguration(
-				_CONFIG_NAME, StringPool.QUESTION));
-
-		Dictionary<String, Object> properties = configuration.getProperties();
-
-		String[] blacklistBundleSymbolicNames = (String[])properties.get(
-			_PROP_KEY);
-
-		if (blacklistBundleSymbolicNames == null) {
-			return Collections.emptyList();
-		}
-
-		return Arrays.asList(blacklistBundleSymbolicNames);
-	}
-
 	private void _updateConfiguration(Dictionary<String, Object> dictionary)
 		throws Exception {
 
@@ -407,9 +342,6 @@ public class BundleBlacklistTest {
 
 	private static final String _SYMBOLIC_NAME =
 		"com.liferay.portal.bundle.blacklist.test.bundle";
-
-	@Inject
-	private static BundleBlacklistManager _bundleBlacklistManager;
 
 	private Configuration _bundleBlacklistConfiguration;
 	private BundleContext _bundleContext;

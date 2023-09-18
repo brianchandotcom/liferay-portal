@@ -69,7 +69,7 @@ public class SynonymSetsDatabaseImporterImplTest
 		Mockito.verify(
 			_synonymSetIndexReindexer, Mockito.times(1)
 		).reindex(
-			Mockito.any()
+			Mockito.anyLong()
 		);
 	}
 
@@ -80,7 +80,7 @@ public class SynonymSetsDatabaseImporterImplTest
 		Mockito.verify(
 			_synonymSetIndexReindexer, Mockito.never()
 		).reindex(
-			Mockito.any()
+			Mockito.anyLong()
 		);
 	}
 

@@ -80,6 +80,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -391,6 +392,50 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		return _toUserAccount(
 			_userService.getUserByExternalReferenceCode(
 				contextCompany.getCompanyId(), externalReferenceCode));
+	}
+
+	@Override
+	public Page<UserAccount> getUserAccountsByStatusPage(
+			String status, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		Integer workflowStatus = null;
+
+		if (StringUtil.equalsIgnoreCase(
+				UserAccount.Status.ACTIVE.getValue(), status)) {
+
+			workflowStatus = WorkflowConstants.STATUS_APPROVED;
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					UserAccount.Status.INACTIVE.getValue(), status)) {
+
+			workflowStatus = WorkflowConstants.STATUS_INACTIVE;
+		}
+
+		return _getUserAccountsPage(
+			HashMapBuilder.putAll(
+				_getCompanyScopeActions(
+					ActionKeys.VIEW, new String[] {"getUserAccountsPage"},
+					User.class.getName())
+			).putAll(
+				_getCompanyScopeActions(
+					ActionKeys.ADD_USER,
+					new String[] {
+						"postUserAccount",
+						"putUserAccountByExternalReferenceCode"
+					},
+					PortletKeys.PORTAL)
+			).build(),
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter("userName", StringPool.BLANK),
+					BooleanClauseOccur.MUST_NOT);
+			},
+			filter, search, pagination, sorts, workflowStatus);
 	}
 
 	@Override

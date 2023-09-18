@@ -996,10 +996,20 @@ public class ServletDataImpl implements ServletData {
 							UserAccountResourceImpl.class,
 							"getUserAccountsPage"));
 					put(
+						"query#userAccountByEmailAddress",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"getUserAccountByEmailAddress"));
+					put(
 						"query#userAccountByExternalReferenceCode",
 						new ObjectValuePair<>(
 							UserAccountResourceImpl.class,
 							"getUserAccountByExternalReferenceCode"));
+					put(
+						"query#userAccountsByStatus",
+						new ObjectValuePair<>(
+							UserAccountResourceImpl.class,
+							"getUserAccountsByStatusPage"));
 					put(
 						"query#userAccount",
 						new ObjectValuePair<>(

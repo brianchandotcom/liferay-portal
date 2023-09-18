@@ -2698,6 +2698,83 @@ public abstract class BaseUserAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGetUserAccountByEmailAddress() throws Exception {
+		UserAccount postUserAccount =
+			testGetUserAccountByEmailAddress_addUserAccount();
+
+		UserAccount getUserAccount =
+			userAccountResource.getUserAccountByEmailAddress(
+				postUserAccount.getEmailAddress());
+
+		assertEquals(postUserAccount, getUserAccount);
+		assertValid(getUserAccount);
+	}
+
+	protected UserAccount testGetUserAccountByEmailAddress_addUserAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetUserAccountByEmailAddress() throws Exception {
+		UserAccount userAccount =
+			testGraphQLGetUserAccountByEmailAddress_addUserAccount();
+
+		Assert.assertTrue(
+			equals(
+				userAccount,
+				UserAccountSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"userAccountByEmailAddress",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"emailAddress",
+											"\"" +
+												userAccount.getEmailAddress() +
+													"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/userAccountByEmailAddress"))));
+	}
+
+	@Test
+	public void testGraphQLGetUserAccountByEmailAddressNotFound()
+		throws Exception {
+
+		String irrelevantEmailAddress =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"userAccountByEmailAddress",
+						new HashMap<String, Object>() {
+							{
+								put("emailAddress", irrelevantEmailAddress);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected UserAccount
+			testGraphQLGetUserAccountByEmailAddress_addUserAccount()
+		throws Exception {
+
+		return testGraphQLUserAccount_addUserAccount();
+	}
+
+	@Test
 	public void testDeleteUserAccountByExternalReferenceCode()
 		throws Exception {
 
@@ -2870,6 +2947,375 @@ public abstract class BaseUserAccountResourceTestCase {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetUserAccountsByStatusPage() throws Exception {
+		String status = testGetUserAccountsByStatusPage_getStatus();
+		String irrelevantStatus =
+			testGetUserAccountsByStatusPage_getIrrelevantStatus();
+
+		Page<UserAccount> page =
+			userAccountResource.getUserAccountsByStatusPage(
+				status, null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(0, page.getTotalCount());
+
+		if (irrelevantStatus != null) {
+			UserAccount irrelevantUserAccount =
+				testGetUserAccountsByStatusPage_addUserAccount(
+					irrelevantStatus, randomIrrelevantUserAccount());
+
+			page = userAccountResource.getUserAccountsByStatusPage(
+				irrelevantStatus, null, null, Pagination.of(1, 2), null);
+
+			Assert.assertEquals(1, page.getTotalCount());
+
+			assertEquals(
+				Arrays.asList(irrelevantUserAccount),
+				(List<UserAccount>)page.getItems());
+			assertValid(
+				page,
+				testGetUserAccountsByStatusPage_getExpectedActions(
+					irrelevantStatus));
+		}
+
+		UserAccount userAccount1 =
+			testGetUserAccountsByStatusPage_addUserAccount(
+				status, randomUserAccount());
+
+		UserAccount userAccount2 =
+			testGetUserAccountsByStatusPage_addUserAccount(
+				status, randomUserAccount());
+
+		page = userAccountResource.getUserAccountsByStatusPage(
+			status, null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(userAccount1, userAccount2),
+			(List<UserAccount>)page.getItems());
+		assertValid(
+			page, testGetUserAccountsByStatusPage_getExpectedActions(status));
+
+		userAccountResource.deleteUserAccount(userAccount1.getId());
+
+		userAccountResource.deleteUserAccount(userAccount2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetUserAccountsByStatusPage_getExpectedActions(String status)
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetUserAccountsByStatusPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String status = testGetUserAccountsByStatusPage_getStatus();
+
+		UserAccount userAccount1 = randomUserAccount();
+
+		userAccount1 = testGetUserAccountsByStatusPage_addUserAccount(
+			status, userAccount1);
+
+		for (EntityField entityField : entityFields) {
+			Page<UserAccount> page =
+				userAccountResource.getUserAccountsByStatusPage(
+					status, null,
+					getFilterString(entityField, "between", userAccount1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(userAccount1),
+				(List<UserAccount>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetUserAccountsByStatusPageWithFilterDoubleEquals()
+		throws Exception {
+
+		testGetUserAccountsByStatusPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
+	}
+
+	@Test
+	public void testGetUserAccountsByStatusPageWithFilterStringContains()
+		throws Exception {
+
+		testGetUserAccountsByStatusPageWithFilter(
+			"contains", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetUserAccountsByStatusPageWithFilterStringEquals()
+		throws Exception {
+
+		testGetUserAccountsByStatusPageWithFilter(
+			"eq", EntityField.Type.STRING);
+	}
+
+	@Test
+	public void testGetUserAccountsByStatusPageWithFilterStringStartsWith()
+		throws Exception {
+
+		testGetUserAccountsByStatusPageWithFilter(
+			"startswith", EntityField.Type.STRING);
+	}
+
+	protected void testGetUserAccountsByStatusPageWithFilter(
+			String operator, EntityField.Type type)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String status = testGetUserAccountsByStatusPage_getStatus();
+
+		UserAccount userAccount1 =
+			testGetUserAccountsByStatusPage_addUserAccount(
+				status, randomUserAccount());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserAccount userAccount2 =
+			testGetUserAccountsByStatusPage_addUserAccount(
+				status, randomUserAccount());
+
+		for (EntityField entityField : entityFields) {
+			Page<UserAccount> page =
+				userAccountResource.getUserAccountsByStatusPage(
+					status, null,
+					getFilterString(entityField, operator, userAccount1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(userAccount1),
+				(List<UserAccount>)page.getItems());
+		}
+	}
+
+	@Test
+	public void testGetUserAccountsByStatusPageWithPagination()
+		throws Exception {
+
+		String status = testGetUserAccountsByStatusPage_getStatus();
+
+		UserAccount userAccount1 =
+			testGetUserAccountsByStatusPage_addUserAccount(
+				status, randomUserAccount());
+
+		UserAccount userAccount2 =
+			testGetUserAccountsByStatusPage_addUserAccount(
+				status, randomUserAccount());
+
+		UserAccount userAccount3 =
+			testGetUserAccountsByStatusPage_addUserAccount(
+				status, randomUserAccount());
+
+		Page<UserAccount> page1 =
+			userAccountResource.getUserAccountsByStatusPage(
+				status, null, null, Pagination.of(1, 2), null);
+
+		List<UserAccount> userAccounts1 = (List<UserAccount>)page1.getItems();
+
+		Assert.assertEquals(userAccounts1.toString(), 2, userAccounts1.size());
+
+		Page<UserAccount> page2 =
+			userAccountResource.getUserAccountsByStatusPage(
+				status, null, null, Pagination.of(2, 2), null);
+
+		Assert.assertEquals(3, page2.getTotalCount());
+
+		List<UserAccount> userAccounts2 = (List<UserAccount>)page2.getItems();
+
+		Assert.assertEquals(userAccounts2.toString(), 1, userAccounts2.size());
+
+		Page<UserAccount> page3 =
+			userAccountResource.getUserAccountsByStatusPage(
+				status, null, null, Pagination.of(1, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(userAccount1, userAccount2, userAccount3),
+			(List<UserAccount>)page3.getItems());
+	}
+
+	@Test
+	public void testGetUserAccountsByStatusPageWithSortDateTime()
+		throws Exception {
+
+		testGetUserAccountsByStatusPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, userAccount1, userAccount2) -> {
+				BeanTestUtil.setProperty(
+					userAccount1, entityField.getName(),
+					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetUserAccountsByStatusPageWithSortDouble()
+		throws Exception {
+
+		testGetUserAccountsByStatusPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, userAccount1, userAccount2) -> {
+				BeanTestUtil.setProperty(
+					userAccount1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					userAccount2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetUserAccountsByStatusPageWithSortInteger()
+		throws Exception {
+
+		testGetUserAccountsByStatusPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, userAccount1, userAccount2) -> {
+				BeanTestUtil.setProperty(
+					userAccount1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					userAccount2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetUserAccountsByStatusPageWithSortString()
+		throws Exception {
+
+		testGetUserAccountsByStatusPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, userAccount1, userAccount2) -> {
+				Class<?> clazz = userAccount1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						userAccount1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						userAccount2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						userAccount1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						userAccount2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						userAccount1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						userAccount2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetUserAccountsByStatusPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, UserAccount, UserAccount, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String status = testGetUserAccountsByStatusPage_getStatus();
+
+		UserAccount userAccount1 = randomUserAccount();
+		UserAccount userAccount2 = randomUserAccount();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, userAccount1, userAccount2);
+		}
+
+		userAccount1 = testGetUserAccountsByStatusPage_addUserAccount(
+			status, userAccount1);
+
+		userAccount2 = testGetUserAccountsByStatusPage_addUserAccount(
+			status, userAccount2);
+
+		for (EntityField entityField : entityFields) {
+			Page<UserAccount> ascPage =
+				userAccountResource.getUserAccountsByStatusPage(
+					status, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(userAccount1, userAccount2),
+				(List<UserAccount>)ascPage.getItems());
+
+			Page<UserAccount> descPage =
+				userAccountResource.getUserAccountsByStatusPage(
+					status, null, null, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(userAccount2, userAccount1),
+				(List<UserAccount>)descPage.getItems());
+		}
+	}
+
+	protected UserAccount testGetUserAccountsByStatusPage_addUserAccount(
+			String status, UserAccount userAccount)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String testGetUserAccountsByStatusPage_getStatus()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String testGetUserAccountsByStatusPage_getIrrelevantStatus()
+		throws Exception {
+
+		return null;
 	}
 
 	@Test
@@ -3348,6 +3794,14 @@ public abstract class BaseUserAccountResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (userAccount.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"userAccountContactInformation",
 					additionalAssertFieldName)) {
@@ -3777,6 +4231,16 @@ public abstract class BaseUserAccountResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getSiteBriefs(),
 						userAccount2.getSiteBriefs())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getStatus(), userAccount2.getStatus())) {
 
 					return false;
 				}
@@ -4767,6 +5231,11 @@ public abstract class BaseUserAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("siteBriefs")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("status")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

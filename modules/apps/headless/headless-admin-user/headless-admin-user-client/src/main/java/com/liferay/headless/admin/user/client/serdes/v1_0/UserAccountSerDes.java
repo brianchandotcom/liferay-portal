@@ -475,6 +475,20 @@ public class UserAccountSerDes {
 			sb.append("]");
 		}
 
+		if (userAccount.getStatus() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append("\"");
+
+			sb.append(userAccount.getStatus());
+
+			sb.append("\"");
+		}
+
 		if (userAccount.getUserAccountContactInformation() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -744,6 +758,13 @@ public class UserAccountSerDes {
 			map.put("siteBriefs", String.valueOf(userAccount.getSiteBriefs()));
 		}
 
+		if (userAccount.getStatus() == null) {
+			map.put("status", null);
+		}
+		else {
+			map.put("status", String.valueOf(userAccount.getStatus()));
+		}
+
 		if (userAccount.getUserAccountContactInformation() == null) {
 			map.put("userAccountContactInformation", null);
 		}
@@ -988,6 +1009,13 @@ public class UserAccountSerDes {
 					}
 
 					userAccount.setSiteBriefs(siteBriefsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setStatus(
+						UserAccount.Status.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(

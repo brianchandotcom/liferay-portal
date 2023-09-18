@@ -3462,6 +3462,14 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (userAccount.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"userAccountContactInformation",
 					additionalAssertFieldName)) {
@@ -4136,6 +4144,16 @@ public abstract class BaseOrganizationResourceTestCase {
 				if (!Objects.deepEquals(
 						userAccount1.getSiteBriefs(),
 						userAccount2.getSiteBriefs())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getStatus(), userAccount2.getStatus())) {
 
 					return false;
 				}

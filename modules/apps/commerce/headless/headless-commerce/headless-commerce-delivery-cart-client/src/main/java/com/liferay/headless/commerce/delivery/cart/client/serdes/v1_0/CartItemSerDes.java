@@ -260,6 +260,16 @@ public class CartItemSerDes {
 			sb.append(cartItem.getSkuId());
 		}
 
+		if (cartItem.getSkuUnitOfMeasure() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuUnitOfMeasure\": ");
+
+			sb.append(String.valueOf(cartItem.getSkuUnitOfMeasure()));
+		}
+
 		if (cartItem.getSubscription() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -280,20 +290,6 @@ public class CartItemSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(cartItem.getThumbnail()));
-
-			sb.append("\"");
-		}
-
-		if (cartItem.getUnitOfMeasureKey() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"unitOfMeasureKey\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(cartItem.getUnitOfMeasureKey()));
 
 			sb.append("\"");
 		}
@@ -451,6 +447,15 @@ public class CartItemSerDes {
 			map.put("skuId", String.valueOf(cartItem.getSkuId()));
 		}
 
+		if (cartItem.getSkuUnitOfMeasure() == null) {
+			map.put("skuUnitOfMeasure", null);
+		}
+		else {
+			map.put(
+				"skuUnitOfMeasure",
+				String.valueOf(cartItem.getSkuUnitOfMeasure()));
+		}
+
 		if (cartItem.getSubscription() == null) {
 			map.put("subscription", null);
 		}
@@ -463,15 +468,6 @@ public class CartItemSerDes {
 		}
 		else {
 			map.put("thumbnail", String.valueOf(cartItem.getThumbnail()));
-		}
-
-		if (cartItem.getUnitOfMeasureKey() == null) {
-			map.put("unitOfMeasureKey", null);
-		}
-		else {
-			map.put(
-				"unitOfMeasureKey",
-				String.valueOf(cartItem.getUnitOfMeasureKey()));
 		}
 
 		if (cartItem.getValid() == null) {
@@ -612,6 +608,13 @@ public class CartItemSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "skuUnitOfMeasure")) {
+				if (jsonParserFieldValue != null) {
+					cartItem.setSkuUnitOfMeasure(
+						SkuUnitOfMeasureSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "subscription")) {
 				if (jsonParserFieldValue != null) {
 					cartItem.setSubscription((Boolean)jsonParserFieldValue);
@@ -620,11 +623,6 @@ public class CartItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
 				if (jsonParserFieldValue != null) {
 					cartItem.setThumbnail((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "unitOfMeasureKey")) {
-				if (jsonParserFieldValue != null) {
-					cartItem.setUnitOfMeasureKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "valid")) {

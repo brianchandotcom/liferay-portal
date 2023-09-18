@@ -378,6 +378,28 @@ public class CartItem implements Cloneable, Serializable {
 
 	protected Long skuId;
 
+	public SkuUnitOfMeasure getSkuUnitOfMeasure() {
+		return skuUnitOfMeasure;
+	}
+
+	public void setSkuUnitOfMeasure(SkuUnitOfMeasure skuUnitOfMeasure) {
+		this.skuUnitOfMeasure = skuUnitOfMeasure;
+	}
+
+	public void setSkuUnitOfMeasure(
+		UnsafeSupplier<SkuUnitOfMeasure, Exception>
+			skuUnitOfMeasureUnsafeSupplier) {
+
+		try {
+			skuUnitOfMeasure = skuUnitOfMeasureUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected SkuUnitOfMeasure skuUnitOfMeasure;
+
 	public Boolean getSubscription() {
 		return subscription;
 	}
@@ -419,27 +441,6 @@ public class CartItem implements Cloneable, Serializable {
 	}
 
 	protected String thumbnail;
-
-	public String getUnitOfMeasureKey() {
-		return unitOfMeasureKey;
-	}
-
-	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
-		this.unitOfMeasureKey = unitOfMeasureKey;
-	}
-
-	public void setUnitOfMeasureKey(
-		UnsafeSupplier<String, Exception> unitOfMeasureKeyUnsafeSupplier) {
-
-		try {
-			unitOfMeasureKey = unitOfMeasureKeyUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String unitOfMeasureKey;
 
 	public Boolean getValid() {
 		return valid;

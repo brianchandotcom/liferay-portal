@@ -58,14 +58,14 @@ public interface SkuResource {
 
 	public Sku postChannelProductSkuBySkuOption(
 			Long channelId, Long productId, Long accountId,
-			java.math.BigDecimal quantity, String unitOfMeasureKey,
+			java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
 			SkuOption[] skuOptions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postChannelProductSkuBySkuOptionHttpResponse(
 				Long channelId, Long productId, Long accountId,
-				java.math.BigDecimal quantity, String unitOfMeasureKey,
+				java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
 				SkuOption[] skuOptions)
 		throws Exception;
 
@@ -426,14 +426,14 @@ public interface SkuResource {
 
 		public Sku postChannelProductSkuBySkuOption(
 				Long channelId, Long productId, Long accountId,
-				java.math.BigDecimal quantity, String unitOfMeasureKey,
+				java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
 				SkuOption[] skuOptions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postChannelProductSkuBySkuOptionHttpResponse(
-					channelId, productId, accountId, quantity, unitOfMeasureKey,
-					skuOptions);
+					channelId, productId, accountId, quantity,
+					skuUnitOfMeasureKey, skuOptions);
 
 			String content = httpResponse.getContent();
 
@@ -497,7 +497,7 @@ public interface SkuResource {
 		public HttpInvoker.HttpResponse
 				postChannelProductSkuBySkuOptionHttpResponse(
 					Long channelId, Long productId, Long accountId,
-					java.math.BigDecimal quantity, String unitOfMeasureKey,
+					java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
 					SkuOption[] skuOptions)
 			throws Exception {
 
@@ -538,9 +538,9 @@ public interface SkuResource {
 				httpInvoker.parameter("quantity", String.valueOf(quantity));
 			}
 
-			if (unitOfMeasureKey != null) {
+			if (skuUnitOfMeasureKey != null) {
 				httpInvoker.parameter(
-					"unitOfMeasureKey", String.valueOf(unitOfMeasureKey));
+					"skuUnitOfMeasureKey", String.valueOf(skuUnitOfMeasureKey));
 			}
 
 			httpInvoker.path(

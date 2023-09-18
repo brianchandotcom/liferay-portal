@@ -121,14 +121,14 @@ public class Mutation {
 			@GraphQLName("productId") Long productId,
 			@GraphQLName("accountId") Long accountId,
 			@GraphQLName("quantity") java.math.BigDecimal quantity,
-			@GraphQLName("unitOfMeasureKey") String unitOfMeasureKey,
+			@GraphQLName("skuUnitOfMeasureKey") String skuUnitOfMeasureKey,
 			@GraphQLName("skuOptions") SkuOption[] skuOptions)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_skuResourceComponentServiceObjects, this::_populateResourceContext,
 			skuResource -> skuResource.postChannelProductSkuBySkuOption(
-				channelId, productId, accountId, quantity, unitOfMeasureKey,
+				channelId, productId, accountId, quantity, skuUnitOfMeasureKey,
 				skuOptions));
 	}
 

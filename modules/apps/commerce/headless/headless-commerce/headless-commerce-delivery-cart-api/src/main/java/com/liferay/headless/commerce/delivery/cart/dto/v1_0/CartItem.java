@@ -531,6 +531,36 @@ public class CartItem implements Serializable {
 	@NotNull
 	protected Long skuId;
 
+	@Schema
+	@Valid
+	public SkuUnitOfMeasure getSkuUnitOfMeasure() {
+		return skuUnitOfMeasure;
+	}
+
+	public void setSkuUnitOfMeasure(SkuUnitOfMeasure skuUnitOfMeasure) {
+		this.skuUnitOfMeasure = skuUnitOfMeasure;
+	}
+
+	@JsonIgnore
+	public void setSkuUnitOfMeasure(
+		UnsafeSupplier<SkuUnitOfMeasure, Exception>
+			skuUnitOfMeasureUnsafeSupplier) {
+
+		try {
+			skuUnitOfMeasure = skuUnitOfMeasureUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected SkuUnitOfMeasure skuUnitOfMeasure;
+
 	@Schema(example = "true")
 	public Boolean getSubscription() {
 		return subscription;
@@ -586,34 +616,6 @@ public class CartItem implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String thumbnail;
-
-	@Schema(example = "m")
-	public String getUnitOfMeasureKey() {
-		return unitOfMeasureKey;
-	}
-
-	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
-		this.unitOfMeasureKey = unitOfMeasureKey;
-	}
-
-	@JsonIgnore
-	public void setUnitOfMeasureKey(
-		UnsafeSupplier<String, Exception> unitOfMeasureKeyUnsafeSupplier) {
-
-		try {
-			unitOfMeasureKey = unitOfMeasureKeyUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String unitOfMeasureKey;
 
 	@Schema
 	public Boolean getValid() {
@@ -884,6 +886,16 @@ public class CartItem implements Serializable {
 			sb.append(skuId);
 		}
 
+		if (skuUnitOfMeasure != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuUnitOfMeasure\": ");
+
+			sb.append(String.valueOf(skuUnitOfMeasure));
+		}
+
 		if (subscription != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -904,20 +916,6 @@ public class CartItem implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(thumbnail));
-
-			sb.append("\"");
-		}
-
-		if (unitOfMeasureKey != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"unitOfMeasureKey\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(unitOfMeasureKey));
 
 			sb.append("\"");
 		}

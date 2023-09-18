@@ -61,7 +61,7 @@ public interface SkuResource {
 
 	public Sku postChannelProductSkuBySkuOption(
 			Long channelId, Long productId, Long accountId,
-			java.math.BigDecimal quantity, String unitOfMeasureKey,
+			java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
 			SkuOption[] skuOptions)
 		throws Exception;
 

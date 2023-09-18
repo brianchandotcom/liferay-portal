@@ -211,7 +211,7 @@ public abstract class BaseSkuResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "unitOfMeasureKey"
+				name = "skuUnitOfMeasureKey"
 			)
 		}
 	)
@@ -241,8 +241,8 @@ public abstract class BaseSkuResourceImpl
 			@javax.ws.rs.QueryParam("quantity")
 			java.math.BigDecimal quantity,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("unitOfMeasureKey")
-			String unitOfMeasureKey,
+			@javax.ws.rs.QueryParam("skuUnitOfMeasureKey")
+			String skuUnitOfMeasureKey,
 			SkuOption[] skuOptions)
 		throws Exception {
 

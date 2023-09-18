@@ -58,12 +58,6 @@ definition {
 		}
 	}
 
-	macro viewNoResultAssetTitle {
-		AssertElementNotPresent(
-			key_searchAssetTitle = ${searchAssetTitle},
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
-	}
-
 	macro viewNotPresentInContentBody {
 		AssertClick(
 			key_rowEntry = ${siteName},
@@ -71,13 +65,6 @@ definition {
 			value1 = ${siteName});
 
 		AssertElementNotPresent(locator1 = "//body[.='${elementValue}']");
-	}
-
-	macro viewResultAssetTitle {
-		AssertTextEquals(
-			key_searchAssetTitle = ${searchAssetTitle},
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
-			value1 = ${searchAssetTitle});
 	}
 
 }

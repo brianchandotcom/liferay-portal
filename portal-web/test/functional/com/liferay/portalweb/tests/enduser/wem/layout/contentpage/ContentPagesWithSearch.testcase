@@ -132,9 +132,9 @@ definition {
 		}
 
 		task ("View both the content page and web content shown in the search results") {
-			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+			SearchResultPortlet.viewSearchResults(searchAssetTitle = "Test Content Page Name");
 
-			Search.viewResultAssetTitle(searchAssetTitle = "Web Content Title");
+			SearchResultPortlet.viewSearchResults(searchAssetTitle = "Web Content Title");
 		}
 
 		task ("Check the Page type in Type Facet") {
@@ -142,9 +142,9 @@ definition {
 		}
 
 		task ("View only the content page shown in the search results") {
-			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+			SearchResultPortlet.viewSearchResults(searchAssetTitle = "Test Content Page Name");
 
-			Search.viewNoResultAssetTitle(searchAssetTitle = "Web Content Title");
+			SearchResultPortlet.viewSearchResultNotPresent(searchAssetTitle = "Web Content Title");
 		}
 	}
 
@@ -180,7 +180,7 @@ definition {
 		}
 
 		task ("View the content page shown in the search results") {
-			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+			SearchResultPortlet.viewSearchResults(searchAssetTitle = "Test Content Page Name");
 		}
 
 		task ("Edit the inline text") {
@@ -209,7 +209,7 @@ definition {
 		}
 
 		task ("View the content page shown in the search results") {
-			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+			SearchResultPortlet.viewSearchResults(searchAssetTitle = "Test Content Page Name");
 		}
 
 		task ("Search by default inline text") {
@@ -217,7 +217,7 @@ definition {
 		}
 
 		task ("View the content page not shown in the search results") {
-			Search.viewNoResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+			SearchResultPortlet.viewSearchResultNotPresent(searchAssetTitle = "Test Content Page Name");
 		}
 	}
 
@@ -278,7 +278,7 @@ definition {
 		}
 
 		task ("View the content page shown in the search results") {
-			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+			SearchResultPortlet.viewSearchResults(searchAssetTitle = "Test Content Page Name");
 		}
 	}
 
@@ -420,7 +420,7 @@ definition {
 			}
 
 			task ("View the content page is shown in the search results") {
-				Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+				SearchResultPortlet.viewSearchResults(searchAssetTitle = "Test Content Page Name");
 			}
 		}
 
@@ -499,7 +499,7 @@ definition {
 			}
 
 			task ("View the content page is shown in the search results") {
-				Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name 2");
+				SearchResultPortlet.viewSearchResults(searchAssetTitle = "Test Content Page Name 2");
 			}
 		}
 	}
@@ -554,7 +554,7 @@ definition {
 		}
 
 		task ("View the content page is shown in the search results") {
-			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+			SearchResultPortlet.viewSearchResults(searchAssetTitle = "Test Content Page Name");
 		}
 
 		task ("Delete the category") {
@@ -575,7 +575,7 @@ definition {
 		}
 
 		task ("View the content page is not shown in the search results") {
-			Search.viewNoResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+			SearchResultPortlet.viewSearchResultNotPresent(searchAssetTitle = "Test Content Page Name");
 		}
 	}
 
@@ -626,7 +626,7 @@ definition {
 
 		task ("View both content page and web content shown in the search results") {
 			for (var title : list "Test Content Page Name,Searchable Web Content Title") {
-				Search.viewResultAssetTitle(searchAssetTitle = ${title});
+				SearchResultPortlet.viewSearchResults(searchAssetTitle = ${title});
 			}
 		}
 
@@ -646,7 +646,7 @@ definition {
 
 		task ("View both content page and web content are still shown in the search results") {
 			for (var title : list "Test Content Page Name,Searchable Web Content Title") {
-				Search.viewResultAssetTitle(searchAssetTitle = ${title});
+				SearchResultPortlet.viewSearchResults(searchAssetTitle = ${title});
 			}
 		}
 	}
@@ -693,7 +693,7 @@ definition {
 
 			Search.searchCP(searchTerm = "lorem");
 
-			Search.viewResultAssetTitle(searchAssetTitle = "Test Content Page Name");
+			SearchResultPortlet.viewSearchResults(searchAssetTitle = "Test Content Page Name");
 		}
 	}
 

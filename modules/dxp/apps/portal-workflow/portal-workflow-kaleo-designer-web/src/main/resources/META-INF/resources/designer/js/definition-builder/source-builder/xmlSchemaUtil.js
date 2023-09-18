@@ -163,9 +163,30 @@ function getLocationValue(field, context) {
 												for (const grandGrand of itemGrandChild.children) {
 													const grandGrandContent = {};
 
-													grandGrandContent[
-														grandGrand.tagName
-													] = grandGrand.textContent;
+													if (
+														grandGrand.children
+															.length
+													) {
+														grandGrandContent[
+															grandGrand.tagName
+														] = {};
+
+														for (const grandGrandChild of grandGrand.children) {
+															grandGrandContent[
+																grandGrand.tagName
+															][
+																grandGrandChild.tagName
+															] =
+																grandGrandChild.textContent;
+														}
+													}
+													else {
+														grandGrandContent[
+															grandGrand.tagName
+														] =
+															grandGrand.textContent;
+													}
+
 													grandGrandChildren.push(
 														grandGrandContent
 													);

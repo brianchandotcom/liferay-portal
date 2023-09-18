@@ -8,10 +8,13 @@ package com.liferay.headless.builder.internal.model.listener;
 import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
+import com.liferay.headless.builder.internal.application.publisher.APIApplicationPublisherUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -19,6 +22,8 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.Serializable;
@@ -100,6 +105,20 @@ public class APIApplicationPublisherObjectEntryModelListener
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
+		}
+	}
+
+	private void _executeForCluster(
+		MethodKey methodKey, String baseURL, long companyId) {
+
+		if (ClusterExecutorUtil.isEnabled()) {
+			ClusterRequest clusterRequest =
+				ClusterRequest.createMulticastRequest(
+					new MethodHandler(methodKey, baseURL, companyId), true);
+
+			clusterRequest.setFireAndForget(true);
+
+			ClusterExecutorUtil.execute(clusterRequest);
 		}
 	}
 
@@ -229,6 +248,10 @@ public class APIApplicationPublisherObjectEntryModelListener
 						_apiApplicationPublisher.unpublish(
 							(String)values.get("baseURL"),
 							apiApplicationObjectEntry.getCompanyId());
+
+						_executeForCluster(
+							_unpublishMethodKey, (String)values.get("baseURL"),
+							apiApplicationObjectEntry.getCompanyId());
 					}
 					else {
 						APIApplication apiApplication =
@@ -241,6 +264,10 @@ public class APIApplicationPublisherObjectEntryModelListener
 						}
 
 						_apiApplicationPublisher.publish(apiApplication);
+
+						_executeForCluster(
+							_publishMethodKey, apiApplication.getBaseURL(),
+							apiApplication.getCompanyId());
 					}
 				}
 
@@ -250,6 +277,12 @@ public class APIApplicationPublisherObjectEntryModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		APIApplicationPublisherObjectEntryModelListener.class);
+
+	private static final MethodKey _publishMethodKey = new MethodKey(
+		APIApplicationPublisherUtil.class, "publish", String.class, long.class);
+	private static final MethodKey _unpublishMethodKey = new MethodKey(
+		APIApplicationPublisherUtil.class, "unpublish", String.class,
+		long.class);
 
 	@Reference
 	private APIApplicationProvider _apiApplicationProvider;

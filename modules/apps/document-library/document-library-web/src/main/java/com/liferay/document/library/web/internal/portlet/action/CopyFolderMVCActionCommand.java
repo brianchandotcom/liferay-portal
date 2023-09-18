@@ -150,20 +150,18 @@ public class CopyFolderMVCActionCommand extends BaseMVCActionCommand {
 	private Map<Long, Long> _getFileEntryTypeIds(long groupId, long folderId)
 		throws PortalException {
 
-		DLFolder folder = _dlFolderService.getFolder(folderId);
-
 		long[] groupIds =
 			_siteConnectedGroupGroupProvider.
 				getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true);
 
-		if (ArrayUtil.isEmpty(groupIds) ||
-			!ArrayUtil.contains(groupIds, folder.getGroupId())) {
-
+		if (ArrayUtil.isEmpty(groupIds)) {
 			return new HashMap<>();
 		}
 
+		DLFolder folder = _dlFolderService.getFolder(folderId);
+
 		return _dlFileEntryLocalService.getFileEntryTypeIds(
-			folder.getCompanyId(), folder.getGroupId(), folder.getTreePath());
+			folder.getCompanyId(), groupIds, folder.getTreePath());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

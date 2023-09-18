@@ -72,7 +72,6 @@ export default function ScheduleModal({
 					<label>{Liferay.Language.get('date-and-time')}</label>
 
 					<ClayDatePicker
-						firstDayOfWeek={1}
 						onChange={setDisplayDate}
 						placeholder="YYYY-MM-DD HH:mm"
 						time

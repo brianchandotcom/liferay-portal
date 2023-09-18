@@ -613,6 +613,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			return {
 				...state,
 				objectFolderName,
+				rightSidebarType: 'empty',
 			};
 		}
 

@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.workflow.NoSuchWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -445,9 +444,6 @@ public class WorkflowDefinitionManagerImpl
 	protected String getVersion(int version) {
 		return version + StringPool.PERIOD + 0;
 	}
-
-	@Reference
-	protected PortalUUID portalUUID;
 
 	private List<WorkflowDefinition> _toWorkflowDefinitions(
 		KaleoDefinition[] kaleoDefinitions,

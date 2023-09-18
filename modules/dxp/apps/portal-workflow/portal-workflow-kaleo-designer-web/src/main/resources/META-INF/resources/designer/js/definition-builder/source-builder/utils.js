@@ -333,8 +333,13 @@ export function parseNotifications(node) {
 			}
 		}
 
-		if (item['scripted-recipient']) {
-			const scriptedRecipient = item['scripted-recipient'][0];
+		if (
+			item['scripted-recipient'] ||
+			(item['recipients'] && item['recipients'][0]['scripted-recipient'])
+		) {
+			const scriptedRecipient = item['scripted-recipient']
+				? item['scripted-recipient'][0]
+				: item['recipients'][0]['scripted-recipient'];
 
 			const script = scriptedRecipient.script;
 			const scriptLanguage = scriptedRecipient['script-language'];
@@ -342,11 +347,7 @@ export function parseNotifications(node) {
 			if (item.receptionType) {
 				notifications.recipients[index].push({
 					assignmentType: ['scriptedRecipient'],
-					receptionType: [
-						item.receptionType[
-							notifications.recipients[index].length
-						],
-					],
+					receptionType: [item.receptionType],
 					script: [script],
 					scriptLanguage: scriptLanguage || [DEFAULT_LANGUAGE],
 				});

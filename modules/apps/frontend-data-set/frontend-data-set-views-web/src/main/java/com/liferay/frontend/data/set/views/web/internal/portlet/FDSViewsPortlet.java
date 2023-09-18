@@ -5,6 +5,7 @@
 
 package com.liferay.frontend.data.set.views.web.internal.portlet;
 
+import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsPortletKeys;
 import com.liferay.frontend.data.set.views.web.internal.constants.FDSViewsWebKeys;
@@ -20,10 +21,12 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -40,6 +43,7 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
@@ -68,6 +72,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_bundle = BundleUtil.getBundle(
+			bundleContext, "com.liferay.frontend.data.set.views.web");
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, null, "(openapi.resource=true)",
 			new RESTApplicationServiceTrackerCustomizer(bundleContext));
@@ -87,12 +93,17 @@ public class FDSViewsPortlet extends MVCPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			BatchEngineUnitThreadLocal.setFileName(_bundle.toString());
+
 			_generate(
 				themeDisplay.getCompanyId(), themeDisplay.getLocale(),
 				themeDisplay.getUserId());
 		}
 		catch (Exception exception) {
 			_log.error(exception);
+		}
+		finally {
+			BatchEngineUnitThreadLocal.setFileName(StringPool.BLANK);
 		}
 
 		renderRequest.setAttribute(
@@ -494,6 +505,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FDSViewsPortlet.class);
+
+	private Bundle _bundle;
 
 	@Reference
 	private CETManager _cetManager;

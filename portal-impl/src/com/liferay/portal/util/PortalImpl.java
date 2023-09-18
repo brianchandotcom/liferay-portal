@@ -5449,7 +5449,7 @@ public class PortalImpl implements Portal {
 			if (userAttribute.equals(UserAttributes.USER_NAME_FULL)) {
 				String fullName = user.getFullName();
 
-				if (!Validator.isBlank(fullName)) {
+				if (!fullName.isEmpty()) {
 					userName = fullName;
 				}
 			}

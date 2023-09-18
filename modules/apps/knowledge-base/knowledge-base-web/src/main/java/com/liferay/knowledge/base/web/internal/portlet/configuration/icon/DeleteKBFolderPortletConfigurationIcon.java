@@ -41,6 +41,11 @@ public class DeleteKBFolderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
+	public String getIconCssClass() {
+		return "trash";
+	}
+
+	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return _language.get(getLocale(portletRequest), "delete");
 	}

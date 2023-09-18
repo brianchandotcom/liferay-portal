@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.uuid.PortalUUIDImpl;
 import com.liferay.saml.constants.SamlWebKeys;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.SecurityConfigurationBootstrap;
@@ -115,9 +114,6 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
-
-		ReflectionTestUtil.setFieldValue(
-			_relayStateHelperImpl, "_portalUUID", new PortalUUIDImpl());
 
 		_samlSpAuthRequestLocalService = getMockPortletService(
 			SamlSpAuthRequestLocalServiceUtil.class,

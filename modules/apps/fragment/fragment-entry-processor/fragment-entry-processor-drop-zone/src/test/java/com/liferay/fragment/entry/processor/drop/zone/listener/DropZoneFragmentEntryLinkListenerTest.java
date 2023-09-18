@@ -22,15 +22,12 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.uuid.PortalUUIDImpl;
 
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,11 +44,6 @@ public class DropZoneFragmentEntryLinkListenerTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@BeforeClass
-	public static void setUpClass() {
-		_setUpPortalUUIDUtil();
-	}
 
 	@Before
 	public void setUp() {
@@ -283,12 +275,6 @@ public class DropZoneFragmentEntryLinkListenerTest {
 				dropZoneId3, fragmentDropZoneLayoutStructureItem3.getItemId()),
 			new KeyValuePair(
 				dropZoneId1, fragmentDropZoneLayoutStructureItem1.getItemId()));
-	}
-
-	private static void _setUpPortalUUIDUtil() {
-		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
-
-		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
 	}
 
 	private void _assertUpdateLayoutPageTemplateStructureData(

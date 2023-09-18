@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.uuid.PortalUUIDImpl;
 
 import java.util.Collections;
 
@@ -53,8 +51,6 @@ public class StylesFragmentEntryProcessorTest {
 	public static void setUpClass() {
 		_setUpDocumentStylesFragmentEntryProcessor();
 		_setUpStylesFragmentEntryValidator();
-
-		_setUpPortalUUIDUtil();
 	}
 
 	@Test
@@ -120,12 +116,6 @@ public class StylesFragmentEntryProcessorTest {
 			_stylesDocumentFragmentEntryProcessor,
 			"_layoutPageTemplateStructureLocalService",
 			Mockito.mock(LayoutPageTemplateStructureLocalService.class));
-	}
-
-	private static void _setUpPortalUUIDUtil() {
-		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
-
-		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
 	}
 
 	private static void _setUpStylesFragmentEntryValidator() {

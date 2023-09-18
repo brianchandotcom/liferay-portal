@@ -7,10 +7,8 @@ package com.liferay.portal.cluster.multiple.internal;
 
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PropsImpl;
-import com.liferay.portal.uuid.PortalUUIDImpl;
 
 import org.junit.After;
 import org.junit.Before;
@@ -25,10 +23,6 @@ public abstract class BaseClusterTestCase {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(new PortalImpl());
-
-		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
-
-		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
 
 		PropsUtil.setProps(new PropsImpl());
 	}

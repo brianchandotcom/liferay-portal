@@ -21,9 +21,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.uuid.PortalUUIDImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,8 +51,6 @@ public class DropZoneFragmentEntryProcessorTest {
 	public static void setUpClass() {
 		_setUpDropZoneDocumentFragmentEntryProcessor();
 		_setUpDropZoneFragmentEntryValidator();
-
-		_setUpPortalUUIDUtil();
 	}
 
 	@Test
@@ -364,12 +360,6 @@ public class DropZoneFragmentEntryProcessorTest {
 		ReflectionTestUtil.setFieldValue(
 			_dropZoneFragmentEntryValidator, "_language",
 			Mockito.mock(Language.class));
-	}
-
-	private static void _setUpPortalUUIDUtil() {
-		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
-
-		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
 	}
 
 	private Document _getDocument(String html) {

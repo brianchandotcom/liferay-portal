@@ -9,11 +9,9 @@ import com.liferay.portal.kernel.test.util.DependenciesTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.uuid.PortalUUIDImpl;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,10 +38,6 @@ public class ZipWriterImplTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
-
-		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
-
 		_expectedEntryContent = StringUtil.read(
 			DependenciesTestUtil.getDependencyAsInputStream(
 				ZipWriterImplTest.class, _ENTRY_FILE_PATH));

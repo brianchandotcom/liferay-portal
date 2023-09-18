@@ -42,7 +42,7 @@ const PurchasedSolutionsAccountSelection: React.FC<PurchasedSolutionsccountSelec
 	orderInfo,
 	setStep,
 }) => {
-	const [radio, setRadio] = useState<RadioOption>();
+	const [radio, setRadio] = useState<RadioOption<Account>>();
 	const [orderType, setOrderType] = useState<OrderType>();
 	const [disabledButton, setDisabledButton] = useState<boolean>(false);
 	const [toastItems, setToastItems] = useState<

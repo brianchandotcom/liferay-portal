@@ -475,7 +475,7 @@ export async function getProduct({
 	return (await response.json()) as Product;
 }
 
-export async function getProductById({nestedFields, productId}: {nestedFields: string ,productId: number}) {
+export async function getProductById({nestedFields, productId}: {nestedFields?: string ,productId: number}) {
 	
 	let url = `${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/${productId}`;
 	

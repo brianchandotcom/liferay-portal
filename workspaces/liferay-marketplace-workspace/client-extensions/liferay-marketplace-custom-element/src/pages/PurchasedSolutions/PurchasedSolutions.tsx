@@ -172,7 +172,7 @@ const PurchasedSolutions: React.FC = () => {
 				);
 			}
 			else {
-				const productById = await getProductById(Number(productId));
+				const productById = await getProductById({productId: Number(productId)});
 				setSku(skuProduct.items[0].id);
 				setProduct(productById);
 			}

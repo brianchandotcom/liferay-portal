@@ -98,6 +98,14 @@ public class SegmentsExperienceServiceUtil {
 		return getService().getSegmentsExperience(segmentsExperienceId);
 	}
 
+	public static SegmentsExperience getSegmentsExperience(
+			long groupId, String segmentsExperienceKey, long plid)
+		throws PortalException {
+
+		return getService().getSegmentsExperience(
+			groupId, segmentsExperienceKey, plid);
+	}
+
 	public static List<SegmentsExperience> getSegmentsExperiences(
 			long groupId, long plid, boolean active)
 		throws PortalException {

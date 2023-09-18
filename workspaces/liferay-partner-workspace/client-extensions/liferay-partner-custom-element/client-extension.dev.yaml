@@ -1,0 +1,5 @@
+liferay-partner-custom-element:
+    urls:
+        - http://localhost:5173/@vite/client
+        - http://localhost:5173/@vite/refresh.js
+        - http://localhost:5173/src/main.tsx

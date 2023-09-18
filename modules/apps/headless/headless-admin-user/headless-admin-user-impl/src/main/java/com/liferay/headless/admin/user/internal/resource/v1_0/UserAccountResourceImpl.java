@@ -105,6 +105,7 @@ import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
@@ -411,6 +412,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 					UserAccount.Status.INACTIVE.getValue(), status)) {
 
 			workflowStatus = WorkflowConstants.STATUS_INACTIVE;
+		}
+		else {
+			throw new BadRequestException("Status is invalid");
 		}
 
 		return _getUserAccountsPage(

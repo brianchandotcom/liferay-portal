@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -30,6 +30,7 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -46,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortletConfigurationIcon.class
 )
 public class MoveKBFolderPortletConfigurationIcon
-	extends BasePortletConfigurationIcon {
+	extends BaseJSPPortletConfigurationIcon {
 
 	@Override
 	public Map<String, Object> getContext(PortletRequest portletRequest) {
@@ -54,11 +55,15 @@ public class MoveKBFolderPortletConfigurationIcon
 			KBWebKeys.KNOWLEDGE_BASE_PARENT_KB_FOLDER);
 
 		return HashMapBuilder.<String, Object>put(
-			"action", "move"
+			"action", getNamespace(portletRequest) + "moveFolder"
+		).put(
+			"globalAction", true
 		).put(
 			"kbObjectClassNameId", kbFolder.getClassNameId()
 		).put(
 			"kbObjectId", kbFolder.getKbFolderId()
+		).put(
+			"kbObjectTitle", kbFolder.getName()
 		).put(
 			"kbObjectType", KBFolder.class.getSimpleName()
 		).put(
@@ -77,7 +82,14 @@ public class MoveKBFolderPortletConfigurationIcon
 			).setWindowState(
 				LiferayWindowState.POP_UP
 			).buildString()
+		).put(
+			"portletNamespace", getNamespace(portletRequest)
 		).build();
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/configuration/icon/move_folder.jsp";
 	}
 
 	@Override
@@ -113,6 +125,11 @@ public class MoveKBFolderPortletConfigurationIcon
 		}
 	}
 
+	@Override
+	protected ServletContext getServletContext() {
+		return _servletContext;
+	}
+
 	private LiferayPortletResponse _getLiferayPortletResponse(
 		PortletRequest portletRequest) {
 
@@ -139,5 +156,10 @@ public class MoveKBFolderPortletConfigurationIcon
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.knowledge.base.web)"
+	)
+	private ServletContext _servletContext;
 
 }

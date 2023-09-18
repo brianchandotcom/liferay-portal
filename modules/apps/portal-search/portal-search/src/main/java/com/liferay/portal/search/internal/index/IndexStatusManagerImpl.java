@@ -35,8 +35,9 @@ public class IndexStatusManagerImpl implements IndexStatusManager {
 
 	@Override
 	public boolean isIndexReadOnly() {
-		if (IndexStatusManagerThreadLocal.isIndexReadOnly() || _indexReadOnly ||
-			StartupHelperUtil.isUpgrading() || DBUpgrader.isUpgradeClient()) {
+		if (DBUpgrader.isUpgradeClient() ||
+			IndexStatusManagerThreadLocal.isIndexReadOnly() || _indexReadOnly ||
+			StartupHelperUtil.isUpgrading()) {
 
 			return true;
 		}

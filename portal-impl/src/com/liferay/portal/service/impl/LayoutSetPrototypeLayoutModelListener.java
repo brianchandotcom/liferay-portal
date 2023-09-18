@@ -55,11 +55,14 @@ public class LayoutSetPrototypeLayoutModelListener
 				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
 					group.getClassPK());
 
-			LayoutSet layoutSet = layoutSetPrototype.getLayoutSet();
+			LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
+				layoutSetPrototype.getGroupId(), true);
 
-			layoutSet.setModifiedDate(modifiedDate);
+			if (layoutSet != null) {
+				layoutSet.setModifiedDate(modifiedDate);
 
-			LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
+				LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
+			}
 		}
 		catch (Exception exception) {
 			_log.error(exception);

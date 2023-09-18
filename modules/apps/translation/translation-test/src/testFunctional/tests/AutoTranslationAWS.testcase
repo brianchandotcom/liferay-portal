@@ -156,8 +156,8 @@ definition {
 		Translations.autoTranslate();
 
 		Translations.viewTargetFields(
-			webContentContent = "Contenido del WC",
-			webContentDescription = "Descripción del WC",
+			webContentContent = "Contenido del inodoro",
+			webContentDescription = "Descripción del inodoro",
 			webContentTitle = "Título del artículo");
 
 		PortletEntry.publish();
@@ -170,8 +170,8 @@ definition {
 			webContentTitle = "Article title");
 
 		Translations.viewTargetFields(
-			webContentContent = "Contenido del WC",
-			webContentDescription = "Descripción del WC",
+			webContentContent = "Contenido del inodoro",
+			webContentDescription = "Descripción del inodoro",
 			webContentTitle = "Título del artículo");
 	}
 

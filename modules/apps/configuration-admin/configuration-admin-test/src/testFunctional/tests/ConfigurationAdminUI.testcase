@@ -1,10 +1,11 @@
 @component-name = "portal-platform-experience-and-design-system"
 definition {
 
+	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "System Settings";
 	property testray.component.name = "Configuration Admin UI";
+	property testray.main.component.name = "System Settings";
 
 	setUp {
 		TestCase.setUpPortalInstance();
@@ -25,6 +26,9 @@ definition {
 	@description = "LPS-194725 - configuration admin UI can autogenerate a doc link"
 	@priority = 3
 	test CanRenderADocLink {
+		property portal.acceptance = "false";
+		property test.liferay.virtual.instance = "false";
+
 		task ("When navigate to Bundle Blacklist edit configuration page ") {
 			SystemSettings.openSystemSettingsAdmin();
 
@@ -46,6 +50,9 @@ definition {
 				key_href = "blacklisting-apps",
 				key_text = "How does bundle blacklisting work?",
 				locator1 = "Link#ANY_HREF_2");
+
+			takeScreenshot();
 		}
 	}
+
 }

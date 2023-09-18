@@ -272,15 +272,6 @@ public class HttpServletEndpointControllerImpl
 	private final ServiceRegistration<ServletContextHelper>
 		_serviceRegistration;
 
-	private static class DefaultServletContextHelper
-		extends ServletContextHelper {
-
-		public DefaultServletContextHelper(Bundle bundle) {
-			super(bundle);
-		}
-
-	}
-
 	private static class DefaultServletContextHelperFactory
 		implements ServiceFactory<ServletContextHelper> {
 
@@ -289,7 +280,8 @@ public class HttpServletEndpointControllerImpl
 			Bundle bundle,
 			ServiceRegistration<ServletContextHelper> serviceRegistration) {
 
-			return new DefaultServletContextHelper(bundle);
+			return new ServletContextHelper(bundle) {
+			};
 		}
 
 		@Override

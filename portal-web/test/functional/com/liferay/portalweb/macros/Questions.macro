@@ -740,6 +740,14 @@ definition {
 		}
 	}
 
+	macro subscribeFromQuestion {
+		Click.waitForMenuToggleJSClick(
+			key_questionTitle = ${questionTitle},
+			locator1 = "Questions#QUESTIONS_ELLIPSIS_ICON");
+
+		MenuItem.clickNoError(menuItem = "Subscribe");
+	}
+
 	macro subscribeFromTag {
 		Click(locator1 = "Questions#QUESTIONS_BELL_BUTTON");
 

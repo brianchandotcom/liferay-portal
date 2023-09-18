@@ -169,6 +169,9 @@ public interface UserAccountResource {
 	public Response postUserAccountBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public UserAccount getUserAccountByEmailAddress(String emailAddress)
+		throws Exception;
+
 	public void deleteUserAccountByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
@@ -179,6 +182,11 @@ public interface UserAccountResource {
 
 	public UserAccount putUserAccountByExternalReferenceCode(
 			String externalReferenceCode, UserAccount userAccount)
+		throws Exception;
+
+	public Page<UserAccount> getUserAccountsByStatusPage(
+			String status, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public void deleteUserAccount(Long userAccountId) throws Exception;

@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -95,6 +96,9 @@ public class UpgradeKaleoDefinitionVersionTest {
 		_getKaleoDefinitionVersion(company1.getCompanyId(), _name, 2);
 		_getKaleoDefinition(company2.getCompanyId(), _name);
 		_getKaleoDefinitionVersion(company2.getCompanyId(), _name, 3);
+
+		_companyLocalService.deleteCompany(company1);
+		_companyLocalService.deleteCompany(company2);
 	}
 
 	private void _addColumn(String table, String column) throws Exception {
@@ -232,6 +236,8 @@ public class UpgradeKaleoDefinitionVersionTest {
 	private UpgradeProcess _kaleoDefinitionVersionUpgradeProcess;
 	private String _name;
 	private Timestamp _timestamp;
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.workflow.kaleo.internal.upgrade.registry.KaleoServiceUpgradeStepRegistrator"

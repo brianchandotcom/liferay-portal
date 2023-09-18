@@ -35,6 +35,7 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderList
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -231,6 +232,10 @@ public class UserResourceDTOConverter
 					});
 				setStatus(
 					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled("LPS-188420")) {
+							return null;
+						}
+
 						if (user.getStatus() ==
 								WorkflowConstants.STATUS_APPROVED) {
 

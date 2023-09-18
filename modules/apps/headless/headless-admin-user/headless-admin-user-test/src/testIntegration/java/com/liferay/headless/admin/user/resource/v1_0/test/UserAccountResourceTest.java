@@ -1257,6 +1257,13 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
+	protected String testGetUserAccountsByStatusPage_getStatus()
+		throws Exception {
+
+		return com.liferay.headless.admin.user.dto.v1_0.UserAccount.Status.
+			INACTIVE.toString();
+	}
+
 	protected UserAccount testGetUserAccountsPage_addUserAccount(
 			UserAccount userAccount)
 		throws Exception {

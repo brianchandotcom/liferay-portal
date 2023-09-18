@@ -1,28 +1,26 @@
 @import 'atlas-variables';
 
-html#{$cadmin-selector} {
-	.page-editor__reorder-set-modal {
-		.card {
-			cursor: grab;
-		}
+html#{$cadmin-selector} .page-editor__reorder-set-modal {
+	.card {
+		cursor: grab;
 
-		.card.dragging {
+		&.dragging {
 			opacity: 0.4;
 		}
+	}
 
-		.dropdown-menu {
-			min-width: 192px;
-		}
+	.dropdown-menu {
+		min-width: 192px;
+	}
 
-		.lexicon-icon-drag {
-			height: 16px;
-			margin: 0;
-			width: 16px;
-		}
+	.lexicon-icon-drag {
+		height: 16px;
+		margin: 0;
+		width: 16px;
+	}
 
-		.modal-dialog .modal-content .modal-body {
-			max-height: 70vh;
-			overflow: auto;
-		}
+	.modal-dialog .modal-content .modal-body {
+		max-height: 70vh;
+		overflow: auto;
 	}
 }

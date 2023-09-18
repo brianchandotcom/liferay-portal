@@ -617,10 +617,6 @@
 			<category name="Upgrade" />
 			<description name="Add new parameter in method onAfterUpdate for classes extending the BaseModelListener" />
 		</check>
-		<check name="JavaUpgradeSchedulerEntryImplConstructorCheck">
-			<category name="Upgrade" />
-			<description name="Replace constructors that use the empty constructor of the SchedulerEntryImpl class." />
-		</check>
 		<check name="MethodCallsOrderCheck">
 			<category name="Styling" />
 			<description name="Sorts method calls for certain object (for example, `put` calls in `java.util.HashMap`)." />
@@ -1746,6 +1742,10 @@
 		<check name="UpgradeJavaPortletSharedSearchSettingsCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the Optional return type of the methods `getParameterValues` and `getPortletPreferences` of `PortletSharedSearchSettings` class" />
+		</check>
+		<check name="UpgradeJavaSchedulerEntryImplConstructorCheck">
+			<category name="Upgrade" />
+			<description name="Replace constructors that use the empty constructor of the SchedulerEntryImpl class." />
 		</check>
 		<check name="UpgradeJavaSearchVocabulariesMethodCheck">
 			<category name="Upgrade" />

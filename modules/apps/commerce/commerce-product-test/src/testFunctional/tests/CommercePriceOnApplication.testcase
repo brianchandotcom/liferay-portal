@@ -2150,7 +2150,7 @@ definition {
 		task ("And goes to the Price Lists tab") {
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 		}
 
 		task ("Then the Price on Application column is shown") {
@@ -2204,7 +2204,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 		}
 
 		task ("Then the Price on Application column values for the new price list and promotion entries are 'Yes'") {
@@ -2266,7 +2266,7 @@ definition {
 		task ("And goes to the Price Lists tab") {
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 		}
 
 		task ("Then the Price on Application column is shown") {
@@ -2318,7 +2318,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 		}
 
 		task ("Then the Price on Application column values for the new price list and promotion entries are 'Yes'") {

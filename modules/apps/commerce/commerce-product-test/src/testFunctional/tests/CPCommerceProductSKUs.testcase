@@ -188,7 +188,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
@@ -237,7 +237,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			CommerceEntry.clickEntryDropdownMenuItem(
 				entryName = "Minium Base Price List",
@@ -288,7 +288,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
@@ -306,7 +306,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
@@ -486,7 +486,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
@@ -504,7 +504,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
@@ -555,7 +555,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 		}
 
 		task ("Then 4 entries are present, 2 for each UOM") {
@@ -639,7 +639,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 		}
 
 		task ("When the admin opens the modal by clicking the plus button") {
@@ -669,7 +669,7 @@ definition {
 
 			CommerceEntry.gotoMenuTab(menuTab = "Details");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			Click(locator1 = "Button#PLUS");
 
@@ -930,7 +930,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
@@ -974,7 +974,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
@@ -1025,7 +1025,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
@@ -1062,7 +1062,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 

@@ -1831,7 +1831,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 		}
 
 		task ("And the admin goes into Minium Base Price List") {
@@ -1854,7 +1854,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
@@ -1904,7 +1904,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 
@@ -1920,7 +1920,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
 			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
 

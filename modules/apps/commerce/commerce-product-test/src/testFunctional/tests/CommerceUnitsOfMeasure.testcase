@@ -560,19 +560,19 @@ definition {
 		}
 
 		task ("And can verify the Minium Base Price and the Minium Promotion prices in Pricing tab are also updated according to the first UOM") {
-			CommerceEntry.gotoMenuTab(menuTab = "Price Lists");
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
 
-			AssertElementPresent(
-				key_entryTitle = "Minium Base Price List",
-				key_index = 2,
-				key_value = "$ 75.00",
-				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			AssertTextEquals(
+				key_columnIndex = 4,
+				key_rowIndex = 1,
+				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
+				value1 = "$ 75.00");
 
-			AssertElementPresent(
-				key_entryTitle = "Minium Base Promotion",
-				key_index = 2,
-				key_value = "$ 70.00",
-				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			AssertTextEquals(
+				key_columnIndex = 4,
+				key_rowIndex = 2,
+				locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
+				value1 = "$ 70.00");
 		}
 
 		task ("And can verify the Minium Base Price and the Minium Promotion prices in Price Lists are also updated according to the first UOM") {

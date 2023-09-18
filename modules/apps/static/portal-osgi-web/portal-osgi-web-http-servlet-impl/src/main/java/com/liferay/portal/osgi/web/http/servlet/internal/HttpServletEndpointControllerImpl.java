@@ -357,9 +357,7 @@ public class HttpServletEndpointControllerImpl
 			ServiceReference<ServletContextHelper> serviceReference,
 			ContextController contextController) {
 
-			if (contextController != null) {
-				contextController.destroy();
-			}
+			contextController.destroy();
 		}
 
 	}

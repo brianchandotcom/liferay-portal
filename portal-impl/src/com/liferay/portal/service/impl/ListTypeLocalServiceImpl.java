@@ -44,6 +44,16 @@ public class ListTypeLocalServiceImpl extends ListTypeLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteCompanyListTypes(long companyId) {
+		List<ListType> listTypes = listTypePersistence.findByCompanyId(
+			companyId);
+
+		for (ListType listType : listTypes) {
+			listTypeLocalService.deleteListType(listType);
+		}
+	}
+
+	@Override
 	public ListType getListType(String name, String type) {
 		return listTypePersistence.fetchByC_N_T(
 			CompanyThreadLocal.getCompanyId(), name, type);

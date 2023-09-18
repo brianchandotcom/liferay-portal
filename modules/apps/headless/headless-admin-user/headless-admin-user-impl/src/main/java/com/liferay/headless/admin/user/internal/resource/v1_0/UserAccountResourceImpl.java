@@ -375,6 +375,15 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	}
 
 	@Override
+	public UserAccount getUserAccountByEmailAddress(String emailAddress)
+		throws Exception {
+
+		return _toUserAccount(
+			_userService.getUserByEmailAddress(
+				contextCompany.getCompanyId(), emailAddress));
+	}
+
+	@Override
 	public UserAccount getUserAccountByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception {

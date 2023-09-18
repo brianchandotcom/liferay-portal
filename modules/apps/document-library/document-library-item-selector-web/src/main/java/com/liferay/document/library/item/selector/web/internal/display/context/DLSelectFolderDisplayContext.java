@@ -235,20 +235,21 @@ public class DLSelectFolderDisplayContext {
 				return getFolderName();
 			}
 		).put(
-			"repositoryid", _repositoryId
+			"repositoryid", getRepositoryId()
 		).put(
 			"repositoryname",
 			() -> {
 				if ((folder == null) ||
-					(_repositoryId == folder.getGroupId())) {
+					(getRepositoryId() == folder.getGroupId())) {
 
-					Group group = GroupServiceUtil.getGroup(_repositoryId);
+					Group group = GroupServiceUtil.getGroup(getRepositoryId());
 
 					return group.getDescriptiveName(_themeDisplay.getLocale());
 				}
 
 				Repository repository =
-					RepositoryLocalServiceUtil.fetchRepository(_repositoryId);
+					RepositoryLocalServiceUtil.fetchRepository(
+						getRepositoryId());
 
 				return repository.getName();
 			}

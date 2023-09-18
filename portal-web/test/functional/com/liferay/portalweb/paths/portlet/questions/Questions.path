@@ -162,7 +162,7 @@
 </tr>
 <tr>
 	<td>QUESTIONS_ELLIPSIS_ICON</td>
-	<td>//div[contains(@class,'question-row') and contains(.,'${key_questionTitle}')]//li//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td>//div[contains(@class,'questions-container row') and contains(.,'${key_questionTitle}')]//li//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

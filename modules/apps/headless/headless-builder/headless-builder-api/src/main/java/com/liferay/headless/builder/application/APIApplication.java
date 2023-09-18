@@ -8,6 +8,7 @@ package com.liferay.headless.builder.application;
 import com.liferay.portal.kernel.util.Http;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Alejandro Tardín
@@ -50,7 +51,29 @@ public interface APIApplication {
 
 		public enum RetrieveType {
 
-			COLLECTION, SINGLE_ELEMENT
+			COLLECTION("collection"), SINGLE_ELEMENT("singleElement");
+
+			public static RetrieveType parse(String value) {
+				for (RetrieveType retrieveType : RetrieveType.values()) {
+					if (Objects.equals(
+							retrieveType.getRetrieveTypeValue(), value)) {
+
+						return retrieveType;
+					}
+				}
+
+				throw new IllegalArgumentException("Invalid value " + value);
+			}
+
+			public String getRetrieveTypeValue() {
+				return _value;
+			}
+
+			private RetrieveType(String value) {
+				_value = value;
+			}
+
+			private final String _value;
 
 		}
 

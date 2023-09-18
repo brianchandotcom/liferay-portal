@@ -32,6 +32,8 @@ definition {
 	@description = "LPS-98233 - Verify that the default date format for en-US in Custom Range filter is MM/DD/YYYY"
 	@priority = 3
 	test DefaultDateFormatIsMMDDYYYY {
+		property portal.acceptance = "default";
+
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");

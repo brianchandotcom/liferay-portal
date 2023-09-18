@@ -10,6 +10,32 @@ definition {
 		}
 	}
 
+	macro _checkElasticSearchStatus {
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var portalURL = Regex.removeHTTP(url = ${portalURL});
+
+		var portalURL = Regex.removePortNumber(url = ${portalURL});
+
+		var workflowMetricsStatus = "";
+
+		while (${workflowMetricsStatus} != "green") {
+			echo("##");
+
+			echo("## Workflow Metrics Processes Status");
+
+			echo("##");
+
+			var workflowMetricsProcesses = JSONCurlUtil.get("http://${portalURL}:9201/_cat/indices/liferay-${companyId}-workflow-metrics-processes");
+
+			var workflowMetricsStatus = StringUtil.extractFirst(${workflowMetricsProcesses}," ");
+
+			echo(${workflowMetricsStatus});
+		}
+	}
+
 	macro allItemPageFilterCheck {
 		var key_allItemsFilterName = ${allItemsFilterName};
 
@@ -728,6 +754,8 @@ definition {
 		Workflow.openWorkflowMetrics();
 
 		while ((IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME")) && (maxIterations = "10")) {
+			// Workflow.openWorkflowMetrics();
+
 			Click(locator1 = "WorkflowMetricsSLA#METRICS_MENU_SLA");
 
 			Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");

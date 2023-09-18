@@ -287,6 +287,8 @@ definition {
 	@description = "LPS-105497 - Verify that the user can select Update Task Due Date in the kebab menu for a particular row"
 	@priority = 4
 	test CanSelectUpDateDueDateInKebabMenu {
+		property portal.acceptance = "default";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",

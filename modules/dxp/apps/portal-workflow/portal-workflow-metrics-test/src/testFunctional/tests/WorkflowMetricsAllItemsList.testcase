@@ -576,6 +576,8 @@ definition {
 	@description = "LPS-92053 - Verify that, at the items table, users should be able to click on process ID column and open a modal for the respective item details"
 	@priority = 3
 	test ClickOnProcessIdColumnToSeeItemDetailsPage {
+		property portal.acceptance = "default";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -1465,7 +1467,7 @@ definition {
 	@description = "Verify that, in the item detail modal, when an item is completed with No SLA, the icon on modal title will keep informing the SLA status but styled in grey color"
 	@priority = 3
 	test IconOnModalTitleIsGreyWhenItemIsCompletedNoSLA {
-		property ci.retries.disabled = "true";
+		property portal.acceptance = "default";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
@@ -2511,6 +2513,8 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, when one of the sections has no entries, the section title is completely removed"
 	@priority = 4
 	test SectionIsRemovedWhenItHasNoEntries {
+		property portal.acceptance = "default";
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -3165,6 +3169,8 @@ definition {
 	@description = "LPS-92053 - Verify that, in the item detail modal, Pause instead of due date, the UI will inform SLA Paused sentence next to the SLA name"
 	@priority = 4
 	test WhenSlaIsPausedSlaPausedIsDisplayedInsteadOfDueDate {
+		property portal.acceptance = "default";
+
 		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
 
 		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");

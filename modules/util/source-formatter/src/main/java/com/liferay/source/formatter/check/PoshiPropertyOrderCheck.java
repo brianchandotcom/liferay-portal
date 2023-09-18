@@ -5,18 +5,19 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author Qi Zhang
  */
-public class PoshiFeatureFlagsOrderCheck extends BaseFileCheck {
+public class PoshiPropertyOrderCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
@@ -30,27 +31,28 @@ public class PoshiFeatureFlagsOrderCheck extends BaseFileCheck {
 
 		outLooper:
 		while (matcher.find()) {
-			String[] featureFlagsArray = StringUtil.split(
+			String[] propertiesArray = StringUtil.split(
 				matcher.group(1), "${line.separator}");
 
-			if (featureFlagsArray.length == 1) {
+			if (propertiesArray.length == 1) {
 				continue;
 			}
 
-			for (String featureFlag : featureFlagsArray) {
-				if (!featureFlag.matches(
-						"feature\\.flag\\.([A-Z]+-\\d+)=\\w+")) {
+			Map<String, String> messagesMap = new TreeMap<>(
+				new NaturalOrderStringComparator());
 
+			for (String property : propertiesArray) {
+				int index = property.indexOf(StringPool.EQUAL);
+
+				if (index == -1) {
 					continue outLooper;
 				}
+
+				messagesMap.put(property.substring(0, index), property);
 			}
 
-			List<String> featureFlags = Arrays.asList(featureFlagsArray);
-
-			featureFlags.sort(new NaturalOrderStringComparator());
-
 			String newCustomPropertiesValue = StringUtil.merge(
-				featureFlags, "${line.separator}");
+				messagesMap.values(), "${line.separator}");
 
 			if (!StringUtil.equals(
 					matcher.group(1), newCustomPropertiesValue)) {

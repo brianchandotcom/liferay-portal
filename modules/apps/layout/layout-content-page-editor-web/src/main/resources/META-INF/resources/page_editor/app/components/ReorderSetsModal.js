@@ -295,14 +295,18 @@ function CardItem({index, item, numberOfItems, onChangeItemPosition}) {
 								</ClayCard.Description>
 							</ClayLayout.ContentCol>
 
-							<ClayLayout.ContentCol gutters>
-								<ReorderDropdown
-									index={index}
-									item={item}
-									numberOfItems={numberOfItems}
-									onChangeItemPosition={onChangeItemPosition}
-								/>
-							</ClayLayout.ContentCol>
+							{Liferay.FeatureFlags['LPS-196420'] ? null : (
+								<ClayLayout.ContentCol gutters>
+									<ReorderDropdown
+										index={index}
+										item={item}
+										numberOfItems={numberOfItems}
+										onChangeItemPosition={
+											onChangeItemPosition
+										}
+									/>
+								</ClayLayout.ContentCol>
+							)}
 						</ClayCard.Row>
 					</ClayCard.Body>
 				</ClayCard>

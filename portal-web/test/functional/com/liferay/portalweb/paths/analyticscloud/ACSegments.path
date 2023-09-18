@@ -392,6 +392,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ACTIVITIES_CRITERION_DROPDOWN</td>
+	<td>xpath=(//button[contains(@class,'dropdown-item') and text()='${operator}'])</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TIME_INPUT_CRITERION_CONJUNCTION</td>
 	<td>xpath=(//button[@data-testid='conjunction-input'])[${key_indexField}]</td>
 	<td></td>

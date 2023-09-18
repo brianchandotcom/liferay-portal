@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.scheduler.quartz.internal.job.MessageSenderJob;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -450,12 +449,8 @@ public class QuartzSchedulerEngineTest {
 	}
 
 	private void _setUpPortalUUIDUtil() {
-		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
-
-		PortalUUID portalUUID = Mockito.mock(PortalUUID.class);
-
-		Mockito.when(
-			portalUUID.generate()
+		_portalUUIDUtilMockedStatic.when(
+			PortalUUIDUtil::generate
 		).then(
 			new Answer<String>() {
 
@@ -472,8 +467,6 @@ public class QuartzSchedulerEngineTest {
 
 			}
 		);
-
-		portalUUIDUtil.setPortalUUID(portalUUID);
 	}
 
 	private static final int _DEFAULT_INTERVAL = 10;
@@ -493,6 +486,8 @@ public class QuartzSchedulerEngineTest {
 
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
+	private static final MockedStatic<PortalUUIDUtil>
+		_portalUUIDUtilMockedStatic = Mockito.mockStatic(PortalUUIDUtil.class);
 	private static ServiceRegistration<SchedulerEngineHelper>
 		_schedulerEngineHelperServiceRegistration;
 

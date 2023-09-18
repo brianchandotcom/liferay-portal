@@ -236,6 +236,10 @@ definition {
 		}
 
 		task ("Assert can not delete system scoped read-only deployed fragment in normal site") {
+			if (IsElementNotPresent(key_menuBar = "Imported", key_stackName = "Default", locator1 = "MenuBar#NAV_LINK_IN_STACK")) {
+				Refresh();
+			}
+
 			FragmentsAdminNavigator.gotoSpecificScopeCollection(
 				collectionName = "Imported",
 				scope = "Default");

@@ -4,7 +4,6 @@
  */
 
 import {Option, Picker, Text} from '@clayui/core';
-import Form from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import Layout from '@clayui/layout';
 import PropTypes from 'prop-types';
@@ -23,55 +22,46 @@ const ExperienceDropdown = (props) => {
 
 	return (
 		!!props.segmentsExperiences.length && (
-			<div className="mr-2">
-				<Form.Group className="mb-2">
-					<Picker
-						aria-label={Liferay.Language.get('experience-selector')}
-						id="picker"
-						items={props.segmentsExperiences}
-						onSelectionChange={handleSelectionChange}
-						selectedKey={selectedKey}
-						selecteditem={props.activeSegmentsExperience}
-					>
-						{(experience) => (
-							<Option
-								key={experience.id}
-								textValue={experience.name}
-							>
-								<Layout.ContentRow>
-									<Layout.ContentCol
-										className="c-pl-0"
-										expand
+			<div className="mb-2 mr-2">
+				<Picker
+					aria-label={Liferay.Language.get('experience-selector')}
+					id="picker"
+					items={props.segmentsExperiences}
+					onSelectionChange={handleSelectionChange}
+					selectedKey={selectedKey}
+					selecteditem={props.activeSegmentsExperience}
+				>
+					{(experience) => (
+						<Option key={experience.id} textValue={experience.name}>
+							<Layout.ContentRow>
+								<Layout.ContentCol className="c-pl-0" expand>
+									<Text size={3} weight="semi-bold">
+										{experience.name}
+									</Text>
+
+									<Text
+										aria-hidden
+										className="mr-1"
+										color="secondary"
+										size={2}
 									>
-										<Text size={3} weight="semi-bold">
-											{experience.name}
+										{Liferay.Language.get('segment') + ': '}
+
+										<Text size={2}>
+											{experience.segmentName}
 										</Text>
+									</Text>
+								</Layout.ContentCol>
 
-										<Text
-											aria-hidden
-											className="mr-1"
-											color="secondary"
-											size={2}
-										>
-											{Liferay.Language.get('segment') +
-												': '}
-
-											<Text size={2}>
-												{experience.segmentName}
-											</Text>
-										</Text>
-									</Layout.ContentCol>
-
-									<Layout.ContentCol>
-										<ExperienceStatusLabel
-											active={experience.active}
-										/>
-									</Layout.ContentCol>
-								</Layout.ContentRow>
-							</Option>
-						)}
-					</Picker>
-				</Form.Group>
+								<Layout.ContentCol>
+									<ExperienceStatusLabel
+										active={experience.active}
+									/>
+								</Layout.ContentCol>
+							</Layout.ContentRow>
+						</Option>
+					)}
+				</Picker>
 			</div>
 		)
 	);

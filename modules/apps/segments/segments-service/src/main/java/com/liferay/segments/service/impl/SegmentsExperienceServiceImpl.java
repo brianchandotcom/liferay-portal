@@ -136,6 +136,21 @@ public class SegmentsExperienceServiceImpl
 	}
 
 	@Override
+	public SegmentsExperience getSegmentsExperience(
+			long groupId, String segmentsExperienceKey, long plid)
+		throws PortalException {
+
+		SegmentsExperience segmentsExperience =
+			segmentsExperienceLocalService.getSegmentsExperience(
+				groupId, segmentsExperienceKey, _getPublishedLayoutPlid(plid));
+
+		_segmentsExperienceResourcePermission.check(
+			getPermissionChecker(), segmentsExperience, ActionKeys.VIEW);
+
+		return segmentsExperience;
+	}
+
+	@Override
 	public List<SegmentsExperience> getSegmentsExperiences(
 			long groupId, long plid, boolean active)
 		throws PortalException {

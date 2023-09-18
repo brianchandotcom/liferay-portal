@@ -11,7 +11,7 @@ import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,10 +21,6 @@ import java.sql.Timestamp;
  * @author Murilo Stodolni
  */
 public class ObjectFolderItemUpgradeProcess extends UpgradeProcess {
-
-	public ObjectFolderItemUpgradeProcess(PortalUUID portalUUID) {
-		_portalUUID = portalUUID;
-	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -44,7 +40,7 @@ public class ObjectFolderItemUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
-				preparedStatement2.setString(1, _portalUUID.generate());
+				preparedStatement2.setString(1, PortalUUIDUtil.generate());
 				preparedStatement2.setLong(2, increment());
 				preparedStatement2.setLong(3, resultSet.getLong("companyId"));
 				preparedStatement2.setLong(4, resultSet.getLong("userId"));
@@ -74,7 +70,5 @@ public class ObjectFolderItemUpgradeProcess extends UpgradeProcess {
 	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {ObjectFolderItemTable.create()};
 	}
-
-	private final PortalUUID _portalUUID;
 
 }

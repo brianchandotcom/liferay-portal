@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
-import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -117,7 +116,7 @@ public class NotificationUpgradeStepRegistrator
 		registry.register(
 			"3.8.0", "3.9.0",
 			new com.liferay.notification.internal.upgrade.v3_9_0.
-				NotificationRecipientSettingUpgradeProcess(_portalUUID));
+				NotificationRecipientSettingUpgradeProcess());
 
 		registry.register(
 			"3.9.0", "3.9.1",
@@ -127,9 +126,6 @@ public class NotificationUpgradeStepRegistrator
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

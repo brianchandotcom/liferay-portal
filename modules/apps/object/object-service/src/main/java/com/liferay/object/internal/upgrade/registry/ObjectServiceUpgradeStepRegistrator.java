@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
-import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -166,7 +165,7 @@ public class ObjectServiceUpgradeStepRegistrator
 		registry.register(
 			"3.17.0", "3.18.0",
 			new com.liferay.object.internal.upgrade.v3_18_0.
-				ObjectFieldUpgradeProcess(_portalUUID));
+				ObjectFieldUpgradeProcess());
 
 		registry.register("3.18.0", "3.19.0", ObjectFilterTable.create());
 
@@ -195,8 +194,7 @@ public class ObjectServiceUpgradeStepRegistrator
 			new com.liferay.object.internal.upgrade.v3_21_0.
 				ObjectDefinitionUpgradeProcess());
 
-		registry.register(
-			"3.21.0", "3.22.0", new ObjectFieldUpgradeProcess(_portalUUID));
+		registry.register("3.21.0", "3.22.0", new ObjectFieldUpgradeProcess());
 
 		registry.register(
 			"3.22.0", "3.23.0",
@@ -217,8 +215,7 @@ public class ObjectServiceUpgradeStepRegistrator
 				ObjectFieldUpgradeProcess());
 
 		registry.register(
-			"3.23.1", "3.24.0",
-			new ObjectFieldSettingUpgradeProcess(_portalUUID));
+			"3.23.1", "3.24.0", new ObjectFieldSettingUpgradeProcess());
 
 		registry.register(
 			"3.24.0", "3.25.0",
@@ -228,7 +225,7 @@ public class ObjectServiceUpgradeStepRegistrator
 		registry.register(
 			"3.25.0", "3.26.0",
 			new com.liferay.object.internal.upgrade.v3_26_0.
-				ObjectFieldSettingUpgradeProcess(_portalUUID));
+				ObjectFieldSettingUpgradeProcess());
 
 		registry.register(
 			"3.26.0", "3.26.1",
@@ -273,7 +270,7 @@ public class ObjectServiceUpgradeStepRegistrator
 		registry.register(
 			"4.1.1", "5.0.0",
 			new com.liferay.object.internal.upgrade.v5_0_0.
-				ObjectFieldSettingUpgradeProcess(_portalUUID));
+				ObjectFieldSettingUpgradeProcess());
 
 		registry.register(
 			"5.0.0", "5.1.0",
@@ -310,7 +307,7 @@ public class ObjectServiceUpgradeStepRegistrator
 			"6.0.0", "7.0.0",
 			new com.liferay.object.internal.upgrade.v7_0_0.
 				ObjectDefinitionUpgradeProcess(
-					_companyLocalService, _portalUUID, _resourceLocalService));
+					_companyLocalService, _resourceLocalService));
 
 		registry.register(
 			"7.0.0", "7.1.0",
@@ -329,7 +326,7 @@ public class ObjectServiceUpgradeStepRegistrator
 		registry.register(
 			"7.1.1", "8.0.0",
 			new com.liferay.object.internal.upgrade.v8_0_0.
-				ObjectFolderItemUpgradeProcess(_portalUUID));
+				ObjectFolderItemUpgradeProcess());
 
 		registry.register(
 			"8.0.0", "8.1.0",
@@ -372,9 +369,6 @@ public class ObjectServiceUpgradeStepRegistrator
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

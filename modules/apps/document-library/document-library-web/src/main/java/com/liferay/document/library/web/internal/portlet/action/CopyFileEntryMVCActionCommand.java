@@ -8,8 +8,10 @@ package com.liferay.document.library.web.internal.portlet.action;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -147,21 +149,32 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private long _getFileEntryTypeId(long groupId, long fileEntryId)
 		throws PortalException {
 
-		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
-
 		long[] groupIds =
 			_siteConnectedGroupGroupProvider.
 				getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true);
 
-		if (ArrayUtil.isEmpty(groupIds) ||
-			!ArrayUtil.contains(groupIds, fileEntry.getGroupId())) {
-
+		if (ArrayUtil.isEmpty(groupIds)) {
 			return DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
 		}
 
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		return dlFileEntry.getFileEntryTypeId();
+		long fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
+
+		if (ArrayUtil.contains(groupIds, fileEntry.getGroupId())) {
+			return fileEntryTypeId;
+		}
+
+		DLFileEntryType fileEntryType =
+			_dlFileEntryTypeService.getFileEntryType(fileEntryTypeId);
+
+		if (ArrayUtil.contains(groupIds, fileEntryType.getGroupId())) {
+			return fileEntryTypeId;
+		}
+
+		return DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -169,6 +182,9 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private DLFileEntryTypeService _dlFileEntryTypeService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

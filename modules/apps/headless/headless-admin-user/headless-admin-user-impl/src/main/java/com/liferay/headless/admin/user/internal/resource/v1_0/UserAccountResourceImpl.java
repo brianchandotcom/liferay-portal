@@ -94,6 +94,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
+import com.liferay.user.associated.data.anonymizer.UADAnonymousUserProvider;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -443,6 +444,15 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			booleanQuery -> {
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
+
+				User user = _uadAnonymousUserProvider.getAnonymousUser(
+					contextCompany.getCompanyId());
+
+				if (user != null) {
+					booleanFilter.add(
+						new TermFilter("screenName", user.getScreenName()),
+						BooleanClauseOccur.MUST_NOT);
+				}
 
 				booleanFilter.add(
 					new TermFilter("userName", StringPool.BLANK),
@@ -1395,6 +1405,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UADAnonymousUserProvider _uadAnonymousUserProvider;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

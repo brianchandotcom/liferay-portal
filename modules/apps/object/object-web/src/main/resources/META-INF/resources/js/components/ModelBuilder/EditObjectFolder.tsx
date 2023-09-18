@@ -12,6 +12,7 @@ import {ModalAddObjectDefinition} from '../ViewObjectDefinitions/ModalAddObjectD
 import {ModalEditObjectFolder} from '../ViewObjectDefinitions/ModalEditObjectFolder';
 import Diagram from './Diagram/Diagram';
 import EditObjectFolderHeader from './EditObjectFolderHeader/EditObjectFolderHeader';
+import {ModalPublishObjectDefinitions} from './EditObjectFolderHeader/ModalPublishObjectDefinitions';
 import LeftSidebar from './LeftSidebar/LeftSidebar';
 import {useObjectFolderContext} from './ModelBuilderContext/objectFolderContext';
 import {TYPES} from './ModelBuilderContext/typesEnum';
@@ -48,6 +49,7 @@ export default function EditObjectFolder({
 		editObjectDefinitionExternalReferenceCode: false,
 		editObjectFolder: false,
 		moveObjectDefinition: false,
+		publishObjectDefinitions: false,
 		redirectToEditObjectDefinitionDetails: false,
 	});
 
@@ -228,6 +230,20 @@ export default function EditObjectFolder({
 					id={selectedObjectFolder.id}
 					initialLabel={selectedObjectFolder.label}
 					name={selectedObjectFolder.name}
+				/>
+			)}
+
+			{showModal.publishObjectDefinitions && (
+				<ModalPublishObjectDefinitions
+					disableAutoClose={false}
+					dispatch={dispatch}
+					elements={elements}
+					handleOnClose={() => {
+						setShowModal((previousState) => ({
+							...previousState,
+							publishObjectDefinitions: false,
+						}));
+					}}
 				/>
 			)}
 

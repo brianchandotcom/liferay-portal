@@ -90,6 +90,7 @@ interface ModelBuilderModals
 	> {
 	addObjectRelationship: boolean;
 	editObjectDefinitionExternalReferenceCode: boolean;
+	publishObjectDefinitions: boolean;
 	redirectToEditObjectDefinitionDetails: boolean;
 }
 

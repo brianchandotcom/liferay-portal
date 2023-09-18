@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Observer} from '@clayui/modal/lib/types';
 import React from 'react';
 import {Elements} from 'react-flow-renderer';
 import {ObjectRelationshipEdgeData, TAction} from '../types';
@@ -12,14 +11,12 @@ interface ModalPublishObjectDefinitionsProps {
 	disableAutoClose: boolean;
 	dispatch: React.Dispatch<TAction>;
 	elements: Elements<ObjectDefinitionNodeData | ObjectRelationshipEdgeData>;
-	observer: Observer;
-	onClose: () => void;
+	handleOnClose: () => void;
 }
 export declare function ModalPublishObjectDefinitions({
 	disableAutoClose,
 	dispatch,
 	elements,
-	observer,
-	onClose,
+	handleOnClose,
 }: ModalPublishObjectDefinitionsProps): JSX.Element;
 export {};

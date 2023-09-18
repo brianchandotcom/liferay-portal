@@ -9,8 +9,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import ClayModal from '@clayui/modal';
-import {Observer} from '@clayui/modal/lib/types';
+import ClayModal, {useModal} from '@clayui/modal';
 import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -33,8 +32,7 @@ interface ModalPublishObjectDefinitionsProps {
 	disableAutoClose: boolean;
 	dispatch: React.Dispatch<TAction>;
 	elements: Elements<ObjectDefinitionNodeData | ObjectRelationshipEdgeData>;
-	observer: Observer;
-	onClose: () => void;
+	handleOnClose: () => void;
 }
 
 interface ObjectDefinitionStatus {
@@ -55,9 +53,12 @@ export function ModalPublishObjectDefinitions({
 	disableAutoClose,
 	dispatch,
 	elements,
-	observer,
-	onClose,
+	handleOnClose,
 }: ModalPublishObjectDefinitionsProps) {
+	const {observer, onClose} = useModal({
+		onClose: () => handleOnClose(),
+	});
+
 	const objectDefinitionNodes = elements.filter((element) =>
 		isNode(element)
 	) as Elements<ObjectDefinitionNodeData>;

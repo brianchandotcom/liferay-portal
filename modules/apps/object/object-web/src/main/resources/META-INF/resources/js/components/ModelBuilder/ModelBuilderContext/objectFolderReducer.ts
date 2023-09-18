@@ -13,7 +13,6 @@ import {
 	LeftSidebarItem,
 	LeftSidebarObjectDefinitionItem,
 	ObjectRelationshipEdgeData,
-	RightSidebarType,
 	TAction,
 	TState,
 } from '../types';
@@ -283,7 +282,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 					...updatedObjectDefinitionNodes,
 				],
 				leftSidebarItems: updatedLeftSidebarItems,
-				rightSidebarType: 'empty' as RightSidebarType,
+				rightSidebarType: 'empty',
 			};
 		}
 
@@ -686,7 +685,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 					...newObjectDefinitionNodes,
 				],
 				leftSidebarItems: newLeftSidebarItems,
-				rightSidebarType: 'objectDefinitionDetails' as RightSidebarType,
+				rightSidebarType: 'objectDefinitionDetails',
 			};
 		}
 
@@ -730,7 +729,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 					...newObjectRelationshipEdges,
 					...newObjectDefinitionNodes,
 				],
-				rightSidebarType: 'objectRelationshipDetails' as RightSidebarType,
+				rightSidebarType: 'objectRelationshipDetails',
 			};
 		}
 

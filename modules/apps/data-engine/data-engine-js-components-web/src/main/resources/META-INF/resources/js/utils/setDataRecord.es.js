@@ -45,6 +45,13 @@ export default function setDataRecord(
 			!!localizedValue?.[languageId] ||
 			(localizedValueEdited && localizedValueEdited[languageId]);
 
+		if (
+			!edited &&
+			Liferay.ThemeDisplay.getDefaultLanguageId() === languageId
+		) {
+			delete localizedValue[languageId];
+		}
+
 		Object.keys(localizedValue)
 			.filter(
 				(languageId) =>
@@ -65,7 +72,10 @@ export default function setDataRecord(
 				[languageId]: _value,
 			};
 		}
-		else if (preserveValue) {
+		else if (
+			preserveValue &&
+			Liferay.ThemeDisplay.getDefaultLanguageId() !== languageId
+		) {
 			dataRecordValues[dataRecordValueKey] = {
 				...localizedValue,
 				[languageId]: value,

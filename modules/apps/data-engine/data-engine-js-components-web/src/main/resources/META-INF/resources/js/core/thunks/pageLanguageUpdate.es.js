@@ -47,11 +47,9 @@ const getDataRecordValues = ({
 const getFieldProperties = (fieldName, pages) => {
 	const visitor = new PagesVisitor(pages);
 
-	const {
-		itemSelectorURL,
-		locale,
-		localizedValueEdited = {[locale]: true},
-	} = visitor.findField((field) => field.fieldName === fieldName);
+	const {itemSelectorURL, localizedValueEdited} = visitor.findField(
+		(field) => field.fieldName === fieldName
+	);
 
 	return {itemSelectorURL, localizedValueEdited};
 };

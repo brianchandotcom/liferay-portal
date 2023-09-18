@@ -41,6 +41,11 @@ public class EditKBFolderPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
+	public String getIconCssClass() {
+		return "pencil";
+	}
+
+	@Override
 	public String getMessage(PortletRequest portletRequest) {
 		return _language.get(getLocale(portletRequest), "edit");
 	}

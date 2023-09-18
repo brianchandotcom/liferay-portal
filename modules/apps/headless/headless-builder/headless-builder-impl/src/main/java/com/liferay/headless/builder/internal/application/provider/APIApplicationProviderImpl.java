@@ -134,8 +134,7 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 						ListEntry listEntry = (ListEntry)properties.get(
 							"scope");
 
-						return Scope.valueOf(
-							StringUtil.toUpperCase(listEntry.getKey()));
+						return Scope.parse(listEntry.getKey());
 					}
 
 					@Override

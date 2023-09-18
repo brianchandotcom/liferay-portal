@@ -55,9 +55,7 @@ public interface APIApplication {
 
 			public static RetrieveType parse(String value) {
 				for (RetrieveType retrieveType : RetrieveType.values()) {
-					if (Objects.equals(
-							retrieveType.getRetrieveTypeValue(), value)) {
-
+					if (Objects.equals(retrieveType.getValue(), value)) {
 						return retrieveType;
 					}
 				}
@@ -65,7 +63,7 @@ public interface APIApplication {
 				throw new IllegalArgumentException("Invalid value " + value);
 			}
 
-			public String getRetrieveTypeValue() {
+			public String getValue() {
 				return _value;
 			}
 
@@ -79,7 +77,27 @@ public interface APIApplication {
 
 		public enum Scope {
 
-			COMPANY, GROUP
+			COMPANY("company"), GROUP("group");
+
+			public static Scope parse(String value) {
+				for (Scope scope : Scope.values()) {
+					if (Objects.equals(scope.getValue(), value)) {
+						return scope;
+					}
+				}
+
+				throw new IllegalArgumentException("Invalid value " + value);
+			}
+
+			public String getValue() {
+				return _value;
+			}
+
+			private Scope(String value) {
+				_value = value;
+			}
+
+			private final String _value;
 
 		}
 

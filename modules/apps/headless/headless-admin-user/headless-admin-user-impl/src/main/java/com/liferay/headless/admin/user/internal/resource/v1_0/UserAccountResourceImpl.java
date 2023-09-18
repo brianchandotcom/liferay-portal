@@ -1164,7 +1164,8 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	private Page<UserAccount> _getUserAccountsPage(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Filter filter, String search, Pagination pagination, Sort[] sorts)
+			Filter filter, String search, Pagination pagination, Sort[] sorts,
+			Integer status)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -1172,8 +1173,10 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
-			searchContext -> searchContext.setCompanyId(
-				contextCompany.getCompanyId()),
+			searchContext -> {
+				searchContext.setAttribute(Field.STATUS, status);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
 			sorts,
 			document -> _toUserAccount(
 				actions,

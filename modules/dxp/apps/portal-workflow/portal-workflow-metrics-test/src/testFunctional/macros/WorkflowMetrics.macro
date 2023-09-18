@@ -728,11 +728,24 @@ definition {
 		Workflow.openWorkflowMetrics();
 
 		while ((IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME")) && (maxIterations = "10")) {
-			Workflow.openWorkflowMetrics();
+			Click(locator1 = "WorkflowMetricsSLA#METRICS_MENU_SLA");
+
+			Click(locator1 = "WorkflowMetricsSLA#METRICS_SLA_SETTINGS");
+
+			Click(
+				key_indexNumber = 1,
+				key_text = "Reindex All",
+				locator1 = "Button#ANY_N");
+
+			WaitForElementNotPresent(locator1 = "WorkflowMetrics#REINDEX_STATUS");
+
+			echo("Workflow was reindexed");
+
+			Navigator.gotoBack();
 		}
 
 		if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME")) {
-			echo("timeout exceeded");
+			fail("Failed: Workflow Metrics ${key_workflowProcessName} is not present.");
 		}
 
 		Click(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");

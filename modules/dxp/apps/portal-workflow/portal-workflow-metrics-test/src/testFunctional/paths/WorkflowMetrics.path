@@ -531,6 +531,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REINDEX_STATUS</td>
+	<td>//*[@id='headerReindexStatus']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_FIELD_MAPPINGS_METRICS_INDEXES</td>
 	<td>//a[contains(text(),'${key_index}')]</td>
 	<td></td>

@@ -2348,4 +2348,43 @@ definition {
 		ObjectPortlet.viewEntry(entry = "Entry Test");
 	}
 
+	@description = "LPS-193697 - Verify that switch button is not present when the M:M relationship is selected"
+	@priority = 3
+	test CheckSwitchNotPresentForManytoMany {
+		task ("Given an object definition") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 195296",
+				objectName = "CustomObject195296",
+				pluralLabelName = "Custom Objects 195296");
+		}
+
+		task ("When the user selects the M:M relationship while creating a self relationship") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 195296");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			LexiconEntry.gotoAdd();
+
+			Click(locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_FORM");
+
+			Click(
+				key_type = "Many to Many",
+				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+
+			Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
+
+			Click(
+				key_columnOption = "Custom Object 195296",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+		}
+
+		task ("Then the switch button is no longer present") {
+			AssertElementNotPresent(
+				key_text = "",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+	}
+
 }

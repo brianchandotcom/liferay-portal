@@ -157,16 +157,6 @@ function filterEmptyGroups(items) {
 
 const noop = () => {};
 
-const defaultDropdownActions = [
-	{
-		'aria-label': Liferay.Language.get('loading'),
-		'aria-valuemax': 100,
-		'aria-valuemin': 0,
-		'label': <ClayLoadingIndicator />,
-		'roleItem': 'progressbar',
-	},
-];
-
 const MillerColumnsItem = ({
 	getItemActionsURL,
 	isLayoutSetPrototype,
@@ -206,22 +196,40 @@ const MillerColumnsItem = ({
 
 	const [layoutActionsActive, setLayoutActionsActive] = useState(false);
 
-	const [dropdownActions, setDropdownActions] = useState(
-		defaultDropdownActions
-	);
+	const [dropdownActions, setDropdownActions] = useState([]);
 
 	const loadPromiseRef = useRef();
 
+	const [loadMessage, setLoadMessage] = useState('');
+
 	function loadDropdownActions() {
 		if (!loadPromiseRef.current) {
+			let loadingMessageShown = false;
+			let optionsLoaded = false;
 			const url = new URL(getItemActionsURL);
 			url.searchParams.append(`${namespace}plid`, itemId);
+
+			setTimeout(() => {
+				if (!optionsLoaded) {
+					setLoadMessage(
+						sub(Liferay.Language.get('loading-x-options'), title)
+					);
+					loadingMessageShown = true;
+				}
+			}, 500);
 
 			loadPromiseRef.current = fetch(url, {
 				method: 'GET',
 			})
 				.then((response) => response.json())
 				.then(({actions}) => {
+					optionsLoaded = true;
+					if (loadingMessageShown) {
+						setLoadMessage(
+							sub(Liferay.Language.get('x-options-loaded'), title)
+						);
+					}
+
 					const updateItem = (item) => {
 						const newItem = {
 							...item,
@@ -519,6 +527,13 @@ const MillerColumnsItem = ({
 			{!!getItemActionsURL && (
 				<ClayLayout.ContentCol className="miller-columns-item-actions">
 					<ClayDropDownWithItems
+						caption={
+							!loadPromiseRef.current ? (
+								<ClayLoadingIndicator />
+							) : (
+								''
+							)
+						}
 						items={dropdownActions}
 						trigger={
 							<ClayButtonWithIcon
@@ -532,6 +547,10 @@ const MillerColumnsItem = ({
 							/>
 						}
 					/>
+
+					<span aria-live="polite" className="sr-only">
+						{loadMessage}
+					</span>
 				</ClayLayout.ContentCol>
 			)}
 

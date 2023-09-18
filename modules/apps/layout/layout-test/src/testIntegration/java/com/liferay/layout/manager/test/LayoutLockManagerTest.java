@@ -6,6 +6,7 @@
 package com.liferay.layout.manager.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.constants.LockedLayoutType;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.model.LockedLayout;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -15,6 +16,7 @@ import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -22,10 +24,13 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.impl.LayoutModelImpl;
@@ -35,6 +40,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -106,6 +112,25 @@ public class LayoutLockManagerTest {
 			Assert.assertTrue(
 				ArrayUtil.contains(layoutPlids, lockedLayout.getPlid()));
 		}
+	}
+
+	@Test
+	public void testGetLockedLayoutsFilterByCollectionPage() throws Exception {
+		Layout draftLayout = _getDraftLayout(LayoutConstants.TYPE_COLLECTION);
+
+		_lockLayout(draftLayout, _user);
+
+		_lockLayout(_getDraftLayout(), _user);
+
+		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
+			TestPropsValues.getCompanyId(), _group.getGroupId(), null,
+			LockedLayoutType.COLLECTION_PAGE);
+
+		Assert.assertEquals(lockedLayouts.toString(), 1, lockedLayouts.size());
+
+		LockedLayout lockedLayout = lockedLayouts.get(0);
+
+		Assert.assertEquals(draftLayout.getPlid(), lockedLayout.getPlid());
 	}
 
 	@Test(expected = LockedLayoutException.class)
@@ -183,7 +208,22 @@ public class LayoutLockManagerTest {
 	}
 
 	private Layout _getDraftLayout() throws Exception {
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+		return _getDraftLayout(LayoutConstants.TYPE_CONTENT);
+	}
+
+	private Layout _getDraftLayout(String type) throws Exception {
+		Layout layout = _layoutLocalService.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
+			Collections.emptyMap(), Collections.emptyMap(), type,
+			UnicodePropertiesBuilder.put(
+				"published", "true"
+			).buildString(),
+			false, false, Collections.emptyMap(), 0,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getCompanyId(), _group.getGroupId(), _user.getUserId()));
 
 		Layout draftLayout = layout.fetchDraftLayout();
 

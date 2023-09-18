@@ -111,6 +111,174 @@ public class ListTypeUtil {
 	}
 
 	/**
+	 * Returns all the list types where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching list types
+	 */
+	public static List<ListType> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the list types where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of list types
+	 * @param end the upper bound of the range of list types (not inclusive)
+	 * @return the range of matching list types
+	 */
+	public static List<ListType> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the list types where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of list types
+	 * @param end the upper bound of the range of list types (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching list types
+	 */
+	public static List<ListType> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<ListType> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the list types where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ListTypeModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of list types
+	 * @param end the upper bound of the range of list types (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching list types
+	 */
+	public static List<ListType> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<ListType> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first list type in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching list type
+	 * @throws NoSuchListTypeException if a matching list type could not be found
+	 */
+	public static ListType findByCompanyId_First(
+			long companyId, OrderByComparator<ListType> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
+
+		return getPersistence().findByCompanyId_First(
+			companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first list type in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching list type, or <code>null</code> if a matching list type could not be found
+	 */
+	public static ListType fetchByCompanyId_First(
+		long companyId, OrderByComparator<ListType> orderByComparator) {
+
+		return getPersistence().fetchByCompanyId_First(
+			companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last list type in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching list type
+	 * @throws NoSuchListTypeException if a matching list type could not be found
+	 */
+	public static ListType findByCompanyId_Last(
+			long companyId, OrderByComparator<ListType> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
+
+		return getPersistence().findByCompanyId_Last(
+			companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last list type in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching list type, or <code>null</code> if a matching list type could not be found
+	 */
+	public static ListType fetchByCompanyId_Last(
+		long companyId, OrderByComparator<ListType> orderByComparator) {
+
+		return getPersistence().fetchByCompanyId_Last(
+			companyId, orderByComparator);
+	}
+
+	/**
+	 * Returns the list types before and after the current list type in the ordered set where companyId = &#63;.
+	 *
+	 * @param listTypeId the primary key of the current list type
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next list type
+	 * @throws NoSuchListTypeException if a list type with the primary key could not be found
+	 */
+	public static ListType[] findByCompanyId_PrevAndNext(
+			long listTypeId, long companyId,
+			OrderByComparator<ListType> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchListTypeException {
+
+		return getPersistence().findByCompanyId_PrevAndNext(
+			listTypeId, companyId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the list types where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 */
+	public static void removeByCompanyId(long companyId) {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns the number of list types where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching list types
+	 */
+	public static int countByCompanyId(long companyId) {
+		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
 	 * Returns all the list types where companyId = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID

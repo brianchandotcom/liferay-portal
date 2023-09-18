@@ -411,7 +411,7 @@ public class SourceFormatterUtil {
 
 		ProcessBuilder processBuilder = new ProcessBuilder(allArgs);
 
-		if (baseDirName != null) {
+		if (!Validator.isBlank(baseDirName)) {
 			processBuilder.directory(new File(baseDirName));
 		}
 

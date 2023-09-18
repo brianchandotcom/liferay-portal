@@ -9,11 +9,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.constants.LockedLayoutType;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.model.LockedLayout;
+import com.liferay.layout.model.LockedLayoutOrder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
@@ -35,9 +37,12 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.lock.service.LockLocalService;
 import com.liferay.portal.model.impl.LayoutModelImpl;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -45,6 +50,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -233,6 +239,34 @@ public class LayoutLockManagerTest {
 				LockedLayoutType.UTILITY_PAGE));
 	}
 
+	@Test
+	public void testGetLockedLayoutsOrderByLastAutosaveAscending()
+		throws Exception {
+
+		_assertLockedLayoutsCreateDates(
+			_getLockedLayoutsCreateDates(Collections::sort),
+			_layoutLockManager.getLockedLayouts(
+				TestPropsValues.getCompanyId(), _group.getGroupId(),
+				new LockedLayoutOrder(
+					true, LocaleUtil.getDefault(),
+					LockedLayoutOrder.LockedLayoutOrderType.LAST_AUTOSAVE),
+				null));
+	}
+
+	@Test
+	public void testGetLockedLayoutsOrderByLastAutosaveDescending()
+		throws Exception {
+
+		_assertLockedLayoutsCreateDates(
+			_getLockedLayoutsCreateDates(null),
+			_layoutLockManager.getLockedLayouts(
+				TestPropsValues.getCompanyId(), _group.getGroupId(),
+				new LockedLayoutOrder(
+					false, LocaleUtil.getDefault(),
+					LockedLayoutOrder.LockedLayoutOrderType.LAST_AUTOSAVE),
+				null));
+	}
+
 	@Test(expected = LockedLayoutException.class)
 	public void testGetLockWithDifferentUser() throws Exception {
 		Layout draftLayout = _getDraftLayout();
@@ -330,6 +364,21 @@ public class LayoutLockManagerTest {
 		}
 	}
 
+	private void _assertLockedLayoutsCreateDates(
+		List<Date> expectedCreateDates, List<LockedLayout> lockedLayouts) {
+
+		Assert.assertEquals(
+			lockedLayouts.toString(), expectedCreateDates.size(),
+			lockedLayouts.size());
+
+		for (int i = 0; i < expectedCreateDates.size(); i++) {
+			LockedLayout lockedLayout = lockedLayouts.get(i);
+
+			Assert.assertEquals(
+				expectedCreateDates.get(i), lockedLayout.getLastAutoSaveDate());
+		}
+	}
+
 	private Layout _getDraftLayout() throws Exception {
 		return _getDraftLayout(LayoutConstants.TYPE_CONTENT);
 	}
@@ -356,6 +405,39 @@ public class LayoutLockManagerTest {
 		draftLayout.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		return _layoutLocalService.updateLayout(draftLayout);
+	}
+
+	private List<Date> _getLockedLayoutsCreateDates(
+			UnsafeConsumer<List<Date>, Exception>
+				createDatesOrderUnsafeConsumer)
+		throws Exception {
+
+		List<Date> createDates = new ArrayList<>();
+
+		for (int i = 0; i < 5; i++) {
+			Layout draftLayout = _getDraftLayout();
+
+			_lockLayout(draftLayout, _user);
+
+			com.liferay.portal.lock.model.Lock lock =
+				_lockLocalService.fetchLock(
+					Layout.class.getName(), draftLayout.getPlid());
+
+			Assert.assertNotNull(lock);
+
+			lock.setCreateDate(
+				new Date(System.currentTimeMillis() - (i * Time.MINUTE)));
+
+			lock = _lockLocalService.updateLock(lock);
+
+			createDates.add(lock.getCreateDate());
+		}
+
+		if (createDatesOrderUnsafeConsumer != null) {
+			createDatesOrderUnsafeConsumer.accept(createDates);
+		}
+
+		return createDates;
 	}
 
 	private void _lockLayout(Layout layout, User user) throws PortalException {
@@ -387,6 +469,9 @@ public class LayoutLockManagerTest {
 	@Inject
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
+
+	@Inject
+	private LockLocalService _lockLocalService;
 
 	@Inject
 	private LockManager _lockManager;

@@ -152,7 +152,7 @@ public class TreeTestUtil {
 			objectDefinition.getObjectDefinitionId());
 	}
 
-	public static void unsafeForEachRemaining(
+	public static void unsafeForEach(
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			Tree tree,
 			UnsafeConsumer<ObjectDefinition, Exception> unsafeConsumer)

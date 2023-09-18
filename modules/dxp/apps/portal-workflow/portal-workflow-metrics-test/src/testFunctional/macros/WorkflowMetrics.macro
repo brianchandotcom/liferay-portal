@@ -1,24 +1,12 @@
 definition {
 
-	macro _deleteAllSLAs {
-		while (IsElementPresent(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON")) {
-			Click(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON");
-
-			Click(locator1 = "WorkflowMetricsSLA#DELETE_SLA_BUTTON");
-
-			Click(locator1 = "WorkflowMetricsSLA#SLA_REMOVE_CONFIRMATION_BUTTON");
-		}
-	}
-
 	macro _checkElasticSearchStatus {
 		var companyId = JSONCompany.getCompanyId();
-
 		var portalURL = JSONCompany.getPortalURL();
 
 		var portalURL = Regex.removeHTTP(url = ${portalURL});
 
 		var portalURL = Regex.removePortNumber(url = ${portalURL});
-
 		var workflowMetricsStatus = "";
 
 		while (${workflowMetricsStatus} != "green") {
@@ -30,9 +18,19 @@ definition {
 
 			var workflowMetricsProcesses = JSONCurlUtil.get("http://${portalURL}:9201/_cat/indices/liferay-${companyId}-workflow-metrics-processes");
 
-			var workflowMetricsStatus = StringUtil.extractFirst(${workflowMetricsProcesses}," ");
+			var workflowMetricsStatus = StringUtil.extractFirst(${workflowMetricsProcesses}, " ");
 
 			echo(${workflowMetricsStatus});
+		}
+	}
+
+	macro _deleteAllSLAs {
+		while (IsElementPresent(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON")) {
+			Click(locator1 = "WorkflowMetricsSLA#SLA_ELLIPSIS_BUTTON");
+
+			Click(locator1 = "WorkflowMetricsSLA#DELETE_SLA_BUTTON");
+
+			Click(locator1 = "WorkflowMetricsSLA#SLA_REMOVE_CONFIRMATION_BUTTON");
 		}
 	}
 
@@ -754,7 +752,8 @@ definition {
 		Workflow.openWorkflowMetrics();
 
 		while ((IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME")) && (maxIterations = "10")) {
-			// Workflow.openWorkflowMetrics();
+
+			//Workflow.openWorkflowMetrics();
 
 			Click(locator1 = "WorkflowMetricsSLA#METRICS_MENU_SLA");
 

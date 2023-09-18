@@ -5,11 +5,12 @@
 
 package com.liferay.application.list;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -115,15 +116,17 @@ public class PanelAppRegistry {
 			panelApps,
 			panelApp -> {
 				try {
-					PanelAppShowFilter panelAppShowFilter =
-						_panelAppShowFilterSnapshot.get();
+					for (PanelAppShowFilter panelAppShowFilter :
+							_serviceTrackerList) {
 
-					if (panelAppShowFilter == null) {
-						return panelApp.isShow(permissionChecker, group);
+						if (!panelAppShowFilter.isShow(
+								panelApp, permissionChecker, group)) {
+
+							return false;
+						}
 					}
 
-					return panelAppShowFilter.isShow(
-						panelApp, permissionChecker, group);
+					return panelApp.isShow(permissionChecker, group);
 				}
 				catch (PortalException portalException) {
 					_log.error(portalException);
@@ -151,6 +154,9 @@ public class PanelAppRegistry {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, PanelAppShowFilter.class);
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, PanelApp.class, "(panel.category.key=*)",
 			new PropertyServiceReferenceMapper<>("panel.category.key"),
@@ -210,15 +216,12 @@ public class PanelAppRegistry {
 
 	@Deactivate
 	protected void deactivate() {
+		_serviceTrackerList.close();
 		_serviceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PanelAppRegistry.class);
-
-	private static final Snapshot<PanelAppShowFilter>
-		_panelAppShowFilterSnapshot = new Snapshot<>(
-			PanelAppRegistry.class, PanelAppShowFilter.class, null, true);
 
 	@Reference
 	private GroupProvider _groupProvider;
@@ -226,6 +229,7 @@ public class PanelAppRegistry {
 	@Reference
 	private PortletLocalService _portletLocalService;
 
+	private ServiceTrackerList<PanelAppShowFilter> _serviceTrackerList;
 	private ServiceTrackerMap<String, List<PanelApp>> _serviceTrackerMap;
 
 }

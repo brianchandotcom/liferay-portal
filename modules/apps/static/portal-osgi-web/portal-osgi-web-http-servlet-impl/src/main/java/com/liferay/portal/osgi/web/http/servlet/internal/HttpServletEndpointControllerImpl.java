@@ -360,8 +360,6 @@ public class HttpServletEndpointControllerImpl
 			if (contextController != null) {
 				contextController.destroy();
 			}
-
-			_bundleContext.ungetService(serviceReference);
 		}
 
 	}

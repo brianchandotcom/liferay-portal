@@ -5,6 +5,8 @@
 
 package com.liferay.fragment.entry.processor.editable.internal.parser;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.exception.FragmentEntryContentException;
@@ -20,6 +22,10 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -182,6 +188,12 @@ public class ImageEditableElementParser implements EditableElementParser {
 		value = value.trim();
 
 		if (fileEntryId > 0) {
+			String previewURL = _getPreviewURL(fileEntryId);
+
+			if (Validator.isNotNull(previewURL)) {
+				value = previewURL;
+			}
+
 			replaceableElement.attr(
 				"data-fileentryid", String.valueOf(fileEntryId));
 
@@ -266,6 +278,36 @@ public class ImageEditableElementParser implements EditableElementParser {
 		}
 	}
 
+	private String _getPreviewURL(long fileEntryId) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return StringPool.BLANK;
+		}
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		if (themeDisplay == null) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
+
+			return _dlURLHelper.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), themeDisplay,
+				StringPool.BLANK, false, false);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return StringPool.BLANK;
+	}
+
 	private void _setImageConfiguration(
 		Element element, JSONObject imageConfigurationJSONObject) {
 
@@ -291,6 +333,12 @@ public class ImageEditableElementParser implements EditableElementParser {
 	private static final Pattern _pattern = Pattern.compile(
 		"\\[resources:(.+?)\\]");
 	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLURLHelper _dlURLHelper;
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;

@@ -3,17 +3,26 @@ import ExperimentOverviewPage from '../ExperimentOverviewPage';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {ApolloProvider} from '@apollo/react-hooks';
+import {ExperimentResolver as Experiment} from 'shared/apollo/resolvers';
+import {fireEvent, render} from '@testing-library/react';
 import {MemoryRouter, Route} from 'react-router-dom';
 import {MockedProvider} from '@apollo/react-testing';
-import {mockExperimentRootReq, mockTimeRangeReq} from 'test/graphql-data';
+import {
+	mockExperimentReq,
+	mockExperimentRootReq,
+	mockTimeRangeReq
+} from 'test/graphql-data';
 import {Provider} from 'react-redux';
-import {render} from '@testing-library/react';
 import {Routes} from 'shared/util/router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
 
 jest.unmock('react-dom');
 
-const WrappedComponent = ({status}) => (
+const WrappedComponent = ({
+	publishable = false,
+	publishedDXPVariantId = null,
+	status
+}) => (
 	<ApolloProvider client={client}>
 		<Provider store={mockStore() as any}>
 			<MemoryRouter
@@ -23,8 +32,12 @@ const WrappedComponent = ({status}) => (
 					<MockedProvider
 						mocks={[
 							mockTimeRangeReq(),
-							mockExperimentRootReq({status})
+							mockExperimentRootReq({publishable, status}),
+							mockExperimentReq({
+								publishedDXPVariantId
+							})
 						]}
+						resolvers={{Experiment}}
 					>
 						<ExperimentOverviewPage
 							router={{
@@ -45,18 +58,18 @@ const WrappedComponent = ({status}) => (
 
 describe('ExperimentOverviewPage', () => {
 	it('renders review and delete button in the DRAFT status', async () => {
-		const {container, getByRole} = render(
+		const {container, findByRole} = render(
 			<WrappedComponent status='DRAFT' />
 		);
 
 		await waitForLoadingToBeRemoved(container);
 
-		const reviewButton = getByRole('link', {
+		const reviewButton = (await findByRole('link', {
 			name: /review/i
-		}) as HTMLAnchorElement;
-		const deleteButton = getByRole('link', {
+		})) as HTMLAnchorElement;
+		const deleteButton = (await findByRole('link', {
 			name: /delete/i
-		}) as HTMLAnchorElement;
+		})) as HTMLAnchorElement;
 
 		expect(reviewButton).toBeInTheDocument();
 		expect(reviewButton.href).toEqual(
@@ -70,15 +83,15 @@ describe('ExperimentOverviewPage', () => {
 	});
 
 	it('renders terminate button in the RUNNING status', async () => {
-		const {container, getByRole} = render(
+		const {container, findByRole} = render(
 			<WrappedComponent status='RUNNING' />
 		);
 
 		await waitForLoadingToBeRemoved(container);
 
-		const terminateButton = getByRole('link', {
+		const terminateButton = (await findByRole('link', {
 			name: /terminate/i
-		}) as HTMLAnchorElement;
+		})) as HTMLAnchorElement;
 
 		expect(terminateButton).toBeInTheDocument();
 		expect(terminateButton.href).toEqual(
@@ -87,21 +100,21 @@ describe('ExperimentOverviewPage', () => {
 	});
 
 	it('renders publish and delete button to experiment to status FINISHED_NO_WINNER', async () => {
-		const {container, getByRole} = render(
+		const {container, findByRole} = render(
 			<WrappedComponent status='FINISHED_NO_WINNER' />
 		);
 
 		await waitForLoadingToBeRemoved(container);
 
-		const reviewButton = getByRole('link', {
+		const publishButton = (await findByRole('link', {
 			name: /publish/i
-		}) as HTMLAnchorElement;
-		const deleteButton = getByRole('link', {
+		})) as HTMLAnchorElement;
+		const deleteButton = (await findByRole('link', {
 			name: /delete/i
-		}) as HTMLAnchorElement;
+		})) as HTMLAnchorElement;
 
-		expect(reviewButton).toBeInTheDocument();
-		expect(reviewButton.href).toEqual(
+		expect(publishButton).toBeInTheDocument();
+		expect(publishButton.href).toEqual(
 			'https://www.beryl.com/experiment-test?segmentsExperimentKey=123&segmentsExperimentAction=publish'
 		);
 
@@ -109,5 +122,74 @@ describe('ExperimentOverviewPage', () => {
 		expect(deleteButton.href).toEqual(
 			'https://www.beryl.com/experiment-test?segmentsExperimentKey=123&segmentsExperimentAction=delete'
 		);
+	});
+
+	it('renders publishabel and delete buttons to experiment to status TERMINATED', async () => {
+		const {container, findByRole} = render(
+			<WrappedComponent publishable status='TERMINATED' />
+		);
+
+		await waitForLoadingToBeRemoved(container);
+
+		const publishButton = (await findByRole('link', {
+			name: /publish/i
+		})) as HTMLAnchorElement;
+		const deleteButton = (await findByRole('link', {
+			name: /delete/i
+		})) as HTMLAnchorElement;
+
+		expect(publishButton).toBeInTheDocument();
+		expect(publishButton.href).toEqual(
+			'https://www.beryl.com/experiment-test?segmentsExperimentKey=123&segmentsExperimentAction=publish'
+		);
+
+		expect(deleteButton).toBeInTheDocument();
+		expect(deleteButton.href).toEqual(
+			'https://www.beryl.com/experiment-test?segmentsExperimentKey=123&segmentsExperimentAction=delete'
+		);
+	});
+
+	it('renders delete button to experiment to status TERMINATED', async () => {
+		const {container, findByRole} = render(
+			<WrappedComponent status='TERMINATED' />
+		);
+
+		await waitForLoadingToBeRemoved(container);
+
+		const deleteButton = await findByRole('button', {name: /delete/i});
+
+		expect(deleteButton).toBeInTheDocument();
+
+		fireEvent.click(deleteButton);
+
+		expect(document.querySelector('.modal')).toBeInTheDocument();
+	});
+
+	it('renders published label to the control variant', async () => {
+		const {container, findByText} = render(
+			<WrappedComponent
+				publishable
+				publishedDXPVariantId='DEFAULT'
+				status='TERMINATED'
+			/>
+		);
+
+		await waitForLoadingToBeRemoved(container);
+
+		expect(await findByText(/published/i)).toBeInTheDocument();
+	});
+
+	it('renders published label to the second variant', async () => {
+		const {container, findByText} = render(
+			<WrappedComponent
+				publishable
+				publishedDXPVariantId='44167'
+				status='TERMINATED'
+			/>
+		);
+
+		await waitForLoadingToBeRemoved(container);
+
+		expect(await findByText(/published/i)).toBeInTheDocument();
 	});
 });

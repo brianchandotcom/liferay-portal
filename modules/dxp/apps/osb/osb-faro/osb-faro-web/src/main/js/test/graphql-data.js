@@ -187,7 +187,7 @@ export function mockExperimentVariantsHistogramReq() {
 	};
 }
 
-export function mockExperimentReq() {
+export function mockExperimentReq({publishedDXPVariantId = null}) {
 	return {
 		request: {
 			query: EXPERIMENT_QUERY,
@@ -252,7 +252,7 @@ export function mockExperimentReq() {
 					modifiedDate: '2020-09-30T17:55:45.417Z',
 					name: 'Timezone',
 					pageURL: 'http://localhost:8089/web/guest/home',
-					publishedDXPVariantId: null,
+					publishedDXPVariantId,
 					sessions: 800,
 					startedDate: '2020-09-30T12:00:00.000Z',
 					status: 'RUNNING',
@@ -264,9 +264,10 @@ export function mockExperimentReq() {
 	};
 }
 
-export function mockExperimentRootReq({status}) {
+export function mockExperimentRootReq({publishable = false, status}) {
 	return {
 		request: {
+			fetchPolicy: 'network-only',
 			query: EXPERIMENT_ROOT_QUERY,
 			variables: {
 				experimentId: '123'
@@ -280,7 +281,7 @@ export function mockExperimentRootReq({status}) {
 					id: '123',
 					name: 'Experiment Test',
 					pageURL: 'https://www.beryl.com/experiment-test',
-					publishable: false,
+					publishable,
 					status
 				}
 			}

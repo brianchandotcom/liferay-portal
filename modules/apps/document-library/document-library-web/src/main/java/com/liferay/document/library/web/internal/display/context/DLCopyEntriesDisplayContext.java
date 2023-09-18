@@ -203,7 +203,7 @@ public class DLCopyEntriesDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
-	private long _sourceFolderId;
+	private long _sourceFolderId = -1;
 	private long _sourceRepositoryId;
 	private final ThemeDisplay _themeDisplay;
 

@@ -1,3 +1,4 @@
 Bundle-Name: Liferay Portal List Type Test
 Bundle-SymbolicName: com.liferay.portal.list.type.test
 Bundle-Version: 1.0.0
+-includeresource: @com.liferay.portal.list.type.impl-*.jar!/com/liferay/portal/list/type/impl/dependencies/portal-list-type.json

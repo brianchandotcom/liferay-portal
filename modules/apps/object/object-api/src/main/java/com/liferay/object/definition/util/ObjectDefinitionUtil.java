@@ -58,21 +58,33 @@ public class ObjectDefinitionUtil {
 
 		String fileName = BatchEngineUnitThreadLocal.getFileName();
 
-		if (fileName.matches(
-				"com\\.liferay\\.frontend\\.data\\.set\\.views\\.web_\\d+" +
-					"\\.\\d+\\.\\d+\\s+\\[\\d+\\]") ||
-			fileName.matches(
-				"com\\.liferay\\.headless\\.builder\\.impl_\\d+\\.\\d+\\." +
-					"\\d+\\s+\\[\\d+\\]") ||
-			fileName.matches(
-				"com\\.liferay\\.object\\.service_\\d+\\.\\d+\\.\\d+\\s+" +
-					"\\[\\d+\\]")) {
+		for (String allowedInvokerBundleSymbolicName :
+				_ALLOWED_INVOKER_BUNDLE_SYMBOLIC_NAMES) {
 
-			return true;
+			if (fileName.matches(
+					_getInvokerFileNameRegex(
+						allowedInvokerBundleSymbolicName))) {
+
+				return true;
+			}
 		}
 
 		return false;
 	}
+
+	private static String _getInvokerFileNameRegex(
+		String allowedInvokerBundleSymbolicName) {
+
+		String invokerFileNameRegex = StringUtil.replace(
+			allowedInvokerBundleSymbolicName, '.', "\\.");
+
+		return invokerFileNameRegex + "_\\d+\\.\\d+\\.\\d+\\s+\\[\\d+\\]";
+	}
+
+	private static final String[] _ALLOWED_INVOKER_BUNDLE_SYMBOLIC_NAMES = {
+		"com.liferay.frontend.data.set.views.web",
+		"com.liferay.headless.builder.impl", "com.liferay.object.service"
+	};
 
 	private static final Map<String, String>
 		_allowedModifiableSystemObjectDefinitionNames = HashMapBuilder.put(

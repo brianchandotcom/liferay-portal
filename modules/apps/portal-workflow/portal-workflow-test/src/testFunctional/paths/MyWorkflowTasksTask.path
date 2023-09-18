@@ -84,7 +84,7 @@
 
 <tr>
 	<td>COMMENTS</td>
-	<td>//div[contains(@class,'panel-title') and contains(.,'Comments')]/a</td>
+	<td>//span[contains(@class,'panel-title') and contains(.,'Comments')]</td>
 	<td></td>
 </tr>
 </tbody>

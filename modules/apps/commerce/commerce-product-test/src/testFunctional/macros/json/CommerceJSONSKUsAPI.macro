@@ -13,6 +13,10 @@ definition {
 			var priority = 0;
 		}
 
+		if (!(isSet(promoPrice))) {
+			var promoPrice = 0;
+		}
+
 		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
@@ -27,11 +31,68 @@ definition {
 					"name": {
 						"en_US": "${uomName}"
 					},
-					"priority": ${priority}
+					"priority": ${priority},
+					"promoPrice": ${promoPrice}
 				}'
 		''';
 
 		JSONCurlUtil.post(${curl});
+	}
+
+	macro _deleteCommerceSkuUom {
+		Variables.assertDefined(parameterList = "${productSKU},${uomKey}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var skuUomId = CommerceJSONSKUsAPI._getCommerceSkuUomIdByKey(
+			productSKU = ${productSKU},
+			uomKey = ${uomKey});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/sku-unit-of-measures/${skuUomId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		JSONCurlUtil.delete(${curl});
+	}
+
+	macro _getCommerceSkuUomIdByKey {
+		Variables.assertDefined(parameterList = "${productSKU},${uomKey}");
+
+		var responseBody = CommerceJSONSKUsAPI._getCommerceSkuUomsBySKU(productSKU = ${productSKU});
+
+		var skuUomId = JSONUtil.getWithJSONPath(${responseBody}, "$.items[?(@.key == '${uomKey}')].['id']]");
+
+		return ${skuUomId};
+	}
+
+	macro _getCommerceSkuUomsBySKU {
+		Variables.assertDefined(parameterList = ${productSKU});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus/${skuId}/sku-unit-of-measures \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var responseBody = JSONCurlUtil.get(${curl});
+
+		return ${responseBody};
 	}
 
 }

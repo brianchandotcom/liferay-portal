@@ -2011,7 +2011,7 @@ definition {
 		task ("Then the error message is displayed on the page") {
 			AssertTextPresent(
 				locator1 = "Message#ALERT_DISMISSIBLE",
-				value1 = "At least one custom field must be added.");
+				value1 = "Error:At least one object field must be added");
 		}
 
 		task ("And the Object that was created is show with Draft") {

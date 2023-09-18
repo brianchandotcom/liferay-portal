@@ -13,12 +13,12 @@
 				"en-US": "[%CURRENT_USER_FIRST_NAME%]"
 			},
 			"to": {
-				"en-US": "[%ORDERNOTIFICATION_AUTHOR_EMAIL_ADDRESS%]"
+				"en-US": "[%GETAPPINFORMATION_AUTHOR_EMAIL_ADDRESS%]"
 			}
 		}
 	],
 	"subject": {
-		"en_US": "Liferay Marketplace - Next steps on [%ORDERNOTIFICATION_PROJECTNAME%] purchase"
+		"en_US": "Liferay Marketplace - Next steps on [%GETAPPINFORMATION_PROJECTNAME%] purchase"
 	},
 	"type": "email"
 }

@@ -5,17 +5,14 @@
 
 package com.liferay.source.formatter.dependencies.upgrade;
 
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
-import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
-
-/**
- * @author Michael Cavalcanti
- */
 public class UpgradeJavaSchedulerEntryImplConstructorCheck
 		extends SchedulerEntryImpl {
 
 	public UpgradeJavaSchedulerEntryImplConstructorCheck() {
 
+    }
+
+	public UpgradeJavaSchedulerEntryImplConstructorCheck() {
 		super();
 	}
 
@@ -26,10 +23,10 @@ public class UpgradeJavaSchedulerEntryImplConstructorCheck
 	}
 
 	public UpgradeJavaSchedulerEntryImplConstructorCheck(
-			String eventListenerClass, TriggerConfiguration triggerConfiguration,
+			String eventListenerClass, Trigger trigger,
 			String description) {
 
-		super(eventListenerClass, triggerConfiguration, description);
+		super(eventListenerClass, trigger, description);
 	}
 
 }

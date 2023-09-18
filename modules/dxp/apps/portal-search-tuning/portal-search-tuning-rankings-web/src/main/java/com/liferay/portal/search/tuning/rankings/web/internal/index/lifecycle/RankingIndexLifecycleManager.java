@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.tuning.rankings.web.internal.index.lifecycle;
 
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.search.spi.index.lifecycle.IndexLifecycleManager;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexCreator;
 import com.liferay.portal.search.tuning.rankings.web.internal.index.RankingIndexReader;
@@ -23,6 +24,10 @@ public class RankingIndexLifecycleManager implements IndexLifecycleManager {
 
 	@Override
 	public void createIndex(long companyId) {
+		if (companyId == CompanyConstants.SYSTEM) {
+			return;
+		}
+
 		RankingIndexName rankingIndexName =
 			_rankingIndexNameBuilder.getRankingIndexName(companyId);
 

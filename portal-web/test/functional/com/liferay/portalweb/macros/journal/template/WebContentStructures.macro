@@ -157,7 +157,7 @@ definition {
 
 		AssertClick(
 			locator1 = "Button#COPY",
-			value1 = "Make a Copy");
+			value1 = "Copy");
 
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}

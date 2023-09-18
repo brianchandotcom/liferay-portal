@@ -23,6 +23,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -1306,7 +1307,7 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public Map<Long, Long> getFileEntryTypeIds(
-		long companyId, long groupId, String treePath) {
+		long companyId, long[] groupIds, String treePath) {
 
 		List<Object[]> results = dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -1314,11 +1315,23 @@ public class DLFileEntryLocalServiceImpl
 				DLFileEntryTable.INSTANCE.fileEntryTypeId
 			).from(
 				DLFileEntryTable.INSTANCE
+			).innerJoinON(
+				DLFileEntryTypeTable.INSTANCE,
+				DLFileEntryTypeTable.INSTANCE.fileEntryTypeId.eq(
+					DLFileEntryTable.INSTANCE.fileEntryTypeId
+				).and(
+					DLFileEntryTypeTable.INSTANCE.companyId.eq(companyId)
+				).and(
+					DLFileEntryTypeTable.INSTANCE.groupId.in(
+						ArrayUtil.toLongArray(groupIds))
+				).and(
+					DLFileEntryTypeTable.INSTANCE.fileEntryTypeId.neq(
+						DLFileEntryTypeConstants.
+							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
+				)
 			).where(
 				DLFileEntryTable.INSTANCE.companyId.eq(
 					companyId
-				).and(
-					DLFileEntryTable.INSTANCE.groupId.eq(groupId)
 				).and(
 					DLFileEntryTable.INSTANCE.fileEntryTypeId.neq(
 						DLFileEntryTypeConstants.

@@ -98,6 +98,7 @@ interface saveProps {
 	returnValue?: boolean;
 	url: string;
 }
+export declare function deleteItem(url: string): Promise<void>;
 export declare function deleteObjectDefinition(
 	objectDefinitionId: number
 ): Promise<void>;

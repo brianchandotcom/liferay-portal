@@ -126,7 +126,7 @@ const headers = new Headers({
 	'Content-Type': 'application/json',
 });
 
-async function deleteItem(url: string) {
+export async function deleteItem(url: string) {
 	const response = await fetch(url, {headers, method: 'DELETE'});
 
 	if (response.status === 401) {

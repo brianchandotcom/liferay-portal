@@ -28,7 +28,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -127,14 +126,7 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 						ListEntry listEntry = (ListEntry)properties.get(
 							"retrieveType");
 
-						if (Objects.equals(
-								listEntry.getKey(), "singleElement")) {
-
-							return RetrieveType.SINGLE_ELEMENT;
-						}
-
-						return RetrieveType.valueOf(
-							StringUtil.toUpperCase(listEntry.getKey()));
+						return RetrieveType.parse(listEntry.getKey());
 					}
 
 					@Override

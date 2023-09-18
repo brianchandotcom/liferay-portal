@@ -5,6 +5,8 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -19,7 +21,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import javax.servlet.ServletContext;
 
@@ -47,7 +48,6 @@ import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.runtime.HttpServiceRuntimeConstants;
 import org.osgi.service.http.runtime.dto.DTOConstants;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
-import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
@@ -68,11 +68,9 @@ public class HttpServletEndpointControllerImpl
 			"(http.servlet.endpoint.id=" +
 				attributesMap.get("http.servlet.endpoint.id") + ")";
 
-		_servletContextHelperServiceTracker = new ServiceTracker<>(
-			bundleContext, ServletContextHelper.class,
+		_contextControllers = ServiceTrackerListFactory.open(
+			bundleContext, ServletContextHelper.class, null,
 			new ServletContextHelperServiceTrackerCustomizer());
-
-		_servletContextHelperServiceTracker.open();
 
 		_serviceRegistration = bundleContext.registerService(
 			ServletContextHelper.class,
@@ -94,12 +92,12 @@ public class HttpServletEndpointControllerImpl
 	public void destroy() {
 		_serviceRegistration.unregister();
 
-		_servletContextHelperServiceTracker.close();
+		_contextControllers.close();
 	}
 
 	@Override
 	public Collection<ContextController> getContextControllers() {
-		return _contextControllersMap.values();
+		return _contextControllers.toList();
 	}
 
 	@Override
@@ -191,9 +189,7 @@ public class HttpServletEndpointControllerImpl
 		while (true) {
 			List<ContextController> contextControllers = new ArrayList<>();
 
-			for (ContextController contextController :
-					_contextControllersMap.values()) {
-
+			for (ContextController contextController : _contextControllers) {
 				if (Objects.equals(
 						contextController.getContextPath(), requestURI)) {
 
@@ -269,16 +265,12 @@ public class HttpServletEndpointControllerImpl
 
 	private final Map<String, Object> _attributesMap;
 	private final BundleContext _bundleContext;
-	private final ConcurrentMap
-		<ServiceReference<ServletContextHelper>, ContextController>
-			_contextControllersMap = new ConcurrentHashMap<>();
+	private final ServiceTrackerList<ContextController> _contextControllers;
 	private final ServletContext _parentServletContext;
 	private final Set<Object> _registeredObjects = Collections.newSetFromMap(
 		new ConcurrentHashMap<>());
 	private final ServiceRegistration<ServletContextHelper>
 		_serviceRegistration;
-	private final ServiceTracker<ServletContextHelper, ContextController>
-		_servletContextHelperServiceTracker;
 
 	private static class DefaultServletContextHelper
 		extends ServletContextHelper {
@@ -341,15 +333,11 @@ public class HttpServletEndpointControllerImpl
 						DTOConstants.FAILURE_REASON_VALIDATION_FAILED);
 				}
 
-				ContextController contextController = new ContextController(
+				return new ContextController(
 					_bundleContext, _bundleContext, serviceReference,
 					new ProxyContext(contextName, _parentServletContext),
 					HttpServletEndpointControllerImpl.this, contextName,
 					contextPath);
-
-				_contextControllersMap.put(serviceReference, contextController);
-
-				return contextController;
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -373,7 +361,6 @@ public class HttpServletEndpointControllerImpl
 				contextController.destroy();
 			}
 
-			_contextControllersMap.remove(serviceReference);
 			_bundleContext.ungetService(serviceReference);
 		}
 

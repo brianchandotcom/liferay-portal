@@ -343,7 +343,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 								organizationId))),
 					BooleanClauseOccur.MUST);
 			},
-			filter, search, pagination, sorts);
+			filter, search, pagination, sorts, null);
 	}
 
 	@Override
@@ -366,7 +366,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 					new TermFilter("groupId", String.valueOf(siteId)),
 					BooleanClauseOccur.MUST);
 			},
-			filter, search, pagination, sorts);
+			filter, search, pagination, sorts, null);
 	}
 
 	@Override
@@ -420,7 +420,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 					new TermFilter("userName", StringPool.BLANK),
 					BooleanClauseOccur.MUST_NOT);
 			},
-			filter, search, pagination, sorts);
+			filter, search, pagination, sorts, null);
 	}
 
 	@Override

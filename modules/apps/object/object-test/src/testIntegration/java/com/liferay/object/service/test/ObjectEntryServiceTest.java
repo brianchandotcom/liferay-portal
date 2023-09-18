@@ -290,6 +290,13 @@ public class ObjectEntryServiceTest {
 					objectDefinition.getObjectDefinitionId());
 
 				if (objectDefinition.isRootDescendantNode()) {
+					_resourcePermissionLocalService.addResourcePermission(
+						TestPropsValues.getCompanyId(),
+						objectDefinition.getClassName(),
+						ResourceConstants.SCOPE_COMPANY,
+						String.valueOf(TestPropsValues.getCompanyId()),
+						role.getRoleId(), ActionKeys.DELETE);
+
 					_resourcePermissionLocalService.addModelResourcePermissions(
 						TestPropsValues.getCompanyId(),
 						TestPropsValues.getGroupId(), _user.getUserId(),
@@ -302,24 +309,6 @@ public class ObjectEntryServiceTest {
 							).build(),
 							objectDefinition.getClassName()));
 				}
-
-				_assertPrincipalException(ActionKeys.DELETE, null, objectEntry);
-			});
-
-		TreeTestUtil.unsafeForEach(
-			_objectDefinitionLocalService, _tree,
-			objectDefinition -> {
-				if (objectDefinition.isRootDescendantNode()) {
-					_resourcePermissionLocalService.addResourcePermission(
-						TestPropsValues.getCompanyId(),
-						objectDefinition.getClassName(),
-						ResourceConstants.SCOPE_COMPANY,
-						String.valueOf(TestPropsValues.getCompanyId()),
-						role.getRoleId(), ActionKeys.DELETE);
-				}
-
-				ObjectEntry objectEntry = objectEntries1.get(
-					objectDefinition.getObjectDefinitionId());
 
 				_assertPrincipalException(ActionKeys.DELETE, null, objectEntry);
 			});

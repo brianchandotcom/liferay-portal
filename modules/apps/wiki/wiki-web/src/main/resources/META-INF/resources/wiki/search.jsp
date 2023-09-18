@@ -38,10 +38,21 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 	/>
 
 	<div class="form-search">
-		<liferay-ui:input-search
-			placeholder='<%= LanguageUtil.get(request, "keywords") %>'
-			title='<%= LanguageUtil.get(request, "search-pages") %>'
-		/>
+		<div class="input-group">
+			<div class="input-group-item">
+				<input aria-label="<%= LanguageUtil.get(request, "search-pages") %>" class="form-control input-group-inset input-group-inset-after search-query" data-qa-id="searchInput" id="<portlet:namespace />keywords" name="<portlet:namespace />keywords" placeholder="<%= LanguageUtil.get(request, "keywords") %>" title="<%= LanguageUtil.get(request, "search-pages") %>" type="text" value="<%= HtmlUtil.escapeAttribute(ParamUtil.getString(request, "keywords")) %>" />
+
+				<div class="input-group-inset-item input-group-inset-item-after">
+					<clay:button
+						data-qa-id="searchButton"
+						icon="search"
+						displayType="unstyled"
+						monospaced="<%= false %>"
+						type="submit"
+					/>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<%

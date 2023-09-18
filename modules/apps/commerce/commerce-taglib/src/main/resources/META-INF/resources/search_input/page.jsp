@@ -24,7 +24,19 @@ Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-co
 	}
 	%>
 
-	<liferay-ui:input-search
-		markupView="lexicon"
-	/>
+	<div class="input-group">
+		<div class="input-group-item">
+			<input aria-label="<%= LanguageUtil.get(request, "search") %>" class="form-control input-group-inset input-group-inset-after search-query" data-qa-id="searchInput" id="<portlet:namespace />keywords" name="<portlet:namespace />keywords" placeholder="<%= LanguageUtil.get(request, "search") %>" title="<%= LanguageUtil.get(request, "search") %>" type="text" value="<%= HtmlUtil.escapeAttribute(ParamUtil.getString(request, "keywords")) %>" />
+
+			<div class="input-group-inset-item input-group-inset-item-after">
+				<clay:button
+					data-qa-id="searchButton"
+					icon="search"
+					displayType="unstyled"
+					monospaced="<%= false %>"
+					type="submit"
+				/>
+			</div>
+		</div>
+	</div>
 </aui:form>

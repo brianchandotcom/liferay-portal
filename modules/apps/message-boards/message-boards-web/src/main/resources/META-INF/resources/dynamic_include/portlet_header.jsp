@@ -25,10 +25,19 @@ long categoryId = MBUtil.getCategoryId(request, category);
 	<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= categoryId %>" />
 	<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
 
-	<liferay-ui:input-search
-		id='<%= (PortalUtil.getLiferayPortletResponse(portletResponse)).getNamespace() + "keywords1" %>'
-		markupView="lexicon"
-		name='<%= (PortalUtil.getLiferayPortletResponse(portletResponse)).getNamespace() + "keywords" %>'
-		useNamespace="<%= false %>"
-	/>
+	<div class="input-group">
+		<div class="input-group-item">
+			<input aria-label="<%= LanguageUtil.get(request, "search") %>" class="form-control input-group-inset input-group-inset-after search-query" data-qa-id="searchInput" id="<%= (PortalUtil.getLiferayPortletResponse(portletResponse)).getNamespace() %>keywords1" name="<%= (PortalUtil.getLiferayPortletResponse(portletResponse)).getNamespace() %>keywordskeywords" placeholder="<%= LanguageUtil.get(request, "keywords") %>" title="<%= LanguageUtil.get(request, "search") %>" type="text" value="<%= HtmlUtil.escapeAttribute(ParamUtil.getString(request, "keywords")) %>" />
+
+			<div class="input-group-inset-item input-group-inset-item-after">
+				<clay:button
+					data-qa-id="searchButton"
+					icon="search"
+					displayType="unstyled"
+					monospaced="<%= false %>"
+					type="submit"
+				/>
+			</div>
+		</div>
+	</div>
 </aui:form>

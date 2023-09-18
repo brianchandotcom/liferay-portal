@@ -715,6 +715,12 @@ public class GetEntryRenderDataMVCResourceCommand
 					).put(
 						"id", segmentsExperience.getSegmentsExperienceId()
 					).put(
+						"isDefault",
+						Objects.equals(
+							segmentsExperience.getSegmentsExperienceKey(),
+							SegmentsExperienceConstants.KEY_DEFAULT) &&
+						(segmentsExperience.getSegmentsEntryId() == 0)
+					).put(
 						"name",
 						segmentsExperience.getName(
 							httpServletRequest.getLocale())

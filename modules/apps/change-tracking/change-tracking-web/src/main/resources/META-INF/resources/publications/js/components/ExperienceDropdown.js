@@ -7,17 +7,21 @@ import {Option, Picker, Text} from '@clayui/core';
 import ClayLabel from '@clayui/label';
 import Layout from '@clayui/layout';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
-const ExperienceDropdown = (props) => {
-	const [selectedKey, setSelectedKey] = useState(
-		props.activeSegmentsExperience.id
-	);
+const ExperienceDropdown = ({
+	activeSegmentsExperience,
+	updatePreviewRender,
+	...props
+}) => {
+	const [selectedKey, setSelectedKey] = useState(activeSegmentsExperience.id);
+
+	useEffect(() => {
+		updatePreviewRender(selectedKey);
+	}, [activeSegmentsExperience.id, selectedKey, updatePreviewRender]);
 
 	const handleSelectionChange = (key) => {
 		setSelectedKey(key);
-
-		props.updatePreviewRender(key);
 	};
 
 	return (
@@ -25,11 +29,10 @@ const ExperienceDropdown = (props) => {
 			<div className="mb-2 mr-2">
 				<Picker
 					aria-label={Liferay.Language.get('experience-selector')}
-					id="picker"
 					items={props.segmentsExperiences}
 					onSelectionChange={handleSelectionChange}
 					selectedKey={selectedKey}
-					selecteditem={props.activeSegmentsExperience}
+					selecteditem={activeSegmentsExperience}
 				>
 					{(experience) => (
 						<Option key={experience.id} textValue={experience.name}>
@@ -71,6 +74,7 @@ ExperienceDropdown.propTypes = {
 	activeSegmentsExperience: PropTypes.shape({
 		active: PropTypes.bool,
 		id: PropTypes.string,
+		isDefault: PropTypes.bool,
 		name: PropTypes.string,
 		segmentName: PropTypes.string,
 	}),
@@ -78,6 +82,7 @@ ExperienceDropdown.propTypes = {
 		PropTypes.shape({
 			active: PropTypes.bool,
 			id: PropTypes.string,
+			isDefault: PropTypes.bool,
 			name: PropTypes.string,
 			segmentName: PropTypes.string,
 		})

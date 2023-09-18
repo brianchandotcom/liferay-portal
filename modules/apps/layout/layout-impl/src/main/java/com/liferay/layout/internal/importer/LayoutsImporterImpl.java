@@ -1330,7 +1330,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 					name, layoutPageTemplateEntryType,
 					LayoutsImporterResultEntry.Status.INVALID,
 					_getErrorMessage(
-						groupId, _MESSAGE_KEY_INVALID,
+						groupId, _MESSAGE_KEY_NAME_INVALID,
 						new String[] {
 							zipPath, _toTypeName(layoutPageTemplateEntryType)
 						})));
@@ -1464,7 +1464,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				new LayoutsImporterResultEntry(
 					name, LayoutsImporterResultEntry.Status.INVALID,
 					_getErrorMessage(
-						groupId, _MESSAGE_KEY_INVALID,
+						groupId, _MESSAGE_KEY_NAME_INVALID,
 						new String[] {zipPath, "utility page"})));
 		}
 	}
@@ -1972,7 +1972,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	private static final String _MESSAGE_KEY_IGNORED =
 		"x-was-ignored-because-a-x-with-the-same-key-already-exists";
 
-	private static final String _MESSAGE_KEY_INVALID =
+	private static final String _MESSAGE_KEY_NAME_INVALID =
 		"x-could-not-be-imported-because-a-x-with-the-same-name-already-exists";
 
 	private static final String _MESSAGE_KEY_TYPE_INVALID =

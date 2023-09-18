@@ -143,7 +143,7 @@ public class ObjectEntryServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _adminUser.getUserId())));
 
-		TreeTestUtil.unsafeForEachRemaining(
+		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> Assert.assertNotNull(
 				_objectEntryService.addObjectEntry(
@@ -160,7 +160,7 @@ public class ObjectEntryServiceTest {
 		_assertPrincipalException(
 			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition, null);
 
-		TreeTestUtil.unsafeForEachRemaining(
+		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> _assertPrincipalException(
 				ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, null));
@@ -170,7 +170,7 @@ public class ObjectEntryServiceTest {
 		_assertPrincipalException(
 			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition, null);
 
-		TreeTestUtil.unsafeForEachRemaining(
+		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> _assertPrincipalException(
 				ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, null));
@@ -195,7 +195,7 @@ public class ObjectEntryServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
-		TreeTestUtil.unsafeForEachRemaining(
+		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				if (objectDefinition.isRootNode()) {
@@ -220,7 +220,7 @@ public class ObjectEntryServiceTest {
 			String.valueOf(TestPropsValues.getCompanyId()),
 			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
 
-		TreeTestUtil.unsafeForEachRemaining(
+		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> Assert.assertNotNull(
 				_objectEntryService.addObjectEntry(
@@ -243,7 +243,7 @@ public class ObjectEntryServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
-		TreeTestUtil.unsafeForEachRemaining(
+		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> Assert.assertNotNull(
 				_objectEntryService.addObjectEntry(
@@ -283,7 +283,7 @@ public class ObjectEntryServiceTest {
 		Map<Long, ObjectEntry> objectEntries1 = _createObjectEntryHierarchy(
 			_tree);
 
-		TreeTestUtil.unsafeForEachRemaining(
+		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries1.get(
@@ -306,7 +306,7 @@ public class ObjectEntryServiceTest {
 				_assertPrincipalException(ActionKeys.DELETE, null, objectEntry);
 			});
 
-		TreeTestUtil.unsafeForEachRemaining(
+		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				if (objectDefinition.isRootDescendantNode()) {
@@ -380,7 +380,7 @@ public class ObjectEntryServiceTest {
 			_objectEntryService.deleteObjectEntry(
 				rootObjectEntry.getObjectEntryId()));
 
-		TreeTestUtil.unsafeForEachRemaining(
+		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries3.get(
@@ -453,7 +453,7 @@ public class ObjectEntryServiceTest {
 		Map<Long, ObjectEntry> objectEntries1 = _createObjectEntryHierarchy(
 			_tree);
 
-		TreeTestUtil.unsafeForEachRemaining(
+		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries1.get(
@@ -476,7 +476,7 @@ public class ObjectEntryServiceTest {
 				_assertPrincipalException(ActionKeys.VIEW, null, objectEntry);
 			});
 
-		TreeTestUtil.unsafeForEachRemaining(
+		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				if (objectDefinition.isRootDescendantNode()) {
@@ -510,7 +510,7 @@ public class ObjectEntryServiceTest {
 		Map<Long, ObjectEntry> objectEntries2 = _createObjectEntryHierarchy(
 			_tree);
 
-		TreeTestUtil.unsafeForEachRemaining(
+		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries1.get(
@@ -533,7 +533,7 @@ public class ObjectEntryServiceTest {
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ActionKeys.VIEW);
 
-		TreeTestUtil.unsafeForEachRemaining(
+		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries2.get(
@@ -653,7 +653,7 @@ public class ObjectEntryServiceTest {
 		for (int depth = 2; depth > 1; depth--) {
 			int finalDepth = depth;
 
-			TreeTestUtil.unsafeForEachRemaining(
+			TreeTestUtil.unsafeForEach(
 				_objectDefinitionLocalService, tree,
 				objectDefinition -> {
 					Node node = tree.getNode(

@@ -62,9 +62,8 @@ public class ListTypeLocalServiceTest {
 	public void testDefaultListTypes() throws Exception {
 		JSONArray listTypesJSONArray = _jsonFactory.createJSONArray(
 			StringUtil.read(
-				_listTypeLocalService.getClass(
-				).getClassLoader(),
-				"com/liferay/portal/tools/json/dependencies" +
+				getClass().getClassLoader(),
+				"com/liferay/portal/list/type/impl/dependencies" +
 					"/portal-list-type.json",
 				false));
 

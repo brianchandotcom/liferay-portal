@@ -25,7 +25,7 @@ interface ModalAddObjectValidationProps extends AddObjectValidationProps {
 
 interface AddObjectValidationProps {
 	apiURL: string;
-	objectValidationRuleEngines: ObjectValidationType[];
+	objectValidationRuleEngines: LabelNameObject[];
 }
 
 interface ObjectValidationLabel {
@@ -45,7 +45,7 @@ function ModalAddObjectValidation({
 	observer,
 	onClose,
 }: ModalAddObjectValidationProps) {
-	const [typeSelection, setTypeSelection] = useState<ObjectValidationType>({
+	const [typeSelection, setTypeSelection] = useState<LabelNameObject>({
 		label: '',
 		name: '',
 	});
@@ -101,7 +101,7 @@ function ModalAddObjectValidation({
 		}
 	};
 
-	const handleTypeChange = (option: ObjectValidationType) => {
+	const handleTypeChange = (option: LabelNameObject) => {
 		setTypeSelection({
 			label: option.label,
 			name: option.name,
@@ -141,7 +141,7 @@ function ModalAddObjectValidation({
 						value={labelInput[defaultLanguageId]}
 					/>
 
-					<SingleSelect<ObjectValidationType>
+					<SingleSelect<LabelNameObject>
 						error={
 							showError && fieldErrors.typeError !== ''
 								? fieldErrors.typeError

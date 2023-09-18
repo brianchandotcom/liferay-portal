@@ -442,11 +442,6 @@ interface PickList {
 	name_i18n: LocalizedValue<string>;
 }
 
-type ObjectValidationType = {
-	label: string;
-	name: string;
-};
-
 interface PredefinedValue {
 	businessType: ObjectFieldBusinessType;
 	inputAsValue: boolean;

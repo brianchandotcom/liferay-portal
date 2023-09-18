@@ -13,9 +13,7 @@ interface MultiselectPicklistDataRendererProps {
 	}[];
 }
 
-export default function MultiselectPicklistFDSPropsTransformer({
-	...otherProps
-}) {
+export default function ViewObjectEntriesFDSPropsTransformer({...otherProps}) {
 	return {
 		...otherProps,
 		customDataRenderers: {
@@ -24,6 +22,19 @@ export default function MultiselectPicklistFDSPropsTransformer({
 			}: MultiselectPicklistDataRendererProps) =>
 				value ? value.map((v) => v.name).join(', ') : '',
 			sourceDataRenderer: SourceDataRenderer,
+		},
+		onActionDropdownItemClick({
+			action,
+			itemData,
+		}: {
+			action: {data: {id: string}};
+			itemData: any;
+		}) {
+			if (action.data.id === 'deleteObjectEntry') {
+				Liferay.fire('openModalDeleteObjectEntry', {
+					objectEntry: itemData,
+				});
+			}
 		},
 	};
 }

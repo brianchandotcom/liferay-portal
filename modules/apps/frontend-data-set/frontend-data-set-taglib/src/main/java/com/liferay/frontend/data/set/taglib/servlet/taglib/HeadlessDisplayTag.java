@@ -302,7 +302,7 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 			).put(
 				"showSearch", _showSearch
 			).put(
-				"sorting", _fdsSortItemList
+				"sorts", _fdsSortItemList
 			).put(
 				"style", _validateDataAttribute(_style)
 			).put(

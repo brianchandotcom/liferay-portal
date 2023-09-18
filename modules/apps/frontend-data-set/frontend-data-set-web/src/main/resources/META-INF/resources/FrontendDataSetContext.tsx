@@ -47,7 +47,7 @@ export interface IFrontendDataSetContext {
 	selectedItemsValue?: Array<any>;
 	selectionType?: string;
 	sidePanelId?: string;
-	sorting?: Array<TRenderer>;
+	sorts?: Array<TRenderer>;
 	style?: string;
 	toggleItemInlineEdit?: Function;
 	uniformActionsDisplay?: boolean;

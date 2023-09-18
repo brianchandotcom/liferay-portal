@@ -323,7 +323,7 @@ public class ClassicDisplayTag extends BaseDisplayTag {
 			).put(
 				"showSearch", _showSearch
 			).put(
-				"sorting", _fdsSortItemList
+				"sorts", _fdsSortItemList
 			).put(
 				"style", _toNullOrObject(_style)
 			).put(

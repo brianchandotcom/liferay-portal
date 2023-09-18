@@ -26,7 +26,7 @@ const CustomViewsControls = () => {
 			customViews,
 			filters,
 			paginationDelta,
-			sorting,
+			sorts,
 			viewUpdated,
 			visibleFieldNames,
 		},
@@ -81,7 +81,7 @@ const CustomViewsControls = () => {
 			customViewLabel: label ?? customViews[id].customViewLabel,
 			filters,
 			paginationDelta,
-			sorting,
+			sorts,
 			visibleFieldNames,
 		};
 

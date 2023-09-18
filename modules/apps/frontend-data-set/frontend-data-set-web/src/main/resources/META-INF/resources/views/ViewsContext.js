@@ -13,7 +13,7 @@ export default React.createContext({
 	filters: [],
 	modifiedFields: {},
 	paginationDelta: null,
-	sorting: [],
+	sorts: [],
 	views: [],
 	visibleFieldNames: {},
 });

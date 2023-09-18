@@ -143,7 +143,7 @@ export function viewsReducer(state, {type, value}) {
 	else if (type === VIEWS_ACTION_TYPES.UPDATE_SORTING) {
 		return {
 			...state,
-			sorting: value,
+			sorts: value,
 			viewUpdated: true,
 		};
 	}

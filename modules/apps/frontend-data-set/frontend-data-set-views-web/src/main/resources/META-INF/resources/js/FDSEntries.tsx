@@ -1034,7 +1034,7 @@ const FDSEntries = ({
 						onClick: onDeleteClick,
 					},
 				]}
-				sorting={[{direction: 'desc', key: 'dateCreated'}]}
+				sorts={[{direction: 'desc', key: 'dateCreated'}]}
 				views={views}
 			/>
 		</div>

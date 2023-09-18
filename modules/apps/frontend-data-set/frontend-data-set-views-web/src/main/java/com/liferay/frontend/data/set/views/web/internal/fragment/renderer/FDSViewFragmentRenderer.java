@@ -212,7 +212,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 			printWriter.write(
 				_buildFragmentHTML(
-					fdsViewObjectDefinition, fdsViewObjectEntry, 
+					fdsViewObjectDefinition, fdsViewObjectEntry,
 					fragmentRendererContext, httpServletRequest));
 		}
 		catch (Exception exception) {
@@ -275,7 +275,8 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			).put(
 				"pagination", _getPaginationJSONObject(fdsViewObjectEntry)
 			).put(
-				"sorting", _getSortingsJSONArray(fdsViewObjectDefinition, fdsViewObjectEntry)
+				"sorts",
+				_getSortsJSONArray(fdsViewObjectDefinition, fdsViewObjectEntry)
 			).put(
 				"style", "fluid"
 			).put(
@@ -578,34 +579,59 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		return relatedObjectEntriesPage.getItems();
 	}
 
-	private JSONArray _getSortingsJSONArray(
-		ObjectDefinition fdsViewObjectDefinition, ObjectEntry fdsViewObjectEntry) {
+	private JSONArray _getSelectedItemsJSONArray(
+			List<ListTypeEntry> listTypeEntries, Locale locale,
+			String preselectedValues)
+		throws JSONException {
 
-		try {
-			List<ObjectEntry> fdsSortingObjectEntries = new ArrayList<>(
-				_getRelatedObjectEntries(
-					fdsViewObjectDefinition, fdsViewObjectEntry, "fdsViewFDSSortRelationship"));
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-			if (ListUtil.isEmpty(fdsSortingObjectEntries)) {
-				return _jsonFactory.createJSONArray();
+		JSONArray preselectedValuesJSONArray = _jsonFactory.createJSONArray(
+			preselectedValues);
+
+		for (int i = 0; i < preselectedValuesJSONArray.length(); i++) {
+			String key = preselectedValuesJSONArray.getString(i);
+
+			for (ListTypeEntry listTypeEntry : listTypeEntries) {
+				if (Objects.equals(listTypeEntry.getKey(), key)) {
+					jsonArray.put(
+						JSONUtil.put(
+							"label", listTypeEntry.getName(locale)
+						).put(
+							"value", listTypeEntry.getKey()
+						));
+
+					break;
+				}
 			}
+		}
 
-			return JSONUtil.toJSONArray(
-				fdsSortingObjectEntries,
-				(ObjectEntry fdsSortingObjectEntry) -> _getSortingsJSONObject(
-					fdsSortingObjectEntry));
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to create frontend data set sort from frontend data set view", exception);
-			}
-			return _jsonFactory.createJSONArray();
-		}
+		return jsonArray;
 	}
 
-	private JSONObject _getSortingsJSONObject(ObjectEntry fdsSortingObjectEntry) {
-		Map<String, Object> fdsSortingProperties = fdsSortingObjectEntry.getProperties();
+	private JSONArray _getSortsJSONArray(
+			ObjectDefinition fdsViewObjectDefinition,
+			ObjectEntry fdsViewObjectEntry)
+		throws Exception {
+
+		List<ObjectEntry> fdsSortingObjectEntries = new ArrayList<>(
+			_getRelatedObjectEntries(
+				fdsViewObjectDefinition, fdsViewObjectEntry,
+				"fdsViewFDSSortRelationship"));
+
+		if (ListUtil.isEmpty(fdsSortingObjectEntries)) {
+			return _jsonFactory.createJSONArray();
+		}
+
+		return JSONUtil.toJSONArray(
+			fdsSortingObjectEntries,
+			(ObjectEntry fdsSortingObjectEntry) -> _getSortsJSONObject(
+				fdsSortingObjectEntry));
+	}
+
+	private JSONObject _getSortsJSONObject(ObjectEntry fdsSortingObjectEntry) {
+		Map<String, Object> fdsSortingProperties =
+			fdsSortingObjectEntry.getProperties();
 
 		return JSONUtil.put(
 			"direction", fdsSortingProperties.get("sortingDirection")

@@ -22,7 +22,7 @@ function TableHeadCell({
 	sortable,
 	sortingKey: sortingKeyProp,
 }) {
-	const [{sorting}, viewsDispatch] = useContext(ViewsContext);
+	const [{sorts}, viewsDispatch] = useContext(ViewsContext);
 
 	const [sortingKey, setSortingKey] = useState(null);
 	const [sortingMatch, setSortingMatch] = useState(null);
@@ -33,16 +33,14 @@ function TableHeadCell({
 			(Array.isArray(fieldName) ? fieldName[0] : fieldName);
 
 		setSortingKey(newSortingKey);
-		setSortingMatch(
-			sorting.find((element) => element.key === newSortingKey)
-		);
-	}, [fieldName, sorting, sortingKeyProp]);
+		setSortingMatch(sorts.find((element) => element.key === newSortingKey));
+	}, [fieldName, sorts, sortingKeyProp]);
 
 	function handleSortingCellClick(event) {
 		event.preventDefault();
 
 		const updatedSortedElements = sortingMatch
-			? sorting.map((element) =>
+			? sorts.map((element) =>
 					element.key === sortingKey
 						? {
 								...element,

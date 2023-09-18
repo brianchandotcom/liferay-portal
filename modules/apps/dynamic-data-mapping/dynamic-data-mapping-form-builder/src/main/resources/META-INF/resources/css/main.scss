@@ -16,8 +16,45 @@
 	position: fixed;
 }
 
-.dropdown-menu.date-picker-dropdown-menu.show {
-	position: fixed;
+@media screen and (max-height: 850px) {
+	.dropdown-menu.date-picker-dropdown-menu.show {
+		height: 21rem;
+		position: fixed;
+	}
+}
+
+@media screen and (max-height: 750px) {
+	.dropdown-menu.date-picker-dropdown-menu.show {
+		height: 15rem;
+		position: fixed;
+	}
+}
+
+@media screen and (max-height: 550px) {
+	.dropdown-menu.date-picker-dropdown-menu.show {
+		height: 10rem;
+		position: fixed;
+	}
+}
+
+@media screen and (max-height: 450px) {
+	.dropdown-menu.date-picker-dropdown-menu.show {
+		height: 8rem;
+		position: fixed;
+	}
+}
+
+@media screen and (max-height: 370px) {
+	.dropdown-menu.date-picker-dropdown-menu.show {
+		height: 6rem;
+		position: fixed;
+	}
+}
+
+@media screen and (min-height: 851px) {
+	.dropdown-menu.date-picker-dropdown-menu.show {
+		position: fixed;
+	}
 }
 
 .dropdown-menu.ddm-select-dropdown.show {

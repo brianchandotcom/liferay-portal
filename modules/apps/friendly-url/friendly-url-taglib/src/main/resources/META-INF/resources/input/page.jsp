@@ -39,6 +39,7 @@ String value = (String)request.getAttribute("liferay-friendly-url:input:value");
 			<liferay-ui:input-localized
 				defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>"
 				disabled="<%= disabled %>"
+				helpMessage='<%= (String)request.getAttribute("liferay-friendly-url:input:helpMessage") %>'
 				ignoreRequestValue="<%= SessionErrors.isEmpty(request) %>"
 				inputAddon='<%= (String)request.getAttribute("liferay-friendly-url:input:inputAddon") %>'
 				name="<%= name %>"

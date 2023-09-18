@@ -47,6 +47,10 @@ public class InputTag extends IncludeTag {
 		return _classPK;
 	}
 
+	public String getHelpMessage() {
+		return _helpMessage;
+	}
+
 	public String getInputAddon() {
 		return _inputAddon;
 	}
@@ -83,6 +87,10 @@ public class InputTag extends IncludeTag {
 		_disabled = disabled;
 	}
 
+	public void setHelpMessage(String helpMessage) {
+		_helpMessage = helpMessage;
+	}
+
 	public void setInputAddon(String inputAddon) {
 		_inputAddon = inputAddon;
 	}
@@ -117,6 +125,7 @@ public class InputTag extends IncludeTag {
 		_className = null;
 		_classPK = 0;
 		_disabled = false;
+		_helpMessage = null;
 		_inputAddon = null;
 		_localizable = true;
 		_name = _DEFAULT_NAME;
@@ -142,6 +151,8 @@ public class InputTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:friendlyURLMaxLength",
 			_FRIENDLY_URL_MAX_LENGTH);
+		httpServletRequest.setAttribute(
+			"liferay-friendly-url:input:helpMessage", getHelpMessage());
 		httpServletRequest.setAttribute(
 			"liferay-friendly-url:input:inputAddon", getInputAddon());
 		httpServletRequest.setAttribute(
@@ -285,6 +296,7 @@ public class InputTag extends IncludeTag {
 	private String _className;
 	private long _classPK;
 	private boolean _disabled;
+	private String _helpMessage;
 	private String _inputAddon;
 	private boolean _localizable = true;
 	private String _name = _DEFAULT_NAME;

@@ -9,10 +9,9 @@ import ClayModal, {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useCallback, useEffect, useState} from 'react';
 
+import appPlaceholder from '../../assets/images/app_placeholder.png';
 import {getCompanyId} from '../../liferay/constants';
 import {Liferay} from '../../liferay/liferay';
-import appPlaceholder from '../../assets/images/app_placeholder.png';
-
 import {
 	baseURL,
 	getAccountAddressesFromCommerce,
@@ -70,8 +69,9 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 	const {observer, onClose} = useModal({
 		onClose: handleClose,
 	});
-	const [activeAccounts, setActiveAccounts] =
-		useState<Partial<AccountBrief>[]>();
+	const [activeAccounts, setActiveAccounts] = useState<
+		Partial<AccountBrief>[]
+	>();
 	const [accountPublisher, setAccountPublisher] = useState<Account>();
 	const [accounts, setAccounts] = useState<AccountBrief[]>();
 	const [app, setApp] = useState<App>({
@@ -112,11 +112,13 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 		initialBillingAddress
 	);
 
-	const [selectedAccount, setSelectedAccount] =
-		useState<Partial<AccountBrief>>();
+	const [selectedAccount, setSelectedAccount] = useState<
+		Partial<AccountBrief>
+	>();
 
-	const [selectedPaymentMethod, setSelectedPaymentMethod] =
-		useState<PaymentMethodSelector>('pay');
+	const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
+		PaymentMethodSelector
+	>('pay');
 
 	const [selectedAddress, setSelectedAddress] = useState('');
 
@@ -290,15 +292,16 @@ export function GetAppModal({handleClose}: GetAppModalProps) {
 			const orderThumbnail = await (async () => {
 				const promises = productAttachments.map(
 					async (currentAttachment) => {
-						const attachmentsCustomField =
-							await getCustomFieldExpandoValue({
+						const attachmentsCustomField = await getCustomFieldExpandoValue(
+							{
 								className:
 									'com.liferay.commerce.product.model.CPAttachmentFileEntry',
 								classPK: currentAttachment.id,
 								columnName: 'App Icon',
 								companyId: Number(getCompanyId()),
 								tableName: 'CUSTOM_FIELDS',
-							});
+							}
+						);
 
 						if (attachmentsCustomField[0].toLowerCase() === 'yes') {
 							return currentAttachment;

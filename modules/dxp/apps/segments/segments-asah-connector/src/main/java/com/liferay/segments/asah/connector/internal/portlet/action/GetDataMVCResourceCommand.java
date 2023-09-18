@@ -41,6 +41,7 @@ import com.liferay.segments.asah.connector.internal.configuration.SegmentsExperi
 import com.liferay.segments.asah.connector.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.service.SegmentsExperimentRelService;
@@ -166,9 +167,23 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 		if (!Objects.equals(
 				segmentsExperiment.getStatus(), status.getValue())) {
 
-			_segmentsExperimentService.updateSegmentsExperimentStatus(
-				segmentsExperiment.getSegmentsExperimentId(),
-				status.getValue());
+			if (experiment.getWinnerDXPVariantId() != null) {
+				SegmentsExperience segmentsExperience =
+					_segmentsExperienceService.getSegmentsExperience(
+						segmentsExperiment.getGroupId(),
+						experiment.getWinnerDXPVariantId(),
+						segmentsExperiment.getPlid());
+
+				_segmentsExperimentService.updateSegmentsExperimentStatus(
+					segmentsExperiment.getSegmentsExperimentId(),
+					segmentsExperience.getSegmentsExperienceId(),
+					status.getValue());
+			}
+			else {
+				_segmentsExperimentService.updateSegmentsExperimentStatus(
+					segmentsExperiment.getSegmentsExperimentId(),
+					status.getValue());
+			}
 		}
 
 		return experiment;

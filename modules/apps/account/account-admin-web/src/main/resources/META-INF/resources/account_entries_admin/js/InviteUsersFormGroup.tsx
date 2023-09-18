@@ -122,13 +122,8 @@ const InviteUserFormGroup = ({
 	}
 
 	return (
-		<ClayLayout.Sheet
-			className={
-				Liferay.FeatureFlags['LPS-189430'] ? 'd-flex flex-column' : ''
-			}
-			size="lg"
-		>
-			{Liferay.FeatureFlags['LPS-189430'] && index !== 0 && (
+		<ClayLayout.Sheet className="d-flex flex-column" size="lg">
+			{index !== 0 && (
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('remove-entry')}
 					borderless

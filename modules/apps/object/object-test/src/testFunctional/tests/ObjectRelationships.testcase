@@ -2244,6 +2244,107 @@ definition {
 			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 	}
 
+	@description = "LPS-193697 - Verify the user can switch the relationship order between the parent and child object definitions"
+	@priority = 4
+	test CanSwitchRelationshipOrder {
+		task ("Given an object folder with two object definitions") {
+			property custom.properties = "feature.flag.LPS-148856=true";
+
+			var objectFolderERC = JSONObjectFolder.addFolder(
+				folderLabel = "Custom Folder 193697",
+				folderName = "CustomFolder193697");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 193",
+				objectName = "CustomObject193",
+				pluralLabelName = "Custom Objects 193");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 697",
+				objectName = "CustomObject697",
+				pluralLabelName = "Custom Objects 697");
+
+			JSONObject.updateObject(
+				configKey = "objectFolderExternalReferenceCode",
+				configValue = ${objectFolderERC},
+				objectName = "CustomObject193");
+
+			JSONObject.updateObject(
+				configKey = "objectFolderExternalReferenceCode",
+				configValue = ${objectFolderERC},
+				objectName = "CustomObject697");
+		}
+
+		task ("and Given the user creates a 1:M relationship between them using the Add Relationship button") {
+			ObjectAdmin.openObjectAdmin();
+
+			Click(
+				key_label = "Custom Folder 193697",
+				locator1 = "ObjectPortlet#SELECT_OBJECT_FOLDER");
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 193");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			LexiconEntry.gotoAdd();
+
+			Type(
+				locator1 = "ObjectAdmin#LABEL_OBJECT_RELATIONSHIP",
+				value1 = "Relationship");
+
+			Click(locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_FORM");
+
+			Click(
+				key_type = "One to Many",
+				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+
+			Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
+
+			Click(
+				key_columnOption = "Custom Object 697",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+		}
+
+		task ("When the user clicks on the switch button") {
+			Click(
+				key_text = "",
+				locator1 = "Button#ANY_SECONDARY");
+		}
+
+		task ("Then the parent and child object definitions are switched") {
+			AssertElementPresent(
+				key_relationObject = "Custom Object 697",
+				key_relationType = "One Record Of",
+				locator1 = "ObjectRelationships#SELECTED_OBJECT_IN_MODAL");
+
+			AssertElementPresent(
+				key_relationObject = "Custom Object 193",
+				key_relationType = "Many Records Of",
+				locator1 = "ObjectRelationships#SELECTED_OBJECT_IN_MODAL");
+		}
+
+		task ("and When the user clicks save") {
+			Button.clickSave();
+		}
+
+		task ("Then a relationship between the two object definitions is created") {
+			ObjectAdmin.openObjectAdmin();
+
+			Click(
+				key_label = "Custom Folder 193697",
+				locator1 = "ObjectPortlet#SELECT_OBJECT_FOLDER");
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 697");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			AssertElementPresent(
+				key_label = "Relationship",
+				key_relatedObject = "CustomObject193",
+				locator1 = "ObjectRelationships#OPTIONS_TAB_RELATIONSHIPS_LABEL_AND_RELATED_OBJECT");
+		}
+	}
+
 	@description = "LPS-143021 - Verify it is possible to view and add entries on an Object after creating a Relationship One to Many for it"
 	@priority = 4
 	test CanViewAndAddObjectEntriesAfterCreateRelationship {

@@ -83,7 +83,6 @@ components:
                     format: date
                     type: string
                 externalReferenceCode:
-                    readOnly: true
                     type: string
                 id:
                     format: int64

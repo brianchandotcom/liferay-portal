@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -32,11 +32,10 @@ import java.sql.Timestamp;
 public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 
 	public ObjectDefinitionUpgradeProcess(
-		CompanyLocalService companyLocalService, PortalUUID portalUUID,
+		CompanyLocalService companyLocalService,
 		ResourceLocalService resourceLocalService) {
 
 		_companyLocalService = companyLocalService;
-		_portalUUID = portalUUID;
 		_resourceLocalService = resourceLocalService;
 	}
 
@@ -66,7 +65,7 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 				"modifiedDate, label, name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ",
 				"?, ?)"));
 
-		preparedStatement1.setString(1, _portalUUID.generate());
+		preparedStatement1.setString(1, PortalUUIDUtil.generate());
 		preparedStatement1.setString(
 			2, ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_UNCATEGORIZED);
 
@@ -116,7 +115,6 @@ public class ObjectDefinitionUpgradeProcess extends UpgradeProcess {
 	}
 
 	private final CompanyLocalService _companyLocalService;
-	private final PortalUUID _portalUUID;
 	private final ResourceLocalService _resourceLocalService;
 
 }

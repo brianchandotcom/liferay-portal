@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,10 +29,6 @@ import java.util.Locale;
  * @author Mateus Santana
  */
 public class ObjectFieldUpgradeProcess extends UpgradeProcess {
-
-	public ObjectFieldUpgradeProcess(PortalUUID portalUUID) {
-		_portalUUID = portalUUID;
-	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -175,7 +171,7 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 
 		preparedStatement.setLong(1, 0);
 
-		String uuid = _portalUUID.generate();
+		String uuid = PortalUUIDUtil.generate();
 
 		preparedStatement.setString(2, uuid);
 
@@ -205,7 +201,5 @@ public class ObjectFieldUpgradeProcess extends UpgradeProcess {
 
 		preparedStatement.addBatch();
 	}
-
-	private final PortalUUID _portalUUID;
 
 }

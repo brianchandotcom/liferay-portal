@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -152,8 +151,7 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 		registry.register(
 			"1.11.2", "2.0.0", CPInstanceOptionValueRelTable.create(),
-			new CPInstanceOptionValueRelUpgradeProcess(
-				_jsonFactory, _portalUUID));
+			new CPInstanceOptionValueRelUpgradeProcess(_jsonFactory));
 
 		registry.register(
 			"2.0.0", "2.1.0",
@@ -449,9 +447,6 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	@Reference
 	private RepositoryLocalService _repositoryLocalService;

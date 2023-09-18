@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -32,11 +32,8 @@ import java.util.Map;
  */
 public class CPInstanceOptionValueRelUpgradeProcess extends UpgradeProcess {
 
-	public CPInstanceOptionValueRelUpgradeProcess(
-		JSONFactory jsonFactory, PortalUUID portalUUID) {
-
+	public CPInstanceOptionValueRelUpgradeProcess(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
-		_portalUUID = portalUUID;
 	}
 
 	@Override
@@ -210,7 +207,7 @@ public class CPInstanceOptionValueRelUpgradeProcess extends UpgradeProcess {
 					_getCPDefinitionOptionValueRelId(
 						cpDefinitionOptionRelId, cpDefinitionOptionValueRelKey);
 
-				String uuid = _portalUUID.generate();
+				String uuid = PortalUUIDUtil.generate();
 				long cpInstanceOptionValueRelId = increment();
 
 				preparedStatement.setString(1, uuid);
@@ -245,6 +242,5 @@ public class CPInstanceOptionValueRelUpgradeProcess extends UpgradeProcess {
 	private PreparedStatement _cpDefinitionOptionRelIdPreparedStatement;
 	private PreparedStatement _cpDefinitionOptionValueRelIdPreparedStatement;
 	private final JSONFactory _jsonFactory;
-	private final PortalUUID _portalUUID;
 
 }

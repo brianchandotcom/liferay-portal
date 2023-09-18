@@ -1,0 +1,20 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+export enum MDFColumnKey {
+	ACTION = 'FIXED-ACTION',
+	ACTIVITY_PERIOD = 'ACTIVITY-PERIOD',
+	AMOUNT_CLAIMED = 'AMOUNT-CLAIMED',
+	APPROVED = 'APPROVED',
+	DATE_SUBMITTTED = 'DATE-SUBMITTED',
+	ID = 'REQUEST-ID',
+	LAST_MODIFIED = 'LAST-MODIFIED',
+	NAME = 'NAME',
+	PAID = 'PAID',
+	PARTNER = 'PARTNER',
+	REQUESTED = 'REQUESTED',
+	STATUS = 'STATUS',
+	TOTAL_COST = 'TOTAL-COST',
+}

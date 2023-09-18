@@ -416,6 +416,11 @@ public abstract class BaseObjectEntryResourceImpl
 			existingObjectEntry.setDateModified(objectEntry.getDateModified());
 		}
 
+		if (objectEntry.getExternalReferenceCode() != null) {
+			existingObjectEntry.setExternalReferenceCode(
+				objectEntry.getExternalReferenceCode());
+		}
+
 		if (objectEntry.getKeywords() != null) {
 			existingObjectEntry.setKeywords(objectEntry.getKeywords());
 		}
@@ -625,6 +630,11 @@ public abstract class BaseObjectEntryResourceImpl
 
 		if (objectEntry.getDateModified() != null) {
 			existingObjectEntry.setDateModified(objectEntry.getDateModified());
+		}
+
+		if (objectEntry.getExternalReferenceCode() != null) {
+			existingObjectEntry.setExternalReferenceCode(
+				objectEntry.getExternalReferenceCode());
 		}
 
 		if (objectEntry.getKeywords() != null) {
@@ -860,6 +870,11 @@ public abstract class BaseObjectEntryResourceImpl
 
 		if (objectEntry.getDateModified() != null) {
 			existingObjectEntry.setDateModified(objectEntry.getDateModified());
+		}
+
+		if (objectEntry.getExternalReferenceCode() != null) {
+			existingObjectEntry.setExternalReferenceCode(
+				objectEntry.getExternalReferenceCode());
 		}
 
 		if (objectEntry.getKeywords() != null) {

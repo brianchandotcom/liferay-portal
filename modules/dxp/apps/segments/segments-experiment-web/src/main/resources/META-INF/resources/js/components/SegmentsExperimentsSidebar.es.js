@@ -44,6 +44,8 @@ import {
 } from '../util/navigation.es';
 import {
 	STATUS_DRAFT,
+	STATUS_FINISHED_NO_WINNER,
+	STATUS_FINISHED_WINNER,
 	STATUS_RUNNING,
 	STATUS_TERMINATED,
 } from '../util/statuses.es';
@@ -112,7 +114,15 @@ function SegmentsExperimentsSidebar({
 			return;
 		}
 
-		if (experiment.status.value === STATUS_DRAFT) {
+		if (
+			experiment.status.value === STATUS_FINISHED_NO_WINNER ||
+			experiment.status.value === STATUS_FINISHED_WINNER
+		) {
+			if (segmentsExperimentAction === 'delete') {
+				dispatch(openDeletionModal());
+			}
+		}
+		else if (experiment.status.value === STATUS_DRAFT) {
 			if (segmentsExperimentAction === 'reviewAndRun') {
 				dispatch(reviewAndRunExperiment());
 			}

@@ -237,11 +237,13 @@ public class ObjectFieldLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectField addOrUpdateSystemObjectField(
-			long userId, long listTypeDefinitionId, long objectDefinitionId,
+			String externalReferenceCode, long userId,
+			long listTypeDefinitionId, long objectDefinitionId,
 			String businessType, String dbColumnName, String dbTableName,
 			String dbType, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId, Map<Locale, String> labelMap, String name,
-			boolean required, boolean state)
+			boolean required, boolean state,
+			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
 		ObjectField existingObjectField = objectFieldPersistence.fetchByODI_N(
@@ -249,9 +251,10 @@ public class ObjectFieldLocalServiceImpl
 
 		if (existingObjectField == null) {
 			return addSystemObjectField(
-				userId, listTypeDefinitionId, objectDefinitionId, businessType,
-				dbColumnName, dbTableName, dbType, indexed, indexedAsKeyword,
-				indexedLanguageId, labelMap, name, required, state);
+				externalReferenceCode, userId, listTypeDefinitionId,
+				objectDefinitionId, businessType, dbColumnName, dbTableName,
+				dbType, indexed, indexedAsKeyword, indexedLanguageId, labelMap,
+				name, required, state, objectFieldSettings);
 		}
 
 		_validateLabel(labelMap, existingObjectField);
@@ -264,11 +267,13 @@ public class ObjectFieldLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectField addSystemObjectField(
-			long userId, long listTypeDefinitionId, long objectDefinitionId,
+			String externalReferenceCode, long userId,
+			long listTypeDefinitionId, long objectDefinitionId,
 			String businessType, String dbColumnName, String dbTableName,
 			String dbType, boolean indexed, boolean indexedAsKeyword,
 			String indexedLanguageId, Map<Locale, String> labelMap, String name,
-			boolean required, boolean state)
+			boolean required, boolean state,
+			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
 
 		name = StringUtil.trim(name);
@@ -287,11 +292,18 @@ public class ObjectFieldLocalServiceImpl
 				"Only allowed bundles can add system object fields");
 		}
 
-		return _addObjectField(
-			null, userId, listTypeDefinitionId, objectDefinitionId,
-			businessType, dbColumnName, dbTableName, dbType, indexed,
-			indexedAsKeyword, indexedLanguageId, labelMap, false, name,
+		ObjectField objectField = _addObjectField(
+			externalReferenceCode, userId, listTypeDefinitionId,
+			objectDefinitionId, businessType, dbColumnName, dbTableName, dbType,
+			indexed, indexedAsKeyword, indexedLanguageId, labelMap, false, name,
 			ObjectFieldConstants.READ_ONLY_FALSE, null, required, state, true);
+
+		if (ListUtil.isNotEmpty(objectFieldSettings)) {
+			_addOrUpdateObjectFieldSettings(
+				objectDefinition, objectField, null, objectFieldSettings);
+		}
+
+		return objectField;
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -771,9 +783,10 @@ public class ObjectFieldLocalServiceImpl
 
 		if (system) {
 			return objectFieldLocalService.addOrUpdateSystemObjectField(
-				userId, listTypeDefinitionId, objectDefinitionId, businessType,
-				dbColumnName, dbTableName, dbType, indexed, indexedAsKeyword,
-				indexedLanguageId, labelMap, name, required, state);
+				null, userId, listTypeDefinitionId, objectDefinitionId,
+				businessType, dbColumnName, dbTableName, dbType, indexed,
+				indexedAsKeyword, indexedLanguageId, labelMap, name, required,
+				state, objectFieldSettings);
 		}
 
 		return objectFieldLocalService.addOrUpdateCustomObjectField(

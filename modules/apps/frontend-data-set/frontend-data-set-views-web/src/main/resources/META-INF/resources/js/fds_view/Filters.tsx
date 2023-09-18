@@ -407,7 +407,7 @@ function AddFDSFilterModalContent({
 
 				{filterType === EFilterType.SELECTION && !picklists.length && (
 					<ClayAlert displayType="info" title="Info">
-						{Liferay.Language.get('no-filter-sources-available')}
+						{Liferay.Language.get('no-filter-sources-available.-create-a-picklist-or-a-vocabulary-for-this-type-of-filter')}
 					</ClayAlert>
 				)}
 

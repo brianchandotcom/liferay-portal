@@ -230,7 +230,7 @@ Tabs.propTypes = {
 function Items({items: initialItems, listId, updateLists}) {
 	const [items, setItems] = useState(initialItems);
 
-	const onChangeItemPosition = (itemId, newPosition) => {
+	const onDropItem = (itemId, newPosition) => {
 		const itemIndex = items.findIndex(({id}) => id === itemId);
 		const item = items[itemIndex];
 
@@ -251,7 +251,7 @@ function Items({items: initialItems, listId, updateLists}) {
 					item={item}
 					key={item.id}
 					numberOfItems={items.length}
-					onChangeItemPosition={onChangeItemPosition}
+					onDropItem={onDropItem}
 				/>
 			))}
 		</div>
@@ -264,11 +264,11 @@ Items.propTypes = {
 	updateLists: PropTypes.func.isRequired,
 };
 
-function CardItem({index, item, numberOfItems, onChangeItemPosition}) {
+function CardItem({index, item, numberOfItems, onDropItem}) {
 	const {name} = item;
 
 	const {handlerRef, isDragging} = useDragItem(item);
-	const {targetRef} = useDropTarget(item.id, index, onChangeItemPosition);
+	const {targetRef} = useDropTarget(item.id, index, onDropItem);
 
 	return (
 		<div ref={targetRef}>
@@ -301,9 +301,7 @@ function CardItem({index, item, numberOfItems, onChangeItemPosition}) {
 										index={index}
 										item={item}
 										numberOfItems={numberOfItems}
-										onChangeItemPosition={
-											onChangeItemPosition
-										}
+										onDropItem={onDropItem}
 									/>
 								</ClayLayout.ContentCol>
 							)}
@@ -319,21 +317,21 @@ CardItem.propTypes = {
 	index: PropTypes.number.isRequired,
 	item: PropTypes.object.isRequired,
 	numberOfItems: PropTypes.number.isRequired,
-	onChangeItemPosition: PropTypes.func.isRequired,
+	onDropItem: PropTypes.func.isRequired,
 };
 
-function ReorderDropdown({index, item, numberOfItems, onChangeItemPosition}) {
+function ReorderDropdown({index, item, numberOfItems, onDropItem}) {
 	const items = [
 		{
 			disabled: index === 0,
 			label: Liferay.Language.get('move-up'),
-			onClick: () => onChangeItemPosition(item.id, index - 1),
+			onClick: () => onDropItem(item.id, index - 1),
 			symbolLeft: 'angle-up',
 		},
 		{
 			disabled: index === numberOfItems - 1,
 			label: Liferay.Language.get('move-down'),
-			onClick: () => onChangeItemPosition(item.id, index + 1),
+			onClick: () => onDropItem(item.id, index + 1),
 			symbolLeft: 'angle-down',
 		},
 	];
@@ -358,7 +356,7 @@ ReorderDropdown.propTypes = {
 	index: PropTypes.number.isRequired,
 	item: PropTypes.object.isRequired,
 	numberOfItems: PropTypes.number.isRequired,
-	onChangeItemPosition: PropTypes.func.isRequired,
+	onDropItem: PropTypes.func.isRequired,
 };
 
 function useDragItem(item) {
@@ -384,7 +382,7 @@ function useDragItem(item) {
 	};
 }
 
-export function useDropTarget(itemId, itemIndex, onChangeItemPosition) {
+export function useDropTarget(itemId, itemIndex, onDropItem) {
 	const [, targetRef] = useDrop({
 		accept: ACCEPTING_ITEM_TYPE,
 		canDrop(source, monitor) {
@@ -396,7 +394,7 @@ export function useDropTarget(itemId, itemIndex, onChangeItemPosition) {
 					return;
 				}
 
-				onChangeItemPosition(source.id, itemIndex);
+				onDropItem(source.id, itemIndex);
 			}
 		},
 	});

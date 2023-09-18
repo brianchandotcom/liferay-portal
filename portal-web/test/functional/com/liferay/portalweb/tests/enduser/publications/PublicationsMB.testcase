@@ -325,6 +325,9 @@ definition {
 	@description = "Assert we can resolve the conflict publications by discarding."
 	@priority = 4
 	test ResolveConflictingPublicationsByDiscarding {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONMBMessage.addMessage(

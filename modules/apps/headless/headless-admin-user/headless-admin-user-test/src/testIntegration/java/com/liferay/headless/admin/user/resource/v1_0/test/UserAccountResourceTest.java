@@ -1240,6 +1240,13 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
+	protected UserAccount testGetUserAccountByEmailAddress_addUserAccount()
+		throws Exception {
+
+		return userAccountResource.postUserAccount(randomUserAccount());
+	}
+
+	@Override
 	protected UserAccount
 			testGetUserAccountByExternalReferenceCode_addUserAccount()
 		throws Exception {

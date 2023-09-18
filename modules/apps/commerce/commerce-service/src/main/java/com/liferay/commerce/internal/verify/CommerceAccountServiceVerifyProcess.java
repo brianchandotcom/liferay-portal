@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.verify.VerifyProcess;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,7 +45,7 @@ public class CommerceAccountServiceVerifyProcess extends VerifyProcess {
 
 					serviceContext.setCompanyId(companyId);
 					serviceContext.setUserId(_getAdminUserId(companyId));
-					serviceContext.setUuid(_portalUUID.generate());
+					serviceContext.setUuid(PortalUUIDUtil.generate());
 
 					_commerceAccountRoleHelper.checkCommerceAccountRoles(
 						serviceContext);
@@ -83,9 +83,6 @@ public class CommerceAccountServiceVerifyProcess extends VerifyProcess {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

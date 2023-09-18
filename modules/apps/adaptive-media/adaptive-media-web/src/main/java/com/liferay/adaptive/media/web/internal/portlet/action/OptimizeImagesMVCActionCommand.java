@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -56,7 +56,7 @@ public class OptimizeImagesMVCActionCommand extends BaseMVCActionCommand {
 
 		String entryUuid = ParamUtil.getString(actionRequest, "entryUuid");
 
-		String jobName = "optimizeImages-".concat(_portalUUID.generate());
+		String jobName = "optimizeImages-".concat(PortalUUIDUtil.generate());
 
 		if (Validator.isNotNull(entryUuid)) {
 			_optimizeImagesSingleConfiguration(
@@ -129,8 +129,5 @@ public class OptimizeImagesMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

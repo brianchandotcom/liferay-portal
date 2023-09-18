@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
@@ -143,7 +143,7 @@ public class CommerceCatalogLocalServiceImpl
 
 		serviceContext.setCompanyId(company.getCompanyId());
 		serviceContext.setUserId(guestUser.getUserId());
-		serviceContext.setUuid(_portalUUID.generate());
+		serviceContext.setUuid(PortalUUIDUtil.generate());
 
 		return commerceCatalogLocalService.addCommerceCatalog(
 			null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
@@ -504,9 +504,6 @@ public class CommerceCatalogLocalServiceImpl
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

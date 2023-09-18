@@ -74,7 +74,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesImpl;
@@ -1242,7 +1242,7 @@ public class SitesImpl implements Sites {
 	private String _acquireLock(
 		String className, long classPK, long mergeLockMaxTime) {
 
-		String owner = _portalUUID.generate();
+		String owner = PortalUUIDUtil.generate();
 
 		try {
 			Lock lock = LockManagerUtil.lock(
@@ -1396,9 +1396,6 @@ public class SitesImpl implements Sites {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -200,7 +200,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			CPDefinitionVirtualSetting newCPDefinitionVirtualSetting =
 				(CPDefinitionVirtualSetting)cpDefinitionVirtualSetting.clone();
 
-			newCPDefinitionVirtualSetting.setUuid(_portalUUID.generate());
+			newCPDefinitionVirtualSetting.setUuid(PortalUUIDUtil.generate());
 			newCPDefinitionVirtualSetting.setCPDefinitionVirtualSettingId(
 				counterLocalService.increment());
 			newCPDefinitionVirtualSetting.setClassPK(newCPDefinitionId);
@@ -516,9 +516,6 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	@Reference
 	private UserLocalService _userLocalService;

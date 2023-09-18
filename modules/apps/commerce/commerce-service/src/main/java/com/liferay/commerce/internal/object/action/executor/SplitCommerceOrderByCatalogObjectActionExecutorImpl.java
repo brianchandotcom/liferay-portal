@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -220,9 +220,9 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 				CommerceOrder supplierCommerceOrder =
 					customerCommerceOrder.cloneWithOriginalValues();
 
-				supplierCommerceOrder.setUuid(_portalUUID.generate());
+				supplierCommerceOrder.setUuid(PortalUUIDUtil.generate());
 				supplierCommerceOrder.setExternalReferenceCode(
-					_portalUUID.generate());
+					PortalUUIDUtil.generate());
 
 				long newCommerceOrderId = _counterLocalService.increment();
 
@@ -259,9 +259,9 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 					CommerceOrderItem newCommerceOrderItem =
 						commerceOrderItem.cloneWithOriginalValues();
 
-					newCommerceOrderItem.setUuid(_portalUUID.generate());
+					newCommerceOrderItem.setUuid(PortalUUIDUtil.generate());
 					newCommerceOrderItem.setExternalReferenceCode(
-						_portalUUID.generate());
+						PortalUUIDUtil.generate());
 					newCommerceOrderItem.setCommerceOrderItemId(
 						_counterLocalService.increment());
 
@@ -434,8 +434,5 @@ public class SplitCommerceOrderByCatalogObjectActionExecutorImpl
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

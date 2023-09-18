@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.verify.VerifyProcess;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,7 +40,7 @@ public class CommerceProductServiceVerifyProcess extends VerifyProcess {
 						UpgradeProcessUtil.getDefaultLanguageId(companyId));
 					serviceContext.setScopeGroupId(0);
 					serviceContext.setUserId(_getAdminUserId(companyId));
-					serviceContext.setUuid(_portalUUID.generate());
+					serviceContext.setUuid(PortalUUIDUtil.generate());
 
 					_cpMeasurementUnitLocalService.importDefaultValues(
 						serviceContext);
@@ -74,9 +74,6 @@ public class CommerceProductServiceVerifyProcess extends VerifyProcess {
 
 	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

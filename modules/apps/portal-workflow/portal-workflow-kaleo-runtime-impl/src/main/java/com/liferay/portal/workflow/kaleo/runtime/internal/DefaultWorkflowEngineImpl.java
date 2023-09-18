@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
@@ -793,9 +793,6 @@ public class DefaultWorkflowEngineImpl
 		}
 	}
 
-	@Reference
-	protected PortalUUID portalUUID;
-
 	private Definition _getDefinition(byte[] bytes) throws WorkflowException {
 		try {
 			_workflowModelParser.setValidate(false);
@@ -836,7 +833,7 @@ public class DefaultWorkflowEngineImpl
 			return definition.getName();
 		}
 
-		return portalUUID.generate();
+		return PortalUUIDUtil.generate();
 	}
 
 	private String _getDefinitionName(
@@ -852,13 +849,13 @@ public class DefaultWorkflowEngineImpl
 					definition.getName(), serviceContext);
 
 			if ((kaleoDefinition != null) && kaleoDefinition.isActive()) {
-				return portalUUID.generate();
+				return PortalUUIDUtil.generate();
 			}
 
 			return definition.getName();
 		}
 
-		return portalUUID.generate();
+		return PortalUUIDUtil.generate();
 	}
 
 	private String _getVersion(int version) {

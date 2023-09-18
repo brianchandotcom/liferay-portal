@@ -88,7 +88,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
@@ -214,7 +214,7 @@ public class CalendarBookingLocalServiceImpl
 		String vEventUid = (String)serviceContext.getAttribute("vEventUid");
 
 		if (vEventUid == null) {
-			vEventUid = _portalUUID.generate();
+			vEventUid = PortalUUIDUtil.generate();
 		}
 
 		calendarBooking.setVEventUid(vEventUid);
@@ -2732,9 +2732,6 @@ public class CalendarBookingLocalServiceImpl
 
 	@Reference
 	private NotificationSenderFactory _notificationSenderFactory;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	@Reference
 	private RatingsStatsLocalService _ratingsStatsLocalService;

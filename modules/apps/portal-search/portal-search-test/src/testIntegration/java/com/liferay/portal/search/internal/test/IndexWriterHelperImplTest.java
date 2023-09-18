@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
@@ -219,7 +219,7 @@ public class IndexWriterHelperImplTest {
 	}
 
 	private void _reindex(String className) throws Exception {
-		String jobName = "reindex-".concat(_portalUUID.generate());
+		String jobName = "reindex-".concat(PortalUUIDUtil.generate());
 
 		_indexWriterHelper.reindex(
 			UserConstants.USER_ID_DEFAULT, jobName, _getCompanyIds(), className,
@@ -244,9 +244,6 @@ public class IndexWriterHelperImplTest {
 
 	@Inject
 	private PortalInstancesLocalService _portalInstancesLocalService;
-
-	@Inject
-	private PortalUUID _portalUUID;
 
 	@Inject
 	private Queries _queries;

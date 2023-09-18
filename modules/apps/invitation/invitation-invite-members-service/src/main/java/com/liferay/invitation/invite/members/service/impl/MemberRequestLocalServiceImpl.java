@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
@@ -101,7 +101,7 @@ public class MemberRequestLocalServiceImpl
 		memberRequest.setUserName(user.getFullName());
 		memberRequest.setCreateDate(date);
 		memberRequest.setModifiedDate(date);
-		memberRequest.setKey(_portalUUID.generate());
+		memberRequest.setKey(PortalUUIDUtil.generate());
 		memberRequest.setReceiverUserId(receiverUserId);
 		memberRequest.setInvitedRoleId(invitedRoleId);
 		memberRequest.setInvitedTeamId(invitedTeamId);
@@ -479,9 +479,6 @@ public class MemberRequestLocalServiceImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

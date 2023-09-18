@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.math.BigDecimal;
 
@@ -99,7 +99,7 @@ public class CPDefinitionInventoryLocalServiceImpl
 			CPDefinitionInventory newCPDefinitionInventory =
 				(CPDefinitionInventory)cpDefinitionInventory.clone();
 
-			newCPDefinitionInventory.setUuid(_portalUUID.generate());
+			newCPDefinitionInventory.setUuid(PortalUUIDUtil.generate());
 			newCPDefinitionInventory.setCPDefinitionInventoryId(
 				counterLocalService.increment());
 			newCPDefinitionInventory.setCPDefinitionId(newCPDefinitionId);
@@ -238,9 +238,6 @@ public class CPDefinitionInventoryLocalServiceImpl
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	@Reference
 	private UserLocalService _userLocalService;

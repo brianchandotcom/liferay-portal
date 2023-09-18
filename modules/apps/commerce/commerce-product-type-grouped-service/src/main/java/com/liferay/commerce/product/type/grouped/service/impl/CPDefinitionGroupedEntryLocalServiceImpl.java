@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,7 +130,7 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 			CPDefinitionGroupedEntry newCPDefinitionGroupedEntry =
 				(CPDefinitionGroupedEntry)cpDefinitionGroupedEntry.clone();
 
-			newCPDefinitionGroupedEntry.setUuid(_portalUUID.generate());
+			newCPDefinitionGroupedEntry.setUuid(PortalUUIDUtil.generate());
 			newCPDefinitionGroupedEntry.setCPDefinitionGroupedEntryId(
 				counterLocalService.increment());
 			newCPDefinitionGroupedEntry.setCPDefinitionId(newCPDefinitionId);
@@ -407,9 +407,6 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 
 	@Reference
 	private IndexerRegistry _indexerRegistry;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	@Reference
 	private UserLocalService _userLocalService;

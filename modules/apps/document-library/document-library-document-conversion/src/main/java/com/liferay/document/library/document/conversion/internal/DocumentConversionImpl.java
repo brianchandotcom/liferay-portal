@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -154,7 +154,7 @@ public class DocumentConversionImpl implements DocumentConversion {
 			companyId -> {
 				try {
 					String jobName = "generatePreviews-".concat(
-						_portalUUID.generate());
+						PortalUUIDUtil.generate());
 
 					_backgroundTaskManager.addBackgroundTask(
 						UserConstants.USER_ID_DEFAULT, CompanyConstants.SYSTEM,
@@ -357,9 +357,6 @@ public class DocumentConversionImpl implements DocumentConversion {
 	private DocumentConverter _documentConverter;
 	private volatile OpenOfficeConfiguration _openOfficeConfiguration;
 	private OpenOfficeConnection _openOfficeConnection;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	private static class ConversionsHolder {
 

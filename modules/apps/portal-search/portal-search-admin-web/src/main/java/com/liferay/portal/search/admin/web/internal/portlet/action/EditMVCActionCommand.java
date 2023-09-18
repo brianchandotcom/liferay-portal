@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.search.admin.web.internal.constants.SearchAdminPortletKeys;
 import com.liferay.portal.search.admin.web.internal.util.DictionaryReindexer;
 
@@ -145,7 +145,7 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		String jobName = "reindex-".concat(_portalUUID.generate());
+		String jobName = "reindex-".concat(PortalUUIDUtil.generate());
 
 		CountDownLatch countDownLatch = new CountDownLatch(1);
 
@@ -249,8 +249,5 @@ public class EditMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private PortalInstancesLocalService _portalInstancesLocalService;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 }

@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.Serializable;
 
@@ -108,7 +108,7 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 			commerceSubscriptionEntryPersistence.create(
 				commerceSubscriptionEntryId);
 
-		commerceSubscriptionEntry.setUuid(_portalUUID.generate());
+		commerceSubscriptionEntry.setUuid(PortalUUIDUtil.generate());
 		commerceSubscriptionEntry.setGroupId(groupId);
 		commerceSubscriptionEntry.setCompanyId(user.getCompanyId());
 		commerceSubscriptionEntry.setUserId(user.getUserId());
@@ -849,9 +849,6 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -1,0 +1,32 @@
+{
+	"cpu": 1.0,
+	"id": "activemq",
+	"image": "rmohr/activemq:5.15.9-alpine",
+	"kind": "Deployment",
+	"livenessProbe": {
+		"httpGet": {
+			"path": "/",
+			"port": 8161
+		}
+	},
+	"loadBalancer": {
+		"cdn": false,
+		"targetPort": 8161
+	},
+	"memory": 1024,
+	"ports": [
+		{
+			"external": true,
+			"port": 61616,
+			"protocol": "TCP",
+			"targetPort": 61616
+		}
+	],
+	"readinessProbe": {
+		"httpGet": {
+			"path": "/",
+			"port": 8161
+		}
+	},
+	"scale": 1
+}

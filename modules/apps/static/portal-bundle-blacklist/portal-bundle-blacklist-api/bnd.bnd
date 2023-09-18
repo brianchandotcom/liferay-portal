@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal Bundle Blacklist API
-Bundle-SymbolicName: com.liferay.portal.bundle.blacklist.api
-Bundle-Version: 4.0.6
-Export-Package: com.liferay.portal.bundle.blacklist

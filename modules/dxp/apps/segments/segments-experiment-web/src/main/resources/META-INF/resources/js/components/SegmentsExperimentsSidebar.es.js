@@ -45,6 +45,8 @@ import {
 } from '../util/navigation.es';
 import {
 	STATUS_DRAFT,
+	STATUS_FINISHED_NO_WINNER,
+	STATUS_FINISHED_WINNER,
 	STATUS_RUNNING,
 	STATUS_TERMINATED,
 } from '../util/statuses.es';
@@ -124,6 +126,8 @@ function SegmentsExperimentsSidebar({
 		if (segmentsExperimentAction === 'delete') {
 			if (
 				experiment.status.value === STATUS_DRAFT ||
+				experiment.status.value === STATUS_FINISHED_NO_WINNER ||
+				experiment.status.value === STATUS_FINISHED_WINNER ||
 				experiment.status.value === STATUS_TERMINATED
 			) {
 				dispatch(openDeletionModal());

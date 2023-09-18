@@ -168,44 +168,6 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		}
 	}
 
-	protected static String getPathSegment(
-		FileVersion fileVersion, boolean preview) {
-
-		return getPathSegment(
-			fileVersion.getGroupId(), fileVersion.getFileEntryId(),
-			fileVersion.getFileVersionId(), preview);
-	}
-
-	protected static String getPathSegment(
-		long groupId, long fileEntryId, long fileVersionId, boolean preview) {
-
-		StringBundler sb = null;
-
-		if (fileVersionId > 0) {
-			sb = new StringBundler(5);
-		}
-		else {
-			sb = new StringBundler(3);
-		}
-
-		if (preview) {
-			sb.append(PREVIEW_PATH);
-		}
-		else {
-			sb.append(THUMBNAIL_PATH);
-		}
-
-		sb.append(groupId);
-		sb.append(DLUtil.getDividedPath(fileEntryId));
-
-		if (fileVersionId > 0) {
-			sb.append(StringPool.SLASH);
-			sb.append(fileVersionId);
-		}
-
-		return sb.toString();
-	}
-
 	protected void addFileToStore(
 			long companyId, String dirName, String filePath, File srcFile)
 		throws PortalException {
@@ -621,6 +583,42 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	protected abstract List<Long> getFileVersionIds();
+
+	protected String getPathSegment(FileVersion fileVersion, boolean preview) {
+		return getPathSegment(
+			fileVersion.getGroupId(), fileVersion.getFileEntryId(),
+			fileVersion.getFileVersionId(), preview);
+	}
+
+	protected String getPathSegment(
+		long groupId, long fileEntryId, long fileVersionId, boolean preview) {
+
+		StringBundler sb = null;
+
+		if (fileVersionId > 0) {
+			sb = new StringBundler(5);
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		if (preview) {
+			sb.append(PREVIEW_PATH);
+		}
+		else {
+			sb.append(THUMBNAIL_PATH);
+		}
+
+		sb.append(groupId);
+		sb.append(DLUtil.getDividedPath(fileEntryId));
+
+		if (fileVersionId > 0) {
+			sb.append(StringPool.SLASH);
+			sb.append(fileVersionId);
+		}
+
+		return sb.toString();
+	}
 
 	protected String getPreviewFilePath(FileVersion fileVersion) {
 		return getPreviewFilePath(fileVersion, 0);

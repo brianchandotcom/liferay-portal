@@ -35,7 +35,7 @@
 					"name": "oDataSort",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				}
 			],
@@ -70,7 +70,7 @@
 					"name": "oDataFilter",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				}
 			],
@@ -105,7 +105,7 @@
 					"name": "description",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -136,7 +136,7 @@
 					],
 					"required": true,
 					"state": true,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -151,7 +151,7 @@
 					"name": "name",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -166,7 +166,7 @@
 					"name": "path",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -195,7 +195,7 @@
 						}
 					],
 					"required": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -237,7 +237,7 @@
 					],
 					"required": true,
 					"state": true,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -279,7 +279,7 @@
 					],
 					"required": true,
 					"state": true,
-					"system": false,
+					"system": true,
 					"type": "String"
 				}
 			],
@@ -347,7 +347,7 @@
 					"name": "description",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -362,7 +362,7 @@
 					"name": "name",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -377,7 +377,7 @@
 					"name": "objectFieldERC",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -392,7 +392,7 @@
 					"name": "objectRelationshipNames",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -407,7 +407,7 @@
 					"name": "parentAPIPropertyERC",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				}
 			],
@@ -460,7 +460,7 @@
 					"name": "description",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -475,7 +475,7 @@
 					"name": "mainObjectDefinitionERC",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -490,7 +490,7 @@
 					"name": "name",
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				}
 			],
@@ -598,7 +598,7 @@
 					],
 					"required": true,
 					"state": true,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -620,7 +620,7 @@
 					],
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -636,7 +636,7 @@
 					"name": "description",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -658,7 +658,7 @@
 					],
 					"required": true,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				},
 				{
@@ -674,7 +674,7 @@
 					"name": "version",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String"
 				}
 			],

@@ -182,6 +182,16 @@ exports[`Channels List should render 1`] = `
                 <th
                   class="table-head-title"
                 >
+                  Sites
+                </th>
+                <th
+                  class="table-head-title"
+                >
+                  Channels
+                </th>
+                <th
+                  class="table-head-title"
+                >
                   Property ID
                 </th>
                 <th
@@ -255,6 +265,12 @@ exports[`Channels List should render 1`] = `
                       </span>
                     </a>
                   </div>
+                </td>
+                <td>
+                  -
+                </td>
+                <td>
+                  -
                 </td>
                 <td>
                   0

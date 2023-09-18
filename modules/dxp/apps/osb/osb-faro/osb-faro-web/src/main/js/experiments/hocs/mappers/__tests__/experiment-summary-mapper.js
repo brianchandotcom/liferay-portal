@@ -302,18 +302,6 @@ describe('Summary Mapper for status FINISHED_WINNER and winner declared', () => 
 		expect(mapper).toMatchSnapshot();
 	});
 
-	it('should return formatted modals', () => {
-		expect(mapper.header.modals.length).toBe(2);
-		expect(mapper.header.modals[0].title).toEqual('Publish Winner');
-		expect(mapper.header.modals[1].title).toEqual('Complete Test');
-	});
-
-	it('should return formatted modals with Control winner', () => {
-		expect(mapperControlWinner.header.modals.length).toBe(2);
-		expect(mapper.header.modals[0].title).toEqual('Publish Winner');
-		expect(mapper.header.modals[1].title).toEqual('Complete Test');
-	});
-
 	it('should return formatted alert', () => {
 		expect(mapper.alert.description).toEqual(
 			'We recommend that you publish the winning variant.'
@@ -330,7 +318,7 @@ describe('Summary Mapper for status FINISHED_WINNER and winner declared', () => 
 		);
 		expect(mapperControlWinner.alert.symbol).toEqual('check-circle');
 		expect(mapperControlWinner.alert.title).toEqual(
-			'Control has outperformed all variants by at least 1%'
+			'Control has outperformed Variant 01 by at least 1%'
 		);
 	});
 

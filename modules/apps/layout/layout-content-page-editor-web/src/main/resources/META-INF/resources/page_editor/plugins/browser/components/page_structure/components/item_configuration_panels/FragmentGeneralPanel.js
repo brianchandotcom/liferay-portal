@@ -90,7 +90,7 @@ export function FragmentGeneralPanel({item}) {
 					let fields = fieldSet.fields;
 
 					if (
-						!Liferay.FeatureFlags['LPS-183727'] &&
+						!Liferay.FeatureFlags['LPS-187846'] &&
 						fragmentEntryLink.fragmentEntryKey ===
 							'INPUTS-submit-button'
 					) {

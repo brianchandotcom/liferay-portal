@@ -188,7 +188,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 				httpServletRequest, "status",
 				WorkflowConstants.STATUS_APPROVED);
 
-			if (!FeatureFlagManagerUtil.isEnabled("LPS-183727")) {
+			if (!FeatureFlagManagerUtil.isEnabled("LPS-187846")) {
 				status = WorkflowConstants.STATUS_APPROVED;
 			}
 

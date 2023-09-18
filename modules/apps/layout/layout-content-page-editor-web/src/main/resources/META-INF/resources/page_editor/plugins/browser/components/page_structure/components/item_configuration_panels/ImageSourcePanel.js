@@ -116,39 +116,6 @@ export default function ImageSourcePanel({item}) {
 			)}
 
 			{ConfigurationPanel && <ConfigurationPanel item={item} />}
-
-			{item.type === EDITABLE_TYPES.image && (
-				<CheckboxField
-					field={{
-						defaultValue: false,
-						description: Liferay.FeatureFlags['LPS-187285']
-							? Liferay.Language.get(
-									'lazy-loading-can-help-to-improve-page-performance'
-							  )
-							: undefined,
-						label: Liferay.Language.get('enable-lazy-loading'),
-						name: 'lazyLoading',
-					}}
-					onValueSelect={(name, value) => {
-						dispatch(
-							updateEditableValuesThunk({
-								editableValues: setIn(
-									editableValues,
-									[
-										EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-										item.editableId,
-										'config',
-										name,
-									],
-									value
-								),
-								fragmentEntryLinkId: item.fragmentEntryLinkId,
-							})
-						);
-					}}
-					value={editableValue.config.lazyLoading}
-				/>
-			)}
 		</>
 	);
 }
@@ -176,6 +143,7 @@ function DirectImagePanel({item}) {
 		fragmentEntryLinks[fragmentEntryLinkId].editableValues;
 
 	const editableValue = editableValues[processorKey]?.[editableId];
+
 	const editableConfig = editableValue.config || {};
 
 	const editableContent = selectEditableValueContent(
@@ -287,6 +255,39 @@ function DirectImagePanel({item}) {
 			/>
 
 			<ImagePanelSizeSelector item={item} />
+
+			{item.type === EDITABLE_TYPES.image && (
+				<CheckboxField
+					field={{
+						defaultValue: false,
+						description: Liferay.FeatureFlags['LPS-187285']
+							? Liferay.Language.get(
+									'lazy-loading-can-help-to-improve-page-performance'
+							  )
+							: undefined,
+						label: Liferay.Language.get('enable-lazy-loading'),
+						name: 'lazyLoading',
+					}}
+					onValueSelect={(name, value) => {
+						dispatch(
+							updateEditableValuesThunk({
+								editableValues: setIn(
+									editableValues,
+									[
+										EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+										item.editableId,
+										'config',
+										name,
+									],
+									value
+								),
+								fragmentEntryLinkId: item.fragmentEntryLinkId,
+							})
+						);
+					}}
+					value={editableValue.config.lazyLoading}
+				/>
+			)}
 
 			{selectedViewportSize === VIEWPORT_SIZES.desktop &&
 				type === EDITABLE_TYPES.image && (

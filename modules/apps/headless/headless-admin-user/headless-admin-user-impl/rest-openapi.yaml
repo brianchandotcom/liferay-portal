@@ -4635,6 +4635,50 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/UserAccount"
             tags: ["UserAccount"]
+    "/user-accounts/by-status/{status}":
+        get:
+            operationId: getUserAccountsByStatusPage
+            parameters:
+                - in: path
+                  name: status
+                  required: true
+                  schema:
+                      enum: [Active, Inactive]
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/UserAccount"
+                                type: array
+            tags: ["UserAccount"]
     "/user-accounts/{userAccountId}":
         delete:
             # @review

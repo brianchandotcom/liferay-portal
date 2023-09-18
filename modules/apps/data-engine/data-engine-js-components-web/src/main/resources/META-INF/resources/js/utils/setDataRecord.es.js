@@ -45,8 +45,6 @@ export default function setDataRecord(
 			!!localizedValue?.[languageId] ||
 			(localizedValueEdited && localizedValueEdited[languageId]);
 
-		let availableLanguageIds;
-
 		Object.keys(localizedValue)
 			.filter(
 				(languageId) =>
@@ -58,17 +56,6 @@ export default function setDataRecord(
 			.forEach((languageId) => {
 				delete localizedValue[languageId];
 			});
-
-		if (localizedValue) {
-			availableLanguageIds = Object.keys(localizedValue);
-		}
-		else {
-			availableLanguageIds = [];
-		}
-
-		if (!availableLanguageIds.includes(languageId)) {
-			availableLanguageIds.push(languageId);
-		}
 
 		dataRecordValues[dataRecordValueKey] = {...localizedValue};
 

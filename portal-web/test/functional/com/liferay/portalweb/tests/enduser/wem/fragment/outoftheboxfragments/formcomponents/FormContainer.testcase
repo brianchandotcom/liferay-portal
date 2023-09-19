@@ -706,7 +706,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-155529. The page designer can submit a Form Container with External URL success message."
+	@description = "This is a test for LPS-155529 and LPS-188036. The page designer can submit a Form Container with External URL success message."
 	@priority = 4
 	test SubmitFormContainerWithExternalURLSuccessMessage {
 		task ("Given a page designer has mapped Form Container with URL as success message") {
@@ -743,6 +743,10 @@ definition {
 					panel = "General",
 					successMessage = "Go to External URL",
 					url = "https://www.liferay.com");
+
+				AssertElementNotPresent(
+					checkboxName = "Show Notification when Form Is Submitted",
+					locator1 = "Checkbox#ANY_CHECKBOX");
 
 				PageEditor.publish();
 			}

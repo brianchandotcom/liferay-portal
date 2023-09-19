@@ -2901,13 +2901,13 @@ definition {
 						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 				}
 
+				PageEditor.waitForAutoSave();
+
 				if (${previewSuccessState} == "true") {
 					Check.checkNotVisible(
 						checkboxName = "Preview Embedded Message",
 						locator1 = "Checkbox#ANY_CHECKBOX");
 				}
-
-				PageEditor.waitForAutoSave();
 			}
 			else if (${successMessage} == "Go to Page") {
 				Select(
@@ -3019,6 +3019,12 @@ definition {
 						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 					PageEditor.waitForAutoSave();
+				}
+
+				if (${previewSuccessNotification} == "true") {
+					Check.checkNotVisible(
+						checkboxName = "Preview Success Notification",
+						locator1 = "Checkbox#ANY_CHECKBOX");
 				}
 			}
 		}

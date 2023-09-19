@@ -96,12 +96,14 @@ export function BasicInfo({
 					value={values.engineLabel}
 				/>
 
-				<Toggle
-					disabled={disabled}
-					label={Liferay.Language.get('active-validation')}
-					onToggle={(active) => setValues({active})}
-					toggled={values.active}
-				/>
+				{values.engine !== 'compositeKey' && (
+					<Toggle
+						disabled={disabled}
+						label={Liferay.Language.get('active-validation')}
+						onToggle={(active) => setValues({active})}
+						toggled={values.active}
+					/>
+				)}
 			</Card>
 
 			<TriggerEventContainer

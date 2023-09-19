@@ -2866,7 +2866,20 @@ definition {
 					value1 = ${subtype});
 			}
 
-			if (${successMessage} == "Embedded") {
+			if (${successMessage} == "Stay in Page") {
+				Select(
+					key_fieldLabel = "Success Interaction",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Stay in Page");
+
+				AssertSelectedLabel(
+					key_fieldLabel = "Success Interaction",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "Stay in Page");
+
+				PageEditor.waitForAutoSave();
+			}
+			else if (${successMessage} == "Embedded") {
 				Select(
 					key_fieldLabel = "Success Interaction",
 					locator1 = "Select#GENERIC_SELECT_FIELD",

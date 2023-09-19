@@ -6,6 +6,7 @@
 import ClayPanel from '@clayui/panel';
 import {useState} from 'react';
 
+import {toLocaleString} from '../../services/DateUtil';
 import useSpringBootData from '../../services/useSpringBootData';
 import Jethr0Table from '../Jethr0Table/Jethr0Table';
 
@@ -54,7 +55,7 @@ function JobBuilds({jobId}) {
 											{jobBuild.id}
 										</th>
 										<td>{jobBuild.name}</td>
-										<td>{jobBuild.dateCreated}</td>
+										<td>{toLocaleString(jobBuild.dateCreated)}</td>
 										<td>{jobBuild.state.name}</td>
 										<td>
 											{jobBuild.initialBuild.toString()}

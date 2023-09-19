@@ -6,6 +6,7 @@
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 
+import {toLocaleString} from '../../services/DateUtil';
 import useSpringBootData from '../../services/useSpringBootData';
 import Jethr0Table from '../Jethr0Table/Jethr0Table';
 
@@ -38,12 +39,6 @@ function Jobs() {
 			<tbody>
 				{jobs &&
 					jobs.map((job) => {
-						let jobStartDate = '';
-
-						if (job.startDate !== undefined) {
-							jobStartDate = job.startDate;
-						}
-
 						return (
 							<tr key={job.id}>
 								<th className="font-weight-semi-bold">
@@ -53,9 +48,9 @@ function Jobs() {
 								</th>
 								<td>{job.name}</td>
 								<td>{job.priority}</td>
-								<td>{job.dateCreated}</td>
-								<td>{job.dateModified}</td>
-								<td>{jobStartDate}</td>
+								<td>{toLocaleString(job.dateCreated)}</td>
+								<td>{toLocaleString(job.dateModified)}</td>
+								<td>{toLocaleString(job.startDate)}</td>
 								<td>{job.state.name}</td>
 								<td>{job.type.name}</td>
 							</tr>

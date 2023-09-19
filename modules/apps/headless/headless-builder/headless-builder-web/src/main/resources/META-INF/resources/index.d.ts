@@ -3,88 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-type ActiveNav = 'details' | 'endpoints' | 'schemas';
-
-interface APIListType {
-	key: string;
-	name?: string;
-}
-
-interface APIURLPaths {
-	applications: string;
-	endpoints: string;
-	filters: string;
-	properties: string;
-	schemas: string;
-	sorts: string;
-}
-
-interface Action {
-	href: string;
-	method: string;
-}
-
-interface Actions {
-	delete: Action;
-	get: Action;
-	permissions: Action;
-	update: Action;
-}
-
-type voidReturn = () => void;
-
-interface FDSActionData {
-	id: string;
-}
-
-interface FDSItem<T> {
-	action: {data: FDSActionData; id: string};
-	id: number;
-	itemData: T;
-	loadData: voidReturn;
-	value: string;
-}
-
-interface FetchedData {
-	apiApplication?: APIApplicationItem;
-	apiEndpoint?: APIEndpointItem;
-	apiSchema?: APISchemaItem;
-}
-
-interface FetchedListType {
-	listTypeEntries: APIListType[];
-}
-
-interface BaseItem {
-	actions: Actions;
-	createDate: string;
-	dateCreated: string;
-	dateModified: string;
-	description: string;
-	externalReferenceCode: string;
-	id: number;
-	keywords: string[];
-	modifiedDate: string;
-	scopeKey: string;
-}
-
-type ApplicationStatusKeys = 'published' | 'unpublished';
-
-interface ApplicationStatus {
-	key: ApplicationStatusKeys;
-	name?: 'Published' | 'Unpublished';
-}
 interface APIApplicationItem extends BaseItem {
 	applicationStatus: ApplicationStatus;
 	baseURL: string;
 	title: string;
 	version: string;
 }
-
-type APIApplicationUIData = Pick<
-	APIApplicationItem,
-	'baseURL' | 'description' | 'title'
->;
 
 interface APIEndpointItem extends BaseItem {
 	httpMethod: APIListType;
@@ -93,10 +17,10 @@ interface APIEndpointItem extends BaseItem {
 	scope: APIListType;
 }
 
-type APIEndpointUIData = Pick<
-	APIEndpointItem,
-	'description' | 'path' | 'scope'
->;
+interface APIListType {
+	key: string;
+	name?: string;
+}
 
 interface APIProperty {
 	description?: string;
@@ -136,32 +60,72 @@ interface APISchemaUIData {
 	schemaProperties?: TreeViewItemData[];
 }
 
-type ExcludesFilterOperator = {
-	not: {
-		in: string[] | number[];
-	};
-};
+interface APIURLPaths {
+	applications: string;
+	endpoints: string;
+	filters: string;
+	properties: string;
+	schemas: string;
+	sorts: string;
+}
 
-type IncludesFilterOperator = {
-	in: string[] | number[];
-};
+interface Action {
+	href: string;
+	method: string;
+}
 
-type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
+interface Actions {
+	delete: Action;
+	get: Action;
+	permissions: Action;
+	update: Action;
+}
 
-type ApplicationDataError = {
-	baseURL: boolean;
-	title: boolean;
-};
+interface AddedObjectDefinition extends ObjectDefinition {
+	aggregatedObjectRelationshipNames?: string;
+}
 
-type EndpointDataError = {
-	description: boolean;
-	path: boolean;
-	scope: boolean;
-};
+interface ApplicationStatus {
+	key: ApplicationStatusKeys;
+	name?: 'Published' | 'Unpublished';
+}
 
-type MainEndpointNav = 'list' | {edit: number};
+interface BaseItem {
+	actions: Actions;
+	createDate: string;
+	creator: string;
+	dateCreated: string;
+	dateModified: string;
+	description: string;
+	externalReferenceCode: string;
+	id: number;
+	keywords: string[];
+	modifiedDate: string;
+	scopeKey: string;
+	status: string;
+}
 
-type MainSchemaNav = 'list' | {edit: number};
+interface FDSActionData {
+	id: string;
+}
+
+interface FDSItem<T> {
+	action: {data: FDSActionData; id: string};
+	id: number;
+	itemData: T;
+	loadData: voidReturn;
+	value: string;
+}
+
+interface FetchedData {
+	apiApplication?: APIApplicationItem;
+	apiEndpoint?: APIEndpointItem;
+	apiSchema?: APISchemaItem;
+}
+
+interface FetchedListType {
+	listTypeEntries: APIListType[];
+}
 
 interface ManagementButton {
 	onClick: voidReturn;
@@ -177,12 +141,6 @@ interface ManagementButtonsProps {
 interface NameValueObject {
 	name: string;
 	value: string;
-}
-
-interface ObjectRelationship {
-	name: string;
-	objectDefinitionExternalReferenceCode2: string;
-	objectDefinitionId2: number;
 }
 
 interface ObjectDefinition {
@@ -225,34 +183,10 @@ interface ObjectDefinition {
 	titleObjectFieldName: string;
 }
 
-type SchemaDataError = {
-	description: boolean;
-	mainObjectDefinitionERC: boolean;
-	name: boolean;
-};
-
-interface AddedObjectDefinition extends ObjectDefinition {
-	aggregatedObjectRelationshipNames?: string;
+interface ObjectDefinitionsRelationshipTree {
+	definition: AddedObjectDefinition;
+	relatedDefinitions?: ObjectDefinitionsRelationshipTree[];
 }
-
-type ObjectFieldBusinessType =
-	| 'Aggregation'
-	| 'Attachment'
-	| 'Date'
-	| 'DateTime'
-	| 'Decimal'
-	| 'Encrypted'
-	| 'Formula'
-	| 'Integer'
-	| 'LongInteger'
-	| 'LongText'
-	| 'MultiselectPicklist'
-	| 'Picklist'
-	| 'PrecisionDecimal'
-	| 'Relationship'
-	| 'RichText'
-	| 'Text'
-	| 'Workflow Status';
 
 interface ObjectField {
 	DBType: string;
@@ -284,6 +218,103 @@ interface ObjectFieldSetting {
 	value: ObjectFieldSettingValue;
 }
 
+interface ObjectRelationship {
+	name: string;
+	objectDefinitionExternalReferenceCode2: string;
+	objectDefinitionId2: number;
+}
+
+interface ObjectState {
+	key: string;
+	objectStateTransitions: {key: string}[];
+}
+
+interface SelectOption {
+	label: string;
+	value: string;
+}
+
+interface TreeViewItemData {
+	businessType: ObjectFieldBusinessType;
+	children?: TreeViewItemData[];
+	description?: string;
+	id?: number;
+	name: string;
+	objectDefinitionName: string;
+	objectFieldERC: string;
+	objectFieldId: number;
+	objectFieldName: string;
+	objectRelationshipNames?: string;
+	r_apiSchemaToAPIProperties_c_apiSchemaId: number;
+	type: string;
+}
+
+type APIApplicationUIData = Pick<
+	APIApplicationItem,
+	'baseURL' | 'description' | 'title'
+>;
+
+type APIEndpointUIData = Pick<
+	APIEndpointItem,
+	'description' | 'path' | 'scope'
+>;
+
+type ActiveNav = 'details' | 'endpoints' | 'schemas';
+
+type ApplicationDataError = {
+	baseURL: boolean;
+	title: boolean;
+};
+
+type ApplicationStatusKeys = 'published' | 'unpublished';
+
+type EndpointDataError = {
+	description: boolean;
+	path: boolean;
+	scope: boolean;
+};
+
+type ExcludesFilterOperator = {
+	not: {
+		in: string[] | number[];
+	};
+};
+
+type FetchedSchemaData = {
+	apiSchema?: APISchemaItem;
+	objectDefinitions?: ObjectDefinitionsRelationshipTree;
+	schemaProperties?: APISchemaPropertyItem[];
+};
+
+type IncludesFilterOperator = {
+	in: string[] | number[];
+};
+
+type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
+
+type MainEndpointNav = 'list' | {edit: number};
+
+type MainSchemaNav = 'list' | {edit: number};
+
+type ObjectFieldBusinessType =
+	| 'Aggregation'
+	| 'Attachment'
+	| 'Date'
+	| 'DateTime'
+	| 'Decimal'
+	| 'Encrypted'
+	| 'Formula'
+	| 'Integer'
+	| 'LongInteger'
+	| 'LongText'
+	| 'MultiselectPicklist'
+	| 'Picklist'
+	| 'PrecisionDecimal'
+	| 'Relationship'
+	| 'RichText'
+	| 'Text'
+	| 'Workflow Status';
+
 type ObjectFieldDateRangeFilterSettings = {
 	[key: string]: string;
 };
@@ -302,6 +333,11 @@ type ObjectFieldFilterSetting = {
 		| ExcludesFilterOperator
 		| IncludesFilterOperator
 		| string;
+};
+
+type ObjectFieldPicklistSetting = {
+	id: number;
+	objectStates: ObjectState[];
 };
 
 type ObjectFieldSettingName =
@@ -335,45 +371,12 @@ type ObjectFieldSettingValue =
 	| number
 	| string;
 
-type ObjectFieldPicklistSetting = {
-	id: number;
-	objectStates: ObjectState[];
-};
-
-interface ObjectState {
-	key: string;
-	objectStateTransitions: {key: string}[];
-}
-
-interface ObjectDefinitionsRelationshipTree {
-	definition: AddedObjectDefinition;
-	relatedDefinitions?: ObjectDefinitionsRelationshipTree[];
-}
-
-type FetchedSchemaData = {
-	apiSchema?: APISchemaItem;
-	objectDefinitions?: ObjectDefinitionsRelationshipTree;
-	schemaProperties?: APISchemaPropertyItem[];
-};
-
 type ReadOnlyFieldValue = '' | 'conditional' | 'false' | 'true';
 
-interface SelectOption {
-	label: string;
-	value: string;
-}
+type SchemaDataError = {
+	description: boolean;
+	mainObjectDefinitionERC: boolean;
+	name: boolean;
+};
 
-interface TreeViewItemData {
-	businessType: ObjectFieldBusinessType;
-	children?: TreeViewItemData[];
-	description?: string;
-	id?: number;
-	name: string;
-	objectDefinitionName: string;
-	objectFieldERC: string;
-	objectFieldId: number;
-	objectFieldName: string;
-	objectRelationshipNames?: string;
-	r_apiSchemaToAPIProperties_c_apiSchemaId: number;
-	type: string;
-}
+type voidReturn = () => void;

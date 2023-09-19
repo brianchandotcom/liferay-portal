@@ -258,7 +258,7 @@ definition {
 			locator1 = "FormFields#FIELD_DISABLED");
 
 		AssertVisible(
-			key_text = "Make a Copy",
+			key_text = "Copy",
 			locator1 = "Button#ANY_DISABLED");
 
 		Button.clickSelect();
@@ -304,7 +304,7 @@ definition {
 
 		SelectFrame(locator1 = "relative=top");
 
-		Button.click(button = "Make a Copy");
+		Button.click(button = "Copy");
 
 		if (isSet(copyDuplicatedDocument)) {
 			Alert.viewErrorMessage(errorMessage = "A folder already exists with name ${dmFolderName}");

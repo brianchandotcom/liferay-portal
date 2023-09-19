@@ -11,10 +11,6 @@
 CPInstanceUnitOfMeasureDisplayContext cpInstanceUnitOfMeasureDisplayContext = (CPInstanceUnitOfMeasureDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPInstance cpInstance = cpInstanceUnitOfMeasureDisplayContext.getCPInstance();
-
-String commerceCurrencyCode = cpInstanceUnitOfMeasureDisplayContext.getCommerceCurrencyCode();
-
-boolean hasCPInstanceUnitOfMeasure = cpInstanceUnitOfMeasureDisplayContext.hasCPInstanceUnitOfMeasure();
 %>
 
 <commerce-ui:modal-content
@@ -30,7 +26,7 @@ boolean hasCPInstanceUnitOfMeasure = cpInstanceUnitOfMeasureDisplayContext.hasCP
 		<aui:input name="cpInstanceId" type="hidden" value="<%= cpInstance.getCPInstanceId() %>" />
 		<aui:input name="sku" type="hidden" value="<%= cpInstance.getSku() %>" />
 
-		<c:if test="<%= !hasCPInstanceUnitOfMeasure %>">
+		<c:if test="<%= !cpInstanceUnitOfMeasureDisplayContext.hasCPInstanceUnitOfMeasure() %>">
 			<div class="alert alert-info">
 				<liferay-ui:message key="creating-first-unit-of-measure-for-this-sku" />
 			</div>
@@ -42,7 +38,7 @@ boolean hasCPInstanceUnitOfMeasure = cpInstanceUnitOfMeasureDisplayContext.hasCP
 		<liferay-ui:error exception="<%= CPInstanceUnitOfMeasureRateException.class %>" message="rate-quantity-must-be-greater-than-zero" />
 		<liferay-ui:error exception="<%= DuplicateCPInstanceUnitOfMeasureKeyException.class %>" message="there-is-another-unit-of-measure-with-the-same-key" />
 
-		<c:if test="<%= hasCPInstanceUnitOfMeasure %>">
+		<c:if test="<%= cpInstanceUnitOfMeasureDisplayContext.hasCPInstanceUnitOfMeasure() %>">
 			<div class="row">
 				<div class="col-6">
 					<aui:input checked="<%= true %>" helpMessage="set-as-primary-uom-help" inlineLabel="right" label="set-as-primary-uom" name="primary" type="toggle-switch" value="<%= false %>" />
@@ -72,7 +68,7 @@ boolean hasCPInstanceUnitOfMeasure = cpInstanceUnitOfMeasureDisplayContext.hasCP
 			</div>
 		</div>
 
-		<c:if test="<%= hasCPInstanceUnitOfMeasure %>">
+		<c:if test="<%= cpInstanceUnitOfMeasureDisplayContext.hasCPInstanceUnitOfMeasure() %>">
 			<div class="row">
 				<div class="col-12">
 					<aui:input label="conversion-rate-uom" name="rate" type="text">
@@ -110,14 +106,14 @@ boolean hasCPInstanceUnitOfMeasure = cpInstanceUnitOfMeasureDisplayContext.hasCP
 
 		<div class="row">
 			<div class="col-6">
-				<aui:input label="base-price" name="basePrice" suffix="<%= HtmlUtil.escape(commerceCurrencyCode) %>" type="text" value="<%= cpInstanceUnitOfMeasureDisplayContext.getPrice() %>">
+				<aui:input label="base-price" name="basePrice" suffix="<%= HtmlUtil.escape(cpInstanceUnitOfMeasureDisplayContext.getCommerceCurrencyCode()) %>" type="text" value="<%= cpInstanceUnitOfMeasureDisplayContext.getPrice() %>">
 					<aui:validator name="min">0</aui:validator>
 					<aui:validator name="number" />
 				</aui:input>
 			</div>
 
 			<div class="col-6">
-				<aui:input label="base-promotion-price" name="promoPrice" suffix="<%= HtmlUtil.escape(commerceCurrencyCode) %>" type="text" value="<%= cpInstanceUnitOfMeasureDisplayContext.getPromoPrice() %>">
+				<aui:input label="base-promotion-price" name="promoPrice" suffix="<%= HtmlUtil.escape(cpInstanceUnitOfMeasureDisplayContext.getCommerceCurrencyCode()) %>" type="text" value="<%= cpInstanceUnitOfMeasureDisplayContext.getPromoPrice() %>">
 					<aui:validator name="number" />
 				</aui:input>
 			</div>

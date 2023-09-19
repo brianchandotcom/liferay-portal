@@ -83,13 +83,20 @@ public class CPInstanceUnitOfMeasureDisplayContext
 	}
 
 	public String getCommerceCurrencyCode() throws PortalException {
+		if (_commerceCurrencyCode != null) {
+			return _commerceCurrencyCode;
+		}
+
 		CommerceCurrency commerceCurrency = _getCommerceCurrency();
 
 		if (commerceCurrency != null) {
-			return commerceCurrency.getCode();
+			_commerceCurrencyCode = commerceCurrency.getCode();
+		}
+		else {
+			_commerceCurrencyCode = StringPool.BLANK;
 		}
 
-		return StringPool.BLANK;
+		return _commerceCurrencyCode;
 	}
 
 	public CPInstance getCPInstance() throws PortalException {
@@ -219,15 +226,22 @@ public class CPInstanceUnitOfMeasureDisplayContext
 	}
 
 	public boolean hasCPInstanceUnitOfMeasure() throws PortalException {
+		if (_hasCPInstanceUnitOfMeasure != null) {
+			return _hasCPInstanceUnitOfMeasure;
+		}
+
 		int cpInstanceUnitOfMeasuresCount =
 			_cpInstanceUnitOfMeasureService.getCPInstanceUnitOfMeasuresCount(
 				getCPInstanceId());
 
 		if (cpInstanceUnitOfMeasuresCount > 0) {
-			return true;
+			_hasCPInstanceUnitOfMeasure = Boolean.TRUE;
+		}
+		else {
+			_hasCPInstanceUnitOfMeasure = Boolean.FALSE;
 		}
 
-		return false;
+		return _hasCPInstanceUnitOfMeasure;
 	}
 
 	private CommerceCurrency _getCommerceCurrency() throws PortalException {
@@ -266,6 +280,7 @@ public class CPInstanceUnitOfMeasureDisplayContext
 		return commerceCurrency.round(value);
 	}
 
+	private String _commerceCurrencyCode;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 	private final CommerceProductPriceCalculation
 		_commerceProductPriceCalculation;
@@ -273,5 +288,6 @@ public class CPInstanceUnitOfMeasureDisplayContext
 	private CPInstanceUnitOfMeasure _cpInstanceUnitOfMeasure;
 	private final CPInstanceUnitOfMeasureService
 		_cpInstanceUnitOfMeasureService;
+	private Boolean _hasCPInstanceUnitOfMeasure;
 
 }

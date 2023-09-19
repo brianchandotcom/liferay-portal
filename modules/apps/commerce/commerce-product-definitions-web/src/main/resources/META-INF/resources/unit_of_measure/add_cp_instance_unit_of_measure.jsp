@@ -76,11 +76,11 @@ CPInstance cpInstance = cpInstanceUnitOfMeasureDisplayContext.getCPInstance();
 
 						<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-x", 0) %>' name="custom">
 							function(val) {
-							if (Number(val) > 0) {
-							return true;
-							}
+								if (Number(val) > 0) {
+									return true;
+								}
 
-							return false;
+								return false;
 							}
 						</aui:validator>
 					</aui:input>

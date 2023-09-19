@@ -65,6 +65,8 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 		for (BuildEntity buildEntity : buildEntities) {
 			buildEntity.setJobEntity(jobEntity);
 
+			buildEntity.addBuildParameterEntities(
+				_buildParameterEntityRepository.getAll(buildEntity));
 			buildEntity.addBuildRunEntities(
 				_buildRunEntityRepository.getAll(buildEntity));
 		}

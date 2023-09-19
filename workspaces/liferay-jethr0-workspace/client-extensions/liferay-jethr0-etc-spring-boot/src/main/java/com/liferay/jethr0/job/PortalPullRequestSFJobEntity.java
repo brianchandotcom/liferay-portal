@@ -1,9 +1,12 @@
 package com.liferay.jethr0.job;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
+import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
+import com.liferay.jethr0.util.StringUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +21,39 @@ public class PortalPullRequestSFJobEntity extends BaseJobEntity {
 		initialBuildJSONObjects.add(_getInitialBuildJSONObject());
 
 		return initialBuildJSONObjects;
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put("pullRequestURL", getPullRequestURL());
+
+		return jsonObject;
+	}
+
+	public URL getPullRequestURL() {
+		if (_pullRequestURL != null) {
+			return _pullRequestURL;
+		}
+
+		for (BuildEntity initialBuildEntity : getInitialBuildEntities()) {
+			System.out.println("initialBuildEntity=" + initialBuildEntity);
+
+			BuildParameterEntity buildParameterEntity =
+				initialBuildEntity.getBuildParameterEntity("PULL_REQUEST_URL");
+
+			System.out.println("buildParameterEntity=" + buildParameterEntity);
+
+			if (buildParameterEntity != null) {
+				_pullRequestURL = StringUtil.toURL(
+					buildParameterEntity.getValue());
+
+				return _pullRequestURL;
+			}
+		}
+
+		return null;
 	}
 
 	protected PortalPullRequestSFJobEntity(JSONObject jsonObject) {
@@ -65,6 +101,8 @@ public class PortalPullRequestSFJobEntity extends BaseJobEntity {
 
 		return initialBuildParametersJSONArray;
 	}
+
+	private URL _pullRequestURL;
 
 	private static final String _BUILD_PRIORITY = "4";
 	private static final String _JENKINS_JOB_NAME = "test-portal-source-format";

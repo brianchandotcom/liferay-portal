@@ -44,34 +44,27 @@ public class JobRestController {
 	public ResponseEntity<String> addJob(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String body) {
 
-		JSONObject bodyJSONObject = new JSONObject(body);
+		JobEntity jobEntity = _jobEntityRepository.add(new JSONObject(body));
 
-		int jobPriority = bodyJSONObject.getInt("priority");
-		String jobName = bodyJSONObject.getString("name");
-		JobEntity.Type jobEntityType = JobEntity.Type.getByKey(
-			bodyJSONObject.getString("type"));
+		for (JSONObject initialBuildJSONObject :
+				jobEntity.getInitialBuildJSONObjects()) {
 
-		JobEntity jobEntity = _jobEntityRepository.add(
-			jobName, jobPriority, null, null, jobEntityType);
+			BuildEntity buildEntity = _buildEntityRepository.add(
+				jobEntity, initialBuildJSONObject);
 
-		BuildEntity buildEntity = _buildEntityRepository.add(
-			jobEntity, "test-portal-source-format", "test-portal-source-format",
-			BuildEntity.State.OPENED);
+			JSONArray buildParametersJSONArray =
+				initialBuildJSONObject.optJSONArray("buildParameters");
 
-		_buildParameterEntityRepository.add(
-			buildEntity, "BUILD_PRIORITY", String.valueOf(jobPriority));
-		_buildParameterEntityRepository.add(
-			buildEntity, "PULL_REQUEST_URL",
-			bodyJSONObject.getString("pullRequestURL"));
+			for (int i = 0; i < buildParametersJSONArray.length(); i++) {
+				JSONObject buildParameterJSONObject =
+					buildParametersJSONArray.getJSONObject(i);
 
-		JobEntity.State jobEntityState = JobEntity.State.getByKey(
-			bodyJSONObject.getString("state"));
+				_buildParameterEntityRepository.add(
+					buildEntity, buildParameterJSONObject);
+			}
+		}
 
-		if (jobEntityState == JobEntity.State.QUEUED) {
-			jobEntity.setState(jobEntityState);
-
-			_jobEntityRepository.update(jobEntity);
-
+		if (jobEntity.getState() == JobEntity.State.QUEUED) {
 			_buildQueue.addJobEntity(jobEntity);
 
 			_jenkinsQueue.invoke();

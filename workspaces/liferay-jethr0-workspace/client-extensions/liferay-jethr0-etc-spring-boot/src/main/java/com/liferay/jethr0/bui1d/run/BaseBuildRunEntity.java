@@ -60,16 +60,16 @@ public abstract class BaseBuildRunEntity
 		}
 
 		jobParametersJSONObject.put(
-			"BUILD_ID", String.valueOf(buildEntity.getId())
+			"JETHR0_BUILD_ID", String.valueOf(buildEntity.getId())
 		).put(
-			"BUILD_RUN_ID", String.valueOf(getId())
+			"JETHR0_BUILD_RUN_ID", String.valueOf(getId())
 		);
 
 		JobEntity jobEntity = buildEntity.getJobEntity();
 
 		if (jobEntity != null) {
 			jobParametersJSONObject.put(
-				"JOB_ID", String.valueOf(jobEntity.getId()));
+				"JETHR0_JOB_ID", String.valueOf(jobEntity.getId()));
 		}
 
 		invokeJSONObject.put("jobParameters", jobParametersJSONObject);

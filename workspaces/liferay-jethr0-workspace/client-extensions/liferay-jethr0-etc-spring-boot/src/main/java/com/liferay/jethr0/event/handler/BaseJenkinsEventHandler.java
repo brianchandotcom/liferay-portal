@@ -76,7 +76,8 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 			throw new Exception("Missing parameters from build");
 		}
 
-		String buildRunID = parmetersJSONObject.optString("BUILD_RUN_ID");
+		String buildRunID = parmetersJSONObject.optString(
+			"JETHR0_BUILD_RUN_ID");
 
 		if ((buildRunID == null) || !buildRunID.matches("\\d+")) {
 			return null;

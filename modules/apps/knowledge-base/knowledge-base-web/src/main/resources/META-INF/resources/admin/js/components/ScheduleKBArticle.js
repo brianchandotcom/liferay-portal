@@ -10,6 +10,8 @@ import ScheduleModal from './ScheduleModal';
 
 function ScheduleKBArticle(props) {
 	const [showModal, setShowModal] = useState();
+	const [callback, setCallback] = useState();
+
 	const namespace = props.portletNamespace;
 
 	const handleOnClose = () => {
@@ -27,7 +29,8 @@ function ScheduleKBArticle(props) {
 			Liferay.component(
 				bridgeComponentId,
 				{
-					open: () => {
+					open: (callback) => {
+						setCallback(() => callback);
 						setShowModal(true);
 					},
 				},
@@ -47,6 +50,7 @@ function ScheduleKBArticle(props) {
 			{showModal && (
 				<ScheduleModal
 					{...props}
+					callback={callback}
 					observer={observer}
 					onModalClose={onClose}
 				/>

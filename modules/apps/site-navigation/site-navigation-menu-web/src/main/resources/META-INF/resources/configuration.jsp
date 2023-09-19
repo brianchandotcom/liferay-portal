@@ -12,7 +12,7 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 
 SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSiteNavigationMenu();
 
-SiteNavigationMenuConfigurationDisplayContext siteNavigationMenuConfigurationDisplayContext = new SiteNavigationMenuConfigurationDisplayContext(request);
+SiteNavigationMenuConfigurationDisplayContext siteNavigationMenuConfigurationDisplayContext = new SiteNavigationMenuConfigurationDisplayContext(request, siteNavigationMenuDisplayContext);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -44,43 +44,12 @@ SiteNavigationMenuConfigurationDisplayContext siteNavigationMenuConfigurationDis
 					<aui:select disabled="<%= siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" label="" name="selectSiteNavigationMenuType" value="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() %>">
 
 						<%
-						Group scopeGroup = themeDisplay.getScopeGroup();
+						String pagesLabel = siteNavigationMenuConfigurationDisplayContext.getPagesLabel();
 						%>
 
-						<c:choose>
-							<c:when test="<%= scopeGroup.isPrivateLayoutsEnabled() %>">
-								<c:choose>
-									<c:when test="<%= siteNavigationMenuConfigurationDisplayContext.hasLayoutPageTemplateEntry() %>">
-										<c:if test="<%= scopeGroup.hasPublicLayouts() || scopeGroup.hasPrivateLayouts() %>">
-											<aui:option label="pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_DEFAULT %>" value="<%= SiteNavigationConstants.TYPE_DEFAULT %>" />
-										</c:if>
-									</c:when>
-									<c:otherwise>
-										<c:if test="<%= scopeGroup.hasPublicLayouts() && layout.isPublicLayout() %>">
-											<aui:option label="public-pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" />
-										</c:if>
-
-										<c:if test="<%= scopeGroup.hasPrivateLayouts() && layout.isPrivateLayout() %>">
-											<aui:option label="private-pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" />
-										</c:if>
-									</c:otherwise>
-								</c:choose>
-							</c:when>
-							<c:otherwise>
-								<c:if test="<%= scopeGroup.hasPublicLayouts() %>">
-									<c:choose>
-										<c:when test="<%= siteNavigationMenuConfigurationDisplayContext.hasLayoutPageTemplateEntry() %>">
-											<aui:option label="pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_DEFAULT %>" value="<%= SiteNavigationConstants.TYPE_DEFAULT %>" />
-										</c:when>
-										<c:otherwise>
-											<c:if test="<%= layout.isPublicLayout() %>">
-												<aui:option label="pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" />
-											</c:if>
-										</c:otherwise>
-									</c:choose>
-								</c:if>
-							</c:otherwise>
-						</c:choose>
+						<c:if test="<%= Validator.isNotNull(pagesLabel) %>">
+							<aui:option label="<%= pagesLabel %>" selected="<%= siteNavigationMenuConfigurationDisplayContext.isPagesSelected() %>" value="<%= siteNavigationMenuConfigurationDisplayContext.getPagesValue() %>" />
+						</c:if>
 
 						<aui:option label="primary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIMARY %>" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" />
 						<aui:option label="secondary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_SECONDARY %>" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" />

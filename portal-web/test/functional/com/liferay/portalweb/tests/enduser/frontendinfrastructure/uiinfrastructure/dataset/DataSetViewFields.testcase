@@ -519,7 +519,7 @@ definition {
 		}
 
 		task ("Then Confirm all fields are checked ") {
-			DataSetAdmin.assertFieldsChecked(key_fieldList = "name,creator,externalReferenceCode,id,status,createDate,label,modifiedDate,renderer,r_fdsViewFDSFieldRelationship_c_fdsViewId,r_fdsViewFDSFieldRelationship_c_fdsViewERC,sortable,type");
+			DataSetAdmin.assertFieldsChecked(key_fieldList = "creator,dateCreated,dateModified,externalReferenceCode,id,status,label,name,renderer,rendererType,r_fdsViewFDSFieldRelationship_c_fdsViewId,r_fdsViewFDSFieldRelationship_c_fdsViewERC,sortable,type");
 		}
 
 		task ("When Uncheck all the fields.") {
@@ -527,7 +527,7 @@ definition {
 		}
 
 		task ("Then Confirm that all fields are unchecked ") {
-			DataSetAdmin.assertFieldsNotChecked(key_fieldList = "name,creator,externalReferenceCode,id,status,createDate,label,modifiedDate,renderer,r_fdsViewFDSFieldRelationship_c_fdsViewId,r_fdsViewFDSFieldRelationship_c_fdsViewERC,sortable,type");
+			DataSetAdmin.assertFieldsNotChecked(key_fieldList = "creator,dateCreated,dateModified,externalReferenceCode,id,status,label,name,renderer,rendererType,r_fdsViewFDSFieldRelationship_c_fdsViewId,r_fdsViewFDSFieldRelationship_c_fdsViewERC,sortable,type");
 		}
 	}
 

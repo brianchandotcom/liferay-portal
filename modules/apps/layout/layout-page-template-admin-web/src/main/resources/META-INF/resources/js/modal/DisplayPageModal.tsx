@@ -9,6 +9,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {fetch, navigate} from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
 
+import {MODAL_TYPES, ModalType} from '../constants/modalTypes';
 import {MappingType} from '../types/MappingTypes';
 import {ValidationError} from '../types/ValidationError';
 import DisplayPageModalForm from './DisplayPageModalForm';
@@ -20,6 +21,7 @@ interface Props {
 	namespace: string;
 	onClose: () => void;
 	title: string;
+	type: ModalType;
 }
 
 export default function DisplayPageModal({
@@ -29,6 +31,7 @@ export default function DisplayPageModal({
 	namespace,
 	onClose,
 	title,
+	type,
 }: Props) {
 	const [error, setError] = useState<ValidationError>({});
 	const [loading, setLoading] = useState(false);
@@ -46,7 +49,7 @@ export default function DisplayPageModal({
 
 			const nameField = elements[`${namespace}name`];
 
-			if (!nameField.value) {
+			if (nameField && !nameField.value) {
 				error.name = errorMessage;
 			}
 
@@ -101,13 +104,18 @@ export default function DisplayPageModal({
 				})
 				.catch(() =>
 					setError({
-						other: Liferay.Language.get(
-							'an-unexpected-error-occurred-while-creating-the-display-page'
-						),
+						other:
+							type === MODAL_TYPES.create
+								? Liferay.Language.get(
+										'an-unexpected-error-occurred-while-creating-the-display-page'
+								  )
+								: Liferay.Language.get(
+										'an-unexpected-error-occurred-while-changing-the-content-type'
+								  ),
 					})
 				);
 		},
-		[formSubmitURL, onClose, validateForm]
+		[formSubmitURL, onClose, type, validateForm]
 	);
 
 	const visible = observer.mutation;
@@ -135,6 +143,7 @@ export default function DisplayPageModal({
 						mappingTypes={mappingTypes}
 						namespace={namespace}
 						onSubmit={handleSubmit}
+						type={type}
 					/>
 				)}
 			</ClayModal.Body>

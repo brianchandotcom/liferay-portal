@@ -11,6 +11,7 @@ import React, {
 	useState,
 } from 'react';
 
+import {MODAL_TYPES, ModalType} from '../constants/modalTypes';
 import {MappingSubtype, MappingType} from '../types/MappingTypes';
 import {ValidationError} from '../types/ValidationError';
 import FormField from './FormField';
@@ -22,6 +23,7 @@ interface Props {
 	mappingTypes: MappingType[];
 	namespace: string;
 	onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+	type: ModalType;
 }
 
 export default function DisplayPageModalForm({
@@ -31,6 +33,7 @@ export default function DisplayPageModalForm({
 	mappingTypes,
 	namespace,
 	onSubmit,
+	type,
 }: Props) {
 	const [error, setError] = useState<ValidationError>(initialError);
 
@@ -45,6 +48,19 @@ export default function DisplayPageModalForm({
 	useEffect(() => {
 		setError(initialError);
 	}, [initialError]);
+
+	if (type === MODAL_TYPES.edit) {
+		return (
+			<form onSubmit={onSubmit} ref={formRef}>
+				<MappingTypeSelector
+					error={error}
+					mappingTypes={mappingTypes}
+					namespace={namespace}
+					setError={setError}
+				/>
+			</form>
+		);
+	}
 
 	return (
 		<form onSubmit={onSubmit} ref={formRef}>

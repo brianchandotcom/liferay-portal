@@ -61,31 +61,11 @@ export default function EditKBArticle({
 	};
 
 	const openScheduleModal = (modalTitle) => {
-		const modalEventHandlers = [];
-
-		openModal({
-			height: '65vh',
-			id: 'scheduleKBArticleDialog',
-			iframeBodyCssClass: '',
-			onClose: () => {
-				modalEventHandlers.forEach((eventHandler) => {
-					eventHandler.detach();
-				});
-
-				modalEventHandlers.splice(0, modalEventHandlers.length);
-			},
-			onOpen: () => {
-				const scheduleEventHandler = Liferay.on(
-					'scheduleKBArticle',
-					publishButtonOnClick
-				);
-
-				modalEventHandlers.push(scheduleEventHandler);
-			},
-			size: 'md',
-			title: modalTitle,
-			url: scheduleModalURL,
-		});
+		Liferay.componentReady(`${namespace}ScheduleKBArticleComponent`).then(
+			(component) => {
+				component.open();
+			}
+		);
 	};
 
 	const form = document.getElementById(`${namespace}fm`);

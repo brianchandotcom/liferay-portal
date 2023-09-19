@@ -237,7 +237,7 @@ definition {
 				contentType = "Purchase Order",
 				displayPageName = "Default",
 				panel = "General",
-				successMessage = "Entry Display Page");
+				successMessage = "Go to Entry Display Page");
 
 			PageEditor.publish();
 		}

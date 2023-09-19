@@ -2984,7 +2984,7 @@ definition {
 
 				PageEditor.waitForAutoSave();
 			}
-			else if (${successMessage} == "Entry Display Page") {
+			else if (${successMessage} == "Go to Entry Display Page") {
 				Select(
 					key_fieldLabel = "Success Interaction",
 					locator1 = "Select#GENERIC_SELECT_FIELD",

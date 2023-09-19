@@ -21,6 +21,7 @@ double targetVersion = (Double)request.getAttribute(WebKeys.TARGET_VERSION);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(LanguageUtil.get(request, "compare-versions"));
 %>

@@ -18,7 +18,10 @@ import com.liferay.portlet.Preference;
 
 import java.sql.PreparedStatement;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Preston Crary
@@ -93,18 +96,12 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 		}
 
 		for (Preference preference : preferenceMap.values()) {
-			String[] values = preference.getValues();
+			Set<String> valuesSet = new LinkedHashSet<>(
+				Arrays.asList(preference.getValues()));
 
-			outerLoop:
-			for (int i = 0; i < values.length; i++) {
-				String value = values[i];
+			int index = 0;
 
-				for (int j = 0; j < i; j++) {
-					if (values[j].equals(value)) {
-						continue outerLoop;
-					}
-				}
-
+			for (String value : valuesSet) {
 				String largeValue = null;
 				String smallValue = null;
 
@@ -122,13 +119,15 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 					2, increment(PortletPreferenceValue.class.getName()));
 				preparedStatement.setLong(3, companyId);
 				preparedStatement.setLong(4, portletPreferencesId);
-				preparedStatement.setInt(5, i);
+				preparedStatement.setInt(5, index);
 				preparedStatement.setString(6, largeValue);
 				preparedStatement.setString(7, preference.getName());
 				preparedStatement.setBoolean(8, preference.isReadOnly());
 				preparedStatement.setString(9, smallValue);
 
 				preparedStatement.addBatch();
+
+				index++;
 			}
 		}
 	}

@@ -5,18 +5,18 @@
 
 import {useEffect} from 'react';
 
-let oAuth2Client;
-
-try {
-	oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-		'liferay-jethr0-etc-spring-boot-oauth-application-user-agent'
-	);
-}
-catch (error) {
-	console.error(error);
-}
-
 function useSpringBootData({setData, timeout = -1, urlPath}) {
+	let oAuth2Client;
+
+	try {
+		oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
+			'liferay-jethr0-etc-spring-boot-oauth-application-user-agent'
+		);
+	}
+	catch (error) {
+		console.error(error);
+	}
+
 	useEffect(() => {
 		oAuth2Client
 			?.fetch(urlPath)

@@ -83,7 +83,7 @@ export default function LeftSidebar({
 
 			return {
 				...sidebarItem,
-				objectDefinitions: newObjectDefinitions,
+				leftSidebarObjectDefinitionItems: newObjectDefinitions,
 			};
 		});
 	}, [query, leftSidebarItems]);

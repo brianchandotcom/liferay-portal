@@ -28,6 +28,14 @@ public class BuildParameterEntityRepository
 	extends BaseEntityRepository<BuildParameterEntity> {
 
 	public BuildParameterEntity add(
+		BuildEntity buildEntity, JSONObject jsonObject) {
+
+		return add(
+			buildEntity, jsonObject.getString("name"),
+			jsonObject.getString("value"));
+	}
+
+	public BuildParameterEntity add(
 		BuildEntity buildEntity, String name, String value) {
 
 		JSONObject jsonObject = new JSONObject();

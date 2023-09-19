@@ -354,8 +354,6 @@ definition {
 		}
 
 		task ("Copy Structure successfully") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
 			NavItem.gotoStructures();
 
 			WebContentStructures.copyCP(
@@ -363,14 +361,10 @@ definition {
 				structureName = "WC Structure Name");
 		}
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		NavItem.gotoStructures();
-
 		WebContentNavigator.gotoEditStructure(structureName = "WC Structure Copy Name");
 
 		for (var fieldName : list "Label UF Comunicado,Lista UF Comunicado,Mensagem de erro de timeout,Titulo Mobile,Titulo,Informe Titulo,Informativo Formulario Cadastro,Titulo Programa Milhas,Texo Box Programa Amigo,Informe Programa Milhas,Footer Cadastro,Botao Cadastrar,Footer Cadastro Mobile,Botao Cadastrar Mobile,Informe Programa Amigo,Botao Quero Participar,Botao Quero Participar Mobile,Nacionalidade,Rotulo - Primeiro Nome,Título do banner,Rótulo - Nome do meio,Rótulo - Sobrenome,Rótulo - Email,Rótulo - Confirmação Email,Rótulo - Senha,Rótulo - Confirmação Senha,DDI,CPF,Passaporte,Celular,Data de Nascimento,Gênero,País de residência,UF,CEP,Cidade,Bairro,Endereço,Número,Complemento,Texto Box Amigo,País") {
-			DataEngine.editFieldRequired(fieldFieldLabel = ${fieldName});
+			DataEngine.editFieldRequiredWithoutBack(fieldFieldLabel = ${fieldName});
 		}
 
 		WebContentStructures.saveCP();

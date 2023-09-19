@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,56 +51,12 @@ public class LayoutModelDocumentContributor
 			return;
 		}
 
-		List<LayoutLocalization> layoutLocalizations =
-			_layoutLocalizationLocalService.getLayoutLocalizations(
-				layout.getPlid());
-
-		if (layoutLocalizations.isEmpty() && layout.isPublished()) {
-			try (AutoCloseable autoCloseable =
-					_layoutServiceContextHelper.getServiceContextAutoCloseable(
-						layout)) {
-
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
-
-				ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-				for (Locale locale :
-						_language.getAvailableLocales(layout.getGroupId())) {
-
-					_layoutLocalizationLocalService.updateLayoutLocalization(
-						_layoutContentProvider.getLayoutContent(
-							themeDisplay.getRequest(),
-							themeDisplay.getResponse(), layout, locale),
-						LocaleUtil.toLanguageId(locale), layout.getPlid(),
-						serviceContext);
-				}
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to add LayoutLocalization for plid " +
-							layout.getPlid(),
-						exception);
-				}
-			}
-
-			layoutLocalizations =
-				_layoutLocalizationLocalService.getLayoutLocalizations(
-					layout.getPlid());
-		}
-
-		for (LayoutLocalization layoutLocalization : layoutLocalizations) {
-			document.addText(
-				Field.getLocalizedName(
-					layoutLocalization.getLanguageId(), Field.CONTENT),
-				layoutLocalization.getContent());
-		}
-
 		document.addText(
 			Field.DEFAULT_LANGUAGE_ID, layout.getDefaultLanguageId());
 		document.addLocalizedText(Field.NAME, layout.getNameMap());
 		document.addKeyword(Field.STATUS, _getStatus(layout));
+
+		_addLayoutContentFields(document, layout);
 
 		for (String languageId : layout.getAvailableLanguageIds()) {
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
@@ -117,6 +75,63 @@ public class LayoutModelDocumentContributor
 				layout.getNameMap(), layout.getDefaultLanguageId(),
 				layout.getGroupId()),
 			true, true);
+	}
+
+	private void _addLayoutContentFields(Document document, Layout layout) {
+		if (!layout.isTypeContent() || !layout.isPublished()) {
+			return;
+		}
+
+		Map<String, String> layoutContentMap = new HashMap<>();
+
+		List<LayoutLocalization> layoutLocalizations =
+			_layoutLocalizationLocalService.getLayoutLocalizations(
+				layout.getPlid());
+
+		for (LayoutLocalization layoutLocalization : layoutLocalizations) {
+			layoutContentMap.put(
+				layoutLocalization.getLanguageId(),
+				layoutLocalization.getContent());
+		}
+
+		try (AutoCloseable autoCloseable =
+				_layoutServiceContextHelper.getServiceContextAutoCloseable(
+					layout)) {
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			for (Locale locale :
+					_language.getAvailableLocales(layout.getGroupId())) {
+
+				String languageId = LocaleUtil.toLanguageId(locale);
+
+				if (layoutContentMap.containsKey(languageId)) {
+					continue;
+				}
+
+				layoutContentMap.put(
+					languageId,
+					_layoutContentProvider.getLayoutContent(
+						themeDisplay.getRequest(), themeDisplay.getResponse(),
+						layout, locale));
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to generate content for plid " + layout.getPlid(),
+					exception);
+			}
+		}
+
+		for (Map.Entry<String, String> entry : layoutContentMap.entrySet()) {
+			document.addText(
+				Field.getLocalizedName(entry.getKey(), Field.CONTENT),
+				entry.getValue());
+		}
 	}
 
 	private int _getStatus(Layout layout) {

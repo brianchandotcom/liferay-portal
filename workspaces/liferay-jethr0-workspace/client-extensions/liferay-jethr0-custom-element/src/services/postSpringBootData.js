@@ -3,9 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect} from 'react';
-import {Navigate} from 'react-router-dom';
-
 let oAuth2Client;
 
 try {
@@ -19,7 +16,7 @@ catch (error) {
 
 function postSpringBootData({data, redirect, urlPath}) {
 	oAuth2Client
-		?.fetch(urlPath, {method: 'POST', body: JSON.stringify(data)})
+		?.fetch(urlPath, {body: JSON.stringify(data), method: 'POST'})
 		.then((response) => response.text())
 		.then((data) => {
 			if (redirect !== null) {

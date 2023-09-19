@@ -7,7 +7,6 @@ import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
 
 import './JobsPage.css';
-
 import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
 import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
@@ -31,7 +30,7 @@ function JobsPage() {
 							Jobs
 						</Heading>
 						<Jethr0ButtonsRow
-							buttons={[{title: 'Add Job', link: '/jobs/add'}]}
+							buttons={[{link: '/jobs/add', title: 'Add Job'}]}
 						/>
 					</ClayLayout.Row>
 				</ClayLayout.ContainerFluid>

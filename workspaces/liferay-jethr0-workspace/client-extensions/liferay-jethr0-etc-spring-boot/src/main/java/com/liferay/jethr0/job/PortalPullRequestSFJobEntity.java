@@ -1,26 +1,32 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 package com.liferay.jethr0.job;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.util.StringUtil;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.net.URL;
-import java.util.ArrayList;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+/**
+ * @author Michael Hashimoto
+ */
 public class PortalPullRequestSFJobEntity extends BaseJobEntity {
 
 	@Override
 	public List<JSONObject> getInitialBuildJSONObjects() {
-		List<JSONObject> initialBuildJSONObjects = new ArrayList<>();
-
-		initialBuildJSONObjects.add(_getInitialBuildJSONObject());
-
-		return initialBuildJSONObjects;
+		return Collections.singletonList(_getInitialBuildJSONObject());
 	}
 
 	@Override
@@ -96,17 +102,18 @@ public class PortalPullRequestSFJobEntity extends BaseJobEntity {
 				"value", initialBuildParameter.getValue()
 			);
 
-			initialBuildParametersJSONArray.put(initialBuildParameterJSONObject);
+			initialBuildParametersJSONArray.put(
+				initialBuildParameterJSONObject);
 		}
 
 		return initialBuildParametersJSONArray;
 	}
 
-	private URL _pullRequestURL;
-
 	private static final String _BUILD_PRIORITY = "4";
+
 	private static final String _JENKINS_JOB_NAME = "test-portal-source-format";
 
 	private final Map<String, String> _initialBuildParameters = new HashMap<>();
+	private URL _pullRequestURL;
 
 }

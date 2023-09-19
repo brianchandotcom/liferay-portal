@@ -56,7 +56,9 @@ function JobBuilds({jobId}) {
 										<td>{jobBuild.name}</td>
 										<td>{jobBuild.dateCreated}</td>
 										<td>{jobBuild.state.name}</td>
-										<td>{jobBuild.initialBuild.toString()}</td>
+										<td>
+											{jobBuild.initialBuild.toString()}
+										</td>
 										<td>
 											{jobBuild.latestJenkinsBuildURL ? (
 												<a

@@ -4,7 +4,6 @@
  */
 
 import ClayButton from '@clayui/button';
-import {Heading} from '@clayui/core';
 import ClayLayout from '@clayui/layout';
 import {Link} from 'react-router-dom';
 
@@ -12,7 +11,7 @@ import './Jethr0ButtonsRow.css';
 
 function Jethr0ButtonsRow({buttons}) {
 	return (
-		<ClayLayout.Row justify="end" className="jethr0-buttons-row">
+		<ClayLayout.Row className="jethr0-buttons-row" justify="end">
 			{buttons.map((button) => {
 				let displayType = 'primary';
 
@@ -21,7 +20,11 @@ function Jethr0ButtonsRow({buttons}) {
 				}
 
 				return (
-					<Link title={button.title} to={button.link}>
+					<Link
+						key={button.title}
+						title={button.title}
+						to={button.link}
+					>
 						<ClayButton
 							displayType={displayType}
 							onClick={() => {

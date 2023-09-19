@@ -18,7 +18,6 @@ import useSpringBootData from '../../services/useSpringBootData';
 function JobsPage() {
 	const [jobName, setJobName] = useState(null);
 	const [jobPriority, setJobPriority] = useState(4);
-	const [jobSave, setJobSave] = useState(null);
 	const [jobTypeKey, setJobTypeKey] = useState('portalPullRequestSF');
 	const [jobTypes, setJobTypes] = useState(null);
 	const [pullRequestURL, setPullRequestURL] = useState(null);
@@ -70,7 +69,7 @@ function JobsPage() {
 	const jobData = {
 		name: jobName,
 		priority: jobPriority,
-		pullRequestURL: pullRequestURL,
+		pullRequestURL,
 		state: 'opened',
 		type: jobTypeKey,
 	};
@@ -91,10 +90,10 @@ function JobsPage() {
 
 					<ClayInput
 						disabled="true"
+						id="buildPriority"
 						onChange={(event) => {
 							setJobPriority(event.target.value);
 						}}
-						id="buildPriority"
 						type="text"
 						value={jobPriority}
 					/>
@@ -106,11 +105,11 @@ function JobsPage() {
 					<ClaySelectWithOption
 						aria-label="Job Types"
 						id="jobType"
-						options={jobTypesOptions}
 						onChange={(event) => {
 							setJobNameFromJobTypeKey(event.target.value);
 							setJobTypeKey(event.target.value);
 						}}
+						options={jobTypesOptions}
 						value={jobTypeKey}
 					/>
 				</ClayForm.Group>
@@ -145,12 +144,11 @@ function JobsPage() {
 				<Jethr0ButtonsRow
 					buttons={[
 						{
-							title: 'Cancel',
-							link: '/jobs',
 							displayType: 'secondary',
+							link: '/jobs',
+							title: 'Cancel',
 						},
 						{
-							title: 'Save',
 							onClick: () => {
 								postSpringBootData({
 									data: jobData,
@@ -158,9 +156,9 @@ function JobsPage() {
 									urlPath: '/jobs/add',
 								});
 							},
+							title: 'Save',
 						},
 						{
-							title: 'Save & Start',
 							onClick: () => {
 								jobData.state = 'queued';
 
@@ -170,6 +168,7 @@ function JobsPage() {
 									urlPath: '/jobs/add',
 								});
 							},
+							title: 'Save & Start',
 						},
 					]}
 				/>

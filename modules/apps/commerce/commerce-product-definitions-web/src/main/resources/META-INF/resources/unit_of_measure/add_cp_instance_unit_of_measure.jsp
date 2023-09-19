@@ -15,7 +15,7 @@ CPInstance cpInstance = cpInstanceUnitOfMeasureDisplayContext.getCPInstance();
 
 <commerce-ui:modal-content
 	submitButtonLabel='<%= LanguageUtil.get(request, "add") %>'
-	title='<%= LanguageUtil.get(request, "add-uom") %>'
+	title='<%= LanguageUtil.get(request, "add-unit-of-measure") %>'
 >
 	<portlet:actionURL name="/cp_definitions/edit_cp_instance_unit_of_measure" var="editCPInstanceUnitOfMeasureActionURL" />
 
@@ -28,14 +28,14 @@ CPInstance cpInstance = cpInstanceUnitOfMeasureDisplayContext.getCPInstance();
 
 		<c:if test="<%= !cpInstanceUnitOfMeasureDisplayContext.hasCPInstanceUnitOfMeasure() %>">
 			<div class="alert alert-info">
-				<liferay-ui:message key="creating-first-unit-of-measure-for-this-sku" />
+				<liferay-ui:message key="by-creating-the-first-unit-of-measure-for-this-sku-all-existing-sku-stock-and-pricing-will-be-mapped-to-the-first-unit-of-measure-created" />
 			</div>
 
 			<aui:input name="primary" type="hidden" value="<%= true %>" />
 		</c:if>
 
 		<liferay-ui:error exception="<%= CPInstanceUnitOfMeasureIncrementalOrderQuantityException.class %>" message="decimals-allowed-cannot-be-less-than-the-number-of-decimals-in-the-base-unit-quantity" />
-		<liferay-ui:error exception="<%= CPInstanceUnitOfMeasureRateException.class %>" message="rate-quantity-must-be-greater-than-zero" />
+		<liferay-ui:error exception="<%= CPInstanceUnitOfMeasureRateException.class %>" message="conversion-rate-quantity-must-be-greater-than-zero" />
 		<liferay-ui:error exception="<%= DuplicateCPInstanceUnitOfMeasureKeyException.class %>" message="there-is-another-unit-of-measure-with-the-same-key" />
 
 		<c:if test="<%= cpInstanceUnitOfMeasureDisplayContext.hasCPInstanceUnitOfMeasure() %>">
@@ -71,7 +71,7 @@ CPInstance cpInstance = cpInstanceUnitOfMeasureDisplayContext.getCPInstance();
 		<c:if test="<%= cpInstanceUnitOfMeasureDisplayContext.hasCPInstanceUnitOfMeasure() %>">
 			<div class="row">
 				<div class="col-12">
-					<aui:input label="conversion-rate-uom" name="rate" type="text">
+					<aui:input label="conversion-rate-to-primary-unit-of-measure" name="rate" type="text">
 						<aui:validator name="number" />
 
 						<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-x", 0) %>' name="custom">

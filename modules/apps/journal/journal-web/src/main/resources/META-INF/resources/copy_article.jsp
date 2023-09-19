@@ -17,6 +17,7 @@ double version = ParamUtil.getDouble(request, "version");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(LanguageUtil.get(request, "web-content"));
 %>

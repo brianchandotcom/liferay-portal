@@ -1157,13 +1157,11 @@ definition {
 			languageName = "中文 (中国)",
 			userScreenName = "usersn");
 
-		User.logoutPG();
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
 
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		Navigator.openSiteURL(siteName = "Site Name");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name");
 
 		task ("Assert site displays in user's locale by asserting user dropdown menu item") {
 			UserBar.gotoDropdown();

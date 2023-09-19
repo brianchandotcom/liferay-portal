@@ -123,18 +123,13 @@ public class LayoutModelDocumentContributorTest {
 
 		Layout layout = _addTypeContentLayout(true, headingText);
 
-		int expectedLayoutLocalizationsSize = _deleteLayoutLocalizations(
-			layout.getPlid());
+		_deleteLayoutLocalizations(layout.getPlid());
 
-		_assertReindex(headingText, layout);
+		List<LogEntry> logEntries = _reindexLogEntries(layout);
 
-		List<LayoutLocalization> layoutLocalizations =
-			_layoutLocalizationLocalService.getLayoutLocalizations(
-				layout.getPlid());
+		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
 
-		Assert.assertEquals(
-			layoutLocalizations.toString(), expectedLayoutLocalizationsSize,
-			layoutLocalizations.size());
+		_assertSearch(headingText, layout.getPlid());
 	}
 
 	@Test

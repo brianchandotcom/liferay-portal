@@ -111,7 +111,10 @@ export function parseReassignments(node) {
 			}
 			else {
 				assignments.assignmentType = ['roleId'];
-				assignments.roleId = parseInt(item['roles'][0]['role'], 10);
+				assignments.roleId = parseInt(
+					item['roles'][0]['role']?.['role-id'],
+					10
+				);
 			}
 		}
 		else if (item['scripted-assignment']) {

@@ -1893,15 +1893,6 @@
 		],
 		"primKey": "[$PermissionAction#MDF-REQUEST-EXPORT$]",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
-		"roleName": "Channel Operations Manager (COM)",
-		"scope": 4
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "[$PermissionAction#MDF-REQUEST-EXPORT$]",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
 		"roleName": "Partner Manager (PM)",
 		"scope": 4
 	},
@@ -1912,15 +1903,6 @@
 		"primKey": "[$PermissionAction#MDF-REQUEST-EXPORT$]",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
 		"roleName": "Partner Marketing User (PMU)",
-		"scope": 4
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "[$PermissionAction#MDF-REQUEST-EXPORT$]",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
-		"roleName": "Partner Sales User (PSU)",
 		"scope": 4
 	},
 	{
@@ -2253,15 +2235,6 @@
 		],
 		"primKey": "[$PermissionAction#MDF-CLAIM-EXPORT$]",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
-		"roleName": "Channel Operations Manager (COM)",
-		"scope": 4
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "[$PermissionAction#MDF-CLAIM-EXPORT$]",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
 		"roleName": "Partner Manager (PM)",
 		"scope": 4
 	},
@@ -2272,15 +2245,6 @@
 		"primKey": "[$PermissionAction#MDF-CLAIM-EXPORT$]",
 		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
 		"roleName": "Partner Marketing User (PMU)",
-		"scope": 4
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "[$PermissionAction#MDF-CLAIM-EXPORT$]",
-		"resourceName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:PermissionAction$]",
-		"roleName": "Partner Sales User (PSU)",
 		"scope": 4
 	},
 	{

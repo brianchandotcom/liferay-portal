@@ -363,6 +363,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"8.4.0", "8.5.0",
 			new com.liferay.object.internal.upgrade.v8_5_0.
 				ObjectRelationshipUpgradeProcess());
+
+		registry.register(
+			"8.5.0", "8.6.0",
+			new com.liferay.object.internal.upgrade.v8_6_0.
+				ObjectActionUpgradeProcess());
 	}
 
 	@Reference

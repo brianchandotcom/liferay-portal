@@ -12,6 +12,8 @@ import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.commerce.pricing.web.internal.constants.CommercePricingFDSNames;
 import com.liferay.commerce.pricing.web.internal.model.InstanceTierPriceEntry;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
@@ -78,6 +80,11 @@ public class CPInstanceTierPriceEntryFDSDataProvider
 				httpServletRequest,
 				System.currentTimeMillis() - createDate.getTime(), true);
 
+			CPInstance cpInstance =
+				_cpInstanceLocalService.fetchCProductInstance(
+					commercePriceEntry.getCProductId(),
+					commercePriceEntry.getCPInstanceUuid());
+
 			instanceTierPriceEntries.add(
 				new InstanceTierPriceEntry(
 					commerceTierPriceEntry.getCommerceTierPriceEntryId(),
@@ -85,8 +92,7 @@ public class CPInstanceTierPriceEntryFDSDataProvider
 						httpServletRequest, "x-ago", createDateDescription,
 						false),
 					_commerceQuantityFormatter.format(
-						commercePriceEntry.getCPInstance(),
-						commerceTierPriceEntry.getMinQuantity(),
+						cpInstance, commerceTierPriceEntry.getMinQuantity(),
 						commercePriceEntry.getUnitOfMeasureKey()),
 					HtmlUtil.escape(
 						priceCommerceMoney.format(
@@ -113,6 +119,9 @@ public class CPInstanceTierPriceEntryFDSDataProvider
 
 	@Reference
 	private CommerceTierPriceEntryService _commerceTierPriceEntryService;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private Language _language;

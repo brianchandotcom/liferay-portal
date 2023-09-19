@@ -22,6 +22,7 @@ import com.liferay.commerce.price.list.service.persistence.CommercePriceEntryPer
 import com.liferay.commerce.price.list.util.comparator.CommerceTierPriceEntryMinQuantityComparator;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.string.CharPool;
@@ -977,7 +978,9 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		int unitOfMeasurePrecision = 0;
 
-		CPInstance cpInstance = commercePriceEntry.getCPInstance();
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCProductInstance(
+			commercePriceEntry.getCProductId(),
+			commercePriceEntry.getCPInstanceUuid());
 
 		if (cpInstance != null) {
 			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
@@ -1098,29 +1101,35 @@ public class CommerceTierPriceEntryLocalServiceImpl
 				"The min quantity must be greater than zero");
 		}
 
-		CPInstance cpInstance = commercePriceEntry.getCPInstance();
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCProductInstance(
+			commercePriceEntry.getCProductId(),
+			commercePriceEntry.getCPInstanceUuid());
 
-		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
-			_cpInstanceUnitOfMeasureLocalService.fetchCPInstanceUnitOfMeasure(
-				cpInstance.getCPInstanceId(),
-				commercePriceEntry.getUnitOfMeasureKey());
+		if (cpInstance != null) {
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+				_cpInstanceUnitOfMeasureLocalService.
+					fetchCPInstanceUnitOfMeasure(
+						cpInstance.getCPInstanceId(),
+						commercePriceEntry.getUnitOfMeasureKey());
 
-		if (cpInstanceUnitOfMeasure != null) {
-			int unitOfMeasurePrecision = cpInstanceUnitOfMeasure.getPrecision();
+			if (cpInstanceUnitOfMeasure != null) {
+				int unitOfMeasurePrecision =
+					cpInstanceUnitOfMeasure.getPrecision();
 
-			if (minQuantity.scale() > unitOfMeasurePrecision) {
-				throw new CommerceTierPriceEntryMinQuantityException(
-					"It does not have the same precision as the unit of " +
-						"measure quantity");
-			}
+				if (minQuantity.scale() > unitOfMeasurePrecision) {
+					throw new CommerceTierPriceEntryMinQuantityException(
+						"It does not have the same precision as the unit of " +
+							"measure quantity");
+				}
 
-			BigDecimal remainder = minQuantity.remainder(
-				cpInstanceUnitOfMeasure.getIncrementalOrderQuantity());
+				BigDecimal remainder = minQuantity.remainder(
+					cpInstanceUnitOfMeasure.getIncrementalOrderQuantity());
 
-			if (remainder.compareTo(BigDecimal.ZERO) != 0) {
-				throw new CommerceTierPriceEntryMinQuantityException(
-					"It is not a multiple of the incremental order quantity " +
-						"of the unit of measure");
+				if (remainder.compareTo(BigDecimal.ZERO) != 0) {
+					throw new CommerceTierPriceEntryMinQuantityException(
+						"It is not a multiple of the incremental order " +
+							"quantity of the unit of measure");
+				}
 			}
 		}
 	}
@@ -1137,6 +1146,9 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 	@Reference
 	private CommercePriceEntryPersistence _commercePriceEntryPersistence;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private CPInstanceUnitOfMeasureLocalService

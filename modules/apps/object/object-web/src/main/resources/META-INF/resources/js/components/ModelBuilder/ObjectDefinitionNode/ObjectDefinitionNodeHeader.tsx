@@ -14,7 +14,7 @@ import {DropDownItems} from '../types';
 
 interface ObjectDefinitionNodeHeaderProps {
 	dropDownItems: DropDownItems[];
-	handleSelectedNode: () => void;
+	handleSelectObjectDefinitionNode: () => void;
 	isLinkedObjectDefinition: boolean;
 	objectDefinitionLabel: string;
 	status: {
@@ -27,7 +27,7 @@ interface ObjectDefinitionNodeHeaderProps {
 
 export default function ObjectDefinitionNodeHeader({
 	dropDownItems,
-	handleSelectedNode,
+	handleSelectObjectDefinitionNode,
 	isLinkedObjectDefinition,
 	objectDefinitionLabel,
 	status,
@@ -37,7 +37,11 @@ export default function ObjectDefinitionNodeHeader({
 		<>
 			<div
 				className="lfr-objects__model-builder-node-header-container"
-				onClick={handleSelectedNode}
+				onClick={(event) => {
+					event.stopPropagation();
+
+					handleSelectObjectDefinitionNode();
+				}}
 			>
 				<div className="lfr-objects__model-builder-node-header-label-container">
 					<div className="lfr-objects__model-builder-node-header-label-title">

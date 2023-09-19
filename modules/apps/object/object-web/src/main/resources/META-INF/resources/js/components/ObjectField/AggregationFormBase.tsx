@@ -15,10 +15,10 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {normalizeFieldSettings} from '../../utils/fieldSettings';
 import {ObjectFieldErrors} from './ObjectFieldFormBase';
 
-interface IAggregationSourcePropertyProps {
+interface AggregationSourcePropertyProps {
 	creationLanguageId2: Liferay.Language.Locale;
 	disabled?: boolean;
-	editingField?: boolean;
+	editingObjectField?: boolean;
 	errors: ObjectFieldErrors;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldSettings: ObjectFieldSetting[];
@@ -62,13 +62,13 @@ export function AggregationFormBase({
 	creationLanguageId2,
 	disabled,
 	errors,
-	editingField,
+	editingObjectField,
 	onAggregationFilterChange,
 	onRelationshipChange,
 	objectDefinitionExternalReferenceCode,
 	objectFieldSettings = [],
 	setValues,
-}: IAggregationSourcePropertyProps) {
+}: AggregationSourcePropertyProps) {
 	const [relationshipsQuery, setRelationshipsQuery] = useState<string>('');
 	const [relationshipFieldsQuery, setRelationshipFieldsQuery] = useState<
 		string
@@ -134,7 +134,7 @@ export function AggregationFormBase({
 	}, [objectDefinitionExternalReferenceCode]);
 
 	useEffect(() => {
-		if (editingField && objectRelationships) {
+		if (editingObjectField && objectRelationships) {
 			const makeFetch = async () => {
 				const settings = normalizeFieldSettings(objectFieldSettings);
 
@@ -197,7 +197,7 @@ export function AggregationFormBase({
 		}
 	}, [
 		creationLanguageId2,
-		editingField,
+		editingObjectField,
 		objectRelationships,
 		objectFieldSettings,
 		onRelationshipChange,

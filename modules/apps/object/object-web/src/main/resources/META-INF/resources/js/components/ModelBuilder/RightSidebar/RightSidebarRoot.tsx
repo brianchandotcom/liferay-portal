@@ -14,7 +14,7 @@ interface IRightSidebarRoot {
 }
 
 export function RightSideBarRoot({children}: IRightSidebarRoot) {
-	const [{selectedObjectDefinitionField}] = useObjectFolderContext();
+	const [{selectedObjectField}] = useObjectFolderContext();
 	const [loading, setLoading] = useState(false);
 	const [verticalBarWidth, setVerticalBarWidth] = useState(320);
 
@@ -28,8 +28,8 @@ export function RightSideBarRoot({children}: IRightSidebarRoot) {
 
 	useEffect(() => {
 		if (
-			selectedObjectDefinitionField &&
-			selectedObjectDefinitionField.businessType === 'Aggregation'
+			selectedObjectField &&
+			selectedObjectField.businessType === 'Aggregation'
 		) {
 			setNewVerticalBarWidthValue(950);
 
@@ -39,7 +39,7 @@ export function RightSideBarRoot({children}: IRightSidebarRoot) {
 		setNewVerticalBarWidthValue(320);
 
 		return;
-	}, [selectedObjectDefinitionField]);
+	}, [selectedObjectField]);
 
 	return (
 		<>

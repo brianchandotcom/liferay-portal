@@ -25,8 +25,8 @@ interface BasicInfoContainerProps {
 	modelBuilder?: boolean;
 	objectDefinition: Partial<ObjectDefinition>;
 	objectDefinitionExternalReferenceCode: string;
+	objectDefinitionName: string;
 	objectFieldTypes: ObjectFieldType[];
-	objectName: string;
 	objectRelationshipId: number;
 	readOnly: boolean;
 	setAggregationFilters: (values: AggregationFilters[]) => void;
@@ -43,8 +43,8 @@ export function BasicInfoContainer({
 	modelBuilder = false,
 	objectDefinition,
 	objectDefinitionExternalReferenceCode,
+	objectDefinitionName,
 	objectFieldTypes,
-	objectName,
 	objectRelationshipId,
 	readOnly,
 	setAggregationFilters,
@@ -69,8 +69,7 @@ export function BasicInfoContainer({
 	return (
 		<div
 			className={classNames({
-				'lfr-objects__edit-object-field-card-content':
-					modelBuilder === false,
+				'lfr-objects__edit-object-field-card-content': !modelBuilder,
 				'lfr-objects__edit-object-field-model-builder-panel': modelBuilder,
 			})}
 		>
@@ -89,16 +88,16 @@ export function BasicInfoContainer({
 					creationLanguageId2 as Liferay.Language.Locale
 				}
 				disabled={disableFieldFormBase}
-				editingField
+				editingObjectField
 				errors={errors}
 				handleChange={handleChange}
 				objectDefinition={objectDefinition}
 				objectDefinitionExternalReferenceCode={
 					objectDefinitionExternalReferenceCode
 				}
+				objectDefinitionName={objectDefinitionName}
 				objectField={values}
 				objectFieldTypes={objectFieldTypes}
-				objectName={objectName}
 				objectRelationshipId={objectRelationshipId}
 				onAggregationFilterChange={setAggregationFilters}
 				onRelationshipChange={setObjectDefinitionExternalReferenceCode2}

@@ -6,6 +6,7 @@
 	display: flex;
 	justify-content: space-between;
 	padding: 0.5rem 1rem 0.5rem 0.5rem;
+	transition: 0.3s;
 
 	&-business-type {
 		font-size: 10px;
@@ -30,5 +31,6 @@
 
 	&--selected {
 		background: #f0f5ff;
+		color: #0b5fff !important;
 	}
 }

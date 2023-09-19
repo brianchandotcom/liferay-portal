@@ -190,8 +190,8 @@ export default function LeftSidebarTreeView({
 				) {
 					dispatch({
 						payload: {
-							edges,
-							nodes,
+							objectDefinitionNodes: nodes,
+							objectRelationshipEdges: edges,
 							selectedObjectDefinitionId: (item as LeftSidebarObjectDefinitionItem).id.toString(),
 						},
 						type: TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE,
@@ -266,11 +266,11 @@ export default function LeftSidebarTreeView({
 									() =>
 										dispatch({
 											payload: {
-												edges,
 												hiddenObjectFolderObjectDefinitionNodes:
 													leftSidebarItem.hiddenObjectFolderObjectDefinitionNodes,
 												leftSidebarItem,
-												nodes,
+												objectDefinitionNodes: nodes,
+												objectRelationshipEdges: edges,
 											},
 											type: TYPES.BULK_CHANGE_NODE_VIEW,
 										})
@@ -330,11 +330,11 @@ export default function LeftSidebarTreeView({
 											() =>
 												dispatch({
 													payload: {
-														edges,
 														hiddenObjectDefinitionNode,
-														nodes,
 														objectDefinitionId: id,
 														objectDefinitionName: name,
+														objectDefinitionNodes: nodes,
+														objectRelationshipEdges: edges,
 														selectedSidebarItem: leftSidebarItem,
 													},
 													type:

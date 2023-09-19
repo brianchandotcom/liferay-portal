@@ -40,14 +40,14 @@ interface ObjectFieldFormBaseProps {
 	children?: ReactNode;
 	creationLanguageId2?: Liferay.Language.Locale;
 	disabled?: boolean;
-	editingField?: boolean;
+	editingObjectField?: boolean;
 	errors: ObjectFieldErrors;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	objectDefinition?: Partial<ObjectDefinition>;
 	objectDefinitionExternalReferenceCode: string;
+	objectDefinitionName: string;
 	objectField: Partial<ObjectField>;
 	objectFieldTypes: ObjectFieldType[];
-	objectName: string;
 	objectRelationshipId?: number;
 	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
 	onRelationshipChange?: (
@@ -112,7 +112,7 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 	],
 ]);
 
-async function getFieldSettingsByBusinessType(
+async function getObjectFieldSettingsByBusinessType(
 	objectRelationshipId: number,
 	setListTypeDefinitions: (value: ListTypeDefinition[]) => void,
 	setOneToManyRelationship: (value: TObjectRelationship) => void,
@@ -156,24 +156,30 @@ export default function ObjectFieldFormBase({
 	children,
 	creationLanguageId2,
 	disabled,
-	editingField = false,
+	editingObjectField = false,
 	errors,
 	handleChange,
 	objectDefinition,
 	objectDefinitionExternalReferenceCode,
+	objectDefinitionName,
 	objectField: values,
 	objectFieldTypes,
-	objectName,
 	objectRelationshipId,
 	onAggregationFilterChange,
 	onRelationshipChange,
 	setValues,
 }: ObjectFieldFormBaseProps) {
-	const [oneToManyRelationship, setOneToManyRelationship] = useState<
-		TObjectRelationship
-	>();
-	const [pickLists, setPickLists] = useState<Partial<PickList>[]>([]);
-	const [picklistQuery, setPicklistQuery] = useState<string>('');
+	const [listTypeDefinitions, setListTypeDefinitions] = useState<
+		Partial<ListTypeDefinition>[]
+	>([]);
+	const [listTypeDefinitionQuery, setListTypeDefinitionQuery] = useState<
+		string
+	>('');
+
+	const [
+		oneToManyObjectRelationship,
+		setOneToManyObjectRelationship,
+	] = useState<TObjectRelationship>();
 	const [selectedOutput, setSelectedOutput] = useState<string>('');
 
 	const businessTypeMap = useMemo(() => {
@@ -186,27 +192,17 @@ export default function ObjectFieldFormBase({
 		return businessTypeMap;
 	}, [objectFieldTypes]);
 
-	const [listTypeDefinitions, setListTypeDefinitions] = useState<
-		Partial<ListTypeDefinition>[]
-	>([]);
-	const [picklistQuery, setPicklistQuery] = useState<string>('');
-
-	const [oneToManyRelationship, setOneToManyRelationship] = useState<
-		TObjectRelationship
-	>();
-	const [selectedOutput, setSelectedOutput] = useState<string>('');
-
 	const validListTypeDefinitionId =
 		values.listTypeDefinitionId !== undefined &&
 		values.listTypeDefinitionId !== 0;
 
-	const filteredPicklist = useMemo(() => {
+	const filteredListTypeDefinitions = useMemo(() => {
 		return listTypeDefinitions.filter(({name}) => {
-			return stringIncludesQuery(name as string, picklistQuery);
+			return stringIncludesQuery(name as string, listTypeDefinitionQuery);
 		});
-	}, [picklistQuery, listTypeDefinitions]);
+	}, [listTypeDefinitionQuery, listTypeDefinitions]);
 
-	const selectedPicklist = useMemo(() => {
+	const selectedListTypeDefinition = useMemo(() => {
 		return listTypeDefinitions.find(
 			({id}) => values.listTypeDefinitionId === id
 		);
@@ -253,8 +249,8 @@ export default function ObjectFieldFormBase({
 		}
 
 		if (
-			oneToManyRelationship &&
-			oneToManyRelationship.deletionType !== 'disassociate'
+			oneToManyObjectRelationship &&
+			oneToManyObjectRelationship.deletionType !== 'disassociate'
 		) {
 			return false;
 		}
@@ -272,10 +268,10 @@ export default function ObjectFieldFormBase({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			await getFieldSettingsByBusinessType(
+			await getObjectFieldSettingsByBusinessType(
 				objectRelationshipId as number,
 				setListTypeDefinitions,
-				setOneToManyRelationship,
+				setOneToManyObjectRelationship,
 				setSelectedOutput,
 				values
 			);
@@ -330,10 +326,10 @@ export default function ObjectFieldFormBase({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			await getFieldSettingsByBusinessType(
+			await getObjectFieldSettingsByBusinessType(
 				objectRelationshipId as number,
-				setOneToManyRelationship,
-				setPickLists,
+				setListTypeDefinitions,
+				setOneToManyObjectRelationship,
 				setSelectedOutput,
 				values
 			);
@@ -341,7 +337,7 @@ export default function ObjectFieldFormBase({
 
 		makeFetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values.businessType, objectRelationshipId]);
+	}, [objectRelationshipId, values.businessType]);
 
 	return (
 		<>
@@ -364,7 +360,7 @@ export default function ObjectFieldFormBase({
 				label={Liferay.Language.get('type')}
 				onChange={handleTypeChange}
 				options={
-					!Liferay.FeatureFlags['LPS-164948'] && !editingField
+					!Liferay.FeatureFlags['LPS-164948'] && !editingObjectField
 						? applyFeatureFlag()
 						: objectFieldTypes
 				}
@@ -376,10 +372,10 @@ export default function ObjectFieldFormBase({
 				<AttachmentFormBase
 					disabled={disabled}
 					error={errors.fileSource}
+					objectDefinitionName={objectDefinitionName}
 					objectFieldSettings={
 						values.objectFieldSettings as ObjectFieldSetting[]
 					}
-					objectName={objectName}
 					setValues={setValues}
 				/>
 			)}
@@ -389,7 +385,7 @@ export default function ObjectFieldFormBase({
 					creationLanguageId2={
 						creationLanguageId2 as Liferay.Language.Locale
 					}
-					editingField={editingField}
+					editingObjectField={editingObjectField}
 					errors={errors}
 					objectDefinitionExternalReferenceCode={
 						objectDefinitionExternalReferenceCode
@@ -445,10 +441,12 @@ export default function ObjectFieldFormBase({
 					disabled={disabled}
 					emptyStateMessage={Liferay.Language.get('option-not-found')}
 					error={errors.listTypeDefinitionId}
-					items={filteredPicklist}
+					items={filteredListTypeDefinitions}
 					label={Liferay.Language.get('picklist')}
-					onActive={(item) => item.name === selectedPicklist?.name}
-					onChangeQuery={setPicklistQuery}
+					onActive={(item) =>
+						item.name === selectedListTypeDefinition?.name
+					}
+					onChangeQuery={setListTypeDefinitionQuery}
 					onSelectItem={(item) => {
 						setValues({
 							listTypeDefinitionExternalReferenceCode:
@@ -460,8 +458,8 @@ export default function ObjectFieldFormBase({
 							),
 						});
 					}}
-					query={picklistQuery}
-					value={selectedPicklist?.name}
+					query={listTypeDefinitionQuery}
+					value={selectedListTypeDefinition?.name}
 				>
 					{({name}) => (
 						<div className="d-flex justify-content-between">

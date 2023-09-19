@@ -39,7 +39,6 @@ interface BasicInfoTabProps {
 	modelBuilder?: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldTypes: ObjectFieldType[];
-	objectName: string;
 	objectRelationshipId: number;
 	readOnly: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
@@ -58,7 +57,6 @@ export function BasicInfoTab({
 	modelBuilder = false,
 	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
-	objectName,
 	objectRelationshipId,
 	readOnly,
 	setValues,
@@ -83,11 +81,13 @@ export function BasicInfoTab({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
-				objectDefinitionExternalReferenceCode
-			);
+			if (objectDefinitionExternalReferenceCode) {
+				const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode
+				);
 
-			setObjectDefinition(objectDefinitionResponse);
+				setObjectDefinition(objectDefinitionResponse);
+			}
 		};
 
 		makeFetch();
@@ -112,8 +112,8 @@ export function BasicInfoTab({
 					objectDefinitionExternalReferenceCode={
 						objectDefinitionExternalReferenceCode
 					}
+					objectDefinitionName={objectDefinition.name ?? ''}
 					objectFieldTypes={objectFieldTypes}
-					objectName={objectName}
 					objectRelationshipId={objectRelationshipId}
 					readOnly={readOnly}
 					setAggregationFilters={setAggregationFilters}

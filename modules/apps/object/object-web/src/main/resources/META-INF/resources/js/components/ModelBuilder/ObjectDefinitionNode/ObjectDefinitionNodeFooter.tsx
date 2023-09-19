@@ -12,7 +12,7 @@ import React, {SetStateAction} from 'react';
 import './ObjectDefinitionNodeFooter.scss';
 
 interface ObjectDefinitionNodeFooterProps {
-	handleSelectedNode: () => void;
+	handleSelectObjectDefinitionNode: () => void;
 	isLinkedObjectDefinition: boolean;
 	setShowAllObjectFields: (value: boolean) => void;
 	setShowModal: (value: SetStateAction<Partial<ModelBuilderModals>>) => void;
@@ -20,7 +20,7 @@ interface ObjectDefinitionNodeFooterProps {
 }
 
 export default function ObjectDefinitionNodeFooter({
-	handleSelectedNode,
+	handleSelectObjectDefinitionNode,
 	isLinkedObjectDefinition,
 	setShowAllObjectFields,
 	setShowModal,
@@ -30,7 +30,7 @@ export default function ObjectDefinitionNodeFooter({
 		<>
 			<div
 				className="lfr-objects__model-builder-node-button-container"
-				onClick={handleSelectedNode}
+				onClick={handleSelectObjectDefinitionNode}
 			>
 				{!isLinkedObjectDefinition && (
 					<DropDown

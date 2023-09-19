@@ -10,14 +10,14 @@ interface ObjectFieldFormBaseProps {
 	children?: ReactNode;
 	creationLanguageId2?: Liferay.Language.Locale;
 	disabled?: boolean;
-	editingField?: boolean;
+	editingObjectField?: boolean;
 	errors: ObjectFieldErrors;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	objectDefinition?: Partial<ObjectDefinition>;
 	objectDefinitionExternalReferenceCode: string;
+	objectDefinitionName: string;
 	objectField: Partial<ObjectField>;
 	objectFieldTypes: ObjectFieldType[];
-	objectName: string;
 	objectRelationshipId?: number;
 	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
 	onRelationshipChange?: (
@@ -35,14 +35,14 @@ export default function ObjectFieldFormBase({
 	children,
 	creationLanguageId2,
 	disabled,
-	editingField,
+	editingObjectField,
 	errors,
 	handleChange,
 	objectDefinition,
 	objectDefinitionExternalReferenceCode,
+	objectDefinitionName,
 	objectField: values,
 	objectFieldTypes,
-	objectName,
 	objectRelationshipId,
 	onAggregationFilterChange,
 	onRelationshipChange,

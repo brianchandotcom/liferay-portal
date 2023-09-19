@@ -34,7 +34,6 @@ export declare function EditObjectFieldContent({
 	learnResources,
 	modelBuilder,
 	objectDefinitionExternalReferenceCode,
-	objectName,
 	readOnly,
 	setValues,
 	values,

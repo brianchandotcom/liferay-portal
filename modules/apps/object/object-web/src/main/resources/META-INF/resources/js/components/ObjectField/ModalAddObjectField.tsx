@@ -24,7 +24,7 @@ interface ModalAddObjectField {
 	baseResourceURL: string;
 	creationLanguageId: Liferay.Language.Locale;
 	objectDefinitionExternalReferenceCode: string;
-	objectName?: string;
+	objectDefinitionName?: string;
 	onAfterSubmit: (value: ObjectField) => void;
 	setVisibility: (value: boolean) => void;
 }
@@ -33,7 +33,7 @@ export function ModalAddObjectField({
 	baseResourceURL,
 	creationLanguageId,
 	objectDefinitionExternalReferenceCode,
-	objectName,
+	objectDefinitionName,
 	onAfterSubmit,
 	setVisibility,
 }: ModalAddObjectField) {
@@ -195,9 +195,9 @@ export function ModalAddObjectField({
 							objectDefinitionExternalReferenceCode={
 								objectDefinitionExternalReferenceCode
 							}
+							objectDefinitionName={objectDefinitionName ?? ''}
 							objectField={values}
 							objectFieldTypes={objectFieldTypes}
-							objectName={objectName ?? ''}
 							setValues={setValues}
 						>
 							{Liferay.FeatureFlags['LPS-172017'] &&

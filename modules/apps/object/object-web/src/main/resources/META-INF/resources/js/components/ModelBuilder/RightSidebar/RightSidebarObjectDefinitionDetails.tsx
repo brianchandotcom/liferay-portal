@@ -57,15 +57,9 @@ export function RightSidebarObjectDefinitionDetails({
 	siteKeyValuePairs,
 }: RightSidebarObjectDefinitionDetailsProps) {
 	const [
-		{elements, selectedObjectFolder},
+		{elements, selectedObjectDefinitionNode, selectedObjectFolder},
 		dispatch,
 	] = useObjectFolderContext();
-
-	const selectedObjectDefinitionNode = elements.find((element) => {
-		if (isNode(element)) {
-			return (element as Node<ObjectDefinitionNodeData>).data?.selected;
-		}
-	}) as Node<ObjectDefinitionNodeData>;
 
 	const [
 		nonRelationshipObjectFieldsInfo,

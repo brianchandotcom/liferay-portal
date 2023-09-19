@@ -41,8 +41,7 @@ export function ReadOnlyContainer({
 	return (
 		<div
 			className={classNames({
-				'lfr-objects__edit-object-field-card-content':
-					modelBuilder === false,
+				'lfr-objects__edit-object-field-card-content': !modelBuilder,
 				'lfr-objects__edit-object-field-model-builder-panel': modelBuilder,
 			})}
 		>

@@ -6,8 +6,8 @@
 import {Edge} from 'react-flow-renderer';
 import {ObjectRelationshipEdgeData} from '../types';
 export declare function convertAllObjectFieldsToUnselected(
-	objectFields: ObjectFieldNode[]
-): ObjectFieldNode[];
+	objectFields: ObjectFieldNodeRow[]
+): ObjectFieldNodeRow[];
 export declare function getNonOverlappingEdges(
 	allEdges: Edge<ObjectRelationshipEdgeData>[]
 ): Edge<ObjectRelationshipEdgeData>[];
@@ -17,5 +17,5 @@ export declare function incrementEdgesYPosition(
 	yIncrement: number
 ): Edge<ObjectRelationshipEdgeData>[];
 export declare function objectFieldsCustomSort(
-	objectFields: ObjectFieldNode[]
-): ObjectFieldNode[];
+	objectFields: ObjectFieldNodeRow[]
+): ObjectFieldNodeRow[];

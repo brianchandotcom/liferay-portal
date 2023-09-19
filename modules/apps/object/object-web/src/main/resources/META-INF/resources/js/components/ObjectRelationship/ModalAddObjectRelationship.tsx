@@ -81,7 +81,13 @@ export function ModalAddObjectRelationship({
 			}
 
 			if (onAfterSubmit) {
-				setTimeout(() => onAfterSubmit(objectRelationship.id), 200);
+				setTimeout(
+					() =>
+						onAfterSubmit(
+							(objectRelationship as ObjectRelationship).id
+						),
+					200
+				);
 			}
 		}
 		catch (error: unknown) {
@@ -105,7 +111,7 @@ export function ModalAddObjectRelationship({
 
 	return (
 		<ClayModalProvider>
-			<ClayModal observer={observer}>
+			<ClayModal center observer={observer}>
 				<ClayForm onSubmit={handleSubmit}>
 					<ClayModal.Header>
 						{Liferay.Language.get('new-relationship')}

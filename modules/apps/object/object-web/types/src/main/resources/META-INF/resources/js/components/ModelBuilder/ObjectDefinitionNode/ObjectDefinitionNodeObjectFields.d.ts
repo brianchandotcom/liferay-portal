@@ -8,7 +8,7 @@
 import './ObjectDefinitionNodeObjectFields.scss';
 interface ObjectDefinitionNodeFieldsProps {
 	defaultLanguageId: Liferay.Language.Locale;
-	objectFields: ObjectFieldNode[];
+	objectFields: ObjectFieldNodeRow[];
 	selectedObjectDefinitionId: number;
 	showAllObjectFields: boolean;
 }

@@ -15,8 +15,8 @@ interface BasicInfoContainerProps {
 	modelBuilder?: boolean;
 	objectDefinition: Partial<ObjectDefinition>;
 	objectDefinitionExternalReferenceCode: string;
+	objectDefinitionName: string;
 	objectFieldTypes: ObjectFieldType[];
-	objectName: string;
 	objectRelationshipId: number;
 	readOnly: boolean;
 	setAggregationFilters: (values: AggregationFilters[]) => void;
@@ -32,8 +32,8 @@ export declare function BasicInfoContainer({
 	modelBuilder,
 	objectDefinition,
 	objectDefinitionExternalReferenceCode,
+	objectDefinitionName,
 	objectFieldTypes,
-	objectName,
 	objectRelationshipId,
 	readOnly,
 	setAggregationFilters,

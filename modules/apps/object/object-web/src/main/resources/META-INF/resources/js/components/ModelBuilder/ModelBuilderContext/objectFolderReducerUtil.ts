@@ -8,12 +8,12 @@ import {Edge} from 'react-flow-renderer';
 import {ObjectRelationshipEdgeData} from '../types';
 
 export function convertAllObjectFieldsToUnselected(
-	objectFields: ObjectFieldNode[]
+	objectFields: ObjectFieldNodeRow[]
 ) {
 	return objectFields.map((objectField) => ({
 		...objectField,
 		selected: false,
-	})) as ObjectFieldNode[];
+	})) as ObjectFieldNodeRow[];
 }
 
 export function getNonOverlappingEdges(
@@ -82,12 +82,12 @@ export function incrementEdgesYPosition(
 	});
 }
 
-export function objectFieldsCustomSort(objectFields: ObjectFieldNode[]) {
+export function objectFieldsCustomSort(objectFields: ObjectFieldNodeRow[]) {
 	const fieldOrder = ['id', 'externalReferenceCode'];
 
 	const compareFields = (
-		fieldA: ObjectFieldNode,
-		fieldB: ObjectFieldNode
+		fieldA: ObjectFieldNodeRow,
+		fieldB: ObjectFieldNodeRow
 	) => {
 		const fieldAIndex = fieldOrder.indexOf(fieldA.name as string);
 		const fieldBIndex = fieldOrder.indexOf(fieldB.name as string);

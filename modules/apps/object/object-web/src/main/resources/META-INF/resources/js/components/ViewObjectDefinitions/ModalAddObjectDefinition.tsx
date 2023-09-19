@@ -106,9 +106,9 @@ export function ModalAddObjectDefinition({
 			objectDefinition.storageType = storageType.value;
 		}
 		try {
-			const newObjectDefinition = await API.postObjectDefinition(
+			const newObjectDefinition = (await API.postObjectDefinition(
 				objectDefinition
-			);
+			)) as ObjectDefinition;
 
 			onClose();
 
@@ -169,7 +169,7 @@ export function ModalAddObjectDefinition({
 
 	return (
 		<ClayModalProvider>
-			<ClayModal observer={observer}>
+			<ClayModal center observer={observer}>
 				<ClayForm onSubmit={handleSubmit}>
 					<ClayModal.Header>
 						{Liferay.Language.get('new-custom-object')}

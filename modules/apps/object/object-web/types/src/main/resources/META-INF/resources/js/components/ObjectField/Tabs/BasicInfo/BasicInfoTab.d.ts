@@ -30,7 +30,6 @@ interface BasicInfoTabProps {
 	modelBuilder?: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldTypes: ObjectFieldType[];
-	objectName: string;
 	objectRelationshipId: number;
 	readOnly: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
@@ -48,7 +47,6 @@ export declare function BasicInfoTab({
 	modelBuilder,
 	objectDefinitionExternalReferenceCode,
 	objectFieldTypes,
-	objectName,
 	objectRelationshipId,
 	readOnly,
 	setValues,

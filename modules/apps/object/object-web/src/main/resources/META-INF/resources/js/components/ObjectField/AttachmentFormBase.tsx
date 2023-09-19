@@ -14,8 +14,8 @@ import './ObjectFieldFormBase.scss';
 interface IAttachmentFormBaseProps {
 	disabled?: boolean;
 	error?: string;
+	objectDefinitionName: string;
 	objectFieldSettings: ObjectFieldSetting[];
-	objectName: string;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 
@@ -41,8 +41,8 @@ const attachmentSources = [
 export function AttachmentFormBase({
 	disabled,
 	error,
+	objectDefinitionName,
 	objectFieldSettings,
-	objectName,
 	setValues,
 }: IAttachmentFormBaseProps) {
 	const settings = normalizeFieldSettings(objectFieldSettings);
@@ -88,7 +88,7 @@ export function AttachmentFormBase({
 		if (value) {
 			updatedSettings.push({
 				name: 'storageDLFolderPath',
-				value: `/${objectName}`,
+				value: `/${objectDefinitionName}`,
 			});
 		}
 

@@ -22,7 +22,7 @@ export default function DangerModal({
 	const [value, setValue] = useState<string>();
 
 	return (
-		<ClayModal observer={observer} status="danger">
+		<ClayModal center observer={observer} status="danger">
 			<ClayModal.Header>{title}</ClayModal.Header>
 
 			<ClayModal.Body>

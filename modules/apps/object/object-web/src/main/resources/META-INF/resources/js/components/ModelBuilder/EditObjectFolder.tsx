@@ -110,7 +110,7 @@ export default function EditObjectFolder({
 						dispatch({
 							payload: {
 								newObjectDefinition,
-								nodes,
+								objectDefinitionNodes: nodes,
 								selectedObjectFolderName:
 									selectedObjectFolder.name,
 							},

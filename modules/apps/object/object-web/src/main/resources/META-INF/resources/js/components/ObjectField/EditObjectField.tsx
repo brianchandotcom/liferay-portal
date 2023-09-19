@@ -29,7 +29,6 @@ export interface EditObjectFieldProps {
 	learnResources: ObjectWebLearnResources;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldId: number;
-	objectName: string;
 	readOnly: boolean;
 	workflowStatusJSONArray: LabelValueObject[];
 }
@@ -65,7 +64,6 @@ export default function EditObjectField({
 	learnResources,
 	objectDefinitionExternalReferenceCode,
 	objectFieldId,
-	objectName,
 	readOnly,
 	workflowStatusJSONArray,
 }: EditObjectFieldProps) {
@@ -117,6 +115,17 @@ export default function EditObjectField({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectFieldId]);
 
+	useEffect(() => {
+		if (errors.defaultValue) {
+			openToast({
+				message: Liferay.Language.get(
+					'please-fill-out-all-required-fields'
+				),
+				type: 'danger',
+			});
+		}
+	}, [errors]);
+
 	return (
 		<SidePanelForm
 			className="lfr-objects__edit-object-field"
@@ -137,7 +146,6 @@ export default function EditObjectField({
 				objectDefinitionExternalReferenceCode={
 					objectDefinitionExternalReferenceCode
 				}
-				objectName={objectName}
 				readOnly={readOnly}
 				setValues={setValues}
 				values={values}

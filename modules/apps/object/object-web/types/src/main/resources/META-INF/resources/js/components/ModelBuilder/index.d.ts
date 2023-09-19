@@ -25,9 +25,15 @@ export default function CustomObjectFolderWrapper({
 	baseResourceURL,
 	companyKeyValuePairs,
 	editObjectDefinitionURL,
+	filterOperators,
+	forbiddenChars,
+	forbiddenLastChars,
+	forbiddenNames,
 	objectDefinitionPermissionsURL,
 	objectDefinitionsStorageTypes,
 	objectRelationshipDeletionTypes,
+	objectWebLearnResources,
 	siteKeyValuePairs,
+	workflowStatusJSONArray,
 }: CustomObjectFolderWrapperProps): JSX.Element;
 export {};

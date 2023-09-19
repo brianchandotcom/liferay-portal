@@ -16,7 +16,7 @@ import './ObjectDefinitionNodeObjectFields.scss';
 
 interface ObjectDefinitionNodeFieldsProps {
 	defaultLanguageId: Liferay.Language.Locale;
-	objectFields: ObjectFieldNode[];
+	objectFields: ObjectFieldNodeRow[];
 	selectedObjectDefinitionId: number;
 	showAllObjectFields: boolean;
 }
@@ -27,23 +27,24 @@ export default function ObjectDefinitionNodeFields({
 	selectedObjectDefinitionId,
 	showAllObjectFields,
 }: ObjectDefinitionNodeFieldsProps) {
-	const store = useStore();
 	const [_, dispatch] = useObjectFolderContext();
 
-	const handleClickDetails = (
-		selectedObjectDefinitionField: ObjectFieldNode
+	const store = useStore();
+
+	const handleSelectObjectField = (
+		selectedObjectField: ObjectFieldNodeRow
 	) => {
 		const {edges, nodes} = store.getState();
 
 		dispatch({
 			payload: {
-				edges,
-				nodes,
-				selectedFieldDefinitionName: selectedObjectDefinitionField.name as string,
-				selectedObjectDefinitionField,
+				objectDefinitionNodes: nodes,
+				objectRelationshipEdges: edges,
 				selectedObjectDefinitionId,
+				selectedObjectField,
+				selectedObjectFieldName: selectedObjectField.name as string,
 			},
-			type: TYPES.SET_SELECTED_FIELD,
+			type: TYPES.SET_SELECTED_OBJECT_FIELD,
 		});
 	};
 
@@ -61,7 +62,7 @@ export default function ObjectDefinitionNodeFields({
 								}
 							)}
 							key={objectField.name}
-							onClick={() => handleClickDetails(objectField)}
+							onClick={() => handleSelectObjectField(objectField)}
 						>
 							<div className="lfr-objects__model-builder-node-field-label">
 								<span>

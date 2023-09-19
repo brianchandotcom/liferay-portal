@@ -46,7 +46,6 @@ export function EditObjectFieldContent({
 	learnResources,
 	modelBuilder = false,
 	objectDefinitionExternalReferenceCode,
-	objectName,
 	readOnly,
 	setValues,
 	values,
@@ -145,7 +144,6 @@ export function EditObjectFieldContent({
 									objectDefinitionExternalReferenceCode
 								}
 								objectFieldTypes={objectFieldTypes}
-								objectName={objectName}
 								objectRelationshipId={objectRelationshipId}
 								readOnly={readOnly}
 								setValues={setValues}
@@ -192,7 +190,6 @@ export function EditObjectFieldContent({
 						objectDefinitionExternalReferenceCode
 					}
 					objectFieldTypes={objectFieldTypes}
-					objectName={objectName}
 					objectRelationshipId={objectRelationshipId}
 					readOnly={readOnly}
 					setValues={setValues}

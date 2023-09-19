@@ -179,8 +179,8 @@ export default function DefaultObjectRelationshipEdge({
 				onClick={() => {
 					dispatch({
 						payload: {
-							edges,
-							nodes,
+							objectDefinitionNodes: nodes,
+							objectRelationshipEdges: edges,
 							selectedObjectRelationshipId: objectRelationshipId.toString(),
 						},
 						type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE,

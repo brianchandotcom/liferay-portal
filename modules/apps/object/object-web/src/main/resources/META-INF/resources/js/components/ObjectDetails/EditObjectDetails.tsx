@@ -13,17 +13,17 @@ import {
 import React, {useEffect, useState} from 'react';
 
 import ObjectManagementToolbar from '../ObjectManagementToolbar';
+import {AccountRestrictionContainer} from './AccountRestrictionContainer';
 import {ConfigurationContainer} from './ConfigurationContainer';
 import {EntryDisplayContainer} from './EntryDisplayContainer';
+import {ExternalDataSourceContainer} from './ExternalDataSourceContainer';
 import {ObjectDataContainer} from './ObjectDataContainer';
 import {ScopeContainer} from './ScopeContainer';
 import Sheet from './Sheet';
+import {TranslationsContainer} from './TranslationsContainer';
 import {useObjectDetailsForm} from './useObjectDetailsForm';
 
 import './ObjectDetails.scss';
-import {AccountRestrictionContainer} from './AccountRestrictionContainer';
-import {ExternalDataSourceContainer} from './ExternalDataSourceContainer';
-import {TranslationsContainer} from './TranslationsContainer';
 
 export type KeyValuePair = {
 	key: string;

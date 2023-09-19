@@ -18,7 +18,7 @@ interface ModalDeleteObjectFieldProps {
 	onAfterSubmit: () => void;
 	setModalVisibility: (value: boolean) => void;
 	setObjectField?: (values: ObjectField | null) => void;
-	showDeletionNotAllowedModal: boolean;
+	showObjectFieldDeletionNotAllowedModal: boolean;
 }
 
 export function ModalDeleteObjectField({
@@ -26,7 +26,7 @@ export function ModalDeleteObjectField({
 	onAfterSubmit,
 	setModalVisibility,
 	setObjectField,
-	showDeletionNotAllowedModal,
+	showObjectFieldDeletionNotAllowedModal,
 }: ModalDeleteObjectFieldProps) {
 	const {observer, onClose, open} = useModal({
 		onClose: () => setModalVisibility(false),
@@ -36,7 +36,7 @@ export function ModalDeleteObjectField({
 		<ClayModalProvider>
 			{objectField && (
 				<>
-					{showDeletionNotAllowedModal ? (
+					{showObjectFieldDeletionNotAllowedModal ? (
 						<WarningModal
 							observer={observer}
 							onClose={() => onClose()}

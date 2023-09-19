@@ -10,7 +10,7 @@ interface ModalAddObjectField {
 	baseResourceURL: string;
 	creationLanguageId: Liferay.Language.Locale;
 	objectDefinitionExternalReferenceCode: string;
-	objectName?: string;
+	objectDefinitionName?: string;
 	onAfterSubmit: (value: ObjectField) => void;
 	setVisibility: (value: boolean) => void;
 }
@@ -18,7 +18,7 @@ export declare function ModalAddObjectField({
 	baseResourceURL,
 	creationLanguageId,
 	objectDefinitionExternalReferenceCode,
-	objectName,
+	objectDefinitionName,
 	onAfterSubmit,
 	setVisibility,
 }: ModalAddObjectField): JSX.Element;

@@ -18,7 +18,6 @@ export interface EditObjectFieldProps {
 	learnResources: ObjectWebLearnResources;
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldId: number;
-	objectName: string;
 	readOnly: boolean;
 	workflowStatusJSONArray: LabelValueObject[];
 }
@@ -35,7 +34,6 @@ export default function EditObjectField({
 	learnResources,
 	objectDefinitionExternalReferenceCode,
 	objectFieldId,
-	objectName,
 	readOnly,
 	workflowStatusJSONArray,
 }: EditObjectFieldProps): JSX.Element;

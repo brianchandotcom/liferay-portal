@@ -111,7 +111,7 @@ function PageContentSelectors({
 						Liferay.Language.get(
 							'showing-content-for-the-experience-x'
 						),
-						selectedSegmentsExperience.segmentsExperienceName
+						selectedSegmentsExperience?.segmentsExperienceName
 					),
 				});
 
@@ -174,7 +174,7 @@ function PageContentSelectors({
 	useEffect(() => {
 		if (!firstRenderRef.current) {
 			simulateSegmentsExperiment(
-				selectedSegmentsExperience.segmentsExperienceId
+				selectedSegmentsExperience?.segmentsExperienceId
 			);
 		}
 	}, [selectedSegmentsExperience, simulateSegmentsExperiment]);
@@ -206,7 +206,7 @@ function PageContentSelectors({
 				method: 'POST',
 			}).then(() => {
 				simulateSegmentsExperiment(
-					selectedSegmentsExperience.segmentsExperienceId
+					selectedSegmentsExperience?.segmentsExperienceId
 				);
 			});
 		}

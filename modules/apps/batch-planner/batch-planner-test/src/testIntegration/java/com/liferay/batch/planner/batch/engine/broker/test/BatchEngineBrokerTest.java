@@ -151,16 +151,6 @@ public class BatchEngineBrokerTest {
 
 	@Test
 	public void testExportCompanyScopeObjectEntry() throws Exception {
-		_objectMapper.setFilterProvider(
-			new SimpleFilterProvider() {
-				{
-					addFilter(
-						"Liferay.Vulcan",
-						VulcanPropertyFilter.of(
-							new HashSet<>(_objectEntryFieldNames), null));
-				}
-			});
-
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObject",
 			TestPropsValues.getUser());
@@ -203,6 +193,16 @@ public class BatchEngineBrokerTest {
 			_getFinishedBatchEngineExportTask(
 				batchPlannerPlan.getBatchPlannerPlanId());
 
+		_objectMapper.setFilterProvider(
+			new SimpleFilterProvider() {
+				{
+					addFilter(
+						"Liferay.Vulcan",
+						VulcanPropertyFilter.of(
+							new HashSet<>(_objectEntryFieldNames), null));
+				}
+			});
+
 		JsonNode expectedJsonNode = _getExpectedJsonNode(
 			_objectDefinition1, objectEntry1.getObjectEntryId());
 
@@ -220,16 +220,6 @@ public class BatchEngineBrokerTest {
 
 	@Test
 	public void testExportObjectDefinition() throws Exception {
-		_objectMapper.setFilterProvider(
-			new SimpleFilterProvider() {
-				{
-					addFilter(
-						"Liferay.Vulcan",
-						VulcanPropertyFilter.of(
-							new HashSet<>(_objectDefinitionFieldNames), null));
-				}
-			});
-
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObject1",
 			TestPropsValues.getUser());
@@ -311,6 +301,16 @@ public class BatchEngineBrokerTest {
 		BatchEngineExportTask batchEngineExportTask =
 			_getFinishedBatchEngineExportTask(
 				batchPlannerPlan.getBatchPlannerPlanId());
+
+		_objectMapper.setFilterProvider(
+			new SimpleFilterProvider() {
+				{
+					addFilter(
+						"Liferay.Vulcan",
+						VulcanPropertyFilter.of(
+							new HashSet<>(_objectDefinitionFieldNames), null));
+				}
+			});
 
 		JsonNode expectedJsonNode = _getExpectedJsonNode(_objectDefinition1);
 

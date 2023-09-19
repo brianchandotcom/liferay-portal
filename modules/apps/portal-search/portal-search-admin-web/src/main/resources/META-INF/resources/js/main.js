@@ -389,12 +389,8 @@ AUI.add(
 					const {
 						availableDiskSpace = 0,
 						currentDiskSpaceUsed = 0,
+						isLowOnDiskSpace = false,
 					} = instance.get('elasticSearchDiskSpace');
-
-					const isLowOnDiskSpace =
-						availableDiskSpace && currentDiskSpaceUsed
-							? availableDiskSpace < 1.5 * currentDiskSpaceUsed
-							: true;
 
 					const status =
 						isConcurrentMode && isLowOnDiskSpace

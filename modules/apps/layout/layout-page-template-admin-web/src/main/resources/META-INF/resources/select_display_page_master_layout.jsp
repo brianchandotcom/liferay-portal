@@ -10,6 +10,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+DisplayPageDisplayContext displayPageDisplayContext = new DisplayPageDisplayContext(request, renderRequest, renderResponse);
 SelectDisplayPageMasterLayoutDisplayContext selectDisplayPageMasterLayoutDisplayContext = new SelectDisplayPageMasterLayoutDisplayContext(request);
 
 portletDisplay.setShowBackIcon(true);
@@ -39,7 +40,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 							HashMapBuilder.<String, Object>put(
 								"addDisplayPageUrl", selectDisplayPageMasterLayoutVerticalCard.getAddDisplayPageURL()
 							).put(
-								"mappingTypes", selectDisplayPageMasterLayoutDisplayContext.getMappingTypesJSONArray()
+								"mappingTypes", displayPageDisplayContext.getMappingTypesJSONArray()
 							).put(
 								"title", LanguageUtil.get(request, "add-display-page-template")
 							).build()

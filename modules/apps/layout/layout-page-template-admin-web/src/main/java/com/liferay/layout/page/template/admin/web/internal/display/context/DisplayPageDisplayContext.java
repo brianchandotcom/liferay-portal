@@ -5,10 +5,16 @@
 
 package com.liferay.layout.page.template.admin.web.internal.display.context;
 
+import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemFormVariation;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.info.item.capability.DisplayPageInfoItemCapability;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
@@ -19,6 +25,9 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -26,9 +35,11 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -52,6 +63,9 @@ public class DisplayPageDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
+		_infoItemServiceRegistry =
+			(InfoItemServiceRegistry)httpServletRequest.getAttribute(
+				InfoItemServiceRegistry.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -243,6 +257,33 @@ public class DisplayPageDisplayContext {
 		return _layoutPageTemplateEntryId;
 	}
 
+	public JSONArray getMappingTypesJSONArray() {
+		JSONArray mappingTypesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (InfoItemClassDetails infoItemClassDetails :
+				_infoItemServiceRegistry.getInfoItemClassDetails(
+					_themeDisplay.getScopeGroupId(),
+					DisplayPageInfoItemCapability.KEY,
+					_themeDisplay.getPermissionChecker())) {
+
+			mappingTypesJSONArray.put(
+				JSONUtil.put(
+					"id",
+					String.valueOf(
+						PortalUtil.getClassNameId(
+							infoItemClassDetails.getClassName()))
+				).put(
+					"label",
+					infoItemClassDetails.getLabel(_themeDisplay.getLocale())
+				).put(
+					"subtypes",
+					_getMappingFormVariationsJSONArray(infoItemClassDetails)
+				));
+		}
+
+		return mappingTypesJSONArray;
+	}
+
 	public String getOrderByCol() {
 		if (Validator.isNotNull(_orderByCol)) {
 			return _orderByCol;
@@ -353,6 +394,45 @@ public class DisplayPageDisplayContext {
 		return _layoutPageTemplateCollectionId;
 	}
 
+	private JSONArray _getMappingFormVariationsJSONArray(
+		InfoItemClassDetails infoItemClassDetails) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
+				infoItemClassDetails.getClassName());
+
+		if (infoItemFormVariationsProvider == null) {
+			return jsonArray;
+		}
+
+		Collection<InfoItemFormVariation> infoItemFormVariations =
+			infoItemFormVariationsProvider.getInfoItemFormVariations(
+				_themeDisplay.getScopeGroupId());
+
+		for (InfoItemFormVariation infoItemFormVariation :
+				infoItemFormVariations) {
+
+			jsonArray.put(
+				JSONUtil.put(
+					"id", String.valueOf(infoItemFormVariation.getKey())
+				).put(
+					"label",
+					() -> {
+						InfoLocalizedValue<String> labelInfoLocalizedValue =
+							infoItemFormVariation.getLabelInfoLocalizedValue();
+
+						return labelInfoLocalizedValue.getValue(
+							_themeDisplay.getLocale());
+					}
+				));
+		}
+
+		return jsonArray;
+	}
+
 	private OrderByComparator<Object> _getOrderByComparator() {
 		boolean orderByAsc = false;
 
@@ -391,6 +471,7 @@ public class DisplayPageDisplayContext {
 
 	private SearchContainer<?> _displayPagesSearchContainer;
 	private final HttpServletRequest _httpServletRequest;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private String _keywords;
 	private Long _layoutPageTemplateCollectionId;
 	private Long _layoutPageTemplateEntryId;

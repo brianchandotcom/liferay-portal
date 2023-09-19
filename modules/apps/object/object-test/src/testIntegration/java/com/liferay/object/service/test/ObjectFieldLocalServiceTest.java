@@ -752,6 +752,8 @@ public class ObjectFieldLocalServiceTest {
 		// Object field label needs to be replicated when there is an update
 		// with another default language
 
+		Locale defaultLocale = LocaleUtil.getDefault();
+
 		LocaleUtil.setDefault(
 			LocaleUtil.GERMANY.getLanguage(), LocaleUtil.GERMANY.getCountry(),
 			LocaleUtil.GERMANY.getVariant());
@@ -763,6 +765,10 @@ public class ObjectFieldLocalServiceTest {
 
 		Assert.assertEquals(
 			labelMap.get(LocaleUtil.GERMANY), labelMap.get(LocaleUtil.US));
+
+		LocaleUtil.setDefault(
+			defaultLocale.getLanguage(), defaultLocale.getCountry(),
+			defaultLocale.getVariant());
 
 		// Object field read only
 

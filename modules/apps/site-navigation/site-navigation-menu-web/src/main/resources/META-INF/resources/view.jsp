@@ -61,6 +61,7 @@
 			ddmTemplateKey="<%= siteNavigationMenuDisplayContext.getDDMTemplateKey() %>"
 			displayDepth="<%= siteNavigationMenuDisplayContext.getDisplayDepth() %>"
 			expandedLevels="<%= siteNavigationMenuDisplayContext.getExpandedLevels() %>"
+			navigationMenuMode="<%= siteNavigationMenuDisplayContext.getNavigationMenuMode() %>"
 			preview="<%= siteNavigationMenuDisplayContext.isPreview() %>"
 			rootItemId="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>"
 			rootItemLevel="<%= siteNavigationMenuDisplayContext.getRootMenuItemLevel() %>"

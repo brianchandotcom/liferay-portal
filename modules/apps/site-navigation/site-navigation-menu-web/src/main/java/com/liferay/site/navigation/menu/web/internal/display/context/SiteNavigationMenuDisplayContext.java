@@ -30,6 +30,7 @@ import com.liferay.site.navigation.menu.web.internal.configuration.SiteNavigatio
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
+import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuMode;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -127,6 +128,30 @@ public class SiteNavigationMenuDisplayContext {
 			_httpServletRequest, "expandedLevels", defaultExpandedLevels);
 
 		return _expandedLevels;
+	}
+
+	public NavigationMenuMode getNavigationMenuMode() {
+		if (_navigationMenuMode != null) {
+			return _navigationMenuMode;
+		}
+
+		int selectSiteNavigationMenuType = getSelectSiteNavigationMenuType();
+
+		if (selectSiteNavigationMenuType ==
+				SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) {
+
+			_navigationMenuMode = NavigationMenuMode.PRIVATE_PAGES;
+		}
+		else if (selectSiteNavigationMenuType ==
+					SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY) {
+
+			_navigationMenuMode = NavigationMenuMode.PUBLIC_PAGES;
+		}
+		else {
+			_navigationMenuMode = NavigationMenuMode.DEFAULT;
+		}
+
+		return _navigationMenuMode;
 	}
 
 	public String getRootMenuItemEventName() {
@@ -547,6 +572,7 @@ public class SiteNavigationMenuDisplayContext {
 	private long _displayStyleGroupId;
 	private String _expandedLevels;
 	private final HttpServletRequest _httpServletRequest;
+	private NavigationMenuMode _navigationMenuMode;
 	private Integer _navigationMenuType;
 	private Boolean _preview;
 	private String _rootMenuItemId;

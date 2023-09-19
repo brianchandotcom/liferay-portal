@@ -28,4 +28,10 @@ public interface HeadlessAPICompanyConfiguration {
 	)
 	public int pageSizeLimit();
 
+	@Meta.AD(
+		deflt = "20", description = "query-depth-limit-description",
+		name = "query-depth-limit", required = false
+	)
+	public int queryDepthLimit();
+
 }

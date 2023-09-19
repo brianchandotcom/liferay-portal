@@ -1656,8 +1656,11 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		try {
-			layoutFullURL = HttpComponentsUtil.setParameter(
-				layoutFullURL, "p_l_back_url", _getBackURL());
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			layoutFullURL = HttpComponentsUtil.addParameters(
+				layoutFullURL, "p_l_back_url", _getBackURL(),
+				"p_l_back_url_title", portletDisplay.getTitle());
 		}
 		catch (Exception exception) {
 			_log.error(

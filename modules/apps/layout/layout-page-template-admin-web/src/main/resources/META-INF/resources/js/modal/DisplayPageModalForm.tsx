@@ -3,15 +3,39 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {
+	RefObject,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
-import FormField from './FormField.es';
+import {MappingSubtype, MappingType} from '../types/MappingTypes';
+import {ValidationError} from '../types/ValidationError';
+import FormField from './FormField';
 
-const DisplayPageModalForm = React.forwardRef((props, ref) => {
-	const [subtypes, setSubtypes] = useState([]);
-	const nameInputRef = useRef(null);
-	const [error, setError] = useState(props.error);
+interface Props {
+	displayPageName: string;
+	error: ValidationError;
+	formRef: RefObject<HTMLFormElement>;
+	mappingTypes: MappingType[];
+	namespace: string;
+	onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+}
+
+export default function DisplayPageModalForm({
+	displayPageName,
+	error: initialError,
+	formRef,
+	mappingTypes,
+	namespace,
+	onSubmit,
+}: Props) {
+	const [subtypes, setSubtypes] = useState<MappingSubtype[]>([]);
+	const [error, setError] = useState<ValidationError>(initialError);
+
+	const nameInputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		if (nameInputRef.current) {
@@ -20,18 +44,18 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 	}, []);
 
 	useEffect(() => {
-		setError(props.error);
-	}, [props.error]);
+		setError(initialError);
+	}, [initialError]);
 
 	const onChange = useCallback(
 		(event) => {
-			setError({...error, classNameId: null, classTypeId: null});
+			setError({...error, classNameId: '', classTypeId: ''});
 
 			const select = event.target;
 			const selectedMappingId =
 				select.options[select.selectedIndex].value;
 
-			const mappingType = props.mappingTypes.find(
+			const mappingType = mappingTypes.find(
 				(mappingType) => mappingType.id === selectedMappingId
 			);
 
@@ -42,36 +66,36 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 				setSubtypes([]);
 			}
 		},
-		[error, props.mappingTypes]
+		[error, mappingTypes]
 	);
 
 	return (
-		<form onSubmit={props.onSubmit} ref={ref}>
+		<form onSubmit={onSubmit} ref={formRef}>
 			<FormField
-				error={error && error.name}
-				id={`${props.namespace}name`}
+				error={error.name}
+				id={`${namespace}name`}
 				name={Liferay.Language.get('name')}
 			>
 				<input
 					className="form-control"
-					defaultValue={props.displayPageName}
-					id={`${props.namespace}name`}
-					name={`${props.namespace}name`}
-					onChange={() => setError({...error, name: null})}
+					defaultValue={displayPageName}
+					id={`${namespace}name`}
+					name={`${namespace}name`}
+					onChange={() => setError({...error, name: ''})}
 					ref={nameInputRef}
 				/>
 			</FormField>
 
-			{Array.isArray(props.mappingTypes) && !!props.mappingTypes.length && (
+			{Array.isArray(mappingTypes) && !!mappingTypes.length && (
 				<fieldset>
 					<FormField
-						error={error && error.classNameId}
-						id={`${props.namespace}classNameId`}
+						error={error.classNameId}
+						id={`${namespace}classNameId`}
 						name={Liferay.Language.get('content-type')}
 					>
 						<select
 							className="form-control"
-							name={`${props.namespace}classNameId`}
+							name={`${namespace}classNameId`}
 							onChange={onChange}
 						>
 							<option value="">
@@ -80,7 +104,7 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 								)} --`}
 							</option>
 
-							{props.mappingTypes.map((mappingType) => (
+							{mappingTypes.map((mappingType) => (
 								<option
 									key={mappingType.id}
 									value={mappingType.id}
@@ -91,17 +115,20 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 						</select>
 					</FormField>
 
-					{Array.isArray(subtypes) && !!subtypes.length && (
+					{Array.isArray(subtypes) && Boolean(subtypes.length) && (
 						<FormField
 							error={error && error.classTypeId}
-							id={`${props.namespace}classTypeId`}
+							id={`${namespace}classTypeId`}
 							name={Liferay.Language.get('subtype')}
 						>
 							<select
 								className="form-control"
-								name={`${props.namespace}classTypeId`}
+								name={`${namespace}classTypeId`}
 								onChange={() =>
-									setError({...error, classTypeId: null})
+									setError({
+										...error,
+										classTypeId: '',
+									})
 								}
 							>
 								<option value="">
@@ -122,26 +149,4 @@ const DisplayPageModalForm = React.forwardRef((props, ref) => {
 			)}
 		</form>
 	);
-});
-
-DisplayPageModalForm.propTypes = {
-	displayPageName: PropTypes.string,
-	error: PropTypes.object,
-	mappingType: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string,
-			label: PropTypes.string,
-			subtypes: PropTypes.arrayOf(
-				PropTypes.shape({
-					id: PropTypes.string,
-					label: PropTypes.string,
-				})
-			),
-		})
-	),
-	namespace: PropTypes.string.isRequired,
-	onSubmit: PropTypes.func.isRequired,
-};
-
-export {DisplayPageModalForm};
-export default DisplayPageModalForm;
+}

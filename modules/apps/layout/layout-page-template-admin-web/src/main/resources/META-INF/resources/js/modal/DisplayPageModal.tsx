@@ -7,39 +7,56 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import {fetch, navigate} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React, {useCallback, useRef, useState} from 'react';
 
-import DisplayPageModalForm from './DisplayPageModalForm.es';
+import {MappingType} from '../types/MappingTypes';
+import {ValidationError} from '../types/ValidationError';
+import DisplayPageModalForm from './DisplayPageModalForm';
 
-const DisplayPageModal = (props) => {
-	const {formSubmitURL, onClose} = props;
+interface Props {
+	displayPageName: string;
+	formSubmitURL: string;
+	mappingTypes: MappingType[];
+	namespace: string;
+	onClose: () => void;
+	title: string;
+}
 
-	const formRef = useRef();
-	const [error, setError] = useState(null);
+export default function DisplayPageModal({
+	displayPageName,
+	formSubmitURL,
+	mappingTypes,
+	namespace,
+	onClose,
+	title,
+}: Props) {
+	const [error, setError] = useState<ValidationError>({});
 	const [loading, setLoading] = useState(false);
+
 	const {observer} = useModal({onClose});
+
+	const formRef = useRef<HTMLFormElement>(null);
 
 	const validateForm = useCallback(
 		(form) => {
 			const {elements} = form;
-			const error = {};
+			const error: ValidationError = {};
 
 			const errorMessage = Liferay.Language.get('this-field-is-required');
 
-			const nameField = elements[`${props.namespace}name`];
+			const nameField = elements[`${namespace}name`];
 
 			if (!nameField.value) {
 				error.name = errorMessage;
 			}
 
-			const classNameIdField = elements[`${props.namespace}classNameId`];
+			const classNameIdField = elements[`${namespace}classNameId`];
 
 			if (classNameIdField.selectedIndex === 0) {
 				error.classNameId = errorMessage;
 			}
 
-			const classTypeIdField = elements[`${props.namespace}classTypeId`];
+			const classTypeIdField = elements[`${namespace}classTypeId`];
 
 			if (classTypeIdField && classTypeIdField.selectedIndex === 0) {
 				error.classTypeId = errorMessage;
@@ -47,14 +64,16 @@ const DisplayPageModal = (props) => {
 
 			return error;
 		},
-		[props.namespace]
+		[namespace]
 	);
 
 	const handleSubmit = useCallback(
 		(event) => {
 			event.preventDefault();
 
-			const error = validateForm(formRef.current);
+			const form = formRef.current;
+
+			const error = validateForm(form);
 
 			if (Object.keys(error).length !== 0) {
 				setError(error);
@@ -65,7 +84,7 @@ const DisplayPageModal = (props) => {
 			setLoading(true);
 
 			fetch(formSubmitURL, {
-				body: new FormData(formRef.current),
+				body: new FormData(form!),
 				method: 'POST',
 			})
 				.then((response) => response.json())
@@ -94,8 +113,8 @@ const DisplayPageModal = (props) => {
 	const visible = observer.mutation;
 
 	return (
-		<ClayModal observer={observer} size="md">
-			<ClayModal.Header>{props.title}</ClayModal.Header>
+		<ClayModal observer={observer}>
+			<ClayModal.Header>{title}</ClayModal.Header>
 
 			<ClayModal.Body>
 				{error && error.other && (
@@ -110,12 +129,12 @@ const DisplayPageModal = (props) => {
 
 				{visible && (
 					<DisplayPageModalForm
-						displayPageName={props.displayPageName}
+						displayPageName={displayPageName}
 						error={error}
-						mappingTypes={props.mappingTypes}
-						namespace={props.namespace}
+						formRef={formRef}
+						mappingTypes={mappingTypes}
+						namespace={namespace}
 						onSubmit={handleSubmit}
-						ref={formRef}
 					/>
 				)}
 			</ClayModal.Body>
@@ -147,16 +166,4 @@ const DisplayPageModal = (props) => {
 			/>
 		</ClayModal>
 	);
-};
-
-DisplayPageModal.propTypes = {
-	displayPageName: PropTypes.string,
-	formSubmitURL: PropTypes.string.isRequired,
-	mappingTypes: PropTypes.array,
-	namespace: PropTypes.string.isRequired,
-	onClose: PropTypes.func.isRequired,
-	title: PropTypes.node.isRequired,
-};
-
-export {DisplayPageModal};
-export default DisplayPageModal;
+}

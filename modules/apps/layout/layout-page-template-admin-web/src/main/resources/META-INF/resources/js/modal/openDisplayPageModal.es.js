@@ -7,7 +7,7 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import DisplayPageModal from './DisplayPageModal.es';
+import DisplayPageModal from './DisplayPageModal';
 
 let container;
 

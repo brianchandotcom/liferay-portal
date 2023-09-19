@@ -5,11 +5,17 @@
 
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, {ReactNode} from 'react';
 
-const FormField = ({children, error, id, name}) => {
-	const hasError = error !== null && error !== undefined;
+interface Props {
+	children: ReactNode;
+	error?: string;
+	id: string;
+	name: string;
+}
+
+export default function FormField({children, error, id, name}: Props) {
+	const hasError = Boolean(error);
 
 	return (
 		<div
@@ -36,13 +42,4 @@ const FormField = ({children, error, id, name}) => {
 			)}
 		</div>
 	);
-};
-
-FormField.propTypes = {
-	error: PropTypes.string,
-	id: PropTypes.string.isRequired,
-	name: PropTypes.string.isRequired,
-};
-
-export {FormField};
-export default FormField;
+}

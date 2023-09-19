@@ -267,12 +267,6 @@ definition {
 
 			AssertVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
 		}
-
-		task ("Login with Test user to allow Teardown") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-		}
 	}
 
 	@description = "LPS-136512 Given A document associated with a Display Page When the user clicks on the ""Metrics"" button in the hover action Then the Content Performance panel is displayed"

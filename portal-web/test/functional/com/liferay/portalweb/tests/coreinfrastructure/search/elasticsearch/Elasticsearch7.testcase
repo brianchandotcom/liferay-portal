@@ -289,6 +289,21 @@ definition {
 		AssertConsoleTextPresent(value1 = "Limit of total fields \[100\] has been exceeded");
 	}
 
+	@description = "This is a use case for LPS-177666"
+	@priority = 3
+	test CanSetDefaultReindexExecutionMode {
+		property custom.properties = "feature.flag.LPS-177664=true${line.separator}feature.flag.LPS-183661=true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.search.configuration.ReindexConfiguration.config";
+		property osgi.module.configurations = "defaultReindexExecutionMode=\"concurrent\"";
+		property test.liferay.virtual.instance = "false";
+
+		SearchAdministration.openIndexActions();
+
+		AssertElementPresent(
+			key_text = "Concurrent",
+			locator1 = "Button#ANY");
+	}
+
 	@priority = 5
 	test ElasticsearchClusteringSmokeTest {
 		property elasticsearch.cluster.size = "2";

@@ -379,3 +379,16 @@ if (editKBArticleDisplayContext.isPortletTitleBasedNavigation()) {
 	%>'
 	module="admin/js/EditKBArticle"
 />
+
+<div>
+	<react:component
+		module="admin/js/components/ScheduleKBArticle"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"displayDate", editKBArticleDisplayContext.getDatePickerFormattedDisplayDate()
+			).put(
+				"isScheduled", String.valueOf(editKBArticleDisplayContext.isScheduled())
+			).build()
+		%>'
+	/>
+</div>

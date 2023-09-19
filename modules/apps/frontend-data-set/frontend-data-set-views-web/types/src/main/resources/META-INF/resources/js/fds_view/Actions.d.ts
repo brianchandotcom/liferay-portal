@@ -16,6 +16,7 @@ interface IFDSAction {
 		};
 	};
 	confirmationMessage: string;
+	confirmationMessageType: string;
 	confirmationMessage_i18n: {
 		[key: string]: string;
 	};
@@ -25,6 +26,7 @@ interface IFDSAction {
 	label_i18n: {
 		[key: string]: string;
 	};
+	permissionKey: string;
 	type: string;
 	url: string;
 }

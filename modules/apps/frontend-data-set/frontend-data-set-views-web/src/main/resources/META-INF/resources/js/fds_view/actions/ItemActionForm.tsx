@@ -74,13 +74,6 @@ const ItemActionForm = ({
 	setActiveSection,
 	spritemap,
 }: IFDSItemActionFormProps) => {
-	const labelFormElementId = `${namespace}Label`;
-	const iconFormElementId = `${namespace}Icon`;
-	const typeFormElementId = `${namespace}Type`;
-	const urlFormElementId = `${namespace}URL`;
-	const confirmationMessageFormElementId = `${namespace}ConfirmationMessage`;
-	const confirmationMessageTypeFormElementId = `${namespace}ConfirmationMessageType`;
-
 	const [availableIconSymbols, setAvailableIconSymbols] = useState<
 		Array<{label: string; value: string}>
 	>([]);
@@ -95,8 +88,11 @@ const ItemActionForm = ({
 
 	const [actionData, setActionData] = useState({
 		confirmationMessage: initialValues?.confirmationMessage ?? '',
+		confirmationMessageType:
+			initialValues?.confirmationMessageType ?? 'warning',
 		iconSymbol: initialValues?.icon ?? '',
 		label: initialValues?.label ?? '',
+		permissionKey: initialValues?.permissionKey ?? '',
 		type: initialValues?.type ?? 'link',
 		url: initialValues?.url ?? '',
 	});
@@ -104,11 +100,20 @@ const ItemActionForm = ({
 	const saveFDSAction = async () => {
 		setSaveButtonDisabled(true);
 
-		const {confirmationMessage, iconSymbol, type, url} = actionData;
+		const {
+			confirmationMessage,
+			confirmationMessageType,
+			iconSymbol,
+			label,
+			permissionKey,
+			type,
+			url,
+		} = actionData;
 
 		const body = {
 			[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_ID]: fdsView.id,
 			icon: iconSymbol,
+			permissionKey,
 			type,
 			url,
 		} as any;
@@ -116,10 +121,18 @@ const ItemActionForm = ({
 		if (Liferay.FeatureFlags['LPS-172017']) {
 			body.confirmationMessage_i18n = confirmationMessageTranslations;
 			body.label_i18n = labelTranslations;
+
+			if (Object.keys(confirmationMessageTranslations).length) {
+				body.confirmationMessageType = confirmationMessageType;
+			}
 		}
 		else {
 			body.confirmationMessage = confirmationMessage;
-			body.label = labelTranslations;
+			body.label = label;
+
+			if (confirmationMessage) {
+				body.confirmationMessageType = confirmationMessageType;
+			}
 		}
 
 		let fetchURL = API_URL.FDS_ACTIONS;
@@ -185,6 +198,14 @@ const ItemActionForm = ({
 
 		getIcons();
 	}, [spritemap]);
+
+	const labelFormElementId = `${namespace}Label`;
+	const permissionKeyFormElementId = `${namespace}PermissionKey`;
+	const iconFormElementId = `${namespace}Icon`;
+	const typeFormElementId = `${namespace}Type`;
+	const urlFormElementId = `${namespace}URL`;
+	const confirmationMessageFormElementId = `${namespace}ConfirmationMessage`;
+	const confirmationMessageTypeFormElementId = `${namespace}ConfirmationMessageType`;
 
 	return (
 		<>
@@ -332,6 +353,36 @@ const ItemActionForm = ({
 								/>
 							</ClayForm.Group>
 
+							<ClayForm.Group>
+								<label htmlFor={permissionKeyFormElementId}>
+									{Liferay.Language.get(
+										'headless-action-key'
+									)}
+
+									<span
+										className="label-icon lfr-portal-tooltip ml-2"
+										title={Liferay.Language.get(
+											'headless-action-key-help'
+										)}
+									>
+										<ClayIcon symbol="question-circle-full" />
+									</span>
+								</label>
+
+								<ClayInput
+									id={permissionKeyFormElementId}
+									onChange={(event) =>
+										setActionData({
+											...actionData,
+											permissionKey: event.target.value,
+										})
+									}
+									placeholder={Liferay.Language.get(
+										'add-a-value-here'
+									)}
+								/>
+							</ClayForm.Group>
+
 							<ClayLayout.Row>
 								<ClayLayout.Col size={8}>
 									<ClayForm.Group>
@@ -400,11 +451,20 @@ const ItemActionForm = ({
 										</label>
 
 										<ClaySelectWithOption
-											defaultValue="info"
 											id={
 												confirmationMessageTypeFormElementId
 											}
+											onChange={(event) =>
+												setActionData({
+													...actionData,
+													confirmationMessageType:
+														event.target.value,
+												})
+											}
 											options={MESSAGE_TYPES}
+											value={
+												actionData.confirmationMessageType
+											}
 										/>
 									</ClayForm.Group>
 								</ClayLayout.Col>

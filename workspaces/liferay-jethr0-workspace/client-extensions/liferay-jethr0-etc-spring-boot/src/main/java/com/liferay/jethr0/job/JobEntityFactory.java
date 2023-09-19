@@ -19,6 +19,15 @@ public class JobEntityFactory extends BaseEntityFactory<JobEntity> {
 
 	@Override
 	public JobEntity newEntity(JSONObject jsonObject) {
+		JSONObject typeJSONObject = jsonObject.getJSONObject("type");
+
+		JobEntity.Type jobEntityType = JobEntity.Type.getByKey(
+			typeJSONObject.getString("key"));
+
+		if (jobEntityType == JobEntity.Type.PORTAL_PULL_REQUEST_SF) {
+			return new PortalPullRequestSFJobEntity(jsonObject);
+		}
+
 		return new DefaultJobEntity(jsonObject);
 	}
 

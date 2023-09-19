@@ -18,9 +18,9 @@ interface IProps {
 
 const RadioGroup = ({
 	field,
-	meta,
 	items = [],
 	label,
+	meta,
 	required,
 	small,
 	...props

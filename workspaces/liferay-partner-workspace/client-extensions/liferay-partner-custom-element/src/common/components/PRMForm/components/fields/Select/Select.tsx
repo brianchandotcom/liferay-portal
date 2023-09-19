@@ -15,10 +15,10 @@ interface IProps {
 }
 
 const Select = ({
-	field,
-	meta,
-	label,
 	emptyOptionMessage = 'No options available',
+	field,
+	label,
+	meta,
 	options = [],
 	required,
 	...props

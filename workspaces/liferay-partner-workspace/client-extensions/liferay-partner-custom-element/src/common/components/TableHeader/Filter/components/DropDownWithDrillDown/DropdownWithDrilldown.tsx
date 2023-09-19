@@ -129,7 +129,7 @@ const DropDownWithDrillDown = ({
 
 							setActiveMenu(childId);
 						}}
-						onKeyDown={(event) => {
+						onKeyDown={(event: {key: string}) => {
 							if (event.key !== 'Enter') {
 								isKeyboardRef.current = false;
 							}

@@ -119,6 +119,7 @@ const BudgetBreakdownSection = ({
 								</PRMForm.Group>
 
 								<ClayButtonWithIcon
+									aria-label="Remove Activity"
 									className="mt-2"
 									displayType="secondary"
 									onClick={() => onRemove(index)}

@@ -25,12 +25,12 @@ interface iProps {
 }
 
 const DonutChart = ({
+	LegendElement = () => null,
 	chartDataColumns,
 	dataCurrency,
 	hasLegend = false,
 	height = 400,
 	isLoading,
-	LegendElement = () => null,
 	showLabel = false,
 	showLegend = false,
 	titleChart = '',

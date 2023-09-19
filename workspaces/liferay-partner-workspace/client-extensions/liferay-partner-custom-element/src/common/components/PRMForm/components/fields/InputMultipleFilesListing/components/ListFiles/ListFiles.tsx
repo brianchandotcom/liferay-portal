@@ -47,6 +47,7 @@ const ListFiles = ({arrayHelpers, files, meta}: IProps) => {
 						</div>
 
 						<ClayButtonWithIcon
+							aria-label="Delete Document"
 							className="text-neutral-7"
 							displayType={null}
 							onClick={async () => {

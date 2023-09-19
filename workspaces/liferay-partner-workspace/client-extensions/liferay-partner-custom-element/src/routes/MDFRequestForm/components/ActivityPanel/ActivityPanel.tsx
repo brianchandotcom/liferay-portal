@@ -62,6 +62,7 @@ const ActivityPanel = ({
 							{!detail && (
 								<div className="d-flex">
 									<ClayButtonWithIcon
+										aria-label="Edit Activity"
 										displayType={null}
 										onClick={onEdit}
 										small
@@ -69,6 +70,7 @@ const ActivityPanel = ({
 									/>
 
 									<ClayButtonWithIcon
+										aria-label="Remove Activity"
 										displayType={null}
 										onClick={onRemove}
 										small

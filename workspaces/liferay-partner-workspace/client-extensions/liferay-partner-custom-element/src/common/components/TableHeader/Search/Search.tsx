@@ -50,12 +50,14 @@ const Search = ({onSearchSubmit}: IProps) => {
 				<ClayInput.GroupInsetItem after tag="span">
 					{searching || !term ? (
 						<ClayButtonWithIcon
+							aria-label="Search"
 							displayType="unstyled"
 							onClick={() => handleSearchSubmit()}
 							symbol="search"
 						/>
 					) : (
 						<ClayButtonWithIcon
+							aria-label="Clean Search"
 							className="navbar-breakpoint-d-none"
 							displayType="unstyled"
 							onClick={() => handleSearchSubmit()}

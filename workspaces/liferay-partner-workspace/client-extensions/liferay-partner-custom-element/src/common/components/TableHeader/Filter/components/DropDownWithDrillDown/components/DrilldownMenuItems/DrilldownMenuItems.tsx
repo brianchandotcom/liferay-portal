@@ -17,6 +17,7 @@ interface MenuItem extends Omit<IItem, 'child' | 'type'> {
 
 interface IProps {
 	items: MenuItem[];
+	onKeyDown: (event: {key: string}) => void;
 }
 
 const DrilldownMenuItems = ({
@@ -26,7 +27,8 @@ const DrilldownMenuItems = ({
 	items,
 	onBack,
 	onForward,
-}: Omit<React.ComponentProps<typeof DrilldownMenu>, 'items'> & IProps) => {
+}: Omit<React.ComponentProps<typeof DrilldownMenu>, 'items' | 'messages'> &
+	IProps) => {
 	const initialClasses = classNames('transitioning', {
 		'drilldown-prev-initial': direction === 'prev',
 	});
@@ -53,6 +55,7 @@ const DrilldownMenuItems = ({
 							onClick={onBack}
 						>
 							<ClayButtonWithIcon
+								aria-label="Back to filter"
 								className="component-action dropdown-item-indicator-start text-neutral-2"
 								onClick={onBack}
 								symbol="angle-left-small"

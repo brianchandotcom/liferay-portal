@@ -22,6 +22,7 @@ export default function ModalContent({content, onClose}: IProps) {
 				<h3 className="col-6 mb-0">Opportunity Details</h3>
 
 				<ClayButtonWithIcon
+					aria-label="Close"
 					displayType={null}
 					onClick={onClose}
 					symbol="times"

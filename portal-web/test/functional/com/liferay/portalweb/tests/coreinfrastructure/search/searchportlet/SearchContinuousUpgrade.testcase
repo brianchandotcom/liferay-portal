@@ -36,24 +36,24 @@ definition {
 		HeadlessSite.addSite(siteName = "Site Name");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
+			groupName = "Guest",
 			layoutName = "Site Page");
 
 		for (var count : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content ${count}",
-				groupName = "Site Name",
+				groupName = "Guest",
 				title = "WC Title ${count}");
 		}
 
 		SearchPortlets.addWidgets(
-			groupName = "Site Name",
+			groupName = "Guest",
 			layoutName = "Site Page",
 			searchPortletList = "Search Results,Search Options,Suggestions,Type Facet");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
-			siteName = "Site Name");
+			siteName = "Guest");
 
 		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "Site Page");
 

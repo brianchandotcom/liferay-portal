@@ -163,7 +163,7 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "Publication Calendar Event Title Edit",
-			warningMessage = "Modification Conflict: The conflict cannot be automatically resolved.");
+			warningMessage = "Modification Conflict");
 
 		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "Publication Calendar Event Title Edit");
 

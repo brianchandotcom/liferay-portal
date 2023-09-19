@@ -85,11 +85,11 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "DM Document Title Edit 2",
-			warningMessage = "Modification Conflict: The conflict cannot be automatically resolved.");
+			warningMessage = "Modification Conflict");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "DM Document Title Edit 2",
-			warningMessage = "Duplicate Document Version: The document version was updated to latest.");
+			warningMessage = "Duplicate Document Version");
 	}
 
 	@description = "Assert the conflict changes disply when modifying and deleting the same document in two Publications"
@@ -145,15 +145,15 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "Asset",
-			warningMessage = "Modification Deletion Conflict: Deletion conflicts with a modification.");
+			warningMessage = "Entity Updated Before Deletion");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "Document Version",
-			warningMessage = "Modification Deletion Conflict: Deletion conflicts with a modification.");
+			warningMessage = "Entity Updated Before Deletion");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "Document",
-			warningMessage = "Modification Deletion Conflict: Deletion conflicts with a modification.");
+			warningMessage = "Entity Updated Before Deletion");
 	}
 
 	@description = "This is a use case for LPS-172496. Deleting a portlet with a modified configuration from a Publication incorrectly leads to a Deletion Modification Conflict"
@@ -435,7 +435,7 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "WC Folder Name",
-			warningMessage = "Duplicate Folder Name: Rename the folder in the publication.");
+			warningMessage = "Duplicate Folder Name");
 	}
 
 	@description = "Assert explanation of missing requirements conflict displays"
@@ -486,7 +486,7 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "WC SubFolder Name",
-			warningMessage = "Missing Requirement Conflict: Cannot be added because a required Web Content Folder has been deleted.");
+			warningMessage = "Missing Requirement Conflict");
 	}
 
 	@description = "Assert the conflict changes disply when modifying and deleting the same document in two Publications and discard the changes"
@@ -571,7 +571,7 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "WC WebContent Title 2 Edit",
-			warningMessage = "Deletion Modification Conflict: Modification conflicts with a deletion.");
+			warningMessage = "Missing Entity");
 
 		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "WC WebContent Title 2 Edit");
 
@@ -648,7 +648,7 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "DM Folder Name",
-			warningMessage = "Duplicate Folder Name: Rename the folder in the publication.");
+			warningMessage = "Duplicate Folder Name");
 
 		PublicationsChanges.gotoEditChanges(
 			changeCategory = "Documents Folder",

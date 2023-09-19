@@ -14,6 +14,7 @@ JournalFeedsManagementToolbarDisplayContext journalFeedsManagementToolbarDisplay
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(journalFeedsDisplayContext.getRedirect());
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 %>

@@ -26,8 +26,6 @@ definition {
 
 		Portlet.startServer(keepOsGiState = "true");
 
-		Navigator.openSpecificURL(url = "http://localhost:8080");
-
 		User.firstLoginUI(
 			password = "test",
 			specificURL = "http://localhost:8080",
@@ -35,41 +33,25 @@ definition {
 
 		HeadlessSite.addSite(siteName = "Site Name");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "Site Page");
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
 
 		for (var count : list "1,2,3") {
-			JSONWebcontent.addWebContent(
-				content = "WC Content ${count}",
-				groupName = "Guest",
-				title = "WC Title ${count}");
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(webContentTitle = "WC Title ${count}");
+
+			PortletEntry.publish();
 		}
 
-		SearchPortlets.addWidgets(
-			groupName = "Guest",
-			layoutName = "Site Page",
-			searchPortletList = "Search Results,Search Options,Suggestions,Type Facet");
+		Navigator.openSpecificURL(url = "http://localhost:8080");
 
-		Navigator.gotoSitePage(
-			pageName = "Site Page",
-			siteName = "Guest");
-
-		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "Site Page");
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
 		SearchResultPortlet.configureSearchResults(paginationDelta = 2);
 
 		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
-
-		SearchPortlets.gotoConfigureSuggestionsOptions(portletOption = "Configuration");
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		FormFields.enableCheckbox(fieldName = "spellCheckSuggestionEnabled");
-
-		PortletEntry.save();
-
-		IFrame.closeFrame();
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			displayFrequencies = "disable",
@@ -81,8 +63,6 @@ definition {
 
 		Portlet.startServer(deleteLiferayHome = "false");
 
-		Navigator.openSpecificURL(url = "http://localhost:8080");
-
 		TestUtils.hardRefresh();
 
 		User.firstLoginUI(
@@ -90,9 +70,65 @@ definition {
 			specificURL = "http://localhost:8080",
 			userEmailAddress = "test@liferay.com");
 
-		SearchAdministration.executeReindex();
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
 
-		ValidateSearchUpgrade.viewSearchPortletsConfiguration();
+		Click(
+			key_navItem = "Index Actions",
+			locator1 = "NavBar#NAV_ITEM_LINK");
+
+		Click(
+			key_action = "Reindex Search Indexes",
+			locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
+
+		SearchAdministration.waitForReindexFinished(waitForReindexRequest = "true");
+
+		Navigator.openSpecificURL(url = "http://localhost:8080");
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search Result",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		FormFields.viewTextValue(
+			fieldName = "paginationDelta",
+			fieldValue = 2);
+
+		IFrame.closeFrame();
+
+		Portlet.gotoPortletOptions(
+			portletName = "Search Options",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		FormFields.viewCheckboxChecked(fieldName = "allowEmptySearches");
+
+		IFrame.closeFrame();
+
+		Portlet.gotoPortletOptions(
+			portletName = "Type Facet",
+			portletOption = "Configuration");
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "frequenciesVisible");
+
+		IFrame.closeFrame();
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		Pagination.viewResults(results = "Showing 1 to 2 of 3 entries.");
+
+		AssertElementNotPresent(
+			key_facetType = "Type Facet",
+			key_termValue = "",
+			locator1 = "Search#FACET_TERM_FREQUENCIES");
 	}
 
 	@priority = 5
@@ -106,14 +142,15 @@ definition {
 
 		Portlet.startServer(keepOsGiState = "true");
 
-		Navigator.openSpecificURL(url = "http://localhost:8080");
-
 		User.firstLoginUI(
 			password = "test",
 			specificURL = "http://localhost:8080",
 			userEmailAddress = "test@liferay.com");
 
-		Blueprints.openBlueprintsAdmin();
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Experiences",
+			panel = "Applications",
+			portlet = "Blueprints");
 
 		Blueprints.createElement(title = "Test Element");
 
@@ -370,9 +407,25 @@ definition {
 			specificURL = "http://localhost:8080",
 			userEmailAddress = "test@liferay.com");
 
-		SearchAdministration.executeReindex();
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
 
-		Blueprints.openBlueprintsAdmin();
+		Click(
+			key_navItem = "Index Actions",
+			locator1 = "NavBar#NAV_ITEM_LINK");
+
+		Click(
+			key_action = "Reindex Search Indexes",
+			locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
+
+		SearchAdministration.waitForReindexFinished(waitForReindexRequest = "true");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Search Experiences",
+			panel = "Applications",
+			portlet = "Blueprints");
 
 		AssertElementPresent(
 			key_entryTitle = "Empty Blueprint",

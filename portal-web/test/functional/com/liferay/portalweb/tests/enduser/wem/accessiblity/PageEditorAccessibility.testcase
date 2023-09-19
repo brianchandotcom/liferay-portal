@@ -722,6 +722,31 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-194373. The Page Design / Content Editing picker should comply with WCAG 2.1 AA standard."
+	@priority = 3
+	test ViewAccessibilityOfPageEditionModeSelector {
+		task ("Given a page creator has a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+
+		task ("When the page creator opens the dropdown menu of page edition mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Click(locator1 = "PageEditor#EDIT_MODE_SELECTOR");
+		}
+
+		task ("Then the dropdown menu should have correct accessibility") {
+			AssertElementAccessible(locator1 = "//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li");
+
+			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li)[2]");
+		}
+	}
+
 	@description = "This is a test for LPS-165296. The screen reader should be able to distinguish between view mode and edit mode."
 	@priority = 3
 	test ViewPageTitleOfViewModeAndEditMode {

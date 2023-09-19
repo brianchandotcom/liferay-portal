@@ -6,7 +6,7 @@ definition {
 		if (${contentType} == "Commerce Order") {
 			var value = "com.liferay.commerce.model.CommerceOrder";
 		}
-		else if (${contentType} == "Commerce Product") {
+		else if (${contentType} == "Product") {
 			var value = "com.liferay.commerce.product.model.CPDefinition";
 		}
 		else if (${contentType} == "Web Content Article") {

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -158,8 +157,6 @@ public class PriceEntryResourceImpl extends BasePriceEntryResourceImpl {
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
 				searchContext.setAttribute("commercePriceListId", id);
-				searchContext.setAttribute(
-					"status", WorkflowConstants.STATUS_ANY);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 			},
 			sorts,

@@ -20,6 +20,7 @@ function JobsPage() {
 	const [jobPriority, setJobPriority] = useState(4);
 	const [jobTypeKey, setJobTypeKey] = useState('portalPullRequestSF');
 	const [jobTypes, setJobTypes] = useState(null);
+	const [jenkinsGitHubURL, setJenkinsGitHubURL] = useState(null);
 	const [pullRequestURL, setPullRequestURL] = useState(null);
 
 	function redirectToJobPage(data) {
@@ -69,6 +70,7 @@ function JobsPage() {
 	const jobData = {
 		name: jobName,
 		priority: jobPriority,
+		jenkinsGitHubURL,
 		pullRequestURL,
 		state: 'opened',
 		type: jobTypeKey,
@@ -125,6 +127,19 @@ function JobsPage() {
 						placeholder="Insert your name here"
 						type="text"
 						value={jobName}
+					/>
+				</ClayForm.Group>
+
+				<ClayForm.Group>
+					<label htmlFor="jenkinsGitHubURL">Jenkins GitHub URL</label>
+
+					<ClayInput
+						id="jenkinsGitHubURL"
+						onChange={(event) => {
+							setJenkinsGitHubURL(event.target.value);
+						}}
+						placeholder="Insert your Jenkins GitHub URL here"
+						type="text"
 					/>
 				</ClayForm.Group>
 

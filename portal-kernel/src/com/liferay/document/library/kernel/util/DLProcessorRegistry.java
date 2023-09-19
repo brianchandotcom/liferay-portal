@@ -35,13 +35,9 @@ public interface DLProcessorRegistry {
 
 	public boolean isPreviewableSize(FileVersion fileVersion);
 
-	public void register(DLProcessor dlProcessor);
-
 	public void trigger(FileEntry fileEntry, FileVersion fileVersion);
 
 	public void trigger(
 		FileEntry fileEntry, FileVersion fileVersion, boolean trusted);
-
-	public void unregister(DLProcessor dlProcessor);
 
 }

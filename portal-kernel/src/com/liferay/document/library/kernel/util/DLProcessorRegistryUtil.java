@@ -75,13 +75,6 @@ public class DLProcessorRegistryUtil {
 		return dlProcessorRegistry.isPreviewableSize(fileVersion);
 	}
 
-	public static void register(DLProcessor dlProcessor) {
-		DLProcessorRegistry dlProcessorRegistry =
-			_dlProcessorRegistrySnapshot.get();
-
-		dlProcessorRegistry.register(dlProcessor);
-	}
-
 	public static void trigger(FileEntry fileEntry, FileVersion fileVersion) {
 		DLProcessorRegistry dlProcessorRegistry =
 			_dlProcessorRegistrySnapshot.get();
@@ -96,13 +89,6 @@ public class DLProcessorRegistryUtil {
 			_dlProcessorRegistrySnapshot.get();
 
 		dlProcessorRegistry.trigger(fileEntry, fileVersion, trusted);
-	}
-
-	public static void unregister(DLProcessor dlProcessor) {
-		DLProcessorRegistry dlProcessorRegistry =
-			_dlProcessorRegistrySnapshot.get();
-
-		dlProcessorRegistry.unregister(dlProcessor);
 	}
 
 	private static final Snapshot<DLProcessorRegistry>

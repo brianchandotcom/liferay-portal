@@ -456,6 +456,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT_ROW</td>
+	<td>//*[@data-qa-id='row']//*[normalize-space(text())='${key_rowEntry}']//..//..//*[normalize-space(text())='Edit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_SELECT</td>
+	<td>//*[@data-qa-id='row']//*[normalize-space(text())='${key_rowEntry}']//..//..//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_SAVE</td>
+	<td>//*[@data-qa-id='row']//*[normalize-space(text())='${key_rowEntry}']//..//..//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_RESOURCE_NAME</td>
+	<td>//*[@data-qa-id='row']//*[normalize-space(text())='${key_resourceName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHORT_DESCRIPTION_FIELD</td>
 	<td>//textarea[contains (@id,'shortDescription')]</td>
 	<td></td>

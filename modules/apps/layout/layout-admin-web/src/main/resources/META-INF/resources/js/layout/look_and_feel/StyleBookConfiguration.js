@@ -71,7 +71,7 @@ export default function StyleBookConfiguration({
 					disabled={isReadOnly}
 					displayType="secondary"
 					onClick={handleChangeStyleBookClick}
-					symbol="plus"
+					symbol="change"
 				/>
 			</div>
 		</>

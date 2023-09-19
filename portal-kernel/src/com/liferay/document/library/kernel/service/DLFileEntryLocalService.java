@@ -538,7 +538,7 @@ public interface DLFileEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Long, Long> getFileEntryTypeIds(
-		long companyId, long groupId, String treePath);
+		long companyId, long[] groupIds, String treePath);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLFileEntry> getGroupFileEntries(

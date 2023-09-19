@@ -721,9 +721,9 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	public static Map<Long, Long> getFileEntryTypeIds(
-		long companyId, long groupId, String treePath) {
+		long companyId, long[] groupIds, String treePath) {
 
-		return getService().getFileEntryTypeIds(companyId, groupId, treePath);
+		return getService().getFileEntryTypeIds(companyId, groupIds, treePath);
 	}
 
 	public static List<DLFileEntry> getGroupFileEntries(

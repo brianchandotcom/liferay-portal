@@ -9,7 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLProcessor;
-import com.liferay.document.library.kernel.util.DLProcessorRegistry;
+import com.liferay.document.library.kernel.util.DLProcessorHelper;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -47,7 +47,7 @@ import org.osgi.framework.ServiceRegistration;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class DLProcessorRegistryTest {
+public class DLProcessorHelperTest {
 
 	@ClassRule
 	@Rule
@@ -61,7 +61,7 @@ public class DLProcessorRegistryTest {
 		_cleanUp = new AtomicBoolean(false);
 		_trigger = new AtomicBoolean(false);
 
-		Bundle bundle = FrameworkUtil.getBundle(DLProcessorRegistryTest.class);
+		Bundle bundle = FrameworkUtil.getBundle(DLProcessorHelperTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -144,7 +144,7 @@ public class DLProcessorRegistryTest {
 			TestDataConstants.TEST_BYTE_ARRAY, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
-		_dlProcessorRegistry.cleanUp(fileEntry);
+		_dlProcessorHelper.cleanUp(fileEntry);
 
 		Assert.assertTrue(_cleanUp.get());
 	}
@@ -159,7 +159,7 @@ public class DLProcessorRegistryTest {
 			TestDataConstants.TEST_BYTE_ARRAY, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
-		_dlProcessorRegistry.cleanUp(fileEntry.getFileVersion());
+		_dlProcessorHelper.cleanUp(fileEntry.getFileVersion());
 
 		Assert.assertTrue(_cleanUp.get());
 	}
@@ -174,7 +174,7 @@ public class DLProcessorRegistryTest {
 			TestDataConstants.TEST_BYTE_ARRAY, null, null,
 			ServiceContextTestUtil.getServiceContext());
 
-		_dlProcessorRegistry.trigger(fileEntry, fileEntry.getFileVersion());
+		_dlProcessorHelper.trigger(fileEntry, fileEntry.getFileVersion());
 
 		Assert.assertTrue(_trigger.get());
 	}
@@ -193,7 +193,7 @@ public class DLProcessorRegistryTest {
 
 		_dlAppLocalService.deleteFileEntry(fileEntry.getFileEntryId());
 
-		_dlProcessorRegistry.trigger(fileEntry, fileVersion);
+		_dlProcessorHelper.trigger(fileEntry, fileVersion);
 
 		Assert.assertTrue(_trigger.get());
 	}
@@ -204,7 +204,7 @@ public class DLProcessorRegistryTest {
 	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
-	private DLProcessorRegistry _dlProcessorRegistry;
+	private DLProcessorHelper _dlProcessorHelper;
 
 	private Group _group;
 	private ServiceRegistration<DLProcessor> _serviceRegistration;

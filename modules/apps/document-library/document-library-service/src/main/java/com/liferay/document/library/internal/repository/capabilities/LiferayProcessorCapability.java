@@ -5,7 +5,7 @@
 
 package com.liferay.document.library.internal.repository.capabilities;
 
-import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
+import com.liferay.document.library.kernel.util.DLProcessorHelperUtil;
 import com.liferay.document.library.security.io.InputStreamSanitizer;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -46,12 +46,12 @@ public class LiferayProcessorCapability
 
 	@Override
 	public void cleanUp(FileEntry fileEntry) {
-		DLProcessorRegistryUtil.cleanUp(fileEntry);
+		DLProcessorHelperUtil.cleanUp(fileEntry);
 	}
 
 	@Override
 	public void cleanUp(FileVersion fileVersion) {
-		DLProcessorRegistryUtil.cleanUp(fileVersion);
+		DLProcessorHelperUtil.cleanUp(fileVersion);
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class LiferayProcessorCapability
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
-				DLProcessorRegistryUtil.trigger(
+				DLProcessorHelperUtil.trigger(
 					_wrap(fileEntry), _wrap(fileVersion), true);
 
 				return null;

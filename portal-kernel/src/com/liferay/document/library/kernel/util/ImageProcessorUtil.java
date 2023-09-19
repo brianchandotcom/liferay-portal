@@ -57,7 +57,7 @@ public class ImageProcessorUtil {
 	}
 
 	public static ImageProcessor getImageProcessor() {
-		return (ImageProcessor)DLProcessorRegistryUtil.getDLProcessor(
+		return (ImageProcessor)DLProcessorHelperUtil.getDLProcessor(
 			DLProcessorConstants.IMAGE_PROCESSOR);
 	}
 

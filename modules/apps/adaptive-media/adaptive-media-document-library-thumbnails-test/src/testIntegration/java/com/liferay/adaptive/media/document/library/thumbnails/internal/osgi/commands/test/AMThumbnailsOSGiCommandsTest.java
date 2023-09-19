@@ -18,7 +18,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLProcessor;
-import com.liferay.document.library.kernel.util.DLProcessorRegistry;
+import com.liferay.document.library.kernel.util.DLProcessorHelper;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.preview.processor.BasePreviewableDLProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -279,8 +279,8 @@ public class AMThumbnailsOSGiCommandsTest {
 				"type", DLProcessorConstants.IMAGE_PROCESSOR));
 
 		ReflectionTestUtil.setFieldValue(
-			imagePreviewableDLProcessor, "dlProcessorRegistry",
-			_dlProcessorRegistry);
+			imagePreviewableDLProcessor, "dlProcessorHelper",
+			_dlProcessorHelper);
 		ReflectionTestUtil.setFieldValue(
 			imagePreviewableDLProcessor, "messageBus", _messageBus);
 		ReflectionTestUtil.setFieldValue(
@@ -431,7 +431,7 @@ public class AMThumbnailsOSGiCommandsTest {
 	private static DLProcessor _dlProcessor;
 
 	@Inject
-	private static DLProcessorRegistry _dlProcessorRegistry;
+	private static DLProcessorHelper _dlProcessorHelper;
 
 	@Inject
 	private static MessageBus _messageBus;

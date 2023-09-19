@@ -396,7 +396,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-132510 Given The Content Dashboard When the info panel of a blog is open Then the Creation date of the blog is shown in the Details section"
+	@description = "This is a test for LPS-132510 and LPS-164349. Given The Content Dashboard When the info panel of a blog is open Then the Creation date of the blog is shown in the Properties section"
 	@priority = 3
 	test BlogCreationDateInInfoPanel {
 		task ("Create a blog") {
@@ -410,12 +410,10 @@ definition {
 			ContentDashboard.goToContentDashboard();
 		}
 
-		task ("Go to Content Dashboard and check the Creation date in the Info panel") {
+		task ("Go to Content Dashboard and check the Creation date in the Properties section") {
 			LexiconTable.clickEllipsisItem(
 				item = "Info",
 				tableEntry = "Blogs Entry Title");
-
-			Panel.expandPanel(panel = "Properties");
 
 			AssertVisible(
 				locator1 = "ContentDashboard#INFO_PANEL_TYPE_OF_DATE",

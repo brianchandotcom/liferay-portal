@@ -35,7 +35,7 @@ exports[`Field Color Picker renders field disabled 1`] = `
           </div>
         </div>
         <div
-          class="input-group-item input-group-append"
+          class="input-group-item input-group-item-focusable input-group-append"
         >
           <input
             aria-label="Color selection is 000000"
@@ -95,7 +95,7 @@ exports[`Field Color Picker renders field with helptext 1`] = `
           </div>
         </div>
         <div
-          class="input-group-item input-group-append"
+          class="input-group-item input-group-item-focusable input-group-append"
         >
           <input
             aria-label="Color selection is 000000"
@@ -176,7 +176,7 @@ exports[`Field Color Picker renders field with label 1`] = `
           </div>
         </div>
         <div
-          class="input-group-item input-group-append"
+          class="input-group-item input-group-item-focusable input-group-append"
         >
           <input
             aria-label="Color selection is 000000"

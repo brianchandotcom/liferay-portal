@@ -832,6 +832,46 @@ definition {
 			title = "Delete Task Node");
 	}
 
+	@description = "LPS-178499 - Verify it's possible change the recipient field to Asset Creator"
+	@priority = 4
+	test CanChangeRecipientFieldToAssetCreator {
+		task ("Given that a user accesses the workflow") {
+			Workflow.openWorkflowListView();
+
+			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+		}
+
+		task ("When create the recipient to Asset Creator") {
+			KaleoDesigner.selectNode(nodeNodeLabel = "created");
+
+			ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+				name = "Asset Creator",
+				newNotification = "true",
+				notificationTemplateValue = "Notification Template",
+				notificationTypeOption = "User Notification",
+				recipientTypeOption = "Asset Creator",
+				singleAction = "true");
+
+			Button.clickUpdate();
+
+			Alert.viewSuccessMessageText(successMessage = "Workflow updated successfully.");
+		}
+
+		task ("and When entering and exiting the Created node") {
+			Workflow.openWorkflowListView();
+
+			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
+		}
+
+		task ("Then select the Created node, the assignments will be for the Asset Creator") {
+			KaleoDesigner.selectNode(nodeNodeLabel = "created");
+
+			ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "Asset Creator");
+
+			ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationRecipientType = "Asset Creator");
+		}
+	}
+
 	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the X button"
 	@priority = 3
 	test CanCloseDeleteModal {

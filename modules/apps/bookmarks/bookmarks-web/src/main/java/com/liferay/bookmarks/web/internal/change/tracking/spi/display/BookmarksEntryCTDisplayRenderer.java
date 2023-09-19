@@ -116,6 +116,10 @@ public class BookmarksEntryCTDisplayRenderer
 			() -> {
 				BookmarksFolder bookmarksFolder = bookmarksEntry.getFolder();
 
+				if (bookmarksFolder == null) {
+					return null;
+				}
+
 				return bookmarksFolder.getName();
 			}
 		).display(

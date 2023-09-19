@@ -26,6 +26,7 @@ import com.liferay.portal.search.cluster.StatsClusterInformation;
 import com.liferay.portal.search.configuration.ReindexConfiguration;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexInformation;
+import com.liferay.portal.search.index.StatsIndexInformation;
 
 import java.io.IOException;
 
@@ -85,6 +86,9 @@ public class SearchAdminPortlet extends MVCPortlet {
 
 		searchAdminDisplayContextBuilder.setStatsClusterInformation(
 			_statsClusterInformationSnapshot.get());
+
+		searchAdminDisplayContextBuilder.setStatsIndexInformation(
+			_statsIndexInformationSnapshot.get());
 
 		List<String> indexReindexerClassNames = ListUtil.fromCollection(
 			IndexReindexerRegistryUtil.getIndexReindexerClassNames());
@@ -166,6 +170,9 @@ public class SearchAdminPortlet extends MVCPortlet {
 		_statsClusterInformationSnapshot = new Snapshot<>(
 			SearchAdminPortlet.class, StatsClusterInformation.class, null,
 			true);
+	private static final Snapshot<StatsIndexInformation>
+		_statsIndexInformationSnapshot = new Snapshot<>(
+			SearchAdminPortlet.class, StatsIndexInformation.class, null, true);
 
 	@Reference
 	private Language _language;

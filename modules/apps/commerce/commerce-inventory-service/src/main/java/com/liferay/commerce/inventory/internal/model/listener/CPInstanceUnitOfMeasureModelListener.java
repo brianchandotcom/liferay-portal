@@ -40,11 +40,21 @@ public class CPInstanceUnitOfMeasureModelListener
 
 	@Override
 	public void onAfterCreate(CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure) {
-		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
-			_cpInstanceUnitOfMeasureLocalService.getCPInstanceUnitOfMeasures(
-				cpInstanceUnitOfMeasure.getCPInstanceId(), 0, 2, null);
 
-		if (cpInstanceUnitOfMeasures.size() == 1) {
+		int cpInstanceUnitOfMeasuresCount =
+			_cpInstanceUnitOfMeasureLocalService.
+				getCPInstanceUnitOfMeasuresCount(
+					cpInstanceUnitOfMeasure.getCPInstanceId());
+
+		int commerceInventoryWarehouseItemsCount =
+			_commerceInventoryWarehouseItemLocalService.
+				getCommerceInventoryWarehouseItemsCount(
+					cpInstanceUnitOfMeasure.getCompanyId(),
+					cpInstanceUnitOfMeasure.getSku(),
+					StringPool.BLANK);
+
+		if (cpInstanceUnitOfMeasuresCount == 1 &&
+			commerceInventoryWarehouseItemsCount > 0) {
 			_updateUnitOfMeasureKey(
 				cpInstanceUnitOfMeasure.getCompanyId(),
 				cpInstanceUnitOfMeasure.getKey(), StringPool.BLANK,

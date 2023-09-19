@@ -40,8 +40,11 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -101,23 +104,13 @@ public class FragmentEntryLinkManager {
 		themeDisplay.setIsolated(true);
 
 		try {
-			String languageId = ParamUtil.getString(
-				httpServletRequest, "languageId", themeDisplay.getLanguageId());
-
-			defaultFragmentRendererContext.setLocale(
-				LocaleUtil.fromLanguageId(languageId));
-
-			defaultFragmentRendererContext.setMode(
-				FragmentEntryLinkConstants.EDIT);
-			defaultFragmentRendererContext.setInfoForm(
-				_getInfoForm(fragmentEntryLink, layoutStructure));
-
-			String content = _fragmentRendererController.render(
-				defaultFragmentRendererContext, httpServletRequest,
-				httpServletResponse);
-
 			JSONObject editableValuesJSONObject = _jsonFactory.createJSONObject(
 				fragmentEntryLink.getEditableValues());
+
+			String content = _getContent(
+				defaultFragmentRendererContext, editableValuesJSONObject,
+				fragmentEntryLink, httpServletRequest, httpServletResponse,
+				layoutStructure, themeDisplay);
 
 			if (fragmentEntryLink.isTypePortlet()) {
 				String portletId = editableValuesJSONObject.getString(
@@ -332,6 +325,41 @@ public class FragmentEntryLinkManager {
 			layoutStructure);
 	}
 
+	private String _getContent(
+		DefaultFragmentRendererContext defaultFragmentRendererContext,
+		JSONObject editableValuesJSONObject,
+		FragmentEntryLink fragmentEntryLink,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse,
+		LayoutStructure layoutStructure, ThemeDisplay themeDisplay) {
+
+		if (fragmentEntryLink.isTypePortlet()) {
+			String portletId = editableValuesJSONObject.getString("portletId");
+
+			Portlet portlet = _portletLocalService.fetchPortletById(
+				themeDisplay.getCompanyId(), portletId);
+
+			if ((portlet == null) || portlet.isUndeployedPortlet()) {
+				return "<div class=\"alert alert-danger\">" +
+					_language.get(httpServletRequest, "undeployed") + "</div>";
+			}
+		}
+
+		String languageId = ParamUtil.getString(
+			httpServletRequest, "languageId", themeDisplay.getLanguageId());
+
+		defaultFragmentRendererContext.setLocale(
+			LocaleUtil.fromLanguageId(languageId));
+
+		defaultFragmentRendererContext.setMode(FragmentEntryLinkConstants.EDIT);
+		defaultFragmentRendererContext.setInfoForm(
+			_getInfoForm(fragmentEntryLink, layoutStructure));
+
+		return _fragmentRendererController.render(
+			defaultFragmentRendererContext, httpServletRequest,
+			httpServletResponse);
+	}
+
 	private FragmentEntry _getFragmentEntry(
 		FragmentEntryLink fragmentEntryLink, Locale locale) {
 
@@ -495,6 +523,12 @@ public class FragmentEntryLinkManager {
 	private JSONFactory _jsonFactory;
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 }

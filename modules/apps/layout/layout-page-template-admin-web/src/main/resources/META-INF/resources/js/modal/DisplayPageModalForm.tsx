@@ -32,7 +32,6 @@ export default function DisplayPageModalForm({
 	namespace,
 	onSubmit,
 }: Props) {
-	const [subtypes, setSubtypes] = useState<MappingSubtype[]>([]);
 	const [error, setError] = useState<ValidationError>(initialError);
 
 	const nameInputRef = useRef<HTMLInputElement>(null);
@@ -46,6 +45,48 @@ export default function DisplayPageModalForm({
 	useEffect(() => {
 		setError(initialError);
 	}, [initialError]);
+
+	return (
+		<form onSubmit={onSubmit} ref={formRef}>
+			<FormField
+				error={error.name}
+				id={`${namespace}name`}
+				name={Liferay.Language.get('name')}
+			>
+				<input
+					className="form-control"
+					defaultValue={displayPageName}
+					id={`${namespace}name`}
+					name={`${namespace}name`}
+					onChange={() => setError({...error, name: ''})}
+					ref={nameInputRef}
+				/>
+			</FormField>
+
+			<MappingTypeSelector
+				error={error}
+				mappingTypes={mappingTypes}
+				namespace={namespace}
+				setError={setError}
+			/>
+		</form>
+	);
+}
+
+interface MappingTypesSelectorProps {
+	error: ValidationError;
+	mappingTypes: MappingType[];
+	namespace: string;
+	setError: (error: ValidationError) => void;
+}
+
+function MappingTypeSelector({
+	error,
+	mappingTypes,
+	namespace,
+	setError,
+}: MappingTypesSelectorProps) {
+	const [subtypes, setSubtypes] = useState<MappingSubtype[]>([]);
 
 	const onChange = useCallback(
 		(event) => {
@@ -66,87 +107,65 @@ export default function DisplayPageModalForm({
 				setSubtypes([]);
 			}
 		},
-		[error, mappingTypes]
+		[error, mappingTypes, setError]
 	);
 
+	if (!Array.isArray(mappingTypes) || !mappingTypes.length) {
+		return null;
+	}
+
 	return (
-		<form onSubmit={onSubmit} ref={formRef}>
+		<fieldset>
 			<FormField
-				error={error.name}
-				id={`${namespace}name`}
-				name={Liferay.Language.get('name')}
+				error={error.classNameId}
+				id={`${namespace}classNameId`}
+				name={Liferay.Language.get('content-type')}
 			>
-				<input
+				<select
 					className="form-control"
-					defaultValue={displayPageName}
-					id={`${namespace}name`}
-					name={`${namespace}name`}
-					onChange={() => setError({...error, name: ''})}
-					ref={nameInputRef}
-				/>
+					name={`${namespace}classNameId`}
+					onChange={onChange}
+				>
+					<option value="">
+						{`-- ${Liferay.Language.get('not-selected')} --`}
+					</option>
+
+					{mappingTypes.map((mappingType) => (
+						<option key={mappingType.id} value={mappingType.id}>
+							{mappingType.label}
+						</option>
+					))}
+				</select>
 			</FormField>
 
-			{Array.isArray(mappingTypes) && !!mappingTypes.length && (
-				<fieldset>
-					<FormField
-						error={error.classNameId}
-						id={`${namespace}classNameId`}
-						name={Liferay.Language.get('content-type')}
+			{Array.isArray(subtypes) && Boolean(subtypes.length) && (
+				<FormField
+					error={error.classTypeId}
+					id={`${namespace}classTypeId`}
+					name={Liferay.Language.get('subtype')}
+				>
+					<select
+						className="form-control"
+						name={`${namespace}classTypeId`}
+						onChange={() =>
+							setError({
+								...error,
+								classTypeId: '',
+							})
+						}
 					>
-						<select
-							className="form-control"
-							name={`${namespace}classNameId`}
-							onChange={onChange}
-						>
-							<option value="">
-								{`-- ${Liferay.Language.get(
-									'not-selected'
-								)} --`}
+						<option value="">
+							{`-- ${Liferay.Language.get('not-selected')} --`}
+						</option>
+
+						{subtypes.map((subtype) => (
+							<option key={subtype.id} value={subtype.id}>
+								{subtype.label}
 							</option>
-
-							{mappingTypes.map((mappingType) => (
-								<option
-									key={mappingType.id}
-									value={mappingType.id}
-								>
-									{mappingType.label}
-								</option>
-							))}
-						</select>
-					</FormField>
-
-					{Array.isArray(subtypes) && Boolean(subtypes.length) && (
-						<FormField
-							error={error && error.classTypeId}
-							id={`${namespace}classTypeId`}
-							name={Liferay.Language.get('subtype')}
-						>
-							<select
-								className="form-control"
-								name={`${namespace}classTypeId`}
-								onChange={() =>
-									setError({
-										...error,
-										classTypeId: '',
-									})
-								}
-							>
-								<option value="">
-									{`-- ${Liferay.Language.get(
-										'not-selected'
-									)} --`}
-								</option>
-
-								{subtypes.map((subtype) => (
-									<option key={subtype.id} value={subtype.id}>
-										{subtype.label}
-									</option>
-								))}
-							</select>
-						</FormField>
-					)}
-				</fieldset>
+						))}
+					</select>
+				</FormField>
 			)}
-		</form>
+		</fieldset>
 	);
 }

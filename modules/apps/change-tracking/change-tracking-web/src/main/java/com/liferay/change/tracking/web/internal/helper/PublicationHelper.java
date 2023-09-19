@@ -5,16 +5,14 @@
 
 package com.liferay.change.tracking.web.internal.helper;
 
-import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.on.demand.user.ticket.generator.CTOnDemandUserTicketGenerator;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Ticket;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 
-import javax.portlet.PortletResponse;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -26,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 public class PublicationHelper {
 
 	public String getShareURL(
-			long ctCollectionId, PortletResponse portletResponse)
+			long ctCollectionId, PortletRequest portletRequest)
 		throws PortalException {
 
 		Ticket ticket = _ctOnDemandUserTicketGenerator.generate(ctCollectionId);
@@ -35,16 +33,14 @@ public class PublicationHelper {
 			return StringPool.BLANK;
 		}
 
-		return HttpComponentsUtil.addParameter(
-			PortletURLBuilder.createRenderURL(
-				_portal.getLiferayPortletResponse(portletResponse),
-				CTPortletKeys.PUBLICATIONS
-			).setMVCRenderCommandName(
-				"/change_tracking/view_changes"
-			).setParameter(
-				"ctCollectionId", ctCollectionId
-			).buildString(),
-			"ticketKey", ticket.getKey());
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_portal.getPortalURL(portletRequest));
+		sb.append(Portal.PATH_MODULE);
+		sb.append("/change_tracking/review_changes?ticketKey=");
+		sb.append(ticket.getKey());
+
+		return sb.toString();
 	}
 
 	@Reference

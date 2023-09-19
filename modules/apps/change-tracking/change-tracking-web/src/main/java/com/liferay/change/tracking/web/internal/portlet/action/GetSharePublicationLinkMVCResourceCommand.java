@@ -61,7 +61,7 @@ public class GetSharePublicationLinkMVCResourceCommand
 			).put(
 				"sharePublicationLink",
 				_publicationHelper.getShareURL(
-					ctCollection.getCtCollectionId(), resourceResponse)
+					ctCollection.getCtCollectionId(), resourceRequest)
 			));
 	}
 

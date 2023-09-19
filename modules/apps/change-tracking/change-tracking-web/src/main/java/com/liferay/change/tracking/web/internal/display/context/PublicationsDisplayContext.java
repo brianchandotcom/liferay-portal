@@ -299,8 +299,7 @@ public class PublicationsDisplayContext extends BasePublicationsDisplayContext {
 				))
 		).put(
 			"sharePublicationLink",
-			() -> _publicationHelper.getShareURL(
-				ctCollectionId, _renderResponse)
+			() -> _publicationHelper.getShareURL(ctCollectionId, _renderRequest)
 		).put(
 			"showShareLinkTab", FeatureFlagManagerUtil.isEnabled("LPS-187436")
 		).put(

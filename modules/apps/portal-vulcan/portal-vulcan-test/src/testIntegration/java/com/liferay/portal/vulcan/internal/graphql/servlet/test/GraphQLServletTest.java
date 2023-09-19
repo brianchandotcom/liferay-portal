@@ -88,13 +88,13 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			StringBundler.concat(
 				"(&(service.factoryPid=com.liferay.portal.vulcan.internal.",
-				"configuration.GraphQLCompanyConfiguration.scoped)(companyId=",
+				"configuration.HeadlessAPICompanyConfiguration.scoped)(companyId=",
 				TestPropsValues.getCompanyId(), "))"));
 
 		Configuration factoryConfiguration =
 			_configurationAdmin.createFactoryConfiguration(
 				"com.liferay.portal.vulcan.internal.configuration." +
-					"GraphQLCompanyConfiguration.scoped",
+					"HeadlessAPICompanyConfiguration.scoped",
 				StringPool.QUESTION);
 
 		try {

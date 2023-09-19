@@ -34,7 +34,6 @@ import com.liferay.saml.opensaml.integration.internal.binding.SamlBinding;
 import com.liferay.saml.opensaml.integration.internal.bootstrap.ParserPoolUtil;
 import com.liferay.saml.opensaml.integration.internal.metadata.MetadataManager;
 import com.liferay.saml.opensaml.integration.internal.resolver.AttributePublisherImpl;
-import com.liferay.saml.opensaml.integration.internal.resolver.AttributeResolverRegistry;
 import com.liferay.saml.opensaml.integration.internal.resolver.AttributeResolverSAMLContextImpl;
 import com.liferay.saml.opensaml.integration.internal.resolver.DecrypterContext;
 import com.liferay.saml.opensaml.integration.internal.resolver.DefaultServiceReferenceMapper;
@@ -310,6 +309,11 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		_samlConfiguration = ConfigurableUtil.createConfigurable(
 			SamlConfiguration.class, properties);
 
+		_stringAttributeResolverServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, AttributeResolver.class, "(companyId=*)",
+				new DefaultServiceReferenceMapper(_log));
+
 		_stringNameIdResolverServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, NameIdResolver.class, "(companyId=*)",
@@ -318,6 +322,7 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 	@Deactivate
 	protected void deactivate() {
+		_stringAttributeResolverServiceTrackerMap.close();
 		_stringNameIdResolverServiceTrackerMap.close();
 	}
 
@@ -1258,6 +1263,27 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 		return messageContext;
 	}
 
+	private AttributeResolver _getAttributeResolver(String entityId) {
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		AttributeResolver attributeResolver =
+			_stringAttributeResolverServiceTrackerMap.getService(
+				companyId + "," + entityId);
+
+		if (attributeResolver == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"No attribute resolver for company ID ", companyId,
+						" and entity ID ", entityId));
+			}
+
+			attributeResolver = _defaultAttributeResolver;
+		}
+
+		return attributeResolver;
+	}
+
 	private String _getAuthRedirectURL(
 			MessageContext<?> messageContext,
 			HttpServletRequest httpServletRequest)
@@ -1362,9 +1388,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		User user = samlSsoRequestContext.getUser();
 
-		AttributeResolver attributeResolver =
-			_attributeResolverRegistry.getAttributeResolver(
-				samlPeerEntityContext.getEntityId());
+		AttributeResolver attributeResolver = _getAttributeResolver(
+			samlPeerEntityContext.getEntityId());
 
 		AttributePublisherImpl attributePublisherImpl =
 			new AttributePublisherImpl();
@@ -2143,11 +2168,13 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	private static final SAMLSignatureProfileValidator
 		_samlSignatureProfileValidator = new SAMLSignatureProfileValidator();
 
-	@Reference
-	private AttributeResolverRegistry _attributeResolverRegistry;
-
 	private final DCLSingleton<Decrypter> _decrypterDCLSingleton =
 		new DCLSingleton<>();
+
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY, target = "(!(companyId=*))"
+	)
+	private AttributeResolver _defaultAttributeResolver;
 
 	@Reference(
 		policyOption = ReferencePolicyOption.GREEDY, target = "(!(companyId=*))"
@@ -2184,6 +2211,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 	@Reference
 	private SamlSpMessageLocalService _samlSpMessageLocalService;
 
+	private ServiceTrackerMap<String, AttributeResolver>
+		_stringAttributeResolverServiceTrackerMap;
 	private ServiceTrackerMap<String, NameIdResolver>
 		_stringNameIdResolverServiceTrackerMap;
 

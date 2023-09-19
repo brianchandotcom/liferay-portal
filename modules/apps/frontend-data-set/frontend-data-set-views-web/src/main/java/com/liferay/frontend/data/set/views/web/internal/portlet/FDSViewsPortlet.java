@@ -469,7 +469,7 @@ public class FDSViewsPortlet extends MVCPortlet {
 						_language.get(locale, "permission-key"),
 						"permissionKey", false),
 					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
 						_language.get(locale, "url"), "url", false)));
 

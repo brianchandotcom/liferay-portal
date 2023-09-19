@@ -106,13 +106,13 @@ public class IndexStatusManagerImplRequireIndexReadWriteTest {
 	@Test
 	public void testReadOnlyUsingUpgradeTool() {
 		_dbUpgraderMockedStatic.when(
-			(MockedStatic.Verification)DBUpgrader::isUpgradeClient
+			DBUpgrader::isUpgradeClient
 		).thenReturn(
 			true
 		);
 
 		_startupHelperUtilMockedStatic.when(
-			(MockedStatic.Verification)StartupHelperUtil::isUpgrading
+			StartupHelperUtil::isUpgrading
 		).thenReturn(
 			false
 		);
@@ -122,7 +122,7 @@ public class IndexStatusManagerImplRequireIndexReadWriteTest {
 		Assert.assertTrue(indexStatusManagerImpl.isIndexReadOnly());
 
 		_dbUpgraderMockedStatic.when(
-			(MockedStatic.Verification)DBUpgrader::isUpgradeClient
+			DBUpgrader::isUpgradeClient
 		).thenReturn(
 			false
 		);
@@ -133,13 +133,13 @@ public class IndexStatusManagerImplRequireIndexReadWriteTest {
 	@Test
 	public void testReadOnlyWhenStartupHelperUtilIsUpgrading() {
 		_dbUpgraderMockedStatic.when(
-			(MockedStatic.Verification)DBUpgrader::isUpgradeClient
+			DBUpgrader::isUpgradeClient
 		).thenReturn(
 			false
 		);
 
 		_startupHelperUtilMockedStatic.when(
-			(MockedStatic.Verification)StartupHelperUtil::isUpgrading
+			StartupHelperUtil::isUpgrading
 		).thenReturn(
 			true
 		);
@@ -149,7 +149,7 @@ public class IndexStatusManagerImplRequireIndexReadWriteTest {
 		Assert.assertTrue(indexStatusManagerImpl.isIndexReadOnly());
 
 		_startupHelperUtilMockedStatic.when(
-			(MockedStatic.Verification)StartupHelperUtil::isUpgrading
+			StartupHelperUtil::isUpgrading
 		).thenReturn(
 			false
 		);

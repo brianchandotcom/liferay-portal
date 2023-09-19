@@ -424,8 +424,8 @@
 
 		<column name="parentFolderId" parent-container-model="true" type="long" />
 		<column name="treePath" type="String" />
-		<column name="name" type="String" uad-nonanonymizable="true" />
-		<column name="description" type="String" uad-nonanonymizable="true" />
+		<column change-tracking-resolution-type="merge" name="name" type="String" uad-nonanonymizable="true" />
+		<column change-tracking-resolution-type="merge" name="description" type="String" uad-nonanonymizable="true" />
 		<column name="restrictionType" type="int" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />

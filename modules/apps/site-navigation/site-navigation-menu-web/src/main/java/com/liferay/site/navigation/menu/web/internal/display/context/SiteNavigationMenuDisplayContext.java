@@ -447,6 +447,39 @@ public class SiteNavigationMenuDisplayContext {
 		return false;
 	}
 
+	public boolean showAlert() {
+		if (_showAlert != null) {
+			return _showAlert;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if (!scopeGroup.isPrivateLayoutsEnabled() ||
+			!_hasLayoutPageTemplateEntry(themeDisplay.getLayout())) {
+
+			_showAlert = false;
+
+			return _showAlert;
+		}
+
+		if ((getSelectSiteNavigationMenuType() ==
+				SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY) ||
+			(getSelectSiteNavigationMenuType() ==
+				SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY)) {
+
+			_showAlert = true;
+		}
+		else {
+			_showAlert = false;
+		}
+
+		return _showAlert;
+	}
+
 	private int _getDefaultSelectSiteNavigationMenuType() {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -519,6 +552,7 @@ public class SiteNavigationMenuDisplayContext {
 	private String _rootMenuItemId;
 	private Integer _rootMenuItemLevel;
 	private String _rootMenuItemType;
+	private Boolean _showAlert;
 	private SiteNavigationMenu _siteNavigationMenu;
 	private Long _siteNavigationMenuId;
 	private String _siteNavigationMenuName;

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {getSpritemap} from '@liferay/frontend-icons-web';
 import {
 	openConfirmModal,
 	openModal,
@@ -10,9 +11,24 @@ import {
 	openSimpleInputModal,
 } from 'frontend-js-web';
 
+import {MODAL_TYPES} from '../constants/modalTypes';
 import openDeletePageTemplateModal from '../modal/openDeletePageTemplateModal';
+import openDisplayPageModal from '../modal/openDisplayPageModal.es';
 
 const ACTIONS = {
+	changeContentType({mappingTypes}, namespace) {
+		openDisplayPageModal({
+			mappingTypes,
+			namespace,
+			spritemap: getSpritemap(),
+			title: Liferay.Language.get('change-content-type'),
+			type: MODAL_TYPES.edit,
+			warningMessage: Liferay.Language.get(
+				'changing-the-content-type-may-cause-some-elements-of-the-display-page-template-to-lose-their-previous-mapping'
+			),
+		});
+	},
+
 	copyDisplayPage({copyDisplayPageURL}) {
 		send(copyDisplayPageURL);
 	},
@@ -137,6 +153,7 @@ function send(url) {
 
 export default function DisplayPageDropdownPropsTransformer({
 	actions,
+	additionalProps,
 	portletNamespace,
 	...otherProps
 }) {
@@ -154,7 +171,10 @@ export default function DisplayPageDropdownPropsTransformer({
 							if (action) {
 								event.preventDefault();
 
-								ACTIONS[action](child.data, portletNamespace);
+								ACTIONS[action](
+									{...child.data, ...additionalProps},
+									portletNamespace
+								);
 							}
 						},
 					};

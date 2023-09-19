@@ -204,11 +204,11 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 		CPInstance cpInstance = _cpInstanceService.fetchCPInstance(
 			cpInstanceId);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CPInstanceUnitOfMeasure.class.getName(), actionRequest);
-
 		BigDecimal basePrice = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "basePrice", BigDecimal.ZERO);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CPInstanceUnitOfMeasure.class.getName(), actionRequest);
 
 		if (basePrice != null) {
 			_updateCommercePriceEntry(

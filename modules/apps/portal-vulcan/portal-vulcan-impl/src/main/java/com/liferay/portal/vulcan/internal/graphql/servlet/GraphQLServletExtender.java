@@ -37,7 +37,7 @@ import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOProperty;
 import com.liferay.portal.vulcan.graphql.dto.v1_0.Creator;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.portal.vulcan.graphql.validation.GraphQLRequestContextValidator;
-import com.liferay.portal.vulcan.internal.configuration.GraphQLCompanyConfiguration;
+import com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration;
 import com.liferay.portal.vulcan.internal.configuration.VulcanCompanyConfiguration;
 import com.liferay.portal.vulcan.internal.configuration.VulcanConfiguration;
 import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
@@ -1067,12 +1067,12 @@ public class GraphQLServletExtender {
 		long companyId) {
 
 		try {
-			GraphQLCompanyConfiguration graphQLCompanyConfiguration =
+			HeadlessAPICompanyConfiguration headlessAPICompanyConfiguration =
 				_configurationProvider.getCompanyConfiguration(
-					GraphQLCompanyConfiguration.class, companyId);
+					HeadlessAPICompanyConfiguration.class, companyId);
 
 			return new MaxQueryDepthInstrumentation(
-				graphQLCompanyConfiguration.queryDepthLimit());
+				headlessAPICompanyConfiguration.queryDepthLimit());
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

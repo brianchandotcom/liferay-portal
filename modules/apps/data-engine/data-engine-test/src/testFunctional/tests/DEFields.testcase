@@ -1,0 +1,95 @@
+@component-name = "data-engine"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Data Engine";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Account.tearDownCP();
+		}
+	}
+
+	@description = "LPS-179788 - It's not possible to mix repeatable fields with other repeatable fields"
+	@priority = 4
+	test CannotMixRepeatableFields {
+		task ("Given a Web Content with Structure that contains repeatable fields") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+			NavItem.gotoStructures();
+
+			WebContentStructures.addCP(structureName = "WC Structure Title");
+
+			DEBuilder.addField(
+				fieldLabel = "Text",
+				fieldName = "Text");
+
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text");
+
+			DEBuilder.addField(
+				fieldLabel = "Date",
+				fieldName = "Date");
+
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Date");
+
+			DEBuilder.addField(
+				fieldLabel = "Numeric",
+				fieldName = "Numeric");
+
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Numeric");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("When a user creates a Web Content from the Structure") {
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Title");
+
+			PortletEntry.inputTitle(title = "Web Content Title");
+		}
+
+		task ("and When the user try be able to mix repeatable fields") {
+			AssertElementPresent(locator1 = "DDMEditStructure#FORM_FIELD_GROUP_TARGET_SPACE");
+
+			DragOver(
+				key_fieldFieldLabel = "Text",
+				key_indexItem = 1,
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY",
+				locator2 = "DDMEditStructure#FORM_FIELD_GROUP_TARGET_SPACE");
+		}
+
+		task ("Then the user should not be able to mix repeatable fields with other repeatable fields") {
+			AssertTextEquals(
+				index = 1,
+				key_fieldFieldLabel = "Text",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+				value1 = "Text");
+
+			AssertTextEquals(
+				index = 2,
+				key_fieldFieldLabel = "Date",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+				value1 = "Date");
+
+			AssertTextEquals(
+				index = 3,
+				key_fieldFieldLabel = "Numeric",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL",
+				value1 = "Numeric");
+		}
+	}
+
+}

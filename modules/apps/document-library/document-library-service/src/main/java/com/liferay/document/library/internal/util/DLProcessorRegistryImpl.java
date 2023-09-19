@@ -14,19 +14,13 @@ import com.liferay.document.library.kernel.util.DLProcessorThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -35,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mika Koivisto
  */
-@Component(immediate = true, service = DLProcessorRegistry.class)
+@Component(service = DLProcessorRegistry.class)
 public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 	@Override
@@ -141,29 +135,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	}
 
 	@Override
-	public void register(DLProcessor dlProcessor) {
-		Class<?>[] classes = ReflectionUtil.getInterfaces(dlProcessor);
-
-		String[] classNames = new String[classes.length];
-
-		for (int i = 0; i < classes.length; i++) {
-			classNames[i] = classes[i].getName();
-		}
-
-		ServiceRegistration<?> serviceRegistration =
-			_bundleContext.registerService(
-				classNames, dlProcessor,
-				MapUtil.singletonDictionary("type", dlProcessor.getType()));
-
-		ServiceRegistration<?> previousServiceRegistration =
-			_serviceRegistrations.put(dlProcessor, serviceRegistration);
-
-		if (previousServiceRegistration != null) {
-			previousServiceRegistration.unregister();
-		}
-	}
-
-	@Override
 	public void trigger(FileEntry fileEntry, FileVersion fileVersion) {
 		trigger(fileEntry, fileVersion, false);
 	}
@@ -192,19 +163,8 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 	}
 
-	@Override
-	public void unregister(DLProcessor dlProcessor) {
-		ServiceRegistration<?> serviceRegistration =
-			_serviceRegistrations.remove(dlProcessor);
-
-		serviceRegistration.unregister();
-	}
-
 	@Activate
-	protected void activate(
-			BundleContext bundleContext, Map<String, Object> properties)
-		throws Exception {
-
+	protected void activate(BundleContext bundleContext) throws Exception {
 		_bundleContext = bundleContext;
 
 		_dlProcessorServiceTrackerMap =
@@ -249,7 +209,5 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 	private ServiceTrackerMap<String, DLProcessor>
 		_dlProcessorServiceTrackerMap;
-	private final Map<DLProcessor, ServiceRegistration<?>>
-		_serviceRegistrations = new ConcurrentHashMap<>();
 
 }

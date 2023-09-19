@@ -178,6 +178,22 @@ public class ObjectValidationRuleLocalServiceImpl
 	}
 
 	@Override
+	public ObjectValidationRule fetchObjectValidationRule(
+		String externalReferenceCode, long objectDefinitionId) {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
+
+		if (objectDefinition == null) {
+			return null;
+		}
+
+		return objectValidationRulePersistence.fetchByERC_C_ODI(
+			externalReferenceCode, objectDefinition.getCompanyId(),
+			objectDefinitionId);
+	}
+
+	@Override
 	public ObjectValidationRule getObjectValidationRule(
 			long objectValidationRuleId)
 		throws PortalException {

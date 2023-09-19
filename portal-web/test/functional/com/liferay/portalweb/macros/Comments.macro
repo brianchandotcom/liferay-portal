@@ -159,6 +159,8 @@ definition {
 
 			Alert.viewSuccessMessage();
 
+			WorkflowComment._openComments();
+
 			AssertTextEquals(
 				locator1 = "Comments#COMMENT_BODY_SPECIFIC",
 				value1 = ${entryCommentEdit});

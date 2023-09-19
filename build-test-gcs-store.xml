@@ -79,7 +79,7 @@
 		<local name="bucket.objects" />
 
 		<exec executable="gcloud" outputproperty="bucket.objects">
-			<arg line="storage ls --recursive gs://lfr-qa-poshi-test-${gcs.bucket.id}//${company.id}/${group.id} --project=liferay-qa-automated-tests" />
+			<arg line="storage ls --recursive gs://lfr-qa-poshi-test-${gcs.bucket.id}/${company.id}/${group.id} --project=liferay-qa-automated-tests" />
 		</exec>
 
 		<echo>${bucket.objects}</echo>
@@ -99,7 +99,7 @@
 		<local name="bucket.objects" />
 
 		<exec executable="gcloud" outputproperty="bucket.objects">
-			<arg line="storage ls --recursive gs://lfr-qa-poshi-test-${gcs.bucket.id}//${company.id} --project=liferay-qa-automated-tests" />
+			<arg line="storage ls --recursive gs://lfr-qa-poshi-test-${gcs.bucket.id}/${company.id} --project=liferay-qa-automated-tests" />
 		</exec>
 
 		<echo>${bucket.objects}</echo>

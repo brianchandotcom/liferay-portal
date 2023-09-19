@@ -38,6 +38,14 @@ function JobInformation({job}) {
 				Create Date: {job.dateCreated}
 				<br />
 				Modified Date: {job.dateModified}
+				{job.pullRequestURL &&
+					(
+						<>
+							<br />
+							Pull Request URL: <a href={job.pullRequestURL}>{job.pullRequestURL}</a>
+						</>
+					)
+				}
 			</ClayPanel.Body>
 		</ClayPanel>
 	);

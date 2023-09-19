@@ -10,7 +10,6 @@ export default function hasDraftSubmitChild(itemId) {
 		`.${getLayoutDataItemUniqueClassName(itemId)}`
 	);
 
-	return !!Array.from(
-		element.querySelectorAll('[name="info-item-status"][value="draft"]')
-	).length;
+	return !!Array.from(element.querySelectorAll('[name="status"][value="2"]'))
+		.length;
 }

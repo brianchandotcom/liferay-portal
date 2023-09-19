@@ -5,7 +5,7 @@
  */
 
 const productID = fragmentElement
-	.querySelector('.productID')
+	.querySelector('.product-id')
 	.innerText.replace(/[\n\r]+|[\s]{2,}/g, ' ')
 	.trim();
 const linkButton = fragmentElement.querySelector('.get-app-button');
@@ -19,8 +19,9 @@ const getSiteURL = () => {
 
 	return '';
 };
+
 if (layoutMode !== 'edit') {
 	linkButton.onclick = () => {
-		window.location.href = getSiteURL() + '/get-app?productId=' + productID;
+		window.location.href = `${getSiteURL()}/get-app?productId=${productID}`;
 	};
 }

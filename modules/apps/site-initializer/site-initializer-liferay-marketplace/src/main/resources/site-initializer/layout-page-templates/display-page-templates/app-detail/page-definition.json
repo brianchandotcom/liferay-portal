@@ -312,13 +312,13 @@
 												"siteKey": "[$GROUP_KEY$]"
 											},
 											"fragmentConfig": {
-												"productId": {
+												"product-id": {
 													"href": ""
 												}
 											},
 											"fragmentFields": [
 												{
-													"id": "productID",
+													"id": "product-id",
 													"value": {
 														"fragmentLink": {
 														},

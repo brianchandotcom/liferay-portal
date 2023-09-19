@@ -36,7 +36,7 @@ const NewRadioCard = <T extends unknown>({
 			className={classNames(
 				'align-items-center d-flex justify-content-between form-control mb-5 cursor-pointer py-4 px-0',
 				{
-					radioSelected: activeRadio?.index === index,
+					'radio-selected': activeRadio?.index === index,
 				}
 			)}
 			key={index}

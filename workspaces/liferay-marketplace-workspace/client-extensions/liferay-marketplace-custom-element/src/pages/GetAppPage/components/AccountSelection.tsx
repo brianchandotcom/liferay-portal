@@ -61,7 +61,7 @@ const AccountSelection = ({onSelectAccount}: AccountSelectionProps) => {
 	}, []);
 
 	return (
-		<div className="">
+		<div>
 			<div className="mb-4">
 				<span>
 					{`Accounts available for `}
@@ -80,7 +80,7 @@ const AccountSelection = ({onSelectAccount}: AccountSelectionProps) => {
 			/>
 
 			<div>
-				<span>Not seeing a specific Account? </span>
+				<span>Not seeing a specific Account?</span>
 
 				<ClayLink href="http://help.liferay.com/">
 					Contact Support

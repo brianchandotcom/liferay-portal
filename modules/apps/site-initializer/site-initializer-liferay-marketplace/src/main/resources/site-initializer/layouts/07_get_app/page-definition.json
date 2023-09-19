@@ -50,7 +50,7 @@
 									"widgetInstance": {
 										"widgetConfig": {
 										},
-										"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_20096_LXC_liferay_marketplace_custom_element_get_app"
+										"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_marketplace_custom_element_get_app"
 									}
 								},
 								"type": "Widget"

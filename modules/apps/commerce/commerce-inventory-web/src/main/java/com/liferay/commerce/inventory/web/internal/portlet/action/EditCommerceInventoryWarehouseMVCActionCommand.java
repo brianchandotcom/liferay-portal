@@ -11,6 +11,8 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryReplenishmentItemService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.exception.CPInstanceUnitOfMeasureKeyException;
+import com.liferay.commerce.product.exception.NoSuchCPInstanceUnitOfMeasureException;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -62,9 +64,11 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof
+			if (exception instanceof CPInstanceUnitOfMeasureKeyException ||
+				exception instanceof
 					DuplicateCommerceInventoryWarehouseItemException ||
-				exception instanceof MVCCException) {
+				exception instanceof MVCCException ||
+				exception instanceof NoSuchCPInstanceUnitOfMeasureException) {
 
 				SessionErrors.add(actionRequest, exception.getClass());
 
@@ -85,13 +89,16 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 		long commerceInventoryWarehouseId = ParamUtil.getLong(
 			actionRequest, "commerceInventoryWarehouseId");
 
-		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "quantity", BigDecimal.ZERO);
 		String sku = ParamUtil.getString(actionRequest, "sku");
+		String unitOfMeasure = ParamUtil.getString(
+			actionRequest, "unitOfMeasure");
 
 		_commerceInventoryWarehouseItemService.
 			addCommerceInventoryWarehouseItem(
-				StringPool.BLANK, commerceInventoryWarehouseId,
-				BigDecimal.valueOf(quantity), sku, StringPool.BLANK);
+				StringPool.BLANK, commerceInventoryWarehouseId, quantity, sku,
+				unitOfMeasure);
 	}
 
 	private void _deleteCommerceInventoryWarehouse(ActionRequest actionRequest)

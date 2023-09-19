@@ -6,7 +6,6 @@
 package com.liferay.commerce.inventory.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
-import com.liferay.commerce.inventory.model.CIWarehouseItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
 import com.liferay.commerce.inventory.web.internal.constants.CommerceInventoryFDSNames;
@@ -15,9 +14,6 @@ import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryPos;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -61,8 +57,7 @@ public class CommerceInventoryItemFDSDataProvider
 			return TransformUtil.transform(
 				_commerceInventoryWarehouseItemLocalService.getItemsByCompanyId(
 					_portal.getCompanyId(httpServletRequest),
-					fdsKeywords.getKeywords(),
-					fdsPagination.getStartPosition(),
+					fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
 					fdsPagination.getEndPosition()),
 				ciWarehouseItem -> new InventoryItem(
 					ciWarehouseItem.getSkuCode(),
@@ -88,12 +83,10 @@ public class CommerceInventoryItemFDSDataProvider
 			PermissionThreadLocal.getPermissionChecker(), null,
 			CommerceInventoryActionKeys.MANAGE_INVENTORY);
 
-		List<CIWarehouseItem> itemsByCompanyId = _commerceInventoryWarehouseItemLocalService.getItemsByCompanyId(
+		return _commerceInventoryWarehouseItemLocalService.
+			countItemsByCompanyId(
 				_portal.getCompanyId(httpServletRequest),
-				fdsKeywords.getKeywords(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		return itemsByCompanyId.size();
+				fdsKeywords.getKeywords());
 	}
 
 	@Reference

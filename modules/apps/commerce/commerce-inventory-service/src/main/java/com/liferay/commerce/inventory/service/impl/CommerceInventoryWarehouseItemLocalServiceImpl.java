@@ -154,32 +154,42 @@ public class CommerceInventoryWarehouseItemLocalServiceImpl
 	}
 
 	@Override
-	public int countItemsByCompanyId(
-		long companyId, String sku) {
-
+	public int countItemsByCompanyId(long companyId, String sku) {
 		return dslQueryCount(
-			DSLQueryFactoryUtil.countDistinct(
-				CommerceInventoryWarehouseItemTable.INSTANCE.sku
+			DSLQueryFactoryUtil.count(
 			).from(
-				CommerceInventoryWarehouseItemTable.INSTANCE
-			).where(
-				CommerceInventoryWarehouseItemTable.INSTANCE.companyId.eq(
-					companyId
-				).and(
-					() -> {
-						if (Validator.isNull(sku)) {
-							return null;
+				DSLQueryFactoryUtil.select(
+					CommerceInventoryWarehouseItemTable.INSTANCE.sku,
+					CommerceInventoryWarehouseItemTable.INSTANCE.
+						unitOfMeasureKey
+				).from(
+					CommerceInventoryWarehouseItemTable.INSTANCE
+				).where(
+					CommerceInventoryWarehouseItemTable.INSTANCE.companyId.eq(
+						companyId
+					).and(
+						() -> {
+							if (Validator.isNull(sku)) {
+								return null;
+							}
+
+							return DSLFunctionFactoryUtil.lower(
+								CommerceInventoryWarehouseItemTable.INSTANCE.sku
+							).like(
+								StringPool.PERCENT +
+									StringUtil.toLowerCase(sku) +
+										StringPool.PERCENT
+							);
 						}
-
-						return DSLFunctionFactoryUtil.lower(
-							CommerceInventoryWarehouseItemTable.INSTANCE.sku
-						).like(
-							StringPool.PERCENT + StringUtil.toLowerCase(sku) +
-								StringPool.PERCENT
-						);
-					}
-				)));
-
+					)
+				).groupBy(
+					CommerceInventoryWarehouseItemTable.INSTANCE.sku,
+					CommerceInventoryWarehouseItemTable.INSTANCE.
+						unitOfMeasureKey
+				).as(
+					"count_sku_uom"
+				)
+			));
 	}
 
 	@Override

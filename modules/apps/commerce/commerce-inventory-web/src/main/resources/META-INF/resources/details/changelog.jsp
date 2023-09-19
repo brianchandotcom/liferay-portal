@@ -19,8 +19,7 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 			HashMapBuilder.<String, String>put(
 				"sku", commerceInventoryDisplayContext.getSku()
 			).put(
-				"unitOfMeasureKey",
-				commerceInventoryDisplayContext.getUnitOfMeasureKey()
+				"unitOfMeasureKey", commerceInventoryDisplayContext.getUnitOfMeasureKey()
 			).build()
 		%>'
 		dataProviderKey="<%= CommerceInventoryFDSNames.INVENTORY_AUDIT %>"

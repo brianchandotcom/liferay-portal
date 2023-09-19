@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
+import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameException;
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
@@ -196,6 +197,9 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 				queryConfig -> queryConfig.setSelectedFieldNames(
 					Field.ENTRY_CLASS_PK),
 				searchContext -> {
+					searchContext.setAttribute(
+						CPField.CP_DEFINITION_STATUS,
+						WorkflowConstants.STATUS_ANY);
 					searchContext.setAttribute(
 						Field.STATUS, WorkflowConstants.STATUS_ANY);
 					searchContext.setCompanyId(contextCompany.getCompanyId());

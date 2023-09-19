@@ -80,7 +80,8 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			UnicodePropertiesBuilder.put(
 				"notificationTemplateId",
 				notificationTemplate.getNotificationTemplateId()
-			).build());
+			).build(),
+			false);
 
 		_addObjectEntry();
 

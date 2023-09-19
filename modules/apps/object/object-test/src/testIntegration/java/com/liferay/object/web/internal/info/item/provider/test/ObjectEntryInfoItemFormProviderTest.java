@@ -117,7 +117,8 @@ public class ObjectEntryInfoItemFormProviderTest {
 			ObjectActionTriggerConstants.KEY_STANDALONE,
 			UnicodePropertiesBuilder.put(
 				"script", StringPool.BLANK
-			).build());
+			).build(),
+			false);
 
 		InfoItemFormProvider<?> infoItemFormProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(

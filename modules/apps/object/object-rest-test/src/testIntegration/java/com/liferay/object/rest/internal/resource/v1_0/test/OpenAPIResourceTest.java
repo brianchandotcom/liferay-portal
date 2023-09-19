@@ -104,7 +104,7 @@ public class OpenAPIResourceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			objectActionName, ObjectActionExecutorConstants.KEY_GROOVY,
 			ObjectActionTriggerConstants.KEY_STANDALONE,
-			new UnicodeProperties());
+			new UnicodeProperties(), false);
 
 		_testGetActionsOpenAPI(
 			Arrays.asList(

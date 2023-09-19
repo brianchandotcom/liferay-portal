@@ -156,7 +156,8 @@ public class ObjectActionServiceTest {
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 			UnicodePropertiesBuilder.put(
 				"url", RandomTestUtil.randomString()
-			).build());
+			).build(),
+			false);
 	}
 
 	private void _setUser(User user) {
@@ -183,7 +184,8 @@ public class ObjectActionServiceTest {
 				ObjectActionTriggerConstants.KEY_ON_AFTER_ADD,
 				UnicodePropertiesBuilder.put(
 					"url", RandomTestUtil.randomString()
-				).build());
+				).build(),
+				false);
 		}
 		finally {
 			if (objectAction != null) {

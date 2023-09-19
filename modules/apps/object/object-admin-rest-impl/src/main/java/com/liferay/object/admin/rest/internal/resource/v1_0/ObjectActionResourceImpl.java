@@ -163,7 +163,8 @@ public class ObjectActionResourceImpl extends BaseObjectActionResourceImpl {
 				objectAction.getObjectActionExecutorKey(),
 				objectAction.getObjectActionTriggerKey(),
 				ObjectActionUtil.toParametersUnicodeProperties(
-					objectAction.getParameters())));
+					objectAction.getParameters()),
+				objectAction.getSystem()));
 	}
 
 	@Override

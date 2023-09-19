@@ -133,7 +133,8 @@ public class ExecuteInfoItemActionStrutsActionTest {
 				"script",
 				"File file = new File('" + _fileName +
 					"'); file.append('true');"
-			).build());
+			).build(),
+			false);
 	}
 
 	@After

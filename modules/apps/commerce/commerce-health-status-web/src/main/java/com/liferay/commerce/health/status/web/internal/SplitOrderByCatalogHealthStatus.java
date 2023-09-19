@@ -186,7 +186,8 @@ public class SplitOrderByCatalogHealthStatus implements CommerceHealthStatus {
 					UnicodePropertiesBuilder.put(
 						"objectDefinitionId",
 						commerceOrderObjectDefinition.getObjectDefinitionId()
-					).build());
+					).build(),
+					false);
 			}
 
 			return null;

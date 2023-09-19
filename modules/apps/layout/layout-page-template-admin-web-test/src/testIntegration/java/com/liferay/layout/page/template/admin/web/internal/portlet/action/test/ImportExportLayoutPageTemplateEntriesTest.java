@@ -1317,7 +1317,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 			ObjectActionTriggerConstants.KEY_STANDALONE,
 			UnicodePropertiesBuilder.put(
 				"script", StringPool.BLANK
-			).build());
+			).build(),
+			false);
 	}
 
 	private ObjectEntry _addObjectEntry() throws Exception {

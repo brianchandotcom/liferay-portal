@@ -158,7 +158,7 @@ export function ModalPublishObjectDefinitions({
 		setModalHeaderMessage(`${Liferay.Language.get('publishing')}...`);
 		setPublishObjectDefinitionsStatus(STATUS.PENDING);
 
-		const publishPromises = selectedDraftObjectDefinitions.map(
+		const publishObjectDefinitionPromises = selectedDraftObjectDefinitions.map(
 			({id, status}) => {
 				setSelectedDraftObjectDefinitions((prevState) =>
 					updateObjectDefinitionStatus(prevState, id, status)
@@ -169,23 +169,29 @@ export function ModalPublishObjectDefinitions({
 		);
 
 		try {
-			const responses = await Promise.all(publishPromises);
-
-			const hasRejectedResponses = responses.some(
-				(response) =>
-					typeof response === 'number' && response === STATUS.REJECTED
+			const publishObjectDefinitionResponses = await Promise.all(
+				publishObjectDefinitionPromises
 			);
-			const filteredResponses = responses.filter(
-				(response) => typeof response === 'object'
+
+			const hasRejectedPublishObjectDefinitionResponses = publishObjectDefinitionResponses.some(
+				(publishObjectDefinitionResponse) =>
+					typeof publishObjectDefinitionResponse === 'number' &&
+					publishObjectDefinitionResponse === STATUS.REJECTED
+			);
+			const acceptedPublishObjectDefinitionResponses = publishObjectDefinitionResponses.filter(
+				(publishObjectDefinitionResponse) =>
+					typeof publishObjectDefinitionResponse === 'object'
 			);
 
 			setModalHeaderMessage(
-				!hasRejectedResponses
+				!hasRejectedPublishObjectDefinitionResponses
 					? Liferay.Language.get('successfully-published')
 					: Liferay.Language.get('published-with-errors')
 			);
 			setPublishObjectDefinitionsStatus(
-				!hasRejectedResponses ? STATUS.APPROVED : STATUS.REJECTED
+				!hasRejectedPublishObjectDefinitionResponses
+					? STATUS.APPROVED
+					: STATUS.REJECTED
 			);
 
 			const newElements = elements.map((element) => {
@@ -194,16 +200,19 @@ export function ModalPublishObjectDefinitions({
 						(element as FlowElement<ObjectDefinitionNodeData>).data
 							?.id || 0;
 
-					const response = (filteredResponses as ObjectDefinition[]).find(
-						(response) => response.id === elementId
+					const currentObjectDefinitionPublishedResponse = (acceptedPublishObjectDefinitionResponses as ObjectDefinition[]).find(
+						(acceptedPublishObjectDefinitionResponse) =>
+							acceptedPublishObjectDefinitionResponse.id ===
+							elementId
 					);
 
-					if (response) {
+					if (currentObjectDefinitionPublishedResponse) {
 						return {
 							...element,
 							data: {
 								...element.data,
-								status: response.status,
+								status:
+									currentObjectDefinitionPublishedResponse.status,
 							},
 						};
 					}
@@ -274,7 +283,7 @@ export function ModalPublishObjectDefinitions({
 			);
 		}
 		else {
-			const objectDefinition = objectDefinitionNodes.find(
+			const selectedDraftObjectDefinitionNode = objectDefinitionNodes.find(
 				(objectDefinitionNode) =>
 					objectDefinitionNode.data?.id === objectDefinitionId
 			)!;
@@ -283,7 +292,7 @@ export function ModalPublishObjectDefinitions({
 				...selectedDraftObjectDefinitions,
 				{
 					id: objectDefinitionId,
-					status: objectDefinition.data?.status!,
+					status: selectedDraftObjectDefinitionNode.data?.status!,
 				},
 			]);
 		}

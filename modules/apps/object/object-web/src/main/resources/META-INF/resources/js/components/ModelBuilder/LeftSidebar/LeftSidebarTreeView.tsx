@@ -16,7 +16,13 @@ import {
 import classNames from 'classnames';
 import {openToast, sub} from 'frontend-js-web';
 import React, {useMemo} from 'react';
-import {Node, useStore, useZoomPanHelper} from 'react-flow-renderer';
+import {
+	FlowElement,
+	Node,
+	isNode,
+	useStore,
+	useZoomPanHelper,
+} from 'react-flow-renderer';
 
 import './LeftSidebar.scss';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
@@ -37,7 +43,7 @@ export default function LeftSidebarTreeView({
 	showActions?: boolean;
 }) {
 	const [
-		{leftSidebarItems, selectedObjectFolder},
+		{elements, leftSidebarItems, selectedObjectFolder},
 		dispatch,
 	] = useObjectFolderContext();
 	const store = useStore();
@@ -63,12 +69,12 @@ export default function LeftSidebarTreeView({
 	);
 
 	const filteredLeftSidebarItems = useMemo(() => {
-		return leftSidebarItems.map((sidebarItem) => {
-			if (!sidebarItem.leftSidebarObjectDefinitionItems) {
-				return sidebarItem;
+		return leftSidebarItems.map((leftSidebarItem) => {
+			if (!leftSidebarItem.leftSidebarObjectDefinitionItems) {
+				return leftSidebarItem;
 			}
 
-			const newObjectDefinitions = sidebarItem.leftSidebarObjectDefinitionItems.filter(
+			const newLeftSidebarObjectDefinitionItems = leftSidebarItem.leftSidebarObjectDefinitionItems.filter(
 				(leftSidebarObjectDefinitionItem) =>
 					stringIncludesQuery(
 						leftSidebarObjectDefinitionItem.label,
@@ -77,8 +83,8 @@ export default function LeftSidebarTreeView({
 			);
 
 			return {
-				...sidebarItem,
-				objectDefinitions: newObjectDefinitions,
+				...leftSidebarItem,
+				leftSidebarObjectDefinitionItems: newLeftSidebarObjectDefinitionItems,
 			};
 		});
 	}, [leftSidebarItems, query]);
@@ -96,43 +102,52 @@ export default function LeftSidebarTreeView({
 			(objectFolder) => objectFolder.name === objectFolderName
 		);
 
-		const objectDefinitionsFilteredByObjectFolder = await API.getObjectDefinitions(
+		const currentObjectFolderObjectDefinitions = await API.getObjectDefinitions(
 			`filter=objectFolderExternalReferenceCode eq '${currentObjectFolder?.externalReferenceCode}'`
 		);
 
-		const objectDefinition = objectDefinitionsFilteredByObjectFolder.find(
-			(objectDefinition) => objectDefinition.id === objectDefinitionId
-		) as ObjectDefinitionNodeData;
+		let objectDefinitionToBeMoved = currentObjectFolderObjectDefinitions.find(
+			(currentObjectFolderObjectDefinition) =>
+				currentObjectFolderObjectDefinition.id === objectDefinitionId
+		);
 
-		if (objectDefinition) {
-			const movedObjectDefinition: ObjectDefinitionNodeData = {
-				...objectDefinition,
+		if (objectDefinitionToBeMoved) {
+			objectDefinitionToBeMoved = {
+				...objectDefinitionToBeMoved,
 				objectFolderExternalReferenceCode:
 					selectedObjectFolder.externalReferenceCode,
 			};
 
 			try {
-				const newObjectDefinition = (await API.save({
-					item: movedObjectDefinition,
+				const movedObjectDefinition = (await API.save({
+					item: objectDefinitionToBeMoved,
 					method: 'PATCH',
 					returnValue: true,
-					url: `/o/object-admin/v1.0/object-definitions/${objectDefinition?.id}`,
+					url: `/o/object-admin/v1.0/object-definitions/${objectDefinitionToBeMoved?.id}`,
 				})) as ObjectDefinition;
 
 				dispatch({
 					payload: {
-						newObjectDefinition,
+						newObjectDefinition: movedObjectDefinition,
 						selectedObjectFolderName: selectedObjectFolder.name,
 					},
 					type: TYPES.ADD_OBJECT_DEFINITION_TO_OBJECT_FOLDER,
 				});
 
-				if (!objectDefinition.linkedObjectDefinition) {
+				const objectDefinitionNodeToBeMoved = elements.find(
+					(element) =>
+						isNode(element) &&
+						element.id === objectDefinitionToBeMoved!.id.toString()
+				) as FlowElement<ObjectDefinitionNodeData>;
+
+				if (
+					!objectDefinitionNodeToBeMoved.data?.linkedObjectDefinition
+				) {
 					dispatch({
 						payload: {
 							currentObjectFolderName: currentObjectFolder!.name,
 							deletedObjectDefinitionName:
-								newObjectDefinition.name,
+								movedObjectDefinition.name,
 						},
 						type: TYPES.DELETE_OBJECT_DEFINITION,
 					});
@@ -142,7 +157,7 @@ export default function LeftSidebarTreeView({
 					message: sub(
 						Liferay.Language.get('x-was-moved-successfully'),
 						`<strong>${getLocalizableLabel(
-							objectDefinition.defaultLanguageId,
+							movedObjectDefinition.defaultLanguageId,
 							movedObjectDefinition.label
 						)}</strong>`
 					),
@@ -179,9 +194,9 @@ export default function LeftSidebarTreeView({
 			leftSidebarObjectDefinitionItem.type === 'linkedObjectDefinition'
 	);
 
-	const newOtherObjectFolders = leftSidebarOtherObjectFoldersItems.map(
+	const newLeftSidebarOtherObjectFolderItems = leftSidebarOtherObjectFoldersItems.map(
 		(leftSidebarObjectFolderItem) => {
-			const objectDefinitions = leftSidebarObjectFolderItem.leftSidebarObjectDefinitionItems?.map(
+			const newLeftSidebarObjectDefinitionItems = leftSidebarObjectFolderItem.leftSidebarObjectDefinitionItems?.map(
 				(leftSidebarObjectDefinitionItem) => {
 					const linkedObjectDefinition = linkedObjectDefinitions?.find(
 						(linkedObjectDefinition) =>
@@ -202,7 +217,7 @@ export default function LeftSidebarTreeView({
 
 			return {
 				...leftSidebarObjectFolderItem,
-				objectDefinitions,
+				leftSidebarObjectDefinitionItems: newLeftSidebarObjectDefinitionItems,
 			};
 		}
 	);
@@ -211,7 +226,7 @@ export default function LeftSidebarTreeView({
 		<TreeView<LeftSidebarItem | LeftSidebarObjectDefinitionItem>
 			items={
 				showActions
-					? newOtherObjectFolders
+					? newLeftSidebarOtherObjectFolderItems
 					: [leftSidebarSelectedObjectFolderItem]
 			}
 			nestedKey="objectDefinitions"

@@ -161,17 +161,16 @@ public class CopyFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		long fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
-
 		if (ArrayUtil.contains(groupIds, fileEntry.getGroupId())) {
-			return fileEntryTypeId;
+			return dlFileEntry.getFileEntryTypeId();
 		}
 
 		DLFileEntryType fileEntryType =
-			_dlFileEntryTypeService.getFileEntryType(fileEntryTypeId);
+			_dlFileEntryTypeService.getFileEntryType(
+				dlFileEntry.getFileEntryTypeId());
 
 		if (ArrayUtil.contains(groupIds, fileEntryType.getGroupId())) {
-			return fileEntryTypeId;
+			return dlFileEntry.getFileEntryTypeId();
 		}
 
 		return DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;

@@ -17,6 +17,7 @@ JournalArticle article = JournalArticleLocalServiceUtil.fetchArticle(groupId, ar
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(article.getTitle(themeDisplay.getLocale()));
 %>

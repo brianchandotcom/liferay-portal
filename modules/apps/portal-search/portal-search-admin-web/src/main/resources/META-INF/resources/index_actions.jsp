@@ -356,6 +356,7 @@ SearchAdminDisplayContext searchAdminDisplayContext = (SearchAdminDisplayContext
 		elasticSearchDiskSpace: {
 			availableDiskSpace: <%= searchAdminDisplayContext.getAvailableDiskSpace() %>,
 			currentDiskSpaceUsed: <%= searchAdminDisplayContext.getCurrentDiskSpaceUsed() %>,
+			isLowOnDiskSpace: <%= searchAdminDisplayContext.isLowOnDiskSpace() %>,
 		},
 		form: document.<portlet:namespace />fm,
 		indexActionWrapperSelector: '.index-action-wrapper',

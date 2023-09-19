@@ -59,7 +59,7 @@ public class BlogsPortletDisplayTemplateHandler
 		).put(
 			"blogsEntryPermission", new BlogsEntryPermission()
 		).put(
-			"blogsEntryUtil", _blogsEntryUtil
+			"blogsEntryUtil", new BlogsEntryUtil()
 		).put(
 			"commentManager", _commentManager
 		).put(
@@ -143,9 +143,6 @@ public class BlogsPortletDisplayTemplateHandler
 	}
 
 	private volatile BlogsConfiguration _blogsConfiguration;
-
-	@Reference
-	private BlogsEntryUtil _blogsEntryUtil;
 
 	@Reference
 	private CommentManager _commentManager;

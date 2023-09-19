@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal} from 'frontend-js-web';
-
 function attachListener(element, eventType, callback) {
 	element?.addEventListener(eventType, callback);
 
@@ -15,12 +13,7 @@ function attachListener(element, eventType, callback) {
 	};
 }
 
-export default function EditKBArticle({
-	kbArticle,
-	namespace,
-	publishAction,
-	scheduleModalURL,
-}) {
+export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 	const contextualSidebarButton = document.getElementById(
 		`${namespace}contextualSidebarButton`
 	);
@@ -52,15 +45,7 @@ export default function EditKBArticle({
 		event.currentTarget.dataset.customUrl = urlTitleInput.value !== '';
 	};
 
-	const scheduleItemOnClick = () => {
-		openScheduleModal(Liferay.Language.get('schedule-publication'));
-	};
-
-	const scheduledButtonOnClick = () => {
-		openScheduleModal(Liferay.Language.get('edit-scheduled-publication'));
-	};
-
-	const openScheduleModal = (modalTitle) => {
+	const openScheduleModal = () => {
 		Liferay.componentReady(`${namespace}ScheduleKBArticleComponent`).then(
 			(component) => {
 				component.open();
@@ -154,10 +139,10 @@ export default function EditKBArticle({
 
 	if (Liferay.FeatureFlags['LPS-188060']) {
 		eventHandlers.push(
-			attachListener(scheduleItem, 'click', scheduleItemOnClick)
+			attachListener(scheduleItem, 'click', openScheduleModal)
 		);
 		eventHandlers.push(
-			attachListener(scheduledButton, 'click', scheduledButtonOnClick)
+			attachListener(scheduledButton, 'click', openScheduleModal)
 		);
 	}
 

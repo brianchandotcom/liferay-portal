@@ -490,6 +490,98 @@ definition {
 		FormFields.viewFieldLabelNotPresent(fieldLabel = "Image");
 	}
 
+	@description = "LPS-186215 - Verify if not possible to submit the form with a file larger than 5MB"
+	@priority = 4
+	test NotPossibleSubmitLargeImage {
+		task ("Given a Form with an upload field created in a virtual instance") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Forms");
+
+			FormsAdminNavigator.gotoAddForm();
+
+			Form.editName(formName = "Form Name");
+		}
+
+		task ("and Given added Upload field with the option "Allow Guest Users to Send Files" enabled") {
+			FormViewBuilder.addFieldByDoubleClick(fieldType = "Upload");
+
+			FormFields.enableSwitch(fieldName = "Allow Guest Users to Send Files");
+
+			Form.publishForm();
+		}
+
+		task ("and Given that Form added on the home page") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
+
+			PagesAdmin.addPage(
+				pageName = "Form Page",
+				sitePageType = "Widget Page");
+
+			Navigator.gotoPage(
+				baseURL = "http://www.able.com:8080",
+				pageName = "Form Page");
+
+			Portlet.addPG(portletName = "Form");
+
+			FormPortletNavigator.gotoSelectForm();
+
+			FormPortletConfiguration.selectForm(formTitle = "Form Name");
+
+			PortletEntry.save();
+
+			IFrame.closeFrame();
+		}
+
+		task ("When the user changes the value of the "Guest Upload Maximum File Size" setting to 5 in the Instance Settings") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Forms",
+				configurationName = "Forms",
+				configurationScope = "Site Scope");
+
+			FormFields.editText(
+				fieldName = "guestUploadMaximumFileSize",
+				fieldValue = 5);
+
+			SystemSettings.saveConfiguration();
+		}
+
+		task ("and When the Guest user uploads a file larger than 5MB") {
+			User.logoutPG(specificURL = "http://www.able.com:8080");
+
+			Navigator.gotoPage(
+				baseURL = "http://www.able.com:8080",
+				pageName = "Form Page");
+
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = "image_larger_than_5MB.jpg");
+		}
+
+		task ("Then the Guest user should not be able to submit the form with a file larger than 5.0 MB") {
+			FormPortlet.viewValidationErrorMessage(validationErrorMessage = "Please enter a file with a valid file size no larger than 5 MB.");
+		}
+	}
+
 	@description = "Verify that a Predefined Value can be set"
 	@priority = 4
 	test PredefinedValueCanBeAdded {

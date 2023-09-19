@@ -838,13 +838,13 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("Given that a user accesses the workflow") {
+		task ("Given the single approver workflow") {
 			Workflow.openWorkflowListView();
 
 			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 		}
 
-		task ("When create the recipient to Asset Creator") {
+		task ("When creating the recipient for Asset Creator") {
 			KaleoDesigner.selectNode(nodeNodeLabel = "created");
 
 			ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
@@ -860,15 +860,17 @@ definition {
 			Alert.viewSuccessMessageText(successMessage = "Workflow updated successfully.");
 		}
 
-		task ("and When entering and exiting the Created node") {
+		task ("and When entering and exiting the created node") {
 			Workflow.openWorkflowListView();
 
 			Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 		}
 
-		task ("Then select the Created node, the assignments will be for the Asset Creator") {
+		task ("and When the created node is selected") {
 			KaleoDesigner.selectNode(nodeNodeLabel = "created");
+		}
 
+		task ("Then the created node is assigned to the Asset Creator") {
 			ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "Asset Creator");
 
 			ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationRecipientType = "Asset Creator");

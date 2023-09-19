@@ -14,6 +14,7 @@ import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.RenderRequest;
@@ -77,17 +79,17 @@ public class CommerceInventoryWarehouseItemsDisplayContext {
 		).buildString();
 	}
 
-	public List<CommerceInventoryWarehouseItem>
-			getCommerceInventoryWarehouseItem(
-				CommerceInventoryWarehouse commerceInventoryWarehouse)
+	public CommerceInventoryWarehouseItem getCommerceInventoryWarehouseItem(
+			CommerceInventoryWarehouse commerceInventoryWarehouse,
+			String unitOfMeasureKey)
 		throws PortalException {
 
 		CPInstance cpInstance = getCPInstance();
 
 		return _commerceInventoryWarehouseItemService.
-			findCommerceInventoryWarehouseItem(
+			fetchCommerceInventoryWarehouseItem(
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				cpInstance.getSku());
+				cpInstance.getSku(), unitOfMeasureKey);
 	}
 
 	public List<CommerceInventoryWarehouse> getCommerceInventoryWarehouses()
@@ -105,6 +107,23 @@ public class CommerceInventoryWarehouseItemsDisplayContext {
 		}
 
 		return _cpInstance;
+	}
+
+	public List<String> getCPInstanceUnitOfMeasureKeys()
+		throws PortalException {
+
+		CPInstance cpInstance = getCPInstance();
+
+		List<String> cpInstanceUnitOfMeasureKeys = TransformUtil.transform(
+			cpInstance.getCPInstanceUnitOfMeasures(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			cpInstanceUnitOfMeasure -> cpInstanceUnitOfMeasure.getKey());
+
+		if (cpInstanceUnitOfMeasureKeys.isEmpty()) {
+			return Arrays.asList(StringPool.BLANK);
+		}
+
+		return cpInstanceUnitOfMeasureKeys;
 	}
 
 	public String getUpdateCommerceInventoryWarehouseItemTaglibOnClick(

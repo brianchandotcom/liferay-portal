@@ -20,9 +20,15 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
+		<liferay-ui:error exception="<%= CPInstanceUnitOfMeasureKeyException.class %>" message="inventory-item-with-this-sku-and-uom-already-exists-in-the-selected-warehouse" />
 		<liferay-ui:error exception="<%= DuplicateCommerceInventoryWarehouseItemException.class %>" message="inventory-item-with-this-sku-already-exists-in-the-selected-warehouse" />
+		<liferay-ui:error exception="<%= NoSuchCPInstanceUnitOfMeasureException.class %>" message="no-such-uom-exists-with-this-sku" />
 
 		<aui:input name="sku" required="<%= true %>" type="text" />
+
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-11287") %>'>
+			<aui:input name="unitOfMeasure" type="text" />
+		</c:if>
 
 		<aui:select label="warehouse" name="commerceInventoryWarehouseId" required="<%= true %>">
 
@@ -40,6 +46,7 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 
 		<aui:input name="quantity" required="<%= true %>" type="text">
 			<aui:validator name="min">1</aui:validator>
+			<aui:validator name="number" />
 		</aui:input>
 	</aui:form>
 </commerce-ui:modal-content>

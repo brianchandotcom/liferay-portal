@@ -66,7 +66,8 @@ public class CommerceInventoryDisplayContext {
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
 		_sku = ParamUtil.getString(httpServletRequest, "sku");
-		_unitOfMeasureKey = ParamUtil.getString(httpServletRequest, "unitOfMeasureKey");
+		_unitOfMeasureKey = ParamUtil.getString(
+			httpServletRequest, "unitOfMeasureKey");
 	}
 
 	public String getAddQuantityActionURL() throws Exception {
@@ -252,22 +253,22 @@ public class CommerceInventoryDisplayContext {
 		return creationMenu;
 	}
 
-	public String getTitle(){
-		StringBundler sb = new StringBundler(getSku());
-
-		if(Validator.isNotNull(getUnitOfMeasureKey())){
-			sb.append(StringPool.SPACE).append(getUnitOfMeasureKey());
-		}
-
-		return sb.toString();
-	}
-
 	public String getSku() {
 		return _sku;
 	}
 
-	public String getUnitOfMeasureKey() {
-		return _unitOfMeasureKey;
+	public String getTitle() {
+		StringBundler sb = new StringBundler(getSku());
+
+		if (Validator.isNotNull(getUnitOfMeasureKey())) {
+			sb.append(
+				StringPool.SPACE
+			).append(
+				getUnitOfMeasureKey()
+			);
+		}
+
+		return sb.toString();
 	}
 
 	public String getTransferQuantitiesActionURL() throws Exception {
@@ -296,6 +297,10 @@ public class CommerceInventoryDisplayContext {
 		).setParameter(
 			"sku", _sku
 		).buildPortletURL();
+	}
+
+	public String getUnitOfMeasureKey() {
+		return _unitOfMeasureKey;
 	}
 
 	public CreationMenu getWarehousesCreationMenu() throws Exception {
@@ -345,6 +350,6 @@ public class CommerceInventoryDisplayContext {
 		_commerceInventoryWarehouseService;
 	private final CPRequestHelper _cpRequestHelper;
 	private String _sku;
-	private String _unitOfMeasureKey;
+	private final String _unitOfMeasureKey;
 
 }

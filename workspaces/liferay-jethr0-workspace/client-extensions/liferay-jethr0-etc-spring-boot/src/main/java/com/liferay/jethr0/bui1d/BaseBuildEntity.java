@@ -162,6 +162,8 @@ public abstract class BaseBuildEntity
 		State state = getState();
 
 		jsonObject.put(
+			"initialBuild", isInitialBuild()
+		).put(
 			"jenkinsJobName", getJenkinsJobName()
 		).put(
 			"name", getName()
@@ -234,6 +236,11 @@ public abstract class BaseBuildEntity
 		Set<BuildEntity> parentBuildEntities = _getAllParentBuildEntities();
 
 		return parentBuildEntities.contains(parentBuildEntity);
+	}
+
+	@Override
+	public boolean isInitialBuild() {
+		return _initialBuild;
 	}
 
 	@Override
@@ -335,9 +342,10 @@ public abstract class BaseBuildEntity
 	protected BaseBuildEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
-		_name = jsonObject.getString("name");
+		_initialBuild = jsonObject.optBoolean("initialBuild");
 		_jenkinsJobName = jsonObject.getString("jenkinsJobName");
 		_jobEntityId = jsonObject.optLong("r_jobToBuilds_c_jobId");
+		_name = jsonObject.getString("name");
 		_state = State.get(jsonObject.getJSONObject("state"));
 	}
 
@@ -369,6 +377,7 @@ public abstract class BaseBuildEntity
 	private static final int _DEFAULT_MIN_NODE_RAM = 12;
 
 	private final Set<BuildEntity> _childBuildEntities = new HashSet<>();
+	private final boolean _initialBuild;
 	private String _jenkinsJobName;
 	private JobEntity _jobEntity;
 	private long _jobEntityId;

@@ -78,6 +78,8 @@ public interface BuildEntity extends Entity {
 
 	public boolean isChildBuildEntity(BuildEntity parentBuildEntity);
 
+	public boolean isInitialBuild();
+
 	public boolean isParentBuildEntity(BuildEntity buildEntity);
 
 	public void removeBuildParameterEntities(

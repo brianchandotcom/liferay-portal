@@ -27,6 +27,25 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 
+	public BuildEntity add(
+		JobEntity jobEntity, boolean initialBuild, String jenkinsJobName,
+		String name, BuildEntity.State state) {
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"initialBuild", initialBuild
+		).put(
+			"jenkinsJobName", jenkinsJobName
+		).put(
+			"name", name
+		).put(
+			"state", state.getJSONObject()
+		);
+
+		return add(jobEntity, jsonObject);
+	}
+
 	public BuildEntity add(JobEntity jobEntity, JSONObject jsonObject) {
 		jsonObject.put("r_jobToBuilds_c_jobId", jobEntity.getId());
 
@@ -39,29 +58,15 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 		return buildEntity;
 	}
 
-	public BuildEntity add(
-		JobEntity jobEntity, String name, String jenkinsJobName,
-		BuildEntity.State state) {
-
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put(
-			"jenkinsJobName", jenkinsJobName
-		).put(
-			"name", name
-		).put(
-			"state", state.getJSONObject()
-		);
-
-		return add(jobEntity, jsonObject);
-	}
-
 	public Set<BuildEntity> getAll(JobEntity jobEntity) {
 		Set<BuildEntity> buildEntities = new HashSet<>(
 			_jobToBuildsEntityRelationshipDALO.getChildEntities(jobEntity));
 
 		for (BuildEntity buildEntity : buildEntities) {
 			buildEntity.setJobEntity(jobEntity);
+
+			buildEntity.addBuildRunEntities(
+				_buildRunEntityRepository.getAll(buildEntity));
 		}
 
 		return addAll(buildEntities);

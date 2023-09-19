@@ -734,6 +734,15 @@
 			"name": "Build",
 			"objectFields": [
 				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"label": {
+						"en_US": "Initial Build"
+					},
+					"name": "initialBuild",
+					"type": "Boolean"
+				},
+				{
 					"DBType": "String",
 					"businessType": "Text",
 					"label": {

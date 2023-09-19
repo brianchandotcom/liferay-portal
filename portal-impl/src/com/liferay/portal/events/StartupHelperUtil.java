@@ -44,18 +44,13 @@ import java.util.List;
 public class StartupHelperUtil {
 
 	public static void initResourceActions() {
-		if (_dbNew) {
-			ResourceActionLocalServiceUtil.checkResourceActions();
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId ->
+					ResourceActionLocalServiceUtil.checkResourceActions());
 		}
-		else {
-			try {
-				DBPartitionUtil.forEachCompanyId(
-					companyId ->
-						ResourceActionLocalServiceUtil.checkResourceActions());
-			}
-			catch (Exception exception) {
-				ReflectionUtil.throwException(exception);
-			}
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {

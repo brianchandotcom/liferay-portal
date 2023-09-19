@@ -666,12 +666,19 @@ public class GitWorkingDirectory {
 			System.out.println(
 				remoteGitRefSHA + " already exists in Git repository");
 
-			if (localGitBranch != null) {
-				return createLocalGitBranch(
-					localGitBranch.getName(), true, remoteGitRefSHA);
+			if ((localGitBranch != null) &&
+				Objects.equals(localGitBranch.getSHA(), remoteGitRefSHA)) {
+
+				return localGitBranch;
 			}
 
-			return null;
+			if (localGitBranch == null) {
+				return createLocalGitBranch(
+					remoteGitRef.getName(), true, remoteGitRefSHA);
+			}
+
+			return createLocalGitBranch(
+				localGitBranch.getName(), true, remoteGitRefSHA);
 		}
 
 		StringBuilder gitBranchesSHAReportStringBuilder = new StringBuilder();

@@ -389,20 +389,18 @@ definition {
 
 		task ("Then the page creator switchs to Content Editing via keyboard") {
 			KeyPress(
-				key_menuItem = "Page Design",
-				locator1 = "MenuItem#ANY_MENU_ITEM",
+				locator1 = "PageEditor#EDIT_MODE_SELECTOR",
 				value1 = "\UP");
 
 			KeyPress(
-				key_menuItem = "Content Editing",
-				locator1 = "MenuItem#ANY_MENU_ITEM",
+				locator1 = "PageEditor#EDIT_MODE_SELECTOR",
 				value1 = "\ENTER");
 
 			AssertTextEquals(
 				locator1 = "PageEditor#EDIT_MODE_SELECTOR",
 				value1 = "Content Editing");
 
-			AssertElementFocused(locator1 = "//button[contains(@class,'edit-mode-selector')]");
+			AssertElementFocused(locator1 = "PageEditor#EDIT_MODE_SELECTOR");
 		}
 	}
 

@@ -281,6 +281,14 @@ definition {
 		return ${publicationName};
 	}
 
+	macro getShareLinkURL {
+		WaitForElementPresent(locator1 = "PublicationsChanges#SHARE_LINK_URL");
+
+		var publicURL = selenium.getElementValue("PublicationsChanges#SHARE_LINK_URL");
+
+		return ${publicURL};
+	}
+
 	macro inviteUsers {
 		if (${gotoReviewChanges} == "true") {
 			PublicationsNavigator.gotoPublicationEllipsisItem(

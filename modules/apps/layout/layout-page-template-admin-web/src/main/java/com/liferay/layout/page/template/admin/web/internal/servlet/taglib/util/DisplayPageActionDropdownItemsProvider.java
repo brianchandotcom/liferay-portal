@@ -97,6 +97,11 @@ public class DisplayPageActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
+						() ->
+							FeatureFlagManagerUtil.isEnabled("LPS-195263") &&
+							hasUpdatePermission,
+						_getChangeContentTypeActionUnsafeConsumer()
+					).add(
 						() -> hasUpdatePermission,
 						_getUpdateLayoutPageTemplateEntryPreviewActionUnsafeConsumer()
 					).add(
@@ -171,6 +176,16 @@ public class DisplayPageActionDropdownItemsProvider {
 				dropdownGroupItem.setSeparator(true);
 			}
 		).build();
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getChangeContentTypeActionUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "changeContentType");
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "change-content-type"));
+		};
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

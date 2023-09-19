@@ -73,7 +73,7 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 						dropdownItem -> {
 							dropdownItem.setHref(
 								_getURL(
-									layoutClassedModelUsage,
+									article, layoutClassedModelUsage,
 									AssetRendererFactory.TYPE_LATEST_APPROVED,
 									InfoItemIdentifier.VERSION_LATEST_APPROVED,
 									httpServletRequest));
@@ -107,7 +107,7 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 								dropdownItem -> {
 									dropdownItem.setHref(
 										_getURL(
-											layoutClassedModelUsage,
+											article, layoutClassedModelUsage,
 											AssetRendererFactory.TYPE_LATEST,
 											InfoItemIdentifier.VERSION_LATEST,
 											httpServletRequest));
@@ -126,6 +126,7 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 	}
 
 	private String _getURL(
+			JournalArticle article,
 			LayoutClassedModelUsage layoutClassedModelUsage, int previewType,
 			String previewVersion, HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -173,8 +174,9 @@ public class JournalArticleLayoutClassedModelUsageActionMenuContributor
 			).buildString();
 		}
 
-		String portletURLString = HttpComponentsUtil.setParameter(
-			layoutURL, "p_l_back_url", themeDisplay.getURLCurrent());
+		String portletURLString = HttpComponentsUtil.addParameters(
+			layoutURL, "p_l_back_url", themeDisplay.getURLCurrent(),
+			"p_l_back_url_title", article.getTitle(themeDisplay.getLocale()));
 
 		return portletURLString + "#portlet_" +
 			layoutClassedModelUsage.getContainerKey();

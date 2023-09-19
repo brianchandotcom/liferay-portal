@@ -7,7 +7,6 @@ package com.liferay.commerce.util;
 
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
-import com.liferay.portal.kernel.exception.PortalException;
 
 import java.math.BigDecimal;
 
@@ -17,21 +16,16 @@ import java.math.BigDecimal;
 public interface CommerceQuantityFormatter {
 
 	public BigDecimal format(
-			CPInstance cpInstance, BigDecimal quantity, String unitOfMeasureKey)
-		throws PortalException;
+		CPInstance cpInstance, BigDecimal quantity, String unitOfMeasureKey);
 
 	public BigDecimal format(
-			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure,
-			BigDecimal quantity)
-		throws PortalException;
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure, BigDecimal quantity);
 
 	public BigDecimal format(
-			long cpInstanceId, BigDecimal quantity, String unitOfMeasureKey)
-		throws PortalException;
+		long cpInstanceId, BigDecimal quantity, String unitOfMeasureKey);
 
 	public BigDecimal format(
-			long companyId, BigDecimal quantity, String sku,
-			String unitOfMeasureKey)
-		throws PortalException;
+		long companyId, BigDecimal quantity, String sku,
+		String unitOfMeasureKey);
 
 }

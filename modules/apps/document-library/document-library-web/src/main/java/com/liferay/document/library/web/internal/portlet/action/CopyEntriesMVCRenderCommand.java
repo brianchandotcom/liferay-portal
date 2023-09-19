@@ -163,7 +163,7 @@ public class CopyEntriesMVCRenderCommand implements MVCRenderCommand {
 							themeDisplay.getScopeGroupId()),
 						_dlSizeLimitConfigurationProvider.
 							getSystemMaxSizeToCopy(),
-						size)));
+						size, themeDisplay.getLocale())));
 		}
 	}
 

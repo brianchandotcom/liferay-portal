@@ -5,14 +5,37 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
+import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.document.library.web.internal.exception.FolderSizeLimitExceededException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.constants.MVCRenderConstants;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sam Ziemer
@@ -33,7 +56,133 @@ public class CopyEntriesMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/document_library/copy_entries.jsp";
+		try {
+			_validateEntriesSize(renderRequest);
+
+			return "/document_library/copy_entries.jsp";
+		}
+		catch (FolderSizeLimitExceededException
+					folderSizeLimitExceededException) {
+
+			HttpServletRequest originalHttpServletRequest =
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(renderRequest));
+
+			SessionErrors.add(
+				originalHttpServletRequest.getSession(),
+				FolderSizeLimitExceededException.class,
+				folderSizeLimitExceededException);
+
+			_sendRedirect(renderRequest, renderResponse);
+
+			return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
+		}
 	}
+
+	private long _getEntriesSize(long[] entryIds) throws PortalException {
+		long size = 0;
+
+		for (long entryId : entryIds) {
+			DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+				entryId);
+
+			if (dlFileEntry != null) {
+				size += dlFileEntry.getSize();
+
+				continue;
+			}
+
+			DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(entryId);
+
+			if (dlFolder != null) {
+				size += _dlFolderLocalService.getFolderSize(
+					dlFolder.getCompanyId(), dlFolder.getGroupId(),
+					dlFolder.getTreePath());
+
+				continue;
+			}
+
+			DLFileShortcut dlFileShortcut =
+				_dlFileShortcutLocalService.getDLFileShortcut(entryId);
+
+			DLFileEntry toDLFileEntry = _dlFileEntryLocalService.getDLFileEntry(
+				dlFileShortcut.getToFileEntryId());
+
+			size += toDLFileEntry.getSize();
+		}
+
+		return size;
+	}
+
+	private void _sendRedirect(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
+
+		try {
+			HttpServletResponse httpServletResponse =
+				_portal.getHttpServletResponse(renderResponse);
+
+			httpServletResponse.sendRedirect(
+				ParamUtil.getString(renderRequest, "redirect"));
+		}
+		catch (IOException ioException) {
+			throw new PortletException(ioException);
+		}
+	}
+
+	private void _validateEntriesSize(PortletRequest portletRequest)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long size = _getEntriesSize(
+			ParamUtil.getLongValues(portletRequest, "entryIds"));
+
+		if (!DLCopyValidationUtil.isCopyToAllowed(
+				_dlSizeLimitConfigurationProvider.getCompanyMaxSizeToCopy(
+					themeDisplay.getCompanyId()),
+				_dlSizeLimitConfigurationProvider.getGroupMaxSizeToCopy(
+					themeDisplay.getScopeGroupId()),
+				_dlSizeLimitConfigurationProvider.getSystemMaxSizeToCopy(),
+				size)) {
+
+			throw new FolderSizeLimitExceededException(
+				_language.format(
+					themeDisplay.getLocale(),
+					"folder-cannot-be-copied-because-it-exceeds-the-limit-" +
+						"defined-in-x-Settings-x",
+					DLCopyValidationUtil.getCopyToValidationMessage(
+						_dlSizeLimitConfigurationProvider.
+							getCompanyMaxSizeToCopy(
+								themeDisplay.getCompanyId()),
+						_dlSizeLimitConfigurationProvider.getGroupMaxSizeToCopy(
+							themeDisplay.getScopeGroupId()),
+						_dlSizeLimitConfigurationProvider.
+							getSystemMaxSizeToCopy(),
+						size)));
+		}
+	}
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private DLFileShortcutLocalService _dlFileShortcutLocalService;
+
+	@Reference
+	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
+	private DLSizeLimitConfigurationProvider _dlSizeLimitConfigurationProvider;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

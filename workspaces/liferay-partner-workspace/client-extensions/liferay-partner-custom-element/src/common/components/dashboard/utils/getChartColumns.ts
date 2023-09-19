@@ -113,7 +113,25 @@ function totalMDFRequestToClaims(mdfRequests: any, chartColumns: any) {
 			acc + parseFloat(value.totalClaimedRequest || 0),
 		0
 	);
-	chartColumns.push(['Claimed', totalClaimedRequestsAmount]);
+	const claimedRequests = mdfRequests?.items
+		?.map((claim: any) =>
+			claim.mdfReqToMDFClms.filter(
+				(request: any) => request.mdfClaimStatus.key === 'claimPaid'
+			)
+		)
+		.flat();
+
+	const totalClaimedActivites = claimedRequests.reduce(
+		(acc: any, value: any) =>
+			acc + parseFloat(value.mdfClaimActivitiesCount),
+		0
+	);
+
+	chartColumns.push([
+		'Claimed',
+		totalClaimedRequestsAmount,
+		totalClaimedActivites,
+	]);
 }
 
 function totalMDFActivities(mdfRequests: any, chartColumns: any) {

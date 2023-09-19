@@ -26,6 +26,67 @@ definition {
 		}
 	}
 
+	@description = "This ensures that a document can be copied to a workflow-enabled folder."
+	@priority = 4
+	test CanApproveCopiedDocument {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMFolder.configureWorkflowCP(
+			dmFolderName = "DM Folder Name",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.copy(
+			dmDocumentTitle = "DM Document Title",
+			targetFolderName = "DM Folder Name");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewStatus(
+			dmDocumentStatus = "Pending",
+			dmDocumentTitle = "DM Document Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "DM Document Title",
+			workflowAssetType = "Document",
+			workflowTask = "Review");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "DM Document Title",
+			workflowAssetType = "Document",
+			workflowTask = "Review");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		DMDocument.viewStatus(
+			dmDocumentStatus = "Approved",
+			dmDocumentTitle = "DM Document Title");
+	}
+
 	@description = "This is a test for LPS-136855. It checks that a pending file cannot be added to another asset."
 	@priority = 4
 	test CannotAddPendingFileToAsset {
@@ -241,6 +302,57 @@ definition {
 		DMDocument.viewStatus(
 			dmDocumentStatus = "Approved",
 			dmDocumentTitle = "Document_1.doc");
+	}
+
+	@description = "This ensures that a folder can be copied to a workflow-enabled folder."
+	@priority = 4
+	test CopiedDocumentRespectsGrandparentFolderWorkflow {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Destination Folder Name",
+			groupName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		DMFolder.configureWorkflowCP(
+			dmFolderName = "DM Destination Folder Name",
+			workflowDefinition = "Single Approver",
+			workflowRestriction = "Default Workflow");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			folderName = "DM Folder Name",
+			groupName = "Guest",
+			mimeType = "application/msword",
+			sourceFileName = "Document_1.doc");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMFolder.copy(
+			dmFolderName = "DM Folder Name",
+			siteName = "Site Name",
+			targetFolderName = "DM Destination Folder Name");
+
+		DMNavigator.openToFolderInAdmin(
+			dmFolderName = "DM Destination Folder Name",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
+
+		DMDocument.viewStatus(
+			dmDocumentStatus = "Pending",
+			dmDocumentTitle = "DM Document Title");
 	}
 
 }

@@ -6,12 +6,12 @@
 package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -54,11 +54,9 @@ public abstract class BaseAddLayoutMVCActionCommand
 		String backURL = ParamUtil.getString(actionRequest, "backURL");
 
 		if (Validator.isNotNull(backURL)) {
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 			layoutFullURL = HttpComponentsUtil.addParameters(
 				layoutFullURL, "p_l_back_url", backURL, "p_l_back_url_title",
-				portletDisplay.getTitle());
+				language.get(themeDisplay.getLocale(), "pages"));
 		}
 
 		return layoutFullURL;
@@ -103,6 +101,9 @@ public abstract class BaseAddLayoutMVCActionCommand
 
 		return configureLayoutURL.toString();
 	}
+
+	@Reference
+	protected Language language;
 
 	@Reference
 	protected LayoutLocalService layoutLocalService;

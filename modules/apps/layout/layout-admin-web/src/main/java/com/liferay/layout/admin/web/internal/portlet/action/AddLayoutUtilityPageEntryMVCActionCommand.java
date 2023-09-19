@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
@@ -107,8 +106,6 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return HttpComponentsUtil.addParameters(
 			_portal.getLayoutFullURL(draftLayout, themeDisplay), "p_l_back_url",
 			PortletURLBuilder.create(
@@ -118,7 +115,8 @@ public class AddLayoutUtilityPageEntryMVCActionCommand
 			).setTabs1(
 				"utility-pages"
 			).buildString(),
-			"p_l_back_url_title", portletDisplay.getTitle(), "p_l_mode",
+			"p_l_back_url_title",
+			_language.get(themeDisplay.getLocale(), "pages"), "p_l_mode",
 			Constants.EDIT);
 	}
 

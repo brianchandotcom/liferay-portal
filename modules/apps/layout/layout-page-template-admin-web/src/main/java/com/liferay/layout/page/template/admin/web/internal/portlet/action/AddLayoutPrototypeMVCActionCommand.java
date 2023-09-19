@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -132,12 +131,9 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 			String backURL = ParamUtil.getString(actionRequest, "backURL");
 
 			if (Validator.isNotNull(backURL)) {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
 				redirectURL = HttpComponentsUtil.addParameters(
 					redirectURL, "p_l_back_url", backURL, "p_l_back_url_title",
-					portletDisplay.getTitle());
+					_language.get(themeDisplay.getLocale(), "pages"));
 			}
 
 			JSONPortletResponseUtil.writeJSON(

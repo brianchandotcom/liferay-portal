@@ -20,6 +20,7 @@ if (ddmTemplate != null) {
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(journalEditDDMTemplateDisplayContext.getRedirect());
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 %>

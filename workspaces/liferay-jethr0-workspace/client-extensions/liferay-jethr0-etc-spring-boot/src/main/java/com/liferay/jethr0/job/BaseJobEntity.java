@@ -13,7 +13,10 @@ import com.liferay.jethr0.task.TaskEntity;
 import com.liferay.jethr0.testsuite.TestSuiteEntity;
 import com.liferay.jethr0.util.StringUtil;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.json.JSONObject;
@@ -85,6 +88,24 @@ public abstract class BaseJobEntity extends BaseEntity implements JobEntity {
 	@Override
 	public Set<GitBranchEntity> getGitBranchEntities() {
 		return getRelatedEntities(GitBranchEntity.class);
+	}
+
+	@Override
+	public Set<BuildEntity> getInitialBuildEntities() {
+		Set<BuildEntity> initialBuildEntities = new HashSet<>();
+
+		for (BuildEntity buildEntity : getBuildEntities()) {
+			if (buildEntity.isInitialBuild()) {
+				initialBuildEntities.add(buildEntity);
+			}
+		}
+
+		return initialBuildEntities;
+	}
+
+	@Override
+	public List<JSONObject> getInitialBuildJSONObjects() {
+		return Collections.emptyList();
 	}
 
 	@Override

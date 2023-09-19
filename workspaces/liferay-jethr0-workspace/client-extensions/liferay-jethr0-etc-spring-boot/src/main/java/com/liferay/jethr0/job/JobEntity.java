@@ -14,6 +14,7 @@ import com.liferay.jethr0.testsuite.TestSuiteEntity;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -48,6 +49,10 @@ public interface JobEntity extends Entity {
 	public Set<BuildEntity> getBuildEntities();
 
 	public Set<GitBranchEntity> getGitBranchEntities();
+
+	public Set<BuildEntity> getInitialBuildEntities();
+
+	public List<JSONObject> getInitialBuildJSONObjects();
 
 	public Set<JenkinsCohortEntity> getJenkinsCohortEntities();
 

@@ -17,7 +17,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 %>
 
 <div class="translation">
-	<aui:form action="<%= importTranslationDisplayContext.getImportTranslationURL() %>" cssClass="translation-import" name="fm">
+	<aui:form action="<%= importTranslationDisplayContext.getImportTranslationURL() %>" cssClass="translation-import" enctype="multipart/form-data" name="fm">
 		<span aria-hidden="true" class="loading-animation"></span>
 
 		<react:component

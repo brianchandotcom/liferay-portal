@@ -270,7 +270,9 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			// Check ResourceActions
 
-			_resourceActionLocalService.checkResourceActions();
+			if (DBPartition.isPartitionEnabled()) {
+				_resourceActionLocalService.checkResourceActions();
+			}
 
 			company = _checkCompany(company);
 

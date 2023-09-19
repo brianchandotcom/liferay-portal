@@ -16,6 +16,7 @@ DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(ddmStruc
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(LanguageUtil.format(request, "copy-x", ddmStructure.getName(locale), false));
 %>

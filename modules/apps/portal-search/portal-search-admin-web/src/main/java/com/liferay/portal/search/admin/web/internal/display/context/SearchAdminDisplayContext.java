@@ -40,6 +40,10 @@ public class SearchAdminDisplayContext {
 		return _selectedTab;
 	}
 
+	public boolean isLowOnDiskSpace() {
+		return _lowOnDiskSpace;
+	}
+
 	public void setAvailableDiskSpace(double availableDiskSpace) {
 		_availableDiskSpace = availableDiskSpace;
 	}
@@ -58,6 +62,10 @@ public class SearchAdminDisplayContext {
 		_indexReindexerClassNames = indexReindexerClassNames;
 	}
 
+	public void setIsLowOnDiskSpace(boolean lowOnDiskSpace) {
+		_lowOnDiskSpace = lowOnDiskSpace;
+	}
+
 	public void setNavigationItemList(NavigationItemList navigationItemList) {
 		_navigationItemList = navigationItemList;
 	}
@@ -70,6 +78,7 @@ public class SearchAdminDisplayContext {
 	private double _currentDiskSpaceUsed;
 	private Map<String, List<Indexer<?>>> _indexersMap;
 	private List<String> _indexReindexerClassNames;
+	private boolean _lowOnDiskSpace;
 	private NavigationItemList _navigationItemList;
 	private String _selectedTab;
 

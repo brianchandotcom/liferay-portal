@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext;
 import com.liferay.portal.search.cluster.StatsClusterInformation;
 import com.liferay.portal.search.index.IndexInformation;
+import com.liferay.portal.search.index.StatsIndexInformation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,10 +60,19 @@ public class SearchAdminDisplayContextBuilder {
 
 		String[] nodeIds = {};
 
-		searchAdminDisplayContext.setAvailableDiskSpace(
-			_statsClusterInformation.getAvailableDiskSpace(nodeIds));
+		double availableDiskSpace =
+			_statsClusterInformation.getAvailableDiskSpace(nodeIds);
+
+		searchAdminDisplayContext.setAvailableDiskSpace(availableDiskSpace);
+
 		searchAdminDisplayContext.setCurrentDiskSpaceUsed(
 			_statsClusterInformation.getUsedDiskSpace(nodeIds));
+
+		searchAdminDisplayContext.setIsLowOnDiskSpace(
+			_isLowOnDiskSpace(
+				availableDiskSpace,
+				_statsIndexInformation.getLargestIndexSize(
+					_indexInformation.getIndexNames())));
 
 		NavigationItemList navigationItemList = new NavigationItemList();
 		String selectedTab = getSelectedTab();
@@ -98,6 +108,12 @@ public class SearchAdminDisplayContextBuilder {
 		StatsClusterInformation statsClusterInformation) {
 
 		_statsClusterInformation = statsClusterInformation;
+	}
+
+	public void setStatsIndexInformation(
+		StatsIndexInformation statsIndexInformation) {
+
+		_statsIndexInformation = statsIndexInformation;
 	}
 
 	protected Map<String, List<Indexer<?>>> getIndexersMap() {
@@ -191,6 +207,16 @@ public class SearchAdminDisplayContextBuilder {
 		return false;
 	}
 
+	private boolean _isLowOnDiskSpace(
+		double availableDiskSpace, double largestIndexSize) {
+
+		if (availableDiskSpace < (largestIndexSize * 1.5)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchAdminDisplayContextBuilder.class);
 
@@ -204,5 +230,6 @@ public class SearchAdminDisplayContextBuilder {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private StatsClusterInformation _statsClusterInformation;
+	private StatsIndexInformation _statsIndexInformation;
 
 }

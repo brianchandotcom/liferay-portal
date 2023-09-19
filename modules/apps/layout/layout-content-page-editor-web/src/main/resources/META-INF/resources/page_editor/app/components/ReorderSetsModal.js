@@ -297,10 +297,10 @@ function CardItem({index, item, numberOfItems, onDropItem}) {
 	);
 
 	return (
-		<div ref={targetRef}>
+		<div className="c-pb-3" ref={targetRef}>
 			<div ref={handlerRef}>
 				<ClayCard
-					className={classNames('mb-3', {
+					className={classNames('c-mb-0', {
 						dragging: isDragging,
 						draggingOver: dragOverPosition,
 						draggingOverBottom:

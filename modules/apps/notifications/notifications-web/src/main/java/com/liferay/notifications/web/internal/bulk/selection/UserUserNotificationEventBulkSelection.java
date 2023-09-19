@@ -10,6 +10,7 @@ import com.liferay.bulk.selection.BaseContainerEntryBulkSelection;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.bulk.selection.EmptyBulkSelection;
+import com.liferay.notifications.web.internal.util.comparator.UserNotificationEventUserNotificationEventIdOrderByComparator;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
@@ -52,7 +53,10 @@ public class UserUserNotificationEventBulkSelection
 				(start, end) -> {
 					List<UserNotificationEvent> userNotificationEvents =
 						_userNotificationEventLocalService.
-							getUserNotificationEvents(_userId, start, end);
+							getUserNotificationEvents(
+								_userId, start, end,
+								new UserNotificationEventUserNotificationEventIdOrderByComparator(
+									true));
 
 					for (UserNotificationEvent userNotificationEvent :
 							userNotificationEvents) {

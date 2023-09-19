@@ -502,6 +502,15 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	@Override
+	public List<UserNotificationEvent> getUserNotificationEvents(
+		long userId, int start, int end,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return userNotificationEventPersistence.findByUserId(
+			userId, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getUserNotificationEventsCount(long userId) {
 		return userNotificationEventPersistence.countByUserId(userId);
 	}

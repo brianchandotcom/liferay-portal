@@ -143,6 +143,7 @@ public class EditCPInstanceUnitOfMeasureMVCActionCommand
 
 		long cpInstanceUnitOfMeasureId = ParamUtil.getLong(
 			actionRequest, "cpInstanceUnitOfMeasureId");
+
 		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
 		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		BigDecimal incrementalOrderQuantity = (BigDecimal)ParamUtil.getNumber(

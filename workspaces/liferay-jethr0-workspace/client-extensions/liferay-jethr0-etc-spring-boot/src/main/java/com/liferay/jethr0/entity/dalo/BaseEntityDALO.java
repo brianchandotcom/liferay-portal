@@ -172,16 +172,26 @@ public abstract class BaseEntityDALO<T extends Entity>
 					throw new RuntimeException("No response");
 				}
 
+				JSONObject jsonObject = new JSONObject();
+
+				for (String key : requestJSONObject.keySet()) {
+					jsonObject.put(key, requestJSONObject.get(key));
+				}
+
 				JSONObject responseJSONObject = new JSONObject(response);
+
+				for (String key : responseJSONObject.keySet()) {
+					jsonObject.put(key, responseJSONObject.get(key));
+				}
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						StringUtil.combine(
 							"Created ", _getEntityLabel(), " ",
-							responseJSONObject.getLong("id")));
+							jsonObject.getLong("id")));
 				}
 
-				return responseJSONObject;
+				return jsonObject;
 			}
 
 			@Override

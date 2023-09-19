@@ -296,6 +296,39 @@ public class LayoutLockManagerTest {
 				null));
 	}
 
+	@Test
+	public void testGetLockedLayoutsOrderByUserAscending() throws Exception {
+		List<String> userNames = new ArrayList<>();
+
+		for (int i = 0; i < 5; i++) {
+			Layout draftLayout = _getDraftLayout();
+
+			User user = UserTestUtil.addUser();
+
+			_lockLayout(draftLayout, user);
+
+			userNames.add(user.getFullName());
+		}
+
+		Collections.sort(userNames, String.CASE_INSENSITIVE_ORDER);
+
+		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
+			TestPropsValues.getCompanyId(), _group.getGroupId(),
+			new LockedLayoutOrder(
+				true, LocaleUtil.getDefault(),
+				LockedLayoutOrder.LockedLayoutOrderType.USER),
+			null);
+
+		Assert.assertEquals(
+			lockedLayouts.toString(), userNames.size(), lockedLayouts.size());
+
+		for (int i = 0; i < userNames.size(); i++) {
+			LockedLayout lockedLayout = lockedLayouts.get(i);
+
+			Assert.assertEquals(userNames.get(i), lockedLayout.getUserName());
+		}
+	}
+
 	@Test(expected = LockedLayoutException.class)
 	public void testGetLockWithDifferentUser() throws Exception {
 		Layout draftLayout = _getDraftLayout();

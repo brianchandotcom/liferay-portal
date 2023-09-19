@@ -124,7 +124,7 @@ class PartnerPortalRemoteAppComponent extends HTMLElement {
 	}
 }
 
-const ELEMENT_NAME = 'liferay-remote-app-partner-portal';
+const ELEMENT_NAME = 'liferay-partner-custom-element';
 
 if (!customElements.get(ELEMENT_NAME)) {
 	customElements.define(ELEMENT_NAME, PartnerPortalRemoteAppComponent);

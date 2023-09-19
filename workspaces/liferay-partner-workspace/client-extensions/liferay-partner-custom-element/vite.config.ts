@@ -19,21 +19,5 @@ export default defineConfig({
 			},
 		},
 	},
-	experimental: {
-		renderBuiltUrl(filename: string) {
-			if (
-				filename.endsWith('.css') ||
-				filename.endsWith('.png') ||
-				filename.endsWith('.svg')
-			) {
-				return `/o/liferay-partner-custom-element/${filename}`;
-			}
-
-			return filename;
-		},
-	},
-	esbuild: {
-		logOverride: {'this-is-undefined-in-esm': 'silent'},
-	},
 	plugins: [react()],
 });

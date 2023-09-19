@@ -11,7 +11,7 @@ import RefreshRuntime from '/@react-refresh';
 /**
  * @description This file is used ONLY and EXCLUSIVE for development
  * When setting up the remote app, add this import
- * http://localhost:5173/@vite/refresh.ts
+ * http://localhost:5173/@vite/refresh.js
  */
 
 RefreshRuntime.injectIntoGlobalHook(window);

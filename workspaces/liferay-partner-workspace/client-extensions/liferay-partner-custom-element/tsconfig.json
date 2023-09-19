@@ -18,11 +18,13 @@
 		"skipLibCheck": true,
 		"strict": true,
 		"target": "ESNext",
+		"types": [
+			"vite/client"
+		],
 		"useDefineForClassFields": true
 	},
 	"include": [
-		"src",
-		"src/react-app-env.d.ts"
+		"src"
 	],
 	"references": [
 		{

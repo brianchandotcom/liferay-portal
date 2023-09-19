@@ -4,6 +4,7 @@
 		"@clayui/button": "^3.65.0",
 		"@clayui/card": "^3.67.0",
 		"@clayui/charts": "^3.65.0",
+		"@clayui/core": "^3.104.0",
 		"@clayui/css": "^3.65.2",
 		"@clayui/date-picker": "^3.68.0",
 		"@clayui/drop-down": "^3.68.0",
@@ -36,11 +37,16 @@
 		"typescript": "^4.6.4",
 		"vite": "^3.0.0"
 	},
+	"eslintConfig": {
+		"globals": {
+			"Liferay": true
+		}
+	},
 	"license": "LGPL",
 	"name": "liferay-partner-custom-element",
 	"private": true,
 	"scripts": {
-		"build": "tsc && vite build",
+		"build": "vite build",
 		"dev": "vite",
 		"preview": "vite preview"
 	},

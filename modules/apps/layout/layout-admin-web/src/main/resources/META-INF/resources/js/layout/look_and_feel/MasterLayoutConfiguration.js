@@ -133,7 +133,7 @@ export default function MasterLayoutConfiguration({
 						disabled={isReadOnly}
 						displayType="secondary"
 						onClick={handleChangeMasterButtonClick}
-						symbol="plus"
+						symbol="change"
 					/>
 				</div>
 			)}

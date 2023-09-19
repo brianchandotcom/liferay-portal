@@ -37,8 +37,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PREVIEW_CONTENT</td>
-	<td>//div[@id='preview']//div[@class='panel-body']</td>
+	<td>PREVIEW_CONTENT_TITLE</td>
+	<td>//h3[@class='task-content-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_CONTENT_BODY</td>
+	<td>//div[@class='asset-summary']</td>
 	<td></td>
 </tr>
 <tr>

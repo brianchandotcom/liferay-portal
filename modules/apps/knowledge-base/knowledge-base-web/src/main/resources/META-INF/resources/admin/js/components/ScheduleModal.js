@@ -6,6 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayDatePicker from '@clayui/date-picker';
+import ClayModal from '@clayui/modal';
 import classnames from 'classnames';
 import {isAfter} from 'date-fns';
 import {getOpener} from 'frontend-js-web';
@@ -17,6 +18,8 @@ export default function ScheduleModal({
 	displayDate: initialDisplayDate,
 	isScheduled,
 	portletNamespace,
+	observer,
+	onModalClose = () => {},
 }) {
 	const [displayDate, setDisplayDate] = useState(
 		isScheduled ? initialDisplayDate : null
@@ -56,8 +59,14 @@ export default function ScheduleModal({
 	}, [displayDate]);
 
 	return (
-		<div className="schedule-modal">
-			<div className="container-fluid p-4">
+		<ClayModal observer={observer} size="md">
+			<ClayModal.Header>
+				{isScheduled
+					? Liferay.Language.get('edit-scheduled-publication')
+					: Liferay.Language.get('schedule-publication')}
+			</ClayModal.Header>
+
+			<ClayModal.Body>
 				<p className="text-secondary">
 					{isScheduled
 						? Liferay.Language.get(
@@ -90,10 +99,10 @@ export default function ScheduleModal({
 						</ClayAlert>
 					</div>
 				)}
-			</div>
+			</ClayModal.Body>
 
-			<div className="modal-footer">
-				<div className="modal-item-last">
+			<ClayModal.Footer
+				last={
 					<ClayButton.Group spaced>
 						<ClayButton
 							borderless="<%= true %>"
@@ -120,9 +129,9 @@ export default function ScheduleModal({
 							{Liferay.Language.get('schedule')}
 						</ClayButton>
 					</ClayButton.Group>
-				</div>
-			</div>
-		</div>
+				}
+			/>
+		</ClayModal>
 	);
 }
 

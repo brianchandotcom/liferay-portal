@@ -1044,7 +1044,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Custom Fields");
 
-			CustomFields.addCP(
+			CommerceConfiguration.addCP(
 				customFieldName = ${customField1Name},
 				customFieldType = "Text Area",
 				resourceName = "Product");
@@ -1054,7 +1054,7 @@ definition {
 				panel = "Control Panel",
 				portlet = "Custom Fields");
 
-			CustomFields.addCP(
+			CommerceConfiguration.addCP(
 				customFieldName = ${customField2Name},
 				customFieldType = "Text Area",
 				resourceName = "Product");

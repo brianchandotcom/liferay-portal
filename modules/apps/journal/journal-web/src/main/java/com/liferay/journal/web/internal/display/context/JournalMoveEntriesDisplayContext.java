@@ -209,6 +209,7 @@ public class JournalMoveEntriesDisplayContext {
 
 		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(getRedirect());
+		portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 		if (_liferayPortletResponse instanceof RenderResponse) {
 			RenderResponse renderResponse =

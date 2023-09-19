@@ -139,14 +139,14 @@ function PageContentSelectors({
 			simulationToggle
 		);
 
+		sidenavInstance.on('closed.lexicon.sidenav', () => {
+			fetchDeactivateSimulation();
+		});
+
 		sidenavInstance.on('open.lexicon.sidenav', () => {
 			if (!firstRenderRef.current) {
 				simulateSegmentsEntries();
 			}
-		});
-
-		sidenavInstance.on('closed.lexicon.sidenav', () => {
-			fetchDeactivateSimulation();
 		});
 
 		if (firstRenderRef.current) {

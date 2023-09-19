@@ -42,19 +42,19 @@ export default function App({portletNamespace: namespace}: IProps) {
 			simulationToggle
 		);
 
-		sidenavInstance.on('open.lexicon.sidenav', () => {
-			setOpen(true);
-
-			if (wrapper) {
-				wrapper.setAttribute('inert', '');
-			}
-		});
-
 		sidenavInstance.on('closed.lexicon.sidenav', () => {
 			setOpen(false);
 
 			if (wrapper) {
 				wrapper.removeAttribute('inert');
+			}
+		});
+
+		sidenavInstance.on('open.lexicon.sidenav', () => {
+			setOpen(true);
+
+			if (wrapper) {
+				wrapper.setAttribute('inert', '');
 			}
 		});
 

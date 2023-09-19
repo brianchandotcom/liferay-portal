@@ -31,6 +31,13 @@ export default function SegmentsExperimentApp({context}) {
 				segmentsExperimentPanelToggle
 			);
 
+			sidenavInstance.on('closed.lexicon.sidenav', () => {
+				setSessionValue(
+					SEGMENTS_EXPERIMENT_PANEL_ID,
+					SEGMENTS_EXPERIMENT_CLOSED_PANEL_VALUE
+				);
+			});
+
 			sidenavInstance.on('open.lexicon.sidenav', () => {
 				setSessionValue(
 					SEGMENTS_EXPERIMENT_PANEL_ID,
@@ -42,13 +49,6 @@ export default function SegmentsExperimentApp({context}) {
 				);
 
 				segmentsExperimentPanel.focus();
-			});
-
-			sidenavInstance.on('closed.lexicon.sidenav', () => {
-				setSessionValue(
-					SEGMENTS_EXPERIMENT_PANEL_ID,
-					SEGMENTS_EXPERIMENT_CLOSED_PANEL_VALUE
-				);
 			});
 
 			Liferay.once('screenLoad', () => {

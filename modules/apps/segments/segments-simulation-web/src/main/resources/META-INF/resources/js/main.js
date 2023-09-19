@@ -54,12 +54,12 @@ export default function ({
 
 	const sidenavInstance = Liferay.SideNavigation.initialize(simulationToggle);
 
-	sidenavInstance.on('open.lexicon.sidenav', () => {
-		simulateSegmentsEntries();
-	});
-
 	sidenavInstance.on('closed.lexicon.sidenav', () => {
 		fetchDeactivateSimulation();
+	});
+
+	sidenavInstance.on('open.lexicon.sidenav', () => {
+		simulateSegmentsEntries();
 	});
 
 	return {

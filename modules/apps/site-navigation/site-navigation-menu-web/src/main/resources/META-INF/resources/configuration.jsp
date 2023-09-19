@@ -47,16 +47,32 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSite
 
 						<c:choose>
 							<c:when test="<%= scopeGroup.isPrivateLayoutsEnabled() %>">
-								<c:if test="<%= scopeGroup.hasPublicLayouts() && layout.isPublicLayout() %>">
-									<aui:option label="public-pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" />
-								</c:if>
+								<c:choose>
+									<c:when test="<%= _hasLayoutPageTemplateEntry(layout) %>">
+										<c:choose>
+											<c:when test="<%= scopeGroup.hasPublicLayouts() %>">
+												<aui:option label="pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" />
+											</c:when>
+											<c:otherwise>
+												<c:if test="<%= scopeGroup.hasPrivateLayouts() %>">
+													<aui:option label="pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" />
+												</c:if>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:otherwise>
+										<c:if test="<%= scopeGroup.hasPublicLayouts() && layout.isPublicLayout() %>">
+											<aui:option label="public-pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" />
+										</c:if>
 
-								<c:if test="<%= scopeGroup.hasPrivateLayouts() && layout.isPrivateLayout() %>">
-									<aui:option label="private-pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" />
-								</c:if>
+										<c:if test="<%= scopeGroup.hasPrivateLayouts() && layout.isPrivateLayout() %>">
+											<aui:option label="private-pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY %>" />
+										</c:if>
+									</c:otherwise>
+								</c:choose>
 							</c:when>
 							<c:otherwise>
-								<c:if test="<%= scopeGroup.hasPublicLayouts() && layout.isPublicLayout() %>">
+								<c:if test="<%= scopeGroup.hasPublicLayouts() && (layout.isPublicLayout() || _hasLayoutPageTemplateEntry(layout)) %>">
 									<aui:option label="pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" value="<%= SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY %>" />
 								</c:if>
 							</c:otherwise>
@@ -508,3 +524,21 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSite
 		);
 	}
 </aui:script>
+
+<%!
+private boolean _hasLayoutPageTemplateEntry(Layout layout) {
+	long plid = layout.getPlid();
+
+	if (layout.isDraftLayout()) {
+		plid = layout.getClassPK();
+	}
+
+	LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(plid);
+
+	if (layoutPageTemplateEntry != null) {
+		return true;
+	}
+
+	return false;
+}
+%>

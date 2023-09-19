@@ -329,13 +329,6 @@ public class CommercePriceEntryWrapper
 		return model.getCompanyId();
 	}
 
-	@Override
-	public com.liferay.commerce.product.model.CPInstance getCPInstance()
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return model.getCPInstance();
-	}
-
 	/**
 	 * Returns the cp instance uuid of this commerce price entry.
 	 *

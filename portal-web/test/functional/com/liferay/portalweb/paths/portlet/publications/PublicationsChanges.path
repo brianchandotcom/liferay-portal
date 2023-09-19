@@ -156,6 +156,34 @@
 	</td>
 <td></td>
 </tr>
+
+<!--SHARE ACCESS-->
+
+<tr>
+	<td>COPY_URL_BUTTON</td>
+	<td>//div[contains (@class,'input-group-item-shrink')]//button[contains(text(),'Copy')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_SHARE_LINK_TOGGLE_SWITCH</td>
+	<td>//span[contains(.,'Allow anyone with the link to view this publication')]/..//input[contains(@type, 'checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHARE_ACCESS_BUTTON</td>
+	<td>//div/button[contains(@class, 'sticker-user-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHARE_LINK_TAB</td>
+	<td>//button[contains(@class, 'nav-link btn') and (@aria-controls = 'share-link')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHARE_LINK_URL</td>
+	<td>//div[@class='input-group-item']//input[@class='form-control' and @type='text']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

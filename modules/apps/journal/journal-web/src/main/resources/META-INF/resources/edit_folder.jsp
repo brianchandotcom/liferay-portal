@@ -30,6 +30,7 @@ String languageId = LocaleUtil.toLanguageId(locale);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 String title = StringPool.BLANK;
 

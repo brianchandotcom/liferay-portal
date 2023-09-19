@@ -12,6 +12,7 @@ EditJournalFeedDisplayContext editJournalFeedDisplayContext = new EditJournalFee
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(editJournalFeedDisplayContext.getRedirect());
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(editJournalFeedDisplayContext.getTitle());
 %>

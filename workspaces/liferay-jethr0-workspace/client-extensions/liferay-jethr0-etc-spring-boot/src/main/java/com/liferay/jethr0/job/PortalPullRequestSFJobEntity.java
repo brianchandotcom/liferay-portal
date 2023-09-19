@@ -8,13 +8,15 @@ package com.liferay.jethr0.job;
 import com.liferay.jethr0.bui1d.BuildEntity;
 import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.util.StringUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.net.URL;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,11 +31,37 @@ public class PortalPullRequestSFJobEntity extends BaseJobEntity {
 		return Collections.singletonList(_getInitialBuildJSONObject());
 	}
 
+	public URL getJenkinsGitHubURL() {
+		if (_jenkinsGitHubURL != null) {
+			return _jenkinsGitHubURL;
+		}
+
+		String jenkinsGitHubBranchName = _getJenkinsGitHubBranchName();
+		String jenkinsGitHubBranchUserName = _getJenkinsGitHubBranchUserName();
+
+		if (StringUtil.isNullOrEmpty(jenkinsGitHubBranchName) ||
+			StringUtil.isNullOrEmpty(jenkinsGitHubBranchUserName)) {
+
+			return null;
+		}
+
+		_jenkinsGitHubURL = StringUtil.toURL(
+			StringUtil.combine(
+				"https://github.com/", jenkinsGitHubBranchUserName,
+				"/liferay-jenkins-ee/tree/", jenkinsGitHubBranchName));
+
+		return _jenkinsGitHubURL;
+	}
+
 	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 
-		jsonObject.put("pullRequestURL", getPullRequestURL());
+		jsonObject.put(
+			"jenkinsGitHubURL", getJenkinsGitHubURL()
+		).put(
+			"pullRequestURL", getPullRequestURL()
+		);
 
 		return jsonObject;
 	}
@@ -44,13 +72,8 @@ public class PortalPullRequestSFJobEntity extends BaseJobEntity {
 		}
 
 		for (BuildEntity initialBuildEntity : getInitialBuildEntities()) {
-			System.out.println("Initial build entity " + initialBuildEntity);
-
 			BuildParameterEntity buildParameterEntity =
 				initialBuildEntity.getBuildParameterEntity("PULL_REQUEST_URL");
-
-			System.out.println(
-				"Build parameter entity " + buildParameterEntity);
 
 			if (buildParameterEntity != null) {
 				_pullRequestURL = StringUtil.toURL(
@@ -66,9 +89,39 @@ public class PortalPullRequestSFJobEntity extends BaseJobEntity {
 	protected PortalPullRequestSFJobEntity(JSONObject jsonObject) {
 		super(jsonObject);
 
-		_initialBuildParameters.put("BUILD_PRIORITY", _BUILD_PRIORITY);
-		_initialBuildParameters.put(
-			"PULL_REQUEST_URL", jsonObject.optString("pullRequestURL"));
+		String pullRequestURLString = jsonObject.optString("pullRequestURL");
+
+		if (!StringUtil.isNullOrEmpty(pullRequestURLString)) {
+			_pullRequestURL = StringUtil.toURL(pullRequestURLString);
+		}
+
+		String jenkinsGitHubURLString = jsonObject.optString(
+			"jenkinsGitHubURL");
+
+		if (!StringUtil.isNullOrEmpty(jenkinsGitHubURLString)) {
+			_jenkinsGitHubURL = StringUtil.toURL(jenkinsGitHubURLString);
+		}
+	}
+
+	private String _getBuildParameterValue(String buildParameterName) {
+		for (BuildEntity initialBuildEntity : getInitialBuildEntities()) {
+			BuildParameterEntity buildParameterEntity =
+				initialBuildEntity.getBuildParameterEntity(buildParameterName);
+
+			if (buildParameterEntity == null) {
+				continue;
+			}
+
+			String buildParameterValue = buildParameterEntity.getValue();
+
+			if (StringUtil.isNullOrEmpty(buildParameterValue)) {
+				continue;
+			}
+
+			return buildParameterEntity.getValue();
+		}
+
+		return null;
 	}
 
 	private JSONObject _getInitialBuildJSONObject() {
@@ -89,11 +142,45 @@ public class PortalPullRequestSFJobEntity extends BaseJobEntity {
 		return initialBuildJSONObject;
 	}
 
+	private Map<String, String> _getInitialBuildParameters() {
+		return HashMapBuilder.put(
+			"BUILD_PRIORITY", _BUILD_PRIORITY
+		).put(
+			"JENKINS_GITHUB_BRANCH_NAME",
+			() -> {
+				String jenkinsGitHubBranchName = _getJenkinsGitHubBranchName();
+
+				if (!StringUtil.isNullOrEmpty(jenkinsGitHubBranchName)) {
+					return jenkinsGitHubBranchName;
+				}
+
+				return null;
+			}
+		).put(
+			"JENKINS_GITHUB_BRANCH_USERNAME",
+			() -> {
+				String jenkinsGitHubBranchUserName =
+					_getJenkinsGitHubBranchUserName();
+
+				if (!StringUtil.isNullOrEmpty(jenkinsGitHubBranchUserName)) {
+					return jenkinsGitHubBranchUserName;
+				}
+
+				return null;
+			}
+		).put(
+			"PULL_REQUEST_URL", String.valueOf(getPullRequestURL())
+		).build();
+	}
+
 	private JSONArray _getInitialBuildParametersJSONArray() {
 		JSONArray initialBuildParametersJSONArray = new JSONArray();
 
+		Map<String, String> initialBuildParameters =
+			_getInitialBuildParameters();
+
 		for (Map.Entry<String, String> initialBuildParameter :
-				_initialBuildParameters.entrySet()) {
+				initialBuildParameters.entrySet()) {
 
 			JSONObject initialBuildParameterJSONObject = new JSONObject();
 
@@ -110,11 +197,61 @@ public class PortalPullRequestSFJobEntity extends BaseJobEntity {
 		return initialBuildParametersJSONArray;
 	}
 
+	private String _getJenkinsGitHubBranchName() {
+		if (_jenkinsGitHubBranchName != null) {
+			return _jenkinsGitHubBranchName;
+		}
+
+		if (_jenkinsGitHubURL != null) {
+			Matcher matcher = _jenkinsGitHubURLPattern.matcher(
+				String.valueOf(_jenkinsGitHubURL));
+
+			if (matcher.find()) {
+				_jenkinsGitHubBranchName = matcher.group("branchName");
+			}
+
+			return _jenkinsGitHubBranchName;
+		}
+
+		_jenkinsGitHubBranchName = _getBuildParameterValue(
+			"JENKINS_GITHUB_BRANCH_NAME");
+
+		return _jenkinsGitHubBranchName;
+	}
+
+	private String _getJenkinsGitHubBranchUserName() {
+		if (_jenkinsGitHubBranchUserName != null) {
+			return _jenkinsGitHubBranchUserName;
+		}
+
+		if (_jenkinsGitHubURL != null) {
+			Matcher matcher = _jenkinsGitHubURLPattern.matcher(
+				String.valueOf(_jenkinsGitHubURL));
+
+			if (matcher.find()) {
+				_jenkinsGitHubBranchUserName = matcher.group("branchUserName");
+			}
+
+			return _jenkinsGitHubBranchUserName;
+		}
+
+		_jenkinsGitHubBranchUserName = _getBuildParameterValue(
+			"JENKINS_GITHUB_BRANCH_USERNAME");
+
+		return _jenkinsGitHubBranchUserName;
+	}
+
 	private static final String _BUILD_PRIORITY = "4";
 
 	private static final String _JENKINS_JOB_NAME = "test-portal-source-format";
 
-	private final Map<String, String> _initialBuildParameters = new HashMap<>();
+	private static final Pattern _jenkinsGitHubURLPattern = Pattern.compile(
+		"https://github.com/(?<branchUserName>[^/]+)/liferay-jenkins-ee/tree/" +
+			"(?<branchName>[^/]+)");
+
+	private String _jenkinsGitHubBranchName;
+	private String _jenkinsGitHubBranchUserName;
+	private URL _jenkinsGitHubURL;
 	private URL _pullRequestURL;
 
 }

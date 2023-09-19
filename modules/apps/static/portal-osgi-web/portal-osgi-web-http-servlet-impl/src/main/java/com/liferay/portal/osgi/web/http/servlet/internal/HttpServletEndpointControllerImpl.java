@@ -5,6 +5,7 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal;
 
+import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
@@ -48,7 +49,6 @@ import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.runtime.HttpServiceRuntimeConstants;
 import org.osgi.service.http.runtime.dto.DTOConstants;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Dante Wang
@@ -294,7 +294,7 @@ public class HttpServletEndpointControllerImpl
 	}
 
 	private class ServletContextHelperServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
+		implements EagerServiceTrackerCustomizer
 			<ServletContextHelper, ContextController> {
 
 		@Override

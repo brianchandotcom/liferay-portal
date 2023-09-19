@@ -230,6 +230,14 @@ definition {
 		}
 	}
 
+	macro enablePublicationSharing {
+		Click(locator1 = "PublicationsChanges#SHARE_ACCESS_BUTTON");
+
+		Check.checkToggleSwitch(locator1 = "PublicationsChanges#ENABLE_SHARE_LINK_TOGGLE_SWITCH");
+
+		Click(locator1 = "PublicationsChanges#COPY_URL_BUTTON");
+	}
+
 	macro enableSandboxOnly {
 		PublicationsNavigator.openPublicationsSettings();
 

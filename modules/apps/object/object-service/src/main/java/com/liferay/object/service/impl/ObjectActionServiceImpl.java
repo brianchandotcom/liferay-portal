@@ -39,7 +39,7 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 			Map<Locale, String> errorMessageMap, Map<Locale, String> labelMap,
 			String name, String objectActionExecutorKey,
 			String objectActionTriggerKey,
-			UnicodeProperties parametersUnicodeProperties)
+			UnicodeProperties parametersUnicodeProperties, boolean system)
 		throws PortalException {
 
 		_objectDefinitionModelResourcePermission.check(
@@ -49,7 +49,7 @@ public class ObjectActionServiceImpl extends ObjectActionServiceBaseImpl {
 			externalReferenceCode, getUserId(), objectDefinitionId, active,
 			conditionExpression, description, errorMessageMap, labelMap, name,
 			objectActionExecutorKey, objectActionTriggerKey,
-			parametersUnicodeProperties);
+			parametersUnicodeProperties, system);
 	}
 
 	@Override

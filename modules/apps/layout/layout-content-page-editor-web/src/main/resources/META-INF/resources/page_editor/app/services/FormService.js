@@ -16,7 +16,7 @@ export default {
 	 */
 	getFormConfig({classNameId, onNetworkStatus = () => {}}) {
 		return serviceFetch(
-			config.getFormFieldsURL,
+			config.getFormConfigURL,
 			{
 				body: {
 					classNameId,

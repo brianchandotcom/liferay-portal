@@ -37,19 +37,12 @@
 		</c:choose>
 	</c:when>
 	<c:when test="<%= (siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) || (siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY) %>">
-		<c:if test="<%= siteNavigationMenuDisplayContext.showAlert() %>">
 
-			<%
-			String alertKey = null;
+		<%
+		String alertKey = siteNavigationMenuDisplayContext.getAlertKey();
+		%>
 
-			if (siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY) {
-				alertKey = "the-navigation-being-displayed-here-is-the-private-pages-hierarchy.-if-a-public-page-inherits-this-page-template-the-public-pages-hierarchy-will-be-displayed-there-instead";
-			}
-			else {
-				alertKey = "the-navigation-being-displayed-here-is-the-public-pages-hierarchy.-if-a-private-page-inherits-this-page-template-the-private-pages-hierarchy-will-be-displayed-there-instead";
-			}
-			%>
-
+		<c:if test="<%= Validator.isNotNull(alertKey) %>">
 			<clay:alert
 				displayType="info"
 				message="<%= LanguageUtil.format(request, alertKey, siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuTypeLabel()) %>"

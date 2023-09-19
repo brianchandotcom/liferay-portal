@@ -3002,6 +3002,25 @@ definition {
 
 				PageEditor.waitForAutoSave();
 			}
+
+			if (${showNotificationWhenFormIsSubmitted} == "true") {
+				Check.checkNotVisible(
+					checkboxName = "Show Notification when Form Is Submitted",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+
+				if (isSet(successNotificationText)) {
+					Type(
+						key_text = "Success Notification Text",
+						locator1 = "TextInput#ANY",
+						value1 = ${successNotificationText});
+
+					Click(
+						key_sidebarButton = "Browser",
+						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+					PageEditor.waitForAutoSave();
+				}
+			}
 		}
 	}
 

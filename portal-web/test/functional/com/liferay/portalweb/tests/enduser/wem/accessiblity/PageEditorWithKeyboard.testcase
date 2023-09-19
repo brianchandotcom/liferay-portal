@@ -244,6 +244,145 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-194375. Using Keyboard navigation it is possible to access and use the Page Editor filter."
+	@priority = 3
+	test FilterDisplayedAssetsViaKeyboard {
+		task ("Given a page creator has displayed assets on content page") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = ${randomSiteName},
+				title = "Web Content Title");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Content Display",
+				targetFragmentName = "Heading");
+
+			PageEditor.editContentDisplay(
+				fragmentName = "Content Display",
+				webcontent = "true",
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("When the page creator accesses to the Page Content panel") {
+			PageEditor.gotoTab(tabName = "Page Content");
+		}
+
+		task ("Then the page creator could filter the displayed assets via keyboard") {
+			KeyPress(
+				key_text = "times",
+				locator1 = "Icon#ANY",
+				value1 = "\TAB");
+
+			KeyPress(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_menuItem = "All Content",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_menuItem = "Web Content Article",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\DOWN");
+
+			KeyPress(
+				key_menuItem = "Inline Text",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\ENTER");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "Inline Text");
+
+			AssertVisible(
+				key_itemName = "Heading Example",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertElementNotPresent(
+				key_itemName = "Web Content Title",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			KeyPress(
+				key_text = "times",
+				locator1 = "Icon#ANY",
+				value1 = "\TAB");
+
+			KeyPress(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_menuItem = "Inline Text",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\UP");
+
+			KeyPress(
+				key_menuItem = "Web Content Article",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\ENTER");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "Web Content Article");
+
+			AssertVisible(
+				key_itemName = "Web Content Title",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			AssertElementNotPresent(
+				key_itemName = "Heading Example",
+				locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+
+			KeyPress(
+				key_text = "times",
+				locator1 = "Icon#ANY",
+				value1 = "\TAB");
+
+			KeyPress(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "\ENTER");
+
+			KeyPress(
+				key_menuItem = "Web Content Article",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\UP");
+
+			KeyPress(
+				key_menuItem = "All Content",
+				locator1 = "MenuItem#ANY_MENU_ITEM",
+				value1 = "\ENTER");
+
+			AssertTextEquals(
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
+				value1 = "Web Content Article");
+
+			PageEditor.selectContentFilter(filter = "All Content");
+
+			for (var itemName : list "Heading Example,Web Content Title") {
+				AssertVisible(
+					key_itemName = ${itemName},
+					locator1 = "PageEditor#PAGE_CONTENTS_ITEM");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-165776. The page creator could reorder fragments on page editor via Browser panel with keyboard."
 	@priority = 5
 	test ReorderElements {

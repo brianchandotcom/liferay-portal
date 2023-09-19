@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.xml.Element;
 /**
  * @author Mika Koivisto
  */
-public interface DLProcessorRegistry {
+public interface DLProcessorHelper {
 
 	public void cleanUp(FileEntry fileEntry);
 

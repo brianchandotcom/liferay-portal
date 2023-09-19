@@ -58,7 +58,7 @@ public class RawMetadataProcessorUtil {
 	}
 
 	public static RawMetadataProcessor getRawMetadataProcessor() {
-		return (RawMetadataProcessor)DLProcessorRegistryUtil.getDLProcessor(
+		return (RawMetadataProcessor)DLProcessorHelperUtil.getDLProcessor(
 			DLProcessorConstants.RAW_METADATA_PROCESSOR);
 	}
 

@@ -9,44 +9,30 @@ import ClayDatePicker from '@clayui/date-picker';
 import ClayModal from '@clayui/modal';
 import classnames from 'classnames';
 import {isAfter} from 'date-fns';
-import {getOpener} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-const SCHEDULE_EVENT_NAME = 'scheduleKBArticle';
+const noop = () => {};
 export default function ScheduleModal({
+	callback = noop,
 	displayDate: initialDisplayDate,
 	isScheduled,
-	portletNamespace,
 	observer,
-	onModalClose = () => {},
+	onModalClose = noop,
 }) {
 	const [displayDate, setDisplayDate] = useState(
-		isScheduled ? initialDisplayDate : null
+		isScheduled ? initialDisplayDate : ''
 	);
 	const [invalidDate, setInvalidDate] = useState(false);
 
-	const closeModal = () => {
-		getOpener().Liferay.fire('closeModal', {
-			id: 'scheduleKBArticleDialog',
-		});
-	};
-
 	const handleScheduleButtonOnClick = () => {
-		const openerWindow = getOpener();
-
-		const displayDateInput = openerWindow.document.getElementById(
-			`${portletNamespace}displayDate`
-		);
-		displayDateInput.value = displayDate;
-
-		openerWindow.Liferay.fire(SCHEDULE_EVENT_NAME);
-		closeModal();
+		onModalClose();
+		callback(displayDate);
 	};
 
 	const publisNowButtonOnClick = () => {
-		getOpener().Liferay.fire(SCHEDULE_EVENT_NAME);
-		closeModal();
+		onModalClose();
+		callback('');
 	};
 
 	useEffect(() => {
@@ -107,7 +93,7 @@ export default function ScheduleModal({
 						<ClayButton
 							borderless="<%= true %>"
 							displayType="secondary"
-							onClick={closeModal}
+							onClick={onModalClose}
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
@@ -136,7 +122,9 @@ export default function ScheduleModal({
 }
 
 ScheduleModal.propTypes = {
+	callback: PropTypes.func,
 	displayDate: PropTypes.string,
 	isScheduled: PropTypes.bool,
-	portletNamespace: PropTypes.string.isRequired,
+	observer: PropTypes.object.isRequired,
+	onModalClose: PropTypes.func,
 };

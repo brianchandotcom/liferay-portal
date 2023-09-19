@@ -48,7 +48,14 @@ export default function EditKBArticle({kbArticle, namespace, publishAction}) {
 	const openScheduleModal = () => {
 		Liferay.componentReady(`${namespace}ScheduleKBArticleComponent`).then(
 			(component) => {
-				component.open();
+				component.open((displayDate) => {
+					const displayDateInput = document.getElementById(
+						`${namespace}displayDate`
+					);
+					displayDateInput.value = displayDate;
+
+					publishButtonOnClick();
+				});
 			}
 		);
 	};

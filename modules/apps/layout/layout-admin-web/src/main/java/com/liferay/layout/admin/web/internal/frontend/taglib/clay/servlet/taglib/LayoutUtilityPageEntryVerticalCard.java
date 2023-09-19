@@ -72,8 +72,8 @@ public class LayoutUtilityPageEntryVerticalCard extends BaseVerticalCard {
 			return HttpComponentsUtil.addParameters(
 				PortalUtil.getLayoutFullURL(_draftLayout, themeDisplay),
 				"p_l_back_url", themeDisplay.getURLCurrent(),
-				"p_l_back_url_title", portletDisplay.getTitle(), "p_l_mode",
-				Constants.EDIT);
+				"p_l_back_url_title", portletDisplay.getPortletDisplayName(),
+				"p_l_mode", Constants.EDIT);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

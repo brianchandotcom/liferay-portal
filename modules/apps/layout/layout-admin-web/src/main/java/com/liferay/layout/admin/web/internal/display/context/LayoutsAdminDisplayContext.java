@@ -2292,7 +2292,7 @@ public class LayoutsAdminDisplayContext {
 		return HttpComponentsUtil.addParameters(
 			PortalUtil.getLayoutFullURL(getDraftLayout(layout), themeDisplay),
 			"p_l_back_url", _getBackURL(), "p_l_back_url_title",
-			portletDisplay.getTitle(), "p_l_mode", Constants.EDIT);
+			portletDisplay.getPortletDisplayName(), "p_l_mode", Constants.EDIT);
 	}
 
 	private String _getFriendlyURLWarningURL() {

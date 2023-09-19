@@ -333,7 +333,8 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 					HttpComponentsUtil.addParameters(
 						layoutPrototypeGroup.getDisplayURL(_themeDisplay, true),
 						"p_l_back_url", _themeDisplay.getURLCurrent(),
-						"p_l_back_url_title", portletDisplay.getTitle()));
+						"p_l_back_url_title",
+						portletDisplay.getPortletDisplayName()));
 				dropdownItem.setIcon("pencil");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "edit"));

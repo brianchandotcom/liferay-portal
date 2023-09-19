@@ -105,7 +105,8 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 				return HttpComponentsUtil.addParameters(
 					layoutPrototypeGroup.getDisplayURL(themeDisplay, true),
 					"p_l_back_url", themeDisplay.getURLCurrent(),
-					"p_l_back_url_title", portletDisplay.getTitle());
+					"p_l_back_url_title",
+					portletDisplay.getPortletDisplayName());
 			}
 
 			return HttpComponentsUtil.addParameters(

@@ -313,7 +313,8 @@ public class MasterLayoutActionDropdownItemsProvider {
 				HttpComponentsUtil.addParameters(
 					PortalUtil.getLayoutFullURL(_draftLayout, _themeDisplay),
 					"p_l_back_url", _themeDisplay.getURLCurrent(),
-					"p_l_back_url_title", portletDisplay.getTitle(), "p_l_mode",
+					"p_l_back_url_title",
+					portletDisplay.getPortletDisplayName(), "p_l_mode",
 					Constants.EDIT));
 			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(

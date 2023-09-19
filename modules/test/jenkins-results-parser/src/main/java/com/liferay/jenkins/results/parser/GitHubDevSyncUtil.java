@@ -1544,10 +1544,21 @@ public class GitHubDevSyncUtil {
 					cachedRemoteGitBranch, 1);
 
 				if (!gitRemotesWithoutCacheBranch.isEmpty()) {
+					StringBuilder sb = new StringBuilder();
+
+					for (GitRemote gitRemoteWithoutCacheBranch :
+							gitRemotesWithoutCacheBranch) {
+
+						sb.append("    ");
+						sb.append(gitRemoteWithoutCacheBranch.getHostname());
+						sb.append("\n");
+					}
+
 					System.out.println(
 						JenkinsResultsParserUtil.combine(
 							"Pushing ", cacheBranchName,
-							" to GitHub-dev nodes ", "that do not have it."));
+							" to the following GitHub-dev nodes because they ",
+							"do not have it.\n", sb.toString()));
 
 					pushToAllRemotes(
 						true, cachedLocalGitBranch, cacheBranchName,

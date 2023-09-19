@@ -296,7 +296,7 @@ public class OrganizationMembershipPolicyMembershipsTest
 		Organization organization = MembershipPolicyTestUtil.addOrganization();
 
 		OrganizationServiceUtil.updateOrganization(
-			organization.getOrganizationId(),
+			null, organization.getOrganizationId(),
 			organization.getParentOrganizationId(), organization.getName(),
 			organization.getType(), 0, 0, organization.getStatusListTypeId(),
 			organization.getComments(), false,

@@ -825,7 +825,7 @@ public class UserIndexerTest {
 		throws Exception {
 
 		organizationLocalService.updateOrganization(
-			organization.getCompanyId(), organization.getOrganizationId(),
+			null, organization.getCompanyId(), organization.getOrganizationId(),
 			organization.getParentOrganizationId(), organization.getName(),
 			organization.getType(), organization.getRegionId(),
 			organization.getCountryId(), organization.getStatusListTypeId(),

@@ -91,7 +91,7 @@ public class OrganizationFixture {
 		}
 
 		Organization organization = _organizationService.addOrganization(
-			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			null, OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			organizationName, OrganizationConstants.TYPE_ORGANIZATION,
 			region.getRegionId(), country.getCountryId(),
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,

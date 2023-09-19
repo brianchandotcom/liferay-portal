@@ -13,6 +13,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -111,6 +112,10 @@ public class EditBatchPlannerPlanMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private boolean _isAllowedEntityClassName(String entityClassName) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-186620")) {
+			return true;
+		}
+
 		int index = entityClassName.indexOf(CharPool.POUND);
 
 		if (index >= 0) {

@@ -618,6 +618,276 @@ public class ObjectFieldLocalServiceTest {
 	}
 
 	@Test
+	public void testAddOrUpdateCustomObjectField() throws Exception {
+		ObjectFieldBuilder objectFieldBuilder =
+			new LongIntegerObjectFieldBuilder();
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Arrays.asList(
+					objectFieldBuilder.userId(
+						TestPropsValues.getUserId()
+					).indexedAsKeyword(
+						true
+					).indexedLanguageId(
+						StringPool.BLANK
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap("able")
+					).name(
+						"able"
+					).build()));
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			objectDefinition.getObjectDefinitionId(), "able");
+
+		Assert.assertEquals("able_", objectField.getDBColumnName());
+		Assert.assertEquals(
+			ObjectFieldConstants.DB_TYPE_LONG, objectField.getDBType());
+		Assert.assertFalse(objectField.isIndexed());
+		Assert.assertTrue(objectField.isIndexedAsKeyword());
+		Assert.assertEquals("", objectField.getIndexedLanguageId());
+		Assert.assertEquals(
+			LocalizedMapUtil.getLocalizedMap("able"),
+			objectField.getLabelMap());
+		Assert.assertEquals("able", objectField.getName());
+		Assert.assertFalse(objectField.isRequired());
+
+		_testAddOrUpdateCustomObjectField(
+			objectFieldBuilder.dbColumnName(
+				objectField.getDBColumnName()
+			).objectFieldId(
+				objectField.getObjectFieldId()
+			).externalReferenceCode(
+				objectField.getExternalReferenceCode()
+			).build());
+
+		_testAddOrUpdateCustomObjectField(
+			objectFieldBuilder.businessType(
+				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST
+			).dbType(
+				ObjectFieldConstants.DB_TYPE_STRING
+			).indexedAsKeyword(
+				false
+			).listTypeDefinitionId(
+				_listTypeDefinition.getListTypeDefinitionId()
+			).build());
+
+		_testAddOrUpdateCustomObjectField(
+			objectFieldBuilder.objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
+					).value(
+						_listTypeEntryKey
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE
+					).value(
+						ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
+					).build())
+			).required(
+				true
+			).state(
+				true
+			).build());
+
+		_testAddOrUpdateCustomObjectField(
+			objectFieldBuilder.businessType(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT
+			).dbColumnName(
+				"baker_"
+			).indexed(
+				true
+			).indexedLanguageId(
+				LanguageUtil.getLanguageId(LocaleUtil.getDefault())
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("baker")
+			).listTypeDefinitionId(
+				0
+			).name(
+				"baker"
+			).objectFieldSettings(
+				Collections.emptyList()
+			).state(
+				false
+			).build());
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
+		objectField = _addOrUpdateCustomObjectField(
+			objectFieldBuilder.businessType(
+				ObjectFieldConstants.BUSINESS_TYPE_INTEGER
+			).dbType(
+				ObjectFieldConstants.DB_TYPE_INTEGER
+			).indexed(
+				false
+			).indexedAsKeyword(
+				true
+			).indexedLanguageId(
+				StringPool.BLANK
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("charlie")
+			).name(
+				"charlie"
+			).build());
+
+		Assert.assertEquals("baker_", objectField.getDBColumnName());
+		Assert.assertEquals(
+			ObjectFieldConstants.DB_TYPE_STRING, objectField.getDBType());
+		Assert.assertFalse(objectField.isIndexed());
+		Assert.assertTrue(objectField.isIndexedAsKeyword());
+		Assert.assertEquals(
+			StringPool.BLANK, objectField.getIndexedLanguageId());
+		Assert.assertEquals(
+			objectField.getLabelMap(),
+			LocalizedMapUtil.getLocalizedMap("charlie"));
+		Assert.assertEquals("baker", objectField.getName());
+		Assert.assertTrue(objectField.isRequired());
+
+		// Object field label needs to be replicated when there is an update
+		// with another default language
+
+		LocaleUtil.setDefault(
+			LocaleUtil.GERMANY.getLanguage(), LocaleUtil.GERMANY.getCountry(),
+			LocaleUtil.GERMANY.getVariant());
+
+		objectField = _addOrUpdateCustomObjectField(
+			objectField, objectField.getObjectFieldSettings());
+
+		Map<Locale, String> labelMap = objectField.getLabelMap();
+
+		Assert.assertEquals(
+			labelMap.get(LocaleUtil.GERMANY), labelMap.get(LocaleUtil.US));
+
+		// Object field read only
+
+		objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			false, _objectDefinitionLocalService, Collections.emptyList());
+
+		objectField = _addCustomObjectField(
+			_getReadOnlyTextObjectField(
+				objectDefinition.getObjectDefinitionId(), null, null));
+
+		ObjectField finalObjectField = objectField;
+
+		AssertUtils.assertFailure(
+			ObjectFieldReadOnlyConditionExpressionException.class,
+			"Read only condition expression is required",
+			() -> _updateReadOnlyObjectField(
+				finalObjectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
+				null));
+
+		String invalidDDMScript = RandomTestUtil.randomString() + "()";
+
+		AssertUtils.assertFailure(
+			ObjectFieldReadOnlyConditionExpressionException.class,
+			"Syntax error in: " + invalidDDMScript,
+			() -> _updateReadOnlyObjectField(
+				finalObjectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
+				invalidDDMScript));
+
+		String invalidReadOnly = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			ObjectFieldReadOnlyException.class,
+			"Unknown read only: " + invalidReadOnly,
+			() -> _updateReadOnlyObjectField(
+				finalObjectField, invalidReadOnly, null));
+
+		ObjectDefinition relatedObjectDefinition =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				false, _objectDefinitionLocalService,
+				Arrays.asList(
+					_getIntegerObjectField(0, Collections.emptyList())));
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			relatedObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"oneToManyRelationshipName",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_assertReadOnly(
+			invalidDDMScript, invalidReadOnly,
+			_addReadOnlyAggregationObjectField(
+				objectDefinition.getObjectDefinitionId(), null, null));
+		_assertReadOnly(
+			invalidDDMScript, invalidReadOnly,
+			_addReadOnlyFormulaObjectField(
+				objectDefinition.getObjectDefinitionId(), null, null));
+
+		// Object field relationship
+
+		relatedObjectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
+			_objectDefinitionLocalService);
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				relatedObjectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"relationship", ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectField relationshipObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				relatedObjectDefinition.getObjectDefinitionId(),
+				"r_relationship_" + objectDefinition.getPKObjectFieldName());
+
+		long relationshipObjectFieldId =
+			relationshipObjectField.getObjectFieldId();
+
+		relationshipObjectField = _addOrUpdateCustomObjectField(
+			relationshipObjectField,
+			Arrays.asList(
+				_objectFieldSettingLocalService.fetchObjectFieldSetting(
+					relationshipObjectFieldId,
+					ObjectFieldSettingConstants.
+						NAME_OBJECT_DEFINITION_1_SHORT_NAME),
+				_objectFieldSettingLocalService.fetchObjectFieldSetting(
+					relationshipObjectFieldId,
+					ObjectFieldSettingConstants.
+						NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME)));
+
+		String relationshipObjectFieldDBColumnName =
+			relationshipObjectField.getDBColumnName();
+
+		Assert.assertNotEquals(
+			StringPool.UNDERLINE,
+			relationshipObjectFieldDBColumnName.charAt(
+				relationshipObjectFieldDBColumnName.length() - 1));
+
+		AssertUtils.assertFailure(
+			ObjectFieldRelationshipTypeException.class,
+			"Object field relationship name and DB type cannot be changed",
+			() -> _addOrUpdateCustomObjectField(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					"able"
+				).objectFieldId(
+					relationshipObjectFieldId
+				).build()));
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			relatedObjectDefinition);
+	}
+
+	@Test
 	public void testAddSystemObjectField() throws Exception {
 		List<ObjectFieldBusinessType> objectFieldBusinessTypes =
 			_objectFieldBusinessTypeRegistry.getObjectFieldBusinessTypes();
@@ -1019,7 +1289,7 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "100"
 			).build());
 
-		_updateCustomObjectField(
+		_addOrUpdateCustomObjectField(
 			attachmentObjectField,
 			Arrays.asList(
 				new ObjectFieldSettingBuilder(
@@ -1071,7 +1341,7 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldSettingConstants.NAME_UNIQUE_VALUES, "TRUE"
 			).build());
 
-		_updateCustomObjectField(
+		_addOrUpdateCustomObjectField(
 			integerObjectField,
 			Arrays.asList(
 				new ObjectFieldSettingBuilder(
@@ -1095,7 +1365,7 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingValueException.UnmodifiableValue.class,
 			"The value of setting uniqueValues is unmodifiable when object " +
 				"definition is published",
-			() -> _updateCustomObjectField(
+			() -> _addOrUpdateCustomObjectField(
 				integerObjectField,
 				Arrays.asList(
 					new ObjectFieldSettingBuilder(
@@ -1123,7 +1393,7 @@ public class ObjectFieldLocalServiceTest {
 		_assertObjectEntryDefaultValue(
 			_listTypeEntryKey, picklistObjectField, new HashMap<>());
 
-		_updateCustomObjectField(
+		_addOrUpdateCustomObjectField(
 			picklistObjectField,
 			Arrays.asList(
 				new ObjectFieldSettingBuilder(
@@ -1203,7 +1473,7 @@ public class ObjectFieldLocalServiceTest {
 				textObjectField.getObjectFieldId(),
 				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE));
 
-		_updateCustomObjectField(
+		_addOrUpdateCustomObjectField(
 			textObjectField,
 			Arrays.asList(
 				new ObjectFieldSettingBuilder(
@@ -1227,7 +1497,7 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldSettingConstants.NAME_SHOW_COUNTER, "true"
 			).build());
 
-		_updateCustomObjectField(
+		_addOrUpdateCustomObjectField(
 			textObjectField,
 			Arrays.asList(
 				new ObjectFieldSettingBuilder(
@@ -1249,276 +1519,6 @@ public class ObjectFieldLocalServiceTest {
 			).build());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
-	}
-
-	@Test
-	public void testUpdateCustomObjectField() throws Exception {
-		ObjectFieldBuilder objectFieldBuilder =
-			new LongIntegerObjectFieldBuilder();
-
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.addObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Arrays.asList(
-					objectFieldBuilder.userId(
-						TestPropsValues.getUserId()
-					).indexedAsKeyword(
-						true
-					).indexedLanguageId(
-						StringPool.BLANK
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap("able")
-					).name(
-						"able"
-					).build()));
-
-		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-			objectDefinition.getObjectDefinitionId(), "able");
-
-		Assert.assertEquals("able_", objectField.getDBColumnName());
-		Assert.assertEquals(
-			ObjectFieldConstants.DB_TYPE_LONG, objectField.getDBType());
-		Assert.assertFalse(objectField.isIndexed());
-		Assert.assertTrue(objectField.isIndexedAsKeyword());
-		Assert.assertEquals("", objectField.getIndexedLanguageId());
-		Assert.assertEquals(
-			LocalizedMapUtil.getLocalizedMap("able"),
-			objectField.getLabelMap());
-		Assert.assertEquals("able", objectField.getName());
-		Assert.assertFalse(objectField.isRequired());
-
-		_testUpdateCustomObjectField(
-			objectFieldBuilder.dbColumnName(
-				objectField.getDBColumnName()
-			).objectFieldId(
-				objectField.getObjectFieldId()
-			).externalReferenceCode(
-				objectField.getExternalReferenceCode()
-			).build());
-
-		_testUpdateCustomObjectField(
-			objectFieldBuilder.businessType(
-				ObjectFieldConstants.BUSINESS_TYPE_PICKLIST
-			).dbType(
-				ObjectFieldConstants.DB_TYPE_STRING
-			).indexedAsKeyword(
-				false
-			).listTypeDefinitionId(
-				_listTypeDefinition.getListTypeDefinitionId()
-			).build());
-
-		_testUpdateCustomObjectField(
-			objectFieldBuilder.objectFieldSettings(
-				Arrays.asList(
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE
-					).value(
-						_listTypeEntryKey
-					).build(),
-					new ObjectFieldSettingBuilder(
-					).name(
-						ObjectFieldSettingConstants.NAME_DEFAULT_VALUE_TYPE
-					).value(
-						ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE
-					).build())
-			).required(
-				true
-			).state(
-				true
-			).build());
-
-		_testUpdateCustomObjectField(
-			objectFieldBuilder.businessType(
-				ObjectFieldConstants.BUSINESS_TYPE_TEXT
-			).dbColumnName(
-				"baker_"
-			).indexed(
-				true
-			).indexedLanguageId(
-				LanguageUtil.getLanguageId(LocaleUtil.getDefault())
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap("baker")
-			).listTypeDefinitionId(
-				0
-			).name(
-				"baker"
-			).objectFieldSettings(
-				Collections.emptyList()
-			).state(
-				false
-			).build());
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId());
-
-		objectField = _updateCustomObjectField(
-			objectFieldBuilder.businessType(
-				ObjectFieldConstants.BUSINESS_TYPE_INTEGER
-			).dbType(
-				ObjectFieldConstants.DB_TYPE_INTEGER
-			).indexed(
-				false
-			).indexedAsKeyword(
-				true
-			).indexedLanguageId(
-				StringPool.BLANK
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap("charlie")
-			).name(
-				"charlie"
-			).build());
-
-		Assert.assertEquals("baker_", objectField.getDBColumnName());
-		Assert.assertEquals(
-			ObjectFieldConstants.DB_TYPE_STRING, objectField.getDBType());
-		Assert.assertFalse(objectField.isIndexed());
-		Assert.assertTrue(objectField.isIndexedAsKeyword());
-		Assert.assertEquals(
-			StringPool.BLANK, objectField.getIndexedLanguageId());
-		Assert.assertEquals(
-			objectField.getLabelMap(),
-			LocalizedMapUtil.getLocalizedMap("charlie"));
-		Assert.assertEquals("baker", objectField.getName());
-		Assert.assertTrue(objectField.isRequired());
-
-		// Object field label needs to be replicated when there is an update
-		// with another default language
-
-		LocaleUtil.setDefault(
-			LocaleUtil.GERMANY.getLanguage(), LocaleUtil.GERMANY.getCountry(),
-			LocaleUtil.GERMANY.getVariant());
-
-		objectField = _updateCustomObjectField(
-			objectField, objectField.getObjectFieldSettings());
-
-		Map<Locale, String> labelMap = objectField.getLabelMap();
-
-		Assert.assertEquals(
-			labelMap.get(LocaleUtil.GERMANY), labelMap.get(LocaleUtil.US));
-
-		// Object field read only
-
-		objectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
-			false, _objectDefinitionLocalService, Collections.emptyList());
-
-		objectField = _addCustomObjectField(
-			_getReadOnlyTextObjectField(
-				objectDefinition.getObjectDefinitionId(), null, null));
-
-		ObjectField finalObjectField = objectField;
-
-		AssertUtils.assertFailure(
-			ObjectFieldReadOnlyConditionExpressionException.class,
-			"Read only condition expression is required",
-			() -> _updateReadOnlyObjectField(
-				finalObjectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
-				null));
-
-		String invalidDDMScript = RandomTestUtil.randomString() + "()";
-
-		AssertUtils.assertFailure(
-			ObjectFieldReadOnlyConditionExpressionException.class,
-			"Syntax error in: " + invalidDDMScript,
-			() -> _updateReadOnlyObjectField(
-				finalObjectField, ObjectFieldConstants.READ_ONLY_CONDITIONAL,
-				invalidDDMScript));
-
-		String invalidReadOnly = RandomTestUtil.randomString();
-
-		AssertUtils.assertFailure(
-			ObjectFieldReadOnlyException.class,
-			"Unknown read only: " + invalidReadOnly,
-			() -> _updateReadOnlyObjectField(
-				finalObjectField, invalidReadOnly, null));
-
-		ObjectDefinition relatedObjectDefinition =
-			ObjectDefinitionTestUtil.addObjectDefinition(
-				false, _objectDefinitionLocalService,
-				Arrays.asList(
-					_getIntegerObjectField(0, Collections.emptyList())));
-
-		_objectRelationshipLocalService.addObjectRelationship(
-			TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
-			relatedObjectDefinition.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			"oneToManyRelationshipName",
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_assertReadOnly(
-			invalidDDMScript, invalidReadOnly,
-			_addReadOnlyAggregationObjectField(
-				objectDefinition.getObjectDefinitionId(), null, null));
-		_assertReadOnly(
-			invalidDDMScript, invalidReadOnly,
-			_addReadOnlyFormulaObjectField(
-				objectDefinition.getObjectDefinitionId(), null, null));
-
-		// Object field relationship
-
-		relatedObjectDefinition = ObjectDefinitionTestUtil.addObjectDefinition(
-			_objectDefinitionLocalService);
-
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
-				objectDefinition.getObjectDefinitionId(),
-				relatedObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"relationship", ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		ObjectField relationshipObjectField =
-			_objectFieldLocalService.fetchObjectField(
-				relatedObjectDefinition.getObjectDefinitionId(),
-				"r_relationship_" + objectDefinition.getPKObjectFieldName());
-
-		long relationshipObjectFieldId =
-			relationshipObjectField.getObjectFieldId();
-
-		relationshipObjectField = _updateCustomObjectField(
-			relationshipObjectField,
-			Arrays.asList(
-				_objectFieldSettingLocalService.fetchObjectFieldSetting(
-					relationshipObjectFieldId,
-					ObjectFieldSettingConstants.
-						NAME_OBJECT_DEFINITION_1_SHORT_NAME),
-				_objectFieldSettingLocalService.fetchObjectFieldSetting(
-					relationshipObjectFieldId,
-					ObjectFieldSettingConstants.
-						NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME)));
-
-		String relationshipObjectFieldDBColumnName =
-			relationshipObjectField.getDBColumnName();
-
-		Assert.assertNotEquals(
-			StringPool.UNDERLINE,
-			relationshipObjectFieldDBColumnName.charAt(
-				relationshipObjectFieldDBColumnName.length() - 1));
-
-		AssertUtils.assertFailure(
-			ObjectFieldRelationshipTypeException.class,
-			"Object field relationship name and DB type cannot be changed",
-			() -> _updateCustomObjectField(
-				new TextObjectFieldBuilder(
-				).labelMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString())
-				).name(
-					"able"
-				).objectFieldId(
-					relationshipObjectFieldId
-				).build()));
-
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			objectRelationship);
-
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			relatedObjectDefinition);
 	}
 
 	@Test
@@ -1621,6 +1621,33 @@ public class ObjectFieldLocalServiceTest {
 			objectField.getReadOnlyConditionExpression(),
 			objectField.isRequired(), objectField.isState(),
 			objectField.getObjectFieldSettings());
+	}
+
+	private ObjectField _addOrUpdateCustomObjectField(ObjectField objectField)
+		throws Exception {
+
+		return _addOrUpdateCustomObjectField(
+			objectField, Collections.emptyList());
+	}
+
+	private ObjectField _addOrUpdateCustomObjectField(
+			ObjectField objectField,
+			List<ObjectFieldSetting> objectFieldSettings)
+		throws Exception {
+
+		return _objectFieldLocalService.addOrUpdateCustomObjectField(
+			objectField.getExternalReferenceCode(),
+			objectField.getObjectFieldId(), TestPropsValues.getUserId(),
+			objectField.getListTypeDefinitionId(),
+			objectField.getObjectDefinitionId(), objectField.getBusinessType(),
+			objectField.getDBType(), objectField.isIndexed(),
+			objectField.isIndexedAsKeyword(),
+			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
+			objectField.isLocalized(), objectField.getName(),
+			objectField.getReadOnly(),
+			objectField.getReadOnlyConditionExpression(),
+			objectField.isRequired(), objectField.isState(),
+			objectFieldSettings);
 	}
 
 	private ObjectField _addPicklistObjectField(
@@ -2066,10 +2093,11 @@ public class ObjectFieldLocalServiceTest {
 					ObjectFieldConstants.READ_ONLY_TRUE, null)));
 	}
 
-	private void _testUpdateCustomObjectField(ObjectField expectedObjectField)
+	private void _testAddOrUpdateCustomObjectField(
+			ObjectField expectedObjectField)
 		throws Exception {
 
-		ObjectField objectField = _updateCustomObjectField(
+		ObjectField objectField = _addOrUpdateCustomObjectField(
 			expectedObjectField, expectedObjectField.getObjectFieldSettings());
 
 		Assert.assertEquals(
@@ -2098,42 +2126,18 @@ public class ObjectFieldLocalServiceTest {
 			expectedObjectField.isState(), objectField.isState());
 	}
 
-	private ObjectField _updateCustomObjectField(ObjectField objectField)
-		throws Exception {
-
-		return _updateCustomObjectField(objectField, Collections.emptyList());
-	}
-
-	private ObjectField _updateCustomObjectField(
-			ObjectField objectField,
-			List<ObjectFieldSetting> objectFieldSettings)
-		throws Exception {
-
-		return _objectFieldLocalService.updateCustomObjectField(
-			objectField.getExternalReferenceCode(),
-			objectField.getObjectFieldId(),
-			objectField.getListTypeDefinitionId(),
-			objectField.getBusinessType(), objectField.getDBType(),
-			objectField.isIndexed(), objectField.isIndexedAsKeyword(),
-			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
-			objectField.isLocalized(), objectField.getName(),
-			objectField.getReadOnly(),
-			objectField.getReadOnlyConditionExpression(),
-			objectField.isRequired(), objectField.isState(),
-			objectFieldSettings);
-	}
-
 	private ObjectField _updateReadOnlyObjectField(
 			ObjectField objectField, String readOnly,
 			String readOnlyConditionExpression)
 		throws PortalException {
 
-		return _objectFieldLocalService.updateCustomObjectField(
+		return _objectFieldLocalService.addOrUpdateCustomObjectField(
 			objectField.getExternalReferenceCode(),
-			objectField.getObjectFieldId(),
+			objectField.getObjectFieldId(), TestPropsValues.getUserId(),
 			objectField.getListTypeDefinitionId(),
-			objectField.getBusinessType(), objectField.getDBType(),
-			objectField.isIndexed(), objectField.isIndexedAsKeyword(),
+			objectField.getObjectDefinitionId(), objectField.getBusinessType(),
+			objectField.getDBType(), objectField.isIndexed(),
+			objectField.isIndexedAsKeyword(),
 			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
 			objectField.isLocalized(), objectField.getName(), readOnly,
 			readOnlyConditionExpression, objectField.isRequired(),

@@ -654,6 +654,14 @@ public class UserNotificationEventLocalServiceUtil {
 			userId, deliveryType, start, end);
 	}
 
+	public static List<UserNotificationEvent> getUserNotificationEvents(
+		long userId, int start, int end,
+		OrderByComparator<UserNotificationEvent> orderByComparator) {
+
+		return getService().getUserNotificationEvents(
+			userId, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of user notification events.
 	 *

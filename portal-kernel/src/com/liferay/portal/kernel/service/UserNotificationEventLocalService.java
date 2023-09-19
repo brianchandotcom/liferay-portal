@@ -464,6 +464,11 @@ public interface UserNotificationEventLocalService
 	public List<UserNotificationEvent> getUserNotificationEvents(
 		long userId, int deliveryType, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<UserNotificationEvent> getUserNotificationEvents(
+		long userId, int start, int end,
+		OrderByComparator<UserNotificationEvent> orderByComparator);
+
 	/**
 	 * Returns the number of user notification events.
 	 *

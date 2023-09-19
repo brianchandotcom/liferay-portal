@@ -28,7 +28,7 @@ public class PDFProcessorUtil {
 	}
 
 	public static PDFProcessor getPDFProcessor() {
-		return (PDFProcessor)DLProcessorRegistryUtil.getDLProcessor(
+		return (PDFProcessor)DLProcessorHelperUtil.getDLProcessor(
 			DLProcessorConstants.PDF_PROCESSOR);
 	}
 

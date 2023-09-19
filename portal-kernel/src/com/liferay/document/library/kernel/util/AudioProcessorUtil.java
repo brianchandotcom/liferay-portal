@@ -40,7 +40,7 @@ public class AudioProcessorUtil {
 	}
 
 	public static AudioProcessor getAudioProcessor() {
-		return (AudioProcessor)DLProcessorRegistryUtil.getDLProcessor(
+		return (AudioProcessor)DLProcessorHelperUtil.getDLProcessor(
 			DLProcessorConstants.AUDIO_PROCESSOR);
 	}
 

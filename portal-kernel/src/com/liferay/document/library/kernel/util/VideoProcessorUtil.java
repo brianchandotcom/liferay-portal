@@ -90,7 +90,7 @@ public class VideoProcessorUtil {
 	}
 
 	public static VideoProcessor getVideoProcessor() {
-		return (VideoProcessor)DLProcessorRegistryUtil.getDLProcessor(
+		return (VideoProcessor)DLProcessorHelperUtil.getDLProcessor(
 			DLProcessorConstants.VIDEO_PROCESSOR);
 	}
 

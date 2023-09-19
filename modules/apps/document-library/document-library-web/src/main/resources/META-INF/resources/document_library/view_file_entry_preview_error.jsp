@@ -28,7 +28,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 				long maxFileSize = dlPreviewSizeException.getMaxFileSize();
 
 				if (maxFileSize == 0) {
-					maxFileSize = DLProcessorRegistryUtil.getPreviewableProcessorMaxSize(fileVersion.getGroupId());
+					maxFileSize = DLProcessorHelperUtil.getPreviewableProcessorMaxSize(fileVersion.getGroupId());
 				}
 				%>
 

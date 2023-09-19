@@ -9,6 +9,7 @@ import {fetch, openToast} from 'frontend-js-web';
 import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import BaseAPIEndpointFields from '../baseComponents/BaseAPIEndpointFields';
+import {headers} from '../utils/fetchUtil';
 import {beginStringWithForwardSlash} from '../utils/string';
 
 interface CreateAPIEndpointModalProps {
@@ -20,12 +21,6 @@ interface CreateAPIEndpointModalProps {
 	loadData: voidReturn;
 	setMainEndpointNav: Dispatch<SetStateAction<MainEndpointNav>>;
 }
-
-const headers = new Headers({
-	'Accept': 'application/json',
-	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-	'Content-Type': 'application/json',
-});
 
 export function CreateAPIEndpointModalContent({
 	apiApplicationBaseURL,

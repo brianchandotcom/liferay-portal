@@ -9,6 +9,7 @@ import {fetch, openToast} from 'frontend-js-web';
 import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import BaseAPISchemaFields from '../baseComponents/BaseAPISchemaFields';
+import {headers} from '../utils/fetchUtil';
 
 interface CreateAPISchemaModalProps {
 	apiSchemasURLPath: string;
@@ -17,12 +18,6 @@ interface CreateAPISchemaModalProps {
 	loadData: voidReturn;
 	setMainSchemaNav: Dispatch<SetStateAction<MainSchemaNav>>;
 }
-
-const headers = new Headers({
-	'Accept': 'application/json',
-	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-	'Content-Type': 'application/json',
-});
 
 export function CreateAPISchemaModalContent({
 	apiSchemasURLPath,

@@ -13,6 +13,8 @@ import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.commerce.pricing.web.internal.constants.CommercePricingFDSNames;
 import com.liferay.commerce.pricing.web.internal.model.TierPriceEntry;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
@@ -84,6 +86,10 @@ public class CommerceTierPriceEntryFDSDataProvider
 					fdsPagination.getStartPosition(),
 					fdsPagination.getEndPosition(), sort);
 
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCProductInstance(
+			commercePriceEntry.getCProductId(),
+			commercePriceEntry.getCPInstanceUuid());
+
 		for (CommerceTierPriceEntry commerceTierPriceEntry :
 				commerceTierPriceEntryBaseModelSearchResult.getBaseModels()) {
 
@@ -98,8 +104,7 @@ public class CommerceTierPriceEntryFDSDataProvider
 					_getOverride(commerceTierPriceEntry, httpServletRequest),
 					priceCommerceMoney.format(themeDisplay.getLocale()),
 					_commerceQuantityFormatter.format(
-						commercePriceEntry.getCPInstance(),
-						commerceTierPriceEntry.getMinQuantity(),
+						cpInstance, commerceTierPriceEntry.getMinQuantity(),
 						commercePriceEntry.getUnitOfMeasureKey()),
 					dateTimeFormat.format(
 						commerceTierPriceEntry.getDisplayDate()),
@@ -167,6 +172,9 @@ public class CommerceTierPriceEntryFDSDataProvider
 
 	@Reference
 	private CommerceTierPriceEntryService _commerceTierPriceEntryService;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private Language _language;

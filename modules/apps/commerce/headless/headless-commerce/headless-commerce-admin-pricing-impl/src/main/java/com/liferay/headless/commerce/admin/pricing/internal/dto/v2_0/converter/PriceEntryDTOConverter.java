@@ -11,6 +11,7 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceEntry;
 import com.liferay.petra.string.StringPool;
@@ -53,7 +54,9 @@ public class PriceEntryDTOConverter
 		CommerceCurrency commerceCurrency =
 			commercePriceList.getCommerceCurrency();
 
-		CPInstance cpInstance = commercePriceEntry.getCPInstance();
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCProductInstance(
+			commercePriceEntry.getCProductId(),
+			commercePriceEntry.getCPInstanceUuid());
 
 		ExpandoBridge expandoBridge = commercePriceEntry.getExpandoBridge();
 
@@ -85,10 +88,24 @@ public class PriceEntryDTOConverter
 				priceListId = commercePriceEntry.getCommercePriceListId();
 				priceOnApplication = commercePriceEntry.isPriceOnApplication();
 				quantity = commercePriceEntry.getQuantity();
-				skuExternalReferenceCode =
-					cpInstance.getExternalReferenceCode();
-				skuId = cpInstance.getCPInstanceId();
 				unitOfMeasureKey = commercePriceEntry.getUnitOfMeasureKey();
+
+				setSkuExternalReferenceCode(
+					() -> {
+						if (cpInstance == null) {
+							return null;
+						}
+
+						return cpInstance.getExternalReferenceCode();
+					});
+				setSkuId(
+					() -> {
+						if (cpInstance == null) {
+							return null;
+						}
+
+						return cpInstance.getCPInstanceId();
+					});
 			}
 		};
 	}
@@ -146,5 +163,8 @@ public class PriceEntryDTOConverter
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 }

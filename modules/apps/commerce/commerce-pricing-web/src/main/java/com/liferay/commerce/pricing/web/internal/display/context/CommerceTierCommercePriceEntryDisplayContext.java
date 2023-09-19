@@ -15,6 +15,7 @@ import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,6 +41,7 @@ public class CommerceTierCommercePriceEntryDisplayContext
 			commercePriceListModelResourcePermission,
 		CommercePriceListService commercePriceListService,
 		CommerceTierPriceEntryService commerceTierPriceEntryService,
+		CPInstanceLocalService cpInstanceLocalService,
 		HttpServletRequest httpServletRequest) {
 
 		super(
@@ -48,6 +50,7 @@ public class CommerceTierCommercePriceEntryDisplayContext
 
 		_commercePriceEntryService = commercePriceEntryService;
 		_commerceTierPriceEntryService = commerceTierPriceEntryService;
+		_cpInstanceLocalService = cpInstanceLocalService;
 	}
 
 	public CommercePriceEntry getCommercePriceEntry() throws PortalException {
@@ -150,7 +153,10 @@ public class CommerceTierCommercePriceEntryDisplayContext
 		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
 
 		if (commercePriceEntry != null) {
-			CPInstance cpInstance = commercePriceEntry.getCPInstance();
+			CPInstance cpInstance =
+				_cpInstanceLocalService.fetchCProductInstance(
+					commercePriceEntry.getCProductId(),
+					commercePriceEntry.getCPInstanceUuid());
 
 			if (cpInstance != null) {
 				CPDefinition cpDefinition = cpInstance.getCPDefinition();
@@ -192,5 +198,6 @@ public class CommerceTierCommercePriceEntryDisplayContext
 	private final CommercePriceEntryService _commercePriceEntryService;
 	private CommerceTierPriceEntry _commerceTierPriceEntry;
 	private final CommerceTierPriceEntryService _commerceTierPriceEntryService;
+	private final CPInstanceLocalService _cpInstanceLocalService;
 
 }

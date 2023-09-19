@@ -11,6 +11,7 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.util.CommerceQuantityFormatter;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.TierPrice;
@@ -78,7 +79,9 @@ public class TierPriceDTOConverter
 					commerceTierPriceEntry.getExternalReferenceCode();
 				id = commerceTierPriceEntry.getCommerceTierPriceEntryId();
 				minimumQuantity = _commerceQuantityFormatter.format(
-					commercePriceEntry.getCPInstance(),
+					_cpInstanceLocalService.fetchCPInstance(
+						commercePriceEntry.getCProductId(),
+						commercePriceEntry.getCPInstanceUuid()),
 					commerceTierPriceEntry.getMinQuantity(),
 					commercePriceEntry.getUnitOfMeasureKey());
 				price = tierPriceEntryPrice.doubleValue();
@@ -111,5 +114,8 @@ public class TierPriceDTOConverter
 
 	@Reference
 	private CommerceTierPriceEntryService _commerceTierPriceEntryService;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 }

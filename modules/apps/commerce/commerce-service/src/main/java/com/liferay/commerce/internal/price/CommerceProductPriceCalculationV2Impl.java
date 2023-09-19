@@ -36,6 +36,7 @@ import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
@@ -803,13 +804,15 @@ public class CommerceProductPriceCalculationV2Impl
 			_commercePriceListLocalService.getCommercePriceList(
 				commercePriceListId);
 
-		CPInstance cpInstance = commercePriceEntry.getCPInstance();
-
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyLocalService.getCommerceCurrency(
 				commercePriceList.getCommerceCurrencyId());
 
-		if (!commercePriceEntry.isHasTierPrice()) {
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCProductInstance(
+			commercePriceEntry.getCProductId(),
+			commercePriceEntry.getCPInstanceUuid());
+
+		if ((cpInstance != null) && !commercePriceEntry.isHasTierPrice()) {
 			if ((commercePriceEntry.getCommercePriceListId() !=
 					commercePriceListId) &&
 				(commercePriceList.isNetPrice() ==
@@ -835,7 +838,8 @@ public class CommerceProductPriceCalculationV2Impl
 				return commercePriceEntry.getPrice();
 			}
 
-			if ((commercePriceEntry.getCommercePriceListId() !=
+			if ((cpInstance != null) &&
+				(commercePriceEntry.getCommercePriceListId() !=
 					commercePriceListId) &&
 				(commercePriceList.isNetPrice() ==
 					modifierCommercePriceList.isNetPrice())) {
@@ -1208,10 +1212,16 @@ public class CommerceProductPriceCalculationV2Impl
 				commercePriceListId);
 
 		if (!commercePriceList.isNetPrice()) {
-			CPInstance cpInstance = commercePriceEntry.getCPInstance();
+			CPInstance cpInstance =
+				_cpInstanceLocalService.fetchCProductInstance(
+					commercePriceEntry.getCProductId(),
+					commercePriceEntry.getCPInstanceUuid());
 
-			unitPrice = getConvertedPrice(
-				cpInstance.getCPInstanceId(), unitPrice, true, commerceContext);
+			if (cpInstance != null) {
+				unitPrice = getConvertedPrice(
+					cpInstance.getCPInstanceId(), unitPrice, true,
+					commerceContext);
+			}
 		}
 
 		return _getCommerceMoney(
@@ -1309,6 +1319,9 @@ public class CommerceProductPriceCalculationV2Impl
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
 
 	@Reference
 	private CPInstanceUnitOfMeasureLocalService

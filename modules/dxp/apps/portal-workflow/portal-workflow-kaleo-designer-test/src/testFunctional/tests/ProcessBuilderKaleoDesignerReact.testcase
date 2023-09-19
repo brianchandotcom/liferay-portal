@@ -835,6 +835,9 @@ definition {
 	@description = "LPS-178499 - Verify it's possible change the recipient field to Asset Creator"
 	@priority = 4
 	test CanChangeRecipientFieldToAssetCreator {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
 		task ("Given that a user accesses the workflow") {
 			Workflow.openWorkflowListView();
 

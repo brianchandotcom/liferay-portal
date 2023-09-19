@@ -195,53 +195,11 @@ definition {
 				roleTitle = "Test Role Name");
 		}
 
-		task ("Add all Content Dashboard permissions to role") {
-			for (var resourceActionIndex : list "VIEW,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,ACCESS_IN_CONTROL_PANEL") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet",
-					roleTitle = "Test Role Name");
-			}
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_CONTROL_PANEL",
-				resourceName = 90,
-				roleTitle = "Test Role Name");
-		}
-
-		task ("Add all Web Content permissions to role") {
-			for (var resourceActionIndex : list "ADD_STRUCTURE,ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,ADD_TEMPLATE") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.journal",
-					roleTitle = "Test Role Name");
-			}
-
-			for (var resourceActionIndex : list "ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION,DELETE") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.journal.model.JournalArticle",
-					roleTitle = "Test Role Name");
-			}
-
-			for (var resourceActionIndex : list "VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,DELETE,ADD_SUBFOLDER,ADD_ARTICLE,ACCESS") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.journal.model.JournalFolder",
-					roleTitle = "Test Role Name");
-			}
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Test Role Name");
-
-			for (var resourceActionIndex : list "VIEW,ACCESS_IN_CONTROL_PANEL") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
-					roleTitle = "Test Role Name");
-			}
+		task ("Add permissions to role") {
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com.liferay.journal,ADD_STRUCTURE,ADD_FOLDER,ADD_FEED,ADD_ARTICLE,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,ADD_TEMPLATE:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL:com_liferay_content_dashboard_web_portlet_ContentDashboardAdminPortlet,VIEW,ADD_TO_PAGE,CONFIGURATION,PERMISSIONS,PREFERENCES,ACCESS_IN_CONTROL_PANEL:90,VIEW_CONTROL_PANEL:com.liferay.journal.model.JournalArticle,ADD_DISCUSSION,VIEW,UPDATE_DISCUSSION,UPDATE,SUBSCRIBE,PERMISSIONS,EXPIRE,DELETE_DISCUSSION,DELETE:com.liferay.journal.model.JournalFolder,VIEW,UPDATE,SUBSCRIBE,PERMISSIONS,DELETE,ADD_SUBFOLDER,ADD_ARTICLE,ACCESS",
+				roleTitle = "Test Role Name",
+				roleType = "regular");
 		}
 
 		task ("Set role to user") {

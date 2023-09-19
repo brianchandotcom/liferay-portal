@@ -268,6 +268,15 @@ public class ObjectValidationRuleLocalServiceWrapper
 			objectValidationRuleId);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectValidationRule
+		fetchObjectValidationRule(
+			String externalReferenceCode, long objectDefinitionId) {
+
+		return _objectValidationRuleLocalService.fetchObjectValidationRule(
+			externalReferenceCode, objectDefinitionId);
+	}
+
 	/**
 	 * Returns the object validation rule with the matching UUID and company.
 	 *

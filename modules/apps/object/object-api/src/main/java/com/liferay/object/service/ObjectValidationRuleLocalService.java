@@ -221,6 +221,10 @@ public interface ObjectValidationRuleLocalService
 	public ObjectValidationRule fetchObjectValidationRule(
 		long objectValidationRuleId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectValidationRule fetchObjectValidationRule(
+		String externalReferenceCode, long objectDefinitionId);
+
 	/**
 	 * Returns the object validation rule with the matching UUID and company.
 	 *

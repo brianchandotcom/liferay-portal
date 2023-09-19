@@ -234,6 +234,13 @@ public class ObjectValidationRuleLocalServiceUtil {
 		return getService().fetchObjectValidationRule(objectValidationRuleId);
 	}
 
+	public static ObjectValidationRule fetchObjectValidationRule(
+		String externalReferenceCode, long objectDefinitionId) {
+
+		return getService().fetchObjectValidationRule(
+			externalReferenceCode, objectDefinitionId);
+	}
+
 	/**
 	 * Returns the object validation rule with the matching UUID and company.
 	 *

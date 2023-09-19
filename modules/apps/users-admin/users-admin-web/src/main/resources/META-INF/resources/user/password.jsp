@@ -236,3 +236,60 @@ else {
 		}
 	</aui:script>
 </c:if>
+
+<clay:sheet-section>
+	<h3 class="sheet-subtitle"><liferay-ui:message key="web-dav-password" /></h3>
+
+	<c:if test="<%= Validator.isNotNull(selUser.getDigest()) %>">
+		<div class="alert alert-info">
+			<liferay-ui:message key="a-webdav-password-has-already-been-generated-and-will-be-expired-if-a-new-one-is-generated" />
+		</div>
+	</c:if>
+
+	<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "generateWebDavPassword()" %>' value="generate-webdav-password" />
+</clay:sheet-section>
+
+<aui:script>
+	window['<portlet:namespace />generateWebDavPassword'] = function () {
+		var baseUrl;
+
+		var data = {
+			p_auth: '<%= AuthTokenUtil.getToken(request) %>',
+		};
+
+		baseUrl =
+			'<portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="/users_admin/generate_webdav_password" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/users_admin/generate_webdav_password" /></portlet:actionURL>';
+
+		Liferay.Util.fetch(new URL(baseUrl), {
+			body: Liferay.Util.objectToURLSearchParams(data),
+			method: 'POST',
+		})
+			.then((response) => {
+				return response.text();
+			})
+			.then((text) => {
+				Liferay.Util.openModal({
+					bodyHTML: text,
+					onOpen: function (event) {
+						var webdavPasswordInput = document.getElementById(
+							'<portlet:namespace />webDavPassword'
+						);
+
+						if (webdavPasswordInput) {
+							webdavPasswordInput.focus();
+						}
+					},
+					title:
+						'<%= UnicodeLanguageUtil.get(request, "webdav-password-generated") %>',
+				});
+			})
+			.catch((error) => {
+				Liferay.Util.openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-system-error-occurred'
+					),
+					type: 'danger',
+				});
+			});
+	};
+</aui:script>

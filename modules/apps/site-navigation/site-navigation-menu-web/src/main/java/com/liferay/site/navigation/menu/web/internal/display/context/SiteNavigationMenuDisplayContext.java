@@ -8,6 +8,8 @@ package com.liferay.site.navigation.menu.web.internal.display.context;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -453,6 +455,17 @@ public class SiteNavigationMenuDisplayContext {
 		Layout layout = themeDisplay.getLayout();
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
+		if (_hasLayoutPageTemplateEntry(layout)) {
+			if (scopeGroup.hasPublicLayouts()) {
+				return SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY;
+			}
+			else if (scopeGroup.hasPrivateLayouts()) {
+				return SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY;
+			}
+
+			return SiteNavigationConstants.TYPE_PRIMARY;
+		}
+
 		if (layout.isPrivateLayout() && scopeGroup.hasPrivateLayouts()) {
 			return SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY;
 		}
@@ -475,6 +488,24 @@ public class SiteNavigationMenuDisplayContext {
 				siteNavigationMenuName());
 
 		return _siteNavigationMenuName;
+	}
+
+	private boolean _hasLayoutPageTemplateEntry(Layout layout) {
+		long plid = layout.getPlid();
+
+		if (layout.isDraftLayout()) {
+			plid = layout.getClassPK();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(plid);
+
+		if (layoutPageTemplateEntry != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _ddmTemplateKey;

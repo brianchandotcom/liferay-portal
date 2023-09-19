@@ -776,7 +776,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 	private static volatile PortalExecutorManager _portalExecutorManager =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			PortalExecutorManager.class, AggregateFilter.class,
-			"_portalExecutorManager", true);
+			"_portalExecutorManager", false, true);
 
 	private final Map<String, NoticeableFuture<String>> _noticeableFutures =
 		new ConcurrentHashMap<>();

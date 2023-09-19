@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
+import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.sharing.security.permission.resource.SharingModelResourcePermissionConfigurator;
@@ -191,9 +191,6 @@ public class DLFileEntryModelResourcePermissionWrapper
 	@Reference
 	private StagingPermission _stagingPermission;
 
-	@Reference
-	private WorkflowPermission _workflowPermission;
-
 	private class DLFileEntryWorkflowedModelResourcePermissionLogic
 		implements ModelResourcePermissionLogic<DLFileEntry> {
 
@@ -214,7 +211,7 @@ public class DLFileEntryModelResourcePermissionWrapper
 				}
 			}
 			else if (fileVersion.isPending()) {
-				Boolean hasPermission = _workflowPermission.hasPermission(
+				Boolean hasPermission = WorkflowPermissionUtil.hasPermission(
 					permissionChecker, fileVersion.getGroupId(), name,
 					fileVersion.getFileVersionId(), actionId);
 

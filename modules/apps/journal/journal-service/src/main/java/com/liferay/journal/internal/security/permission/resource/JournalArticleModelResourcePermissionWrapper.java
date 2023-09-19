@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.WorkflowedModelPermissionLogic;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 import com.liferay.portal.util.PropsValues;
 
 import org.osgi.service.component.annotations.Component;
@@ -81,8 +80,8 @@ public class JournalArticleModelResourcePermissionWrapper
 					});
 				consumer.accept(
 					new WorkflowedModelPermissionLogic<>(
-						_workflowPermission, modelResourcePermission,
-						_groupLocalService, JournalArticle::getId));
+						modelResourcePermission, _groupLocalService,
+						JournalArticle::getId));
 
 				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 					consumer.accept(
@@ -133,8 +132,5 @@ public class JournalArticleModelResourcePermissionWrapper
 
 	@Reference
 	private StagingPermission _stagingPermission;
-
-	@Reference
-	private WorkflowPermission _workflowPermission;
 
 }

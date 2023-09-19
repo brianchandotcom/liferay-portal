@@ -14,7 +14,7 @@ CommercePriceEntry commercePriceEntry = commercePriceEntryDisplayContext.getComm
 
 long commercePriceEntryId = commercePriceEntryDisplayContext.getCommercePriceEntryId();
 
-CPInstance cpInstance = commercePriceEntry.getCPInstance();
+CPInstance cpInstance = commercePriceEntryDisplayContext.getCPInstance();
 %>
 
 <portlet:actionURL name="/commerce_price_list/edit_commerce_price_entry" var="editCommercePriceEntryActionURL" />

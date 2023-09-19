@@ -131,6 +131,20 @@ public class CommercePriceEntryDisplayContext
 		return commercePriceEntry.getCommercePriceEntryId();
 	}
 
+	public CPInstance getCPInstance() throws Exception {
+		if (_cpInstance != null) {
+			return _cpInstance;
+		}
+
+		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
+
+		_cpInstance = _cpInstanceLocalService.getCProductInstance(
+			commercePriceEntry.getCProductId(),
+			commercePriceEntry.getCPInstanceUuid());
+
+		return _cpInstance;
+	}
+
 	public List<CPInstanceUnitOfMeasure> getCPInstanceUnitOfMeasures()
 		throws Exception {
 
@@ -217,6 +231,7 @@ public class CommercePriceEntryDisplayContext
 	private final CommercePriceEntryLocalService
 		_commercePriceEntryLocalService;
 	private final CommercePriceEntryService _commercePriceEntryService;
+	private CPInstance _cpInstance;
 	private final CPInstanceLocalService _cpInstanceLocalService;
 	private final CPInstanceUnitOfMeasureLocalService
 		_cpInstanceUnitOfMeasureLocalService;

@@ -312,6 +312,9 @@ definition {
 		else if (isSet(copyToUnconnectedSite)) {
 			Alert.viewErrorMessage(errorMessage = "The item is not copied because the site and asset library are not connected.");
 		}
+		else if (isSet(copyToStagingSite)) {
+			Alert.viewErrorMessage(errorMessage = "Cannot copy folders to the live version of a group. Make your changes in staging and publish them to Live afterwards to make them public.");
+		}
 		else {
 			Alert.viewSuccessMessage();
 		}

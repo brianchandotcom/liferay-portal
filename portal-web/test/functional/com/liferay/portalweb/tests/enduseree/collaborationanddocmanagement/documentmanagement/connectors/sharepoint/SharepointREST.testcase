@@ -512,9 +512,9 @@ definition {
 
 		Search.searchCP(searchTerm = "Document_4.txt");
 
-		AssertElementPresent(
-			key_text = "No documents were found that matched the keywords",
-			locator1 = "SearchResults#SEARCH_EMPTY_INFO");
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No documents were found that matched the keywords");
 
 		DMDocument.viewSearchResultsCP(
 			dmDocumentTitle = "Document_4.txt",
@@ -526,9 +526,9 @@ definition {
 
 		Alert.viewInfoMessageSpecific(infoMessage = "Filters only apply to documents in the local repository.");
 
-		AssertElementPresent(
-			key_text = "There are no documents or media files that matched the filters in this repository.",
-			locator1 = "SearchResults#SEARCH_EMPTY_INFO");
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "There are no documents or media files that matched the filters in this repository.");
 
 		DMDocument.removeSearchFilter(filter = "Owner: Test Test");
 

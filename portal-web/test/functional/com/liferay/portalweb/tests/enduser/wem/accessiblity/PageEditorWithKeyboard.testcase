@@ -293,18 +293,15 @@ definition {
 				value1 = "\ENTER");
 
 			KeyPress(
-				key_menuItem = "All Content",
-				locator1 = "MenuItem#ANY_MENU_ITEM",
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
 				value1 = "\DOWN");
 
 			KeyPress(
-				key_menuItem = "Web Content Article",
-				locator1 = "MenuItem#ANY_MENU_ITEM",
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
 				value1 = "\DOWN");
 
 			KeyPress(
-				key_menuItem = "Inline Text",
-				locator1 = "MenuItem#ANY_MENU_ITEM",
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
 				value1 = "\ENTER");
 
 			AssertTextEquals(
@@ -329,13 +326,11 @@ definition {
 				value1 = "\ENTER");
 
 			KeyPress(
-				key_menuItem = "Inline Text",
-				locator1 = "MenuItem#ANY_MENU_ITEM",
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
 				value1 = "\UP");
 
 			KeyPress(
-				key_menuItem = "Web Content Article",
-				locator1 = "MenuItem#ANY_MENU_ITEM",
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
 				value1 = "\ENTER");
 
 			AssertTextEquals(
@@ -360,20 +355,16 @@ definition {
 				value1 = "\ENTER");
 
 			KeyPress(
-				key_menuItem = "Web Content Article",
-				locator1 = "MenuItem#ANY_MENU_ITEM",
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
 				value1 = "\UP");
 
 			KeyPress(
-				key_menuItem = "All Content",
-				locator1 = "MenuItem#ANY_MENU_ITEM",
+				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
 				value1 = "\ENTER");
 
 			AssertTextEquals(
 				locator1 = "PageEditor#PAGE_CONTENTS_CONTENT_FILTER_TOGGLE",
-				value1 = "Web Content Article");
-
-			PageEditor.selectContentFilter(filter = "All Content");
+				value1 = "All Content");
 
 			for (var itemName : list "Heading Example,Web Content Title") {
 				AssertVisible(

@@ -4,16 +4,11 @@
  */
 
 import {Dispatch, SetStateAction} from 'react';
-declare type DataError = {
-	description: boolean;
-	path: boolean;
-	scope: boolean;
-};
 interface BaseAPIApplicationFieldsProps {
 	apiApplicationBaseURL: string;
 	basePath: string;
 	data: Partial<APIEndpointUIData>;
-	displayError: DataError;
+	displayError: EndpointDataError;
 	editMode?: boolean;
 	setData: Dispatch<SetStateAction<APIEndpointUIData>>;
 }

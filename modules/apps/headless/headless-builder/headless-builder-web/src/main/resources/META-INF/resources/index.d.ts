@@ -148,6 +148,17 @@ type IncludesFilterOperator = {
 
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
+type ApplicationDataError = {
+	baseURL: boolean;
+	title: boolean;
+};
+
+type EndpointDataError = {
+	description: boolean;
+	path: boolean;
+	scope: boolean;
+};
+
 type MainEndpointNav = 'list' | {edit: number};
 
 type MainSchemaNav = 'list' | {edit: number};
@@ -213,6 +224,12 @@ interface ObjectDefinition {
 	titleObjectFieldId: number | string;
 	titleObjectFieldName: string;
 }
+
+type SchemaDataError = {
+	description: boolean;
+	mainObjectDefinitionERC: boolean;
+	name: boolean;
+};
 
 interface AddedObjectDefinition extends ObjectDefinition {
 	aggregatedObjectRelationshipNames?: string;

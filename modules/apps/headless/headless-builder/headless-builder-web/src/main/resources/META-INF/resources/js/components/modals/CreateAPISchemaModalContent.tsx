@@ -10,12 +10,6 @@ import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import BaseAPISchemaFields from '../baseComponents/BaseAPISchemaFields';
 
-type DataError = {
-	description: boolean;
-	mainObjectDefinitionERC: boolean;
-	name: boolean;
-};
-
 interface CreateAPISchemaModalProps {
 	apiSchemasURLPath: string;
 	closeModal: voidReturn;
@@ -42,7 +36,7 @@ export function CreateAPISchemaModalContent({
 		mainObjectDefinitionERC: '',
 		name: '',
 	});
-	const [displayError, setDisplayError] = useState<DataError>({
+	const [displayError, setDisplayError] = useState<SchemaDataError>({
 		description: false,
 		mainObjectDefinitionERC: false,
 		name: false,
@@ -110,7 +104,7 @@ export function CreateAPISchemaModalContent({
 				(errors, field) => ({...errors, [field]: true}),
 				{}
 			);
-			setDisplayError(errors as DataError);
+			setDisplayError(errors as SchemaDataError);
 
 			isDataValid = false;
 		}

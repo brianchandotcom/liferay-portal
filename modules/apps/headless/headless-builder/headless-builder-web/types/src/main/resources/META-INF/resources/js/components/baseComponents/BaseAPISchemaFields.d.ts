@@ -4,15 +4,10 @@
  */
 
 import {Dispatch, SetStateAction} from 'react';
-declare type DataError = {
-	description: boolean;
-	mainObjectDefinitionERC: boolean;
-	name: boolean;
-};
 interface BaseAPIApplicationFieldsProps {
 	data: Partial<APISchemaUIData>;
 	disableObjectSelect?: boolean;
-	displayError: DataError;
+	displayError: SchemaDataError;
 	setData: Dispatch<SetStateAction<APISchemaUIData>>;
 }
 export default function BaseAPISchemaFields({

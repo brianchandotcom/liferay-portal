@@ -34,11 +34,6 @@ interface EditAPIApplicationProps {
 	portletId: string;
 }
 
-type DataError = {
-	baseURL: boolean;
-	title: boolean;
-};
-
 export default function EditAPIApplication({
 	apiURLPaths,
 	basePath,
@@ -55,7 +50,7 @@ export default function EditAPIApplication({
 		})
 	);
 
-	const [displayError, setDisplayError] = useState<DataError>({
+	const [displayError, setDisplayError] = useState<ApplicationDataError>({
 		baseURL: false,
 		title: false,
 	});
@@ -306,7 +301,7 @@ export default function EditAPIApplication({
 				(errors, field) => ({...errors, [field]: true}),
 				{}
 			);
-			setDisplayError(errors as DataError);
+			setDisplayError(errors as ApplicationDataError);
 
 			isDataValid = false;
 		}

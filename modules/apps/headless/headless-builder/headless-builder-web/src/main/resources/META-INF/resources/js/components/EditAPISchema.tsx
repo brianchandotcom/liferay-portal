@@ -44,12 +44,6 @@ interface EditAPISchemaProps {
 	setTitle: Dispatch<SetStateAction<string>>;
 }
 
-type DataError = {
-	description: boolean;
-	mainObjectDefinitionERC: boolean;
-	name: boolean;
-};
-
 export default function EditAPISchema({
 	apiURLPaths,
 	currentAPIApplicationId,
@@ -69,7 +63,7 @@ export default function EditAPISchema({
 
 	const [activeTab, setActiveTab] = useState(0);
 
-	const [displayError, setDisplayError] = useState<DataError>({
+	const [displayError, setDisplayError] = useState<SchemaDataError>({
 		description: false,
 		mainObjectDefinitionERC: false,
 		name: false,
@@ -154,7 +148,7 @@ export default function EditAPISchema({
 				(errors, field) => ({...errors, [field]: true}),
 				{}
 			);
-			setDisplayError(errors as DataError);
+			setDisplayError(errors as SchemaDataError);
 
 			isDataValid = false;
 		}

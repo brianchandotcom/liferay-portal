@@ -11,12 +11,6 @@ import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import BaseAPIEndpointFields from '../baseComponents/BaseAPIEndpointFields';
 import {beginStringWithForwardSlash} from '../utils/string';
 
-type DataError = {
-	description: boolean;
-	path: boolean;
-	scope: boolean;
-};
-
 interface CreateAPIEndpointModalProps {
 	apiApplicationBaseURL: string;
 	apiEndpointsURLPath: string;
@@ -47,7 +41,7 @@ export function CreateAPIEndpointModalContent({
 		path: '',
 		scope: {key: '', name: ''},
 	});
-	const [displayError, setDisplayError] = useState<DataError>({
+	const [displayError, setDisplayError] = useState<EndpointDataError>({
 		description: false,
 		path: false,
 		scope: false,
@@ -118,7 +112,7 @@ export function CreateAPIEndpointModalContent({
 				(errors, field) => ({...errors, [field]: true}),
 				{}
 			);
-			setDisplayError(errors as DataError);
+			setDisplayError(errors as EndpointDataError);
 
 			isDataValid = false;
 		}

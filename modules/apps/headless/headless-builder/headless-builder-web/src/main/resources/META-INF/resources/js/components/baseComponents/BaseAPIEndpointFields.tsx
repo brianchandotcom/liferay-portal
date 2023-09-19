@@ -17,17 +17,11 @@ import {
 	removeLeadingForwardSlash,
 } from '../utils/string';
 
-type DataError = {
-	description: boolean;
-	path: boolean;
-	scope: boolean;
-};
-
 interface BaseAPIApplicationFieldsProps {
 	apiApplicationBaseURL: string;
 	basePath: string;
 	data: Partial<APIEndpointUIData>;
-	displayError: DataError;
+	displayError: EndpointDataError;
 	editMode?: boolean;
 	setData: Dispatch<SetStateAction<APIEndpointUIData>>;
 }

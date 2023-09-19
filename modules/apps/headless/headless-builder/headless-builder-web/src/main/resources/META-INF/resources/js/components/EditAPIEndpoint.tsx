@@ -36,12 +36,6 @@ interface EditAPIEndpointProps {
 	setTitle: Dispatch<SetStateAction<string>>;
 }
 
-type DataError = {
-	description: boolean;
-	path: boolean;
-	scope: boolean;
-};
-
 export default function EditAPIEndpoint({
 	apiApplicationBaseURL,
 	apiURLPaths,
@@ -66,7 +60,7 @@ export default function EditAPIEndpoint({
 		path: '',
 		scope: {key: '', name: ''},
 	});
-	const [displayError, setDisplayError] = useState<DataError>({
+	const [displayError, setDisplayError] = useState<EndpointDataError>({
 		description: false,
 		path: false,
 		scope: false,
@@ -111,7 +105,7 @@ export default function EditAPIEndpoint({
 				(errors, field) => ({...errors, [field]: true}),
 				{}
 			);
-			setDisplayError(errors as DataError);
+			setDisplayError(errors as EndpointDataError);
 
 			isDataValid = false;
 		}

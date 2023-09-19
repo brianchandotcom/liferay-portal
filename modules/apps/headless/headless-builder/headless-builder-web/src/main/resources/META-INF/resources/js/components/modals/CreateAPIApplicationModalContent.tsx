@@ -11,11 +11,6 @@ import React, {useEffect, useState} from 'react';
 import BaseAPIApplicationField from '../baseComponents/BaseAPIApplicationFields';
 import {openEditURL} from '../utils/urlUtil';
 
-type DataError = {
-	baseURL: boolean;
-	title: boolean;
-};
-
 interface HandleCreateInModal {
 	apiApplicationsURLPath: string;
 	basePath: string;
@@ -44,7 +39,7 @@ export function CreateAPIApplicationModalContent({
 		description: '',
 		title: '',
 	});
-	const [displayError, setDisplayError] = useState<DataError>({
+	const [displayError, setDisplayError] = useState<ApplicationDataError>({
 		baseURL: false,
 		title: false,
 	});
@@ -109,7 +104,7 @@ export function CreateAPIApplicationModalContent({
 				(errors, field) => ({...errors, [field]: true}),
 				{}
 			);
-			setDisplayError(errors as DataError);
+			setDisplayError(errors as ApplicationDataError);
 
 			isDataValid = false;
 		}

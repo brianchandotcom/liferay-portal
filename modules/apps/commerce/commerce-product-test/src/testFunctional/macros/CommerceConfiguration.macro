@@ -1,5 +1,109 @@
 definition {
 
+	macro addCP {
+		var key_resourceName = ${resourceName};
+
+		if (isSet(modelResource)) {
+			CustomFields.openToAddResourceCustomField(
+				baseURL = ${baseURL},
+				modelResource = ${modelResource});
+		}
+		else {
+			AssertClick(
+				key_resourceName = ${resourceName},
+				locator1 = "CommerceEntry#RESOURCE_TABLE_RESOURCE_NAME",
+				value1 = ${resourceName});
+
+			LexiconEntry.gotoAdd();
+		}
+
+		var key_customFieldType = ${customFieldType};
+
+		Click(locator1 = "CustomFields#CUSTOM_FIELD_TYPE");
+
+		var customFieldKey = StringUtil.lowerCase(${customFieldName});
+
+		PortletEntry.inputName(name = ${customFieldKey});
+
+		if (${customFieldType} == "Input Field") {
+			var key_customInputDataType = ${customInputDataType};
+
+			Select(
+				locator1 = "CustomFields#CUSTOM_INPUT_FIELD_DATA_TYPE",
+				value1 = ${customInputDataType});
+
+			if (isSet(startingValue)) {
+				Type(
+					key_fieldLabel = "Starting Value",
+					locator1 = "CustomFields#CUSTOM_INPUT_FIELD",
+					value1 = ${startingValue});
+			}
+		}
+		else if ((${customFieldType} == "Dropdown") || (${customFieldType} == "Checkbox") || (${customFieldType} == "Radio")) {
+			if (isSet(startingValue)) {
+				PortletEntry.inputTextArea(
+					fieldId = "Value",
+					text = ${startingValue});
+			}
+			else {
+				PortletEntry.inputTextArea(
+					fieldId = "Value",
+					text = ${customFieldType});
+			}
+		}
+
+		if (isSet(nameLocalization)) {
+			if (${nameLocalization} == "false") {
+				Click(locator1 = "CustomFields#CUSTOM_FIELDS_ADVANCED_PROPERTIES");
+
+				WaitForElementPresent(
+					key_toggleSwitchLabel = "Localize Field Name",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+				Uncheck.uncheckToggleSwitch(
+					key_toggleSwitchLabel = "Localize Field Name",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+			else {
+				Click(locator1 = "CustomFields#CUSTOM_FIELDS_ADVANCED_PROPERTIES");
+
+				WaitForElementPresent(
+					key_toggleSwitchLabel = "Localize Field Name",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+				Check.checkToggleSwitch(
+					key_toggleSwitchLabel = "Localize Field Name",
+					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+			}
+		}
+
+		if (isSet(customBooleanDefaultValue)) {
+			Select(
+				locator1 = "CustomFields#CUSTOM_BOOLEAN_DEFAULT_VALUE",
+				value1 = ${customBooleanDefaultValue});
+		}
+
+		if (${localization} == "true") {
+			Check(
+				checkboxName = "Make Field Localizable",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if (${searchable} == "true") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Searchable",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		Button.clickSave();
+
+		var key_customFieldName = ${customFieldName};
+
+		AssertTextEquals(
+			locator1 = "CustomFieldsEditResource#CUSTOM_FIELDS_TABLE_NAME",
+			value1 = ${customFieldName});
+	}
+
 	macro commerceAdminTearDown {
 		var emptyCount = 0;
 
@@ -251,6 +355,36 @@ definition {
 				User.logoutPG();
 			}
 		}
+	}
+
+	macro configureWorkflow {
+		var key_workflowResourceValue = ${workflowResourceValue};
+
+		if (!(IsElementPresent(locator1 = "Pagination#ICON_DISABLED", type = "angle-right")) && (IsElementPresent(locator1 = "Pagination#FIRST_LINK"))) {
+			Pagination.changePagination(itemsPerPage = 40);
+		}
+
+		AssertClick.pauseAssertTextClickAt(
+			key_rowEntry = ${workflowResourceValue},
+			locator1 = "CommerceEntry#EDIT_ROW",
+			value1 = "Edit");
+
+		WaitForElementPresent(
+			key_rowEntry = ${workflowResourceValue},
+			locator1 = "CommerceEntry#RESOURCE_TABLE_SELECT",
+			value1 = ${workflowDefinition});
+
+		Select(
+			key_rowEntry = ${workflowResourceValue},
+			locator1 = "CommerceEntry#RESOURCE_TABLE_SELECT",
+			value1 = ${workflowDefinition});
+
+		AssertClick(
+			key_rowEntry = ${workflowResourceValue},
+			locator1 = "CommerceEntry#RESOURCE_TABLE_SAVE",
+			value1 = "Save");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro setupB2BGuestCheckout {

@@ -31,7 +31,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSite
 				md="6"
 			>
 				<liferay-frontend:fieldset
-					cssClass="p-3"
+					cssClass="c-p-3"
 					label="navigation-menu"
 				>
 					<aui:input id="siteNavigationMenuId" name="preferences--siteNavigationMenuId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>" />
@@ -69,13 +69,13 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSite
 
 					<aui:input checked="<%= siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" cssClass="select-navigation" label="choose-menu" name="selectNavigation" type="radio" value="-1" />
 
-					<div class="mb-2 text-muted">
+					<div class="c-mb-2 text-muted">
 						<span id="<portlet:namespace />navigationMenuName">
 							<c:if test="<%= siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() && (siteNavigationMenu != null) %>">
 								<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuName() %>
 							</c:if>
 						</span>
-						<span class="mt-1 <%= (siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() && (siteNavigationMenu != null)) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />removeSiteNavigationMenu" role="button">
+						<span class="c-mt-1 <%= (siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() && (siteNavigationMenu != null)) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />removeSiteNavigationMenu" role="button">
 							<clay:icon
 								monospaced="<%= true %>"
 								symbol="times-circle"
@@ -85,7 +85,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSite
 
 					<aui:button disabled="<%= !siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" name="chooseSiteNavigationMenu" value="select" />
 
-					<div class="display-template mt-4">
+					<div class="c-mt-4 display-template">
 						<liferay-template:template-selector
 							className="<%= NavItem.class.getName() %>"
 							displayStyle="<%= siteNavigationMenuDisplayContext.getDisplayStyle() %>"
@@ -96,7 +96,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSite
 				</liferay-frontend:fieldset>
 
 				<liferay-frontend:fieldset
-					cssClass="p-3"
+					cssClass="c-p-3"
 					label="menu-items-to-show"
 				>
 					<div id="<portlet:namespace />customDisplayOptions">
@@ -114,7 +114,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSite
 							<clay:col
 								md="3"
 							>
-								<div class="mt-4 pt-1 <%= (rootMenuItemType.equals("parent-at-level") || rootMenuItemType.equals("relative-parent-up-by")) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootMenuItemLevel">
+								<div class="c-mt-4 c-pt-1 <%= (rootMenuItemType.equals("parent-at-level") || rootMenuItemType.equals("relative-parent-up-by")) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootMenuItemLevel">
 									<aui:select label="" name="preferences--rootMenuItemLevel--">
 
 										<%
@@ -136,7 +136,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSite
 							<clay:col
 								md="10"
 							>
-								<div class="mb-3 <%= rootMenuItemType.equals("select") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootMenuItemIdPanel">
+								<div class="c-mb-3 <%= rootMenuItemType.equals("select") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootMenuItemIdPanel">
 									<aui:input id="rootMenuItemId" ignoreRequestValue="<%= true %>" name="preferences--rootMenuItemId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>" />
 
 									<%

@@ -1969,7 +1969,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-190586. Success notification with toast message must be compatible with Go to Page redirect option."
+	@description = "This is a test for LPS-188036. Success notification with toast message must be compatible with Go to Page redirect option."
 	@priority = 4
 	test ViewSuccessNotificationOfGoToPage {
 		task ("Given a page creator has a mapped Form Container on a content page") {
@@ -2031,7 +2031,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-190586. Success notification with toast message must be compatible with Show Embedded Message redirect option.."
+	@description = "This is a test for LPS-188036. Success notification with toast message must be compatible with Show Embedded Message redirect option.."
 	@priority = 4
 	test ViewSuccessNotificationOfShowEmbeddedMessage {
 		task ("Given a page creator has a mapped Form Container on a content page") {
@@ -2087,7 +2087,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-190586. Success notification with toast message must be compatible with Stay in page redirect option."
+	@description = "This is a test for LPS-188036. Success notification with toast message must be compatible with Stay in page redirect option."
 	@priority = 4
 	test ViewSuccessNotificationOfStayInPage {
 		task ("Given a page creator has a mapped Form Container on a content page") {

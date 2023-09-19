@@ -631,7 +631,7 @@ definition {
 			PageEditor.editFormContainer(
 				panel = "General",
 				previewSuccessState = "true",
-				successMessage = "Embedded");
+				successMessage = "Show Embedded Message");
 		}
 
 		task ("Then the page designer can see sucess text under Form Container") {
@@ -678,7 +678,7 @@ definition {
 			PageEditor.editFormContainer(
 				panel = "General",
 				previewSuccessState = "true",
-				successMessage = "Embedded",
+				successMessage = "Show Embedded Message",
 				successText = "We are glad to receive your Form!");
 		}
 
@@ -965,7 +965,7 @@ definition {
 
 			PageEditor.editFormContainer(
 				panel = "General",
-				successMessage = "Embedded",
+				successMessage = "Show Embedded Message",
 				successText = "Estamos muy agradecidos de recibir su formulario.");
 
 			PageEditor.changeLocale(
@@ -974,7 +974,7 @@ definition {
 
 			PageEditor.editFormContainer(
 				panel = "General",
-				successMessage = "Embedded",
+				successMessage = "Show Embedded Message",
 				successText = "Obrigado por nos enviar seu formulario!");
 		}
 
@@ -982,7 +982,7 @@ definition {
 			PageEditor.editFormContainer(
 				panel = "General",
 				previewSuccessState = "true",
-				successMessage = "Embedded");
+				successMessage = "Show Embedded Message");
 
 			AssertTextPresent(value1 = "Obrigado por nos enviar seu formulario!");
 		}

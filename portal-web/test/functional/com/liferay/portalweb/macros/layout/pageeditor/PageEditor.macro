@@ -2879,7 +2879,7 @@ definition {
 
 				PageEditor.waitForAutoSave();
 			}
-			else if (${successMessage} == "Embedded") {
+			else if (${successMessage} == "Show Embedded Message") {
 				Select(
 					key_fieldLabel = "Success Interaction",
 					locator1 = "Select#GENERIC_SELECT_FIELD",

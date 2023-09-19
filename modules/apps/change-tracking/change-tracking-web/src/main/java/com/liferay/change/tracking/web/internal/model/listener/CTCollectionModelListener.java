@@ -40,13 +40,14 @@ public class CTCollectionModelListener extends BaseModelListener<CTCollection> {
 			ctCollectionResource.postCTCollection(
 				new com.liferay.change.tracking.rest.client.dto.v1_0.
 					CTCollection() {
-						{
-							description = ctCollection.getDescription();
-							externalReferenceCode =
-								ctCollection.getExternalReferenceCode();
-							name = ctCollection.getName();
-						}
-					});
+
+					{
+						description = ctCollection.getDescription();
+						externalReferenceCode =
+							ctCollection.getExternalReferenceCode();
+						name = ctCollection.getName();
+					}
+				});
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);
@@ -90,13 +91,14 @@ public class CTCollectionModelListener extends BaseModelListener<CTCollection> {
 				ctCollection.getExternalReferenceCode(),
 				new com.liferay.change.tracking.rest.client.dto.v1_0.
 					CTCollection() {
-						{
-							description = ctCollection.getDescription();
-							externalReferenceCode =
-								ctCollection.getExternalReferenceCode();
-							name = ctCollection.getName();
-						}
-					});
+
+					{
+						description = ctCollection.getDescription();
+						externalReferenceCode =
+							ctCollection.getExternalReferenceCode();
+						name = ctCollection.getName();
+					}
+				});
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

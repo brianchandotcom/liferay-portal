@@ -51,7 +51,9 @@ definition {
 
 			PageEditor.publish();
 
-			PagesFinder.goToPagesFinder();
+			ProductMenuHelper.openProductMenu();
+
+			ProductMenu.gotoHomePage();
 
 			PagesFinder.addPrivatePage(
 				pageName = "Test Private Widget Page",

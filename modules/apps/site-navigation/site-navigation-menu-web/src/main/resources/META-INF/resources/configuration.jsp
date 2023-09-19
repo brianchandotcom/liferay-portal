@@ -11,6 +11,8 @@
 String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType();
 
 SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSiteNavigationMenu();
+
+SiteNavigationMenuConfigurationDisplayContext siteNavigationMenuConfigurationDisplayContext = new SiteNavigationMenuConfigurationDisplayContext(request);
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -48,7 +50,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSite
 						<c:choose>
 							<c:when test="<%= scopeGroup.isPrivateLayoutsEnabled() %>">
 								<c:choose>
-									<c:when test="<%= _hasLayoutPageTemplateEntry(layout) %>">
+									<c:when test="<%= siteNavigationMenuConfigurationDisplayContext.hasLayoutPageTemplateEntry() %>">
 										<c:if test="<%= scopeGroup.hasPublicLayouts() || scopeGroup.hasPrivateLayouts() %>">
 											<aui:option label="pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_DEFAULT %>" value="<%= SiteNavigationConstants.TYPE_DEFAULT %>" />
 										</c:if>
@@ -67,7 +69,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSite
 							<c:otherwise>
 								<c:if test="<%= scopeGroup.hasPublicLayouts() %>">
 									<c:choose>
-										<c:when test="<%= _hasLayoutPageTemplateEntry(layout) %>">
+										<c:when test="<%= siteNavigationMenuConfigurationDisplayContext.hasLayoutPageTemplateEntry() %>">
 											<aui:option label="pages-hierarchy" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_DEFAULT %>" value="<%= SiteNavigationConstants.TYPE_DEFAULT %>" />
 										</c:when>
 										<c:otherwise>
@@ -526,21 +528,3 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationMenuDisplayContext.getSite
 		);
 	}
 </aui:script>
-
-<%!
-private boolean _hasLayoutPageTemplateEntry(Layout layout) {
-	long plid = layout.getPlid();
-
-	if (layout.isDraftLayout()) {
-		plid = layout.getClassPK();
-	}
-
-	LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.fetchLayoutPageTemplateEntryByPlid(plid);
-
-	if (layoutPageTemplateEntry != null) {
-		return true;
-	}
-
-	return false;
-}
-%>

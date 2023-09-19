@@ -298,35 +298,29 @@ public class LayoutLockManagerTest {
 
 	@Test
 	public void testGetLockedLayoutsOrderByUserAscending() throws Exception {
-		List<String> userNames = new ArrayList<>();
+		_assertLockedLayoutsUserNames(
+			_getLockedLayoutsUserNames(
+				list -> Collections.sort(list, String.CASE_INSENSITIVE_ORDER)),
+			_layoutLockManager.getLockedLayouts(
+				TestPropsValues.getCompanyId(), _group.getGroupId(),
+				new LockedLayoutOrder(
+					true, LocaleUtil.getDefault(),
+					LockedLayoutOrder.LockedLayoutOrderType.USER),
+				null));
+	}
 
-		for (int i = 0; i < 5; i++) {
-			Layout draftLayout = _getDraftLayout();
-
-			User user = UserTestUtil.addUser();
-
-			_lockLayout(draftLayout, user);
-
-			userNames.add(user.getFullName());
-		}
-
-		Collections.sort(userNames, String.CASE_INSENSITIVE_ORDER);
-
-		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
-			TestPropsValues.getCompanyId(), _group.getGroupId(),
-			new LockedLayoutOrder(
-				true, LocaleUtil.getDefault(),
-				LockedLayoutOrder.LockedLayoutOrderType.USER),
-			null);
-
-		Assert.assertEquals(
-			lockedLayouts.toString(), userNames.size(), lockedLayouts.size());
-
-		for (int i = 0; i < userNames.size(); i++) {
-			LockedLayout lockedLayout = lockedLayouts.get(i);
-
-			Assert.assertEquals(userNames.get(i), lockedLayout.getUserName());
-		}
+	@Test
+	public void testGetLockedLayoutsOrderByUserDescending() throws Exception {
+		_assertLockedLayoutsUserNames(
+			_getLockedLayoutsUserNames(
+				list -> Collections.sort(
+					list, String.CASE_INSENSITIVE_ORDER.reversed())),
+			_layoutLockManager.getLockedLayouts(
+				TestPropsValues.getCompanyId(), _group.getGroupId(),
+				new LockedLayoutOrder(
+					false, LocaleUtil.getDefault(),
+					LockedLayoutOrder.LockedLayoutOrderType.USER),
+				null));
 	}
 
 	@Test(expected = LockedLayoutException.class)
@@ -460,6 +454,21 @@ public class LayoutLockManagerTest {
 		}
 	}
 
+	private void _assertLockedLayoutsUserNames(
+		List<String> expectedUserNames, List<LockedLayout> lockedLayouts) {
+
+		Assert.assertEquals(
+			lockedLayouts.toString(), expectedUserNames.size(),
+			lockedLayouts.size());
+
+		for (int i = 0; i < expectedUserNames.size(); i++) {
+			LockedLayout lockedLayout = lockedLayouts.get(i);
+
+			Assert.assertEquals(
+				expectedUserNames.get(i), lockedLayout.getUserName());
+		}
+	}
+
 	private Layout _getDraftLayout() throws Exception {
 		return _getDraftLayout(LayoutConstants.TYPE_CONTENT);
 	}
@@ -542,6 +551,28 @@ public class LayoutLockManagerTest {
 		namesOrderUnsafeConsumer.accept(names);
 
 		return names;
+	}
+
+	private List<String> _getLockedLayoutsUserNames(
+			UnsafeConsumer<List<String>, Exception>
+				userNamesOrderUnsafeConsumer)
+		throws Exception {
+
+		List<String> userNames = new ArrayList<>();
+
+		for (int i = 0; i < 5; i++) {
+			Layout draftLayout = _getDraftLayout();
+
+			User user = UserTestUtil.addUser();
+
+			_lockLayout(draftLayout, user);
+
+			userNames.add(user.getFullName());
+		}
+
+		userNamesOrderUnsafeConsumer.accept(userNames);
+
+		return userNames;
 	}
 
 	private void _lockLayout(Layout layout, User user) throws PortalException {

@@ -141,11 +141,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MODIFIED_FACET_SPECIFIC_ORDER</td>
-	<td>//div[contains(@id,'ModifiedFacet')]//li[${resultOrder}]/a</td>
-	<td></td>
-</tr>
-<tr>
 	<td>REINDEX_IN_PROGRESS_INDICATOR</td>
 	<td>//div[contains(.,'The portal is currently reindexing.')]</td>
 	<td></td>

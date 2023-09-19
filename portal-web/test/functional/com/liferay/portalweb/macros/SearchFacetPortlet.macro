@@ -337,38 +337,17 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro viewFacetItemsSpecificOrder {
-		var resultOrder = 0;
+	macro viewFacetTermsSpecificOrder {
+		var termOrder = 0;
 
-		if (${portletName} == "Modified Facet") {
-			for (var facetItem : list ${facetList}) {
-				var resultOrder = ${resultOrder} + 1;
+		for (var termItem : list ${termList}) {
+			var termOrder = ${termOrder} + 1;
 
-				AssertTextEquals.assertPartialText(
-					locator1 = "Search#MODIFIED_FACET_SPECIFIC_ORDER",
-					resultOrder = ${resultOrder},
-					value1 = ${facetItem});
-			}
-		}
-		else if (${portletName} == "Category Facet") {
-			for (var facetItem : list ${facetList}) {
-				var resultOrder = ${resultOrder} + 1;
-
-				AssertTextEquals.assertPartialText(
-					locator1 = "SearchResults#FACET_PORTLET_ITEMS_SPECIFIC_ORDER_VOCABULARY_LAYOUT",
-					resultOrder = ${resultOrder},
-					value1 = ${facetItem});
-			}
-		}
-		else {
-			for (var facetItem : list ${facetList}) {
-				var resultOrder = ${resultOrder} + 1;
-
-				AssertElementPresent(
-					key_facetItem = ${facetItem},
-					key_resultOrder = ${resultOrder},
-					locator1 = "SearchResults#FACET_PORTLET_ITEMS_SPECIFIC_ORDER");
-			}
+			AssertTextEquals.assertPartialText(
+				key_facetName = ${facetName},
+				key_termOrderNumber = ${termOrder},
+				locator1 = "SearchResults#FACET_PORTLET_ITEMS_SPECIFIC_ORDER",
+				value1 = ${termItem});
 		}
 	}
 

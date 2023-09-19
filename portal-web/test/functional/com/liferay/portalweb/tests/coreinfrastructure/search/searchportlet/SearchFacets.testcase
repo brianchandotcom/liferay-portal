@@ -1218,7 +1218,9 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "2022,2021,Engineering,Product");
+		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			facetName = "Category Facet",
+			termList = "2022,2021,Engineering,Product");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "Category Facet",
@@ -1226,7 +1228,9 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Product,Engineering,2021,2022");
+		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			facetName = "Category Facet",
+			termList = "Product,Engineering,2021,2022");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "Category Facet",
@@ -1234,7 +1238,9 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "2021,2022,Engineering,Product");
+		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			facetName = "Category Facet",
+			termList = "2021,2022,Engineering,Product");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "Category Facet",
@@ -1242,7 +1248,9 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Product,Engineering,2022,2021");
+		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			facetName = "Category Facet",
+			termList = "Product,Engineering,2022,2021");
 	}
 
 	@priority = 3
@@ -1279,7 +1287,9 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "png,doc,jpg,mp3");
+		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			facetName = "Custom Facet",
+			termList = "png,doc,jpg,mp3");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "Custom Facet",
@@ -1287,7 +1297,9 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "doc,jpg,mp3,png");
+		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			facetName = "Custom Facet",
+			termList = "doc,jpg,mp3,png");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "Custom Facet",
@@ -1295,7 +1307,9 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "doc,jpg,mp3,png");
+		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			facetName = "Custom Facet",
+			termList = "doc,jpg,mp3,png");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "Custom Facet",
@@ -1303,7 +1317,9 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "png,mp3,jpg,doc");
+		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			facetName = "Custom Facet",
+			termList = "png,mp3,jpg,doc");
 	}
 
 	@priority = 3
@@ -1349,7 +1365,9 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
 		task ("Assert that the Folder facet sorts by term frequency descending by default") {
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "2022,2021,Engineering,Product");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Folder Facet",
+				termList = "2022,2021,Engineering,Product");
 		}
 
 		task ("Assert that the Folder facet values are correct when sorted by term frequency ascending") {
@@ -1359,7 +1377,9 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Product,Engineering,2021,2022");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Folder Facet",
+				termList = "Product,Engineering,2021,2022");
 		}
 
 		task ("Assert that the Folder facet values are correct when sorted by term value ascending") {
@@ -1369,7 +1389,9 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "2021,2022,Engineering,Product");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Folder Facet",
+				termList = "2021,2022,Engineering,Product");
 		}
 
 		task ("Assert that the Folder facet values are correct when sorted by term value descending") {
@@ -1379,7 +1401,9 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Product,Engineering,2022,2021");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Folder Facet",
+				termList = "Product,Engineering,2022,2021");
 		}
 	}
 
@@ -1414,9 +1438,9 @@ definition {
 		}
 
 		task ("Assert the order of modified facet by Ranges Configuration by default") {
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(
-				facetList = "Past Hour,Past 23 Hours,Past 24 Hours,Past Week,Past Month,Past Year,Custom Range…",
-				portletName = "Modified Facet");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Modified Facet",
+				termList = "Past Hour,Past 23 Hours,Past 24 Hours,Past Week,Past Month,Past Year,Custom Range…");
 		}
 
 		task ("Assert the order of modified facet by Term Frequency Descending") {
@@ -1426,9 +1450,9 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(
-				facetList = "Past 24 Hours,Past Hour,Past Month,Past Week,Past Year,Past 23 Hours,Custom Range…",
-				portletName = "Modified Facet");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Modified Facet",
+				termList = "Past 24 Hours,Past Hour,Past Month,Past Week,Past Year,Past 23 Hours,Custom Range…");
 		}
 
 		task ("Assert the order of modified facet by Term Frequency Ascending") {
@@ -1438,9 +1462,9 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(
-				facetList = "Past 23 Hours,Past 24 Hours,Past Hour,Past Month,Past Week,Past Year,Custom Range…",
-				portletName = "Modified Facet");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Modified Facet",
+				termList = "Past 23 Hours,Past 24 Hours,Past Hour,Past Month,Past Week,Past Year,Custom Range…");
 		}
 	}
 
@@ -1487,7 +1511,9 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "web content");
 
 		task ("Assert the order of site facet by term frequency descending by default") {
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Engineering,Community,Product,Sales");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Site Facet",
+				termList = "Engineering,Community,Product,Sales");
 		}
 
 		task ("Assert the order of site facet by Frequency term ascending") {
@@ -1497,7 +1523,9 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Sales,Product,Community,Engineering");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Site Facet",
+				termList = "Sales,Product,Community,Engineering");
 		}
 
 		task ("Assert the order of site facet by Term value ascending") {
@@ -1507,7 +1535,9 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Community,Engineering,Product,Sales");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Site Facet",
+				termList = "Community,Engineering,Product,Sales");
 		}
 
 		task ("Assert the order of site facet by Term value descending") {
@@ -1517,7 +1547,9 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Sales,Product,Engineering,Community");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Site Facet",
+				termList = "Sales,Product,Engineering,Community");
 		}
 	}
 
@@ -1552,7 +1584,9 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
 		task ("Assert the order of tag facet by term frequency descending by default") {
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "2022,2021,engineering,product");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Tag Facet",
+				termList = "2022,2021,engineering,product");
 		}
 
 		task ("Assert the order of tag facet by Frequency term ascending") {
@@ -1562,7 +1596,9 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "product,engineering,2021,2022");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Tag Facet",
+				termList = "product,engineering,2021,2022");
 		}
 
 		task ("Assert the order of tag facet by Term value ascending") {
@@ -1572,7 +1608,9 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "2021,2022,engineering,product");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Tag Facet",
+				termList = "2021,2022,engineering,product");
 		}
 
 		task ("Assert the order of tag facet by Term value descending") {
@@ -1582,7 +1620,9 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "product,engineering,2022,2021");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Tag Facet",
+				termList = "product,engineering,2022,2021");
 		}
 	}
 
@@ -1617,7 +1657,9 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
 		task ("Assert that the Type facet sorts by term frequency descending by default") {
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Web Content Article,Page,Document,User");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Type Facet",
+				termList = "Web Content Article,Page,Document,User");
 		}
 
 		task ("Assert that the Type facet values are correct when sorted by term frequency ascending") {
@@ -1627,7 +1669,9 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "User,Document,Page,Web Content Article");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Type Facet",
+				termList = "User,Document,Page,Web Content Article");
 		}
 
 		task ("Assert that the Type facet values are correct when sorted by term value ascending") {
@@ -1637,7 +1681,9 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Document,Page,User,Web Content Article");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Type Facet",
+				termList = "Document,Page,User,Web Content Article");
 		}
 
 		task ("Assert that the Type facet values are correct when sorted by term value descending") {
@@ -1647,7 +1693,9 @@ definition {
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Web Content Article,User,Page,Document");
+			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+				facetName = "Type Facet",
+				termList = "Web Content Article,User,Page,Document");
 		}
 	}
 
@@ -1706,7 +1754,9 @@ definition {
 
 		Search.openSearchPage(searchTerm = "test");
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Test Test,john adams,carter braxton,jonathan franklin");
+		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			facetName = "User Facet",
+			termList = "Test Test,john adams,carter braxton,jonathan franklin");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "User Facet",
@@ -1714,7 +1764,9 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "jonathan franklin,carter braxton,john adams,Test Test");
+		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			facetName = "User Facet",
+			termList = "jonathan franklin,carter braxton,john adams,Test Test");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "User Facet",
@@ -1722,7 +1774,9 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "Test Test,carter braxton,john adams,jonathan franklin");
+		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			facetName = "User Facet",
+			termList = "Test Test,carter braxton,john adams,jonathan franklin");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			portletName = "User Facet",
@@ -1730,7 +1784,9 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetItemsSpecificOrder(facetList = "jonathan franklin,john adams,carter braxton,Test Test");
+		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			facetName = "User Facet",
+			termList = "jonathan franklin,john adams,carter braxton,Test Test");
 	}
 
 	@description = "This is a use case for LPS-194520."

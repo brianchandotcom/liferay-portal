@@ -6,7 +6,8 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.util.Locale;
 
 /**
  * @author Jaime León Rosado
@@ -15,45 +16,39 @@ public class DLCopyValidationUtil {
 
 	public static String getCopyToValidationMessage(
 		long companyMaxSizeToCopy, long groupMaxSizeToCopy,
-		long systemMaxSizeToCopy, long size) {
+		long systemMaxSizeToCopy, long size, Locale locale) {
 
 		if ((size > groupMaxSizeToCopy) && (groupMaxSizeToCopy != 0)) {
 			String messagePrefix = LanguageUtil.get(
-				LocaleUtil.getDefault(),
+				locale,
 				"file-cannot-be-copied-because-it-exceeds-the-limit-defined-" +
 					"in-site-settings");
 			String messageSuffix = LanguageUtil.format(
-				LocaleUtil.getDefault(),
-				"the-total-number-of-files-must-not-exceed-x",
-				LanguageUtil.formatStorageSize(
-					groupMaxSizeToCopy, LocaleUtil.getDefault()));
+				locale, "the-total-number-of-files-must-not-exceed-x",
+				LanguageUtil.formatStorageSize(groupMaxSizeToCopy, locale));
 
 			return messagePrefix + " " + messageSuffix;
 		}
 
 		if ((size > companyMaxSizeToCopy) && (companyMaxSizeToCopy != 0)) {
 			String messagePrefix = LanguageUtil.get(
-				LocaleUtil.getDefault(),
+				locale,
 				"file-cannot-be-copied-because-it-exceeds-the-limit-defined-" +
 					"in-instance-settings");
 			String messageSuffix = LanguageUtil.format(
-				LocaleUtil.getDefault(),
-				"the-total-number-of-files-must-not-exceed-x",
-				LanguageUtil.formatStorageSize(
-					companyMaxSizeToCopy, LocaleUtil.getDefault()));
+				locale, "the-total-number-of-files-must-not-exceed-x",
+				LanguageUtil.formatStorageSize(companyMaxSizeToCopy, locale));
 
 			return messagePrefix + " " + messageSuffix;
 		}
 
 		String messagePrefix = LanguageUtil.get(
-			LocaleUtil.getDefault(),
+			locale,
 			"file-cannot-be-copied-because-it-exceeds-the-limit-defined-in-" +
 				"system-settings");
 		String messageSuffix = LanguageUtil.format(
-			LocaleUtil.getDefault(),
-			"the-total-number-of-files-must-not-exceed-x",
-			LanguageUtil.formatStorageSize(
-				systemMaxSizeToCopy, LocaleUtil.getDefault()));
+			locale, "the-total-number-of-files-must-not-exceed-x",
+			LanguageUtil.formatStorageSize(systemMaxSizeToCopy, locale));
 
 		return messagePrefix + " " + messageSuffix;
 	}

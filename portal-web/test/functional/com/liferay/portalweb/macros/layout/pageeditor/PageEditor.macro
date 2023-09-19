@@ -2960,7 +2960,7 @@ definition {
 
 				PageEditor.waitForAutoSave();
 			}
-			else if (${successMessage} == "External URL") {
+			else if (${successMessage} == "Go to External URL") {
 				Select(
 					key_fieldLabel = "Success Interaction",
 					locator1 = "Select#GENERIC_SELECT_FIELD",

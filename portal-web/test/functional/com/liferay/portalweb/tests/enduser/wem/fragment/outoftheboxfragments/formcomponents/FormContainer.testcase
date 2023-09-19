@@ -741,7 +741,7 @@ definition {
 				PageEditor.editFormContainer(
 					contentType = "Purchase Order",
 					panel = "General",
-					successMessage = "External URL",
+					successMessage = "Go to External URL",
 					url = "https://www.liferay.com");
 
 				PageEditor.publish();

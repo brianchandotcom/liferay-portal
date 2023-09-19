@@ -26,8 +26,6 @@ definition {
 
 		Portlet.startServer(keepOsGiState = "true");
 
-		AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
-
 		Navigator.openSpecificURL(url = "http://localhost:8080");
 
 		User.firstLoginUI(
@@ -107,8 +105,6 @@ definition {
 		AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
 
 		Portlet.startServer(keepOsGiState = "true");
-
-		AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
 
 		Navigator.openSpecificURL(url = "http://localhost:8080");
 

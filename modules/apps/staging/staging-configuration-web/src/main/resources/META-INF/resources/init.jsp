@@ -65,7 +65,6 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.util.comparator.PortletTitleComparator" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.site.display.context.GroupDisplayContextHelper" %><%@
-page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %><%@
 page import="com.liferay.trash.service.TrashEntryLocalServiceUtil" %>
 
 <%@ page import="java.util.HashSet" %><%@

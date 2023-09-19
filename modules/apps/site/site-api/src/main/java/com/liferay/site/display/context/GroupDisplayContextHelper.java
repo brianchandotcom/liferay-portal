@@ -6,13 +6,18 @@
 package com.liferay.site.display.context;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
+
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,6 +28,19 @@ public class GroupDisplayContextHelper {
 
 	public GroupDisplayContextHelper(HttpServletRequest httpServletRequest) {
 		_httpServletRequest = httpServletRequest;
+	}
+
+	public List<BreadcrumbEntry> getBreadcrumbEntries() {
+		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		breadcrumbEntry.setTitle(
+			LanguageUtil.get(themeDisplay.getLocale(), "staging"));
+
+		return Collections.singletonList(breadcrumbEntry);
 	}
 
 	public Group getGroup() {

@@ -41,7 +41,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 			cssClass="main-content-body mt-4"
 		>
 			<liferay-site-navigation:breadcrumb
-				breadcrumbEntries="<%= BreadcrumbEntriesUtil.getBreadcrumbEntries(request, true, false, false, true, true) %>"
+				breadcrumbEntries="<%= groupDisplayContextHelper.getBreadcrumbEntries() %>"
 			/>
 
 			<clay:sheet

@@ -9,8 +9,6 @@ import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useLayoutEffect, useRef, useState} from 'react';
 
-import {getNumberOfDecimals} from '../../utilities/quantities';
-
 export default function RulesPopover({
 	alignment,
 	errors,
@@ -18,6 +16,7 @@ export default function RulesPopover({
 	max,
 	min,
 	multiple,
+	precision,
 }) {
 	const popoverRef = useRef();
 	const [popoverPosition, setPopoverPosition] = useState({});
@@ -85,7 +84,7 @@ export default function RulesPopover({
 									Liferay.Language.get(
 										'quantity-allows-for-x-decimal-places'
 									),
-									`<b>${getNumberOfDecimals(multiple)}</b>`
+									`<b>${precision}</b>`
 								),
 							}}
 						/>

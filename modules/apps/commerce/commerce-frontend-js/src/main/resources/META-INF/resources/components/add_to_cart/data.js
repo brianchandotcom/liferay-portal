@@ -107,7 +107,7 @@ export async function addToCart(
 
 		if (includedCartItem) {
 			includedCartItem.quantity = Number(
-				(includedCartItem.quantity + cpInstance.quantity).toFixed(
+				Number(includedCartItem.quantity + cpInstance.quantity).toFixed(
 					cpInstance.skuUnitOfMeasure?.precision || 0
 				)
 			);

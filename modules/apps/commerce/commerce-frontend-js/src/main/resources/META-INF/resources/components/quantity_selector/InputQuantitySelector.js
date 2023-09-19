@@ -226,7 +226,7 @@ const InputQuantitySelector = forwardRef(
 
 						setInputProperties((inputProperties) => ({
 							...inputProperties,
-							quantity: numValue,
+							quantity: target.value,
 						}));
 
 						onUpdate({
@@ -252,6 +252,10 @@ const InputQuantitySelector = forwardRef(
 							max={max || ''}
 							min={min}
 							multiple={inputProperties.step}
+							precision={
+								inputProperties.currentUnitOfMeasure
+									?.precision || 0
+							}
 						/>
 					)}
 			</ClayForm.Group>

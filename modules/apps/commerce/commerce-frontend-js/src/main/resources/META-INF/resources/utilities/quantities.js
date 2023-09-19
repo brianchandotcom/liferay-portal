@@ -18,7 +18,9 @@ export function getMinQuantity(
 		return multipleQuantity.toFixed(precision);
 	}
 
-	return (minQuantity + multipleQuantity - minDifference).toFixed(precision);
+	return Number(minQuantity + multipleQuantity - minDifference).toFixed(
+		precision
+	);
 }
 
 export function getProductMaxQuantity(
@@ -36,7 +38,7 @@ export function getProductMaxQuantity(
 		return maxQuantity.toFixed(precision);
 	}
 
-	return (maxQuantity - maxDifference).toFixed(precision);
+	return Number(maxQuantity - maxDifference).toFixed(precision);
 }
 
 export function getProductMinQuantity({

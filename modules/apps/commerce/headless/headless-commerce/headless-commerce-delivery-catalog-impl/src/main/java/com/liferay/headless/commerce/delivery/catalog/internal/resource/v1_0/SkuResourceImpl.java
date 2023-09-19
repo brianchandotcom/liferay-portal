@@ -14,10 +14,12 @@ import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.exception.NoSuchCProductException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.permission.CommerceProductViewPermission;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.util.CommerceAccountHelper;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -98,8 +101,9 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			new SkuDTOConverterContext(
 				commerceContext, contextCompany.getCompanyId(), cpDefinition,
 				contextAcceptLanguage.getPreferredLocale(), BigDecimal.ONE,
-				cpInstance.getCPInstanceId(), StringPool.BLANK, contextUriInfo,
-				contextUser));
+				cpInstance.getCPInstanceId(),
+				_getDefaultUnitOfMeasureKey(cpInstance.getCPInstanceId()),
+				contextUriInfo, contextUser));
 	}
 
 	@NestedField(parentClass = Product.class, value = "skus")
@@ -211,6 +215,11 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			throw new NoSuchCPInstanceException();
 		}
 
+		if (Validator.isNull(skuUnitOfMeasureKey)) {
+			skuUnitOfMeasureKey = _getDefaultUnitOfMeasureKey(
+				cpInstance.getCPInstanceId());
+		}
+
 		return _skuDTOConverter.toDTO(
 			new SkuDTOConverterContext(
 				commerceContext, contextCompany.getCompanyId(), cpDefinition,
@@ -255,6 +264,21 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			contextUser.getUserId(), 0, commerceAccountIds[0]);
 	}
 
+	private String _getDefaultUnitOfMeasureKey(long cpInstanceId) {
+		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+			_cpInstanceUnitOfMeasureLocalService.
+				getActiveCPInstanceUnitOfMeasures(cpInstanceId);
+
+		if (cpInstanceUnitOfMeasures.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+			cpInstanceUnitOfMeasures.get(0);
+
+		return cpInstanceUnitOfMeasure.getKey();
+	}
+
 	private List<Sku> _toSKUs(
 			Long channelId, Long accountId, List<CPInstance> cpInstances,
 			CPDefinition cpDefinition)
@@ -273,7 +297,9 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 						contextCompany.getCompanyId(), cpDefinition,
 						contextAcceptLanguage.getPreferredLocale(),
 						BigDecimal.ONE, cpInstance.getCPInstanceId(),
-						StringPool.BLANK, contextUriInfo, contextUser)));
+						_getDefaultUnitOfMeasureKey(
+							cpInstance.getCPInstanceId()),
+						contextUriInfo, contextUser)));
 		}
 
 		return skus;
@@ -302,6 +328,10 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

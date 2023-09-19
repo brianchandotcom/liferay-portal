@@ -12,6 +12,7 @@
 	CPCatalogEntry="<%= cpCatalogEntry %>"
 	inline="<%= inline %>"
 	namespace="<%= namespace %>"
+	showUnitOfMeasureSelector="<%= true %>"
 	size="<%= size %>"
 	skuOptions="[]"
 />

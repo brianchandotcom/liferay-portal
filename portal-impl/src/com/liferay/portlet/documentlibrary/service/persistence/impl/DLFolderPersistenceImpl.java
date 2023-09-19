@@ -15615,7 +15615,7 @@ public class DLFolderPersistenceImpl
 		ctStrictColumnNames.add("mountPoint");
 		ctStrictColumnNames.add("parentFolderId");
 		ctStrictColumnNames.add("treePath");
-		ctStrictColumnNames.add("name");
+		ctMergeColumnNames.add("name");
 		ctMergeColumnNames.add("description");
 		ctMaxColumnNames.add("lastPostDate");
 		ctStrictColumnNames.add("defaultFileEntryTypeId");

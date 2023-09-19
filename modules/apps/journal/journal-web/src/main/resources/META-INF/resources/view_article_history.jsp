@@ -18,6 +18,7 @@ JournalHistoryManagementToolbarDisplayContext journalHistoryManagementToolbarDis
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(journalHistoryDisplayContext.getBackURL());
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(article.getTitle(locale));
 %>

@@ -5,8 +5,8 @@
 
 /// <reference types="react" />
 
-import {FDSViewType} from '../FDSViews';
-import {IFDSAction} from '../fds_view/Actions';
+import {FDSViewType} from '../../FDSViews';
+import {IFDSAction} from '../Actions';
 interface IFDSItemActionFormProps {
 	editing?: boolean;
 	fdsView: FDSViewType;

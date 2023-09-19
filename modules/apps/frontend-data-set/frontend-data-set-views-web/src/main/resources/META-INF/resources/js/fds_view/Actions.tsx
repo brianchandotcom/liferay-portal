@@ -12,10 +12,10 @@ import React, {useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
 import {IFDSViewSectionInterface} from '../FDSView';
-import ItemActionForm from '../actions/ItemActionForm';
 import OrderableTable from '../components/OrderableTable';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
+import ItemActionForm from './actions/ItemActionForm';
 
 const SECTIONS = {
 	ACTIONS: 'actions',

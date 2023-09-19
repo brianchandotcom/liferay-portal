@@ -12,12 +12,12 @@ import {InputLocalized} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
-import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
-import {FDSViewType} from '../FDSViews';
-import RequiredMark from '../components/RequiredMark';
-import {IFDSAction} from '../fds_view/Actions';
-import openDefaultFailureToast from '../utils/openDefaultFailureToast';
-import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
+import {API_URL, OBJECT_RELATIONSHIP} from '../../Constants';
+import {FDSViewType} from '../../FDSViews';
+import RequiredMark from '../../components/RequiredMark';
+import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
+import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
+import {IFDSAction} from '../Actions';
 
 const MESSAGE_TYPES = [
 	{

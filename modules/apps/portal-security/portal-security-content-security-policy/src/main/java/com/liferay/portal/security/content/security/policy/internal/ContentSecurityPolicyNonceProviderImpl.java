@@ -6,7 +6,6 @@
 package com.liferay.portal.security.content.security.policy.internal;
 
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProvider;
-import com.liferay.portal.security.content.security.policy.internal.ContentSecurityPolicyNonceManager;
 
 import javax.servlet.http.HttpServletRequest;
 

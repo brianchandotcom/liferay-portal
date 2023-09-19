@@ -15,9 +15,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.ActionRequest;
 
 /**
  * @author Roberto Díaz
@@ -55,6 +58,16 @@ public class UserUserNotificationEventBulkSelection
 							userNotificationEvents) {
 
 						unsafeConsumer.accept(userNotificationEvent);
+					}
+
+					String actionName = MapUtil.getString(
+						getParameterMap(), ActionRequest.ACTION_NAME);
+
+					if (!actionName.equals("deleteNotifications") &&
+						!actionName.equals("deleteUserNotificationEvent")) {
+
+						userNotificationEventIntervalActionProcessor.
+							incrementStart(userNotificationEvents.size());
 					}
 
 					return null;

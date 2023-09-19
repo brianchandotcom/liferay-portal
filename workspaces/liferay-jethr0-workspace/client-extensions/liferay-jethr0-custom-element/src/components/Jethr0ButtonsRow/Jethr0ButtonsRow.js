@@ -27,9 +27,7 @@ function Jethr0ButtonsRow({buttons}) {
 					>
 						<ClayButton
 							displayType={displayType}
-							onClick={() => {
-								button.onClick();
-							}}
+							onClick={button.onClick}
 						>
 							{button.title}
 						</ClayButton>

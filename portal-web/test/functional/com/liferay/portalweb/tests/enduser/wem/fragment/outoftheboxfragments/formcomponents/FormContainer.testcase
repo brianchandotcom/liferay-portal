@@ -1969,6 +1969,62 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-190586. Success notification with toast message must be compatible with Show Embedded Message redirect option.."
+	@priority = 4
+	test ViewSuccessNotificationOfShowEmbeddedMessage {
+		task ("Given a page creator has a mapped Form Container on a content page") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Name",
+				fieldName = "name",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "PurchaseOrder");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+		}
+
+		task ("When the page creator defines the success notification of Show Embedded Message") {
+			PageEditor.editFormContainer(
+				panel = "General",
+				showNotificationWhenFormIsSubmitted = "true",
+				successNotificationText = "Your form was successfully submitted.");
+
+			PageEditor.publish();
+		}
+
+		task ("Then the page creator could see success notification on redirection page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			InputField.editText(
+				fieldLabel = "Name",
+				text = "Jack");
+
+			Button.clickSubmitButton();
+
+			Alert.viewSuccessMessageText(successMessage = "Your form was successfully submitted.");
+
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+		}
+	}
+
 	@description = "This is a test for LPS-190586. Success notification with toast message must be compatible with Stay in page redirect option."
 	@priority = 4
 	test ViewSuccessNotificationOfStayInPage {

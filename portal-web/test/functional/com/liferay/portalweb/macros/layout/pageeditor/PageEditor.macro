@@ -2909,7 +2909,7 @@ definition {
 
 				PageEditor.waitForAutoSave();
 			}
-			else if (${successMessage} == "Page") {
+			else if (${successMessage} == "Go to Page") {
 				Select(
 					key_fieldLabel = "Success Interaction",
 					locator1 = "Select#GENERIC_SELECT_FIELD",

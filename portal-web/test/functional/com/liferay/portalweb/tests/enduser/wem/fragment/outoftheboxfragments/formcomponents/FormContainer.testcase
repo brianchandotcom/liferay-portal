@@ -814,7 +814,7 @@ definition {
 					contentType = "Purchase Order",
 					pageName = "Thank you page",
 					panel = "General",
-					successMessage = "Page");
+					successMessage = "Go to Page");
 
 				PageEditor.viewItemSelectorText(
 					fieldLabel = "Page",
@@ -882,7 +882,7 @@ definition {
 				pageName = "Home",
 				panel = "General",
 				siteName = ${siteName},
-				successMessage = "Page");
+				successMessage = "Go to Page");
 
 			PageEditor.viewItemSelectorText(
 				fieldLabel = "Page",

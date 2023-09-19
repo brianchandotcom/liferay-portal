@@ -1039,7 +1039,8 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				ObjectFieldConstants.DB_TYPE_STRING, false, true, "",
-				LocalizedMapUtil.getLocalizedMap("Able"), "able", false, false,
+				LocalizedMapUtil.getLocalizedMap("Able"), "able",
+				ObjectFieldConstants.READ_ONLY_FALSE, null, false, false,
 				null));
 		AssertUtils.assertFailure(
 			ObjectFieldNameException.MustNotBeNull.class, "Name is null",

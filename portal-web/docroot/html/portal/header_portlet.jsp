@@ -52,7 +52,7 @@ boolean modePrint = layoutTypePortlet.hasModePrintPortletId(portletId);
 
 PortletPreferences portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, portletId));
 
-PortletPreferences portletSetup = themeDisplay.getStrictLayoutPortletSetup(layout, portletId);
+PortletPreferences portletPreferences = themeDisplay.getStrictLayoutPortletSetup(layout, portletId);
 
 Group group = null;
 
@@ -153,7 +153,7 @@ if (Validator.isNotNull(portletResource)) {
 boolean supportsMimeType = portlet.hasPortletMode(responseContentType, portletMode);
 
 if (responseContentType.equals(ContentTypes.XHTML_MP) && portlet.hasMultipleMimeTypes()) {
-	supportsMimeType = GetterUtil.getBoolean(portletSetup.getValue("portletSetupSupportedClientsMobileDevices_" + portletMode, String.valueOf(supportsMimeType)));
+	supportsMimeType = GetterUtil.getBoolean(portletPreferences.getValue("portletSetupSupportedClientsMobileDevices_" + portletMode, String.valueOf(supportsMimeType)));
 }
 
 if (Validator.isNotNull(portletResource)) {
@@ -203,7 +203,7 @@ portletDisplay.setStateMax(stateMax);
 portletDisplay.setStateMin(stateMin);
 portletDisplay.setStateNormal(windowState.equals(WindowState.NORMAL));
 portletDisplay.setStatePopUp(themeDisplay.isStatePopUp());
-portletDisplay.setPortletSetup(portletSetup);
+portletDisplay.setPortletSetup(portletPreferences);
 portletDisplay.setWebDAVEnabled(portlet.getWebDAVStorageInstance() != null);
 %>
 

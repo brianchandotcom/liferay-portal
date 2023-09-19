@@ -6,7 +6,7 @@
 --%>
 
 <%
-JSONObject jsonObject = PortletSetupUtil.cssToJSONObject(portletSetup, portletSetupCss);
+JSONObject jsonObject = PortletSetupUtil.cssToJSONObject(portletPreferences, portletSetupCss);
 
 List<String> finalCSS = new ArrayList<>();
 

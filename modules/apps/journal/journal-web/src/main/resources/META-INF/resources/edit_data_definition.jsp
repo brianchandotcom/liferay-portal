@@ -18,6 +18,7 @@ long groupId = BeanParamUtil.getLong(ddmStructure, request, "groupId", scopeGrou
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle((ddmStructure != null) ? LanguageUtil.format(request, "edit-x", ddmStructure.getName(locale), false) : LanguageUtil.get(request, "new-structure"));
 

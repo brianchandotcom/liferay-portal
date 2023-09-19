@@ -200,6 +200,8 @@ definition {
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "Edit",
 				pageName = "Test Page Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
 		}
 
 		task ("When the page creator opens the Product Menu") {

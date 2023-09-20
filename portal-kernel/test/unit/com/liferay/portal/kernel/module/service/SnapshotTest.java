@@ -9,9 +9,9 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Dictionary;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -42,7 +42,7 @@ public class SnapshotTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			CodeCoverageAssertor.INSTANCE, LiferayUnitTestRule.INSTANCE);
+			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -226,8 +226,9 @@ public class SnapshotTest {
 				InvalidSyntaxException.class, exception.getClass());
 
 			Assert.assertEquals(
-				"Missing closing parenthesis: (&(objectClass=com.liferay." +
-					"osgi.util.service.SnapshotTest$TestService)(name=test)",
+				"Missing closing parenthesis: (&(objectClass=" +
+					"com.liferay.portal.kernel.module.service.SnapshotTest" +
+						"$TestService)(name=test)",
 				exception.getMessage());
 		}
 

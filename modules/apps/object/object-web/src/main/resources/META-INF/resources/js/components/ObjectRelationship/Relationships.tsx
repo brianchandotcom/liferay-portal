@@ -225,7 +225,7 @@ export default function Relationships({
 					objectDefinitionExternalReferenceCode={
 						objectDefinitionExternalReferenceCode
 					}
-					parameterRequired={parameterRequired}
+					objectRelationshipParameterRequired={parameterRequired}
 				/>
 			)}
 

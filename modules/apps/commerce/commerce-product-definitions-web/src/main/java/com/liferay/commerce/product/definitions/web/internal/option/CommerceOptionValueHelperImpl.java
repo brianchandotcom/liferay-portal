@@ -127,6 +127,9 @@ public class CommerceOptionValueHelperImpl
 						commerceOptionValueBuilder.price(
 							cpDefinitionOptionValueRelCPInstance.getPrice());
 					}
+
+					commerceOptionValueBuilder.unitOfMeasureKey(
+						cpDefinitionOptionValueRel.getUnitOfMeasureKey());
 				}
 
 				commerceOptionValues.add(commerceOptionValueBuilder.build());
@@ -250,6 +253,9 @@ public class CommerceOptionValueHelperImpl
 							cpDefinitionOptionValueRelCPInstance.
 								getCPInstanceId());
 
+						commerceOptionValueBuilder.unitOfMeasureKey(
+							cpDefinitionOptionValueRel.getUnitOfMeasureKey());
+
 						if (!cpDefinitionOptionRel.isPriceTypeDynamic()) {
 							continue;
 						}
@@ -321,6 +327,11 @@ public class CommerceOptionValueHelperImpl
 		if (jsonObject.has("cpInstanceId")) {
 			commerceOptionValueBuilder.cpInstanceId(
 				jsonObject.getLong("cpInstanceId"));
+		}
+
+		if (jsonObject.has("unitOfMeasureKey")) {
+			commerceOptionValueBuilder.unitOfMeasureKey(
+				jsonObject.getString("unitOfMeasureKey"));
 		}
 
 		return commerceOptionValueBuilder.build();

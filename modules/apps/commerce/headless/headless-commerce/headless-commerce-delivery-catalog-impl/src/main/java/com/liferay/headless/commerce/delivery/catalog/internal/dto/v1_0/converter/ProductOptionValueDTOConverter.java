@@ -88,6 +88,8 @@ public class ProductOptionValueDTOConverter
 
 				skuId =
 					(cpInstance == null) ? null : cpInstance.getCPInstanceId();
+				unitOfMeasureKey =
+					cpDefinitionOptionValueRel.getUnitOfMeasureKey();
 
 				setRelativePriceFormatted(
 					() -> {

@@ -61,7 +61,6 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -188,22 +187,21 @@ public class CommerceOrderItemLocalServiceImpl
 				commerceOptionValue.getQuantity());
 
 			currentQuantity = currentQuantity.divide(
-				unitOfMeasureIncrementalOrderQuantity,
-				unitOfMeasureIncrementalOrderQuantity.scale(),
-				RoundingMode.HALF_UP);
+				unitOfMeasureIncrementalOrderQuantity, RoundingMode.HALF_UP);
 
 			commerceProductPrice = _getCommerceProductPrice(
 				commerceOptionValueCPInstance.getCPDefinitionId(),
 				commerceOptionValueCPInstance.getCPInstanceId(),
-				commerceOptionValue.toJSON(), currentQuantity, StringPool.BLANK,
-				commerceContext);
+				commerceOptionValue.toJSON(), currentQuantity,
+				commerceOptionValue.getUnitOfMeasureKey(), commerceContext);
 
 			CommerceOrderItem childCommerceOrderItem = _createCommerceOrderItem(
 				commerceOrder.getGroupId(), user, commerceOrder,
 				commerceProductPrice, commerceOptionValueCPInstance,
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceOptionValue.toJSON(), currentQuantity, BigDecimal.ZERO,
-				BigDecimal.ZERO, StringPool.BLANK, serviceContext);
+				BigDecimal.ZERO, commerceOptionValue.getUnitOfMeasureKey(),
+				serviceContext);
 
 			if (!_isStaticPriceType(commerceOptionValue.getPriceType())) {
 				childCommerceOrderItem = commerceOrderItemPersistence.update(
@@ -217,7 +215,7 @@ public class CommerceOrderItemLocalServiceImpl
 				commerceContext.getCommerceCurrency(),
 				childCommerceOrderItem.getCommerceOrder(), currentQuantity,
 				commerceOptionValue.getPrice(), BigDecimal.ONE,
-				StringPool.BLANK);
+				commerceOptionValue.getUnitOfMeasureKey());
 
 			_setCommerceOrderItemPrice(
 				childCommerceOrderItem, commerceProductPrice);

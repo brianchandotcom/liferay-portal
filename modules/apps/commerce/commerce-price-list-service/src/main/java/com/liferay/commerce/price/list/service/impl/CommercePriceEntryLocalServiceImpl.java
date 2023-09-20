@@ -563,6 +563,9 @@ public class CommercePriceEntryLocalServiceImpl
 					}
 				).and(
 					CommercePriceListTable.INSTANCE.type.eq(priceListType)
+				).and(
+					CommercePriceListTable.INSTANCE.catalogBasePriceList.eq(
+						true)
 				)
 			));
 

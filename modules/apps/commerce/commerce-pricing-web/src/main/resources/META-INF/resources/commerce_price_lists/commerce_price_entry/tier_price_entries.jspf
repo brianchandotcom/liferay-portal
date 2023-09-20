@@ -6,7 +6,7 @@
 --%>
 
 <div class="tier-price-entries">
-	<aui:fieldset collapsible="<%= false %>" cssClass="price-entry-price-settings" label="tier-price-settings">
+	<aui:fieldset collapsible="<%= false %>" cssClass="price-entry-price-settings" label="settings">
 		<div class="row">
 			<div class="col-12">
 				<aui:input checked="<%= commercePriceEntry.isBulkPricing() %>" disabled="<%= priceOnApplication %>" label="bulk-pricing" name="bulkPricing" type="radio" value="<%= true %>" />
@@ -18,7 +18,7 @@
 		</div>
 	</aui:fieldset>
 
-	<aui:fieldset collapsible="<%= false %>" cssClass="price-entry-price-settings" label="tier-price-entries">
+	<aui:fieldset collapsible="<%= false %>" cssClass="price-entry-price-settings" label="entries">
 		<frontend-data-set:classic-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(

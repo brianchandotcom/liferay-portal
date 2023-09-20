@@ -949,7 +949,7 @@ definition {
 		}
 
 		task ("Then a dropdown is displayed") {
-			AssertVisible(locator1 = "ObjectCustomViews#VIEW_DROPDOWN_MENU_ON_MODAL_DEFAULT_SORT");
+			AssertVisible(locator1 = "WorkflowAllItems#TRANSITION_DROPDOWN_KEBAB");
 		}
 
 		task ("And the options present in the dropdown can be selected") {

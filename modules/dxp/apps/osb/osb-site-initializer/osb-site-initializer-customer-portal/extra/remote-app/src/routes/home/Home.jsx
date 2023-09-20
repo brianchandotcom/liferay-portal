@@ -35,9 +35,12 @@ const Home = () => {
 		search,
 		searching,
 	} = useKoroneikiAccounts({
-		selectedFilterCategory: projectCategoryItems.find(
-			({key}) => key === selectedProjectCategoryKey
-		),
+		selectedFilterCategory: {
+			...projectCategoryItems.find(
+				({key}) => key === selectedProjectCategoryKey
+			),
+			pageSize: 20,
+		},
 	});
 
 	const handleOnSelect = (key) => {

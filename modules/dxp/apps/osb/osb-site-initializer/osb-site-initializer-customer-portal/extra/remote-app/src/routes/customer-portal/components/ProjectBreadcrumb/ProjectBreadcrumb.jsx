@@ -10,13 +10,23 @@ import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {memo, useCallback, useEffect, useState} from 'react';
+
+// import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
+
 import {IconBreadcrumbs} from '~/common/icons';
+
+// import {getAccounts} from '~/common/services/liferay/graphql/queries';
+
 import i18n from '../../../../common/I18n';
 import Skeleton from '../../../../common/components/Skeleton';
 import useCurrentKoroneikiAccount from '../../../../common/hooks/useCurrentKoroneikiAccount';
 import useDebounce from '../../../../common/hooks/useDebounce';
 import useIntersectionObserver from '../../../../common/hooks/useIntersectionObserver';
+
 import useKoroneikiAccounts from '../../../../common/hooks/useKoroneikiAccounts';
+
+// import {getKoroneikiAccounts} from '../../../common/services/liferay/graphql/queries';
+
 import {getTooltipContentRenderer} from '../../containers/ActivationKeysTable/utils/getTooltipContentRenderer';
 import PopoverIcon from '../ActivationStatus/DXPCloud/components/PopoverIcon';
 
@@ -68,25 +78,67 @@ const Search = memo(({setSearchTerm}) => {
 	);
 });
 
-const Dropdown = memo(
-	({
-		fetching,
-		initialTotalCount,
-		koroneikiAccounts,
-		onIntersecting,
-		onSearch,
-		searching,
-		selectedKoroneikiAccount,
-		totalCount,
-	}) => {
-		const [active, setActive] = useState(false);
-		const [trackedRef, isIntersecting] = useIntersectionObserver();
+const InfiniteScroll = memo(
+	({koroneikiAccounts, selectedKoroneikiAccount, setPage}) => {
+		const [items, setItems] = useState([]);
+		const [isLoading, setIsLoading] = useState(false);
+		const [error, setError] = useState(null);
+
+		const fetchData = useCallback(async () => {
+			// eslint-disable-next-line no-console
+			console.log(`Called`);
+
+			setIsLoading(true);
+			setError(null);
+
+			try {
+				const data = koroneikiAccounts;
+
+				setItems((prevItems) => {
+					return [...prevItems, ...data];
+				});
+
+				setPage((prevPage) => {
+					// eslint-disable-next-line no-console
+					console.log('prevPage', prevPage);
+
+					return prevPage + 1;
+				});
+			} catch (error) {
+				setError(error);
+			} finally {
+				setIsLoading(false);
+			}
+		}, [koroneikiAccounts, setPage]);
 
 		useEffect(() => {
-			if (isIntersecting) {
-				onIntersecting();
+			fetchData();
+		}, []);
+
+		// eslint-disable-next-line no-console
+		console.log('items', items);
+
+		const handleScroll = useCallback(() => {
+			if (
+				window.innerHeight + document.documentElement.scrollTop !==
+					document.documentElement.offsetHeight ||
+				isLoading
+			) {
+				return;
 			}
-		}, [isIntersecting, onIntersecting]);
+
+			// eslint-disable-next-line no-console
+			console.log('Fetching');
+
+			fetchData();
+		}, [fetchData, isLoading]);
+
+		useEffect(() => {
+			window.addEventListener('scroll', handleScroll);
+
+			return () => window.removeEventListener('scroll', handleScroll);
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [isLoading]);
 
 		const getHref = useCallback((accountKey) => {
 			const hashLocation = window.location.hash.replace(
@@ -99,8 +151,8 @@ const Dropdown = memo(
 
 		const PROJECT_NAME_LIMIT = 16;
 		const abbreviationProjectName = useCallback((selectedLabel) => {
-			if (selectedLabel.length > PROJECT_NAME_LIMIT) {
-				const splittedProjectName = selectedLabel.split(
+			if (selectedLabel?.length > PROJECT_NAME_LIMIT) {
+				const splittedProjectName = selectedLabel?.split(
 					'',
 					PROJECT_NAME_LIMIT
 				);
@@ -124,45 +176,104 @@ const Dropdown = memo(
 
 		const getDropDownItems = useCallback(
 			() =>
-				koroneikiAccounts?.map((koroneikiAccount, index) => {
+				items?.map((koroneikiAccount, index) => {
 					const isSelected =
-						koroneikiAccount.accountKey ===
+						koroneikiAccount?.accountKey ===
 						selectedKoroneikiAccount?.accountKey;
 
 					return (
-						<ClayDropDown.Item
-							active={isSelected}
-							className="align-items-center cp-breadcrumbs-dropdown-item d-flex font-weight-semi-bold pl-3 pr-5 text-paragraph"
-							href={
-								!isSelected
-									? getHref(koroneikiAccount.accountKey)
-									: ''
-							}
-							key={`${koroneikiAccount.code}-${index}`}
-							symbolRight={isSelected ? 'check' : ''}
-						>
-							<div>
-								<IconBreadcrumbs height={25} width={25} />
-							</div>
-
-							<div
-								className="pl-2"
-								title={koroneikiAccount?.name}
+						<>
+							<ClayDropDown.Item
+								active={isSelected}
+								className="align-items-center cp-breadcrumbs-dropdown-item d-flex font-weight-semi-bold pl-3 pr-5 text-paragraph"
+								href={
+									!isSelected
+										? getHref(koroneikiAccount?.accountKey)
+										: ''
+								}
+								key={`${koroneikiAccount.code}-${index}`}
+								symbolRight={isSelected ? 'check' : ''}
 							>
-								{abbreviationProjectName(
-									koroneikiAccount?.name
-								)}
-							</div>
-						</ClayDropDown.Item>
+								<div>
+									<IconBreadcrumbs height={25} width={25} />
+								</div>
+
+								<div
+									className="pl-2"
+									title={koroneikiAccount?.name}
+								>
+									{abbreviationProjectName(
+										koroneikiAccount?.name
+									)}
+								</div>
+							</ClayDropDown.Item>
+
+							{isLoading && <p>Loading...</p>}
+
+							{error && <p>Error: {error.message}</p>}
+						</>
 					);
 				}),
 			[
-				getHref,
-				koroneikiAccounts,
+				items,
 				selectedKoroneikiAccount?.accountKey,
+				getHref,
 				abbreviationProjectName,
+				isLoading,
+				error,
 			]
 		);
+
+		return getDropDownItems();
+	}
+);
+
+const Dropdown = memo(
+	({
+		fetching,
+		initialTotalCount,
+		koroneikiAccounts,
+		onIntersecting,
+		onSearch,
+		page,
+		searching,
+		selectedKoroneikiAccount,
+		setPage,
+		totalCount,
+	}) => {
+		const [active, setActive] = useState(false);
+		const [trackedRef, isIntersecting] = useIntersectionObserver();
+
+		useEffect(() => {
+			if (isIntersecting) {
+				onIntersecting();
+			}
+		}, [isIntersecting, onIntersecting]);
+
+		const PROJECT_NAME_LIMIT = 16;
+		const abbreviationProjectName = useCallback((selectedLabel) => {
+			if (selectedLabel?.length > PROJECT_NAME_LIMIT) {
+				const splittedProjectName = selectedLabel?.split(
+					'',
+					PROJECT_NAME_LIMIT
+				);
+
+				const truncateProjectName = splittedProjectName.join('');
+
+				return (
+					<ClayTooltipProvider
+						contentRenderer={({title}) =>
+							getTooltipContentRenderer(title)
+						}
+						delay={100}
+					>
+						<span>{truncateProjectName}...</span>
+					</ClayTooltipProvider>
+				);
+			}
+
+			return selectedLabel;
+		}, []);
 
 		const dropdownProjectsExceeded =
 			initialTotalCount > MAX_ITEM_BEFORE_FILTER;
@@ -227,7 +338,12 @@ const Dropdown = memo(
 
 				{!!koroneikiAccounts?.length && initialTotalCount > 1 && (
 					<ClayDropDown.ItemList>
-						{getDropDownItems()}
+						<InfiniteScroll
+							koroneikiAccounts={koroneikiAccounts}
+							page={page}
+							selectedKoroneikiAccount={selectedKoroneikiAccount}
+							setPage={setPage}
+						/>
 
 						{koroneikiAccounts?.length < totalCount && !fetching && (
 							<ClayDropDown.Section className="px-3">
@@ -249,6 +365,7 @@ const Dropdown = memo(
 const ProjectBreadcrumb = () => {
 	const [initialTotalCount, setInitialTotalCount] = useState(0);
 	const [projectStatus, setProjectStatus] = useState('');
+	const [page, setPage] = useState(1);
 
 	const {
 		data: currentKoroneikiAccountData,
@@ -266,7 +383,11 @@ const ProjectBreadcrumb = () => {
 		onSearch,
 		searching,
 	} = useKoroneikiAccounts({
-		selectedFilterCategory: {filter: (searchBuilder) => searchBuilder},
+		selectedFilterCategory: {
+			filter: (searchBuilder) => searchBuilder,
+			page: 1,
+			pageSize: 5,
+		},
 	});
 
 	useEffect(() => {
@@ -303,8 +424,10 @@ const ProjectBreadcrumb = () => {
 						})
 					}
 					onSearch={onSearch}
+					page={page}
 					searching={searching}
 					selectedKoroneikiAccount={selectedKoroneikiAccount}
+					setPage={setPage}
 					totalCount={data?.c.koroneikiAccounts.totalCount}
 				/>
 

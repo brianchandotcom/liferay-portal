@@ -104,6 +104,7 @@ export default function EditObjectValidation({
 
 				setErrorMessage({[fieldName]: detailMessage});
 			}
+
 			openToast({message, type: 'danger'});
 		}
 	};

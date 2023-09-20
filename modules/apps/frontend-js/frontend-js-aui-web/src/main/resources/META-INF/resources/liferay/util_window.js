@@ -169,10 +169,6 @@ AUI.add(
 							}
 
 							iframeNode.focus();
-
-							if (UA.ios) {
-								iframeNode.attr('scrolling', 'no');
-							}
 						}
 					})
 				);

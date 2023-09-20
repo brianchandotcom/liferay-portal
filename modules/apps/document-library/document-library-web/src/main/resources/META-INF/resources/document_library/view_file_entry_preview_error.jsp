@@ -14,11 +14,16 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 
 <c:choose>
 	<c:when test="<%= exception instanceof DLPreviewSizeException %>">
+
+		<%
+		DLPreviewSizeException dlPreviewSizeException = (DLPreviewSizeException)exception;
+		%>
+
 		<div class="preview-file-error-container">
 			<h3><liferay-ui:message key="no-preview-available" /></h3>
 
 			<p class="text-secondary">
-				<liferay-ui:message key="this-file-is-too-large-to-preview.-the-maximun-size-for-preview-files-is-x" />
+				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(dlPreviewSizeException.getMaxSize(), locale) %>" key="this-file-is-too-large-to-preview.-the-maximum-file-size-for-previews-is-x" />
 			</p>
 
 			<clay:link

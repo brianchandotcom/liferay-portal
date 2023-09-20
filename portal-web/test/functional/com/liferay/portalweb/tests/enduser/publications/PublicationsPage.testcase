@@ -28,6 +28,9 @@ definition {
 	@description = "Assert that is possible to add a Information Template to a Publication"
 	@priority = 3
 	test CanAddInformationTemplateAndApplyItWithinPublications {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
 		task ("Add a new publications, select it and crete a new site") {
 			JSONPublications.addPublication(publicationName = "Publication Name");
 

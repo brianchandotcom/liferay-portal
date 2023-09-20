@@ -3,18 +3,52 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {BuilderScreen, Card} from '@liferay/object-js-components-web';
+import {
+	BuilderScreen,
+	Card,
+	getLocalizableLabel,
+} from '@liferay/object-js-components-web';
 import React from 'react';
 
 export interface UniqueCompositeKeyProps {
+	creationLanguageId: Liferay.Language.Locale;
+	objectFields: ObjectField[];
 	setShowUniqueCompositeKeyAlert: (value: boolean) => void;
 	showUniqueCompositeKeyAlert: boolean;
 }
 
 export function UniqueCompositeKey({
+	creationLanguageId,
+	objectFields,
 	setShowUniqueCompositeKeyAlert,
 	showUniqueCompositeKeyAlert,
 }: UniqueCompositeKeyProps) {
+
+	const filteredObjectFields = objectFields.filter(
+		(objectField) =>
+			objectField.businessType === 'Integer' ||
+			'Picklist' ||
+			'Relationship' ||
+			'Text'
+	);
+
+	const handleAddObjectFields = () => {
+		const parentWindow = Liferay.Util.getOpener();
+
+		parentWindow.Liferay.fire('openModalSelectObjectFields', {
+			getName: ({label, name}: ObjectField) =>
+				getLocalizableLabel(creationLanguageId, label, name),
+			header: Liferay.Language.get('add-fields-to-unique-composite-key'),
+			items: filteredObjectFields.map((filteredObjectField) => ({
+				...filteredObjectField,
+				checked: false,
+			})),
+			onSave: () => {},
+			selected: filteredObjectFields,
+			title: Liferay.Language.get('select-the-fields'),
+		});
+	};
+
 	return (
 		<>
 			<Card
@@ -43,7 +77,7 @@ export function UniqueCompositeKey({
 					}}
 					firstColumnHeader={Liferay.Language.get('label')}
 					onDeleteColumn={() => {}}
-					openModal={() => {}}
+					openModal={handleAddObjectFields}
 					secondColumnHeader={Liferay.Language.get('type')}
 				/>
 			</Card>

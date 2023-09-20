@@ -50,8 +50,7 @@ const getMiscellaneousMarketingFieldsValidation = (tactic: TacticKeys) => {
 						999999999,
 						'The value cannot be greater than 9,999,999.99'
 					)
-					.min(1, 'Required')
-					.required('Required'),
+					.min(1, 'Required'),
 			};
 		}
 		else if (tactic === TacticKeys.DIRECT_MAIL) {

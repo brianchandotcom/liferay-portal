@@ -96,7 +96,9 @@ const generalSchema = object({
 			key: string(),
 			name: string(),
 		}).test('is-empty', 'Required', (value, context) =>
-			context.parent.country.name === 'US' ? !isObjectEmpty(value) : true
+			context.parent.country.name === 'United States'
+				? !isObjectEmpty(value)
+				: true
 		),
 	}),
 });

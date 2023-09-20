@@ -119,7 +119,7 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					"com.liferay.layout.locked.layouts.web.internal." +
-						"configuration.LockedLayoutsConfiguration",
+						"configuration.LockedLayoutsCompanyConfiguration",
 					HashMapDictionaryBuilder.<String, Object>put(
 						"allowAutomaticUnlockingProcess",
 						allowAutomaticUnlockingProcess

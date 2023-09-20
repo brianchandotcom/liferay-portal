@@ -18,21 +18,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			ObjectAdmin.deleteAllCustomObjectsViaAPI();
-
-			JSONUser.tearDownNonAdminUsers();
-		}
-	}
-
 	@description = "This is a test for LPS-162848. The page creator without view permission for custom object cannot see Form Components in page editor."
 	@priority = 4
 	test CannotSeeFormComponentsInPageEditorAsUserWithoutViewPermissionForCustomObject {

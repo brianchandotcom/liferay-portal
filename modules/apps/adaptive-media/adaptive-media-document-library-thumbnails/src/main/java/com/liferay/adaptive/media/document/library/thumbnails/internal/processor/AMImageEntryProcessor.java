@@ -22,17 +22,18 @@ import com.liferay.document.library.security.io.InputStreamSanitizer;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileEntryWrapper;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.FileVersionWrapper;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portlet.documentlibrary.util.ImageProcessorImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -140,7 +141,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
 	@Override
 	public String getPreviewType(FileVersion fileVersion) {
-		return _imageProcessor.getPreviewType(fileVersion);
+		return _getType(fileVersion);
 	}
 
 	@Override
@@ -184,7 +185,7 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 
 	@Override
 	public String getThumbnailType(FileVersion fileVersion) {
-		return _imageProcessor.getThumbnailType(fileVersion);
+		return _getType(fileVersion);
 	}
 
 	@Override
@@ -324,6 +325,34 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT));
 	}
 
+	private String _getType(FileVersion fileVersion) {
+		String type = "png";
+
+		if (fileVersion == null) {
+			return type;
+		}
+
+		String mimeType = fileVersion.getMimeType();
+
+		if (mimeType.equals(ContentTypes.IMAGE_BMP)) {
+			type = ImageTool.TYPE_BMP;
+		}
+		else if (mimeType.equals(ContentTypes.IMAGE_GIF)) {
+			type = ImageTool.TYPE_GIF;
+		}
+		else if (mimeType.equals(ContentTypes.IMAGE_JPEG)) {
+			type = ImageTool.TYPE_JPEG;
+		}
+		else if (mimeType.equals(ContentTypes.IMAGE_PNG)) {
+			type = ImageTool.TYPE_PNG;
+		}
+		else if (!_previewGenerationRequired(fileVersion)) {
+			type = fileVersion.getExtension();
+		}
+
+		return type;
+	}
+
 	private Long _getValue(
 		AdaptiveMedia<AMProcessor<FileVersion>> adaptiveMedia) {
 
@@ -355,6 +384,16 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 		if (_amImageValidator.isProcessingRequired(
 				adaptiveMedia, fileVersion)) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _previewGenerationRequired(FileVersion fileVersion) {
+		String mimeType = fileVersion.getMimeType();
+
+		if (mimeType.contains("tiff") || mimeType.contains("tif")) {
 			return true;
 		}
 
@@ -402,7 +441,6 @@ public class AMImageEntryProcessor implements DLProcessor, ImageProcessor {
 	private AMImageValidator _amImageValidator;
 
 	private volatile AMSystemImagesConfiguration _amSystemImagesConfiguration;
-	private final ImageProcessor _imageProcessor = new ImageProcessorImpl();
 
 	@Reference
 	private InputStreamSanitizer _inputStreamSanitizer;

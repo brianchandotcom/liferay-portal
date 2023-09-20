@@ -10,8 +10,8 @@ import '@testing-library/jest-dom/extend-expect';
 import {act, fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
-import {ReorderSetsModal} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/ReorderSetsModal';
-import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import {ReorderSetsModal} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/reorder_sets_modal/ReorderSetsModal';
 
 const renderComponent = (dispatch = () => {}) => {
 	return render(

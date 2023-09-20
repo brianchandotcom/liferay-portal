@@ -19,11 +19,11 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
-import updateSetsOrder from '../../app/thunks/updateSetsOrder';
-import {config} from '../config/index';
-import {useDispatch, useSelector} from '../contexts/StoreContext';
-import selectWidgetFragmentEntryLinks from '../selectors/selectWidgetFragmentEntryLinks';
-import loadWidgets from '../thunks/loadWidgets';
+import {config} from '../../../../app/config';
+import {useDispatch, useSelector} from '../../../../app/contexts/StoreContext';
+import selectWidgetFragmentEntryLinks from '../../../../app/selectors/selectWidgetFragmentEntryLinks';
+import loadWidgets from '../../../../app/thunks/loadWidgets';
+import updateSetsOrder from '../../../../app/thunks/updateSetsOrder';
 
 const DRAG_OVER_POSITIONS = {
 	bottom: 'bottom',

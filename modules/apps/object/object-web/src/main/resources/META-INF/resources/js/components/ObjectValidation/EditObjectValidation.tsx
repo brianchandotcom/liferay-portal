@@ -14,8 +14,12 @@ import {
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
-import {BasicInfo} from './BasicInfo';
-import {Conditions} from './Conditions';
+import {BasicInfo, BasicInfoProps} from './BasicInfo';
+import {Conditions, ConditionsProps} from './Conditions';
+import {
+	UniqueCompositeKey,
+	UniqueCompositeKeyProps,
+} from './UniqueCompositeKey';
 import {
 	ObjectValidationErrors,
 	useObjectValidationForm,
@@ -41,16 +45,19 @@ interface ErrorDetails extends Error {
 	detail?: string;
 }
 
+type Tab = {
+	Component: (
+		params: BasicInfoProps | ConditionsProps | UniqueCompositeKeyProps
+	) => JSX.Element;
+	label: string;
+};
+
 const TABS = [
 	{
 		Component: BasicInfo,
 		label: Liferay.Language.get('basic-info'),
 	},
-	{
-		Component: Conditions,
-		label: Liferay.Language.get('conditions'),
-	},
-];
+] as Tab[];
 
 const initialValues: ObjectValidation = {
 	active: false,
@@ -75,6 +82,10 @@ export default function EditObjectValidation({
 		{}
 	);
 	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
+	const [
+		showUniqueCompositeKeyAlert,
+		setShowUniqueCompositeKeyAlert,
+	] = useState(true);
 
 	const onSubmit = async (objectValidation: ObjectValidation) => {
 		delete objectValidation.lineCount;
@@ -117,6 +128,23 @@ export default function EditObjectValidation({
 		values,
 	} = useObjectValidationForm({initialValues, onSubmit});
 
+	if (TABS.length < 2) {
+		if (values.engine === 'compositeKey') {
+			TABS.push({
+				Component: UniqueCompositeKey,
+				label: Liferay.Language.get('unique-composite-key'),
+			} as Tab);
+		}
+		else if (values.engine !== '') {
+			TABS.push({
+				Component: Conditions,
+				label: Liferay.Language.get('conditions'),
+			} as Tab);
+		}
+	}
+
+	const disabled = readOnly || !!values?.system;
+
 	useEffect(() => {
 		if (Object.keys(errors).length) {
 			openToast({
@@ -155,8 +183,6 @@ export default function EditObjectValidation({
 		makeFetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinitionId, objectValidationRuleId]);
-
-	const disabled = readOnly || !!values?.system;
 
 	return (
 		<SidePanelForm
@@ -198,7 +224,13 @@ export default function EditObjectValidation({
 								objectValidationRuleElements={
 									objectValidationRuleElements
 								}
+								setShowUniqueCompositeKeyAlert={
+									setShowUniqueCompositeKeyAlert
+								}
 								setValues={setValues}
+								showUniqueCompositeKeyAlert={
+									showUniqueCompositeKeyAlert
+								}
 								values={values}
 							/>
 						</ClayTabs.TabPane>

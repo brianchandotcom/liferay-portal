@@ -19,7 +19,7 @@ import {NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE} from '../../utils/cons
 import {TriggerEventContainer} from './TriggerEventContainer';
 import {TabProps} from './useObjectValidationForm';
 
-interface BasicInfoProps extends TabProps {
+export interface BasicInfoProps extends TabProps {
 	componentLabel: string;
 	creationLanguageId: Liferay.Language.Locale;
 	objectFields: ObjectField[];

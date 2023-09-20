@@ -15,7 +15,7 @@ dependencies {
 	api group: "com.github.scribejava", name: "scribejava-core", version: "3.2.0"
 	api group: "com.google.guava", name: "guava", version: "32.0.1-jre"
 	api group: "com.jayway.jsonpath", name: "json-path", version: "2.1.0"
-	api group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.145"
+	api group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.146"
 	api group: "com.liferay", name: "jodd.util", version: "6.0.1.LIFERAY-PATCHED-1"
 	api group: "com.liferay", name: "net.jsourcerer.webdriver.JSErrorCollector", version: "0.6"
 	api group: "com.sun.mail", name: "jakarta.mail", version: "1.6.6"

@@ -53,7 +53,6 @@ public class OAuth2ProviderApplicationConfigurationFactoryTest {
 		_webId = RandomTestUtil.randomString();
 
 		_company = Mockito.mock(Company.class);
-		_companyLocalService = Mockito.mock(CompanyLocalService.class);
 
 		Mockito.when(
 			_company.getCompanyId()
@@ -73,13 +72,13 @@ public class OAuth2ProviderApplicationConfigurationFactoryTest {
 			_webId
 		);
 
+		_companyLocalService = Mockito.mock(CompanyLocalService.class);
+
 		Mockito.when(
 			_companyLocalService.getCompanyById(_companyId)
 		).thenReturn(
 			_company
 		);
-
-		_userLocalService = Mockito.mock(UserLocalService.class);
 
 		_user = Mockito.mock(User.class);
 
@@ -95,6 +94,8 @@ public class OAuth2ProviderApplicationConfigurationFactoryTest {
 			1L
 		);
 
+		_userLocalService = Mockito.mock(UserLocalService.class);
+
 		Mockito.when(
 			_userLocalService.getGuestUser(_companyId)
 		).thenReturn(
@@ -108,15 +109,18 @@ public class OAuth2ProviderApplicationConfigurationFactoryTest {
 			_user
 		);
 
-		_oAuth2ApplicationLocalService = Mockito.mock(
-			OAuth2ApplicationLocalService.class);
-
 		_oAuth2Application = Mockito.mock(OAuth2Application.class);
 
 		Mockito.when(
 			_oAuth2Application.getClientId()
 		).thenReturn(
 			"ClientId"
+		);
+
+		Mockito.when(
+			_oAuth2Application.getOAuth2ApplicationId()
+		).thenReturn(
+			1L
 		);
 
 		Mockito.when(
@@ -131,11 +135,8 @@ public class OAuth2ProviderApplicationConfigurationFactoryTest {
 			"UserName"
 		);
 
-		Mockito.when(
-			_oAuth2Application.getOAuth2ApplicationId()
-		).thenReturn(
-			1L
-		);
+		_oAuth2ApplicationLocalService = Mockito.mock(
+			OAuth2ApplicationLocalService.class);
 
 		Mockito.when(
 			_oAuth2ApplicationLocalService.addOrUpdateOAuth2Application(
@@ -157,17 +158,17 @@ public class OAuth2ProviderApplicationConfigurationFactoryTest {
 		);
 
 		Mockito.when(
-			_oAuth2ApplicationLocalService.updateScopeAliases(
-				Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong(),
-				AdditionalMatchers.or(Mockito.any(), Mockito.isNull()))
+			_oAuth2ApplicationLocalService.
+				fetchOAuth2ApplicationByExternalReferenceCode(
+					_externalReferenceCode, _companyId)
 		).thenReturn(
 			_oAuth2Application
 		);
 
 		Mockito.when(
-			_oAuth2ApplicationLocalService.
-				fetchOAuth2ApplicationByExternalReferenceCode(
-					_externalReferenceCode, _companyId)
+			_oAuth2ApplicationLocalService.updateScopeAliases(
+				Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong(),
+				AdditionalMatchers.or(Mockito.any(), Mockito.isNull()))
 		).thenReturn(
 			_oAuth2Application
 		);

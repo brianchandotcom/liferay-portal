@@ -71,7 +71,7 @@ export default function EditModeSelector() {
 			<Picker
 				UNSAFE_menuClassName="cadmin"
 				aria-label={sub(
-					Liferay.Language.get('page-edition-mode-x'),
+					Liferay.Language.get('page-edition-mode'),
 					editMode.label
 				)}
 				as={TriggerLabel}

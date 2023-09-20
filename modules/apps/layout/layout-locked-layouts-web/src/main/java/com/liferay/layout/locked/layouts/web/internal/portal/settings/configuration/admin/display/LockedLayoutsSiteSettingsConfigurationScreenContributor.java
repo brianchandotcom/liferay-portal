@@ -5,7 +5,7 @@
 
 package com.liferay.layout.locked.layouts.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsGroupConfiguration;
+import com.liferay.layout.configuration.LockedLayoutsGroupConfiguration;
 import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayoutsConfigurationDisplayContext;
 import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayoutsSiteSettingsConfigurationDisplayContext;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Mikel Lorza
  */
 @Component(
-	configurationPid = "com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsGroupConfiguration",
+	configurationPid = "com.liferay.layout.configuration.LockedLayoutsGroupConfiguration",
 	service = SiteSettingsConfigurationScreenContributor.class
 )
 public class LockedLayoutsSiteSettingsConfigurationScreenContributor

@@ -64,6 +64,7 @@ page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.SetUtil" %><%@
 page import="com.liferay.portal.kernel.view.count.ViewCountManagerUtil" %><%@
 page import="com.liferay.portal.util.RepositoryUtil" %><%@
+page import="com.liferay.product.navigation.personal.menu.util.PersonalApplicationURLUtil" %><%@
 page import="com.liferay.ratings.kernel.RatingsType" %><%@
 page import="com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil" %><%@
 page import="com.liferay.taglib.util.PortalIncludeUtil" %>

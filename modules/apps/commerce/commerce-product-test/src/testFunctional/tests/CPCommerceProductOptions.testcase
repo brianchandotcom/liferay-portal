@@ -2450,7 +2450,11 @@ definition {
 			entryName = "Color",
 			title = "Add Option");
 
+		Refresh();
+
 		CommerceNavigator.gotoEntry(entryName = "Color");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		CommerceNavigator.gotoEntry(entryName = "Black");
 

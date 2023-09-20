@@ -12,7 +12,7 @@ import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import {openToast, sub} from 'frontend-js-web';
 import React from 'react';
-import {Node, useStore, useZoomPanHelper} from 'react-flow-renderer';
+import {Node, useStoreState, useZoomPanHelper} from 'react-flow-renderer';
 
 import './LeftSidebar.scss';
 import {getUpdatedModelBuilderStructurePayload} from '../../ViewObjectDefinitions/objectDefinitionUtil';
@@ -40,8 +40,9 @@ export default function LeftSidebarTreeView({
 	showActions?: boolean;
 }) {
 	const [{selectedObjectFolder}, dispatch] = useObjectFolderContext();
-	const store = useStore();
 	const {setCenter} = useZoomPanHelper();
+
+	const {edges, nodes} = useStoreState((state) => state);
 
 	const changeObjectDefinitionNodeViewButton = (
 		hiddenObjectDefinitionNode: boolean,
@@ -187,8 +188,6 @@ export default function LeftSidebarTreeView({
 								.externalReferenceCode
 					)
 				) {
-					const {edges, nodes} = store.getState();
-
 					dispatch({
 						payload: {
 							edges,
@@ -267,9 +266,11 @@ export default function LeftSidebarTreeView({
 									() =>
 										dispatch({
 											payload: {
+												edges,
 												hiddenObjectFolderObjectDefinitionNodes:
 													leftSidebarItem.hiddenObjectFolderObjectDefinitionNodes,
 												leftSidebarItem,
+												nodes,
 											},
 											type: TYPES.BULK_CHANGE_NODE_VIEW,
 										})
@@ -329,7 +330,9 @@ export default function LeftSidebarTreeView({
 											() =>
 												dispatch({
 													payload: {
+														edges,
 														hiddenObjectDefinitionNode,
+														nodes,
 														objectDefinitionId: id,
 														objectDefinitionName: name,
 														selectedSidebarItem: leftSidebarItem,

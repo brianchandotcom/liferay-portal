@@ -34,6 +34,7 @@ export declare type TAction =
 	| {
 			payload: {
 				newObjectDefinition: ObjectDefinition;
+				nodes: Node<ObjectDefinitionNodeData>[];
 				selectedObjectFolderName: string;
 			};
 			type: TYPES.ADD_OBJECT_DEFINITION_TO_OBJECT_FOLDER;
@@ -49,14 +50,18 @@ export declare type TAction =
 	  }
 	| {
 			payload: {
+				edges: Edge<ObjectRelationshipEdgeData>[];
 				hiddenObjectFolderObjectDefinitionNodes: boolean;
 				leftSidebarItem: LeftSidebarItem;
+				nodes: Node<ObjectDefinitionNodeData>[];
 			};
 			type: TYPES.BULK_CHANGE_NODE_VIEW;
 	  }
 	| {
 			payload: {
+				edges: Edge<ObjectRelationshipEdgeData>[];
 				hiddenObjectDefinitionNode: boolean;
+				nodes: Node<ObjectDefinitionNodeData>[];
 				objectDefinitionId: number;
 				objectDefinitionName: string;
 				selectedSidebarItem: LeftSidebarItem;
@@ -72,14 +77,9 @@ export declare type TAction =
 	  }
 	| {
 			payload: {
-				currentObjectFolderName: string;
-				deletedObjectDefinitionName: string;
-			};
-			type: TYPES.DELETE_OBJECT_DEFINITION;
-	  }
-	| {
-			payload: {
-				newElements: any;
+				newElements: Elements<
+					ObjectDefinitionNodeData | ObjectRelationshipEdgeData
+				>;
 			};
 			type: TYPES.SET_ELEMENTS;
 	  }

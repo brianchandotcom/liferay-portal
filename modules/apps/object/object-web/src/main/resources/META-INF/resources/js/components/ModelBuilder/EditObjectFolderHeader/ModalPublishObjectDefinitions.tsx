@@ -221,7 +221,7 @@ export function ModalPublishObjectDefinitions({
 				}
 
 				return element;
-			});
+			}) as Elements<ObjectDefinitionNodeData>;
 
 			dispatch({
 				payload: {

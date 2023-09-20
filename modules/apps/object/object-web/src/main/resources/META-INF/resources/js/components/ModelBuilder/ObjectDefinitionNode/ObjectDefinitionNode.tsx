@@ -6,6 +6,7 @@
 import classNames from 'classnames';
 import React, {useEffect, useRef, useState} from 'react';
 import {
+	Elements,
 	Handle,
 	Node,
 	NodeProps,
@@ -391,7 +392,7 @@ export function ObjectDefinitionNode({
 							}
 
 							return element;
-						});
+						}) as Elements<ObjectDefinitionNodeData>;
 
 						dispatch({
 							payload: {

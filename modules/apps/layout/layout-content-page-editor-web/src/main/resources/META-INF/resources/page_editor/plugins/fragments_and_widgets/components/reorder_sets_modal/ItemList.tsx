@@ -3,16 +3,33 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-import {DRAG_OVER_POSITIONS} from '../../config/constants/dragOverPositions';
+import {
+	DRAG_OVER_POSITIONS,
+	DragOverPosition,
+} from '../../config/constants/dragOverPositions';
+import {TabId} from '../../config/constants/tabsIds';
 import {Item} from './Item';
 
-export function ItemList({items: initialItems, listId, updateLists}) {
+interface ItemListProps {
+	items: Item[];
+	listId: TabId;
+	updateLists: (tabId: TabId, items: Item[]) => void;
+}
+
+export function ItemList({
+	items: initialItems,
+	listId,
+	updateLists,
+}: ItemListProps) {
 	const [items, setItems] = useState(initialItems);
 
-	const onDropItem = (itemId, nextIndex, dragOverPosition) => {
+	const onDropItem = (
+		itemId: string,
+		nextIndex: number,
+		dragOverPosition?: DragOverPosition
+	) => {
 		const index = items.findIndex(({id}) => id === itemId);
 		const item = items[index];
 		const nextItems = [...items];
@@ -56,9 +73,3 @@ export function ItemList({items: initialItems, listId, updateLists}) {
 		</div>
 	);
 }
-
-ItemList.propTypes = {
-	items: PropTypes.array,
-	listId: PropTypes.number.isRequired,
-	updateLists: PropTypes.func.isRequired,
-};

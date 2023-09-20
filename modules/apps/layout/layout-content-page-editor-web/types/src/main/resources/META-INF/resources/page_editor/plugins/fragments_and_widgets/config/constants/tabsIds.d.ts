@@ -7,3 +7,4 @@ export declare const TABS_IDS: {
 	readonly fragments: 0;
 	readonly widgets: 1;
 };
+export declare type TabId = typeof TABS_IDS[keyof typeof TABS_IDS];

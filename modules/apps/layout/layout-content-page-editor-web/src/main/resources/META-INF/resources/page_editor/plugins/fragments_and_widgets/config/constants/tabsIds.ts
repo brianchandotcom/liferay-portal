@@ -7,3 +7,5 @@ export const TABS_IDS = {
 	fragments: 0,
 	widgets: 1,
 } as const;
+
+export type TabId = typeof TABS_IDS[keyof typeof TABS_IDS];

@@ -725,7 +725,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 						type, defaultData);
 
 				ExpandoColumn expandoColumn =
-					_expandoColumnLocalService.getColumn(
+					_expandoColumnLocalService.fetchColumn(
 						expandoTable.getTableId(), name);
 
 				if (expandoColumn != null) {

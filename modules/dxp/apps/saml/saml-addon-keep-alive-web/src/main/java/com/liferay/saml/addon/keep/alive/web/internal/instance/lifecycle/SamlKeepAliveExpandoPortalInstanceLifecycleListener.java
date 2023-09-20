@@ -53,7 +53,7 @@ public class SamlKeepAliveExpandoPortalInstanceLifecycleListener
 				companyId, clazz.getName());
 		}
 
-		ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.fetchColumn(
 			expandoTable.getTableId(),
 			SamlKeepAliveConstants.EXPANDO_COLUMN_NAME_KEEP_ALIVE_URL);
 

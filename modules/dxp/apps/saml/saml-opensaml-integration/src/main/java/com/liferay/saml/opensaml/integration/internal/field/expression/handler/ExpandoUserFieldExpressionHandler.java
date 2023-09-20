@@ -301,7 +301,7 @@ public class ExpandoUserFieldExpressionHandler
 				throw new SystemException(portalException);
 			}
 
-			ExpandoColumn column = _expandoColumnLocalService.getColumn(
+			ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
 				table.getTableId(), validUserFieldExpression);
 
 			expandoValue = _expandoValueLocalService.createExpandoValue(0);

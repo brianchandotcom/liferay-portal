@@ -191,9 +191,14 @@ definition {
 	}
 
 	macro gotoTableListEntry {
+		if (!(isSet(index))) {
+			var index = 1;
+		}
+
 		Click(
+			index = ${index},
 			key_entryName = ${entryName},
-			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+			locator1 = "CommerceEntry#TABLE_LIST_TITLE_AND_POSITION");
 	}
 
 	macro goToTaxCategoriesAdmin {

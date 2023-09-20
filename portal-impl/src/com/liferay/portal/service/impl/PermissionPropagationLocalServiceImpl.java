@@ -18,6 +18,7 @@ import com.liferay.portal.service.base.PermissionPropagationLocalServiceBaseImpl
 public class PermissionPropagationLocalServiceImpl
 	extends PermissionPropagationLocalServiceBaseImpl {
 
+	@Override
 	public PermissionPropagation addPermissionPropagation(
 		long companyId, long groupId, String className, long classPK,
 		boolean propagate) {
@@ -37,6 +38,7 @@ public class PermissionPropagationLocalServiceImpl
 		return permissionPropagationPersistence.update(permissionPropagation);
 	}
 
+	@Override
 	public PermissionPropagation fetchPermissionPropagation(
 		long companyId, long groupId, String className, long classPK) {
 
@@ -45,6 +47,7 @@ public class PermissionPropagationLocalServiceImpl
 			_classNameLocalService.getClassNameId(className), classPK);
 	}
 
+	@Override
 	public PermissionPropagation updatePermissionPropagation(
 		long companyId, long groupId, String className, long classPK,
 		boolean propagate) {

@@ -4,7 +4,7 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import {FlowElement} from 'react-flow-renderer';
+import {FlowElement, useStore} from 'react-flow-renderer';
 
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
 import {ModalAddObjectDefinition} from '../ViewObjectDefinitions/ModalAddObjectDefinition';
@@ -39,6 +39,9 @@ export default function EditObjectFolder({
 		},
 		dispatch,
 	] = useObjectFolderContext();
+
+	const store = useStore();
+	const {nodes} = store.getState();
 
 	const [showModal, setShowModal] = useState<ModelBuilderModals>({
 		addObjectDefinition: false,
@@ -105,6 +108,7 @@ export default function EditObjectFolder({
 						dispatch({
 							payload: {
 								newObjectDefinition,
+								nodes,
 								selectedObjectFolderName:
 									selectedObjectFolder.name,
 							},

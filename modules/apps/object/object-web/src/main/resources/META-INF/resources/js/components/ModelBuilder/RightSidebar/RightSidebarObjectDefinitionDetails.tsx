@@ -10,7 +10,7 @@ import {
 } from '@liferay/object-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
-import {Node, isNode} from 'react-flow-renderer';
+import {Elements, Node, isNode} from 'react-flow-renderer';
 
 import {AccountRestrictionContainer} from '../../ObjectDetails/AccountRestrictionContainer';
 import {ConfigurationContainer} from '../../ObjectDetails/ConfigurationContainer';
@@ -170,7 +170,7 @@ export function RightSidebarObjectDefinitionDetails({
 				}
 
 				return element;
-			});
+			}) as Elements<ObjectDefinitionNodeData>;
 
 			if (!updatedObjectDefinitionResponse.ok) {
 				const {

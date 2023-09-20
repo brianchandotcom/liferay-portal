@@ -44,9 +44,7 @@ interface SidebarBodyProps {
 	schemaUIData: APISchemaUIData;
 	searchKeyword: string;
 	setNavHistory: Dispatch<SetStateAction<AddedObjectDefinition[][]>>;
-	setOnBackClick: Dispatch<SetStateAction<voidReturn>>;
 	setSchemaUIData: Dispatch<SetStateAction<APISchemaUIData>>;
-	viewRelatedObjects: boolean;
 }
 
 function ObjectFieldsPanel({
@@ -230,7 +228,6 @@ export default function SidebarBody({
 	schemaUIData,
 	searchKeyword,
 	setNavHistory,
-	setOnBackClick,
 	setSchemaUIData,
 }: SidebarBodyProps) {
 	const navigateObjectRelationships = useCallback(
@@ -270,13 +267,6 @@ export default function SidebarBody({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[fectchedObjectDefinitions]
 	);
-
-	useEffect(() => {
-		setOnBackClick(() => () => {
-			setNavHistory([...navHistory.slice(1)]);
-		});
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [navHistory]);
 
 	return (
 		<div className="sidebar-body">

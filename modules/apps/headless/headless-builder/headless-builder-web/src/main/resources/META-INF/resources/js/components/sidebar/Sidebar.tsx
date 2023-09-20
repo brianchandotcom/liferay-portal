@@ -36,9 +36,7 @@ export default function Sidebar({
 	const [navHistory, setNavHistory] = useState<AddedObjectDefinition[][]>([
 		[],
 	]);
-	const [onBackClick, setOnBackClick] = useState(() => () => {});
 	const [searchKeyword, setSearchKeyword] = useState('');
-	const [viewRelatedObjects, setViewRelatedObjects] = useState(false);
 
 	useEffect(() => {
 		fetchJSON<ObjectDefinition>({
@@ -62,11 +60,9 @@ export default function Sidebar({
 				<>
 					<SidebarHeader
 						navHistory={navHistory}
-						onBackClick={onBackClick}
+						searchKeyword={searchKeyword}
 						setNavHistory={setNavHistory}
 						setSearchKeyword={setSearchKeyword}
-						setViewRelatedObjects={setViewRelatedObjects}
-						viewRelatedObjects={viewRelatedObjects}
 					/>
 
 					<SidebarBody
@@ -75,9 +71,7 @@ export default function Sidebar({
 						schemaUIData={schemaUIData}
 						searchKeyword={searchKeyword}
 						setNavHistory={setNavHistory}
-						setOnBackClick={setOnBackClick}
 						setSchemaUIData={setSchemaUIData}
-						viewRelatedObjects={viewRelatedObjects}
 					/>
 				</>
 			)}

@@ -10,9 +10,7 @@ interface SidebarBodyProps {
 	schemaUIData: APISchemaUIData;
 	searchKeyword: string;
 	setNavHistory: Dispatch<SetStateAction<AddedObjectDefinition[][]>>;
-	setOnBackClick: Dispatch<SetStateAction<voidReturn>>;
 	setSchemaUIData: Dispatch<SetStateAction<APISchemaUIData>>;
-	viewRelatedObjects: boolean;
 }
 export default function SidebarBody({
 	fectchedObjectDefinitions,
@@ -20,7 +18,6 @@ export default function SidebarBody({
 	schemaUIData,
 	searchKeyword,
 	setNavHistory,
-	setOnBackClick,
 	setSchemaUIData,
 }: SidebarBodyProps): JSX.Element;
 export {};

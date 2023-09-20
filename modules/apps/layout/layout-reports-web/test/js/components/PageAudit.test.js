@@ -95,7 +95,10 @@ describe('PageAudit', () => {
 	});
 
 	it('shows alerts according to the number of warnings', async () => {
-		const warnings = ['Warning 1', 'Warning 2'];
+		const warnings = [
+			{description: 'Warning 1', title: ''},
+			{description: 'Warning 2', title: ''},
+		];
 
 		const selectedItem = {
 			title: 'Selected Item',
@@ -106,7 +109,7 @@ describe('PageAudit', () => {
 		await act(async () => renderPageAudit({selectedItem}));
 
 		for (const warning of warnings) {
-			const element = screen.getByText(warning);
+			const element = screen.getByText(warning.description);
 
 			expect(element).toBeInTheDocument();
 

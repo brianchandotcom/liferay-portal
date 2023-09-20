@@ -50,7 +50,7 @@ jest.mock(
 		),
 		getCollectionVariations: jest.fn(() => Promise.resolve([])),
 		getCollectionWarningMessage: jest.fn(() =>
-			Promise.resolve({warningMessage: ''})
+			Promise.resolve({warningMessage: null})
 		),
 	})
 );
@@ -272,7 +272,10 @@ describe('CollectionGeneralPanel', () => {
 	it('shows a warning message from backend when collection has some problematic configuration', async () => {
 		CollectionService.getCollectionWarningMessage.mockImplementation(() =>
 			Promise.resolve({
-				warningMessage: 'page-performance-warning-and-stuff',
+				warningMessage: {
+					description: 'page-performance-warning-and-stuff',
+					title: '',
+				},
 			})
 		);
 

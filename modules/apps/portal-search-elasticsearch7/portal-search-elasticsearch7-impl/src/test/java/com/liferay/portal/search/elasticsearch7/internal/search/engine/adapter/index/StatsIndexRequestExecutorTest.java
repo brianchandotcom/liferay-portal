@@ -5,12 +5,11 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index;
 
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.StatsIndexRequest;
-import com.liferay.portal.search.engine.adapter.index.StatsIndexResponse;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import org.elasticsearch.client.Request;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -41,29 +40,49 @@ public class StatsIndexRequestExecutorTest {
 	}
 
 	@Test
-	public void testIndexRequestExecution() {
+	public void testStatsIndexRequestTranslationWithMoreThanOneIndex() {
 		StatsIndexRequest statsIndexRequest = new StatsIndexRequest(
-			_INDEX_NAME);
+			"liferay-1", "liferay-2", "liferay-3");
 
 		StatsIndexRequestExecutorImpl statsIndexRequestExecutorImpl =
 			new StatsIndexRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			statsIndexRequestExecutorImpl, "_elasticsearchClientResolver",
-			_elasticsearchFixture);
-		ReflectionTestUtil.setFieldValue(
-			statsIndexRequestExecutorImpl, "_jsonFactory",
-			new JSONFactoryImpl());
+		Request request =
+			statsIndexRequestExecutorImpl.getElasticsearchIndexRequest(
+				statsIndexRequest);
 
-		StatsIndexResponse statsIndexResponse =
-			statsIndexRequestExecutorImpl.execute(statsIndexRequest);
-
-		Assert.assertNotNull(statsIndexResponse);
-
-		Assert.assertNotEquals(0, statsIndexResponse.getIndexSize(_INDEX_NAME));
+		Assert.assertEquals(
+			"/liferay-1,liferay-2,liferay-3/_stats", request.getEndpoint());
 	}
 
-	private static final String _INDEX_NAME = "liferay";
+	@Test
+	public void testStatsIndexRequestTranslationWithOneIndex() {
+		StatsIndexRequest statsIndexRequest = new StatsIndexRequest(
+			"liferay-1");
+
+		StatsIndexRequestExecutorImpl statsIndexRequestExecutorImpl =
+			new StatsIndexRequestExecutorImpl();
+
+		Request request =
+			statsIndexRequestExecutorImpl.getElasticsearchIndexRequest(
+				statsIndexRequest);
+
+		Assert.assertEquals("/liferay-1/_stats", request.getEndpoint());
+	}
+
+	@Test
+	public void testStatsIndexRequestTranslationWithoutIndex() {
+		StatsIndexRequest statsIndexRequest = new StatsIndexRequest();
+
+		StatsIndexRequestExecutorImpl statsIndexRequestExecutorImpl =
+			new StatsIndexRequestExecutorImpl();
+
+		Request request =
+			statsIndexRequestExecutorImpl.getElasticsearchIndexRequest(
+				statsIndexRequest);
+
+		Assert.assertEquals("/_all/_stats", request.getEndpoint());
+	}
 
 	private ElasticsearchFixture _elasticsearchFixture;
 

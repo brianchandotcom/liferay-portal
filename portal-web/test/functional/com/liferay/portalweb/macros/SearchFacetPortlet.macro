@@ -170,7 +170,7 @@ definition {
 		}
 
 		if (${facetName} == "Type Facet") {
-			var termURLValue = SearchFacetPortlet.getFacetTypeValue(typeFacetTerm = ${facetTerm});
+			var termURLValue = SearchFacetPortlet.getTypeFacetTermURLValue(typeFacetTerm = ${facetTerm});
 		}
 		else if (${facetName} == "User Facet") {
 			var termURLValue = SearchFacetPortlet.getUserFacetTermURLValue(userFacetTerm = ${facetTerm});
@@ -227,7 +227,7 @@ definition {
 
 	macro generateFacetUncheckedURL {
 		if (${facetName} == "Type Facet") {
-			var termURLValue = SearchFacetPortlet.getFacetTypeValue(typeFacetTerm = ${facetTerm});
+			var termURLValue = SearchFacetPortlet.getTypeFacetTermURLValue(typeFacetTerm = ${facetTerm});
 		}
 		else if (${facetName} == "User Facet") {
 			var termURLValue = SearchFacetPortlet.getUserFacetTermURLValue(userFacetTerm = ${facetTerm});
@@ -263,7 +263,7 @@ definition {
 		return ${searchURL};
 	}
 
-	macro getFacetTypeValue {
+	macro getTypeFacetTermURLValue {
 		if (contains(${typeFacetTerm}, "Blogs")) {
 			var typeFacetTermURLValue = "com.liferay.blogs.model.BlogsEntry";
 			var termURLValueFound = "true";

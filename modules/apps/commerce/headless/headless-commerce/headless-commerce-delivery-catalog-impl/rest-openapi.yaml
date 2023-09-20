@@ -587,6 +587,9 @@ components:
                 totalPrice:
                     readOnly: true
                     type: string
+                unitOfMeasureKey:
+                    readOnly: true
+                    type: string
                 visible:
                     example: true
                     readOnly: true

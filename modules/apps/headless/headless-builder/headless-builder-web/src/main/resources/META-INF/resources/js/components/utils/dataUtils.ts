@@ -62,7 +62,7 @@ export function AddObjectFieldsDataToProperties({
 			if (currentObjectField && parentObjectDefinition) {
 				return {
 					businessType: currentObjectField?.businessType!,
-					...(description && {
+					...((description || description === '') && {
 						description,
 					}),
 					id,
@@ -120,6 +120,7 @@ export function hasPropertiesDataChanged({
 						property.objectRelationshipNames &&
 					objectFieldERC === property.objectFieldERC
 			);
+
 			if (
 				!(
 					matchedFetchedProperty &&

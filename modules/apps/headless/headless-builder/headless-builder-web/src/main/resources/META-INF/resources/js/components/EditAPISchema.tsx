@@ -255,7 +255,9 @@ export default function EditAPISchema({
 						...(localUIData.schemaProperties.length && {
 							apiSchemaToAPIProperties: localUIData.schemaProperties.map(
 								(property) => ({
-									description: property.description,
+									...(!!property.description && {
+										description: property.description,
+									}),
 									name: property.name,
 									objectFieldERC: property.objectFieldERC,
 									r_apiSchemaToAPIProperties_c_apiSchemaId:

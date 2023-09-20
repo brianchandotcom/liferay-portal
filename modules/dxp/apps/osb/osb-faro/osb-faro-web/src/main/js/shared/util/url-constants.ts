@@ -16,6 +16,7 @@ enum URLConstants {
 	CustomEventsDocumentation = 'https://learn.liferay.com/analytics-cloud/latest/en/touchpoints/events/tracking-events.html',
 	DataSourceConnection = 'https://learn.liferay.com/analytics-cloud/latest/en/getting-started/connecting-liferay-dxp-to-analytics-cloud.html',
 	DefinitionsForEventsDocumentation = 'https://learn.liferay.com/analytics-cloud/latest/en/workspace-data/definitions/definitions-for-events.html',
+	DeletePropertyDocumentation = 'https://learn.liferay.com/en/w/analytics-cloud/workspace-settings/managing-properties#adding-and-removing-users-to-a-property',
 	DocumentationAdminLink = 'https://learn.liferay.com/analytics-cloud/latest/en/getting-started.html',
 	DocumentationLink = 'https://learn.liferay.com/analytics-cloud/latest/en/',
 	DownloadDXP70FixPack98 = 'https://customer.liferay.com/downloads/-/download/liferay-dxp-7-0-fix-pack-98',

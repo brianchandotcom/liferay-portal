@@ -80,35 +80,6 @@ public class OAuth2ProviderApplicationConfigurationFactoryTest {
 			_company
 		);
 
-		_user = Mockito.mock(User.class);
-
-		Mockito.when(
-			_user.getScreenName()
-		).thenReturn(
-			"ScreenName"
-		);
-
-		Mockito.when(
-			_user.getUserId()
-		).thenReturn(
-			1L
-		);
-
-		_userLocalService = Mockito.mock(UserLocalService.class);
-
-		Mockito.when(
-			_userLocalService.getGuestUser(_companyId)
-		).thenReturn(
-			_user
-		);
-
-		Mockito.when(
-			_userLocalService.getUserByScreenName(
-				Mockito.anyLong(), Mockito.anyString())
-		).thenReturn(
-			_user
-		);
-
 		_oAuth2Application = Mockito.mock(OAuth2Application.class);
 
 		Mockito.when(
@@ -224,6 +195,35 @@ public class OAuth2ProviderApplicationConfigurationFactoryTest {
 			_snapshot.get()
 		).thenReturn(
 			portalK8sConfigMapModifier
+		);
+
+		_user = Mockito.mock(User.class);
+
+		Mockito.when(
+			_user.getScreenName()
+		).thenReturn(
+			"ScreenName"
+		);
+
+		Mockito.when(
+			_user.getUserId()
+		).thenReturn(
+			1L
+		);
+
+		_userLocalService = Mockito.mock(UserLocalService.class);
+
+		Mockito.when(
+			_userLocalService.getGuestUser(_companyId)
+		).thenReturn(
+			_user
+		);
+
+		Mockito.when(
+			_userLocalService.getUserByScreenName(
+				Mockito.anyLong(), Mockito.anyString())
+		).thenReturn(
+			_user
 		);
 	}
 

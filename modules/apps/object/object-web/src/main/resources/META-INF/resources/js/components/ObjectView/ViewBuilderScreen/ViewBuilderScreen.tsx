@@ -42,7 +42,7 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 	const handleAddColumns = () => {
 		const parentWindow = Liferay.Util.getOpener();
 
-		parentWindow.Liferay.fire('openModalAddColumns', {
+		parentWindow.Liferay.fire('openModalSelectObjectFields', {
 			getName: ({label, name}: ObjectField) =>
 				getLocalizableLabel(creationLanguageId, label, name),
 			header: Liferay.Language.get('add-columns'),

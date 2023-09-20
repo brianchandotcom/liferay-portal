@@ -253,7 +253,7 @@ export default function PredefinedValuesTable({
 		const handleAddFields = () => {
 			const parentWindow = Liferay.Util.getOpener();
 
-			parentWindow.Liferay.fire('openModalAddColumns', {
+			parentWindow.Liferay.fire('openModalSelectObjectFields', {
 				disableRequired: true,
 				disableRequiredChecked,
 				getLabel: ({label, name}: ObjectField) =>

@@ -222,8 +222,8 @@ app.post('/marketplace/trial', async (req, res) => {
 
 		if (getUserInfo.ok) {
 			data.emailAddress = userInformation.emailAddress;
-			data.firstName = userInformation.familyName;
-			data.lastName = userInformation.alternateName;
+			data.firstName = userInformation.givenName;
+			data.lastName = userInformation.familyName;
 		}
 
 		if (accountId !== '') {
@@ -238,12 +238,9 @@ app.post('/marketplace/trial', async (req, res) => {
 			data.siteInitializer = siteInitializer;
 		}
 
-		data.devEnabled = false;
-		data.drEnabled = false;
 		data.duration =
 			trialTypes[body.modelDTOOrder.orderTypeExternalReferenceCode] ||
 			Number(SSA_DURATION);
-		data.sendEmailForTrial = true;
 		data.userId = Number(SSA_SERVICE_USER_ID) || body.userId;
 
 		fetch(uri, {
@@ -256,14 +253,13 @@ app.post('/marketplace/trial', async (req, res) => {
 		})
 			.then((response) => {
 				return log.info(
-					'Trail request sent for order: ',
-					response.commerceOrderId
+					'Trail request sent for order: ' + response.commerceOrderId
 				);
 			})
 			.catch((error) => {
 				log.error(error);
 
-				return log.info('Trail request sent for order: ', error);
+				return log.info('Trail request error for order: ' + error);
 			});
 	}, 100);
 

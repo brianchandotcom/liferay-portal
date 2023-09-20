@@ -210,6 +210,10 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 							</p>
 						</div>
 					</div>
+
+					<div class="col-lg-6">
+						<aui:input checked="<%= commerceChannelDisplayContext.isShowSeparateOrderItems() %>" helpMessage="show-separate-order-items-help" label="show-separate-order-items" labelOff="disabled" labelOn="enabled" name="settings--showSeparateOrderItems--" type="toggle-switch" />
+					</div>
 				</div>
 			</commerce-ui:panel>
 		</div>

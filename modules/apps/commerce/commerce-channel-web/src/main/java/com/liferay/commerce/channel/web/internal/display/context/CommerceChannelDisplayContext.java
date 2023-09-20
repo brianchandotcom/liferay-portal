@@ -546,6 +546,19 @@ public class CommerceChannelDisplayContext
 		return commerceOrderFieldsConfiguration.showPurchaseOrderNumber();
 	}
 
+	public boolean isShowSeparateOrderItems() throws PortalException {
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		CommerceOrderCheckoutConfiguration commerceOrderCheckoutConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderCheckoutConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		return commerceOrderCheckoutConfiguration.showSeparateOrderItems();
+	}
+
 	private CommerceAccountGroupServiceConfiguration
 			_getCommerceAccountGroupServiceConfiguration()
 		throws PortalException {

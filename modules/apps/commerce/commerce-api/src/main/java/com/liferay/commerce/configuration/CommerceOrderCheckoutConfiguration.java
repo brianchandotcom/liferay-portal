@@ -36,4 +36,9 @@ public interface CommerceOrderCheckoutConfiguration {
 	)
 	public boolean hideShippingPriceZero();
 
+	@Meta.AD(
+		deflt = "false", name = "show-separate-order-items", required = false
+	)
+	public boolean showSeparateOrderItems();
+
 }

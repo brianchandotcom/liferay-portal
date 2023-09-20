@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY_DROP_ZONE_DASHED</td>
+	<td>//div[contains(@class,'empty-drop-zone--dashed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_ASSIGN_ROLES_SEGMENTS_CHECKBOX</td>
 	<td>//input[contains(@class, 'custom-control-input') and contains(@name, 'roleSegmentation')]</td>
 	<td></td>

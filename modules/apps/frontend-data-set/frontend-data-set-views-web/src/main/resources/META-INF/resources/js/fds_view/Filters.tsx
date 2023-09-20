@@ -245,13 +245,13 @@ function AddFDSFilterModalContent({
 		fieldNames?.includes(item.name) ? item.name : undefined
 	);
 
-	const CellRendererDropdown = ({
-		cellRenderers,
+	const FieldNameDropdown = ({
+		fields,
 		inUseFields,
 		namespace,
 		onItemClick,
 	}: {
-		cellRenderers: IField[];
+		fields: IField[];
 		inUseFields: (string | undefined)[];
 		namespace: string;
 		onItemClick: Function;
@@ -260,13 +260,14 @@ function AddFDSFilterModalContent({
 			<ClayDropDown
 				closeOnClick
 				menuElementAttrs={{
-					className: 'fds-cell-renderers-dropdown-menu',
+					className: 'fds-field-name-dropdown-menu',
 				}}
 				trigger={
 					<ClayButton
-						aria-labelledby={`${namespace}cellRenderersLabel`}
+						aria-labelledby={`${namespace}fieldsLabel`}
 						className="form-control form-control-select form-control-select-secondary"
 						displayType="secondary"
+						id={selectedFieldFormElementId}
 					>
 						{selectedField
 							? selectedField.label
@@ -274,8 +275,8 @@ function AddFDSFilterModalContent({
 					</ClayButton>
 				}
 			>
-				<ClayDropDown.ItemList items={cellRenderers} role="listbox">
-					{cellRenderers.map((cellRenderer) => (
+				<ClayDropDown.ItemList items={fields} role="listbox">
+					{fields.map((field) => (
 						<ClayDropDown.Item
 							className="align-items-center d-flex justify-content-between"
 							disabled={
@@ -283,13 +284,13 @@ function AddFDSFilterModalContent({
 								(filterType === EFilterType.SELECTION &&
 									!picklists.length)
 							}
-							key={cellRenderer.name}
-							onClick={() => onItemClick(cellRenderer)}
+							key={field.name}
+							onClick={() => onItemClick(field)}
 							roleItem="option"
 						>
-							{cellRenderer.label}
+							{field.label}
 
-							{inUseFields.includes(cellRenderer.name) && (
+							{inUseFields.includes(field.name) && (
 								<ClayLabel displayType="info">
 									{Liferay.Language.get('in-use')}
 								</ClayLabel>
@@ -372,8 +373,8 @@ function AddFDSFilterModalContent({
 						{Liferay.Language.get('filter-by')}
 					</label>
 
-					<CellRendererDropdown
-						cellRenderers={fields}
+					<FieldNameDropdown
+						fields={fields}
 						inUseFields={inUseFields}
 						namespace={namespace}
 						onItemClick={(item: IField) => {

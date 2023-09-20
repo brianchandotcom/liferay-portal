@@ -187,7 +187,7 @@ export function mockExperimentVariantsHistogramReq() {
 	};
 }
 
-export function mockExperimentReq({publishedDXPVariantId = null}) {
+export function mockExperimentReq({publishedDXPVariantId = null} = {}) {
 	return {
 		request: {
 			query: EXPERIMENT_QUERY,

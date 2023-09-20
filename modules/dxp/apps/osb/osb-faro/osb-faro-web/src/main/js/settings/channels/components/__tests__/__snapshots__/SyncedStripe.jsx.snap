@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SitesSyncedStriped should render 1`] = `
+exports[`SyncedStripe should render 1`] = `
 <div>
   <div
     class="sites-synced-stripe-root empty"
@@ -8,11 +8,7 @@ exports[`SitesSyncedStriped should render 1`] = `
     <div
       class="title d-flex align-items-center"
     >
-      Sites Synced: 
-      <span
-        aria-hidden="true"
-        class="loading-root center loading-animation"
-      />
+      There are 0 Sites and 0 Channels synced to this property.
     </div>
     <div>
       Manage sites synced to this property by going to 

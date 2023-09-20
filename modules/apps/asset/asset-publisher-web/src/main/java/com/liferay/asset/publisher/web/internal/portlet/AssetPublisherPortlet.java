@@ -390,7 +390,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 			if (portletDisplay != null) {
-				portletPreferences = portletDisplay.getPortletSetup();
+				portletPreferences = portletDisplay.getPortletPreferences();
 			}
 
 			AssetPublisherDisplayContext assetPublisherDisplayContext =

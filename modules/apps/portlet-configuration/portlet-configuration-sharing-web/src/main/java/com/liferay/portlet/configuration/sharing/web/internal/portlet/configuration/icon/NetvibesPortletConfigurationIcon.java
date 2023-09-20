@@ -79,7 +79,7 @@ public class NetvibesPortletConfigurationIcon
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletPreferences portletPreferences =
-			portletDisplay.getPortletSetup();
+			portletDisplay.getPortletPreferences();
 
 		boolean lfrNetvibesShowAddAppLink = GetterUtil.getBoolean(
 			portletPreferences.getValue(

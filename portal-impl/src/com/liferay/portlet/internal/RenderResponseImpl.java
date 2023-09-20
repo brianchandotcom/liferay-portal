@@ -73,14 +73,15 @@ public class RenderResponseImpl
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		String localizedCustomTitle = PortletConfigurationUtil.getPortletTitle(
-			portletDisplay.getPortletSetup(), themeDisplay.getLanguageId());
+			portletDisplay.getPortletPreferences(),
+			themeDisplay.getLanguageId());
 
 		if (Validator.isNull(localizedCustomTitle)) {
 			String siteDefaultLanguageId = LocaleUtil.toLanguageId(
 				themeDisplay.getSiteDefaultLocale());
 
 			localizedCustomTitle = PortletConfigurationUtil.getPortletTitle(
-				portletDisplay.getPortletSetup(), siteDefaultLanguageId);
+				portletDisplay.getPortletPreferences(), siteDefaultLanguageId);
 		}
 
 		if (portletDisplay.isActive() &&

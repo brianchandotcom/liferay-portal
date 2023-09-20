@@ -17,7 +17,29 @@
 #portlet_com_liferay_headless_builder_web_internal_portlet_HeadlessBuilderPortlet {
 	.card-type-asset {
 		.card-body {
-			padding: 1.5rem 2.5rem;
+			padding: 0;
+
+			.schema-fields-card-body {
+				padding-bottom: 1px;
+				padding-left: 24px;
+				padding-right: 24px;
+				padding-top: 24px;
+			}
+
+			.schema-properties-card-body {
+				max-height: calc(100vh - 343px);
+				padding-bottom: 24px;
+				padding-left: 24px;
+				padding-right: 24px;
+				padding-top: 16px;
+			}
+
+			.application-fields-card-body {
+				padding-bottom: 2px;
+				padding-left: 24px;
+				padding-right: 24px;
+				padding-top: 24px;
+			}
 
 			textarea.form-control {
 				min-height: 136px !important;
@@ -30,6 +52,10 @@
 			#hostTextPreview {
 				margin-bottom: 7px !important;
 			}
+		}
+
+		.schema-tabs {
+			padding: 0 !important;
 		}
 	}
 
@@ -64,10 +90,6 @@
 			max-height: 200px !important;
 		}
 	}
-}
-
-.schema-tabs {
-	padding: 0 !important;
 }
 
 .select-field-icon {

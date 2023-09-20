@@ -381,13 +381,15 @@ export default function EditAPIApplication({
 							</ClayModal.Header>
 
 							<ClayCard.Body>
-								<BaseAPIApplicationField
-									basePath={basePath}
-									data={localUIData}
-									disableURLAutoFill
-									displayError={displayError}
-									setData={setLocalUIData}
-								/>
+								<div className="application-fields-card-body">
+									<BaseAPIApplicationField
+										basePath={basePath}
+										data={localUIData}
+										disableURLAutoFill
+										displayError={displayError}
+										setData={setLocalUIData}
+									/>
+								</div>
 							</ClayCard.Body>
 						</ClayCard>
 					</ClayLayout.Container>

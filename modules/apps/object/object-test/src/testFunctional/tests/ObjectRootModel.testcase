@@ -1,0 +1,79 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-189378 - Verify the user cannot delete a relationship of an object definition that is bound to a root object definition"
+	@priority = 3
+	test CannotDeleteRelationshipWithChild {
+		property custom.properties = "feature.flag.LPS-187142=true";
+
+		task ("Given an object definition that is bound to a root") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 195",
+				objectName = "CustomObject195",
+				pluralLabelName = "Custom Objects 195");
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 292",
+				objectName = "CustomObject292",
+				pluralLabelName = "Custom Objects 292");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject195",
+				objectName_2 = "CustomObject292",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectAdmin.selectSpecificKebabMenuOption(
+				kebabOption = "Bind",
+				objectLabel = "Custom Object 292");
+
+			Click(locator1 = "ObjectAction#SELECT_OPTION_TYPE");
+
+			Click(
+				key_columnOption = "Custom Object 195",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+
+			Button.click(button = "Bind to Root");
+		}
+
+		task ("When the user tries to delete the relationship between them") {
+			ObjectPortlet.selectCustomObject(label = "Custom Object 195");
+
+			ObjectAdmin.gotoRelationshipsTab();
+
+			ObjectAdmin.selectKebabMenuOption(kebabOption = "Delete");
+		}
+
+		task ("Then a modal is seen and the user is prevented from deleting the relationship") {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "Deletion Not Allowed");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Modal#BODY",
+				value1 = "\"Relationship\" is being used by a root object and cannot be deleted. To delete \"Relationship\", you must first unbind it from the root object that is using it.");
+		}
+	}
+
+}

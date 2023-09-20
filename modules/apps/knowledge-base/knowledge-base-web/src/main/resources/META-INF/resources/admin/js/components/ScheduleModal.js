@@ -16,12 +16,12 @@ const noop = () => {};
 export default function ScheduleModal({
 	callback = noop,
 	displayDate: initialDisplayDate,
-	isScheduled,
+	scheduled,
 	observer,
 	onModalClose = noop,
 }) {
 	const [displayDate, setDisplayDate] = useState(
-		isScheduled ? initialDisplayDate : ''
+		scheduled ? initialDisplayDate : ''
 	);
 	const [invalidDate, setInvalidDate] = useState(false);
 
@@ -47,14 +47,14 @@ export default function ScheduleModal({
 	return (
 		<ClayModal observer={observer} size="md">
 			<ClayModal.Header>
-				{isScheduled
+				{scheduled
 					? Liferay.Language.get('edit-scheduled-publication')
 					: Liferay.Language.get('schedule-publication')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
 				<p className="text-secondary">
-					{isScheduled
+					{scheduled
 						? Liferay.Language.get(
 								'this-article-is-set-to-publish-later'
 						  )
@@ -98,7 +98,7 @@ export default function ScheduleModal({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						{isScheduled && (
+						{scheduled && (
 							<ClayButton
 								displayType="secondary"
 								onClick={publisNowButtonOnClick}
@@ -124,7 +124,7 @@ export default function ScheduleModal({
 ScheduleModal.propTypes = {
 	callback: PropTypes.func,
 	displayDate: PropTypes.string,
-	isScheduled: PropTypes.bool,
 	observer: PropTypes.object.isRequired,
 	onModalClose: PropTypes.func,
+	scheduled: PropTypes.bool,
 };

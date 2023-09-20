@@ -8,7 +8,7 @@ import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import CollectionConfiguration from '../../../../../src/main/resources/META-INF/resources/page_editor/plugins/collection-configuration/CollectionConfiguration';
+import CollectionConfiguration from '../../../../../src/main/resources/META-INF/resources/page_editor/plugins/collection_configuration/CollectionConfiguration';
 
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',

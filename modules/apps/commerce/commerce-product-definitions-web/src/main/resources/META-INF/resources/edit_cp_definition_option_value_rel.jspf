@@ -63,7 +63,17 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 				</div>
 
 				<div class="col-4">
-					<aui:input min="1" name="quantity" type="number" wrapperCssClass="mb-0" />
+					<aui:input min="0" name="quantity" type="text" wrapperCssClass="mb-0">
+						<aui:validator errorMessage='<%= LanguageUtil.format(request, "please-enter-a-value-greater-than-x", 0) %>' name="custom">
+							function(val) {
+								if (Number(val) > 0) {
+									return true;
+								}
+
+								return false;
+							}
+						</aui:validator>
+					</aui:input>
 				</div>
 
 				<div class="align-items-end col-auto d-flex">
@@ -83,7 +93,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 		CPInstance cpInstance = cpDefinitionOptionValueRel.fetchCPInstance();
 
 		if (cpInstance != null) {
-			cpInstanceId = String.valueOf(cpInstance.getCPInstanceId());
+			cpInstanceId = cpDefinitionOptionValueRelDisplayContext.getComposedCPInstanceId(cpInstance, cpDefinitionOptionValueRel.getUnitOfMeasureKey());
 			cpInstanceLabel = cpInstance.getSku();
 		}
 		%>
@@ -100,12 +110,12 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 
 			autocomplete.default('autocomplete', 'autocomplete-root', {
 				apiUrl:
-					'/o/headless-commerce-admin-catalog/v1.0/skus?filter=(hasChildCPDefinitions eq false)',
+					'/o/headless-commerce-admin-catalog/v1.0/unit-of-measure-skus?filter=(hasChildCPDefinitions eq false)',
 				initialLabel: '<%= cpInstanceLabel %>',
 				initialValue: '<%= cpInstanceId %>',
 				inputId: 'skuId',
 				inputName: '<%= liferayPortletResponse.getNamespace() %>cpInstanceId',
-				itemsKey: 'id',
+				itemsKey: 'unitOfMeasureSkuId',
 				itemsLabel: 'sku',
 				onValueUpdated: function (value) {
 					if (value) {
@@ -117,6 +127,7 @@ long cpDefinitionOptionValueRelId = cpDefinitionOptionValueRelDisplayContext.get
 						deleteButton.disabled = true;
 					}
 				},
+				secondaryItemsLabel: 'unitOfMeasureKey',
 			});
 
 			Liferay.provide(window, '<portlet:namespace />removeSku', () => {

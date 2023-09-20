@@ -12,13 +12,17 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.servlet.taglib.ui.constants.CPDefinitionScreenNavigationConstants;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.CustomAttributesUtil;
 
@@ -64,6 +68,23 @@ public class CPDefinitionOptionValueRelDisplayContext
 		return _commerceCurrencyLocalService.getCommerceCurrency(
 			commerceCatalog.getCompanyId(),
 			commerceCatalog.getCommerceCurrencyCode());
+	}
+
+	public String getComposedCPInstanceId(
+		CPInstance cpInstance, String unitOfMeasureKey) {
+
+		if (Validator.isNotNull(unitOfMeasureKey)) {
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+				cpInstance.fetchCPInstanceUnitOfMeasure(unitOfMeasureKey);
+
+			if (cpInstanceUnitOfMeasure != null) {
+				return StringBundler.concat(
+					cpInstance.getCPInstanceId(), StringPool.DASH,
+					cpInstanceUnitOfMeasure.getCPInstanceUnitOfMeasureId());
+			}
+		}
+
+		return String.valueOf(cpInstance.getCPInstanceId());
 	}
 
 	public CPDefinitionOptionRel getCPDefinitionOptionRel()

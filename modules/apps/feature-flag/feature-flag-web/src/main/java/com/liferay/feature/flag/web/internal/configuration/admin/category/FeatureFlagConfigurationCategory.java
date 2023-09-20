@@ -10,7 +10,6 @@ import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.feature.flag.web.internal.configuration.admin.display.FeatureFlagConfigurationScreen;
 import com.liferay.feature.flag.web.internal.display.FeatureFlagsDisplayContextFactory;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
@@ -58,8 +57,7 @@ public class FeatureFlagConfigurationCategory implements ConfigurationCategory {
 				bundleContext.registerService(
 					ConfigurationScreen.class,
 					new FeatureFlagConfigurationScreen(
-						_featureFlagManager, featureFlagType,
-						_featureFlagsDisplayContextFactory, i,
+						featureFlagType, _featureFlagsDisplayContextFactory, i,
 						ExtendedObjectClassDefinition.Scope.SYSTEM.getValue(),
 						_servletContext),
 					new HashMapDictionary<>()));
@@ -68,8 +66,7 @@ public class FeatureFlagConfigurationCategory implements ConfigurationCategory {
 				bundleContext.registerService(
 					ConfigurationScreen.class,
 					new FeatureFlagConfigurationScreen(
-						_featureFlagManager, featureFlagType,
-						_featureFlagsDisplayContextFactory, i,
+						featureFlagType, _featureFlagsDisplayContextFactory, i,
 						ExtendedObjectClassDefinition.Scope.COMPANY.getValue(),
 						_servletContext),
 					new HashMapDictionary<>()));
@@ -87,9 +84,6 @@ public class FeatureFlagConfigurationCategory implements ConfigurationCategory {
 		FeatureFlagType.RELEASE, FeatureFlagType.BETA,
 		FeatureFlagType.DEPRECATION, FeatureFlagType.DEV
 	};
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private FeatureFlagsDisplayContextFactory

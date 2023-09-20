@@ -113,6 +113,15 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-188909. The portal version info shouldn't be shown on the Home page."
+	@priority = 4
+	test CannotViewPortalVersionInfoOnHomePage {
+		ContentPages.viewFragmentText(
+			fragmentName = "paragraph",
+			id = "element-text",
+			text = "Enjoy using the best DXP on Earth!");
+	}
+
 	@description = "This is a test for LPS-146373. The page creator could close the left sidebar panel via the times icon."
 	@priority = 4
 	test CloseLeftPageEditorSidebar {
@@ -1145,19 +1154,6 @@ definition {
 
 			AssertElementNotPresent(locator1 = "PageEditor#ITEM_CONFIGURATION_SIDEBAR_OPEN");
 		}
-	}
-
-	@description = "This is a test for LPS-153650. The portal version info should be shown on the Home page."
-	@priority = 4
-	test ViewPortalVersionInfoOnHomePage {
-		takeScreenshot();
-
-		AssertTextMatches(
-			fragmentName = "paragraph",
-			id = "element-text",
-			index = 1,
-			locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
-			value1 = "Liferay Digital Experience Platform \/ \d+\.\d+\.\d{1,2} \([A-Z]\w+\)");
 	}
 
 }

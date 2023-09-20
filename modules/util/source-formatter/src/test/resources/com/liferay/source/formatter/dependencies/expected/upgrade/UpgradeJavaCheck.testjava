@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.dependencies.upgrade;
 
+import com.liferay.frontend.data.set.provider.search.FDSPagination;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;

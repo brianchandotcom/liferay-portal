@@ -25,14 +25,14 @@ interface ModalAddObjectRelationshipProps {
 	baseResourceURL: string;
 	handleOnClose: () => void;
 	objectDefinitionExternalReferenceCode: string;
-	parameterRequired: boolean;
+	objectRelationshipParameterRequired: boolean;
 }
 
 export function ModalAddObjectRelationship({
 	baseResourceURL,
 	handleOnClose,
 	objectDefinitionExternalReferenceCode,
-	parameterRequired,
+	objectRelationshipParameterRequired,
 }: ModalAddObjectRelationshipProps) {
 	const {observer, onClose} = useModal({
 		onClose: () => {
@@ -80,7 +80,11 @@ export function ModalAddObjectRelationship({
 		handleSubmit,
 		setValues,
 		values,
-	} = useObjectRelationshipForm({initialValues, onSubmit, parameterRequired});
+	} = useObjectRelationshipForm({
+		initialValues,
+		onSubmit,
+		parameterRequired: objectRelationshipParameterRequired,
+	});
 
 	return (
 		<ClayModalProvider>
@@ -124,7 +128,7 @@ export function ModalAddObjectRelationship({
 							}}
 						/>
 
-						{parameterRequired &&
+						{objectRelationshipParameterRequired &&
 							values.type ===
 								ObjectRelationshipType.ONE_TO_MANY && (
 								<SelectRelationship

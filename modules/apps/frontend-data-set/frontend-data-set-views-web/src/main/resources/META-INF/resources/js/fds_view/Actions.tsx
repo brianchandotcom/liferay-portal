@@ -243,9 +243,11 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 								{Liferay.Language.get('item-actions')}
 							</ClayTabs.Item>
 
-							<ClayTabs.Item>
-								{Liferay.Language.get('creation-actions')}
-							</ClayTabs.Item>
+							{Liferay.FeatureFlags['LPS-194395'] && (
+								<ClayTabs.Item>
+									{Liferay.Language.get('creation-actions')}
+								</ClayTabs.Item>
+							)}
 						</ClayTabs>
 
 						<ClayTabs.Content active={activeTab} fade>

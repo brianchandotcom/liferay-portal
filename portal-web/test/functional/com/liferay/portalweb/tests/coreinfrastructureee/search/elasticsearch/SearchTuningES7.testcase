@@ -55,6 +55,7 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	@description = "This is a use case for LPS-191998."
 	@priority = 3
 	test AssertCannotAddDuplicateQueriesAndAliases {
 		SearchTuning.openResultRankingsAdmin();
@@ -108,6 +109,22 @@ definition {
 		Button.clickSave();
 
 		Alert.viewErrorMessage(errorMessage = "Active search queries and aliases must be unique across all rankings. The following ones already exist: Journal.");
+
+		SearchTuning.openResultRankingsAdmin();
+
+		SearchTuning.addResultRanking(searchQuery = "Third Ranking");
+
+		SearchTuning.configureAliases(addAlias = "Article");
+
+		SearchTuning.configureAliases(addAlias = "Web Content");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "Error:Active search queries and aliases must be unique across all rankings. The following ones already exist: Article, Web Content.");
+
+		Refresh();
+
+		ControlMenu.viewHeaderTitle(headerTitle = "Customize Results");
 	}
 
 	@priority = 4

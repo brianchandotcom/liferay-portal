@@ -272,7 +272,7 @@ public class BatchEngineBrokerTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
-			"isEmailAddress(textObjectField)", Collections.emptyList());
+			"isEmailAddress(textObjectField)", false, Collections.emptyList());
 
 		_objectViewLocalService.addObjectView(
 			TestPropsValues.getUserId(),

@@ -47,17 +47,17 @@
 </tr>
 <tr>
 	<td>FACET_CLOUD_LAYOUT_ITEM</td>
-	<td>//section[./header[contains(@class,'portlet-topper') and contains(.,'${facetName}')]]//ul[contains(@class,'tag-cloud')]//button[contains(.,'${facetValue}')]</td>
+	<td>//section[./header[contains(@class,'portlet-topper') and contains(.,'${key_facetName}')]]//ul[contains(@class,'tag-cloud')]//button[contains(.,'${key_termValue}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FACET_COMPACT_LAYOUT_ITEM</td>
-	<td>//section[./header[contains(@class,'portlet-topper') and contains(.,'${facetName}')]]//ul[contains(@class,'list-unstyled')]//button[contains(.,'${facetValue}')]</td>
+	<td>//section[./header[contains(@class,'portlet-topper') and contains(.,'${key_facetName}')]]//ul[contains(@class,'list-unstyled')]//button[contains(.,'${key_termValue}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FACET_LABEL_LAYOUT_ITEM</td>
-	<td>//section[./header[contains(@class,'portlet-topper') and contains(.,'${facetName}')]]//div[contains(@class,'label-container')]//button[contains(.,'${facetValue}')]</td>
+	<td>//section[./header[contains(@class,'portlet-topper') and contains(.,'${key_facetName}')]]//div[contains(@class,'label-container')]//button[contains(.,'${key_termValue}')]</td>
 	<td></td>
 </tr>
 <tr>

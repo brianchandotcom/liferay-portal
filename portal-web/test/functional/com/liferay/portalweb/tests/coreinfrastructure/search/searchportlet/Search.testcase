@@ -1489,8 +1489,8 @@ definition {
 		Refresh();
 
 		AssertElementPresent(
-			facetName = "Category Facet",
-			facetValue = "Category Name",
+			key_facetName = "Category Facet",
+			key_termValue = "Category Name",
 			locator1 = "Search#FACET_CLOUD_LAYOUT_ITEM");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Category");

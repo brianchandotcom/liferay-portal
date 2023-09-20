@@ -383,8 +383,8 @@ definition {
 
 		for (var categories : list "Company,Product,Engineering") {
 			AssertElementPresent(
-				facetName = "Category Facet",
-				facetValue = ${categories},
+				key_facetName = "Category Facet",
+				key_termValue = ${categories},
 				locator1 = "Search#FACET_CLOUD_LAYOUT_ITEM");
 		}
 
@@ -396,8 +396,8 @@ definition {
 
 		for (var categories : list "Company,Product,Engineering") {
 			AssertElementPresent(
-				facetName = "Category Facet",
-				facetValue = ${categories},
+				key_facetName = "Category Facet",
+				key_termValue = ${categories},
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
@@ -409,8 +409,8 @@ definition {
 
 		for (var categories : list "Company,Product,Engineering") {
 			AssertElementPresent(
-				facetName = "Category Facet",
-				facetValue = ${categories},
+				key_facetName = "Category Facet",
+				key_termValue = ${categories},
 				locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 		}
 
@@ -473,8 +473,8 @@ definition {
 
 		for (var Document : list "dm title 1,dm title 2,dm title 3") {
 			AssertElementPresent(
-				facetName = "Custom Facet",
-				facetValue = ${Document},
+				key_facetName = "Custom Facet",
+				key_termValue = ${Document},
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
@@ -486,8 +486,8 @@ definition {
 
 		for (var Document : list "dm title 1,dm title 2,dm title 3") {
 			AssertElementPresent(
-				facetName = "Custom Facet",
-				facetValue = ${Document},
+				key_facetName = "Custom Facet",
+				key_termValue = ${Document},
 				locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 		}
 	}
@@ -523,8 +523,8 @@ definition {
 
 			for (var folders : list "Company,Engineering,Product") {
 				AssertElementPresent(
-					facetName = "Folder Facet",
-					facetValue = ${folders},
+					key_facetName = "Folder Facet",
+					key_termValue = ${folders},
 					locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 			}
 		}
@@ -538,8 +538,8 @@ definition {
 
 			for (var folders : list "Company,Engineering,Product") {
 				AssertElementPresent(
-					facetName = "Folder Facet",
-					facetValue = ${folders},
+					key_facetName = "Folder Facet",
+					key_termValue = ${folders},
 					locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 			}
 		}
@@ -732,8 +732,8 @@ definition {
 
 		for (var siteName : list "Community,Engineering,Product") {
 			AssertElementPresent(
-				facetName = "Site Facet",
-				facetValue = ${siteName},
+				key_facetName = "Site Facet",
+				key_termValue = ${siteName},
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
@@ -745,8 +745,8 @@ definition {
 
 		for (var siteName : list "Community,Engineering,Product") {
 			AssertElementPresent(
-				facetName = "Site Facet",
-				facetValue = ${siteName},
+				key_facetName = "Site Facet",
+				key_termValue = ${siteName},
 				locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 		}
 	}
@@ -771,8 +771,8 @@ definition {
 
 		for (var tagName : list "engineering,product,2021,2022") {
 			AssertElementPresent(
-				facetName = "Tag Facet",
-				facetValue = ${tagName},
+				key_facetName = "Tag Facet",
+				key_termValue = ${tagName},
 				locator1 = "Search#FACET_CLOUD_LAYOUT_ITEM");
 		}
 
@@ -784,8 +784,8 @@ definition {
 
 		for (var tagName : list "engineering,product,2021,2022") {
 			AssertElementPresent(
-				facetName = "Tag Facet",
-				facetValue = ${tagName},
+				key_facetName = "Tag Facet",
+				key_termValue = ${tagName},
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
@@ -797,8 +797,8 @@ definition {
 
 		for (var tagName : list "engineering,product,2021,2022") {
 			AssertElementPresent(
-				facetName = "Tag Facet",
-				facetValue = ${tagName},
+				key_facetName = "Tag Facet",
+				key_termValue = ${tagName},
 				locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 		}
 	}
@@ -832,8 +832,8 @@ definition {
 
 		for (var Document : list "Web Content Article,Document,Blogs Entry") {
 			AssertElementPresent(
-				facetName = "Type Facet",
-				facetValue = ${Document},
+				key_facetName = "Type Facet",
+				key_termValue = ${Document},
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
@@ -845,8 +845,8 @@ definition {
 
 		for (var Document : list "Web Content Article,Document,Blogs Entry") {
 			AssertElementPresent(
-				facetName = "Type Facet",
-				facetValue = ${Document},
+				key_facetName = "Type Facet",
+				key_termValue = ${Document},
 				locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 		}
 	}
@@ -877,8 +877,8 @@ definition {
 
 		for (var users : list "userfn1 userln1,userfn2 userln2,userfn3 userln3") {
 			AssertElementPresent(
-				facetName = "User Facet",
-				facetValue = ${users},
+				key_facetName = "User Facet",
+				key_termValue = ${users},
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
@@ -890,8 +890,8 @@ definition {
 
 		for (var users : list "userfn1 userln1,userfn2 userln2,userfn3 userln3") {
 			AssertElementPresent(
-				facetName = "User Facet",
-				facetValue = ${users},
+				key_facetName = "User Facet",
+				key_termValue = ${users},
 				locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 		}
 	}

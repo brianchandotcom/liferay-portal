@@ -5,13 +5,13 @@ definition {
 	function robotType(locator1) {
 		WaitForSPARefresh();
 
-		selenium.robotType(${locator1});
+		selenium.type();
 	}
 
 	function robotTypeShortcut(locator1) {
 		WaitForSPARefresh();
 
-		selenium.robotTypeShortcut(${locator1});
+		selenium.sendKeys();
 	}
 
 }

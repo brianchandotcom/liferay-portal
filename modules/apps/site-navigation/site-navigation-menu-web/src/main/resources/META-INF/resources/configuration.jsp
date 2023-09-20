@@ -44,11 +44,11 @@ SiteNavigationMenuConfigurationDisplayContext siteNavigationMenuConfigurationDis
 					<aui:select disabled="<%= siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected() %>" label="" name="selectSiteNavigationMenuType" value="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() %>">
 
 						<%
-						String pagesLabel = siteNavigationMenuConfigurationDisplayContext.getPagesLabel();
+						String layoutsLabel = siteNavigationMenuConfigurationDisplayContext.getLayoutsLabel();
 						%>
 
-						<c:if test="<%= Validator.isNotNull(pagesLabel) %>">
-							<aui:option label="<%= pagesLabel %>" selected="<%= siteNavigationMenuConfigurationDisplayContext.isPagesSelected() %>" value="<%= siteNavigationMenuConfigurationDisplayContext.getPagesValue() %>" />
+						<c:if test="<%= Validator.isNotNull(layoutsLabel) %>">
+							<aui:option label="<%= layoutsLabel %>" selected="<%= siteNavigationMenuConfigurationDisplayContext.isLayoutsSelected() %>" value="<%= siteNavigationMenuConfigurationDisplayContext.getLayoutsValue() %>" />
 						</c:if>
 
 						<aui:option label="primary-navigation" selected="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType() == SiteNavigationConstants.TYPE_PRIMARY %>" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" />

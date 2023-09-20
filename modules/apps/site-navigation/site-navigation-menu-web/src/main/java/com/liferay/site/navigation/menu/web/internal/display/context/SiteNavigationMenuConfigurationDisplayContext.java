@@ -29,9 +29,9 @@ public class SiteNavigationMenuConfigurationDisplayContext {
 		_siteNavigationMenuDisplayContext = siteNavigationMenuDisplayContext;
 	}
 
-	public String getPagesLabel() {
-		if (_pagesLabel != null) {
-			return _pagesLabel;
+	public String getLayoutsLabel() {
+		if (_layoutsLabel != null) {
+			return _layoutsLabel;
 		}
 
 		ThemeDisplay themeDisplay =
@@ -46,38 +46,38 @@ public class SiteNavigationMenuConfigurationDisplayContext {
 				(scopeGroup.hasPublicLayouts() ||
 				 scopeGroup.hasPrivateLayouts())) {
 
-				_pagesLabel = "pages-hierarchy";
+				_layoutsLabel = "pages-hierarchy";
 			}
 			else if (scopeGroup.hasPublicLayouts() && layout.isPublicLayout()) {
-				_pagesLabel = "public-pages-hierarchy";
+				_layoutsLabel = "public-pages-hierarchy";
 			}
 			else if (scopeGroup.hasPrivateLayouts() &&
 					 layout.isPrivateLayout()) {
 
-				_pagesLabel = "private-pages-hierarchy";
+				_layoutsLabel = "private-pages-hierarchy";
 			}
 			else {
-				_pagesLabel = StringPool.BLANK;
+				_layoutsLabel = StringPool.BLANK;
 			}
 
-			return _pagesLabel;
+			return _layoutsLabel;
 		}
 
 		if (scopeGroup.hasPublicLayouts() &&
 			(hasLayoutPageTemplateEntry() || layout.isPublicLayout())) {
 
-			_pagesLabel = "pages-hierarchy";
+			_layoutsLabel = "pages-hierarchy";
 		}
 		else {
-			_pagesLabel = StringPool.BLANK;
+			_layoutsLabel = StringPool.BLANK;
 		}
 
-		return _pagesLabel;
+		return _layoutsLabel;
 	}
 
-	public int getPagesValue() {
-		if (_pagesValue != null) {
-			return _pagesValue;
+	public int getLayoutsValue() {
+		if (_layoutsValue != null) {
+			return _layoutsValue;
 		}
 
 		ThemeDisplay themeDisplay =
@@ -90,41 +90,41 @@ public class SiteNavigationMenuConfigurationDisplayContext {
 		if (scopeGroup.isPrivateLayoutsEnabled()) {
 			if (!hasLayoutPageTemplateEntry()) {
 				if (scopeGroup.hasPublicLayouts() && layout.isPublicLayout()) {
-					_pagesValue =
+					_layoutsValue =
 						SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY;
 				}
 				else if (scopeGroup.hasPrivateLayouts() &&
 						 layout.isPrivateLayout()) {
 
-					_pagesValue =
+					_layoutsValue =
 						SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY;
 				}
 			}
 
-			if (_pagesValue == null) {
-				_pagesValue = SiteNavigationConstants.TYPE_DEFAULT;
+			if (_layoutsValue == null) {
+				_layoutsValue = SiteNavigationConstants.TYPE_DEFAULT;
 			}
 
-			return _pagesValue;
+			return _layoutsValue;
 		}
 
 		if (scopeGroup.hasPublicLayouts()) {
 			if (hasLayoutPageTemplateEntry()) {
-				_pagesValue = SiteNavigationConstants.TYPE_DEFAULT;
+				_layoutsValue = SiteNavigationConstants.TYPE_DEFAULT;
 			}
 			else if (layout.isPublicLayout()) {
-				_pagesValue =
+				_layoutsValue =
 					SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY;
 			}
 			else {
-				_pagesValue = SiteNavigationConstants.TYPE_DEFAULT;
+				_layoutsValue = SiteNavigationConstants.TYPE_DEFAULT;
 			}
 		}
 		else {
-			_pagesValue = SiteNavigationConstants.TYPE_DEFAULT;
+			_layoutsValue = SiteNavigationConstants.TYPE_DEFAULT;
 		}
 
-		return _pagesValue;
+		return _layoutsValue;
 	}
 
 	public boolean hasLayoutPageTemplateEntry() {
@@ -158,29 +158,29 @@ public class SiteNavigationMenuConfigurationDisplayContext {
 		return _hasLayoutPageTemplateEntry;
 	}
 
-	public boolean isPagesSelected() {
-		if (_pagesSelected != null) {
-			return _pagesSelected;
+	public boolean isLayoutsSelected() {
+		if (_layoutsSelected != null) {
+			return _layoutsSelected;
 		}
 
 		int selectSiteNavigationMenuType =
 			_siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuType();
 
-		if (selectSiteNavigationMenuType == getPagesValue()) {
-			_pagesSelected = true;
+		if (selectSiteNavigationMenuType == getLayoutsValue()) {
+			_layoutsSelected = true;
 		}
 		else {
-			_pagesSelected = false;
+			_layoutsSelected = false;
 		}
 
-		return _pagesSelected;
+		return _layoutsSelected;
 	}
 
 	private Boolean _hasLayoutPageTemplateEntry;
 	private final HttpServletRequest _httpServletRequest;
-	private String _pagesLabel;
-	private Boolean _pagesSelected;
-	private Integer _pagesValue;
+	private String _layoutsLabel;
+	private Boolean _layoutsSelected;
+	private Integer _layoutsValue;
 	private final SiteNavigationMenuDisplayContext
 		_siteNavigationMenuDisplayContext;
 

@@ -22,7 +22,7 @@ public class UpgradeJavaMultiVMPoolUtilCheck
 		String fileName, String absolutePath, String content,
 		String newContent) {
 
-		newContent = addNewImports(newContent);
+		newContent = addNewImports(fileName, newContent);
 		newContent = StringUtil.replace(
 			newContent, "MultiVMPoolUtil.getPortalCache(",
 			_WARNING_CASE_TYPE + " _multiVMPool.getPortalCache(");

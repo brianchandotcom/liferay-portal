@@ -1435,6 +1435,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WAREHOUSE_INVENTORY_ITEM_UNIT_OF_MEASURE</td>
+	<td>//tr[@data-index="${key_index}"]//td[contains(.,'${key_warehouseName}')]//following-sibling::td[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INVENTORY_BY_WAREHOUSE_NAME</td>
 	<td>//div[contains(@class,'dnd-tbody')]//div[contains(@class,'dnd-td')][1]</td>
 	<td></td>

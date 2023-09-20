@@ -38,7 +38,8 @@ public class APIApplicationPublisherPortalInstanceLifecycleListener
 				_apiApplicationProvider.getPublishedAPIApplications(
 					company.getCompanyId())) {
 
-			_apiApplicationPublisher.publish(apiApplication);
+			_apiApplicationPublisher.publish(
+				apiApplication.getBaseURL(), apiApplication.getCompanyId());
 		}
 	}
 

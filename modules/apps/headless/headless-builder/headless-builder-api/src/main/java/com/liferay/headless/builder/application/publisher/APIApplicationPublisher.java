@@ -5,14 +5,12 @@
 
 package com.liferay.headless.builder.application.publisher;
 
-import com.liferay.headless.builder.application.APIApplication;
-
 /**
  * @author Luis Miguel Barcos
  */
 public interface APIApplicationPublisher {
 
-	public void publish(APIApplication apiApplication) throws Exception;
+	public void publish(String baseURL, long companyId) throws Exception;
 
 	public void unpublish(String baseURL, long companyId);
 

@@ -311,6 +311,10 @@ public interface LayoutPageTemplateEntryService extends BaseService {
 		throws PortalException;
 
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+			long layoutPageTemplateEntryId, long classNameId, long classTypeId)
+		throws PortalException;
+
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long layoutPageTemplateEntryId, String name)
 		throws PortalException;
 

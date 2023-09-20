@@ -2228,6 +2228,50 @@ public class LayoutPageTemplateEntryServiceHttp {
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
+			updateLayoutPageTemplateEntry(
+				HttpPrincipal httpPrincipal, long layoutPageTemplateEntryId,
+				long classNameId, long classTypeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutPageTemplateEntryServiceUtil.class,
+				"updateLayoutPageTemplateEntry",
+				_updateLayoutPageTemplateEntryParameterTypes56);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, layoutPageTemplateEntryId, classNameId, classTypeId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.layout.page.template.model.
+				LayoutPageTemplateEntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry
 			updateStatus(
 				HttpPrincipal httpPrincipal, long layoutPageTemplateEntryId,
 				int status)
@@ -2236,7 +2280,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutPageTemplateEntryServiceUtil.class, "updateStatus",
-				_updateStatusParameterTypes56);
+				_updateStatusParameterTypes57);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, layoutPageTemplateEntryId, status);
@@ -2521,7 +2565,11 @@ public class LayoutPageTemplateEntryServiceHttp {
 		_updateLayoutPageTemplateEntryParameterTypes55 = new Class[] {
 			long.class, String.class
 		};
-	private static final Class<?>[] _updateStatusParameterTypes56 =
+	private static final Class<?>[]
+		_updateLayoutPageTemplateEntryParameterTypes56 = new Class[] {
+			long.class, long.class, long.class
+		};
+	private static final Class<?>[] _updateStatusParameterTypes57 =
 		new Class[] {long.class, int.class};
 
 }

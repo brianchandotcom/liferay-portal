@@ -587,6 +587,14 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 	}
 
 	public static LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+			long layoutPageTemplateEntryId, long classNameId, long classTypeId)
+		throws PortalException {
+
+		return getService().updateLayoutPageTemplateEntry(
+			layoutPageTemplateEntryId, classNameId, classTypeId);
+	}
+
+	public static LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
 			long userId, long layoutPageTemplateEntryId, String name,
 			int status)
 		throws PortalException {

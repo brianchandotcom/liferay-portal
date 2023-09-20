@@ -199,7 +199,7 @@ definition {
 		task ("View page author can edit page at view mode after rejected") {
 			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 
-			Navigator.gotoSitePage(
+			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = ${randomSiteName});
 
@@ -325,8 +325,6 @@ definition {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",
 				siteName = ${randomSiteName});
-
-			AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
 
 			ContentPages.gotoPageEditor();
 

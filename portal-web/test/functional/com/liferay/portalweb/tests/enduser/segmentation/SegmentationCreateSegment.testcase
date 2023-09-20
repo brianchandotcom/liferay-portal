@@ -25,25 +25,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-
-		JSONUser.tearDownNonAdminUsers();
-
-		JSONOrganization.deleteOrganizationByName(
-			organizationName = "Organization Name",
-			parentOrganizationName = "Parent Organization Name");
-
-		JSONOrganization.deleteOrganizationByName(organizationName = "Parent Organization Name");
-	}
-
 	@description = "This is a test for LPS-187282. The segment designer could add a segment based on organization category criteria."
 	@priority = 5
 	test AddSegmentByOrganizationCategory {

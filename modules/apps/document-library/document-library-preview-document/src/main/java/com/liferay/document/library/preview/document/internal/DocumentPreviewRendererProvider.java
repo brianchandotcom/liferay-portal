@@ -45,7 +45,11 @@ public class DocumentPreviewRendererProvider
 	public DLPreviewRenderer getPreviewDLPreviewRenderer(
 		FileVersion fileVersion) {
 
-		if (!PDFProcessorUtil.isDocumentSupported(fileVersion)) {
+		if ((fileVersion == null) || (fileVersion.getSize() == 0) ||
+			(!PDFProcessorUtil.hasImages(fileVersion) &&
+			 !PDFProcessorUtil.isDocumentSupported(
+				 fileVersion.getMimeType()))) {
+
 			return null;
 		}
 

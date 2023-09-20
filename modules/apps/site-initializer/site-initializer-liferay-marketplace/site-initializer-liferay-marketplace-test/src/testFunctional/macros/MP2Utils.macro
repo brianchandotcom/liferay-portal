@@ -8,14 +8,6 @@ definition {
 		}
 	}
 
-	macro assertUserInfoAtTable {
-		for (var text : list ${textList}) {
-			var key_text = ${text};
-
-			AssertVisible(locator1 = "MP2Utils#RESPONSIVE_TABLE");
-		}
-	}
-
 	macro firstLoginMKT {
 		var baseURL = PropsUtil.get("portal.url");
 
@@ -25,7 +17,7 @@ definition {
 
 		var userPassword = selenium.getText("MP2Utils#MOCKMOCK_HTML_BODY_FORMATTED");
 
-		Navigator.openSpecificURL(url = "${baseURL}/c/login?redirect=/web/marketplace-site/publisher-dashboard");
+		Navigator.openSpecificURL(url = "${baseURL}/c/login?redirect=/web/marketplace-site/loading");
 
 		Type(
 			locator1 = "TextInput#EMAIL_ADDRESS",

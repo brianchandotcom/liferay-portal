@@ -110,7 +110,7 @@ export default function SidebarHeader({
 						<ClayResultsBar>
 							<ClayResultsBar.Item className="results-angle-left">
 								<ClayButtonWithIcon
-									aria-label="Back"
+									aria-label={Liferay.Language.get('back')}
 									displayType="unstyled"
 									onClick={() =>
 										navHistory.length > 1 &&

@@ -4,8 +4,7 @@
  */
 
 import {TOGGLE_WIDGET_HIGHLIGHTED, UPDATE_WIDGETS} from '../actions/types';
-
-const HIGHLIGHTED_CATEGORY_ID = 'root--category-highlighted';
+import {HIGHLIGHTED_CATEGORY_ID} from '../config/constants/highlightedCategoryId';
 
 const DEFAULT_HIGHLIGHTED_CATEGORY = {
 	categories: [],

@@ -10,12 +10,11 @@ import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
+import {HIGHLIGHTED_COLLECTION_ID} from '../../../app/config/constants/highlightedCollectionId';
 import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
 import {config} from '../../../app/config/index';
 import useKeyboardNavigation from '../hooks/useKeyboardNavigation';
 import TabItem from './TabItem';
-
-const HIGHLIGHTED_COLLECTION_ID = 'highlighted';
 
 export default function TabCollection({
 	collection,

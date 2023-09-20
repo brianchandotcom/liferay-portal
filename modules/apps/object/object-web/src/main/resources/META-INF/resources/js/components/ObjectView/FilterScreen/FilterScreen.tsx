@@ -124,19 +124,7 @@ export function FilterScreen() {
 		<>
 			<Card title={Liferay.Language.get('filters')}>
 				<BuilderScreen
-					creationLanguageId={creationLanguageId}
-					emptyState={{
-						buttonText: Liferay.Language.get('new-filter'),
-						description: Liferay.Language.get(
-							'start-creating-a-filter-to-display-specific-data'
-						),
-						title: Liferay.Language.get(
-							'no-filter-was-created-yet'
-						),
-					}}
-					filter
-					firstColumnHeader={Liferay.Language.get('filter-by')}
-					objectColumns={
+					builderScreenItems={
 						objectViewFilterColumns.map((filterColumn) => {
 							if (
 								filterColumn.objectFieldName === 'createDate' ||
@@ -152,6 +140,18 @@ export function FilterScreen() {
 							}
 						}) ?? []
 					}
+					creationLanguageId={creationLanguageId}
+					emptyState={{
+						buttonText: Liferay.Language.get('new-filter'),
+						description: Liferay.Language.get(
+							'start-creating-a-filter-to-display-specific-data'
+						),
+						title: Liferay.Language.get(
+							'no-filter-was-created-yet'
+						),
+					}}
+					filter
+					firstColumnHeader={Liferay.Language.get('filter-by')}
 					onDeleteColumn={handleDeleteColumn}
 					onEditing={setEditingFilter}
 					onEditingObjectFieldName={setEditingObjectFieldName}

@@ -33,6 +33,7 @@ export function UniqueCompositeKey({
 				title={Liferay.Language.get('fields')}
 			>
 				<BuilderScreen
+					builderScreenItems={[]}
 					emptyState={{
 						buttonText: Liferay.Language.get('add-fields'),
 						description: Liferay.Language.get(
@@ -41,7 +42,6 @@ export function UniqueCompositeKey({
 						title: Liferay.Language.get('no-fields-added-yet'),
 					}}
 					firstColumnHeader={Liferay.Language.get('label')}
-					objectColumns={[]}
 					onDeleteColumn={() => {}}
 					openModal={() => {}}
 					secondColumnHeader={Liferay.Language.get('type')}

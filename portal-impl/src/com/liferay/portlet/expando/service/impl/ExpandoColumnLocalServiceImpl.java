@@ -199,7 +199,7 @@ public class ExpandoColumnLocalServiceImpl
 	public ExpandoColumn getColumn(
 		long companyId, String className, String tableName, String name) {
 
-		return getColumn(
+		return fetchColumn(
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName, name);
 	}
@@ -298,7 +298,7 @@ public class ExpandoColumnLocalServiceImpl
 	public ExpandoColumn getDefaultTableColumn(
 		long companyId, long classNameId, String name) {
 
-		return getColumn(
+		return fetchColumn(
 			companyId, classNameId, ExpandoTableConstants.DEFAULT_TABLE_NAME,
 			name);
 	}
@@ -307,7 +307,7 @@ public class ExpandoColumnLocalServiceImpl
 	public ExpandoColumn getDefaultTableColumn(
 		long companyId, String className, String name) {
 
-		return getColumn(
+		return fetchColumn(
 			companyId, _classNameLocalService.getClassNameId(className),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME, name);
 	}

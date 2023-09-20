@@ -23,7 +23,7 @@ interface AggregationSourcePropertyProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldSettings: ObjectFieldSetting[];
 	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
-	onRelationshipChange?: (
+	onObjectRelationshipChange?: (
 		objectDefinitionExternalReferenceCode2: string
 	) => void;
 	setValues: (values: Partial<ObjectField>) => void;
@@ -64,7 +64,7 @@ export function AggregationFormBase({
 	errors,
 	editingObjectField,
 	onAggregationFilterChange,
-	onRelationshipChange,
+	onObjectRelationshipChange,
 	objectDefinitionExternalReferenceCode,
 	objectFieldSettings = [],
 	setValues,
@@ -158,8 +158,8 @@ export function AggregationFormBase({
 							relatedField.name === settings.objectFieldName
 					) as ObjectField;
 
-					if (onRelationshipChange) {
-						onRelationshipChange(
+					if (onObjectRelationshipChange) {
+						onObjectRelationshipChange(
 							currentRelatedObjectRelationship.objectDefinitionExternalReferenceCode2
 						);
 					}
@@ -200,7 +200,7 @@ export function AggregationFormBase({
 		editingObjectField,
 		objectRelationships,
 		objectFieldSettings,
-		onRelationshipChange,
+		onObjectRelationshipChange,
 	]);
 
 	const handleChangeRelatedObjectRelationship = async (
@@ -253,8 +253,8 @@ export function AggregationFormBase({
 			objectFieldSettings: newObjectFieldSettings,
 		});
 
-		if (onRelationshipChange) {
-			onRelationshipChange(
+		if (onObjectRelationshipChange) {
+			onObjectRelationshipChange(
 				objectRelationship.objectDefinitionExternalReferenceCode2
 			);
 		}

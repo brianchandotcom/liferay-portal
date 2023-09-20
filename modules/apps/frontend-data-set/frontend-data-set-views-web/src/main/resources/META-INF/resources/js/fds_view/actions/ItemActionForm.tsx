@@ -8,6 +8,7 @@ import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
+import classNames from 'classnames';
 import {InputLocalized} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -15,6 +16,7 @@ import React, {useEffect, useState} from 'react';
 import {API_URL, OBJECT_RELATIONSHIP} from '../../Constants';
 import {FDSViewType} from '../../FDSViews';
 import RequiredMark from '../../components/RequiredMark';
+import ValidationFeedback from '../../components/ValidationFeedback';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {IFDSAction} from '../Actions';
@@ -49,6 +51,9 @@ const TYPES = [
 	},
 ];
 
+const translationExists = ({translations}: {translations: any}) => {
+	return Boolean(Object.keys(translations).find((key) => translations[key]));
+};
 interface IFDSItemActionFormProps {
 	editing?: boolean;
 	fdsView: FDSViewType;
@@ -84,7 +89,9 @@ const ItemActionForm = ({
 	const [labelTranslations, setLabelTranslations] = useState(
 		initialValues?.label_i18n ?? {}
 	);
-	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
+	const [labelValidationError, setLabelValidationError] = useState(false);
+	const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
+	const [urlValidationError, setURLValidationError] = useState(false);
 
 	const [actionData, setActionData] = useState({
 		confirmationMessage: initialValues?.confirmationMessage ?? '',
@@ -169,6 +176,27 @@ const ItemActionForm = ({
 		loadFDSActions();
 	};
 
+	const validateForm = () => {
+		let valid = true;
+
+		if (!actionData.url) {
+			valid = false;
+		}
+
+		if (
+			Liferay.FeatureFlags['LPS-172017'] &&
+			!translationExists({translations: labelTranslations})
+		) {
+			valid = false;
+		}
+
+		if (!Liferay.FeatureFlags['LPS-172017'] && !actionData.label) {
+			valid = false;
+		}
+
+		setSaveButtonDisabled(!valid);
+	};
+
 	useEffect(() => {
 		const getIcons = async () => {
 			const response = await fetch(spritemap);
@@ -225,7 +253,23 @@ const ItemActionForm = ({
 						<ClayLayout.Col size={8}>
 							{Liferay.FeatureFlags['LPS-172017'] ? (
 								<InputLocalized
+									error={
+										labelValidationError
+											? Liferay.Language.get(
+													'this-field-is-required'
+											  )
+											: undefined
+									}
 									label={Liferay.Language.get('label')}
+									onBlur={() => {
+										setLabelValidationError(
+											!translationExists({
+												translations: labelTranslations,
+											})
+										);
+
+										validateForm();
+									}}
 									onChange={setLabelTranslations}
 									placeholder={Liferay.Language.get(
 										'action-name'
@@ -234,13 +278,24 @@ const ItemActionForm = ({
 									translations={labelTranslations}
 								/>
 							) : (
-								<ClayForm.Group>
+								<ClayForm.Group
+									className={classNames({
+										'has-error': labelValidationError,
+									})}
+								>
 									<label htmlFor={labelFormElementId}>
 										{Liferay.Language.get('label')}
 									</label>
 
 									<ClayInput
 										id={labelFormElementId}
+										onBlur={() => {
+											setLabelValidationError(
+												!actionData.label
+											);
+
+											validateForm();
+										}}
 										onChange={(event) =>
 											setActionData({
 												...actionData,
@@ -250,6 +305,10 @@ const ItemActionForm = ({
 										type="text"
 										value={actionData.label}
 									/>
+
+									{labelValidationError && (
+										<ValidationFeedback />
+									)}
 								</ClayForm.Group>
 							)}
 						</ClayLayout.Col>
@@ -281,12 +340,11 @@ const ItemActionForm = ({
 											label: Liferay.Language.get(
 												'select'
 											),
-											selected: true,
 											value: '',
 										},
 										...availableIconSymbols,
 									]}
-									value={actionData.iconSymbol}
+									value={actionData.iconSymbol || ''}
 								/>
 							</ClayForm.Group>
 						</ClayLayout.Col>
@@ -330,7 +388,11 @@ const ItemActionForm = ({
 
 					<ClayLayout.Row justify="start">
 						<ClayLayout.Col lg>
-							<ClayForm.Group>
+							<ClayForm.Group
+								className={classNames({
+									'has-error': urlValidationError,
+								})}
+							>
 								<label htmlFor={urlFormElementId}>
 									{Liferay.Language.get('url')}
 
@@ -340,6 +402,11 @@ const ItemActionForm = ({
 								<ClayInput
 									component="textarea"
 									id={urlFormElementId}
+									onBlur={() => {
+										setURLValidationError(!actionData.url);
+
+										validateForm();
+									}}
 									onChange={(event) =>
 										setActionData({
 											...actionData,
@@ -351,6 +418,8 @@ const ItemActionForm = ({
 									)}
 									value={actionData.url}
 								/>
+
+								{urlValidationError && <ValidationFeedback />}
 							</ClayForm.Group>
 
 							<ClayForm.Group>

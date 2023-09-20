@@ -5,7 +5,7 @@
 
 import ClayLocalizedInput from '@clayui/localized-input';
 import classNames from 'classnames';
-import React, {useEffect, useState} from 'react';
+import React, {FocusEventHandler, useEffect, useState} from 'react';
 
 import FieldBase from '../common/FieldBase';
 
@@ -19,6 +19,7 @@ interface InputLocalizedProps {
 	id?: string;
 	label: string;
 	name?: string;
+	onBlur?: FocusEventHandler<HTMLInputElement>;
 	onChange: (
 		value: Liferay.Language.LocalizedValue<string>,
 		locale: InputLocale
@@ -53,6 +54,7 @@ export default function InputLocalized({
 	id,
 	label,
 	name,
+	onBlur,
 	onChange,
 	onSelectedLocaleChange,
 	placeholder,
@@ -101,6 +103,7 @@ export default function InputLocalized({
 				label=""
 				locales={availableLocales}
 				name={name}
+				onBlur={onBlur}
 				onSelectedLocaleChange={(locale) => {
 					setLocale(locale as InputLocale);
 					onChange(translations, locale as InputLocale);

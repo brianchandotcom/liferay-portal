@@ -9,8 +9,6 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.model.CommerceMoneyFactoryUtil;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalServiceUtil;
-import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -22,12 +20,6 @@ public class CommercePriceEntryImpl extends CommercePriceEntryBaseImpl {
 	public CommercePriceList getCommercePriceList() throws PortalException {
 		return CommercePriceListLocalServiceUtil.getCommercePriceList(
 			getCommercePriceListId());
-	}
-
-	@Override
-	public CPInstance getCPInstance() throws PortalException {
-		return CPInstanceLocalServiceUtil.getCProductInstance(
-			getCProductId(), getCPInstanceUuid());
 	}
 
 	@Override

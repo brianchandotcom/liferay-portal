@@ -5,7 +5,7 @@
 
 package com.liferay.layout.locked.layouts.web.internal.portal.settings.configuration.admin.display;
 
-import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsConfiguration;
+import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsCompanyConfiguration;
 import com.liferay.layout.locked.layouts.web.internal.display.context.LockedLayoutsConfigurationDisplayContext;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lourdes Fernández Besada
  */
 @Component(
-	configurationPid = "com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsConfiguration",
+	configurationPid = "com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsCompanyConfiguration",
 	service = PortalSettingsConfigurationScreenContributor.class
 )
 public class LockedLayoutsPortalSettingsConfigurationScreenContributor
@@ -98,7 +98,7 @@ public class LockedLayoutsPortalSettingsConfigurationScreenContributor
 				new LockedLayoutsConfigurationDisplayContext(
 					_hasConfiguration(themeDisplay.getCompanyId()),
 					_configurationProvider.getCompanyConfiguration(
-						LockedLayoutsConfiguration.class,
+						LockedLayoutsCompanyConfiguration.class,
 						themeDisplay.getCompanyId())));
 		}
 		catch (PortalException portalException) {
@@ -112,7 +112,7 @@ public class LockedLayoutsPortalSettingsConfigurationScreenContributor
 		try {
 			String filterString = StringBundler.concat(
 				"(&(", ConfigurationAdmin.SERVICE_FACTORYPID, StringPool.EQUAL,
-				LockedLayoutsConfiguration.class.getName(), ".scoped",
+				LockedLayoutsCompanyConfiguration.class.getName(), ".scoped",
 				")(companyId=", companyId, "))");
 
 			Configuration[] configuration =

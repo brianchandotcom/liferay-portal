@@ -17,10 +17,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsConfiguration",
+	id = "com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsCompanyConfiguration",
 	localization = "content/Language", name = "locked-pages-configuration-name"
 )
-public interface LockedLayoutsConfiguration {
+public interface LockedLayoutsCompanyConfiguration {
 
 	@Meta.AD(
 		deflt = "true", name = "allow-automatic-unlocking-process",

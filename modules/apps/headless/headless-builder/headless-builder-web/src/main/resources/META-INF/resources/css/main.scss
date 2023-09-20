@@ -140,11 +140,25 @@
 
 			.treeview-container {
 				flex-direction: column;
-				margin-top: 24px;
+				margin-top: 12px;
+				max-height: calc(100vh - 461px);
+				max-width: calc(100vw - 416px);
+				overflow-y: auto;
+
+				ul.treeview {
+					gap: 5px;
+				}
 
 				.treeview-item {
 					.treeview-link {
+						padding-left: 16px !important;
+
+						span.treeview-item-label {
+							margin-left: 5px;
+						}
+
 						.treeview-item-path {
+							color: $gray-600;
 							display: none !important;
 						}
 
@@ -152,7 +166,16 @@
 							span.treeview-item-path {
 								display: inline-block !important;
 							}
+
+							span.treeview-item-label {
+								display: inline-block !important;
+								text-decoration: underline;
+							}
 						}
+					}
+
+					.quick-action-item {
+						color: $gray-600;
 					}
 				}
 			}

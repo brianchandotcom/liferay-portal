@@ -170,7 +170,7 @@ export default function PropertiesTreeView({
 						>
 							<ClayIcon symbol={getIconName(businessType)} />
 
-							{name}
+							<span className="treeview-item-label">{name}</span>
 
 							<span className="text-truncate treeview-item-path">
 								&nbsp;

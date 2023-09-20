@@ -162,13 +162,17 @@ export default function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 					</label>
 
 					<ClayDropDown
-						closeOnClick={true}
+						closeOnClick
 						closeOnClickOutside
-						menuWidth="full"
+						menuWidth="sm"
 						trigger={
-							<button className="form-control form-control-select">
+							<ClayButton
+								aria-label={Liferay.Language.get('scope')}
+								className="form-control form-control-select"
+								displayType="unstyled"
+							>
 								{SCOPE_LABELS[scopeType]}
-							</button>
+							</ClayButton>
 						}
 					>
 						<ClayDropDown.ItemList items={_getScopeTypeOptions()}>

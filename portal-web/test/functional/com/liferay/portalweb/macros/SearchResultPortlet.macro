@@ -130,33 +130,41 @@ definition {
 	}
 
 	macro viewMultipleSearchResults {
-		if (!(contains(${resultsList}, "/"))) {
-			fail("You must pass in a list with title and type separated by '/'.");
+		if (contains(${resultsList}, "/")) {
+			for (var titleAndType : list ${resultsList}) {
+				var searchAssetTitle = StringUtil.extractFirst(${titleAndType}, "/");
+				var searchAssetType = StringUtil.extractLast(${titleAndType}, "/");
+
+				SearchResultPortlet.viewSearchResults(
+					searchAssetTitle = ${searchAssetTitle},
+					searchAssetType = ${searchAssetType},
+					searchTerm = ${searchTerm});
+			}
 		}
-
-		for (var titleAndType : list ${resultsList}) {
-			var searchAssetTitle = StringUtil.extractFirst(${titleAndType}, "/");
-			var searchAssetType = StringUtil.extractLast(${titleAndType}, "/");
-
-			SearchResultPortlet.viewSearchResults(
-				searchAssetTitle = ${searchAssetTitle},
-				searchAssetType = ${searchAssetType},
-				searchTerm = ${searchTerm});
+		else {
+			for (var searchAssetTitle : list ${resultsList}) {
+				SearchResultPortlet.viewSearchResults(
+					searchAssetTitle = ${searchAssetTitle},
+					searchTerm = ${searchTerm});
+			}
 		}
 	}
 
 	macro viewMultipleSearchResultsNotPresent {
-		if (!(contains(${noResultsList}, "/"))) {
-			fail("You must pass in a list with title and type separated by '/'.");
+		if (contains(${noResultsList}, "/")) {
+			for (var titleAndType : list ${noResultsList}) {
+				var searchAssetTitle = StringUtil.extractFirst(${titleAndType}, "/");
+				var searchAssetType = StringUtil.extractLast(${titleAndType}, "/");
+
+				SearchResultPortlet.viewSearchResultNotPresent(
+					searchAssetTitle = ${searchAssetTitle},
+					searchAssetType = ${searchAssetType});
+			}
 		}
-
-		for (var titleAndType : list ${noResultsList}) {
-			var searchAssetTitle = StringUtil.extractFirst(${titleAndType}, "/");
-			var searchAssetType = StringUtil.extractLast(${titleAndType}, "/");
-
-			SearchResultPortlet.viewSearchResultNotPresent(
-				searchAssetTitle = ${searchAssetTitle},
-				searchAssetType = ${searchAssetType});
+		else {
+			for (var searchAssetTitle : list ${resultsList}) {
+				SearchResultPortlet.viewSearchResultNotPresent(searchAssetTitle = ${searchAssetTitle});
+			}
 		}
 	}
 

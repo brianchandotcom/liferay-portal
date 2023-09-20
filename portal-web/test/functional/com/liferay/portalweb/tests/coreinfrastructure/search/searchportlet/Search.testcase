@@ -371,7 +371,7 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "tree.png/Document,stars.png/Document,satellite.png/Document,moon.png/Document,earth.png/Document,Home/Page,Test Test/User",
+			resultsList = "tree.png,stars.png,satellite.png,moon.png,earth.png,Home,Test Test",
 			searchTerm = "test");
 
 		SearchPortlets.configureSearchOptions(allowEmptySearches = "true");
@@ -381,7 +381,7 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "tree.png/Document,stars.png/Document,satellite.png/Document,moon.png/Document,earth.png/Document,Search/Page,Home/Page,Test Test/User",
+			resultsList = "tree.png,stars.png,satellite.png,moon.png,earth.png,Search,Home,Test Test",
 			searchTerm = "");
 	}
 
@@ -449,7 +449,7 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "tree.png/Document,stars.png/Document,satellite.png/Document,moon.png/Document,earth.png/Document,Home/Page,Test Test/User",
+			resultsList = "tree.png,stars.png,satellite.png,moon.png,earth.png,Home,Test Test",
 			searchTerm = "test");
 
 		User.logoutAndLoginPG(
@@ -793,7 +793,7 @@ definition {
 
 		task ("Assert the web content structure articles still appear in the search results and the basic web content article does not") {
 			SearchResultPortlet.viewMultipleSearchResults(
-				resultsList = "Fruit 1/Web Content Article,Fruit 2/Web Content Article",
+				resultsList = "Fruit 1,Fruit 2",
 				searchTerm = "Fruit");
 
 			SearchResultPortlet.viewSearchResultNotPresent(
@@ -818,7 +818,7 @@ definition {
 
 		task ("Assert the web content structure articles still appear in the search results") {
 			SearchResultPortlet.viewMultipleSearchResults(
-				resultsList = "Fruit 1/Web Content Article,Fruit 2/Web Content Article",
+				resultsList = "Fruit 1,Fruit 2",
 				searchTerm = "Fruit");
 		}
 
@@ -920,7 +920,7 @@ definition {
 			searchTerm = "test");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "tree.png/Document,stars.png/Document,satellite.png/Document,moon.png/Document,earth.png/Document",
+			resultsList = "tree.png,stars.png,satellite.png,moon.png,earth.png",
 			searchTerm = "test");
 
 		var currentURL = selenium.getCurrentUrl();
@@ -975,7 +975,7 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "Apple 1/Web Content Article,Apple 2/Web Content Article,Apple 3/Web Content Article,Apple 4/Web Content Article,Apple 5/Web Content Article,",
+			resultsList = "Apple 1,Apple 2,Apple 3,Apple 4,Apple 5",
 			searchTerm = "Apple");
 
 		SearchResultPortlet.configureSearchResults(paginationDelta = 3);
@@ -989,13 +989,13 @@ definition {
 		Pagination.changePagination(itemsPerPage = 20);
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "Apple 1/Web Content Article,Apple 2/Web Content Article,Apple 3/Web Content Article,Apple 4/Web Content Article,Apple 5/Web Content Article,",
+			resultsList = "Apple 1,Apple 2,Apple 3,Apple 4,Apple 5",
 			searchTerm = "Apple");
 
 		Pagination.changePagination(itemsPerPage = 4);
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "Apple 1/Web Content Article,Apple 2/Web Content Article,Apple 3/Web Content Article,Apple 4/Web Content Article",
+			resultsList = "Apple 1,Apple 2,Apple 3,Apple 4",
 			searchTerm = "Apple");
 
 		SearchResultPortlet.viewSearchResultNotPresent(
@@ -1005,7 +1005,7 @@ definition {
 		Pagination.changePagination(itemsPerPage = 20);
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "Apple 1/Web Content Article,Apple 2/Web Content Article,Apple 3/Web Content Article,Apple 4/Web Content Article,Apple 5/Web Content Article",
+			resultsList = "Apple 1,Apple 2,Apple 3,Apple 4,Apple 5",
 			searchTerm = "Apple");
 	}
 

@@ -775,7 +775,7 @@ definition {
 				locator1 = "Search#MODIFIED_FACET_SELECTION",
 				range = "Past 23 Hours");
 
-			SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Web Content 1/Web Content Article,Web Content 2/Web Content Article,Web Content 3/Web Content Article");
+			SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Web Content 1,Web Content 2,Web Content 3");
 		}
 	}
 
@@ -1940,19 +1940,19 @@ definition {
 
 		task ("Assert the search results after 'wc' search and after applying any search filter") {
 			SearchResultPortlet.viewMultipleSearchResults(
-				resultsList = "wc1/Web Content Article,wc2/Web Content Article,wc3/Web Content Article,wc4/Web Content Article,wc5/Web Content Article,wc6/Web Content Article",
+				resultsList = "wc1,wc2,wc3,wc4,wc5,wc6",
 				searchTerm = "wc");
 
 			SearchFacetPortlet.checkFacet(facetTerm = "tag1");
 
 			SearchResultPortlet.viewMultipleSearchResults(
-				resultsList = "wc2/Web Content Article,wc4/Web Content Article,wc6/Web Content Article",
+				resultsList = "wc2,wc4,wc6",
 				searchTerm = "wc");
 
 			SearchFacetPortlet.checkFacet(facetTerm = "cat1");
 
 			SearchResultPortlet.viewMultipleSearchResults(
-				resultsList = "wc4/Web Content Article,wc6/Web Content Article",
+				resultsList = "wc4,wc6",
 				searchTerm = "wc");
 
 			GoBack();
@@ -1962,7 +1962,7 @@ definition {
 			FormFields.viewCheckboxNotChecked(fieldName = "cat1");
 
 			SearchResultPortlet.viewMultipleSearchResults(
-				resultsList = "wc2/Web Content Article,wc4/Web Content Article,wc6/Web Content Article",
+				resultsList = "wc2,wc4,wc6",
 				searchTerm = "wc");
 		}
 	}
@@ -2197,13 +2197,13 @@ definition {
 		SearchPortlets.searchWidget(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article,WC Title 3/Web Content Article",
+			resultsList = "WC Title 1,WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
 		SearchFacetPortlet.checkFacet(facetTerm = "Category Name 2");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article",
+			resultsList = "WC Title 1,WC Title 2",
 			searchTerm = "WC Title");
 
 		SearchFacetPortlet.clearFacet();
@@ -2211,7 +2211,7 @@ definition {
 		SearchFacetPortlet.checkFacet(facetTerm = "Category Name 3");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "WC Title 2/Web Content Article,WC Title 3/Web Content Article",
+			resultsList = "WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
 		SearchFacetPortlet.clearFacet();
@@ -2221,7 +2221,7 @@ definition {
 		SearchFacetPortlet.checkFacet(facetTerm = "Category Name 3");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article,WC Title 3/Web Content Article",
+			resultsList = "WC Title 1,WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 	}
 
@@ -2291,13 +2291,13 @@ definition {
 		SearchPortlets.searchWidget(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article,WC Title 3/Web Content Article",
+			resultsList = "WC Title 1,WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
 		SearchFacetPortlet.checkFacet(facetTerm = "Category Name 2");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article",
+			resultsList = "WC Title 1,WC Title 2",
 			searchTerm = "WC Title");
 
 		SearchFacetPortlet.clearFacet();
@@ -2305,7 +2305,7 @@ definition {
 		SearchFacetPortlet.checkFacet(facetTerm = "Category Name 3");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "WC Title 2/Web Content Article,WC Title 3/Web Content Article",
+			resultsList = "WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
 		SearchFacetPortlet.clearFacet();
@@ -2315,7 +2315,7 @@ definition {
 		SearchFacetPortlet.checkFacet(facetTerm = "Category Name 3");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article,WC Title 3/Web Content Article",
+			resultsList = "WC Title 1,WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 	}
 
@@ -2391,13 +2391,13 @@ definition {
 		SearchPortlets.searchWidget(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article,WC Title 3/Web Content Article",
+			resultsList = "WC Title 1,WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
 		SearchFacetPortlet.checkFacet(facetTerm = "Category Name 2");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article",
+			resultsList = "WC Title 1,WC Title 2",
 			searchTerm = "WC Title");
 
 		SearchFacetPortlet.clearFacet();
@@ -2405,7 +2405,7 @@ definition {
 		SearchFacetPortlet.checkFacet(facetTerm = "Category Name 3");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "WC Title 2/Web Content Article,WC Title 3/Web Content Article",
+			resultsList = "WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
 		SearchFacetPortlet.clearFacet();
@@ -2503,7 +2503,7 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "DM");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "DM Document Title 1/Document,DM Document Title 2/Document",
+			resultsList = "DM Document Title 1,DM Document Title 2",
 			searchTerm = "DM");
 
 		SearchFacetPortlet.checkFacet(facetTerm = "DM Folder Name 1");

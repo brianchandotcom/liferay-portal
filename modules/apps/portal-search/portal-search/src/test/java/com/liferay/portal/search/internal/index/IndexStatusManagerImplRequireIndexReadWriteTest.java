@@ -104,7 +104,7 @@ public class IndexStatusManagerImplRequireIndexReadWriteTest {
 	}
 
 	@Test
-	public void testReadOnlyUsingUpgradeTool() {
+	public void testReadOnlyWhenIsUpgradeClient() {
 		_dbUpgraderMockedStatic.when(
 			DBUpgrader::isUpgradeClient
 		).thenReturn(
@@ -131,7 +131,7 @@ public class IndexStatusManagerImplRequireIndexReadWriteTest {
 	}
 
 	@Test
-	public void testReadOnlyWhenStartupHelperUtilIsUpgrading() {
+	public void testReadOnlyWhenIsUpgrading() {
 		_dbUpgraderMockedStatic.when(
 			DBUpgrader::isUpgradeClient
 		).thenReturn(

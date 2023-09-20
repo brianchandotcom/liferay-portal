@@ -324,6 +324,16 @@ public class ExpandoColumnLocalServiceWrapper
 	}
 
 	@Override
+	public ExpandoColumn getColumn(
+			long companyId, long classNameId, String tableName, String name)
+		throws com.liferay.expando.kernel.exception.NoSuchColumnException,
+			   com.liferay.expando.kernel.exception.NoSuchTableException {
+
+		return _expandoColumnLocalService.getColumn(
+			companyId, classNameId, tableName, name);
+	}
+
+	@Override
 	public ExpandoColumn getColumn(long tableId, String name) {
 		return _expandoColumnLocalService.getColumn(tableId, name);
 	}

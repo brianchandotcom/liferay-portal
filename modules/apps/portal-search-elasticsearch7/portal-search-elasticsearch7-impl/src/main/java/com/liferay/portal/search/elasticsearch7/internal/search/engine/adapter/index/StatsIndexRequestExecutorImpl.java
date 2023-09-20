@@ -36,6 +36,8 @@ public class StatsIndexRequestExecutorImpl
 
 	@Override
 	public StatsIndexResponse execute(StatsIndexRequest statsIndexRequest) {
+		Request request = getElasticsearchIndexRequest(statsIndexRequest);
+
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchClientResolver.getRestHighLevelClient(
 				statsIndexRequest.getConnectionId(),
@@ -43,23 +45,11 @@ public class StatsIndexRequestExecutorImpl
 
 		RestClient restClient = restHighLevelClient.getLowLevelClient();
 
-		String indexes = "_all";
-
-		if (ArrayUtil.isNotEmpty(statsIndexRequest.getIndexNames())) {
-			indexes = StringUtil.merge(statsIndexRequest.getIndexNames());
-		}
-
-		String endpoint = "/" + indexes + "/_stats";
-
-		Request request = new Request("GET", endpoint);
-
 		try {
 			Response response = restClient.performRequest(request);
 
-			String responseBody = EntityUtils.toString(response.getEntity());
-
 			JSONObject responseJSONObject = _jsonFactory.createJSONObject(
-				responseBody);
+				EntityUtils.toString(response.getEntity()));
 
 			JSONObject indicesJSONObject = responseJSONObject.getJSONObject(
 				"indices");
@@ -76,9 +66,8 @@ public class StatsIndexRequestExecutorImpl
 				JSONObject storeJSONObject = totalJSONObject.getJSONObject(
 					"store");
 
-				long size = storeJSONObject.getLong("size_in_bytes");
-
-				indexSizes.put(indexName, size);
+				indexSizes.put(
+					indexName, storeJSONObject.getLong("size_in_bytes"));
 			}
 
 			return new StatsIndexResponse(indexSizes);
@@ -86,6 +75,20 @@ public class StatsIndexRequestExecutorImpl
 		catch (Exception exception) {
 			throw new SystemException(exception);
 		}
+	}
+
+	protected Request getElasticsearchIndexRequest(
+		StatsIndexRequest statsIndexRequest) {
+
+		String indexes = "_all";
+
+		if (ArrayUtil.isNotEmpty(statsIndexRequest.getIndexNames())) {
+			indexes = StringUtil.merge(statsIndexRequest.getIndexNames());
+		}
+
+		String endpoint = "/" + indexes + "/_stats";
+
+		return new Request("GET", endpoint);
 	}
 
 	@Reference

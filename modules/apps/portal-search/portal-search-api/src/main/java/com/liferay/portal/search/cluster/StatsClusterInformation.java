@@ -13,8 +13,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface StatsClusterInformation {
 
-	public double getAvailableDiskSpace(String[] nodeId);
+	public double getAvailableDiskSpace(String... nodeIds);
 
-	public double getUsedDiskSpace(String[] nodeId);
+	public double getUsedDiskSpace(String... nodeIds);
 
 }

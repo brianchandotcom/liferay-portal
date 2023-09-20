@@ -29,7 +29,7 @@ public class UpgradeDLUtilCheck extends BaseUpgradeMatcherReplacementCheck {
 				"com.liferay.portal.kernel.util.PortalUtil\" %>");
 		}
 
-		return addNewImports(newContent);
+		return addNewImports(fileName, newContent);
 	}
 
 	@Override

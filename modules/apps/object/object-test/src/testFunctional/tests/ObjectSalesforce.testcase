@@ -9,6 +9,22 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Feature Flags",
+			configurationName = "Beta",
+			configurationScope = "Virtual Instance Scope");
+
+		Check.checkToggleSwitch(
+			key_featureFlag = "LPS-135430",
+			locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Third Party",
+			configurationName = "Salesforce Integration",
+			configurationScope = "Site Scope");
+
+		ObjectSalesforce.configureSalesforce();
 	}
 
 	tearDown {
@@ -26,35 +42,7 @@ definition {
 	test AssertCRUDWithCreatedCustomObject {
 		property portal.acceptance = "true";
 
-		task ("Given portal configured with Salesforce") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Feature Flags",
-				configurationName = "Beta",
-				configurationScope = "Virtual Instance Scope");
-
-			Check.checkToggleSwitch(
-				key_featureFlag = "LPS-135430",
-				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Third Party",
-				configurationName = "Salesforce Integration",
-				configurationScope = "Site Scope");
-
-			ObjectSalesforce.configureSalesforce();
-		}
-
-		task ("And given a created custom object with the storage type set to Salesforce") {
+		task ("Given a created custom object with the storage type set to Salesforce") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectAdmin.addObjectWithStorageType(
@@ -155,35 +143,7 @@ definition {
 	test AssertCRUDWithCreatedStandardObject {
 		property portal.acceptance = "true";
 
-		task ("Given portal configured with Salesforce") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Feature Flags",
-				configurationName = "Beta",
-				configurationScope = "Virtual Instance Scope");
-
-			Check.checkToggleSwitch(
-				key_featureFlag = "LPS-135430",
-				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Third Party",
-				configurationName = "Salesforce Integration",
-				configurationScope = "Site Scope");
-
-			ObjectSalesforce.configureSalesforce();
-		}
-
-		task ("And given a created custom object with the storage type set to Salesforce") {
+		task ("Given a created custom object with the storage type set to Salesforce") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectAdmin.addObjectWithStorageType(
@@ -342,35 +302,7 @@ definition {
 	test AssertCRUDWithFormContainer {
 		property portal.acceptance = "true";
 
-		task ("Given portal configured with Salesforce") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Feature Flags",
-				configurationName = "Beta",
-				configurationScope = "Virtual Instance Scope");
-
-			Check.checkToggleSwitch(
-				key_featureFlag = "LPS-135430",
-				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Third Party",
-				configurationName = "Salesforce Integration",
-				configurationScope = "Site Scope");
-
-			ObjectSalesforce.configureSalesforce();
-		}
-
-		task ("And given an imported custom object with the storage type as Salesforce") {
+		task ("Given an imported custom object with the storage type as Salesforce") {
 			ObjectExportImport.importObject(
 				objectFileName = "ImportedCustomObjectWithSalesforceStorageType",
 				objectName = "PoshiTest");
@@ -435,35 +367,7 @@ definition {
 	test AssertCRUDWithImportedCustomObject {
 		property portal.acceptance = "true";
 
-		task ("Given portal configured with Salesforce") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Feature Flags",
-				configurationName = "Beta",
-				configurationScope = "Virtual Instance Scope");
-
-			Check.checkToggleSwitch(
-				key_featureFlag = "LPS-135430",
-				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Third Party",
-				configurationName = "Salesforce Integration",
-				configurationScope = "Site Scope");
-
-			ObjectSalesforce.configureSalesforce();
-		}
-
-		task ("And given an imported custom object whose external reference code matches a Salesforce custom object") {
+		task ("Given an imported custom object whose external reference code matches a Salesforce custom object") {
 			ObjectExportImport.importObject(
 				objectFileName = "ImportedCustomObjectWithSalesforceStorageType",
 				objectName = "PoshiTest");
@@ -529,35 +433,7 @@ definition {
 	test AssertCRUDWithImportedStandardObject {
 		property portal.acceptance = "true";
 
-		task ("Given the DXP configured with Salesforce") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Feature Flags",
-				configurationName = "Beta",
-				configurationScope = "Virtual Instance Scope");
-
-			Check.checkToggleSwitch(
-				key_featureFlag = "LPS-135430",
-				locator1 = "ToggleSwitch#ENABLE_BETA_TOGGLE_SWITCH");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Third Party",
-				configurationName = "Salesforce Integration",
-				configurationScope = "Site Scope");
-
-			ObjectSalesforce.configureSalesforce();
-		}
-
-		task ("And given an imported standard object with storage type as Salesforce") {
+		task ("Given an imported standard object with storage type as Salesforce") {
 			ObjectExportImport.importObject(
 				objectFileName = "ImportedStandardObjectWithSalesforceStorageType",
 				objectName = "Contact");

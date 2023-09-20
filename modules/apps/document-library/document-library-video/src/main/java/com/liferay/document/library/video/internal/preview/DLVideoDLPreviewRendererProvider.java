@@ -51,6 +51,12 @@ public class DLVideoDLPreviewRendererProvider
 	public DLPreviewRenderer getPreviewDLPreviewRenderer(
 		FileVersion fileVersion) {
 
+		if (!_videoProcessor.hasVideo(fileVersion) &&
+			!_videoProcessor.isVideoSupported(fileVersion.getMimeType())) {
+
+			return null;
+		}
+
 		return (request, response) -> {
 			_checkForPreviewGenerationExceptions(fileVersion);
 

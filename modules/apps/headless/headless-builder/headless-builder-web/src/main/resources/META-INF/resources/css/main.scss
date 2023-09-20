@@ -289,6 +289,10 @@
 						padding: 8px;
 						padding-top: 11px;
 
+						&.focused-parent {
+							display: flex !important;
+						}
+
 						&.plus-icon {
 							border: 2px solid transparent;
 							display: none;
@@ -299,10 +303,6 @@
 
 							svg {
 								fill: $dark;
-							}
-
-							&:hover {
-								border: 2px solid $primary-l1;
 							}
 						}
 

@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButtonWithIcon from '@clayui/button';
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
-import React, {Dispatch, SetStateAction, useContext} from 'react';
+import React, {Dispatch, SetStateAction, useContext, useState} from 'react';
 
 import {EditSchemaContext} from '../EditAPIApplicationContext';
 import {BUSINESS_TYPES_TO_SYMBOLS} from '../utils/constants';
@@ -28,6 +28,7 @@ export default function BaseAPISchemaProperty({
 	setSchemaUIData,
 }: BaseAPISchemaPropertyProps) {
 	const {apiSchemaId} = useContext(EditSchemaContext);
+	const [focused, setFocused] = useState(false);
 
 	const localizedPropertyName = objectField.label[
 		Liferay.ThemeDisplay.getDefaultLanguageId()
@@ -61,7 +62,17 @@ export default function BaseAPISchemaProperty({
 	};
 
 	return (
-		<div className="property-container">
+		<ClayButton
+			aria-label={sub(
+				Liferay.Language.get('add-x-property'),
+				localizedPropertyName
+			)}
+			className="property-container"
+			displayType="unstyled"
+			onBlur={() => setFocused(false)}
+			onClick={() => !added && handleClick()}
+			onFocus={() => setFocused(true)}
+		>
 			<div
 				className={classNames({
 					'disabled': added,
@@ -84,19 +95,16 @@ export default function BaseAPISchemaProperty({
 			</div>
 
 			{!added && (
-				<ClayButtonWithIcon
-					aria-label={sub(
-						Liferay.Language.get('add-x-property'),
-						localizedPropertyName
-					)}
-					className="icon-container plus-icon"
-					displayType="unstyled"
-					onClick={handleClick}
-					size="sm"
+				<div
+					className={classNames({
+						'focused-parent': focused,
+						'icon-container': true,
+						'plus-icon': true,
+					})}
 				>
 					<ClayIcon symbol="plus" />
-				</ClayButtonWithIcon>
+				</div>
 			)}
-		</div>
+		</ClayButton>
 	);
 }

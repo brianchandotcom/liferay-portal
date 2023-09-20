@@ -73,6 +73,9 @@ public class CreateAccountNavigationPostPageInclude implements PageInclude {
 		iconTag.setCssClass("text-4");
 		iconTag.setMessage("create-account");
 
+		httpServletRequest.setAttribute(
+			WebKeys.REDIRECT, _portal.getCurrentURL(httpServletRequest));
+
 		try {
 			iconTag.setUrl(
 				_portal.getCreateAccountURL(httpServletRequest, themeDisplay));

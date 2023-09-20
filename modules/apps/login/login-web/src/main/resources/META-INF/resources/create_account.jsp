@@ -10,6 +10,10 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNotNull(redirect)) {
+	portletDisplay.setURLBack(redirect);
+}
+
 boolean male = ParamUtil.getBoolean(request, "male", true);
 
 Calendar birthdayCalendar = CalendarFactoryUtil.getCalendar();

@@ -39,6 +39,39 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
+	macro _deleteAllCommerceUOMs {
+		Variables.assertDefined(parameterList = ${productSKU});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var uomCount = CommerceJSONSKUsAPI._getCommerceUOMCountBySKUId(productSKU = ${productSKU});
+
+		if (${uomCount} != 0) {
+			var uomIds = CommerceJSONSKUsAPI._getCommerceUOMIdBySKUId(productSKU = ${productSKU});
+
+			for (var uomId : list ${uomIds}) {
+				echo("Deleting Commerce UOM with id: ${uomId}");
+
+				var userLoginInfo = JSONUtil2.formatJSONUser();
+
+				var curl = '''
+					${baseURL}/o/headless-commerce-admin-catalog/v1.0/sku-unit-of-measures/${uomId} \
+						-u ${userLoginInfo} \
+						-H 'accept: application/json' \
+				''';
+
+				JSONCurlUtil.delete(${curl});
+			}
+		}
+		else {
+			echo("No Commerce UOM to be deleted");
+		}
+	}
+
 	macro _deleteCommerceSkuUom {
 		Variables.assertDefined(parameterList = "${productSKU},${uomKey}");
 
@@ -93,6 +126,54 @@ definition {
 		var responseBody = JSONCurlUtil.get(${curl});
 
 		return ${responseBody};
+	}
+
+	macro _getCommerceUOMCountBySKUId {
+		Variables.assertDefined(parameterList = ${productSKU});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus/${skuId}/sku-unit-of-measures \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var uomCount = JSONCurlUtil.get(${curl}, "$['totalCount']");
+
+		echo("The Commerce uom count for SKU ${productSKU} is: ${uomCount}");
+
+		return ${uomCount};
+	}
+
+	macro _getCommerceUOMIdBySKUId {
+		Variables.assertDefined(parameterList = ${productSKU});
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/skus/${skuId}/sku-unit-of-measures \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		var uomIds = JSONCurlUtil.get(${curl}, "$..['id']");
+
+		return ${uomIds};
 	}
 
 }

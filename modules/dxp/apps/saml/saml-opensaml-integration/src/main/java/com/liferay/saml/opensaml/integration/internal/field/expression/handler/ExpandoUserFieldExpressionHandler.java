@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -448,7 +449,8 @@ public class ExpandoUserFieldExpressionHandler
 			_expandoValueLocalService.createExpandoValue(0);
 
 		ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
-			companyId, User.class.getName(),
+			companyId,
+			_classNameLocalService.getClassNameId(User.class.getName()),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME, columnName);
 
 		expandoValue.setColumnId(expandoColumn.getColumnId());
@@ -611,6 +613,9 @@ public class ExpandoUserFieldExpressionHandler
 			ExpandoColumnConstants.STRING_ARRAY,
 			_getValueConsumer(Function.identity(), ExpandoValue::setStringArray)
 		).build();
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;

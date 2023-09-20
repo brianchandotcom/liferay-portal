@@ -60,6 +60,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistrarHelper;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -850,6 +851,7 @@ public class ObjectDefinitionLocalServiceImpl
 		InactiveObjectDefinitionDeployer inactiveObjectDefinitionDeployer =
 			new InactiveObjectDefinitionDeployerImpl(
 				_bundleContext, _objectEntryService, _objectFieldLocalService,
+				_objectRelatedModelsProviderRegistrarHelper,
 				_objectRelationshipLocalService);
 		Map<Long, List<ServiceRegistration<?>>>
 			inactiveServiceRegistrationsMap = new ConcurrentHashMap<>();
@@ -863,12 +865,13 @@ public class ObjectDefinitionLocalServiceImpl
 				_objectActionLocalService, objectDefinitionLocalService,
 				_objectEntryLocalService, _objectEntryService,
 				_objectFieldLocalService, _objectLayoutLocalService,
-				_objectLayoutTabLocalService, _objectRelationshipLocalService,
-				_objectScopeProviderRegistry, _objectViewLocalService,
-				_organizationLocalService, _persistedModelLocalServiceRegistry,
-				_ploEntryLocalService, _portal, _portletLocalService,
-				_resourceActions, _treeFactory, _userLocalService,
-				_resourcePermissionLocalService,
+				_objectLayoutTabLocalService,
+				_objectRelatedModelsProviderRegistrarHelper,
+				_objectRelationshipLocalService, _objectScopeProviderRegistry,
+				_objectViewLocalService, _organizationLocalService,
+				_persistedModelLocalServiceRegistry, _ploEntryLocalService,
+				_portal, _portletLocalService, _resourceActions, _treeFactory,
+				_userLocalService, _resourcePermissionLocalService,
 				_workflowStatusModelPreFilterContributor,
 				_userGroupRoleLocalService);
 
@@ -2404,6 +2407,10 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private ObjectLayoutTabLocalService _objectLayoutTabLocalService;
+
+	@Reference
+	private ObjectRelatedModelsProviderRegistrarHelper
+		_objectRelatedModelsProviderRegistrarHelper;
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

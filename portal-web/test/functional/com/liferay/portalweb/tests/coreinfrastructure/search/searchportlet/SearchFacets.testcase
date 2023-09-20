@@ -2268,7 +2268,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.configureCategoryFacet(
+		SearchFacetPortlet.configureCategoryFacet(
 			groupName = "Guest",
 			vocabularyScope = "All Vocabularies");
 
@@ -2368,7 +2368,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.configureCategoryFacet(
+		SearchFacetPortlet.configureCategoryFacet(
 			groupName = "Guest",
 			siteName = "Global",
 			vocabularyName = "Vocabulary Name 1,Vocabulary Name 2",
@@ -2470,13 +2470,13 @@ definition {
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.configureCategoryFacet(
+		SearchFacetPortlet.configureCategoryFacet(
 			groupName = "Guest",
 			index = 1,
 			vocabularyName = "Vocabulary Name 1",
 			vocabularyScope = "Select Vocabularies");
 
-		SearchPortlets.configureCategoryFacet(
+		SearchFacetPortlet.configureCategoryFacet(
 			groupName = "Guest",
 			index = 2,
 			vocabularyName = "Vocabulary Name 2",
@@ -2847,7 +2847,7 @@ definition {
 
 			Search.openSearchPage();
 
-			SearchPortlets.configureCategoryFacet(
+			SearchFacetPortlet.configureCategoryFacet(
 				groupName = "Guest",
 				index = 1,
 				vocabularyName = "Vocabulary 21",

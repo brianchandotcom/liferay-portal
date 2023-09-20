@@ -10,7 +10,6 @@ import com.liferay.object.internal.related.models.ObjectEntry1to1ObjectRelatedMo
 import com.liferay.object.internal.related.models.ObjectEntry1toMObjectRelatedModelsProviderImpl;
 import com.liferay.object.internal.related.models.ObjectEntryMtoMObjectRelatedModelsProviderImpl;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.related.models.ManyToOneObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -51,10 +50,7 @@ public class InactiveObjectDefinitionDeployerImpl
 					_objectFieldLocalService, _objectRelationshipLocalService),
 				null),
 			_bundleContext.registerService(
-				new String[] {
-					ManyToOneObjectRelatedModelsProvider.class.getName(),
-					ObjectRelatedModelsProvider.class.getName()
-				},
+				ObjectRelatedModelsProvider.class,
 				new ObjectEntry1toMObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectEntryService,
 					_objectFieldLocalService, _objectRelationshipLocalService),

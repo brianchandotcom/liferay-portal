@@ -19,7 +19,6 @@ import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
-import com.liferay.object.related.models.ManyToOneObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
@@ -315,13 +314,11 @@ public class DefaultObjectEntryManagerImpl
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(
 			objectDefinition, objectRelationship);
 
-		ManyToOneObjectRelatedModelsProvider objectRelatedModelsProvider =
-			(ManyToOneObjectRelatedModelsProvider)
-				_objectRelatedModelsProviderRegistry.
-					getObjectRelatedModelsProvider(
-						relatedObjectDefinition.getClassName(),
-						relatedObjectDefinition.getCompanyId(),
-						objectRelationship.getType());
+		ObjectRelatedModelsProvider objectRelatedModelsProvider =
+			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
+				relatedObjectDefinition.getClassName(),
+				relatedObjectDefinition.getCompanyId(),
+				objectRelationship.getType());
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			(com.liferay.object.model.ObjectEntry)
@@ -1110,27 +1107,23 @@ public class DefaultObjectEntryManagerImpl
 		throws Exception {
 
 		if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
-			ManyToOneObjectRelatedModelsProvider
-				manyToOneObjectRelatedModelsProvider =
-					(ManyToOneObjectRelatedModelsProvider)
-						_objectRelatedModelsProviderRegistry.
-							getObjectRelatedModelsProvider(
-								relatedObjectDefinition.getClassName(),
-								relatedObjectDefinition.getCompanyId(),
-								objectRelationship.getType());
-
-			return manyToOneObjectRelatedModelsProvider.fetchRelatedModel(
-				relatedObjectDefinition.getCompanyId(),
-				objectRelationship.getObjectRelationshipId(), primaryKey);
-		}
-
-		ManyToOneObjectRelatedModelsProvider objectRelatedModelsProvider =
-			(ManyToOneObjectRelatedModelsProvider)
+			ObjectRelatedModelsProvider objectRelatedModelsProvider =
 				_objectRelatedModelsProviderRegistry.
 					getObjectRelatedModelsProvider(
 						relatedObjectDefinition.getClassName(),
 						relatedObjectDefinition.getCompanyId(),
 						objectRelationship.getType());
+
+			return objectRelatedModelsProvider.fetchRelatedModel(
+				relatedObjectDefinition.getCompanyId(),
+				objectRelationship.getObjectRelationshipId(), primaryKey);
+		}
+
+		ObjectRelatedModelsProvider objectRelatedModelsProvider =
+			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
+				relatedObjectDefinition.getClassName(),
+				relatedObjectDefinition.getCompanyId(),
+				objectRelationship.getType());
 
 		return objectRelatedModelsProvider.fetchRelatedModel(
 			GroupThreadLocal.getGroupId(),

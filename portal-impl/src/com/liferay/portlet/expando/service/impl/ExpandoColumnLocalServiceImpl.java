@@ -172,12 +172,7 @@ public class ExpandoColumnLocalServiceImpl
 	}
 
 	@Override
-	public ExpandoColumn getColumn(long columnId) throws PortalException {
-		return expandoColumnPersistence.findByPrimaryKey(columnId);
-	}
-
-	@Override
-	public ExpandoColumn getColumn(
+	public ExpandoColumn fetchColumn(
 		long companyId, long classNameId, String tableName, String name) {
 
 		ExpandoTable table = _expandoTablePersistence.fetchByC_C_N(
@@ -188,6 +183,11 @@ public class ExpandoColumnLocalServiceImpl
 		}
 
 		return expandoColumnPersistence.fetchByT_N(table.getTableId(), name);
+	}
+
+	@Override
+	public ExpandoColumn getColumn(long columnId) throws PortalException {
+		return expandoColumnPersistence.findByPrimaryKey(columnId);
 	}
 
 	@Override

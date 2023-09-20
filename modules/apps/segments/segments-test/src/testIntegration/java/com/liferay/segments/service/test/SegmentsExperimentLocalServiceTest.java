@@ -928,8 +928,8 @@ public class SegmentsExperimentLocalServiceTest {
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
 				variantSegmentsExperience.getSegmentsExperienceId());
 
-		Assert.assertFalse(variantSegmentsExperience.isActive());
-		Assert.assertEquals(2, variantSegmentsExperience.getPriority());
+		Assert.assertTrue(variantSegmentsExperience.isActive());
+		Assert.assertEquals(0, variantSegmentsExperience.getPriority());
 	}
 
 	@Test(expected = WinnerSegmentsExperienceException.class)

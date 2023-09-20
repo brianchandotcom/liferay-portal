@@ -85,17 +85,16 @@ public class EditSegmentsExperimentStatusMVCActionCommandTest {
 			_group.getGroupId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			StringPool.BLANK, SegmentsEntryConstants.SOURCE_DEFAULT);
+
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		SegmentsExperience defaultSegmentsExperience =
-			SegmentsTestUtil.addSegmentsExperience(
-				segmentsEntry.getSegmentsEntryId(), layout.getPlid(),
-				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
 
 		SegmentsExperiment segmentsExperiment =
 			SegmentsTestUtil.addSegmentsExperiment(
-				_group.getGroupId(),
-				defaultSegmentsExperience.getSegmentsExperienceId(),
+				_group.getGroupId(), defaultSegmentsExperienceId,
 				layout.getPlid());
 
 		SegmentsExperience variantSegmentsExperience =
@@ -165,7 +164,7 @@ public class EditSegmentsExperimentStatusMVCActionCommandTest {
 
 			Assert.assertNull(
 				_segmentsExperienceRelLocalService.fetchSegmentsExperience(
-					defaultSegmentsExperience.getSegmentsExperienceId()));
+					defaultSegmentsExperienceId));
 
 			variantSegmentsExperience =
 				_segmentsExperienceRelLocalService.getSegmentsExperience(
@@ -187,6 +186,9 @@ public class EditSegmentsExperimentStatusMVCActionCommandTest {
 		filter = "mvc.command.name=/segments_experiment/edit_segments_experiment_status"
 	)
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceRelLocalService;

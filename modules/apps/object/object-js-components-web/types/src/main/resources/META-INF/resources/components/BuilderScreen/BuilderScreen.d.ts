@@ -59,7 +59,7 @@ interface IProps {
 	onDeleteColumn: (objectFieldName: string) => void;
 	onEditing?: (boolean: boolean) => void;
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
-	onVisibleEditModal: (boolean: boolean) => void;
+	onVisibleEditModal?: (boolean: boolean) => void;
 	openModal: () => void;
 	secondColumnHeader: string;
 	thirdColumnHeader?: string;

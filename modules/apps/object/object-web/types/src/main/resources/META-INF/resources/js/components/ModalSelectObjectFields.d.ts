@@ -5,9 +5,11 @@
 
 /// <reference types="react" />
 
-import './ModalAddColumns.scss';
-declare function ModalAddColumns<T extends ModalItem>(): JSX.Element | null;
-export default ModalAddColumns;
+import './ModalSelectObjectFields.scss';
+declare function ModalSelectObjectFields<
+	T extends ModalItem
+>(): JSX.Element | null;
+export default ModalSelectObjectFields;
 interface ModalItem {
 	checked?: boolean;
 	id?: unknown;

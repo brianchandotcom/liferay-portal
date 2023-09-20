@@ -58,6 +58,6 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 
 <div>
 	<react:component
-		module="js/components/ModalAddColumns"
+		module="js/components/ModalSelectObjectFields"
 	/>
 </div>

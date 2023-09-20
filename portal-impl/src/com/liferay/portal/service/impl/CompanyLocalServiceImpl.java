@@ -268,12 +268,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				_addDemoSettings(company);
 			}
 
-			// Check ResourceActions
-
-			if (DBPartition.isPartitionEnabled()) {
-				_resourceActionLocalService.checkResourceActions();
-			}
-
 			company = _checkCompany(company);
 
 			_userLocalService.addDefaultAdminUser(
@@ -1945,6 +1939,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			// Key
 
 			checkCompanyKey(company.getCompanyId());
+
+			// Check ResourceActions
+
+			if (DBPartition.isPartitionEnabled()) {
+				_resourceActionLocalService.checkResourceActions();
+			}
 
 			// System roles
 

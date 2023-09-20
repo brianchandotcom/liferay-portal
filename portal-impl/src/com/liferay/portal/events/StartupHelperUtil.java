@@ -7,7 +7,6 @@ package com.liferay.portal.events;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.ResourceActionsException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -45,9 +44,7 @@ public class StartupHelperUtil {
 
 	public static void initResourceActions() {
 		try {
-			DBPartitionUtil.forEachCompanyId(
-				companyId ->
-					ResourceActionLocalServiceUtil.checkResourceActions());
+			ResourceActionLocalServiceUtil.checkResourceActions();
 		}
 		catch (Exception exception) {
 			ReflectionUtil.throwException(exception);

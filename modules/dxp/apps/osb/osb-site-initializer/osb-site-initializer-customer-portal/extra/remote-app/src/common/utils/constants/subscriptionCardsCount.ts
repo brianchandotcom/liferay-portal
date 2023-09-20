@@ -39,13 +39,15 @@ export const PRODUCT_DISPLAY_EXCEPTION = {
 		'CSP - Up to 20K Users',
 		'CSP - Up to 500 Users',
 		'CSP - Up to 5K Users',
-	],
-	nonBlankProducts: ['Contact', 'Mobile Device'],
-	purchasedProduct: [
-		'Extended Premium Support',
 		'Extended Premium Support - Liferay DXP 7.1',
 		'Extended Premium Support - DXP 7.0',
+		'Extended Premium Support',
+		'Business Plan',
+		'Enterprise Plan',
+		'Pro Plan',
 	],
+	nonBlankProducts: ['Contact', 'Mobile Device'],
+	purchasedProduct: [],
 } as const;
 
 export const PRODUCT_DISPLAY_EXCEPTION_INSTANCE_SIZE = {

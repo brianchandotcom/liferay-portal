@@ -138,12 +138,12 @@ const AccountSubscriptionCard = ({
 		accountSubscription?.name
 	);
 
+	const isPurchased = SUBSCRIPTION_TYPES.Purchased.includes(
+		selectedAccountSubscriptionGroup?.name
+	);
+
 	const accountSubscriptionGroupName =
-		selectedAccountSubscriptionGroup?.name.includes('Analytics Cloud') ||
-		selectedAccountSubscriptionGroup?.name.includes(
-			'Liferay Experience Cloud'
-		) ||
-		selectedAccountSubscriptionGroup?.name.includes('LXC - SM');
+		accountSubscription?.name === 'Designated Contact' || isPurchased;
 
 	return (
 		<ClayCard

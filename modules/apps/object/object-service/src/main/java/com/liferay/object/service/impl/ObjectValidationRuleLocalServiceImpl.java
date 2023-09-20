@@ -20,6 +20,7 @@ import com.liferay.object.exception.ObjectValidationRuleSettingValueException;
 import com.liferay.object.exception.ObjectValidationRuleSystemException;
 import com.liferay.object.internal.action.util.ObjectEntryVariablesUtil;
 import com.liferay.object.internal.validation.rule.FunctionObjectValidationRuleEngineImpl;
+import com.liferay.object.internal.validation.rule.UniqueComposedKeyObjectValidationRuleEngineImpl;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectValidationRule;
@@ -356,7 +357,15 @@ public class ObjectValidationRuleLocalServiceImpl
 
 			if (StringUtil.equals(
 					objectValidationRuleEngine.getKey(),
-					ObjectValidationRuleConstants.ENGINE_TYPE_DDM)) {
+					ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSED_KEY)) {
+
+				variables.put("objectValidationRule", objectValidationRule);
+
+				results = objectValidationRuleEngine.execute(variables, null);
+			}
+			else if (StringUtil.equals(
+						objectValidationRuleEngine.getKey(),
+						ObjectValidationRuleConstants.ENGINE_TYPE_DDM)) {
 
 				results = objectValidationRuleEngine.execute(
 					variables, objectValidationRule.getScript());
@@ -514,7 +523,9 @@ public class ObjectValidationRuleLocalServiceImpl
 
 		if (Validator.isNull(script) &&
 			!(objectValidationRuleEngine instanceof
-				FunctionObjectValidationRuleEngineImpl)) {
+				FunctionObjectValidationRuleEngineImpl ||
+			  objectValidationRuleEngine instanceof
+				  UniqueComposedKeyObjectValidationRuleEngineImpl)) {
 
 			throw new ObjectValidationRuleScriptException(
 				"The script is required", "required");

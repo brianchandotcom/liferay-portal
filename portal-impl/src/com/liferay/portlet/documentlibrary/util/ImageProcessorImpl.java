@@ -372,7 +372,7 @@ public class ImageProcessorImpl
 
 			String type = getPreviewType(fileVersion);
 
-			if (!_store.hasFile(
+			if (!store.hasFile(
 					fileVersion.getCompanyId(), REPOSITORY_ID,
 					getPreviewFilePath(fileVersion, type),
 					Store.VERSION_DEFAULT)) {
@@ -483,10 +483,6 @@ public class ImageProcessorImpl
 			ServiceProxyFactory.newServiceTrackedInstance(
 				FileVersionPreviewEventListener.class, ImageProcessorImpl.class,
 				"_fileVersionPreviewEventListener", false, false);
-	private static volatile Store _store =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			Store.class, ImageProcessorImpl.class, "_store", "(default=true)",
-			true);
 
 	private final List<Long> _fileVersionIds = new Vector<>();
 	private final Set<String> _imageMimeTypes = SetUtil.fromArray(

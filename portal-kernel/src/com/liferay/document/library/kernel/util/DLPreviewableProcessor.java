@@ -83,10 +83,9 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	public static void deleteFiles() {
 		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId -> {
-				_store.deleteDirectory(companyId, REPOSITORY_ID, PREVIEW_PATH);
+				store.deleteDirectory(companyId, REPOSITORY_ID, PREVIEW_PATH);
 
-				_store.deleteDirectory(
-					companyId, REPOSITORY_ID, THUMBNAIL_PATH);
+				store.deleteDirectory(companyId, REPOSITORY_ID, THUMBNAIL_PATH);
 			});
 	}
 
@@ -219,7 +218,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		throws PortalException {
 
 		try (InputStream inputStream = new FileInputStream(srcFile)) {
-			_store.addFile(
+			store.addFile(
 				companyId, REPOSITORY_ID, filePath, Store.VERSION_DEFAULT,
 				inputStream);
 		}
@@ -233,7 +232,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			InputStream inputStream)
 		throws PortalException {
 
-		_store.addFile(
+		store.addFile(
 			companyId, REPOSITORY_ID, filePath, Store.VERSION_DEFAULT,
 			inputStream);
 	}
@@ -316,7 +315,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	protected void deletePreviews(
 		long companyId, long groupId, long fileEntryId, long fileVersionId) {
 
-		_store.deleteDirectory(
+		store.deleteDirectory(
 			companyId, REPOSITORY_ID,
 			getPreviewFilePath(groupId, fileEntryId, fileVersionId, null));
 	}
@@ -326,7 +325,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		String thumbnailType, int index) {
 
 		try {
-			_store.deleteDirectory(
+			store.deleteDirectory(
 				companyId, REPOSITORY_ID,
 				getThumbnailFilePath(
 					groupId, fileEntryId, fileVersionId, thumbnailType, index));
@@ -374,7 +373,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			FileVersion fileVersion, int index, String type)
 		throws PortalException {
 
-		return _store.getFileAsStream(
+		return store.getFileAsStream(
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
 			getPreviewFilePath(fileVersion, index, type), StringPool.BLANK);
 	}
@@ -390,7 +389,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		throws Exception {
 
 		try {
-			String[] fileNames = _store.getFileNames(
+			String[] fileNames = store.getFileNames(
 				fileVersion.getCompanyId(), REPOSITORY_ID,
 				getPathSegment(fileVersion, true));
 
@@ -415,7 +414,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			FileVersion fileVersion, int index, String type)
 		throws PortalException {
 
-		return _store.getFileSize(
+		return store.getFileSize(
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
 			getPreviewFilePath(fileVersion, index, type), StringPool.BLANK);
 	}
@@ -432,7 +431,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		String type = getThumbnailType(fileVersion);
 
-		return _store.getFileAsStream(
+		return store.getFileAsStream(
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
 			getThumbnailFilePath(fileVersion, type, index), StringPool.BLANK);
 	}
@@ -442,7 +441,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 
 		String type = getThumbnailType(fileVersion);
 
-		return _store.getFileSize(
+		return store.getFileSize(
 			fileVersion.getCompanyId(), CompanyConstants.SYSTEM,
 			getThumbnailFilePath(fileVersion, type, index), StringPool.BLANK);
 	}
@@ -876,7 +875,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	protected boolean hasPreview(FileVersion fileVersion, String type)
 		throws Exception {
 
-		if (_store.hasFile(
+		if (store.hasFile(
 				fileVersion.getCompanyId(), REPOSITORY_ID,
 				getPreviewFilePath(fileVersion, type), Store.VERSION_DEFAULT)) {
 
@@ -908,7 +907,7 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		try {
 			String imageType = getThumbnailType(fileVersion);
 
-			return _store.hasFile(
+			return store.hasFile(
 				fileVersion.getCompanyId(), REPOSITORY_ID,
 				getThumbnailFilePath(fileVersion, imageType, index),
 				Store.VERSION_DEFAULT);
@@ -1219,14 +1218,14 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			fileVersion, renderedImage, THUMBNAIL_INDEX_CUSTOM_2);
 	}
 
+	protected static volatile Store store =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			Store.class, DLPreviewableProcessor.class, "store",
+			"(default=true)", true);
+
 	protected Map<String, Future<?>> futures = new ConcurrentHashMap<>();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLPreviewableProcessor.class);
-
-	private static volatile Store _store =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			Store.class, DLPreviewableProcessor.class, "_store",
-			"(default=true)", true);
 
 }

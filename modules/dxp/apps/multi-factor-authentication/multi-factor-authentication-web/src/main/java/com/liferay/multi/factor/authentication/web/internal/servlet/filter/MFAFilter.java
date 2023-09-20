@@ -32,8 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
-		"servlet-filter-name=MFA Filter",
-		"url-pattern=/c/portal/update_password*"
+		"servlet-filter-name=MFA Filter", "url-pattern=/*"
 	},
 	service = Filter.class
 )
@@ -45,13 +44,18 @@ public class MFAFilter extends BaseFilter implements TryFilter {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		boolean mfaEnabled = _mfaPolicy.isMFAEnabled(
-			GetterUtil.getLong(
-				httpServletRequest.getAttribute(WebKeys.COMPANY_ID)));
+		String path = (String)httpServletRequest.getAttribute(
+			WebKeys.INVOKER_FILTER_URI);
 
-		HttpSession httpSession = httpServletRequest.getSession();
+		if (path.contains("/c/portal/update_password")) {
+			boolean mfaEnabled = _mfaPolicy.isMFAEnabled(
+				GetterUtil.getLong(
+					httpServletRequest.getAttribute(WebKeys.COMPANY_ID)));
 
-		httpSession.setAttribute(WebKeys.MFA_ENABLED, mfaEnabled);
+			HttpSession httpSession = httpServletRequest.getSession();
+
+			httpSession.setAttribute(WebKeys.MFA_ENABLED, mfaEnabled);
+		}
 
 		return true;
 	}

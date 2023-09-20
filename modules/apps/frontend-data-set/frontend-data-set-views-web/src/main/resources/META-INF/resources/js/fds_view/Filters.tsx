@@ -83,7 +83,7 @@ function AddFDSFilterModalContent({
 	>();
 	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
 	const [from, setFrom] = useState<string>(
-		(filter as IDateFilter)?.from ?? format(new Date(), 'yyyy-MM-dd')
+		(filter as IDateFilter)?.from ?? ''
 	);
 	const [i18nFilterLabels, setI18nFilterLabels] = useState(
 		fdsFilterLabelTranslations
@@ -107,9 +107,7 @@ function AddFDSFilterModalContent({
 		fields.find((item) => item.name === filter?.fieldName) || null
 	);
 	const [selectedPicklist, setSelectedPicklist] = useState<IPickList>();
-	const [to, setTo] = useState<string>(
-		(filter as IDateFilter)?.to ?? format(new Date(), 'yyyy-MM-dd')
-	);
+	const [to, setTo] = useState<string>((filter as IDateFilter)?.to ?? '');
 
 	useEffect(() => {
 		getAllPicklists().then((items) => {

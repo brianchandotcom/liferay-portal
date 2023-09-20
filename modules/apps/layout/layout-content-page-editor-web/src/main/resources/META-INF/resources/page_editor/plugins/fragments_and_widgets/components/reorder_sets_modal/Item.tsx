@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {ContentCol} from '@clayui/layout';
 import classNames from 'classnames';
+import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {DragObjectWithType, useDrag, useDrop} from 'react-dnd';
@@ -37,6 +38,8 @@ interface ItemProps {
 }
 
 export function Item({index, item, numberOfItems, onDropItem}: ItemProps) {
+	const dragButtonDescriptionId = useId();
+	const itemDescriptionId = useId();
 	const {name} = item;
 
 	const {
@@ -50,7 +53,7 @@ export function Item({index, item, numberOfItems, onDropItem}: ItemProps) {
 	} = useMouseDropTarget(item.id, index, onDropItem);
 
 	return (
-		<div className="c-pb-3" ref={mouseDropTargetRef}>
+		<div className="c-pb-3" ref={mouseDropTargetRef} role="listitem">
 			<div ref={mouseDragHandlerRef}>
 				<ClayCard
 					className={classNames('c-mb-0', {
@@ -66,16 +69,38 @@ export function Item({index, item, numberOfItems, onDropItem}: ItemProps) {
 					<ClayCard.Body className="px-0">
 						<ClayCard.Row className="align-items-center">
 							<ContentCol gutters>
-								<ClayIcon
-									className="text-secondary"
-									symbol="drag"
-								/>
+								{Liferay.FeatureFlags['LPS-196420'] ? (
+									<ClayButton
+										aria-labelledby={`${dragButtonDescriptionId} ${itemDescriptionId}`}
+										displayType="unstyled"
+										monospaced
+										size="xs"
+									>
+										<ClayIcon
+											className="text-secondary"
+											symbol="drag"
+										/>
+
+										<span
+											className="sr-only"
+											id={dragButtonDescriptionId}
+										>
+											{Liferay.Language.get('reorder')}
+										</span>
+									</ClayButton>
+								) : (
+									<ClayIcon
+										className="text-secondary"
+										symbol="drag"
+									/>
+								)}
 							</ContentCol>
 
 							<ContentCol expand>
 								<ClayCard.Description
 									className="text-uppercase"
 									displayType="title"
+									id={itemDescriptionId}
 									title={name}
 								>
 									{name}

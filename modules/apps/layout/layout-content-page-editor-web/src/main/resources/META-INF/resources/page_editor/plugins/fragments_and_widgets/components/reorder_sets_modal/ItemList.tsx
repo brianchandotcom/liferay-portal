@@ -60,7 +60,7 @@ export function ItemList({
 	};
 
 	return (
-		<div className="p-4">
+		<div aria-orientation="vertical" className="p-4" role="list">
 			{items.map((item, index) => (
 				<Item
 					index={index}

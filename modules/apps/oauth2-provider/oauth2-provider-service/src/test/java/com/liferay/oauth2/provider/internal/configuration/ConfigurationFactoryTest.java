@@ -231,17 +231,18 @@ public class ConfigurationFactoryTest {
 	public void testOAuth2ProviderApplicationHeadlessServerConfigurationFactory()
 		throws Exception {
 
-		OAuth2ProviderApplicationHeadlessServerConfigurationFactory factory =
+		OAuth2ProviderApplicationHeadlessServerConfigurationFactory oa2pahscf =
 			new OAuth2ProviderApplicationHeadlessServerConfigurationFactory();
 
-		factory.companyLocalService = _companyLocalService;
-		factory.oAuth2ApplicationLocalService = _oAuth2ApplicationLocalService;
-		factory.userLocalService = _userLocalService;
+		oa2pahscf.companyLocalService = _companyLocalService;
+		oa2pahscf.oAuth2ApplicationLocalService =
+			_oAuth2ApplicationLocalService;
+		oa2pahscf.userLocalService = _userLocalService;
 
 		ReflectionTestUtil.setFieldValue(
-			factory, "_portalK8sConfigMapModifierSnapshot", _snapshot);
+			oa2pahscf, "_portalK8sConfigMapModifierSnapshot", _snapshot);
 
-		factory.activate(
+		oa2pahscf.activate(
 			HashMapBuilder.<String, Object>put(
 				"baseURL", "http://localhost"
 			).put(
@@ -288,17 +289,18 @@ public class ConfigurationFactoryTest {
 	public void testOAuth2ProviderApplicationUserAgentConfigurationFactory()
 		throws Exception {
 
-		OAuth2ProviderApplicationUserAgentConfigurationFactory factory =
+		OAuth2ProviderApplicationUserAgentConfigurationFactory oa2pauacf =
 			new OAuth2ProviderApplicationUserAgentConfigurationFactory();
 
-		factory.companyLocalService = _companyLocalService;
-		factory.userLocalService = _userLocalService;
-		factory.oAuth2ApplicationLocalService = _oAuth2ApplicationLocalService;
+		oa2pauacf.companyLocalService = _companyLocalService;
+		oa2pauacf.oAuth2ApplicationLocalService =
+			_oAuth2ApplicationLocalService;
+		oa2pauacf.userLocalService = _userLocalService;
 
 		ReflectionTestUtil.setFieldValue(
-			factory, "_portalK8sConfigMapModifierSnapshot", _snapshot);
+			oa2pauacf, "_portalK8sConfigMapModifierSnapshot", _snapshot);
 
-		factory.activate(
+		oa2pauacf.activate(
 			HashMapBuilder.<String, Object>put(
 				"baseURL", "http://localhost"
 			).put(

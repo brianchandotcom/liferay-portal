@@ -38,6 +38,7 @@ import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
 import com.liferay.object.model.ObjectFieldModel;
 import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.model.ObjectRelationshipModel;
 import com.liferay.object.model.ObjectValidationRuleModel;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionService;
@@ -554,6 +555,8 @@ public class ObjectDefinitionResourceImpl
 
 		List<ObjectField> objectFields = ListUtil.fromArray(
 			objectDefinition.getObjectFields());
+		List<ObjectRelationship> objectRelationships = ListUtil.fromArray(
+			objectDefinition.getObjectRelationships());
 		List<ObjectValidationRule> objectValidationRules = ListUtil.fromArray(
 			objectDefinition.getObjectValidationRules());
 
@@ -565,8 +568,10 @@ public class ObjectDefinitionResourceImpl
 				_objectValidationRuleLocalService.getObjectValidationRules(
 					objectDefinitionId));
 
-		List<ObjectRelationship> objectRelationships = ListUtil.fromArray(
-			objectDefinition.getObjectRelationships());
+		List<com.liferay.object.model.ObjectRelationship>
+			serviceBuilderObjectRelationships = new ArrayList<>(
+				_objectRelationshipLocalService.getObjectRelationships(
+					objectDefinitionId));
 
 		if (serviceBuilderObjectDefinition.isModifiable() &&
 			serviceBuilderObjectDefinition.isSystem() &&
@@ -574,6 +579,9 @@ public class ObjectDefinitionResourceImpl
 
 			objectFields.removeIf(
 				objectField -> !GetterUtil.getBoolean(objectField.getSystem()));
+			objectRelationships.removeIf(
+				objectRelationship -> !GetterUtil.getBoolean(
+					objectRelationship.getSystem()));
 			objectValidationRules.removeIf(
 				objectValidationRule -> !GetterUtil.getBoolean(
 					objectValidationRule.getSystem()));
@@ -589,6 +597,9 @@ public class ObjectDefinitionResourceImpl
 			objectRelationships.removeIf(
 				objectRelationship -> !GetterUtil.getBoolean(
 					objectRelationship.getSystem()));
+			serviceBuilderObjectRelationships.removeIf(
+				serviceBuilderObjectRelationship ->
+					!serviceBuilderObjectRelationship.isSystem());
 		}
 		else {
 			objectFields.removeIf(
@@ -597,13 +608,15 @@ public class ObjectDefinitionResourceImpl
 				objectValidationRule -> GetterUtil.getBoolean(
 					objectValidationRule.getSystem()));
 
-			serviceBuilderObjectFields.removeIf(ObjectFieldModel::isSystem);
 			serviceBuilderObjectValidationRules.removeIf(
 				ObjectValidationRuleModel::isSystem);
 
 			objectRelationships.removeIf(
 				objectRelationship -> GetterUtil.getBoolean(
 					objectRelationship.getSystem()));
+			serviceBuilderObjectFields.removeIf(ObjectFieldModel::isSystem);
+			serviceBuilderObjectRelationships.removeIf(
+				ObjectRelationshipModel::isSystem);
 		}
 
 		for (ObjectField objectField : objectFields) {
@@ -665,8 +678,27 @@ public class ObjectDefinitionResourceImpl
 
 		Set<String> accountEntryRestrictedObjectRelationshipsNames =
 			_getAccountEntryRestrictedObjectRelationshipsNames(
-				serviceBuilderObjectDefinition,
-				objectRelationships.toArray(new ObjectRelationship[0]));
+				serviceBuilderObjectDefinition, objectRelationships);
+
+		Set<String> deleteObjectRelationshipsNames =
+			SetUtil.asymmetricDifference(
+				transform(
+					serviceBuilderObjectRelationships,
+					com.liferay.object.model.ObjectRelationship::getName),
+				transform(objectRelationships, ObjectRelationship::getName));
+
+		for (String deleteObjectRelationshipsName :
+				deleteObjectRelationshipsNames) {
+
+			com.liferay.object.model.ObjectRelationship
+				serviceBuilderObjectRelationship =
+					_objectRelationshipLocalService.
+						fetchObjectRelationshipByObjectDefinitionId(
+							objectDefinitionId, deleteObjectRelationshipsName);
+
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				serviceBuilderObjectRelationship.getObjectRelationshipId());
+		}
 
 		Set<String> deleteObjectValidationRulesERCs =
 			SetUtil.asymmetricDifference(
@@ -778,29 +810,6 @@ public class ObjectDefinitionResourceImpl
 		}
 
 		if (objectRelationships != null) {
-			Set<String> deleteObjectRelationshipsNames =
-				SetUtil.asymmetricDifference(
-					transform(
-						_objectRelationshipLocalService.getObjectRelationships(
-							objectDefinitionId),
-						com.liferay.object.model.ObjectRelationship::getName),
-					transformToList(
-						objectRelationships, ObjectRelationship::getName));
-
-			for (String deleteObjectRelationshipsName :
-					deleteObjectRelationshipsNames) {
-
-				com.liferay.object.model.ObjectRelationship
-					serviceBuilderObjectRelationship =
-						_objectRelationshipLocalService.
-							fetchObjectRelationshipByObjectDefinitionId(
-								objectDefinitionId,
-								deleteObjectRelationshipsName);
-
-				_objectRelationshipLocalService.deleteObjectRelationship(
-					serviceBuilderObjectRelationship.getObjectRelationshipId());
-			}
-
 			ObjectRelationshipResource.Builder builder =
 				_objectRelationshipResourceFactory.create();
 
@@ -892,7 +901,7 @@ public class ObjectDefinitionResourceImpl
 
 	private Set<String> _getAccountEntryRestrictedObjectRelationshipsNames(
 		com.liferay.object.model.ObjectDefinition objectDefinition1,
-		ObjectRelationship[] objectRelationships) {
+		List<ObjectRelationship> objectRelationships) {
 
 		if ((objectDefinition1 == null) ||
 			!objectDefinition1.isUnmodifiableSystemObject() ||

@@ -113,7 +113,9 @@ definition {
 		}
 
 		task ("Then the page creator could see new pages and identify the page type according to icon in Page Tree") {
-			PagesFinder.goToPagesFinder();
+			ProductMenuHelper.openProductMenu();
+
+			ProductMenu.gotoHomePage();
 
 			PagesFinder.selectPageType(optionValue = "Pages Hierarchy");
 

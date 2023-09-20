@@ -1094,7 +1094,8 @@ public class ObjectFieldLocalServiceImpl
 			!objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
 			!objectField.compareBusinessType(
-				ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
+				ObjectFieldConstants.BUSINESS_TYPE_FORMULA) &&
+			!Objects.equals(objectField.getDBTableName(), "ObjectEntry")) {
 
 			_alterTableDropColumn(
 				objectField.getDBTableName(), objectField.getDBColumnName());

@@ -13,6 +13,7 @@ import com.liferay.adaptive.media.image.internal.storage.ImageStorage;
 import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.adaptive.media.image.service.base.AMImageEntryLocalServiceBaseImpl;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.aop.AopService;
@@ -304,6 +305,8 @@ public class AMImageEntryLocalServiceImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_imageStorage = new ImageStorage(_store);
+
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, AMImageCounter.class, "adaptive.media.key");
 	}
@@ -334,9 +337,10 @@ public class AMImageEntryLocalServiceImpl
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
-	@Reference
 	private ImageStorage _imageStorage;
-
 	private ServiceTrackerMap<String, AMImageCounter> _serviceTrackerMap;
+
+	@Reference(target = "(default=true)")
+	private Store _store;
 
 }

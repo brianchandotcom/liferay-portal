@@ -30,7 +30,7 @@ public class ImageStorageTest {
 
 	@Before
 	public void setUp() {
-		_imageStorage.setStore(_store);
+		_imageStorage = new ImageStorage(_store);
 	}
 
 	@Test
@@ -89,7 +89,7 @@ public class ImageStorageTest {
 		);
 	}
 
-	private final ImageStorage _imageStorage = new ImageStorage();
+	private ImageStorage _imageStorage;
 	private final Store _store = Mockito.mock(Store.class);
 
 }

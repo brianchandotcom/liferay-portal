@@ -13,14 +13,14 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.io.InputStream;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Adolfo Pérez
  */
-@Component(service = ImageStorage.class)
 public class ImageStorage {
+
+	public ImageStorage(Store store) {
+		_store = store;
+	}
 
 	public void delete(FileVersion fileVersion, String configurationUuid) {
 		_store.deleteDirectory(
@@ -82,11 +82,6 @@ public class ImageStorage {
 		return String.format("adaptive/%s", configurationUuid);
 	}
 
-	protected void setStore(Store store) {
-		_store = store;
-	}
-
-	@Reference(target = "(default=true)")
-	private Store _store;
+	private final Store _store;
 
 }

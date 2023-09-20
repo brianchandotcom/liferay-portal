@@ -410,7 +410,7 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "Wiki Page Production/Wiki Page,Wiki Page Content Edit/Wiki Page,Wiki Page Publication 2/Wiki Page",
+			resultsList = "Wiki Page Production,Wiki Page Content Edit,Wiki Page Publication 2",
 			searchTerm = "Wiki");
 
 		JSONPublications.selectPublication(publicationName = "Publication 1");
@@ -420,7 +420,7 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "Wiki Page Production/Wiki Page,Original content/Wiki Page,Wiki Page Publication 1/Wiki Page",
+			resultsList = "Wiki Page Production,Original content,Wiki Page Publication 1",
 			searchTerm = "Wiki");
 
 		Publications.workOnProduction();

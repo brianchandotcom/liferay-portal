@@ -355,7 +355,7 @@ definition {
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Journal 2,Article 1");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 2/Web Content Article,Journal 1/Web Content Article");
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 2,Journal 1");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Journal");
 
@@ -367,7 +367,7 @@ definition {
 			searchAssetTitle = "Journal 2",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 1/Web Content Article,Article 2/Web Content Article");
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 1,Article 2");
 
 		SearchTuning.openResultRankingsAdmin();
 
@@ -395,7 +395,7 @@ definition {
 			searchAssetTitle = "Article 1",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 2/Web Content Article,Journal 1/Web Content Article,Journal 2/Web Content Article");
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 2,Journal 1,Journal 2");
 
 		SearchTuning.openResultRankingsAdmin();
 
@@ -619,7 +619,7 @@ definition {
 			searchAssetTitle = "Article 3",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 1/Web Content Article,Article 2/Web Content Article,Article 4/Web Content Article");
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 1,Article 2,Article 4");
 
 		Navigator.openURL();
 
@@ -674,7 +674,7 @@ definition {
 			searchAssetTitle = "Article 4",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 1/Web Content Article,Article 2/Web Content Article,Article 3/Web Content Article");
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 1,Article 2,Article 3");
 
 		Navigator.openURL();
 
@@ -752,7 +752,7 @@ definition {
 			searchAssetTitle = "WC Title 3",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article");
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1,WC Title 2");
 
 		SearchPortlets.searchEmbedded(searchTerm = "banana");
 
@@ -760,7 +760,7 @@ definition {
 			searchAssetTitle = "WC Title 3",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article");
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1,WC Title 2");
 
 		SearchTuning.openResultRankingsAdmin();
 
@@ -790,7 +790,7 @@ definition {
 			searchAssetTitle = "WC Title 2",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1/Web Content Article,WC Title 3/Web Content Article");
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1,WC Title 3");
 
 		SearchPortlets.searchEmbedded(searchTerm = "banana");
 
@@ -1127,7 +1127,7 @@ definition {
 			searchAssetTitle = "Liferay Article",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Liferay Journal/Web Content Article,New Site Article/Web Content Article,New Site Journal/Web Content Article");
+		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Liferay Journal,New Site Article,New Site Journal");
 	}
 
 	@description = "This is a use case for LPS-126743"
@@ -1184,7 +1184,7 @@ definition {
 			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
 
 			SearchResultPortlet.viewMultipleSearchResults(
-				resultsList = "banana/Web Content Article,red apple/Web Content Article,blue.berry!/Web Content Article,\"xigua\"/Web Content Article",
+				resultsList = "banana,red apple,blue.berry!,\"xigua\"",
 				searchTerm = ${searchTerm});
 		}
 
@@ -1214,7 +1214,7 @@ definition {
 			searchAssetType = "Web Content Article");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "red apple/Web Content Article,blue.berry!/Web Content Article,\"xigua\"/Web Content Article",
+			resultsList = "red apple,blue.berry!,\"xigua\"",
 			searchTerm = "pear");
 
 		SearchPortlets.searchEmbedded(searchTerm = "red apple");
@@ -1224,7 +1224,7 @@ definition {
 			searchAssetType = "Web Content Article");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "red apple/Web Content Article,blue.berry!/Web Content Article,\"xigua\"/Web Content Article",
+			resultsList = "red apple,blue.berry!,\"xigua\"",
 			searchTerm = "red apple");
 
 		SearchTuning.openSynonymsAdmin();
@@ -1240,13 +1240,13 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "red apple");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "red apple/Web Content Article,blue.berry!/Web Content Article,\"xigua\"/Web Content Article,citrus-orange/Web Content Article",
+			resultsList = "red apple,blue.berry!,\"xigua\",citrus-orange",
 			searchTerm = "red apple");
 
 		SearchPortlets.searchEmbedded(searchTerm = "citrus-orange");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "red apple/Web Content Article,citrus-orange/Web Content Article",
+			resultsList = "red apple,citrus-orange",
 			searchTerm = "citrus-orange");
 
 		SearchTuning.openSynonymsAdmin();

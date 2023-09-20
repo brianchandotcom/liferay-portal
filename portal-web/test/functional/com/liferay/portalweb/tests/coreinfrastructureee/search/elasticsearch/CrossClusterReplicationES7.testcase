@@ -58,7 +58,7 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "Apple1/Document,Apple2/Document",
+			resultsList = "Apple1,Apple2",
 			searchTerm = "Apple");
 	}
 

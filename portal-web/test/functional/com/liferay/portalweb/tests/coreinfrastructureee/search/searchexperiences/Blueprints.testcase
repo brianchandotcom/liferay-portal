@@ -716,7 +716,7 @@ definition {
 				searchAssetTitle = "WC WebContent Title",
 				searchAssetType = "Web Content Article");
 
-			SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "astronaut.png/Document,earth.png/Document,moon.png/Document");
+			SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "astronaut.png,earth.png,moon.png");
 		}
 	}
 

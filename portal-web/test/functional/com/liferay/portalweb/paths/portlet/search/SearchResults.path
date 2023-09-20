@@ -107,7 +107,7 @@
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_TITLE</td>
-	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//a</td>
+	<td>//li[contains(@class,'list-group-item')]//a[contains(.,'${key_searchAssetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

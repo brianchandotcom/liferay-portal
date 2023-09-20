@@ -49,7 +49,7 @@ definition {
 	}
 
 	macro _viewMailFromInbox {
-		var key_columnEntry = ${asset};
+		var key_columnEntry = "";
 		var key_recipient = ${recipient};
 		var key_sender = ${sender};
 

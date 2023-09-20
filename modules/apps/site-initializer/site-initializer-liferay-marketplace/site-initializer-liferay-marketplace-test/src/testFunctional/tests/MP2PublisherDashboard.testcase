@@ -91,7 +91,9 @@ definition {
 		}
 
 		task ("And the user opens the details of the invited member") {
-			MP2Dashboards.clickOnTheInvitedUser(text = "Invited Member");
+			MP2Dashboards.clickOnTheInvitedUser(
+				label = "Role",
+				value = "Invited Member");
 		}
 
 		task ("Then I should be able to assert all user details") {
@@ -122,9 +124,23 @@ definition {
 		}
 
 		task ("Then I should be able to assert that the user has been invited") {
-			var userInvitedInfo = "Test QA,test.mp@liferay.com,Invited Member";
+			var table = '''
+				| Name    | Test QA             |
+				| Email   | test.mp@liferay.com |
+				| Role    | Invited Member      |
+			''';
 
-			MP2Utils.assertUserInfoAtTable(textList = ${userInvitedInfo});
+			var rawTable = TableUtil.newTable(${table});
+
+			for (var row : table ${rawTable}) {
+				var label = "${row[0]}";
+				var value = "${row[1]}";
+
+				AssertElementPresent(
+					key_label = ${label},
+					key_text = ${value},
+					locator1 = "MP2Dashboards#DASHBOARD_TABLE");
+			}
 		}
 	}
 

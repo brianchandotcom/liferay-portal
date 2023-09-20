@@ -1,13 +1,36 @@
 .lfr-objects__model-builder-right-sidebar-object-definition-node {
-	&-title {
+	&-details {
+		align-items: center;
 		border-bottom: 1px solid #f1f2f5;
-		color: #272833;
-		font-size: 14px;
-		font-weight: 600;
-		height: 3.3rem;
-		line-height: 21px;
+		display: flex;
+		height: 4rem;
+		justify-content: space-between;
 		padding: 1rem;
-		width: 17.5rem;
+
+		&-title {
+			color: #272833;
+			font-size: 14px;
+			font-weight: 600;
+			height: 3.3rem;
+			line-height: 21px;
+			padding: 1rem;
+			width: 17.5rem;
+
+			&-buttons-container {
+				align-items: center;
+				display: flex;
+				gap: 10px;
+				justify-content: center;
+			}
+
+			&-save-button {
+				align-items: center;
+				display: flex;
+				height: 32px;
+				justify-content: center;
+				width: 57px;
+			}
+		}
 	}
 
 	&-content {

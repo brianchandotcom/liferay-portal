@@ -5,6 +5,8 @@
 
 package com.liferay.expando.kernel.service;
 
+import com.liferay.expando.kernel.exception.NoSuchColumnException;
+import com.liferay.expando.kernel.exception.NoSuchTableException;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -237,6 +239,11 @@ public interface ExpandoColumnLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExpandoColumn getColumn(long columnId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoColumn getColumn(
+			long companyId, long classNameId, String tableName, String name)
+		throws NoSuchColumnException, NoSuchTableException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExpandoColumn getColumn(long tableId, String name);

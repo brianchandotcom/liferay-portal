@@ -189,14 +189,14 @@ app.get('/marketplace/trials/count', async (req, res) => {
 });
 
 app.post('/marketplace/trial', async (req, res) => {
-	const {body} = req;
-	const bearerToken = req.headers.authorization;
-	const data = {};
-	const token = await getSSABearer();
-	const uri = SSA_BASE_URL + '/o/provisioning/trial';
+	try {
+		const { body } = req;
+		const bearerToken = req.headers.authorization;
+		const data = {};
+		const token = await getSSABearer();
+		const uri = SSA_BASE_URL + '/o/provisioning/trial';
 
-	setTimeout(async () => {
-		const getUserInfo = await fetch(
+		const getUserInfoResponse = await fetch(
 			`${lxcDXPServerProtocol}://${lxcDXPMainDomain}/o/headless-admin-user/v1.0/user-accounts/${body.userId}`,
 			{
 				headers: {
@@ -205,7 +205,13 @@ app.post('/marketplace/trial', async (req, res) => {
 			}
 		);
 
-		const getCustomFields = await fetch(
+		if (!getUserInfoResponse.ok) {
+			throw new Error('Failed to fetch user information');
+		}
+
+		const userInformation = await getUserInfoResponse.json();
+
+		const getCustomFieldsResponse = await fetch(
 			`${lxcDXPServerProtocol}://${lxcDXPMainDomain}/o/headless-commerce-admin-order/v1.0/orders/${body.modelDTOOrder.id}?fields=customFields`,
 			{
 				headers: {
@@ -214,17 +220,18 @@ app.post('/marketplace/trial', async (req, res) => {
 			}
 		);
 
-		const userInformation = await getUserInfo.json();
-		const {customFields} = await getCustomFields.json();
+		if (!getCustomFieldsResponse.ok) {
+			throw new Error('Failed to fetch custom fields');
+		}
+
+		const { customFields } = await getCustomFieldsResponse.json();
 		const accountId = body.modelDTOOrder.accountId;
 		const projectName = customFields['Project Name'];
 		const siteInitializer = customFields['Site Initializer'];
 
-		if (getUserInfo.ok) {
-			data.emailAddress = userInformation.emailAddress;
-			data.firstName = userInformation.givenName;
-			data.lastName = userInformation.familyName;
-		}
+		data.emailAddress = userInformation.emailAddress;
+		data.firstName = userInformation.givenName;
+		data.lastName = userInformation.familyName;
 
 		if (accountId !== '') {
 			data.accountId = Number(accountId);
@@ -243,27 +250,29 @@ app.post('/marketplace/trial', async (req, res) => {
 			Number(SSA_DURATION);
 		data.userId = Number(SSA_SERVICE_USER_ID) || body.userId;
 
-		fetch(uri, {
-			body: JSON.stringify(data),
+		const response = await fetch(uri, {
+			method: 'POST',
 			headers: {
-				'Authorization': `Bearer ${token.access_token}`,
+				Authorization: `Bearer ${token.access_token}`,
 				'Content-Type': 'application/json',
 			},
-			method: 'POST',
-		})
-			.then((response) => {
-				return log.info(
-					'Trail request sent for order: ' + response.commerceOrderId
-				);
-			})
-			.catch((error) => {
-				log.error(error);
+			body: JSON.stringify(data),
+		});
 
-				return log.info('Trail request error for order: ' + error);
-			});
-	}, 100);
+		if (!response.ok) {
+			throw new Error(`Trial request failed with status: ${response.status}`);
+		}
 
-	res.status(200).send(body);
+		const responseData = await response.json();
+
+		log.info('Trail request sent for order: ' + JSON.stringify(responseData));
+
+		res.status(200).send(body);
+	} catch (error) {
+		log.error(error);
+
+		res.status(500).send('Internal Server Error');
+	}
 });
 
 app.post('/marketplace/trial/extend', async (req, res) => {

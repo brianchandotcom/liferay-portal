@@ -161,10 +161,10 @@ public class PortletPreferencesFactoryImpl
 			return;
 		}
 
-		PortletPreferences portletSetup = getStrictLayoutPortletSetup(
+		PortletPreferences portletPreferences = getStrictLayoutPortletSetup(
 			layout, portletId);
 
-		if (portletSetup instanceof StrictPortletPreferencesImpl) {
+		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
 			getLayoutPortletSetup(layout, portletId);
 		}
 
@@ -646,14 +646,15 @@ public class PortletPreferencesFactoryImpl
 					privateLayout);
 
 		for (com.liferay.portal.kernel.model.PortletPreferences
-				portletPreferences : portletPreferencesList) {
+				curPortletPreferences : portletPreferencesList) {
 
-			PortletPreferences portletSetup =
+			PortletPreferences portletPreferences =
 				PortletPreferencesLocalServiceUtil.getPreferences(
-					companyId, ownerId, ownerType, portletPreferences.getPlid(),
-					portletId);
+					companyId, ownerId, ownerType,
+					curPortletPreferences.getPlid(), portletId);
 
-			portletSetupMap.put(portletPreferences.getPlid(), portletSetup);
+			portletSetupMap.put(
+				curPortletPreferences.getPlid(), portletPreferences);
 		}
 
 		return portletSetupMap;

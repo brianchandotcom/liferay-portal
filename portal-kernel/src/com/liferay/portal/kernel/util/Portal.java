@@ -570,10 +570,12 @@ public interface Portal {
 	public long getDefaultCompanyId();
 
 	public String getEmailFromAddress(
-		PortletPreferences preferences, long companyId, String defaultValue);
+		PortletPreferences portletPreferences, long companyId,
+		String defaultValue);
 
 	public String getEmailFromName(
-		PortletPreferences preferences, long companyId, String defaultValue);
+		PortletPreferences portletPreferences, long companyId,
+		String defaultValue);
 
 	public String getForwardedHost(HttpServletRequest httpServletRequest);
 

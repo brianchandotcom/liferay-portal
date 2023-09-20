@@ -227,9 +227,9 @@ public class PortletPreferencesImpl
 			throw new ReadOnlyException(key);
 		}
 
-		if ((_defaultPreferences == null) && (_portletId != null)) {
+		if ((_defaultPortletPreferences == null) && (_portletId != null)) {
 			try {
-				_defaultPreferences =
+				_defaultPortletPreferences =
 					PortletPreferencesLocalServiceUtil.getDefaultPreferences(
 						_companyId, _portletId);
 			}
@@ -242,8 +242,9 @@ public class PortletPreferencesImpl
 
 		String[] defaultValues = null;
 
-		if (_defaultPreferences != null) {
-			defaultValues = _defaultPreferences.getValues(key, defaultValues);
+		if (_defaultPortletPreferences != null) {
+			defaultValues = _defaultPortletPreferences.getValues(
+				key, defaultValues);
 		}
 
 		if (defaultValues != null) {
@@ -397,7 +398,7 @@ public class PortletPreferencesImpl
 		PortletPreferencesImpl.class);
 
 	private final long _companyId;
-	private PortletPreferences _defaultPreferences;
+	private PortletPreferences _defaultPortletPreferences;
 	private Map<String, Preference> _modifiedPreferences;
 	private final Map<String, Preference> _originalPreferences;
 	private final String _originalXML;

@@ -22,10 +22,12 @@ public interface PrefsProps {
 	public boolean getBoolean(
 		long companyId, String name, boolean defaultValue);
 
-	public boolean getBoolean(PortletPreferences preferences, String name);
+	public boolean getBoolean(
+		PortletPreferences portletPreferences, String name);
 
 	public boolean getBoolean(
-		PortletPreferences preferences, String name, boolean defaultValue);
+		PortletPreferences portletPreferences, String name,
+		boolean defaultValue);
 
 	public boolean getBoolean(String name);
 
@@ -33,7 +35,8 @@ public interface PrefsProps {
 
 	public String getContent(long companyId, String name);
 
-	public String getContent(PortletPreferences preferences, String name);
+	public String getContent(
+		PortletPreferences portletPreferences, String name);
 
 	public String getContent(String name);
 
@@ -41,10 +44,11 @@ public interface PrefsProps {
 
 	public double getDouble(long companyId, String name, double defaultValue);
 
-	public double getDouble(PortletPreferences preferences, String name);
+	public double getDouble(PortletPreferences portletPreferences, String name);
 
 	public double getDouble(
-		PortletPreferences preferences, String name, double defaultValue);
+		PortletPreferences portletPreferences, String name,
+		double defaultValue);
 
 	public double getDouble(String name);
 
@@ -54,10 +58,10 @@ public interface PrefsProps {
 
 	public int getInteger(long companyId, String name, int defaultValue);
 
-	public int getInteger(PortletPreferences preferences, String name);
+	public int getInteger(PortletPreferences portletPreferences, String name);
 
 	public int getInteger(
-		PortletPreferences preferences, String name, int defaultValue);
+		PortletPreferences portletPreferences, String name, int defaultValue);
 
 	public int getInteger(String name);
 
@@ -67,10 +71,10 @@ public interface PrefsProps {
 
 	public long getLong(long companyId, String name, long defaultValue);
 
-	public long getLong(PortletPreferences preferences, String name);
+	public long getLong(PortletPreferences portletPreferences, String name);
 
 	public long getLong(
-		PortletPreferences preferences, String name, long defaultValue);
+		PortletPreferences portletPreferences, String name, long defaultValue);
 
 	public long getLong(String name);
 
@@ -81,7 +85,8 @@ public interface PrefsProps {
 	public PortletPreferences getPreferences(long companyId);
 
 	public Properties getProperties(
-		PortletPreferences preferences, String prefix, boolean removePrefix);
+		PortletPreferences portletPreferences, String prefix,
+		boolean removePrefix);
 
 	public Properties getProperties(String prefix, boolean removePrefix);
 
@@ -89,10 +94,10 @@ public interface PrefsProps {
 
 	public short getShort(long companyId, String name, short defaultValue);
 
-	public short getShort(PortletPreferences preferences, String name);
+	public short getShort(PortletPreferences portletPreferences, String name);
 
 	public short getShort(
-		PortletPreferences preferences, String name, short defaultValue);
+		PortletPreferences portletPreferences, String name, short defaultValue);
 
 	public short getShort(String name);
 
@@ -102,25 +107,28 @@ public interface PrefsProps {
 
 	public String getString(long companyId, String name, String defaultValue);
 
-	public String getString(PortletPreferences preferences, String name);
+	public String getString(PortletPreferences portletPreferences, String name);
 
 	public String getString(
-		PortletPreferences preferences, String name, boolean defaultValue);
+		PortletPreferences portletPreferences, String name,
+		boolean defaultValue);
 
 	public String getString(
-		PortletPreferences preferences, String name, double defaultValue);
+		PortletPreferences portletPreferences, String name,
+		double defaultValue);
 
 	public String getString(
-		PortletPreferences preferences, String name, int defaultValue);
+		PortletPreferences portletPreferences, String name, int defaultValue);
 
 	public String getString(
-		PortletPreferences preferences, String name, long defaultValue);
+		PortletPreferences portletPreferences, String name, long defaultValue);
 
 	public String getString(
-		PortletPreferences preferences, String name, short defaultValue);
+		PortletPreferences portletPreferences, String name, short defaultValue);
 
 	public String getString(
-		PortletPreferences preferences, String name, String defaultValue);
+		PortletPreferences portletPreferences, String name,
+		String defaultValue);
 
 	public String getString(String name);
 
@@ -133,10 +141,10 @@ public interface PrefsProps {
 		long companyId, String name, String delimiter, String[] defaultValue);
 
 	public String[] getStringArray(
-		PortletPreferences preferences, String name, String delimiter);
+		PortletPreferences portletPreferences, String name, String delimiter);
 
 	public String[] getStringArray(
-		PortletPreferences preferences, String name, String delimiter,
+		PortletPreferences portletPreferences, String name, String delimiter,
 		String[] defaultValue);
 
 	public String[] getStringArray(String name, String delimiter);

@@ -694,15 +694,15 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	 */
 	@Override
 	public void removePreferences(long companyId, String[] keys) {
-		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
 			companyId);
 
 		try {
 			for (String key : keys) {
-				preferences.reset(key);
+				portletPreferences.reset(key);
 			}
 
-			preferences.store();
+			portletPreferences.store();
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
@@ -1186,28 +1186,28 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		boolean sendPassword, boolean strangers, boolean strangersWithMx,
 		boolean strangersVerify, boolean siteLogo) {
 
-		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
 			companyId);
 
 		try {
-			preferences.setValue(
+			portletPreferences.setValue(
 				PropsKeys.COMPANY_SECURITY_AUTH_TYPE, authType);
-			preferences.setValue(
+			portletPreferences.setValue(
 				PropsKeys.COMPANY_SECURITY_AUTO_LOGIN,
 				String.valueOf(autoLogin));
-			preferences.setValue(
+			portletPreferences.setValue(
 				PropsKeys.COMPANY_SECURITY_STRANGERS,
 				String.valueOf(strangers));
-			preferences.setValue(
+			portletPreferences.setValue(
 				PropsKeys.COMPANY_SECURITY_STRANGERS_WITH_MX,
 				String.valueOf(strangersWithMx));
-			preferences.setValue(
+			portletPreferences.setValue(
 				PropsKeys.COMPANY_SECURITY_STRANGERS_VERIFY,
 				String.valueOf(strangersVerify));
-			preferences.setValue(
+			portletPreferences.setValue(
 				PropsKeys.COMPANY_SECURITY_SITE_LOGO, String.valueOf(siteLogo));
 
-			preferences.store();
+			portletPreferences.store();
 		}
 		catch (IOException | PortletException exception) {
 			throw new SystemException(exception);
@@ -1862,16 +1862,16 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			company.getCompanyId(), CompanyConstants.AUTH_TYPE_EA, true, true,
 			true, true, false, true);
 
-		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
 			company.getCompanyId());
 
 		try {
-			preferences.setValue(
+			portletPreferences.setValue(
 				PropsKeys.ADMIN_EMAIL_FROM_NAME, "Liferay Demo");
-			preferences.setValue(
+			portletPreferences.setValue(
 				PropsKeys.ADMIN_EMAIL_FROM_ADDRESS, "test@liferay.net");
 
-			preferences.store();
+			portletPreferences.store();
 		}
 		catch (IOException ioException) {
 			throw new SystemException(ioException);

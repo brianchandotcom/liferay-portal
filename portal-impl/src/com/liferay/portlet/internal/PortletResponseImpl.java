@@ -285,16 +285,16 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 		Layout layout = getLayout(portletRequestImpl, themeDisplay);
 
-		if (_portletSetup == null) {
-			_portletSetup = getPortletPreferences(
+		if (_portletPreferences == null) {
+			_portletPreferences = getPortletPreferences(
 				themeDisplay, layout, portletName);
 		}
 
 		LiferayPortletURLPrivilegedAction liferayPortletURLPrivilegedAction =
 			new LiferayPortletURLPrivilegedAction(
 				plid, portletName, lifecycle, copy, includeLinkToLayoutUuid,
-				layout, getPortlet(), _portletSetup, portletRequestImpl, this,
-				_plid, _constructors);
+				layout, getPortlet(), _portletPreferences, portletRequestImpl,
+				this, _plid, _constructors);
 
 		return liferayPortletURLPrivilegedAction.run();
 	}
@@ -672,7 +672,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 	private String _namespace;
 	private long _plid;
 	private Portlet _portlet;
-	private PortletPreferences _portletSetup;
+	private PortletPreferences _portletPreferences;
 	private URLEncoder _urlEncoder;
 
 }

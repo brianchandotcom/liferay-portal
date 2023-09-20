@@ -46,16 +46,19 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	@Override
-	public boolean getBoolean(PortletPreferences preferences, String name) {
-		return GetterUtil.getBoolean(getString(preferences, name));
+	public boolean getBoolean(
+		PortletPreferences portletPreferences, String name) {
+
+		return GetterUtil.getBoolean(getString(portletPreferences, name));
 	}
 
 	@Override
 	public boolean getBoolean(
-		PortletPreferences preferences, String name, boolean defaultValue) {
+		PortletPreferences portletPreferences, String name,
+		boolean defaultValue) {
 
 		return GetterUtil.getBoolean(
-			getString(preferences, name, defaultValue));
+			getString(portletPreferences, name, defaultValue));
 	}
 
 	@Override
@@ -74,8 +77,10 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	@Override
-	public String getContent(PortletPreferences preferences, String name) {
-		String value = preferences.getValue(name, StringPool.BLANK);
+	public String getContent(
+		PortletPreferences portletPreferences, String name) {
+
+		String value = portletPreferences.getValue(name, StringPool.BLANK);
 
 		if (Validator.isNotNull(value)) {
 			return value;
@@ -110,15 +115,19 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	@Override
-	public double getDouble(PortletPreferences preferences, String name) {
-		return GetterUtil.getDouble(getString(preferences, name));
+	public double getDouble(
+		PortletPreferences portletPreferences, String name) {
+
+		return GetterUtil.getDouble(getString(portletPreferences, name));
 	}
 
 	@Override
 	public double getDouble(
-		PortletPreferences preferences, String name, double defaultValue) {
+		PortletPreferences portletPreferences, String name,
+		double defaultValue) {
 
-		return GetterUtil.getDouble(getString(preferences, name, defaultValue));
+		return GetterUtil.getDouble(
+			getString(portletPreferences, name, defaultValue));
 	}
 
 	@Override
@@ -142,16 +151,16 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	@Override
-	public int getInteger(PortletPreferences preferences, String name) {
-		return GetterUtil.getInteger(getString(preferences, name));
+	public int getInteger(PortletPreferences portletPreferences, String name) {
+		return GetterUtil.getInteger(getString(portletPreferences, name));
 	}
 
 	@Override
 	public int getInteger(
-		PortletPreferences preferences, String name, int defaultValue) {
+		PortletPreferences portletPreferences, String name, int defaultValue) {
 
 		return GetterUtil.getInteger(
-			getString(preferences, name, defaultValue));
+			getString(portletPreferences, name, defaultValue));
 	}
 
 	@Override
@@ -175,15 +184,16 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	@Override
-	public long getLong(PortletPreferences preferences, String name) {
-		return GetterUtil.getLong(getString(preferences, name));
+	public long getLong(PortletPreferences portletPreferences, String name) {
+		return GetterUtil.getLong(getString(portletPreferences, name));
 	}
 
 	@Override
 	public long getLong(
-		PortletPreferences preferences, String name, long defaultValue) {
+		PortletPreferences portletPreferences, String name, long defaultValue) {
 
-		return GetterUtil.getLong(getString(preferences, name, defaultValue));
+		return GetterUtil.getLong(
+			getString(portletPreferences, name, defaultValue));
 	}
 
 	@Override
@@ -211,17 +221,19 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public Properties getProperties(
-		PortletPreferences preferences, String prefix, boolean removePrefix) {
+		PortletPreferences portletPreferences, String prefix,
+		boolean removePrefix) {
 
 		Properties newProperties = new Properties();
 
-		Enumeration<String> enumeration = preferences.getNames();
+		Enumeration<String> enumeration = portletPreferences.getNames();
 
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement();
 
 			if (key.startsWith(prefix)) {
-				String value = preferences.getValue(key, StringPool.BLANK);
+				String value = portletPreferences.getValue(
+					key, StringPool.BLANK);
 
 				if (removePrefix) {
 					key = key.substring(prefix.length());
@@ -250,15 +262,17 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	@Override
-	public short getShort(PortletPreferences preferences, String name) {
-		return GetterUtil.getShort(getString(preferences, name));
+	public short getShort(PortletPreferences portletPreferences, String name) {
+		return GetterUtil.getShort(getString(portletPreferences, name));
 	}
 
 	@Override
 	public short getShort(
-		PortletPreferences preferences, String name, short defaultValue) {
+		PortletPreferences portletPreferences, String name,
+		short defaultValue) {
 
-		return GetterUtil.getShort(getString(preferences, name, defaultValue));
+		return GetterUtil.getShort(
+			getString(portletPreferences, name, defaultValue));
 	}
 
 	@Override
@@ -282,52 +296,58 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	@Override
-	public String getString(PortletPreferences preferences, String name) {
+	public String getString(
+		PortletPreferences portletPreferences, String name) {
+
 		String value = PropsUtil.get(name);
 
-		return preferences.getValue(name, value);
+		return portletPreferences.getValue(name, value);
 	}
 
 	@Override
 	public String getString(
-		PortletPreferences preferences, String name, boolean defaultValue) {
+		PortletPreferences portletPreferences, String name,
+		boolean defaultValue) {
 
-		return preferences.getValue(name, String.valueOf(defaultValue));
+		return portletPreferences.getValue(name, String.valueOf(defaultValue));
 	}
 
 	@Override
 	public String getString(
-		PortletPreferences preferences, String name, double defaultValue) {
+		PortletPreferences portletPreferences, String name,
+		double defaultValue) {
 
-		return preferences.getValue(name, String.valueOf(defaultValue));
+		return portletPreferences.getValue(name, String.valueOf(defaultValue));
 	}
 
 	@Override
 	public String getString(
-		PortletPreferences preferences, String name, int defaultValue) {
+		PortletPreferences portletPreferences, String name, int defaultValue) {
 
-		return preferences.getValue(name, String.valueOf(defaultValue));
+		return portletPreferences.getValue(name, String.valueOf(defaultValue));
 	}
 
 	@Override
 	public String getString(
-		PortletPreferences preferences, String name, long defaultValue) {
+		PortletPreferences portletPreferences, String name, long defaultValue) {
 
-		return preferences.getValue(name, String.valueOf(defaultValue));
+		return portletPreferences.getValue(name, String.valueOf(defaultValue));
 	}
 
 	@Override
 	public String getString(
-		PortletPreferences preferences, String name, short defaultValue) {
+		PortletPreferences portletPreferences, String name,
+		short defaultValue) {
 
-		return preferences.getValue(name, String.valueOf(defaultValue));
+		return portletPreferences.getValue(name, String.valueOf(defaultValue));
 	}
 
 	@Override
 	public String getString(
-		PortletPreferences preferences, String name, String defaultValue) {
+		PortletPreferences portletPreferences, String name,
+		String defaultValue) {
 
-		return preferences.getValue(name, defaultValue);
+		return portletPreferences.getValue(name, defaultValue);
 	}
 
 	@Override
@@ -357,19 +377,20 @@ public class PrefsPropsImpl implements PrefsProps {
 
 	@Override
 	public String[] getStringArray(
-		PortletPreferences preferences, String name, String delimiter) {
+		PortletPreferences portletPreferences, String name, String delimiter) {
 
 		String value = PropsUtil.get(name);
 
-		return StringUtil.split(preferences.getValue(name, value), delimiter);
+		return StringUtil.split(
+			portletPreferences.getValue(name, value), delimiter);
 	}
 
 	@Override
 	public String[] getStringArray(
-		PortletPreferences preferences, String name, String delimiter,
+		PortletPreferences portletPreferences, String name, String delimiter,
 		String[] defaultValue) {
 
-		String value = preferences.getValue(name, null);
+		String value = portletPreferences.getValue(name, null);
 
 		if (value == null) {
 			return defaultValue;

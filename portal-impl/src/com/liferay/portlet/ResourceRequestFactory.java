@@ -27,13 +27,13 @@ public class ResourceRequestFactory {
 		HttpServletRequest httpServletRequest, Portlet portlet,
 		InvokerPortlet invokerPortlet, PortletContext portletContext,
 		WindowState windowState, PortletMode portletMode,
-		PortletPreferences preferences, long plid) {
+		PortletPreferences portletPreferences, long plid) {
 
 		ResourceRequestImpl resourceRequestImpl = new ResourceRequestImpl();
 
 		resourceRequestImpl.init(
 			httpServletRequest, portlet, invokerPortlet, portletContext,
-			windowState, portletMode, preferences, plid);
+			windowState, portletMode, portletPreferences, plid);
 
 		return resourceRequestImpl;
 	}

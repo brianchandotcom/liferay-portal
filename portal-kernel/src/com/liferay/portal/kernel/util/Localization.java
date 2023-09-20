@@ -187,14 +187,14 @@ public interface Localization {
 	 * Returns a map of locales and localized strings for the preference in the
 	 * preferences container.
 	 *
-	 * @param  preferences the preferences container
+	 * @param  portletPreferences the preferences container
 	 * @param  preferenceName the prefix of the preference containing the
 	 *         localized strings. Each localization is loaded from a preference
 	 *         with this prefix, followed by an underscore, and the language ID.
 	 * @return the locales and localized strings
 	 */
 	public Map<Locale, String> getLocalizationMap(
-		PortletPreferences preferences, String preferenceName);
+		PortletPreferences portletPreferences, String preferenceName);
 
 	/**
 	 * Returns a map of locales and localized strings for the preference in the
@@ -202,7 +202,7 @@ public interface Localization {
 	 * the default locale, the value of the property is used as the localization
 	 * for it.
 	 *
-	 * @param  preferences the preferences container
+	 * @param  portletPreferences the preferences container
 	 * @param  preferenceName the prefix of the preference containing the
 	 *         localized strings. Each localization is loaded from a preference
 	 *         with this prefix, followed by an underscore, and the language ID.
@@ -212,11 +212,11 @@ public interface Localization {
 	 * @return the locales and localized strings
 	 */
 	public Map<Locale, String> getLocalizationMap(
-		PortletPreferences preferences, String preferenceName,
+		PortletPreferences portletPreferences, String preferenceName,
 		String propertyName);
 
 	public Map<Locale, String> getLocalizationMap(
-		PortletPreferences preferences, String preferenceName,
+		PortletPreferences portletPreferences, String preferenceName,
 		String propertyName, String defaultPropertyValue,
 		ClassLoader classLoader);
 
@@ -269,7 +269,7 @@ public interface Localization {
 	 * attempting to get data from the preferences container if it is not
 	 * available in the portlet request.
 	 *
-	 * @param  preferences the preferences container
+	 * @param  portletPreferences the preferences container
 	 * @param  portletRequest the portlet request
 	 * @param  parameter the prefix of the parameters containing the localized
 	 *         strings. Each localization is loaded from a parameter with this
@@ -277,7 +277,7 @@ public interface Localization {
 	 * @return the locales and localized strings
 	 */
 	public String getLocalizationXmlFromPreferences(
-		PortletPreferences preferences, PortletRequest portletRequest,
+		PortletPreferences portletPreferences, PortletRequest portletRequest,
 		String parameter);
 
 	/**
@@ -286,7 +286,7 @@ public interface Localization {
 	 * available in the portlet request. If no localization exists in the
 	 * default locale, the default value is used as the localization for it.
 	 *
-	 * @param  preferences the preferences container
+	 * @param  portletPreferences the preferences container
 	 * @param  portletRequest the portlet request
 	 * @param  parameter the prefix of the parameters containing the localized
 	 *         strings. Each localization is loaded from a parameter with this
@@ -296,7 +296,7 @@ public interface Localization {
 	 * @return the locales and localized strings
 	 */
 	public String getLocalizationXmlFromPreferences(
-		PortletPreferences preferences, PortletRequest portletRequest,
+		PortletPreferences portletPreferences, PortletRequest portletRequest,
 		String parameter, String defaultValue);
 
 	/**
@@ -305,7 +305,7 @@ public interface Localization {
 	 * not available in the portlet request. If no localization exists for the
 	 * the default locale, the default value is used as the localization for it.
 	 *
-	 * @param  preferences the preferences container
+	 * @param  portletPreferences the preferences container
 	 * @param  portletRequest the portlet request
 	 * @param  parameter the prefix of the parameters containing the localized
 	 *         strings. Each localization is loaded from a parameter with this
@@ -317,7 +317,7 @@ public interface Localization {
 	 *         <code>defaultValue</code> if no localization exists
 	 */
 	public String getLocalizationXmlFromPreferences(
-		PortletPreferences preferences, PortletRequest portletRequest,
+		PortletPreferences portletPreferences, PortletRequest portletRequest,
 		String parameter, String prefix, String defaultValue);
 
 	/**
@@ -337,20 +337,20 @@ public interface Localization {
 	 * default language is used if no localization exists for the requested
 	 * language.
 	 *
-	 * @param  preferences the preferences container
+	 * @param  portletPreferences the preferences container
 	 * @param  key the preferences key
 	 * @param  languageId the ID of the language
 	 * @return the localized preferences value
 	 */
 	public String getPreferencesValue(
-		PortletPreferences preferences, String key, String languageId);
+		PortletPreferences portletPreferences, String key, String languageId);
 
 	/**
 	 * Returns the localized preferences value for the key in the language,
 	 * optionally using the default language if no localization exists for the
 	 * requested language.
 	 *
-	 * @param  preferences the preferences container
+	 * @param  portletPreferences the preferences container
 	 * @param  key the preferences key
 	 * @param  languageId the ID of the language
 	 * @param  useDefault whether to use the default language if no localization
@@ -360,7 +360,7 @@ public interface Localization {
 	 *         exists for the requested language
 	 */
 	public String getPreferencesValue(
-		PortletPreferences preferences, String key, String languageId,
+		PortletPreferences portletPreferences, String key, String languageId,
 		boolean useDefault);
 
 	/**
@@ -368,20 +368,20 @@ public interface Localization {
 	 * default language is used if no localization exists for the requested
 	 * language.
 	 *
-	 * @param  preferences the preferences container
+	 * @param  portletPreferences the preferences container
 	 * @param  key the preferences key
 	 * @param  languageId the ID of the language
 	 * @return the localized preferences values
 	 */
 	public String[] getPreferencesValues(
-		PortletPreferences preferences, String key, String languageId);
+		PortletPreferences portletPreferences, String key, String languageId);
 
 	/**
 	 * Returns the localized preferences values for the key in the language,
 	 * optionally using the default language if no localization exists for the
 	 * requested language.
 	 *
-	 * @param  preferences the preferences container
+	 * @param  portletPreferences the preferences container
 	 * @param  key the preferences key
 	 * @param  languageId the ID of the language
 	 * @param  useDefault whether to use the default language if no localization
@@ -391,7 +391,7 @@ public interface Localization {
 	 *         exists for the requested language
 	 */
 	public String[] getPreferencesValues(
-		PortletPreferences preferences, String key, String languageId,
+		PortletPreferences portletPreferences, String key, String languageId,
 		boolean useDefault);
 
 	/**
@@ -512,43 +512,43 @@ public interface Localization {
 	 * request.
 	 *
 	 * @param  portletRequest the portlet request
-	 * @param  preferences the preferences container
+	 * @param  portletPreferences the preferences container
 	 * @param  parameter the prefix of the parameters containing the localized
 	 *         strings. Each localization is loaded from a parameter with this
 	 *         prefix, followed by an underscore, and the language ID.
 	 * @throws Exception if an exception occurred
 	 */
 	public void setLocalizedPreferencesValues(
-			PortletRequest portletRequest, PortletPreferences preferences,
-			String parameter)
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences, String parameter)
 		throws Exception;
 
 	/**
 	 * Sets the localized preferences value for the key in the language.
 	 *
-	 * @param  preferences the preferences container
+	 * @param  portletPreferences the preferences container
 	 * @param  key the preferences key
 	 * @param  languageId the ID of the language
 	 * @param  value the localized value
 	 * @throws Exception if an exception occurred
 	 */
 	public void setPreferencesValue(
-			PortletPreferences preferences, String key, String languageId,
-			String value)
+			PortletPreferences portletPreferences, String key,
+			String languageId, String value)
 		throws Exception;
 
 	/**
 	 * Sets the localized preferences values for the key in the language.
 	 *
-	 * @param  preferences the preferences container
+	 * @param  portletPreferences the preferences container
 	 * @param  key the preferences key
 	 * @param  languageId the ID of the language
 	 * @param  values the localized values
 	 * @throws Exception if an exception occurred
 	 */
 	public void setPreferencesValues(
-			PortletPreferences preferences, String key, String languageId,
-			String[] values)
+			PortletPreferences portletPreferences, String key,
+			String languageId, String[] values)
 		throws Exception;
 
 	/**

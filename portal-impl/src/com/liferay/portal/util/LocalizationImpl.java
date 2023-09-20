@@ -402,14 +402,14 @@ public class LocalizationImpl implements Localization {
 
 	@Override
 	public Map<Locale, String> getLocalizationMap(
-		PortletPreferences preferences, String preferenceName) {
+		PortletPreferences portletPreferences, String preferenceName) {
 
-		return getLocalizationMap(preferences, preferenceName, null);
+		return getLocalizationMap(portletPreferences, preferenceName, null);
 	}
 
 	@Override
 	public Map<Locale, String> getLocalizationMap(
-		PortletPreferences preferences, String preferenceName,
+		PortletPreferences portletPreferences, String preferenceName,
 		String propertyName) {
 
 		String defaultPropertyValue = null;
@@ -421,13 +421,13 @@ public class LocalizationImpl implements Localization {
 		Class<?> clazz = getClass();
 
 		return getLocalizationMap(
-			preferences, preferenceName, propertyName, defaultPropertyValue,
-			clazz.getClassLoader());
+			portletPreferences, preferenceName, propertyName,
+			defaultPropertyValue, clazz.getClassLoader());
 	}
 
 	@Override
 	public Map<Locale, String> getLocalizationMap(
-		PortletPreferences preferences, String preferenceName,
+		PortletPreferences portletPreferences, String preferenceName,
 		String propertyName, String defaultPropertyValue,
 		ClassLoader classLoader) {
 
@@ -439,7 +439,8 @@ public class LocalizationImpl implements Localization {
 
 			map.put(
 				locale,
-				preferences.getValue(localizedPreference, StringPool.BLANK));
+				portletPreferences.getValue(
+					localizedPreference, StringPool.BLANK));
 		}
 
 		if (Validator.isNull(propertyName)) {
@@ -581,25 +582,25 @@ public class LocalizationImpl implements Localization {
 
 	@Override
 	public String getLocalizationXmlFromPreferences(
-		PortletPreferences preferences, PortletRequest portletRequest,
+		PortletPreferences portletPreferences, PortletRequest portletRequest,
 		String parameter) {
 
 		return getLocalizationXmlFromPreferences(
-			preferences, portletRequest, parameter, null, null);
+			portletPreferences, portletRequest, parameter, null, null);
 	}
 
 	@Override
 	public String getLocalizationXmlFromPreferences(
-		PortletPreferences preferences, PortletRequest portletRequest,
+		PortletPreferences portletPreferences, PortletRequest portletRequest,
 		String parameter, String defaultValue) {
 
 		return getLocalizationXmlFromPreferences(
-			preferences, portletRequest, parameter, null, defaultValue);
+			portletPreferences, portletRequest, parameter, null, defaultValue);
 	}
 
 	@Override
 	public String getLocalizationXmlFromPreferences(
-		PortletPreferences preferences, PortletRequest portletRequest,
+		PortletPreferences portletPreferences, PortletRequest portletRequest,
 		String parameter, String prefix, String defaultValue) {
 
 		String xml = null;
@@ -622,7 +623,7 @@ public class LocalizationImpl implements Localization {
 
 			String value = ParamUtil.getString(
 				portletRequest, prefixedLocalizedKey,
-				preferences.getValue(localizedKey, null));
+				portletPreferences.getValue(localizedKey, null));
 
 			if (value != null) {
 				xml = updateLocalization(xml, parameter, value, languageId);
@@ -631,7 +632,7 @@ public class LocalizationImpl implements Localization {
 
 		if (getLocalization(xml, defaultLanguageId, true, null) == null) {
 			String oldValue = PrefsParamUtil.getString(
-				preferences, portletRequest, parameter, defaultValue);
+				portletPreferences, portletRequest, parameter, defaultValue);
 
 			if (Validator.isNotNull(oldValue)) {
 				xml = updateLocalization(xml, parameter, oldValue);
@@ -661,26 +662,27 @@ public class LocalizationImpl implements Localization {
 
 	@Override
 	public String getPreferencesValue(
-		PortletPreferences preferences, String key, String languageId) {
+		PortletPreferences portletPreferences, String key, String languageId) {
 
-		return getPreferencesValue(preferences, key, languageId, true);
+		return getPreferencesValue(portletPreferences, key, languageId, true);
 	}
 
 	@Override
 	public String getPreferencesValue(
-		PortletPreferences preferences, String key, String languageId,
+		PortletPreferences portletPreferences, String key, String languageId,
 		boolean useDefault) {
 
 		String localizedKey = getLocalizedName(key, languageId);
 
-		String value = preferences.getValue(localizedKey, StringPool.BLANK);
+		String value = portletPreferences.getValue(
+			localizedKey, StringPool.BLANK);
 
 		if (useDefault && Validator.isNull(value)) {
-			value = preferences.getValue(
+			value = portletPreferences.getValue(
 				_getDefaultLocalizedName(key), StringPool.BLANK);
 
 			if (Validator.isNull(value)) {
-				value = preferences.getValue(key, StringPool.BLANK);
+				value = portletPreferences.getValue(key, StringPool.BLANK);
 			}
 		}
 
@@ -689,26 +691,27 @@ public class LocalizationImpl implements Localization {
 
 	@Override
 	public String[] getPreferencesValues(
-		PortletPreferences preferences, String key, String languageId) {
+		PortletPreferences portletPreferences, String key, String languageId) {
 
-		return getPreferencesValues(preferences, key, languageId, true);
+		return getPreferencesValues(portletPreferences, key, languageId, true);
 	}
 
 	@Override
 	public String[] getPreferencesValues(
-		PortletPreferences preferences, String key, String languageId,
+		PortletPreferences portletPreferences, String key, String languageId,
 		boolean useDefault) {
 
 		String localizedKey = getLocalizedName(key, languageId);
 
-		String[] values = preferences.getValues(localizedKey, new String[0]);
+		String[] values = portletPreferences.getValues(
+			localizedKey, new String[0]);
 
 		if (useDefault && ArrayUtil.isEmpty(values)) {
-			values = preferences.getValues(
+			values = portletPreferences.getValues(
 				_getDefaultLocalizedName(key), new String[0]);
 
 			if (ArrayUtil.isEmpty(values)) {
-				values = preferences.getValues(key, new String[0]);
+				values = portletPreferences.getValues(key, new String[0]);
 			}
 		}
 
@@ -1088,8 +1091,8 @@ public class LocalizationImpl implements Localization {
 
 	@Override
 	public void setLocalizedPreferencesValues(
-			PortletRequest portletRequest, PortletPreferences preferences,
-			String parameter)
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences, String parameter)
 		throws Exception {
 
 		Map<Locale, String> map = getLocalizationMap(portletRequest, parameter);
@@ -1098,26 +1101,26 @@ public class LocalizationImpl implements Localization {
 			String languageId = LocaleUtil.toLanguageId(entry.getKey());
 
 			setPreferencesValue(
-				preferences, parameter, languageId, entry.getValue());
+				portletPreferences, parameter, languageId, entry.getValue());
 		}
 	}
 
 	@Override
 	public void setPreferencesValue(
-			PortletPreferences preferences, String key, String languageId,
-			String value)
+			PortletPreferences portletPreferences, String key,
+			String languageId, String value)
 		throws Exception {
 
-		preferences.setValue(getLocalizedName(key, languageId), value);
+		portletPreferences.setValue(getLocalizedName(key, languageId), value);
 	}
 
 	@Override
 	public void setPreferencesValues(
-			PortletPreferences preferences, String key, String languageId,
-			String[] values)
+			PortletPreferences portletPreferences, String key,
+			String languageId, String[] values)
 		throws Exception {
 
-		preferences.setValues(getLocalizedName(key, languageId), values);
+		portletPreferences.setValues(getLocalizedName(key, languageId), values);
 	}
 
 	@Override

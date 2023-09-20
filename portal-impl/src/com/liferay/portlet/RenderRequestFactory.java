@@ -27,24 +27,24 @@ public class RenderRequestFactory {
 		HttpServletRequest httpServletRequest, Portlet portlet,
 		InvokerPortlet invokerPortlet, PortletContext portletContext,
 		WindowState windowState, PortletMode portletMode,
-		PortletPreferences preferences) {
+		PortletPreferences portletPreferences) {
 
 		return create(
 			httpServletRequest, portlet, invokerPortlet, portletContext,
-			windowState, portletMode, preferences, 0);
+			windowState, portletMode, portletPreferences, 0);
 	}
 
 	public static LiferayRenderRequest create(
 		HttpServletRequest httpServletRequest, Portlet portlet,
 		InvokerPortlet invokerPortlet, PortletContext portletContext,
 		WindowState windowState, PortletMode portletMode,
-		PortletPreferences preferences, long plid) {
+		PortletPreferences portletPreferences, long plid) {
 
 		RenderRequestImpl renderRequestImpl = new RenderRequestImpl();
 
 		renderRequestImpl.init(
 			httpServletRequest, portlet, invokerPortlet, portletContext,
-			windowState, portletMode, preferences, plid);
+			windowState, portletMode, portletPreferences, plid);
 
 		return renderRequestImpl;
 	}

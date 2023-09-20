@@ -476,8 +476,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 		Set<String> layoutPortletIds = _getLayoutPortletIds();
 
-		for (PortletPreferences portletPreference : portletPreferences) {
-			String portletId = portletPreference.getPortletId();
+		for (PortletPreferences curPortletPreferences : portletPreferences) {
+			String portletId = curPortletPreferences.getPortletId();
 
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				getCompanyId(), portletId);
@@ -1653,8 +1653,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, getPlid());
 
-		for (PortletPreferences portletPreference : portletPreferences) {
-			layoutPortletIds.add(portletPreference.getPortletId());
+		for (PortletPreferences curPortletPreferences : portletPreferences) {
+			layoutPortletIds.add(curPortletPreferences.getPortletId());
 		}
 
 		return layoutPortletIds;

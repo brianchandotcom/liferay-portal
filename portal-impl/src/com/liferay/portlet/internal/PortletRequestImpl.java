@@ -359,7 +359,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	}
 
 	public PortletPreferencesImpl getPreferencesImpl() {
-		return (PortletPreferencesImpl)_preferences;
+		return (PortletPreferencesImpl)_portletPreferences;
 	}
 
 	/**
@@ -589,7 +589,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		HttpServletRequest httpServletRequest, Portlet portlet,
 		InvokerPortlet invokerPortlet, PortletContext portletContext,
 		WindowState windowState, PortletMode portletMode,
-		PortletPreferences preferences, long plid) {
+		PortletPreferences portletPreferences, long plid) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -810,8 +810,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		}
 
 		_mergePublicRenderParameters(
-			dynamicServletRequest, publicRenderParametersMap, preferences,
-			getLifecycle());
+			dynamicServletRequest, publicRenderParametersMap,
+			portletPreferences, getLifecycle());
 
 		_processCheckbox(dynamicServletRequest);
 
@@ -833,7 +833,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_portletContext = portletContext;
 		_windowState = windowState;
 		_portletMode = portletMode;
-		_preferences = preferences;
+		_portletPreferences = portletPreferences;
 		_portletSessionImpl = new PortletSessionImpl(
 			_httpServletRequest.getSession(), _portletContext, _portletName,
 			plid);
@@ -1132,7 +1132,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	private void _mergePublicRenderParameters(
 		DynamicServletRequest dynamicServletRequest,
 		Map<String, String[]> publicRenderParametersMap,
-		PortletPreferences preferences, String lifecycle) {
+		PortletPreferences portletPreferences, String lifecycle) {
 
 		Set<PublicRenderParameter> publicRenderParameters =
 			_portlet.getPublicRenderParameters();
@@ -1141,7 +1141,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			return;
 		}
 
-		Enumeration<String> enumeration = preferences.getNames();
+		Enumeration<String> enumeration = portletPreferences.getNames();
 
 		if (!enumeration.hasMoreElements()) {
 			if (publicRenderParametersMap.isEmpty()) {
@@ -1187,7 +1187,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 					publicRenderParameter.getQName());
 
 			boolean ignoreValue = GetterUtil.getBoolean(
-				preferences.getValue(
+				portletPreferences.getValue(
 					PublicRenderParameterConfiguration.getIgnoreKey(
 						publicRenderParameterName),
 					null));
@@ -1197,7 +1197,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			}
 
 			String mappingValue = GetterUtil.getString(
-				preferences.getValue(
+				portletPreferences.getValue(
 					PublicRenderParameterConfiguration.getMappingKey(
 						publicRenderParameterName),
 					null));
@@ -1271,10 +1271,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 	private PortletContext _portletContext;
 	private PortletMode _portletMode;
 	private String _portletName;
+	private PortletPreferences _portletPreferences;
 	private HttpServletRequest _portletRequestDispatcherHttpServletRequest;
 	private PortletSessionImpl _portletSessionImpl;
 	private int _portletSpecMajorVersion;
-	private PortletPreferences _preferences;
 	private Object _profile;
 	private String _remoteUser;
 	private long _remoteUserId;

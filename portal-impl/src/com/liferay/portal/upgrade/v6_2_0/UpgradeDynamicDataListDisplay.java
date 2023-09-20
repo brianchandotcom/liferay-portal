@@ -34,10 +34,11 @@ public class UpgradeDynamicDataListDisplay
 			String portletId, String xml)
 		throws Exception {
 
-		PortletPreferences preferences = PortletPreferencesFactoryUtil.fromXML(
-			companyId, ownerId, ownerType, plid, portletId, xml);
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.fromXML(
+				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		Map<String, String[]> preferencesMap = preferences.getMap();
+		Map<String, String[]> preferencesMap = portletPreferences.getMap();
 
 		for (Map.Entry<String, String> entry : _preferenceNamesMap.entrySet()) {
 			String name = entry.getKey();
@@ -48,18 +49,18 @@ public class UpgradeDynamicDataListDisplay
 				continue;
 			}
 
-			preferences.reset(name);
+			portletPreferences.reset(name);
 
 			String newName = entry.getValue();
 
 			String[] newValues = preferencesMap.get(newName);
 
 			if (newValues == null) {
-				preferences.setValues(newName, values);
+				portletPreferences.setValues(newName, values);
 			}
 		}
 
-		return PortletPreferencesFactoryUtil.toXML(preferences);
+		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
 	private final Map<String, String> _preferenceNamesMap = new HashMap<>();

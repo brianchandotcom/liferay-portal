@@ -148,7 +148,7 @@ public class ResourceRequestImpl
 		HttpServletRequest httpServletRequest, Portlet portlet,
 		InvokerPortlet invokerPortlet, PortletContext portletContext,
 		WindowState windowState, PortletMode portletMode,
-		PortletPreferences preferences, long plid) {
+		PortletPreferences portletPreferences, long plid) {
 
 		if (Validator.isNull(windowState.toString())) {
 			windowState = WindowState.NORMAL;
@@ -160,7 +160,7 @@ public class ResourceRequestImpl
 
 		super.init(
 			httpServletRequest, portlet, invokerPortlet, portletContext,
-			windowState, portletMode, preferences, plid);
+			windowState, portletMode, portletPreferences, plid);
 
 		_cacheablity = ParamUtil.getString(
 			httpServletRequest, "p_p_cacheability", ResourceURL.PAGE);

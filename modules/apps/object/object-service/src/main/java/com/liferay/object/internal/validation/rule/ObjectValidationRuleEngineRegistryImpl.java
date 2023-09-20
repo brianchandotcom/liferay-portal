@@ -112,9 +112,12 @@ public class ObjectValidationRuleEngineRegistryImpl
 						key);
 				}
 
-				if (!(objectValidationRuleEngine instanceof
+				if ((!(objectValidationRuleEngine instanceof
 						FunctionObjectValidationRuleEngineImpl) ||
-					FeatureFlagManagerUtil.isEnabled("LPS-188898")) {
+					 FeatureFlagManagerUtil.isEnabled("LPS-188898")) &&
+					(!(objectValidationRuleEngine instanceof
+						UniqueComposedKeyObjectValidationRuleEngineImpl) ||
+					 FeatureFlagManagerUtil.isEnabled("LPS-187854"))) {
 
 					emitter.emit(key);
 				}

@@ -49,6 +49,8 @@ public interface CPInstance extends CPInstanceModel, PersistedModel {
 
 		};
 
+	public CPInstanceUnitOfMeasure fetchCPInstanceUnitOfMeasure(String key);
+
 	public CommerceCatalog getCommerceCatalog()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

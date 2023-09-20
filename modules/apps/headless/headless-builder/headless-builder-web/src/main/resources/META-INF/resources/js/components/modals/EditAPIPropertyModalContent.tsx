@@ -8,6 +8,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
+import {openToast} from 'frontend-js-web';
 import React, {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import {Select} from '../fieldComponents/Select';
@@ -118,6 +119,10 @@ export default function EditAPIPropertyModalContent({
 					: previous
 			);
 			closeModal();
+			openToast({
+				message: Liferay.Language.get('schema-property-was-updated'),
+				type: 'success',
+			});
 		}
 		else {
 			return;

@@ -43,14 +43,9 @@ public class ImageDLPreviewRendererProvider
 	public DLPreviewRenderer getPreviewDLPreviewRenderer(
 		FileVersion fileVersion) {
 
-		if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
-			return (httpServletRequest, httpServletResponse) -> {
-				throw new DLPreviewSizeException();
-			};
-		}
-
-		if (!_imageProcessor.hasImages(fileVersion) &&
-			!_imageProcessor.isImageSupported(fileVersion)) {
+		if ((fileVersion == null) || (fileVersion.getSize() == 0) ||
+			(!_imageProcessor.hasImages(fileVersion) &&
+			 !_imageProcessor.isImageSupported(fileVersion.getMimeType()))) {
 
 			return null;
 		}
@@ -86,6 +81,10 @@ public class ImageDLPreviewRendererProvider
 		}
 
 		if (!_imageProcessor.hasImages(fileVersion)) {
+			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
+				throw new DLPreviewSizeException();
+			}
+
 			throw new DLPreviewGenerationInProcessException();
 		}
 	}

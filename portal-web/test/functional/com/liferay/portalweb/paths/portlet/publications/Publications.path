@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>CONFLICTING_CHANGES_WARNING_CONTENT</td>
-	<td>//div[contains(.,'${key_entryTitle}')]//following-sibling::div[contains(.,'${key_warningMessage}')]</td>
+	<td>//p[contains(.,'${key_entryTitle}')]//following-sibling::p[contains(text(),'${key_warningMessage}')] | //p[contains(.,'${key_entryTitle}')]//following-sibling::p/strong[contains(text(),'${key_warningMessage}')]</td>
 	<td></td>
 </tr>
 <tr>

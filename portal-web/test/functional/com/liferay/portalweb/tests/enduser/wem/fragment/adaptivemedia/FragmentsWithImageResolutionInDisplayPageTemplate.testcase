@@ -875,13 +875,13 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "01-img",
 				imageDescription = "",
-				imageFileName = "high_resolution_photo.jpg");
+				imageFileName = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the orignal image is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/documents/",
-				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
+				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo-jpg')]");
 		}
 
 		task ("Change to the Tablet Device in simulation menu") {
@@ -902,13 +902,13 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "01-img",
 				imageDescription = "",
-				imageFileName = "high_resolution_photo.jpg");
+				imageFileName = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the Preview-1000x0 is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "/Preview-1000x0/",
-				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
+				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo-jpg')]");
 		}
 	}
 

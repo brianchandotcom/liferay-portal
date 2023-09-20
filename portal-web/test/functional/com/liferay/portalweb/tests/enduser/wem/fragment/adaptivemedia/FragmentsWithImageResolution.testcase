@@ -427,13 +427,13 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "01-img",
 				imageDescription = "",
-				imageFileName = "high_resolution_photo.jpg");
+				imageFileName = "high_resolution_photo-jpg");
 		}
 
 		task ("Assert the Large Image Resolution is selected automatically") {
 			PageEditor.assertAutoImageResolution(
 				adaptiveMediaName = "large-image-resolution",
-				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo.jpg')]");
+				element = "//img[contains(@data-lfr-editable-id,'01-img') and contains(@src,'high_resolution_photo-jpg')]");
 		}
 	}
 

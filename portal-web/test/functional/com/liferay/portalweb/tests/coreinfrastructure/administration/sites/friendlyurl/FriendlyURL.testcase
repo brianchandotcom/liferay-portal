@@ -345,7 +345,7 @@ definition {
 			ContentPages.viewFragmentImage(
 				fragmentName = "image",
 				id = "image-square",
-				image = "tree.png");
+				image = "tree-png");
 		}
 
 		task ("Change the locale to Chinese") {
@@ -363,7 +363,7 @@ definition {
 			ContentPages.viewFragmentImage(
 				fragmentName = "image",
 				id = "image-square",
-				image = "tree.png");
+				image = "tree-png");
 		}
 
 		task ("Change the locale to Portuguese") {
@@ -381,7 +381,7 @@ definition {
 			ContentPages.viewFragmentImage(
 				fragmentName = "image",
 				id = "image-square",
-				image = "tree.png");
+				image = "tree-png");
 		}
 
 		task ("Change the locale to French") {
@@ -399,7 +399,7 @@ definition {
 			ContentPages.viewFragmentImage(
 				fragmentName = "image",
 				id = "image-square",
-				image = "tree.png");
+				image = "tree-png");
 		}
 
 		task ("Change the locale to English") {

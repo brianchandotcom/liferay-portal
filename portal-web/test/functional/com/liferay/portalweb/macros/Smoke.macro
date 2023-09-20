@@ -159,7 +159,7 @@ definition {
 		ContentPages.viewFragmentImage(
 			fragmentName = "image",
 			id = "image-square",
-			image = "tree.png");
+			image = "tree-png");
 	}
 
 }

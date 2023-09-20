@@ -63,7 +63,7 @@ definition {
 		ContentPages.viewFragmentImage(
 			fragmentName = "image",
 			id = "image-square",
-			image = "tree.png");
+			image = "tree-png");
 
 		User.firstLoginUI(
 			password = "test",
@@ -146,7 +146,7 @@ definition {
 		ContentPages.viewFragmentImage(
 			fragmentName = "image",
 			id = "image-square",
-			image = "tree.png");
+			image = "tree-png");
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
@@ -225,7 +225,7 @@ definition {
 		ContentPages.viewFragmentImage(
 			fragmentName = "image",
 			id = "image-square",
-			image = "tree.png");
+			image = "tree-png");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

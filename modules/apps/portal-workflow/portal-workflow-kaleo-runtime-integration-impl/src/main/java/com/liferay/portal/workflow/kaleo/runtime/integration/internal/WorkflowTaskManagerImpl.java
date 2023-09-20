@@ -842,8 +842,12 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			(ServiceContext)workflowContext.get(
 				WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
-		return new ExecutionContext(
+		ExecutionContext executionContext = new ExecutionContext(
 			kaleoInstanceToken, workflowContext, workflowContextServiceContext);
+
+		executionContext.setKaleoTaskInstanceToken(kaleoTaskInstanceToken);
+
+		return executionContext;
 	}
 
 	private long _getAssignedUserId(long kaleoTaskInstanceTokenId) {

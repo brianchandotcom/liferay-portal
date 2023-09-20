@@ -1132,7 +1132,9 @@ definition {
 
 		SearchPortlets.searchWidget(searchTerm = "Potato");
 
-		SearchFacetPortlet.checkFacet(facetTerm = "Blogs Entry");
+		SearchFacetPortlet.checkFacetTerm(
+			facetName = "Type Facet",
+			facetTerm = "Blogs Entry");
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1641,7 +1643,9 @@ definition {
 
 		IFrame.closeFrame();
 
-		SearchFacetPortlet.checkFacet(facetTerm = "Custom Object 500");
+		SearchFacetPortlet.checkFacetTerm(
+			facetName = "Type Facet",
+			facetTerm = "Custom Object 500");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = ${objectEntryId},
@@ -1916,7 +1920,9 @@ definition {
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 
-		SearchFacetPortlet.checkFacet(facetTerm = "moon rocks");
+		SearchFacetPortlet.checkFacetTerm(
+			facetName = "Tag Facet",
+			facetTerm = "moon rocks");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
@@ -2070,7 +2076,9 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.checkFacet(facetTerm = "userfn userln");
+		SearchFacetPortlet.checkFacetTerm(
+			facetName = "User Facet",
+			facetTerm = "userfn userln");
 
 		var currentURL = selenium.getLocation();
 

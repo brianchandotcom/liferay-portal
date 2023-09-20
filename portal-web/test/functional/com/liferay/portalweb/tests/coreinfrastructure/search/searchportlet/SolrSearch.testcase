@@ -273,7 +273,9 @@ definition {
 
 		SearchPortlets.searchWidget(searchTerm = "Potato");
 
-		SearchFacetPortlet.checkFacet(facetTerm = "Blogs Entry");
+		SearchFacetPortlet.checkFacetTerm(
+			facetName = "Type Facet",
+			facetTerm = "Blogs Entry");
 
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -936,7 +938,9 @@ definition {
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 
-		SearchFacetPortlet.checkFacet(facetTerm = "moon rocks");
+		SearchFacetPortlet.checkFacetTerm(
+			facetName = "Tag Facet",
+			facetTerm = "moon rocks");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",

@@ -1,11 +1,18 @@
 definition {
 
-	macro checkFacet {
-		FormFields.enableCheckbox(fieldName = ${facetTerm});
+	macro checkFacetTerm {
+		if (IsNotChecked.isNotCheckedNotVisible(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "FormFields#CHECKBOX")) {
+			Click(
+				key_checkboxName = ${facetTerm},
+				key_facetName = ${facetName},
+				locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
+		}
 	}
 
-	macro checkFacetAndViewURL {
-		SearchFacetPortlet.checkFacet(facetTerm = ${facetTerm});
+	macro checkFacetTermAndViewURL {
+		SearchFacetPortlet.checkFacetTerm(
+			facetName = ${facetName},
+			facetTerm = ${facetTerm});
 
 		var searchURL = SearchFacetPortlet.generateFacetCheckedURL(
 			facetName = ${facetName},
@@ -267,12 +274,19 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro uncheckFacet {
-		FormFields.disableCheckbox(fieldName = ${facetTerm});
+	macro uncheckFacetTerm {
+		if (IsChecked(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "FormFields#CHECKBOX")) {
+			Click(
+				key_checkboxName = ${facetTerm},
+				key_facetName = ${facetName},
+				locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
+		}
 	}
 
-	macro uncheckFacetAndViewURL {
-		SearchFacetPortlet.uncheckFacet(facetTerm = ${facetTerm});
+	macro uncheckFacetTermAndViewURL {
+		SearchFacetPortlet.uncheckFacetTerm(
+			facetName = ${facetName},
+			facetTerm = ${facetTerm});
 
 		var searchURL = SearchFacetPortlet.generateFacetUncheckedURL(
 			facetName = ${facetName},

@@ -8,10 +8,12 @@ import ClayPanel from '@clayui/panel';
 import {
 	CustomVerticalBar,
 	ManagementToolbarSearch,
+	stringIncludesQuery,
 } from '@liferay/object-js-components-web';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
+import {LeftSidebarItem} from '../types';
 import {LeftSidebarEmptySearch} from './LeftSidebarEmptySearch';
 import LeftSidebarTreeView from './LeftSidebarTreeView';
 
@@ -20,11 +22,65 @@ interface LeftSidebarProps {
 }
 
 export default function LeftSidebar({setShowModal}: LeftSidebarProps) {
-	const [emptySearch, setEmptySearch] = useState(false);
+	const [expandedKeys, setExpandedKeys] = useState<Set<React.Key>>(
+		new Set(['uncategorized'])
+	);
 	const [query, setQuery] = useState('');
 	const [
-		{isLoadingObjectFolder, leftSidebarItems},
+		{isLoadingObjectFolder, leftSidebarItems, selectedObjectFolder},
 	] = useObjectFolderContext();
+
+	const filteredLeftSidebarItems = useMemo(() => {
+		const keys = [] as string[];
+
+		const newLeftSidebarItems = leftSidebarItems.map((leftSidebarItem) => {
+			if (!leftSidebarItem.leftSidebarObjectDefinitionItems) {
+				return leftSidebarItem;
+			}
+
+			const newLeftSidebarObjectDefinitionItems = leftSidebarItem.leftSidebarObjectDefinitionItems.filter(
+				(leftSidebarObjectDefinitionItem) =>
+					stringIncludesQuery(
+						leftSidebarObjectDefinitionItem.label,
+						query
+					)
+			);
+
+			keys.push(leftSidebarItem.name);
+
+			return {
+				...leftSidebarItem,
+				id: leftSidebarItem.name,
+				leftSidebarObjectDefinitionItems: newLeftSidebarObjectDefinitionItems,
+			};
+		});
+
+		setExpandedKeys(new Set(keys));
+
+		return newLeftSidebarItems;
+	}, [leftSidebarItems, query]);
+
+	const leftSidebarOtherObjectFoldersItems = filteredLeftSidebarItems.filter(
+		(filteredLeftSidebarItem) =>
+			filteredLeftSidebarItem.objectFolderName !==
+				selectedObjectFolder.name &&
+			filteredLeftSidebarItem.leftSidebarObjectDefinitionItems?.length !==
+				0
+	);
+
+	leftSidebarOtherObjectFoldersItems.sort((a, b) =>
+		a.objectFolderName > b.objectFolderName
+			? 1
+			: b.objectFolderName > a.objectFolderName
+			? -1
+			: 0
+	);
+
+	const leftSidebarSelectedObjectFolderItem = filteredLeftSidebarItems.find(
+		(filteredLeftSidebarItem) =>
+			filteredLeftSidebarItem.objectFolderName ===
+			selectedObjectFolder.name
+	) as LeftSidebarItem;
 
 	return (
 		<CustomVerticalBar
@@ -59,14 +115,23 @@ export default function LeftSidebar({setShowModal}: LeftSidebarProps) {
 
 				{!isLoadingObjectFolder ? (
 					<>
-						{emptySearch ? (
+						{!leftSidebarOtherObjectFoldersItems.length &&
+						leftSidebarSelectedObjectFolderItem
+							?.leftSidebarObjectDefinitionItems?.length === 0 &&
+						query ? (
 							<LeftSidebarEmptySearch />
 						) : (
 							!!leftSidebarItems.length && (
 								<>
 									<LeftSidebarTreeView
-										query={query}
-										setEmptySearch={setEmptySearch}
+										expandedKeys={expandedKeys}
+										leftSidebarOtherObjectFoldersItems={
+											leftSidebarOtherObjectFoldersItems
+										}
+										leftSidebarSelectedObjectFolderItem={
+											leftSidebarSelectedObjectFolderItem
+										}
+										setExpandedKeys={setExpandedKeys}
 									/>
 
 									<ClayPanel
@@ -81,8 +146,16 @@ export default function LeftSidebar({setShowModal}: LeftSidebarProps) {
 									>
 										<ClayPanel.Body>
 											<LeftSidebarTreeView
-												query={query}
-												setEmptySearch={setEmptySearch}
+												expandedKeys={expandedKeys}
+												leftSidebarOtherObjectFoldersItems={
+													leftSidebarOtherObjectFoldersItems
+												}
+												leftSidebarSelectedObjectFolderItem={
+													leftSidebarSelectedObjectFolderItem
+												}
+												setExpandedKeys={
+													setExpandedKeys
+												}
 												showActions
 											/>
 										</ClayPanel.Body>

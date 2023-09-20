@@ -33,22 +33,6 @@ public class BrowserSnifferUtil {
 
 	public static final String BROWSER_ID_OTHER = "other";
 
-	public static final String[] REVISION_LEADINGS = {
-		"rv", "it", "ra", "trident", "ie"
-	};
-
-	public static final char[] REVISION_SEPARATORS = {
-		CharPool.BACK_SLASH, CharPool.COLON, CharPool.SLASH, CharPool.SPACE
-	};
-
-	public static final String[] VERSION_LEADINGS = {
-		"edge", "chrome", "firefox", "version", "minefield", "trident"
-	};
-
-	public static final char[] VERSION_SEPARATORS = {
-		CharPool.BACK_SLASH, CharPool.SLASH
-	};
-
 	public static boolean acceptsGzip(HttpServletRequest httpServletRequest) {
 		String acceptEncoding = httpServletRequest.getHeader(
 			HttpHeaders.ACCEPT_ENCODING);
@@ -157,8 +141,8 @@ public class BrowserSnifferUtil {
 		}
 
 		revision = parseVersion(
-			_getUserAgent(httpServletRequest), REVISION_LEADINGS,
-			REVISION_SEPARATORS);
+			_getUserAgent(httpServletRequest), _REVISION_LEADINGS,
+			_REVISION_SEPARATORS);
 
 		httpServletRequest.setAttribute(
 			WebKeys.BROWSER_SNIFFER_REVISION, revision);
@@ -190,11 +174,12 @@ public class BrowserSnifferUtil {
 
 		String userAgent = _getUserAgent(httpServletRequest);
 
-		version = parseVersion(userAgent, VERSION_LEADINGS, VERSION_SEPARATORS);
+		version = parseVersion(
+			userAgent, _VERSION_LEADINGS, _VERSION_SEPARATORS);
 
 		if (version.isEmpty()) {
 			version = parseVersion(
-				userAgent, REVISION_LEADINGS, REVISION_SEPARATORS);
+				userAgent, _REVISION_LEADINGS, _REVISION_SEPARATORS);
 		}
 
 		httpServletRequest.setAttribute(
@@ -461,5 +446,21 @@ public class BrowserSnifferUtil {
 
 		return userAgent;
 	}
+
+	private static final String[] _REVISION_LEADINGS = {
+		"rv", "it", "ra", "trident", "ie"
+	};
+
+	private static final char[] _REVISION_SEPARATORS = {
+		CharPool.BACK_SLASH, CharPool.COLON, CharPool.SLASH, CharPool.SPACE
+	};
+
+	private static final String[] _VERSION_LEADINGS = {
+		"edge", "chrome", "firefox", "version", "minefield", "trident"
+	};
+
+	private static final char[] _VERSION_SEPARATORS = {
+		CharPool.BACK_SLASH, CharPool.SLASH
+	};
 
 }

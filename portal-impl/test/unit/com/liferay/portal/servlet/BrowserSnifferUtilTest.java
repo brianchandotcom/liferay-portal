@@ -9,6 +9,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -147,14 +148,20 @@ public class BrowserSnifferUtilTest {
 				Assert.assertEquals(
 					parts[0].trim() + " version", parts[1].trim(),
 					BrowserSnifferUtil.parseVersion(
-						userAgent, BrowserSnifferUtil.VERSION_LEADINGS,
-						BrowserSnifferUtil.VERSION_SEPARATORS));
+						userAgent,
+						ReflectionTestUtil.getFieldValue(
+							BrowserSnifferUtil.class, "_VERSION_LEADINGS"),
+						ReflectionTestUtil.getFieldValue(
+							BrowserSnifferUtil.class, "_VERSION_SEPARATORS")));
 
 				Assert.assertEquals(
 					parts[0].trim() + " revision", parts[2].trim(),
 					BrowserSnifferUtil.parseVersion(
-						userAgent, BrowserSnifferUtil.REVISION_LEADINGS,
-						BrowserSnifferUtil.REVISION_SEPARATORS));
+						userAgent,
+						ReflectionTestUtil.getFieldValue(
+							BrowserSnifferUtil.class, "_REVISION_LEADINGS"),
+						ReflectionTestUtil.getFieldValue(
+							BrowserSnifferUtil.class, "_REVISION_SEPARATORS")));
 			}
 		}
 	}

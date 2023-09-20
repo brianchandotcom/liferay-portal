@@ -6,17 +6,23 @@
 package com.liferay.commerce.frontend.js.internal.servlet.taglib;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Portal;
 
 import java.io.IOException;
@@ -134,6 +140,29 @@ public class CommerceFrontendJsDynamicInclude extends BaseDynamicInclude {
 						"orderType", commerceOrder.getCommerceOrderTypeId()
 					);
 				}
+			).put(
+				"showSeparateOrderItems",
+				() -> {
+					CommerceChannel commerceChannel =
+						_commerceChannelLocalService.fetchCommerceChannel(
+							commerceContext.getCommerceChannelId());
+
+					if (commerceChannel == null) {
+						return false;
+					}
+
+					CommerceOrderCheckoutConfiguration
+						commerceOrderCheckoutConfiguration =
+							_configurationProvider.getConfiguration(
+								CommerceOrderCheckoutConfiguration.class,
+								new GroupServiceSettingsLocator(
+									commerceChannel.getGroupId(),
+									CommerceConstants.
+										SERVICE_NAME_COMMERCE_ORDER));
+
+					return commerceOrderCheckoutConfiguration.
+						showSeparateOrderItems();
+				}
 			),
 			";</script><link href=\"",
 			_portal.getPathProxy() + httpServletRequest.getContextPath(),
@@ -143,6 +172,12 @@ public class CommerceFrontendJsDynamicInclude extends BaseDynamicInclude {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceFrontendJsDynamicInclude.class);
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Portal _portal;

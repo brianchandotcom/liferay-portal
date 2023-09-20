@@ -15,6 +15,7 @@ declare module Liferay {
 		commerceSiteType: number;
 		currency?: CommerceCurrency;
 		order?: CommerceOrder;
+		showSeparateOrderItems: boolean;
 	};
 }
 

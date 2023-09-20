@@ -242,64 +242,76 @@ portletDisplay.setURLBack(backURL);
 									}
 								})
 								.then((response) => {
-									const errorMessageArray = JSON.parse(
-										response.detail
-									);
-
-									for (const error of errorMessageArray) {
-										const portletBody = document.querySelector(
-											'.portlet-body'
+									if (response && response.detail) {
+										const errorMessageArray = JSON.parse(
+											response.detail
 										);
 
-										const existingAlert = portletBody.querySelector(
-											'.alert'
-										);
+										for (const error of errorMessageArray) {
+											const portletBody = document.querySelector(
+												'.portlet-body'
+											);
 
-										if (existingAlert) {
-											existingAlert.remove();
+											const existingAlert = portletBody.querySelector(
+												'.alert'
+											);
+
+											if (existingAlert) {
+												existingAlert.remove();
+											}
+
+											const alertElement = document.createElement(
+												'div'
+											);
+
+											alertElement.className =
+												'alert alert-danger';
+											alertElement.setAttribute('role', 'alert');
+											alertElement.style.bottom = '20px';
+											alertElement.style.margin = '2rem auto 0';
+											alertElement.style.width = '800px';
+
+											alertElement.insertAdjacentHTML(
+												'afterbegin',
+												"<span class='alert-indicator'><svg class='lexicon-icon lexicon-icon-exclamation-full' focusable='false' role='presentation'><use xlink:href='/o/admin-theme/images/clay/icons.svg#exclamation-full'/></svg> <strong class='lead'>Error:</strong></span>"
+											);
+
+											alertElement.insertAdjacentHTML(
+												'beforeend',
+												error.errorMessage
+											);
+
+											const closeButton = document.createElement(
+												'button'
+											);
+											closeButton.classList.add('close');
+											closeButton.setAttribute(
+												'aria-label',
+												'Close'
+											);
+											closeButton.setAttribute('type', 'button');
+											closeButton.style.fontSize = '32px';
+											closeButton.style.fontWeight = '300';
+											closeButton.innerHTML = '&times;';
+											closeButton.onclick = () => {
+												alertElement.remove();
+											};
+
+											alertElement.appendChild(closeButton);
+
+											form.insertAdjacentElement(
+												'afterbegin',
+												alertElement
+											);
 										}
-
-										const alertElement = document.createElement(
-											'div'
-										);
-
-										alertElement.className = 'alert alert-danger';
-										alertElement.setAttribute('role', 'alert');
-										alertElement.style.bottom = '20px';
-										alertElement.style.margin = '2rem auto 0';
-										alertElement.style.width = '800px';
-
-										alertElement.insertAdjacentHTML(
-											'afterbegin',
-											"<span class='alert-indicator'><svg class='lexicon-icon lexicon-icon-exclamation-full' focusable='false' role='presentation'><use xlink:href='/o/admin-theme/images/clay/icons.svg#exclamation-full'/></svg> <strong class='lead'>Error:</strong></span>"
-										);
-
-										alertElement.insertAdjacentHTML(
-											'beforeend',
-											error.errorMessage
-										);
-
-										const closeButton = document.createElement(
-											'button'
-										);
-										closeButton.classList.add('close');
-										closeButton.setAttribute('aria-label', 'Close');
-										closeButton.setAttribute('type', 'button');
-										closeButton.style.fontSize = '32px';
-										closeButton.style.fontWeight = '300';
-										closeButton.innerHTML = '&times;';
-										closeButton.onclick = () => {
-											alertElement.remove();
-										};
-
-										alertElement.appendChild(closeButton);
-
-										form.insertAdjacentElement(
-											'afterbegin',
-											alertElement
-										);
+										scroll(0, 0);
 									}
-									scroll(0, 0);
+									else if (response && response.title) {
+										Liferay.Util.openToast({
+											message: response.title,
+											type: 'danger',
+										});
+									}
 
 									loadingElement.remove();
 								});

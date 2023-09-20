@@ -71,8 +71,7 @@ public class ActionUtil {
 	}
 
 	public static void getLayoutPublicRenderParameters(
-			PortletRequest portletRequest)
-		throws Exception {
+		PortletRequest portletRequest) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -130,8 +129,7 @@ public class ActionUtil {
 	}
 
 	public static void getPublicRenderParameterConfigurationList(
-			PortletRequest portletRequest, Portlet portlet)
-		throws Exception {
+		PortletRequest portletRequest, Portlet portlet) {
 
 		PortletPreferences portletPreferences = null;
 

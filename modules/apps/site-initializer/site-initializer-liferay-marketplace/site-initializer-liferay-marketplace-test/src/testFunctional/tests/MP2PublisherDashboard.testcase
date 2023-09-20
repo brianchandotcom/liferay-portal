@@ -180,6 +180,54 @@ definition {
 	@description = "LPS-160952 | Verify that after accepting the invitation, the guest user role is listed in the members section of the editor account"
 	@priority = 3
 	test CanViewTheUserRoleInTheMemberList {
+		task ("Given the user accepts the invitation") {
+			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "App Editor",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+
+			User.logoutPG();
+
+			MockMock._gotoMail();
+		}
+
+		task ("And logs into the panel with the invited roles") {
+			MP2Utils.firstLoginMKT(
+				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
+				bodyLink = "Accept invitation",
+				recipient = "da@administrator.com",
+				userEmailAddress = "test.mp@liferay.com");
+		}
+
+		task ("When I go to the member page") {
+			MP2Navigator.gotoNavItem(navItem = "Members");
+		}
+
+		task ("Then I should be able to assert that the invited user's status is now Active") {
+			var table = '''
+				| Name    | Test QA             |
+				| Email   | test.mp@liferay.com |
+				| Role    | App Editor          |
+			''';
+
+			var rawTable = TableUtil.newTable(${table});
+
+			for (var row : table ${rawTable}) {
+				var label = "${row[0]}";
+				var value = "${row[1]}";
+
+				AssertElementPresent(
+					key_label = ${label},
+					key_text = ${value},
+					locator1 = "MP2Dashboards#DASHBOARD_TABLE");
+			}
+		}
 	}
 
 }

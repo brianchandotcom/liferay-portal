@@ -5,6 +5,7 @@
 
 package com.liferay.document.library.preview.exception;
 
+import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -13,18 +14,53 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class DLPreviewSizeException extends PortalException {
 
 	public DLPreviewSizeException() {
+		this(0);
+	}
+
+	public DLPreviewSizeException(long maxSize) {
+		_maxSize = maxSize;
+	}
+
+	public DLPreviewSizeException(long maxSize, Throwable throwable) {
+		super(throwable);
+
+		_maxSize = maxSize;
 	}
 
 	public DLPreviewSizeException(String msg) {
+		this(msg, 0);
+	}
+
+	public DLPreviewSizeException(String msg, long maxSize) {
 		super(msg);
+
+		_maxSize = maxSize;
+	}
+
+	public DLPreviewSizeException(
+		String msg, long maxSize, Throwable throwable) {
+
+		super(msg, throwable);
+
+		_maxSize = maxSize;
 	}
 
 	public DLPreviewSizeException(String msg, Throwable throwable) {
-		super(msg, throwable);
+		this(msg, 0, throwable);
 	}
 
 	public DLPreviewSizeException(Throwable throwable) {
-		super(throwable);
+		this(0, throwable);
 	}
+
+	public long getMaxSize() {
+		if (_maxSize != 0) {
+			return _maxSize;
+		}
+
+		return DLProcessorRegistryUtil.getPreviewableProcessorMaxSize();
+	}
+
+	private final long _maxSize;
 
 }

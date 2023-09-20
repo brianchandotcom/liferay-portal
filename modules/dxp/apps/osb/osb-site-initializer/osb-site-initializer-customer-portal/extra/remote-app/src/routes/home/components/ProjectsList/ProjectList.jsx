@@ -12,6 +12,49 @@ import {Liferay} from '../../../../common/services/liferay';
 import routerPath from '../../../../common/utils/routerPath';
 import ProjectCard from './components/ProjectCard';
 
+const RenderResults = ({compressed, koroneikiAccounts, loading}) => {
+	const pageRoutes = routerPath();
+
+	if (!koroneikiAccounts) {
+		return (
+			<p className="mx-auto">
+				{i18n.translate('sorry-there-are-no-results-found')}
+			</p>
+		);
+	}
+
+	if (koroneikiAccounts.totalCount) {
+		return (
+			<>
+				{koroneikiAccounts?.items.map((koroneikiAccount, index) => (
+					<ProjectCard
+						compressed={compressed}
+						key={`${koroneikiAccount.accountKey}-${index}`}
+						onClick={() =>
+							Liferay.Util.navigate(
+								pageRoutes.project(koroneikiAccount.accountKey)
+							)
+						}
+						{...koroneikiAccount}
+					/>
+				))}
+
+				{loading && (
+					<div className="mx-auto">
+						<ClayLoadingIndicator small />
+					</div>
+				)}
+			</>
+		);
+	}
+
+	return (
+		<p className="mx-auto">
+			{i18n.translate('no-projects-match-these-criteria')}
+		</p>
+	);
+};
+
 const ProjectList = ({
 	compressed,
 	fetching,
@@ -20,8 +63,7 @@ const ProjectList = ({
 	maxCardsLoading = 4,
 	onIntersect,
 }) => {
-	const [setTrackedRefCurrent, isIntersecting] = useIntersectionObserver();
-	const pageRoutes = routerPath();
+	const [ref, isIntersecting] = useIntersectionObserver();
 
 	const isLastPage = koroneikiAccounts?.page === koroneikiAccounts?.lastPage;
 	const allowFetching = !isLastPage && !fetching;
@@ -32,54 +74,6 @@ const ProjectList = ({
 		}
 	}, [isIntersecting, koroneikiAccounts?.page, onIntersect, allowFetching]);
 
-	const getLoadingCards = () =>
-		[...new Array(maxCardsLoading)].map((_, index) => (
-			<ProjectCard compressed={compressed} key={index} loading />
-		));
-
-	const getProjects = () =>
-		koroneikiAccounts?.items.map((koroneikiAccount, index) => (
-			<ProjectCard
-				compressed={compressed}
-				key={`${koroneikiAccount.accountKey}-${index}`}
-				onClick={() =>
-					Liferay.Util.navigate(
-						pageRoutes.project(koroneikiAccount.accountKey)
-					)
-				}
-				{...koroneikiAccount}
-			/>
-		));
-
-	const getResults = () => {
-		if (!koroneikiAccounts) {
-			return (
-				<p className="mx-auto">
-					{i18n.translate('sorry-there-are-no-results-found')}
-				</p>
-			);
-		}
-
-		if (koroneikiAccounts.totalCount) {
-			return (
-				<>
-					{getProjects()}
-					{allowFetching && (
-						<div className="mx-auto" ref={setTrackedRefCurrent}>
-							<ClayLoadingIndicator small />
-						</div>
-					)}
-				</>
-			);
-		}
-
-		return (
-			<p className="mx-auto">
-				{i18n.translate('no-projects-match-these-criteria')}
-			</p>
-		);
-	};
-
 	return (
 		<div
 			className={classNames('d-flex', {
@@ -87,7 +81,25 @@ const ProjectList = ({
 				'flex-wrap pl-3': !compressed,
 			})}
 		>
-			{loading ? getLoadingCards() : getResults()}
+			{loading ? (
+				<>
+					{[...new Array(maxCardsLoading)].map((_, index) => (
+						<ProjectCard
+							compressed={compressed}
+							key={index}
+							loading
+						/>
+					))}
+				</>
+			) : (
+				<RenderResults
+					compressed={compressed}
+					koroneikiAccounts={koroneikiAccounts}
+					loading={loading}
+				/>
+			)}
+
+			<div ref={ref}></div>
 		</div>
 	);
 };

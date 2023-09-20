@@ -120,6 +120,6 @@ public class DDMFormTemplateContextFactoryHelper {
 	}
 
 	private static final Pattern _pattern = Pattern.compile(
-		"'?([\\w]+)'?\\s*[,\\)]\\s*");
+		"'?([\\p{L}\\p{N}]+)'?\\s*[,\\)]\\s*");
 
 }

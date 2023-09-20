@@ -121,7 +121,7 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		JSONWebcontent.addWebContent(
 			content = "",
@@ -317,7 +317,7 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
 
@@ -346,7 +346,7 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		JSONWebcontent.addWebContent(
 			content = "Liferay",
@@ -475,7 +475,7 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
 
@@ -549,7 +549,7 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
 
@@ -569,7 +569,7 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		SearchPortlets.searchEmbedded(searchTerm = "apple");
 
@@ -621,7 +621,7 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
 
@@ -639,7 +639,7 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		SearchPortlets.searchEmbedded(searchTerm = "apple");
 
@@ -688,7 +688,7 @@ definition {
 		}
 
 		task ("Create a Content Page with Search widgets") {
-			Search.openSearchPage();
+			SearchPortlets.openSearchPage();
 
 			SearchPortlets.configureEmbeddedSearchBar(
 				federatedSearchKey = "key",
@@ -710,7 +710,7 @@ definition {
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
 
-			Search.openSearchPage();
+			SearchPortlets.openSearchPage();
 
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "WC WebContent Title",
@@ -857,7 +857,7 @@ definition {
 
 		AssertAlertNotPresent();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "<script>alert(123);</script>");
 
@@ -927,7 +927,7 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
 
@@ -989,7 +989,7 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
 
@@ -1033,7 +1033,7 @@ definition {
 			groupName = "Guest",
 			title = "red apple");
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		SearchPortlets.searchEmbedded(searchTerm = "red apple");
 
@@ -1080,7 +1080,7 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Boost Custom Object Blueprint");
 
@@ -1129,7 +1129,7 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
 
@@ -1421,7 +1421,7 @@ definition {
 			groupName = "Guest",
 			title = "WC Title");
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
 
@@ -1928,7 +1928,7 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
 
@@ -2067,7 +2067,7 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
 
@@ -3355,7 +3355,7 @@ definition {
 
 		SearchPortlets.addWidgets(searchPortletList = "Blueprints Options");
 
-		Search.openSearchPage(locale = "es-ES");
+		SearchPortlets.openSearchPage(locale = "es-ES");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Opciones de planos",
@@ -4858,7 +4858,7 @@ definition {
 
 		SearchPortlets.addWidgets(searchPortletList = "Blueprints Options");
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Portlet.gotoPortletOptions(
 			portletName = "Blueprints Options",

@@ -54,7 +54,7 @@ definition {
 
 		SearchPortlets.addWidgets(searchPortletList = "Search Insights");
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Insights",

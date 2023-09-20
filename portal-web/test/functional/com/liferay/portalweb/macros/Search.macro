@@ -6,22 +6,6 @@ definition {
 		AssertElementNotPresent(locator1 = "Search#SEARCH_INFO");
 	}
 
-	macro openSearchPage {
-		if (!(isSet(siteURLKey))) {
-			var siteURLKey = "guest";
-		}
-
-		if (isSet(searchTerm)) {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/search?q=${searchTerm}");
-		}
-		else if (isSet(locale)) {
-			Navigator.openWithAppendToBaseURL(urlAppend = "${locale}/web/${siteURLKey}/search");
-		}
-		else {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/search");
-		}
-	}
-
 	macro searchCP {
 		WaitForElementPresent(locator1 = "TextInput#SEARCH");
 

@@ -319,7 +319,7 @@ definition {
 
 		PortletEntry.save();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
 
@@ -363,7 +363,7 @@ definition {
 			wikiPageContent = "",
 			wikiPageName = "Test Wiki Page");
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		SearchResultPortlet.configureSearchResults(displayDocumentForm = "true");
 

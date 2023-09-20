@@ -53,7 +53,7 @@ public class AudioDLPreviewRendererProvider
 		FileVersion fileVersion) {
 
 		if (!_audioProcessor.hasAudio(fileVersion) &&
-			!_audioProcessor.isAudioSupported(fileVersion)) {
+			!_audioProcessor.isAudioSupported(fileVersion.getMimeType())) {
 
 			return null;
 		}

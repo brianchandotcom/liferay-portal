@@ -23,6 +23,10 @@ DLAccessFromDesktopDisplayContext dlAccessFromDesktopDisplayContext = new DLAcce
 		<br /><br />
 
 		<aui:input cssClass="webdav-url-resource" id='<%= dlAccessFromDesktopDisplayContext.getRandomNamespace() + "webDavURL" %>' name="webDavURL" type="resource" value="<%= dlAccessFromDesktopDisplayContext.getWebDAVURL() %>" />
+
+		<div class="alert alert-info">
+			<liferay-ui:message arguments='<%= "<a href=" + PersonalApplicationURLUtil.getPersonalApplicationURL(request, PortletKeys.MY_ACCOUNT) + ">" + LanguageUtil.get(resourceBundle, "my-account") + "</a>" %>' key="webdav-access-requires-generation-of-a-webdav-specific-password-at-x" />
+		</div>
 	</div>
 </div>
 

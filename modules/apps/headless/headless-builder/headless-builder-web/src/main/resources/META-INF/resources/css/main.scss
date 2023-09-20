@@ -371,9 +371,14 @@
 
 							.results-angle-left {
 								justify-content: space-around;
+
+								svg {
+									fill: $dark;
+								}
 							}
 
 							.results-close-button {
+								justify-content: space-around;
 								padding-left: 0;
 
 								svg {

@@ -28,7 +28,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Shuyang Zhou
  * @author Iliyan Peych
  */
-public class BrowserSnifferImplTest {
+public class BrowserSnifferUtilTest {
 
 	@ClassRule
 	@Rule

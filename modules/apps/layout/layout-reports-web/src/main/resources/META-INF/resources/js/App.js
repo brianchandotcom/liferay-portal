@@ -44,7 +44,6 @@ export default function App(props) {
 				'open'
 			);
 
-			layoutReportsPanelId.focus();
 			setPanelIsOpen(true);
 		});
 
@@ -54,7 +53,6 @@ export default function App(props) {
 				'closed'
 			);
 
-			layoutReportsPanelToggle.focus();
 			setPanelIsOpen(false);
 		});
 

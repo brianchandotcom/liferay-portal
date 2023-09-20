@@ -29,14 +29,12 @@ page import="com.liferay.portal.search.tuning.rankings.web.internal.exception.Du
 <portlet:defineObjects />
 
 <%
+String formName = "addResultRankingsFm";
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 String resultActionCmd = ParamUtil.getString(request, "resultActionCmd");
 String resultActionUid = ParamUtil.getString(request, "resultActionUid");
-
-String namespace = liferayPortletResponse.getNamespace();
-
-String formName = namespace + "addResultRankingsFm";
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -77,7 +75,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 				).put(
 					"formName", formName
 				).put(
-					"namespace", namespace
+					"namespace", liferayPortletResponse.getNamespace()
 				).build()
 			%>'
 		/>

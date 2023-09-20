@@ -65,9 +65,11 @@ export default function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 		setTouched({...touched, scope: false});
 	};
 
-	const _handleSubmit = () => {
+	const _handleSubmit = (event) => {
+		event.preventDefault();
+
 		if (!Object.keys(errors).length) {
-			submitForm(document[formName]);
+			submitForm(document[namespace + formName]);
 		}
 	};
 

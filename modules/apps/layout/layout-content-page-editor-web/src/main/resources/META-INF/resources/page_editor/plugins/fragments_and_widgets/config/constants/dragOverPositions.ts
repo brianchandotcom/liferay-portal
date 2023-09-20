@@ -7,3 +7,5 @@ export const DRAG_OVER_POSITIONS = {
 	bottom: 'bottom',
 	top: 'top',
 } as const;
+
+export type DragOverPosition = typeof DRAG_OVER_POSITIONS[keyof typeof DRAG_OVER_POSITIONS];

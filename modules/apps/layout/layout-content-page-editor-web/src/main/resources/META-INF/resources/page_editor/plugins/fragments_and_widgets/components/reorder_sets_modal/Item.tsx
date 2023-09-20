@@ -7,20 +7,38 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import ClayLayout from '@clayui/layout';
+import {ContentCol} from '@clayui/layout';
 import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
-import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {useDrag, useDrop} from 'react-dnd';
+import {DragObjectWithType, useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
-import {config} from '../../../../app/config';
-import {DRAG_OVER_POSITIONS} from '../../config/constants/dragOverPositions';
+import {config} from '../../../../app/config/index';
+import {
+	DRAG_OVER_POSITIONS,
+	DragOverPosition,
+} from '../../config/constants/dragOverPositions';
 
 const ACCEPTING_ITEM_TYPE = 'acceptingItemType';
 
-export function Item({index, item, numberOfItems, onDropItem}) {
+export interface Item {
+	id: string;
+	name: string;
+}
+
+interface ItemProps {
+	index: number;
+	item: Item;
+	numberOfItems: number;
+	onDropItem: (
+		itemId: Item['id'],
+		index: number,
+		dragOverPosition?: DragOverPosition
+	) => void;
+}
+
+export function Item({index, item, numberOfItems, onDropItem}: ItemProps) {
 	const {name} = item;
 
 	const {
@@ -49,14 +67,14 @@ export function Item({index, item, numberOfItems, onDropItem}) {
 				>
 					<ClayCard.Body className="px-0">
 						<ClayCard.Row className="align-items-center">
-							<ClayLayout.ContentCol gutters>
+							<ContentCol gutters>
 								<ClayIcon
 									className="text-secondary"
 									symbol="drag"
 								/>
-							</ClayLayout.ContentCol>
+							</ContentCol>
 
-							<ClayLayout.ContentCol expand>
+							<ContentCol expand>
 								<ClayCard.Description
 									className="text-uppercase"
 									displayType="title"
@@ -64,17 +82,17 @@ export function Item({index, item, numberOfItems, onDropItem}) {
 								>
 									{name}
 								</ClayCard.Description>
-							</ClayLayout.ContentCol>
+							</ContentCol>
 
-							{Liferay.FeatureFlags['LPS-196420'] ? null : (
-								<ClayLayout.ContentCol gutters>
+							{!Liferay.FeatureFlags['LPS-196420'] && (
+								<ContentCol gutters>
 									<ReorderDropdown
 										index={index}
 										item={item}
 										numberOfItems={numberOfItems}
 										onDropItem={onDropItem}
 									/>
-								</ClayLayout.ContentCol>
+								</ContentCol>
 							)}
 						</ClayCard.Row>
 					</ClayCard.Body>
@@ -84,14 +102,12 @@ export function Item({index, item, numberOfItems, onDropItem}) {
 	);
 }
 
-Item.propTypes = {
-	index: PropTypes.number.isRequired,
-	item: PropTypes.object.isRequired,
-	numberOfItems: PropTypes.number.isRequired,
-	onDropItem: PropTypes.func.isRequired,
-};
-
-export function ReorderDropdown({index, item, numberOfItems, onDropItem}) {
+export function ReorderDropdown({
+	index,
+	item,
+	numberOfItems,
+	onDropItem,
+}: ItemProps) {
 	const items = [
 		{
 			disabled: index === 0,
@@ -123,18 +139,11 @@ export function ReorderDropdown({index, item, numberOfItems, onDropItem}) {
 	);
 }
 
-ReorderDropdown.propTypes = {
-	index: PropTypes.number.isRequired,
-	item: PropTypes.object.isRequired,
-	numberOfItems: PropTypes.number.isRequired,
-	onDropItem: PropTypes.func.isRequired,
-};
-
-function useMouseDragItem(item) {
+function useMouseDragItem(item: Item) {
 	const [{isDragging}, handlerRef, previewRef] = useDrag({
 		begin() {},
 		collect: (monitor) => ({
-			isDragging: !!monitor.isDragging(),
+			isDragging: monitor.isDragging(),
 		}),
 		item: {
 			...item,
@@ -153,12 +162,22 @@ function useMouseDragItem(item) {
 	};
 }
 
-export function useMouseDropTarget(itemId, itemIndex, onDropItem) {
-	const [dragOverPosition, setDragOverPosition] = useState(null);
-	const targetRef = useRef(null);
-	const targetRectRef = useRef(null);
+export function useMouseDropTarget(
+	itemId: string,
+	itemIndex: number,
+	onDropItem: ItemProps['onDropItem']
+) {
+	const [dragOverPosition, setDragOverPosition] = useState<
+		DragOverPosition | undefined
+	>();
+	const targetRef = useRef<HTMLElement | null>(null);
+	const targetRectRef = useRef<DOMRect | null>(null);
 
-	const [{isOver}, internalSetTargetRef] = useDrop({
+	const [{isOver}, internalSetTargetRef] = useDrop<
+		DragObjectWithType & Item,
+		void,
+		{isOver: boolean}
+	>({
 		accept: ACCEPTING_ITEM_TYPE,
 		canDrop(sourceItem, monitor) {
 			return sourceItem.id !== itemId && monitor.isOver();
@@ -185,13 +204,13 @@ export function useMouseDropTarget(itemId, itemIndex, onDropItem) {
 			if (Liferay.FeatureFlags['LPS-196420']) {
 				targetRectRef.current =
 					targetRectRef.current ||
-					targetRef.current.getBoundingClientRect();
+					targetRef.current!.getBoundingClientRect();
 
 				const targetMiddlePosition =
-					targetRectRef.current.top +
-					targetRectRef.current.height / 2;
+					targetRectRef.current!.top +
+					targetRectRef.current!.height / 2;
 
-				if (monitor.getClientOffset().y < targetMiddlePosition) {
+				if (monitor.getClientOffset()!.y < targetMiddlePosition) {
 					setDragOverPosition(DRAG_OVER_POSITIONS.top);
 				}
 				else {

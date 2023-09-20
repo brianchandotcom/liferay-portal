@@ -54,7 +54,7 @@ const Legend = ({currentValue, total, type}: IProps) => {
 			<div>
 				<span className="font-weight-bold mr-1 text-paragraph">
 					{type === ChartTypes.ARR
-						? formatCurrency(currentValue)
+						? formatCurrency(currentValue, 'USD', 'lessPrecision')
 						: currentValue}
 				</span>
 
@@ -63,7 +63,7 @@ const Legend = ({currentValue, total, type}: IProps) => {
 
 					<span>
 						{type === ChartTypes.ARR
-							? formatCurrency(total)
+							? formatCurrency(total, 'USD', 'lessPrecision')
 							: total}
 					</span>
 				</span>

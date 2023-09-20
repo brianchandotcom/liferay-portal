@@ -40,11 +40,6 @@ export default function useAccountInformation() {
 	const {data: userAccount} = useGetMyUserAccount();
 
 	const {
-		data: opportunities,
-		isValidating: isValidatingOpportunities,
-	} = useGetOpportunities(200);
-
-	const {
 		data: account,
 		isValidating: isValidatingAccount,
 	} = useGetAccountByERC(
@@ -53,6 +48,14 @@ export default function useAccountInformation() {
 
 	const {data: accountUserAccounts} = useGetAccountUserAccounts(
 		account?.externalReferenceCode
+	);
+
+	const {
+		data: opportunities,
+		isValidating: isValidatingOpportunities,
+	} = useGetOpportunities(
+		account?.name &&
+			`?pageSize=200&filter=accountName eq '${account?.name}'`
 	);
 
 	const {
@@ -65,20 +68,7 @@ export default function useAccountInformation() {
 			accountData: AccountEntry,
 			opportunitiesData: LiferayItems<Opportunity[]>
 		) => {
-			const accountByOpportunity = opportunitiesData.items.reduce(
-				(newArray: Opportunity[], data: Opportunity) => {
-					if (
-						data.accountName === accountData.externalReferenceCode
-					) {
-						return [...newArray, data];
-					}
-
-					return newArray;
-				},
-				[]
-			);
-
-			const aRRResults = accountByOpportunity.reduce(
+			const aRRResults = opportunitiesData.items.reduce(
 				(aRRAccumulator, data: Opportunity) => ({
 					aRRAmountTotal:
 						aRRAccumulator.aRRAmountTotal +

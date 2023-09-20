@@ -11,12 +11,14 @@ import {LiferayAPIs} from '../../common/enums/apis';
 import LiferayItems from '../../common/interfaces/liferayItems';
 import liferayFetcher from '../../common/utils/fetcher';
 
-export default function useGetOpportunities(pageSize: number) {
+export default function useGetOpportunities(parameters?: string) {
 	return useSWR(
-		[
-			`/o/${LiferayAPIs.OBJECT}/opportunitysfs?pageSize=${pageSize}`,
-			Liferay.authToken,
-		],
+		parameters
+			? [
+					`/o/${LiferayAPIs.OBJECT}/opportunitysfs${parameters}`,
+					Liferay.authToken,
+			  ]
+			: null,
 		(url, token) => liferayFetcher<LiferayItems<Opportunity[]>>(url, token)
 	);
 }

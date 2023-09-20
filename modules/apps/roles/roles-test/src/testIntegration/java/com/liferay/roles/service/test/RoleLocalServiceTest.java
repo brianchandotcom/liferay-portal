@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -97,6 +98,19 @@ public class RoleLocalServiceTest {
 	public static void tearDownClass() {
 		_resourcePermissionLocalService.deleteResourcePermission(
 			_resourcePermission);
+	}
+
+	@Test
+	public void testAddRoleWithDescriptionTextType() throws Exception {
+		_role = _roleLocalService.addRole(
+			TestPropsValues.getUserId(), null, 0, RandomTestUtil.randomString(),
+			null,
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString(4001)
+			).build(),
+			RoleConstants.TYPE_REGULAR, null, null);
+
+		Assert.assertNotNull(_role);
 	}
 
 	@Test(expected = RoleNameException.class)

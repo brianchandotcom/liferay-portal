@@ -15,6 +15,7 @@ export const Liferay = window.Liferay || {
 		getCompanyGroupId: () => 0,
 		getLanguageId: () => 'en_US',
 		getLayoutRelativeURL: () => '',
+		getLayoutURL: () => '',
 		getPathThemeImages: () => null,
 		getPortalURL: () => window.location.origin,
 		getScopeGroupId: () => 0,

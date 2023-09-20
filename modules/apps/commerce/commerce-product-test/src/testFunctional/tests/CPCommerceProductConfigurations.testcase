@@ -768,11 +768,11 @@ definition {
 			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
 		}
 
-		task ("Then the quantity selector shows the configured decimal quantity for that product") {
+		task ("Then the quantity selector still shows the integer number because there is no UOM configured for that product") {
 			AssertTextEquals(
 				key_productName = "ABS Sensor",
 				locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
-				value1 = "0.5");
+				value1 = 1);
 		}
 	}
 

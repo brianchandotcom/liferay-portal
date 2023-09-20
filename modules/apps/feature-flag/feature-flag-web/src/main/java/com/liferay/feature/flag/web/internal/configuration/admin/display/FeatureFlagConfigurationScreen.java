@@ -32,11 +32,12 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 	public FeatureFlagConfigurationScreen(
 		FeatureFlagManager featureFlagManager, FeatureFlagType featureFlagType,
 		FeatureFlagsDisplayContextFactory featureFlagsDisplayContextFactory,
-		String scope, ServletContext servletContext) {
+		int index, String scope, ServletContext servletContext) {
 
 		_featureFlagManager = featureFlagManager;
 		_featureFlagType = featureFlagType;
 		_featureFlagsDisplayContextFactory = featureFlagsDisplayContextFactory;
+		_index = index;
 		_scope = scope;
 		_servletContext = servletContext;
 	}
@@ -49,7 +50,7 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 	@Override
 	public String getKey() {
 		return FeatureFlagConstants.getKey(
-			_featureFlagType.toString(), getScope());
+			String.valueOf(_index), _featureFlagType.toString(), getScope());
 	}
 
 	@Override
@@ -101,6 +102,7 @@ public class FeatureFlagConfigurationScreen implements ConfigurationScreen {
 	private final FeatureFlagsDisplayContextFactory
 		_featureFlagsDisplayContextFactory;
 	private final FeatureFlagType _featureFlagType;
+	private final int _index;
 	private final String _scope;
 	private final ServletContext _servletContext;
 

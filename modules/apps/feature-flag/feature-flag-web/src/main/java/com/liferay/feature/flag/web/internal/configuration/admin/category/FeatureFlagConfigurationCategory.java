@@ -51,13 +51,15 @@ public class FeatureFlagConfigurationCategory implements ConfigurationCategory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		for (FeatureFlagType featureFlagType : FeatureFlagType.values()) {
+		for (int i = 0; i < _orderedFeatureFlagTypes.length; i++) {
+			FeatureFlagType featureFlagType = _orderedFeatureFlagTypes[i];
+
 			_serviceRegistrations.add(
 				bundleContext.registerService(
 					ConfigurationScreen.class,
 					new FeatureFlagConfigurationScreen(
 						_featureFlagManager, featureFlagType,
-						_featureFlagsDisplayContextFactory,
+						_featureFlagsDisplayContextFactory, i,
 						ExtendedObjectClassDefinition.Scope.SYSTEM.getValue(),
 						_servletContext),
 					new HashMapDictionary<>()));
@@ -67,7 +69,7 @@ public class FeatureFlagConfigurationCategory implements ConfigurationCategory {
 					ConfigurationScreen.class,
 					new FeatureFlagConfigurationScreen(
 						_featureFlagManager, featureFlagType,
-						_featureFlagsDisplayContextFactory,
+						_featureFlagsDisplayContextFactory, i,
 						ExtendedObjectClassDefinition.Scope.COMPANY.getValue(),
 						_servletContext),
 					new HashMapDictionary<>()));
@@ -80,6 +82,11 @@ public class FeatureFlagConfigurationCategory implements ConfigurationCategory {
 
 		_serviceRegistrations.clear();
 	}
+
+	private static final FeatureFlagType[] _orderedFeatureFlagTypes = {
+		FeatureFlagType.RELEASE, FeatureFlagType.BETA,
+		FeatureFlagType.DEPRECATION, FeatureFlagType.DEV
+	};
 
 	@Reference
 	private FeatureFlagManager _featureFlagManager;

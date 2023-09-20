@@ -31,6 +31,8 @@ public interface CommerceOptionValue {
 
 	public BigDecimal getQuantity();
 
+	public String getUnitOfMeasureKey();
+
 	public boolean matches(CommerceOptionValue commerceOptionValue);
 
 	public String toJSON();
@@ -86,6 +88,11 @@ public interface CommerceOptionValue {
 				}
 
 				@Override
+				public String getUnitOfMeasureKey() {
+					return _unitOfMeasureKey;
+				}
+
+				@Override
 				public boolean matches(
 					CommerceOptionValue commerceOptionValue) {
 
@@ -109,7 +116,8 @@ public interface CommerceOptionValue {
 				public String toJSON() {
 					return String.format(
 						_JSON_SERIALIZED_PATTERN, _cpInstanceId, _optionKey,
-						_price, _priceType, _quantity, _optionValueKey);
+						_price, _priceType, _quantity, _unitOfMeasureKey,
+						_optionValueKey);
 				}
 
 				private final long _cpInstanceId = Builder.this._cpInstanceId;
@@ -119,6 +127,8 @@ public interface CommerceOptionValue {
 				private final BigDecimal _price = Builder.this._price;
 				private final String _priceType = Builder.this._priceType;
 				private final BigDecimal _quantity = Builder.this._quantity;
+				private final String _unitOfMeasureKey =
+					Builder.this._unitOfMeasureKey;
 
 			};
 		}
@@ -159,9 +169,16 @@ public interface CommerceOptionValue {
 			return this;
 		}
 
+		public Builder unitOfMeasureKey(String unitOfMeasureKey) {
+			_unitOfMeasureKey = unitOfMeasureKey;
+
+			return this;
+		}
+
 		private static final String _JSON_SERIALIZED_PATTERN =
 			"{\"cpInstanceId\":%d, \"key\":\"%s\", \"price\":\"%s\", " +
-				"\"priceType\":\"%s\", \"quantity\":%.0f, \"value\":\"%s\"}";
+				"\"priceType\":\"%s\", \"quantity\":%.0f, " +
+					"\"unitOfMeasureKey\":\"%s\", \"value\":\"%s\"}";
 
 		private long _cpInstanceId;
 		private String _optionKey;
@@ -169,6 +186,7 @@ public interface CommerceOptionValue {
 		private BigDecimal _price;
 		private String _priceType;
 		private BigDecimal _quantity = BigDecimal.ZERO;
+		private String _unitOfMeasureKey;
 
 	}
 

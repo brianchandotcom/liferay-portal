@@ -1277,7 +1277,7 @@ definition {
 
 		PortletEntry.save();
 
-		SearchPortlets.viewCopiedContent(text = "clauses");
+		WebContent.viewClipboardContent(text = "clauses");
 	}
 
 	@priority = 3
@@ -1300,7 +1300,7 @@ definition {
 
 		Click.javaScriptClick(locator1 = "Button#COPY");
 
-		SearchPortlets.viewCopiedContent(text = "queryConfiguration");
+		WebContent.viewClipboardContent(text = "queryConfiguration");
 	}
 
 	@description = "This is a use case for LPS-165923."
@@ -1320,7 +1320,7 @@ definition {
 
 		Click.javaScriptClick(locator1 = "Button#COPY");
 
-		SearchPortlets.viewCopiedContent(text = "hits");
+		WebContent.viewClipboardContent(text = "hits");
 	}
 
 	@priority = 3
@@ -1339,7 +1339,7 @@ definition {
 
 		Click.javaScriptClick(locator1 = "Button#COPY");
 
-		SearchPortlets.viewCopiedContent(text = "hits");
+		WebContent.viewClipboardContent(text = "hits");
 	}
 
 	@priority = 3
@@ -1358,7 +1358,7 @@ definition {
 
 		Click.javaScriptClick(locator1 = "Button#COPY");
 
-		SearchPortlets.viewCopiedContent(text = "PerFieldSimilarity");
+		WebContent.viewClipboardContent(text = "PerFieldSimilarity");
 	}
 
 	@priority = 3

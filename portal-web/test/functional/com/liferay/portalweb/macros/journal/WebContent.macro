@@ -2052,6 +2052,24 @@ definition {
 		}
 	}
 
+	macro viewClipboardContent {
+		WebContentNavigator.openToAddBasicArticle(
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
+
+		Click(locator1 = "CKEditor#BODY");
+
+		Type.sendKeys(
+			locator1 = "CKEditor#BODY",
+			value1 = "keys=CONTROL,v");
+
+		WaitForElementPresent(
+			key_text = ${text},
+			locator1 = "CKEditor#BODY_TEXT");
+	}
+
 	macro viewCompareVersions {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

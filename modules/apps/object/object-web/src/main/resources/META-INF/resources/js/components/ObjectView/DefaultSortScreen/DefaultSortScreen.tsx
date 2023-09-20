@@ -62,6 +62,7 @@ export function DefaultSortScreen() {
 
 			<Card title={Liferay.Language.get('default-sort')}>
 				<BuilderScreen
+					builderScreenItems={objectViewSortColumns ?? []}
 					defaultSort
 					emptyState={{
 						buttonText: Liferay.Language.get('new-default-sort'),
@@ -74,7 +75,6 @@ export function DefaultSortScreen() {
 					}}
 					firstColumnHeader={Liferay.Language.get('name')}
 					hasDragAndDrop
-					objectColumns={objectViewSortColumns ?? []}
 					onChangeColumnOrder={handleChangeColumnOrder}
 					onDeleteColumn={handleDeleteColumn}
 					onEditing={setIsEditingSort}

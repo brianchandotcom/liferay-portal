@@ -7,6 +7,7 @@
 
 import './BuilderScreen.scss';
 export declare function BuilderScreen({
+	builderScreenItems,
 	creationLanguageId,
 	defaultSort,
 	disableEdit,
@@ -14,7 +15,6 @@ export declare function BuilderScreen({
 	filter,
 	firstColumnHeader,
 	hasDragAndDrop,
-	objectColumns,
 	onChangeColumnOrder,
 	onDeleteColumn,
 	onEditing,
@@ -28,7 +28,7 @@ declare type TLabelValueObject = {
 	label: string;
 	value: string;
 };
-declare type TBuilderScreenColumn = {
+declare type TBuilderScreenItem = {
 	defaultSort?: boolean;
 	disableEdit?: boolean;
 	fieldLabel?: string;
@@ -43,6 +43,7 @@ declare type TBuilderScreenColumn = {
 	valueList?: TLabelValueObject[];
 };
 interface IProps {
+	builderScreenItems: TBuilderScreenItem[];
 	creationLanguageId?: Liferay.Language.Locale;
 	defaultSort?: boolean;
 	disableEdit?: boolean;
@@ -54,7 +55,6 @@ interface IProps {
 	filter?: boolean;
 	firstColumnHeader: string;
 	hasDragAndDrop?: boolean;
-	objectColumns: TBuilderScreenColumn[];
 	onChangeColumnOrder?: (draggedIndex: number, targetIndex: number) => void;
 	onDeleteColumn: (objectFieldName: string) => void;
 	onEditing?: (boolean: boolean) => void;

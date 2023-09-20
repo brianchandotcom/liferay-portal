@@ -445,6 +445,8 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				const leftSidebarObjectDefinitionItems = objectFolder.objectDefinitions?.map(
 					(objectDefinition) => {
 						return {
+							externalReferenceCode:
+								objectDefinition.externalReferenceCode,
 							hiddenObjectDefinitionNode: false,
 							id: objectDefinition.id,
 							label: getLocalizableLabel(

@@ -5,10 +5,17 @@
 
 package com.liferay.document.library.video.internal.preview;
 
+import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
+import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
+import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
+import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
+import com.liferay.document.library.preview.exception.DLPreviewSizeException;
+import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
 import com.liferay.document.library.video.renderer.DLVideoRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 
@@ -45,6 +52,8 @@ public class DLVideoDLPreviewRendererProvider
 		FileVersion fileVersion) {
 
 		return (request, response) -> {
+			_checkForPreviewGenerationExceptions(fileVersion);
+
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/preview.jsp");
 
@@ -62,6 +71,28 @@ public class DLVideoDLPreviewRendererProvider
 
 		return null;
 	}
+
+	private void _checkForPreviewGenerationExceptions(FileVersion fileVersion)
+		throws PortalException {
+
+		if (_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
+				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
+				DLFileVersionPreviewConstants.STATUS_FAILURE)) {
+
+			throw new DLFileEntryPreviewGenerationException();
+		}
+
+		if (!_videoProcessor.hasVideo(fileVersion)) {
+			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
+				throw new DLPreviewSizeException();
+			}
+
+			throw new DLPreviewGenerationInProcessException();
+		}
+	}
+
+	@Reference
+	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
 	@Reference
 	private DLVideoRenderer _dlVideoRenderer;

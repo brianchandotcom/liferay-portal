@@ -2934,8 +2934,9 @@ definition {
 			searchPage = "Search Page",
 			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "apple/Web Content Article",
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "apple",
+			searchAssetType = "Web Content Article",
 			searchTerm = "apple");
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,banana/Document,orange/Web Content Article");
@@ -2956,8 +2957,9 @@ definition {
 			facetTerm = "Web Content Article",
 			searchURL = ${testSearchURL});
 
-		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "apple/Blogs Entry",
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "apple",
+			searchAssetType = "Blogs Entry",
 			searchTerm = "apple");
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article,banana/Document,orange/Web Content Article");
@@ -2993,8 +2995,9 @@ definition {
 			facetTerm = "userfn userln",
 			searchURL = ${testSearchURL});
 
-		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "banana/Document",
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "banana",
+			searchAssetType = "Document",
 			searchTerm = "test");
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,orange/Web Content Article");
@@ -3032,7 +3035,9 @@ definition {
 			resultsList = "apple/Blogs Entry,banana/Document,orange/Web Content Article",
 			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article");
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "apple",
+			searchAssetType = "Web Content Article");
 
 		var liferaySiteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
@@ -3058,7 +3063,9 @@ definition {
 			resultsList = "apple/Blogs Entry,banana/Document,orange/Web Content Article",
 			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article");
+		SearchResultPortlet.viewSearchResultNotPresent(
+			searchAssetTitle = "apple",
+			searchAssetType = "Web Content Article");
 
 		var testSearchURL = SearchFacetPortlet.uncheckFacetAndViewURL(
 			facetName = "Site Facet",
@@ -3082,8 +3089,9 @@ definition {
 			searchURL = ${testSearchURL},
 			termURLValue = ${webContentFolderId2});
 
-		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "orange/Web Content Article",
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "orange",
+			searchAssetType = "Web Content Article",
 			searchTerm = "test");
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document");
@@ -3093,8 +3101,9 @@ definition {
 			facetTerm = "ripe",
 			searchURL = ${testSearchURL});
 
-		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "orange/Web Content Article",
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "orange",
+			searchAssetType = "Web Content Article",
 			searchTerm = "test");
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document");
@@ -3160,8 +3169,9 @@ definition {
 			facetTerm = "Test Test",
 			searchURL = ${testSearchURL});
 
-		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "apple/Web Content Article",
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "apple",
+			searchAssetType = "Web Content Article",
 			searchTerm = "organic");
 	}
 

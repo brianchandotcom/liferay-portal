@@ -40,9 +40,34 @@ definition {
 		MP2Configuration.marketplaceInitializersTearDown(doLogout = "true");
 	}
 
-	@description = "LPS-160952 | Assert the subject and body of the e-mail: (Liferay Marketplace - Invitation from %Admin User%)"
+	@description = "LPS-160952 | Assert the subject of the e-mail: (Liferay Marketplace - Invitation from %Admin User%)"
 	@priority = 4
 	test AssertTheDetailsOfTheEmail {
+		task ("Given that the user sends an invitation") {
+			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "Account Administrator",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+
+			User.logoutPG();
+		}
+
+		task ("When the user accesses the invitation email") {
+			MockMock._gotoMail();
+		}
+
+		task ("Then I should be able to assert the subject of the email") {
+			MockMock._viewMailFromInbox(
+				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
+				recipient = "test.mp@liferay.com",
+				sender = "da@administrator.com");
+		}
 	}
 
 	@description = "LPS-162211 | Publisher admin should be able to read invited user record details"

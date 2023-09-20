@@ -43,12 +43,6 @@ export default function SegmentsExperimentApp({context}) {
 					SEGMENTS_EXPERIMENT_PANEL_ID,
 					SEGMENTS_EXPERIMENT_OPEN_PANEL_VALUE
 				);
-
-				const segmentsExperimentPanel = document.getElementById(
-					`${namespace}segmentsExperimentPanelId`
-				);
-
-				segmentsExperimentPanel.focus();
 			});
 
 			Liferay.once('screenLoad', () => {

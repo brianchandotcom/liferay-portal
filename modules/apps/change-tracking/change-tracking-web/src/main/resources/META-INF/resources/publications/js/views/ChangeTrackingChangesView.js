@@ -2752,9 +2752,9 @@ export default function ChangeTrackingChangesView({
 								}
 								handleShowHideable={handleShowHideableToggle}
 								initialDataURL={getDataURL(renderState.node)}
-                moveChangesURL={getMoveChangesURL(
-                    renderState.node
-                )}
+								moveChangesURL={getMoveChangesURL(
+									renderState.node
+								)}
 								namespace={namespace}
 								parentEntries={renderState.parents}
 								showDropdown={renderState.node.modelClassNameId}

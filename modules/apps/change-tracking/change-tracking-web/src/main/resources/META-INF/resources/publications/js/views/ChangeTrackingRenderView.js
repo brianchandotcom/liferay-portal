@@ -135,7 +135,7 @@ export default function ChangeTrackingRenderView({
 	handleNavigation,
 	handleShowHideable,
 	initialDataURL,
-  moveChangesURL,
+	moveChangesURL,
 	namespace,
 	parentEntries,
 	showDropdown,

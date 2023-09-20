@@ -246,7 +246,7 @@ definition {
 				pageName = "Home",
 				siteTemplateName = "Site Template Name");
 
-			Portlet.deletePG(key_portletName = "Asset Publisher");
+			Portlet.deletePG(portletName = "Asset Publisher");
 		}
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
@@ -288,7 +288,7 @@ definition {
 				pageName = "Home",
 				siteTemplateName = "Site Template Name");
 
-			Portlet.deletePG(key_portletName = "Asset Publisher");
+			Portlet.deletePG(portletName = "Asset Publisher");
 		}
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {
@@ -370,7 +370,7 @@ definition {
 				siteTemplateName = "Site Template Name",
 				widgetPage = "true");
 
-			Portlet.deletePG(key_portletName = "Asset Publisher");
+			Portlet.deletePG(portletName = "Asset Publisher");
 		}
 
 		task ("Verify that the AP Widget is still present on the Site Name page") {

@@ -5,36 +5,15 @@
 
 package com.liferay.layout.locked.layouts.web.internal.display.context;
 
-import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsCompanyConfiguration;
-
 /**
  * @author Lourdes Fernández Besada
  */
-public class LockedLayoutsConfigurationDisplayContext {
+public interface LockedLayoutsConfigurationDisplayContext {
 
-	public LockedLayoutsConfigurationDisplayContext(
-		boolean hasConfiguration,
-		LockedLayoutsCompanyConfiguration lockedLayoutsCompanyConfiguration) {
+	public int getTimeWithoutAutosave();
 
-		_hasConfiguration = hasConfiguration;
-		_lockedLayoutsCompanyConfiguration = lockedLayoutsCompanyConfiguration;
-	}
+	public boolean hasConfiguration();
 
-	public int getTimeWithoutAutosave() {
-		return _lockedLayoutsCompanyConfiguration.timeWithoutAutosave();
-	}
-
-	public boolean hasConfiguration() {
-		return _hasConfiguration;
-	}
-
-	public boolean isAllowAutomaticUnlockingProcess() {
-		return _lockedLayoutsCompanyConfiguration.
-			allowAutomaticUnlockingProcess();
-	}
-
-	private final boolean _hasConfiguration;
-	private final LockedLayoutsCompanyConfiguration
-		_lockedLayoutsCompanyConfiguration;
+	public boolean isAllowAutomaticUnlockingProcess();
 
 }

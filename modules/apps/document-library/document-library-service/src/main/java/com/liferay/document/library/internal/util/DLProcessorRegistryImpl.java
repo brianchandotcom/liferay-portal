@@ -105,6 +105,11 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	}
 
 	@Override
+	public long getPreviewableProcessorMaxSize() {
+		return _dlFileEntryConfiguration.previewableProcessorMaxSize();
+	}
+
+	@Override
 	public void importGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)
@@ -132,7 +137,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	@Override
 	public boolean isPreviewableSize(FileVersion fileVersion) {
 		long fileEntryPreviewableProcessorMaxSize =
-			_dlFileEntryConfiguration.previewableProcessorMaxSize();
+			getPreviewableProcessorMaxSize();
 
 		if ((fileEntryPreviewableProcessorMaxSize == 0) ||
 			((fileEntryPreviewableProcessorMaxSize > 0) &&

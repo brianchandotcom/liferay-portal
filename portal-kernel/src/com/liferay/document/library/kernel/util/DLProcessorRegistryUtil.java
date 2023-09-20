@@ -37,6 +37,10 @@ public class DLProcessorRegistryUtil {
 		return _dlProcessorRegistry.getDLProcessor(dlProcessorType);
 	}
 
+	public static long getPreviewableProcessorMaxSize() {
+		return _dlProcessorRegistry.getPreviewableProcessorMaxSize();
+	}
+
 	public static void importGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,
 			FileEntry importedFileEntry, Element fileEntryElement)

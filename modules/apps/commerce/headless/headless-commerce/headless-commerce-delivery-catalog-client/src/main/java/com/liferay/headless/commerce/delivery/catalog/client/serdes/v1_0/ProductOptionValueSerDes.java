@@ -194,6 +194,20 @@ public class ProductOptionValueSerDes {
 			sb.append("\"");
 		}
 
+		if (productOptionValue.getUnitOfMeasureKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unitOfMeasureKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(productOptionValue.getUnitOfMeasureKey()));
+
+			sb.append("\"");
+		}
+
 		if (productOptionValue.getVisible() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -320,6 +334,15 @@ public class ProductOptionValueSerDes {
 				String.valueOf(productOptionValue.getTotalPrice()));
 		}
 
+		if (productOptionValue.getUnitOfMeasureKey() == null) {
+			map.put("unitOfMeasureKey", null);
+		}
+		else {
+			map.put(
+				"unitOfMeasureKey",
+				String.valueOf(productOptionValue.getUnitOfMeasureKey()));
+		}
+
 		if (productOptionValue.getVisible() == null) {
 			map.put("visible", null);
 		}
@@ -416,6 +439,12 @@ public class ProductOptionValueSerDes {
 			else if (Objects.equals(jsonParserFieldName, "totalPrice")) {
 				if (jsonParserFieldValue != null) {
 					productOptionValue.setTotalPrice(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "unitOfMeasureKey")) {
+				if (jsonParserFieldValue != null) {
+					productOptionValue.setUnitOfMeasureKey(
 						(String)jsonParserFieldValue);
 				}
 			}

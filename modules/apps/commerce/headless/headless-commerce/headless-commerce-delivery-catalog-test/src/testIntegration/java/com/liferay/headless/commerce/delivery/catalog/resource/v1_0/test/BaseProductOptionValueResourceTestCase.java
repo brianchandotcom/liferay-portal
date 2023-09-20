@@ -179,6 +179,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		productOptionValue.setQuantity(regex);
 		productOptionValue.setRelativePriceFormatted(regex);
 		productOptionValue.setTotalPrice(regex);
+		productOptionValue.setUnitOfMeasureKey(regex);
 
 		String json = ProductOptionValueSerDes.toJSON(productOptionValue);
 
@@ -194,6 +195,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		Assert.assertEquals(
 			regex, productOptionValue.getRelativePriceFormatted());
 		Assert.assertEquals(regex, productOptionValue.getTotalPrice());
+		Assert.assertEquals(regex, productOptionValue.getUnitOfMeasureKey());
 	}
 
 	@Test
@@ -595,6 +597,14 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("unitOfMeasureKey", additionalAssertFieldName)) {
+				if (productOptionValue.getUnitOfMeasureKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("visible", additionalAssertFieldName)) {
 				if (productOptionValue.getVisible() == null) {
 					valid = false;
@@ -851,6 +861,17 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				if (!Objects.deepEquals(
 						productOptionValue1.getTotalPrice(),
 						productOptionValue2.getTotalPrice())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("unitOfMeasureKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productOptionValue1.getUnitOfMeasureKey(),
+						productOptionValue2.getUnitOfMeasureKey())) {
 
 					return false;
 				}
@@ -1321,6 +1342,52 @@ public abstract class BaseProductOptionValueResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("unitOfMeasureKey")) {
+			Object object = productOptionValue.getUnitOfMeasureKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("visible")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1385,6 +1452,8 @@ public abstract class BaseProductOptionValueResourceTestCase {
 					RandomTestUtil.randomString());
 				skuId = RandomTestUtil.randomLong();
 				totalPrice = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				unitOfMeasureKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				visible = RandomTestUtil.randomBoolean();
 			}

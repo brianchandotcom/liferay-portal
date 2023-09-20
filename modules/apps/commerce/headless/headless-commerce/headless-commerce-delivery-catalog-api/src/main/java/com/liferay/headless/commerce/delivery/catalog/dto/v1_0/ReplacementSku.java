@@ -191,6 +191,36 @@ public class ReplacementSku implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected SkuOption[] skuOptions;
 
+	@Schema
+	@Valid
+	public SkuUnitOfMeasure[] getSkuUnitOfMeasures() {
+		return skuUnitOfMeasures;
+	}
+
+	public void setSkuUnitOfMeasures(SkuUnitOfMeasure[] skuUnitOfMeasures) {
+		this.skuUnitOfMeasures = skuUnitOfMeasures;
+	}
+
+	@JsonIgnore
+	public void setSkuUnitOfMeasures(
+		UnsafeSupplier<SkuUnitOfMeasure[], Exception>
+			skuUnitOfMeasuresUnsafeSupplier) {
+
+		try {
+			skuUnitOfMeasures = skuUnitOfMeasuresUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected SkuUnitOfMeasure[] skuUnitOfMeasures;
+
 	@Schema(
 		example = "{en_US=product-url-us, hr_HR=product-url-hr, hu_HU=product-url-hu}"
 	)
@@ -306,6 +336,26 @@ public class ReplacementSku implements Serializable {
 				sb.append(String.valueOf(skuOptions[i]));
 
 				if ((i + 1) < skuOptions.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (skuUnitOfMeasures != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuUnitOfMeasures\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < skuUnitOfMeasures.length; i++) {
+				sb.append(String.valueOf(skuUnitOfMeasures[i]));
+
+				if ((i + 1) < skuUnitOfMeasures.length) {
 					sb.append(", ");
 				}
 			}

@@ -74,13 +74,18 @@ public class UpgradeJavaCheck extends BaseFileCheck {
 			}
 		}
 
+		String javaClassContent = javaClass.getContent();
+
+		String newJavaClassContent = javaClassContent;
+
 		if (!newVariables.isEmpty()) {
-			content = StringUtil.replace(
-				content, ArrayUtil.toStringArray(variables),
+			newJavaClassContent = StringUtil.replace(
+				javaClassContent, ArrayUtil.toStringArray(variables),
 				ArrayUtil.toStringArray(newVariables));
 		}
 
-		return content;
+		return StringUtil.replace(
+			content, javaClassContent, newJavaClassContent);
 	}
 
 	private synchronized Map<String, String> _getImportsMap() throws Exception {

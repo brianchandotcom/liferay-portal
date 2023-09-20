@@ -86,6 +86,7 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 		<>
 			<Card title={Liferay.Language.get('columns')}>
 				<BuilderScreen
+					builderScreenItems={objectViewColumns ?? []}
 					emptyState={{
 						buttonText: Liferay.Language.get('add-column'),
 						description: Liferay.Language.get(
@@ -95,7 +96,6 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 					}}
 					firstColumnHeader={Liferay.Language.get('name')}
 					hasDragAndDrop
-					objectColumns={objectViewColumns ?? []}
 					onChangeColumnOrder={handleChangeColumnOrder}
 					onDeleteColumn={handleDeleteColumn}
 					onEditingObjectFieldName={setEditingObjectFieldName}

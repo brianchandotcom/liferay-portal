@@ -88,7 +88,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -112,7 +112,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -136,7 +136,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -160,7 +160,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -184,7 +184,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -208,7 +208,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -232,7 +232,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -256,7 +256,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -280,7 +280,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -304,7 +304,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -328,7 +328,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -352,7 +352,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -376,7 +376,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -401,7 +401,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -434,7 +434,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -458,7 +458,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -610,7 +610,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -634,7 +634,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -658,7 +658,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();
@@ -682,7 +682,7 @@ public class ExpandoValueLocalServiceImpl
 			companyId, _classNameLocalService.getClassNameId(className),
 			tableName);
 
-		ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
+		ExpandoColumn column = _expandoColumnLocalService.getColumn(
 			table.getTableId(), columnName);
 
 		ExpandoValue value = new ExpandoValueImpl();

@@ -290,19 +290,21 @@ public class ExpandoUserFieldExpressionHandler
 		}
 
 		if (expandoValue == null) {
+			ExpandoColumn column = null;
+
 			ExpandoTable table = null;
 
 			try {
 				table = _expandoTableLocalService.getTable(
 					user.getCompanyId(), User.class.getName(),
 					ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+				column = _expandoColumnLocalService.getColumn(
+					table.getTableId(), validUserFieldExpression);
 			}
 			catch (PortalException portalException) {
 				throw new SystemException(portalException);
 			}
-
-			ExpandoColumn column = _expandoColumnLocalService.fetchColumn(
-				table.getTableId(), validUserFieldExpression);
 
 			expandoValue = _expandoValueLocalService.createExpandoValue(0);
 

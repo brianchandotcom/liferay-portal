@@ -23,11 +23,11 @@ const SCOPE_LABELS = {
 };
 
 export default function ResultRankingsAdd({cancelUrl, formName, namespace}) {
-	const [searchQuery, setSearchQuery] = useState('');
 	const [errors, setErrors] = useState({});
-	const [touched, setTouched] = useState({});
 	const [scopeType, setScopeType] = useState(SCOPE_TYPES.EVERYWHERE);
 	const [scope, setScope] = useState('');
+	const [searchQuery, setSearchQuery] = useState('');
+	const [touched, setTouched] = useState({});
 
 	const _getScopeTypeOptions = () => {
 		const options = [SCOPE_TYPES.EVERYWHERE];

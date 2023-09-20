@@ -104,6 +104,13 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 			<ul class="lfr-tree list-unstyled">
 				<div class="sheet">
 					<div class="panel-group panel-group-flush">
+						<clay:alert
+							displayType="warning"
+							message="please-publish-small-incremental-changes-to-avoid-huge-publishing-processes-that-can-take-a-long-time-to-execute"
+							symbol="page"
+							title="recommendation"
+						/>
+
 						<aui:fieldset>
 							<aui:input maxlength='<%= ModelHintsUtil.getMaxLength(ExportImportConfiguration.class.getName(), "name") %>' name="name" placeholder="process-name-placeholder" />
 						</aui:fieldset>

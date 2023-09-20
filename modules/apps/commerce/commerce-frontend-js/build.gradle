@@ -9,7 +9,9 @@ dependencies {
 	compileOnly project(":apps:account:account-api")
 	compileOnly project(":apps:commerce:commerce-api")
 	compileOnly project(":apps:commerce:commerce-currency-api")
+	compileOnly project(":apps:commerce:commerce-product-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 }

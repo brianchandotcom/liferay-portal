@@ -125,7 +125,7 @@ definition {
 			groupName = "Guest",
 			titleMap = "en_US:WC Title,de_DE:WC Titel");
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		SearchPortlets.addWidgets(searchPortletList = "Suggestions");
 
@@ -152,7 +152,7 @@ definition {
 
 		Navigator.openURL();
 
-		Search.openSearchPage(locale = "de-DE");
+		SearchPortlets.openSearchPage(locale = "de-DE");
 
 		for (var searchTerm : list "ächten,angreifen,anmarschieren") {
 			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
@@ -846,7 +846,7 @@ definition {
 
 		var currentDate = DateUtil.getCurrentYear();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Everything");
 

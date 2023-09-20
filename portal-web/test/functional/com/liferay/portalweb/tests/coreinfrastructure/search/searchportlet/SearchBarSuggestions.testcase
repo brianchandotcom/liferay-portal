@@ -451,7 +451,7 @@ definition {
 		}
 
 		task ("Set language to match translation language and assert Apple Strudel translated result") {
-			Search.openSearchPage(locale = "pt-BR");
+			SearchPortlets.openSearchPage(locale = "pt-BR");
 
 			Navigator.openURL();
 
@@ -816,7 +816,7 @@ definition {
 			groupName = "Guest",
 			titleMap = "en_US:Title,es_ES:Título,de_DE:Titel");
 
-		Search.openSearchPage(locale = "es-ES");
+		SearchPortlets.openSearchPage(locale = "es-ES");
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
@@ -833,7 +833,7 @@ definition {
 			key_suggestionContributorDisplayGroupName = "Sugerencias",
 			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_DESCRIPTION");
 
-		Search.openSearchPage(locale = "de-DE");
+		SearchPortlets.openSearchPage(locale = "de-DE");
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",

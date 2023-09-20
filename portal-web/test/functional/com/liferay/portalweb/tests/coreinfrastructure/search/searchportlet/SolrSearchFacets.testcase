@@ -142,7 +142,7 @@ definition {
 
 		User.logoutPG();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		for (var portletName : list "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet") {
 			Portlet.viewNoSpecificPG(portletName = ${portletName});
@@ -208,7 +208,7 @@ definition {
 
 		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = "version");
 

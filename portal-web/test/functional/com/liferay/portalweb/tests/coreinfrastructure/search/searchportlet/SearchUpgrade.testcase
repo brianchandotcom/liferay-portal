@@ -438,7 +438,7 @@ definition {
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 		}
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 

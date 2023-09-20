@@ -87,7 +87,7 @@ definition {
 		}
 
 		task ("Go to the search page and execute a search for the object entries") {
-			Search.openSearchPage(searchTerm = "fruit");
+			SearchPortlets.openSearchPage(searchTerm = "fruit");
 		}
 
 		task ("Configure the Custom Facet widget to aggregate by the 'title' custom Object field") {
@@ -206,7 +206,7 @@ definition {
 		}
 
 		task ("Go to the Search page and execute a search for the web content articles") {
-			Search.openSearchPage(searchTerm = "WC Title");
+			SearchPortlets.openSearchPage(searchTerm = "WC Title");
 		}
 
 		task ("Curl the Elasticsearch index to retrieve the DDM field name of the text field for the web content structure") {
@@ -432,7 +432,7 @@ definition {
 	test AssertCustomFacetNoXSS {
 		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(
 			aggregationField = "title_sortable",
@@ -501,7 +501,7 @@ definition {
 			adtFile = "custom_search_results_template.ftl",
 			adtType = "Search Results");
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		SearchResultPortlet.configureSearchResults(
 			customEmptyResultMessage = "true",
@@ -677,7 +677,7 @@ definition {
 
 		User.logoutPG();
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		for (var portletName : list "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet") {
 			Portlet.viewNoSpecificPG(portletName = ${portletName});
@@ -693,7 +693,7 @@ definition {
 	@description = "This is a use case for LPS-147397."
 	@priority = 4
 	test AssertModifiedFacetNoXSS {
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		Portlet.gotoPortletOptions(
 			portletName = "Modified Facet",
@@ -935,7 +935,7 @@ definition {
 	@description = "This is a use case for LPS-152993."
 	@priority = 4
 	test AssertSortWidgetNoXSS {
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 
@@ -1520,7 +1520,7 @@ definition {
 			}
 		}
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Everything");
 
@@ -1768,7 +1768,7 @@ definition {
 			userEmailAddress = "jonathan.franklin@liferay.com",
 			userPassword = "test");
 
-		Search.openSearchPage(searchTerm = "test");
+		SearchPortlets.openSearchPage(searchTerm = "test");
 
 		SearchFacetPortlet.viewFacetTermsSpecificOrder(
 			facetName = "User Facet",
@@ -1839,7 +1839,7 @@ definition {
 		task ("Navigate to the search page and add a Custom Facet with Aggregation Field 'entryClassName' and Frequency Threshold '0'") {
 			SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 
-			Search.openSearchPage();
+			SearchPortlets.openSearchPage();
 
 			SearchFacetPortlet.configureCustomFacet(aggregationField = "entryClassName");
 
@@ -1855,7 +1855,7 @@ definition {
 		}
 
 		task ("Search for the Web Content articles") {
-			Search.openSearchPage(searchTerm = "test");
+			SearchPortlets.openSearchPage(searchTerm = "test");
 		}
 
 		task ("Assert that the appropriate facet values show up in the custom facet") {
@@ -1905,7 +1905,7 @@ definition {
 		}
 
 		task ("Go to the Search page and execute a search for the web content article") {
-			Search.openSearchPage(searchTerm = "WC Title");
+			SearchPortlets.openSearchPage(searchTerm = "WC Title");
 		}
 
 		task ("Curl the Elasticsearch index to retrieve the DDM field name of the text field for the web content structure") {
@@ -1945,7 +1945,7 @@ definition {
 		}
 
 		task ("Perform a search and assert that the Custom Facet does not display any facet terms for the web content article since its repeatable text field is empty") {
-			Search.openSearchPage(searchTerm = "WC Title");
+			SearchPortlets.openSearchPage(searchTerm = "WC Title");
 
 			AssertElementNotPresent(
 				key_facetType = "Custom Facet",
@@ -2086,7 +2086,7 @@ definition {
 
 		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = "version");
 
@@ -2199,7 +2199,7 @@ definition {
 
 		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
 
-		Search.openSearchPage();
+		SearchPortlets.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
 
@@ -2845,7 +2845,7 @@ definition {
 		task ("Go to Search Page, select the 'Select Vocabularies' option in the category facet and assert vocabulary 21 can be selected") {
 			SearchPortlets.addWidgets(searchPortletList = "Category Facet");
 
-			Search.openSearchPage();
+			SearchPortlets.openSearchPage();
 
 			SearchFacetPortlet.configureCategoryFacet(
 				groupName = "Guest",
@@ -2859,7 +2859,7 @@ definition {
 	@priority = 4
 	test ViewDefaultEmptySearchResultsAndPaginationConfiguration {
 		task ("Assert 'Show Default Empty Result Message' and 'Show Default Pagination' are checked by default within the Search Results widget configuration") {
-			Search.openSearchPage();
+			SearchPortlets.openSearchPage();
 
 			Portlet.gotoPortletOptions(
 				portletName = "Search Results",
@@ -3287,7 +3287,7 @@ definition {
 	@priority = 3
 	test ViewSortWidgetConfigurationNewUI {
 		task ("Execute a search to populate the search widgets and add the Sort widget") {
-			Search.openSearchPage(searchTerm = "test");
+			SearchPortlets.openSearchPage(searchTerm = "test");
 
 			SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
 		}

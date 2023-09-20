@@ -114,7 +114,10 @@ export async function addToCart(
 			return includedCartItem;
 		});
 
-		if (includedCartItem) {
+		if (
+			includedCartItem &&
+			!Liferay.CommerceContext.showSeparateOrderItems
+		) {
 			includedCartItem.quantity = Number(
 				Number(includedCartItem.quantity + cpInstance.quantity).toFixed(
 					cpInstance.skuUnitOfMeasure?.precision || 0

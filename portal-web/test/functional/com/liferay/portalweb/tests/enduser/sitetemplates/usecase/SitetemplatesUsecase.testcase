@@ -528,8 +528,6 @@ definition {
 	test SitesTemplateResourceInheritance {
 		property portal.release = "false";
 
-		var siteName = TestCase.getSiteName(siteName = ${siteName});
-
 		task ("Given: User add a new Site Template and a page to it") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
@@ -574,9 +572,9 @@ definition {
 
 			User.openUsersAdmin();
 
-			User.editPasswordCP(
-				userEmailAddress = "userea@liferay.com",
-				userScreenName = "usersn");
+			UserNavigator.gotoUser(userScreenName = "usersn");
+
+			User.editPassword(newPassword = "test");
 
 			User.logoutPG();
 		}

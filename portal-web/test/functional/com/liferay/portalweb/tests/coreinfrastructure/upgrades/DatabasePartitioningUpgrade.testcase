@@ -10,6 +10,7 @@ definition {
 	property test.assert.warning.exceptions = "true";
 	property test.liferay.virtual.instance = "false";
 	property test.run.environment = "EE";
+	property test.run.type = "single";
 	property testray.main.component.name = "Database Partitioning";
 
 	@priority = 5

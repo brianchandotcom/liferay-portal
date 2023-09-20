@@ -7,12 +7,11 @@ definition {
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.liferay.virtual.instance = "false";
+	property test.run.type = "single";
 	property testray.main.component.name = "Database Upgrade Framework";
 
 	@priority = 4
 	test DecrementCoreSchemaMajorVersion {
-		property test.run.type = "single";
-
 		var script = '''
 			import com.liferay.portal.kernel.model.*;
 			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
@@ -49,8 +48,6 @@ definition {
 
 	@priority = 4
 	test DecrementCoreSchemaMicroVersion {
-		property test.run.type = "single";
-
 		var script = '''
 			import com.liferay.portal.kernel.model.*;
 			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
@@ -98,8 +95,6 @@ definition {
 
 	@priority = 3
 	test DecrementCoreSchemaMinorVersion {
-		property test.run.type = "single";
-
 		var script = '''
 			import com.liferay.portal.kernel.model.*;
 			import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;

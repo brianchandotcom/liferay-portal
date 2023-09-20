@@ -9,9 +9,11 @@ import React from 'react';
 export function WarningMessage({
 	fontWeight = 'bold',
 	message,
+	title,
 }: {
 	fontWeight?: 'bold' | 'normal';
 	message: string;
+	title?: string;
 }) {
 	return (
 		<div
@@ -22,7 +24,14 @@ export function WarningMessage({
 				<ClayIcon symbol="warning-full" />
 			</span>
 
-			{message}
+			{title ? (
+				<>
+					<p className="text-weight-semi-bold">{title}</p>
+					<p>{message}</p>
+				</>
+			) : (
+				<span>{message}</span>
+			)}
 		</div>
 	);
 }

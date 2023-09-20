@@ -23,7 +23,7 @@ public class UpgradeGetImagePreviewURLMethodCheck
 		String newContent) {
 
 		if (fileName.endsWith(".java")) {
-			newContent = addNewImports(newContent);
+			newContent = addNewImports(fileName, newContent);
 			newContent = StringUtil.replaceLast(
 				newContent, CharPool.CLOSE_CURLY_BRACE,
 				"\t@Reference\n\tprivate DLURLHelper _dlURLHelper;\n\n}");

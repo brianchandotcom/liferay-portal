@@ -25,7 +25,7 @@ public class UpgradeJavaAssetEntryAssetCategoriesCheck
 		String fileName, String absolutePath, String content,
 		String newContent) {
 
-		newContent = addNewImports(newContent);
+		newContent = addNewImports(fileName, newContent);
 
 		return StringUtil.replaceLast(
 			newContent, CharPool.CLOSE_CURLY_BRACE,

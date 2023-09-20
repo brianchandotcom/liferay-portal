@@ -495,7 +495,7 @@ public class DataCleanupTest {
 		if (Validator.isNotNull(expandoTableName)) {
 			Assert.assertEquals(
 				null,
-				_expandoColumnLocalService.getColumn(
+				_expandoColumnLocalService.fetchColumn(
 					expandoTableId, expandoColumnName));
 
 			Assert.assertEquals(

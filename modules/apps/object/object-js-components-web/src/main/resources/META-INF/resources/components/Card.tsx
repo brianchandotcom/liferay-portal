@@ -3,13 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert, {IClayAlertProps} from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useState} from 'react';
 
 import './Card.scss';
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+	alert?: {
+		content: string;
+		otherProps: IClayAlertProps;
+	};
 	customHeader?: JSX.Element;
 	disabled?: boolean;
 	title?: string;
@@ -27,6 +32,7 @@ interface ITooltip {
 	symbol: string;
 }
 export function Card({
+	alert,
 	children,
 	className,
 	customHeader,
@@ -36,6 +42,8 @@ export function Card({
 	viewMode,
 	...otherProps
 }: CardProps) {
+	const [showAlert, setShowAlert] = useState(true);
+
 	const inline = viewMode === 'inline';
 	const noChildren = viewMode === 'no-children';
 	const noHeaderBorder = viewMode === 'no-header-border';
@@ -95,6 +103,18 @@ export function Card({
 							)}
 						</div>
 					)}
+
+					{alert && showAlert && (
+						<ClayAlert
+							displayType={alert.otherProps.displayType}
+							onClose={() => setShowAlert(false)}
+							title={alert.otherProps.title}
+							variant={alert.otherProps.variant}
+						>
+							{alert.content}
+						</ClayAlert>
+					)}
+
 					<div
 						className={classNames('lfr-objects__card-body', {
 							'lfr-objects__card-body--inline': inline,

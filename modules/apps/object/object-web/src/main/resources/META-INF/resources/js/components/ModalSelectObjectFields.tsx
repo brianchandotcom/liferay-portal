@@ -12,9 +12,9 @@ import {ManagementToolbarSearch} from '@liferay/object-js-components-web';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import './ModalAddColumns.scss';
+import './ModalSelectObjectFields.scss';
 
-function ModalAddColumns<T extends ModalItem>() {
+function ModalSelectObjectFields<T extends ModalItem>() {
 	const [
 		{
 			disableRequired,
@@ -49,10 +49,13 @@ function ModalAddColumns<T extends ModalItem>() {
 			setState({items, searchTerm, selected, ...otherProps});
 		};
 
-		Liferay.on('openModalAddColumns', openModal);
+		Liferay.on('openModalSelectObjectFields', openModal);
 
 		return () =>
-			Liferay.detach('openModalAddColumns', openModal as () => void);
+			Liferay.detach(
+				'openModalSelectObjectFields',
+				openModal as () => void
+			);
 	}, []);
 
 	const filteredItems = useMemo(() => {
@@ -98,13 +101,13 @@ function ModalAddColumns<T extends ModalItem>() {
 
 	return items.length ? (
 		<ClayModal
-			className="lfr-object__object-view-modal-add-columns"
+			className="lfr-object__object-view-modal-select-object-fields"
 			observer={observer}
 		>
 			<ClayModal.Header>{header}</ClayModal.Header>
 
 			<ClayModal.Body>
-				<div className="lfr-object__object-view-modal-add-columns-selection-title">
+				<div className="lfr-object__object-view-modal-select-object-fields-selection-title">
 					{title}
 				</div>
 
@@ -144,7 +147,7 @@ function ModalAddColumns<T extends ModalItem>() {
 				</ManagementToolbar.Container>
 			</ClayModal.Body>
 
-			<ClayList className="lfr-object__object-view-modal-add-columns-list">
+			<ClayList className="lfr-object__object-view-modal-select-object-fields-list">
 				{filteredItems.map((item, index) => (
 					<ClayList.Item flex key={`list-item-${index}`}>
 						<ClayCheckbox
@@ -161,7 +164,7 @@ function ModalAddColumns<T extends ModalItem>() {
 						/>
 
 						{disableRequired && item.required && (
-							<span className="lfr-object__object-view-modal-add-columns-reference-mark">
+							<span className="lfr-object__object-view-modal-select-object-fields-reference-mark">
 								<ClayIcon symbol="asterisk" />
 							</span>
 						)}
@@ -195,7 +198,7 @@ function ModalAddColumns<T extends ModalItem>() {
 	) : null;
 }
 
-export default ModalAddColumns;
+export default ModalSelectObjectFields;
 
 interface ModalItem {
 	checked?: boolean;

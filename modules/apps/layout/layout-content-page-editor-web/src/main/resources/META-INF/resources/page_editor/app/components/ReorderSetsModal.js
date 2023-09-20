@@ -289,24 +289,28 @@ Items.propTypes = {
 function CardItem({index, item, numberOfItems, onDropItem}) {
 	const {name} = item;
 
-	const {handlerRef, isDragging} = useDragItem(item);
-	const {dragOverPosition, targetRef} = useDropTarget(
-		item.id,
-		index,
-		onDropItem
-	);
+	const {
+		handlerRef: mouseDragHandlerRef,
+		isDragging: isMouseDragging,
+	} = useMouseDragItem(item);
+
+	const {
+		dragOverPosition: mouseDragOverPosition,
+		targetRef: mouseDropTargetRef,
+	} = useMouseDropTarget(item.id, index, onDropItem);
 
 	return (
-		<div className="c-pb-3" ref={targetRef}>
-			<div ref={handlerRef}>
+		<div className="c-pb-3" ref={mouseDropTargetRef}>
+			<div ref={mouseDragHandlerRef}>
 				<ClayCard
 					className={classNames('c-mb-0', {
-						dragging: isDragging,
-						draggingOver: dragOverPosition,
+						dragging: isMouseDragging,
+						draggingOver: mouseDragOverPosition,
 						draggingOverBottom:
-							dragOverPosition === DRAG_OVER_POSITIONS.bottom,
+							mouseDragOverPosition ===
+							DRAG_OVER_POSITIONS.bottom,
 						draggingOverTop:
-							dragOverPosition === DRAG_OVER_POSITIONS.top,
+							mouseDragOverPosition === DRAG_OVER_POSITIONS.top,
 					})}
 				>
 					<ClayCard.Body className="px-0">
@@ -392,7 +396,7 @@ ReorderDropdown.propTypes = {
 	onDropItem: PropTypes.func.isRequired,
 };
 
-function useDragItem(item) {
+function useMouseDragItem(item) {
 	const [{isDragging}, handlerRef, previewRef] = useDrag({
 		begin() {},
 		collect: (monitor) => ({
@@ -415,7 +419,7 @@ function useDragItem(item) {
 	};
 }
 
-export function useDropTarget(itemId, itemIndex, onDropItem) {
+export function useMouseDropTarget(itemId, itemIndex, onDropItem) {
 	const [dragOverPosition, setDragOverPosition] = useState(null);
 	const targetRef = useRef(null);
 	const targetRectRef = useRef(null);

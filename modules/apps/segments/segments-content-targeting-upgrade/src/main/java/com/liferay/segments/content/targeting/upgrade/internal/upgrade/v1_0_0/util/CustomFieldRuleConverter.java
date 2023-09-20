@@ -51,8 +51,9 @@ public class CustomFieldRuleConverter implements RuleConverter {
 				_expandoTableLocalService.getDefaultTable(
 					companyId, User.class.getName());
 
-			ExpandoColumn expandoColumn = _expandoColumnLocalService.getColumn(
-				expandoTable.getTableId(), attributeName);
+			ExpandoColumn expandoColumn =
+				_expandoColumnLocalService.fetchColumn(
+					expandoTable.getTableId(), attributeName);
 
 			if (expandoColumn == null) {
 				return;

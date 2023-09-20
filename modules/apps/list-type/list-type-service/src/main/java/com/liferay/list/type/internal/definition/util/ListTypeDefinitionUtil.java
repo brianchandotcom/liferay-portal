@@ -7,7 +7,6 @@ package com.liferay.list.type.internal.definition.util;
 
 import com.liferay.list.type.exception.ListTypeDefinitionSystemException;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -15,8 +14,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class ListTypeDefinitionUtil {
 
-	public static void validateInvokerBundle(
-			String message, boolean system)
+	public static void validateInvokerBundle(String message, boolean system)
 		throws PortalException {
 
 		if (!system || ObjectDefinitionUtil.isInvokerBundleAllowed()) {

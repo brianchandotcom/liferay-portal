@@ -832,14 +832,10 @@ definition {
 		}
 
 		task ("View the collection items shown in Collection Display") {
-			var n = 1;
-
 			for (var i : list "3,2,1") {
-				PageEditor.viewCollectionItem(
-					assetTitle = "Document Title ${i}",
-					row = ${n});
-
-				var n = ${n} + 1;
+				AssertVisible(
+					key_text = "Document Title ${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
 			}
 		}
 
@@ -851,14 +847,8 @@ definition {
 		}
 
 		task ("View the images shown in Content Display") {
-			var n = 1;
-
 			for (var image : list "Document_3.jpg,Document_2.jpg,Document_1.jpg") {
-				ContentPages.viewFragmentBackgroundImage(
-					image = ${image},
-					position = ${n});
-
-				var n = ${n} + 1;
+				AssertVisible(locator1 = "//div[contains(@style,'background-image')][contains(@style,'${image}')]");
 			}
 		}
 

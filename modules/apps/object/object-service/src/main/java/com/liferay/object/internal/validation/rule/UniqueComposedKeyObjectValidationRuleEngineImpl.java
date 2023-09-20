@@ -14,6 +14,7 @@ import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.model.ObjectValidationRuleSetting;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.petra.sql.dsl.Column;
@@ -66,28 +67,30 @@ public class UniqueComposedKeyObjectValidationRuleEngineImpl
 			}
 		}
 
+		Map<String, Object> baseModel = (Map<String, Object>)inputObjects.get(
+			"baseModel");
+		Map<String, Object> entryDTO = (Map<String, Object>)inputObjects.get(
+			"entryDTO");
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				objectValidationRule.getObjectDefinitionId());
 
-		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
-			new DynamicObjectDefinitionTable(
-				objectDefinition, objectFields,
-				objectDefinition.getDBTableName());
+		long objectEntriesCount =
+			_objectEntryLocalService.getObjectEntriesCount(
+				GetterUtil.getLong(baseModel.get("groupId")),
+				new DynamicObjectDefinitionTable(
+					objectDefinition, objectFields,
+					objectDefinition.getDBTableName()),
+				new DynamicObjectDefinitionTable(
+					objectDefinition, objectFields,
+					objectDefinition.getExtensionDBTableName()),
+				objectDefinition.getScope(),
+				_getPredicate(
+					(Map<String, Object>)entryDTO.get("properties"),
+					objectValidationRule.getObjectDefinitionId(),
+					objectFields));
 
-		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable =
-			new DynamicObjectDefinitionTable(
-				objectDefinition, objectFields,
-				objectDefinition.getExtensionDBTableName());
-
-		long count = _objectDefinitionLocalService.getDslQuery(
-			dynamicObjectDefinitionTable, extensionDynamicObjectDefinitionTable,
-			_getSearchPredicate(
-				_getEntryValues(
-					(Map<String, Object>)inputObjects.get("entryDTO")),
-				objectValidationRule.getObjectDefinitionId(), objectFields));
-
-		if (count > 0) {
+		if (objectEntriesCount > 0) {
 			results.put("validationCriteriaMet", false);
 		}
 
@@ -104,15 +107,11 @@ public class UniqueComposedKeyObjectValidationRuleEngineImpl
 		return _language.get(locale, getKey());
 	}
 
-	private Map<String, Object> _getEntryValues(Map<String, Object> entryDTO) {
-		return (Map<String, Object>)entryDTO.get("properties");
-	}
-
-	private Predicate _getSearchPredicate(
+	private Predicate _getPredicate(
 		Map<String, Object> entryValues, long objectDefinitionId,
 		List<ObjectField> objectFields) {
 
-		Predicate searchPredicate = null;
+		Predicate predicate = null;
 
 		for (ObjectField objectField : objectFields) {
 			Table<?> table = null;
@@ -132,21 +131,22 @@ public class UniqueComposedKeyObjectValidationRuleEngineImpl
 				continue;
 			}
 
-			Predicate objectFieldPredicate =
+			Predicate uniqueComposedKeyObjectFieldPredicate =
 				ObjectEntrySearchUtil.getUniqueComposedKeyObjectFieldPredicate(
 					(Column<?, Object>)column, objectField.getDBType(),
 					GetterUtil.getString(
 						entryValues.get(objectField.getName())));
 
-			if (searchPredicate == null) {
-				searchPredicate = objectFieldPredicate;
+			if (predicate == null) {
+				predicate = uniqueComposedKeyObjectFieldPredicate;
 			}
 			else {
-				searchPredicate = searchPredicate.and(objectFieldPredicate);
+				predicate = predicate.and(
+					uniqueComposedKeyObjectFieldPredicate);
 			}
 		}
 
-		return searchPredicate;
+		return predicate;
 	}
 
 	@Reference
@@ -154,6 +154,9 @@ public class UniqueComposedKeyObjectValidationRuleEngineImpl
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

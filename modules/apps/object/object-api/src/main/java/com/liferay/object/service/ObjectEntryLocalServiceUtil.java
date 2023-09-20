@@ -428,6 +428,21 @@ public class ObjectEntryLocalServiceUtil {
 		return getService().getObjectEntriesCount();
 	}
 
+	public static long getObjectEntriesCount(
+		long groupId,
+		com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable
+			dynamicObjectDefinitionTable,
+		com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable
+			extensionDynamicObjectDefinitionTable,
+		String objectDefinitionScope,
+		com.liferay.petra.sql.dsl.expression.Predicate predicate) {
+
+		return getService().getObjectEntriesCount(
+			groupId, dynamicObjectDefinitionTable,
+			extensionDynamicObjectDefinitionTable, objectDefinitionScope,
+			predicate);
+	}
+
 	public static int getObjectEntriesCount(
 		long groupId, long objectDefinitionId) {
 

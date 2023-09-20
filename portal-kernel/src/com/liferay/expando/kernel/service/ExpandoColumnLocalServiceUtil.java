@@ -265,6 +265,10 @@ public class ExpandoColumnLocalServiceUtil {
 			companyId, classNameId, tableName, name);
 	}
 
+	public static ExpandoColumn fetchColumn(long tableId, String name) {
+		return getService().fetchColumn(tableId, name);
+	}
+
 	public static ExpandoColumn fetchExpandoColumn(long columnId) {
 		return getService().fetchExpandoColumn(columnId);
 	}
@@ -287,10 +291,6 @@ public class ExpandoColumnLocalServiceUtil {
 			   com.liferay.expando.kernel.exception.NoSuchTableException {
 
 		return getService().getColumn(companyId, classNameId, tableName, name);
-	}
-
-	public static ExpandoColumn getColumn(long tableId, String name) {
-		return getService().getColumn(tableId, name);
 	}
 
 	public static ExpandoColumn getColumn(

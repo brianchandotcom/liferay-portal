@@ -305,6 +305,11 @@ public class ExpandoColumnLocalServiceWrapper
 	}
 
 	@Override
+	public ExpandoColumn fetchColumn(long tableId, String name) {
+		return _expandoColumnLocalService.fetchColumn(tableId, name);
+	}
+
+	@Override
 	public ExpandoColumn fetchExpandoColumn(long columnId) {
 		return _expandoColumnLocalService.fetchExpandoColumn(columnId);
 	}
@@ -331,11 +336,6 @@ public class ExpandoColumnLocalServiceWrapper
 
 		return _expandoColumnLocalService.getColumn(
 			companyId, classNameId, tableName, name);
-	}
-
-	@Override
-	public ExpandoColumn getColumn(long tableId, String name) {
-		return _expandoColumnLocalService.getColumn(tableId, name);
 	}
 
 	@Override

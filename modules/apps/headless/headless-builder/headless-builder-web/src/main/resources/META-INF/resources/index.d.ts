@@ -292,9 +292,7 @@ type IncludesFilterOperator = {
 
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
-type MainEndpointNav = 'list' | {edit: number};
-
-type MainSchemaNav = 'list' | {edit: number};
+type MainNav = 'list' | {edit: number};
 
 type ObjectFieldBusinessType =
 	| 'Aggregation'

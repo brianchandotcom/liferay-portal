@@ -9,7 +9,7 @@ interface EditAPISchemaProps {
 	apiURLPaths: APIURLPaths;
 	currentAPIApplicationId: string;
 	schemaId: number;
-	setMainSchemaNav: Dispatch<SetStateAction<MainSchemaNav>>;
+	setMainSchemaNav: Dispatch<SetStateAction<MainNav>>;
 	setManagementButtonsProps: Dispatch<SetStateAction<ManagementButtonsProps>>;
 	setStatus: Dispatch<SetStateAction<ApplicationStatusKeys>>;
 	setTitle: Dispatch<SetStateAction<string>>;

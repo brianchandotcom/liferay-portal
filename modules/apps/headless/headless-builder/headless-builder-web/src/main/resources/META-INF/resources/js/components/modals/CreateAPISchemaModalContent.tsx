@@ -16,7 +16,7 @@ interface CreateAPISchemaModalProps {
 	closeModal: voidReturn;
 	currentAPIApplicationId: string | null;
 	loadData: voidReturn;
-	setMainSchemaNav: Dispatch<SetStateAction<MainSchemaNav>>;
+	setMainSchemaNav: Dispatch<SetStateAction<MainNav>>;
 }
 
 export function CreateAPISchemaModalContent({

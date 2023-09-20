@@ -29,9 +29,7 @@ export default function EndpointsContent({
 	setStatus,
 	setTitle,
 }: EndpointsContentProps) {
-	const [mainEndpointNav, setMainEndpointNav] = useState<MainEndpointNav>(
-		'list'
-	);
+	const [mainEndpointNav, setMainEndpointNav] = useState<MainNav>('list');
 
 	return (
 		<>

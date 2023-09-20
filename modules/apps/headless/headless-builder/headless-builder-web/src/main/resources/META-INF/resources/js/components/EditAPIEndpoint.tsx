@@ -30,7 +30,7 @@ interface EditAPIEndpointProps {
 	basePath: string;
 	currentAPIApplicationId: string;
 	endpointId: number;
-	setMainEndpointNav: Dispatch<SetStateAction<MainEndpointNav>>;
+	setMainEndpointNav: Dispatch<SetStateAction<MainNav>>;
 	setManagementButtonsProps: Dispatch<SetStateAction<ManagementButtonsProps>>;
 	setStatus: Dispatch<SetStateAction<ApplicationStatusKeys>>;
 	setTitle: Dispatch<SetStateAction<string>>;

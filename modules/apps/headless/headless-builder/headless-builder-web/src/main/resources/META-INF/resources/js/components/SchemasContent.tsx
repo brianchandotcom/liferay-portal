@@ -25,7 +25,7 @@ export default function SchemasContent({
 	setStatus,
 	setTitle,
 }: SchemasContentProps) {
-	const [mainSchemaNav, setMainSchemaNav] = useState<MainSchemaNav>('list');
+	const [mainSchemaNav, setMainSchemaNav] = useState<MainNav>('list');
 
 	return (
 		<>

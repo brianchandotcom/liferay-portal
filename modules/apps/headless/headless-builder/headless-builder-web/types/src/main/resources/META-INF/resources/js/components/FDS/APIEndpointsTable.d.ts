@@ -11,7 +11,7 @@ interface APIApplicationsTableProps {
 	currentAPIApplicationId: string | null;
 	portletId: string;
 	readOnly: boolean;
-	setMainEndpointNav: Dispatch<SetStateAction<MainEndpointNav>>;
+	setMainEndpointNav: Dispatch<SetStateAction<MainNav>>;
 }
 export default function APIEndpointsTable({
 	apiApplicationBaseURL,

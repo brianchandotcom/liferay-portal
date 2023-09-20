@@ -19,7 +19,7 @@ interface CreateAPIEndpointModalProps {
 	closeModal: voidReturn;
 	currentAPIApplicationId: string | null;
 	loadData: voidReturn;
-	setMainEndpointNav: Dispatch<SetStateAction<MainEndpointNav>>;
+	setMainEndpointNav: Dispatch<SetStateAction<MainNav>>;
 }
 
 export function CreateAPIEndpointModalContent({

@@ -17,7 +17,7 @@ interface APIApplicationsTableProps {
 	apiURLPaths: APIURLPaths;
 	currentAPIApplicationId: string | null;
 	portletId: string;
-	setMainSchemaNav: Dispatch<SetStateAction<MainSchemaNav>>;
+	setMainSchemaNav: Dispatch<SetStateAction<MainNav>>;
 }
 
 export default function APISchemasTable({

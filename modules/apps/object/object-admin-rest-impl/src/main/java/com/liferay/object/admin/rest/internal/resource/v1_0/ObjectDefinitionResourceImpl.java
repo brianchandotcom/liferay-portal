@@ -574,7 +574,6 @@ public class ObjectDefinitionResourceImpl
 				serviceBuilderObjectField ->
 					serviceBuilderObjectField.isMetadata() ||
 					!serviceBuilderObjectField.isSystem());
-
 			serviceBuilderObjectValidationRules.removeIf(
 				serviceBuilderObjectValidationRule ->
 					!serviceBuilderObjectValidationRule.isSystem());

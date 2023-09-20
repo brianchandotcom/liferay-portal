@@ -16,8 +16,9 @@ import openDeletePageTemplateModal from '../modal/openDeletePageTemplateModal';
 import openDisplayPageModal from '../modal/openDisplayPageModal.es';
 
 const ACTIONS = {
-	changeContentType({mappingTypes}, namespace) {
+	changeContentType({changeContentTypeURL, mappingTypes}, namespace) {
 		openDisplayPageModal({
+			formSubmitURL: changeContentTypeURL,
 			mappingTypes,
 			namespace,
 			spritemap: getSpritemap(),

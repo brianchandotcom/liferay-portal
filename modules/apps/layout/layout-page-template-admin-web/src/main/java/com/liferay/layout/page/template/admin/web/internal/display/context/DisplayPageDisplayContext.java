@@ -70,6 +70,21 @@ public class DisplayPageDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public String getChangeContentTypeURL(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		return PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/layout_page_template_admin/update_display_page_entry_content_type"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"layoutPageTemplateEntryId",
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		).buildString();
+	}
+
 	public SearchContainer<?> getDisplayPagesSearchContainer() {
 		if (_displayPagesSearchContainer != null) {
 			return _displayPagesSearchContainer;

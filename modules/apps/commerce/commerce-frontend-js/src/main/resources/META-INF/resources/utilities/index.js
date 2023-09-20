@@ -91,6 +91,15 @@ export function getValueFromItem(item, fieldName) {
 	return item[fieldName];
 }
 
+export function getLabelFromItem(item, itemsLabel, secondaryItemsLabel) {
+	return [
+		getValueFromItem(item, itemsLabel),
+		getValueFromItem(item, secondaryItemsLabel),
+	]
+		.filter(Boolean)
+		.join(' - ');
+}
+
 export function formatActionUrl(url, item) {
 	let regex = new RegExp('{(.*?)}', 'mg');
 

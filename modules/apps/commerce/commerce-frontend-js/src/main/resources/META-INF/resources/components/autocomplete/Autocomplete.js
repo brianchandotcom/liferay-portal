@@ -17,17 +17,23 @@ import {useLiferayModule} from '../../utilities/hooks';
 import {
 	formatAutocompleteItem,
 	getData,
+	getLabelFromItem,
 	getValueFromItem,
 } from '../../utilities/index';
 import {showErrorNotification} from '../../utilities/notifications';
 import InfiniteScroller from '../infinite_scroller/InfiniteScroller';
 
 function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
-	const [query, setQuery] = useState(props.initialLabel || '');
+	const [active, setActive] = useState(false);
 	const [initialised, setInitialised] = useState(
 		Boolean(props.customViewModuleUrl || props.customView)
 	);
-	const [active, setActive] = useState(false);
+	const [items, setItems] = useState(null);
+	const [lastPage, setLastPage] = useState(null);
+	const [loading, setLoading] = useState(false);
+	const [page, setPage] = useState(1);
+	const [pageSize, setPageSize] = useState(props.pageSize);
+	const [query, setQuery] = useState(props.initialLabel || '');
 	const [selectedItem, setSelectedItem] = useState(
 		formatAutocompleteItem(
 			props.initialValue,
@@ -36,12 +42,8 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 			props.itemsLabel
 		)
 	);
-	const [items, setItems] = useState(null);
-	const [loading, setLoading] = useState(false);
 	const [totalCount, setTotalCount] = useState(null);
-	const [lastPage, setLastPage] = useState(null);
-	const [page, setPage] = useState(1);
-	const [pageSize, setPageSize] = useState(props.pageSize);
+	const firstLoadRef = useRef(true);
 	const nodeRef = useRef();
 	const dropdownNodeRef = useRef();
 	const inputNodeRef = useRef();
@@ -156,10 +158,26 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 					if (!query) {
 						return;
 					}
-					const found = jsonResponse.items.find(
+
+					let found = jsonResponse.items.find(
 						(item) =>
-							getValueFromItem(item, props.itemsLabel) === query
+							getLabelFromItem(
+								item,
+								props.itemsLabel,
+								props.secondaryItemsLabel
+							) === query
 					);
+
+					if (!found && firstLoadRef.current) {
+						found = jsonResponse.items.find(
+							(item) =>
+								getValueFromItem(item, props.itemsKey) ===
+								props.initialValue
+						);
+					}
+
+					firstLoadRef.current = false;
+
 					if (found) {
 						setSelectedItem(found);
 					}
@@ -176,11 +194,13 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 		query,
 		page,
 		pageSize,
+		props.apiUrl,
 		props.disabled,
 		props.infiniteScrollMode,
-		props.apiUrl,
+		props.initialValue,
+		props.itemsKey,
 		props.itemsLabel,
-		props.showErrorNotification,
+		props.secondaryItemsLabel,
 	]);
 
 	useEffect(() => {
@@ -237,12 +257,18 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 				!!items.length &&
 				items.map((item) => (
 					<ClayAutocomplete.Item
-						key={item.id || String(item[props.itemsKey])}
+						key={String(item[props.itemsKey]) || item.id}
 						onClick={() => {
 							setSelectedItem(item);
 							setActive(false);
 						}}
-						value={String(getValueFromItem(item, props.itemsLabel))}
+						value={String(
+							getLabelFromItem(
+								item,
+								props.itemsLabel,
+								props.secondaryItemsLabel
+							)
+						)}
 					/>
 				))}
 		</ClayDropDown.ItemList>
@@ -309,9 +335,10 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 								required={props.required || false}
 								value={
 									selectedItem
-										? getValueFromItem(
+										? getLabelFromItem(
 												selectedItem,
-												props.itemsLabel
+												props.itemsLabel,
+												props.secondaryItemsLabel
 										  )
 										: query
 								}
@@ -398,6 +425,10 @@ Autocomplete.propTypes = {
 	onItemsUpdated: PropTypes.func,
 	onValueUpdated: PropTypes.func,
 	required: PropTypes.bool,
+	secondaryItemsLabel: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.arrayOf(PropTypes.string),
+	]),
 	showDeleteButton: PropTypes.bool,
 	value: PropTypes.string,
 };

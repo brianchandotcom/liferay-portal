@@ -229,6 +229,13 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 					<div class="sheet">
 						<div class="panel-group panel-group-flush">
+							<clay:alert
+								displayType="warning"
+								message="please-publish-small-incremental-changes-to-avoid-huge-publishing-processes-that-can-take-a-long-time-to-execute"
+								symbol="page"
+								title="recommendation"
+							/>
+
 							<aui:fieldset>
 								<c:choose>
 									<c:when test="<%= exportImportConfiguration == null %>">

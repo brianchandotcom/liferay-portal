@@ -159,6 +159,11 @@ AUI.add(
 					Util.reorder(box, direction);
 
 					instance._toggleBtnSort(box);
+
+					Liferay.fire(NAME + ':orderItem', {
+						box,
+						direction,
+					});
 				},
 
 				_renderBoxes() {

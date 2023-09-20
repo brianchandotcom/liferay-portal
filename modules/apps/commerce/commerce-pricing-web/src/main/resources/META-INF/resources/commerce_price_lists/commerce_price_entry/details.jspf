@@ -5,36 +5,12 @@
  */
 --%>
 
-<commerce-ui:panel
-	title='<%= LanguageUtil.get(request, "schedule") %>'
->
-	<div class="row">
-		<div class="col-6">
-			<aui:input formName="fm" label="publish-date" name="displayDate" />
-		</div>
-
-		<%
-		boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
-
-		if ((commercePriceEntry != null) && (commercePriceEntry.getExpirationDate() != null)) {
-			neverExpire = false;
-		}
-		%>
-
-		<div class="col-6">
-			<liferay-ui:error exception="<%= CommercePriceListExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
-
-			<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
-		</div>
-	</div>
-</commerce-ui:panel>
-
 <%
 boolean priceOnApplication = BeanParamUtil.getBoolean(commercePriceEntry, request, "priceOnApplication", false);
 %>
 
 <commerce-ui:panel
-	title='<%= LanguageUtil.get(request, "price") %>'
+	title='<%= LanguageUtil.get(request, "details") %>'
 >
 	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-11028") %>'>
 		<div class="row">
@@ -44,7 +20,7 @@ boolean priceOnApplication = BeanParamUtil.getBoolean(commercePriceEntry, reques
 		</div>
 	</c:if>
 
-	<aui:fieldset collapsible="<%= false %>" cssClass='<%= "price-entry-price-settings " + (priceOnApplication ? "disabled" : StringPool.BLANK) %>' id='<%= liferayPortletResponse.getNamespace() + "price-entry-price-settings" %>' label="price-settings">
+	<aui:fieldset collapsible="<%= false %>" cssClass='<%= "price-entry-price-settings " + (priceOnApplication ? "disabled" : StringPool.BLANK) %>' id='<%= liferayPortletResponse.getNamespace() + "price-entry-price-settings" %>'>
 		<liferay-ui:error exception="<%= CommercePriceListMaxPriceValueException.class %>">
 			<liferay-ui:message arguments="<%= CommercePriceConstants.PRICE_VALUE_MAX %>" key="price-max-value-is-x" />
 		</liferay-ui:error>
@@ -125,6 +101,26 @@ boolean priceOnApplication = BeanParamUtil.getBoolean(commercePriceEntry, reques
 			</div>
 		</div>
 	</aui:fieldset>
+
+	<div class="row">
+		<div class="col-6">
+			<aui:input formName="fm" label="publish-date" name="displayDate" />
+		</div>
+
+		<%
+		boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
+
+		if ((commercePriceEntry != null) && (commercePriceEntry.getExpirationDate() != null)) {
+			neverExpire = false;
+		}
+		%>
+
+		<div class="col-6">
+			<liferay-ui:error exception="<%= CommercePriceListExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
+
+			<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
+		</div>
+	</div>
 </commerce-ui:panel>
 
 <commerce-ui:panel

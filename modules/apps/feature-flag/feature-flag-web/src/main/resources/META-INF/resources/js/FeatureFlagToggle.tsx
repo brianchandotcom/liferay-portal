@@ -7,6 +7,7 @@ import {ClayToggle} from '@clayui/form';
 import React, {useState} from 'react';
 
 interface IProps {
+	ariaDescribedBy: string;
 	companyId: number;
 	disabled: boolean;
 	featureFlagKey: string;
@@ -17,6 +18,7 @@ interface IProps {
 }
 
 const FeatureFlagToggle = ({
+	ariaDescribedBy,
 	companyId,
 	disabled: initialDisabled,
 	featureFlagKey,
@@ -64,6 +66,7 @@ const FeatureFlagToggle = ({
 	return (
 		<>
 			<ClayToggle
+				aria-describedby={ariaDescribedBy}
 				disabled={disabled}
 				id={inputName}
 				label={toggled ? labelOn : labelOff}

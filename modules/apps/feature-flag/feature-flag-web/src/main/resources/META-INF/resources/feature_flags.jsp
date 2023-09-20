@@ -36,6 +36,8 @@ String displayStyle = featureFlagsDisplayContext.getDisplayStyle();
 
 					<%
 					FeatureFlagDisplay featureFlagDisplay = (FeatureFlagDisplay)model;
+
+					String titleId = "titleId" + featureFlagDisplay.getKey();
 					%>
 
 					<c:choose>
@@ -57,7 +59,7 @@ String displayStyle = featureFlagsDisplayContext.getDisplayStyle();
 								colspan="<%= 11 %>"
 							>
 								<h5>
-									<strong><%= featureFlagDisplay.getTitle() %>
+									<strong id="<%= titleId %>"><%= featureFlagDisplay.getTitle() %>
 									</strong><span class="text-muted"> (<%= featureFlagDisplay.getKey() %>)</span>
 								</h5>
 

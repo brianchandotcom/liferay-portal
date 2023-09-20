@@ -29,6 +29,8 @@ String inputName = featureFlagDisplay.getKey() + "-toggle";
 	module="js/FeatureFlagToggle"
 	props='<%=
 		HashMapBuilder.<String, Object>put(
+			"ariaDescribedBy", titleId
+		).put(
 			"companyId", featureFlagDisplay.getCompanyId()
 		).put(
 			"disabled", !featureFlagDisplay.isDependenciesFulfilled()

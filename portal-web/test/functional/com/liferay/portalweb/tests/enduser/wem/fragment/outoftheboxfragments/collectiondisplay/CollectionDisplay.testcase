@@ -643,7 +643,7 @@ definition {
 			ContentPages.viewFragmentImage(
 				fragmentName = "image",
 				id = "image-square",
-				image = "Document_1.jpg");
+				image = "document_1-jpg");
 		}
 	}
 

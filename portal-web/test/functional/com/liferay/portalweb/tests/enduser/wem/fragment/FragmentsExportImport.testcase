@@ -737,7 +737,7 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
 				imageDescription = "",
-				imageFileName = "Document_1-jpg");
+				imageFileName = "Document_1.jpg");
 		}
 
 		task ("Save the fragment composition as fragment with mapping configuration") {
@@ -784,7 +784,7 @@ definition {
 			PageEditor.viewFragmentEditableImage(
 				id = "image-square",
 				imageDescription = "",
-				imageFileName = "Document_1-jpg");
+				imageFileName = "Document_1.jpg");
 		}
 	}
 

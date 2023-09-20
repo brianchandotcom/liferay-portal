@@ -31,6 +31,7 @@ import SearchableTableModalGraphql from './modals/SearchableTableModalGraphql';
 import SelectItemsModal from './modals/SelectItemsModal';
 import TestModal from './modals/TestModal';
 import TimeZoneSelectionModal from './modals/TimeZoneSelectionModal';
+import UnableDeletePropertyModal from './modals/UnableDeletePropertyModal';
 import UnassignedSegmentsModal from './modals/unassigned-segments-modal';
 import {close, modalTypes} from '../actions/modals';
 import {connect} from 'react-redux';
@@ -71,7 +72,8 @@ const COMPONENT_MAP = {
 	[modalTypes.SEARCHABLE_TABLE_MODAL_GRAPHQL]: SearchableTableModalGraphql,
 	[modalTypes.SELECT_ITEMS_MODAL]: SelectItemsModal,
 	[modalTypes.TEST]: TestModal,
-	[modalTypes.TIME_ZONE_SELECTION_MODAL]: TimeZoneSelectionModal
+	[modalTypes.TIME_ZONE_SELECTION_MODAL]: TimeZoneSelectionModal,
+	[modalTypes.UNABLE_DELETE_PROPERTY_MODAL]: UnableDeletePropertyModal
 };
 
 function toggleBodyModalOpen(open = true) {

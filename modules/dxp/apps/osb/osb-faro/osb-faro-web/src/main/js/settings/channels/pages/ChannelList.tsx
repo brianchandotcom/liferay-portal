@@ -22,7 +22,6 @@ import {close, modalTypes, open} from 'shared/actions/modals';
 import {compose, withCurrentUser} from 'shared/hoc';
 import {connect, ConnectedProps} from 'react-redux';
 import {CREATE_TIME, createOrderIOMap} from 'shared/util/pagination';
-import {ENABLE_DELETE_PROPERTY_BUTTON, Sizes} from 'shared/util/constants';
 import {formatDateToTimeZone} from 'shared/util/date';
 import {FormikActions} from 'formik';
 import {getPluralMessage, sub} from 'shared/util/lang';
@@ -121,11 +120,15 @@ const ChannelList: React.FC<IChannelListProps> = ({
 		});
 	};
 
-	const handleClearData = () => {
-		const ids: string[] = selectedItems.keySeq().toArray();
+	const handleUnableToDeleteProperty = () => {
+		open(modalTypes.UNABLE_DELETE_PROPERTY_MODAL, {
+			onClose: close
+		});
+	};
 
+	const handleClearData = (ids: string[], name: string) => {
 		const message: string = getPluralMessage(
-			selectedItems.first().name,
+			name,
 			Liferay.Language.get('x-properties'),
 			ids.length
 		) as string;
@@ -202,19 +205,38 @@ const ChannelList: React.FC<IChannelListProps> = ({
 		});
 	};
 
-	const handleDeleteChannel = () => {
-		const ids: string[] = selectedItems.keySeq().toArray();
-
+	const handleDeleteChannel = (ids: string[], name: string) => {
 		const message: string = getPluralMessage(
-			selectedItems.first().name,
+			name,
 			Liferay.Language.get('x-properties'),
 			ids.length
 		) as string;
 
-		open(modalTypes.DELETE_CHANNEL_MODAL, {
-			channelIds: ids,
-			channelName: message,
-			groupId,
+		open(modalTypes.DELETE_CONFIRMATION_MODAL, {
+			children: (
+				<>
+					<p>
+						<strong>
+							{sub(
+								Liferay.Language.get(
+									'to-delete-x,-copy-the-sentence-below-to-confirm-your-intention-to-delete-property'
+								),
+								[message]
+							)}
+						</strong>
+					</p>
+
+					<p>
+						{Liferay.Language.get(
+							'this-will-result-in-the-complete-removal-of-this-propertys-historical-events.-you-will-not-be-able-to-undo-this-operation'
+						)}
+					</p>
+				</>
+			),
+			deleteButtonLabel: Liferay.Language.get('delete'),
+			deleteConfirmationText: sub(Liferay.Language.get('delete-x'), [
+				message
+			]),
 			onClose: close,
 			onSubmit: () =>
 				API.channels
@@ -270,7 +292,8 @@ const ChannelList: React.FC<IChannelListProps> = ({
 									: Liferay.Language.get('error'),
 							timeout: false
 						})
-					)
+					),
+			title: sub(Liferay.Language.get('delete-x?'), [message])
 		});
 	};
 
@@ -329,23 +352,40 @@ const ChannelList: React.FC<IChannelListProps> = ({
 						borderless
 						className='button-root'
 						displayType='secondary'
-						onClick={handleClearData}
+						onClick={() =>
+							handleClearData(
+								selectedItems.keySeq().toArray(),
+								selectedItems.first().name
+							)
+						}
 						outline
 					>
 						{Liferay.Language.get('clear-data')}
 					</ClayButton>
 
-					{ENABLE_DELETE_PROPERTY_BUTTON && (
-						<ClayButton
-							borderless
-							className='button-root'
-							displayType='secondary'
-							onClick={handleDeleteChannel}
-							outline
-						>
-							{Liferay.Language.get('delete')}
-						</ClayButton>
-					)}
+					<ClayButton
+						borderless
+						className='button-root'
+						displayType='secondary'
+						onClick={() => {
+							const ableToDeleteChannel = !selectedItems.some(
+								({commerceChannelsCount, groupsCount}) =>
+									commerceChannelsCount || groupsCount
+							);
+
+							if (ableToDeleteChannel) {
+								handleDeleteChannel(
+									selectedItems.keySeq().toArray(),
+									selectedItems.first().name
+								);
+							} else {
+								handleUnableToDeleteProperty();
+							}
+						}}
+						outline
+					>
+						{Liferay.Language.get('delete')}
+					</ClayButton>
 				</Nav>
 			);
 		}

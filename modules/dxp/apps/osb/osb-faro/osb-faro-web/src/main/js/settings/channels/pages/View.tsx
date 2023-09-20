@@ -3,7 +3,7 @@ import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'settings/components/BasePage';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
-import Constants, {ENABLE_DELETE_PROPERTY_BUTTON} from 'shared/util/constants';
+import Constants from 'shared/util/constants';
 import EmailReports from '../components/EmailReports';
 import Form, {
 	validateMaxLength,
@@ -13,8 +13,8 @@ import Form, {
 import HelpBlock from 'shared/components/form/HelpBlock';
 import RadioGroup from 'shared/components/RadioGroup';
 import React, {useEffect, useState} from 'react';
-import SitesSyncedStripe from '../components/SitesSyncedStripe';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
+import SyncedStripe from '../components/SyncedStripe';
 import TitleEditor from 'shared/components/TitleEditor';
 import UserList from '../components/UserList';
 import {addAlert} from 'shared/actions/alerts';
@@ -36,8 +36,9 @@ import {useRequest} from 'shared/hooks';
 const {channelPermissionTypes} = Constants;
 
 type Channel = {
+	commerceChannelsCount: number;
 	createTime: number;
-	groupIdCount: number;
+	groupsCount: number;
 	id: string;
 	name: string;
 	permissionType: number;
@@ -160,6 +161,12 @@ const View: React.FC<IViewProps> = ({
 
 	const authorized = currentUser.isAdmin();
 
+	const handleUnableToDeleteProperty = () => {
+		open(modalTypes.UNABLE_DELETE_PROPERTY_MODAL, {
+			onClose: close
+		});
+	};
+
 	return (
 		<BasePage
 			breadcrumbItems={[
@@ -209,6 +216,7 @@ const View: React.FC<IViewProps> = ({
 										validateRequired
 									])}
 								/>
+
 								<HelpBlock
 									className='text-danger'
 									name='name'
@@ -228,7 +236,7 @@ const View: React.FC<IViewProps> = ({
 					<EmailReports
 						channelId={id}
 						className='align-items-center d-flex'
-						sitesSynced={!!channel.groupIdCount}
+						sitesSynced={!!channel.groupsCount}
 					/>
 
 					{authorized && (
@@ -317,101 +325,134 @@ const View: React.FC<IViewProps> = ({
 								{Liferay.Language.get('clear-data')}
 							</ClayButton>
 
-							{ENABLE_DELETE_PROPERTY_BUTTON && (
-								<ClayButton
-									className='button-root'
-									displayType='secondary'
-									onClick={() =>
-										open(modalTypes.DELETE_CHANNEL_MODAL, {
-											channelIds: [id],
-											channelName: name,
-											groupId,
-											onClose: close,
-											onSubmit: () => {
-												API.channels
-													.delete({
-														groupId,
-														ids: [id]
-													})
-													.then(() => {
-														const deletedMessage = Liferay.Language.get(
-															'x-has-been-deleted'
-														);
+							<ClayButton
+								className='button-root'
+								displayType='secondary'
+								onClick={() => {
+									if (
+										channel.commerceChannelsCount ||
+										channel.groupsCount
+									) {
+										handleUnableToDeleteProperty();
 
-														close();
+										return;
+									}
 
-														history.push(
+									open(modalTypes.DELETE_CONFIRMATION_MODAL, {
+										children: (
+											<>
+												<p>
+													<strong>
+														{sub(
+															Liferay.Language.get(
+																'to-delete-x,-copy-the-sentence-below-to-confirm-your-intention-to-delete-property'
+															),
+															[name]
+														)}
+													</strong>
+												</p>
+
+												<p>
+													{Liferay.Language.get(
+														'this-will-result-in-the-complete-removal-of-this-propertys-historical-events.-you-will-not-be-able-to-undo-this-operation'
+													)}
+												</p>
+											</>
+										),
+										deleteButtonLabel: Liferay.Language.get(
+											'delete'
+										),
+										deleteConfirmationText: sub(
+											Liferay.Language.get('delete-x'),
+											[name]
+										),
+										onClose: close,
+										onSubmit: () => {
+											API.channels
+												.delete({
+													groupId,
+													ids: [id]
+												})
+												.then(() => {
+													const deletedMessage = Liferay.Language.get(
+														'x-has-been-deleted'
+													);
+
+													close();
+
+													history.push(
+														toRoute(
+															Routes.SETTINGS_CHANNELS,
+															{
+																groupId,
+																id
+															}
+														)
+													);
+
+													addAlert({
+														alertType:
+															Alert.Types.Success,
+														message: sub(
+															deletedMessage,
+															[name]
+														) as string
+													});
+
+													if (
+														defaultChannelId === id
+													) {
+														updateDefaultChannelId({
+															defaultChannelId: null,
+															groupId
+														});
+
+														setBackURL(
 															toRoute(
-																Routes.SETTINGS_CHANNELS,
+																Routes.WORKSPACE_WITH_ID,
 																{
-																	groupId,
-																	id
+																	groupId
 																}
 															)
 														);
-
-														addAlert({
-															alertType:
-																Alert.Types
-																	.Success,
-															message: sub(
-																deletedMessage,
-																[name]
-															) as string
-														});
-
-														if (
-															defaultChannelId ===
-															id
-														) {
-															updateDefaultChannelId(
-																{
-																	defaultChannelId: null,
-																	groupId
-																}
-															);
-
-															setBackURL(
-																toRoute(
-																	Routes.WORKSPACE_WITH_ID,
-																	{
-																		groupId
-																	}
-																)
-															);
-														}
+													}
+												})
+												.catch(err =>
+													addAlert({
+														alertType:
+															Alert.Types.Error,
+														message:
+															err.message ===
+															UNAUTHORIZED_ACCESS
+																? Liferay.Language.get(
+																		'unauthorized-access'
+																  )
+																: Liferay.Language.get(
+																		'error'
+																  ),
+														timeout: false
 													})
-													.catch(err =>
-														addAlert({
-															alertType:
-																Alert.Types
-																	.Error,
-															message:
-																err.message ===
-																UNAUTHORIZED_ACCESS
-																	? Liferay.Language.get(
-																			'unauthorized-access'
-																	  )
-																	: Liferay.Language.get(
-																			'error'
-																	  ),
-															timeout: false
-														})
-													);
-											}
-										})
-									}
-								>
-									{Liferay.Language.get('delete')}
-								</ClayButton>
-							)}
+												);
+										},
+										title: sub(
+											Liferay.Language.get('delete-x?'),
+											[name]
+										)
+									});
+								}}
+							>
+								{Liferay.Language.get('delete')}
+							</ClayButton>
 						</span>
 					)}
 				</div>
 			</div>
 
 			<Card pageDisplay>
-				<SitesSyncedStripe sitesSyncedCount={channel.groupIdCount} />
+				<SyncedStripe
+					channelsSyncedCount={channel.commerceChannelsCount}
+					sitesSyncedCount={channel.groupsCount}
+				/>
 
 				<Card.Body className='flex-grow-0'>
 					<RadioGroup

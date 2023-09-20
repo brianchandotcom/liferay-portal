@@ -9,7 +9,7 @@ interface IVariantTitleProps {
 	title: string;
 }
 
-const VariantTitle: React.FC<IVariantTitleProps> = ({labels, title}) => {
+const VariantTitle: React.FC<IVariantTitleProps> = ({labels = [], title}) => {
 	const [showPopover, setShowPopover] = useState(false);
 	const titleRef = useRef();
 

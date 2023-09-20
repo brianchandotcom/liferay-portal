@@ -121,15 +121,20 @@ export default function SidebarHeader({
 							</ClayResultsBar.Item>
 
 							<ClayResultsBar.Item className="results-info">
-								<span className="component-text text-truncate">
-									{sub(
-										Liferay.Language.get(
-											'x-related-objects-for-x'
+								<span
+									className="sidebar-results-text"
+									dangerouslySetInnerHTML={{
+										__html: sub(
+											Liferay.Language.get(
+												'x-related-objects-for-x'
+											),
+											navHistory[0].length,
+											`<strong>"${getParentLabel(
+												navHistory
+											)}"</strong>`
 										),
-										navHistory[0].length,
-										`"${getParentLabel(navHistory)}`
-									)}
-								</span>
+									}}
+								/>
 							</ClayResultsBar.Item>
 
 							<ClayResultsBar.Item className="results-close-button">

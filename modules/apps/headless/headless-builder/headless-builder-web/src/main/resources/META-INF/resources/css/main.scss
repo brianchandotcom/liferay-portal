@@ -342,6 +342,17 @@
 								width: 226px;
 							}
 
+							.sidebar-results-text {
+								display: -webkit-box;
+								margin-bottom: 8px;
+								margin-top: 8px;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								white-space: initial;
+								-webkit-line-clamp: 2;
+								-webkit-box-orient: vertical;
+							}
+
 							.tbar-nav.tbar-nav-wrap {
 								flex-wrap: nowrap !important;
 							}

@@ -3,9 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {IClayAlertProps} from '@clayui/alert';
 import React from 'react';
 import './Card.scss';
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+	alert?: {
+		content: string;
+		otherProps: IClayAlertProps;
+	};
 	customHeader?: JSX.Element;
 	disabled?: boolean;
 	title?: string;
@@ -22,6 +27,7 @@ interface ITooltip {
 	symbol: string;
 }
 export declare function Card({
+	alert,
 	children,
 	className,
 	customHeader,

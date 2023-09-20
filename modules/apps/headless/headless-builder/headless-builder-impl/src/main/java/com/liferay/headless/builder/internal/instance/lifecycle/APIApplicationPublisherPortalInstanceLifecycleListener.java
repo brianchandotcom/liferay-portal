@@ -30,7 +30,7 @@ public class APIApplicationPublisherPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-186757")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-178642")) {
 			return;
 		}
 

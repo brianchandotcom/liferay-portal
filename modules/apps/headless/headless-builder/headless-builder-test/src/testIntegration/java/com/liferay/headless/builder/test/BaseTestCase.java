@@ -43,7 +43,7 @@ public abstract class BaseTestCase {
 	@Before
 	public void setUp() throws Exception {
 
-		// TODO Delete the bundle deployment when the FF LPS-184413 is removed
+		// TODO Delete the bundle deployment when the FF LPS-178642 is removed
 
 		Bundle testBundle = FrameworkUtil.getBundle(BaseTestCase.class);
 

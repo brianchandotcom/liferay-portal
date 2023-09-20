@@ -47,7 +47,7 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	@Override
 	public void publish(APIApplication apiApplication) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-186757")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-178642")) {
 			throw new UnsupportedOperationException(
 				"APIApplicationPublisher not available");
 		}
@@ -94,7 +94,7 @@ public class APIApplicationPublisherImpl implements APIApplicationPublisher {
 
 	@Override
 	public void unpublish(String baseURL, long companyId) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-186757")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-178642")) {
 			throw new UnsupportedOperationException(
 				"APIApplicationPublisher not available");
 		}

@@ -32,7 +32,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author Sergio Jiménez del Coso
  */
-@FeatureFlags({"LPS-167253", "LPS-184413", "LPS-186757"})
+@FeatureFlags({"LPS-167253", "LPS-178642"})
 public class APIEndpointRelevantObjectEntryModelListenerTest
 	extends BaseTestCase {
 

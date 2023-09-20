@@ -24,24 +24,32 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.dto.v1_0.util.CreatorUtil;
 import com.liferay.object.rest.filter.factory.FilterFactory;
+import com.liferay.object.rest.manager.exception.ObjectEntryManagerHttpException;
 import com.liferay.object.rest.manager.v1_0.BaseObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.storage.salesforce.internal.http.SalesforceHttp;
+import com.liferay.object.storage.salesforce.configuration.SalesforceConfiguration;
+import com.liferay.object.storage.salesforce.internal.web.cache.SalesforceAccessTokenWebCacheItem;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -54,6 +62,8 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.math.BigDecimal;
+
+import java.net.HttpURLConnection;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -708,6 +718,9 @@ public class SalesforceObjectEntryManagerImpl
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
 	private final Map<String, String> _defaultObjectFieldNames =
 		HashMapBuilder.put(
 			"createDate", "CreatedDate"
@@ -729,6 +742,9 @@ public class SalesforceObjectEntryManagerImpl
 	private FilterFactory<String> _filterFactory;
 
 	@Reference
+	private Http _http;
+
+	@Reference
 	private InlineSQLHelper _inlineSQLHelper;
 
 	@Reference
@@ -746,10 +762,158 @@ public class SalesforceObjectEntryManagerImpl
 	@Reference
 	private Portal _portal;
 
-	@Reference
-	private SalesforceHttp _salesforceHttp;
+	private final SalesforceHttp _salesforceHttp = new SalesforceHttp();
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private class SalesforceHttp {
+
+		public JSONObject delete(
+			long companyId, long groupId, String location) {
+
+			try {
+				return _invoke(
+					companyId, groupId, location, Http.Method.DELETE, null);
+			}
+			catch (Exception exception) {
+				return ReflectionUtil.throwException(exception);
+			}
+		}
+
+		public JSONObject get(long companyId, long groupId, String location) {
+			try {
+				return _invoke(
+					companyId, groupId, location, Http.Method.GET, null);
+			}
+			catch (Exception exception) {
+				return ReflectionUtil.throwException(exception);
+			}
+		}
+
+		public JSONObject patch(
+			long companyId, long groupId, String location,
+			JSONObject bodyJSONObject) {
+
+			try {
+				return _invoke(
+					companyId, groupId, location, Http.Method.PATCH,
+					bodyJSONObject);
+			}
+			catch (Exception exception) {
+				return ReflectionUtil.throwException(exception);
+			}
+		}
+
+		public JSONObject post(
+			long companyId, long groupId, String location,
+			JSONObject bodyJSONObject) {
+
+			try {
+				return _invoke(
+					companyId, groupId, location, Http.Method.POST,
+					bodyJSONObject);
+			}
+			catch (Exception exception) {
+				return ReflectionUtil.throwException(exception);
+			}
+		}
+
+		private JSONObject _getSalesforceAccessTokenJSONObject(
+			SalesforceConfiguration salesforceConfiguration) {
+
+			JSONObject jSONObject = SalesforceAccessTokenWebCacheItem.get(
+				salesforceConfiguration);
+
+			if (jSONObject == null) {
+				throw new ObjectEntryManagerHttpException(
+					"Unable to authenticate with Salesforce");
+			}
+
+			return jSONObject;
+		}
+
+		private SalesforceConfiguration _getSalesforceConfiguration(
+			long companyId, long groupId) {
+
+			try {
+				if (groupId == 0) {
+					return _configurationProvider.getCompanyConfiguration(
+						SalesforceConfiguration.class, companyId);
+				}
+
+				return _configurationProvider.getGroupConfiguration(
+					SalesforceConfiguration.class, groupId);
+			}
+			catch (ConfigurationException configurationException) {
+				return ReflectionUtil.throwException(configurationException);
+			}
+		}
+
+		private JSONObject _invoke(
+				long companyId, long groupId, String location,
+				Http.Method method, JSONObject bodyJSONObject)
+			throws Exception {
+
+			byte[] bytes = _invokeAsBytes(
+				companyId, groupId, location, method, bodyJSONObject);
+
+			if (bytes == null) {
+				return _jsonFactory.createJSONObject();
+			}
+
+			return _jsonFactory.createJSONObject(new String(bytes));
+		}
+
+		private byte[] _invokeAsBytes(
+				long companyId, long groupId, String location,
+				Http.Method method, JSONObject bodyJSONObject)
+			throws Exception {
+
+			Http.Options options = new Http.Options();
+
+			if (bodyJSONObject != null) {
+				options.addHeader(
+					HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
+			}
+
+			JSONObject jsonObject = _getSalesforceAccessTokenJSONObject(
+				_getSalesforceConfiguration(companyId, groupId));
+
+			options.addHeader(
+				"Authorization",
+				"Bearer " + jsonObject.getString("access_token"));
+
+			if (bodyJSONObject != null) {
+				options.setBody(
+					bodyJSONObject.toString(), ContentTypes.APPLICATION_JSON,
+					StringPool.UTF8);
+			}
+
+			options.setFollowRedirects(false);
+			options.setLocation(
+				StringBundler.concat(
+					jsonObject.getString("instance_url"),
+					"/services/data/v54.0/", location));
+			options.setMethod(method);
+
+			byte[] bytes = _http.URLtoByteArray(options);
+
+			Http.Response response = options.getResponse();
+
+			if ((response.getResponseCode() < HttpURLConnection.HTTP_OK) ||
+				(response.getResponseCode() >=
+					HttpURLConnection.HTTP_MULT_CHOICE)) {
+
+				throw new ObjectEntryManagerHttpException(
+					StringBundler.concat(
+						"Unexpected response code ", response.getResponseCode(),
+						" with response message: ", new String(bytes)));
+			}
+
+			return bytes;
+		}
+
+	}
 
 }

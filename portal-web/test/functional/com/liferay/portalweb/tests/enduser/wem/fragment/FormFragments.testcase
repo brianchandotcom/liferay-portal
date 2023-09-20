@@ -411,7 +411,7 @@ definition {
 				id = "submit-button-text",
 				text = "Submit");
 
-			ScrollBy(value1 = "0, 500");
+			ScrollBy(value1 = "0, 1200");
 
 			AssertVisible(
 				index = 1,

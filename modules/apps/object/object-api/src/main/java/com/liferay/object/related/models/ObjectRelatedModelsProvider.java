@@ -28,6 +28,13 @@ public interface ObjectRelatedModelsProvider<T extends BaseModel<T>> {
 			long primaryKey2)
 		throws PortalException;
 
+	public default T fetchRelatedModel(
+			long groupId, long objectRelationshipId, long primaryKey)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public String getClassName();
 
 	public long getCompanyId();

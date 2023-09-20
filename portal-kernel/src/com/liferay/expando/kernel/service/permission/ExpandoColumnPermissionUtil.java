@@ -10,6 +10,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 
 /**
  * @author Michael C. Han
@@ -48,7 +49,8 @@ public class ExpandoColumnPermissionUtil {
 		check(
 			permissionChecker,
 			ExpandoColumnLocalServiceUtil.getColumn(
-				companyId, className, tableName, columnName),
+				companyId, ClassNameLocalServiceUtil.getClassNameId(className),
+				tableName, columnName),
 			actionId);
 	}
 

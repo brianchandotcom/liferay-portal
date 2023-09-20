@@ -479,7 +479,8 @@ public class ExpandoValueLocalServiceImpl
 		throws PortalException {
 
 		ExpandoColumn column = _expandoColumnLocalService.getColumn(
-			companyId, className, tableName, columnName);
+			companyId, _classNameLocalService.getClassNameId(className),
+			tableName, columnName);
 
 		int type = column.getType();
 

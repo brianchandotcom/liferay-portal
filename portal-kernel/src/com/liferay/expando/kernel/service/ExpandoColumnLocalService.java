@@ -249,6 +249,10 @@ public interface ExpandoColumnLocalService
 		throws NoSuchColumnException, NoSuchTableException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExpandoColumn getColumn(long tableId, String name)
+		throws NoSuchColumnException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExpandoColumn getColumn(
 		long companyId, String className, String tableName, String name);
 

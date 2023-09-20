@@ -2113,14 +2113,18 @@ public class PoshiValidation {
 			return;
 		}
 
-		System.out.println("\n\n");
-		System.out.println(filteredExceptions.size());
-		System.out.println(" errors in POSHI\n\n");
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("\n\n");
+		sb.append(filteredExceptions.size());
+		sb.append(" errors in POSHI\n\n");
 
 		for (Exception exception : filteredExceptions) {
-			System.out.println(exception.getMessage());
-			System.out.println("\n\n");
+			sb.append(exception.getMessage());
+			sb.append("\n\n");
 		}
+
+		System.out.println(sb.toString());
 
 		throw new Exception();
 	}

@@ -21,7 +21,7 @@ public class ElasticsearchStatsClusterInformation
 	implements StatsClusterInformation {
 
 	@Override
-	public double getAvailableDiskSpace(String[] nodeIds) {
+	public double getAvailableDiskSpace(String... nodeIds) {
 		return _convertToGigabytes(
 			_getStatsClusterResponse(
 				nodeIds
@@ -29,7 +29,7 @@ public class ElasticsearchStatsClusterInformation
 	}
 
 	@Override
-	public double getUsedDiskSpace(String[] nodeIds) {
+	public double getUsedDiskSpace(String... nodeIds) {
 		return _convertToGigabytes(
 			_getStatsClusterResponse(
 				nodeIds
@@ -40,7 +40,7 @@ public class ElasticsearchStatsClusterInformation
 		return (double)value / (1024 * 1024 * 1024);
 	}
 
-	private StatsClusterResponse _getStatsClusterResponse(String[] nodeIds) {
+	private StatsClusterResponse _getStatsClusterResponse(String... nodeIds) {
 		if (_statsClusterResponse == null) {
 			_statsClusterResponse = _searchEngineAdapter.execute(
 				new StatsClusterRequest(nodeIds));

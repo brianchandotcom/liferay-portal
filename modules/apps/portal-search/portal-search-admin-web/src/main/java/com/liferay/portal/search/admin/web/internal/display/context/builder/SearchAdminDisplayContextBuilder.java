@@ -6,6 +6,7 @@
 package com.liferay.portal.search.admin.web.internal.display.context.builder;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -58,15 +59,14 @@ public class SearchAdminDisplayContextBuilder {
 		searchAdminDisplayContext.setIndexReindexerClassNames(
 			_indexReindexerClassNames);
 
-		String[] nodeIds = {};
-
 		double availableDiskSpace =
-			_statsClusterInformation.getAvailableDiskSpace(nodeIds);
+			_statsClusterInformation.getAvailableDiskSpace(
+				StringPool.EMPTY_ARRAY);
 
 		searchAdminDisplayContext.setAvailableDiskSpace(availableDiskSpace);
 
 		searchAdminDisplayContext.setCurrentDiskSpaceUsed(
-			_statsClusterInformation.getUsedDiskSpace(nodeIds));
+			_statsClusterInformation.getUsedDiskSpace(StringPool.EMPTY_ARRAY));
 
 		searchAdminDisplayContext.setIsLowOnDiskSpace(
 			_isLowOnDiskSpace(

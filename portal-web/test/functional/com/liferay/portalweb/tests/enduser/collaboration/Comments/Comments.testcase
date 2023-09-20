@@ -1,0 +1,123 @@
+@component-name = "portal-lima"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Comment";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			PagesAdmin.tearDownCP();
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+	}
+
+	@description = "This ensures that the comment of an asset can be subscribed automatically when the setting is true."
+	@priority = 5
+	test CanConfigureDiscussionSubscribeAtInstanceLevel {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Comments.openToCommentsConfiguration();
+
+		Comments.configureCommentSubscribe(commentSubscribe = "false");
+
+		Comments.openToCommentsConfiguration(configurationScope = "Instance Settings");
+
+		Comments.configureCommentSubscribe(commentSubscribe = "true");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		Comments.addPG(entryComment = "This is a comment");
+
+		AssertVisible(locator1 = "Button#UNSUBSCRIBE");
+	}
+
+	@description = "This ensures that the comment of an asset will not be subscribed automatically when the setting is false."
+	@priority = 5
+	test CanConfigureDiscussionSubscribeAtSystemLevel {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		Comments.openToCommentsConfiguration();
+
+		Comments.configureCommentSubscribe(commentSubscribe = "false");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Image Description",
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			mimeType = "image/jpg",
+			sourceFileName = "Document_1.jpg");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		Comments.addPG(entryComment = "This is a comment");
+
+		AssertVisible(locator1 = "Button#SUBSCRIBE");
+	}
+
+	@description = "This ensures that changing the discussion subscription value in one instance does not affect the value in another instance."
+	@priority = 5
+	test InstanceLevelConfigurationsAreIndependentFromOneAnother {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "www.able.com",
+			portalInstanceId = "www.able.com",
+			virtualHost = "www.able.com");
+
+		Comments.openToCommentsConfiguration(configurationScope = "Instance Settings");
+
+		Comments.configureCommentSubscribe(commentSubscribe = "false");
+
+		User.firstLoginUI(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		DMNavigator.openDocumentsAndMediaAdmin(
+			baseURL = "http://www.able.com:8080",
+			siteURLKey = "guest");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		Comments.addPG(entryComment = "This is a comment");
+
+		AssertVisible(locator1 = "Button#UNSUBSCRIBE");
+	}
+
+}

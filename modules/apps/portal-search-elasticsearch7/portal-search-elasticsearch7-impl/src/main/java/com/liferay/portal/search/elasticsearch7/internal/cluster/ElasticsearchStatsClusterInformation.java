@@ -22,19 +22,18 @@ public class ElasticsearchStatsClusterInformation
 
 	@Override
 	public double getAvailableDiskSpace(String[] nodeIds) {
-		StatsClusterResponse statsClusterResponse = _getStatsClusterResponse(
-			nodeIds);
-
 		return _convertToGigabytes(
-			statsClusterResponse.getAvailableSpaceInBytes());
+			_getStatsClusterResponse(
+				nodeIds
+			).getAvailableSpaceInBytes());
 	}
 
 	@Override
 	public double getUsedDiskSpace(String[] nodeIds) {
-		StatsClusterResponse statsClusterResponse = _getStatsClusterResponse(
-			nodeIds);
-
-		return _convertToGigabytes(statsClusterResponse.getUsedSpaceInBytes());
+		return _convertToGigabytes(
+			_getStatsClusterResponse(
+				nodeIds
+			).getUsedSpaceInBytes());
 	}
 
 	private double _convertToGigabytes(long value) {
@@ -42,13 +41,17 @@ public class ElasticsearchStatsClusterInformation
 	}
 
 	private StatsClusterResponse _getStatsClusterResponse(String[] nodeIds) {
-		StatsClusterRequest statsClusterRequest = new StatsClusterRequest(
-			nodeIds);
+		if (_statsClusterResponse == null) {
+			_statsClusterResponse = _searchEngineAdapter.execute(
+				new StatsClusterRequest(nodeIds));
+		}
 
-		return _searchEngineAdapter.execute(statsClusterRequest);
+		return _statsClusterResponse;
 	}
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;
+
+	private StatsClusterResponse _statsClusterResponse;
 
 }

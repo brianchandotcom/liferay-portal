@@ -22,6 +22,7 @@ interface Props {
 	onClose: () => void;
 	title: string;
 	type: ModalType;
+	warningMessage: string;
 }
 
 export default function DisplayPageModal({
@@ -32,9 +33,11 @@ export default function DisplayPageModal({
 	onClose,
 	title,
 	type,
+	warningMessage,
 }: Props) {
 	const [error, setError] = useState<ValidationError>({});
 	const [loading, setLoading] = useState(false);
+	const [warningVisible, setWarningVisible] = useState(true);
 
 	const {observer} = useModal({onClose});
 
@@ -123,6 +126,17 @@ export default function DisplayPageModal({
 	return (
 		<ClayModal observer={observer}>
 			<ClayModal.Header>{title}</ClayModal.Header>
+
+			{warningMessage && warningVisible ? (
+				<ClayAlert
+					displayType="warning"
+					onClose={() => setWarningVisible(false)}
+					title={Liferay.Language.get('warning')}
+					variant="stripe"
+				>
+					{warningMessage}
+				</ClayAlert>
+			) : null}
 
 			<ClayModal.Body>
 				{error && error.other && (

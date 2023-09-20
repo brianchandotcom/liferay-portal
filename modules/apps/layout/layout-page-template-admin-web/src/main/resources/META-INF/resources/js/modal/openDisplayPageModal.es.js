@@ -31,6 +31,7 @@ export default function openDisplayPageModal({
 	spritemap,
 	title,
 	type = MODAL_TYPES.create,
+	warningMessage,
 }) {
 	if (container) {
 		cleanUp();
@@ -51,6 +52,7 @@ export default function openDisplayPageModal({
 				onClose={cleanUp}
 				title={title}
 				type={type}
+				warningMessage={warningMessage}
 			/>
 		</ClayIconSpriteContext.Provider>,
 		container

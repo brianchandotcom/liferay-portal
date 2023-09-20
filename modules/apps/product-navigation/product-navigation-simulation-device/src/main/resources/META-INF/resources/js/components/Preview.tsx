@@ -19,8 +19,6 @@ interface IPreviewProps {
 	previewRef: React.RefObject<HTMLDivElement>;
 }
 
-const SEGMENT_SIMULATION_EVENT = 'SegmentSimulation:changeSegment';
-
 export default function Preview({activeSize, open, previewRef}: IPreviewProps) {
 	const [segmentMessage, setSegmentMessage] = useState<string | null>(null);
 	const [size, setSize] = useState<ScreenSize | undefined>(
@@ -31,14 +29,12 @@ export default function Preview({activeSize, open, previewRef}: IPreviewProps) {
 	const previewWrapperRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		const handleSegmentChange = ({message}: {message: string}) => {
-			setSegmentMessage(message);
-		};
-
-		Liferay.on(SEGMENT_SIMULATION_EVENT, handleSegmentChange);
+		Liferay.component('SimulationPreview', {
+			setMessage: setSegmentMessage,
+		});
 
 		return () => {
-			Liferay.detach(SEGMENT_SIMULATION_EVENT);
+			Liferay.destroyComponent('SimulationPreview');
 		};
 	}, []);
 

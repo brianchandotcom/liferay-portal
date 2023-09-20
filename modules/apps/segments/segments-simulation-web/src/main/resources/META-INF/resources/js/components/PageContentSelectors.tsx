@@ -39,8 +39,6 @@ const PREVIEW_OPTIONS = [
 	},
 ];
 
-const SEGMENT_SIMULATION_EVENT = 'SegmentSimulation:changeSegment';
-
 function PageContentSelectors({
 	deactivateSimulationURL,
 	namespace,
@@ -76,12 +74,19 @@ function PageContentSelectors({
 
 	const simulateSegmentsEntries = useCallback(() => {
 		if (formRef.current) {
-			Liferay.fire(SEGMENT_SIMULATION_EVENT, {
-				message: sub(
-					Liferay.Language.get('showing-content-for-the-segment-x'),
-					selectedSegmentEntry.name
-				),
-			});
+			Liferay.componentReady('SimulationPreview').then(
+				(simulationPreview) => {
+					simulationPreview.setMessage(
+						sub(
+							Liferay.Language.get(
+								'showing-content-for-the-segment-x'
+							),
+							selectedSegmentEntry.name
+						)
+					);
+				}
+			);
+
 			fetch(simulateSegmentsEntriesURL, {
 				body: new FormData(
 					formRef.current ? formRef.current : undefined
@@ -106,15 +111,18 @@ function PageContentSelectors({
 			const iframe = document.querySelector('iframe');
 
 			if (iframe) {
-				Liferay.fire(SEGMENT_SIMULATION_EVENT, {
-					message: sub(
-						Liferay.Language.get(
-							'showing-content-for-the-experience-x'
-						),
-						selectedSegmentsExperience?.segmentsExperienceName
-					),
-				});
-
+				Liferay.componentReady('SimulationPreview').then(
+					(simulationPreview) => {
+						simulationPreview.setMessage(
+							sub(
+								Liferay.Language.get(
+									'showing-content-for-the-experience-x'
+								),
+								selectedSegmentsExperience?.segmentsExperienceName
+							)
+						);
+					}
+				);
 				const url = new URL(iframe.src);
 
 				url.searchParams.set('segmentsExperienceId', experience);
@@ -152,7 +160,6 @@ function PageContentSelectors({
 		if (firstRenderRef.current) {
 			if (sidenavInstance && sidenavInstance.visible()) {
 				firstRenderRef.current = false;
-
 				simulateSegmentsEntries();
 			}
 		}

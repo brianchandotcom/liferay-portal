@@ -90,6 +90,15 @@ public class CommerceInventoryWarehouseItemServiceUtil {
 				externalReferenceCode, companyId);
 	}
 
+	public static List<CommerceInventoryWarehouseItem>
+			findCommerceInventoryWarehouseItem(
+				long commerceInventoryWarehouseId, String sku)
+		throws PortalException {
+
+		return getService().findCommerceInventoryWarehouseItem(
+			commerceInventoryWarehouseId, sku);
+	}
+
 	public static CommerceInventoryWarehouseItem
 			getCommerceInventoryWarehouseItem(
 				long commerceInventoryWarehouseItemId)

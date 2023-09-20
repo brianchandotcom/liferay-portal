@@ -280,6 +280,15 @@ public class CommerceInventoryWarehouseItemPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCIWI_S() throws Exception {
+		_persistence.countByCIWI_S(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByCIWI_S(0L, "null");
+
+		_persistence.countByCIWI_S(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByC_S_U() throws Exception {
 		_persistence.countByC_S_U(RandomTestUtil.nextLong(), "", "");
 

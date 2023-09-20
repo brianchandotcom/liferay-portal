@@ -86,8 +86,7 @@ public interface CommerceInventoryWarehouseItemLocalService
 				String sku, String unitOfMeasureKey)
 		throws PortalException;
 
-	public int countItemsByCompanyId(
-		long companyId, String sku, String unitOfMeasureKey);
+	public int countItemsByCompanyId(long companyId, String sku);
 
 	/**
 	 * Creates a new commerce inventory warehouse item with the primary key. Does not add the commerce inventory warehouse item to the database.
@@ -248,6 +247,10 @@ public interface CommerceInventoryWarehouseItemLocalService
 		fetchCommerceInventoryWarehouseItemByUuidAndCompanyId(
 			String uuid, long companyId);
 
+	public List<CommerceInventoryWarehouseItem>
+		findCommerceInventoryWarehouseItem(
+			long commerceInventoryWarehouseId, String sku);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -362,8 +365,7 @@ public interface CommerceInventoryWarehouseItemLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CIWarehouseItem> getItemsByCompanyId(
-		long companyId, String sku, String unitOfMeasureKey, int start,
-		int end);
+		long companyId, String sku, int start, int end);
 
 	/**
 	 * Returns the OSGi service identifier.

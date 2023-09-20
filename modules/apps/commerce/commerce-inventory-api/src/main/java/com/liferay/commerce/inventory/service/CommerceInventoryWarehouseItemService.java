@@ -78,6 +78,11 @@ public interface CommerceInventoryWarehouseItemService extends BaseService {
 				String externalReferenceCode, long companyId)
 		throws PortalException;
 
+	public List<CommerceInventoryWarehouseItem>
+			findCommerceInventoryWarehouseItem(
+				long commerceInventoryWarehouseId, String sku)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceInventoryWarehouseItem getCommerceInventoryWarehouseItem(
 			long commerceInventoryWarehouseItemId)

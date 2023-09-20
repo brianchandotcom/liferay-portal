@@ -103,6 +103,18 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 	}
 
 	@Override
+	public java.util.List
+		<com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem>
+				findCommerceInventoryWarehouseItem(
+					long commerceInventoryWarehouseId, String sku)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryWarehouseItemService.
+			findCommerceInventoryWarehouseItem(
+				commerceInventoryWarehouseId, sku);
+	}
+
+	@Override
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 			getCommerceInventoryWarehouseItem(
 				long commerceInventoryWarehouseItemId)

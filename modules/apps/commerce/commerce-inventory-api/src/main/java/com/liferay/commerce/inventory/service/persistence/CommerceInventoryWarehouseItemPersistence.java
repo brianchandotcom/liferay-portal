@@ -631,6 +631,162 @@ public interface CommerceInventoryWarehouseItemPersistence
 		long commerceInventoryWarehouseId);
 
 	/**
+	 * Returns all the commerce inventory warehouse items where commerceInventoryWarehouseId = &#63; and sku = &#63;.
+	 *
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @param sku the sku
+	 * @return the matching commerce inventory warehouse items
+	 */
+	public java.util.List<CommerceInventoryWarehouseItem> findByCIWI_S(
+		long commerceInventoryWarehouseId, String sku);
+
+	/**
+	 * Returns a range of all the commerce inventory warehouse items where commerceInventoryWarehouseId = &#63; and sku = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryWarehouseItemModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @param sku the sku
+	 * @param start the lower bound of the range of commerce inventory warehouse items
+	 * @param end the upper bound of the range of commerce inventory warehouse items (not inclusive)
+	 * @return the range of matching commerce inventory warehouse items
+	 */
+	public java.util.List<CommerceInventoryWarehouseItem> findByCIWI_S(
+		long commerceInventoryWarehouseId, String sku, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the commerce inventory warehouse items where commerceInventoryWarehouseId = &#63; and sku = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryWarehouseItemModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @param sku the sku
+	 * @param start the lower bound of the range of commerce inventory warehouse items
+	 * @param end the upper bound of the range of commerce inventory warehouse items (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce inventory warehouse items
+	 */
+	public java.util.List<CommerceInventoryWarehouseItem> findByCIWI_S(
+		long commerceInventoryWarehouseId, String sku, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CommerceInventoryWarehouseItem> orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the commerce inventory warehouse items where commerceInventoryWarehouseId = &#63; and sku = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceInventoryWarehouseItemModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @param sku the sku
+	 * @param start the lower bound of the range of commerce inventory warehouse items
+	 * @param end the upper bound of the range of commerce inventory warehouse items (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce inventory warehouse items
+	 */
+	public java.util.List<CommerceInventoryWarehouseItem> findByCIWI_S(
+		long commerceInventoryWarehouseId, String sku, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CommerceInventoryWarehouseItem> orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first commerce inventory warehouse item in the ordered set where commerceInventoryWarehouseId = &#63; and sku = &#63;.
+	 *
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @param sku the sku
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce inventory warehouse item
+	 * @throws NoSuchInventoryWarehouseItemException if a matching commerce inventory warehouse item could not be found
+	 */
+	public CommerceInventoryWarehouseItem findByCIWI_S_First(
+			long commerceInventoryWarehouseId, String sku,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CommerceInventoryWarehouseItem> orderByComparator)
+		throws NoSuchInventoryWarehouseItemException;
+
+	/**
+	 * Returns the first commerce inventory warehouse item in the ordered set where commerceInventoryWarehouseId = &#63; and sku = &#63;.
+	 *
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @param sku the sku
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce inventory warehouse item, or <code>null</code> if a matching commerce inventory warehouse item could not be found
+	 */
+	public CommerceInventoryWarehouseItem fetchByCIWI_S_First(
+		long commerceInventoryWarehouseId, String sku,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CommerceInventoryWarehouseItem> orderByComparator);
+
+	/**
+	 * Returns the last commerce inventory warehouse item in the ordered set where commerceInventoryWarehouseId = &#63; and sku = &#63;.
+	 *
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @param sku the sku
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce inventory warehouse item
+	 * @throws NoSuchInventoryWarehouseItemException if a matching commerce inventory warehouse item could not be found
+	 */
+	public CommerceInventoryWarehouseItem findByCIWI_S_Last(
+			long commerceInventoryWarehouseId, String sku,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CommerceInventoryWarehouseItem> orderByComparator)
+		throws NoSuchInventoryWarehouseItemException;
+
+	/**
+	 * Returns the last commerce inventory warehouse item in the ordered set where commerceInventoryWarehouseId = &#63; and sku = &#63;.
+	 *
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @param sku the sku
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce inventory warehouse item, or <code>null</code> if a matching commerce inventory warehouse item could not be found
+	 */
+	public CommerceInventoryWarehouseItem fetchByCIWI_S_Last(
+		long commerceInventoryWarehouseId, String sku,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CommerceInventoryWarehouseItem> orderByComparator);
+
+	/**
+	 * Returns the commerce inventory warehouse items before and after the current commerce inventory warehouse item in the ordered set where commerceInventoryWarehouseId = &#63; and sku = &#63;.
+	 *
+	 * @param commerceInventoryWarehouseItemId the primary key of the current commerce inventory warehouse item
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @param sku the sku
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce inventory warehouse item
+	 * @throws NoSuchInventoryWarehouseItemException if a commerce inventory warehouse item with the primary key could not be found
+	 */
+	public CommerceInventoryWarehouseItem[] findByCIWI_S_PrevAndNext(
+			long commerceInventoryWarehouseItemId,
+			long commerceInventoryWarehouseId, String sku,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CommerceInventoryWarehouseItem> orderByComparator)
+		throws NoSuchInventoryWarehouseItemException;
+
+	/**
+	 * Removes all the commerce inventory warehouse items where commerceInventoryWarehouseId = &#63; and sku = &#63; from the database.
+	 *
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @param sku the sku
+	 */
+	public void removeByCIWI_S(long commerceInventoryWarehouseId, String sku);
+
+	/**
+	 * Returns the number of commerce inventory warehouse items where commerceInventoryWarehouseId = &#63; and sku = &#63;.
+	 *
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @param sku the sku
+	 * @return the number of matching commerce inventory warehouse items
+	 */
+	public int countByCIWI_S(long commerceInventoryWarehouseId, String sku);
+
+	/**
 	 * Returns all the commerce inventory warehouse items where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * @param companyId the company ID

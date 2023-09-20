@@ -193,6 +193,8 @@ public class ObjectEntryVariablesUtil {
 		SystemObjectDefinitionManagerRegistry
 			systemObjectDefinitionManagerRegistry) {
 
+		Map<String, Object> objectEntry =
+			(Map<String, Object>)payloadJSONObject.get("objectEntry");
 		String userId = payloadJSONObject.getString("userId");
 
 		Map<String, Object> allowedVariables =
@@ -203,13 +205,19 @@ public class ObjectEntryVariablesUtil {
 						return userId;
 					}
 
-					return MapUtil.getString(
-						(Map<String, Object>)payloadJSONObject.get(
-							"objectEntry"),
-						"userId");
+					return MapUtil.getString(objectEntry, "userId");
 				}
 			).put(
 				"currentUserId", userId
+			).put(
+				"groupId",
+				() -> {
+					if (objectEntry != null) {
+						return MapUtil.getString(objectEntry, "groupId");
+					}
+
+					return null;
+				}
 			).build();
 
 		Map<String, Object> variables = new HashMap<>();

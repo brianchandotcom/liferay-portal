@@ -149,6 +149,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -803,6 +805,45 @@ public class ObjectEntryLocalServiceImpl
 
 		return objectEntryPersistence.findByG_ODI_S(
 			groupId, objectDefinitionId, status, start, end);
+	}
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public long getObjectEntriesCount(
+		long groupId, DynamicObjectDefinitionTable dynamicObjectDefinitionTable,
+		DynamicObjectDefinitionTable extensionDynamicObjectDefinitionTable,
+		String objectDefinitionScope, Predicate predicate) {
+
+		JoinStep joinStep = DSLQueryFactoryUtil.countDistinct(
+			dynamicObjectDefinitionTable.getPrimaryKeyColumn()
+		).from(
+			dynamicObjectDefinitionTable
+		).innerJoinON(
+			extensionDynamicObjectDefinitionTable,
+			extensionDynamicObjectDefinitionTable.getPrimaryKeyColumn(
+			).eq(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn()
+			)
+		);
+
+		if (!StringUtil.equals(objectDefinitionScope, "site")) {
+			return dslQueryCount(joinStep.where(predicate));
+		}
+
+		return dslQueryCount(
+			joinStep.innerJoinON(
+				ObjectEntryTable.INSTANCE,
+				ObjectEntryTable.INSTANCE.objectEntryId.eq(
+					dynamicObjectDefinitionTable.getPrimaryKeyColumn())
+			).where(
+				predicate.and(
+					() -> {
+						if (groupId == 0) {
+							return null;
+						}
+
+						return ObjectEntryTable.INSTANCE.groupId.eq(groupId);
+					})
+			));
 	}
 
 	@Override

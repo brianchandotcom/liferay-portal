@@ -325,11 +325,11 @@ public class ObjectValidationRuleResourceImpl
 				if (StringUtil.equals(
 						objectValidationRuleSetting.getName(),
 						ObjectValidationRuleSettingConstants.
-							NAME_KEY_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE)) {
+							NAME_COMPOSITE_KEY_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE)) {
 
 					return _setObjectValidationRuleSettingProperties(
 						ObjectValidationRuleSettingConstants.
-							NAME_KEY_OBJECT_FIELD_ID,
+							NAME_COMPOSITE_KEY_OBJECT_FIELD_ID,
 						objectFieldLocalService, objectValidationRuleSetting,
 						objectDefinitionId,
 						serviceBuilderObjectValidationRuleSetting);

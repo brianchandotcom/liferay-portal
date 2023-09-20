@@ -59,7 +59,7 @@ public class UniqueCompositeKeyObjectValidationRuleEngineImpl
 
 			if (objectValidationRuleSetting.compareName(
 					ObjectValidationRuleSettingConstants.
-						NAME_KEY_OBJECT_FIELD_ID)) {
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID)) {
 
 				objectFields.add(
 					_objectFieldLocalService.fetchObjectField(
@@ -101,7 +101,7 @@ public class UniqueCompositeKeyObjectValidationRuleEngineImpl
 
 	@Override
 	public String getKey() {
-		return ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSED_KEY;
+		return ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY;
 	}
 
 	@Override

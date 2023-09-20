@@ -497,6 +497,17 @@ public class ObjectEntryLocalServiceWrapper
 			groupId, objectDefinitionId);
 	}
 
+	@Override
+	public long getObjectEntriesCount(
+			long groupId,
+			com.liferay.object.model.ObjectDefinition objectDefinition,
+			com.liferay.petra.sql.dsl.expression.Predicate predicate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.getObjectEntriesCount(
+			groupId, objectDefinition, predicate);
+	}
+
 	/**
 	 * Returns the object entry with the primary key.
 	 *

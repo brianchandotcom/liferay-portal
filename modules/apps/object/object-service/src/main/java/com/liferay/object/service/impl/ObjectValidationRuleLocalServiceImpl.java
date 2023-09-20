@@ -357,7 +357,7 @@ public class ObjectValidationRuleLocalServiceImpl
 
 			if (StringUtil.equals(
 					objectValidationRuleEngine.getKey(),
-					ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSED_KEY)) {
+					ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY)) {
 
 				variables.put("objectValidationRule", objectValidationRule);
 
@@ -582,7 +582,7 @@ public class ObjectValidationRuleLocalServiceImpl
 			if (FeatureFlagManagerUtil.isEnabled("LPS-187854") &&
 				!(objectValidationRuleSetting.compareName(
 					ObjectValidationRuleSettingConstants.
-						NAME_KEY_OBJECT_FIELD_ID) ||
+						NAME_COMPOSITE_KEY_OBJECT_FIELD_ID) ||
 				  objectValidationRuleSetting.compareName(
 					  ObjectValidationRuleSettingConstants.
 						  NAME_OUTPUT_OBJECT_FIELD_ID))) {

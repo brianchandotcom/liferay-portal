@@ -32,12 +32,4 @@ export declare function ReorderDropdown({
 	numberOfItems,
 	onDropItem,
 }: ItemProps): JSX.Element;
-export declare function useMouseDropTarget(
-	itemId: string,
-	itemIndex: number,
-	onDropItem: ItemProps['onDropItem']
-): {
-	dragOverPosition: DragOverPosition | null | undefined;
-	targetRef: (targetElement: any) => void;
-};
 export {};

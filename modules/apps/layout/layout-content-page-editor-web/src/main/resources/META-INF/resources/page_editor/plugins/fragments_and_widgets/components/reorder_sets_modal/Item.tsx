@@ -14,13 +14,11 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {DragObjectWithType, useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
-import {config} from '../../../../app/config/index';
 import {
 	DRAG_OVER_POSITIONS,
 	DragOverPosition,
 } from '../../config/constants/dragOverPositions';
-
-const ACCEPTING_ITEM_TYPE = 'acceptingItemType';
+import {useMouseDragItem, useMouseDropTarget} from './MouseDragAndDropContext';
 
 export interface Item {
 	id: string;
@@ -137,102 +135,4 @@ export function ReorderDropdown({
 			}
 		/>
 	);
-}
-
-function useMouseDragItem(item: Item) {
-	const [{isDragging}, handlerRef, previewRef] = useDrag({
-		begin() {},
-		collect: (monitor) => ({
-			isDragging: monitor.isDragging(),
-		}),
-		item: {
-			...item,
-			namespace: config.portletNamespace,
-			type: ACCEPTING_ITEM_TYPE,
-		},
-	});
-
-	useEffect(() => {
-		previewRef(getEmptyImage(), {captureDraggingState: true});
-	}, [previewRef]);
-
-	return {
-		handlerRef,
-		isDragging,
-	};
-}
-
-export function useMouseDropTarget(
-	itemId: string,
-	itemIndex: number,
-	onDropItem: ItemProps['onDropItem']
-) {
-	const [dragOverPosition, setDragOverPosition] = useState<
-		DragOverPosition | undefined
-	>();
-	const targetRef = useRef<HTMLElement | null>(null);
-	const targetRectRef = useRef<DOMRect | null>(null);
-
-	const [{isOver}, internalSetTargetRef] = useDrop<
-		DragObjectWithType & Item,
-		void,
-		{isOver: boolean}
-	>({
-		accept: ACCEPTING_ITEM_TYPE,
-		canDrop(sourceItem, monitor) {
-			return sourceItem.id !== itemId && monitor.isOver();
-		},
-		collect(monitor) {
-			return {
-				isOver: monitor.isOver(),
-			};
-		},
-		drop(source, monitor) {
-			targetRectRef.current = null;
-
-			if (Liferay.FeatureFlags['LPS-196420'] && monitor.canDrop()) {
-				onDropItem(source.id, itemIndex, dragOverPosition);
-			}
-		},
-		hover(source, monitor) {
-			if (!monitor.isOver()) {
-				targetRectRef.current = null;
-
-				return;
-			}
-
-			if (Liferay.FeatureFlags['LPS-196420']) {
-				targetRectRef.current =
-					targetRectRef.current ||
-					targetRef.current!.getBoundingClientRect();
-
-				const targetMiddlePosition =
-					targetRectRef.current!.top +
-					targetRectRef.current!.height / 2;
-
-				if (monitor.getClientOffset()!.y < targetMiddlePosition) {
-					setDragOverPosition(DRAG_OVER_POSITIONS.top);
-				}
-				else {
-					setDragOverPosition(DRAG_OVER_POSITIONS.bottom);
-				}
-			}
-			else if (monitor.canDrop()) {
-				onDropItem(source.id, itemIndex);
-			}
-		},
-	});
-
-	const setTargetRef = useCallback(
-		(targetElement) => {
-			internalSetTargetRef(targetElement);
-			targetRef.current = targetElement;
-		},
-		[internalSetTargetRef]
-	);
-
-	return {
-		dragOverPosition: isOver ? dragOverPosition : null,
-		targetRef: setTargetRef,
-	};
 }

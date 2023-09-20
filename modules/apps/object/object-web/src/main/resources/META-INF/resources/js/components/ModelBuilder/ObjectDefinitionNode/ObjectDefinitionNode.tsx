@@ -238,6 +238,7 @@ export function ObjectDefinitionNode({
 							style={{
 								background: '#80ACFF',
 								height: '12px',
+								opacity: 0,
 								[position]: '-18px',
 								width: '12px',
 							}}

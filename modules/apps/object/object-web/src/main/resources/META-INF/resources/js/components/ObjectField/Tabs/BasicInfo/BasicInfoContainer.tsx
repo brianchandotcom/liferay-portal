@@ -87,7 +87,9 @@ export function BasicInfoContainer({
 				objectName={objectName}
 				objectRelationshipId={objectRelationshipId}
 				onAggregationFilterChange={setAggregationFilters}
-				onRelationshipChange={setObjectDefinitionExternalReferenceCode2}
+				onObjectRelationshipChange={
+					setObjectDefinitionExternalReferenceCode2
+				}
 				setValues={setValues}
 			>
 				{values.businessType === 'Attachment' && (

@@ -14,7 +14,7 @@ interface IAggregationSourcePropertyProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectFieldSettings: ObjectFieldSetting[];
 	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
-	onRelationshipChange?: (
+	onObjectRelationshipChange?: (
 		objectDefinitionExternalReferenceCode2: string
 	) => void;
 	setValues: (values: Partial<ObjectField>) => void;
@@ -25,7 +25,7 @@ export declare function AggregationFormBase({
 	errors,
 	editingField,
 	onAggregationFilterChange,
-	onRelationshipChange,
+	onObjectRelationshipChange,
 	objectDefinitionExternalReferenceCode,
 	objectFieldSettings,
 	setValues,

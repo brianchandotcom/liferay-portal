@@ -50,7 +50,7 @@ interface ObjectFieldFormBaseProps {
 	objectName: string;
 	objectRelationshipId?: number;
 	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
-	onRelationshipChange?: (
+	onObjectRelationshipChange?: (
 		objectDefinitionExternalReferenceCode2: string
 	) => void;
 	setValues: (values: Partial<ObjectField>) => void;
@@ -113,10 +113,10 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 	],
 ]);
 
-async function getFieldSettingsByBusinessType(
+async function getObjectFieldSettingsByBusinessType(
 	objectRelationshipId: number,
 	setListTypeDefinitions: (value: ListTypeDefinition[]) => void,
-	setOneToManyRelationship: (value: TObjectRelationship) => void,
+	setOneToManyObjectRelationship: (value: TObjectRelationship) => void,
 	setSelectedOutput: (value: string) => void,
 	values: Partial<ObjectField>
 ) {
@@ -148,7 +148,7 @@ async function getFieldSettingsByBusinessType(
 		>(objectRelationshipId!);
 
 		if (relationshipData.id) {
-			setOneToManyRelationship(relationshipData);
+			setOneToManyObjectRelationship(relationshipData);
 		}
 	}
 }
@@ -167,7 +167,7 @@ export default function ObjectFieldFormBase({
 	objectName,
 	objectRelationshipId,
 	onAggregationFilterChange,
-	onRelationshipChange,
+	onObjectRelationshipChange,
 	setValues,
 }: ObjectFieldFormBaseProps) {
 	const businessTypeMap = useMemo(() => {
@@ -185,9 +185,10 @@ export default function ObjectFieldFormBase({
 	>([]);
 	const [picklistQuery, setPicklistQuery] = useState<string>('');
 
-	const [oneToManyRelationship, setOneToManyRelationship] = useState<
-		TObjectRelationship
-	>();
+	const [
+		oneToManyObjectRelationship,
+		setOneToManyObjectRelationship,
+	] = useState<TObjectRelationship>();
 	const [selectedOutput, setSelectedOutput] = useState<string>('');
 
 	const validListTypeDefinitionId =
@@ -247,11 +248,11 @@ export default function ObjectFieldFormBase({
 		}
 
 		if (
-			oneToManyRelationship &&
-			oneToManyRelationship.deletionType !== 'disassociate'
+			oneToManyObjectRelationship &&
+			oneToManyObjectRelationship.deletionType !== 'disassociate'
 		) {
 			return Liferay.FeatureFlags['LPS-187142']
-				? oneToManyRelationship.edge
+				? oneToManyObjectRelationship.edge
 				: false;
 		}
 
@@ -268,10 +269,10 @@ export default function ObjectFieldFormBase({
 
 	useEffect(() => {
 		const makeFetch = async () => {
-			await getFieldSettingsByBusinessType(
+			await getObjectFieldSettingsByBusinessType(
 				objectRelationshipId as number,
 				setListTypeDefinitions,
-				setOneToManyRelationship,
+				setOneToManyObjectRelationship,
 				setSelectedOutput,
 				values
 			);
@@ -367,7 +368,7 @@ export default function ObjectFieldFormBase({
 						values.objectFieldSettings as ObjectFieldSetting[]
 					}
 					onAggregationFilterChange={onAggregationFilterChange}
-					onRelationshipChange={onRelationshipChange}
+					onObjectRelationshipChange={onObjectRelationshipChange}
 					setValues={setValues}
 				/>
 			)}

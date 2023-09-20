@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {LAYOUT_TYPES} from './constants/layoutTypes';
+import {Config} from '../../types/config';
+import {LAYOUT_TYPES, LayoutType} from './constants/layoutTypes';
 
-const DEFAULT_CONFIG = {
+const DEFAULT_CONFIG: Partial<Config> = {
 	toolbarId: 'pageEditorToolbar',
 };
 
-/** @type {import('../../types/config').Config} */
-export let config = DEFAULT_CONFIG;
+export let config = DEFAULT_CONFIG as Config;
 
 /**
  * Extracts the immutable parts from the server data.
@@ -18,7 +18,7 @@ export let config = DEFAULT_CONFIG;
  * Unlike data in the store, this config does not change over the lifetime of
  * the app, so we can safely store is as a variable.
  */
-export function initializeConfig(backendConfig) {
+export function initializeConfig(backendConfig: Config) {
 	if (!backendConfig.layoutType) {
 		config = {
 			...backendConfig,
@@ -34,13 +34,17 @@ export function initializeConfig(backendConfig) {
 		portletNamespace,
 		sidebarPanels,
 	} = backendConfig;
+
 	const toolbarId = `${portletNamespace}${DEFAULT_CONFIG.toolbarId}`;
 
 	// Special items requiring augmentation, creation, or transformation.
 
-	const augmentedPanels = augmentPanelData(pluginsRootPath, sidebarPanels);
+	const augmentedPanels = augmentPanelData(
+		pluginsRootPath,
+		(sidebarPanels as unknown) as SidebarPanel[]
+	);
 
-	const syntheticItems = {
+	const syntheticItems: Partial<Config> = {
 		commonStyles: getCommonStyles(commonStyles),
 		commonStylesFields: getCommonStylesFields(commonStyles),
 		panels: generatePanels(augmentedPanels),
@@ -67,9 +71,14 @@ export function initializeConfig(backendConfig) {
  * of a plugin. Here we deal with the exceptions by mapping IDs to
  * plugin names.
  */
-const SIDEBAR_PANEL_IDS_TO_PLUGINS = {};
+const SIDEBAR_PANEL_IDS_TO_PLUGINS: Record<string, string> = {};
 
-function augmentPanelData(pluginsRootPath, sidebarPanels) {
+type SidebarPanel = Config['sidebarPanels'][keyof Config['sidebarPanels']];
+
+function augmentPanelData(
+	pluginsRootPath: string,
+	sidebarPanels: SidebarPanel[]
+) {
 	return sidebarPanels.map((panel) => {
 		if (isSeparator(panel) || panel.isLink) {
 			return panel;
@@ -91,8 +100,8 @@ function augmentPanelData(pluginsRootPath, sidebarPanels) {
 	});
 }
 
-function generatePanels(sidebarPanels) {
-	return sidebarPanels.reduce(
+function generatePanels(sidebarPanels: SidebarPanel[]): Config['panels'] {
+	return sidebarPanels.reduce<SidebarPanel['sidebarPanelId'][][]>(
 		(groups, panel) => {
 			if (isSeparator(panel)) {
 				groups.push([]);
@@ -107,7 +116,7 @@ function generatePanels(sidebarPanels) {
 	);
 }
 
-function getCommonStyles(commonStyles) {
+function getCommonStyles(commonStyles: Config['commonStyles']) {
 	return commonStyles.map((fieldSet) => {
 		return {
 			...fieldSet,
@@ -119,8 +128,10 @@ function getCommonStyles(commonStyles) {
 	});
 }
 
-function getCommonStylesFields(commonStyles) {
-	const commonStylesFields = {};
+function getCommonStylesFields(
+	commonStyles: Config['commonStyles']
+): Config['commonStylesFields'] {
+	const commonStylesFields: Config['commonStylesFields'] = {};
 
 	const fieldSets = Object.values(commonStyles);
 
@@ -141,7 +152,11 @@ function getCommonStylesFields(commonStyles) {
  * server data. In the future we may choose to encapsulate it better and
  * deal with it inside the plugin.
  */
-function getToolbarPlugins(layoutType, pluginsRootPath, toolbarId) {
+function getToolbarPlugins(
+	layoutType: LayoutType,
+	pluginsRootPath: string,
+	toolbarId: string
+) {
 	const toolbarPluginId = 'experience';
 	const selectId = `${toolbarId}_${toolbarPluginId}`;
 
@@ -173,7 +188,7 @@ function getToolbarPlugins(layoutType, pluginsRootPath, toolbarId) {
 		: [];
 }
 
-function isSeparator(panel) {
+function isSeparator(panel: SidebarPanel) {
 	return panel.sidebarPanelId === 'separator';
 }
 
@@ -181,13 +196,16 @@ function isSeparator(panel) {
  * Instead of using fake panels with an ID of `separator`, partition the panels
  * array into an array of arrays; we'll draw a separator between each group.
  */
-function partitionPanels(panels) {
-	return panels.reduce((map, panel) => {
-		const {sidebarPanelId} = panel;
-		if (!isSeparator(panel)) {
-			map[sidebarPanelId] = panel;
-		}
+function partitionPanels(panels: SidebarPanel[]): Config['sidebarPanels'] {
+	return panels.reduce<Record<SidebarPanel['sidebarPanelId'], SidebarPanel>>(
+		(map, panel) => {
+			const {sidebarPanelId} = panel;
+			if (!isSeparator(panel)) {
+				map[sidebarPanelId] = panel;
+			}
 
-		return map;
-	}, {});
+			return map;
+		},
+		{}
+	);
 }

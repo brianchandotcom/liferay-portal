@@ -5,7 +5,7 @@
 
 package com.liferay.layout.locked.layouts.web.internal.scheduler;
 
-import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsConfiguration;
+import com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsCompanyConfiguration;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lourdes Fernández Besada
  */
 @Component(
-	configurationPid = "com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsConfiguration",
+	configurationPid = "com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsCompanyConfiguration",
 	service = SchedulerJobConfiguration.class
 )
 public class UnlockLayoutsSchedulerJobConfiguration
@@ -56,16 +56,20 @@ public class UnlockLayoutsSchedulerJobConfiguration
 				return;
 			}
 
-			LockedLayoutsConfiguration lockedLayoutsConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					LockedLayoutsConfiguration.class, companyId);
+			LockedLayoutsCompanyConfiguration
+				lockedLayoutsCompanyConfiguration =
+					_configurationProvider.getCompanyConfiguration(
+						LockedLayoutsCompanyConfiguration.class, companyId);
 
-			if (!lockedLayoutsConfiguration.allowAutomaticUnlockingProcess()) {
+			if (!lockedLayoutsCompanyConfiguration.
+					allowAutomaticUnlockingProcess()) {
+
 				return;
 			}
 
 			_layoutLockManager.unlockLayouts(
-				companyId, lockedLayoutsConfiguration.timeWithoutAutosave());
+				companyId,
+				lockedLayoutsCompanyConfiguration.timeWithoutAutosave());
 		};
 	}
 

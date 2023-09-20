@@ -17,7 +17,7 @@ const UnableDeletePropertyModal: React.FC<{
 			<p className='text-secondary'>
 				{sub(
 					Liferay.Language.get(
-						'in-order-to-delete-a-property-ensure-no-sites-and-channels-are-assigned-to-it'
+						'ensure-no-sites-and-channels-are-assigned-to-it-before-deleting-a-property'
 					),
 					[
 						<a

@@ -5,7 +5,6 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
-import com.liferay.headless.builder.application.provider.APIApplicationProvider;
 import com.liferay.headless.builder.application.publisher.APIApplicationPublisher;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -242,9 +241,6 @@ public class APIApplicationPublisherObjectEntryModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		APIApplicationPublisherObjectEntryModelListener.class);
-
-	@Reference
-	private APIApplicationProvider _apiApplicationProvider;
 
 	@Reference
 	private APIApplicationPublisher _apiApplicationPublisher;

@@ -11,7 +11,9 @@ import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelKeyExcep
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelPriceException;
 import com.liferay.commerce.product.exception.CPDefinitionOptionValueRelQuantityException;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -149,18 +152,42 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 
 		// Update commerce product definition option value rel
 
-		long cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
+		long cpInstanceId = 0;
+		String unitOfMeasureKey = StringPool.BLANK;
+
+		String composedCPInstanceId = ParamUtil.getString(
+			actionRequest, "cpInstanceId");
+
+		if (composedCPInstanceId.contains(StringPool.DASH)) {
+			String[] idParts = composedCPInstanceId.split(StringPool.DASH);
+
+			cpInstanceId = GetterUtil.getLong(idParts[0]);
+
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+				_cpInstanceUnitOfMeasureLocalService.
+					fetchCPInstanceUnitOfMeasure(
+						GetterUtil.getLong(idParts[1]));
+
+			if (cpInstanceUnitOfMeasure != null) {
+				unitOfMeasureKey = cpInstanceUnitOfMeasure.getKey();
+			}
+		}
+		else {
+			cpInstanceId = ParamUtil.getLong(actionRequest, "cpInstanceId");
+		}
+
 		boolean preselected = ParamUtil.getBoolean(
 			actionRequest, "preselected");
 		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "price", BigDecimal.ZERO);
-		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
+		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "quantity");
 
 		return _cpDefinitionOptionValueRelService.
 			updateCPDefinitionOptionValueRel(
 				cpDefinitionOptionValueRelId, cpInstanceId, key, nameMap,
-				preselected, price, priority, BigDecimal.valueOf(quantity),
-				StringPool.BLANK, serviceContext);
+				preselected, price, priority, quantity, unitOfMeasureKey,
+				serviceContext);
 	}
 
 	private CPDefinitionOptionValueRel _updatePreselected(
@@ -191,6 +218,10 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 	@Reference
 	private CPDefinitionOptionValueRelService
 		_cpDefinitionOptionValueRelService;
+
+	@Reference
+	private CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 	@Reference
 	private Localization _localization;

@@ -60,6 +60,8 @@ public class AuditMessageBuilder {
 
 		if ((realUserId > 0) && (userId != realUserId)) {
 			additionalInfoJSONObject.put(
+				"doAsUserEmailAddress", PortalUtil.getUserEmailAddress(userId)
+			).put(
 				"doAsUserId", String.valueOf(userId)
 			).put(
 				"doAsUserName", PortalUtil.getUserName(userId, StringPool.BLANK)

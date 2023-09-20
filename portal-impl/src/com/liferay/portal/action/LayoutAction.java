@@ -309,9 +309,11 @@ public class LayoutAction implements Action {
 						(realUser.getUserId() != user.getUserId())) {
 
 						additionalInfoJSONObject = JSONUtil.put(
-							"userId", user.getUserId()
+							"doAsUserEmailAddress", user.getEmailAddress()
 						).put(
-							"userName", user.getFullName()
+							"doAsUserId", user.getUserId()
+						).put(
+							"doAsUserName", user.getFullName()
 						);
 					}
 

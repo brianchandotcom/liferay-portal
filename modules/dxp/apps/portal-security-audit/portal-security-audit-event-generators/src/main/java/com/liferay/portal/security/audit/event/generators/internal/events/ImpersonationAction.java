@@ -82,6 +82,8 @@ public class ImpersonationAction extends Action {
 					_jsonFactory.createJSONObject();
 
 				additionalInfoJSONObject.put(
+					"userEmailAddress", user.getEmailAddress()
+				).put(
 					"userId", user.getUserId()
 				).put(
 					"userName", user.getFullName()

@@ -5,15 +5,18 @@
 
 package com.liferay.portal.kernel.audit;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.Serializable;
 
@@ -99,6 +102,26 @@ public class AuditMessage implements Serializable {
 		_userEmailAddress = auditRequestThreadLocal.getRealUserEmailAddress();
 
 		long realUserId = auditRequestThreadLocal.getRealUserId();
+
+		long doAsUserId = 0;
+
+		if (PrincipalThreadLocal.getName() != null) {
+			doAsUserId = GetterUtil.getLong(PrincipalThreadLocal.getName());
+		}
+
+		if ((realUserId > 0) && (doAsUserId != realUserId) &&
+			!_additionalInfoJSONObject.has("doAsUserId")) {
+
+			_additionalInfoJSONObject.put(
+				"doAsUserEmailAddress",
+				PortalUtil.getUserEmailAddress(doAsUserId)
+			).put(
+				"doAsUserId", String.valueOf(doAsUserId)
+			).put(
+				"doAsUserName",
+				PortalUtil.getUserName(doAsUserId, StringPool.BLANK)
+			);
+		}
 
 		if (userId == realUserId) {
 			_userLogin = auditRequestThreadLocal.getRealUserLogin();

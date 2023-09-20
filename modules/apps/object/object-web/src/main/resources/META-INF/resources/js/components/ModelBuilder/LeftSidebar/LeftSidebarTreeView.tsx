@@ -203,10 +203,11 @@ export default function LeftSidebarTreeView({
 			onExpandedChange={setExpandedKeys}
 			onSelect={(item) => {
 				if (
-					selectedObjectFolder.objectDefinitions?.find(
-						(objectDefinition) =>
-							objectDefinition.id ===
-							(item as LeftSidebarObjectDefinitionItem).id
+					selectedObjectFolder.objectFolderItems?.find(
+						(objectFolderItem) =>
+							objectFolderItem.objectDefinitionExternalReferenceCode ===
+							(item as LeftSidebarObjectDefinitionItem)
+								.externalReferenceCode
 					)
 				) {
 					const {edges, nodes} = store.getState();

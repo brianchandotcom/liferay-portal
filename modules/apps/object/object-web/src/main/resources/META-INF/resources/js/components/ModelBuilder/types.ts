@@ -155,6 +155,7 @@ export interface LeftSidebarItem {
 }
 
 export interface LeftSidebarObjectDefinitionItem {
+	externalReferenceCode?: string;
 	hiddenObjectDefinitionNode: boolean;
 	id: number;
 	label: string;

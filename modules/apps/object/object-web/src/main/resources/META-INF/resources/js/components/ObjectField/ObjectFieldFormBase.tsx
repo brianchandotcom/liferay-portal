@@ -50,7 +50,7 @@ interface ObjectFieldFormBaseProps {
 	objectFieldTypes: ObjectFieldType[];
 	objectRelationshipId?: number;
 	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
-	onRelationshipChange?: (
+	onObjectRelationshipChange?: (
 		objectDefinitionExternalReferenceCode2: string
 	) => void;
 	setValues: (values: Partial<ObjectField>) => void;
@@ -116,7 +116,7 @@ const fieldSettingsMap = new Map<string, ObjectFieldSetting[]>([
 async function getObjectFieldSettingsByBusinessType(
 	objectRelationshipId: number,
 	setListTypeDefinitions: (value: ListTypeDefinition[]) => void,
-	setOneToManyRelationship: (value: TObjectRelationship) => void,
+	setOneToManyObjectRelationship: (value: TObjectRelationship) => void,
 	setSelectedOutput: (value: string) => void,
 	values: Partial<ObjectField>
 ) {
@@ -148,7 +148,7 @@ async function getObjectFieldSettingsByBusinessType(
 		>(objectRelationshipId!);
 
 		if (relationshipData.id) {
-			setOneToManyRelationship(relationshipData);
+			setOneToManyObjectRelationship(relationshipData);
 		}
 	}
 }
@@ -167,7 +167,7 @@ export default function ObjectFieldFormBase({
 	objectFieldTypes,
 	objectRelationshipId,
 	onAggregationFilterChange,
-	onRelationshipChange,
+	onObjectRelationshipChange,
 	setValues,
 }: ObjectFieldFormBaseProps) {
 	const [listTypeDefinitions, setListTypeDefinitions] = useState<
@@ -254,7 +254,7 @@ export default function ObjectFieldFormBase({
 			oneToManyObjectRelationship.deletionType !== 'disassociate'
 		) {
 			return Liferay.FeatureFlags['LPS-187142']
-				? oneToManyRelationship.edge
+				? oneToManyObjectRelationship.edge
 				: false;
 		}
 
@@ -397,7 +397,7 @@ export default function ObjectFieldFormBase({
 						values.objectFieldSettings as ObjectFieldSetting[]
 					}
 					onAggregationFilterChange={onAggregationFilterChange}
-					onRelationshipChange={onRelationshipChange}
+					onObjectRelationshipChange={onObjectRelationshipChange}
 					setValues={setValues}
 				/>
 			)}

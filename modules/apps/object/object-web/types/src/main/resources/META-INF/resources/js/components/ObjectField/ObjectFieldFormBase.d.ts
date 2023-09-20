@@ -20,7 +20,7 @@ interface ObjectFieldFormBaseProps {
 	objectFieldTypes: ObjectFieldType[];
 	objectRelationshipId?: number;
 	onAggregationFilterChange?: (aggregationFilterArray: []) => void;
-	onRelationshipChange?: (
+	onObjectRelationshipChange?: (
 		objectDefinitionExternalReferenceCode2: string
 	) => void;
 	setValues: (values: Partial<ObjectField>) => void;
@@ -45,7 +45,7 @@ export default function ObjectFieldFormBase({
 	objectFieldTypes,
 	objectRelationshipId,
 	onAggregationFilterChange,
-	onRelationshipChange,
+	onObjectRelationshipChange,
 	setValues,
 }: ObjectFieldFormBaseProps): JSX.Element;
 export {};

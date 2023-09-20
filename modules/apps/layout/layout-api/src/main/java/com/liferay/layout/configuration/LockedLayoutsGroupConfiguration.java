@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.layout.locked.layouts.web.internal.configuration;
+package com.liferay.layout.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -17,7 +17,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(
-	id = "com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsGroupConfiguration",
+	id = "com.liferay.layout.configuration.LockedLayoutsGroupConfiguration",
 	localization = "content/Language", name = "locked-pages-configuration-name"
 )
 public interface LockedLayoutsGroupConfiguration {

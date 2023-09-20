@@ -598,26 +598,6 @@ definition {
 			value1 = "Control Panel > Object");
 	}
 
-	@description = "LPS-142175 - Verify it is not possible to maintain Relationships after importing an Object"
-	@priority = 4
-	test CannotImportRelationships {
-		ObjectExportImport.importObject(
-			objectFileName = "ImportedObjectWithRelationship",
-			objectName = "ImportedObjectWithRelationship146359");
-
-		AssertElementPresent(
-			key_labelName = "Imported Object With Relationship",
-			locator1 = "CreateObject#OBJECT_NAME");
-
-		ObjectPortlet.selectCustomObject(label = "Imported Object With Relationship");
-
-		ObjectAdmin.gotoRelationshipsTab();
-
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_STATE_INFO",
-			value1 = "No Results Found");
-	}
-
 	@description = "LPS-142175 - Verify it is possible to publish an imported custom object"
 	@ignore = "Test Stub"
 	@priority = 4

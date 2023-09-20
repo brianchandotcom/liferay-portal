@@ -80,7 +80,10 @@ public class DisplayPageManagementToolbarDisplayContext
 					DropdownItemListBuilder.add(
 						dropdownItem -> {
 							dropdownItem.putData(
-								"action", "deleteSelectedDisplayPages");
+								"action", "deleteSelectedEntries");
+							dropdownItem.putData(
+								"deleteSelectedEntriesURL",
+								_getDeleteSelectedEntriesURL());
 							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(httpServletRequest, "delete"));
@@ -102,7 +105,7 @@ public class DisplayPageManagementToolbarDisplayContext
 				_themeDisplay.getPermissionChecker(), layoutPageTemplateEntry,
 				ActionKeys.DELETE)) {
 
-			availableActions.add("deleteSelectedDisplayPages");
+			availableActions.add("deleteSelectedEntries");
 		}
 
 		if ((layoutPageTemplateEntry.getLayoutPrototypeId() == 0) &&
@@ -219,6 +222,21 @@ public class DisplayPageManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"create-date", "name"};
+	}
+
+	private String _getDeleteSelectedEntriesURL() {
+		return PortletURLBuilder.createActionURL(
+			liferayPortletResponse
+		).setActionName(
+			"/layout_page_template_admin/delete_layout_page_template_entries_" +
+				"and_layout_page_template_collections"
+		).setTabs1(
+			"display-page-templates"
+		).setParameter(
+			"layoutPageTemplateCollectionId",
+			ParamUtil.getLong(
+				httpServletRequest, "layoutPageTemplateCollectionId")
+		).buildString();
 	}
 
 	private String _getExportDisplayPageURL() {

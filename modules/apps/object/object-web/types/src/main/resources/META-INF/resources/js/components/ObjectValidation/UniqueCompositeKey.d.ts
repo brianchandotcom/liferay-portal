@@ -5,4 +5,11 @@
 
 /// <reference types="react" />
 
-export declare function UniqueCompositeKey(): JSX.Element;
+export interface UniqueCompositeKeyProps {
+	setShowUniqueCompositeKeyCardAlert: (value: boolean) => void;
+	showUniqueCompositeKeyCardAlert: boolean;
+}
+export declare function UniqueCompositeKey({
+	setShowUniqueCompositeKeyCardAlert,
+	showUniqueCompositeKeyCardAlert,
+}: UniqueCompositeKeyProps): JSX.Element;

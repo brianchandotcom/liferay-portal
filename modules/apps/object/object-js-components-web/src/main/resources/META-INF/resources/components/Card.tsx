@@ -6,7 +6,7 @@
 import ClayAlert, {IClayAlertProps} from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useState} from 'react';
+import React from 'react';
 
 import './Card.scss';
 
@@ -14,6 +14,8 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 	alert?: {
 		content: string;
 		otherProps: IClayAlertProps;
+		setShowAlert: (value: boolean) => void;
+		showAlert: boolean;
 	};
 	customHeader?: JSX.Element;
 	disabled?: boolean;
@@ -42,8 +44,6 @@ export function Card({
 	viewMode,
 	...otherProps
 }: CardProps) {
-	const [showAlert, setShowAlert] = useState(true);
-
 	const inline = viewMode === 'inline';
 	const noChildren = viewMode === 'no-children';
 	const noHeaderBorder = viewMode === 'no-header-border';
@@ -104,10 +104,10 @@ export function Card({
 						</div>
 					)}
 
-					{alert && showAlert && (
+					{alert?.showAlert && (
 						<ClayAlert
 							displayType={alert.otherProps.displayType}
-							onClose={() => setShowAlert(false)}
+							onClose={() => alert.setShowAlert(false)}
 							title={alert.otherProps.title}
 							variant={alert.otherProps.variant}
 						>

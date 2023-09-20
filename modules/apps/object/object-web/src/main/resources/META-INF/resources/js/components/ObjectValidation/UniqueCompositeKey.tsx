@@ -6,7 +6,15 @@
 import {BuilderScreen, Card} from '@liferay/object-js-components-web';
 import React from 'react';
 
-export function UniqueCompositeKey() {
+export interface UniqueCompositeKeyProps {
+	setShowUniqueCompositeKeyAlert: (value: boolean) => void;
+	showUniqueCompositeKeyAlert: boolean;
+}
+
+export function UniqueCompositeKey({
+	setShowUniqueCompositeKeyAlert,
+	showUniqueCompositeKeyAlert,
+}: UniqueCompositeKeyProps) {
 	return (
 		<>
 			<Card
@@ -19,6 +27,8 @@ export function UniqueCompositeKey() {
 						title: Liferay.Language.get('info'),
 						variant: 'stripe',
 					},
+					setShowAlert: setShowUniqueCompositeKeyAlert,
+					showAlert: showUniqueCompositeKeyAlert,
 				}}
 				title={Liferay.Language.get('fields')}
 			>

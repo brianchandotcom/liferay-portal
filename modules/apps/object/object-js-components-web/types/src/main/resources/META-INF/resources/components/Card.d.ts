@@ -10,6 +10,8 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 	alert?: {
 		content: string;
 		otherProps: IClayAlertProps;
+		setShowAlert: (value: boolean) => void;
+		showAlert: boolean;
 	};
 	customHeader?: JSX.Element;
 	disabled?: boolean;

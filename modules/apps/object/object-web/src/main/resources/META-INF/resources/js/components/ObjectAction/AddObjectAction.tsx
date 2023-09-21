@@ -33,7 +33,7 @@ export default function AddObjectAction({
 }: AddObjectActionProps) {
 	return (
 		<ObjectAction
-			objectAction={{active: true}}
+			objectAction={{active: true, system: false}}
 			objectActionCodeEditorElements={objectActionCodeEditorElements}
 			objectActionExecutors={objectActionExecutors}
 			objectActionTriggers={objectActionTriggers}

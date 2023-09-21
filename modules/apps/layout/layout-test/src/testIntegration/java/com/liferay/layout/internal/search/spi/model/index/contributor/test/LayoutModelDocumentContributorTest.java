@@ -100,6 +100,39 @@ public class LayoutModelDocumentContributorTest {
 	}
 
 	@Test
+	public void testReindexPublishedLayoutWithFreemarkerErrors()
+		throws Exception {
+
+		String elementText = RandomTestUtil.randomString();
+
+		Layout layout = _addTypeContentLayout(elementText, true);
+
+		String html =
+			"[#if /#] <h1 data-lfr-editable-id=\"element-text\" " +
+				"data-lfr-editable-type=\"text\">Heading Example</h1>";
+
+		_addFragmentEntryLinkToLayout(
+			elementText, html, layout,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_reindexLogEntries(layout);
+
+		Document document = _layoutIndexerFixture.searchOnlyOne(
+			layout.getName(_locale), _locale);
+
+		Assert.assertNotNull(document);
+
+		String content = document.get(
+			Field.getLocalizedName(_locale, Field.CONTENT));
+
+		Assert.assertEquals(elementText, content);
+
+		Assert.assertEquals(
+			document.get(Field.ENTRY_CLASS_PK),
+			String.valueOf(layout.getPlid()));
+	}
+
+	@Test
 	public void testReindexPublishedLayoutWithLayoutLocalization()
 		throws Exception {
 

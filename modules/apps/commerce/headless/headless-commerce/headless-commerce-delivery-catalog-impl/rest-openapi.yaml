@@ -677,6 +677,10 @@ components:
                         $ref: "#/components/schemas/SkuOption"
                     readOnly: true
                     type: array
+                skuUnitOfMeasures:
+                    items:
+                        $ref: "#/components/schemas/SkuUnitOfMeasure"
+                    type: array
                 urls:
                     additionalProperties:
                         type: string

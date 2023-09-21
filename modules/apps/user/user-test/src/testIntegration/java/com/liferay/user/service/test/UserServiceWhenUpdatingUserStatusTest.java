@@ -86,6 +86,45 @@ public class UserServiceWhenUpdatingUserStatusTest {
 			WorkflowConstants.STATUS_APPROVED);
 	}
 
+	@FeatureFlags("LPS-188420")
+	@Test
+	public void testDeactivateUserWithActivatePermissionFails()
+		throws Exception {
+
+		_testUpdateUserStatusWithInvalidPermission(
+			ActionKeys.ACTIVATE, WorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_INACTIVE, "DEACTIVATE,DELETE");
+	}
+
+	@FeatureFlags("LPS-188420")
+	@Test
+	public void testDeactivateUserWithDeactivatePermissionSucceeds()
+		throws Exception {
+
+		_testUpdateUserStatusWithValidPermission(
+			ActionKeys.DEACTIVATE, WorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_INACTIVE);
+	}
+
+	@FeatureFlags("LPS-188420")
+	@Test
+	public void testDeactivateUserWithDeletePermissionSucceedsWithFeatureFlag()
+		throws Exception {
+
+		_testUpdateUserStatusWithValidPermission(
+			ActionKeys.DELETE, WorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_INACTIVE);
+	}
+
+	@Test
+	public void testDeactivateUserWithDeletePermissionSucceedsWithoutFeatureFlag()
+		throws Exception {
+
+		_testUpdateUserStatusWithValidPermission(
+			ActionKeys.DELETE, WorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_INACTIVE);
+	}
+
 	private void _testUpdateUserStatusWithInvalidPermission(
 			String actionId, int sourceStatus, int targetStatus,
 			String expectedPermissions)

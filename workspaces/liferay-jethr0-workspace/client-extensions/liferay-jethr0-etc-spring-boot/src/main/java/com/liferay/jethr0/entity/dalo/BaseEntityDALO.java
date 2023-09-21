@@ -39,7 +39,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 	@Override
 	public T create(JSONObject jsonObject) {
-		long id = jsonObject.getLong("id");
+		long id = jsonObject.optLong("id");
 
 		if (id != 0) {
 			throw new RuntimeException("Entity already exists");
@@ -52,23 +52,6 @@ public abstract class BaseEntityDALO<T extends Entity>
 		}
 
 		T entity = newEntity(responseJSONObject);
-
-		entity.setCreatedDate(
-			_getDateFromJSON(responseJSONObject, "dateCreated"));
-		entity.setId(responseJSONObject.getLong("id"));
-		entity.setModifiedDate(
-			_getDateFromJSON(responseJSONObject, "dateModified"));
-
-		return entity;
-	}
-
-	@Override
-	public T create(T entity) {
-		JSONObject responseJSONObject = _create(entity.getJSONObject());
-
-		if (responseJSONObject == null) {
-			throw new RuntimeException("No response");
-		}
 
 		entity.setCreatedDate(
 			_getDateFromJSON(responseJSONObject, "dateCreated"));

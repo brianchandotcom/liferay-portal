@@ -18,8 +18,6 @@ public interface EntityDALO<T extends Entity> extends DALO {
 
 	public T create(JSONObject jsonObject);
 
-	public T create(T entity);
-
 	public void delete(T entity);
 
 	public T get(long id);

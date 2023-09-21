@@ -125,6 +125,76 @@ public class UserServiceWhenUpdatingUserStatusTest {
 			WorkflowConstants.STATUS_INACTIVE);
 	}
 
+	private void _testDeleteUserWithDeletePermission() throws Exception {
+		_user1 = UserTestUtil.addUser();
+		_user2 = UserTestUtil.addUser();
+
+		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleTestUtil.addResourcePermission(
+			_role, User.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_user1.getCompanyId()), ActionKeys.DELETE);
+
+		_userLocalService.addRoleUser(_role.getRoleId(), _user1);
+
+		PermissionChecker oldPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(_user1));
+
+			_userService.deleteUser(_user2.getUserId());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(oldPermissionChecker);
+		}
+
+		Assert.assertNull(_userLocalService.fetchUser(_user2.getUserId()));
+	}
+
+	private void _testDeleteUserWithInvalidPermission(
+			String actionId, String expectedPermissions)
+		throws Exception {
+
+		_user1 = UserTestUtil.addUser();
+		_user2 = UserTestUtil.addUser();
+
+		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleTestUtil.addResourcePermission(
+			_role, User.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(_user1.getCompanyId()), actionId);
+
+		_userLocalService.addRoleUser(_role.getRoleId(), _user1);
+
+		PermissionChecker oldPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(_user1));
+
+			_userService.deleteUser(_user2.getUserId());
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			Assert.assertEquals(
+				String.format(
+					"User %s must have %s permission for " +
+						"com.liferay.portal.kernel.model.User %s",
+					_user1.getUserId(), expectedPermissions,
+					_user2.getUserId()),
+				principalException.getMessage());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(oldPermissionChecker);
+		}
+
+		Assert.assertNotNull(_userLocalService.fetchUser(_user2.getUserId()));
+	}
+
 	private void _testUpdateUserStatusWithInvalidPermission(
 			String actionId, int sourceStatus, int targetStatus,
 			String expectedPermissions)

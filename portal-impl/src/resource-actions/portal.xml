@@ -310,6 +310,8 @@
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
+				<action-key>ACTIVATE</action-key>
+				<action-key>DEACTIVATE</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>IMPERSONATE</action-key>
 				<action-key>PERMISSIONS</action-key>

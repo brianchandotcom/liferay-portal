@@ -9,6 +9,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.io.Deserializer;
 import com.liferay.petra.io.Serializer;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -93,7 +94,7 @@ public class IndexCreationElasticsearchConfigurationObserver
 		File dataFile = bundleContext.getDataFile(
 			"elasticsearch_configuration_state.data");
 
-		if (dataFile.exists()) {
+		if (dataFile.exists() && !StartupHelperUtil.isDBNew()) {
 			try {
 				Deserializer deserializer = new Deserializer(
 					ByteBuffer.wrap(FileUtil.getBytes(dataFile)));

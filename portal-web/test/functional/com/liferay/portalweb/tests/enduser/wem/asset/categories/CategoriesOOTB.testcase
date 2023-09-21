@@ -973,7 +973,7 @@ definition {
 
 			SearchPage.searchEmbedded(searchTerm = "Internal Category");
 
-			SearchResultPortlet.viewNoSearchResults(searchTerm = "Internal Category");
+			SearchResults.viewNoSearchResults(searchTerm = "Internal Category");
 		}
 	}
 
@@ -1042,7 +1042,7 @@ definition {
 
 			SearchPage.searchEmbedded(searchTerm = "Internal Category");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Web Content Title",
 				searchAssetType = "Web Content Article");
 		}

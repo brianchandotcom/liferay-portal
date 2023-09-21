@@ -42,7 +42,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple1",
 			searchAssetType = "Document");
 
@@ -57,7 +57,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Apple");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "Apple1,Apple2",
 			searchTerm = "Apple");
 	}
@@ -186,7 +186,7 @@ definition {
 
 			SearchPage.searchEmbedded(searchTerm = "WC Title");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "WC Title",
 				searchAssetType = "Web Content Article",
 				searchTerm = "WC Title");
@@ -487,7 +487,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Blogs");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Blogs Entry Title",
 			searchAssetType = "Blogs Entry",
 			searchTerm = "Blogs");
@@ -529,9 +529,9 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title 3,WC Title 1");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "WC Title 3,WC Title 1");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "WC Title 2",
 			searchAssetType = "Web Content Article");
 	}
@@ -578,11 +578,11 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple 2",
 			searchAssetType = "Document");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Apple 1",
 			searchAssetType = "Document");
 	}
@@ -621,7 +621,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "DM");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Title 1",
 			searchAssetType = "Document");
 
@@ -650,7 +650,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "DM");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Title 1",
 			searchAssetType = "Document");
 
@@ -681,7 +681,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "DM");
 
-		SearchResultPortlet.viewSearchResultNotPresent(searchTerm = "DM");
+		SearchResults.viewSearchResultNotPresent(searchTerm = "DM");
 	}
 
 }

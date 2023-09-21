@@ -207,11 +207,11 @@ definition {
 
 		SearchBarSuggestions.showMoreSuggestions();
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple Pie",
 			searchAssetType = "Document");
 
@@ -359,19 +359,19 @@ definition {
 		task ("Populate AC with data") {
 			SearchPage.searchEmbedded(searchTerm = "Apple Pie");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Apple Pie",
 				searchAssetType = "Web Content Article");
 
 			SearchPage.searchEmbedded(searchTerm = "Apple Pie");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Apple Pie",
 				searchAssetType = "Web Content Article");
 
 			SearchPage.searchEmbedded(searchTerm = "Apple Strudel");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Apple Strudel",
 				searchAssetType = "Web Content Article");
 

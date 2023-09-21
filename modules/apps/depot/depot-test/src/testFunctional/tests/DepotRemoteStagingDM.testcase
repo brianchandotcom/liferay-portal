@@ -2204,7 +2204,7 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "DM Document Title");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 	}

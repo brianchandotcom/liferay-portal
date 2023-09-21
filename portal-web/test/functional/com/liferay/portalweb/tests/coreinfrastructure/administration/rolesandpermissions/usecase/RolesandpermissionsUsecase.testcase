@@ -981,7 +981,7 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "Test Blog");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetSummary = "Blog Entry Content.",
 			searchAssetTitle = "Test Blog",
 			searchAssetType = "Blogs Entry");
@@ -1020,7 +1020,7 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "\"Test Blog\"");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"Test Blog\"");
+		SearchResults.viewNoSearchResults(searchTerm = "\"Test Blog\"");
 
 		User.logoutPG();
 
@@ -1042,7 +1042,7 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "Test Blog");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetSummary = "Blog Entry Content.",
 			searchAssetTitle = "Test Blog",
 			searchAssetType = "Blogs Entry");
@@ -1135,7 +1135,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Test Blog");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Test Blog",
 			searchAssetType = "Blogs Entry");
 
@@ -1167,7 +1167,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Test Blog");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Test Blog",
 			searchAssetType = "Blogs Entry");
 
@@ -1185,7 +1185,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Test Blog");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Test Blog",
 			searchAssetType = "Blogs Entry");
 

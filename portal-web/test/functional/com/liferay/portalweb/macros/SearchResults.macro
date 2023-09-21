@@ -2,7 +2,7 @@ definition {
 
 	macro configureSearchResults {
 		if (isSet(index)) {
-			SearchResultPortlet.gotoWidgetOptionsSpecific(
+			SearchResults.gotoWidgetOptionsSpecific(
 				index = ${index},
 				portletOption = "Configuration");
 		}
@@ -104,7 +104,7 @@ definition {
 			Click(locator1 = "Pagination#NEXT_LINK");
 		}
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = ${searchAssetTitle},
 			searchAssetType = ${searchAssetType},
 			searchTerm = ${searchTerm});
@@ -135,7 +135,7 @@ definition {
 				var searchAssetTitle = StringUtil.extractFirst(${titleAndType}, "/");
 				var searchAssetType = StringUtil.extractLast(${titleAndType}, "/");
 
-				SearchResultPortlet.viewSearchResults(
+				SearchResults.viewSearchResults(
 					searchAssetTitle = ${searchAssetTitle},
 					searchAssetType = ${searchAssetType},
 					searchTerm = ${searchTerm});
@@ -143,7 +143,7 @@ definition {
 		}
 		else {
 			for (var searchAssetTitle : list ${resultsList}) {
-				SearchResultPortlet.viewSearchResults(
+				SearchResults.viewSearchResults(
 					searchAssetTitle = ${searchAssetTitle},
 					searchTerm = ${searchTerm});
 			}
@@ -156,14 +156,14 @@ definition {
 				var searchAssetTitle = StringUtil.extractFirst(${titleAndType}, "/");
 				var searchAssetType = StringUtil.extractLast(${titleAndType}, "/");
 
-				SearchResultPortlet.viewSearchResultNotPresent(
+				SearchResults.viewSearchResultNotPresent(
 					searchAssetTitle = ${searchAssetTitle},
 					searchAssetType = ${searchAssetType});
 			}
 		}
 		else {
 			for (var searchAssetTitle : list ${resultsList}) {
-				SearchResultPortlet.viewSearchResultNotPresent(searchAssetTitle = ${searchAssetTitle});
+				SearchResults.viewSearchResultNotPresent(searchAssetTitle = ${searchAssetTitle});
 			}
 		}
 	}

@@ -113,7 +113,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "newtag");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Document_1",
 			searchAssetType = "Document");
 	}

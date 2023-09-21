@@ -413,7 +413,7 @@ definition {
 			for (var searchTerm : list "blue,green,yellow") {
 				SearchPage.searchEmbedded(searchTerm = ${searchTerm});
 
-				SearchResultPortlet.viewSearchResults(
+				SearchResults.viewSearchResults(
 					searchAssetTitle = "Blogs Entry Title ${i}",
 					searchAssetType = "Blogs Entry");
 

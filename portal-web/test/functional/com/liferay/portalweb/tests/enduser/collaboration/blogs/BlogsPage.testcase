@@ -425,25 +425,25 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "\"Blogs\"");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Entry Title",
 			searchAssetType = "Blogs Entry",
 			searchTerm = "\"Blogs\"");
 
 		SearchPage.searchEmbedded(searchTerm = "\"Blogs Entry Content\"");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Entry Title",
 			searchAssetType = "Blogs Entry",
 			searchTerm = "\"Blogs Entry Content\"");
 
 		SearchPage.searchEmbedded(searchTerm = "\"Blogs1\"");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"Blogs1\"");
+		SearchResults.viewNoSearchResults(searchTerm = "\"Blogs1\"");
 
 		SearchPage.searchEmbedded(searchTerm = "\"Blogs1 Entry1 Content1\"");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"Blogs1 Entry1 Content1\"");
+		SearchResults.viewNoSearchResults(searchTerm = "\"Blogs1 Entry1 Content1\"");
 	}
 
 	@description = "This checks that exact title search returns an entry when it includes the entire phrase being queried."
@@ -462,25 +462,25 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "\"Blogs\"");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Blogs Entry Title",
 			searchAssetType = "Blogs Entry",
 			searchTerm = "\"Blogs\"");
 
 		SearchPage.searchEmbedded(searchTerm = "\"Blogs Entry Title\"");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Blogs Entry Title",
 			searchAssetType = "Blogs Entry",
 			searchTerm = "\"Blogs Entry Title\"");
 
 		SearchPage.searchEmbedded(searchTerm = "\"Blogs1\"");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"Blogs1\"");
+		SearchResults.viewNoSearchResults(searchTerm = "\"Blogs1\"");
 
 		SearchPage.searchEmbedded(searchTerm = "\"Blogs Entry Title1\"");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"Blogs Entry Title1\"");
+		SearchResults.viewNoSearchResults(searchTerm = "\"Blogs Entry Title1\"");
 	}
 
 	@description = "This checks that a blog comment can be subscribed to."

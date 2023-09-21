@@ -755,7 +755,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Record Text");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Record for Dynamic Data List:",
 			searchAssetType = "Dynamic Data Lists Record");
 
@@ -770,7 +770,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = 123);
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Record for Dynamic Data List:",
 			searchAssetType = "Dynamic Data Lists Record");
 
@@ -854,7 +854,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Record Text");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Record for Dynamic Data List:",
 			searchAssetType = "Dynamic Data Lists Record");
 
@@ -871,7 +871,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Record Text");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "Record Text");
+		SearchResults.viewNoSearchResults(searchTerm = "Record Text");
 	}
 
 	@priority = 4

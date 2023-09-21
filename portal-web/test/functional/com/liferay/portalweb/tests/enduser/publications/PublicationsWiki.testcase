@@ -409,7 +409,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Wiki");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "Wiki Page Production,Wiki Page Content Edit,Wiki Page Publication 2",
 			searchTerm = "Wiki");
 
@@ -419,7 +419,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Wiki");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "Wiki Page Production,Original content,Wiki Page Publication 1",
 			searchTerm = "Wiki");
 
@@ -429,16 +429,16 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Wiki");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetSummary = "Original content",
 			searchAssetTitle = "Wiki Page Production",
 			searchAssetType = "Wiki Page");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Wiki Page Publication 1",
 			searchAssetType = "Wiki Page");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Wiki Page Publication 2",
 			searchAssetType = "Wiki Page");
 	}

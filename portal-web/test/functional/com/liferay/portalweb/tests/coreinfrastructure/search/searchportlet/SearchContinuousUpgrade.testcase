@@ -47,7 +47,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
-		SearchResultPortlet.configureSearchResults(paginationDelta = 2);
+		SearchResults.configureSearchResults(paginationDelta = 2);
 
 		SearchPage.configureSearchOptions(allowEmptySearches = "true");
 

@@ -454,7 +454,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Awesome Button");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "Awesome Button");
+		SearchResults.viewNoSearchResults(searchTerm = "Awesome Button");
 	}
 
 }

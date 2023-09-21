@@ -1536,7 +1536,7 @@ definition {
 
 			SearchPage.searchEmbedded(searchTerm = "WC WebContent Title");
 
-			SearchResultPortlet.viewNoSearchResults(searchTerm = "WC WebContent Title");
+			SearchResults.viewNoSearchResults(searchTerm = "WC WebContent Title");
 		}
 
 		task ("Reindex and search it again") {
@@ -1546,7 +1546,7 @@ definition {
 
 			SearchPage.searchEmbedded(searchTerm = "WC WebContent Title");
 
-			SearchResultPortlet.viewNoSearchResults(searchTerm = "WC WebContent Title");
+			SearchResults.viewNoSearchResults(searchTerm = "WC WebContent Title");
 		}
 	}
 

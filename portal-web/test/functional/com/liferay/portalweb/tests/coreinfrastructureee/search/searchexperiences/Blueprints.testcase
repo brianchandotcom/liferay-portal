@@ -132,7 +132,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article");
 
@@ -144,7 +144,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article");
 	}
@@ -208,7 +208,7 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
 	}
 
 	@priority = 3
@@ -277,7 +277,7 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
 	}
 
 	@description = "This is a use case for LPS-177882. Can apply blueprint to blueprint options widget in a non-root portal context."
@@ -323,7 +323,7 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
 	}
 
 	@priority = 3
@@ -359,13 +359,13 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "liferay");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Liferay Blogs Entry,Liferay Web Content");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Liferay Blogs Entry,Liferay Web Content");
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
 
 		SearchPage.searchEmbedded(searchTerm = "liferay");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Liferay Web Content,Liferay Blogs Entry");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Liferay Web Content,Liferay Blogs Entry");
 	}
 
 	@description = "This is a use case for LPS-147264."
@@ -481,7 +481,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Employee");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Employee eyes only",
 			searchAssetType = "Web Content Article");
 
@@ -491,7 +491,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Employee");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Employee eyes only",
 			searchAssetType = "Web Content Article");
 	}
@@ -555,7 +555,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Longer,WC Shorter");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "WC Longer,WC Shorter");
 
 		Blueprints.openBlueprintsAdmin();
 
@@ -573,7 +573,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Longer,WC Shorter");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "WC Longer,WC Shorter");
 	}
 
 	@description = "This is a use case for LPS-136868."
@@ -627,7 +627,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "gala,apple apple apple");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "gala,apple apple apple");
 
 		Blueprints.openBlueprintsAdmin();
 
@@ -643,7 +643,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "apple apple apple,gala");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "apple apple apple,gala");
 	}
 
 	@description = "This is a use case for LPS-185939 - Federated search requests should inherit parent request's search context properties."
@@ -694,7 +694,7 @@ definition {
 				federatedSearchKey = "key",
 				searchScope = "Everything");
 
-			SearchResultPortlet.configureSearchResults(federatedSearchKey = "key");
+			SearchResults.configureSearchResults(federatedSearchKey = "key");
 
 			SearchPage.configureSearchOptions(
 				allowEmptySearches = "true",
@@ -712,11 +712,11 @@ definition {
 
 			SearchPage.openSearchPage();
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "WC WebContent Title",
 				searchAssetType = "Web Content Article");
 
-			SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "astronaut.png,earth.png,moon.png");
+			SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "astronaut.png,earth.png,moon.png");
 		}
 	}
 
@@ -933,7 +933,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
 	}
 
 	@priority = 3
@@ -995,7 +995,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "WC Title,apple apple apple");
 	}
 
 	@priority = 3
@@ -1037,7 +1037,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "red apple");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "red apple,reddish apple");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "red apple,reddish apple");
 
 		Blueprints.openBlueprintsAdmin();
 
@@ -1086,7 +1086,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "red apple");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "reddish apple,red apple");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "reddish apple,red apple");
 	}
 
 	@priority = 3
@@ -1135,11 +1135,11 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "food");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Delicious Food",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Good Food",
 			searchAssetType = "Web Content Article");
 	}
@@ -1936,15 +1936,15 @@ definition {
 
 		SearchPage.configureSearchBarWidget(federatedSearchKey = "key");
 
-		SearchResultPortlet.configureSearchResults(federatedSearchKey = "key");
+		SearchResults.configureSearchResults(federatedSearchKey = "key");
 
 		SearchPage.searchWidget(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple Pie",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Document");
 	}
@@ -2073,11 +2073,11 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Content");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Show This Content",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Hide This Content",
 			searchAssetType = "Web Content Article");
 	}

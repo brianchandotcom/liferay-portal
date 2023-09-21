@@ -103,15 +103,15 @@ definition {
 		}
 
 		task ("Assert only search results associated with the checked title facet term are returned") {
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Coconut Fruit",
 				searchAssetType = "Custom Object");
 
-			SearchResultPortlet.viewSearchResultNotPresent(
+			SearchResults.viewSearchResultNotPresent(
 				searchAssetTitle = "Apple Fruit",
 				searchAssetType = "Custom Object");
 
-			SearchResultPortlet.viewSearchResultNotPresent(
+			SearchResults.viewSearchResultNotPresent(
 				searchAssetTitle = "Banana Fruit",
 				searchAssetType = "Custom Object");
 		}
@@ -129,15 +129,15 @@ definition {
 		}
 
 		task ("Assert only search results associated with the checked siteID facet term are returned") {
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Apple Fruit",
 				searchAssetType = "Custom Object");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Banana Fruit",
 				searchAssetType = "Custom Object");
 
-			SearchResultPortlet.viewSearchResultNotPresent(
+			SearchResults.viewSearchResultNotPresent(
 				searchAssetTitle = "Coconut Fruit",
 				searchAssetType = "Custom Object");
 		}
@@ -155,15 +155,15 @@ definition {
 		}
 
 		task ("Assert only search results associated with the checked date facet term are returned") {
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Apple Fruit",
 				searchAssetType = "Custom Object");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Banana Fruit",
 				searchAssetType = "Custom Object");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Coconut Fruit",
 				searchAssetType = "Custom Object");
 		}
@@ -229,11 +229,11 @@ definition {
 				facetName = "Custom Facet",
 				facetTerm = "Liferay 1");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "WC Title 1",
 				searchAssetType = "Web Content Article");
 
-			SearchResultPortlet.viewSearchResultNotPresent(
+			SearchResults.viewSearchResultNotPresent(
 				searchAssetTitle = "WC Title 2",
 				searchAssetType = "Web Content Article");
 		}
@@ -249,11 +249,11 @@ definition {
 				facetName = "Custom Facet",
 				facetTerm = "Liferay 2");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "WC Title 2",
 				searchAssetType = "Web Content Article");
 
-			SearchResultPortlet.viewSearchResultNotPresent(
+			SearchResults.viewSearchResultNotPresent(
 				searchAssetTitle = "WC Title 1",
 				searchAssetType = "Web Content Article");
 		}
@@ -335,7 +335,7 @@ definition {
 			facetName = "Tag Facet",
 			facetTerm = "fruit");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "apple");
+		SearchResults.viewNoSearchResults(searchTerm = "apple");
 
 		Refresh();
 
@@ -343,7 +343,7 @@ definition {
 
 		FormFields.viewCheckboxChecked(fieldName = "fruit");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "apple");
+		SearchResults.viewNoSearchResults(searchTerm = "apple");
 	}
 
 	@priority = 3
@@ -595,7 +595,7 @@ definition {
 			Refresh();
 
 			for (var count : list "1,2,3") {
-				SearchResultPortlet.viewSearchResults(
+				SearchResults.viewSearchResults(
 					searchAssetTitle = "Web Content ${count}",
 					searchAssetType = "Content");
 			}
@@ -607,7 +607,7 @@ definition {
 				range = "Past Hour");
 
 			for (var count : list "1,2,3") {
-				SearchResultPortlet.viewSearchResults(
+				SearchResults.viewSearchResults(
 					searchAssetTitle = "Web Content ${count}",
 					searchAssetType = "Content");
 			}
@@ -642,7 +642,7 @@ definition {
 				locator1 = "Search#MODIFIED_FACET_SELECTION",
 				range = "Past 23 Hours");
 
-			SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Web Content 1,Web Content 2,Web Content 3");
+			SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "Web Content 1,Web Content 2,Web Content 3");
 		}
 	}
 
@@ -680,7 +680,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Category Name");
 
-		SearchResultPortlet.configureSearchResults(paginationDelta = 2);
+		SearchResults.configureSearchResults(paginationDelta = 2);
 
 		Refresh();
 
@@ -1801,7 +1801,7 @@ definition {
 		SearchPage.searchEmbedded(searchTerm = "wc");
 
 		task ("Assert the search results after 'wc' search and after applying any search filter") {
-			SearchResultPortlet.viewMultipleSearchResults(
+			SearchResults.viewMultipleSearchResults(
 				resultsList = "wc1,wc2,wc3,wc4,wc5,wc6",
 				searchTerm = "wc");
 
@@ -1809,7 +1809,7 @@ definition {
 				facetName = "Tag Facet",
 				facetTerm = "tag1");
 
-			SearchResultPortlet.viewMultipleSearchResults(
+			SearchResults.viewMultipleSearchResults(
 				resultsList = "wc2,wc4,wc6",
 				searchTerm = "wc");
 
@@ -1817,7 +1817,7 @@ definition {
 				facetName = "Category Facet",
 				facetTerm = "cat1");
 
-			SearchResultPortlet.viewMultipleSearchResults(
+			SearchResults.viewMultipleSearchResults(
 				resultsList = "wc4,wc6",
 				searchTerm = "wc");
 
@@ -1827,7 +1827,7 @@ definition {
 
 			FormFields.viewCheckboxNotChecked(fieldName = "cat1");
 
-			SearchResultPortlet.viewMultipleSearchResults(
+			SearchResults.viewMultipleSearchResults(
 				resultsList = "wc2,wc4,wc6",
 				searchTerm = "wc");
 		}
@@ -1882,7 +1882,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "WebContent");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1",
 			searchAssetType = "Web Content Article",
 			searchTerm = "WebContent");
@@ -1897,7 +1897,7 @@ definition {
 			key_facetName = "Custom Facet",
 			locator1 = "SearchResults#FACET_CHECKBOX_LABEL_SPECIFIC");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1",
 			searchAssetType = "Web Content Article",
 			searchTerm = "WebContent");
@@ -1920,7 +1920,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "WebContent");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1.1",
 			searchAssetType = "Web Content Article",
 			searchTerm = "WebContent");
@@ -1935,7 +1935,7 @@ definition {
 			key_facetName = "Custom Facet",
 			locator1 = "SearchResults#FACET_CHECKBOX_LABEL_SPECIFIC");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1.1",
 			searchAssetType = "Web Content Article",
 			searchTerm = "WebContent");
@@ -2064,7 +2064,7 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "WC Title");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "WC Title 1,WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
@@ -2072,7 +2072,7 @@ definition {
 			facetName = "Category Facet",
 			facetTerm = "Category Name 2");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "WC Title 1,WC Title 2",
 			searchTerm = "WC Title");
 
@@ -2082,7 +2082,7 @@ definition {
 			facetName = "Category Facet",
 			facetTerm = "Category Name 3");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
@@ -2096,7 +2096,7 @@ definition {
 			facetName = "Category Facet",
 			facetTerm = "Category Name 3");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "WC Title 1,WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 	}
@@ -2166,7 +2166,7 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "WC Title");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "WC Title 1,WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
@@ -2174,7 +2174,7 @@ definition {
 			facetName = "Category Facet",
 			facetTerm = "Category Name 2");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "WC Title 1,WC Title 2",
 			searchTerm = "WC Title");
 
@@ -2184,7 +2184,7 @@ definition {
 			facetName = "Category Facet",
 			facetTerm = "Category Name 3");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
@@ -2198,7 +2198,7 @@ definition {
 			facetName = "Category Facet",
 			facetTerm = "Category Name 3");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "WC Title 1,WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 	}
@@ -2274,7 +2274,7 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "WC Title");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "WC Title 1,WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
@@ -2282,7 +2282,7 @@ definition {
 			facetName = "Category Facet",
 			facetTerm = "Category Name 2");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "WC Title 1,WC Title 2",
 			searchTerm = "WC Title");
 
@@ -2292,7 +2292,7 @@ definition {
 			facetName = "Category Facet",
 			facetTerm = "Category Name 3");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
@@ -2306,7 +2306,7 @@ definition {
 			facetName = "Category Facet",
 			facetTerm = "Category Name 3");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC Title 2",
 			searchAssetType = "Web Content Article");
 	}
@@ -2332,7 +2332,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "DM");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "DM Document Title 1,DM Document Title 2",
 			searchTerm = "DM");
 
@@ -2340,11 +2340,11 @@ definition {
 			facetName = "Folder Facet",
 			facetTerm = "DM Folder Name 1");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Document Title 1",
 			searchAssetType = "Document");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "DM Document Title 2",
 			searchAssetType = "Document");
 
@@ -2354,11 +2354,11 @@ definition {
 			facetName = "Folder Facet",
 			facetTerm = "DM Folder Name 2");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Document Title 2",
 			searchAssetType = "Document");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "DM Document Title 1",
 			searchAssetType = "Document");
 
@@ -2420,7 +2420,7 @@ definition {
 			locator1 = "Search#MODIFIED_FACET_SELECTION",
 			range = "Past 23 Hours");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "WC Title");
+		SearchResults.viewNoSearchResults(searchTerm = "WC Title");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Modified Facet",
@@ -2444,7 +2444,7 @@ definition {
 			locator1 = "Search#MODIFIED_FACET_SELECTION",
 			range = "Past 23 Hours");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article",
 			searchTerm = "WC Title");
@@ -2479,7 +2479,7 @@ definition {
 
 		Click(locator1 = "Button#SEARCH");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article",
 			searchTerm = "WC Title");
@@ -2523,7 +2523,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Apple");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "Apple/Web Content Article,Apple/Document,Apple/Blogs Entry",
 			searchTerm = "Apple");
 
@@ -2543,11 +2543,11 @@ definition {
 			key_fieldName = "Document",
 			locator1 = "FormFields#CHECKBOX_LABEL");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "Apple/Web Content Article,Apple/Blogs Entry",
 			searchTerm = "Apple");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Document");
 	}
@@ -2644,7 +2644,7 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "*");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Test Test",
 			searchAssetType = "User");
 
@@ -2656,7 +2656,7 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "test");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Test Test",
 			searchAssetType = "User");
 
@@ -2758,11 +2758,11 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,apple/Web Content Article",
 			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Document,orange/Web Content Article");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Document,orange/Web Content Article");
 
 		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Type Facet",
@@ -2770,35 +2770,35 @@ definition {
 			searchPage = "Search Page",
 			searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article",
 			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,banana/Document,orange/Web Content Article");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,banana/Document,orange/Web Content Article");
 
 		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Type Facet",
 			facetTerm = "Blogs Entry",
 			searchURL = ${testSearchURL});
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,apple/Web Content Article",
 			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Document,orange/Web Content Article");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Document,orange/Web Content Article");
 
 		var testSearchURL = SearchFacets.uncheckFacetTermAndViewURL(
 			facetName = "Type Facet",
 			facetTerm = "Web Content Article",
 			searchURL = ${testSearchURL});
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "apple",
 			searchAssetType = "Blogs Entry",
 			searchTerm = "apple");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article,banana/Document,orange/Web Content Article");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article,banana/Document,orange/Web Content Article");
 
 		var testSearchURL = SearchFacets.clearAllFacetsAndViewURL(searchURL = ${testSearchURL});
 
@@ -2810,7 +2810,7 @@ definition {
 
 		AssertLocation(value1 = ${testSearchURL});
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document,orange/Web Content Article",
 			searchTerm = "test");
 
@@ -2820,34 +2820,34 @@ definition {
 			searchURL = ${testSearchURL},
 			termURLValue = ${organicCategoryId});
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article,banana/Document",
 			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
 		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "User Facet",
 			facetTerm = "userfn userln",
 			searchURL = ${testSearchURL});
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "banana",
 			searchAssetType = "Document",
 			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,orange/Web Content Article");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,orange/Web Content Article");
 
 		var testSearchURL = SearchFacets.uncheckFacetTermAndViewURL(
 			facetName = "User Facet",
 			facetTerm = "userfn userln",
 			searchURL = ${testSearchURL});
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article,banana/Document",
 			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
 		var testSearchURL = SearchFacets.clearAllFacetsAndViewURL(searchURL = ${testSearchURL});
 
@@ -2867,11 +2867,11 @@ definition {
 			facetTerm = "fresh",
 			searchURL = ${testSearchURL});
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,banana/Document,orange/Web Content Article",
 			searchTerm = "test");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article");
 
@@ -2895,11 +2895,11 @@ definition {
 			searchURL = ${testSearchURL},
 			termURLValue = ${newSiteId});
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,banana/Document,orange/Web Content Article",
 			searchTerm = "test");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article");
 
@@ -2909,11 +2909,11 @@ definition {
 			searchURL = ${testSearchURL},
 			termURLValue = ${newSiteId});
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "banana/Document,orange/Web Content Article",
 			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article");
 
 		var webContentFolderId2 = JSONWebcontent.getFolderIdByFolderName(
 			folderName = "WC Folder Name 2",
@@ -2925,24 +2925,24 @@ definition {
 			searchURL = ${testSearchURL},
 			termURLValue = ${webContentFolderId2});
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "orange",
 			searchAssetType = "Web Content Article",
 			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document");
 
 		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Tag Facet",
 			facetTerm = "ripe",
 			searchURL = ${testSearchURL});
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "orange",
 			searchAssetType = "Web Content Article",
 			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document");
 
 		var testSearchURL = SearchFacets.uncheckFacetTermAndViewURL(
 			facetName = "Folder Facet",
@@ -2955,11 +2955,11 @@ definition {
 			facetTerm = "fresh",
 			searchURL = ${testSearchURL});
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "apple/Web Content Article,banana/Document",
 			searchTerm = "test");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
 		var testSearchURL = SearchFacets.clearAllFacetsAndViewURL(searchURL = ${testSearchURL});
 
@@ -3005,7 +3005,7 @@ definition {
 			facetTerm = "Test Test",
 			searchURL = ${testSearchURL});
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article",
 			searchTerm = "organic");

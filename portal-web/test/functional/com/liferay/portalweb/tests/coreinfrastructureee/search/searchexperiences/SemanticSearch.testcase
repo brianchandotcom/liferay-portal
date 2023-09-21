@@ -325,7 +325,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "test");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Test Web Content",
 			searchAssetType = "Web Content Article");
 
@@ -365,12 +365,12 @@ definition {
 
 		SearchPage.openSearchPage();
 
-		SearchResultPortlet.configureSearchResults(displayDocumentForm = "true");
+		SearchResults.configureSearchResults(displayDocumentForm = "true");
 
 		SearchPage.searchEmbedded(searchTerm = "test");
 
 		for (var assetTitle : list "Test Web Content,Test Blog,Test Knowledge Base Article,Test Message Board Thread,Test Wiki Page") {
-			SearchResultPortlet.viewDocumentDetailValue(
+			SearchResults.viewDocumentDetailValue(
 				documentDetailKey = "text_embedding_768_en_US",
 				documentDetailKeyValue = "0.0",
 				searchAssetTitle = ${assetTitle});

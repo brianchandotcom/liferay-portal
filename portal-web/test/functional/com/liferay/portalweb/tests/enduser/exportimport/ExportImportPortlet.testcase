@@ -112,7 +112,7 @@ definition {
 
 	@description = "This is a use case for LRQA-73362. Verify if custom fields can be added and deleted through importing their LAR file. Blocked by LPS-149168."
 	@ignore = "true"
-	@priority = 4
+	@priority = 3
 	test CustomFieldDeletionViaImporting {
 		property app.server.bundles.size = "1";
 		property databases.size = "1";
@@ -295,7 +295,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-95589. Verify is not possible export a DM with deleted document link."
-	@priority = 4
+	@priority = 3
 	test ExportDMWithDeletedDocumentLink {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -350,7 +350,7 @@ definition {
 	}
 
 	@description = "Verify is possible export and import a DDL via Global."
-	@priority = 5
+	@priority = 3
 	test ExportImportDDLViaGlobal {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -509,7 +509,7 @@ definition {
 	}
 
 	@description = "Verify is possible export/import a Portlet."
-	@priority = 5
+	@priority = 4
 	test ExportImportPortlet {
 		property portal.acceptance = "true";
 
@@ -571,7 +571,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-83326 and LPS-99287. Verify is possible export/import Web Content Folder with a Workflow."
-	@priority = 5
+	@priority = 3
 	test ExportImportWebContentFolderWithWorkflow {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -768,7 +768,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-88831, LPS-88889 and LPS-88890. Verify is possible export a web content with deleted reference."
-	@priority = 4
+	@priority = 3
 	test ExportWebContentWithDeletedReference {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -928,7 +928,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-182704. TC-1 and TC-3: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during portlet import process."
-	@priority = 5
+	@priority = 3
 	test ViewDeleteApplicationDataPopUpInPortletImportProgress {
 		task ("Export blank web content and add a new web content entry") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
@@ -959,7 +959,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-182704. TC-14 and TC-15: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during portlet import process on virtual instance."
-	@priority = 5
+	@priority = 3
 	test ViewDeleteApplicationDataPopUpInPortletImportProgressInVirtualInstance {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

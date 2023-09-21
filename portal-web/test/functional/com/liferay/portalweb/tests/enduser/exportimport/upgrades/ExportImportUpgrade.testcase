@@ -16,7 +16,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Relaunch export process for default site."
-	@priority = 5
+	@priority = 4
 	test DefaultSiteCanBeExportedAfterUpgrade71103 {
 		property data.archive.type = "data-archive-default-site-export";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -32,7 +32,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Relaunch export process for default site."
-	@priority = 5
+	@priority = 3
 	test DefaultSiteCanBeExportedAfterUpgrade72101 {
 		property data.archive.type = "data-archive-default-site-export";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Relaunch export process for default site."
-	@priority = 5
+	@priority = 3
 	test DefaultSiteCanBeExportedAfterUpgrade73101 {
 		property data.archive.type = "data-archive-default-site-export";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Relaunch export process for default site. Blocked by LRQA-73610."
-	@priority = 5
+	@priority = 3
 	test DefaultSiteCanBeExportedAfterUpgrade701016 {
 		property data.archive.type = "data-archive-default-site-export";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -80,7 +80,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Modify contents of export template after upgrading."
-	@priority = 5
+	@priority = 3
 	test ExportTemplateCanBeEditedAfterUpgrade71103 {
 		property data.archive.type = "data-archive-edit-export-template";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -150,7 +150,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Modify contents of export template after upgrading."
-	@priority = 5
+	@priority = 3
 	test ExportTemplateCanBeEditedAfterUpgrade72101 {
 		property data.archive.type = "data-archive-edit-export-template";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -220,7 +220,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Modify contents of export template after upgrading."
-	@priority = 5
+	@priority = 3
 	test ExportTemplateCanBeEditedAfterUpgrade73101 {
 		property data.archive.type = "data-archive-edit-export-template";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -290,7 +290,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-138634. Modify contents of export template after upgrading."
-	@priority = 5
+	@priority = 3
 	test ExportTemplateCanBeEditedAfterUpgrade701016 {
 		property data.archive.type = "data-archive-edit-export-template";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
@@ -360,7 +360,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-184978. TC-11: URL Pattern configuration works well after upgrading from 7.3 SP1."
-	@priority = 5
+	@priority = 3
 	test URLPatternShouldWorkAfterUpgrade73101 {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property data.archive.type = "data-archive-web-content-with-custom-url";

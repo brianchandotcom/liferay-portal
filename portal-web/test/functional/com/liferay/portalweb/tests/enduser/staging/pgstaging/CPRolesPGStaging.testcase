@@ -44,7 +44,7 @@ definition {
 		}
 	}
 
-	@priority = 4
+	@priority = 3
 	test AccessStaging {
 		property portal.acceptance = "true";
 
@@ -100,7 +100,7 @@ definition {
 		}
 	}
 
-	@priority = 4
+	@priority = 3
 	test StagingBlogsRolesWorkflow {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

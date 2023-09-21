@@ -37,7 +37,7 @@ definition {
 		}
 	}
 
-	@priority = 4
+	@priority = 3
 	test StagingDemoLocalLive1 {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -152,7 +152,7 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
-	@priority = 4
+	@priority = 3
 	test StagingDemoLocalLive2 {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -220,7 +220,7 @@ definition {
 		PagesAdmin.viewSelectedLayoutColumn(columnName = "1 Column");
 	}
 
-	@priority = 4
+	@priority = 3
 	test StagingDemoLocalLive3 {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -393,7 +393,7 @@ definition {
 		PagesAdmin.viewPageItemPresent(pageName = "Test Page Name");
 	}
 
-	@priority = 5
+	@priority = 3
 	test StagingDemoLocalLive4 {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -480,7 +480,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-82564."
-	@priority = 4
+	@priority = 3
 	test StagingLocalLiveWebContent {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -599,7 +599,7 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	@priority = 4
+	@priority = 3
 	test StagingLocalLiveWorkflow {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -857,7 +857,7 @@ definition {
 			workflowTask = "Review");
 	}
 
-	@priority = 5
+	@priority = 3
 	test StagingPublishPage {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

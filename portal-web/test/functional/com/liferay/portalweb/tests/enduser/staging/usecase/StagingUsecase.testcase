@@ -37,7 +37,7 @@ definition {
 		}
 	}
 
-	@priority = 5
+	@priority = 3
 	test ActivateStagingForSiteWithTheme {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -75,7 +75,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-98170"
-	@priority = 4
+	@priority = 3
 	test AssertAssetPriorityNotBeResetAfterPublication {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -266,7 +266,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-128736."
-	@priority = 4
+	@priority = 3
 	test AssertContentNotBePublishedByDefault {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -478,7 +478,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123156"
-	@priority = 4
+	@priority = 3
 	test AssertStagingPublicationAndProcessesMessage {
 		task ("Given: The initial publish process is deleted") {
 			Staging.openStagingAdmin(siteURLKey = "site-name-staging");
@@ -572,7 +572,7 @@ definition {
 		}
 	}
 
-	@priority = 5
+	@priority = 3
 	test ContentCannotBeCreatedOnLive {
 		property portal.acceptance = "true";
 
@@ -613,7 +613,7 @@ definition {
 		}
 	}
 
-	@priority = 5
+	@priority = 3
 	test DeleteLivePage {
 		task ("Given: User add a new page to the staging site and publish it") {
 			property portal.acceptance = "true";
@@ -799,7 +799,7 @@ definition {
 		}
 	}
 
-	@priority = 5
+	@priority = 3
 	test ImportLARsOnStagedSite {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -911,7 +911,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-167777 TC-2: Verify that the modified referred content(DM content) will present in the LAR when 'Include if modified' is enabled for Web Content."
-	@priority = 4
+	@priority = 3
 	test ModifiedReferredContentCanPublishToLiveWhenEnableIncludeIfModifiedOption {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -994,7 +994,7 @@ definition {
 		}
 	}
 
-	@priority = 4
+	@priority = 3
 	test MoveToTheRecycleBinAndRestorePublishTemplate {
 		task ("Given: User add a new publish template") {
 			Staging.openStagingAdmin(siteURLKey = "site-name-staging");
@@ -1039,7 +1039,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-167777 TC-1: Verify that the non-modified referred content(DM content) will not present in the LAR when 'Include if modified' is enabled for Web Content."
-	@priority = 4
+	@priority = 3
 	test NonModifiedReferredContentCannotPublishToLiveWhenEnableIncludeIfModifiedOption {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1191,7 +1191,7 @@ definition {
 		}
 	}
 
-	@priority = 5
+	@priority = 4
 	test PublishPortlet {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -1236,7 +1236,7 @@ definition {
 		}
 	}
 
-	@priority = 5
+	@priority = 3
 	test PublishThemeFromStagedToLive {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1284,7 +1284,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-127207."
-	@priority = 4
+	@priority = 3
 	test PublishWebContentFolderWithChildFolders {
 		task ("When: User add a new folder with 3 subfolder") {
 			JSONWebcontent.addFolder(
@@ -1359,7 +1359,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-149374. TC-3: Verify the state of portlets and contents in Live when publishing with Publish Displayed Content by Default and Replicate Individual Deletions."
-	@priority = 5
+	@priority = 3
 	test PublishWithDefaultTrueAndReplicateIndividualDeletions {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1578,7 +1578,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-84418 and LPS-117578."
-	@priority = 5
+	@priority = 3
 	test PublishWithImpossibleDateRange {
 		property portal.acceptance = "true";
 
@@ -1594,7 +1594,7 @@ definition {
 		}
 	}
 
-	@priority = 4
+	@priority = 3
 	test RemoveTagsFromPublishBlogAndDM {
 		task ("Given: User add a Blog portlet to the staging site with an entry") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -1702,7 +1702,7 @@ definition {
 		}
 	}
 
-	@priority = 4
+	@priority = 3
 	test SearchPublishTemplate {
 		task ("When: User add two publish templates on the staging site") {
 			Staging.openStagingAdmin(siteURLKey = "site-name-staging");
@@ -1738,7 +1738,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-82028."
-	@priority = 4
+	@priority = 3
 	test SingleAssetPublishLayoutScopedContent {
 		task ("Given: User add a Blog portlet to the staging site") {
 			JSONLayout.addWidgetToPublicLayout(
@@ -1786,7 +1786,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-92578. It ensures that DM succeeds to publish to live when file exists in the recycle bin."
-	@priority = 4
+	@priority = 3
 	test SinglePublicationAfterDeleteDocument {
 		task ("Given: User add a new file on the staging site") {
 			JSONDocument.addFileWithUploadedFile(
@@ -1916,7 +1916,7 @@ definition {
 		}
 	}
 
-	@priority = 4
+	@priority = 3
 	test StagingPublishChildSiteWithReference {
 		task ("Given: User add a new WC to staging then publish the site") {
 			JSONWebcontent.addWebContent(
@@ -1976,7 +1976,7 @@ definition {
 		}
 	}
 
-	@priority = 4
+	@priority = 3
 	test StagingPublishOnlySelectedPage {
 		task ("Given: User add 3 pages to the staging site") {
 			for (var layoutName : list "Page 1,Page 2,Page 3") {
@@ -2011,7 +2011,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-91017, LPS-89646."
-	@priority = 4
+	@priority = 3
 	test StagingPublishWCWithWebContentFieldViaAP {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -2236,7 +2236,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123156 and LPS-185203 TC-1: The summary of the failed publishing processes can be viewed."
-	@priority = 5
+	@priority = 3
 	test TrashEntryReferencePublishing {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -2369,7 +2369,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-182704. TC-7 and TC-9: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during Blogs and Forms portlet import process on live site"
-	@priority = 5
+	@priority = 3
 	test ViewDeleteApplicationDataPopUpInBlogsAndFormsImportProgressOnLiveSite {
 		task ("Export blank Blogs lar from the default site and add a blog entry in staging site") {
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
@@ -2447,7 +2447,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-182704. TC-6 and TC-8: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during Blogs and Forms portlet import process on staging site"
-	@priority = 5
+	@priority = 3
 	test ViewDeleteApplicationDataPopUpInBlogsAndFormsImportProgressOnStagingSite {
 		task ("Export blank Blogs lar from the default site and add a blog entry in staging site") {
 			BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
@@ -2515,7 +2515,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-182704. TC-5 and TC-11: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during WCM portlet import process on live site"
-	@priority = 5
+	@priority = 3
 	test ViewDeleteApplicationDataPopUpInWCMImportProgressOnLiveSite {
 		task ("Export web content from the default site and add a new web content entry in staging site") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
@@ -2553,7 +2553,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-182704. TC-4 and TC-10: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during WCM portlet import process on staging site"
-	@priority = 5
+	@priority = 3
 	test ViewDeleteApplicationDataPopUpInWCMImportProgressOnStagingSite {
 		task ("Export web content from the default site and add a new web content entry in staging site") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
@@ -2585,7 +2585,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-178085. TC-1: Verify that a confirmation pop-up shows up after checking Delete Application Data Before Importing checkbox when publishing staging site."
-	@priority = 5
+	@priority = 3
 	test ViewDeletingApplicationDataPopUpInPublishProgress {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -2620,7 +2620,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-178085. TC-4: Verify that a confirmation pop-up shows up after checking Delete Application Data Before Importing checkbox when set schedule for publish progress."
-	@priority = 5
+	@priority = 3
 	test ViewDeletingApplicationDataPopUpWhenSetPublishSchedule {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -2656,7 +2656,7 @@ definition {
 		}
 	}
 
-	@priority = 4
+	@priority = 3
 	test ViewPublishDMWithModifiedTitle {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -2714,7 +2714,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-96721."
-	@priority = 4
+	@priority = 3
 	test ViewPublishedContentWithSpecialCharsInDocumentTitle {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -2834,7 +2834,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-87280."
-	@priority = 4
+	@priority = 3
 	test ViewPublishedWCWithApostropheInImageField {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -2967,7 +2967,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-76633."
-	@priority = 5
+	@priority = 4
 	test ViewSingleAssetPublication {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

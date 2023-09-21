@@ -62,7 +62,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174465 and LPS-174471. TC-8 Verify that the exclamation mark are present after upgrade."
-	@priority = 4
+	@priority = 3
 	test ExclamationMarkPresentAfterUpgrade701016 {
 		property custom.properties = "feature.flag.LPS-174417=true";
 		property data.archive.type = "data-archive-page-with-collision";
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-138633. User can edit the name and the status of a template after upgrade."
-	@priority = 5
+	@priority = 3
 	test TemplateNameAndStatusCanBeEditedAfterUpgrade71103 {
 		property data.archive.type = "data-archive-deactivated-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
@@ -136,7 +136,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-138633. User can edit the name and the status of a template after upgrade."
-	@priority = 5
+	@priority = 3
 	test TemplateNameAndStatusCanBeEditedAfterUpgrade72101 {
 		property data.archive.type = "data-archive-deactivated-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
@@ -164,7 +164,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-138633. User can edit the name and the status of a template after upgrade."
-	@priority = 5
+	@priority = 3
 	test TemplateNameAndStatusCanBeEditedAfterUpgrade73101 {
 		property data.archive.type = "data-archive-deactivated-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
@@ -192,7 +192,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-138633. User can edit the name and the status of a template after upgrade."
-	@priority = 5
+	@priority = 3
 	test TemplateNameAndStatusCanBeEditedAfterUpgrade701016 {
 		property data.archive.type = "data-archive-deactivated-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
@@ -220,7 +220,7 @@ definition {
 	}
 
 	@description = "Disabling propagation of the template should work after an upgrade. User can disable propagation and prevent any changes on template from reaching the site created from it."
-	@priority = 5
+	@priority = 3
 	test TemplatePropagationShouldWorkAfterUpgrade71103 {
 		property data.archive.type = "data-archive-page-from-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
@@ -262,7 +262,7 @@ definition {
 	}
 
 	@description = "Disabling propagation of the template should work after an upgrade. User can disable propagation and prevent any changes on template from reaching the site created from it."
-	@priority = 5
+	@priority = 3
 	test TemplatePropagationShouldWorkAfterUpgrade72101 {
 		property data.archive.type = "data-archive-page-from-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
@@ -304,7 +304,7 @@ definition {
 	}
 
 	@description = "Disabling propagation of the template should work after an upgrade. User can disable propagation and prevent any changes on template from reaching the site created from it."
-	@priority = 5
+	@priority = 3
 	test TemplatePropagationShouldWorkAfterUpgrade73101 {
 		property data.archive.type = "data-archive-page-from-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";
@@ -344,7 +344,7 @@ definition {
 	}
 
 	@description = "Disabling propagation of the template should work after an upgrade. User can disable propagation and prevent any changes on template from reaching the site created from it."
-	@priority = 5
+	@priority = 3
 	test TemplatePropagationShouldWorkAfterUpgrade701016 {
 		property data.archive.type = "data-archive-page-from-template";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";

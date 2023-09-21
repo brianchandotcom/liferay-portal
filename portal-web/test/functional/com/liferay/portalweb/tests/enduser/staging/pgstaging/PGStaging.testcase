@@ -29,7 +29,7 @@ definition {
 		}
 	}
 
-	@priority = 4
+	@priority = 3
 	test ActivateDeactivateRemoteStagingInOnePortal {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -96,7 +96,7 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
-	@priority = 4
+	@priority = 3
 	test ActivateDeactivateStagingLocalLiveDM {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -148,7 +148,7 @@ definition {
 			pageStaging = "true");
 	}
 
-	@priority = 5
+	@priority = 4
 	test ActivateRemoteStaging {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -176,7 +176,7 @@ definition {
 		Site.deleteAllCP();
 	}
 
-	@priority = 5
+	@priority = 3
 	test AddDMDocumentWCArticleStagingLocalLive {
 		property testray.component.names = "Training";
 
@@ -308,7 +308,7 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	@priority = 5
+	@priority = 3
 	test AssertNoEditLink {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -417,7 +417,7 @@ definition {
 		Staging.deactivateStagingCP(siteName = "Site Name");
 	}
 
-	@priority = 4
+	@priority = 3
 	test DeleteDMDocument {
 		Navigator.gotoSitePage(
 			pageName = "Staging Test Page",
@@ -501,7 +501,7 @@ definition {
 		AssertElementNotPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_ICON");
 	}
 
-	@priority = 4
+	@priority = 3
 	test LayoutScope {
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -528,7 +528,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-72893."
-	@priority = 4
+	@priority = 3
 	test PublishLayoutIconDeletion {
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 
@@ -567,7 +567,7 @@ definition {
 		Page.viewLayoutLogoPG();
 	}
 
-	@priority = 5
+	@priority = 3
 	test PublishPrivatePage {
 		property portal.acceptance = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
@@ -610,7 +610,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-80367."
-	@priority = 5
+	@priority = 3
 	test PublishWCIncludingTextsAndImages {
 		Navigator.openURL();
 
@@ -697,7 +697,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-80295."
-	@priority = 4
+	@priority = 3
 	test PublishWCWithFriendlyURL {
 		var baseURL = PropsUtil.get("portal.url");
 		var friendlyURL = "link";

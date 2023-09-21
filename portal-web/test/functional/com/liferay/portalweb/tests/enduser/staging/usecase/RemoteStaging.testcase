@@ -86,7 +86,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-154557 TC-1: Verify detailed error message should show up with default configuration."
-	@priority = 4
+	@priority = 3
 	test AssertDetailedErrorMessageWithDefaultConfiguration {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -114,7 +114,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-154557 TC-2: Verify only generic error message should show up when set property to true."
-	@priority = 4
+	@priority = 3
 	test AssertExceptionDataIsHiddenWhenSetPropertyToTrue {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}tunnel.servlet.hide.exception.data=true";
 		property test.liferay.virtual.instance = "false";
@@ -143,7 +143,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123156. Verify that the publication process message is shown while the publication is in progress."
-	@priority = 4
+	@priority = 3
 	test AssertLongPublicationProcessMessage {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -205,7 +205,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123156. Verify that correct error message will appear when the publishing process encounters an error."
-	@priority = 4
+	@priority = 3
 	test AssertValidationErrors {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -229,7 +229,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-52285. Verify that remote staging can be disabled after shutting down the remote site."
-	@priority = 4
+	@priority = 3
 	test CanDisableRemoteStagingAfterShuttingDownRemoteSite {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -275,7 +275,7 @@ definition {
 
 	@description = "This test covers LPS-163951. Verify the image thumbnail in asset publisher can be published when using image URL."
 	@ignore = "true"
-	@priority = 4
+	@priority = 3
 	test CanPublishWCWithImagesViaAP {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -383,7 +383,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-189191. TC-3: Verify that the instance setting is able to overwrite the system setting via UI to ignore previews and thumbnails during the remote staging publish process."
-	@priority = 4
+	@priority = 3
 	test InstanceSettingOfPreviewsAndThumbnailsCanOverwriteSystemSetting {
 		property custom.properties = "feature.flag.LPS-189187=true${line.separator}tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property test.liferay.virtual.instance = "false";
@@ -560,7 +560,7 @@ definition {
 	}
 
 	@description = "Web contents are only published if their content date is in correspondence with the content data range of the publish configuration."
-	@priority = 4
+	@priority = 3
 	test StagingRemoteLiveWebContent {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -675,7 +675,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-82839. Web contents can be published on remote staging."
-	@priority = 5
+	@priority = 3
 	test StagingRemoteLiveWebContentViaPortletCP {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -714,7 +714,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-81950. Web contents can be published via their portlet."
-	@priority = 5
+	@priority = 3
 	test StagingRemoteLiveWebContentViaPortletPG {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -864,7 +864,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-178088. Verify the error message displays the missing reference information with the implicated Site's name."
-	@priority = 4
+	@priority = 3
 	test VerifyErrorMessageWithMissingReferenceInformation {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -925,7 +925,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-182704. TC-13: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during WCM portlet import process on remote live site"
-	@priority = 5
+	@priority = 3
 	test ViewDeleteApplicationDataPopUpInPortletImportProgressOnRemoteLiveSite {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1049,7 +1049,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-182704. TC-12: Verify that a confirmation pop-up should show up when Delete Application Data Before Importing checkbox is checked during portlet import process on remote staging site."
-	@priority = 5
+	@priority = 3
 	test ViewDeleteApplicationDataPopUpInPortletImportProgressOnRemoteStagingSite {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1142,7 +1142,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-74038. Expected error message will appear on the UI when the live instance is not running on remote staging and the link to it is not visible."
-	@priority = 5
+	@priority = 3
 	test ViewInfoMessageAfterShutDownRemoteSite {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1161,7 +1161,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-81836. Web contents can be published via SAP."
-	@priority = 4
+	@priority = 3
 	test ViewSingleAssetRemotePublication {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

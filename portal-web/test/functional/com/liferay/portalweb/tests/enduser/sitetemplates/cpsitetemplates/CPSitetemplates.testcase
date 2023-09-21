@@ -50,7 +50,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-166515. TC-1: The changes made on the site template will apply to the site created by the template by default and background tasks are deleted at the end of propagation."
-	@priority = 4
+	@priority = 3
 	test AddSiteTemplateApplySiteTemplateChangesToSite {
 		property portal.acceptance = "true";
 
@@ -225,7 +225,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-150460 TC-1. User is able to trigger propagation of the site template to all connected sites automatically."
-	@priority = 5
+	@priority = 4
 	test AssertAutomaticSiteTemplatePropagation {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
@@ -340,7 +340,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-121139. User is able to propagate pages separately on site templates and in this situation only the corresponding page's SQL value will be updated."
-	@priority = 4
+	@priority = 3
 	test AssertPartialSiteTemplatePropagation {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
@@ -463,7 +463,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-166286. TC-1: Verify that site template propagation works well after the conflicting layout friendly URL is modified."
-	@priority = 4
+	@priority = 3
 	test AssertSiteTemplatePropagationAfterConflictingFriendlyURLIsModified {
 		task ("Given: Add new site template and a new site based on this site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -506,7 +506,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-166286. TC-3: Verify that site template propagation works well on child page."
-	@priority = 4
+	@priority = 3
 	test AssertSiteTemplatePropagationOnChildPage {
 		task ("Given: Add new site template and a new site based on this site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -576,7 +576,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-166286. TC-2: Verify that site template propagation works well on private page."
-	@priority = 4
+	@priority = 3
 	test AssertSiteTemplatePropagationOnPrivatePage {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property test.liferay.virtual.instance = "false";
@@ -641,7 +641,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-150460 TC-2. User can trigger Site template propagation upon visiting a connected site."
-	@priority = 5
+	@priority = 3
 	test AssertSiteTemplatePropagationWhenOpeningSite {
 		property database.types = "mysql";
 		property test.liferay.virtual.instance = "false";
@@ -735,7 +735,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-161817. Child content page of a Site created from a Site Template cannot be viewed or edited."
-	@priority = 4
+	@priority = 3
 	test CanViewAndEditChildContentPageInSiteCreatedBySiteTemplate {
 		task ("disable "exportDraftLayout"") {
 			OSGiConfig.deployOSGiConfigFile(
@@ -866,7 +866,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-87081. User can delete site template both from it's hamburger menu and from the list of the site template admin page."
-	@priority = 5
+	@priority = 4
 	test DeleteSiteTemplate {
 		property portal.acceptance = "true";
 
@@ -904,7 +904,7 @@ definition {
 	}
 
 	@description = "User is not able to delete sites templates which are associated to existing sites."
-	@priority = 4
+	@priority = 3
 	test DeleteSiteTemplateAssociatedWithASite {
 		property portal.acceptance = "true";
 
@@ -937,7 +937,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-98548. User can import site templates to virtual instances and delete them."
-	@priority = 4
+	@priority = 3
 	test DeleteSiteTemplateImportedToVirtualInstance {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1031,7 +1031,7 @@ definition {
 	}
 
 	@description = "User can edit the status of an existing site template."
-	@priority = 5
+	@priority = 4
 	test EditSiteTemplateStatus {
 		property portal.acceptance = "true";
 
@@ -1066,7 +1066,7 @@ definition {
 	}
 
 	@description = "Information on site template admin page should be localized corresponding to the chosen language."
-	@priority = 4
+	@priority = 3
 	test LocalizeSiteTemplatesAdmin {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1125,7 +1125,7 @@ definition {
 	}
 
 	@description = "Sites created from templates should only be editable by connecting users with admin rights."
-	@priority = 4
+	@priority = 3
 	test OnlySiteAdminCanModifyPageAssociatedWithSiteTemplate {
 		property portal.acceptance = "true";
 
@@ -1188,7 +1188,7 @@ definition {
 	}
 
 	@description = "User can reset changes made on already existing portlets on sites which are based on site templates."
-	@priority = 5
+	@priority = 3
 	test ResetPageChanges {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -1276,7 +1276,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-166286. TC-5: Verify that the LAR from the Site Template export is cached, so different Sites can reuse it for content page."
-	@priority = 4
+	@priority = 3
 	test SiteCanReuseCachedSiteTemplateLarFileForContentPage {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1345,7 +1345,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-166286. TC-4: Verify that the LAR from the Site Template export is cached, so different Sites can reuse it for widget page."
-	@priority = 4
+	@priority = 3
 	test SiteCanReuseCachedSiteTemplateLarFileForWidgetPage {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1416,7 +1416,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-44550. XSS should not be possible through site template name field."
-	@priority = 4
+	@priority = 3
 	test SiteTemplateXSS {
 		task ("Given: User adds new site template with javascript in it's name") {
 			SiteTemplates.addCP(
@@ -1458,7 +1458,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-124594 and LPS-129081. User can switch propagation status on site template sites with the propagation button."
-	@priority = 4
+	@priority = 3
 	test SwitchPropagationWithOneClickControl {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -1519,7 +1519,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174434 TC-1 TC-2. Verify there's a confirmation dialog and toast message appears when the Site's Page saved with friendly URL collision."
-	@priority = 4
+	@priority = 3
 	test ViewAlertAfterAddSitePageWithURLCollision {
 		property custom.properties = "feature.flag.LPS-174417=true";
 
@@ -1558,7 +1558,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174431 TC-8. Verify that the site link in the URL collision cannot be accessed when the User didn't have access to the Site made from the template."
-	@priority = 4
+	@priority = 3
 	test ViewCanNotAccesseSiteLinkInURLCollisionWithoutUserAccessSite {
 		property custom.properties = "feature.flag.LPS-174417=true";
 		property test.liferay.virtual.instance = "false";
@@ -1629,7 +1629,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174434 TC-7. Verify that the site link in the URL collision cannot be accessed when the User didn't have access to the Site made from the template."
-	@priority = 4
+	@priority = 3
 	test ViewCanNotAccesseSiteLinkInURLCollisionWithoutUserAccessSiteInSitePage {
 		property custom.properties = "feature.flag.LPS-174417=true";
 		property test.liferay.virtual.instance = "false";
@@ -1738,7 +1738,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174431 TC-1, TC-2, TC-3. Verify there's a warning message when the Site Template's Page has a friendly URL that matches with a non-connecting Site's similar friendly URL."
-	@priority = 4
+	@priority = 3
 	test ViewWarnignMessageAfterEditExistingTemplatePageURLCollision {
 		property custom.properties = "feature.flag.LPS-174417=true";
 
@@ -1783,7 +1783,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174434 TC-3. Verify there's a warning message at Page's configuration, in case of friendly URL collision."
-	@priority = 4
+	@priority = 3
 	test ViewWarnignMessageOfEditExistingSitePageWithURLCollision {
 		property custom.properties = "feature.flag.LPS-174417=true";
 
@@ -1840,7 +1840,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174431 TC-4. Verify there's a confirmation dialog when a friendly URL collision exists and Administrator tries to add a new Site Template page."
-	@priority = 4
+	@priority = 3
 	test ViewWarnignMessageOfMultipleEntriesWithTemplatePageURLCollision {
 		property custom.properties = "feature.flag.LPS-174417=true";
 
@@ -1882,7 +1882,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174434 TC-6. Verify that the friendly URL collision is detected with child pages."
-	@priority = 4
+	@priority = 3
 	test ViewWarnignMessageWithChildSitePageURLCollision {
 		property custom.properties = "feature.flag.LPS-174417=true";
 
@@ -1939,7 +1939,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-174431 TC-7. Verify that the friendly URL collision is detected with child pages."
-	@priority = 4
+	@priority = 3
 	test ViewWarnignMessageWithChildTemplatePageURLCollision {
 		property custom.properties = "feature.flag.LPS-174417=true";
 

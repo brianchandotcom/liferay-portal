@@ -45,7 +45,7 @@ definition {
 	}
 
 	@description = "Verify if is possible add an event that repeats daily."
-	@priority = 4
+	@priority = 3
 	test AddEventRepeatDaily {
 		task ("When: I add a daily repeating event") {
 			Staging.addRepeatEvent(
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@description = "Verify is possible add a page variation."
-	@priority = 5
+	@priority = 4
 	test AddPageVariation {
 		property portal.acceptance = "true";
 		property test.assert.warning.exceptions = "true";
@@ -109,7 +109,7 @@ definition {
 	}
 
 	@description = "Verify is possible add page with versioning enabled."
-	@priority = 5
+	@priority = 4
 	test AddPageWithPageVersioningEnabled {
 		property portal.acceptance = "true";
 
@@ -145,7 +145,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-36620. Verified that navigation is visible when clicking the site page variation."
-	@priority = 5
+	@priority = 4
 	test AddSitePagesVariation {
 		property portal.acceptance = "true";
 
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123156. Verify is possible see the variation info on Staging."
-	@priority = 4
+	@priority = 3
 	test AssertStagingVariationInfo {
 		task ("Given: I have Site Page Variation") {
 			Page.viewWithWorkflowPG(workflowStatus = "Ready for Publication");
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123156. Verify is possible see the variation info on publish screen."
-	@priority = 4
+	@priority = 3
 	test AssertVariationInfoInPublishScreen {
 		task ("Given: I add a Site Page Variation") {
 			Staging.addSitePagesVariationPG(

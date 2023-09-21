@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "Check the publication summary that is published via local staging."
-	@priority = 4
+	@priority = 3
 	test CheckPublicationSummaryLocal {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@description = "Check the publication summary that is published via remote staging."
-	@priority = 4
+	@priority = 3
 	test CheckPublicationSummaryRemote {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
@@ -110,7 +110,7 @@ definition {
 	}
 
 	@description = "Verify that the recycle bin of the site is automatically emptied before turning on local staging."
-	@priority = 4
+	@priority = 3
 	test DeleteRecycleBinOnStagingActivation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";

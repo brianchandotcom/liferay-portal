@@ -66,7 +66,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-98651."
-	@priority = 4
+	@priority = 3
 	test PublishArticleCreatedByDeletedUserAfterUpgrade70106 {
 		property data.archive.type = "data-archive-staging-with-deleted-user";
 		property portal.version = "7.0.10.6";
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-98651."
-	@priority = 4
+	@priority = 3
 	test PublishArticleCreatedByDeletedUserAfterUpgrade621021 {
 		property data.archive.type = "data-archive-staging-with-deleted-user";
 		property database.types = "db2,mysql,oracle,postgresql";
@@ -121,7 +121,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-132493."
-	@priority = 5
+	@priority = 3
 	test PublishPageVersioningAfterUpgrade71103 {
 		property data.archive.type = "data-archive-local-staging-with-page-versioning";
 		property portal.version = "7.1.10.3";
@@ -153,7 +153,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-132493."
-	@priority = 5
+	@priority = 3
 	test PublishPageVersioningAfterUpgrade72101 {
 		property data.archive.type = "data-archive-local-staging-with-page-versioning";
 		property portal.version = "7.2.10.1";
@@ -185,7 +185,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-132493."
-	@priority = 5
+	@priority = 3
 	test PublishPageVersioningAfterUpgrade73101 {
 		property data.archive.type = "data-archive-local-staging-with-page-versioning";
 		property portal.version = "7.3.10.1";
@@ -217,7 +217,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-132493."
-	@priority = 5
+	@priority = 3
 	test PublishPageVersioningAfterUpgrade701016 {
 		property data.archive.type = "data-archive-local-staging-with-page-versioning";
 		property portal.version = "7.0.10.16";
@@ -249,7 +249,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-132491."
-	@priority = 5
+	@priority = 3
 	test PublishPageVersioningViaRemoteStagingAfterUpgrade71103 {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property data.archive.type = "data-archive-remote-staging-with-page-versioning";
@@ -275,7 +275,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-132491."
-	@priority = 5
+	@priority = 3
 	test PublishPageVersioningViaRemoteStagingAfterUpgrade72101 {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property data.archive.type = "data-archive-remote-staging-with-page-versioning";
@@ -301,7 +301,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-132491."
-	@priority = 5
+	@priority = 3
 	test PublishPageVersioningViaRemoteStagingAfterUpgrade73101 {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property data.archive.type = "data-archive-remote-staging-with-page-versioning";
@@ -328,7 +328,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-132491."
-	@priority = 5
+	@priority = 3
 	test PublishPageVersioningViaRemoteStagingAfterUpgrade701016 {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property data.archive.type = "data-archive-remote-staging-with-page-versioning";
@@ -354,7 +354,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
-	@priority = 5
+	@priority = 3
 	test ViewStagingDefaultSettingAfterUpgrade704 {
 		property data.archive.type = "data-archive-staging-with-default-setting";
 		property database.types = "mariadb,mysql,postgresql";
@@ -368,7 +368,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
-	@priority = 5
+	@priority = 3
 	test ViewStagingDefaultSettingAfterUpgrade713 {
 		property data.archive.type = "data-archive-staging-with-default-setting";
 		property database.types = "mariadb,mysql,postgresql";
@@ -382,7 +382,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
-	@priority = 5
+	@priority = 3
 	test ViewStagingDefaultSettingAfterUpgrade721 {
 		property data.archive.type = "data-archive-staging-with-default-setting";
 		property database.types = "mariadb,mysql,postgresql";
@@ -396,7 +396,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
-	@priority = 5
+	@priority = 3
 	test ViewStagingDefaultSettingAfterUpgrade730 {
 		property data.archive.type = "data-archive-staging-with-default-setting";
 		property database.types = "mariadb,mysql,postgresql";
@@ -410,7 +410,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
-	@priority = 5
+	@priority = 3
 	test ViewStagingDefaultSettingAfterUpgrade70106 {
 		property data.archive.type = "data-archive-staging-with-default-setting";
 		property portal.version = "7.0.10.6";
@@ -423,7 +423,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
-	@priority = 5
+	@priority = 3
 	test ViewStagingDefaultSettingAfterUpgrade71103 {
 		property data.archive.type = "data-archive-staging-with-default-setting";
 		property portal.version = "7.1.10.3";
@@ -436,7 +436,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
-	@priority = 5
+	@priority = 3
 	test ViewStagingDefaultSettingAfterUpgrade72101 {
 		property data.archive.type = "data-archive-staging-with-default-setting";
 		property portal.version = "7.2.10.1";
@@ -449,7 +449,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
-	@priority = 5
+	@priority = 3
 	test ViewStagingDefaultSettingAfterUpgrade73101 {
 		property data.archive.type = "data-archive-staging-with-default-setting";
 		property portal.version = "7.3.10.1";
@@ -462,7 +462,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-87237 and LPS-126769."
-	@priority = 5
+	@priority = 3
 	test ViewStagingDefaultSettingAfterUpgrade621021 {
 		property data.archive.type = "data-archive-staging-with-default-setting";
 		property database.types = "db2,mysql,oracle,postgresql,sybase";

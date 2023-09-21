@@ -40,7 +40,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-128736. Check Asset Publisher can't publish the displayed content to live by default."
-	@priority = 4
+	@priority = 3
 	test AssertContentNotBePublishedByDefault {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

@@ -90,7 +90,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 	@Override
 	public T get(long id) {
-		for (T entity : getAll()) {
+		for (T entity : getAll("id eq " + id, null)) {
 			if (!Objects.equals(entity.getId(), id)) {
 				continue;
 			}

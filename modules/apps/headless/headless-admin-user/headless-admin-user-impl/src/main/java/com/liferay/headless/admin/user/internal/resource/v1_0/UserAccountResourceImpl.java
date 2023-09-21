@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.UserLockoutException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Contact;
@@ -382,10 +381,6 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	public UserAccount getUserAccountByEmailAddress(String emailAddress)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-188420")) {
-			throw new UnsupportedOperationException();
-		}
-
 		return _toUserAccount(
 			_userService.getUserByEmailAddress(
 				contextCompany.getCompanyId(), emailAddress));
@@ -406,10 +401,6 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			String status, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-188420")) {
-			throw new UnsupportedOperationException();
-		}
 
 		Integer workflowStatus = null;
 

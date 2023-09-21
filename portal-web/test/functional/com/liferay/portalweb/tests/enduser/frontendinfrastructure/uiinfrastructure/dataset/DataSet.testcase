@@ -244,19 +244,6 @@ definition {
 				locator1 = "CP2ActivationKeys#KEY_DEACTIVATION_TERMS");
 		}
 
-		task ("And Add a new blog /Title: New Blog /Description: Description test") {
-			Navigator.openURL();
-
-			ProductMenu.gotoPortlet(
-				category = "Content & Data",
-				panel = "Site Administration",
-				portlet = "Blogs");
-
-			Blogs.addEntry(
-				entryContent = "Description test",
-				entryTitle = "New Blogs");
-		}
-
 		task ("And add a new content page and Add a data set fragment to content page created") {
 			Navigator.openURL();
 
@@ -289,6 +276,19 @@ definition {
 			SelectFrame(locator1 = "DataSet#DEFOCUS");
 
 			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("And Add a new blog /Title: New Blog /Description: Description test") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				panel = "Site Administration",
+				portlet = "Blogs");
+
+			Blogs.addEntry(
+				entryContent = "Description test",
+				entryTitle = "New Blogs");
 		}
 
 		task ("Then confirm that the information of the blog created and the site ID is displayed") {

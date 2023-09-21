@@ -385,6 +385,45 @@ definition {
 			searchTerm = "");
 	}
 
+	@description = "This is a use case for LPS-179990"
+	@priority = 3
+	test CanRemoveSortFieldsAndDeactivateRelevanceInSortWidget {
+		task ("Add a new Sort Widget and open configuration") {
+			Search.openSearchPage();
+
+			SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Sort",
+				portletOption = "Configuration");
+
+			SelectFrame(locator1 = "IFrame#CONFIGURATION");
+		}
+
+		task ("Delete all indexed field names and disable relevance") {
+			while ((IsElementPresent(locator1 = "Button#TRASH_ENABLED")) && (maxIterations = "50")) {
+				Click(locator1 = "Button#TRASH_ENABLED");
+			}
+
+			Uncheck.uncheckToggleSwitch(
+				checkboxName = "On",
+				locator1 = "Checkbox#ANY_CHECKBOX",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("Assert the the portlet is still available") {
+			PortletEntry.save();
+
+			Alert.viewSuccessMessage();
+
+			IFrame.closeFrame();
+
+			AssertElementPresent(
+				key_portletName = "Sort",
+				locator1 = "Portlet#SPECIFIC_PORTLET_SECTION");
+		}
+	}
+
 	@priority = 4
 	test CanViewTermsOfUseWhenEnterpriseSearchIsEnabled {
 		property custom.properties = "enterprise.product.notification.enabled=true";

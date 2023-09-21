@@ -1,4 +1,7 @@
 {
+	"dependencies": {
+		"frontend-js-web": "*"
+	},
 	"name": "server-admin-web",
 	"scripts": {
 		"build": "liferay-npm-scripts build",

@@ -214,7 +214,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-162826: Add the Compare to Action to the Version History for Web Content"
+	@description = "LPS-162826 Add the Compare to Action to the Version History for Web Content"
 	@priority = 3
 	test BackFromCompareToWebContent {
 		task ("Given the compare screen for Web Content") {
@@ -661,7 +661,7 @@ definition {
 		}
 	}
 
-	@description = "Given a Blog When the user opens asset's Info Panel at Content Dashboard Then ""Blogs Entry"" text will be exhibit"
+	@description = "LPS-151065 Given a Blog When the user opens asset's Info Panel at Content Dashboard Then ""Blogs Entry"" text will be exhibit"
 	@priority = 3
 	test BlogTypeInInfoPanel {
 		task ("Create a blog") {
@@ -1199,7 +1199,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-160210: Add WebDAV URL to Info Panel"
+	@description = "LPS-160210 Add WebDAV URL to Info Panel"
 	@priority = 3
 	test CheckDocumentURLLabel {
 		task ("Given a Document Asset at Content Dashboard") {
@@ -1586,7 +1586,7 @@ definition {
 		}
 	}
 
-	@description = "When click on the 'Other options' icon of Approved WC and has NOT a display page associated, View option NOT displayed"
+	@description = "LPS-112357 When click on the 'Other options' icon of Approved WC and has NOT a display page associated, View option NOT displayed"
 	@priority = 4
 	test CheckViewOptionNotDisplayedApprovedWCNotAssiciatedDPT {
 		property portal.acceptance = "true";
@@ -1611,7 +1611,7 @@ definition {
 		}
 	}
 
-	@description = "When click on the 'Other options' icon of not Approved WC and has a display page associated, View option NOT displayed"
+	@description = "LPS-112357 When click on the 'Other options' icon of not Approved WC and has a display page associated, View option NOT displayed"
 	@priority = 4
 	test CheckViewOptionNotDisplayedNotApprovedWCAssiciatedDPT {
 		property portal.acceptance = "true";
@@ -2192,7 +2192,7 @@ definition {
 		}
 	}
 
-	@description = "Given a user with NO permissions to edit documents When the user clicks on the title link in the content dashboard Then the user cannot click on the title"
+	@description = "LPS-119966 Given a user with NO permissions to edit documents When the user clicks on the title link in the content dashboard Then the user cannot click on the title"
 	@priority = 4
 	@uitest
 	test ClickTitleDocumentDPTWithNoPermissions {
@@ -2435,7 +2435,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-162826: Add the Compare to Action to the Version History for Web Content"
+	@description = "LPS-162826 Add the Compare to Action to the Version History for Web Content"
 	@priority = 3
 	test CompareToLastVersionWebContent {
 		task ("Given the compare screen for Web Content") {
@@ -2486,7 +2486,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-162826: Add the Compare to Action to the Version History for Web Content"
+	@description = "LPS-162826 Add the Compare to Action to the Version History for Web Content"
 	@priority = 3
 	test CompareToVersionWebContent {
 		task ("Given the Versions tab in the Info panel of a Web Content") {
@@ -2533,7 +2533,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-138908. Type filter in Content Dashboard does work when deselecting previously selected types"
+	@description = "LPS-138908 Type filter in Content Dashboard does work when deselecting previously selected types"
 	@priority = 4
 	test DeselectTypeFilter {
 		task ("Given a user has a Content Dashboard filtered by a type") {
@@ -2752,7 +2752,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164334: Add a Version History Page to Documents and Media"
+	@description = "LPS-164334 Add a Version History Page to Documents and Media"
 	@priority = 4
 	@uitest
 	test DocumentsVersionHistoryClickBack {
@@ -2789,7 +2789,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164334: Add a Version History Page to Documents and Media"
+	@description = "LPS-164334 Add a Version History Page to Documents and Media"
 	@priority = 4
 	test DocumentsVersionHistoryDeleteVersion {
 		property portal.acceptance = "true";
@@ -2836,7 +2836,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164334: Add a Version History Page to Documents and Media"
+	@description = "LPS-164334 Add a Version History Page to Documents and Media"
 	@priority = 4
 	test DocumentsVersionHistoryDownloadVersion {
 		property portal.acceptance = "true";
@@ -2877,7 +2877,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164334: Add a Version History Page to Documents and Media"
+	@description = "LPS-164334 Add a Version History Page to Documents and Media"
 	@priority = 3
 	test DocumentsVersionHistoryFirstVersionOptions {
 		task ("Given the Version History page for documents") {
@@ -2929,7 +2929,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164334: Add a Version History Page to Documents and Media"
+	@description = "LPS-164334 Add a Version History Page to Documents and Media"
 	@priority = 3
 	@uitest
 	test DocumentsVersionHistoryInformation {
@@ -2996,7 +2996,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164334: Add a Version History Page to Documents and Media"
+	@description = "LPS-164334 Add a Version History Page to Documents and Media"
 	@priority = 3
 	test DocumentsVersionHistoryOfSingleVersion {
 		task ("Given the Version History page for documents") {
@@ -3034,7 +3034,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164334: Add a Version History Page to Documents and Media"
+	@description = "LPS-164334 Add a Version History Page to Documents and Media"
 	@priority = 3
 	@uitest
 	test DocumentsVersionHistoryOrdered {
@@ -3079,7 +3079,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164334: Add a Version History Page to Documents and Media"
+	@description = "LPS-164334 Add a Version History Page to Documents and Media"
 	@priority = 3
 	test DocumentsVersionHistoryOtherVersionOptions {
 		task ("Given the Version History page for documents") {
@@ -3135,7 +3135,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164334: Add a Version History Page to Documents and Media"
+	@description = "LPS-164334 Add a Version History Page to Documents and Media"
 	@priority = 4
 	test DocumentsVersionHistoryRevertVersion {
 		property portal.acceptance = "true";
@@ -3178,7 +3178,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164334: Add a Version History Page to Documents and Media"
+	@description = "LPS-164334 Add a Version History Page to Documents and Media"
 	@priority = 4
 	test DocumentsVersionHistoryViewVersion {
 		property portal.acceptance = "true";
@@ -3287,7 +3287,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-161017: Add the Download Action to the Version History for Documents and Media"
+	@description = "LPS-161017 Add the Download Action to the Version History for Documents and Media"
 	@priority = 4
 	test DownloadDocumentFromVersionsTab {
 		task ("Given the Versions tab in the Info panel of a document") {
@@ -3397,7 +3397,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can edit a web content through the Edit option"
+	@description = "LPS-112356 Validate if the user can edit a web content through the Edit option"
 	@priority = 5
 	test EditWebContent {
 		property portal.acceptance = "true";
@@ -3422,7 +3422,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can access to the Content Dashboard after s/he has expired a Web Content"
+	@description = "LPS-162827 Validate if the user can access to the Content Dashboard after s/he has expired a Web Content"
 	@priority = 5
 	test ExpiredWebContent {
 		property portal.acceptance = "true";
@@ -3773,7 +3773,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can filter by Author, using different display types"
+	@description = "LPS-117489 Validate if the user can filter by Author, using different display types"
 	@priority = 5
 	test FilterByAuthor {
 		property portal.acceptance = "true";
@@ -3908,7 +3908,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can filter by category"
+	@description = "LPS-115493 Validate if the user can filter by category"
 	@priority = 5
 	test FilterByCategory {
 		property portal.acceptance = "true";
@@ -4259,7 +4259,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can filter by multiple tags"
+	@description = "LPS-124960 Validate if the user can filter by multiple tags"
 	@priority = 5
 	test FilterByMultipleTags {
 		property portal.acceptance = "true";
@@ -4293,7 +4293,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can filter by Site"
+	@description = "LPS-114982 Validate if the user can filter by Site"
 	@priority = 5
 	test FilterBySite {
 		property portal.acceptance = "true";
@@ -4316,7 +4316,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can filter by Status: Any"
+	@description = "LPS-114983 Validate if the user can filter by Status: Any"
 	@priority = 5
 	test FilterByStatusAny {
 		property portal.acceptance = "true";
@@ -4351,7 +4351,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can filter by Status: Approved"
+	@description = "LPS-114983 Validate if the user can filter by Status: Approved"
 	@priority = 5
 	test FilterByStatusApproved {
 		property portal.acceptance = "true";
@@ -4374,7 +4374,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can filter by Status: Draft"
+	@description = "LPS-114983 Validate if the user can filter by Status: Draft"
 	@priority = 5
 	test FilterByStatusDraft {
 		property portal.acceptance = "true";
@@ -4557,7 +4557,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can filter by Status: Scheduled. And for LPS-86164 - Assert whether selecting time ends in JS error."
+	@description = "LPS-86164 Validate if the user can filter by Status: Scheduled. And for LPS-86164 - Assert whether selecting time ends in JS error."
 	@priority = 5
 	test FilterByStatusScheduled {
 		property portal.acceptance = "true";
@@ -4720,7 +4720,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can filter by tag"
+	@description = "LPS-124960 Validate if the user can filter by tag"
 	@priority = 5
 	test FilterByTag {
 		property portal.acceptance = "true";
@@ -4744,7 +4744,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-182032. User can Filter by the to be reviewed column."
+	@description = "LPS-182032 User can Filter by the to be reviewed column."
 	@priority = 5
 	test FilterByToBeReviewed {
 		task ("Given a web content with review date") {
@@ -4973,7 +4973,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-160218: Make the Info Panel closed After navigation"
+	@description = "LPS-160218 Make the Info Panel closed After navigation"
 	@priority = 3
 	test InfoPanelClosedAfterNavigation {
 		task ("Given the info panel is open") {
@@ -5006,7 +5006,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-160218: Make the Info Panel Remain closed After a Page Refresh"
+	@description = "LPS-160218 Make the Info Panel Remain closed After a Page Refresh"
 	@priority = 3
 	test InfoPanelClosedAfterRefresh {
 		task ("Given the info panel is open") {
@@ -5676,7 +5676,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can order by Modification Date"
+	@description = "LPS-111323 Validate if the user can order by Modification Date"
 	@priority = 5
 	test OrderByModificationDate {
 		property portal.acceptance = "true";
@@ -5709,7 +5709,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-182032. User can Order by the new column."
+	@description = "LPS-182032 User can Order by the new column."
 	@priority = 5
 	test OrderByReviewDate {
 		task ("Given two web contents with review date") {
@@ -5756,7 +5756,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can order by title"
+	@description = "LPS-111323 Validate if the user can order by title"
 	@priority = 5
 	test OrderByTitle {
 		property portal.acceptance = "true";
@@ -5921,7 +5921,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-152905: Add a Preview to the Info Panel of Blogs in the Content Dashboard :"
+	@description = "LPS-152905 Add a Preview to the Info Panel of Blogs in the Content Dashboard :"
 	@priority = 3
 	test PreviewBlogsImage {
 		task ("Given a blog contains only an image") {
@@ -5949,7 +5949,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-162824: Add the Revert Action to the Version History for Documents and Media"
+	@description = "LPS-162824 Add the Revert Action to the Version History for Documents and Media"
 	@priority = 4
 	test RevertDocumentVersion {
 		task ("Given a Document with more than one version") {
@@ -6008,7 +6008,7 @@ definition {
 		}
 	}
 
-	@description = "Validate if the user can open de Info side panel of a web content"
+	@description = "LPS-162826 Validate if the user can open de Info side panel of a web content"
 	@priority = 5
 	test SaveFiltersAfterEditing {
 		property portal.acceptance = "true";
@@ -6264,7 +6264,7 @@ definition {
 		}
 	}
 
-	@description = "When the user selects one or more authors in the item selector, the list of contents displays content where the selected users are the creators"
+	@description = "LPS-114985 When the user selects one or more authors in the item selector, the list of contents displays content where the selected users are the creators"
 	@priority = 5
 	test ShowAllContentsCreatedByUsers {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -6549,7 +6549,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-162823: Add the View Action to the Version History for Documents and Media"
+	@description = "LPS-162823 Add the View Action to the Version History for Documents and Media"
 	@priority = 3
 	test ViewDocumentVersion {
 		task ("Given the Versions tab in the Info panel of a document") {
@@ -6601,7 +6601,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-182032. The .xls file is exported with the review date column."
+	@description = "LPS-182032 The .xls file is exported with the review date column."
 	@priority = 3
 	test ViewExportXLSButtonWithReviewDate {
 		task ("Given a web content with review date") {
@@ -6703,7 +6703,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164334: Add a Version History Page to Documents and Media"
+	@description = "LPS-164334 Add a Version History Page to Documents and Media"
 	@priority = 4
 	test ViewMoreButtonToDocumentsVersionHistory {
 		property portal.acceptance = "true";
@@ -6795,7 +6795,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-182032. If a content has the Never Review field checked, the column must shows -"
+	@description = "LPS-182032 If a content has the Never Review field checked, the column must shows -"
 	@priority = 4
 	test ViewNeverReviewChecked {
 		task ("Given a web content with never review checked") {
@@ -6829,7 +6829,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-182032. The Review Date column is visible and shows the values propertly."
+	@description = "LPS-182032 The Review Date column is visible and shows the values propertly."
 	@priority = 5
 	test ViewReviewDateColumn {
 		task ("Given a web content with review date") {
@@ -6962,7 +6962,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-114912: Validate if the user can open de Info side panel of a web content"
+	@description = "LPS-114912 Validate if the user can open de Info side panel of a web content"
 	@priority = 5
 	test WebContentViewInfoPanel {
 		property portal.acceptance = "true";

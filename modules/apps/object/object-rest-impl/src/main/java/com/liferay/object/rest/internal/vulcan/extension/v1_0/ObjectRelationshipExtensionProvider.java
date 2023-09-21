@@ -23,9 +23,12 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
@@ -102,7 +105,7 @@ public class ObjectRelationshipExtensionProvider
 					return defaultObjectEntryManager.
 						fetchRelatedManyToOneObjectEntry(
 							_getDefaultDTOConverterContext(
-								objectDefinition, primaryKey, null),
+								objectDefinition, primaryKey, null, null),
 							objectDefinition, primaryKey,
 							objectRelationship.getName());
 				}
@@ -116,7 +119,7 @@ public class ObjectRelationshipExtensionProvider
 					defaultObjectEntryManager.
 						getObjectEntryRelatedObjectEntries(
 							_getDefaultDTOConverterContext(
-								objectDefinition, primaryKey, null),
+								objectDefinition, primaryKey, null, null),
 							objectDefinition, primaryKey,
 							objectRelationship.getName(),
 							Pagination.of(
@@ -226,7 +229,7 @@ public class ObjectRelationshipExtensionProvider
 
 			defaultObjectEntryManager.disassociateRelatedModels(
 				_getDefaultDTOConverterContext(
-					objectDefinition, primaryKey, null),
+					objectDefinition, primaryKey, null, userId),
 				objectDefinition, objectRelationship, primaryKey,
 				relatedObjectDefinition, userId);
 
@@ -234,7 +237,7 @@ public class ObjectRelationshipExtensionProvider
 				nestedObjectEntry = objectEntryManager.updateObjectEntry(
 					objectDefinition.getCompanyId(),
 					_getDefaultDTOConverterContext(
-						objectDefinition, primaryKey, null),
+						objectDefinition, primaryKey, null, userId),
 					nestedObjectEntry.getExternalReferenceCode(),
 					relatedObjectDefinition, nestedObjectEntry,
 					relatedObjectDefinition.getScope());
@@ -251,15 +254,22 @@ public class ObjectRelationshipExtensionProvider
 	}
 
 	private DefaultDTOConverterContext _getDefaultDTOConverterContext(
-		ObjectDefinition objectDefinition, Long objectEntryId,
-		UriInfo uriInfo) {
+			ObjectDefinition objectDefinition, Long objectEntryId,
+			UriInfo uriInfo, Long userId)
+		throws Exception {
+
+		User user = null;
+
+		if (Validator.isNotNull(userId)) {
+			user = _userLocalService.getUser(userId);
+		}
 
 		DefaultDTOConverterContext defaultDTOConverterContext =
 			new DefaultDTOConverterContext(
 				false, null, _dtoConverterRegistry, objectEntryId,
 				LocaleUtil.fromLanguageId(
 					objectDefinition.getDefaultLanguageId(), true, false),
-				uriInfo, null);
+				uriInfo, user);
 
 		defaultDTOConverterContext.setAttribute("addActions", Boolean.FALSE);
 
@@ -344,5 +354,8 @@ public class ObjectRelationshipExtensionProvider
 
 	@Reference
 	private ObjectRelationshipService _objectRelationshipService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

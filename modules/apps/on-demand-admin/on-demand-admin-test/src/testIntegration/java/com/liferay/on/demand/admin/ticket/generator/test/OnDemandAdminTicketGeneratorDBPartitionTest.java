@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.db.partition.on.demand.admin.test;
+package com.liferay.on.demand.admin.ticket.generator.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.on.demand.admin.ticket.generator.OnDemandAdminTicketGenerator;
@@ -25,7 +25,8 @@ import org.junit.runner.RunWith;
  * @author Stian Sigvartsen
  */
 @RunWith(Arquillian.class)
-public class OnDemandAdminTest extends BaseDBPartitionTestCase {
+public class OnDemandAdminTicketGeneratorDBPartitionTest
+	extends BaseDBPartitionTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

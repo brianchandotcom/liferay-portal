@@ -5,8 +5,8 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index;
 
-import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -22,7 +22,8 @@ import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
 import com.liferay.portal.workflow.metrics.search.index.WorkflowMetricsIndex;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Deactivate;
@@ -64,7 +65,7 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 			return false;
 		}
 
-		ArrayList<String> indexNames = portalCache.get(companyId);
+		Set<String> indexNames = portalCache.get(companyId);
 
 		if ((indexNames != null) &&
 			indexNames.contains(getIndexName(companyId))) {
@@ -80,7 +81,7 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 
 		if (indicesExistsIndexResponse.isExists()) {
 			if (indexNames == null) {
-				indexNames = new ArrayList<>();
+				indexNames = new HashSet<>();
 			}
 
 			indexNames.add(getIndexName(companyId));
@@ -102,7 +103,7 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 		searchEngineAdapter.execute(
 			new DeleteIndexRequest(getIndexName(companyId)));
 
-		ArrayList<String> indexNames = portalCache.get(companyId);
+		Set<String> indexNames = portalCache.get(companyId);
 
 		if (indexNames == null) {
 			return true;
@@ -122,25 +123,26 @@ public abstract class BaseWorkflowMetricsIndex implements WorkflowMetricsIndex {
 		}
 
 		portalCache =
-			(PortalCache<Long, ArrayList<String>>)multiVMPool.getPortalCache(
+			(PortalCache<Long, Set<String>>)singleVMPool.getPortalCache(
 				BaseWorkflowMetricsIndex.class.getName());
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		multiVMPool.removePortalCache(BaseWorkflowMetricsIndex.class.getName());
+		singleVMPool.removePortalCache(
+			BaseWorkflowMetricsIndex.class.getName());
 	}
 
-	@Reference
-	protected MultiVMPool multiVMPool;
-
-	protected PortalCache<Long, ArrayList<String>> portalCache;
+	protected PortalCache<Long, Set<String>> portalCache;
 
 	@Reference
 	protected SearchCapabilities searchCapabilities;
 
 	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
+
+	@Reference
+	protected SingleVMPool singleVMPool;
 
 	private String _readJSON(String fileName) {
 		try {

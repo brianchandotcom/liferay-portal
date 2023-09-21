@@ -111,13 +111,7 @@ public class UserServiceWhenUpdatingUserStatusTest {
 	}
 
 	@Test
-	public void testDeleteUserWithDeletePermissionSucceeds()
-		throws Exception {
-
-		_testDeleteUserWithDeletePermission();
-	}
-
-	private void _testDeleteUserWithDeletePermission() throws Exception {
+	public void testDeleteUserWithDeletePermissionSucceeds() throws Exception {
 		_user1 = UserTestUtil.addUser();
 		_user2 = UserTestUtil.addUser();
 

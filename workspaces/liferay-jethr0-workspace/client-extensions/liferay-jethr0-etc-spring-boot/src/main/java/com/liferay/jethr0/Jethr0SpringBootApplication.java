@@ -7,13 +7,11 @@ package com.liferay.jethr0;
 
 import com.liferay.client.extension.util.spring.boot.ClientExtensionUtilSpringBootComponentScan;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
-import com.liferay.jethr0.entity.repository.EntityRepository;
+import com.liferay.jethr0.entity.EntityInitializer;
 import com.liferay.jethr0.event.controller.EventJmsController;
 import com.liferay.jethr0.event.handler.EventHandlerContext;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.queue.JobQueue;
-
-import java.util.Map;
 
 import javax.jms.ConnectionFactory;
 
@@ -47,13 +45,10 @@ public class Jethr0SpringBootApplication {
 		eventHandlerContext.setEventJmsController(
 			configurableApplicationContext.getBean(EventJmsController.class));
 
-		Map<String, EntityRepository> entityRepositories =
-			configurableApplicationContext.getBeansOfType(
-				EntityRepository.class);
+		EntityInitializer entityInitializer =
+			configurableApplicationContext.getBean(EntityInitializer.class);
 
-		for (EntityRepository entityRepository : entityRepositories.values()) {
-			entityRepository.initialize();
-		}
+		entityInitializer.initialize();
 
 		JobQueue jobQueue = configurableApplicationContext.getBean(
 			JobQueue.class);

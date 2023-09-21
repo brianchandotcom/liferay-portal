@@ -12,8 +12,6 @@ import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.event.controller.EventJmsController;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
-import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
-import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 
@@ -34,26 +32,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 public class JenkinsQueue {
 
 	public void initialize() {
-		_jenkinsCohortEntityRepository.initialize();
-		_jenkinsNodeEntityRepository.initialize();
-		_jenkinsServerEntityRepository.initialize();
-
-		_jenkinsCohortEntityRepository.setJenkinsServerEntityRepository(
-			_jenkinsServerEntityRepository);
-
-		_jenkinsNodeEntityRepository.setJenkinsServerEntityRepository(
-			_jenkinsServerEntityRepository);
-
-		_jenkinsServerEntityRepository.setJenkinsCohortEntityRepository(
-			_jenkinsCohortEntityRepository);
-		_jenkinsServerEntityRepository.setJenkinsNodeEntityRepository(
-			_jenkinsNodeEntityRepository);
-
-		_jenkinsCohortEntityRepository.initializeRelationships();
-		_jenkinsNodeEntityRepository.initializeRelationships();
-		_jenkinsServerEntityRepository.initializeRelationships();
-
-		invoke();
+		update();
 
 		_initialized = true;
 	}
@@ -134,12 +113,6 @@ public class JenkinsQueue {
 
 	private EventJmsController _eventJmsController;
 	private boolean _initialized;
-
-	@Autowired
-	private JenkinsCohortEntityRepository _jenkinsCohortEntityRepository;
-
-	@Autowired
-	private JenkinsNodeEntityRepository _jenkinsNodeEntityRepository;
 
 	@Autowired
 	private JenkinsServerEntityRepository _jenkinsServerEntityRepository;

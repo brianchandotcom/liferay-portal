@@ -6,16 +6,9 @@
 package com.liferay.jethr0.bui1d.queue;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
-import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
-import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
-import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
-import com.liferay.jethr0.environment.repository.EnvironmentEntityRepository;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.job.queue.JobQueue;
-import com.liferay.jethr0.job.repository.JobEntityRepository;
-import com.liferay.jethr0.task.repository.TaskEntityRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -81,15 +74,6 @@ public class BuildQueue {
 	}
 
 	public void initialize() {
-		for (JobEntity jobEntity : _jobQueue.getJobEntities()) {
-			for (BuildEntity buildEntity : jobEntity.getBuildEntities()) {
-				_buildRunEntityRepository.getAll(buildEntity);
-				_buildParameterEntityRepository.getAll(buildEntity);
-				_environmentEntityRepository.getAll(buildEntity);
-				_taskEntityRepository.getAll(buildEntity);
-			}
-		}
-
 		sort();
 
 		for (BuildEntity buildEntity : getBuildEntities()) {
@@ -167,30 +151,8 @@ public class BuildQueue {
 	}
 
 	@Autowired
-	private BuildEntityRepository _buildEntityRepository;
-
-	@Autowired
-	private BuildParameterEntityRepository _buildParameterEntityRepository;
-
-	@Autowired
-	private BuildRunEntityRepository _buildRunEntityRepository;
-
-	@Autowired
-	private EnvironmentEntityRepository _environmentEntityRepository;
-
-	@Autowired
-	private JobEntityRepository _jobEntityRepository;
-
-	@Autowired
 	private JobQueue _jobQueue;
 
-	@Autowired
-	private JobToBuildsEntityRelationshipDALO
-		_jobToBuildsEntityRelationshipDALO;
-
 	private final List<BuildEntity> _sortedBuildEntities = new ArrayList<>();
-
-	@Autowired
-	private TaskEntityRepository _taskEntityRepository;
 
 }

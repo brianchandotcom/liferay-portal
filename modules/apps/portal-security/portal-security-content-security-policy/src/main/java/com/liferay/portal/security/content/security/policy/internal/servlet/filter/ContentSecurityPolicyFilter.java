@@ -86,12 +86,12 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 		String nonce = _contentSecurityPolicyNonceManager.ensureNonce(
 			httpServletRequest);
 
+		policy = StringUtil.replace(policy, "[$NONCE$]", "nonce-" + nonce);
+
+		httpServletResponse.setHeader("Content-Security-Policy", policy);
+
 		try {
 			_contentSecurityPolicyNonceManager.setTLSNonce(nonce);
-
-			policy = StringUtil.replace(policy, "[$NONCE$]", "nonce-" + nonce);
-
-			httpServletResponse.setHeader("Content-Security-Policy", policy);
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
 

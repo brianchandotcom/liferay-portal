@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuWebKeys;
 
 import java.io.IOException;
 
@@ -63,6 +64,9 @@ public class HeadlessBuilderPortlet extends MVCPortlet {
 			new HeadlessBuilderWebDisplayContext(
 				_editorConfigurationFactory,
 				_portal.getHttpServletRequest(renderRequest)));
+
+		renderRequest.setAttribute(
+			ProductNavigationControlMenuWebKeys.BETA, Boolean.TRUE);
 
 		super.render(renderRequest, renderResponse);
 	}

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuWebKeys;
 
 import java.io.IOException;
 
@@ -111,6 +112,9 @@ public class FDSViewsPortlet extends MVCPortlet {
 			new FDSViewsDisplayContext(
 				_cetManager, _objectDefinitionLocalService, renderRequest,
 				renderResponse, _serviceTrackerList));
+
+		renderRequest.setAttribute(
+			ProductNavigationControlMenuWebKeys.BETA, Boolean.TRUE);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

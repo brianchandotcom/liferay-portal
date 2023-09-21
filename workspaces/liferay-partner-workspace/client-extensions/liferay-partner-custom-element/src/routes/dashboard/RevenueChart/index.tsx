@@ -21,23 +21,56 @@ export default function () {
 	const getRevenueData = async () => {
 		setLoading(true);
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const response = await fetch('/o/c/opportunitysfs?&pageSize=200', {
-			headers: {
-				'accept': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-		});
+		const growthRevenueResponseNewProject = await fetch(
+			"/o/c/opportunitysfs?pageSize=200&sort=closeDate:desc&filter=type eq 'New Project Existing Business' and stage eq 'Closed Won'",
+			{
+				headers: {
+					'accept': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+			}
+		);
 
-		if (response.ok) {
-			const revenueData = await response.json();
+		const growthRevenueResponseNewBusiness = await fetch(
+			"/o/c/opportunitysfs?pageSize=200&sort=closeDate:desc&filter=type eq 'New Business' and stage eq 'Closed Won'",
+			{
+				headers: {
+					'accept': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+			}
+		);
 
-			const revenueCurrency = revenueData?.items[0]?.currency?.key;
+		// eslint-disable-next-line @liferay/portal/no-global-fetch
+		const renewalRevenueResponse = await fetch(
+			"/o/c/opportunitysfs?&pageSize=200&sort=closeDate:desc&filter=type ne 'New Business' and type ne 'New Project Existing Business' and stage ne 'Rejected' and stage ne 'Rolled into another opportunity' and stage ne 'Disqualified' and stage ne 'Closed Lost'",
+			{
+				headers: {
+					'accept': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+			}
+		);
+
+		if (
+			growthRevenueResponseNewProject.ok &&
+			renewalRevenueResponse.ok &&
+			growthRevenueResponseNewBusiness.ok
+		) {
+			const growthRevenueResponseNewProjectData = await growthRevenueResponseNewProject.json();
+			const growthRevenueResponseNewBusinessData = await growthRevenueResponseNewBusiness.json();
+			const renewalRevenueData = await renewalRevenueResponse.json();
+
+			const revenueCurrency =
+				growthRevenueResponseNewProjectData?.items[0]?.currency?.key;
 
 			setCurrencyData(revenueCurrency);
 
 			getRevenueChartColumns(
 				revenueCurrency,
-				revenueData,
+				growthRevenueResponseNewProjectData,
+				growthRevenueResponseNewBusinessData,
+				renewalRevenueData,
 				setTitleChart,
 				setValueChart,
 				setColumnsRevenueChart

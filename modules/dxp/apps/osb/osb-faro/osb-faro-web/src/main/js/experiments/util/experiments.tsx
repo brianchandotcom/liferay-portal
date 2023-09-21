@@ -365,7 +365,10 @@ export const getVariantLabels: GetVariantLabels = ({
 		});
 	}
 
-	if (winnerDXPVariantId === dxpVariantId) {
+	if (
+		winnerDXPVariantId === dxpVariantId &&
+		(status === 'FINISHED_WINNER' || status === 'COMPLETED')
+	) {
 		labels.push({
 			status: 'success',
 			value: Liferay.Language.get('winner')

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.auth.PasswordModificationThreadLocal;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -556,8 +557,8 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			!algorithm.equals(PasswordEncryptor.TYPE_NONE)) {
 
 			try {
-				password = _passwordEncryptor.encrypt(
-					algorithm, password, null);
+				password = PasswordEncryptorUtil.encrypt(
+					algorithm, password, (String)null);
 			}
 			catch (PwdEncryptorException pwdEncryptorException) {
 				throw new SystemException(pwdEncryptorException);
@@ -719,9 +720,6 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 	@Reference
 	private ListTypeService _listTypeService;
-
-	@Reference
-	private PasswordEncryptor _passwordEncryptor;
 
 	private final Map<String, String> _reservedContactFieldNames =
 		new HashMap<>();

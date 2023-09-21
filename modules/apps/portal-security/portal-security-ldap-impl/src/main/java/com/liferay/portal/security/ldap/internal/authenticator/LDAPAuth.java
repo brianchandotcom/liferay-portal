@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.security.auth.PasswordModificationThreadLocal;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -245,7 +246,7 @@ public class LDAPAuth implements Authenticator {
 
 					ldapPassword = _removeEncryptionAlgorithm(ldapPassword);
 
-					encryptedPassword = _passwordEncryptor.encrypt(
+					encryptedPassword = PasswordEncryptorUtil.encrypt(
 						ldapAuthConfiguration.passwordEncryptionAlgorithm(),
 						password, ldapPassword);
 				}
@@ -784,9 +785,6 @@ public class LDAPAuth implements Authenticator {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile LDAPUserImporter _ldapUserImporter;
-
-	@Reference
-	private PasswordEncryptor _passwordEncryptor;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

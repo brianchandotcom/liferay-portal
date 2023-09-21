@@ -229,30 +229,68 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 								replacementCPInstance.getCPDefinitionId(),
 								jsonArray.toString()));
 
+						List<CPInstanceUnitOfMeasure>
+							replacementUnitOfMeasures =
+								_cpInstanceUnitOfMeasureLocalService.
+									getActiveCPInstanceUnitOfMeasures(
+										replacementCPInstance.
+											getCPInstanceId());
+
 						return new ReplacementSku() {
 							{
-								price = _getPrice(
-									cpSkuDTOConverterConvertContext.
-										getCommerceContext(),
-									replacementCPInstance,
-									JSONUtil.toString(
-										JSONUtil.toJSONArray(
-											replacementSkuSkuOptions,
-											replacementSkuSkuOption ->
-												_jsonFactory.createJSONObject(
-													replacementSkuSkuOption.
-														toString()))),
-									cpSkuDTOConverterConvertContext.getLocale(),
-									cpSkuDTOConverterConvertContext.
-										getQuantity(),
-									StringPool.BLANK);
 								sku = replacementCPInstance.getSku();
 								skuId = replacementCPInstance.getCPInstanceId();
+								skuUnitOfMeasures =
+									TransformUtil.transformToArray(
+										replacementUnitOfMeasures,
+										replacementUnitOfMeasure ->
+											_toSkuUnitOfMeasure(
+												commerceContext,
+												replacementUnitOfMeasure,
+												cpSkuDTOConverterConvertContext.
+													getLocale()),
+										SkuUnitOfMeasure.class);
 								urls = LanguageUtils.getLanguageIdMap(
 									_cpDefinitionLocalService.getUrlTitleMap(
 										replacementCPInstance.
 											getCPDefinitionId()));
 
+								setPrice(
+									() -> {
+										String replacementUnitOfMeasureKey =
+											StringPool.BLANK;
+
+										if (!replacementUnitOfMeasures.
+												isEmpty()) {
+
+											CPInstanceUnitOfMeasure
+												replacementUnitOfMeasure =
+													replacementUnitOfMeasures.
+														get(0);
+
+											replacementUnitOfMeasureKey =
+												replacementUnitOfMeasure.
+													getKey();
+										}
+
+										return _getPrice(
+											cpSkuDTOConverterConvertContext.
+												getCommerceContext(),
+											replacementCPInstance,
+											JSONUtil.toString(
+												JSONUtil.toJSONArray(
+													replacementSkuSkuOptions,
+													replacementSkuSkuOption ->
+														_jsonFactory.
+															createJSONObject(
+																replacementSkuSkuOption.
+																	toString()))),
+											cpSkuDTOConverterConvertContext.
+												getLocale(),
+											cpSkuDTOConverterConvertContext.
+												getQuantity(),
+											replacementUnitOfMeasureKey);
+									});
 								setProductConfiguration(
 									() -> {
 										if (replacementCPDefinition == null) {

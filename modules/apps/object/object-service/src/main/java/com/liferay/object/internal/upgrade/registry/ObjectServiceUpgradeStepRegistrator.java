@@ -367,6 +367,11 @@ public class ObjectServiceUpgradeStepRegistrator
 				ObjectActionUpgradeProcess());
 
 		registry.register("8.6.0", "8.6.1", new DummyUpgradeStep());
+
+		registry.register(
+			"8.6.1", "8.7.0",
+			UpgradeProcessFactory.addColumns(
+				"ObjectEntry", "rootObjectEntryId LONG"));
 	}
 
 	@Reference

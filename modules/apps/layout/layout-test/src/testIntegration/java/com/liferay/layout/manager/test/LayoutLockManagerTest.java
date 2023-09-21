@@ -112,15 +112,11 @@ public class LayoutLockManagerTest {
 		LayoutTestUtil.addTypePortletLayout(_group);
 		LayoutTestUtil.addTypeContentLayout(_group);
 
-		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
-			TestPropsValues.getCompanyId(), _group.getGroupId(), null, null);
-
-		Assert.assertEquals(lockedLayouts.toString(), 2, lockedLayouts.size());
-
-		for (LockedLayout lockedLayout : lockedLayouts) {
-			Assert.assertTrue(
-				ArrayUtil.contains(layoutPlids, lockedLayout.getPlid()));
-		}
+		_assertLockedLayouts(
+			2, layoutPlids,
+			_layoutLockManager.getLockedLayouts(
+				TestPropsValues.getCompanyId(), _group.getGroupId(), null,
+				null));
 	}
 
 	@Test
@@ -131,15 +127,11 @@ public class LayoutLockManagerTest {
 
 		_lockLayout(_getDraftLayout(), _user);
 
-		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
-			TestPropsValues.getCompanyId(), _group.getGroupId(), null,
-			LockedLayoutType.COLLECTION_PAGE);
-
-		Assert.assertEquals(lockedLayouts.toString(), 1, lockedLayouts.size());
-
-		LockedLayout lockedLayout = lockedLayouts.get(0);
-
-		Assert.assertEquals(draftLayout.getPlid(), lockedLayout.getPlid());
+		_assertLockedLayouts(
+			1, new long[] {draftLayout.getPlid()},
+			_layoutLockManager.getLockedLayouts(
+				TestPropsValues.getCompanyId(), _group.getGroupId(), null,
+				LockedLayoutType.COLLECTION_PAGE));
 	}
 
 	@Test
@@ -150,15 +142,11 @@ public class LayoutLockManagerTest {
 
 		_lockLayout(_getDraftLayout(LayoutConstants.TYPE_COLLECTION), _user);
 
-		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
-			TestPropsValues.getCompanyId(), _group.getGroupId(), null,
-			LockedLayoutType.CONTENT_PAGE);
-
-		Assert.assertEquals(lockedLayouts.toString(), 1, lockedLayouts.size());
-
-		LockedLayout lockedLayout = lockedLayouts.get(0);
-
-		Assert.assertEquals(draftLayout.getPlid(), lockedLayout.getPlid());
+		_assertLockedLayouts(
+			1, new long[] {draftLayout.getPlid()},
+			_layoutLockManager.getLockedLayouts(
+				TestPropsValues.getCompanyId(), _group.getGroupId(), null,
+				LockedLayoutType.CONTENT_PAGE));
 	}
 
 	@Test
@@ -175,15 +163,11 @@ public class LayoutLockManagerTest {
 
 		_lockLayout(_getDraftLayout(), _user);
 
-		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
-			TestPropsValues.getCompanyId(), _group.getGroupId(), null,
-			LockedLayoutType.CONTENT_PAGE_TEMPLATE);
-
-		Assert.assertEquals(lockedLayouts.toString(), 1, lockedLayouts.size());
-
-		LockedLayout lockedLayout = lockedLayouts.get(0);
-
-		Assert.assertEquals(draftLayout.getPlid(), lockedLayout.getPlid());
+		_assertLockedLayouts(
+			1, new long[] {draftLayout.getPlid()},
+			_layoutLockManager.getLockedLayouts(
+				TestPropsValues.getCompanyId(), _group.getGroupId(), null,
+				LockedLayoutType.CONTENT_PAGE_TEMPLATE));
 	}
 
 	@Test
@@ -201,15 +185,11 @@ public class LayoutLockManagerTest {
 
 		_lockLayout(_getDraftLayout(), _user);
 
-		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
-			TestPropsValues.getCompanyId(), _group.getGroupId(), null,
-			LockedLayoutType.DISPLAY_PAGE_TEMPLATE);
-
-		Assert.assertEquals(lockedLayouts.toString(), 1, lockedLayouts.size());
-
-		LockedLayout lockedLayout = lockedLayouts.get(0);
-
-		Assert.assertEquals(draftLayout.getPlid(), lockedLayout.getPlid());
+		_assertLockedLayouts(
+			1, new long[] {draftLayout.getPlid()},
+			_layoutLockManager.getLockedLayouts(
+				TestPropsValues.getCompanyId(), _group.getGroupId(), null,
+				LockedLayoutType.DISPLAY_PAGE_TEMPLATE));
 	}
 
 	@Test
@@ -224,15 +204,11 @@ public class LayoutLockManagerTest {
 
 		_lockLayout(_getDraftLayout(), _user);
 
-		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
-			TestPropsValues.getCompanyId(), _group.getGroupId(), null,
-			LockedLayoutType.MASTER_PAGE);
-
-		Assert.assertEquals(lockedLayouts.toString(), 1, lockedLayouts.size());
-
-		LockedLayout lockedLayout = lockedLayouts.get(0);
-
-		Assert.assertEquals(draftLayout.getPlid(), lockedLayout.getPlid());
+		_assertLockedLayouts(
+			1, new long[] {draftLayout.getPlid()},
+			_layoutLockManager.getLockedLayouts(
+				TestPropsValues.getCompanyId(), _group.getGroupId(), null,
+				LockedLayoutType.MASTER_PAGE));
 	}
 
 	@Test
@@ -250,15 +226,11 @@ public class LayoutLockManagerTest {
 
 		_lockLayout(_getDraftLayout(), _user);
 
-		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
-			TestPropsValues.getCompanyId(), _group.getGroupId(), null,
-			LockedLayoutType.UTILITY_PAGE);
-
-		Assert.assertEquals(lockedLayouts.toString(), 1, lockedLayouts.size());
-
-		LockedLayout lockedLayout = lockedLayouts.get(0);
-
-		Assert.assertEquals(draftLayout.getPlid(), lockedLayout.getPlid());
+		_assertLockedLayouts(
+			1, new long[] {draftLayout.getPlid()},
+			_layoutLockManager.getLockedLayouts(
+				TestPropsValues.getCompanyId(), _group.getGroupId(), null,
+				LockedLayoutType.UTILITY_PAGE));
 	}
 
 	@Test(expected = LockedLayoutException.class)
@@ -342,6 +314,20 @@ public class LayoutLockManagerTest {
 			TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, 0,
 			RandomTestUtil.randomString(), type, 0, true, 0, plid, 0,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+	}
+
+	private void _assertLockedLayouts(
+		int expectedSize, long[] expectedLayoutPlids,
+		List<LockedLayout> lockedLayouts) {
+
+		Assert.assertEquals(
+			lockedLayouts.toString(), expectedSize, lockedLayouts.size());
+
+		for (LockedLayout lockedLayout : lockedLayouts) {
+			Assert.assertTrue(
+				ArrayUtil.contains(
+					expectedLayoutPlids, lockedLayout.getPlid()));
+		}
 	}
 
 	private Layout _getDraftLayout() throws Exception {

@@ -7,11 +7,8 @@ import {dealsChartStatus} from './constants/dealsChartStatus';
 
 export default function isNotOpportunity(opportunity: any) {
 	const stagesToSkip = [
-		dealsChartStatus.STAGE_CLOSEDLOST,
 		dealsChartStatus.STAGE_CLOSEDWON,
-		dealsChartStatus.STAGE_DISQUALIFIED,
 		dealsChartStatus.STAGE_REJECTED,
-		dealsChartStatus.STAGE_ROLLED_INTO_ANOTHER_OPPORTUNITY,
 	];
 
 	return stagesToSkip.includes(opportunity.stage);

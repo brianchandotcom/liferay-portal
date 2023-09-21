@@ -27,12 +27,15 @@ const DealsChart = () => {
 		setLoading(true);
 
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const response = await fetch('/o/c/opportunitysfs?pageSize=200', {
-			headers: {
-				'accept': 'application/json',
-				'x-csrf-token': Liferay.authToken,
-			},
-		});
+		const response = await fetch(
+			`/o/c/opportunitysfs?pageSize=200&filter=stage ne 'Closed Lost' and stage ne 'Disqualified' and stage ne 'Rolled into another opportunity'`,
+			{
+				headers: {
+					'accept': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+			}
+		);
 
 		if (response.ok) {
 			const data = await response.json();

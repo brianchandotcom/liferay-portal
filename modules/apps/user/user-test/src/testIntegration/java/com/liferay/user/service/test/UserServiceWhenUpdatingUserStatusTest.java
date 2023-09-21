@@ -65,7 +65,7 @@ public class UserServiceWhenUpdatingUserStatusTest {
 	}
 
 	@Test
-	public void testActivateUserWithDeletePermissionSucceedsWithFeatureFlag()
+	public void testActivateUserWithDeletePermissionSucceeds()
 		throws Exception {
 
 		_testUpdateUserStatusWithValidPermission(
@@ -92,7 +92,7 @@ public class UserServiceWhenUpdatingUserStatusTest {
 	}
 
 	@Test
-	public void testDeactivateUserWithDeletePermissionSucceedsWithFeatureFlag()
+	public void testDeactivateUserWithDeletePermissionSucceeds()
 		throws Exception {
 
 		_testUpdateUserStatusWithValidPermission(
@@ -111,7 +111,7 @@ public class UserServiceWhenUpdatingUserStatusTest {
 	}
 
 	@Test
-	public void testDeleteUserWithDeletePermissionSucceedsWithFeatureFlag()
+	public void testDeleteUserWithDeletePermissionSucceeds()
 		throws Exception {
 
 		_testDeleteUserWithDeletePermission();

@@ -415,8 +415,8 @@ describe('Review and Run test', () => {
 });
 
 describe('No Winner Declared', () => {
-	it.skip('Experiment has basic no winner declared elements', () => {
-		const {getAllByText, getByText} = renderApp({
+	it('Experiment has basic no winner declared elements', () => {
+		const {getByTestId, getByText} = renderApp({
 			initialSegmentsExperiment: {
 				...segmentsExperiment,
 				editable: false,
@@ -431,40 +431,38 @@ describe('No Winner Declared', () => {
 
 		getByText('discard-test');
 		getByText('No Winner Declared');
-		const allPublishButtons = getAllByText('publish');
 
-		expect(allPublishButtons.length).toBe(segmentsVariants.length - 1);
+		const controlPublishButton = getByTestId(`publish-button-Control`);
+		const variantPublishButton = getByTestId(`publish-button-Variant`);
+
+		expect(controlPublishButton).toBeInTheDocument();
+		expect(variantPublishButton).toBeInTheDocument();
 	});
 
-	it.skip('Variant publish action button when confirming in no winner declared status', async () => {
-
-		/**
-		 * The user accepts the confirmation message
-		 */
-		global.confirm = jest.fn(() => true);
-
-		const {APIServiceMocks, findByText, getByText} = renderApp({
-			initialSegmentsExperiment: {
-				...segmentsExperiment,
-				editable: false,
-				status: {
-					label: 'No Winner Declared',
-					value: STATUS_FINISHED_NO_WINNER,
+	it('Variant publish action button when confirming in no winner declared status', async () => {
+		const {APIServiceMocks, findByText, getByTestId, getByText} = renderApp(
+			{
+				initialSegmentsExperiment: {
+					...segmentsExperiment,
+					editable: false,
+					status: {
+						label: 'No Winner Declared',
+						value: STATUS_FINISHED_NO_WINNER,
+					},
 				},
-			},
-			initialSegmentsVariants: segmentsVariants,
-			winnerSegmentsVariantId: '',
-		});
+				initialSegmentsVariants: segmentsVariants,
+				winnerSegmentsVariantId: '',
+			}
+		);
 		const {publishExperience} = APIServiceMocks;
 
-		const publishButton = getByText('publish');
+		const publishButton = getByTestId(`publish-button-Variant`);
 
 		userEvent.click(publishButton);
 
-		/**
-		 * The user has accepted one confirmation message
-		 */
-		expect(global.confirm).toHaveBeenCalledTimes(1);
+		await findByText('are-you-sure-you-want-to-publish-this-variant');
+
+		userEvent.click(getByText('publish'));
 
 		expect(publishExperience).toHaveBeenCalledWith({
 			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
@@ -472,39 +470,32 @@ describe('No Winner Declared', () => {
 			winnerSegmentsExperienceId:
 				segmentsVariants[1].segmentsExperienceId,
 		});
-
-		await findByText('completed');
 	});
 
-	it.skip('Variant publish action button when not confirming in no winner declared status', async () => {
-
-		/**
-		 * The user rejects the confirmation message
-		 */
-		global.confirm = jest.fn(() => false);
-
-		const {APIServiceMocks, getByText} = renderApp({
-			initialSegmentsExperiment: {
-				...segmentsExperiment,
-				editable: false,
-				status: {
-					label: 'No Winner Declared',
-					value: STATUS_FINISHED_NO_WINNER,
+	it('Variant publish action button when not confirming in no winner declared status', async () => {
+		const {APIServiceMocks, findByText, getByTestId, getByText} = renderApp(
+			{
+				initialSegmentsExperiment: {
+					...segmentsExperiment,
+					editable: false,
+					status: {
+						label: 'No Winner Declared',
+						value: STATUS_FINISHED_NO_WINNER,
+					},
 				},
-			},
-			initialSegmentsVariants: segmentsVariants,
-			winnerSegmentsVariantId: '',
-		});
+				initialSegmentsVariants: segmentsVariants,
+				winnerSegmentsVariantId: '',
+			}
+		);
 		const {publishExperience} = APIServiceMocks;
 
-		const publishButton = getByText('publish');
+		const publishButton = getByTestId('publish-button-Control');
 
 		userEvent.click(publishButton);
 
-		/**
-		 * The user has rejected one confirmation message
-		 */
-		expect(global.confirm).toHaveBeenCalledTimes(1);
+		await findByText('are-you-sure-you-want-to-publish-this-variant');
+
+		userEvent.click(getByText('cancel'));
 
 		/**
 		 * API has not been called
@@ -514,8 +505,8 @@ describe('No Winner Declared', () => {
 });
 
 describe('Winner declared', () => {
-	it.skip('Experiment has basic winner declared elements', () => {
-		const {getAllByText, getByText} = renderApp({
+	it('Experiment has basic winner declared elements', () => {
+		const {getByTestId, getByText} = renderApp({
 			initialSegmentsExperiment: {
 				...segmentsExperiment,
 				editable: false,
@@ -528,43 +519,40 @@ describe('Winner declared', () => {
 			winnerSegmentsVariantId: '1',
 		});
 
-		getByText('publish-winner');
 		getByText('discard-test');
 		getByText('Winner Declared');
-		const allPublishButtons = getAllByText('publish');
 
-		expect(allPublishButtons.length).toBe(segmentsVariants.length - 1);
+		const controlPublishButton = getByTestId('publish-button-Control');
+		const variantPublishButton = getByTestId('publish-button-Variant');
+
+		expect(controlPublishButton).toBeInTheDocument();
+		expect(variantPublishButton).toBeInTheDocument();
 	});
 
-	it.skip('Variant publish winner action button in alert in winner declared status', async () => {
-
-		/**
-		 * The user accepts the confirmation message
-		 */
-		global.confirm = jest.fn(() => true);
-
-		const {APIServiceMocks, findByText, getByText} = renderApp({
-			initialSegmentsExperiment: {
-				...segmentsExperiment,
-				editable: false,
-				status: {
-					label: 'Winner Declared',
-					value: STATUS_FINISHED_WINNER,
+	it('Variant publish winner action button in alert in winner declared status', async () => {
+		const {APIServiceMocks, findByText, getByTestId, getByText} = renderApp(
+			{
+				initialSegmentsExperiment: {
+					...segmentsExperiment,
+					editable: false,
+					status: {
+						label: 'Winner Declared',
+						value: STATUS_FINISHED_WINNER,
+					},
 				},
-			},
-			initialSegmentsVariants: segmentsVariants,
-			winnerSegmentsVariantId: '1',
-		});
+				initialSegmentsVariants: segmentsVariants,
+				winnerSegmentsVariantId: '1',
+			}
+		);
 		const {publishExperience} = APIServiceMocks;
 
-		const publishWinnerButton = getByText('publish-winner');
+		const publishWinnerButton = getByTestId('publish-button-Variant');
 
 		userEvent.click(publishWinnerButton);
 
-		/**
-		 * The user has accepted one confirmation message
-		 */
-		expect(global.confirm).toHaveBeenCalledTimes(1);
+		await findByText('are-you-sure-you-want-to-publish-this-variant');
+
+		userEvent.click(getByText('publish'));
 
 		expect(publishExperience).toHaveBeenCalledWith({
 			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
@@ -572,18 +560,43 @@ describe('Winner declared', () => {
 			winnerSegmentsExperienceId:
 				segmentsVariants[1].segmentsExperienceId,
 		});
-
-		await findByText('completed');
 	});
 
-	it.skip('Variant publish action button when confirming in winner declared status', async () => {
+	it('Variant publish action button when confirming in winner declared status', async () => {
+		const {APIServiceMocks, findByText, getByTestId, getByText} = renderApp(
+			{
+				initialSegmentsExperiment: {
+					...segmentsExperiment,
+					editable: false,
+					status: {
+						label: 'Winner Declared',
+						value: STATUS_FINISHED_WINNER,
+					},
+				},
+				initialSegmentsVariants: segmentsVariants,
+				winnerSegmentsVariantId: '1',
+			}
+		);
+		const {publishExperience} = APIServiceMocks;
 
-		/**
-		 * The user accepts the confirmation message
-		 */
-		global.confirm = jest.fn(() => true);
+		const publishButton = getByTestId('publish-button-Variant');
 
-		const {APIServiceMocks, findByText, getByText} = renderApp({
+		userEvent.click(publishButton);
+
+		await findByText('are-you-sure-you-want-to-publish-this-variant');
+
+		userEvent.click(getByText('publish'));
+
+		expect(publishExperience).toHaveBeenCalledWith({
+			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
+			status: STATUS_COMPLETED,
+			winnerSegmentsExperienceId:
+				segmentsVariants[1].segmentsExperienceId,
+		});
+	});
+
+	it('Variant publish action button when not confirming in winner declared status', async () => {
+		const {APIServiceMocks, getByTestId} = renderApp({
 			initialSegmentsExperiment: {
 				...segmentsExperiment,
 				editable: false,
@@ -597,32 +610,17 @@ describe('Winner declared', () => {
 		});
 		const {publishExperience} = APIServiceMocks;
 
-		const publishButton = getByText('publish');
+		const publishButton = getByTestId('publish-button-Control');
 
 		userEvent.click(publishButton);
 
 		/**
-		 * The user has accepted one confirmation message
+		 * API has not been called
 		 */
-		expect(global.confirm).toHaveBeenCalledTimes(1);
-
-		expect(publishExperience).toHaveBeenCalledWith({
-			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
-			status: STATUS_COMPLETED,
-			winnerSegmentsExperienceId:
-				segmentsVariants[1].segmentsExperienceId,
-		});
-
-		await findByText('completed');
+		expect(publishExperience).toHaveBeenCalledTimes(0);
 	});
 
-	it.skip('Variant publish action button when not confirming in winner declared status', async () => {
-
-		/**
-		 * The user rejects the confirmation message
-		 */
-		global.confirm = jest.fn(() => false);
-
+	it('Discard button action', async () => {
 		const {APIServiceMocks, getByText} = renderApp({
 			initialSegmentsExperiment: {
 				...segmentsExperiment,
@@ -637,47 +635,15 @@ describe('Winner declared', () => {
 		});
 		const {publishExperience} = APIServiceMocks;
 
-		const publishButton = getByText('publish');
+		const discardButton = getByText('discard-test');
 
-		userEvent.click(publishButton);
-
-		/**
-		 * The user has rejected one confirmation message
-		 */
-		expect(global.confirm).toHaveBeenCalledTimes(1);
-
-		/**
-		 * API has not been called
-		 */
-		expect(publishExperience).toHaveBeenCalledTimes(0);
-	});
-
-	it('Discard button action', async () => {
-		const {APIServiceMocks, findByText, getByText} = renderApp({
-			initialSegmentsExperiment: {
-				...segmentsExperiment,
-				editable: false,
-				status: {
-					label: 'Winner Declared',
-					value: STATUS_FINISHED_WINNER,
-				},
-			},
-			initialSegmentsVariants: segmentsVariants,
-			winnerSegmentsVariantId: '1',
-		});
-		const {publishExperience} = APIServiceMocks;
-
-		const publishButton = getByText('discard-test');
-
-		userEvent.click(publishButton);
+		userEvent.click(discardButton);
 
 		expect(publishExperience).toHaveBeenCalledWith({
 			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
 			status: STATUS_COMPLETED,
 			winnerSegmentsExperienceId: segmentsExperiment.segmentsExperienceId,
 		});
-
-		await findByText('completed');
 	});
 });
 

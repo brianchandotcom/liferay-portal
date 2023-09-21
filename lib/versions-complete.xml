@@ -2513,7 +2513,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.osgi.web.http.servlet.impl.jar!org.eclipse.equinox.http.servlet.jar</file-name>
-				<version>1.2.2.v20211118-0920.LIFERAY-PATCHED-1</version>
+				<version>1.2.2.v20211118-0920.LIFERAY-PATCHED-2</version>
 				<project-name>com.liferay:org.eclipse.equinox.http.servlet</project-name>
 				<licenses>
 					<license>

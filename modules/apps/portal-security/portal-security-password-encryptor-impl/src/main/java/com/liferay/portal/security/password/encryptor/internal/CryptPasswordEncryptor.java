@@ -28,8 +28,7 @@ import org.vps.crypt.Crypt;
 	property = "type=" + PasswordEncryptor.TYPE_UFC_CRYPT,
 	service = PasswordEncryptor.class
 )
-public class CryptPasswordEncryptor
-	extends BasePasswordEncryptor implements PasswordEncryptor {
+public class CryptPasswordEncryptor implements PasswordEncryptor {
 
 	@Override
 	public String encrypt(

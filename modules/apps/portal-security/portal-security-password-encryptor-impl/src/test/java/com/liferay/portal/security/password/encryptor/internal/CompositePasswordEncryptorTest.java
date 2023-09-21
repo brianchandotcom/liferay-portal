@@ -301,7 +301,7 @@ public class CompositePasswordEncryptorTest {
 		"CUSTOM_PASSWORD_ENCRYPTOR";
 
 	private static class TestCustomPasswordEncryptor
-		extends BasePasswordEncryptor {
+		implements PasswordEncryptor {
 
 		@Override
 		public String encrypt(

@@ -34,8 +34,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "type=" + PasswordEncryptor.TYPE_PBKDF2,
 	service = PasswordEncryptor.class
 )
-public class PBKDF2PasswordEncryptor
-	extends BasePasswordEncryptor implements PasswordEncryptor {
+public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 
 	@Override
 	public String encrypt(

@@ -17,8 +17,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "type=" + PasswordEncryptor.TYPE_NONE,
 	service = PasswordEncryptor.class
 )
-public class NullPasswordEncryptor
-	extends BasePasswordEncryptor implements PasswordEncryptor {
+public class NullPasswordEncryptor implements PasswordEncryptor {
 
 	@Override
 	public String encrypt(

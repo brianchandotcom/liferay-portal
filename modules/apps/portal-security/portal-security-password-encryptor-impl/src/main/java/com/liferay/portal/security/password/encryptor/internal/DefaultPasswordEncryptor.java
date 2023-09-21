@@ -18,8 +18,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "type=" + PasswordEncryptor.TYPE_DEFAULT,
 	service = PasswordEncryptor.class
 )
-public class DefaultPasswordEncryptor
-	extends BasePasswordEncryptor implements PasswordEncryptor {
+public class DefaultPasswordEncryptor implements PasswordEncryptor {
 
 	@Override
 	public String encrypt(

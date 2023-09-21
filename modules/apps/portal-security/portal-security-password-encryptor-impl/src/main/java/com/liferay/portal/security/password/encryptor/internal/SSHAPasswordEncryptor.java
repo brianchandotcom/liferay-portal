@@ -29,8 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "type=" + PasswordEncryptor.TYPE_SSHA,
 	service = PasswordEncryptor.class
 )
-public class SSHAPasswordEncryptor
-	extends BasePasswordEncryptor implements PasswordEncryptor {
+public class SSHAPasswordEncryptor implements PasswordEncryptor {
 
 	@Override
 	public String encrypt(

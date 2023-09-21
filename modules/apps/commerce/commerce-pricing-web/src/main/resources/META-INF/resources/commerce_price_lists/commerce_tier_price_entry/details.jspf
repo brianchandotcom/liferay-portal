@@ -64,10 +64,8 @@ if ((commerceTierPriceEntry != null) && (commerceTierPriceEntry.getMinQuantity()
 
 <liferay-ui:error exception="<%= CommercePriceListExpirationDateException.class %>" message="please-enter-a-valid-expiration-date" />
 
-
 <aui:input formName="fm" label="publish-date" name="displayDate" />
 <aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" formName="fm" name="expirationDate" />
-
 
 <c:if test="<%= commercePriceEntry.isBulkPricing() %>">
 	<aui:script use="aui-base">

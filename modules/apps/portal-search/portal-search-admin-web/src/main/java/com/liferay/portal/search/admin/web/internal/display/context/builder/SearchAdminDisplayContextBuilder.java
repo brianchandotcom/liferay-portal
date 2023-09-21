@@ -59,20 +59,24 @@ public class SearchAdminDisplayContextBuilder {
 		searchAdminDisplayContext.setIndexReindexerClassNames(
 			_indexReindexerClassNames);
 
-		double availableDiskSpace =
-			_statsClusterInformation.getAvailableDiskSpace(
-				StringPool.EMPTY_ARRAY);
+		if (_isStatsClusterInformationAvailable()) {
+			searchAdminDisplayContext.setAvailableDiskSpace(
+				_statsClusterInformation.getAvailableDiskSpace());
 
-		searchAdminDisplayContext.setAvailableDiskSpace(availableDiskSpace);
+			searchAdminDisplayContext.setCurrentDiskSpaceUsed(
+				_statsClusterInformation.getUsedDiskSpace());
 
-		searchAdminDisplayContext.setCurrentDiskSpaceUsed(
-			_statsClusterInformation.getUsedDiskSpace(StringPool.EMPTY_ARRAY));
+			String[] indexNames = StringPool.EMPTY_ARRAY;
 
-		searchAdminDisplayContext.setIsLowOnDiskSpace(
-			_isLowOnDiskSpace(
-				availableDiskSpace,
-				_statsIndexInformation.getLargestIndexSize(
-					_indexInformation.getIndexNames())));
+			if (_isIndexInformationAvailable()) {
+				indexNames = _indexInformation.getIndexNames();
+			}
+
+			searchAdminDisplayContext.setIsLowOnDiskSpace(
+				_isLowOnDiskSpace(
+					searchAdminDisplayContext.getAvailableDiskSpace(),
+					_statsIndexInformation.getLargestIndexSize(indexNames)));
+		}
 
 		NavigationItemList navigationItemList = new NavigationItemList();
 		String selectedTab = getSelectedTab();
@@ -211,6 +215,14 @@ public class SearchAdminDisplayContextBuilder {
 		double availableDiskSpace, double largestIndexSize) {
 
 		if (availableDiskSpace < (largestIndexSize * 1.5)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isStatsClusterInformationAvailable() {
+		if (_statsClusterInformation != null) {
 			return true;
 		}
 

@@ -245,6 +245,21 @@ public class DynamicQueryTest {
 	}
 
 	@Test
+	public void testNotLikeSQLRestriction() throws Exception {
+		_role = RoleTestUtil.addRole("RoleName", RoleConstants.TYPE_REGULAR);
+
+		DynamicQuery dynamicQuery = _roleLocalService.dynamicQuery();
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.sqlRestriction(
+				"name not like 'RoleNam%' and roleId > 0"));
+
+		List<Role> roles = _roleLocalService.dynamicQuery(dynamicQuery);
+
+		Assert.assertFalse(roles.contains(_role));
+	}
+
+	@Test
 	public void testOrderBy() {
 		DynamicQuery dynamicQuery = _classNameLocalService.dynamicQuery();
 

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {act, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -110,7 +110,7 @@ describe('PageContent', () => {
 
 		const dropdownItems = document.querySelectorAll('.dropdown-item');
 
-		userEvent.click(dropdownItems[2]);
+		fireEvent.click(dropdownItems[2]);
 
 		expect(screen.queryByText('mountain.png')).toBeInTheDocument();
 		expect(screen.queryByText('Collection1')).not.toBeInTheDocument();

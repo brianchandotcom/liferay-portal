@@ -66,7 +66,8 @@ public class DLFileVersionCTDisplayRenderer
 
 		return getDownloadInputStream(
 			_store, _audioProcessor, _dlAppLocalService, dlFileVersion,
-			_imageProcessor, key, (PDFProcessor)_pdfDLProcessor, _videoProcessor);
+			(ImageProcessor)_imageDLProcessor, key,
+			(PDFProcessor)_pdfDLProcessor, _videoProcessor);
 	}
 
 	@Override
@@ -130,9 +131,9 @@ public class DLFileVersionCTDisplayRenderer
 		Set<String> documentMimeTypes =
 			_dlPreviewRendererProvider.getMimeTypes();
 
-		PDFProcessor pdfProcessor = (PDFProcessor)_pdfDLProcessor;
-
 		if (documentMimeTypes.contains(mimeType)) {
+			PDFProcessor pdfProcessor = (PDFProcessor)_pdfDLProcessor;
+
 			if (!pdfProcessor.isDocumentSupported(fileVersion) ||
 				_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 					fileVersion.getFileEntryId(),
@@ -167,9 +168,11 @@ public class DLFileVersionCTDisplayRenderer
 				"\">");
 		}
 
-		if (_imageProcessor.isSupported(mimeType)) {
+		ImageProcessor imageProcessor = (ImageProcessor)_imageDLProcessor;
+
+		if (imageProcessor.isSupported(mimeType)) {
 			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion) ||
-				!_imageProcessor.hasImages(fileVersion) ||
+				!imageProcessor.hasImages(fileVersion) ||
 				_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 					fileVersion.getFileEntryId(),
 					fileVersion.getFileVersionId(),
@@ -180,13 +183,13 @@ public class DLFileVersionCTDisplayRenderer
 
 			fileName = StringBundler.concat(
 				FileUtil.stripExtension(fileName), StringPool.PERIOD,
-				_imageProcessor.getPreviewType(fileVersion));
+				imageProcessor.getPreviewType(fileVersion));
 
 			return StringBundler.concat(
 				"<img src=\"",
 				displayContext.getDownloadURL(
 					_IMAGE_PREVIEW,
-					_imageProcessor.getPreviewFileSize(fileVersion), fileName),
+					imageProcessor.getPreviewFileSize(fileVersion), fileName),
 				"\" style=\"margin: auto; max-height:624px; max-width:100%;",
 				"\">");
 		}
@@ -344,8 +347,11 @@ public class DLFileVersionCTDisplayRenderer
 	)
 	private DLPreviewRendererProvider _dlPreviewRendererProvider;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private ImageProcessor _imageProcessor;
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")"
+	)
+	private DLProcessor _imageDLProcessor;
 
 	@Reference
 	private Language _language;

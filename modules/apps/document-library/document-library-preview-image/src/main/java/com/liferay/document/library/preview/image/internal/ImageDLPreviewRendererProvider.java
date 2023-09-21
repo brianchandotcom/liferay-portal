@@ -6,6 +6,8 @@
 package com.liferay.document.library.preview.image.internal;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
+import com.liferay.document.library.kernel.model.DLProcessorConstants;
+import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.preview.DLPreviewRenderer;
@@ -36,16 +38,20 @@ public class ImageDLPreviewRendererProvider
 
 	@Override
 	public Set<String> getMimeTypes() {
-		return _imageProcessor.getImageMimeTypes();
+		ImageProcessor imageProcessor = (ImageProcessor)_dlProcessor;
+
+		return imageProcessor.getImageMimeTypes();
 	}
 
 	@Override
 	public DLPreviewRenderer getPreviewDLPreviewRenderer(
 		FileVersion fileVersion) {
 
+		ImageProcessor imageProcessor = (ImageProcessor)_dlProcessor;
+
 		if ((fileVersion == null) || (fileVersion.getSize() == 0) ||
-			(!_imageProcessor.hasImages(fileVersion) &&
-			 !_imageProcessor.isImageSupported(fileVersion.getMimeType()))) {
+			(!imageProcessor.hasImages(fileVersion) &&
+			 !imageProcessor.isImageSupported(fileVersion.getMimeType()))) {
 
 			return null;
 		}
@@ -80,7 +86,9 @@ public class ImageDLPreviewRendererProvider
 			throw new DLFileEntryPreviewGenerationException();
 		}
 
-		if (!_imageProcessor.hasImages(fileVersion)) {
+		ImageProcessor imageProcessor = (ImageProcessor)_dlProcessor;
+
+		if (!imageProcessor.hasImages(fileVersion)) {
 			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
 				throw new DLPreviewSizeException();
 			}
@@ -92,8 +100,11 @@ public class ImageDLPreviewRendererProvider
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private ImageProcessor _imageProcessor;
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")"
+	)
+	private DLProcessor _dlProcessor;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.document.library.preview.image)"

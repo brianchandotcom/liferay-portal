@@ -10,6 +10,7 @@ import com.liferay.digital.signature.manager.DSEnvelopeManager;
 import com.liferay.digital.signature.model.DSEnvelope;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessorUtil;
 import com.liferay.document.library.util.DLURLHelperUtil;
@@ -88,7 +89,9 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		Set<String> imageMimeTypes = _imageProcessor.getImageMimeTypes();
+		ImageProcessor imageProcessor = (ImageProcessor)_dlProcessor;
+
+		Set<String> imageMimeTypes = imageProcessor.getImageMimeTypes();
 
 		if (imageMimeTypes.contains(fileEntry.getMimeType())) {
 			return JSONUtil.put(
@@ -119,13 +122,13 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
-	@Reference
-	private DSEnvelopeManager _dsEnvelopeManager;
-
 	@Reference(
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")"
 	)
-	private ImageProcessor _imageProcessor;
+	private DLProcessor _dlProcessor;
+
+	@Reference
+	private DSEnvelopeManager _dsEnvelopeManager;
 
 }

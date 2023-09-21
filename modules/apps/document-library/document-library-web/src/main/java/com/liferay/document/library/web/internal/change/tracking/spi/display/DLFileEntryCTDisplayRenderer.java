@@ -54,9 +54,11 @@ public class DLFileEntryCTDisplayRenderer
 
 		PDFProcessor pdfProcessor = (PDFProcessor)_pdfDLProcessor;
 
+		ImageProcessor imageProcessor = (ImageProcessor)_imageDLProcessor;
+
 		return DLFileVersionCTDisplayRenderer.getDownloadInputStream(
 			_store, _audioProcessor, _dlAppLocalService,
-			dlFileEntry.getFileVersion(), _imageProcessor, key, pdfProcessor,
+			dlFileEntry.getFileVersion(), imageProcessor, key, pdfProcessor,
 			_videoProcessor);
 	}
 
@@ -138,8 +140,11 @@ public class DLFileEntryCTDisplayRenderer
 	@Reference
 	private GroupLocalService _groupLocalService;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private ImageProcessor _imageProcessor;
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")"
+	)
+	private DLProcessor _imageDLProcessor;
 
 	@Reference(
 		policyOption = ReferencePolicyOption.GREEDY,

@@ -11,8 +11,9 @@ package net.sf.jsqlparser.expression.operators.relational;
 
 import net.sf.jsqlparser.expression.BinaryExpression;
 import net.sf.jsqlparser.expression.ExpressionVisitor;
+import net.sf.jsqlparser.expression.internal.IrregularBinaryExpression;
 
-public class LikeExpression extends BinaryExpression {
+public class LikeExpression extends BinaryExpression implements IrregularBinaryExpression {
 
     private boolean not = false;
     private String escape = null;
@@ -62,3 +63,4 @@ public class LikeExpression extends BinaryExpression {
         this.caseInsensitive = caseInsensitive;
     }
 }
+/* @generated */

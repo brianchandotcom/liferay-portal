@@ -14,6 +14,7 @@ import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
 import com.liferay.jethr0.util.StringUtil;
 
 import java.util.Date;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -72,6 +73,10 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 		return add(jobEntity);
 	}
 
+	public Set<JobEntity> getByState(JobEntity.State... states) {
+		return addAll(_jobEntityDALO.getJobsByState(states));
+	}
+
 	@Override
 	public JobEntityDALO getEntityDALO() {
 		return _jobEntityDALO;
@@ -79,9 +84,6 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 
 	@Override
 	public void initialize() {
-		addAll(
-			_jobEntityDALO.getJobsByState(
-				JobEntity.State.QUEUED, JobEntity.State.RUNNING));
 	}
 
 	@Override

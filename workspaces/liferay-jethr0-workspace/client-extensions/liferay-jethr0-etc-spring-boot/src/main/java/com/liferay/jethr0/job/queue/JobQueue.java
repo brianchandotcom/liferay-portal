@@ -85,7 +85,9 @@ public class JobQueue {
 	public void initialize() {
 		setJobPrioritizerEntity(_getDefaultJobPrioritizerEntity());
 
-		addJobEntities(_jobEntityRepository.getAll());
+		addJobEntities(
+			_jobEntityRepository.getByState(
+				JobEntity.State.QUEUED, JobEntity.State.RUNNING));
 
 		update();
 	}

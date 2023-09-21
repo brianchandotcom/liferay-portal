@@ -74,15 +74,6 @@ public class UserServiceWhenUpdatingUserStatusTest {
 	}
 
 	@Test
-	public void testActivateUserWithDeletePermissionSucceedsWithoutFeatureFlag()
-		throws Exception {
-
-		_testUpdateUserStatusWithValidPermission(
-			ActionKeys.DELETE, WorkflowConstants.STATUS_INACTIVE,
-			WorkflowConstants.STATUS_APPROVED);
-	}
-
-	@Test
 	public void testDeactivateUserWithActivatePermissionFails()
 		throws Exception {
 
@@ -110,15 +101,6 @@ public class UserServiceWhenUpdatingUserStatusTest {
 	}
 
 	@Test
-	public void testDeactivateUserWithDeletePermissionSucceedsWithoutFeatureFlag()
-		throws Exception {
-
-		_testUpdateUserStatusWithValidPermission(
-			ActionKeys.DELETE, WorkflowConstants.STATUS_APPROVED,
-			WorkflowConstants.STATUS_INACTIVE);
-	}
-
-	@Test
 	public void testDeleteUserWithActivatePermissionFails() throws Exception {
 		_testDeleteUserWithInvalidPermission(ActionKeys.ACTIVATE, "DELETE");
 	}
@@ -130,13 +112,6 @@ public class UserServiceWhenUpdatingUserStatusTest {
 
 	@Test
 	public void testDeleteUserWithDeletePermissionSucceedsWithFeatureFlag()
-		throws Exception {
-
-		_testDeleteUserWithDeletePermission();
-	}
-
-	@Test
-	public void testDeleteUserWithDeletePermissionSucceedsWithoutFeatureFlag()
 		throws Exception {
 
 		_testDeleteUserWithDeletePermission();

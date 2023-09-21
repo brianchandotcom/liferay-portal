@@ -3,23 +3,29 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayBadge from '@clayui/badge';
+import ClayLabel from '@clayui/label';
 import {useEffect, useState} from 'react';
 
+import './ProductCard.scss';
+
+import ClaySticker from '@clayui/sticker';
+
+import emptyPictureIcon from '../../../assets/icons/avatar.svg';
 import {getProductById} from '../../../utils/api';
+import {getCustomFieldValue} from '../../../utils/customFieldUtil';
+import {getValueFromSpecifications} from '../../../utils/util';
+import {LicenseType} from '../enums/licenseType';
 
 interface ProductCardProps {
 	productId: number | null;
 	selectedAccount?: Account;
 	setProductToForm: (product: Product) => void;
-	showAccount: Boolean;
 }
 
 const ProductCard = ({
 	productId,
 	selectedAccount,
 	setProductToForm,
-	showAccount,
 }: ProductCardProps) => {
 	const [product, setProduct] = useState<Product[]>([]);
 
@@ -29,7 +35,7 @@ const ProductCard = ({
 			{
 				productId &&
 					getProductById({
-						nestedFields: 'skus',
+						nestedFields: 'productSpecifications,skus',
 						productId,
 					}).then((item: Product) => {
 						setProduct([item]);
@@ -43,91 +49,101 @@ const ProductCard = ({
 
 	const currentValue = product[0];
 
-	let setHeight;
+	const getLicenseTagText = (product: Product) => {
+		if (
+			getValueFromSpecifications(
+				product.productSpecifications,
+				'License Type'
+			).toLowerCase === LicenseType.Perpetual.toLowerCase
+		) {
+			return 'One-Time';
+		}
+		else if (
+			getValueFromSpecifications(
+				product.productSpecifications,
+				'License Type'
+			).toLowerCase === LicenseType.Subscription.toLowerCase
+		) {
+			return 'Annually';
+		}
 
-	if (showAccount) {
-		setHeight = 176;
-	}
-	else {
-		setHeight = 112;
-	}
+		return '';
+	};
 
 	return (
-		<div
-			className="d-flex flex-column justify-content-between rounded"
-			style={{backgroundColor: '#F7F7F8', height: setHeight, width: 600}}
-		>
+		<>
 			{currentValue && (
-				<div className="d-flex flex-row justify-content-between">
-					<div className="align-items-start align-self-start col-8 d-flex justify-content-start">
-						<div className="align-items-center align-self-center d-flex justify-content-center ml-5 mt-4">
+				<div className="p-5 product-banner">
+					<div className="d-flex flex-row justify-content-between">
+						<div className="d-flex flex-row">
 							<img
-								src={currentValue.thumbnail}
-								style={{height: 64, width: 64}}
+								height="64px"
+								src={currentValue?.thumbnail}
+								width="64px"
 							/>
-						</div>
-						<div
-							className="align-self-start d-flex flex-column ml-5 mt-4"
-							style={{height: 64}}
-						>
-							<span className="text-7 ttext-weight-semi-bold">
-								{Object.values(currentValue.name)}
-							</span>
-							<span className="text-2">
-								{' '}
-								{Object.values(currentValue.description)}{' '}
-							</span>
-						</div>
-					</div>
-					<div className="col-4 d-flex flex-column mr-4 mt-3">
-						<span className="align-self-end d-flex text-4">
-							Price
-						</span>
-						<span className="align-self-end d-flex text-5 text-weight-bolder"></span>
-						<div className="align-self-end d-flex text-5 text-center">
-							<ClayBadge displayType="secondary" label="TEST" />
-						</div>
-					</div>
-				</div>
-			)}
-
-			{showAccount && (
-				<div className="d-flex flex-column">
-					<div className="align-content-center align-items-center align-self-center d-flex">
-						<div
-							className="card-divider"
-							style={{width: 550}}
-						></div>
-					</div>
-
-					<div className="d-flex justify-content-between mt-4">
-						<div className="col-6 d-flex ml-3">
-							<p className="text-3">
-								{selectedAccount && selectedAccount.name}
-							</p>
-						</div>
-
-						<div className="col-6 d-flex flex-row justify-content-between">
-							<div className="col-10 d-flex flex-column mb-2">
-								<span className="align-self-end d-flex mr-2 text-3"></span>
-								<span className="align-self-end d-flex text-2"></span>
-							</div>
-
-							<div className="align-items-center col-2 d-flex justify-content-end">
-								<span className="sticker sticker-sm sticker-user-icon">
-									<span className="sticker-overlay">
-										<img
-											className="sticker-img"
-											src="/images/thumbnail_dock.jpg"
-										/>
-									</span>
-								</span>
+							<div className="align-items-center ml-4">
+								<h1 className="text-weight-bold">
+									{currentValue.name.en_US}
+								</h1>
+								<div className="sub-text">
+									{getValueFromSpecifications(
+										currentValue.productSpecifications,
+										'latest-version'
+									)}{' '}
+									by{' '}
+									{currentValue.customFields &&
+										getCustomFieldValue(
+											currentValue.customFields,
+											'Developer Name'
+										)}
+								</div>
 							</div>
 						</div>
+						<div className="align-items-end d-flex flex-column price-text">
+							<strong>Price</strong>
+							<div>Textinho com o preco</div>
+							<ClayLabel displayType="secondary">
+								{getLicenseTagText(currentValue)}
+							</ClayLabel>
+						</div>
 					</div>
+					{selectedAccount && (
+						<>
+							<hr></hr>
+							<div className="account-banner d-flex flex-row justify-content-between px-4 py-3">
+								<strong className="align-self-center sub-text">
+									Account Selected
+								</strong>
+								<div className="align-items-center d-flex">
+									<div className="align-items-end d-flex flex-column m-2">
+										<strong>{selectedAccount?.name}</strong>
+										<div className="sub-text">
+											{selectedAccount?.customFields &&
+												getCustomFieldValue(
+													selectedAccount.customFields,
+													'Contact Email'
+												)}
+										</div>
+									</div>
+									<ClaySticker shape="circle" size="lg">
+										<ClaySticker.Image
+											alt="placeholder"
+											height="24"
+											src={
+												selectedAccount &&
+												(selectedAccount?.logoURL ??
+													emptyPictureIcon)
+											}
+											width="24"
+										></ClaySticker.Image>
+									</ClaySticker>
+								</div>
+							</div>
+						</>
+					)}
 				</div>
 			)}
-		</div>
+		</>
 	);
 };
 export default ProductCard;

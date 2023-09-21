@@ -43,7 +43,6 @@ const sectionProperties = {
 
 const GetAppFlow = () => {
 	const [step, setStep] = useState<StepType>(StepType.ACCOUNT);
-	const [showAccount, setShowAccount] = useState<Boolean>(false);
 
 	const {getValues, setValue} = useForm<getAppProps>({
 		defaultValues: {
@@ -73,7 +72,6 @@ const GetAppFlow = () => {
 			<AccountSelection
 				onSelectAccount={(account: Account) => {
 					setValue('selectedAccount', account);
-					setShowAccount(true);
 				}}
 			/>
 		),
@@ -87,7 +85,6 @@ const GetAppFlow = () => {
 				setProductToForm={(product: Product) =>
 					setValue('product', product)
 				}
-				showAccount={showAccount}
 			/>
 			<div className="border d-flex flex-column mt-7 p-5 rounded">
 				<div className="d-flex flex-column">

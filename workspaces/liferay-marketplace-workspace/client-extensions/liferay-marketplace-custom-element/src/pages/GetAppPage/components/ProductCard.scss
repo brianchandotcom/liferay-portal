@@ -1,0 +1,21 @@
+.product-banner {
+	background: var(--neutral-01, #f7f7f8);
+	border-radius: 10px;
+}
+
+.account-banner {
+	background: var(--neutral-01, #f7f7f8);
+	padding: 16px 24px;
+}
+.sub-text {
+	color: var(--neutral-08, #54555f);
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 24px;
+}
+.price-text {
+	color: var(--neutral-10, #282934);
+	font-size: 13px;
+	line-height: 16px;
+}

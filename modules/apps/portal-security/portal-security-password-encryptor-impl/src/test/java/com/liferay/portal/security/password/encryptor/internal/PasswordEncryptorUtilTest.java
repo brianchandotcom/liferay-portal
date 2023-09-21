@@ -28,7 +28,7 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Tomas Polesovsky
  */
-public class CompositePasswordEncryptorTest {
+public class PasswordEncryptorUtilTest {
 
 	@ClassRule
 	@Rule

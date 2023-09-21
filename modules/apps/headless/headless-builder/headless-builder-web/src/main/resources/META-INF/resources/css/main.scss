@@ -19,6 +19,13 @@
 		.card-body {
 			padding: 0;
 
+			.application-fields-card-body {
+				padding-bottom: 2px;
+				padding-left: 24px;
+				padding-right: 24px;
+				padding-top: 24px;
+			}
+
 			.schema-fields-card-body {
 				padding-bottom: 1px;
 				padding-left: 24px;
@@ -32,13 +39,6 @@
 				padding-left: 24px;
 				padding-right: 24px;
 				padding-top: 16px;
-			}
-
-			.application-fields-card-body {
-				padding-bottom: 2px;
-				padding-left: 24px;
-				padding-right: 24px;
-				padding-top: 24px;
 			}
 
 			textarea.form-control {
@@ -172,6 +172,10 @@
 				}
 
 				.treeview-item {
+					.quick-action-item {
+						color: $gray-600;
+					}
+
 					.treeview-link {
 						padding-left: 16px !important;
 
@@ -194,10 +198,6 @@
 								text-decoration: underline;
 							}
 						}
-					}
-
-					.quick-action-item {
-						color: $gray-600;
 					}
 				}
 			}
@@ -393,14 +393,14 @@
 							}
 
 							.sidebar-results-text {
+								-webkit-box-orient: vertical;
+								-webkit-line-clamp: 2;
 								display: -webkit-box;
 								margin-bottom: 8px;
 								margin-top: 8px;
 								overflow: hidden;
 								text-overflow: ellipsis;
 								white-space: initial;
-								-webkit-line-clamp: 2;
-								-webkit-box-orient: vertical;
 							}
 
 							.tbar-nav.tbar-nav-wrap {

@@ -3611,6 +3611,31 @@ definition {
 			dmDocumentTitle = "Document_2");
 	}
 
+	@description = "This test ensures that a user can see the info message after upload the file to see the preview."
+	@priority = 3
+	test CanViewInfoMessageOfDocumentPreview {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_2.pdf",
+			groupName = "Guest",
+			mimeType = "application/pdf",
+			sourceFileName = "Document_2.pdf");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_2.pdf",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		AssertTextEquals(
+			locator1 = "Message#INFO_1",
+			value1 = "Info:The document preview may not show all pages. Download it to see the full document.");
+
+		Click(locator1 = "Icon#CLOSE");
+
+		AssertTextNotPresent(
+			locator1 = "Message#INFO_1",
+			value1 = "Info:The document preview may not show all pages. Download it to see the full document.");
+	}
+
 	@priority = 4
 	@refactordone
 	test CanViewOlderVersion {

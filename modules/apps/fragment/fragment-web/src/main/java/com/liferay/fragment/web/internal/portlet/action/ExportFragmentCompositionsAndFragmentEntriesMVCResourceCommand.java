@@ -10,13 +10,14 @@ import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCompositionService;
 import com.liferay.fragment.service.FragmentEntryService;
-import com.liferay.fragment.web.internal.portlet.helper.ExportHelper;
+import com.liferay.fragment.web.internal.portlet.util.ExportUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.zip.ZipWriterFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -93,9 +94,9 @@ public class ExportFragmentCompositionsAndFragmentEntriesMVCResourceCommand
 				}
 			}
 
-			File file =
-				_exportHelper.exportFragmentCompositionsAndFragmentEntries(
-					fragmentCompositions, fragmentEntries);
+			File file = ExportUtil.exportFragmentCompositionsAndFragmentEntries(
+				fragmentCompositions, fragmentEntries,
+				_zipWriterFactory.getZipWriter());
 
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
@@ -110,12 +111,12 @@ public class ExportFragmentCompositionsAndFragmentEntriesMVCResourceCommand
 	}
 
 	@Reference
-	private ExportHelper _exportHelper;
-
-	@Reference
 	private FragmentCompositionService _fragmentCompositionService;
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;
+
+	@Reference
+	private ZipWriterFactory _zipWriterFactory;
 
 }

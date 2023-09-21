@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -47,7 +46,6 @@ public class UserServiceWhenUpdatingUserStatusTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@FeatureFlags("LPS-188420")
 	@Test
 	public void testActivateUserWithActivatePermissionSucceeds()
 		throws Exception {
@@ -57,7 +55,6 @@ public class UserServiceWhenUpdatingUserStatusTest {
 			WorkflowConstants.STATUS_APPROVED);
 	}
 
-	@FeatureFlags("LPS-188420")
 	@Test
 	public void testActivateUserWithDeactivatePermissionFails()
 		throws Exception {
@@ -67,7 +64,6 @@ public class UserServiceWhenUpdatingUserStatusTest {
 			WorkflowConstants.STATUS_APPROVED, "ACTIVATE,DELETE");
 	}
 
-	@FeatureFlags("LPS-188420")
 	@Test
 	public void testActivateUserWithDeletePermissionSucceedsWithFeatureFlag()
 		throws Exception {
@@ -86,7 +82,6 @@ public class UserServiceWhenUpdatingUserStatusTest {
 			WorkflowConstants.STATUS_APPROVED);
 	}
 
-	@FeatureFlags("LPS-188420")
 	@Test
 	public void testDeactivateUserWithActivatePermissionFails()
 		throws Exception {
@@ -96,7 +91,6 @@ public class UserServiceWhenUpdatingUserStatusTest {
 			WorkflowConstants.STATUS_INACTIVE, "DEACTIVATE,DELETE");
 	}
 
-	@FeatureFlags("LPS-188420")
 	@Test
 	public void testDeactivateUserWithDeactivatePermissionSucceeds()
 		throws Exception {
@@ -106,7 +100,6 @@ public class UserServiceWhenUpdatingUserStatusTest {
 			WorkflowConstants.STATUS_INACTIVE);
 	}
 
-	@FeatureFlags("LPS-188420")
 	@Test
 	public void testDeactivateUserWithDeletePermissionSucceedsWithFeatureFlag()
 		throws Exception {
@@ -125,19 +118,16 @@ public class UserServiceWhenUpdatingUserStatusTest {
 			WorkflowConstants.STATUS_INACTIVE);
 	}
 
-	@FeatureFlags("LPS-188420")
 	@Test
 	public void testDeleteUserWithActivatePermissionFails() throws Exception {
 		_testDeleteUserWithInvalidPermission(ActionKeys.ACTIVATE, "DELETE");
 	}
 
-	@FeatureFlags("LPS-188420")
 	@Test
 	public void testDeleteUserWithDeactivatePermissionFails() throws Exception {
 		_testDeleteUserWithInvalidPermission(ActionKeys.DEACTIVATE, "DELETE");
 	}
 
-	@FeatureFlags("LPS-188420")
 	@Test
 	public void testDeleteUserWithDeletePermissionSucceedsWithFeatureFlag()
 		throws Exception {

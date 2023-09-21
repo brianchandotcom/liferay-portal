@@ -15,4 +15,10 @@ public class LayoutPageTemplateAdminWebKeys {
 
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
+	public static final String LAYOUT_PAGE_TEMPLATE_COLLECTIONS =
+		"LAYOUT_PAGE_TEMPLATE_COLLECTIONS";
+
+	public static final String LAYOUT_PAGE_TEMPLATE_ENTRIES =
+		"LAYOUT_PAGE_TEMPLATE_ENTRIES";
+
 }

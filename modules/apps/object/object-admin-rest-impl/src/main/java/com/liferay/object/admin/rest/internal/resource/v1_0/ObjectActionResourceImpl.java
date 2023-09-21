@@ -200,9 +200,15 @@ public class ObjectActionResourceImpl extends BaseObjectActionResourceImpl {
 		return ObjectActionUtil.toObjectAction(
 			HashMapBuilder.put(
 				"delete",
-				addAction(
-					ActionKeys.DELETE, "deleteObjectAction", permissionName,
-					objectAction.getObjectDefinitionId())
+				() -> {
+					if (objectAction.isSystem()) {
+						return null;
+					}
+
+					return addAction(
+						ActionKeys.DELETE, "deleteObjectAction", permissionName,
+						objectAction.getObjectDefinitionId());
+				}
 			).put(
 				"get",
 				addAction(

@@ -11,6 +11,9 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -23,9 +26,11 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -46,6 +51,7 @@ public class CommercePriceEntryDisplayContext
 		ModelResourcePermission<CommercePriceList>
 			commercePriceListModelResourcePermission,
 		CommercePriceListService commercePriceListService,
+		CPInstanceUnitOfMeasureLocalService cpInstanceUnitOfMeasureLocalService,
 		HttpServletRequest httpServletRequest) {
 
 		super(
@@ -54,6 +60,8 @@ public class CommercePriceEntryDisplayContext
 
 		_commercePriceEntryLocalService = commercePriceEntryLocalService;
 		_commercePriceEntryService = commercePriceEntryService;
+		_cpInstanceUnitOfMeasureLocalService =
+			cpInstanceUnitOfMeasureLocalService;
 	}
 
 	public String getAddCommerceTierPriceEntryRenderURL() throws Exception {
@@ -118,6 +126,20 @@ public class CommercePriceEntryDisplayContext
 		}
 
 		return commercePriceEntry.getCommercePriceEntryId();
+	}
+
+	public List<CPInstanceUnitOfMeasure> getCPInstanceUnitOfMeasures()
+		throws Exception {
+
+		CommercePriceEntry commercePriceEntry = getCommercePriceEntry();
+
+		CPInstance cpInstance = commercePriceEntry.getCPInstance();
+
+		return ListUtil.sort(
+			_cpInstanceUnitOfMeasureLocalService.
+				getActiveCPInstanceUnitOfMeasures(cpInstance.getCPInstanceId()),
+			Comparator.comparing(
+				CPInstanceUnitOfMeasure::getKey, String::compareToIgnoreCase));
 	}
 
 	public CreationMenu getCreationMenu() throws Exception {
@@ -190,5 +212,7 @@ public class CommercePriceEntryDisplayContext
 	private final CommercePriceEntryLocalService
 		_commercePriceEntryLocalService;
 	private final CommercePriceEntryService _commercePriceEntryService;
+	private final CPInstanceUnitOfMeasureLocalService
+		_cpInstanceUnitOfMeasureLocalService;
 
 }

@@ -110,8 +110,7 @@ public class MultiselectPicklistObjectFieldBusinessTypeTest {
 
 		Assert.assertEquals(2, jsonArray.length());
 
-		JSONObject jsonObject = jsonArray.getJSONObject(
-			0);
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
 
 		Assert.assertEquals(
 			jsonObject.getString("key"), _LIST_TYPE_ENTRY_KEY_1);

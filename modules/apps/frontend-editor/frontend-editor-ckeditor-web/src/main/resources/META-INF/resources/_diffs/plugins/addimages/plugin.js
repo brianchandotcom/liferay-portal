@@ -417,6 +417,14 @@
 								uploadImageReturnType: '',
 							});
 
+							const ckeditorImage = document.querySelector(
+								'[data-cke-saved-src]'
+							);
+
+							if (ckeditorImage) {
+								ckeditorImage.remove();
+							}
+
 							const fragment = CKEDITOR.htmlParser.fragment.fromHtml(
 								editor.getData()
 							);

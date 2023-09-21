@@ -25,6 +25,10 @@
 			max-width: 100%;
 		}
 
+		img[data-cke-saved-src]:not([data-fileentryid]) {
+			visibility: hidden;
+		}
+
 		.cover-image-container {
 			background-position: center;
 			background-repeat: no-repeat;

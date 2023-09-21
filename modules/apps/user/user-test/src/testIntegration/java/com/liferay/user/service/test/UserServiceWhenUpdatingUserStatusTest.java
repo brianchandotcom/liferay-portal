@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -21,6 +22,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -28,6 +31,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -42,6 +46,45 @@ public class UserServiceWhenUpdatingUserStatusTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@FeatureFlags("LPS-188420")
+	@Test
+	public void testActivateUserWithActivatePermissionSucceeds()
+		throws Exception {
+
+		_testUpdateUserStatusWithValidPermission(
+			ActionKeys.ACTIVATE, WorkflowConstants.STATUS_INACTIVE,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@FeatureFlags("LPS-188420")
+	@Test
+	public void testActivateUserWithDeactivatePermissionFails()
+		throws Exception {
+
+		_testUpdateUserStatusWithInvalidPermission(
+			ActionKeys.DEACTIVATE, WorkflowConstants.STATUS_INACTIVE,
+			WorkflowConstants.STATUS_APPROVED, "ACTIVATE,DELETE");
+	}
+
+	@FeatureFlags("LPS-188420")
+	@Test
+	public void testActivateUserWithDeletePermissionSucceedsWithFeatureFlag()
+		throws Exception {
+
+		_testUpdateUserStatusWithValidPermission(
+			ActionKeys.DELETE, WorkflowConstants.STATUS_INACTIVE,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Test
+	public void testActivateUserWithDeletePermissionSucceedsWithoutFeatureFlag()
+		throws Exception {
+
+		_testUpdateUserStatusWithValidPermission(
+			ActionKeys.DELETE, WorkflowConstants.STATUS_INACTIVE,
+			WorkflowConstants.STATUS_APPROVED);
+	}
 
 	private void _testUpdateUserStatusWithInvalidPermission(
 			String actionId, int sourceStatus, int targetStatus,

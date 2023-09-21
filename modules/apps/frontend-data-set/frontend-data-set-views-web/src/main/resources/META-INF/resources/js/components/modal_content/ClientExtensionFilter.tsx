@@ -8,19 +8,18 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import classNames from 'classnames';
+import {IClientExtensionRenderer} from 'frontend-js-web';
 import React from 'react';
-
-import {IFDSFilterClientExtension} from '../../types';
 
 function Header() {
 	return <>{Liferay.Language.get('new-client-extension-filter')}</>;
 }
 
 interface IBodyProps {
-	fdsFilterClientExtensions: IFDSFilterClientExtension[];
+	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	namespace: string;
-	onSelectedClientExtensionChange: (val: IFDSFilterClientExtension) => void;
-	selectedClientExtension?: IFDSFilterClientExtension;
+	onSelectedClientExtensionChange: (val: IClientExtensionRenderer) => void;
+	selectedClientExtension?: IClientExtensionRenderer;
 }
 
 function Body({
@@ -35,7 +34,7 @@ function Body({
 		return (
 			<ClayAlert displayType="info" title="Info">
 				{Liferay.Language.get(
-					'no-client-extentions-are-available-create-a-frontend-data-set-filter-in-order-to-use-it'
+					'no-client-extensions-are-available.-create-a-frontend-data-set-filter-in-order-to-use-it'
 				)}
 			</ClayAlert>
 		);
@@ -48,12 +47,6 @@ function Body({
 					{Liferay.Language.get('client-extension')}
 				</label>
 
-				<input
-					name={fdsFilterClientExtensionFormElementId}
-					type="hidden"
-					value={selectedClientExtension?.erc}
-				/>
-
 				<ClayDropDown
 					closeOnClick
 					menuElementAttrs={{
@@ -64,6 +57,7 @@ function Body({
 							aria-labelledby={`${namespace}cellRenderersLabel`}
 							className="form-control form-control-select form-control-select-secondary"
 							displayType="secondary"
+							name={fdsFilterClientExtensionFormElementId}
 						>
 							{selectedClientExtension
 								? selectedClientExtension.name
@@ -77,7 +71,7 @@ function Body({
 					>
 						{fdsFilterClientExtensions.map(
 							(
-								filterClientExtension: IFDSFilterClientExtension
+								filterClientExtension: IClientExtensionRenderer
 							) => (
 								<ClayDropDown.Item
 									className="align-items-center d-flex justify-content-between"

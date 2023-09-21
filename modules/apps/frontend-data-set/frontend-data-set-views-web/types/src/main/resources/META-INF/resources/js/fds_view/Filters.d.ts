@@ -5,11 +5,11 @@
 
 /// <reference types="react" />
 
+import {IClientExtensionRenderer} from 'frontend-js-web';
 import {FDSViewType} from '../FDSViews';
-import {IFDSFilterClientExtension} from '../types';
 import '../../css/Filters.scss';
 interface IProps {
-	fdsFilterClientExtensions: IFDSFilterClientExtension[];
+	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;

@@ -12,7 +12,13 @@ import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {format} from 'date-fns';
-import {fetch, navigate, openModal, sub} from 'frontend-js-web';
+import {
+	IClientExtensionRenderer,
+	fetch,
+	navigate,
+	openModal,
+	sub,
+} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
@@ -28,7 +34,6 @@ import {
 	EFilterType,
 	IClientExtensionFilter,
 	IDateFilter,
-	IFDSFilterClientExtension,
 	IField,
 	IFilter,
 	IPickList,
@@ -45,7 +50,7 @@ type FilterCollection = Array<
 
 interface IPropsAddFDSFilterModalContent {
 	closeModal: Function;
-	fdsFilterClientExtensions?: IFDSFilterClientExtension[];
+	fdsFilterClientExtensions?: IClientExtensionRenderer[];
 	fdsView: FDSViewType;
 	fieldNames?: string[];
 	fields: IField[];
@@ -67,11 +72,11 @@ function AddFDSFilterModalContent({
 	onSave,
 }: IPropsAddFDSFilterModalContent) {
 	const [selectedClientExtension, setSelectedClientExtension] = useState<
-		IFDSFilterClientExtension | undefined
+		IClientExtensionRenderer | undefined
 	>(
 		filter && filterType === EFilterType.CLIENT_EXTENSION
 			? fdsFilterClientExtensions.find(
-					(cx: IFDSFilterClientExtension) =>
+					(cx: IClientExtensionRenderer) =>
 						cx.erc ===
 						(filter as IClientExtensionFilter)
 							.fdsFilterClientExtensionERC
@@ -455,7 +460,7 @@ function AddFDSFilterModalContent({
 }
 
 interface IProps {
-	fdsFilterClientExtensions: IFDSFilterClientExtension[];
+	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;

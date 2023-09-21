@@ -40,10 +40,6 @@ export interface ISelectionFilter extends IFilter {
 	multiple: boolean;
 	preselectedValues: string;
 }
-export interface IFDSFilterClientExtension {
-	erc: string;
-	name: string;
-}
 export interface IPickList {
 	externalReferenceCode: string;
 	id: string;

@@ -5,13 +5,13 @@
 
 /// <reference types="react" />
 
-import {IFDSFilterClientExtension} from '../../types';
+import {IClientExtensionRenderer} from 'frontend-js-web';
 declare function Header(): JSX.Element;
 interface IBodyProps {
-	fdsFilterClientExtensions: IFDSFilterClientExtension[];
+	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	namespace: string;
-	onSelectedClientExtensionChange: (val: IFDSFilterClientExtension) => void;
-	selectedClientExtension?: IFDSFilterClientExtension;
+	onSelectedClientExtensionChange: (val: IClientExtensionRenderer) => void;
+	selectedClientExtension?: IClientExtensionRenderer;
 }
 declare function Body({
 	fdsFilterClientExtensions,

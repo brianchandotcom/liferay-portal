@@ -17,7 +17,6 @@ import Fields from './fds_view/Fields';
 import Filters from './fds_view/Filters';
 import Pagination from './fds_view/Pagination';
 import Sorting from './fds_view/Sorting';
-import {IFDSFilterClientExtension} from './types';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 
 let NAVIGATION_BAR_ITEMS = [
@@ -65,7 +64,7 @@ NAVIGATION_BAR_ITEMS = [
 
 interface IFDSViewSectionProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
-	fdsFilterClientExtensions: IFDSFilterClientExtension[];
+	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
@@ -76,7 +75,7 @@ interface IFDSViewSectionProps {
 
 interface IFDSViewProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
-	fdsFilterClientExtensions: IFDSFilterClientExtension[];
+	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsViewId: string;
 	fdsViewsURL: string;
 	namespace: string;

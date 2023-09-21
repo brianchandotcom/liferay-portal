@@ -7,10 +7,9 @@
 
 import {IClientExtensionRenderer} from 'frontend-js-web';
 import {FDSViewType} from './FDSViews';
-import {IFDSFilterClientExtension} from './types';
 interface IFDSViewSectionProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
-	fdsFilterClientExtensions: IFDSFilterClientExtension[];
+	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
@@ -20,7 +19,7 @@ interface IFDSViewSectionProps {
 }
 interface IFDSViewProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
-	fdsFilterClientExtensions: IFDSFilterClientExtension[];
+	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsViewId: string;
 	fdsViewsURL: string;
 	namespace: string;

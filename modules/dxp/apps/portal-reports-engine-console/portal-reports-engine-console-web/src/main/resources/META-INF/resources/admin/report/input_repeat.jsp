@@ -182,31 +182,27 @@ int yearlyType = ParamUtil.getInteger(request, "yearlyType");
 <aui:script require="frontend-js-web/index as frontendJsWeb">
 	var {delegate} = frontendJsWeb;
 
-	var tables = document.querySelectorAll('#<portlet:namespace />recurrenceTypeDailyTable, #<portlet:namespace />recurrenceTypeMonthlyTable, #<portlet:namespace />recurrenceTypeNeverTable, #<portlet:namespace />recurrenceTypeWeeklyTable, #<portlet:namespace />recurrenceTypeYearlyTable');
+	var tables = document.querySelectorAll(
+		'#<portlet:namespace />recurrenceTypeDailyTable, #<portlet:namespace />recurrenceTypeMonthlyTable, #<portlet:namespace />recurrenceTypeNeverTable, #<portlet:namespace />recurrenceTypeWeeklyTable, #<portlet:namespace />recurrenceTypeYearlyTable'
+	);
 
-	var eventsContainer = document.getElementById('<portlet:namespace />eventsContainer');
+	var eventsContainer = document.getElementById(
+		'<portlet:namespace />eventsContainer'
+	);
 
 	if (eventsContainer) {
-		delegate(
-			eventsContainer,
-			'change',
-			'.field',
-			function(event) {
-				var tableId = event.delegateTarget.id + 'Table';
+		delegate(eventsContainer, 'change', '.field', (event) => {
+			var tableId = event.delegateTarget.id + 'Table';
 
-				Array.prototype.forEach.call(
-					tables,
-					function(table) {
-						if (table.id === tableId) {
-							table.classList.remove('hide');
-						}
-						else {
-							table.classList.add('hide');
-						}
-					}
-				);
-			}
-		);
+			Array.prototype.forEach.call(tables, (table) => {
+				if (table.id === tableId) {
+					table.classList.remove('hide');
+				}
+				else {
+					table.classList.add('hide');
+				}
+			});
+		});
 	}
 </aui:script>
 

@@ -16,16 +16,21 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
+import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
+import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.batch.planner.batch.engine.broker.BatchEngineBroker;
 import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerMappingLocalService;
 import com.liferay.batch.planner.service.BatchPlannerPlanLocalService;
+import com.liferay.batch.planner.service.BatchPlannerPolicyLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
@@ -57,6 +62,8 @@ import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.model.ObjectViewColumn;
 import com.liferay.object.model.ObjectViewFilterColumn;
 import com.liferay.object.model.ObjectViewSortColumn;
+import com.liferay.object.rest.dto.v1_0.Link;
+import com.liferay.object.rest.dto.v1_0.util.LinkUtil;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
@@ -73,8 +80,11 @@ import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewFilterColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewSortColumnPersistence;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -92,6 +102,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -103,11 +114,15 @@ import com.liferay.portal.vulcan.jackson.databind.ser.VulcanPropertyFilter;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+
+import java.net.URI;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -180,7 +195,7 @@ public class BatchEngineBrokerTest {
 				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
 				RandomTestUtil.randomString(), 0, "C_TestObject", false);
 
-		for (String fieldName : _objectEntryFieldNames) {
+		for (String fieldName : _objectEntryExportFieldNames) {
 			_batchPlannerMappingLocalService.addBatchPlannerMapping(
 				TestPropsValues.getUserId(),
 				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
@@ -199,7 +214,7 @@ public class BatchEngineBrokerTest {
 					addFilter(
 						"Liferay.Vulcan",
 						VulcanPropertyFilter.of(
-							new HashSet<>(_objectEntryFieldNames), null));
+							new HashSet<>(_objectEntryExportFieldNames), null));
 				}
 			});
 
@@ -215,7 +230,7 @@ public class BatchEngineBrokerTest {
 		Assert.assertEquals(1, jsonNode.size());
 
 		_assertEquals(
-			expectedJsonNode, _objectEntryFieldNames, jsonNode.get(0));
+			expectedJsonNode, _objectEntryExportFieldNames, jsonNode.get(0));
 	}
 
 	@Test
@@ -331,14 +346,91 @@ public class BatchEngineBrokerTest {
 			expectedJsonNode, _objectDefinitionFieldNames, actualJsonNode);
 	}
 
+	@Test
+	public void testImportCompanyScopeObjectEntry() throws Exception {
+		_objectDefinition1 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), "TestObject",
+			TestPropsValues.getUser());
+
+		File file = _createImportFile(
+			_addDLFileEntry(), _objectDefinition1.getExternalReferenceCode(),
+			"object_entry_import_template.txt");
+
+		URI uri = file.toURI();
+
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanLocalService.addBatchPlannerPlan(
+				TestPropsValues.getUserId(), false,
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON, uri.toString(),
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				RandomTestUtil.randomString(), 0, "C_TestObject", false);
+
+		for (String fieldName : _objectEntryExportFieldNames) {
+			_batchPlannerMappingLocalService.addBatchPlannerMapping(
+				TestPropsValues.getUserId(),
+				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
+				fieldName, "String", StringPool.BLANK);
+		}
+
+		_batchPlannerPolicyLocalService.addBatchPlannerPolicy(
+			TestPropsValues.getUserId(),
+			batchPlannerPlan.getBatchPlannerPlanId(), "onErrorFail", "true");
+
+		_objectMapper.setFilterProvider(
+			new SimpleFilterProvider() {
+				{
+					addFilter(
+						"Liferay.Vulcan",
+						VulcanPropertyFilter.of(
+							new HashSet<>(_objectEntryImportFieldNames), null));
+				}
+			});
+
+		JsonNode jsonNode = _objectMapper.readTree(file);
+
+		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+
+		_getFinishedBatchEngineImportTask(
+			batchPlannerPlan.getBatchPlannerPlanId());
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			_OBJECT_ENTRY_ERC, _objectDefinition1.getObjectDefinitionId());
+
+		_assertEquals(
+			_getExpectedJsonNode(
+				_objectDefinition1, objectEntry.getObjectEntryId()),
+			_objectEntryImportFieldNames, jsonNode.get(0));
+	}
+
+	private DLFileEntry _addDLFileEntry() throws Exception {
+		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
+
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+
+		return _dlFileEntryLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			TestPropsValues.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".txt",
+			MimeTypesUtil.getExtensionContentType("txt"),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
+			null, inputStream, bytes.length, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId()));
+	}
+
 	private ObjectEntry _addObjectEntry(
 			long companyId, long objectDefinitionId, long userId)
 		throws Exception {
 
+		DLFileEntry dlFileEntry = _addDLFileEntry();
+
 		return _objectEntryLocalService.addObjectEntry(
 			userId, 0, objectDefinitionId,
 			HashMapBuilder.<String, Serializable>put(
-				"testAttachmentField", _getAttachmentFieldValue()
+				"testAttachmentField", dlFileEntry.getFileEntryId()
 			).put(
 				"testBooleanField", RandomTestUtil.randomBoolean()
 			).put(
@@ -399,9 +491,58 @@ public class BatchEngineBrokerTest {
 				}
 
 				Assert.assertEquals(
+					fieldName + " value mismatch",
 					expectedFieldJsonNode.toString(), fieldJsonNode.toString());
 			}
 		}
+	}
+
+	private File _createImportFile(
+			DLFileEntry dlFileEntry, String objectDefinitionERC,
+			String templateName)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		File file = null;
+
+		try {
+			file = _file.createTempFile("json");
+
+			String template = StreamUtil.toString(
+				clazz.getResourceAsStream(
+					StringBundler.concat(
+						"/com/liferay/planner/batch/engine/broker/test",
+						"/dependencies/", templateName)));
+
+			Link link = LinkUtil.toLink(
+				_dlAppService, dlFileEntry, _dlURLHelper, objectDefinitionERC,
+				_OBJECT_ENTRY_ERC, _portal);
+
+			template = StringUtil.replace(
+				template, "$[ATTACHMENT_HREF]", link.getHref());
+
+			template = StringUtil.replace(
+				template, "$[ATTACHMENT_ID]",
+				String.valueOf(dlFileEntry.getFileEntryId()));
+
+			template = StringUtil.replace(
+				template, "$[ATTACHMENT_LABEL]", link.getLabel());
+
+			template = StringUtil.replace(
+				template, "$[ATTACHMENT_NAME]", dlFileEntry.getFileName());
+
+			_file.write(file, template);
+		}
+		catch (IOException ioException) {
+			if (file != null) {
+				file.delete();
+			}
+
+			throw ioException;
+		}
+
+		return file;
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(
@@ -468,27 +609,6 @@ public class BatchEngineBrokerTest {
 		return null;
 	}
 
-	private Long _getAttachmentFieldValue() throws Exception {
-		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
-
-		InputStream inputStream = new ByteArrayInputStream(bytes);
-
-		DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".txt",
-			MimeTypesUtil.getExtensionContentType("txt"),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
-			null, inputStream, bytes.length, null, null,
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId()));
-
-		return dlFileEntry.getFileEntryId();
-	}
-
 	private JsonNode _getExpectedJsonNode(ObjectDefinition objectDefinition)
 		throws Exception {
 
@@ -549,6 +669,31 @@ public class BatchEngineBrokerTest {
 		}
 	}
 
+	private BatchEngineImportTask _getFinishedBatchEngineImportTask(
+			long batchPlannerPlanId)
+		throws Exception {
+
+		while (true) {
+			BatchEngineImportTask batchEngineImportTask =
+				_batchEngineImportTaskLocalService.
+					getBatchEngineImportTaskByExternalReferenceCode(
+						String.valueOf(batchPlannerPlanId),
+						TestPropsValues.getCompanyId());
+
+			if (Objects.equals(
+					BatchEngineTaskExecuteStatus.COMPLETED.toString(),
+					batchEngineImportTask.getExecuteStatus()) ||
+				Objects.equals(
+					BatchEngineTaskExecuteStatus.FAILED.toString(),
+					batchEngineImportTask.getExecuteStatus())) {
+
+				return batchEngineImportTask;
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
 	private ZipInputStream _getZipInputStream(InputStream inputStream)
 		throws Exception {
 
@@ -579,13 +724,13 @@ public class BatchEngineBrokerTest {
 				ListTypeEntryUtil.createListTypeEntry(
 					"listTypeEntryKey1",
 					Collections.singletonMap(
-						LocaleUtil.US, RandomTestUtil.randomString()));
+						LocaleUtil.US, "listTypeEntryName1"));
 
 			ListTypeEntry listTypeEntry2 =
 				ListTypeEntryUtil.createListTypeEntry(
 					"listTypeEntryKey2",
 					Collections.singletonMap(
-						LocaleUtil.US, RandomTestUtil.randomString()));
+						LocaleUtil.US, "listTypeEntryName2"));
 
 			ListTypeDefinition listTypeDefinition =
 				_listTypeDefinitionLocalService.addListTypeDefinition(
@@ -596,9 +741,7 @@ public class BatchEngineBrokerTest {
 
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.addCustomObjectDefinition(
-					user.getUserId(),
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, false, false,
-					false,
+					user.getUserId(), 0, false, false, false,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					name, null, null,
@@ -728,6 +871,8 @@ public class BatchEngineBrokerTest {
 		}
 	}
 
+	private static final String _OBJECT_ENTRY_ERC = "TEST-OBJECT-ENTRY";
+
 	private static final List<String> _objectDefinitionFieldNames =
 		Arrays.asList(
 			"accountEntryRestricted", "accountEntryRestrictedObjectFieldName",
@@ -741,13 +886,22 @@ public class BatchEngineBrokerTest {
 			"pluralLabel", "portlet", "restContextPath",
 			"rootObjectDefinitionExternalReferenceCode", "scope", "status",
 			"storageType", "system", "titleObjectFieldName");
-	private static final List<String> _objectEntryFieldNames = Arrays.asList(
-		"actions", "dateCreated", "dateModified", "externalReferenceCode", "id",
-		"testAttachmentField", "testBooleanField", "testDateField",
-		"testDateTimeField", "testDecimalField", "testIntegerField",
-		"testLongIntegerField", "testLongTextField",
-		"testMultiselectPicklistField", "testPicklistField",
-		"testPrecisionDecimalField", "testRichTextField", "testTextField");
+	private static final List<String> _objectEntryExportFieldNames =
+		Arrays.asList(
+			"actions", "dateCreated", "dateModified", "externalReferenceCode",
+			"id", "testAttachmentField", "testBooleanField", "testDateField",
+			"testDateTimeField", "testDecimalField", "testIntegerField",
+			"testLongIntegerField", "testLongTextField",
+			"testMultiselectPicklistField", "testPicklistField",
+			"testPrecisionDecimalField", "testRichTextField", "testTextField");
+	private static final List<String> _objectEntryImportFieldNames =
+		Arrays.asList(
+			"externalReferenceCode", "keywords", "testAttachmentField",
+			"testBooleanField", "testDateField", "testDateTimeField",
+			"testDecimalField", "testIntegerField", "testLongIntegerField",
+			"testLongTextField", "testMultiselectPicklistField",
+			"testPicklistField", "testPrecisionDecimalField",
+			"testRichTextField", "testTextField");
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
 			configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
@@ -767,18 +921,34 @@ public class BatchEngineBrokerTest {
 		_batchEngineExportTaskLocalService;
 
 	@Inject
+	private BatchEngineImportTaskLocalService
+		_batchEngineImportTaskLocalService;
+
+	@Inject
 	private BatchPlannerMappingLocalService _batchPlannerMappingLocalService;
 
 	@Inject
 	private BatchPlannerPlanLocalService _batchPlannerPlanLocalService;
 
+	@Inject
+	private BatchPlannerPolicyLocalService _batchPlannerPolicyLocalService;
+
 	private Company _company2;
+
+	@Inject
+	private DLAppService _dlAppService;
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
+	private DLURLHelper _dlURLHelper;
+
+	@Inject
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Inject
+	private com.liferay.portal.kernel.util.File _file;
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
@@ -831,5 +1001,8 @@ public class BatchEngineBrokerTest {
 
 	@Inject
 	private ObjectViewSortColumnPersistence _objectViewSortColumnPersistence;
+
+	@Inject
+	private Portal _portal;
 
 }

@@ -33,7 +33,6 @@ import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -72,7 +71,7 @@ public class LayoutWarningMessageHelperImpl
 	implements LayoutWarningMessageHelper {
 
 	@Override
-	public String getCollectionWarningMessage(
+	public JSONObject getCollectionWarningMessageJsonObject(
 			CollectionStyledLayoutStructureItem
 				collectionStyledLayoutStructureItem,
 			HttpServletRequest httpServletRequest)
@@ -86,7 +85,7 @@ public class LayoutWarningMessageHelperImpl
 			(!collectionStyledLayoutStructureItem.isDisplayAllItems() &&
 			 (totalCount <= PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA))) {
 
-			return StringPool.BLANK;
+			return _jsonFactory.createJSONObject();
 		}
 
 		String mode = ParamUtil.getString(
@@ -94,26 +93,33 @@ public class LayoutWarningMessageHelperImpl
 			Constants.VIEW);
 
 		if (Objects.equals(mode, Constants.VIEW)) {
-			return _language.format(
-				httpServletRequest,
-				StringBundler.concat(
-					"pagination-is-disabled.-this-setting-can-affect-page-",
-					"performance-severely-if-the-number-of-collection-items-",
-					"is-above-x.-we-strongly-recommend-using-pagination-",
-					"instead"),
-				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA);
+			return JSONUtil.put(
+				"description",
+				_language.format(
+					httpServletRequest,
+					StringBundler.concat(
+						"this-setting-can-affect-page-performance-severely-if-",
+						"the-number-of-collection-items-is-above-x.-we-",
+						"strongly-recommend-using-pagination-instead"),
+					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA)
+			).put(
+				"title",
+				_language.get(httpServletRequest, "pagination-is-disabled")
+			);
 		}
 
-		return _language.format(
-			httpServletRequest,
-			"this-setting-can-affect-page-performance-severely-if-the-number-" +
-				"of-collection-items-is-above-x.-we-strongly-recommend-using-" +
-					"pagination-instead",
-			PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA);
+		return JSONUtil.put(
+			"description",
+			_language.format(
+				httpServletRequest,
+				"this-setting-can-affect-page-performance-severely-if-the-" +
+					"number-of-collection-items-is-above-x.-we-strongly-" +
+						"recommend-using-pagination-instead",
+				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA));
 	}
 
 	@Override
-	public String getFragmentWarningMessage(
+	public JSONObject getFragmentWarningMessageJsonObject(
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
@@ -123,7 +129,7 @@ public class LayoutWarningMessageHelperImpl
 				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
 
 		if (fragmentEntryLink == null) {
-			return StringPool.BLANK;
+			return _jsonFactory.createJSONObject();
 		}
 
 		ThemeDisplay themeDisplay =
@@ -138,11 +144,17 @@ public class LayoutWarningMessageHelperImpl
 					httpServletRequest, httpServletResponse, fragmentEntryLink,
 					themeDisplay)) {
 
-				return _language.get(
-					themeDisplay.getLocale(),
-					"big-image-file-size-used-please-consider-configuring-" +
-						"adaptive-media-lazy-loading-or-reducing-the-image-" +
-							"size");
+				return JSONUtil.put(
+					"description",
+					_language.get(
+						themeDisplay.getLocale(),
+						"please-consider-configuring-adaptive-media-lazy-" +
+							"loading-or-reducing-the-image-size")
+				).put(
+					"title",
+					_language.get(
+						httpServletRequest, "big-image-file-size-used")
+				);
 			}
 		}
 		catch (Exception exception) {
@@ -150,11 +162,13 @@ public class LayoutWarningMessageHelperImpl
 				_log.debug(exception);
 			}
 
-			return _language.get(
-				themeDisplay.getLocale(), "an-unexpected-error-occurred");
+			return JSONUtil.put(
+				"description",
+				_language.get(
+					themeDisplay.getLocale(), "an-unexpected-error-occurred"));
 		}
 
-		return StringPool.BLANK;
+		return _jsonFactory.createJSONObject();
 	}
 
 	private boolean _exceedsFileSize(long fileEntryId) throws Exception {

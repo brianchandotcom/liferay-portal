@@ -7,6 +7,7 @@ package com.liferay.layout.helper;
 
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,13 +20,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface LayoutWarningMessageHelper {
 
-	public String getCollectionWarningMessage(
+	public JSONObject getCollectionWarningMessageJsonObject(
 			CollectionStyledLayoutStructureItem
 				collectionStyledLayoutStructureItem,
 			HttpServletRequest httpServletRequest)
 		throws Exception;
 
-	public String getFragmentWarningMessage(
+	public JSONObject getFragmentWarningMessageJsonObject(
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse);

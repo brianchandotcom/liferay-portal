@@ -59,7 +59,7 @@ public class GetCollectionWarningMessageMVCResourceCommand
 		try {
 			jsonObject = JSONUtil.put(
 				"warningMessage",
-				_getWarningMessage(
+				_getWarningMessageJSONObject(
 					_portal.getHttpServletRequest(resourceRequest),
 					themeDisplay));
 		}
@@ -78,7 +78,7 @@ public class GetCollectionWarningMessageMVCResourceCommand
 			resourceRequest, resourceResponse, jsonObject);
 	}
 
-	private String _getWarningMessage(
+	private JSONObject _getWarningMessageJSONObject(
 			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -105,8 +105,9 @@ public class GetCollectionWarningMessageMVCResourceCommand
 			collectionStyledLayoutStructureItem =
 				(CollectionStyledLayoutStructureItem)layoutStructureItem;
 
-		return _layoutWarningMessageHelper.getCollectionWarningMessage(
-			collectionStyledLayoutStructureItem, httpServletRequest);
+		return _layoutWarningMessageHelper.
+			getCollectionWarningMessageJsonObject(
+				collectionStyledLayoutStructureItem, httpServletRequest);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -175,16 +175,18 @@ public class GetLayoutReportsLayoutItemDataStrutsAction
 							JSONArray collectionWarningMessagesJSONArray =
 								_jsonFactory.createJSONArray();
 
-							String collectionWarningMessage =
+							JSONObject collectionWarningMessageJSONObject =
 								_layoutWarningMessageHelper.
-									getCollectionWarningMessage(
+									getCollectionWarningMessageJsonObject(
 										(CollectionStyledLayoutStructureItem)
 											layoutStructureItem,
 										httpServletRequest);
 
-							if (Validator.isNotNull(collectionWarningMessage)) {
+							if (collectionWarningMessageJSONObject.has(
+									"description")) {
+
 								collectionWarningMessagesJSONArray.put(
-									collectionWarningMessage);
+									collectionWarningMessageJSONObject);
 							}
 
 							return collectionWarningMessagesJSONArray;
@@ -233,16 +235,18 @@ public class GetLayoutReportsLayoutItemDataStrutsAction
 						JSONArray fragmentWarningMessagesJSONArray =
 							_jsonFactory.createJSONArray();
 
-						String fragmentWarningMessage =
+						JSONObject fragmentWarningMessageJSONObject =
 							_layoutWarningMessageHelper.
-								getFragmentWarningMessage(
+								getFragmentWarningMessageJsonObject(
 									(FragmentStyledLayoutStructureItem)
 										layoutStructureItem,
 									httpServletRequest, httpServletResponse);
 
-						if (Validator.isNotNull(fragmentWarningMessage)) {
+						if (fragmentWarningMessageJSONObject.has(
+								"description")) {
+
 							fragmentWarningMessagesJSONArray.put(
-								fragmentWarningMessage);
+								fragmentWarningMessageJSONObject);
 						}
 
 						return fragmentWarningMessagesJSONArray;

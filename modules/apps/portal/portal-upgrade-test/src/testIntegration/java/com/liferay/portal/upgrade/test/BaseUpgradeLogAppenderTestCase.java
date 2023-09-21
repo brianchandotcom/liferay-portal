@@ -96,6 +96,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 		builder.withPattern("%level - %m%n %X");
 
+		_upgradeReportDirectory = "";
+
 		_logContextAppender = WriterAppender.createAppender(
 			builder.build(), null, _unsyncStringWriter,
 			"logContextWriterAppender", false, false);
@@ -112,7 +114,15 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	public void tearDown() {
 		_appender.stop();
 
-		File reportsDir = new File(getFilePath(), "reports");
+		File reportsDir;
+
+		if (_upgradeReportDirectory.isEmpty()) {
+			reportsDir = new File(getFilePath(), "reports");
+		}
+		else {
+			reportsDir = new File(_upgradeReportDirectory);
+			_upgradeReportDirectory = "";
+		}
 
 		if ((reportsDir != null) && reportsDir.exists()) {
 			File reportFile = new File(reportsDir, "upgrade_report.info");
@@ -498,6 +508,30 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 				latestSchemaVersion, StringPool.NEW_LINE));
 	}
 
+	@Test
+	public void testUpgradeReportDirectory() throws Exception {
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "UPGRADE_REPORT_DIRECTORY",
+			"./custom_upgrade_report");
+
+		_upgradeReportDirectory = PropsValues.UPGRADE_REPORT_DIRECTORY;
+
+		_appender.start();
+
+		Log log = LogFactoryUtil.getLog(UpgradeProcess.class);
+
+		log.warn("Upgrade report generated in " + _upgradeReportDirectory);
+
+		_appender.stop();
+
+		String reportContent = _getReportContent();
+
+		_assertReport("Upgrade report generated in " + _upgradeReportDirectory);
+
+		ReflectionTestUtil.setFieldValue(
+			PropsValues.class, "UPGRADE_REPORT_DIRECTORY", "");
+	}
+
 	protected static void setUpClass(boolean upgradeClient) throws Exception {
 		_db = DBManagerUtil.getDB();
 
@@ -600,7 +634,14 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	}
 
 	private String _getReportContent() throws Exception {
-		File reportsDir = new File(getFilePath(), "reports");
+		File reportsDir;
+
+		if (_upgradeReportDirectory.isEmpty()) {
+			reportsDir = new File(getFilePath(), "reports");
+		}
+		else {
+			reportsDir = new File(_upgradeReportDirectory);
+		}
 
 		Assert.assertTrue(reportsDir.exists());
 
@@ -670,5 +711,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	private String _reportContent;
 	private final UnsyncStringWriter _unsyncStringWriter =
 		new UnsyncStringWriter();
+	private String _upgradeReportDirectory;
 
 }

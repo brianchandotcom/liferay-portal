@@ -11,7 +11,9 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
+
 import {format} from 'date-fns';
+import {InputLocalized} from 'frontend-js-components-web';
 import {IClientExtensionRenderer, fetch, openModal, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -80,8 +82,15 @@ function AddFDSFilterModalContent({
 	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
 		boolean
 	>();
+	const [errorMessage, setErrorMessage] = useState('');
+	const fdsFilterNameTranslations = filter?.name_i18n || {
+		[defaultLanguageId]: filter?.name || '',
+	};
 	const [from, setFrom] = useState<string>(
 		(filter as IDateFilter)?.from ?? format(new Date(), 'yyyy-MM-dd')
+	);
+	const [i18nFilterNames, setI18nFilterNames] = useState(
+		fdsFilterNameTranslations
 	);
 	const [includeMode, setIncludeMode] = useState<string>(
 		filter
@@ -133,6 +142,18 @@ function AddFDSFilterModalContent({
 	const handleFilterSave = async () => {
 		setSaveButtonDisabled(true);
 
+		if (Liferay.FeatureFlags['LPS-172017']) {
+			if (!i18nFilterNames[defaultLanguageId]) {
+				setErrorMessage(Liferay.Language.get('required'));
+
+				setSaveButtonDisabled(false);
+
+				return;
+			}
+
+			setErrorMessage('');
+		}
+
 		if (!selectedField) {
 			openDefaultFailureToast();
 
@@ -141,8 +162,14 @@ function AddFDSFilterModalContent({
 
 		let body: any = {
 			fieldName: selectedField.name,
-			name: name || selectedField.label,
 		};
+
+		if (Liferay.FeatureFlags['LPS-172017']) {
+			body = {...body, name_i18n: i18nFilterNames};
+		}
+		else {
+			body = {...body, name: name || selectedField.label};
+		}
 
 		let displayType: string = '';
 		let url: string = '';
@@ -312,30 +339,50 @@ function AddFDSFilterModalContent({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<ClayForm.Group>
-					<label htmlFor={nameFormElementId}>
-						{Liferay.Language.get('name')}
+				{Liferay.FeatureFlags['LPS-172017'] ? (
+					<ClayForm.Group>
+						<InputLocalized
+							error={errorMessage}
+							id={nameFormElementId}
+							label={Liferay.Language.get('name')}
+							name="name"
+							onChange={(newFieldLabel) => {
+								setI18nFilterNames({
+									...i18nFilterNames,
+									...newFieldLabel,
+								});
+							}}
+							required
+							translations={i18nFilterNames}
+						/>
+					</ClayForm.Group>
+				) : (
+					<ClayForm.Group>
+						<label htmlFor={nameFormElementId}>
+							{Liferay.Language.get('name')}
 
-						<span
-							className="label-icon lfr-portal-tooltip ml-2"
-							title={Liferay.Language.get(
-								'if-this-value-is-not-provided,-the-name-will-default-to-the-field-name'
-							)}
-						>
-							<ClayIcon symbol="question-circle-full" />
-						</span>
-					</label>
+							<span
+								className="label-icon lfr-portal-tooltip ml-2"
+								title={Liferay.Language.get(
+									'if-this-value-is-not-provided,-the-name-will-default-to-the-field-name'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</label>
 
-					<ClayInput
-						aria-label={Liferay.Language.get('name')}
-						name={nameFormElementId}
-						onChange={(event) => setName(event.target.value)}
-						placeholder={
-							selectedField?.label || Liferay.Language.get('name')
-						}
-						value={name}
-					/>
-				</ClayForm.Group>
+						<ClayInput
+							aria-label={Liferay.Language.get('name')}
+							name={nameFormElementId}
+							onChange={(event) => setName(event.target.value)}
+							placeholder={
+								selectedField?.label ||
+								Liferay.Language.get('name')
+							}
+							value={name}
+						/>
+					</ClayForm.Group>
+				)}
 
 				<ClayForm.Group
 					className={classNames({

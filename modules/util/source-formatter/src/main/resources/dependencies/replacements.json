@@ -1,0 +1,39 @@
+[
+	{
+		"classNames": [
+			"CommerceAddress"
+		],
+		"from": "getCode",
+		"ticketId": "LPS-189358",
+		"to": "getRegionCode"
+	},
+	{
+		"classNames": [
+			"Region"
+		],
+		"from": "getCode",
+		"ticketId": "LPS-189358",
+		"to": "getRegionCode"
+	},
+	{
+		"classNames": [
+			"AssetVocabularyService",
+			"AssetVocabularyLocalService"
+		],
+		"from": "searchVocabularies(long, long, String, int, int)",
+		"newImports": [
+			"com.liferay.portal.kernel.search.Sort"
+		],
+		"ticketId": "LPS-189866",
+		"to": "searchVocabularies(param#0#, new long[]{param#1#}, param#2#, new int[]{}, param#3#, param#4#, new Sort())"
+	},
+	{
+		"from": "HtmlUtil.extractText",
+		"newImports": [
+			"com.liferay.portal.kernel.util.HtmlParser"
+		],
+		"newReference": "HtmlParser _htmlParser",
+		"ticketId": "LPS-189929",
+		"to": "_htmlParser.extractText"
+	}
+]

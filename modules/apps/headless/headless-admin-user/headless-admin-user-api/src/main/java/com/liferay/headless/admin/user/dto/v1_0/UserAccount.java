@@ -864,7 +864,7 @@ public class UserAccount implements Serializable {
 	}
 
 	@GraphQLField(description = "The user's status.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Status status;
 
 	@Schema(description = "The user's contact information.")

@@ -13,7 +13,6 @@ import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
 import com.liferay.object.exception.NoSuchObjectRelationshipException;
 import com.liferay.object.exception.ObjectRelationshipEdgeException;
-import com.liferay.object.exception.ObjectRelationshipLabelException;
 import com.liferay.object.exception.ObjectRelationshipNameException;
 import com.liferay.object.exception.ObjectRelationshipParameterObjectFieldIdException;
 import com.liferay.object.exception.ObjectRelationshipReverseException;
@@ -742,8 +741,6 @@ public class ObjectRelationshipLocalServiceImpl
 		if (objectRelationship.isSystem() &&
 			!ObjectDefinitionUtil.isInvokerBundleAllowed()) {
 
-			_validateLabel(labelMap);
-
 			objectRelationship.setLabelMap(labelMap);
 
 			return objectRelationshipPersistence.update(objectRelationship);
@@ -761,7 +758,6 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship.getObjectDefinitionId2()),
 			parameterObjectFieldId, objectRelationship.getType());
 		_validateEdge(edge, objectRelationship);
-		_validateLabel(labelMap);
 
 		if (Objects.equals(
 				objectRelationship.getType(),
@@ -911,7 +907,6 @@ public class ObjectRelationshipLocalServiceImpl
 
 		_validateInvokerBundle(
 			"Only allowed bundles can add system object relationships", system);
-		_validateLabel(labelMap);
 		_validateName(objectDefinitionId1, name);
 
 		ObjectDefinition objectDefinition2 =
@@ -1148,17 +1143,6 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 
 		throw new ObjectRelationshipSystemException(message);
-	}
-
-	private void _validateLabel(Map<Locale, String> labelMap)
-		throws PortalException {
-
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		if ((labelMap == null) || Validator.isNull(labelMap.get(locale))) {
-			throw new ObjectRelationshipLabelException(
-				"Label is null for locale " + locale.getDisplayName());
-		}
 	}
 
 	private void _validateName(long objectDefinitionId1, String name)

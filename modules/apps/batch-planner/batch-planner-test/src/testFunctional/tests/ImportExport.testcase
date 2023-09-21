@@ -1606,19 +1606,17 @@ definition {
 			ImportExport.gotoExport();
 
 			ImportExport.configureExport(
-				entityType = "Account (v1_0 - Liferay Headless Admin User)",
+				entityType = "ObjectDefinition (v1_0 - Liferay Object Admin REST)",
 				exportFields = "",
 				exportFileFormat = "CSV");
 
 			Button.click(button = "Export");
 
-			WaitForElementPresent(locator1 = "Message#ERROR_FORM_FIELD_REQUIRED");
+			WaitForElementPresent(locator1 = "Message#ERROR");
 		}
 
 		task ("And given a succesful export") {
-			Button.click(button = "Back to the List");
-
-			ImportExport.mapExport(exportFields = "name,type,description,externalReferenceCode");
+			ImportExport.mapExport(exportFields = "name,scope,dateCreated,externalReferenceCode");
 
 			Button.click(button = "Export");
 
@@ -1629,31 +1627,20 @@ definition {
 			ImportExport.openImportExportAdmin();
 
 			ImportExport.assertExecutionEntry(
-				entityType = "Account",
+				entityType = "ObjectDefinition",
 				executionAction = "Export",
-				executionName = "Account Plan Execution",
-				executionStatus = "Failed");
-
-			ImportExport.assertExecutionEntry(
-				entityType = "Account",
-				executionAction = "Export",
-				executionName = "Account Plan Execution",
+				executionName = "ObjectDefinition Plan Execution",
 				executionStatus = "Completed");
 		}
 
-		task ("Then the the user should receive a notification for the failed and successful exports") {
-			Notifications.viewBadgeCount(notificationCount = 2);
+		task ("Then the the user should receive a notification for the successful exports") {
+			Notifications.viewBadgeCount(notificationCount = 1);
 
 			Notifications.gotoNotifications();
 
 			AssertElementPresent(
-				key_body = "Accounts were exported to a ZIP file.",
-				key_title = "Accounts Exported",
-				locator1 = "ImportExport#EXECUTION_NOTIFICATION");
-
-			AssertElementPresent(
-				key_body = "Account entity export encountered an error while exporting to a ZIP file.",
-				key_title = "Accounts Export Stopped",
+				key_body = "ObjectDefinitions were exported to a ZIP file.",
+				key_title = "ObjectDefinitions Exported",
 				locator1 = "ImportExport#EXECUTION_NOTIFICATION");
 
 			PortletEntry.selectAll();

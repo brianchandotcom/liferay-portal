@@ -185,6 +185,11 @@ public class DisplayPageManagementToolbarDisplayContext
 	}
 
 	@Override
+	public String getInfoPanelId() {
+		return "infoPanelId";
+	}
+
+	@Override
 	public String getSearchActionURL() {
 		return PortletURLBuilder.create(
 			getPortletURL()

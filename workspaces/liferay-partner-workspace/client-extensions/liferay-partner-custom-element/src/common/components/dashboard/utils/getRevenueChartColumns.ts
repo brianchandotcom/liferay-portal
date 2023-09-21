@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import formatCurrency from "./formatCurrency";
+
 export default function getRevenueChartColumns(
 	revenueCurrency: any,
 	growthRevenueResponseNewProjectData: any,
@@ -38,7 +40,7 @@ export default function getRevenueChartColumns(
 
 	const totalRevenueAmount = totalGrowthRevenue + totalRenewalRevenue;
 
-	setValueChart(totalRevenueAmount);
+	setValueChart(formatCurrency(totalRevenueAmount,revenueCurrency, 'lessPrecision'));
 	setTitleChart(`Total Revenue `);
 	setColumnsRevenueChart(chartColumns);
 }

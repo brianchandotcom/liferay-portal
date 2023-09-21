@@ -71,13 +71,46 @@ public class OpenAPIUtilTest {
 	}
 
 	@Test
-	public void testGetOperationIdWithSingleElementByExternalReferenceCode() {
+	public void testGetOperationIdWithScopedSingleElementByExternalReferenceCode() {
 		Assert.assertEquals(
-			"getSchemaByExternalReferenceCodeSchemaERC",
+			"getScopeScopeKeyByExternalReferenceCodeSchemaERC",
 			OpenAPIUtil.getOperationId(
 				Http.Method.GET,
-				"/schemas/by-external-reference-code/{schemaERC}",
+				"/scopes/{scopeKey}/by-external-reference-code/{schemaERC}",
 				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, "Schema"));
+		Assert.assertEquals(
+			"getScopeScopeKeyByExternalReferenceCodeSchemaExternal" +
+				"ReferenceCode",
+			OpenAPIUtil.getOperationId(
+				Http.Method.GET,
+				"/scopes/{scopeKey}/by-external-reference-code " +
+					"/{schemaExternalReferenceCode}",
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, "Schema"));
+		Assert.assertEquals(
+			"getScopeScopeKeyPathNameByExternalReferenceCodePathNameERC",
+			OpenAPIUtil.getOperationId(
+				Http.Method.GET,
+				"/scopes/{scopeKey}/path-names/by-external-reference-code" +
+					"/{pathNameERC}",
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, "Schema"));
+		Assert.assertEquals(
+			"getScopeScopeKeySchemaByExternalReferenceCodeSchemaERC",
+			OpenAPIUtil.getOperationId(
+				Http.Method.GET,
+				"/scopes/{scopeKey}/schemas/by-external-reference-code" +
+					"/{schemaERC}",
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, null));
+		Assert.assertEquals(
+			"getScopeScopeKeySchemaByExternalReferenceCodeSchemaERC",
+			OpenAPIUtil.getOperationId(
+				Http.Method.GET,
+				"/scopes/{scopeKey}/schemas/by-external-reference-code" +
+					"/{schemaERC}",
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, "Schema"));
+	}
+
+	@Test
+	public void testGetOperationIdWithSingleElementByExternalReferenceCode() {
 		Assert.assertEquals(
 			"getByExternalReferenceCode",
 			OpenAPIUtil.getOperationId(
@@ -96,6 +129,12 @@ public class OpenAPIUtilTest {
 				Http.Method.GET, "/path-names/{pathNameERC}",
 				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, "Schema"));
 		Assert.assertEquals(
+			"getSchemaByExternalReferenceCodeSchemaERC",
+			OpenAPIUtil.getOperationId(
+				Http.Method.GET,
+				"/schemas/by-external-reference-code/{schemaERC}",
+				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, "Schema"));
+		Assert.assertEquals(
 			"getSchemaWhateverWhateverERC",
 			OpenAPIUtil.getOperationId(
 				Http.Method.GET, "/schema/whatever/{whateverERC}",
@@ -108,7 +147,7 @@ public class OpenAPIUtilTest {
 	}
 
 	@Test
-	public void testGetOperationIdWithIndividualById() {
+	public void testGetOperationIdWithSingleElementById() {
 		Assert.assertEquals(
 			"getCamelSchema",
 			OpenAPIUtil.getOperationId(
@@ -141,57 +180,6 @@ public class OpenAPIUtilTest {
 				Http.Method.GET, "/whatever/{whateverId}",
 				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT,
 				"CamelSchema"));
-	}
-
-	@Test
-	public void testGetOperationIdWithScopedSingleElementByExternalReferenceCode() {
-		Assert.assertEquals(
-			"getScopeScopeKeyByExternalReferenceCodeSchemaERC",
-			OpenAPIUtil.getOperationId(
-				Http.Method.GET,
-				"/scopes/{scopeKey}/by-external-reference-code/{schemaERC}",
-				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, "Schema"));
-		Assert.assertEquals(
-			"getScopeScopeKeySchemaByExternalReferenceCodeSchemaERC",
-			OpenAPIUtil.getOperationId(
-				Http.Method.GET,
-				"/scopes/{scopeKey}/schemas/by-external-reference-code" +
-					"/{schemaERC}",
-				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, "Schema"));
-		Assert.assertEquals(
-			"getScopeScopeKeySchemaByExternalReferenceCodeSchemaERC",
-			OpenAPIUtil.getOperationId(
-				Http.Method.GET,
-				"/scopes/{scopeKey}/schemas/by-external-reference-code" +
-					"/{schemaERC}",
-				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, "Schema"));
-		Assert.assertEquals(
-			"getScopeScopeKeySchemaByExternalReferenceCodeSchemaERC",
-			OpenAPIUtil.getOperationId(
-				Http.Method.GET,
-				"/scopes/{scopeKey}/schemas/by-external-reference-code" +
-					"/{schemaERC}",
-				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, null));
-		Assert.assertEquals(
-			"getScopeScopeKeyPathNameByExternalReferenceCodePathNameERC",
-			OpenAPIUtil.getOperationId(
-				Http.Method.GET,
-				"/scopes/{scopeKey}/path-names/by-external-reference-code" +
-					"/{pathNameERC}",
-				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, "Schema"));
-		Assert.assertEquals(
-			"getSchemaWhateverWhateverERC",
-			OpenAPIUtil.getOperationId(
-				Http.Method.GET, "/schema/whatever/{whateverERC}",
-				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, "Schema"));
-		Assert.assertEquals(
-			"getScopeScopeKeyByExternalReferenceCodeSchemaExternal" +
-				"ReferenceCode",
-			OpenAPIUtil.getOperationId(
-				Http.Method.GET,
-				"/scopes/{scopeKey}/by-external-reference-code " +
-					"/{schemaExternalReferenceCode}",
-				APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT, "Schema"));
 	}
 
 }

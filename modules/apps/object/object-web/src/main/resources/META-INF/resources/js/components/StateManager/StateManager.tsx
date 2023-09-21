@@ -17,6 +17,7 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
+import FDSSourceDataRenderer from '../FDSPropsTransformer/FDSSourceDataRenderer';
 
 interface ItemData {
 	id: number;
@@ -56,6 +57,7 @@ export default function StateManager({
 		apiURL,
 		creationMenu,
 		customDataRenderers: {
+			FDSSourceDataRenderer,
 			objectStateManagerLabelDataRenderer,
 		},
 		formName,
@@ -81,6 +83,14 @@ export default function StateManager({
 							label: Liferay.Language.get('label'),
 							localizeLabel: true,
 							sortable: true,
+						},
+						{
+							contentRenderer: 'FDSSourceDataRenderer',
+							expand: false,
+							fieldName: 'system',
+							label: Liferay.Language.get('source'),
+							localizeLabel: true,
+							sortable: false,
 						},
 					],
 				},

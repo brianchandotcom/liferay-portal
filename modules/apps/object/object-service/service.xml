@@ -1015,7 +1015,6 @@
 		<exception>ObjectLayoutColumnSize</exception>
 		<exception>ObjectRelationshipDeletionType</exception>
 		<exception>ObjectRelationshipEdge</exception>
-		<exception>ObjectRelationshipLabel</exception>
 		<exception>ObjectRelationshipName</exception>
 		<exception>ObjectRelationshipParameterObjectFieldId</exception>
 		<exception>ObjectRelationshipReverse</exception>

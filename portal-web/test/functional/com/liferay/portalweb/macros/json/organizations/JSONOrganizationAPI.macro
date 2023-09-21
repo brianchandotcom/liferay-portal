@@ -45,6 +45,7 @@ definition {
 		var curl = '''
 			${portalURL}/api/jsonws/organization/add-organization \
 				-u ${userLoginInfo} \
+				-d externalReferenceCode='' \
 				-d parentOrganizationId=${parentOrganizationId} \
 				-d name=${organizationNameEncoded} \
 				-d type=${organizationType} \

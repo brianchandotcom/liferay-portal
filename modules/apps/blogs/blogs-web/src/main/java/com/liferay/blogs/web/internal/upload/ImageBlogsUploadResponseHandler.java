@@ -10,7 +10,6 @@ import com.liferay.blogs.exception.EntryImageNameException;
 import com.liferay.blogs.exception.EntryImageSizeException;
 import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -20,24 +19,21 @@ import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.upload.UploadResponseHandler;
 
-import java.util.Map;
-
 import javax.portlet.PortletRequest;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
  * @author Alejandro Tardín
  */
-@Component(
-	configurationPid = "com.liferay.blogs.configuration.BlogsFileUploadsConfiguration",
-	service = ImageBlogsUploadResponseHandler.class
-)
 public class ImageBlogsUploadResponseHandler implements UploadResponseHandler {
+
+	public ImageBlogsUploadResponseHandler(
+		BlogsFileUploadsConfiguration blogsFileUploadsConfiguration,
+		ItemSelectorUploadResponseHandler itemSelectorUploadResponseHandler) {
+
+		_blogsFileUploadsConfiguration = blogsFileUploadsConfiguration;
+		_itemSelectorUploadResponseHandler = itemSelectorUploadResponseHandler;
+	}
 
 	@Override
 	public JSONObject onFailure(
@@ -85,18 +81,9 @@ public class ImageBlogsUploadResponseHandler implements UploadResponseHandler {
 			uploadPortletRequest, fileEntry);
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_blogsFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
-			BlogsFileUploadsConfiguration.class, properties);
-	}
-
 	private volatile BlogsFileUploadsConfiguration
 		_blogsFileUploadsConfiguration;
-
-	@Reference
-	private ItemSelectorUploadResponseHandler
+	private final ItemSelectorUploadResponseHandler
 		_itemSelectorUploadResponseHandler;
 
 }

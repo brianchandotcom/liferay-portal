@@ -5,23 +5,31 @@
 
 package com.liferay.blogs.web.internal.portlet.action;
 
+import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.web.internal.upload.ImageBlogsUploadResponseHandler;
 import com.liferay.blogs.web.internal.upload.TempImageBlogsUploadFileEntryHandler;
+import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.upload.UploadHandler;
 
+import java.util.Map;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
  */
 @Component(
+	configurationPid = "com.liferay.blogs.configuration.BlogsFileUploadsConfiguration",
 	property = {
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
 		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN,
@@ -33,6 +41,16 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class UploadTempImageMVCActionCommand extends BaseMVCActionCommand {
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_blogsFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
+			BlogsFileUploadsConfiguration.class, properties);
+
+		_imageBlogsUploadResponseHandler = new ImageBlogsUploadResponseHandler(
+			_blogsFileUploadsConfiguration, _itemSelectorUploadResponseHandler);
+	}
+
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -43,8 +61,14 @@ public class UploadTempImageMVCActionCommand extends BaseMVCActionCommand {
 			_imageBlogsUploadResponseHandler, actionRequest, actionResponse);
 	}
 
+	private volatile BlogsFileUploadsConfiguration
+		_blogsFileUploadsConfiguration;
+	private volatile ImageBlogsUploadResponseHandler
+		_imageBlogsUploadResponseHandler;
+
 	@Reference
-	private ImageBlogsUploadResponseHandler _imageBlogsUploadResponseHandler;
+	private ItemSelectorUploadResponseHandler
+		_itemSelectorUploadResponseHandler;
 
 	@Reference
 	private TempImageBlogsUploadFileEntryHandler

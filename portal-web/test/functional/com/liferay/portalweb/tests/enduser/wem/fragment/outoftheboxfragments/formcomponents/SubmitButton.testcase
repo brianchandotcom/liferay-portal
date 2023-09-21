@@ -70,7 +70,7 @@ definition {
 			}
 		}
 
-		task ("Then assert there's only Submit Button displays") {
+		task ("Then assert there's only Submit Button displayed") {
 			LexiconCard.viewCardPresent(card = "Submit Button");
 
 			for (var fragmentName : list "CAPTCHA,Checkbox,Date,File Upload,Multiselect List,Numeric Input,Rich Text Input,Select from List,Text Input,Textarea") {
@@ -79,7 +79,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-189534. The site administrater could select the default Submit Button fragment in Form."
+	@description = "This is a test for LPS-189534. The site administrator could select the default Submit Button fragment in Form."
 	@priority = 4
 	test CanSelectDefaultSubmitButtonFragmentInForm {
 		task ("Given editing the Submit Field type in fragment admin") {
@@ -281,7 +281,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-189534. The site administrater cannot see empty fragment sets in Select Fragment modal of Submit Button field type."
+	@description = "This is a test for LPS-189534. The site administrator cannot see empty fragment sets in Select Fragment modal of Submit Button field type."
 	@priority = 3
 	test ViewEmptyFragmentSetsAreNotShownWhenConfiguringDefaultSubmitButtonInFragmentAdmin {
 		task ("Given adding a fragment set with no fragment") {
@@ -438,7 +438,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-189534. The site administrater should see warning message when publish form content page without submit type fragment."
+	@description = "This is a test for LPS-189534. The site administrator should see warning message when publishing form content page without submit type fragment."
 	@priority = 3
 	test ViewWarningMessageWhenPublishingFormContentPageWithoutSubmitTypeFragment {
 		task ("Given the sumbmit button is configured to a heading fragment in fragment admin") {
@@ -495,7 +495,7 @@ definition {
 			}
 		}
 
-		task ("Then there's Submit Button Missing warning message shown when publish the content page") {
+		task ("Then assert there's a Submit Button Missing warning message shown when publishing the content page") {
 			task ("View the new fragment is shown in Form Container and publish") {
 				AssertElementPresent(
 					index = 1,
@@ -505,7 +505,7 @@ definition {
 				Button.click(button = "Publish");
 			}
 
-			task ("Assert there's Submit Button Missing warning message shown") {
+			task ("Assert there's a Submit Button Missing warning message shown") {
 				AssertTextEquals(
 					index = 1,
 					locator1 = "Modal#BODY_MESSAGE",

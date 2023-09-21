@@ -271,40 +271,29 @@ public class LayoutLockManagerTest {
 
 	@Test
 	public void testGetLockedLayoutsOrderByNameAscending() throws Exception {
-		List<String> names = new ArrayList<>();
+		_assertLockedLayoutsNames(
+			_getLockedLayoutsNames(
+				list -> Collections.sort(list, String.CASE_INSENSITIVE_ORDER)),
+			_layoutLockManager.getLockedLayouts(
+				TestPropsValues.getCompanyId(), _group.getGroupId(),
+				new LockedLayoutOrder(
+					true, LocaleUtil.getDefault(),
+					LockedLayoutOrder.LockedLayoutOrderType.NAME),
+				null));
+	}
 
-		Locale locale = LocaleUtil.getDefault();
-
-		for (int i = 0; i < 5; i++) {
-			Layout draftLayout = _getDraftLayout();
-
-			_lockLayout(draftLayout, _user);
-
-			names.add(
-				LocalizationUtil.getLocalization(
-					draftLayout.getName(), locale.getLanguage()));
-		}
-
-		Collections.sort(names, String.CASE_INSENSITIVE_ORDER);
-
-		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
-			TestPropsValues.getCompanyId(), _group.getGroupId(),
-			new LockedLayoutOrder(
-				true, LocaleUtil.getDefault(),
-				LockedLayoutOrder.LockedLayoutOrderType.NAME),
-			null);
-
-		Assert.assertEquals(
-			lockedLayouts.toString(), names.size(), lockedLayouts.size());
-
-		for (int i = 0; i < names.size(); i++) {
-			LockedLayout lockedLayout = lockedLayouts.get(i);
-
-			Assert.assertEquals(
-				names.get(i),
-				LocalizationUtil.getLocalization(
-					lockedLayout.getName(), locale.getLanguage()));
-		}
+	@Test
+	public void testGetLockedLayoutsOrderByNameDescending() throws Exception {
+		_assertLockedLayoutsNames(
+			_getLockedLayoutsNames(
+				list -> Collections.sort(
+					list, String.CASE_INSENSITIVE_ORDER.reversed())),
+			_layoutLockManager.getLockedLayouts(
+				TestPropsValues.getCompanyId(), _group.getGroupId(),
+				new LockedLayoutOrder(
+					false, LocaleUtil.getDefault(),
+					LockedLayoutOrder.LockedLayoutOrderType.NAME),
+				null));
 	}
 
 	@Test(expected = LockedLayoutException.class)
@@ -419,6 +408,25 @@ public class LayoutLockManagerTest {
 		}
 	}
 
+	private void _assertLockedLayoutsNames(
+		List<String> expectedNames, List<LockedLayout> actualLockedLayouts) {
+
+		Assert.assertEquals(
+			actualLockedLayouts.toString(), expectedNames.size(),
+			actualLockedLayouts.size());
+
+		Locale locale = LocaleUtil.getDefault();
+
+		for (int i = 0; i < expectedNames.size(); i++) {
+			LockedLayout lockedLayout = actualLockedLayouts.get(i);
+
+			Assert.assertEquals(
+				expectedNames.get(i),
+				LocalizationUtil.getLocalization(
+					lockedLayout.getName(), locale.getLanguage()));
+		}
+	}
+
 	private Layout _getDraftLayout() throws Exception {
 		return _getDraftLayout(LayoutConstants.TYPE_CONTENT);
 	}
@@ -478,6 +486,29 @@ public class LayoutLockManagerTest {
 		}
 
 		return createDates;
+	}
+
+	private List<String> _getLockedLayoutsNames(
+			UnsafeConsumer<List<String>, Exception> namesOrderUnsafeConsumer)
+		throws Exception {
+
+		List<String> names = new ArrayList<>();
+
+		Locale locale = LocaleUtil.getDefault();
+
+		for (int i = 0; i < 5; i++) {
+			Layout draftLayout = _getDraftLayout();
+
+			_lockLayout(draftLayout, _user);
+
+			names.add(
+				LocalizationUtil.getLocalization(
+					draftLayout.getName(), locale.getLanguage()));
+		}
+
+		namesOrderUnsafeConsumer.accept(names);
+
+		return names;
 	}
 
 	private void _lockLayout(Layout layout, User user) throws PortalException {

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.security.auth.Authenticator;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
@@ -772,17 +771,13 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testUpdatePasswordWithChangedAlgorithm() throws Exception {
-		PasswordEncryptor passwordEncryptor = ReflectionTestUtil.getFieldValue(
-			PasswordEncryptorUtil.class, "_passwordEncryptor");
-
 		String oldPasswordsEncryptionAlgorithmFieldValue =
 			ReflectionTestUtil.getFieldValue(
-				passwordEncryptor.getClass(),
-				"_PASSWORDS_ENCRYPTION_ALGORITHM");
+				PasswordEncryptorUtil.class, "_PASSWORDS_ENCRYPTION_ALGORITHM");
 
 		try {
 			ReflectionTestUtil.setFieldValue(
-				passwordEncryptor.getClass(), "_PASSWORDS_ENCRYPTION_ALGORITHM",
+				PasswordEncryptorUtil.class, "_PASSWORDS_ENCRYPTION_ALGORITHM",
 				"PBKDF2WithHmacSHA1/160/720000");
 
 			User user = UserTestUtil.addUser();
@@ -793,7 +788,7 @@ public class UserLocalServiceTest {
 				encryptedPassword.startsWith("{PBKDF2WithHmacSHA1}"));
 
 			ReflectionTestUtil.setFieldValue(
-				passwordEncryptor.getClass(), "_PASSWORDS_ENCRYPTION_ALGORITHM",
+				PasswordEncryptorUtil.class, "_PASSWORDS_ENCRYPTION_ALGORITHM",
 				"MD5");
 
 			String password = RandomTestUtil.randomString(
@@ -808,7 +803,7 @@ public class UserLocalServiceTest {
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
-				passwordEncryptor.getClass(), "_PASSWORDS_ENCRYPTION_ALGORITHM",
+				PasswordEncryptorUtil.class, "_PASSWORDS_ENCRYPTION_ALGORITHM",
 				oldPasswordsEncryptionAlgorithmFieldValue);
 		}
 	}

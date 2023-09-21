@@ -352,7 +352,10 @@ SideNavigation.prototype = {
 	_focusTrigger() {
 		const toggler = this.toggler;
 
-		if (!toggler) {
+		if (
+			!toggler ||
+			!document.activeElement.classList.contains('sidenav-close')
+		) {
 			return;
 		}
 

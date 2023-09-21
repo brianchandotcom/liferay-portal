@@ -309,6 +309,7 @@ interface Product {
 	name: {[key: string]: string};
 	productChannels: Channel[];
 	productId: number;
+	productSpecifications: ProductSpecification[];
 	productStatus: number;
 	productType: string;
 	skus: SKU[];

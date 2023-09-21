@@ -71,7 +71,7 @@ public class OpenAPIUtilTest {
 	}
 
 	@Test
-	public void testGetOperationIdWithIndividualByExternalReferenceCode() {
+	public void testGetOperationIdWithSingleElementByExternalReferenceCode() {
 		Assert.assertEquals(
 			"getSchemaByExternalReferenceCodeSchemaERC",
 			OpenAPIUtil.getOperationId(
@@ -144,7 +144,7 @@ public class OpenAPIUtilTest {
 	}
 
 	@Test
-	public void testGetOperationIdWithScopedIndividualByExternalReferenceCode() {
+	public void testGetOperationIdWithScopedSingleElementByExternalReferenceCode() {
 		Assert.assertEquals(
 			"getScopeScopeKeyByExternalReferenceCodeSchemaERC",
 			OpenAPIUtil.getOperationId(

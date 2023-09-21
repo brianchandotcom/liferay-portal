@@ -5,7 +5,7 @@ Object {
   "alert": Object {
     "description": "We recommend that you publish the winning variant.",
     "symbol": "check-circle",
-    "title": "Variant 01 has outperformed control by at least 1%",
+    "title": "Variant 01 has outperformed control by at least 1%.",
   },
   "header": Object {
     "Description": [Function],

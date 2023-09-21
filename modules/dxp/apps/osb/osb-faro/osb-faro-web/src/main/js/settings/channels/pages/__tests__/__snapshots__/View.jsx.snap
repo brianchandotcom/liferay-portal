@@ -141,7 +141,7 @@ exports[`View Channel should render 1`] = `
           <div
             class="title d-flex align-items-center"
           >
-            There are  Site(s) and  Channel(s) synced to this property.
+            There are  Sites and  Channels synced to this property.
           </div>
           <div>
             Manage sites synced to this property by going to 

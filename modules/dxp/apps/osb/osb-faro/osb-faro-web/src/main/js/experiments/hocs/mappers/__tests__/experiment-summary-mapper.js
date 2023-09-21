@@ -308,7 +308,7 @@ describe('Summary Mapper for status FINISHED_WINNER and winner declared', () => 
 		);
 		expect(mapper.alert.symbol).toEqual('check-circle');
 		expect(mapper.alert.title).toEqual(
-			'Variant 01 has outperformed control by at least 1%'
+			'Variant 01 has outperformed control by at least 1%.'
 		);
 	});
 
@@ -318,7 +318,7 @@ describe('Summary Mapper for status FINISHED_WINNER and winner declared', () => 
 		);
 		expect(mapperControlWinner.alert.symbol).toEqual('check-circle');
 		expect(mapperControlWinner.alert.title).toEqual(
-			'Control has outperformed Variant 01 by at least 1%'
+			'Control has outperformed Variant 01 by at least 1%.'
 		);
 	});
 

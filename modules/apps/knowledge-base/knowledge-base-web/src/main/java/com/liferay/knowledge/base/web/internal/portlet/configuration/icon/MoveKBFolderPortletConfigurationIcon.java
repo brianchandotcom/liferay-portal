@@ -94,7 +94,7 @@ public class MoveKBFolderPortletConfigurationIcon
 
 	@Override
 	public String getJspPath() {
-		return "/configuration/icon/move_folder.jsp";
+		return "/configuration/icon/move_kb_folder.jsp";
 	}
 
 	@Override

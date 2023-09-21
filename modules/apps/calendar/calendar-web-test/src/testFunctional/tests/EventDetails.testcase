@@ -895,7 +895,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "tag1");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Calendar Event Title",
 			searchAssetType = "Calendar Event");
 	}

@@ -246,7 +246,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "DM Document Title");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 
@@ -254,7 +254,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = '''"DM Document Title"''');
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 	}
@@ -397,7 +397,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "asdf");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "asdf");
+		SearchResults.viewNoSearchResults(searchTerm = "asdf");
 	}
 
 }

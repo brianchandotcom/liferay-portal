@@ -586,7 +586,7 @@ definition {
 
 		Search.searchCP(searchTerm = "DM Document Title In Depot");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Document Title In Depot",
 			searchAssetType = "Document");
 
@@ -755,7 +755,7 @@ definition {
 
 		Search.searchCP(searchTerm = "WC WebContent Title");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content Article");
 

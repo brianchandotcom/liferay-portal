@@ -44,13 +44,13 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "abc");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article");
 
 		SearchPage.searchEmbedded(searchTerm = "ABC");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article");
 	}
@@ -154,9 +154,9 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 3,Article 1");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Article 3,Article 1");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Article 2",
 			searchAssetType = "Web Content Article");
 
@@ -172,7 +172,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 1,Article 2,Article 3");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Article 1,Article 2,Article 3");
 	}
 
 	@priority = 3
@@ -304,17 +304,17 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Journal 2");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Journal 2");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Article 1",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Journal 1",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Article 2",
 			searchAssetType = "Web Content Article");
 
@@ -326,7 +326,7 @@ definition {
 			value1 = "Journal 2");
 
 		for (var webContentTitle : list "Article 1,Article 2,Journal 1,Journal 2") {
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = ${webContentTitle},
 				searchAssetType = "Web Content Article");
 		}
@@ -353,21 +353,21 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Journal 2,Article 1");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Journal 2,Article 1");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 2,Journal 1");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "Article 2,Journal 1");
 
 		SearchPage.searchEmbedded(searchTerm = "Journal");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Journal 1",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Journal 2",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 1,Article 2");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "Article 1,Article 2");
 
 		SearchTuning.openResultRankingsAdmin();
 
@@ -391,11 +391,11 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Article 1",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 2,Journal 1,Journal 2");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "Article 2,Journal 1,Journal 2");
 
 		SearchTuning.openResultRankingsAdmin();
 
@@ -436,17 +436,17 @@ definition {
 		for (var searchTerm : list "Article,Journal") {
 			SearchPage.searchEmbedded(searchTerm = ${searchTerm});
 
-			SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Journal 2");
+			SearchResults.viewSearchResultsSpecificOrder(resultsList = "Journal 2");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Article 1",
 				searchAssetType = "Web Content Article");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Journal 1",
 				searchAssetType = "Web Content Article");
 
-			SearchResultPortlet.viewSearchResultNotPresent(
+			SearchResults.viewSearchResultNotPresent(
 				searchAssetTitle = "Article 2",
 				searchAssetType = "Web Content Article");
 		}
@@ -605,9 +605,9 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 3,Article 1,Article 4");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Article 3,Article 1,Article 4");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "Article 2",
 			searchAssetType = "Web Content Article");
 
@@ -615,17 +615,17 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "orange");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Article 3",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 1,Article 2,Article 4");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "Article 1,Article 2,Article 4");
 
 		Navigator.openURL();
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "apple");
+		SearchResults.viewNoSearchResults(searchTerm = "apple");
 
 		SearchTuning.openResultRankingsAdmin();
 
@@ -664,23 +664,23 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 4,Article 1,Article 2,Article 3");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Article 4,Article 1,Article 2,Article 3");
 
 		Navigator.openURL();
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Article 4",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 1,Article 2,Article 3");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "Article 1,Article 2,Article 3");
 
 		Navigator.openURL();
 
 		SearchPage.searchEmbedded(searchTerm = "orange");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "orange");
+		SearchResults.viewNoSearchResults(searchTerm = "orange");
 	}
 
 	@priority = 3
@@ -740,27 +740,27 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title 3,WC Title 1");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "WC Title 3,WC Title 1");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "WC Title 2",
 			searchAssetType = "Web Content Article");
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC Title 3",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1,WC Title 2");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1,WC Title 2");
 
 		SearchPage.searchEmbedded(searchTerm = "banana");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC Title 3",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1,WC Title 2");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1,WC Title 2");
 
 		SearchTuning.openResultRankingsAdmin();
 
@@ -778,23 +778,23 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title 3,WC Title 1");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "WC Title 3,WC Title 1");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "WC Title 2",
 			searchAssetType = "Web Content Article");
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC Title 2",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1,WC Title 3");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1,WC Title 3");
 
 		SearchPage.searchEmbedded(searchTerm = "banana");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "banana");
+		SearchResults.viewNoSearchResults(searchTerm = "banana");
 
 		SearchTuning.openResultRankingsAdmin();
 
@@ -812,7 +812,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title 1,WC Title 2,WC Title 3");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "WC Title 1,WC Title 2,WC Title 3");
 	}
 
 	@priority = 5
@@ -1105,7 +1105,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
 
-		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Liferay Journal,New Site Article,New Site Journal,Liferay Article");
+		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Liferay Journal,New Site Article,New Site Journal,Liferay Article");
 
 		SearchTuning.openResultRankingsAdmin();
 
@@ -1123,11 +1123,11 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Article");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Liferay Article",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Liferay Journal,New Site Article,New Site Journal");
+		SearchResults.viewMultipleSearchResultsNotPresent(noResultsList = "Liferay Journal,New Site Article,New Site Journal");
 	}
 
 	@description = "This is a use case for LPS-126743"
@@ -1152,7 +1152,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = 11);
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "eleven",
 			searchAssetType = "Web Content Article");
 	}
@@ -1183,7 +1183,7 @@ definition {
 		for (var searchTerm : list ${searchTerms}) {
 			SearchPage.searchEmbedded(searchTerm = ${searchTerm});
 
-			SearchResultPortlet.viewMultipleSearchResults(
+			SearchResults.viewMultipleSearchResults(
 				resultsList = "banana,red apple,blue.berry!,\"xigua\"",
 				searchTerm = ${searchTerm});
 		}
@@ -1203,27 +1203,27 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "banana");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "banana",
 			searchAssetType = "Web Content Article");
 
 		SearchPage.searchEmbedded(searchTerm = "pear");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "banana",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "red apple,blue.berry!,\"xigua\"",
 			searchTerm = "pear");
 
 		SearchPage.searchEmbedded(searchTerm = "red apple");
 
-		SearchResultPortlet.viewSearchResultNotPresent(
+		SearchResults.viewSearchResultNotPresent(
 			searchAssetTitle = "banana",
 			searchAssetType = "Web Content Article");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "red apple,blue.berry!,\"xigua\"",
 			searchTerm = "red apple");
 
@@ -1239,13 +1239,13 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "red apple");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "red apple,blue.berry!,\"xigua\",citrus-orange",
 			searchTerm = "red apple");
 
 		SearchPage.searchEmbedded(searchTerm = "citrus-orange");
 
-		SearchResultPortlet.viewMultipleSearchResults(
+		SearchResults.viewMultipleSearchResults(
 			resultsList = "red apple,citrus-orange",
 			searchTerm = "citrus-orange");
 
@@ -1257,7 +1257,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "fruit");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "fruit");
+		SearchResults.viewNoSearchResults(searchTerm = "fruit");
 	}
 
 	@priority = 3

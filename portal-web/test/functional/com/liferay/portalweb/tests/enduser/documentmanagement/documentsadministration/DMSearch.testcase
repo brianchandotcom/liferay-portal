@@ -284,7 +284,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "fruit");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "apple",
 			searchAssetType = "Document");
 	}
@@ -313,7 +313,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "DM Document Title");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 	}
@@ -334,7 +334,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "This is a *.doc file.");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetSummary = "This is a *.doc file.",
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
@@ -380,7 +380,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "DM Document Title");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 	}

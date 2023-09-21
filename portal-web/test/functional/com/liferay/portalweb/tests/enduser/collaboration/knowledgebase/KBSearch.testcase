@@ -185,7 +185,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Child");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetSummary = "Knowledge Base Child Article Content",
 			searchAssetTitle = "Knowledge Base Child Article Title",
 			searchAssetType = "Knowledge Base Article");
@@ -231,7 +231,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Knowledge");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetSummary = "Knowledge Base Article 2 Content",
 			searchAssetTitle = "Knowledge Base Article 2 Title",
 			searchAssetType = "Knowledge Base Article");
@@ -255,7 +255,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Knowledge");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetSummary = "Knowledge Base Article Content",
 			searchAssetTitle = "Knowledge Base Article Title",
 			searchAssetType = "Knowledge Base Article");
@@ -279,7 +279,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Knowledge Base");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetSummary = "Knowledge Base Article",
 			searchAssetTitle = "Knowledge Base Article",
 			searchAssetType = "Knowledge Base Article");

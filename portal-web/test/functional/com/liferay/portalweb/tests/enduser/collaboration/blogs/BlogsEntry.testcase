@@ -1534,7 +1534,7 @@ definition {
 
 			SearchPage.searchEmbedded(searchTerm = ${searchTerm});
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Blogs Entry Title",
 				searchAssetType = "Blogs Entry",
 				searchTerm = ${searchTerm});
@@ -1558,7 +1558,7 @@ definition {
 
 			SearchPage.searchEmbedded(searchTerm = ${searchTerm});
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Blogs Entry Title",
 				searchAssetType = "Blogs Entry",
 				searchTerm = ${searchTerm});

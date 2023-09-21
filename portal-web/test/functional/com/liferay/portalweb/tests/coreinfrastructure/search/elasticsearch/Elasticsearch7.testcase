@@ -254,7 +254,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article");
 	}
@@ -339,21 +339,21 @@ definition {
 
 		SearchPage.openSearchPage(searchTerm = "Apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Document");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Message Boards Message");
 
 		SearchPage.openSearchPage(searchTerm = "Orange");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Document");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Apple",
 			searchAssetType = "Message Boards Message");
 	}
@@ -433,7 +433,7 @@ definition {
 
 		Refresh();
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article");
 
@@ -443,7 +443,7 @@ definition {
 			filterValue = "cool",
 			occur = "must");
 
-		SearchResultPortlet.configureSearchResults(fieldsToDisplay = "connection2_field");
+		SearchResults.configureSearchResults(fieldsToDisplay = "connection2_field");
 
 		SearchPage.configureLowLevelSearchOptions(
 			connectionId = "connection2",
@@ -636,7 +636,7 @@ definition {
 
 			AssertElementPresent(locator1 = "Search#REINDEX_IN_PROGRESS_INDICATOR");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Test Test",
 				searchAssetType = "User");
 		}
@@ -736,7 +736,7 @@ definition {
 
 			AssertElementPresent(locator1 = "Search#REINDEX_IN_PROGRESS_INDICATOR");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Test Test",
 				searchAssetType = "User");
 		}
@@ -865,7 +865,7 @@ definition {
 			federatedSearchKey = "s1",
 			indexes = "boston311");
 
-		SearchResultPortlet.configureSearchResults(
+		SearchResults.configureSearchResults(
 			federatedSearchKey = "s1",
 			fieldsToDisplay = "case_title,closure_reason,case_enquiry_id");
 
@@ -950,7 +950,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "WebContent");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content Article");
 
@@ -973,7 +973,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article");
 
@@ -1018,7 +1018,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article");
 	}
@@ -1057,7 +1057,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Unable to get asset renderer for class com.liferay.document.library.kernel.model.DLFileEntry with primary key ${fileEntryId}");
 
-		SearchResultPortlet.configureSearchResults(displayTemplate = "Card Layout");
+		SearchResults.configureSearchResults(displayTemplate = "Card Layout");
 
 		AssertConsoleTextNotPresent(value1 = "Error executing FreeMarker template");
 	}

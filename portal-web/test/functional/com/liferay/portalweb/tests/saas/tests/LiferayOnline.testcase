@@ -375,7 +375,7 @@ definition {
 		task ("Search for Careers in Search Bar to get results") {
 			TeamExtranet.searchEmbedded(searchTerm = "careers");
 
-			SearchResultPortlet.viewSearchResults(
+			SearchResults.viewSearchResults(
 				searchAssetTitle = "Careers",
 				searchAssetType = "Page");
 		}

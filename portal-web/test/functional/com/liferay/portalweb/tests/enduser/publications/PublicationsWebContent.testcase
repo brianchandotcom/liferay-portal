@@ -476,7 +476,7 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "Category Name");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content");
 
@@ -490,7 +490,7 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "Category Name");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content");
 	}

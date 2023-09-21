@@ -197,7 +197,7 @@ definition {
 
 		Search.searchCP(searchTerm = "text1");
 
-		SearchResultPortlet.viewSearchResultNotPresent(searchAssetTitle = "Web Content Complex Title 1");
+		SearchResults.viewSearchResultNotPresent(searchAssetTitle = "Web Content Complex Title 1");
 	}
 
 	@description = "This is a use case for LRQA-61632."

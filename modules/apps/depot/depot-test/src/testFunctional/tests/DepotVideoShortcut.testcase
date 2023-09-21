@@ -147,7 +147,7 @@ definition {
 
 		Search.searchCP(searchTerm = "depot");
 
-		SearchResultPortlet.viewNoSearchResults(searchTerm = "depot");
+		SearchResults.viewNoSearchResults(searchTerm = "depot");
 	}
 
 	@description = "This ensures that a depot external video cannot be viewed from the disconnected site."
@@ -215,7 +215,7 @@ definition {
 
 		Search.searchCP(searchTerm = "depot");
 
-		SearchResultPortlet.viewSearchResults(
+		SearchResults.viewSearchResults(
 			searchAssetTitle = "Test YouTube Video",
 			searchAssetType = "Document");
 	}

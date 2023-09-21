@@ -51,6 +51,10 @@ public class DropdownItemList extends ArrayList<DropdownItem> {
 	}
 
 	public void add(UnsafeConsumer<DropdownItem, Exception> unsafeConsumer) {
+		if (unsafeConsumer == null) {
+			return;
+		}
+
 		DropdownItem dropdownItem = new DropdownItem();
 
 		try {

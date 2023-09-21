@@ -563,14 +563,13 @@ public class ObjectDefinitionResourceImpl
 		List<com.liferay.object.model.ObjectField> serviceBuilderObjectFields =
 			new ArrayList<>(
 				_objectFieldLocalService.getObjectFields(objectDefinitionId));
-		List<com.liferay.object.model.ObjectValidationRule>
-			serviceBuilderObjectValidationRules = new ArrayList<>(
-				_objectValidationRuleLocalService.getObjectValidationRules(
-					objectDefinitionId));
-
 		List<com.liferay.object.model.ObjectRelationship>
 			serviceBuilderObjectRelationships = new ArrayList<>(
 				_objectRelationshipLocalService.getObjectRelationships(
+					objectDefinitionId));
+		List<com.liferay.object.model.ObjectValidationRule>
+			serviceBuilderObjectValidationRules = new ArrayList<>(
+				_objectValidationRuleLocalService.getObjectValidationRules(
 					objectDefinitionId));
 
 		if (serviceBuilderObjectDefinition.isModifiable() &&
@@ -590,32 +589,27 @@ public class ObjectDefinitionResourceImpl
 				serviceBuilderObjectField ->
 					serviceBuilderObjectField.isMetadata() ||
 					!serviceBuilderObjectField.isSystem());
+			serviceBuilderObjectRelationships.removeIf(
+				serviceBuilderObjectRelationship ->
+					!serviceBuilderObjectRelationship.isSystem());
 			serviceBuilderObjectValidationRules.removeIf(
 				serviceBuilderObjectValidationRule ->
 					!serviceBuilderObjectValidationRule.isSystem());
-
-			objectRelationships.removeIf(
-				objectRelationship -> !GetterUtil.getBoolean(
-					objectRelationship.getSystem()));
-			serviceBuilderObjectRelationships.removeIf(
-				ObjectRelationshipModel::isSystem);
 		}
 		else {
 			objectFields.removeIf(
 				objectField -> GetterUtil.getBoolean(objectField.getSystem()));
-			objectValidationRules.removeIf(
-				objectValidationRule -> GetterUtil.getBoolean(
-					objectValidationRule.getSystem()));
-
-			serviceBuilderObjectValidationRules.removeIf(
-				ObjectValidationRuleModel::isSystem);
-
 			objectRelationships.removeIf(
 				objectRelationship -> GetterUtil.getBoolean(
 					objectRelationship.getSystem()));
+			objectValidationRules.removeIf(
+				objectValidationRule -> GetterUtil.getBoolean(
+					objectValidationRule.getSystem()));
 			serviceBuilderObjectFields.removeIf(ObjectFieldModel::isSystem);
 			serviceBuilderObjectRelationships.removeIf(
 				ObjectRelationshipModel::isSystem);
+			serviceBuilderObjectValidationRules.removeIf(
+				ObjectValidationRuleModel::isSystem);
 		}
 
 		for (ObjectField objectField : objectFields) {

@@ -8,21 +8,29 @@ import {
 	Card,
 	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
-import React from 'react';
+import {TBuilderScreenItem} from '@liferay/object-js-components-web/src/main/resources/META-INF/resources/components/BuilderScreen/BuilderScreen';
+import React, {useEffect, useState} from 'react';
 
 export interface UniqueCompositeKeyProps {
 	creationLanguageId: Liferay.Language.Locale;
 	objectFields: ObjectField[];
 	setShowUniqueCompositeKeyAlert: (value: boolean) => void;
+	setValues: (values: Partial<ObjectValidation>) => void;
 	showUniqueCompositeKeyAlert: boolean;
+	values: Partial<ObjectValidation>;
 }
 
 export function UniqueCompositeKey({
 	creationLanguageId,
 	objectFields,
 	setShowUniqueCompositeKeyAlert,
+	setValues,
 	showUniqueCompositeKeyAlert,
+	values,
 }: UniqueCompositeKeyProps) {
+	const [builderScreenItems, setBuilderScreenItems] = useState<
+		TBuilderScreenItem[]
+	>([]);
 
 	const filteredObjectFields = objectFields.filter(
 		(objectField) =>
@@ -43,11 +51,54 @@ export function UniqueCompositeKey({
 				...filteredObjectField,
 				checked: false,
 			})),
-			onSave: () => {},
-			selected: filteredObjectFields,
+			onSave: (selectedObjectFields: ObjectField[]) => {
+				const newObjectValidationRuleSettings = selectedObjectFields.map(
+					(selectedObjectField) => ({
+						name: 'compositeKeyObjectFieldExternalReferenceCode',
+						value: selectedObjectField.externalReferenceCode,
+					})
+				) as ObjectValidationRuleSetting[];
+
+				setValues({
+					objectValidationRuleSettings: newObjectValidationRuleSettings,
+				});
+			},
+			selected: [],
 			title: Liferay.Language.get('select-the-fields'),
 		});
 	};
+
+	useEffect(() => {
+		const newBuilderScreenItems = values?.objectValidationRuleSettings?.map(
+			(objectValidationRuleSetting) => {
+				const filteredObjectFieldsInValidationRuleSetting = filteredObjectFields.find(
+					(filteredObjectField) => {
+						return (
+							filteredObjectField.externalReferenceCode ===
+							objectValidationRuleSetting.value
+						);
+					}
+				);
+
+				return {
+					fieldLabel: getLocalizableLabel(
+						creationLanguageId,
+						filteredObjectFieldsInValidationRuleSetting?.label,
+						filteredObjectFieldsInValidationRuleSetting?.name
+					),
+					label: filteredObjectFieldsInValidationRuleSetting?.label,
+					objectFieldBusinessType:
+						filteredObjectFieldsInValidationRuleSetting?.businessType,
+					objectFieldName:
+						filteredObjectFieldsInValidationRuleSetting?.name,
+				};
+			}
+		) as TBuilderScreenItem[];
+
+		setBuilderScreenItems(newBuilderScreenItems);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [values.objectValidationRuleSettings]);
 
 	return (
 		<>
@@ -67,7 +118,8 @@ export function UniqueCompositeKey({
 				title={Liferay.Language.get('fields')}
 			>
 				<BuilderScreen
-					builderScreenItems={[]}
+					builderScreenItems={builderScreenItems}
+					defaultSort={false}
 					emptyState={{
 						buttonText: Liferay.Language.get('add-fields'),
 						description: Liferay.Language.get(
@@ -75,6 +127,7 @@ export function UniqueCompositeKey({
 						),
 						title: Liferay.Language.get('no-fields-added-yet'),
 					}}
+					filter={true}
 					firstColumnHeader={Liferay.Language.get('label')}
 					onDeleteColumn={() => {}}
 					openModal={handleAddObjectFields}

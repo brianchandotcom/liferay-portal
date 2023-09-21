@@ -189,7 +189,7 @@ type TLabelValueObject = {
 	value: string;
 };
 
-type TBuilderScreenItem = {
+export type TBuilderScreenItem = {
 	defaultSort?: boolean;
 	disableEdit?: boolean;
 	fieldLabel?: string;

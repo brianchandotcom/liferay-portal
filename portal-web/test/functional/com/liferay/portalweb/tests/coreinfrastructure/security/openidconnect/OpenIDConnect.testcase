@@ -903,6 +903,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-148619. User could log in and log out using Google as OpenID Connect provider, using custom parameters for the connection."
+	@priority = 3
 	test OpenIDConnectWithGoogleCustomParameters {
 		property dummy.socket.proxy.disabled = "true";
 		property test.liferay.virtual.instance = "false";

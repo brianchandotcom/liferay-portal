@@ -560,6 +560,7 @@ definition {
 	}
 
 	@description = "This is a use case for OAUTH2-216. Authorization prompt should not include the application name when authorizing and no scopes should be stored from the application in the authorization request page."
+	@priority = 3
 	test AuthPromptInRequestScopeShouldNotBeVisible {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration~default.config";
@@ -804,6 +805,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-48777. User can edit external applications to enable or disable permissions in both scopes."
+	@priority = 3
 	test EditApplicationScopesAndViewLanguageKeys {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~default.config";
 		property osgi.module.configurations = "mapping=[\"example-scope-1,example-scope-2\=everything\"]${line.separator}osgi.jaxrs.name=\"liferay-oauth2-scope-sample-qa-app\"${line.separator}passthrough=\"true\"";
@@ -1098,6 +1100,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-47381. User can authorize external applications."
+	@priority = 3
 	test ExternalApplicationCanBeAuthorized {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property oauth2.application.enabled = "true";
@@ -1166,6 +1169,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-41000. User can view and revoke granted authorizations."
+	@priority = 3
 	test GrantedAuthorizationsCanBeRevoked {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -1562,6 +1566,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-48782. Add and Edit OAuth SAP entries."
+	@priority = 3
 	test OAuth2SAPEntriesCanBeAddedAndEdited {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";
 		property test.liferay.virtual.instance = "false";
@@ -2100,6 +2105,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-48773. User can update scope bundle prefixes."
+	@priority = 3
 	test ScopeBundlePrefixesCanBeUpdated {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -2166,6 +2172,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-40999. User can add and remove configurations in the scope mappings."
+	@priority = 3
 	test ScopeMappingsCanBeUpdated {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~liferay~oauth2~scope~sample~qa~app.config";
 		property osgi.module.configurations = "mapping=[\"example-scope-1,example-scope-2\=everything.read,everything.write\"]${line.separator}osgi.jaxrs.name=\"liferay-oauth2-scope-sample-qa-app\"${line.separator}passthrough=\"false\"";

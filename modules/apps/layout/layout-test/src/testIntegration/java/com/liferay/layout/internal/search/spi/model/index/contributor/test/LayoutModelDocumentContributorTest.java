@@ -75,27 +75,27 @@ public class LayoutModelDocumentContributorTest {
 	public void testReindexPublishedDraftLayoutWithLayoutLocalization()
 		throws Exception {
 
-		String headingText = RandomTestUtil.randomString();
+		String elementText = RandomTestUtil.randomString();
 
-		Layout layout = _addTypeContentLayout(true, headingText);
+		Layout layout = _addTypeContentLayout(elementText, true);
 
-		_assertReindex(headingText, layout);
+		_assertReindex(elementText, layout);
 
-		Layout draftLayout = _addHeadingFragmentToLayout(
+		Layout draftLayout = _addFragmentToLayout(
 			RandomTestUtil.randomString(), layout);
 
 		_assertReindexDraftLayout(draftLayout);
 
-		_assertSearch(headingText, layout.getPlid());
+		_assertSearch(elementText, layout.getPlid());
 	}
 
 	@Test
 	public void testReindexPublishedLayoutWithLayoutLocalization()
 		throws Exception {
 
-		String headingText = RandomTestUtil.randomString();
+		String elementText = RandomTestUtil.randomString();
 
-		Layout layout = _addTypeContentLayout(true, headingText);
+		Layout layout = _addTypeContentLayout(elementText, true);
 
 		List<LayoutLocalization> layoutLocalizations1 =
 			_layoutLocalizationLocalService.getLayoutLocalizations(
@@ -104,7 +104,7 @@ public class LayoutModelDocumentContributorTest {
 		Assert.assertFalse(
 			layoutLocalizations1.toString(), layoutLocalizations1.isEmpty());
 
-		_assertReindex(headingText, layout);
+		_assertReindex(elementText, layout);
 
 		List<LayoutLocalization> layoutLocalizations2 =
 			_layoutLocalizationLocalService.getLayoutLocalizations(
@@ -119,9 +119,9 @@ public class LayoutModelDocumentContributorTest {
 	public void testReindexPublishedLayoutWithoutLayoutLocalization()
 		throws Exception {
 
-		String headingText = RandomTestUtil.randomString();
+		String elementText = RandomTestUtil.randomString();
 
-		Layout layout = _addTypeContentLayout(true, headingText);
+		Layout layout = _addTypeContentLayout(elementText, true);
 
 		_deleteLayoutLocalizations(layout.getPlid());
 
@@ -129,14 +129,14 @@ public class LayoutModelDocumentContributorTest {
 
 		Assert.assertEquals(logEntries.toString(), 0, logEntries.size());
 
-		_assertSearch(headingText, layout.getPlid());
+		_assertSearch(elementText, layout.getPlid());
 	}
 
 	@Test
 	public void testReindexUnpublishedDraftLayout() throws Exception {
-		String headingText = RandomTestUtil.randomString();
+		String elementText = RandomTestUtil.randomString();
 
-		Layout layout = _addTypeContentLayout(false, headingText);
+		Layout layout = _addTypeContentLayout(elementText, false);
 
 		List<LayoutLocalization> layoutLocalizations =
 			_layoutLocalizationLocalService.getLayoutLocalizations(
@@ -148,8 +148,8 @@ public class LayoutModelDocumentContributorTest {
 		_assertReindexDraftLayout(layout);
 	}
 
-	private Layout _addHeadingFragmentToLayout(
-			String headingText, Layout layout)
+	private Layout _addFragmentToLayout(
+			String elementText, Layout layout)
 		throws Exception {
 
 		Layout draftLayout = layout.fetchDraftLayout();
@@ -167,7 +167,7 @@ public class LayoutModelDocumentContributorTest {
 				FragmentEntryProcessorConstants.
 					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
 				JSONUtil.put(
-					"element-text", JSONUtil.put(_languageId, headingText))
+					"element-text", JSONUtil.put(_languageId, elementText))
 			).put(
 				FragmentEntryProcessorConstants.
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
@@ -184,12 +184,12 @@ public class LayoutModelDocumentContributorTest {
 		return draftLayout;
 	}
 
-	private Layout _addTypeContentLayout(boolean publish, String headingText)
+	private Layout _addTypeContentLayout(String elementText, boolean publish)
 		throws Exception {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		Layout draftLayout = _addHeadingFragmentToLayout(headingText, layout);
+		Layout draftLayout = _addFragmentToLayout(elementText, layout);
 
 		if (publish) {
 			ContentLayoutTestUtil.publishLayout(draftLayout, layout);

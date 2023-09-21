@@ -400,13 +400,14 @@ public interface CommerceDiscountLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceDiscount fetchDefaultCommerceDiscount(
 		long commerceChannelAccountEntryRelId, long cpDefinitionId,
-		long cpInstanceId);
+		long cpInstanceId, String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount>
 		getAccountAndChannelAndOrderTypeCommerceDiscounts(
 			long commerceAccountId, long commerceChannelId,
-			long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId);
+			long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId,
+			String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount>
@@ -417,7 +418,7 @@ public interface CommerceDiscountLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
 		long commerceAccountId, long commerceChannelId, long cpDefinitionId,
-		long cpInstanceId);
+		long cpInstanceId, String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
@@ -430,11 +431,12 @@ public interface CommerceDiscountLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountCommerceAndOrderTypeDiscounts(
 		long commerceAccountId, long commerceOrderTypeId, long cpDefinitionId,
-		long cpInstanceId);
+		long cpInstanceId, String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountCommerceDiscounts(
-		long commerceAccountId, long cpDefinitionId, long cpInstanceId);
+		long commerceAccountId, long cpDefinitionId, long cpInstanceId,
+		String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountCommerceDiscounts(
@@ -444,7 +446,8 @@ public interface CommerceDiscountLocalService
 	public List<CommerceDiscount>
 		getAccountGroupAndChannelAndOrderTypeCommerceDiscount(
 			long[] commerceAccountGroupIds, long commerceChannelId,
-			long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId);
+			long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId,
+			String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount>
@@ -455,7 +458,7 @@ public interface CommerceDiscountLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountGroupAndChannelCommerceDiscount(
 		long[] commerceAccountGroupIds, long commerceChannelId,
-		long cpDefinitionId, long cpInstanceId);
+		long cpDefinitionId, long cpInstanceId, String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountGroupAndChannelCommerceDiscount(
@@ -464,7 +467,7 @@ public interface CommerceDiscountLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountGroupAndOrderTypeCommerceDiscount(
 		long[] commerceAccountGroupIds, long commerceOrderTypeId,
-		long cpDefinitionId, long cpInstanceId);
+		long cpDefinitionId, long cpInstanceId, String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountGroupAndOrderTypeCommerceDiscount(
@@ -473,7 +476,8 @@ public interface CommerceDiscountLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountGroupCommerceDiscount(
-		long[] commerceAccountGroupIds, long cpDefinitionId, long cpInstanceId);
+		long[] commerceAccountGroupIds, long cpDefinitionId, long cpInstanceId,
+		String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getAccountGroupCommerceDiscount(
@@ -494,7 +498,7 @@ public interface CommerceDiscountLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getChannelAndOrderTypeCommerceDiscounts(
 		long commerceChannelId, long commerceOrderTypeId, long cpDefinitionId,
-		long cpInstanceId);
+		long cpInstanceId, String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getChannelAndOrderTypeCommerceDiscounts(
@@ -502,7 +506,8 @@ public interface CommerceDiscountLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getChannelCommerceDiscounts(
-		long commerceChannelId, long cpDefinitionId, long cpInstanceId);
+		long commerceChannelId, long cpDefinitionId, long cpInstanceId,
+		String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getChannelCommerceDiscounts(
@@ -591,7 +596,8 @@ public interface CommerceDiscountLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getOrderTypeCommerceDiscounts(
-		long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId);
+		long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId,
+		String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getOrderTypeCommerceDiscounts(
@@ -618,7 +624,8 @@ public interface CommerceDiscountLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getUnqualifiedCommerceDiscounts(
-		long companyId, long cpDefinitionId, long cpInstanceId);
+		long companyId, long cpDefinitionId, long cpInstanceId,
+		String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscount> getUnqualifiedCommerceDiscounts(
@@ -626,7 +633,8 @@ public interface CommerceDiscountLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getValidCommerceDiscountsCount(
-		long commerceDiscountId, long cpDefinitionId, long cpInstanceId);
+		long commerceDiscountId, long cpDefinitionId, long cpInstanceId,
+		String unitOfMeasureKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getValidCommerceDiscountsCount(

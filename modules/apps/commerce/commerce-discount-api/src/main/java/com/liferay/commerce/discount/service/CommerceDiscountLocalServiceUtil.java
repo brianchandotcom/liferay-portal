@@ -524,20 +524,22 @@ public class CommerceDiscountLocalServiceUtil {
 
 	public static CommerceDiscount fetchDefaultCommerceDiscount(
 		long commerceChannelAccountEntryRelId, long cpDefinitionId,
-		long cpInstanceId) {
+		long cpInstanceId, String unitOfMeasureKey) {
 
 		return getService().fetchDefaultCommerceDiscount(
-			commerceChannelAccountEntryRelId, cpDefinitionId, cpInstanceId);
+			commerceChannelAccountEntryRelId, cpDefinitionId, cpInstanceId,
+			unitOfMeasureKey);
 	}
 
 	public static List<CommerceDiscount>
 		getAccountAndChannelAndOrderTypeCommerceDiscounts(
 			long commerceAccountId, long commerceChannelId,
-			long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId) {
+			long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId,
+			String unitOfMeasureKey) {
 
 		return getService().getAccountAndChannelAndOrderTypeCommerceDiscounts(
 			commerceAccountId, commerceChannelId, commerceOrderTypeId,
-			cpDefinitionId, cpInstanceId);
+			cpDefinitionId, cpInstanceId, unitOfMeasureKey);
 	}
 
 	public static List<CommerceDiscount>
@@ -551,10 +553,11 @@ public class CommerceDiscountLocalServiceUtil {
 
 	public static List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
 		long commerceAccountId, long commerceChannelId, long cpDefinitionId,
-		long cpInstanceId) {
+		long cpInstanceId, String unitOfMeasureKey) {
 
 		return getService().getAccountAndChannelCommerceDiscounts(
-			commerceAccountId, commerceChannelId, cpDefinitionId, cpInstanceId);
+			commerceAccountId, commerceChannelId, cpDefinitionId, cpInstanceId,
+			unitOfMeasureKey);
 	}
 
 	public static List<CommerceDiscount> getAccountAndChannelCommerceDiscounts(
@@ -575,18 +578,19 @@ public class CommerceDiscountLocalServiceUtil {
 	public static List<CommerceDiscount>
 		getAccountCommerceAndOrderTypeDiscounts(
 			long commerceAccountId, long commerceOrderTypeId,
-			long cpDefinitionId, long cpInstanceId) {
+			long cpDefinitionId, long cpInstanceId, String unitOfMeasureKey) {
 
 		return getService().getAccountCommerceAndOrderTypeDiscounts(
 			commerceAccountId, commerceOrderTypeId, cpDefinitionId,
-			cpInstanceId);
+			cpInstanceId, unitOfMeasureKey);
 	}
 
 	public static List<CommerceDiscount> getAccountCommerceDiscounts(
-		long commerceAccountId, long cpDefinitionId, long cpInstanceId) {
+		long commerceAccountId, long cpDefinitionId, long cpInstanceId,
+		String unitOfMeasureKey) {
 
 		return getService().getAccountCommerceDiscounts(
-			commerceAccountId, cpDefinitionId, cpInstanceId);
+			commerceAccountId, cpDefinitionId, cpInstanceId, unitOfMeasureKey);
 	}
 
 	public static List<CommerceDiscount> getAccountCommerceDiscounts(
@@ -599,12 +603,13 @@ public class CommerceDiscountLocalServiceUtil {
 	public static List<CommerceDiscount>
 		getAccountGroupAndChannelAndOrderTypeCommerceDiscount(
 			long[] commerceAccountGroupIds, long commerceChannelId,
-			long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId) {
+			long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId,
+			String unitOfMeasureKey) {
 
 		return getService().
 			getAccountGroupAndChannelAndOrderTypeCommerceDiscount(
 				commerceAccountGroupIds, commerceChannelId, commerceOrderTypeId,
-				cpDefinitionId, cpInstanceId);
+				cpDefinitionId, cpInstanceId, unitOfMeasureKey);
 	}
 
 	public static List<CommerceDiscount>
@@ -621,11 +626,11 @@ public class CommerceDiscountLocalServiceUtil {
 	public static List<CommerceDiscount>
 		getAccountGroupAndChannelCommerceDiscount(
 			long[] commerceAccountGroupIds, long commerceChannelId,
-			long cpDefinitionId, long cpInstanceId) {
+			long cpDefinitionId, long cpInstanceId, String unitOfMeasureKey) {
 
 		return getService().getAccountGroupAndChannelCommerceDiscount(
 			commerceAccountGroupIds, commerceChannelId, cpDefinitionId,
-			cpInstanceId);
+			cpInstanceId, unitOfMeasureKey);
 	}
 
 	public static List<CommerceDiscount>
@@ -640,11 +645,11 @@ public class CommerceDiscountLocalServiceUtil {
 	public static List<CommerceDiscount>
 		getAccountGroupAndOrderTypeCommerceDiscount(
 			long[] commerceAccountGroupIds, long commerceOrderTypeId,
-			long cpDefinitionId, long cpInstanceId) {
+			long cpDefinitionId, long cpInstanceId, String unitOfMeasureKey) {
 
 		return getService().getAccountGroupAndOrderTypeCommerceDiscount(
 			commerceAccountGroupIds, commerceOrderTypeId, cpDefinitionId,
-			cpInstanceId);
+			cpInstanceId, unitOfMeasureKey);
 	}
 
 	public static List<CommerceDiscount>
@@ -657,11 +662,12 @@ public class CommerceDiscountLocalServiceUtil {
 	}
 
 	public static List<CommerceDiscount> getAccountGroupCommerceDiscount(
-		long[] commerceAccountGroupIds, long cpDefinitionId,
-		long cpInstanceId) {
+		long[] commerceAccountGroupIds, long cpDefinitionId, long cpInstanceId,
+		String unitOfMeasureKey) {
 
 		return getService().getAccountGroupCommerceDiscount(
-			commerceAccountGroupIds, cpDefinitionId, cpInstanceId);
+			commerceAccountGroupIds, cpDefinitionId, cpInstanceId,
+			unitOfMeasureKey);
 	}
 
 	public static List<CommerceDiscount> getAccountGroupCommerceDiscount(
@@ -695,11 +701,11 @@ public class CommerceDiscountLocalServiceUtil {
 	public static List<CommerceDiscount>
 		getChannelAndOrderTypeCommerceDiscounts(
 			long commerceChannelId, long commerceOrderTypeId,
-			long cpDefinitionId, long cpInstanceId) {
+			long cpDefinitionId, long cpInstanceId, String unitOfMeasureKey) {
 
 		return getService().getChannelAndOrderTypeCommerceDiscounts(
 			commerceChannelId, commerceOrderTypeId, cpDefinitionId,
-			cpInstanceId);
+			cpInstanceId, unitOfMeasureKey);
 	}
 
 	public static List<CommerceDiscount>
@@ -711,10 +717,11 @@ public class CommerceDiscountLocalServiceUtil {
 	}
 
 	public static List<CommerceDiscount> getChannelCommerceDiscounts(
-		long commerceChannelId, long cpDefinitionId, long cpInstanceId) {
+		long commerceChannelId, long cpDefinitionId, long cpInstanceId,
+		String unitOfMeasureKey) {
 
 		return getService().getChannelCommerceDiscounts(
-			commerceChannelId, cpDefinitionId, cpInstanceId);
+			commerceChannelId, cpDefinitionId, cpInstanceId, unitOfMeasureKey);
 	}
 
 	public static List<CommerceDiscount> getChannelCommerceDiscounts(
@@ -837,10 +844,12 @@ public class CommerceDiscountLocalServiceUtil {
 	}
 
 	public static List<CommerceDiscount> getOrderTypeCommerceDiscounts(
-		long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId) {
+		long commerceOrderTypeId, long cpDefinitionId, long cpInstanceId,
+		String unitOfMeasureKey) {
 
 		return getService().getOrderTypeCommerceDiscounts(
-			commerceOrderTypeId, cpDefinitionId, cpInstanceId);
+			commerceOrderTypeId, cpDefinitionId, cpInstanceId,
+			unitOfMeasureKey);
 	}
 
 	public static List<CommerceDiscount> getOrderTypeCommerceDiscounts(
@@ -876,10 +885,11 @@ public class CommerceDiscountLocalServiceUtil {
 	}
 
 	public static List<CommerceDiscount> getUnqualifiedCommerceDiscounts(
-		long companyId, long cpDefinitionId, long cpInstanceId) {
+		long companyId, long cpDefinitionId, long cpInstanceId,
+		String unitOfMeasureKey) {
 
 		return getService().getUnqualifiedCommerceDiscounts(
-			companyId, cpDefinitionId, cpInstanceId);
+			companyId, cpDefinitionId, cpInstanceId, unitOfMeasureKey);
 	}
 
 	public static List<CommerceDiscount> getUnqualifiedCommerceDiscounts(
@@ -889,10 +899,11 @@ public class CommerceDiscountLocalServiceUtil {
 	}
 
 	public static int getValidCommerceDiscountsCount(
-		long commerceDiscountId, long cpDefinitionId, long cpInstanceId) {
+		long commerceDiscountId, long cpDefinitionId, long cpInstanceId,
+		String unitOfMeasureKey) {
 
 		return getService().getValidCommerceDiscountsCount(
-			commerceDiscountId, cpDefinitionId, cpInstanceId);
+			commerceDiscountId, cpDefinitionId, cpInstanceId, unitOfMeasureKey);
 	}
 
 	public static int getValidCommerceDiscountsCount(

@@ -99,20 +99,20 @@ public class CommerceDiscountCalculationV2Impl
 			CommerceDiscountConstants.TARGET_TOTAL);
 	}
 
-	@Override
 	public CommerceDiscountValue getProductCommerceDiscountValue(
 			long cpInstanceId, BigDecimal quantity, BigDecimal productUnitPrice,
-			CommerceContext commerceContext)
+			String unitOfMeasureKey, CommerceContext commerceContext)
 		throws PortalException {
 
 		return getProductCommerceDiscountValue(
-			cpInstanceId, 0, quantity, productUnitPrice, commerceContext);
+			cpInstanceId, 0, quantity, productUnitPrice, unitOfMeasureKey,
+			commerceContext);
 	}
 
-	@Override
 	public CommerceDiscountValue getProductCommerceDiscountValue(
 			long cpInstanceId, long commercePriceListId, BigDecimal quantity,
-			BigDecimal productUnitPrice, CommerceContext commerceContext)
+			BigDecimal productUnitPrice, String unitOfMeasureKey,
+			CommerceContext commerceContext)
 		throws PortalException {
 
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
@@ -151,7 +151,7 @@ public class CommerceDiscountCalculationV2Impl
 		List<CommerceDiscount> commerceDiscounts =
 			getProductCommerceDiscountByHierarchy(
 				cpInstance.getCompanyId(), commerceContext, commerceOrderTypeId,
-				cpInstance.getCPDefinitionId(), cpInstanceId);
+				cpInstance.getCPDefinitionId(), cpInstanceId, unitOfMeasureKey);
 
 		if (commerceDiscounts.isEmpty()) {
 			return null;

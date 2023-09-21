@@ -66,7 +66,8 @@ public class OrderCommerceDiscountValidator
 				_commerceDiscountLocalService.getValidCommerceDiscountsCount(
 					commerceDiscount.getCommerceDiscountId(),
 					commerceOrderItem.getCPDefinitionId(),
-					commerceOrderItem.getCPInstanceId());
+					commerceOrderItem.getCPInstanceId(),
+					commerceOrderItem.getUnitOfMeasureKey());
 
 			if (validCommerceDiscountsCount > 0) {
 				return new CommerceDiscountValidatorResult(true);

@@ -35,6 +35,9 @@ type MDFClaimItem = {
 	[key in MDFClaimColumnKey]?: any;
 };
 
+const BASE_PAGE = 1;
+const MAX_ITEMS = -1;
+
 const MDFClaimList = () => {
 	const {companiesEntries, fieldEntries} = useDynamicFieldEntries();
 
@@ -44,6 +47,12 @@ const MDFClaimList = () => {
 	const {data, isValidating, mutate} = useGetListItemsFromMDFClaims(
 		pagination.activePage,
 		pagination.activeDelta,
+		filtersTerm
+	);
+
+	const {data: dataCSV} = useGetListItemsFromMDFClaims(
+		BASE_PAGE,
+		MAX_ITEMS,
 		filtersTerm
 	);
 
@@ -237,10 +246,10 @@ const MDFClaimList = () => {
 				</div>
 
 				<div className="mb-2 mb-lg-0">
-					{!!data.items?.length && (
+					{!!dataCSV.items?.length && (
 						<CSVLink
 							className="btn btn-secondary mr-2"
-							data={data.items}
+							data={dataCSV.items}
 							filename="MDF Claim.csv"
 						>
 							Export MDF Claim

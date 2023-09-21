@@ -52,6 +52,12 @@ const MDFRequestList = () => {
 		filtersTerm
 	);
 
+	const {data: dataCSV} = useGetMDFRequests(1, -1, filtersTerm);
+
+	const mdfRequestItemsCSV = dataCSV?.items;
+	const mdfRequestListItemsCSV =
+		useGetListItemsFromMDFRequests(mdfRequestItemsCSV) || [];
+
 	const mdfRequestItems = data?.items;
 	const mdfRequestListItems =
 		useGetListItemsFromMDFRequests(mdfRequestItems) || [];
@@ -250,7 +256,7 @@ const MDFRequestList = () => {
 						actions?.includes(PermissionActionType.EXPORT) && (
 							<CSVLink
 								className="btn btn-secondary mr-2"
-								data={mdfRequestListItems}
+								data={mdfRequestListItemsCSV}
 								filename="MDF Requests.csv"
 							>
 								Export MDF Report

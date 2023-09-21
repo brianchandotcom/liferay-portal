@@ -76,16 +76,13 @@ export default function useGetListItemsFromDealRegistration(
 				[DealRegistrationColumnKey.PRIMARY_PROSPECT_JOB_ROLE]: item.primaryProspectJobRole
 					? item.primaryProspectJobRole
 					: ' - ',
-				[DealRegistrationColumnKey.STATUS]: item.leadStatus
-					? item.leadStatus
-					: ' - ',
 				[DealRegistrationColumnKey.STATUS_DETAIL]: item.leadStatusDetail
 					? item.leadStatusDetail
 					: ' - ',
 				[DealRegistrationColumnKey.TYPE]: item.leadType
 					? item.leadType
 					: ' - ',
-				[DealRegistrationColumnKey.CURRENCY]: item.currency.name
+				[DealRegistrationColumnKey.CURRENCY]: item.currency
 					? item.currency.name
 					: ' - ',
 				[DealRegistrationColumnKey.PROSPECT_ADDRESS]: item.prospectAddress

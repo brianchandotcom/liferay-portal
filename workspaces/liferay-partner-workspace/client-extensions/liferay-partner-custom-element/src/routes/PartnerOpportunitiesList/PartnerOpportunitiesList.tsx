@@ -35,6 +35,9 @@ interface IProps {
 	sort: string;
 }
 
+const BASE_PAGE = 1;
+const MAX_ITEMS = 200;
+
 const PartnerOpportunitiesList = ({
 	columnsDates,
 	name,
@@ -59,8 +62,16 @@ const PartnerOpportunitiesList = ({
 		sort,
 		opportunityFilter
 	);
+	const {data: dataCSV} = useGetListItemsFromPartnerOpportunities(
+		BASE_PAGE,
+		MAX_ITEMS,
+		filtersTerm,
+		sort,
+		opportunityFilter
+	);
 	const {totalCount: totalPagination} = data;
 	const filteredData = data.items;
+	const filteredCSVData = dataCSV.items;
 
 	const siteURL = useLiferayNavigate();
 	const columns = [
@@ -180,10 +191,10 @@ const PartnerOpportunitiesList = ({
 				</div>
 
 				<div>
-					{!!filteredData?.length && (
+					{!!filteredCSVData?.length && (
 						<CSVLink
 							className="btn btn-secondary mb-2 mb-lg-0 mr-2"
-							data={filteredData}
+							data={filteredCSVData}
 							filename={`${name}.csv`}
 						>
 							Export {name}

@@ -35,6 +35,10 @@ interface IProps {
 	getFilteredItems: (items: DealRegistrationItem[]) => DealRegistrationItem[];
 	sort: string;
 }
+
+const BASE_PAGE = 1;
+const MAX_ITEMS = 200;
+
 const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 	const {filters, filtersTerm, onFilter} = useFilters();
 
@@ -56,9 +60,17 @@ const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 		sort
 	);
 
+	const {data: dataCSV} = useGetListItemsFromDealRegistration(
+		BASE_PAGE,
+		MAX_ITEMS,
+		filtersTerm,
+		sort
+	);
+
 	const actions = usePermissionActions(ObjectActionName.DEAL_REGISTRATION);
 
 	const filteredData = data.items && getFilteredItems(data.items);
+	const filteredCSVData = dataCSV.items && getFilteredItems(dataCSV.items);
 
 	const columns = [
 		{
@@ -174,11 +186,11 @@ const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 				</div>
 
 				<div>
-					{!!filteredData?.length &&
+					{!!filteredCSVData?.length &&
 						actions?.includes(PermissionActionType.EXPORT) && (
 							<CSVLink
 								className="btn btn-secondary mb-2 mb-lg-0 mr-2"
-								data={filteredData}
+								data={filteredCSVData}
 								filename="Partner Deal Registration.csv"
 							>
 								Export Deal Registrations

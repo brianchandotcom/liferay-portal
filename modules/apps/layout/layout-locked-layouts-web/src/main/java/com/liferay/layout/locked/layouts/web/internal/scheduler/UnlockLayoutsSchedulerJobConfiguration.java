@@ -22,10 +22,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(
-	configurationPid = "com.liferay.layout.locked.layouts.web.internal.configuration.LockedLayoutsCompanyConfiguration",
-	service = SchedulerJobConfiguration.class
-)
+@Component(service = SchedulerJobConfiguration.class)
 public class UnlockLayoutsSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 

@@ -337,6 +337,54 @@ public class CommerceTestUtil {
 				commerceOrder.getGroupId()));
 	}
 
+	public static CommerceOrderItem addCommerceOrderItem(
+			long commerceOrderId, long cpInstanceId, BigDecimal quantity,
+			String unitOfMeasureKey)
+		throws Exception {
+
+		CommerceOrder commerceOrder =
+			CommerceOrderLocalServiceUtil.getCommerceOrder(commerceOrderId);
+
+		if (commerceOrder.getCommerceCurrency() == null) {
+			CommerceCurrency commerceCurrency =
+				CommerceCurrencyTestUtil.addCommerceCurrency(
+					commerceOrder.getCompanyId());
+
+			commerceOrder.setCommerceCurrencyId(
+				commerceCurrency.getCommerceCurrencyId());
+
+			commerceOrder = CommerceOrderLocalServiceUtil.updateCommerceOrder(
+				commerceOrder);
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				commerceOrder.getGroupId());
+
+		CommerceContext commerceContext = new TestCommerceContext(
+			null, commerceOrder.getCommerceCurrency(), null, null,
+			serviceContext.getScopeGroup(), commerceOrder);
+
+		return addCommerceOrderItem(
+			commerceOrderId, cpInstanceId, quantity, unitOfMeasureKey,
+			commerceContext);
+	}
+
+	public static CommerceOrderItem addCommerceOrderItem(
+			long commerceOrderId, long cpInstanceId, BigDecimal quantity,
+			String unitOfMeasureKey, CommerceContext commerceContext)
+		throws Exception {
+
+		CommerceOrder commerceOrder =
+			CommerceOrderLocalServiceUtil.getCommerceOrder(commerceOrderId);
+
+		return CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(
+			commerceOrder.getUserId(), commerceOrderId, cpInstanceId, null,
+			quantity, 0, BigDecimal.ZERO, unitOfMeasureKey, commerceContext,
+			ServiceContextTestUtil.getServiceContext(
+				commerceOrder.getGroupId()));
+	}
+
 	public static CommercePaymentMethodGroupRel
 			addCommercePaymentMethodGroupRel(long userId, long groupId)
 		throws Exception {

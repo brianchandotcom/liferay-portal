@@ -10,9 +10,11 @@ import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.AudioProcessor;
+import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.document.library.kernel.util.VideoProcessor;
@@ -50,9 +52,11 @@ public class DLFileEntryCTDisplayRenderer
 			DLFileEntry dlFileEntry, String key)
 		throws PortalException {
 
+		PDFProcessor pdfProcessor = (PDFProcessor)_pdfDLProcessor;
+
 		return DLFileVersionCTDisplayRenderer.getDownloadInputStream(
 			_store, _audioProcessor, _dlAppLocalService,
-			dlFileEntry.getFileVersion(), _imageProcessor, key, _pdfProcessor,
+			dlFileEntry.getFileVersion(), _imageProcessor, key, pdfProcessor,
 			_videoProcessor);
 	}
 
@@ -137,8 +141,11 @@ public class DLFileEntryCTDisplayRenderer
 	@Reference(policyOption = ReferencePolicyOption.GREEDY)
 	private ImageProcessor _imageProcessor;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private PDFProcessor _pdfProcessor;
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.PDF_PROCESSOR + ")"
+	)
+	private DLProcessor _pdfDLProcessor;
 
 	@Reference
 	private Portal _portal;

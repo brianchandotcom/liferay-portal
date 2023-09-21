@@ -7,8 +7,10 @@ package com.liferay.server.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.document.library.kernel.document.conversion.DocumentConversion;
+import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.util.AudioProcessor;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
+import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.image.Ghostscript;
@@ -222,7 +224,9 @@ public class EditServerMVCActionCommand
 			SessionMessages.add(actionRequest, "dlGenerateOpenOfficePreviews");
 		}
 		else if (cmd.equals("dlGeneratePDFPreviews")) {
-			_pdfProcessor.generatePreviews();
+			PDFProcessor pdfProcessor = (PDFProcessor)_dlProcessor;
+
+			pdfProcessor.generatePreviews();
 
 			hideDefaultSuccessMessage(actionRequest);
 
@@ -904,6 +908,9 @@ public class EditServerMVCActionCommand
 	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
 
+	@Reference(target = "(type=" + DLProcessorConstants.PDF_PROCESSOR + ")")
+	private DLProcessor _dlProcessor;
+
 	@Reference
 	private DocumentConversion _documentConversion;
 
@@ -934,9 +941,6 @@ public class EditServerMVCActionCommand
 	@Reference
 	private OrganizationMembershipPolicyFactory
 		_organizationMembershipPolicyFactory;
-
-	@Reference
-	private PDFProcessor _pdfProcessor;
 
 	@Reference
 	private Portal _portal;

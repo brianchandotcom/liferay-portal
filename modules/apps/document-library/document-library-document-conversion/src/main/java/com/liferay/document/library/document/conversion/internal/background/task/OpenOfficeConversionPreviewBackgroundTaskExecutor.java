@@ -5,6 +5,8 @@
 
 package com.liferay.document.library.document.conversion.internal.background.task;
 
+import com.liferay.document.library.kernel.model.DLProcessorConstants;
+import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.document.library.preview.background.task.BasePreviewBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
@@ -34,7 +36,9 @@ public class OpenOfficeConversionPreviewBackgroundTaskExecutor
 
 	@Override
 	protected void generatePreview(FileVersion fileVersion) throws Exception {
-		_pdfProcessor.generateImages(null, fileVersion);
+		PDFProcessor pdfProcessor = (PDFProcessor)_dlProcessor;
+
+		pdfProcessor.generateImages(null, fileVersion);
 	}
 
 	@Override
@@ -42,8 +46,8 @@ public class OpenOfficeConversionPreviewBackgroundTaskExecutor
 		return MimeTypesHolder.getMimeTypes();
 	}
 
-	@Reference
-	private PDFProcessor _pdfProcessor;
+	@Reference(target = "(type=" + DLProcessorConstants.PDF_PROCESSOR + ")")
+	private DLProcessor _dlProcessor;
 
 	private static class MimeTypesHolder {
 

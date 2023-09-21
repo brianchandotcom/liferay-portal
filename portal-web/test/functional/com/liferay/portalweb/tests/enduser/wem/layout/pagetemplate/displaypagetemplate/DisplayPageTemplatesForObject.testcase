@@ -151,6 +151,11 @@ definition {
 
 			ObjectAdmin.publishObjectViaAPI(objectName = ${randomObjectName});
 
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "${randomLabelName}s");
+
 			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "epicName",
 				objectName = ${randomObjectName},
@@ -173,6 +178,11 @@ definition {
 				objectName = ${objectName});
 
 			ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "${labelName}s");
 
 			ObjectAdmin.addObjectRelationshipViaAPI(
 				objectName_1 = ${randomObjectName},
@@ -289,6 +299,11 @@ definition {
 
 			ObjectAdmin.publishObjectViaAPI(objectName = ${randomObjectName});
 
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "${randomLabelName}s");
+
 			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "epicName",
 				objectName = ${randomObjectName},
@@ -311,6 +326,11 @@ definition {
 				objectName = ${objectName});
 
 			ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "${labelName}s");
 
 			ObjectAdmin.addObjectRelationshipViaAPI(
 				objectName_1 = ${randomObjectName},

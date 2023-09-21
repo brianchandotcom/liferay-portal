@@ -37,7 +37,6 @@ import com.liferay.exportimport.lar.PermissionImporter;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
-import com.liferay.layout.admin.web.internal.exportimport.data.handler.helper.LayoutPageTemplateStructureDataHandlerHelper;
 import com.liferay.layout.configuration.LayoutExportImportConfiguration;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
@@ -47,8 +46,10 @@ import com.liferay.layout.model.LayoutLocalization;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOSite;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
@@ -135,6 +136,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.adapter.impl.StagedThemeImpl;
 import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.sites.kernel.util.Sites;
 import com.liferay.staging.configuration.StagingConfiguration;
@@ -2184,6 +2186,57 @@ public class LayoutStagedModelDataHandler
 		}
 	}
 
+	private void _importLayoutPageTemplateStructure(
+			PortletDataContext portletDataContext, long classNameId,
+			long classPK, Element layoutPageTemplateStructureElement)
+		throws Exception {
+
+		layoutPageTemplateStructureElement.addAttribute(
+			"className", String.valueOf(_portal.getClassName(classNameId)));
+		layoutPageTemplateStructureElement.addAttribute(
+			"classPK", String.valueOf(classPK));
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, layoutPageTemplateStructureElement);
+
+		Map<Long, Long> layoutPageTemplateStructureIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				LayoutPageTemplateStructure.class);
+
+		String path = layoutPageTemplateStructureElement.attributeValue("path");
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			(LayoutPageTemplateStructure)portletDataContext.getZipEntryAsObject(
+				path);
+
+		long layoutPageTemplateStructureId = MapUtil.getLong(
+			layoutPageTemplateStructureIds,
+			layoutPageTemplateStructure.getLayoutPageTemplateStructureId(),
+			layoutPageTemplateStructure.getLayoutPageTemplateStructureId());
+
+		LayoutPageTemplateStructure existingLayoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(layoutPageTemplateStructureId);
+
+		if (existingLayoutPageTemplateStructure == null) {
+			return;
+		}
+
+		List<LayoutPageTemplateStructureRel>
+			existingLayoutPageTemplateStructureRels =
+				_layoutPageTemplateStructureRelLocalService.
+					getLayoutPageTemplateStructureRels(
+						layoutPageTemplateStructureId);
+
+		for (LayoutPageTemplateStructureRel
+				existingLayoutPageTemplateStructureRel :
+					existingLayoutPageTemplateStructureRels) {
+
+			_updateSegmentsExperiences(
+				classPK, existingLayoutPageTemplateStructureRel);
+		}
+	}
+
 	private void _importLayoutPageTemplateStructures(
 			Layout importedLayout, Layout layout,
 			PortletDataContext portletDataContext)
@@ -2203,12 +2256,10 @@ public class LayoutStagedModelDataHandler
 		for (Element layoutPageTemplateStructureElement :
 				layoutPageTemplateStructureElements) {
 
-			_layoutPageTemplateStructureDataHandlerHelper.
-				importLayoutPageTemplateStructure(
-					portletDataContext,
-					_portal.getClassNameId(Layout.class.getName()),
-					importedLayout.getPlid(),
-					layoutPageTemplateStructureElement);
+			_importLayoutPageTemplateStructure(
+				portletDataContext,
+				_portal.getClassNameId(Layout.class.getName()),
+				importedLayout.getPlid(), layoutPageTemplateStructureElement);
 		}
 	}
 
@@ -2930,6 +2981,25 @@ public class LayoutStagedModelDataHandler
 			importedLayoutTypeSettingsUnicodeProperties);
 	}
 
+	private void _updateSegmentsExperiences(
+		long classPK,
+		LayoutPageTemplateStructureRel existingLayoutPageTemplateStructureRel) {
+
+		SegmentsExperience existingSegmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				existingLayoutPageTemplateStructureRel.
+					getSegmentsExperienceId());
+
+		if (existingSegmentsExperience == null) {
+			return;
+		}
+
+		existingSegmentsExperience.setPlid(classPK);
+
+		_segmentsExperienceLocalService.updateSegmentsExperience(
+			existingSegmentsExperience);
+	}
+
 	private void _updateTypeSettings(Layout importedLayout, Layout layout)
 		throws Exception {
 
@@ -3067,12 +3137,12 @@ public class LayoutStagedModelDataHandler
 		_layoutPageTemplateEntryLocalService;
 
 	@Reference
-	private LayoutPageTemplateStructureDataHandlerHelper
-		_layoutPageTemplateStructureDataHandlerHelper;
-
-	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureRelLocalService
+		_layoutPageTemplateStructureRelLocalService;
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;

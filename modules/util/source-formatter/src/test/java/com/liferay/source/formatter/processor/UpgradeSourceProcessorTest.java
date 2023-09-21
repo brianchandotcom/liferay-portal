@@ -43,6 +43,14 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeCatchAllCheck() throws Exception {
+		test(
+			"upgrade/UpgradeCatchAllCheck.testjava",
+			"See LPS-189866, AssetVocabularyService" +
+				"/AssetVocabularyLocalService#searchVocabularies");
+	}
+
+	@Test
 	public void testUpgradeDLUtilCheck() throws Exception {
 		test("upgrade/UpgradeJavaDLUtilCheck.testjava");
 		test("upgrade/UpgradeJSPDLUtilCheck.testjsp");

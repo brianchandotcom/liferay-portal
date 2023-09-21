@@ -1,0 +1,54 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Nícolas Moura
+ */
+public class UpgradeCatchAllCheck {
+
+	public void method() {
+		HtmlUtil.extractText(testEntry.getContent());
+
+		if (true) {
+			String contentVariableLineBreak = HtmlUtil.extractText(
+				testEntry.getContent());
+		}
+	}
+
+	public void method(CommerceAddress commerceAddress) {
+		Region region = commerceAddress.getCountry();
+
+		region.getCode();
+
+		commerceAddress.getRegion().getCode();
+
+		commerceAddress.getRegion(
+		).getCode();
+	}
+
+	public void method(
+		long companyId, long groupId, String title, int start, int end) {
+
+		_assetVocabularyService.searchVocabularies(
+			companyId, groupId, title, start, end);
+
+		return _assetVocabularyLocalService.searchVocabularies(
+			companyId, groupId, title, start, end);
+
+		_assetVocabularyService.searchVocabularies(
+			companyId, 551, "test", start, end);
+	}
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private AssetVocabularyService _assetVocabularyService;
+
+}

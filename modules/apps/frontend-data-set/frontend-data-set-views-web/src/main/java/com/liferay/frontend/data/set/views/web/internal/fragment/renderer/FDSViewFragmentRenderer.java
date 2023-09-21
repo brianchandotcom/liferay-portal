@@ -454,7 +454,17 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					).put(
 						"id", properties.get("fieldName")
 					).put(
-						"label", properties.get("name")
+						"label",
+						() -> {
+							String label = String.valueOf(
+								properties.get("name"));
+
+							if (Validator.isNotNull(label)) {
+								return label;
+							}
+
+							return String.valueOf(properties.get("fieldName"));
+						}
 					).put(
 						"max", _getDateJSONObject(properties.get("to"))
 					).put(
@@ -501,7 +511,17 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 								"value", listTypeEntry.getKey()
 							))
 					).put(
-						"label", properties.get("name")
+						"label",
+						() -> {
+							String label = String.valueOf(
+								properties.get("name"));
+
+							if (Validator.isNotNull(label)) {
+								return label;
+							}
+
+							return String.valueOf(properties.get("fieldName"));
+						}
 					).put(
 						"multiple", properties.get("multiple")
 					).put(

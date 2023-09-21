@@ -13,6 +13,7 @@ import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectActionEnti
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.service.ObjectActionService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -151,6 +152,12 @@ public class ObjectActionResourceImpl extends BaseObjectActionResourceImpl {
 			Long objectDefinitionId, ObjectAction objectAction)
 		throws Exception {
 
+		boolean system = false;
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-193355")) {
+			system = GetterUtil.getBoolean(objectAction.getSystem());
+		}
+
 		return _toObjectAction(
 			_objectActionService.addObjectAction(
 				objectAction.getExternalReferenceCode(), objectDefinitionId,
@@ -164,7 +171,7 @@ public class ObjectActionResourceImpl extends BaseObjectActionResourceImpl {
 				objectAction.getObjectActionTriggerKey(),
 				ObjectActionUtil.toParametersUnicodeProperties(
 					objectAction.getParameters()),
-				objectAction.getSystem()));
+				system));
 	}
 
 	@Override

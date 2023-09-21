@@ -468,10 +468,10 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			int status, int start, int end)
 		throws PortalException {
 
-		return dslQuery(
+		List<Long> cpAttachmentFileEntryIds = dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
-					CPAttachmentFileEntryTable.INSTANCE
+					CPAttachmentFileEntryTable.INSTANCE.CPAttachmentFileEntryId
 				).from(
 					CPAttachmentFileEntryTable.INSTANCE
 				),
@@ -480,6 +480,17 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			).limit(
 				start, end
 			));
+
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries = new ArrayList<>(
+			cpAttachmentFileEntryIds.size());
+
+		for (Long cpAttachmentFileEntryId : cpAttachmentFileEntryIds) {
+			cpAttachmentFileEntries.add(
+				cpAttachmentFileEntryLocalService.getCPAttachmentFileEntry(
+					cpAttachmentFileEntryId));
+		}
+
+		return cpAttachmentFileEntries;
 	}
 
 	@Override

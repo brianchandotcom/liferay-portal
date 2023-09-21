@@ -117,7 +117,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				featureFlags.addAll(
 					_getFeatureFlags(fileContent, _featureFlagPattern4));
 			}
-			else if (fileName.endsWith(".jsp")) {
+			else if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf")) {
 				featureFlags.addAll(
 					_getFeatureFlags(fileContent, _featureFlagPattern3));
 				featureFlags.addAll(_getFeatureFlags(fileContent, false));

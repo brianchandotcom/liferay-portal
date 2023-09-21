@@ -196,7 +196,10 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 													fileVersion="<%= latestFileVersion %>"
 												/>
 
-												<aui:a href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"><%= HtmlUtil.unescape(latestFileVersion.getTitle()) %></aui:a>
+												<clay:link
+													href="<%= dlViewEntriesDisplayContext.getViewFileEntryURL(fileEntry) %>"
+													label="<%= HtmlUtil.unescape(latestFileVersion.getTitle()) %>"
+												/>
 
 												<c:if test="<%= fileEntry.hasLock() || fileEntry.isCheckedOut() %>">
 													<span class="inline-item inline-item-after state-icon">
@@ -396,7 +399,7 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 													icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
 												/>
 
-												<aui:a
+												<clay:link
 													href='<%=
 														PortletURLBuilder.createRenderURL(
 															liferayPortletResponse
@@ -408,9 +411,8 @@ DLViewEntriesDisplayContext dlViewEntriesDisplayContext = new DLViewEntriesDispl
 															"folderId", curFolder.getFolderId()
 														).buildString()
 													%>'
-												>
-													<%= HtmlUtil.unescape(curFolder.getName()) %>
-												</aui:a>
+													label="<%= HtmlUtil.unescape(curFolder.getName()) %>"
+												/>
 											</div>
 										</liferay-ui:search-container-column-text>
 									</c:when>

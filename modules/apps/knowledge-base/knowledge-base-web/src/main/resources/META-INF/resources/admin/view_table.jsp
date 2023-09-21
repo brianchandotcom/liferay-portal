@@ -47,6 +47,7 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 						cssClass="sticker-secondary"
 						icon="folder"
 					/>
+
 					<liferay-portlet:renderURL varImpl="rowURL">
 						<portlet:param name="mvcPath" value="/admin/view_kb_folders.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -55,9 +56,11 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 						<portlet:param name="selectedItemId" value="<%= String.valueOf(kbFolder.getKbFolderId()) %>" />
 					</liferay-portlet:renderURL>
 
-					<aui:a href="<%= rowURL.toString() %>">
-						<%= HtmlUtil.escape(kbFolder.getName()) %>
-					</aui:a>
+					<clay:link
+						aria-label="<%= HtmlUtil.escape(kbFolder.getName()) %>"
+						href="<%= rowURL.toString() %>"
+						label="<%= HtmlUtil.escape(kbFolder.getName()) %>"
+					/>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
@@ -141,9 +144,11 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 					PortletURL viewURL = kbArticleURLHelper.createViewWithRedirectURL(kbArticle, currentURL);
 					%>
 
-					<aui:a href="<%= viewURL.toString() %>">
-						<%= HtmlUtil.escape(kbArticle.getTitle()) %>
-					</aui:a>
+					<clay:link
+						aria-label="<%= HtmlUtil.escape(kbArticle.getTitle()) %>"
+						href="<%= viewURL.toString() %>"
+						label="<%= HtmlUtil.escape(kbArticle.getTitle()) %>"
+					/>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text

@@ -15,6 +15,7 @@ import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.definition.tree.TreeFactory;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.DuplicateObjectActionExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectActionConditionExpressionException;
@@ -155,7 +156,8 @@ public class ObjectActionLocalServiceImpl
 			try {
 				ObjectDefinitionResourcePermissionUtil.populateResourceActions(
 					objectActionLocalService, objectDefinition,
-					_portletLocalService, _resourceActions);
+					_objectDefinitionPersistence, _portletLocalService,
+					_resourceActions, _treeFactory);
 			}
 			catch (Exception exception) {
 				ReflectionUtil.throwException(exception);
@@ -880,6 +882,9 @@ public class ObjectActionLocalServiceImpl
 
 	@Reference
 	private ResourceActions _resourceActions;
+
+	@Reference
+	private TreeFactory _treeFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

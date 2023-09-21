@@ -8,9 +8,13 @@ package com.liferay.object.internal.security.permission.resource.util;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.definition.tree.Node;
+import com.liferay.object.definition.tree.Tree;
+import com.liferay.object.definition.tree.TreeFactory;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectActionLocalService;
+import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Portlet;
@@ -20,17 +24,27 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
+import java.util.Iterator;
+import java.util.Objects;
+
 /**
  * @author Carolina Barbosa
  */
 public class ObjectDefinitionResourcePermissionUtil {
 
+	public static final int INITIAL_WEIGHT = 3;
+
 	public static void populateResourceActions(
 			ObjectActionLocalService objectActionLocalService,
 			ObjectDefinition objectDefinition,
+			ObjectDefinitionPersistence objectDefinitionPersistence,
 			PortletLocalService portletLocalService,
-			ResourceActions resourceActions)
+			ResourceActions resourceActions, TreeFactory treeFactory)
 		throws Exception {
+
+		if (objectDefinition.isRootDescendantNode()) {
+			return;
+		}
 
 		ClassLoader classLoader =
 			ObjectDefinitionResourcePermissionUtil.class.getClassLoader();
@@ -65,7 +79,9 @@ public class ObjectDefinitionResourcePermissionUtil {
 				new String[] {
 					"[$MODEL_NAME$]", "[$PERMISSIONS_GUEST_UNSUPPORTED$]",
 					"[$PERMISSIONS_SUPPORTS$]", "[$PORTLET_NAME$]",
-					"[$RESOURCE_NAME$]"
+					"[$RESOURCE_NAME$]",
+					"[%ROOT_DESCENDANT_NODE_OBJECT_DEFINITIONS_MODEL_" +
+						"RESOURCES%]"
 				},
 				new String[] {
 					objectDefinition.getClassName(),
@@ -74,7 +90,10 @@ public class ObjectDefinitionResourcePermissionUtil {
 					_getPermissionsSupports(objectDefinition) +
 						objectActionPermissionKeys,
 					objectDefinition.getPortletId(),
-					objectDefinition.getResourceName()
+					objectDefinition.getResourceName(),
+					_getRootDescendantNodeObjectDefinitionsModelResources(
+						objectActionLocalService, objectDefinitionPersistence,
+						objectDefinition, treeFactory)
 				}));
 
 		resourceActions.populateModelResources(document);
@@ -118,6 +137,74 @@ public class ObjectDefinitionResourcePermissionUtil {
 		}
 
 		return permissionsSupports;
+	}
+
+	private static String _getRootDescendantNodeObjectDefinitionsModelResources(
+			ObjectActionLocalService objectActionLocalService,
+			ObjectDefinitionPersistence objectDefinitionPersistence,
+			ObjectDefinition objectDefinition, TreeFactory treeFactory)
+		throws Exception {
+
+		if (!objectDefinition.isRootNode()) {
+			return StringPool.BLANK;
+		}
+
+		int weight = INITIAL_WEIGHT;
+
+		Tree tree = treeFactory.create(
+			objectDefinition.getObjectDefinitionId());
+
+		Iterator<Node> iterator = tree.iterator();
+
+		String modelResources = StringPool.BLANK;
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			if (Objects.equals(
+					node.getObjectDefinitionId(),
+					objectDefinition.getObjectDefinitionId())) {
+
+				continue;
+			}
+
+			String objectActionPermissionKeys = StringPool.BLANK;
+
+			for (ObjectAction objectAction :
+					objectActionLocalService.getObjectActions(
+						node.getObjectDefinitionId(),
+						ObjectActionTriggerConstants.KEY_STANDALONE)) {
+
+				objectActionPermissionKeys = StringBundler.concat(
+					objectActionPermissionKeys, "<action-key>",
+					objectAction.getName(), "</action-key>");
+			}
+
+			if (StringUtil.equals(
+					objectActionPermissionKeys, StringPool.BLANK)) {
+
+				continue;
+			}
+
+			ObjectDefinition rootDescendantNodeObjectDefinition =
+				objectDefinitionPersistence.findByPrimaryKey(
+					node.getObjectDefinitionId());
+
+			modelResources = StringBundler.concat(
+				modelResources, "<model-resource><model-name>",
+				rootDescendantNodeObjectDefinition.getClassName(),
+				"</model-name><portlet-ref><portlet-name>",
+				objectDefinition.getPortletId(), "</portlet-name>",
+				"</portlet-ref><weight>", weight++, "</weight><permissions>",
+				"<supports>", objectActionPermissionKeys,
+				"</supports><site-member-defaults>",
+				"</site-member-defaults><guest-defaults>",
+				"</guest-defaults><guest-unsupported>",
+				objectActionPermissionKeys,
+				"</guest-unsupported></permissions></model-resource>");
+		}
+
+		return modelResources;
 	}
 
 }

@@ -55,6 +55,7 @@ import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.TreeFactory;
+import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -182,7 +183,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		try {
 			ObjectDefinitionResourcePermissionUtil.populateResourceActions(
 				_objectActionLocalService, objectDefinition,
-				_portletLocalService, _resourceActions);
+				(ObjectDefinitionPersistence)
+					_objectDefinitionLocalService.getBasePersistence(),
+				_portletLocalService, _resourceActions, _treeFactory);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);

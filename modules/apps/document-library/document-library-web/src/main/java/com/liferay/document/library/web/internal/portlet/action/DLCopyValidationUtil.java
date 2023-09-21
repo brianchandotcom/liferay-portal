@@ -21,7 +21,7 @@ public class DLCopyValidationUtil {
 		if ((size > groupMaxSizeToCopy) && (groupMaxSizeToCopy != 0)) {
 			String messagePrefix = LanguageUtil.get(
 				locale,
-				"file-cannot-be-copied-because-it-exceeds-the-limit-defined-" +
+				"item-cannot-be-copied-because-it-exceeds-the-limit-defined-" +
 					"in-site-settings");
 			String messageSuffix = LanguageUtil.format(
 				locale, "the-total-number-of-files-must-not-exceed-x",
@@ -33,7 +33,7 @@ public class DLCopyValidationUtil {
 		if ((size > companyMaxSizeToCopy) && (companyMaxSizeToCopy != 0)) {
 			String messagePrefix = LanguageUtil.get(
 				locale,
-				"file-cannot-be-copied-because-it-exceeds-the-limit-defined-" +
+				"item-cannot-be-copied-because-it-exceeds-the-limit-defined-" +
 					"in-instance-settings");
 			String messageSuffix = LanguageUtil.format(
 				locale, "the-total-number-of-files-must-not-exceed-x",
@@ -44,7 +44,7 @@ public class DLCopyValidationUtil {
 
 		String messagePrefix = LanguageUtil.get(
 			locale,
-			"file-cannot-be-copied-because-it-exceeds-the-limit-defined-in-" +
+			"item-cannot-be-copied-because-it-exceeds-the-limit-defined-in-" +
 				"system-settings");
 		String messageSuffix = LanguageUtil.format(
 			locale, "the-total-number-of-files-must-not-exceed-x",

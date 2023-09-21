@@ -34,6 +34,8 @@ public class OnDemandAdminTest extends BaseDBPartitionTestCase {
 		addDBPartitions();
 
 		insertPartitionRequiredData();
+
+		insertPartitionData();
 	}
 
 	@AfterClass

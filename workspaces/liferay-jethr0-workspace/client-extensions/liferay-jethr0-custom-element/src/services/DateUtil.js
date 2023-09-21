@@ -4,7 +4,7 @@
  */
 
 function isValidDate(date) {
-	if ((date instanceof Date) && !isNaN(date)) {
+	if (date instanceof Date && !isNaN(date)) {
 		return true;
 	}
 
@@ -12,7 +12,7 @@ function isValidDate(date) {
 }
 
 export function toLocaleString(dateString) {
-	if ((dateString === null) || (dateString === '')) {
+	if (dateString === null || dateString === '') {
 		return '';
 	}
 

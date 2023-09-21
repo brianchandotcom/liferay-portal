@@ -55,7 +55,11 @@ function JobBuilds({jobId}) {
 											{jobBuild.id}
 										</th>
 										<td>{jobBuild.name}</td>
-										<td>{toLocaleString(jobBuild.dateCreated)}</td>
+										<td>
+											{toLocaleString(
+												jobBuild.dateCreated
+											)}
+										</td>
 										<td>{jobBuild.state.name}</td>
 										<td>
 											{jobBuild.initialBuild.toString()}

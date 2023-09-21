@@ -16,11 +16,11 @@ import postSpringBootData from '../../services/postSpringBootData';
 import useSpringBootData from '../../services/useSpringBootData';
 
 function JobsPage() {
+	const [jenkinsGitHubURL, setJenkinsGitHubURL] = useState(null);
 	const [jobName, setJobName] = useState(null);
 	const [jobPriority, setJobPriority] = useState(4);
 	const [jobTypeKey, setJobTypeKey] = useState('portalPullRequestSF');
 	const [jobTypes, setJobTypes] = useState(null);
-	const [jenkinsGitHubURL, setJenkinsGitHubURL] = useState(null);
 	const [pullRequestURL, setPullRequestURL] = useState(null);
 
 	function redirectToJobPage(data) {
@@ -68,9 +68,9 @@ function JobsPage() {
 	}
 
 	const jobData = {
+		jenkinsGitHubURL,
 		name: jobName,
 		priority: jobPriority,
-		jenkinsGitHubURL,
 		pullRequestURL,
 		state: 'opened',
 		type: jobTypeKey,

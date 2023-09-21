@@ -42,11 +42,13 @@ function JobInformation({job}) {
 				Modified Date: {toLocaleString(job.dateModified)}
 				<br />
 				Start Date: {toLocaleString(job.startDate)}
-				{job.jenkinsGitHubURL && (job.jenkinsGitHubURL !== null) && (
+				{job.jenkinsGitHubURL && job.jenkinsGitHubURL !== null && (
 					<>
 						<br />
 						Jenkins GitHub URL:{' '}
-						<a href={job.jenkinsGitHubURL}>{job.jenkinsGitHubURL}</a>
+						<a href={job.jenkinsGitHubURL}>
+							{job.jenkinsGitHubURL}
+						</a>
 					</>
 				)}
 				{job.pullRequestURL && (

@@ -28,7 +28,7 @@ function useSpringBootData({setData, timeout = -1, urlPath}) {
 				// eslint-disable-next-line no-console
 				console.log(error);
 			});
-	}, [setData, urlPath]);
+	}, [oAuth2Client, setData, urlPath]);
 
 	if (timeout > 0) {
 		setTimeout(() => {

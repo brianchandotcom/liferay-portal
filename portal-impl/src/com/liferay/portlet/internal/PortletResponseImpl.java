@@ -286,7 +286,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		Layout layout = getLayout(portletRequestImpl, themeDisplay);
 
 		if (_portletSetup == null) {
-			_portletSetup = getPortletSetup(themeDisplay, layout, portletName);
+			_portletSetup = getPortletPreferences(themeDisplay, layout, portletName);
 		}
 
 		LiferayPortletURLPrivilegedAction liferayPortletURLPrivilegedAction =
@@ -643,7 +643,7 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		return layout;
 	}
 
-	protected PortletPreferences getPortletSetup(
+	protected PortletPreferences getPortletPreferences(
 		ThemeDisplay themeDisplay, Layout layout, String portletName) {
 
 		if (themeDisplay == null) {

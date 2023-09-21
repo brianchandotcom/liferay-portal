@@ -119,12 +119,14 @@ exports[`View Channel should render 1`] = `
           >
             <button
               class="button-root mr-3 btn btn-secondary"
+              data-testid="clear-data"
               type="button"
             >
               Clear Data
             </button>
             <button
               class="button-root btn btn-secondary"
+              data-testid="delete"
               type="button"
             >
               Delete

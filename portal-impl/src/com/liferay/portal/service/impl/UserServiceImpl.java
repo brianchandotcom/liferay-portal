@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredUserException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserFieldException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.log.Log;
@@ -2441,37 +2440,31 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			throw new RequiredUserException();
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-188420")) {
-			if ((status == WorkflowConstants.STATUS_APPROVED) &&
-				!UserPermissionUtil.contains(
-					getPermissionChecker(), userId, ActionKeys.ACTIVATE) &&
-				!UserPermissionUtil.contains(
-					getPermissionChecker(), userId, ActionKeys.DELETE)) {
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			!UserPermissionUtil.contains(
+				getPermissionChecker(), userId, ActionKeys.ACTIVATE) &&
+			!UserPermissionUtil.contains(
+				getPermissionChecker(), userId, ActionKeys.DELETE)) {
 
-				throw new PrincipalException.MustHavePermission(
-					getPermissionChecker(), User.class.getName(), userId,
-					ActionKeys.ACTIVATE, ActionKeys.DELETE);
-			}
-
-			if ((status == WorkflowConstants.STATUS_INACTIVE) &&
-				!UserPermissionUtil.contains(
-					getPermissionChecker(), userId, ActionKeys.DEACTIVATE) &&
-				!UserPermissionUtil.contains(
-					getPermissionChecker(), userId, ActionKeys.DELETE)) {
-
-				throw new PrincipalException.MustHavePermission(
-					getPermissionChecker(), User.class.getName(), userId,
-					ActionKeys.DEACTIVATE, ActionKeys.DELETE);
-			}
-
-			if ((status != WorkflowConstants.STATUS_APPROVED) &&
-				(status != WorkflowConstants.STATUS_INACTIVE)) {
-
-				UserPermissionUtil.check(
-					getPermissionChecker(), userId, ActionKeys.DELETE);
-			}
+			throw new PrincipalException.MustHavePermission(
+				getPermissionChecker(), User.class.getName(), userId,
+				ActionKeys.ACTIVATE, ActionKeys.DELETE);
 		}
-		else {
+
+		if ((status == WorkflowConstants.STATUS_INACTIVE) &&
+			!UserPermissionUtil.contains(
+				getPermissionChecker(), userId, ActionKeys.DEACTIVATE) &&
+			!UserPermissionUtil.contains(
+				getPermissionChecker(), userId, ActionKeys.DELETE)) {
+
+			throw new PrincipalException.MustHavePermission(
+				getPermissionChecker(), User.class.getName(), userId,
+				ActionKeys.DEACTIVATE, ActionKeys.DELETE);
+		}
+
+		if ((status != WorkflowConstants.STATUS_APPROVED) &&
+			(status != WorkflowConstants.STATUS_INACTIVE)) {
+
 			UserPermissionUtil.check(
 				getPermissionChecker(), userId, ActionKeys.DELETE);
 		}

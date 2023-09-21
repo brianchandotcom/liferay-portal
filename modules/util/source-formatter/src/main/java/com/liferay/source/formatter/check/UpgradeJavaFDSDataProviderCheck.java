@@ -15,40 +15,70 @@ import com.liferay.source.formatter.parser.JavaMethod;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * @author Michael Cavalcanti
  */
-public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
+public class UpgradeJavaFDSDataProviderCheck extends BaseUpgradeCheck {
 
 	@Override
-	protected String doProcess(
+	protected String format(
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (!fileName.endsWith(".java")) {
-			return content;
-		}
-
 		JavaClass javaClass = JavaClassParser.parseJavaClass(fileName, content);
 
-		List<String> importNames = javaClass.getImportNames();
+		List<String> implementedClassNames =
+			javaClass.getImplementedClassNames();
 
-		if (!importNames.contains(
-				"com.liferay.frontend.data.set.provider.FDSDataProvider")) {
+		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
+			if (!childJavaTerm.isJavaMethod()) {
+				continue;
+			}
 
-			return content;
+			JavaMethod javaMethod = (JavaMethod)childJavaTerm;
+
+			String javaMethodContent = javaMethod.getContent();
+
+			String newJavaMethodContent = javaMethodContent;
+
+			if (implementedClassNames.contains("FDSDataProvider")) {
+				newJavaMethodContent = _checkMethodDefinition(
+					newJavaMethodContent);
+			}
+
+			newJavaMethodContent = _checkMethodCalls(
+				javaClass.getContent(), newJavaMethodContent);
+
+			content = StringUtil.replace(
+				content, javaMethodContent, newJavaMethodContent);
 		}
 
-		return _formatMethodDefinitions(content, javaClass);
+		return content;
 	}
 
-	private String _formatMethodCalls(
-		String content, String javaMethodContent) {
+	private boolean _checkMethodCall(
+		String content, String javaMethodContent, String methodCall) {
 
+		List<String> parameterList = JavaSourceUtil.getParameterList(
+			methodCall);
+
+		String variableTypeName = getVariableTypeName(
+			javaMethodContent, content, parameterList.get(0));
+
+		if (variableTypeName.equals("HttpServletRequest") &&
+			hasClassOrVariableName(
+				"FDSDataProvider", javaMethodContent, content, methodCall)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private String _checkMethodCalls(String content, String javaMethodContent) {
 		Matcher methodCallGetItemsMatcher = _methodCallGetItemsPattern.matcher(
 			javaMethodContent);
 
@@ -56,18 +86,10 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 			String methodCall = JavaSourceUtil.getMethodCall(
 				javaMethodContent, methodCallGetItemsMatcher.start());
 
-			List<String> parameterList = JavaSourceUtil.getParameterList(
-				methodCall);
-
-			if (_hasClassNameHttpServletRequest(
-					javaMethodContent, content, parameterList.get(0)) &&
-				_isFDSDataProviderMethodCall(
-					javaMethodContent, content, methodCall)) {
-
+			if (_checkMethodCall(content, javaMethodContent, methodCall)) {
 				javaMethodContent = StringUtil.replace(
 					javaMethodContent, methodCall,
-					_reorderParametersGetItems(
-						methodCall, methodCallGetItemsMatcher.group(1)));
+					_reorderGetItems(methodCall));
 			}
 		}
 
@@ -78,25 +100,17 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 			String methodCall = JavaSourceUtil.getMethodCall(
 				javaMethodContent, methodCallGetItemsCountMatcher.start());
 
-			List<String> parameterList = JavaSourceUtil.getParameterList(
-				methodCall);
-
-			if (_hasClassNameHttpServletRequest(
-					javaMethodContent, content, parameterList.get(0)) &&
-				_isFDSDataProviderMethodCall(
-					javaMethodContent, content, methodCall)) {
-
+			if (_checkMethodCall(content, javaMethodContent, methodCall)) {
 				javaMethodContent = StringUtil.replace(
 					javaMethodContent, methodCall,
-					_reorderParametersGetItemsCount(
-						methodCall, methodCallGetItemsCountMatcher.group(1)));
+					_reorderGetItemsCount(methodCall));
 			}
 		}
 
 		return javaMethodContent;
 	}
 
-	private String _formatMethodDefinition(String javaMethodContent) {
+	private String _checkMethodDefinition(String javaMethodContent) {
 		Matcher matcher = _methodGetItemsPattern.matcher(javaMethodContent);
 
 		boolean matchedGetItems = matcher.find();
@@ -112,76 +126,21 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 		String methodCall = JavaSourceUtil.getMethodCall(
 			javaMethodContent, matcher.start());
 
-		String newMethodCall;
-
 		if (matchedGetItems) {
-			newMethodCall = _reorderParametersGetItems(
-				methodCall, matcher.group(1));
-		}
-		else {
-			newMethodCall = _reorderParametersGetItemsCount(
-				methodCall, matcher.group(1));
+			return StringUtil.replace(
+				javaMethodContent, methodCall, _reorderGetItems(methodCall));
 		}
 
-		return StringUtil.replace(javaMethodContent, methodCall, newMethodCall);
+		return StringUtil.replace(
+			javaMethodContent, methodCall, _reorderGetItemsCount(methodCall));
 	}
 
-	private String _formatMethodDefinitions(
-		String content, JavaClass javaClass) {
-
-		List<String> implementedClassNames =
-			javaClass.getImplementedClassNames();
-
-		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
-			if (!childJavaTerm.isJavaMethod()) {
-				continue;
-			}
-
-			JavaMethod javaMethod = (JavaMethod)childJavaTerm;
-
-			String javaMethodContent = javaMethod.getContent();
-
-			if (implementedClassNames.contains("FDSDataProvider")) {
-				javaMethodContent = _formatMethodDefinition(javaMethodContent);
-			}
-
-			javaMethodContent = _formatMethodCalls(
-				javaClass.getContent(), javaMethodContent);
-
-			content = StringUtil.replace(
-				content, javaMethod.getContent(), javaMethodContent);
-		}
-
-		return content;
-	}
-
-	private boolean _hasClassNameHttpServletRequest(
-		String content, String fileContent, String variableName) {
-
-		return Objects.equals(
-			getVariableTypeName(content, fileContent, variableName),
-			"HttpServletRequest");
-	}
-
-	private boolean _isFDSDataProviderMethodCall(
-		String content, String fileContent, String methodCall) {
-
-		String variableTypeName = getVariableTypeName(
-			content, fileContent,
-			methodCall.substring(0, methodCall.indexOf(StringPool.PERIOD)),
-			true);
-
-		return variableTypeName.contains("FDSDataProvider");
-	}
-
-	private String _reorderParametersGetItems(
-		String methodCall, String parameters) {
-
+	private String _reorderGetItems(String methodCall) {
 		List<String> parameterList = JavaSourceUtil.getParameterList(
 			methodCall);
 
 		return StringUtil.replace(
-			methodCall, parameters,
+			methodCall, JavaSourceUtil.getParameters(methodCall),
 			StringBundler.concat(
 				parameterList.get(1), StringPool.COMMA_AND_SPACE,
 				parameterList.get(2), StringPool.COMMA_AND_SPACE,
@@ -189,27 +148,25 @@ public class UpgradeJavaFDSDataProviderCheck extends BaseFileCheck {
 				parameterList.get(3)));
 	}
 
-	private String _reorderParametersGetItemsCount(
-		String methodCall, String parameters) {
-
+	private String _reorderGetItemsCount(String methodCall) {
 		List<String> parameterList = JavaSourceUtil.getParameterList(
 			methodCall);
 
 		return StringUtil.replace(
-			methodCall, parameters,
+			methodCall, JavaSourceUtil.getParameters(methodCall),
 			StringBundler.concat(
 				parameterList.get(1), StringPool.COMMA_AND_SPACE,
 				parameterList.get(0)));
 	}
 
 	private static final Pattern _methodCallGetItemsCountPattern =
-		Pattern.compile("\\w+\\.getItemsCount\\((\\s*.+,\\s*.+)\\s*\\)");
+		Pattern.compile("\\w+\\.getItemsCount\\s*\\(\\s*.+,\\s*.+\\s*\\)");
 	private static final Pattern _methodCallGetItemsPattern = Pattern.compile(
-		"\\w+\\.getItems\\((\\s*.+,\\s*.+,\\s*.+,\\s*.+)\\s*\\)");
+		"\\w+\\.getItems\\s*\\(\\s*.+,\\s*.+,\\s*.+,\\s*.+\\s*\\)");
 	private static final Pattern _methodGetItemsCountPattern = Pattern.compile(
-		"getItemsCount\\((\\s*HttpServletRequest\\s*.+,\\s*.+)\\s*\\)");
+		"getItemsCount\\s*\\(\\s*HttpServletRequest\\s*.+,\\s*.+\\s*\\)");
 	private static final Pattern _methodGetItemsPattern = Pattern.compile(
-		"getItems\\((\\s*HttpServletRequest\\s*.+,\\s*.+,\\s*.+,\\s*.+)" +
+		"getItems\\s*\\(\\s*HttpServletRequest\\s*.+,\\s*.+,\\s*.+,\\s*.+" +
 			"\\s*\\)");
 
 }

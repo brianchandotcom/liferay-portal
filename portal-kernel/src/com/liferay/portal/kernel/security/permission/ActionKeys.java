@@ -18,6 +18,8 @@ public class ActionKeys {
 	public static final String ACCESS_IN_CONTROL_PANEL =
 		"ACCESS_IN_CONTROL_PANEL";
 
+	public static final String ACTIVATE = "ACTIVATE";
+
 	public static final String ADD_ARTICLE = "ADD_ARTICLE";
 
 	public static final String ADD_ATTACHMENT = "ADD_ATTACHMENT";
@@ -133,6 +135,8 @@ public class ActionKeys {
 	public static final String CONFIGURE_PORTLETS = "CONFIGURE_PORTLETS";
 
 	public static final String CUSTOMIZE = "CUSTOMIZE";
+
+	public static final String DEACTIVATE = "DEACTIVATE";
 
 	public static final String DEFINE_PERMISSIONS = "DEFINE_PERMISSIONS";
 

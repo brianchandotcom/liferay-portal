@@ -15,7 +15,6 @@ dependencies {
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:ratings:ratings-taglib")
 	compileOnly project(":apps:staging:staging-api")
-	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:subscription:subscription-api")
 	compileOnly project(":apps:user:user-taglib")
 	compileOnly project(":core:petra:petra-function")

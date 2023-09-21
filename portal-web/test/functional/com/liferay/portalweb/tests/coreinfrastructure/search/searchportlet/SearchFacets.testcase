@@ -1890,12 +1890,12 @@ definition {
 		AssertElementPresent(
 			key_checkboxName = "1.0",
 			key_facetName = "Custom Facet",
-			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
+			locator1 = "SearchResults#FACET_CHECKBOX_LABEL_SPECIFIC");
 
 		Click(
 			key_checkboxName = "1.0",
 			key_facetName = "Custom Facet",
-			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
+			locator1 = "SearchResults#FACET_CHECKBOX_LABEL_SPECIFIC");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1",
@@ -1928,12 +1928,12 @@ definition {
 		AssertElementPresent(
 			key_checkboxName = "1.1",
 			key_facetName = "Custom Facet",
-			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
+			locator1 = "SearchResults#FACET_CHECKBOX_LABEL_SPECIFIC");
 
 		Click(
 			key_checkboxName = "1.1",
 			key_facetName = "Custom Facet",
-			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
+			locator1 = "SearchResults#FACET_CHECKBOX_LABEL_SPECIFIC");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1.1",
@@ -1998,7 +1998,7 @@ definition {
 		AssertElementPresent(
 			key_checkboxName = "Unlocalized text field",
 			key_facetName = "Custom Facet",
-			locator1 = "SearchResults#FACET_PORTLET_CHECKBOX_LABEL_SPECIFIC");
+			locator1 = "SearchResults#FACET_CHECKBOX_LABEL_SPECIFIC");
 	}
 
 	@description = "This is a use case for LPS-156862."

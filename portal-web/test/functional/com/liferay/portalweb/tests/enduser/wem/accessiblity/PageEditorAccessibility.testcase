@@ -659,8 +659,8 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-165625. The Language Selector shouldn't have aria-pressed attribute."
-	@priority = 2
+	@description = "This is a test for LPS-165625 and LPS-194374. The Language Selector shouldn't have aria-pressed attribute. The Language Selector should comply with WCAG 2.1 AA standard."
+	@priority = 3
 	test ViewAccessibilityOfLanguageSelector {
 		task ("Given a page creator has a content page") {
 			JSONLayout.addPublicLayout(
@@ -679,6 +679,20 @@ definition {
 			AssertElementNotPresent(locator1 = "//button[contains(@type,'button')][@aria-pressed][*[name()='svg'][contains(@class,'lexicon-icon-en-us')]]");
 
 			AssertElementPresent(locator1 = "//button[contains(@type,'button')][@aria-label='Select a language, current language: en-US.']");
+		}
+
+		task ("When the page creator opens the dropdown menu of the language selector") {
+			Click(
+				key_currentLocale = StringUtil.lowerCase("en-US"),
+				locator1 = "Button#TRANSLATIONS_LOCALIZATION");
+		}
+
+		task ("Then the dropdown menu should have correct accessibility") {
+			AssertElementAccessible(locator1 = "//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li");
+
+			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li)[2]");
+
+			AssertElementAccessible(locator1 = "xpath=(//div[contains(@class,'dropdown-menu-select')][contains(@class,'show')]//li)[3]");
 		}
 	}
 

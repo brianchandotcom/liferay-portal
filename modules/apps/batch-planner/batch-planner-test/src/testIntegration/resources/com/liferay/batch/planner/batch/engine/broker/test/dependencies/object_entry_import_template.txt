@@ -1,0 +1,53 @@
+[
+	{
+		"creator":{
+			"additionalName":"",
+			"contentType":"UserAccount",
+			"familyName":"Test",
+			"givenName":"Test",
+			"id":20123,
+			"name":"Test Test"
+		},
+		"externalReferenceCode":"TEST-OBJECT-ENTRY",
+		"keywords":[
+
+		],
+		"status":{
+			"code":0,
+			"label":"approved",
+			"label_i18n":"Approved"
+		},
+		"testAttachmentField":{
+			"id":$[ATTACHMENT_ID],
+			"link":{
+			   "href":"$[ATTACHMENT_HREF]",
+			   "label":"$[ATTACHMENT_LABEL]"
+			},
+			"name":"$[ATTACHMENT_NAME]"
+		},
+		"testBooleanField":true,
+		"testDateField":"2022-01-01T00:00:00Z",
+		"testDateTimeField":"2023-07-27T00:00:00.000",
+		"testDecimalField":7.5,
+		"testIntegerField":1476145038,
+		"testLongIntegerField":123456789,
+		"testLongTextField":"i5wpsKAj",
+		"testMultiselectPicklistField":[
+			{
+				"key":"listTypeEntryKey1",
+				"name":"listTypeEntryName1"
+			},
+			{
+				"key":"listTypeEntryKey2",
+				"name":"listTypeEntryName2"
+			}
+		],
+		"testPicklistField":{
+			"key":"listTypeEntryKey1",
+			"name":"listTypeEntryName1"
+		},
+		"testPrecisionDecimalField":0.1234567891234567,
+		"testRichTextField":"<p>Test text</p>\n<img alt=\"\" height=\"202\" src=\"http://localhost:8080/image/company_logo?\">",
+		"testTextField":"SVQgaY1R"
+	}
+]

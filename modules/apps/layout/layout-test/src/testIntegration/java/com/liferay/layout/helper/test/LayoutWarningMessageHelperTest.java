@@ -18,6 +18,7 @@ import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -122,10 +122,12 @@ public class LayoutWarningMessageHelperTest {
 			String mode)
 		throws Exception {
 
-		Assert.assertTrue(
-			Validator.isBlank(
-				_getCollectionWarningMessage(
-					collectionStyledLayoutStructureItem, mode)));
+		JSONObject collectionWarningMessageJSONObject =
+			_getCollectionWarningMessageJSONObject(
+				collectionStyledLayoutStructureItem, mode);
+
+		Assert.assertFalse(
+			collectionWarningMessageJSONObject.has("description"));
 	}
 
 	private void _assertBlankCollectionWarningMessages(
@@ -172,8 +174,12 @@ public class LayoutWarningMessageHelperTest {
 				collectionStyledLayoutStructureItem)
 		throws Exception {
 
-		String actualCollectionWarningMessage = _getCollectionWarningMessage(
-			collectionStyledLayoutStructureItem, Constants.EDIT);
+		JSONObject collectionWarningMessageJSONObject =
+			_getCollectionWarningMessageJSONObject(
+				collectionStyledLayoutStructureItem, Constants.EDIT);
+
+		String actualCollectionWarningMessage =
+			collectionWarningMessageJSONObject.getString("description");
 
 		String expectedCollectionWarningMessage = _language.format(
 			LocaleUtil.getDefault(),
@@ -191,21 +197,23 @@ public class LayoutWarningMessageHelperTest {
 				collectionStyledLayoutStructureItem)
 		throws Exception {
 
-		String actualCollectionWarningMessage = _getCollectionWarningMessage(
-			collectionStyledLayoutStructureItem, Constants.VIEW);
+		JSONObject actualCollectionWarningMessageJSONObject =
+			_getCollectionWarningMessageJSONObject(
+				collectionStyledLayoutStructureItem, Constants.VIEW);
 
 		String expectedCollectionWarningMessage = _language.format(
 			LocaleUtil.getDefault(),
-			"pagination-is-disabled.-this-setting-can-affect-page-" +
-				"performance-severely-if-the-number-of-collection-items-is-" +
-					"above-x.-we-strongly-recommend-using-pagination-instead",
+			"this-setting-can-affect-page-performance-severely-if-the-number-" +
+				"of-collection-items-is-above-x.-we-strongly-recommend-using-" +
+					"pagination-instead",
 			PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA);
 
 		Assert.assertEquals(
-			expectedCollectionWarningMessage, actualCollectionWarningMessage);
+			expectedCollectionWarningMessage,
+			actualCollectionWarningMessageJSONObject.getString("description"));
 	}
 
-	private String _getCollectionWarningMessage(
+	private JSONObject _getCollectionWarningMessageJSONObject(
 			CollectionStyledLayoutStructureItem
 				collectionStyledLayoutStructureItem,
 			String mode)
@@ -216,8 +224,9 @@ public class LayoutWarningMessageHelperTest {
 
 		mockHttpServletRequest.setParameter("p_l_mode", mode);
 
-		return _layoutWarningMessageHelper.getCollectionWarningMessage(
-			collectionStyledLayoutStructureItem, mockHttpServletRequest);
+		return _layoutWarningMessageHelper.
+			getCollectionWarningMessageJsonObject(
+				collectionStyledLayoutStructureItem, mockHttpServletRequest);
 	}
 
 	private ServiceRegistration<InfoCollectionProvider<?>>

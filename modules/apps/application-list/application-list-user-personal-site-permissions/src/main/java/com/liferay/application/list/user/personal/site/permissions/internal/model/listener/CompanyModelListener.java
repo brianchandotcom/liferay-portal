@@ -10,10 +10,7 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
-import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -42,7 +39,10 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Tomas Polesovsky
@@ -78,12 +78,19 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, PanelApp.class,
-			"(panel.category.key=" + PanelCategoryKeys.SITE_ADMINISTRATION +
-				"*)",
-			new PropertyServiceReferenceMapper<>("panel.category.key"),
+		String filter = StringBundler.concat(
+			"(&(objectClass=", PanelApp.class.getName(),
+			")(panel.category.key=", PanelCategoryKeys.SITE_ADMINISTRATION,
+			"*))");
+
+		_serviceTracker = ServiceTrackerFactory.open(
+			bundleContext, filter,
 			new PanelAppServiceTrackerCustomizer(bundleContext));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTracker.close();
 	}
 
 	private Role _getPowerUserRole(long companyId) {
@@ -251,10 +258,10 @@ public class CompanyModelListener extends BaseModelListener<Company> {
 	@Reference
 	private RoleLocalService _roleLocalService;
 
-	private ServiceTrackerMap<String, PanelApp> _serviceTrackerMap;
+	private ServiceTracker<PanelApp, PanelApp> _serviceTracker;
 
 	private class PanelAppServiceTrackerCustomizer
-		implements EagerServiceTrackerCustomizer<PanelApp, PanelApp> {
+		implements ServiceTrackerCustomizer<PanelApp, PanelApp> {
 
 		public PanelAppServiceTrackerCustomizer(BundleContext bundleContext) {
 			_bundleContext = bundleContext;

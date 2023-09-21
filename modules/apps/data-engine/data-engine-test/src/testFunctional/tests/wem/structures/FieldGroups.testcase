@@ -32,6 +32,78 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-179789. Verify it is not possible to mix repeatable fields with other repeatable fields groups"
+	@priority = 4
+	test CannotMixRepeatableFieldsGroups {
+		task ("Given a a Structures that contains 2 field groups with repeatable fields") {
+			DataEngine.addField(
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
+
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text");
+
+			DataEngine.addFieldNested(
+				fieldFieldLabel = "Numeric",
+				fieldName = "Numeric",
+				targetFieldLabel = "Text");
+
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Numeric");
+
+			DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group");
+
+			DataEngine.addField(
+				fieldFieldLabel = "Text 2",
+				fieldName = "Text");
+
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Text 2");
+
+			DataEngine.addFieldNested(
+				fieldFieldLabel = "Numeric 2",
+				fieldName = "Numeric",
+				targetFieldLabel = "Text 2");
+
+			DataEngine.toggleFieldRepeatable(fieldFieldLabel = "Numeric 2");
+
+			DataEngine.editFieldsGroupLabel(
+				fieldsGroupLabel = "Fields Group",
+				fieldsGroupLabelEdit = "Fields Group 2");
+
+			DataEngine.toggleFieldRepeatable(fieldsGroupLabel = "Fields Group 2");
+
+			WebContentStructures.saveCP();
+		}
+
+		task ("When a Web content is created with that structure") {
+			NavItem.gotoWebContent();
+
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(webContentTitle = "WC WebContent Title");
+		}
+
+		task ("and when the user tries to mix the field groups") {
+			AssertElementPresent(locator1 = "DDMEditStructure#FORM_FIELD_GROUP_TARGET_SPACE");
+
+			DragOver(
+				key_fieldFieldLabel = "Fields Group",
+				key_indexItem = 1,
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL_ANY",
+				locator2 = "DDMEditStructure#FORM_FIELD_GROUP_TARGET_SPACE");
+		}
+
+		task ("Then the Field groups stay in separate field groups") {
+			DEBuilder.assertFieldsGroup(
+				fieldGroupDepth = 1,
+				fieldGroupLabel = "Fields Group 2",
+				fieldsLabelList = "Text 2,Numeric 2");
+
+			DEBuilder.assertFieldsGroup(
+				fieldGroupDepth = 1,
+				fieldGroupLabel = "Fields Group",
+				fieldsLabelList = "Text,Numeric");
+		}
+	}
+
 	@description = "This is a test for LPS-161853. Verify if all field groups are present after realigning."
 	@priority = 4
 	test CheckFieldGroupsAfterResize {

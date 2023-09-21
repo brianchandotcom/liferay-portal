@@ -38,7 +38,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_term = "Any User",
-			locator1 = "SearchResults#USER_FACET_TERM");
+			locator1 = "SearchPage#USER_FACET_TERM");
 	}
 
 	macro viewResultRankingsEntry {

@@ -153,7 +153,7 @@ definition {
 	macro viewUserFacetPG {
 		AssertElementPresent(
 			key_term = "Any User",
-			locator1 = "SearchResults#USER_FACET_TERM");
+			locator1 = "SearchPage#USER_FACET_TERM");
 
 		AssertTextEquals.assertPartialText(
 			key_term = ${userLoginFullName},
@@ -162,7 +162,7 @@ definition {
 
 		Click(
 			key_term = ${userLoginFullName},
-			locator1 = "SearchResults#USER_FACET_TERM");
+			locator1 = "SearchPage#USER_FACET_TERM");
 
 		ClassicSearch.viewSearchResultPG(
 			searchAssetSummary = ${searchAssetSummary},

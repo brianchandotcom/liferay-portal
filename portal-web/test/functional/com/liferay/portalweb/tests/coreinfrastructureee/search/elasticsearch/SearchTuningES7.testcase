@@ -321,7 +321,7 @@ definition {
 		SearchPage.searchEmbedded(searchTerm = "Journal");
 
 		AssertTextNotEquals.assertNotPartialText(
-			locator1 = "SearchResults#RESULT_TITLE_SPECIFIC_ORDER",
+			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC_ORDER",
 			resultOrder = 1,
 			value1 = "Journal 2");
 

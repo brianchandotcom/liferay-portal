@@ -584,7 +584,7 @@ definition {
 
 	macro editEntryViaSearchResultDetails {
 		MouseOver(
-			locator1 = "SearchResults#ASSET_DETAILS_TITLE",
+			locator1 = "SearchPage#ASSET_DETAILS_TITLE",
 			value1 = ${searchAssetTitle});
 
 		Click(locator1 = "Icon#EDIT_PENCIL");

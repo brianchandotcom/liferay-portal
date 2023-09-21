@@ -174,7 +174,7 @@ definition {
 
 		AssertCssValue(
 			key_searchAssetTitle = "Test",
-			locator1 = "SearchResults#RESULT_TITLE_SPECIFIC_HIGHLIGHT",
+			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC_HIGHLIGHT",
 			locator2 = "background-color",
 			value1 = "rgba(252, 248, 227, 1)");
 	}
@@ -496,7 +496,7 @@ definition {
 
 			DMDocument.assertFileNameFromTempFolder(fileName = "Document_1.docx");
 
-			Click(locator1 = "SearchResults#PREVIEW_BACK_BUTTON");
+			Click(locator1 = "SearchPage#PREVIEW_BACK_BUTTON");
 
 			SearchPage.gotoResultDetails(searchAssetTitle = "PDF File");
 
@@ -538,13 +538,13 @@ definition {
 
 		AssertCssValue(
 			key_searchAssetTitle = "WC",
-			locator1 = "SearchResults#RESULT_TITLE_SPECIFIC_HIGHLIGHT",
+			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC_HIGHLIGHT",
 			locator2 = "background-color",
 			value1 = "rgba(252, 248, 227, 1)");
 
 		AssertCssValue(
 			key_searchAssetTitle = "Title",
-			locator1 = "SearchResults#RESULT_TITLE_SPECIFIC_HIGHLIGHT",
+			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC_HIGHLIGHT",
 			locator2 = "background-color",
 			value1 = "rgba(252, 248, 227, 1)");
 
@@ -554,11 +554,11 @@ definition {
 
 		AssertElementNotPresent(
 			key_searchAssetTitle = "WC",
-			locator1 = "SearchResults#RESULT_TITLE_SPECIFIC_HIGHLIGHT");
+			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC_HIGHLIGHT");
 
 		AssertElementNotPresent(
 			key_searchAssetTitle = "Title",
-			locator1 = "SearchResults#RESULT_TITLE_SPECIFIC_HIGHLIGHT");
+			locator1 = "SearchPage#RESULT_TITLE_SPECIFIC_HIGHLIGHT");
 	}
 
 	@priority = 4
@@ -677,7 +677,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "test");
 
-		Click(locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_REQUEST_COPY_BUTTON");
+		Click(locator1 = "SearchPage#SEARCH_INSIGHTS_WIDGET_REQUEST_COPY_BUTTON");
 
 		WebContent.viewClipboardContent(text = "\"explain\": true, \"highlight\":");
 
@@ -685,7 +685,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "test");
 
-		Click(locator1 = "SearchResults#SEARCH_INSIGHTS_WIDGET_RESPONSE_COPY_BUTTON");
+		Click(locator1 = "SearchPage#SEARCH_INSIGHTS_WIDGET_RESPONSE_COPY_BUTTON");
 
 		WebContent.viewClipboardContent(text = "\"_shards\": { \"total\":");
 	}
@@ -1155,7 +1155,7 @@ definition {
 			clickMagnifyingGlassIcon = "true",
 			searchTerm = "test");
 
-		AssertElementNotPresent(locator1 = "SearchResults#RESULTS_PORTLET_SEARCH_QUERY");
+		AssertElementNotPresent(locator1 = "SearchPage#RESULTS_PORTLET_SEARCH_QUERY");
 
 		var currentURL = selenium.getCurrentUrl();
 
@@ -1255,7 +1255,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		AssertTextEquals(
-			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
+			locator1 = "SearchPage#RESULTS_PORTLET_PAGINATION_CONFIG",
 			value1 = 1);
 
 		IFrame.closeFrame();
@@ -1269,7 +1269,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		AssertTextEquals(
-			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
+			locator1 = "SearchPage#RESULTS_PORTLET_PAGINATION_CONFIG",
 			value1 = 1);
 
 		IFrame.closeFrame();
@@ -1305,7 +1305,7 @@ definition {
 
 		SearchPage.viewResultDetails(searchAssetTitle = "WC Title");
 
-		Click(locator1 = "SearchResults#ASSET_DETAILS_EDIT_BUTTON");
+		Click(locator1 = "SearchPage#ASSET_DETAILS_EDIT_BUTTON");
 
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 

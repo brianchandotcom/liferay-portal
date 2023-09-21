@@ -80,11 +80,11 @@ definition {
 	macro gotoWidgetOptionsSpecific {
 		MouseOver.mouseOverNotVisible(
 			key_index = ${index},
-			locator1 = "SearchResults#RESULTS_PORTLET_WIDGET_ELLIPSIS_ICON_SPECIFIC");
+			locator1 = "SearchPage#RESULTS_PORTLET_WIDGET_ELLIPSIS_ICON_SPECIFIC");
 
 		Click(
 			key_index = ${index},
-			locator1 = "SearchResults#RESULTS_PORTLET_WIDGET_ELLIPSIS_ICON_SPECIFIC");
+			locator1 = "SearchPage#RESULTS_PORTLET_WIDGET_ELLIPSIS_ICON_SPECIFIC");
 
 		if (isSet(portletOption)) {
 			var key_menuItem = ${portletOption};
@@ -100,7 +100,7 @@ definition {
 		var searchAssetType = ${searchAssetType};
 		var searchTerm = ${searchTerm};
 
-		while (IsElementNotPresent(locator1 = "SearchResults#RESULT_TITLE_SPECIFIC")) {
+		while (IsElementNotPresent(locator1 = "SearchPage#RESULT_TITLE_SPECIFIC")) {
 			Click(locator1 = "Pagination#NEXT_LINK");
 		}
 
@@ -111,21 +111,21 @@ definition {
 	}
 
 	macro viewDocumentDetailValue {
-		if (IsElementPresent(key_searchAssetTitle = ${searchAssetTitle}, locator1 = "SearchResults#RESULT_DOCUMENT_DETAILS_COLLAPSED")) {
+		if (IsElementPresent(key_searchAssetTitle = ${searchAssetTitle}, locator1 = "SearchPage#RESULT_DOCUMENT_DETAILS_COLLAPSED")) {
 			Click(
 				key_searchAssetTitle = ${searchAssetTitle},
-				locator1 = "SearchResults#RESULT_DOCUMENT_DETAILS_BUTTON");
+				locator1 = "SearchPage#RESULT_DOCUMENT_DETAILS_BUTTON");
 		}
 
 		AssertElementPresent(
 			key_documentDetailKey = ${documentDetailKey},
 			key_searchAssetTitle = ${searchAssetTitle},
-			locator1 = "SearchResults#RESULT_DOCUMENT_DETAILS_KEY");
+			locator1 = "SearchPage#RESULT_DOCUMENT_DETAILS_KEY");
 
 		AssertTextEquals.assertPartialText(
 			key_documentDetailKey = ${documentDetailKey},
 			key_searchAssetTitle = ${searchAssetTitle},
-			locator1 = "SearchResults#RESULT_DOCUMENT_DETAILS_KEY_VALUE",
+			locator1 = "SearchPage#RESULT_DOCUMENT_DETAILS_KEY_VALUE",
 			value1 = ${documentDetailKeyValue});
 	}
 
@@ -179,12 +179,12 @@ definition {
 			AssertElementNotPresent(
 				key_searchAssetTitle = ${searchAssetTitle},
 				key_searchAssetType = ${searchAssetType},
-				locator1 = "SearchResults#RESULT_TITLE_SPECIFIC");
+				locator1 = "SearchPage#RESULT_TITLE_SPECIFIC");
 		}
 		else {
 			AssertElementNotPresent(
 				key_searchAssetTitle = ${searchAssetTitle},
-				locator1 = "SearchResults#RESULT_TITLE");
+				locator1 = "SearchPage#RESULT_TITLE");
 		}
 	}
 
@@ -193,31 +193,31 @@ definition {
 			AssertTextEquals.assertPartialText(
 				key_searchAssetTitle = ${searchAssetTitle},
 				key_searchAssetType = ${searchAssetType},
-				locator1 = "SearchResults#RESULT_TITLE_SPECIFIC",
+				locator1 = "SearchPage#RESULT_TITLE_SPECIFIC",
 				value1 = ${searchAssetTitle});
 		}
 		else {
 			AssertTextEquals.assertPartialText(
 				key_searchAssetTitle = ${searchAssetTitle},
-				locator1 = "SearchResults#RESULT_TITLE",
+				locator1 = "SearchPage#RESULT_TITLE",
 				value1 = ${searchAssetTitle});
 		}
 
 		if (isSet(entryDate)) {
 			AssertTextEquals.assertPartialText(
-				locator1 = "SearchResults#RESULT_TYPE_SPECIFIC_DATE",
+				locator1 = "SearchPage#RESULT_TYPE_SPECIFIC_DATE",
 				value1 = ${entryDate});
 		}
 
 		if (isSet(searchAssetSummary)) {
 			AssertTextEquals.assertPartialText(
-				locator1 = "SearchResults#RESULT_SUMMARY_SPECIFIC",
+				locator1 = "SearchPage#RESULT_SUMMARY_SPECIFIC",
 				value1 = ${searchAssetSummary});
 		}
 
 		if (isSet(searchTerm)) {
 			AssertTextEquals.assertPartialText(
-				locator1 = "SearchResults#RESULTS_PORTLET_SEARCH_QUERY",
+				locator1 = "SearchPage#RESULTS_PORTLET_SEARCH_QUERY",
 				value1 = ${searchTerm});
 		}
 	}
@@ -229,7 +229,7 @@ definition {
 			var resultOrder = ${resultOrder} + 1;
 
 			AssertTextEquals.assertPartialText(
-				locator1 = "SearchResults#RESULT_TITLE_SPECIFIC_ORDER",
+				locator1 = "SearchPage#RESULT_TITLE_SPECIFIC_ORDER",
 				resultOrder = ${resultOrder},
 				value1 = ${searchAssetTitle});
 		}

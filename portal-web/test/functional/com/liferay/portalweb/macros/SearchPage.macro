@@ -531,7 +531,7 @@ definition {
 		var key_searchAssetTitle = ${searchAssetTitle};
 
 		AssertClick(
-			locator1 = "SearchResults#RESULT_TITLE",
+			locator1 = "SearchPage#RESULT_TITLE",
 			value1 = ${searchAssetTitle});
 	}
 
@@ -645,7 +645,7 @@ definition {
 
 	macro viewResultDetails {
 		AssertTextEquals(
-			locator1 = "SearchResults#ASSET_DETAILS_TITLE",
+			locator1 = "SearchPage#ASSET_DETAILS_TITLE",
 			value1 = ${searchAssetTitle});
 	}
 

@@ -178,7 +178,7 @@ definition {
 
 		Click(
 			key_term = "Any User",
-			locator1 = "SearchResults#USER_FACET_TERM");
+			locator1 = "SearchPage#USER_FACET_TERM");
 
 		ClassicSearch.viewUserFacetPG(
 			facetFrequency = 1,
@@ -199,7 +199,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_term = "Any User",
-			locator1 = "SearchResults#USER_FACET_TERM");
+			locator1 = "SearchPage#USER_FACET_TERM");
 	}
 
 	@priority = 5

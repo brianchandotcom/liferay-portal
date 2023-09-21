@@ -222,12 +222,12 @@ definition {
 		AssertElementPresent(
 			key_checkboxName = "1.0",
 			key_facetName = "Custom Facet",
-			locator1 = "SearchResults#FACET_CHECKBOX_LABEL_SPECIFIC");
+			locator1 = "SearchPage#FACET_CHECKBOX_LABEL_SPECIFIC");
 
 		Click(
 			key_checkboxName = "1.0",
 			key_facetName = "Custom Facet",
-			locator1 = "SearchResults#FACET_CHECKBOX_LABEL_SPECIFIC");
+			locator1 = "SearchPage#FACET_CHECKBOX_LABEL_SPECIFIC");
 
 		SearchResults.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1",
@@ -260,12 +260,12 @@ definition {
 		AssertElementPresent(
 			key_checkboxName = "1.1",
 			key_facetName = "Custom Facet",
-			locator1 = "SearchResults#FACET_CHECKBOX_LABEL_SPECIFIC");
+			locator1 = "SearchPage#FACET_CHECKBOX_LABEL_SPECIFIC");
 
 		Click(
 			key_checkboxName = "1.1",
 			key_facetName = "Custom Facet",
-			locator1 = "SearchResults#FACET_CHECKBOX_LABEL_SPECIFIC");
+			locator1 = "SearchPage#FACET_CHECKBOX_LABEL_SPECIFIC");
 
 		SearchResults.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1.1",

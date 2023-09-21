@@ -183,7 +183,7 @@ definition {
 
 	macro viewSuggestionResultDetails {
 		AssertTextEquals(
-			locator1 = "SearchResults#ASSET_DETAILS_TITLE",
+			locator1 = "SearchPage#ASSET_DETAILS_TITLE",
 			value1 = ${searchAssetTitle});
 	}
 
@@ -199,7 +199,7 @@ definition {
 		SearchBarSuggestions.gotoSuggestionResultDetails(searchAssetTitle = ${searchAssetTitle});
 
 		AssertTextEquals(
-			locator1 = "SearchResults#ASSET_DETAILS_TITLE",
+			locator1 = "SearchPage#ASSET_DETAILS_TITLE",
 			value1 = ${searchAssetTitle});
 
 		var currentURL = selenium.getCurrentUrl();

@@ -5,7 +5,7 @@ definition {
 			Click(
 				key_checkboxName = ${facetTerm},
 				key_facetName = ${facetName},
-				locator1 = "SearchResults#FACET_CHECKBOX_LABEL_SPECIFIC");
+				locator1 = "SearchPage#FACET_CHECKBOX_LABEL_SPECIFIC");
 		}
 	}
 
@@ -28,8 +28,8 @@ definition {
 	}
 
 	macro clearAllFacetsAndViewURL {
-		while (IsElementPresent(locator1 = "SearchResults#FACET_CLEAR_GENERIC")) {
-			var facetNameBuilder = selenium.getText("SearchResults#FACET_WITH_CLEAR_BUTTON");
+		while (IsElementPresent(locator1 = "SearchPage#FACET_CLEAR_GENERIC")) {
+			var facetNameBuilder = selenium.getText("SearchPage#FACET_WITH_CLEAR_BUTTON");
 
 			var facetNameBuilder = StringUtil.toLowerCase(${facetNameBuilder});
 
@@ -54,12 +54,12 @@ definition {
 
 			AssertClick.assertPartialTextClickAt(
 				key_facetIDName = ${facetIDName},
-				locator1 = "SearchResults#FACET_CLEAR_SPECIFIC",
+				locator1 = "SearchPage#FACET_CLEAR_SPECIFIC",
 				value1 = "Clear");
 		}
 		else {
 			AssertClick.assertPartialTextClickAt(
-				locator1 = "SearchResults#FACET_CLEAR_GENERIC",
+				locator1 = "SearchPage#FACET_CLEAR_GENERIC",
 				value1 = "Clear");
 		}
 	}
@@ -139,7 +139,7 @@ definition {
 
 		if (isSet(aggregationField)) {
 			Type(
-				locator1 = "SearchResults#CUSTOM_FACET_CONFIG_AGGREGATION_FIELD",
+				locator1 = "SearchPage#CUSTOM_FACET_CONFIG_AGGREGATION_FIELD",
 				value1 = ${aggregationField});
 		}
 
@@ -346,7 +346,7 @@ definition {
 			Click(
 				key_checkboxName = ${facetTerm},
 				key_facetName = ${facetName},
-				locator1 = "SearchResults#FACET_CHECKBOX_LABEL_SPECIFIC");
+				locator1 = "SearchPage#FACET_CHECKBOX_LABEL_SPECIFIC");
 		}
 	}
 
@@ -427,7 +427,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				key_facetName = ${facetName},
 				key_termOrderNumber = ${termOrder},
-				locator1 = "SearchResults#FACET_ITEMS_SPECIFIC_ORDER",
+				locator1 = "SearchPage#FACET_ITEMS_SPECIFIC_ORDER",
 				value1 = ${termItem});
 		}
 	}

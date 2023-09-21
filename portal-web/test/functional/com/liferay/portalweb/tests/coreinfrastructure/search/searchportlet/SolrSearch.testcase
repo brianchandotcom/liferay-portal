@@ -188,7 +188,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		AssertTextEquals(
-			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
+			locator1 = "SearchPage#RESULTS_PORTLET_PAGINATION_CONFIG",
 			value1 = 2);
 
 		IFrame.closeFrame();
@@ -204,7 +204,7 @@ definition {
 
 		WaitForElementPresent(
 			key_searchAssetTitle = "WC Title 1",
-			locator1 = "SearchResults#RESULT_TITLE");
+			locator1 = "SearchPage#RESULT_TITLE");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",
@@ -213,7 +213,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		AssertTextEquals(
-			locator1 = "SearchResults#RESULTS_PORTLET_PAGINATION_CONFIG",
+			locator1 = "SearchPage#RESULTS_PORTLET_PAGINATION_CONFIG",
 			value1 = 2);
 
 		IFrame.closeFrame();
@@ -238,7 +238,7 @@ definition {
 
 		SearchPage.viewResultDetails(searchAssetTitle = "WC Title");
 
-		Click(locator1 = "SearchResults#ASSET_DETAILS_EDIT_BUTTON");
+		Click(locator1 = "SearchPage#ASSET_DETAILS_EDIT_BUTTON");
 
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 

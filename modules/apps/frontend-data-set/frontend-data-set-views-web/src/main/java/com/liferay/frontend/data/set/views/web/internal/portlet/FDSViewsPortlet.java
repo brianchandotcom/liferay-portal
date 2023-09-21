@@ -589,28 +589,190 @@ public class FDSViewsPortlet extends MVCPortlet {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				companyId, "FDSEntry");
 
-		if (fdsEntryObjectDefinition != null) {
-			return;
-		}
+		ObjectDefinition fdsDateFilterObjectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"FDSDateFilter", userId, 0, "FDSDateFilter", "FDSDateFilter",
+				false, LocalizedMapUtil.getLocalizedMap("FDS Date Filter"),
+				true, "FDSDateFilter", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap("FDS Date Filters"),
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_DATE,
+						ObjectFieldConstants.DB_TYPE_DATE, true, false, null,
+						_language.get(locale, "to"), "to", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_DATE,
+						ObjectFieldConstants.DB_TYPE_DATE, true, false, null,
+						_language.get(locale, "from"), "from", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "field-name"), "fieldName", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "type"), "type", false)));
 
-		fdsEntryObjectDefinition = _createFDSEntryObjectDefinition(
-			locale, userId);
+		_enableLocalization(fdsDateFilterObjectDefinition);
+
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "name"), "name",
+			fdsDateFilterObjectDefinition, userId);
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, fdsDateFilterObjectDefinition.getObjectDefinitionId());
 
 		ObjectDefinition fdsViewObjectDefinition =
 			_createFDSViewObjectDefinition(
 				fdsEntryObjectDefinition, locale, userId);
 
-		_createFDSActionObjectDefintion(
-			fdsViewObjectDefinition, locale, userId);
-		_createFDSClientExtensionFilterObjectDefintion(
-			fdsViewObjectDefinition, locale, userId);
-		_createFDSDateFilterObjectDefinition(
-			fdsViewObjectDefinition, locale, userId);
-		_createFDSDynamicFilterObjectDefintion(
-			fdsViewObjectDefinition, locale, userId);
-		_createFDSFieldObjectDefinition(
-			fdsViewObjectDefinition, locale, userId);
-		_createFDSSortObjectDefinition(fdsViewObjectDefinition, locale, userId);
+		ObjectDefinition fdsDynamicFilterObjectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"FDSDynamicFilter", userId, 0, "FDSDynamicFilter",
+				"FDSDynamicFilter", false,
+				LocalizedMapUtil.getLocalizedMap("FDS Dynamic Filter"), true,
+				"FDSDynamicFilter", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap("FDS Dynamic Filters"),
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "field-name"), "fieldName", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+						ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
+						_language.get(locale, "include"), "include", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "list-type-definition-id"),
+						"listTypeDefinitionId", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
+						ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
+						_language.get(locale, "multiple"), "multiple", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "preselected-values"),
+						"preselectedValues", false)));
+
+		_enableLocalization(fdsDynamicFilterObjectDefinition);
+
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "name"), "name",
+			fdsDynamicFilterObjectDefinition, userId);
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, fdsDynamicFilterObjectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			userId, fdsViewObjectDefinition.getObjectDefinitionId(),
+			fdsDynamicFilterObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap(
+				"FDSView FDSDynamicFilter Relationship"),
+			"fdsViewFDSDynamicFilterRelationship",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectDefinition fdsSortObjectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"FDSSort", userId, 0, "FDSSort", "FDSSort", false,
+				LocalizedMapUtil.getLocalizedMap("FDS Sort"), true, "FDSSort",
+				"300", null, null, null,
+				LocalizedMapUtil.getLocalizedMap("FDS Sorts"),
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "field-name"), "fieldName", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "sorting"), "sortingDirection",
+						true)));
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, fdsSortObjectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			userId, fdsViewObjectDefinition.getObjectDefinitionId(),
+			fdsSortObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap("FDSView FDSSort Relationship"),
+			"fdsViewFDSSortRelationship",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectDefinition fdsActionObjectDefinition =
+			_objectDefinitionLocalService.addSystemObjectDefinition(
+				"FDSAction", userId, 0, "FDSAction", "FDSAction", false,
+				LocalizedMapUtil.getLocalizedMap("FDS Action"), true,
+				"FDSAction", null, null, null, null,
+				LocalizedMapUtil.getLocalizedMap("FDS Actions"),
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_DRAFT,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "type"), "type", true),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "icon"), "icon", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "confirmation-message-type"),
+						"confirmationMessageType", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "method"), "method", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "permission-key"),
+						"permissionKey", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, true, false, null,
+						_language.get(locale, "url"), "url", false)));
+
+		_enableLocalization(fdsActionObjectDefinition);
+
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "confirmation-message"),
+			"confirmationMessage", fdsActionObjectDefinition, userId);
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "error-message"), "errorMessage",
+			fdsActionObjectDefinition, userId);
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "label"), "label", fdsActionObjectDefinition,
+			userId);
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "success-message"), "successMessage",
+			fdsActionObjectDefinition, userId);
+		_addLocalizedCustomObjectField(
+			_language.get(locale, "title"), "title", fdsActionObjectDefinition,
+			userId);
+
+		_objectDefinitionLocalService.publishSystemObjectDefinition(
+			userId, fdsActionObjectDefinition.getObjectDefinitionId());
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			userId, fdsViewObjectDefinition.getObjectDefinitionId(),
+			fdsActionObjectDefinition.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap("FDSView FDSAction Relationship"),
+			"fdsViewFDSActionRelationship",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

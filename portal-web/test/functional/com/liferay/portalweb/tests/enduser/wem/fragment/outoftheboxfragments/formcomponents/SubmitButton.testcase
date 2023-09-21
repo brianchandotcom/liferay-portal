@@ -48,6 +48,119 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-189534. The site administrater could select the default Submit Button fragment in Form."
+	@priority = 4
+	test CanSelectDefaultSubmitButtonFragmentInForm {
+		task ("Given editing the Submit Field type in fragment admin") {
+			task ("Add a submit fragment") {
+				JSONFragment.addFragmentCollection(
+					groupName = "Test Site Name",
+					name = "Fragment Set Name");
+
+				var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "submit_configuration.html");
+				var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "submit_configuration.json");
+
+				JSONFragment.addSection(
+					collectionName = "Fragment Set Name",
+					configuration = ${jsonSnippet},
+					fragmentStatus = "Approved",
+					groupName = "Test Site Name",
+					html = ${htmlSnippet},
+					name = "Submit Fragment Example");
+			}
+
+			task ("View the new Submit Button is selected in Submit Field type selector") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+				LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
+
+				FragmentsAdmin.viewFormFragementForEachFieldType(
+					fieldType = "Submit Button",
+					formFragmentName = "Submit Button");
+			}
+
+			task ("Open the Select Fragment modal for Submit Button field type") {
+				Click(
+					key_class = "btn-secondary",
+					key_index = 11,
+					locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+			}
+
+			task ("Select the new fragment from current site") {
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				Click(
+					key_navItem = "Test Site Name",
+					locator1 = "NavBar#NAV_ITEM_LINK");
+
+				LexiconCard.clickCardTitle(card = "Fragment Set Name");
+
+				LexiconCard.clickCard(card = "Submit Fragment Example");
+			}
+
+			task ("View the new submit fragment is shown in Form Fragment selector for Text field type and save") {
+				SelectFrameTop();
+
+				FragmentsAdmin.viewFormFragementForEachFieldType(
+					fieldType = "Submit Button",
+					formFragmentName = "Submit Fragment Example");
+
+				Button.clickSave();
+			}
+		}
+
+		task ("When the page designer maps the Form Container to an entity with text field") {
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Map the Form Container to the object") {
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+		}
+
+		task ("Then the sumbimit button is changed in form container") {
+			task ("View the new fragment is shown in Form Container and publish") {
+				AssertElementPresent(
+					index = 1,
+					key_fragmentName = "Submit Fragment Example",
+					locator1 = "Fragment#FRAGMENT_LABEL");
+
+				PageEditor.publish();
+			}
+
+			task ("Navigate to the content page at view mode") {
+				ContentPagesNavigator.openViewContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+			}
+
+			task ("Assertr can submit the form with the new sumbmit button successfully") {
+				Type(
+					key_text = "Name",
+					locator1 = "TextInput#ANY",
+					value1 = "test");
+
+				Button.clickSubmitButton();
+
+				AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-151754. The page designer can configure and map the Submit Button on content page."
 	@priority = 4
 	test ConfigureSubmitButtonOnContentPage {

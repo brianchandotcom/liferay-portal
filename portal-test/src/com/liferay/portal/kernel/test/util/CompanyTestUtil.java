@@ -71,12 +71,12 @@ public class CompanyTestUtil {
 
 		// Reset company supported locales
 
-		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
 			companyId);
 
-		preferences.setValue(PropsKeys.LOCALES, languageIds);
+		portletPreferences.setValue(PropsKeys.LOCALES, languageIds);
 
-		preferences.store();
+		portletPreferences.store();
 
 		// Reset company locales cache
 

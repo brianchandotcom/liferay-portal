@@ -62,13 +62,13 @@ public class SynchronousMailTestRule extends SynchronousDestinationTestRule {
 			long companyId, String adminEmailFromAddress)
 		throws Exception {
 
-		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
 			companyId);
 
-		preferences.setValue(
+		portletPreferences.setValue(
 			PropsKeys.ADMIN_EMAIL_FROM_ADDRESS, adminEmailFromAddress);
 
-		preferences.store();
+		portletPreferences.store();
 	}
 
 	private String _adminEmailFromAddress;

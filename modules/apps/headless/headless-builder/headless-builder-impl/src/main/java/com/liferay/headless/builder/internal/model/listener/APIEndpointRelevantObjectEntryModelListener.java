@@ -260,9 +260,10 @@ public class APIEndpointRelevantObjectEntryModelListener
 				"x-must-start-with-the-x-character");
 		}
 
-		Matcher individualMatcher = _individualPathPattern.matcher(pathString);
+		Matcher singleElementPathMatcher = _singleElementPathPattern.matcher(
+			pathString);
 
-		if (!individualMatcher.matches()) {
+		if (!singleElementPathMatcher.matches()) {
 			throw new ObjectEntryValuesException.InvalidObjectField(
 				Arrays.asList(objectField.getLabel(user.getLocale())),
 				"%s can have a maximum of 255 alphanumeric characters",
@@ -285,10 +286,10 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 	private static final Pattern _curlyBracePattern = Pattern.compile(
 		"^\\{[a-zA-Z0-9]+\\}$");
-	private static final Pattern _individualPathPattern = Pattern.compile(
-		"/[a-zA-Z0-9][a-zA-Z0-9-/-{\\-}]{1,253}");
 	private static final Pattern _pathPattern = Pattern.compile(
 		"/[a-zA-Z0-9][a-zA-Z0-9-/]{1,253}");
+	private static final Pattern _singleElementPathPattern = Pattern.compile(
+		"/[a-zA-Z0-9][a-zA-Z0-9-/-{\\-}]{1,253}");
 
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"

@@ -50,26 +50,6 @@
 					"name": "FileEntry"
 				}
 			},
-			"IndividualSchemaName": {
-				"description": "individual description",
-				"properties": {
-					"individualTextProperty": {
-						"description": "individualTextProperty description",
-						"type": "string"
-					}
-				},
-				"type": "object"
-			},
-			"IndividualSiteScopedSchemaName": {
-				"description": "individual site scoped description",
-				"properties": {
-					"individualSiteScopedTextProperty": {
-						"description": "individualSiteScopedTextProperty description",
-						"type": "string"
-					}
-				},
-				"type": "object"
-			},
 			"Link": {
 				"properties": {
 					"href": {
@@ -271,6 +251,26 @@
 				},
 				"type": "object"
 			},
+			"SingleElementSchemaName": {
+				"description": "description",
+				"properties": {
+					"singleElementTextProperty": {
+						"description": "description",
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
+			"SingleElementSiteScopedSchemaName": {
+				"description": "description",
+				"properties": {
+					"singleElementSiteScopedTextProperty": {
+						"description": "description",
+						"type": "string"
+					}
+				},
+				"type": "object"
+			},
 			"SiteScopedSchemaName": {
 				"description": "site scoped description",
 				"properties": {
@@ -294,41 +294,6 @@
 	},
 	"openapi": "3.0.1",
 	"paths": {
-		"/individual-path/{individualPathId}": {
-			"get": {
-				"operationId": "getIndividualPath",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "individualPathId",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/IndividualSchemaName"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/IndividualSchemaName"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"IndividualSchemaName"
-				]
-			}
-		},
 		"/openapi.{type}": {
 			"get": {
 				"operationId": "getOpenAPI",
@@ -410,49 +375,6 @@
 				]
 			}
 		},
-		"/scopes/{scopeKey}/individual-path/by-external-reference-code/{individualPathERC}": {
-			"get": {
-				"operationId": "getScopeScopeKeyIndividualPathByExternalReferenceCodeIndividualPathERC",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "scopeKey",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"in": "path",
-						"name": "individualPathERC",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"default": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/IndividualSiteScopedSchemaName"
-								}
-							},
-							"application/xml": {
-								"schema": {
-									"$ref": "#/components/schemas/IndividualSiteScopedSchemaName"
-								}
-							}
-						},
-						"description": "default response"
-					}
-				},
-				"tags": [
-					"IndividualSiteScopedSchemaName"
-				]
-			}
-		},
 		"/scopes/{scopeKey}/no-schema": {
 			"get": {
 				"operationId": "getScopeScopeKeyNoSchemaPage",
@@ -499,6 +421,49 @@
 						"description": "default response"
 					}
 				}
+			}
+		},
+		"/scopes/{scopeKey}/single-element-path/by-external-reference-code/{singleElementPathERC}": {
+			"get": {
+				"operationId": "getScopeScopeKeySingleElementPathByExternalReferenceCodeSingleElementPathERC",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "scopeKey",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "singleElementPathERC",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SingleElementSiteScopedSchemaName"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/SingleElementSiteScopedSchemaName"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"SingleElementSiteScopedSchemaName"
+				]
 			}
 		},
 		"/scopes/{scopeKey}/site-scoped-path": {
@@ -561,6 +526,41 @@
 				},
 				"tags": [
 					"SiteScopedSchemaName"
+				]
+			}
+		},
+		"/single-element-path/{singleElementPathId}": {
+			"get": {
+				"operationId": "getSingleElementPath",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "singleElementPathId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SingleElementSchemaName"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/SingleElementSchemaName"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"SingleElementSchemaName"
 				]
 			}
 		}

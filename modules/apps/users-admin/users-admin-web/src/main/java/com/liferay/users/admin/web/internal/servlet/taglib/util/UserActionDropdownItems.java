@@ -10,6 +10,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
@@ -67,6 +68,14 @@ public class UserActionDropdownItems {
 			_themeDisplay.getPermissionChecker(), _user.getUserId(),
 			ActionKeys.DELETE);
 
+		boolean hasActivatePermission = UserPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), _user.getUserId(),
+			ActionKeys.ACTIVATE);
+
+		boolean hasDeactivatePermission = UserPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), _user.getUserId(),
+			ActionKeys.DEACTIVATE);
+
 		UserActionDisplayContext userActionDisplayContext =
 			new UserActionDisplayContext(
 				_httpServletRequest,
@@ -107,8 +116,20 @@ public class UserActionDropdownItems {
 							_user.getUserId(), ActionKeys.IMPERSONATE),
 					_getImpersonateUserActionUnsafeConsumer()
 				).add(
-					() -> hasDeletePermission && !_user.isActive(),
+					() ->
+						((FeatureFlagManagerUtil.isEnabled("LPS-188420") &&
+						  hasActivatePermission) ||
+						 hasDeletePermission) &&
+						!_user.isActive(),
 					_getActivateActionUnsafeConsumer()
+				).add(
+					() ->
+						((FeatureFlagManagerUtil.isEnabled("LPS-188420") &&
+						  hasDeactivatePermission) ||
+						 hasDeletePermission) &&
+						_user.isActive() &&
+						(_user.getUserId() != _themeDisplay.getUserId()),
+					_getDeactivateActionUnsafeConsumer()
 				).add(
 					() ->
 						hasDeletePermission &&

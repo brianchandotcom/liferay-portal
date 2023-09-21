@@ -61,7 +61,7 @@
 
 <tr>
 	<td>WIDGET_CATEGORY</td>
-	<td>//div[contains(@class,'panel-group')]//*[contains(@class,'subtitle') and *[normalize-space(text())='${key_category}']]</td>
+	<td>//button[contains(@class,'panel-header') and contains(.,'${key_category}')]</td>
 	<td></td>
 </tr>
 </tbody>

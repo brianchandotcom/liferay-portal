@@ -12,7 +12,6 @@ import com.liferay.blogs.exception.EntryImageSizeException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -30,24 +29,26 @@ import com.liferay.upload.UploadFileEntryHandler;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Map;
 import java.util.Set;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
  * @author Alejandro Tardín
  */
-@Component(
-	configurationPid = "com.liferay.blogs.configuration.BlogsFileUploadsConfiguration",
-	service = ImageBlogsUploadFileEntryHandler.class
-)
 public class ImageBlogsUploadFileEntryHandler
 	implements UploadFileEntryHandler {
+
+	public ImageBlogsUploadFileEntryHandler(
+		BlogsEntryLocalService blogsLocalService,
+		BlogsFileUploadsConfiguration blogsFileUploadsConfiguration,
+		PortletFileRepository portletFileRepository,
+		PortletResourcePermission portletResourcePermission) {
+
+		_blogsLocalService = blogsLocalService;
+		_blogsFileUploadsConfiguration = blogsFileUploadsConfiguration;
+		_portletFileRepository = portletFileRepository;
+		_portletResourcePermission = portletResourcePermission;
+	}
 
 	@Override
 	public FileEntry upload(UploadPortletRequest uploadPortletRequest)
@@ -57,7 +58,7 @@ public class ImageBlogsUploadFileEntryHandler
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		portletResourcePermission.check(
+		_portletResourcePermission.check(
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
 			ActionKeys.ADD_ENTRY);
 
@@ -77,39 +78,23 @@ public class ImageBlogsUploadFileEntryHandler
 		return _editImageFileEntry(uploadPortletRequest, themeDisplay);
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_blogsFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
-			BlogsFileUploadsConfiguration.class, properties);
-	}
-
 	protected FileEntry addFileEntry(
 			String fileName, String contentType, InputStream inputStream,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Folder folder = blogsLocalService.addAttachmentsFolder(
+		Folder folder = _blogsLocalService.addAttachmentsFolder(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId());
 
-		String uniqueFileName = portletFileRepository.getUniqueFileName(
+		String uniqueFileName = _portletFileRepository.getUniqueFileName(
 			themeDisplay.getScopeGroupId(), folder.getFolderId(), fileName);
 
-		return portletFileRepository.addPortletFileEntry(
+		return _portletFileRepository.addPortletFileEntry(
 			null, themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
 			BlogsEntry.class.getName(), 0, BlogsConstants.SERVICE_NAME,
 			folder.getFolderId(), inputStream, uniqueFileName, contentType,
 			true);
 	}
-
-	@Reference
-	protected BlogsEntryLocalService blogsLocalService;
-
-	@Reference
-	protected PortletFileRepository portletFileRepository;
-
-	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
-	protected PortletResourcePermission portletResourcePermission;
 
 	private FileEntry _addFileEntry(
 			String fileName, InputStream inputStream, String parameterName,
@@ -133,7 +118,7 @@ public class ImageBlogsUploadFileEntryHandler
 		long fileEntryId = ParamUtil.getLong(
 			uploadPortletRequest, "fileEntryId");
 
-		FileEntry fileEntry = portletFileRepository.getPortletFileEntry(
+		FileEntry fileEntry = _portletFileRepository.getPortletFileEntry(
 			fileEntryId);
 
 		try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
@@ -172,5 +157,8 @@ public class ImageBlogsUploadFileEntryHandler
 
 	private volatile BlogsFileUploadsConfiguration
 		_blogsFileUploadsConfiguration;
+	private final BlogsEntryLocalService _blogsLocalService;
+	private final PortletFileRepository _portletFileRepository;
+	private final PortletResourcePermission _portletResourcePermission;
 
 }

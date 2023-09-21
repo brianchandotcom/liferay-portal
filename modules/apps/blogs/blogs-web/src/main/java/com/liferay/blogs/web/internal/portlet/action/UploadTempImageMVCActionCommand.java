@@ -6,13 +6,18 @@
 package com.liferay.blogs.web.internal.portlet.action;
 
 import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
+import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.constants.BlogsPortletKeys;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.web.internal.upload.ImageBlogsUploadResponseHandler;
 import com.liferay.blogs.web.internal.upload.TempImageBlogsUploadFileEntryHandler;
 import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.upload.UniqueFileNameProvider;
 import com.liferay.upload.UploadHandler;
 
 import java.util.Map;
@@ -49,6 +54,12 @@ public class UploadTempImageMVCActionCommand extends BaseMVCActionCommand {
 
 		_imageBlogsUploadResponseHandler = new ImageBlogsUploadResponseHandler(
 			_blogsFileUploadsConfiguration, _itemSelectorUploadResponseHandler);
+
+		_tempImageBlogsUploadFileEntryHandler =
+			new TempImageBlogsUploadFileEntryHandler(
+				_blogsLocalService, _blogsFileUploadsConfiguration,
+				_portletFileRepository, _portletResourcePermission,
+				_uniqueFileNameProvider);
 	}
 
 	@Override
@@ -63,6 +74,10 @@ public class UploadTempImageMVCActionCommand extends BaseMVCActionCommand {
 
 	private volatile BlogsFileUploadsConfiguration
 		_blogsFileUploadsConfiguration;
+
+	@Reference
+	private BlogsEntryLocalService _blogsLocalService;
+
 	private volatile ImageBlogsUploadResponseHandler
 		_imageBlogsUploadResponseHandler;
 
@@ -71,8 +86,16 @@ public class UploadTempImageMVCActionCommand extends BaseMVCActionCommand {
 		_itemSelectorUploadResponseHandler;
 
 	@Reference
-	private TempImageBlogsUploadFileEntryHandler
+	private PortletFileRepository _portletFileRepository;
+
+	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
+
+	private volatile TempImageBlogsUploadFileEntryHandler
 		_tempImageBlogsUploadFileEntryHandler;
+
+	@Reference
+	private UniqueFileNameProvider _uniqueFileNameProvider;
 
 	@Reference
 	private UploadHandler _uploadHandler;

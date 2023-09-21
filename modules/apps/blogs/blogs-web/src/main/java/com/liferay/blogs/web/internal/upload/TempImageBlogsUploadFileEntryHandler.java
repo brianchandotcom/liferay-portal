@@ -5,28 +5,39 @@
 
 package com.liferay.blogs.web.internal.upload;
 
+import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.upload.UniqueFileNameProvider;
 
 import java.io.InputStream;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	configurationPid = "com.liferay.blogs.configuration.BlogsFileUploadsConfiguration",
-	service = TempImageBlogsUploadFileEntryHandler.class
-)
 public class TempImageBlogsUploadFileEntryHandler
 	extends ImageBlogsUploadFileEntryHandler {
+
+	public TempImageBlogsUploadFileEntryHandler(
+		BlogsEntryLocalService blogsLocalService,
+		BlogsFileUploadsConfiguration blogsFileUploadsConfiguration,
+		PortletFileRepository portletFileRepository,
+		PortletResourcePermission portletResourcePermission,
+		UniqueFileNameProvider uniqueFileNameProvider) {
+
+		super(
+			blogsLocalService, blogsFileUploadsConfiguration,
+			portletFileRepository, portletResourcePermission);
+
+		_uniqueFileNameProvider = uniqueFileNameProvider;
+	}
 
 	@Override
 	protected FileEntry addFileEntry(
@@ -69,7 +80,6 @@ public class TempImageBlogsUploadFileEntryHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		TempImageBlogsUploadFileEntryHandler.class);
 
-	@Reference
-	private UniqueFileNameProvider _uniqueFileNameProvider;
+	private final UniqueFileNameProvider _uniqueFileNameProvider;
 
 }

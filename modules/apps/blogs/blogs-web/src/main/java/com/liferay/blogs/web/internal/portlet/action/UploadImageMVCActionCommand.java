@@ -6,13 +6,17 @@
 package com.liferay.blogs.web.internal.portlet.action;
 
 import com.liferay.blogs.configuration.BlogsFileUploadsConfiguration;
+import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.constants.BlogsPortletKeys;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.web.internal.upload.ImageBlogsUploadFileEntryHandler;
 import com.liferay.blogs.web.internal.upload.ImageBlogsUploadResponseHandler;
 import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.upload.UploadHandler;
 
 import java.util.Map;
@@ -46,6 +50,11 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 		_blogsFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
 			BlogsFileUploadsConfiguration.class, properties);
 
+		_imageBlogsUploadFileEntryHandler =
+			new ImageBlogsUploadFileEntryHandler(
+				_blogsLocalService, _blogsFileUploadsConfiguration,
+				_portletFileRepository, _portletResourcePermission);
+
 		_imageBlogsUploadResponseHandler = new ImageBlogsUploadResponseHandler(
 			_blogsFileUploadsConfiguration, _itemSelectorUploadResponseHandler);
 	}
@@ -64,14 +73,22 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 		_blogsFileUploadsConfiguration;
 
 	@Reference
-	private ImageBlogsUploadFileEntryHandler _imageBlogsUploadFileEntryHandler;
+	private BlogsEntryLocalService _blogsLocalService;
 
+	private volatile ImageBlogsUploadFileEntryHandler
+		_imageBlogsUploadFileEntryHandler;
 	private volatile ImageBlogsUploadResponseHandler
 		_imageBlogsUploadResponseHandler;
 
 	@Reference
 	private ItemSelectorUploadResponseHandler
 		_itemSelectorUploadResponseHandler;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
+
+	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private UploadHandler _uploadHandler;

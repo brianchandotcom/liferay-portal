@@ -6,7 +6,6 @@
 package com.liferay.layout.internal.search.spi.model.index.contributor;
 
 import com.liferay.layout.content.LayoutContentProvider;
-import com.liferay.layout.model.LayoutLocalization;
 import com.liferay.layout.service.LayoutLocalizationLocalService;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.portal.kernel.language.Language;
@@ -23,10 +22,7 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -82,18 +78,6 @@ public class LayoutModelDocumentContributor
 			return;
 		}
 
-		Map<String, String> layoutContentMap = new HashMap<>();
-
-		List<LayoutLocalization> layoutLocalizations =
-			_layoutLocalizationLocalService.getLayoutLocalizations(
-				layout.getPlid());
-
-		for (LayoutLocalization layoutLocalization : layoutLocalizations) {
-			layoutContentMap.put(
-				layoutLocalization.getLanguageId(),
-				layoutLocalization.getContent());
-		}
-
 		try (AutoCloseable autoCloseable =
 				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					layout)) {
@@ -106,14 +90,9 @@ public class LayoutModelDocumentContributor
 			for (Locale locale :
 					_language.getAvailableLocales(layout.getGroupId())) {
 
-				String languageId = LocaleUtil.toLanguageId(locale);
-
-				if (layoutContentMap.containsKey(languageId)) {
-					continue;
-				}
-
-				layoutContentMap.put(
-					languageId,
+				document.addText(
+					Field.getLocalizedName(
+						LocaleUtil.toLanguageId(locale), Field.CONTENT),
 					_layoutContentProvider.getLayoutContent(
 						themeDisplay.getRequest(), themeDisplay.getResponse(),
 						layout, locale));
@@ -125,12 +104,6 @@ public class LayoutModelDocumentContributor
 					"Unable to get layout content for PLID " + layout.getPlid(),
 					exception);
 			}
-		}
-
-		for (Map.Entry<String, String> entry : layoutContentMap.entrySet()) {
-			document.addText(
-				Field.getLocalizedName(entry.getKey(), Field.CONTENT),
-				entry.getValue());
 		}
 	}
 

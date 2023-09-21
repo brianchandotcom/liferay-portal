@@ -262,6 +262,22 @@ public class ObjectActionLocalServiceImpl
 	}
 
 	@Override
+	public ObjectAction fetchObjectAction(
+		String externalReferenceCode, long objectDefinitionId) {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
+
+		if (objectDefinition == null) {
+			return null;
+		}
+
+		return objectActionPersistence.fetchByERC_C_ODI(
+			externalReferenceCode, objectDefinition.getCompanyId(),
+			objectDefinitionId);
+	}
+
+	@Override
 	public ObjectAction getObjectAction(
 			long objectDefinitionId, String name, String objectActionTriggerKey)
 		throws PortalException {

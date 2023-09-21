@@ -28,7 +28,7 @@ declare type TLabelValueObject = {
 	label: string;
 	value: string;
 };
-declare type TBuilderScreenItem = {
+export declare type TBuilderScreenItem = {
 	defaultSort?: boolean;
 	disableEdit?: boolean;
 	fieldLabel?: string;

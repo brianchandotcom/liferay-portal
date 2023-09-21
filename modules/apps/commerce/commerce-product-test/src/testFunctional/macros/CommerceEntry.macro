@@ -1383,7 +1383,7 @@ definition {
 
 		if (isSet(setAsPrimaryUOM)) {
 			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Set as Primary UOM",
+				key_toggleSwitchLabel = "Set as Primary Unit of Measure",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 
 			Button.clickNoError(button = "Save");

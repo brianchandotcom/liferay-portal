@@ -11,7 +11,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -43,17 +42,6 @@ public class CompositePasswordEncryptorTest {
 		digesterUtil.setDigester(new DigesterImpl());
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
-
-		CompositePasswordEncryptor compositePasswordEncryptor =
-			new CompositePasswordEncryptor();
-
-		ReflectionTestUtil.invoke(
-			compositePasswordEncryptor, "activate",
-			new Class<?>[] {BundleContext.class}, bundleContext);
-
-		bundleContext.registerService(
-			PasswordEncryptor.class, compositePasswordEncryptor,
-			MapUtil.singletonDictionary("composite", "true"));
 
 		bundleContext.registerService(
 			PasswordEncryptor.class, new DefaultPasswordEncryptor(),

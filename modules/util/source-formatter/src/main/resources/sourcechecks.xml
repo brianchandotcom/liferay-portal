@@ -1691,11 +1691,6 @@
 			<category name="Upgrade" />
 			<description name="Fill the new parameters of the method `addCommerceOrderItem` and `deleteCommerceOrderItems` of `CommerceOrderItemLocalService`, `CommerceOrderItemLocalServiceUtil`, `CommerceOrderItemService` and `CommerceOrderItemServiceUtil` classes" />
 		</check>
-		<check name="UpgradeJavaCommerceRegionCheck">
-			<category name="Upgrade" />
-			<description name="Replaces the old methods of class `CommerceRegion` with the new equivalents in the `Region` class." />
-			<weight>1</weight>
-		</check>
 		<check name="UpgradeJavaCookieKeysCheck">
 			<category name="Upgrade" />
 			<description name="CookieKeys class was replaced by CookiesManagerUtil and CookieConstants" />
@@ -1707,10 +1702,6 @@
 		<check name="UpgradeJavaDLFolderMethodCheck">
 			<category name="Upgrade" />
 			<description name="Fill the new parameter of the method addFolder of DLFolderLocalService, DLFolderLocalServiceUtil, DLFolderService and DLFolderServiceUtil" />
-		</check>
-		<check name="UpgradeJavaExtractTextMethodCheck">
-			<category name="Upgrade" />
-			<description name="Replaces the references of the method `HtmlUtil.extractText(` with the method `extractText(` of `HtmlParser` class" />
 		</check>
 		<check name="UpgradeJavaFacetedSearcherCheck">
 			<category name="Upgrade" />
@@ -1784,10 +1775,6 @@
 		<check name="UpgradeJavaSchedulerEntryImplConstructorCheck">
 			<category name="Upgrade" />
 			<description name="Replace constructors that use the empty constructor of the SchedulerEntryImpl class." />
-		</check>
-		<check name="UpgradeJavaSearchVocabulariesMethodCheck">
-			<category name="Upgrade" />
-			<description name="Fill in the new parameters of the method `searchVocabularies` of 'AssetVocabularyService' and 'AssetVocabularyLocalService'" />
 		</check>
 		<check name="UpgradeJavaServiceReferenceAnnotationCheck">
 			<category name="Upgrade" />

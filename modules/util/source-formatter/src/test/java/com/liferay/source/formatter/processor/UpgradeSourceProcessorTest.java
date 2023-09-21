@@ -180,11 +180,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaCommerceRegionCheck() throws Exception {
-		test("upgrade/UpgradeJavaCommerceRegionCheck.testjava");
-	}
-
-	@Test
 	public void testUpgradeJavaCommerceShippingOptionCheck() throws Exception {
 		test("upgrade/UpgradeJavaCommerceShippingOptionCheck.testjava");
 	}
@@ -208,11 +203,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"DLFolderLocalService, DLFolderServiceUtil and ",
 				"DLFolderLocalServiceUtil. Fill the new parameter manually, ",
 				"see LPS-194001."));
-	}
-
-	@Test
-	public void testUpgradeJavaExtractTextMethodCheck() throws Exception {
-		test("upgrade/UpgradeJavaExtractTextMethodCheck.testjava");
 	}
 
 	@Test
@@ -352,18 +342,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 		throws Exception {
 
 		test("upgrade/UpgradeJavaSchedulerEntryImplConstructorCheck.testjava");
-	}
-
-	@Test
-	public void testUpgradeJavaSearchVocabulariesMethodCheck()
-		throws Exception {
-
-		test(
-			"upgrade/UpgradeJavaSearchVocabulariesMethodCheck.testjava",
-			StringBundler.concat(
-				"Unable to format searchVocabularies method from ",
-				"AssetVocabularyService and AssetVocabularyLocalService. Fill ",
-				"the new parameters manually, see LPS-189866"));
 	}
 
 	@Test

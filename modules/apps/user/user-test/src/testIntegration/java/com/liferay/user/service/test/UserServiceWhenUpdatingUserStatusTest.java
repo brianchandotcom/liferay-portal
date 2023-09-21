@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -123,6 +123,33 @@ public class UserServiceWhenUpdatingUserStatusTest {
 		_testUpdateUserStatusWithValidPermission(
 			ActionKeys.DELETE, WorkflowConstants.STATUS_APPROVED,
 			WorkflowConstants.STATUS_INACTIVE);
+	}
+
+	@FeatureFlags("LPS-188420")
+	@Test
+	public void testDeleteUserWithActivatePermissionFails() throws Exception {
+		_testDeleteUserWithInvalidPermission(ActionKeys.ACTIVATE, "DELETE");
+	}
+
+	@FeatureFlags("LPS-188420")
+	@Test
+	public void testDeleteUserWithDeactivatePermissionFails() throws Exception {
+		_testDeleteUserWithInvalidPermission(ActionKeys.DEACTIVATE, "DELETE");
+	}
+
+	@FeatureFlags("LPS-188420")
+	@Test
+	public void testDeleteUserWithDeletePermissionSucceedsWithFeatureFlag()
+		throws Exception {
+
+		_testDeleteUserWithDeletePermission();
+	}
+
+	@Test
+	public void testDeleteUserWithDeletePermissionSucceedsWithoutFeatureFlag()
+		throws Exception {
+
+		_testDeleteUserWithDeletePermission();
 	}
 
 	private void _testDeleteUserWithDeletePermission() throws Exception {

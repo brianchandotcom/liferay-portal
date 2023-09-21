@@ -115,7 +115,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -410,11 +409,12 @@ public class BatchEngineBrokerTest {
 	public void testImportObjectDefinition() throws Exception {
 		File file = _createImportFile("object_definition_import.json");
 
+		URI uri = file.toURI();
+
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanLocalService.addBatchPlannerPlan(
 				TestPropsValues.getUserId(), false,
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
-				"file:" + file.getAbsolutePath(),
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON, uri.toString(),
 				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
 				RandomTestUtil.randomString(), 0, "DEFAULT", false);
 
@@ -579,63 +579,49 @@ public class BatchEngineBrokerTest {
 
 		Class<?> clazz = getClass();
 
-		File file = null;
+		File file = _file.createTempFile("json");
 
-		try {
-			file = _file.createTempFile("json");
+		String template = StreamUtil.toString(
+			clazz.getResourceAsStream(
+				StringBundler.concat(
+					"/com/liferay/batch/planner/batch/engine/broker/test",
+					"/dependencies/", templateName)));
 
-			String template = StreamUtil.toString(
-				clazz.getResourceAsStream(
-					StringBundler.concat(
-						"/com/liferay/planner/batch/engine/broker/test",
-						"/dependencies/", templateName)));
+		Link link = LinkUtil.toLink(
+			_dlAppService, dlFileEntry, _dlURLHelper, objectDefinitionERC,
+			_OBJECT_ENTRY_ERC, _portal);
 
-			Link link = LinkUtil.toLink(
-				_dlAppService, dlFileEntry, _dlURLHelper, objectDefinitionERC,
-				_OBJECT_ENTRY_ERC, _portal);
+		template = StringUtil.replace(
+			template, "$[ATTACHMENT_HREF]", link.getHref());
 
-			template = StringUtil.replace(
-				template, "$[ATTACHMENT_HREF]", link.getHref());
+		template = StringUtil.replace(
+			template, "$[ATTACHMENT_ID]",
+			String.valueOf(dlFileEntry.getFileEntryId()));
 
-			template = StringUtil.replace(
-				template, "$[ATTACHMENT_ID]",
-				String.valueOf(dlFileEntry.getFileEntryId()));
+		template = StringUtil.replace(
+			template, "$[ATTACHMENT_LABEL]", link.getLabel());
 
-			template = StringUtil.replace(
-				template, "$[ATTACHMENT_LABEL]", link.getLabel());
+		template = StringUtil.replace(
+			template, "$[ATTACHMENT_NAME]", dlFileEntry.getFileName());
 
-			template = StringUtil.replace(
-				template, "$[ATTACHMENT_NAME]", dlFileEntry.getFileName());
-
-			_file.write(file, template);
-		}
-		catch (IOException ioException) {
-			if (file != null) {
-				file.delete();
-			}
-
-			throw ioException;
-		}
+		_file.write(file, template);
 
 		return file;
 	}
 
-	private File _createImportFile() throws Exception {
+	private File _createImportFile(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
-		ClassLoader classLoader = clazz.getClassLoader();
+		File file = _file.createTempFile("json");
 
-		java.io.File tempFile = FileUtil.createTempFile("json");
+		Files.copy(
+			clazz.getResourceAsStream(
+				StringBundler.concat(
+					"/com/liferay/batch/planner/batch/engine/broker/test",
+					"/dependencies/", fileName)),
+			file.toPath());
 
-		FileUtil.write(
-			tempFile,
-			FileUtil.getBytes(
-				classLoader.getResourceAsStream(
-					"com/liferay/batch/planner/batch/engine/broker/test" +
-					"/dependencies/import_object_definition.json")),
-			false);
-
-		return tempFile;
+		return file;
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(

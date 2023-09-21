@@ -260,9 +260,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 				"x-must-start-with-the-x-character");
 		}
 
-		String pathInParameterString = StringUtil.extractLast(
-			pathString, StringPool.FORWARD_SLASH);
-
 		Matcher individualMatcher = _individualPathPattern.matcher(pathString);
 
 		if (!individualMatcher.matches()) {
@@ -271,6 +268,9 @@ public class APIEndpointRelevantObjectEntryModelListener
 				"%s can have a maximum of 255 alphanumeric characters",
 				"x-can-have-a-maximum-of-255-alphanumeric-characters");
 		}
+
+		String pathInParameterString = StringUtil.extractLast(
+			pathString, StringPool.FORWARD_SLASH);
 
 		Matcher curlyBraceMatcher = _curlyBracePattern.matcher(
 			pathInParameterString);

@@ -27,93 +27,109 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 	propsTransformer="js/propsTransformers/DisplayPageManagementToolbarPropsTransformer"
 />
 
-<portlet:actionURL name="/layout_page_template_admin/delete_layout_page_template_entry" var="deleteDisplayPageURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
+<div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= true %>" id="/layout_page_template_admin/info_panel" var="sidebarPanelURL" />
 
-<aui:form action="<%= deleteDisplayPageURL %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
-	<liferay-ui:error key="<%= RequiredLayoutPageTemplateEntryException.class.getName() %>" message="you-cannot-delete-display-page-templates-that-are-used-by-one-or-more-items.-please-view-the-usages-and-try-to-unassign-them" />
-
-	<liferay-ui:success key="displayPageTemplateDeleted" message='<%= GetterUtil.getString(MultiSessionMessages.get(renderRequest, "displayPageTemplateDeleted")) %>' />
-
-	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-189856") %>'>
-		<liferay-site-navigation:breadcrumb
-			breadcrumbEntries="<%= displayPageDisplayContext.getLayoutPageTemplateBreadcrumbEntries() %>"
-		/>
-	</c:if>
-
-	<liferay-ui:search-container
-		id="displayPages"
-		searchContainer="<%= displayPageDisplayContext.getDisplayPagesSearchContainer() %>"
+	<liferay-frontend:sidebar-panel
+		resourceURL="<%= sidebarPanelURL %>"
+		searchContainerId="displayPages"
+		title='<%= LanguageUtil.get(request, "info-panel") %>'
 	>
-		<liferay-ui:search-container-row
-			className="Object"
-			modelVar="object"
-		>
+		<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:sidebar-panel>
 
-			<%
-			LayoutPageTemplateCollection curLayoutPageTemplateCollection = null;
-			LayoutPageTemplateEntry curLayoutPageTemplateEntry = null;
+	<clay:container-fluid
+		cssClass="container-view sidenav-content"
+	>
+		<portlet:actionURL name="/layout_page_template_admin/delete_layout_page_template_entry" var="deleteDisplayPageURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:actionURL>
 
-			Object result = row.getObject();
+		<aui:form action="<%= deleteDisplayPageURL %>" cssClass="container-fluid container-fluid-max-xl" name="fm">
+			<liferay-ui:error key="<%= RequiredLayoutPageTemplateEntryException.class.getName() %>" message="you-cannot-delete-display-page-templates-that-are-used-by-one-or-more-items.-please-view-the-usages-and-try-to-unassign-them" />
 
-			if (result instanceof LayoutPageTemplateEntry) {
-				curLayoutPageTemplateEntry = (LayoutPageTemplateEntry)result;
-			}
-			else {
-				curLayoutPageTemplateCollection = (LayoutPageTemplateCollection)result;
-			}
-			%>
+			<liferay-ui:success key="displayPageTemplateDeleted" message='<%= GetterUtil.getString(MultiSessionMessages.get(renderRequest, "displayPageTemplateDeleted")) %>' />
 
-			<c:choose>
-				<c:when test="<%= curLayoutPageTemplateCollection != null %>">
+			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-189856") %>'>
+				<liferay-site-navigation:breadcrumb
+					breadcrumbEntries="<%= displayPageDisplayContext.getLayoutPageTemplateBreadcrumbEntries() %>"
+				/>
+			</c:if>
 
-					<%
-					row.setCssClass("card-page-item card-page-item-directory " + row.getCssClass());
-					%>
-
-					<liferay-ui:search-container-column-text
-						colspan="<%= 2 %>"
-					>
-						<clay:horizontal-card
-							horizontalCard="<%= new DisplayPageTemplateCollectionHorizontalCard (curLayoutPageTemplateCollection, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
-							propsTransformer="js/propsTransformers/LayoutPageTemplateCollectionPropsTransformer"
-						/>
-					</liferay-ui:search-container-column-text>
-				</c:when>
-				<c:when test="<%= curLayoutPageTemplateEntry != null %>">
+			<liferay-ui:search-container
+				id="displayPages"
+				searchContainer="<%= displayPageDisplayContext.getDisplayPagesSearchContainer() %>"
+			>
+				<liferay-ui:search-container-row
+					className="Object"
+					modelVar="object"
+				>
 
 					<%
-					row.setData(
-						HashMapBuilder.<String, Object>put(
-							"actions", displayPageManagementToolbarDisplayContext.getAvailableActions(curLayoutPageTemplateEntry)
-						).build());
+					LayoutPageTemplateCollection curLayoutPageTemplateCollection = null;
+					LayoutPageTemplateEntry curLayoutPageTemplateEntry = null;
+
+					Object result = row.getObject();
+
+					if (result instanceof LayoutPageTemplateEntry) {
+						curLayoutPageTemplateEntry = (LayoutPageTemplateEntry)result;
+					}
+					else {
+						curLayoutPageTemplateCollection = (LayoutPageTemplateCollection)result;
+					}
 					%>
 
-					<liferay-ui:search-container-column-text>
-						<clay:vertical-card
-							additionalProps='<%=
+					<c:choose>
+						<c:when test="<%= curLayoutPageTemplateCollection != null %>">
+
+							<%
+							row.setCssClass("card-page-item card-page-item-directory " + row.getCssClass());
+							%>
+
+							<liferay-ui:search-container-column-text
+								colspan="<%= 2 %>"
+							>
+								<clay:horizontal-card
+									horizontalCard="<%= new DisplayPageTemplateCollectionHorizontalCard (curLayoutPageTemplateCollection, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+									propsTransformer="js/propsTransformers/LayoutPageTemplateCollectionPropsTransformer"
+								/>
+							</liferay-ui:search-container-column-text>
+						</c:when>
+						<c:when test="<%= curLayoutPageTemplateEntry != null %>">
+
+							<%
+							row.setData(
 								HashMapBuilder.<String, Object>put(
-									"changeContentTypeURL", displayPageDisplayContext.getChangeContentTypeURL(curLayoutPageTemplateEntry)
-								).put(
-									"mappingTypes", displayPageDisplayContext.getMappingTypesJSONArray()
-								).build()
-							%>'
-							propsTransformer="js/propsTransformers/DisplayPageDropdownPropsTransformer"
-							verticalCard="<%= new DisplayPageVerticalCard(curLayoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
-						/>
-					</liferay-ui:search-container-column-text>
-				</c:when>
-			</c:choose>
-		</liferay-ui:search-container-row>
+									"actions", displayPageManagementToolbarDisplayContext.getAvailableActions(curLayoutPageTemplateEntry)
+								).build());
+							%>
 
-		<liferay-ui:search-iterator
-			displayStyle="icon"
-			markupView="lexicon"
-			resultRowSplitter="<%= displayPageDisplayContext.isSearch() ? null : new LayoutPageTemplateResultRowSplitter() %>"
-		/>
-	</liferay-ui:search-container>
-</aui:form>
+							<liferay-ui:search-container-column-text>
+								<clay:vertical-card
+									additionalProps='<%=
+										HashMapBuilder.<String, Object>put(
+											"changeContentTypeURL", displayPageDisplayContext.getChangeContentTypeURL(curLayoutPageTemplateEntry)
+										).put(
+											"mappingTypes", displayPageDisplayContext.getMappingTypesJSONArray()
+										).build()
+									%>'
+									propsTransformer="js/propsTransformers/DisplayPageDropdownPropsTransformer"
+									verticalCard="<%= new DisplayPageVerticalCard(curLayoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+								/>
+							</liferay-ui:search-container-column-text>
+						</c:when>
+					</c:choose>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator
+					displayStyle="icon"
+					markupView="lexicon"
+					resultRowSplitter="<%= displayPageDisplayContext.isSearch() ? null : new LayoutPageTemplateResultRowSplitter() %>"
+				/>
+			</liferay-ui:search-container>
+		</aui:form>
+	</clay:container-fluid>
+</div>
 
 <portlet:actionURL name="/layout_page_template_admin/update_layout_page_template_entry_preview" var="updateLayoutPageTemplateEntryPreviewURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />

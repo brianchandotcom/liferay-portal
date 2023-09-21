@@ -57,7 +57,12 @@ const Radio = ({
 
 	return (
 		<FieldBase {...otherProps} name={name} readOnly={disabled}>
-			<div className="ddm__radio" onBlur={onBlur} onFocus={onFocus}>
+			<div
+				aria-required={otherProps.required}
+				className="ddm__radio"
+				onBlur={onBlur}
+				onFocus={onFocus}
+			>
 				{options.map((option, index) => (
 					<ClayRadio
 						checked={currentValue === option.value}

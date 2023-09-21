@@ -63,6 +63,7 @@ const TableBodyColumns = ({
 };
 
 const Grid = ({
+	accessibleProps,
 	columns = [{label: 'col1', value: 'fieldId'}],
 	disabled,
 	name,
@@ -90,7 +91,7 @@ const Grid = ({
 				);
 			})}
 
-		<ClayTable striped>
+		<ClayTable {...accessibleProps} striped>
 			<TableHead columns={columns} />
 
 			<ClayTable.Body>
@@ -136,6 +137,9 @@ const Main = ({
 	return (
 		<FieldBase name={name} readOnly={readOnly} {...otherProps}>
 			<Grid
+				accessibleProps={{
+					'aria-required': otherProps.required,
+				}}
 				columns={columns}
 				disabled={readOnly}
 				name={name}

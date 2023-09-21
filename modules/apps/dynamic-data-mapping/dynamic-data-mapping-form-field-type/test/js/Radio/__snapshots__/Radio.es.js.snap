@@ -452,6 +452,7 @@ exports[`Field Radio is not required 1`] = `
     data-field-name="radioField"
   >
     <div
+      aria-required="false"
       class="ddm__radio"
     >
       <div

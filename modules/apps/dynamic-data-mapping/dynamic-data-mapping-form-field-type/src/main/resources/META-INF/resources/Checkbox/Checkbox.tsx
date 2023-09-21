@@ -26,6 +26,7 @@ const Switcher: React.FC<ISwitcherProps> = ({
 		<>
 			<label className="toggle-switch">
 				<ClayToggle
+					aria-required={required}
 					disabled={disabled}
 					name={name}
 					onToggle={(checked) => {
@@ -76,6 +77,7 @@ const Checkbox: React.FC<ICheckboxProps> = ({
 }) => {
 	return (
 		<ClayCheckbox
+			aria-required={required}
 			checked={checked}
 			disabled={disabled}
 			label={showLabel ? label : ''}

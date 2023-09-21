@@ -358,6 +358,7 @@ exports[`Field Checkbox is not required 1`] = `
           class="toggle-switch-check-bar"
         >
           <input
+            aria-required="false"
             class="toggle-switch-check"
             role="switch"
             type="checkbox"

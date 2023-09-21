@@ -358,6 +358,7 @@ exports[`Grid is not required 1`] = `
         class="table-responsive"
       >
         <table
+          aria-required="false"
           class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
         >
           <thead>

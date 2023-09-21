@@ -68,6 +68,7 @@ function transformFileEntryProperties({fileEntryTitle, value}) {
 }
 
 const DocumentLibrary = ({
+	accessibleProps,
 	editingLanguageId,
 	fileEntryTitle = '',
 	fileEntryURL = '',
@@ -100,6 +101,7 @@ const DocumentLibrary = ({
 				<ClayInput.Group>
 					<ClayInput.GroupItem prepend>
 						<ClayInput
+							{...accessibleProps}
 							aria-label={Liferay.Language.get('file')}
 							className="bg-light field"
 							dir={Liferay.Language.direction[editingLanguageId]}
@@ -576,6 +578,9 @@ const Main = ({
 				/>
 			) : (
 				<DocumentLibrary
+					accessibleProps={{
+						'aria-required': otherProps.required,
+					}}
 					editingLanguageId={editingLanguageId}
 					fileEntryTitle={fileEntryTitle}
 					fileEntryURL={fileEntryURL}

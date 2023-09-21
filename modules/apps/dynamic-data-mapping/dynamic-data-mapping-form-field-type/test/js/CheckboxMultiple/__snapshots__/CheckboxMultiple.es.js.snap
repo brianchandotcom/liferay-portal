@@ -653,6 +653,7 @@ exports[`Field Checkbox Multiple is not required 1`] = `
     class="form-group hide"
   >
     <div
+      aria-required="false"
       class="lfr-ddm-checkbox-multiple"
     >
       <div

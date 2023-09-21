@@ -9528,6 +9528,10 @@ org.apache.catalina.tribes.level = FINE]]>
 		</if>
 	</target>
 
+	<target name="create-directory">
+		<mkdir dir="${directory.path}" />
+	</target>
+
 	<target name="create-hidden-osgi-file">
 		<get-testcase-property property.name="create.osgi.hidden.file" />
 

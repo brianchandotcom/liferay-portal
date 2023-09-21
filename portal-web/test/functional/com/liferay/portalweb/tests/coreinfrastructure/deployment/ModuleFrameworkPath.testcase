@@ -41,4 +41,21 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-114409. Verify portal can start up with a subfolder under osgi/configs."
+	@priority = 3
+	test PortalStartupWithSubfolderUnderConfigs {
+		property skip.start.app.server = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+		property testcase.url = "file:///opt/dev/projects/github/liferay-portal/";
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		AntCommands.runCommand("build-test.xml", "create-directory -Ddirectory.path=${liferayHome}/osgi/configs/subfolder");
+
+		Portlet.startServer(keepOsGiState = "true");
+
+		AssertConsoleTextNotPresent(value1 = "InvocationTargetException");
+	}
+
 }

@@ -223,6 +223,11 @@ definition {
 
 			ObjectAdmin.publishObjectViaAPI(objectName = ${randomObjectName});
 
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "${randomLabelName}s");
+
 			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "description",
 				objectName = ${randomObjectName},

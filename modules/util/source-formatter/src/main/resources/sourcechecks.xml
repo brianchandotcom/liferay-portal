@@ -1608,6 +1608,11 @@
 			<description name="Checks if the property value `-includeresource` or `Include-Resource` exists and removes it" />
 			<weight>1</weight>
 		</check>
+		<check name="UpgradeCatchAllCheck">
+			<category name="Upgrade" />
+			<description name="Performs replacements on Liferay's outdated code" />
+			<weight>1</weight>
+		</check>
 		<check name="UpgradeDLUtilCheck">
 			<category name="Upgrade" />
 			<description name="Replace the getGroupIds method of class `DLUtil` by getCurrentAndAncestorSiteGroupIds of class `PortalUtil`." />

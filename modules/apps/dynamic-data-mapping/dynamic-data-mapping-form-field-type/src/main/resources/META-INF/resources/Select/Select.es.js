@@ -275,6 +275,7 @@ const Trigger = forwardRef(
 );
 
 const Select = ({
+	accessibleProps,
 	defaultSearch,
 	label,
 	multiple,
@@ -384,6 +385,7 @@ const Select = ({
 	return (
 		<ClayTooltipProvider>
 			<div
+				{...accessibleProps}
 				data-tooltip-align="top"
 				{...getTooltipTitle({
 					placeholder: Liferay.Language.get('choose-an-option'),
@@ -499,6 +501,7 @@ const Select = ({
 						/>
 					) : (
 						<DropdownList
+							{...accessibleProps}
 							currentValue={currentValue}
 							expand={expand}
 							handleSelect={handleSelect}
@@ -576,6 +579,9 @@ const Main = ({
 			{...otherProps}
 		>
 			<Select
+				accessibleProps={{
+					'aria-required': otherProps.required,
+				}}
 				defaultSearch={defaultSearch}
 				label={label}
 				multiple={multiple}

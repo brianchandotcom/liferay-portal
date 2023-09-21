@@ -49,6 +49,7 @@ const Switcher = ({
 );
 
 const CheckboxMultiple = ({
+	accessibleProps,
 	disabled,
 	inline,
 	isSwitcher,
@@ -88,7 +89,7 @@ const CheckboxMultiple = ({
 	};
 
 	return (
-		<div className="lfr-ddm-checkbox-multiple">
+		<div {...accessibleProps} className="lfr-ddm-checkbox-multiple">
 			{options.map((option, index) => (
 				<Toggle
 					checked={displayValues.includes(option.value)}
@@ -134,6 +135,9 @@ const Main = ({
 }) => (
 	<FieldBase name={name} readOnly={readOnly} {...otherProps}>
 		<CheckboxMultiple
+			accessibleProps={{
+				'aria-required': otherProps.required,
+			}}
 			disabled={readOnly}
 			inline={inline}
 			isSwitcher={showAsSwitcher}

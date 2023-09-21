@@ -1595,6 +1595,7 @@ exports[`Select is not required 1`] = `
     class="form-group hide"
   >
     <div
+      aria-required="false"
       data-tooltip-align="top"
       title="choose-an-option"
     >
@@ -1716,6 +1717,7 @@ exports[`Select puts an asterisk when field is required 1`] = `
       </span>
     </label>
     <div
+      aria-required="true"
       data-tooltip-align="top"
       title="choose-an-option"
     >

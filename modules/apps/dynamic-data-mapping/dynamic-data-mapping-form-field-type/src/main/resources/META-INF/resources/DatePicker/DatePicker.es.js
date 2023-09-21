@@ -178,6 +178,9 @@ export default function DatePicker({
 					{...getTooltipTitle({placeholder, value: formattedDate})}
 				>
 					<ClayDatePicker
+						accessibleProps={{
+							'aria-required': otherProps.required,
+						}}
 						dateFormat={clayFormat}
 						dir={dir}
 						disabled={readOnly}

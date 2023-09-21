@@ -5,7 +5,6 @@
 
 package com.liferay.document.library.preview.exception;
 
-import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -54,11 +53,7 @@ public class DLPreviewSizeException extends PortalException {
 	}
 
 	public long getMaxFileSize() {
-		if (_maxFileSize != 0) {
-			return _maxFileSize;
-		}
-
-		return DLProcessorRegistryUtil.getPreviewableProcessorMaxSize();
+		return _maxFileSize;
 	}
 
 	private final long _maxFileSize;

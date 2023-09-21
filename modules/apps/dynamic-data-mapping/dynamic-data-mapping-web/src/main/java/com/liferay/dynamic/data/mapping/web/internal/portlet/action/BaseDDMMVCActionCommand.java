@@ -146,7 +146,7 @@ public abstract class BaseDDMMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, DDMTemplate template)
 		throws Exception {
 
-		PortletPreferences portletPreferences = _getStrictPortletSetup(
+		PortletPreferences portletPreferences = _getStrictPortletPreferences(
 			actionRequest);
 
 		if (portletPreferences == null) {
@@ -194,7 +194,7 @@ public abstract class BaseDDMMVCActionCommand extends BaseMVCActionCommand {
 		return redirect;
 	}
 
-	private PortletPreferences _getStrictPortletSetup(
+	private PortletPreferences _getStrictPortletPreferences(
 			ActionRequest actionRequest)
 		throws Exception {
 
@@ -204,11 +204,11 @@ public abstract class BaseDDMMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return _getStrictPortletSetup(
+		return _getStrictPortletPreferences(
 			themeDisplay.getLayout(), portletResource);
 	}
 
-	private PortletPreferences _getStrictPortletSetup(
+	private PortletPreferences _getStrictPortletPreferences(
 			Layout layout, String portletId)
 		throws Exception {
 

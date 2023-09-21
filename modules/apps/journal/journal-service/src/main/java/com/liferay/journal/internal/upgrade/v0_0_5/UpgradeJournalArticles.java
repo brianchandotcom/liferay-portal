@@ -139,7 +139,7 @@ public class UpgradeJournalArticles extends BasePortletIdUpgradeProcess {
 					portletPreferences.getOwnerType(),
 					portletPreferences.getPlid(),
 					portletPreferences.getPortletId(),
-					_getNewPreferences(
+					_getNewPortletPreferences(
 						oldPortletPreferences, plid, oldRootPortletId,
 						newRootPortletId));
 			}
@@ -178,7 +178,7 @@ public class UpgradeJournalArticles extends BasePortletIdUpgradeProcess {
 		return 0;
 	}
 
-	private PortletPreferences _getNewPreferences(
+	private PortletPreferences _getNewPortletPreferences(
 			PortletPreferences oldPortletPreferences, long plid,
 			String oldRootPortletId, String newRootPortletId)
 		throws Exception {

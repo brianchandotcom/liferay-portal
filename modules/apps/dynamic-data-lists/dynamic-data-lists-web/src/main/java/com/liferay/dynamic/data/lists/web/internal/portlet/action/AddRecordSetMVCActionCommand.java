@@ -63,7 +63,7 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, DDLRecordSet recordSet)
 		throws Exception {
 
-		PortletPreferences portletPreferences = _getStrictPortletSetup(
+		PortletPreferences portletPreferences = _getStrictPortletPreferences(
 			actionRequest);
 
 		if (portletPreferences == null) {
@@ -128,7 +128,7 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, serviceContext);
 	}
 
-	private PortletPreferences _getStrictPortletSetup(
+	private PortletPreferences _getStrictPortletPreferences(
 			ActionRequest actionRequest)
 		throws Exception {
 
@@ -138,11 +138,11 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return _getStrictPortletSetup(
+		return _getStrictPortletPreferences(
 			themeDisplay.getLayout(), portletResource);
 	}
 
-	private PortletPreferences _getStrictPortletSetup(
+	private PortletPreferences _getStrictPortletPreferences(
 			Layout layout, String portletId)
 		throws Exception {
 

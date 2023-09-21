@@ -192,16 +192,6 @@ exports[`Channels List should render 1`] = `
                 <th
                   class="table-head-title text-right"
                 >
-                  Sites
-                </th>
-                <th
-                  class="table-head-title"
-                >
-                  Channels
-                </th>
-                <th
-                  class="table-head-title"
-                >
                   Property ID
                 </th>
                 <th

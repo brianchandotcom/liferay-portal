@@ -85,7 +85,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BASIC_DISPLAY_USER_FACET_CHECKBOX</td>
+	<td>SEARCH_BAR_CONFIG_BASIC_DISPLAY_USER_FACET_CHECKBOX</td>
 	<td>//input[contains(@id,'UserSearchFacet')]</td>
 	<td></td>
 </tr>

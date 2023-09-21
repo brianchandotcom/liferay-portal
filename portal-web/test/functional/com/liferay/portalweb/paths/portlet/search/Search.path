@@ -136,6 +136,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_BAR_CONFIG_DESTINATION_PAGE</td>
+	<td>//input[contains(@name,'destination')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BAR_CONFIG_KEYWORDS_PARAMETER_NAME</td>
+	<td>//input[contains(@name,'keywordsParameterName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BAR_CONFIG_SCOPE_PARAMETER_NAME</td>
+	<td>//input[contains(@name,'scopeParameterName')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_BAR_WIDGET</td>
 	<td>//input[not(ancestor::header[@id='banner'])][contains(@data-qa-id,'searchInput')]</td>
 	<td></td>

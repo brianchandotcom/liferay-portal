@@ -20,7 +20,7 @@ public class SecureProperties extends Properties {
 			SecureProperties secureProperties = (SecureProperties)properties;
 
 			for (Object key : properties.keySet()) {
-				put(key, secureProperties._get(key, false));
+				put(key, secureProperties.get(key, false));
 			}
 
 			return;
@@ -33,24 +33,30 @@ public class SecureProperties extends Properties {
 
 	@Override
 	public synchronized Object get(Object key) {
-		return _get(key, true);
+		return get(key, true);
 	}
 
-	@Override
-	public String getProperty(String key) {
-		return (String)get(key);
-	}
-
-	private synchronized Object _get(Object key, boolean getSecrets) {
+	public synchronized Object get(Object key, boolean getSecret) {
 		String value = (String)super.get(key);
 
-		if (getSecrets && SecretsUtil.isSecretProperty(value)) {
+		if (!getSecret) {
+			return value;
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(value) &&
+			SecretsUtil.isSecretProperty(value)) {
+
 			value = SecretsUtil.getSecret(value);
 
 			put(key, value);
 		}
 
 		return value;
+	}
+
+	@Override
+	public String getProperty(String key) {
+		return (String)get(key);
 	}
 
 }

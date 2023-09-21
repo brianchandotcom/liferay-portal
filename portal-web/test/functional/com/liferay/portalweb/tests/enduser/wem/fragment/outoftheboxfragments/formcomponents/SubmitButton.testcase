@@ -51,7 +51,7 @@ definition {
 	@description = "This is a test for LPS-189534. The site administrater cannot select the form type fragments for Submit Button field type."
 	@priority = 3
 	test CannotSelectFormTypeFragmentsForSubmitButtonFieldType {
-		task ("When the page designer form type fragments for Submit Button field type") {
+		task ("When the page designer selects form type fragments for Submit Button field type") {
 			task ("Go to fragment admin configuration") {
 				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
@@ -278,6 +278,45 @@ definition {
 					fragmentName = "Submit Button",
 					id = "text");
 			}
+		}
+	}
+
+	@description = "This is a test for LPS-189534. The site administrater cannot see empty fragment sets in Select Fragment modal of Submit Button field type."
+	@priority = 3
+	test ViewEmptyFragmentSetsAreNotShownWhenConfiguringDefaultSubmitButtonInFragmentAdmin {
+		task ("Given adding a fragment set with no fragment") {
+			JSONFragment.addFragmentCollection(
+				groupName = "Test Site Name",
+				name = "Fragment Set Name");
+		}
+
+		task ("When the page designer selects a fragment set for Submit Button field type") {
+			task ("Go to fragment admin configuration") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+				LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
+			}
+
+			task ("Select the fragment from Form Components") {
+				Click(
+					key_class = "btn-secondary",
+					key_index = 11,
+					locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			}
+		}
+
+		task ("Then assert empty fragment sets are not shown") {
+			for (var fragmentSetName : list "Cookier Banner, Navigation Bars") {
+				LexiconCard.viewCardNotPresent(card = ${fragmentSetName});
+			}
+
+			Click(
+				key_navItem = "Test Site Name",
+				locator1 = "NavBar#NAV_ITEM_LINK");
+
+			LexiconCard.viewCardNotPresent(card = "Fragment Set Name");
 		}
 	}
 

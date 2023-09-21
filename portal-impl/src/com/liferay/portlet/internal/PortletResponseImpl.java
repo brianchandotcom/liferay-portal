@@ -286,7 +286,8 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		Layout layout = getLayout(portletRequestImpl, themeDisplay);
 
 		if (_portletSetup == null) {
-			_portletSetup = getPortletPreferences(themeDisplay, layout, portletName);
+			_portletSetup = getPortletPreferences(
+				themeDisplay, layout, portletName);
 		}
 
 		LiferayPortletURLPrivilegedAction liferayPortletURLPrivilegedAction =

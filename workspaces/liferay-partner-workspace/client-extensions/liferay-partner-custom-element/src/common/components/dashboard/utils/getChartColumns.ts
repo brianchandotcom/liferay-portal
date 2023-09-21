@@ -29,7 +29,7 @@ export default function getChartColumns(
 
 	expiredTotalActivites(mdfRequests, chartColumns);
 	setValueChart(formatCurrency(totalMDFActivitiesAmount, mdfCurrency));
-	setTitleChart('Total MDF');
+	setTitleChart('Total MDF ');
 	setColumnsMDFChart(chartColumns);
 }
 

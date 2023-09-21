@@ -79,11 +79,7 @@ const DonutChart = ({
 					{titleChart}
 
 					<b>
-						{formatCurrency(
-							valueChart,
-							dataCurrency,
-							'lessPrecision'
-						)}
+						{valueChart}
 					</b>
 				</span>
 

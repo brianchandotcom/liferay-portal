@@ -8,6 +8,7 @@ package com.liferay.frontend.js.bundle.config.extender.internal.servlet.taglib;
 import com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigRegistry;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProvider;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -53,12 +54,36 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
-		if (!_isStale(httpServletRequest)) {
+		String nonce = ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+			httpServletRequest);
+
+		if (Validator.isNotNull(nonce)) {
+			_writeResponse(httpServletResponse, _getBundleConfig(nonce));
+
+			return;
+		}
+
+		if (!_isStale()) {
 			_writeResponse(httpServletResponse, _objectValuePair.getValue());
 
 			return;
 		}
 
+		String bundleConfig = _getBundleConfig(StringPool.BLANK);
+
+		_objectValuePair = new ObjectValuePair<>(
+			_jsBundleConfigRegistry.getLastModified(), bundleConfig);
+
+		_writeResponse(httpServletResponse, bundleConfig);
+	}
+
+	@Override
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
+		dynamicIncludeRegistry.register(
+			"/html/common/themes/top_js.jspf#resources");
+	}
+
+	private String _getBundleConfig(String nonce) {
 		StringWriter stringWriter = new StringWriter();
 
 		Collection<JSBundleConfigRegistry.JSConfig> jsConfigs =
@@ -66,9 +91,7 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		if (!jsConfigs.isEmpty()) {
 			stringWriter.write("<script");
-			stringWriter.write(
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
-					httpServletRequest));
+			stringWriter.write(nonce);
 			stringWriter.write(" data-senna-track=\"temporary\" type=\"");
 			stringWriter.write(ContentTypes.TEXT_JAVASCRIPT);
 			stringWriter.write("\">");
@@ -108,18 +131,7 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 			stringWriter.write("</script>");
 		}
 
-		String bundleConfig = stringWriter.toString();
-
-		_objectValuePair = new ObjectValuePair<>(
-			_jsBundleConfigRegistry.getLastModified(), bundleConfig);
-
-		_writeResponse(httpServletResponse, bundleConfig);
-	}
-
-	@Override
-	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register(
-			"/html/common/themes/top_js.jspf#resources");
+		return stringWriter.toString();
 	}
 
 	private String _getModuleMain(JSBundleConfigRegistry.JSConfig jsConfig) {
@@ -160,12 +172,9 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		}
 	}
 
-	private boolean _isStale(HttpServletRequest httpServletRequest) {
-		if ((_jsBundleConfigRegistry.getLastModified() >
-				_objectValuePair.getKey()) ||
-			Validator.isNotNull(
-				_contentSecurityPolicyNonceProvider.getNonce(
-					httpServletRequest))) {
+	private boolean _isStale() {
+		if (_jsBundleConfigRegistry.getLastModified() >
+				_objectValuePair.getKey()) {
 
 			return true;
 		}

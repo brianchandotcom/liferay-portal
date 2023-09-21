@@ -506,7 +506,7 @@ definition {
 
 			FormViewBuilder.editColor(
 				fieldName = "Color",
-				fieldValue = "5f5f5f");
+				fieldValue = "5F5F5F");
 
 			FormViewBuilder.editDate(
 				fieldName = "Date",
@@ -539,7 +539,7 @@ definition {
 
 			FormViewBuilder.viewSummaryEntry(
 				key_card = "Color",
-				key_entryName = "5f5f5f",
+				key_entryName = "5F5F5F",
 				key_entryNumber = "1 entry");
 
 			FormViewBuilder.viewSummaryEntry(

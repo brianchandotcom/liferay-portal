@@ -148,7 +148,7 @@ definition {
 					siteName = "Test Site Name");
 			}
 
-			task ("Assertr can submit the form with the new sumbmit button successfully") {
+			task ("Assert can submit the form with the new sumbmit button successfully") {
 				Type(
 					key_text = "Name",
 					locator1 = "TextInput#ANY",
@@ -365,6 +365,82 @@ definition {
 				key_messageInfo = "Place fragments here.",
 				key_position = 1,
 				locator1 = "Fragment#NO_FRAGMENTS_MESSAGE");
+		}
+	}
+
+	@description = "This is a test for LPS-189534. The site administrater should see warning message when publish form content page without submit type fragment."
+	@priority = 3
+	test ViewWarningMessageWhenPublishingFormContentPageWithoutSubmitTypeFragment {
+		task ("Given the sumbmit button is configured to a heading fragment in fragment admin") {
+			task ("Go to fragment admin configuration") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+				LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
+			}
+
+			task ("Select the heading fragment from Basic Components") {
+				Click(
+					key_class = "btn-secondary",
+					key_index = 11,
+					locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				LexiconCard.clickCardTitle(card = "Basic Components");
+
+				LexiconCard.clickCard(card = "Heading");
+			}
+
+			task ("View the Heading fragment is shown in Form Fragment selector for Text field type and save") {
+				SelectFrameTop();
+
+				FragmentsAdmin.viewFormFragementForEachFieldType(
+					fieldType = "Submit Button",
+					formFragmentName = "Heading");
+
+				Button.clickSave();
+			}
+		}
+
+		task ("When the page designer maps the Form Container to an entity with text field") {
+			task ("Add a Form Container framgment to content page") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name",
+					type = "content");
+
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Form Components",
+					fragmentName = "Form Container");
+			}
+
+			task ("Map the Form Container to the object") {
+				PageEditor.editFormContainer(
+					contentType = "Purchase Order",
+					panel = "General");
+			}
+		}
+
+		task ("Then there's Submit Button Missing warning message shown when publish the content page") {
+			task ("View the new fragment is shown in Form Container and publish") {
+				AssertElementPresent(
+					index = 1,
+					key_fragmentName = "Heading",
+					locator1 = "Fragment#FRAGMENT_LABEL");
+
+				Button.click(button = "Publish");
+			}
+
+			task ("Assert there's Submit Button Missing warning message shown") {
+				AssertTextEquals(
+					index = 1,
+					locator1 = "Modal#BODY_MESSAGE",
+					value1 = "Purchase Order form has a hidden or missing submit button. If you continue, your users may not be able to submit the form. Are you sure you want to publish it?");
+			}
 		}
 	}
 

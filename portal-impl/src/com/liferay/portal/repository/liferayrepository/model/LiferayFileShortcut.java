@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 
 import java.io.Serializable;
 
@@ -51,7 +51,12 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException {
 
-		return _dlFileShortcutModelResourcePermission.contains(
+		ModelResourcePermission<DLFileShortcut>
+			dlFileShortcutModelResourcePermission =
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					DLFileShortcut.class.getName());
+
+		return dlFileShortcutModelResourcePermission.contains(
 			permissionChecker, _dlFileShortcut, actionId);
 	}
 
@@ -287,14 +292,6 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 
 		return this;
 	}
-
-	private static volatile ModelResourcePermission<DLFileShortcut>
-		_dlFileShortcutModelResourcePermission =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ModelResourcePermission.class, LiferayFileShortcut.class,
-				"_dlFileShortcutModelResourcePermission",
-				"(model.class.name=" + DLFileShortcut.class.getName() + ")",
-				true);
 
 	private final DLFileShortcut _dlFileShortcut;
 	private final boolean _escapedModel;

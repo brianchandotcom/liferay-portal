@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
 
 import java.io.Serializable;
@@ -59,7 +59,11 @@ public class LiferayFolder extends LiferayModel implements Folder {
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException {
 
-		return _dlFolderModelResourcePermission.contains(
+		ModelResourcePermission<DLFolder> dlFolderModelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				DLFolder.class.getName());
+
+		return dlFolderModelResourcePermission.contains(
 			permissionChecker, _dlFolder, actionId);
 	}
 
@@ -435,13 +439,6 @@ public class LiferayFolder extends LiferayModel implements Folder {
 				portalException);
 		}
 	}
-
-	private static volatile ModelResourcePermission<DLFolder>
-		_dlFolderModelResourcePermission =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ModelResourcePermission.class, LiferayFolder.class,
-				"_dlFolderModelResourcePermission",
-				"(model.class.name=" + DLFolder.class.getName() + ")", true);
 
 	private final DLFolder _dlFolder;
 	private final boolean _escapedModel;

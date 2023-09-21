@@ -754,7 +754,11 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 								) {
 									return {
 										...leftSidebarObjectDefinitionItem,
-										name: updatedObjectDefinitionNode.label,
+										label: getLocalizableLabel(
+											defaultLanguageId,
+											updatedObjectDefinitionNode.label,
+											updatedObjectDefinitionNode.name
+										),
 									};
 								}
 
@@ -764,7 +768,9 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 
 						return {
 							...leftSidebarItem,
-							objectDefinitions: [...updatedObjectDefinitions!],
+							leftSidebarObjectDefinitionItems: [
+								...updatedObjectDefinitions!,
+							],
 						};
 					}
 					else {

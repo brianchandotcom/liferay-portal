@@ -166,11 +166,7 @@ export function RightSidebarObjectDefinitionDetails({
 				) {
 					newObjectDefinition = {
 						...element.data,
-						label: getLocalizableLabel(
-							objectDefinition.defaultLanguageId!,
-							objectDefinition.label,
-							objectDefinition.name
-						),
+						label: objectDefinition.label,
 						name: objectDefinition.name,
 						pluralLabel: {
 							[objectDefinition.defaultLanguageId!]: objectDefinition.pluralLabel,

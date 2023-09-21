@@ -909,12 +909,8 @@ public class ObjectRelationshipLocalServiceImpl
 		ObjectDefinition objectDefinition1 =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId1);
 
-		if (objectDefinition1.isModifiable() && objectDefinition1.isSystem()) {
-			_validateInvokerBundle(
-				"Only allowed bundles can add system object relationships",
-				system);
-		}
-
+		_validateInvokerBundle(
+			"Only allowed bundles can add system object relationships", system);
 		_validateLabel(labelMap);
 		_validateName(objectDefinitionId1, name);
 

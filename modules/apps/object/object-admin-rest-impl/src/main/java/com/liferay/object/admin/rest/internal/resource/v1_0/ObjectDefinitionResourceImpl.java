@@ -598,8 +598,7 @@ public class ObjectDefinitionResourceImpl
 				objectRelationship -> !GetterUtil.getBoolean(
 					objectRelationship.getSystem()));
 			serviceBuilderObjectRelationships.removeIf(
-				serviceBuilderObjectRelationship ->
-					!serviceBuilderObjectRelationship.isSystem());
+				ObjectRelationshipModel::isSystem);
 		}
 		else {
 			objectFields.removeIf(

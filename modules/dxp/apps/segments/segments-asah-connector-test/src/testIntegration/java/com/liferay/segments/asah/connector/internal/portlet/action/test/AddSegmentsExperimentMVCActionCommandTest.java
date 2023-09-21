@@ -254,18 +254,22 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 							"id", "123456"
 						).toString())));
 
-			ReflectionTestUtil.invoke(
+			JSONObject jsonObject = ReflectionTestUtil.invoke(
 				_mvcActionCommand, "_addSegmentsExperiment",
 				new Class<?>[] {ActionRequest.class},
 				mockLiferayPortletActionRequest);
 
+			JSONObject segmentsExperimentJSONObject =
+				(JSONObject)jsonObject.get("segmentsExperiment");
+
 			segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
 					_group.getGroupId(),
-					segmentsExperience.getSegmentsExperienceId(),
+					segmentsExperimentJSONObject.getLong(
+						"segmentsExperienceId"),
 					_layout.getPlid());
 
-			Assert.assertNotNull(segmentsExperience);
+			Assert.assertNotNull(segmentsExperiment);
 			Assert.assertEquals(name, segmentsExperiment.getName());
 		}
 	}

@@ -93,7 +93,7 @@ export function getThumbnailByProductAttachment(
 		}
 		const customField = attachment.customFields?.find(
 			({customValue, name}) =>
-				name === 'App Icon' && customValue?.data?.[0] === 'Yes'
+				name === 'App Icon' && customValue?.data?.[0].toLowerCase === 'yes'.toLowerCase
 		);
 
 		return !!customField;

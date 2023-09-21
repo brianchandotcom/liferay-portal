@@ -13,7 +13,7 @@ import ClaySticker from '@clayui/sticker';
 import emptyPictureIcon from '../../../assets/icons/avatar.svg';
 import {getProductById} from '../../../utils/api';
 import {getCustomFieldValue} from '../../../utils/customFieldUtil';
-import {getValueFromSpecifications} from '../../../utils/util';
+import {getThumbnailByProductAttachment, getValueFromSpecifications} from '../../../utils/util';
 import {LicenseType} from '../enums/licenseType';
 
 interface ProductCardProps {
@@ -33,9 +33,9 @@ const ProductCard = ({
 		const getProdut = async () => {
 			// eslint-disable-next-line promise/catch-or-return
 			{
-				productId &&
+				productId &&  
 					getProductById({
-						nestedFields: 'productSpecifications,skus',
+						nestedFields: 'attachments,productSpecifications,skus',
 						productId,
 					}).then((item: Product) => {
 						setProduct([item]);
@@ -48,6 +48,9 @@ const ProductCard = ({
 	setProductToForm(product[0]);
 
 	const currentValue = product[0];
+  const iconURL = currentValue && getThumbnailByProductAttachment(currentValue.attachments)?.split("/o/")
+  const convertedIconURl = iconURL && `/o/${iconURL[1]}`
+  
 
 	const getLicenseTagText = (product: Product) => {
 		if (
@@ -78,7 +81,7 @@ const ProductCard = ({
 						<div className="d-flex flex-row">
 							<img
 								height="64px"
-								src={currentValue?.thumbnail}
+								src={convertedIconURl}
 								width="64px"
 							/>
 							<div className="align-items-center ml-4">

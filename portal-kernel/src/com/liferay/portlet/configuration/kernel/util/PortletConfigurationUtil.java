@@ -25,16 +25,17 @@ import javax.portlet.PortletPreferences;
 public class PortletConfigurationUtil {
 
 	public static String getPortletCustomCSSClassName(
-			PortletPreferences portletSetup)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		String customCSSClassName = StringPool.BLANK;
 
-		String css = portletSetup.getValue("portletSetupCss", StringPool.BLANK);
+		String css = portletPreferences.getValue(
+			"portletSetupCss", StringPool.BLANK);
 
 		if (Validator.isNotNull(css)) {
 			JSONObject cssJSONObject = PortletSetupUtil.cssToJSONObject(
-				portletSetup, css);
+				portletPreferences, css);
 
 			JSONObject advancedDataJSONObject = cssJSONObject.getJSONObject(
 				"advancedData");
@@ -49,19 +50,20 @@ public class PortletConfigurationUtil {
 	}
 
 	public static String getPortletTitle(
-		PortletPreferences portletSetup, String languageId) {
+		PortletPreferences portletPreferences, String languageId) {
 
-		if (!isUseCustomTitle(portletSetup)) {
+		if (!isUseCustomTitle(portletPreferences)) {
 			return null;
 		}
 
-		return portletSetup.getValue("portletSetupTitle_" + languageId, null);
+		return portletPreferences.getValue(
+			"portletSetupTitle_" + languageId, null);
 	}
 
 	public static Map<Locale, String> getPortletTitleMap(
-		PortletPreferences portletSetup) {
+		PortletPreferences portletPreferences) {
 
-		if (!isUseCustomTitle(portletSetup)) {
+		if (!isUseCustomTitle(portletPreferences)) {
 			return null;
 		}
 
@@ -71,7 +73,8 @@ public class PortletConfigurationUtil {
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
 			String portletTitle = GetterUtil.getString(
-				getPortletTitle(portletSetup, LocaleUtil.toLanguageId(locale)));
+				getPortletTitle(
+					portletPreferences, LocaleUtil.toLanguageId(locale)));
 
 			map.put(locale, portletTitle);
 
@@ -87,9 +90,11 @@ public class PortletConfigurationUtil {
 		return null;
 	}
 
-	protected static boolean isUseCustomTitle(PortletPreferences portletSetup) {
+	protected static boolean isUseCustomTitle(
+		PortletPreferences portletPreferences) {
+
 		return GetterUtil.getBoolean(
-			portletSetup.getValue("portletSetupUseCustomTitle", null));
+			portletPreferences.getValue("portletSetupUseCustomTitle", null));
 	}
 
 }

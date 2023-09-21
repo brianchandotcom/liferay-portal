@@ -770,16 +770,19 @@ public class PortalUtil {
 	}
 
 	public static String getEmailFromAddress(
-		PortletPreferences preferences, long companyId, String defaultValue) {
+		PortletPreferences portletPreferences, long companyId,
+		String defaultValue) {
 
 		return _portal.getEmailFromAddress(
-			preferences, companyId, defaultValue);
+			portletPreferences, companyId, defaultValue);
 	}
 
 	public static String getEmailFromName(
-		PortletPreferences preferences, long companyId, String defaultValue) {
+		PortletPreferences portletPreferences, long companyId,
+		String defaultValue) {
 
-		return _portal.getEmailFromName(preferences, companyId, defaultValue);
+		return _portal.getEmailFromName(
+			portletPreferences, companyId, defaultValue);
 	}
 
 	public static String getForwardedHost(

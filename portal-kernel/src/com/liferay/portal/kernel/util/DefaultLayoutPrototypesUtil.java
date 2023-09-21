@@ -81,17 +81,17 @@ public class DefaultLayoutPrototypesUtil {
 			Layout layout, String portletId, Map<String, String> preferences)
 		throws Exception {
 
-		PortletPreferences portletSetup =
+		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 				layout, portletId);
 
 		for (Map.Entry<String, String> entry : preferences.entrySet()) {
-			portletSetup.setValue(entry.getKey(), entry.getValue());
+			portletPreferences.setValue(entry.getKey(), entry.getValue());
 		}
 
-		portletSetup.store();
+		portletPreferences.store();
 
-		return portletSetup;
+		return portletPreferences;
 	}
 
 	protected static void addResourcePermissions(

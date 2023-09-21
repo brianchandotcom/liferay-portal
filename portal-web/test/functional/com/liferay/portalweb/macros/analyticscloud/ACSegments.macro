@@ -371,10 +371,13 @@ definition {
 
 	macro editWebBehaviorTimeCriterion {
 		if (isSet(timeOption)) {
-			Select(
+			Click(
 				key_indexField = ${indexField},
-				locator1 = "ACSegments#TIME_INPUT_CRITERION_CONJUNCTION",
-				value1 = ${timeOption});
+				locator1 = "ACSegments#TIME_INPUT_CRITERION_CONJUNCTION");
+
+			Click(
+				locator1 = "ACSegments#ACTIVITIES_CRITERION_DROPDOWN",
+				operator = "${timeOption}");
 		}
 
 		if (isSet(timePeriod)) {

@@ -158,16 +158,10 @@ public class LayoutModelDocumentContributorTest {
 		_assertReindexDraftLayout(layout);
 	}
 
-	private Layout _addFragmentToLayout(
-			String elementText, String html, Layout layout)
+	private void _addFragmentEntryLinkToLayout(
+			String elementText, String html, Layout layout,
+			ServiceContext serviceContext)
 		throws Exception {
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		Assert.assertNotNull(draftLayout);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
@@ -191,11 +185,23 @@ public class LayoutModelDocumentContributorTest {
 			).toString(),
 			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), draftLayout,
-			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
-			0,
+			fragmentEntry.getJs(), layout, fragmentEntry.getFragmentEntryKey(),
+			fragmentEntry.getType(), null, 0,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid()));
+				layout.getPlid()));
+	}
+
+	private Layout _addFragmentToLayout(
+			String elementText, String html, Layout layout)
+		throws Exception {
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Assert.assertNotNull(draftLayout);
+
+		_addFragmentEntryLinkToLayout(
+			elementText, html, draftLayout,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		return draftLayout;
 	}

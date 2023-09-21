@@ -1,0 +1,115 @@
+@component-name = "portal-solutions"
+definition {
+
+	property osgi.modules.includes = "osb-site-initializer-customer-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property testray.main.component.name = "OSB Site Initializer Customer Portal";
+
+	var testSiteName = "Customer Portal";
+	var testSiteURL = "customer-portal-site";
+	var testAccount = "2022 FIFA World Cup Qatar - FAN ID";
+	var statusActive = "Active";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Customer Portal Site") {
+			CustomerPortal.addCustomerPortalSite(siteName = ${testSiteName});
+		}
+
+		task ("Add test user access to all Accounts") {
+			CustomerPortal.assignUserToOrganization();
+
+			CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${testAccount});
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		CustomerPortal.customerPortalTearDown();
+
+		JSONGroup.deleteGroupByName(groupName = ${testSiteName});
+	}
+
+	@description = "LPS-185975 - Verify that after clicking the 'Deactivate' button, a page appears with a list of active keys"
+	@priority = 4
+	test AssertThatAfterClickInDeactivateAPageOpens {
+		task ("Given a user signs in on OKTA to update the Customer Portal") {
+			CustomerPortal.loginOktaToUpdateCP();
+
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+		}
+
+		task ("When the user selects a project in Customer Portal and goes to generate a new key") {
+			CustomerPortal.enterOnProject(
+				status = ${statusActive},
+				title = ${testAccount});
+
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = "Portal");
+
+			CP2ActivationKeys.generateNewKey();
+		}
+
+		task ("When the user fills in the first part of the form for Generate New License") {
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Version",
+				option = "6.1 GA1");
+
+			CP2ActivationKeys.selectGenerateActivationKeyOptionByField(
+				field = "Key Type",
+				option = "Production");
+
+			CP2ActivationKeys.selectFistActiveSubscriptionInput(index = 1);
+
+			CustomerPortal.clickAtButton(text = "Next");
+		}
+
+		task ("And fills in the second part of the form") {
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Environment Test Name",
+				field = "Environment Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "Description Test Name",
+				field = "Description");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "localhost",
+				field = "Host Name");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "192.168.1.1",
+				field = "IP Address");
+
+			CP2ActivationKeys.fulfillGenerateActivationKeyTextField(
+				content = "A0-B1-C2-D3-E4-F5",
+				field = "MAC Address");
+
+			CustomerPortal.clickAtButton(text = "Generate 1 Key");
+		}
+
+		task ("Then the user can go to Deactivate and select any key from a list to deactivate - minimum 1 key") {
+			CP2ActivationKeys.gotoKeyDeactivation();
+
+			CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(environmentName = "Environment Test Name");
+
+			CustomerPortal.clickAtButton(text = " Deactivate 1 Key");
+
+			AssertElementPresent(
+				key_text = "Confirm Deactivate Keys",
+				locator1 = "Button#ANY");
+		}
+	}
+
+}

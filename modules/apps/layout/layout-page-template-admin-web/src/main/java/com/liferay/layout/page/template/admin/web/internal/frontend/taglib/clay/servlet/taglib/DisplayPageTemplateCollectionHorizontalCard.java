@@ -84,6 +84,12 @@ public class DisplayPageTemplateCollectionHorizontalCard
 	}
 
 	@Override
+	public String getInputName() {
+		return rowChecker.getRowIds() +
+			LayoutPageTemplateCollection.class.getSimpleName();
+	}
+
+	@Override
 	public String getTitle() {
 		return _layoutPageTemplateCollection.getName();
 	}

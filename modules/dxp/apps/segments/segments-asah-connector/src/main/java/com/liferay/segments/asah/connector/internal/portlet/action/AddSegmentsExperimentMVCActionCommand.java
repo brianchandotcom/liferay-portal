@@ -158,6 +158,10 @@ public class AddSegmentsExperimentMVCActionCommand
 
 				_segmentsExperimentService.deleteSegmentsExperiment(
 					segmentsExperiment, false);
+
+				segmentsExperienceId =
+					_segmentsExperienceLocalService.
+						fetchDefaultSegmentsExperienceId(plid);
 			}
 			else {
 				throw new DuplicateSegmentsExperimentException();

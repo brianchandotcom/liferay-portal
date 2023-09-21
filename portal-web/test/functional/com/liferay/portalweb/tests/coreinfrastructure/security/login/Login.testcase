@@ -97,7 +97,7 @@ definition {
 
 	@description = "This is a use case for LRQA-27624. Users could login and logout using their Facebook profile. Blocked by LPS-173860."
 	@ignore = "true"
-	@priority = 4
+	@priority = 5
 	test FacebookSSOSmoke {
 		property portal.ssl.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -472,7 +472,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-27619. Verify that LDAP and OpenSSO portlets are present at Instance Settings."
-	@priority = 3
+	@priority = 5
 	test ViewInstanceSettingsAuthentication {
 		property osgi.app.includes = "portal-security-sso-openid";
 		property test.liferay.virtual.instance = "false";

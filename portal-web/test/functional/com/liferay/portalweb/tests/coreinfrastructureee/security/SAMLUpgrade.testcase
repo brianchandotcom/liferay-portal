@@ -319,7 +319,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-64613. View SAML configuration after upgrade 7.3.10."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLConfigurationAfterUpgrade7310 {
 		property data.archive.type = "data-archive-saml";
 		property portal.version = "7.3.10";
@@ -332,7 +332,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-61620. View SAML configuration after upgrade 7.4.12."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLConfigurationAfterUpgrade7412 {
 		property data.archive.type = "data-archive-saml";
 		property portal.release = "quarantine";
@@ -347,7 +347,7 @@ definition {
 	}
 
 	@description = "View SAML configuration after upgrade 7.1.10.3."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLConfigurationAfterUpgrade71103 {
 		property data.archive.type = "data-archive-saml";
 		property portal.version = "7.1.10.3";
@@ -360,7 +360,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-61620. View SAML configuration after upgrade 7.2.10.1."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-saml";
 		property portal.version = "7.2.10.1";
@@ -373,7 +373,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-136367. View SAML configuration after upgrade 7.3.10.1."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLConfigurationAfterUpgrade73101 {
 		property data.archive.type = "data-archive-saml";
 		property database.types = "db2,mariadb,mysql,postgresql,sqlserver,sybase";
@@ -387,7 +387,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-132679. View SAML configuration after upgrade 7.0.10.10."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLConfigurationAfterUpgrade701016 {
 		property data.archive.type = "data-archive-saml";
 		property portal.version = "7.0.10.16";
@@ -400,7 +400,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-64613. View SAML with encryption configuration after upgrade 7.3.10."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7310 {
 		property data.archive.type = "data-archive-saml-encryption";
 		property database.types = "db2,mariadb,mysql,postgresql,sqlserver,sybase";
@@ -414,7 +414,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-61620. View SAML configuration after upgrade 7.4.12."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade7412 {
 		property data.archive.type = "data-archive-saml-encryption";
 		property portal.release = "quarantine";
@@ -429,7 +429,7 @@ definition {
 	}
 
 	@description = "View SAML configuration after upgrade 7.2.10.1."
-	@priority = 5
+	@priority = 4
 	test ViewSAMLWithEncryptionConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-saml-encryption";
 		property portal.version = "7.2.10.1";

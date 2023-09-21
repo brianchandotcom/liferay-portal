@@ -14,7 +14,7 @@ definition {
 	}
 
 	@description = "This test asserts that apps in App Management do not display in non default instances"
-	@priority = 4
+	@priority = 3
 	test AppManagementAppsAreNotInDefaultInstances {
 		PortalInstances.openVirtualInstancesAdmin();
 
@@ -114,7 +114,7 @@ definition {
 
 	}
 
-	@priority = 4
+	@priority = 3
 	test AppShouldNotBeNestedWithinItself {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -134,7 +134,7 @@ definition {
 	}
 
 	@description = "This ensures that the Adaptive Media app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateAdaptiveMedia {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -168,7 +168,7 @@ definition {
 	}
 
 	@description = "This ensures that the Asset Libraries app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateAssetLibraries {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -202,7 +202,7 @@ definition {
 	}
 
 	@description = "This ensures that the Blogs app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateBlogs {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -238,7 +238,7 @@ definition {
 	}
 
 	@description = "This ensures that the Comment app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateComment {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -272,7 +272,7 @@ definition {
 	}
 
 	@description = "This ensures that the Document Library Opener app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateDocumentLibraryOpener {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -306,7 +306,7 @@ definition {
 	}
 
 	@description = "This ensures that the Knowledge Base app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateKnowledgeBase {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -340,7 +340,7 @@ definition {
 	}
 
 	@description = "This ensures that the Message Boards app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateMessageBoards {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -374,7 +374,7 @@ definition {
 	}
 
 	@description = "This ensures that the Notifications app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateNotifications {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -408,7 +408,7 @@ definition {
 	}
 
 	@description = "This ensures that the Questions app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateQuestions {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -442,7 +442,7 @@ definition {
 	}
 
 	@description = "This ensures that the Ratings app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateRatings {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -476,7 +476,7 @@ definition {
 	}
 
 	@description = "This ensures that the Sharing app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateSharing {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -510,7 +510,7 @@ definition {
 	}
 
 	@description = "This ensures that the Translation app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateTranslation {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -544,7 +544,7 @@ definition {
 	}
 
 	@description = "This ensures that the Wiki app in the app manager can be deactivated and reactivated."
-	@priority = 5
+	@priority = 3
 	test CanDeactivateAndActivateWiki {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -709,7 +709,7 @@ definition {
 		}
 	}
 
-	@priority = 5
+	@priority = 3
 	test InstallViaUploadIsSuccessful {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -813,7 +813,7 @@ definition {
 		}
 	}
 
-	@priority = 5
+	@priority = 3
 	test UninstallAppIsSuccessful {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -845,7 +845,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-99031."
-	@priority = 5
+	@priority = 3
 	test ViewLicenseManager {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

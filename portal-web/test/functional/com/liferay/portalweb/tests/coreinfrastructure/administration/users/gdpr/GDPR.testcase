@@ -53,7 +53,7 @@ definition {
 	}
 
 	@description = "This test asserts that all applications that do not have items are visible but disabled, test with Blogs, WC and MB entries."
-	@priority = 2
+	@priority = 4
 	test AppsWithNoEntriesAreDisabledInNewDataExport {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -261,7 +261,7 @@ definition {
 	}
 
 	@description = "This test anonymizes all entries from an application"
-	@priority = 3
+	@priority = 4
 	test CanAnonymizeAllEntriesFromAnApplication {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -298,7 +298,7 @@ definition {
 	}
 
 	@description = "This test anonymizes all staged data from an application, test with DM entries."
-	@priority = 3
+	@priority = 4
 	test CanAnonymizeAllStagedDataFromDM {
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -363,7 +363,7 @@ definition {
 	}
 
 	@description = "This test asserts a related asset can be anonymized from an application."
-	@priority = 3
+	@priority = 4
 	test CanAnonymizeARelatedAsset {
 		task ("Login as user whose data will be deleted and add a blog entry and document to be added as Related Assets") {
 			JSONBlog.addEntry(
@@ -470,7 +470,7 @@ definition {
 	}
 
 	@description = "This test anonymizes a staged and a live entry from an applciation, test with WC entries."
-	@priority = 3
+	@priority = 4
 	test CanAnonymizeASingleStagedAndLiveWebContentEntry {
 		task ("Given Publish the staged web content entries to live as a new admin user") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -553,7 +553,7 @@ definition {
 
 	@description = "This test anonymizes entries from an application that has hierarachy"
 	@ignore = "Test Stub"
-	@priority = 3
+	@priority = 4
 	test CanAnonymizeEntriesFromAnApplicationWithHierarchy {
 
 		// TODO LRQA-50731 Data Erasure - Anonymize entries from an Application that has a hierarchy
@@ -561,7 +561,7 @@ definition {
 	}
 
 	@description = "This test anonymizes a single entry from an application"
-	@priority = 5
+	@priority = 4
 	test CanAnonymizeEntryFromApplication {
 		property portal.acceptance = "true";
 
@@ -596,7 +596,7 @@ definition {
 	}
 
 	@description = "This tests LPS-77748. This test anonymizes multiple entries from a single application"
-	@priority = 3
+	@priority = 4
 	test CanAnonymizeMultipleEntriesFromAnApplication {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -643,7 +643,7 @@ definition {
 	}
 
 	@description = "This test anonymizes only one entry from an application via the Info panel"
-	@priority = 2
+	@priority = 4
 	test CanAnonymizeViaInfoPanel {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
 
@@ -682,7 +682,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-168719. It ensures that changing the password length does not affect anonymization"
-	@priority = 3
+	@priority = 4
 	test CanAnonymizeWithPasswordLengthChange {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -740,7 +740,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-169408. It ensures that changing the password minimum upper case does not affect anonymization"
-	@priority = 3
+	@priority = 4
 	test CanAnonymizeWithPasswordMinimumUpperCaseChange {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -955,7 +955,7 @@ definition {
 	}
 
 	@description = "This test deletes multiple staged data from an application, tests with Blogs and DM entries."
-	@priority = 3
+	@priority = 4
 	test CanDeleteAllStagedDataFromAnApplication {
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -1045,7 +1045,7 @@ definition {
 	}
 
 	@description = "This test deletes and anonymizes all entries from all applications"
-	@priority = 3
+	@priority = 4
 	test CanDeleteAndAnonymizeAllEntries {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1079,7 +1079,7 @@ definition {
 	}
 
 	@description = "This test deletes export process"
-	@priority = 3
+	@priority = 4
 	test CanDeleteAnExportProcess {
 		task ("Log in as new user and create data across several different applications") {
 			JSONBlog.addEntry(
@@ -1164,7 +1164,7 @@ definition {
 	}
 
 	@description = "This test asserts a related asset can be deleted from an application."
-	@priority = 3
+	@priority = 4
 	test CanDeleteARelatedAsset {
 		task ("Login as user whose data will be deleted and add a blog entry and document to be added as Related Assets") {
 			JSONBlog.addEntry(
@@ -1248,7 +1248,7 @@ definition {
 	}
 
 	@description = "This test deletes a staged and a live entry from an application, tests with Blogs entries."
-	@priority = 3
+	@priority = 4
 	test CanDeleteASingleStagedAndLiveBlogsEntry {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1325,7 +1325,7 @@ definition {
 
 	@description = "This test deletes entries from an application that has hierarchy"
 	@ignore = "Test Stub"
-	@priority = 3
+	@priority = 4
 	test CanDeleteEntriesFromAnApplicationWithHierarchy {
 
 		// TODO LRQA-50724 Data Erasure - Delete entries from an Application that has a hierarchy
@@ -1333,7 +1333,7 @@ definition {
 	}
 
 	@description = "This test deletes a single entry from a single application"
-	@priority = 5
+	@priority = 4
 	test CanDeleteEntryFromApplication {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -1371,7 +1371,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-77748. This test deletes multiple selected entries from a single application."
-	@priority = 3
+	@priority = 4
 	test CanDeleteMultipleEntriesFromAnApplication {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -1606,7 +1606,7 @@ definition {
 	}
 
 	@description = "This test filters and orders data from the export data process"
-	@priority = 2
+	@priority = 4
 	test CanFilterAndOrderExportProcesses {
 		task ("Sign in as New User and create data from various applications") {
 			JSONBlog.addEntry(
@@ -1687,7 +1687,7 @@ definition {
 	}
 
 	@description = "This test filters application to Forms, Web Content and Contacts and views all filtered data in Review Data section"
-	@priority = 3
+	@priority = 4
 	test CanFilterAndViewData {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1817,7 +1817,7 @@ definition {
 	}
 
 	@description = "LPS-77749. This test orders entries by Name and by Description"
-	@priority = 2
+	@priority = 4
 	test CanOrderDataInViewData {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -1881,7 +1881,7 @@ definition {
 	}
 
 	@description = "This test publishes a staged entry to live after deleting live entry, test with Blog entries."
-	@priority = 3
+	@priority = 4
 	test CanPublishToLiveADeletedLiveEntry {
 		task ("Given add staged entry with related asset and publish to live this entry.") {
 			HeadlessSite.addSite(siteName = "Site Name");
@@ -1954,7 +1954,7 @@ definition {
 	}
 
 	@description = "Test is asserting that entries are still anonymous after activating user."
-	@priority = 3
+	@priority = 4
 	test EntriesAreStillAnonymousAfterActivatingUser {
 		task ("Sign in as User and add DM folder1 and Document_2.docx.") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
@@ -2041,7 +2041,7 @@ definition {
 	}
 
 	@description = "LPS-77750 This test asserts that the details of the entry display when user clicks on the Info icon."
-	@priority = 3
+	@priority = 4
 	test EntryDetailsDisplayInInfoPanel {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -2097,7 +2097,7 @@ definition {
 	}
 
 	@description = "This test changes pagination and assert export processes display properly."
-	@priority = 2
+	@priority = 4
 	test PaginationWorksInExportPersonalData {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -2214,7 +2214,7 @@ definition {
 	}
 
 	@description = "This test changes pagination and assert entries display properly."
-	@priority = 2
+	@priority = 4
 	test PaginationWorksInNewDataExport {
 		property portal.release = "false";
 
@@ -2364,7 +2364,7 @@ definition {
 	}
 
 	@description = "LPS-91766. This test asserts that the Remaining Items count under Status Summary is accurate"
-	@priority = 3
+	@priority = 4
 	test RemainingItemsCountIsAccurate {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 

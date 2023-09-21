@@ -151,7 +151,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-155728. TC-1: Assert the email address is present in the audit log context in a human-readable format."
-	@priority = 2
+	@priority = 5
 	test AssertEmailAddressIsPresentInReadable {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -202,7 +202,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-140258. TC-1: Assert that sessionId is not present in the audit log context."
-	@priority = 2
+	@priority = 5
 	test AssertSessionIdIsNotPresentInAuditLogContext {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -230,7 +230,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-140258. TC-2: Assert that sessionId is not present in the Audit Log portlet's UI."
-	@priority = 2
+	@priority = 5
 	test AssertSessionIdIsNotPresentInAuditLogPortlet {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -921,7 +921,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-159334. TC-6: Verify LOGIN_DNE message returns when user tries to login with a non-existing Screen Name but an existing password."
-	@priority = 4
+	@priority = 5
 	test ViewLoginDNEMessageWhenAuthenticateByScreenName {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
@@ -993,7 +993,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-159334. TC-4: Verify LOGIN_DNE message returns when the User tries to login with a non-existing user ID but an existing password."
-	@priority = 4
+	@priority = 5
 	test ViewLoginDNEMessageWhenAuthenticateByUserID {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
@@ -1129,7 +1129,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-159334. TC-5: Verify LOGIN_FAILURE message returns when user tries to login with a valid Screen Name but an invalid password."
-	@priority = 4
+	@priority = 5
 	test ViewLoginFailureMessageWhenAuthenticateByScreenName {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
@@ -1202,7 +1202,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-159334. TC-3: Verify LOGIN_FAILURE message returns when user tries to login with a valid user ID but an invalid password."
-	@priority = 4
+	@priority = 5
 	test ViewLoginFailureMessageWhenAuthenticateByUserID {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
@@ -1277,7 +1277,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-159334. TC-7: Verify LOGIN_FAILURE message returns when LDAP user enters the wrong password during login."
-	@priority = 4
+	@priority = 5
 	test ViewLoginFailureMessageWhenLDAPUserEnterWrongPassword {
 		property apacheds.enabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config:com.liferay.portal.security.audit.router.configuration.LoggingAuditMessageProcessorConfiguration.config";

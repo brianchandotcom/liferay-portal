@@ -86,7 +86,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-157219. It ensures a user can only view the portlets he has permissions from applications menu."
-	@priority = 3
+	@priority = 4
 	test CanOnlyViewPortletsWithPermissionsGranted {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -181,7 +181,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-148855. The default site role shouldn't be inherited by Guest."
-	@priority = 5
+	@priority = 4
 	test DefaultSiteRoleIsNotInheritedByGuestUser {
 		task ("Assign default site to a new regular Role") {
 			JSONRole.addRegularRole(
@@ -415,7 +415,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-124190."
-	@priority = 3
+	@priority = 4
 	test ExportRoleWithSiteAssignee {
 		HeadlessSite.addSite(siteName = "Site Name");
 
@@ -616,7 +616,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@priority = 3
+	@priority = 4
 	test NoGuestRolePermissionsFromPrivateLayout {
 		property custom.properties = "permissions.check.guest.enabled=false";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";

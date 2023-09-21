@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This test adds five suborganizations to an organization"
-	@priority = 5
+	@priority = 4
 	test AddMultipleSuborganizations {
 		property testray.component.names = "Training";
 
@@ -70,7 +70,7 @@ definition {
 			searchTerm = "Suborganization");
 	}
 
-	@priority = 5
+	@priority = 4
 	test AddOrganization {
 		property testray.component.names = "Training";
 
@@ -110,7 +110,7 @@ definition {
 		Site.viewNoMySitesViaMySitesPG(siteName = "Organization Name");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddOrganizationComment {
 		Organization.openOrganizationsAdmin();
 
@@ -123,7 +123,7 @@ definition {
 			value1 = "This is a test comment!");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddOrganizationName50Characters {
 		Organization.openOrganizationsAdmin();
 
@@ -140,7 +140,7 @@ definition {
 			orgType = "Organization");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddOrganizationNameDuplicate {
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
@@ -216,7 +216,7 @@ definition {
 			orgType = "Organization");
 	}
 
-	@priority = 5
+	@priority = 4
 	test AddOrganizationSitePrivatePage {
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 		property testray.component.names = "Training";
@@ -256,7 +256,7 @@ definition {
 			privacy = "Private Pages");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddOrganizationSitePublicPage {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -281,7 +281,7 @@ definition {
 		PagesAdmin.viewPageItemPresent(pageName = "Public Page");
 	}
 
-	@priority = 5
+	@priority = 4
 	test AddOrganizationTeam {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -328,7 +328,7 @@ definition {
 			teamName = "Site Team Name");
 	}
 
-	@priority = 5
+	@priority = 4
 	test AddSuborganization {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -364,7 +364,7 @@ definition {
 			suborgType = "Organization");
 	}
 
-	@priority = 5
+	@priority = 4
 	test AssignImportedUserGroupToSuborganizationSites {
 		property liferay.training.dependency.jars = "01-liferay-fundamentals/modules/02-manage-user-accounts/exercise-src/com.liferay.training.contentloader.jar";
 		property portal.release = "false";
@@ -450,7 +450,7 @@ definition {
 	}
 
 	@description = "Assign multiple members to an organization and searches for them under assignees"
-	@priority = 5
+	@priority = 4
 	test AssignMultipleUsersToOrganization {
 		property testray.component.names = "Training";
 
@@ -526,7 +526,7 @@ definition {
 		Organization.viewUser(userName = "userfn5 userln5");
 	}
 
-	@priority = 5
+	@priority = 4
 	test AssignUser {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -556,7 +556,7 @@ definition {
 	}
 
 	@description = "Add a site to an organization, assign user to that organization and assert it displays in My Dashboard"
-	@priority = 5
+	@priority = 4
 	test AssignUserToOrganizationWithSite {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -596,7 +596,7 @@ definition {
 	}
 
 	@description = "This adds a global category to an organization."
-	@priority = 3
+	@priority = 4
 	test CanAddGlobalCategoryToOrganization {
 		JSONCategory.addVocabulary(
 			groupName = "Global",
@@ -631,7 +631,7 @@ definition {
 	}
 
 	@description = "Resolved bug automation for LPS-140712. This test asserts that a user can be added to an organization through the UI and displays a success message"
-	@priority = 3
+	@priority = 4
 	test CanAddOrganizationUser {
 		task ("Given an organization") {
 			JSONOrganization.addOrganization(
@@ -670,7 +670,7 @@ definition {
 	}
 
 	@description = "This test automates LPS-141217 and asserts that a user can still be added to an organization after initially using an invalid email"
-	@priority = 3
+	@priority = 4
 	test CanAddOrganizationUserAfterFirstUsingInvalidEmail {
 		task ("Given the creation of a user under an organization is attempted using an invalid email") {
 			JSONOrganization.addOrganization(organizationName = "Organization Name");
@@ -707,7 +707,7 @@ definition {
 	}
 
 	@description = "This test asserts that an organization cannot be deleted if there is a suborganization associated with it."
-	@priority = 3
+	@priority = 4
 	test CannotDeleteAnOrganizationWithSuborganization {
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
@@ -739,7 +739,7 @@ definition {
 	}
 
 	@description = "This sets Order By Name and asserts descending and ascending order"
-	@priority = 3
+	@priority = 4
 	test CanOrderOrganizationsByName {
 		for (var organizationNumber : list "1,2,3,4,5,6,7,8") {
 			JSONOrganization.addOrganization(organizationName = "Organization ${organizationNumber}");
@@ -773,7 +773,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-123120."
-	@priority = 3
+	@priority = 4
 	test ClearSearchResults {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -833,7 +833,7 @@ definition {
 		Search.clearSearchResult();
 	}
 
-	@priority = 5
+	@priority = 4
 	test DeleteOrganization {
 		property portal.acceptance = "true";
 
@@ -883,7 +883,7 @@ definition {
 		Site.deleteCP(siteName = "Organization Name");
 	}
 
-	@priority = 5
+	@priority = 4
 	test EditOrganizationSite {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -925,7 +925,7 @@ definition {
 			orgType = "Organization");
 	}
 
-	@priority = 3
+	@priority = 4
 	test EditOrganizationSiteTeam {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -989,7 +989,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-75084."
-	@priority = 5
+	@priority = 4
 	test NoPermissionUserCannotAddOrganizationViaURL {
 		var portalURL = PropsUtil.get("portal.url");
 
@@ -1029,7 +1029,7 @@ definition {
 			value1 = "You do not belong to an organization and are not allowed to view other organizations.");
 	}
 
-	@priority = 5
+	@priority = 4
 	test OrganizationAdministratorActivate {
 		property testray.component.names = "Training";
 
@@ -1135,7 +1135,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@priority = 3
+	@priority = 4
 	test OrganizationDropDownItems {
 		for (var siteName : list "Site Name A,Site Name B,Site Name C,Site Name D,Site Name E,Site Name F,Site Name G,Site Name H") {
 			HeadlessSite.addSite(siteName = ${siteName});
@@ -1171,7 +1171,7 @@ definition {
 			value1 = "Site Name H");
 	}
 
-	@priority = 3
+	@priority = 4
 	test OrganizationSiteDefaultUserAssociations {
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
@@ -1221,7 +1221,7 @@ definition {
 			assigneeName = "Organization Site Bravo");
 	}
 
-	@priority = 3
+	@priority = 4
 	test OrganizationUserManagement {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -1317,7 +1317,7 @@ definition {
 		LexiconTable.viewTableEntryNotPresent(tableEntry = "userfn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test SearchOrganization {
 		JSONOrganization.addOrganization(organizationName = "Organization Name");
 
@@ -1421,7 +1421,7 @@ definition {
 			value1 = "No results were found.");
 	}
 
-	@priority = 3
+	@priority = 4
 	test ViewBack {
 		Organization.openOrganizationsAdmin();
 

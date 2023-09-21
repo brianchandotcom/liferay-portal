@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-143257. LDAP credentials should not expose in URL."
-	@priority = 5
+	@priority = 3
 	test AssertLDAPCredentialsDoesNotExposeInURL {
 		property apacheds.multiple.users.enabled = "true";
 		property portal.acceptance = "true";
@@ -49,7 +49,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-188257. Verify user is able to edit user info after enabling Use LDAP Password Policy."
-	@priority = 4
+	@priority = 3
 	test CanEditUserAfterEnablingUseLDAPPasswordPolicy {
 		property apacheds.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -119,7 +119,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-65498. LDAP user can be imported with blank password."
-	@priority = 5
+	@priority = 3
 	test CanImportLDAPUserWithBlankPassword {
 		property apacheds.blank.user.password.enabled = "true";
 		property app.server.types = "tomcat";
@@ -331,7 +331,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-30529. User fields are not reset to default when signing in with imported LDAP user."
-	@priority = 4
+	@priority = 3
 	test FieldValuesNotResetForImportedLDAPUser {
 		property apacheds.enabled = "true";
 		property custom.properties = "field.enable.com.liferay.portal.kernel.model.Contact.male=true";
@@ -432,7 +432,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-78606 and LPS-64800. Users who have SHA-384 encrypted password and are imported from LDAP are able to log in."
-	@priority = 5
+	@priority = 3
 	test LDAPAuthenticationWorksWithDifferentPasswordAlgorithm {
 		property apacheds.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -537,7 +537,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-73381. LDAP security credentials are obscured when entered."
-	@priority = 4
+	@priority = 3
 	test LDAPSecurityCredentialsAreHidden {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -557,7 +557,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-179689. TC-7: Verify if users cannot edit their password on the My Account page if the change password option is disabled by default policy and LDAP is enabled."
-	@priority = 5
+	@priority = 3
 	test LDAPUsersCannotChangePasswordAfterDisablingPasswordChangeable {
 		property apacheds.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -671,7 +671,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-78055. Liferay Admin user, for the virtual instance, should also be able to login after the 'Required' box in LDAP configurations is turned on, just like the main instance."
-	@priority = 4
+	@priority = 3
 	test VerifyVirtualInstanceLoginWorksWithRequiredBoxTurnedOn {
 		property apacheds.enabled = "true";
 		property test.liferay.virtual.instance = "false";

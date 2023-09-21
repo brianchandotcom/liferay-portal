@@ -17,7 +17,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-61573. Edit Portal CORS configuration and check if CORS keep working after an upgrade."
-	@priority = 5
+	@priority = 4
 	test ViewPortalCORSConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-portal-cors";
 		property portal.version = "7.2.10.1";
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-61573. Add and Edit Web Contexts CORS configuration and check if CORS keep working after an upgrade."
-	@priority = 5
+	@priority = 4
 	test ViewWebContextsCORSConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-web-contexts-cors";
 		property portal.version = "7.2.10.1";

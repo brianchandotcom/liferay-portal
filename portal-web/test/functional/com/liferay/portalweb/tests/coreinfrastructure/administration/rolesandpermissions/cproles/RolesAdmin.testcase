@@ -25,7 +25,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-132482."
-	@priority = 5
+	@priority = 4
 	test AssertSelectAllCheckboxDisplayPorperlyUnderDefinePermissionsTab {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -43,7 +43,7 @@ definition {
 			locator1 = "RolesPermissions#PERMISSION_CHECKBOX");
 	}
 
-	@priority = 3
+	@priority = 4
 	test CanAddRoleWithSameNameDifferentKey {
 		Role.openRolesAdmin();
 
@@ -190,7 +190,7 @@ definition {
 	}
 
 	@description = "This test asserts that user can search role with different title and key."
-	@priority = 3
+	@priority = 4
 	test CanSearchRoleWithDifferentTitleAndKey {
 		task ("Given a new role with different title and key is created") {
 			Role.openRolesAdmin();
@@ -230,7 +230,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-116055."
-	@priority = 5
+	@priority = 4
 	test ChangeScope {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -264,7 +264,7 @@ definition {
 	}
 
 	@description = "This test automates LPS-141903 and asserts that a deactivated user is not counted in Site Roles"
-	@priority = 3
+	@priority = 4
 	test DeactivatedUserIsNotCountedInSiteRoles {
 		task ("Given two users are assigned to corresponding sites as a Site Content Reviewer") {
 			for (var userNum : list "1,2") {
@@ -406,7 +406,7 @@ definition {
 	}
 
 	@description = "This test assigns and unassigns an organization to a regular role via UI."
-	@priority = 5
+	@priority = 4
 	test OrganizationCanBeRemovedFromRegularRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -491,7 +491,7 @@ definition {
 			value1 = "You do not have the roles required to access this portlet.");
 	}
 
-	@priority = 5
+	@priority = 4
 	test OrganizationRoleCanBeDeleted {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
@@ -521,7 +521,7 @@ definition {
 		Role.viewDefaultCP(roleTitle = "Roles Orgrole Name");
 	}
 
-	@priority = 5
+	@priority = 4
 	test RegularRoleCanBeDeleted {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -579,7 +579,7 @@ definition {
 			value1 = "Administrator");
 	}
 
-	@priority = 3
+	@priority = 4
 	test RolesCanBeViewedInTableView {
 		Role.openRolesAdmin();
 
@@ -645,7 +645,7 @@ definition {
 	}
 
 	@description = "This test assigns and unassigns a site to a regular role via UI."
-	@priority = 5
+	@priority = 4
 	test SiteCanBeRemovedFromRegularRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -734,7 +734,7 @@ definition {
 			value1 = "You do not have the roles required to access this portlet.");
 	}
 
-	@priority = 5
+	@priority = 4
 	test SiteRoleCanBeDeleted {
 		property portal.acceptance = "true";
 
@@ -764,7 +764,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105001 and LPS-104999."
-	@priority = 3
+	@priority = 4
 	test UserCanAddARoleWithoutATitle {
 		Role.openRolesAdmin();
 
@@ -780,7 +780,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-109572."
-	@priority = 5
+	@priority = 4
 	test UserCanBeAssignedToARegularRole {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -812,7 +812,7 @@ definition {
 	}
 
 	@description = "This test assigns and unassigns a user to a regular role via UI."
-	@priority = 5
+	@priority = 4
 	test UserCanBeRemovedFromRegularRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -890,7 +890,7 @@ definition {
 	}
 
 	@description = "This test asserts that Organization Role table is empty and select button does not display if user is not a member of an organization."
-	@priority = 3
+	@priority = 4
 	test UserCanNotSelectOrgRoleIfUserIsNotAnOrgMember {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -915,7 +915,7 @@ definition {
 	}
 
 	@description = "This test asserts that Site Role table is empty and select button does not display if user is not a member of a site."
-	@priority = 3
+	@priority = 4
 	test UserCanNotSelectSiteRoleIfUserIsNotASiteMember {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -940,7 +940,7 @@ definition {
 	}
 
 	@description = "This test assigns and unassigns a user group to a regular role via UI."
-	@priority = 5
+	@priority = 4
 	test UserGroupCanBeRemovedFromRegularRole {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 

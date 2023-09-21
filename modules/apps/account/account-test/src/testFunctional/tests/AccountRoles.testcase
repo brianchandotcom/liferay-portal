@@ -167,7 +167,7 @@ definition {
 	}
 
 	@description = "Use case for LPS-142654. This test asserts that a user with the correct permissions is able to assign a user to an account role."
-	@priority = 3
+	@priority = 4
 	test CanAssignUsersToAccountRoleWithPermissions {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 

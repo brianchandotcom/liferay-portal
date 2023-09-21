@@ -30,7 +30,7 @@ definition {
 		}
 	}
 
-	@priority = 3
+	@priority = 4
 	test ExportUserGroupMembers {
 		JSONUserGroup.addUserGroup(
 			userGroupDescription = "UG UserGroup Name Description",
@@ -53,7 +53,7 @@ definition {
 		LAR.exportUserGroups(larFileName = "User_Group_Members.lar");
 	}
 
-	@priority = 3
+	@priority = 4
 	test PredefinedPagesCanBeAdded {
 		JSONUserGroup.addUserGroup(
 			userGroupDescription = "UG User Group Description",

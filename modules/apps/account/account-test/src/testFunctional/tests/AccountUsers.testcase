@@ -23,7 +23,7 @@ definition {
 	}
 
 	@description = "This test adds an account user via Account Users portlet"
-	@priority = 5
+	@priority = 4
 	test CanAddAccountUser {
 		property portal.acceptance = "true";
 
@@ -104,7 +104,7 @@ definition {
 	}
 
 	@description = "This test adds more than 4 account users and asserts correct pagination."
-	@priority = 3
+	@priority = 4
 	test CanChangePaginationInAccountUsersList {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account Name",
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@description = "This test edits a user via Account Users portlet"
-	@priority = 5
+	@priority = 4
 	test CanEditAccountUser {
 		Account.openAccountsAdmin();
 
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-107598 and LPS-129713"
-	@priority = 3
+	@priority = 4
 	test CanFilterAccountUserInTheUsersAdminPortlet {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account with User",
@@ -264,7 +264,7 @@ definition {
 	}
 
 	@description = "The filter by Any Account filters all users that assigned account"
-	@priority = 3
+	@priority = 4
 	test CanFilterByAnyAccount {
 		for (var newEntryNum : list "1,2,3") {
 			JSONAccountEntry.addAccountEntry(
@@ -297,7 +297,7 @@ definition {
 	}
 
 	@description = "This filters users that do not have any assigned account"
-	@priority = 3
+	@priority = 4
 	test CanFilterByNoAssignedAccount {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account with User",
@@ -336,7 +336,7 @@ definition {
 	}
 
 	@description = "This filters users by Selected Accounts, choosing a specific account to view"
-	@priority = 3
+	@priority = 4
 	test CanFilterBySelectedAccounts {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Business Account",
@@ -397,7 +397,7 @@ definition {
 	}
 
 	@description = "This filters users by status: active and inactive"
-	@priority = 3
+	@priority = 4
 	test CanFilterByStatus {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Filter Account User",
@@ -542,7 +542,7 @@ definition {
 	}
 
 	@description = "This test clicks on the cancel button and back icon upon account user creation. It then asserts that the account user was not saved."
-	@priority = 3
+	@priority = 4
 	test ClickingCancelOrBackWillNotSaveAccountUser {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Account with User",

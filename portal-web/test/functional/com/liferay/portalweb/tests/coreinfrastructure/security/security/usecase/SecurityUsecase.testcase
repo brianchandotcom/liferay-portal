@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-107017. Create user via JSONWSAPUI."
-	@priority = 4
+	@priority = 5
 	test CreateUserViaJSONWSAPIUI {
 		var portalURL = PropsUtil.get("portal.url");
 		var userfn = "testfUI";
@@ -223,7 +223,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	}
 
 	@description = "This is a use case for LPS-49848."
-	@priority = 4
+	@priority = 5
 	test ValidateCannotStealAdminAccount {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

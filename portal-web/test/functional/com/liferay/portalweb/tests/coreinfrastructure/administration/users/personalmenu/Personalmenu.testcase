@@ -29,7 +29,7 @@ definition {
 	}
 
 	@description = "This test covers LPS-164469. It ensures that the Not Found message is shown when a guest user access the manage URL."
-	@priority = 3
+	@priority = 4
 	test CanViewNotFoundWhenGuestAccessManageURL {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property test.liferay.virtual.instance = "false";
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@description = "This test asserts that the user display name of My Profile can wrap when over-bounded in the special simulation."
-	@priority = 3
+	@priority = 4
 	test CheckUserDisplayNameOfMyProfileInSpecialSimulation {
 		task ("Given the last name of admin user is changed to a long text") {
 			JSONUser.updateUser(
@@ -313,7 +313,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105387."
-	@priority = 5
+	@priority = 4
 	test UpdateUserPortrait {
 		UserBar.viewUserDefaultIcon();
 
@@ -327,7 +327,7 @@ definition {
 	}
 
 	@description = "LPS-182444 TC-1-8. Verify back Navigation icon present and can return to the previous page from the personal menu page."
-	@priority = 5
+	@priority = 4
 	test VerifyBackNavigationLinkOfPersonalMenuPages {
 		property portal.release = "false";
 
@@ -383,7 +383,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-76106."
-	@priority = 5
+	@priority = 4
 	test ViewMyAccountUserViaURL {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -524,7 +524,7 @@ definition {
 	}
 
 	@ignore = "true"
-	@priority = 3
+	@priority = 4
 	test ViewUserIconIsAccessibleViaKeyboard {
 		AssertAccessible();
 

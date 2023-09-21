@@ -24,7 +24,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-29540. Verify CAPTCHA is enabled when creating an account."
-	@priority = 4
+	@priority = 5
 	test AssertCaptchaEnabled {
 		property captcha.enabled = "true";
 		property portal.acceptance = "true";
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-84310. Verify reCAPTCHA is enabled in account creation after deploying a CAPTCHA OSGi config file."
-	@priority = 4
+	@priority = 5
 	test AssertRecaptchaEnabled {
 		property captcha.enabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.captcha.configuration.CaptchaConfiguration.config";

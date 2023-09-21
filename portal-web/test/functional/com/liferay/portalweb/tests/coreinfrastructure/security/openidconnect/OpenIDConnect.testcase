@@ -14,7 +14,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-139642 TC6-3: Assert error message when add invalid auth server local metadata."
-	@priority = 3
+	@priority = 5
 	test AssertErrorMessageWhenAddInvalidAuthServerLocalMetadata {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-139642 TC2: Verify OAuth client configurations could be removed and readded."
-	@priority = 4
+	@priority = 5
 	test AssertOAuthClientCanBeRemovedAndReadded {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -80,7 +80,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-139642 TC7: Verify OAuth client cannot be created with duplicate client ID."
-	@priority = 4
+	@priority = 5
 	test AssertOAuthClientCannotBeAddedWithDuplicateClientID {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -166,7 +166,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-124898 TC-6: Verify Refresh Token Offset is not existing in the Instance Settings."
-	@priority = 4
+	@priority = 5
 	test AssertTokenRefreshOffsetCannotBeSetAtInstanceLevel {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-124900 TC-4 and LPS-139642 TC-5: Users should be logged out when they don't have a valid access token because OIDC Provider expires the session."
-	@priority = 4
+	@priority = 5
 	test AssertUserIsLoggedOutWhenAccessTokenIsExpiredByOIDCProvider {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"30\"";
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-179688 TC-6: Verify user could log in via OIDC when password creation is disabled."
-	@priority = 3
+	@priority = 5
 	test CanLoginViaOIDCWithDisablePasswordCreation {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"${line.separator}tokenRefreshOffset=\"120\"";
@@ -259,7 +259,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-139642 TC6-2: Cannot add OAuth client with empty configuration."
-	@priority = 3
+	@priority = 5
 	test CannotAddOAuthClientWithEmptyConfiguration {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -314,7 +314,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-139642 TC6-1: Cannot add OAuth client with invalid configurations."
-	@priority = 3
+	@priority = 5
 	test CannotAddOAuthClientWithInvalidConfigurations {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -331,7 +331,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105151 and LPS-139642 TC-3: Users could configure multiple OpenID Connect providers."
-	@priority = 4
+	@priority = 5
 	test ConfigureMultipleOpenIDConnectProviders {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=\"true\"";
@@ -534,7 +534,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-154744. TC4-1: The OIDC user is assigned the regular role which contains multiple spaces given through the property."
-	@priority = 4
+	@priority = 5
 	test MultipleSpacesRoleNameCanBeAssignedToOIDCUser {
 		property custom.properties = "open.id.connect.user.info.processor.impl.issuer=https://dev-5081331.okta.com${line.separator}open.id.connect.user.info.processor.impl.regular.role=My Custom Regular Role";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
@@ -596,7 +596,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105151 and LPS-139642 TC-9: Users could login with instance-level configured OpenID Connect provider."
-	@priority = 4
+	@priority = 5
 	test OpenIDConnectOnInstanceLevelSmoke {
 		property portal.acceptance = "true";
 		property portal.ssl.enabled = "true";
@@ -657,7 +657,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-40911. Users could login and logout using OpenID Connect provider."
-	@priority = 4
+	@priority = 5
 	test OpenIDConnectSmoke {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -903,7 +903,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-148619. User could log in and log out using Google as OpenID Connect provider, using custom parameters for the connection."
-	@priority = 3
+	@priority = 5
 	test OpenIDConnectWithGoogleCustomParameters {
 		property dummy.socket.proxy.disabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -972,7 +972,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-124898 TC-1: Verify Instance admin can set the token refresh offset via System settings."
-	@priority = 4
+	@priority = 5
 	test TokenRefreshOffsetCanBeSetAtSystemLevel {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1288,7 +1288,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-124898 TC-5: Verify Token Refresh Offset cannot be saved with a value under 30 second. Blocked by LPS-138193."
-	@priority = 4
+	@priority = 5
 	test VerifyTokenRefreshOffsetMinimum {
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration~default.config";
 		property portal.release = "quarantine";

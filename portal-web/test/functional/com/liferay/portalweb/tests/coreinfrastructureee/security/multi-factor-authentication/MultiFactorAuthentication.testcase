@@ -79,7 +79,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-102467 and LPS-110444. Configure e-mail template for Email One Time Password verification step."
-	@priority = 5
+	@priority = 4
 	test AssertEditedEmailTemplate {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property test.liferay.virtual.instance = "false";
@@ -131,7 +131,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-101717. Assert portal will not show any other MFA after IP Address Configuration is Enabled and assert portal will goes in other MFA verifier if IP verifier is failed."
-	@priority = 5
+	@priority = 4
 	test AssertLoginGoesInOtherMFAVerifierWhenIPVerifierFailed {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -226,7 +226,7 @@ definition {
 	}
 
 	@description = "LPS-86515 TC-3: As an Instance Administrator, I want to set where I want to have the configured TOTP verifier in the order of the configured verifiers."
-	@priority = 5
+	@priority = 4
 	test AssertMFACheckersWithHigherOrderShownFirst {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -290,7 +290,7 @@ definition {
 	}
 
 	@description = "LPS-92659 TC-3: Assert after user reached the number of allowed failed attempts will be blocked."
-	@priority = 5
+	@priority = 4
 	test AssertUserIsBlockedAfterReachAllowedFailedAttempts {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
@@ -339,7 +339,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-112805. Instance admin is capable to configure and turn off Basic Authentication for a virtual instance."
-	@priority = 5
+	@priority = 4
 	test CanDisableBasicAuthenticationOnInstanceLevel {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";
 		property test.liferay.virtual.instance = "false";
@@ -389,7 +389,7 @@ definition {
 	}
 
 	@description = "LPS-102468 TC-4: Instance admin can enable and disable MFA for instance."
-	@priority = 5
+	@priority = 4
 	test CanDisableOTPForInstanceOnSystemLevel {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -473,7 +473,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-115566. Able to remove TOTP verification and generate new TOTP verification on instance."
-	@priority = 5
+	@priority = 4
 	test CanRemoveTOTPVerificationOnInstanceLevel {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -535,7 +535,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-101720. Instance admin can enable and disable MFA for instance."
-	@priority = 5
+	@priority = 4
 	test EnableOTPForInstanceAsInstanceAdminUser {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.acceptance = "true";
@@ -617,7 +617,7 @@ definition {
 	}
 
 	@description = "LPS-101746 TC-2: End User cannot configure anything on their side regarding IP based verifier."
-	@priority = 5
+	@priority = 4
 	test EndUserPermissionCheck {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
@@ -676,7 +676,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-102469. Forget password won't bypass OTP authentication."
-	@priority = 5
+	@priority = 4
 	test LoginSuccessfulAfterResetPasswordAsEndUser {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
@@ -736,7 +736,7 @@ definition {
 	}
 
 	@description = "LPS-92659 TC-4: User can login successfully after retry timeout."
-	@priority = 5
+	@priority = 4
 	test LoginSuccessfulAfterRetryTimeout {
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
@@ -790,7 +790,7 @@ definition {
 	}
 
 	@description = "LPS-101746 TC-1: Able to configure the IP based verifier on instance level and see successful/unsuccessful login attempts."
-	@priority = 5
+	@priority = 4
 	test LoginWithIPBasedVerifierEnabled {
 		property osgi.module.configuration.file.names = "com.liferay.multi.factor.authentication.email.otp.configuration.MFAEmailOTPConfiguration.config";
 		property osgi.module.configurations = "emailFromAddress=\"test@liferay.com\"${line.separator}emailFromName=\"Joe\ Bloggs\"";
@@ -892,7 +892,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-101720. As an End User, OTP verification shows up in login process when OTP is enabled."
-	@priority = 5
+	@priority = 4
 	test LoginWithOTPEnabled {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -946,7 +946,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-101720. As an End User, OTP verification shows up in login process when OTP is enabled and scoped by Company Id."
-	@priority = 5
+	@priority = 4
 	test LoginWithOTPEnabledByCompanyId {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1005,7 +1005,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-101720. As an End User, OTP verification shows up in login process when OTP is enabled and scoped by Company Web Id."
-	@priority = 5
+	@priority = 4
 	test LoginWithOTPEnabledByCompanyWebId {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -1066,7 +1066,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-98267 and LPS-101744. Login with TOTP enabled as end user."
-	@priority = 5
+	@priority = 4
 	test LoginWithTOTPEnabledAsEndUser {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
@@ -1265,7 +1265,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-101750. Able to deploy a custom verifier, which is configurable of the System admin, and appears in the MFA process depending on it's Order level."
-	@priority = 5
+	@priority = 4
 	test UseCustomMFAVerifier {
 		property osgi.modules.includes = "multi-factor-authentication-sample";
 		property test.liferay.virtual.instance = "false";
@@ -1512,7 +1512,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-86515. Instance level admin is able to see successful/unsuccessful login attempts with the configured TOTP verifier."
-	@priority = 5
+	@priority = 4
 	test ViewResourceActionsOfTOTPVerificationAttempts {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

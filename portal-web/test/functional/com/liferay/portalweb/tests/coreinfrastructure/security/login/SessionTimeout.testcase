@@ -71,7 +71,7 @@ definition {
 	}
 
 	@description = "This is a use cae for LRQA-7765. Remember me checked."
-	@priority = 4
+	@priority = 5
 	test RememberMeChecked {
 		property custom.properties = "session.timeout=2";
 		property test.liferay.virtual.instance = "false";

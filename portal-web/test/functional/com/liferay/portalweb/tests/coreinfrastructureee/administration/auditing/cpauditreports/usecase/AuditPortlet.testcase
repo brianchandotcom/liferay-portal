@@ -28,7 +28,7 @@ definition {
 	}
 
 	@description = "This test Audit can capture events when assign, unassign user to user group or role, and event details contain the correct info."
-	@priority = 3
+	@priority = 4
 	test CanCaptureEventsAboutAssignAndUnassignUserToUserGroupAndRole {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -140,7 +140,7 @@ definition {
 	}
 
 	@description = "This test Audit can capture events when add, update, delete, impersonate user, and event details contain the correct info."
-	@priority = 5
+	@priority = 4
 	test CanCaptureEventsAboutUserActions {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -252,7 +252,7 @@ definition {
 	}
 
 	@description = "This test Audit can capture events when assign, unassign user to user group or role, and event details contain the correct info."
-	@priority = 3
+	@priority = 4
 	test CanCaptureEventsAboutUserGroupAndRole {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

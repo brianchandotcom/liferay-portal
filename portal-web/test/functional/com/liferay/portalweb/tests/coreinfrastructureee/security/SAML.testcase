@@ -21,7 +21,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-32577. Add user inherited roles as SAML attribute statements."
-	@priority = 5
+	@priority = 4
 	test AddUserInheritedRolesAsSAMLAttributeStatements {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -412,7 +412,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105165. Assert instance admin cannot configure IdP when disable IdP role."
-	@priority = 5
+	@priority = 4
 	test AssertInstanceAdminCannotConfigureIdPWhenDisableIdPRole {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -1341,7 +1341,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105170 TC-5: Verification for portal User Attributes when they are duplicated in the mapping  when saving the SAML configuration - Using virtual instances."
-	@priority = 3
+	@priority = 4
 	test AssertVerificationForDuplicatedUserAttributeMappingSAML {
 		property app.server.bundles.size = "0";
 		property test.liferay.virtual.instance = "false";
@@ -1427,7 +1427,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105170 TC-4: Verification for portal User Attributes when they are without SAML attribute value in the mapping when saving the SAML configuration - Using virtual instances."
-	@priority = 3
+	@priority = 4
 	test AssertVerificationForEmptyUserAttributeMappingSAML {
 		property app.server.bundles.size = "0";
 		property test.liferay.virtual.instance = "false";
@@ -1490,7 +1490,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-179688 TC-5: Verify user could log in via SAML (Portal to Portal) when password creation is disabled."
-	@priority = 3
+	@priority = 4
 	test CanLoginViaSAMLWithDisablePasswordCreation {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1567,7 +1567,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-179689. TC-5: Verify if users cannot edit their password on the My Account page if the change password option is disabled by default policy and SAML SSO is enabled."
-	@priority = 5
+	@priority = 4
 	test CannotChangePasswordWhenLoginViaSAMLSSOWithDisablePasswordChangeable {
 		property app.server.bundles.size = "0";
 		property test.liferay.virtual.instance = "false";
@@ -1890,7 +1890,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105170 TC-2: User creation and sync after SAML setup, using email Address for IdP Identifier and screenName for Attribute matching - Using virtual instances."
-	@priority = 3
+	@priority = 4
 	test CreateAndSyncUserAfterSAMLSetupMatchingEmailAddressNameIDWithScreenNameAttribute {
 		property app.server.bundles.size = "0";
 		property test.liferay.virtual.instance = "false";
@@ -1979,7 +1979,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105170 TC-3: User creation and sync after SAML setup, using screenName for IdP Identifier and UUID for Attribute matching - Using virtual instances."
-	@priority = 3
+	@priority = 4
 	test CreateAndSyncUserAfterSAMLSetupMatchingScreenNameIdentifierWithUUIDAttribute {
 		property app.server.bundles.size = "0";
 		property test.liferay.virtual.instance = "false";
@@ -2067,7 +2067,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105170 TC-1: User creation and sync after SAML setup, using screenName field both for User Matching and IdP Identifier - Using virtual instances."
-	@priority = 5
+	@priority = 4
 	test CreateAndSyncUserAfterSAMLSetupWithMatchingScreenNameAttribute {
 		property app.server.bundles.size = "0";
 		property portal.acceptance = "true";
@@ -2155,7 +2155,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105170 TC-7: User creation and sync after SAML setup with 2 IdP portal - Using virtual instances."
-	@priority = 3
+	@priority = 4
 	test CreateAndSyncUserAfterSAMLSetupWithMultipleIdPs {
 		property app.server.bundles.size = "0";
 		property test.liferay.virtual.instance = "false";
@@ -2296,7 +2296,7 @@ definition {
 	}
 
 	@description = "LPS-128600 TC-1. Custom fields and their values will sync on SAML connection."
-	@priority = 5
+	@priority = 4
 	test CustomFieldsCanBeConfiguredForSAML {
 		property app.server.bundles.size = "0";
 		property test.liferay.virtual.instance = "false";
@@ -2459,7 +2459,7 @@ definition {
 	}
 
 	@description = "LPS-128600 TC-2. Custom fields and their values will sync with 2 IdP provider. "
-	@priority = 5
+	@priority = 4
 	test CustomFieldsCanBeConfiguredForSAMLWithMultipleIdPs {
 		property app.server.bundles.size = "0";
 		property test.liferay.virtual.instance = "false";
@@ -2968,7 +2968,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105170 TC-8: Verifying that deleting a User will sync with the SP site - Using virtual instances."
-	@priority = 3
+	@priority = 4
 	test DeleteUserAfterSAMLSetupAndVerify {
 		property app.server.bundles.size = "0";
 		property test.liferay.virtual.instance = "false";
@@ -3143,7 +3143,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-110344. Hot deploy SAML app."
-	@priority = 5
+	@priority = 4
 	test HotDeploySAMLApp {
 		property hot.deploy.osgi.app.includes = "saml";
 		property test.liferay.virtual.instance = "false";
@@ -3161,7 +3161,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-108077. Import encryption certificate from PKCS12 keystore file."
-	@priority = 5
+	@priority = 4
 	test ImportEncryptionCertificateFromPKCS12KeystoreFile {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -3395,7 +3395,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-108077. Import signing certificate from PKCS12 keystore file."
-	@priority = 5
+	@priority = 4
 	test ImportSigningCertificateFromPKCS12KeystoreFile {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -3454,7 +3454,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-147809. TC2: Metadata source is changed after changed from XML File To URL."
-	@priority = 3
+	@priority = 4
 	test MetadataSourceIsChangedAfterChangedFromXMLFileToURL {
 		property app.server.bundles.size = "0";
 		property keystore.enabled = "true";
@@ -3526,7 +3526,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-147809. TC3: SAML Metadata URL is no longer shown after change metadata source from URL to file."
-	@priority = 3
+	@priority = 4
 	test MetadataURLDisappearsAfterChangedFromURLToXMLFile {
 		property app.server.bundles.size = "0";
 		property keystore.enabled = "true";
@@ -3598,7 +3598,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-170940. TC-2: The SAML configuration is not applied to the sites when ACS is disabled."
-	@priority = 5
+	@priority = 4
 	test SAMLConfigurationNotApplyToSitesAfterACSDisabled {
 		property app.server.bundles.size = "0";
 		property test.liferay.virtual.instance = "false";
@@ -3960,7 +3960,7 @@ definition {
 	}
 
 	@description = "LPS-105169 TC-1: SP initiated login should sync IdP&SP user attributes based on user attribute mapping - Using virtual instances. Blocked by LPS-137141."
-	@priority = 5
+	@priority = 4
 	test SPInitiatedSSOSyncsUserAttributesFromIdPToSPDefaultMapping {
 		property app.server.bundles.size = "0";
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
@@ -4287,7 +4287,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-170940. TC-1: Verify SSO login and logout mechanism works the same when having multiple sites configured as SP."
-	@priority = 5
+	@priority = 4
 	test SSOLoginLogoutWorkSameWhenSitesConfiguredAsSP {
 		property app.server.bundles.size = "0";
 		property test.liferay.virtual.instance = "false";
@@ -4520,7 +4520,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-50747. Validate vulnerabilities XML attacks."
-	@priority = 5
+	@priority = 4
 	test ValidateVulnerabilitiesXMLAttacks {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -5308,7 +5308,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-180198 TC-1 and TC-4: The user could be assigned to an existing user group at Portal, during login using Okta as SAML IDP (AC-1), and the missing user group is not created at Portal."
-	@priority = 5
+	@priority = 4
 	test ViewSPInitiatedSSOWithOktaAndUserGroups {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-180198=true";
@@ -5370,7 +5370,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-180198 TC-5: Verify the user group could be assigned even if it's not present at first time login from Okta."
-	@priority = 5
+	@priority = 4
 	test ViewSPInitiatedSSOWithOktaUserGroupCanBeAssignedLater {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-180198=true";
@@ -5450,7 +5450,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-180198 TC-3: The user's non-existing user group at Portal is not created when logging in using Okta as SAML IDP."
-	@priority = 5
+	@priority = 4
 	test ViewSPInitiatedSSOWithOktaUserGroupsAreNotCreatedDuringLogin {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-180198=true";
@@ -5510,7 +5510,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-180198 TC-2: The user could be assigned to multiple existing user groups at the Portal, during login using Okta as SAML IDP."
-	@priority = 5
+	@priority = 4
 	test ViewSPInitiatedSSOWithOktaWithMultipleUserGroups {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-180198=true";
@@ -5950,7 +5950,7 @@ definition {
 	}
 
 	@description = "LPS-123218 TC-1: SP initiated login, using UUID for user matching - Using virtual instances."
-	@priority = 5
+	@priority = 4
 	test ViewSPInitiatedSSOWithSAMLAttributeUUIDUsedForUserMatching {
 		property app.server.bundles.size = "0";
 		property portal.acceptance = "true";

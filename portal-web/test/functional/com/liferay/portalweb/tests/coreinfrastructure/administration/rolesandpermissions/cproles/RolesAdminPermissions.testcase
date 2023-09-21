@@ -32,7 +32,7 @@ definition {
 	}
 
 	@description = "This test automates LPS-144566 and asserts that revoke the User's View permission on Administrator role, you still can assign new roles."
-	@priority = 3
+	@priority = 4
 	test RevokeUserViewPermissionONAdminroleCanStillAssignNewRoles {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 

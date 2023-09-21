@@ -287,7 +287,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-156903. Verify the order of menu items after Cookie Preference Handling is enabled"
-	@priority = 3
+	@priority = 5
 	test VerifyOrderOfMenuItemsInSiteSettings {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

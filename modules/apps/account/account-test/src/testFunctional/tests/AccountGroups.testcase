@@ -23,7 +23,7 @@ definition {
 	}
 
 	@description = "This test asserts the account group name not clickable when user only have the update permission."
-	@priority = 3
+	@priority = 4
 	test AccountGroupNameLinkNotClickableWithOnlyUpdatePermission {
 		task ("Given A new User and a new Account Group exists") {
 			JSONUser.addUser(
@@ -92,7 +92,7 @@ definition {
 	}
 
 	@description = "This test asserts the user with Access in Control Panel permission can acess account group via Control Panel."
-	@priority = 3
+	@priority = 4
 	test CanAccessAccountGroupsInControlPanelWithPermissions {
 		task ("Given A new User exists") {
 			JSONUser.addUser(
@@ -137,7 +137,7 @@ definition {
 	}
 
 	@description = "This test asserts the user with Assign Account permission can assign account to account group."
-	@priority = 3
+	@priority = 4
 	test CanAssignAccountFromAccountGroupWithPermissions {
 		task ("Given A new User/Accounts/Account Groups exists") {
 			JSONUser.addUser(
@@ -255,7 +255,7 @@ definition {
 	}
 
 	@description = "This test assert user can filter the assigned accounts in Account Group by name."
-	@priority = 3
+	@priority = 4
 	test CanFilterAccountsBelongToAccountGroupByName {
 		task ("Given Add a new Account Group and Accounts with different name not in alphabetical order") {
 			JSONAccountGroup.addAccountGroup(
@@ -302,7 +302,7 @@ definition {
 	}
 
 	@description = "This test assert user can filter the assigned accounts in Account Group by status."
-	@priority = 3
+	@priority = 4
 	test CanFilterAccountsBelongToAccountGroupByStatus {
 		task ("Given Add a new Account Group and Accounts with different status") {
 			JSONAccountGroup.addAccountGroup(
@@ -365,7 +365,7 @@ definition {
 	}
 
 	@description = "This test assert user can filter the assigned accounts in Account Group by type."
-	@priority = 3
+	@priority = 4
 	test CanFilterAccountsBelongToAccountGroupByType {
 		task ("Given Add a new Account Group and Accounts with different type") {
 			JSONAccountGroup.addAccountGroup(
@@ -637,7 +637,7 @@ definition {
 	}
 
 	@description = "This test asserts the user with Assign Account permission can unassign account from account group."
-	@priority = 3
+	@priority = 4
 	test CanUnassignAccountFromAccountGroupWithPermissions {
 		task ("Given A new User/Accounts/Account Groups exists") {
 			JSONUser.addUser(
@@ -713,7 +713,7 @@ definition {
 	}
 
 	@description = "This test asserts the user with View Account permission can view account in account group."
-	@priority = 3
+	@priority = 4
 	test CanViewAccountsAssignedToAccountGroupWithPermissions {
 		task ("Given A new User/Accounts/Account Groups exists") {
 			JSONUser.addUser(
@@ -789,7 +789,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-156788. This test asserts that a user with the correct permissions can view and edit the External Reference Code for an Account Group."
-	@priority = 3
+	@priority = 4
 	test UserWithPermissionsCanEditExternalReferenceCode {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 

@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "LPS-112581 TC-4: AntiSamy configuration XML should be configurable through the Portal."
-	@priority = 5
+	@priority = 3
 	test AntiSamyConfigXMLShouldBeConfigurableInPortal {
 		property antisamy.enabled = "true";
 		property portal.acceptance = "true";
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@description = "LPS-112581 TC-3: Knowledge base specific AntiSamy rule should work and sanitize dynamic parameter from KB article."
-	@priority = 5
+	@priority = 3
 	test ModelSpecificAntiSamyRulesShouldWorkForModel {
 		property antisamy.enabled = "true";
 		property portal.acceptance = "true";
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@description = "LRQA-42763 TC-1: Javascript injected into Web Content Display page should be sanitized by AntiSamy."
-	@priority = 4
+	@priority = 3
 	test ScriptInWebContentDisplayPortletShouldBeSanitized {
 		task ("Add public widget page") {
 			JSONLayout.addPublicLayout(
@@ -140,7 +140,7 @@ definition {
 	}
 
 	@description = "LRQA-4988 TC-1: Javascript injected into Wiki portlet should be sanitized by AntiSamy."
-	@priority = 4
+	@priority = 3
 	test ScriptInWikiPortletShouldBeSanitized {
 		task ("Add public widget page") {
 			JSONLayout.addPublicLayout(

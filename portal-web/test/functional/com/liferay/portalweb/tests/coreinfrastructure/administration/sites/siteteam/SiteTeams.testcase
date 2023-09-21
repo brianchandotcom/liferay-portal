@@ -149,7 +149,7 @@ definition {
 	}
 
 	@description = "Able to add multiple site teams."
-	@priority = 5
+	@priority = 4
 	test AddSiteTeamMultiple {
 		property portal.acceptance = "true";
 		property testray.component.names = "Sites Administration";
@@ -192,7 +192,7 @@ definition {
 	}
 
 	@description = "Able to remove user after assigning to site team."
-	@priority = 5
+	@priority = 4
 	@uitest
 	test AddSiteTeamRemoveUser {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
@@ -369,7 +369,7 @@ definition {
 	}
 
 	@description = "Able to find user in site team."
-	@priority = 5
+	@priority = 4
 	test AddSiteTeamSearchUsers {
 		property portal.acceptance = "true";
 		property testray.component.names = "Sites Administration,Users and Organizations";
@@ -424,7 +424,7 @@ definition {
 	}
 
 	@description = "Able to delete site team."
-	@priority = 5
+	@priority = 4
 	@uitest
 	test DeleteSiteTeam {
 		property portal.acceptance = "true";
@@ -448,7 +448,7 @@ definition {
 	}
 
 	@description = "Able to edit site team."
-	@priority = 5
+	@priority = 4
 	@uitest
 	test EditSiteTeam {
 		property portal.acceptance = "true";

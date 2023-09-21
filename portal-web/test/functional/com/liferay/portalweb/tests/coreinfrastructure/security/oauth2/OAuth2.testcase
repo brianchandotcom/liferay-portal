@@ -26,7 +26,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-129398. User can authorize external application multiple times without any user session, when remember device is chosen."
-	@priority = 4
+	@priority = 5
 	test ApplicationCanBeAuthorizedWithoutUserSession {
 		property oauth2.application.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -134,7 +134,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-145191 TC-1:Liferay will not issue an access token back to the client when configure OAuth 2 Application as Client Secret JWT without the client sending client info in JWT."
-	@priority = 4
+	@priority = 5
 	test ApplicationCannotBeAuthorizedWithClientSecretJWTWithoutJWTAssertion {
 		property oauth2.application.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -167,7 +167,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-145190 TC-5 TC-6 TC-7 Request the liferay access token for OAuth2 application with invalid JWTs."
-	@priority = 3
+	@priority = 5
 	test ApplicationCannotBeAuthorizedWithInvalidJWT {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -249,7 +249,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-145191 TC-2:Liferay will not issue an access token back to the client when configure OAuth 2 Application as Private Key JWT without the client sending client info in JWT."
-	@priority = 4
+	@priority = 5
 	test ApplicationCannotBeAuthorizedWithPrivateKeyJWTWithoutJWTAssertion {
 		property oauth2.application.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -502,7 +502,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-129397 TC-2: User can revoke authorizations from a trusted application via kebab menu on the OAuth 2 administration page."
-	@priority = 3
+	@priority = 5
 	test AuthorizationCanBeRevokedViaKebabMenuWithTrustedDevice {
 		property oauth2.application.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -560,7 +560,7 @@ definition {
 	}
 
 	@description = "This is a use case for OAUTH2-216. Authorization prompt should not include the application name when authorizing and no scopes should be stored from the application in the authorization request page."
-	@priority = 3
+	@priority = 5
 	test AuthPromptInRequestScopeShouldNotBeVisible {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.BundlePrefixHandlerFactoryConfiguration~default.config";
@@ -642,7 +642,7 @@ definition {
 
 	@description = "This is a use case for OAUTH2-259 and LPS-156552. Verify that client credential is in the user scope and can be added to an external application. Blocked by LPS-191261."
 	@ignore = "true"
-	@priority = 4
+	@priority = 5
 	test ClientCredentialsShouldBeConfigurableInUserScope {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";
 		property test.liferay.virtual.instance = "false";
@@ -805,7 +805,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-48777. User can edit external applications to enable or disable permissions in both scopes."
-	@priority = 3
+	@priority = 5
 	test EditApplicationScopesAndViewLanguageKeys {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~default.config";
 		property osgi.module.configurations = "mapping=[\"example-scope-1,example-scope-2\=everything\"]${line.separator}osgi.jaxrs.name=\"liferay-oauth2-scope-sample-qa-app\"${line.separator}passthrough=\"true\"";
@@ -898,7 +898,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105156. Authorized application should be automatically removed from the User's connect table when it is expired."
-	@priority = 4
+	@priority = 5
 	test ExpiredAuthorizationShouldBeRemovedFromTable {
 		property oauth2.application.enabled = "true";
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config:com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration.config";
@@ -1100,7 +1100,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-47381. User can authorize external applications."
-	@priority = 3
+	@priority = 5
 	test ExternalApplicationCanBeAuthorized {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property oauth2.application.enabled = "true";
@@ -1134,7 +1134,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-126596. User can authorize trusted external applications."
-	@priority = 3
+	@priority = 5
 	test ExternalApplicationCanBeTrustedAndAuthorized {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property oauth2.application.enabled = "true";
@@ -1169,7 +1169,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-41000. User can view and revoke granted authorizations."
-	@priority = 3
+	@priority = 5
 	test GrantedAuthorizationsCanBeRevoked {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -1516,7 +1516,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-170501. TC-1: Look up the remote apps' clientId via externalReferenceCode."
-	@priority = 4
+	@priority = 5
 	test LookUpRemoteAppClientIdViaERC {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1566,7 +1566,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-48782. Add and Edit OAuth SAP entries."
-	@priority = 3
+	@priority = 5
 	test OAuth2SAPEntriesCanBeAddedAndEdited {
 		property custom.properties = "access.control.sanitize.security.exception=false${line.separator}json.service.serialize.throwable=true";
 		property test.liferay.virtual.instance = "false";
@@ -1690,7 +1690,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-190491. Verify that oAuthApplication* client extension scopes will not lose in a clustered environment."
-	@priority = 4
+	@priority = 5
 	test OAuthApplicationClientExtensionScopesWorkWithClusteredPortals {
 		property app.server.bundles.size = "1";
 		property cluster.enabled = "true";
@@ -1748,7 +1748,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-165963. TC-1: Assert public key is present in JWKS format in URI where DXP makes."
-	@priority = 3
+	@priority = 5
 	test ObtainPublicKeyInJWKSFormatInURI {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1789,7 +1789,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-110393. Verify that panels under global scopes can be expanded."
-	@priority = 4
+	@priority = 5
 	test PanelsShouldBeExpandableOnGlobalScopes {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1849,7 +1849,7 @@ definition {
 	}
 
 	@description = "Verify that panels under resource scopes can be expanded."
-	@priority = 4
+	@priority = 5
 	test PanelsShouldBeExpandableOnResourceScopes {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1910,7 +1910,7 @@ definition {
 
 	@description = "This is a use case for LRQA-57134. Refresh token can expire and can be renewed."
 	@ignore = "true"
-	@priority = 4
+	@priority = 5
 	test RefreshTokenTimeCanBeSetExpiredAndRenewed {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 		property oauth2.application.enabled = "true";
@@ -1983,7 +1983,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-129398. User can authorize multiple external applications which have the remember device option checked."
-	@priority = 4
+	@priority = 5
 	test RememberDeviceShouldWorkWithMultipleAuthorizations {
 		property oauth2.application.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -2045,7 +2045,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-129397 TC-3: User can evoke authorizations via new kebab menu option in OAuth 2 application's row when the device is remembered."
-	@priority = 3
+	@priority = 5
 	test RevokeAuthorizationViaKebabMenuWithRememberDevice {
 		property oauth2.application.enabled = "true";
 		property test.liferay.virtual.instance = "false";
@@ -2105,7 +2105,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-48773. User can update scope bundle prefixes."
-	@priority = 3
+	@priority = 5
 	test ScopeBundlePrefixesCanBeUpdated {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -2172,7 +2172,7 @@ definition {
 	}
 
 	@description = "This is a use case for LRQA-40999. User can add and remove configurations in the scope mappings."
-	@priority = 3
+	@priority = 5
 	test ScopeMappingsCanBeUpdated {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration~liferay~oauth2~scope~sample~qa~app.config";
 		property osgi.module.configurations = "mapping=[\"example-scope-1,example-scope-2\=everything.read,everything.write\"]${line.separator}osgi.jaxrs.name=\"liferay-oauth2-scope-sample-qa-app\"${line.separator}passthrough=\"false\"";
@@ -2228,7 +2228,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-105158. Scopes of external applications are displayed in lists on Instance Level."
-	@priority = 4
+	@priority = 5
 	test ScopesShouldBeDisplayedAsListOnInstanceLevel {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -2268,7 +2268,7 @@ definition {
 
 	@description = "This is a use case for LPS-130869. OAuth2 token introspection should work with empty client secret for PKCE application."
 	@ignore = "true"
-	@priority = 4
+	@priority = 5
 	test TokenIntrospectionShouldWorkWithEmptyClientSecretForPKCE {
 		property oauth2.application.enabled = "true";
 		property portal.ssl.enabled = "true";

@@ -27,7 +27,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-184518. TC-1. Verify Site-level CSP configuration could be set and work for the site with SiteURL and overwrites instance level."
-	@priority = 4
+	@priority = 5
 	test CanSetSiteLevelCSPAndOverwritesInstanceLevelCSP {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-184518. TC-2. Verify Site-level CSP disabled CSP could overwrite Instance-level CSP."
-	@priority = 4
+	@priority = 5
 	test DisableSiteLevelCSPOverwritesInstanceLevelCSP {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -196,7 +196,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-184518. TC-3. Verify After the Site-level CSP reset, the site will display Instance level CSP if configured."
-	@priority = 4
+	@priority = 5
 	test SiteDisplayInstanceLevelCSPAfterResetSiteLevelCSP {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -317,7 +317,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-182349. TC-3. Verify the prespecified Content Security Policy settings could be configured at Instance level using Web ID."
-	@priority = 4
+	@priority = 5
 	test VerifyCSPCouldConfiguredByWebId {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -352,7 +352,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-182349. TC-1, TC-2 and TC-4. Verify the prespecified Content Security Policy settings is present at Instance level and present in the Request headers."
-	@priority = 4
+	@priority = 5
 	test VerifyCSPCouldConfiguredToBlockImageSource {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

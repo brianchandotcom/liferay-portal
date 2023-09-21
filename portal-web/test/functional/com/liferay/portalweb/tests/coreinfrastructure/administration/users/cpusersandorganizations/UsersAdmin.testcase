@@ -35,7 +35,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-119168."
-	@priority = 5
+	@priority = 4
 	test AddUser {
 		property testray.component.names = "Training";
 
@@ -207,7 +207,7 @@ definition {
 			userLoginFullName = "test test");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressAt {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -231,7 +231,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressBackSlash {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -246,7 +246,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressBackTick {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -260,7 +260,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressCaret {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -274,7 +274,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressCloseBracket {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -289,7 +289,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressCloseCurlyBrace {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -303,7 +303,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressCloseParenthesis {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -318,7 +318,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressColon {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -333,7 +333,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressDash {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -347,7 +347,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressEqual {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -372,7 +372,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressGreaterThan {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -387,7 +387,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressMinus {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -401,7 +401,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressNull {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -416,7 +416,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressOpenBracket {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -431,7 +431,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressOpenCurlyBrace {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -445,7 +445,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressOpenParenthesis {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -484,7 +484,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressRoot {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -499,7 +499,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressSemicolon {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -514,7 +514,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserEmailAddressUnderline {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -576,7 +576,7 @@ definition {
 		}
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserScreenNameInvalid {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -600,7 +600,7 @@ definition {
 			userScreenNameVariation = "Invalid");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserScreenNameNumber {
 		property custom.properties = "users.screen.name.allow.numeric=true";
 
@@ -681,7 +681,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-130750."
-	@priority = 2
+	@priority = 4
 	test AssertRelevanceSortOptionDisplaysWhenSearching {
 		JSONUser.addUser(
 			userEmailAddress = "userea1@liferay.com",
@@ -810,7 +810,7 @@ definition {
 	}
 
 	@description = "This is a use case for can add comment for user."
-	@priority = 2
+	@priority = 4
 	test CanAddComment {
 		User.openUsersAdmin();
 
@@ -858,7 +858,7 @@ definition {
 		Portlet.viewDefaultTitle(portletName = "Asset Publisher");
 	}
 
-	@priority = 3
+	@priority = 4
 	test CanBulkActivateUsers {
 		for (var userNum : list "1,2,3,4,5") {
 			JSONUser.addUser(
@@ -898,7 +898,7 @@ definition {
 	}
 
 	@description = "This test changes to cards view for users."
-	@priority = 2
+	@priority = 4
 	test CanChangeToCardsView {
 		JSONUser.addUser(
 			userEmailAddress = "userea1@liferay.com",
@@ -918,7 +918,7 @@ definition {
 	}
 
 	@description = "This test changes to list view for users."
-	@priority = 2
+	@priority = 4
 	test CanChangeToListView {
 		JSONUser.addUser(
 			userEmailAddress = "userea1@liferay.com",
@@ -971,7 +971,7 @@ definition {
 			locator1 = "ProductMenu#PORTLET");
 	}
 
-	@priority = 5
+	@priority = 4
 	test ChangeUserPassword {
 		property portal.acceptance = "true";
 
@@ -1034,7 +1034,7 @@ definition {
 	}
 
 	@description = "This test changes password through the API Explorer GUI."
-	@priority = 3
+	@priority = 4
 	test ChangeUserPasswordViaAPIExplorerGUI {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1108,7 +1108,7 @@ definition {
 	}
 
 	@description = "This test changes password through the Password Reset link sent in email."
-	@priority = 5
+	@priority = 4
 	test ChangingPasswordIsSuccessfulViaPasswordResetLink {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
@@ -1155,7 +1155,7 @@ definition {
 			userEmailAddress = "userea@liferay.com");
 	}
 
-	@priority = 5
+	@priority = 4
 	test DeleteUser {
 		property portal.acceptance = "true";
 
@@ -1200,7 +1200,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-121271."
-	@priority = 3
+	@priority = 4
 	test EditAlertsandAnnouncementsDelivery {
 		property portal.acceptance = "true";
 
@@ -1415,7 +1415,7 @@ definition {
 		User.viewIsPrimary(primaryValue = "1400 Montefino Ave");
 	}
 
-	@priority = 3
+	@priority = 4
 	test EditUserDisplaySettings {
 		property portal.acceptance = "true";
 
@@ -1528,7 +1528,7 @@ definition {
 			searchContainerType = "phonesSearchContainer");
 	}
 
-	@priority = 5
+	@priority = 4
 	test EditUserSite {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -1834,7 +1834,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-145025. No redirect and language is changed when change the language in password reset page."
-	@priority = 3
+	@priority = 4
 	test LanguageChangedAndNoRedirectWhenChangeLanguageInPasswordResetPage {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.smtp.server.enabled = "true";
@@ -1924,7 +1924,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-121270."
-	@priority = 3
+	@priority = 4
 	test LoginUserWithProfileSite {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
@@ -1988,7 +1988,7 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
-	@priority = 3
+	@priority = 4
 	test OnlyGlobalTagCanbeAssociatedToUser {
 		JSONAssettag.addTag(
 			groupName = "Guest",
@@ -2112,7 +2112,7 @@ definition {
 			userScreenNameVariation = "Invalid");
 	}
 
-	@priority = 5
+	@priority = 4
 	test SearchUser {
 		property portal.acceptance = "true";
 
@@ -2133,7 +2133,7 @@ definition {
 		Search.clearSearchResult();
 	}
 
-	@priority = 3
+	@priority = 4
 	test SearchUserFullName {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -2160,7 +2160,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test SearchUserQuotes {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -2292,7 +2292,7 @@ definition {
 			value1 = "Please enter the same value again.");
 	}
 
-	@priority = 3
+	@priority = 4
 	test TestRequiredFields {
 		User.openUsersAdmin();
 
@@ -2310,7 +2310,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-104643."
-	@priority = 3
+	@priority = 4
 	test UpdateExistUserEmailAddressByScript {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -2509,7 +2509,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-111656"
-	@priority = 3
+	@priority = 4
 	test ViewCategoryAssociatedToUser {
 		JSONCategory.addVocabulary(
 			groupName = "Global",
@@ -2556,7 +2556,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-176074. TC-2: Email verification notification template could be set to include user's first name."
-	@priority = 3
+	@priority = 4
 	test ViewEmailVerificationNotificationTemplateUpdated {
 		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=true${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.liferay.virtual.instance = "false";
@@ -2764,7 +2764,7 @@ definition {
 		User.loginUserPG();
 	}
 
-	@priority = 5
+	@priority = 4
 	test ViewLoginForActivatedUser {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
@@ -2844,7 +2844,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@priority = 3
+	@priority = 4
 	test ViewPageRenderedProperlyAfterBeYourselfAgain {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
@@ -2957,7 +2957,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-111136"
-	@priority = 3
+	@priority = 4
 	test WelcomeEmailContainsVirtualHostSendToNewUser {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com${line.separator}mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property test.liferay.virtual.instance = "false";

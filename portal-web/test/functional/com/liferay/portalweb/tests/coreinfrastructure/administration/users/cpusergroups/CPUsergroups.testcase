@@ -24,7 +24,7 @@ definition {
 		}
 	}
 
-	@priority = 5
+	@priority = 4
 	test AddMember {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -49,7 +49,7 @@ definition {
 			userScreenName = "usersn");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserGroupNameDuplicate {
 		UserGroup.openUserGroupsAdmin();
 
@@ -66,7 +66,7 @@ definition {
 		UserGroup.viewCP(userGroupName = "UG UserGroup Name");
 	}
 
-	@priority = 3
+	@priority = 4
 	test AddUserGroupNameWithInvalidCharacters {
 		UserGroup.openUserGroupsAdmin();
 
@@ -97,7 +97,7 @@ definition {
 		UserGroup.viewDefault();
 	}
 
-	@priority = 5
+	@priority = 4
 	test AddUserGroups {
 		property portal.acceptance = "true";
 
@@ -116,7 +116,7 @@ definition {
 		UserGroup.viewCP(userGroupName = "UG UserGroup3 Name");
 	}
 
-	@priority = 5
+	@priority = 4
 	test DeleteUserGroup {
 		property portal.acceptance = "true";
 
@@ -158,7 +158,7 @@ definition {
 		UserGroup.viewCP(userGroupName = "UG UserGroup Name");
 	}
 
-	@priority = 5
+	@priority = 4
 	test EditUserGroup {
 		property portal.acceptance = "true";
 
@@ -177,7 +177,7 @@ definition {
 		UserGroup.viewCP(userGroupName = "UG UserGroup Name Edit");
 	}
 
-	@priority = 5
+	@priority = 4
 	test RemoveMember {
 		property portal.acceptance = "true";
 
@@ -208,7 +208,7 @@ definition {
 			userGroupName = "UG UserGroup Name");
 	}
 
-	@priority = 5
+	@priority = 4
 	test SearchCurrentMembersAssignedToUserGroup {
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
@@ -249,7 +249,7 @@ definition {
 			locator1 = "LexiconTable#TABLE_ROW");
 	}
 
-	@priority = 5
+	@priority = 4
 	test Smoke {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";

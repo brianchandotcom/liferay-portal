@@ -111,11 +111,16 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 			else if (fileName.endsWith(".java")) {
 				featureFlags.addAll(
 					_getFeatureFlags(fileContent, _featureFlagPattern1));
-				featureFlags.addAll(_getFeatureFlags(fileContent));
+				featureFlags.addAll(_getFeatureFlags(fileContent, true));
 			}
 			else if (fileName.endsWith(".json")) {
 				featureFlags.addAll(
 					_getFeatureFlags(fileContent, _featureFlagPattern4));
+			}
+			else if (fileName.endsWith(".jsp")) {
+				featureFlags.addAll(
+					_getFeatureFlags(fileContent, _featureFlagPattern3));
+				featureFlags.addAll(_getFeatureFlags(fileContent, false));
 			}
 			else {
 				featureFlags.addAll(
@@ -195,14 +200,25 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private List<String> _getFeatureFlags(String content) {
+	private List<String> _getFeatureFlags(String content, boolean javaSource) {
 		List<String> featureFlags = new ArrayList<>();
 
 		Matcher matcher = _featureFlagPattern2.matcher(content);
 
 		while (matcher.find()) {
+			String methodCall = null;
+
+			if (javaSource) {
+				methodCall = JavaSourceUtil.getMethodCall(
+					content, matcher.start());
+			}
+			else {
+				methodCall = JavaSourceUtil.getMethodCall(
+					content.substring(matcher.start()), 0);
+			}
+
 			List<String> parameterList = JavaSourceUtil.getParameterList(
-				JavaSourceUtil.getMethodCall(content, matcher.start()));
+				methodCall);
 
 			if (parameterList.isEmpty()) {
 				return featureFlags;

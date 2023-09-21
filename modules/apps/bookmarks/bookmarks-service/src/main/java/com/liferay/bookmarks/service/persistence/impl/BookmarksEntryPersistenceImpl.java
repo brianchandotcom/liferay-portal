@@ -13480,6 +13480,7 @@ public class BookmarksEntryPersistenceImpl
 	static {
 		Set<String> ctControlColumnNames = new HashSet<String>();
 		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
 		Set<String> ctStrictColumnNames = new HashSet<String>();
 
 		ctControlColumnNames.add("mvccVersion");
@@ -13491,13 +13492,13 @@ public class BookmarksEntryPersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
-		ctStrictColumnNames.add("folderId");
-		ctStrictColumnNames.add("treePath");
-		ctStrictColumnNames.add("name");
-		ctStrictColumnNames.add("url");
-		ctStrictColumnNames.add("description");
-		ctStrictColumnNames.add("priority");
-		ctStrictColumnNames.add("lastPublishDate");
+		ctMergeColumnNames.add("folderId");
+		ctMergeColumnNames.add("treePath");
+		ctMergeColumnNames.add("name");
+		ctMergeColumnNames.add("url");
+		ctMergeColumnNames.add("description");
+		ctMergeColumnNames.add("priority");
+		ctMergeColumnNames.add("lastPublishDate");
 		ctStrictColumnNames.add("status");
 		ctStrictColumnNames.add("statusByUserId");
 		ctStrictColumnNames.add("statusByUserName");
@@ -13507,6 +13508,7 @@ public class BookmarksEntryPersistenceImpl
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.PK, Collections.singleton("entryId"));
 		_ctColumnNamesMap.put(

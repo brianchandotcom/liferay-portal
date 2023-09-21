@@ -303,7 +303,7 @@ const AppsPanel = ({
 					size={Liferay?.FeatureFlags?.['LPS-184404'] ? false : 'xl'}
 				>
 					<ClayLayout.Row>
-						<ClayLayout.Col className="pr-0" md="9" xl="8">
+						<ClayLayout.Col className="pr-3" md="9" xl="8">
 							<ClayLayout.ContentRow
 								className="applications-menu-border-top bg-white c-py-3"
 								verticalAlign="center"

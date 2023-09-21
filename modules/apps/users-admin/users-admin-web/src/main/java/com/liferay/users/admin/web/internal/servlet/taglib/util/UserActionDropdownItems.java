@@ -174,7 +174,7 @@ public class UserActionDropdownItems {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getDeleteActionUnsafeConsumer() {
+		_getDeactivateActionUnsafeConsumer() {
 
 		if (_user.isActive()) {
 			return dropdownItem -> {
@@ -196,6 +196,12 @@ public class UserActionDropdownItems {
 					LanguageUtil.get(_httpServletRequest, "deactivate"));
 			};
 		}
+
+		return null;
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDeleteActionUnsafeConsumer() {
 
 		if (!_user.isActive() && PropsValues.USERS_DELETE) {
 			return dropdownItem -> {

@@ -75,7 +75,7 @@ definition {
 		}
 
 		task ("Assert that the cohort analysis card shows anonymous visitors after their first views") {
-			Click(locator1 = "ACSites#COHORT_ANALYSIS_SELECT_VISITOR_TYPE",);
+			Click(locator1 = "ACSites#COHORT_ANALYSIS_SELECT_VISITOR_TYPE");
 
 			Click(
 				locator1 = "ACSegments#ACTIVITIES_CRITERION_DROPDOWN",

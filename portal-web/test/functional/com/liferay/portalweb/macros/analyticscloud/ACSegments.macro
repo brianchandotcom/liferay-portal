@@ -377,7 +377,7 @@ definition {
 
 			Click(
 				locator1 = "ACSegments#ACTIVITIES_CRITERION_DROPDOWN",
-				operator = "${timeOption}");
+				operator = ${timeOption});
 		}
 
 		if (isSet(timePeriod)) {

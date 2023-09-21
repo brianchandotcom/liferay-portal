@@ -18,11 +18,6 @@ html#{$cadmin-selector} {
 	}
 
 	.cadmin {
-		&.lfr-add-panel.open-admin-panel.sidenav-menu-slider {
-			visibility: visible;
-			width: $admin-panel-width;
-		}
-
 		&.lfr-admin-panel {
 			&.sidenav-menu-slider {
 				/* stylelint-disable */

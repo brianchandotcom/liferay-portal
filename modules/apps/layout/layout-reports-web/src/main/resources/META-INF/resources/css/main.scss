@@ -3,11 +3,6 @@
 html#{$cadmin-selector} {
 	.cadmin {
 		&.lfr-layout-reports-panel {
-			&.open-admin-panel.sidenav-menu-slider {
-				visibility: visible;
-				width: 320px;
-			}
-
 			.failing-element {
 				&:not(:first-child) {
 					margin-top: 8px;

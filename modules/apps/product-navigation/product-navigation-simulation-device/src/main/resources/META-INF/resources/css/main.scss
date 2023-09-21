@@ -3,11 +3,6 @@
 html#{$cadmin-selector} {
 	.cadmin {
 		&.simulation-panel {
-			&.open-admin-panel.sidenav-menu-slider {
-				visibility: visible;
-				width: 320px;
-			}
-
 			.sidebar {
 				border-left: 1px solid $cadmin-gray-300;
 			}

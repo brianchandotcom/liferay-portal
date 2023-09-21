@@ -4,11 +4,6 @@
 
 html#{$cadmin-selector} .cadmin {
 	&.lfr-segments-experiment-panel {
-		&.open-admin-panel.sidenav-menu-slider {
-			visibility: visible;
-			width: 320px;
-		}
-
 		.btn-secondary {
 			svg.lexicon-icon-ellipsis-v {
 				fill: $gray-600;

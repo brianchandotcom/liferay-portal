@@ -39,6 +39,12 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 	@Override
 	public T create(JSONObject jsonObject) {
+		long id = jsonObject.getLong("id");
+
+		if (id != 0) {
+			throw new RuntimeException("Entity already exists");
+		}
+
 		JSONObject responseJSONObject = _create(jsonObject);
 
 		if (responseJSONObject == null) {

@@ -50,6 +50,7 @@ export default function EditObjectFolder({
 		addObjectRelationship: false,
 		deleteObjectDefinition: false,
 		deleteObjectFolder: false,
+		deleteObjectRelationship: false,
 		editObjectDefinitionExternalReferenceCode: false,
 		editObjectFolder: false,
 		moveObjectDefinition: false,

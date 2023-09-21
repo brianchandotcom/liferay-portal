@@ -73,6 +73,7 @@ export type TAction =
 	| {
 			payload: {
 				objectFolders: ObjectFolder[];
+				rightSidebarType?: RightSidebarType;
 				selectedObjectFolder: ObjectFolder;
 			};
 			type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE;

@@ -8,11 +8,15 @@
 interface ModalDeleteObjectRelationshipProps {
 	handleOnClose: () => void;
 	objectRelationship: ObjectRelationship;
+	onAfterSubmit?: () => void;
+	reload?: boolean;
 	setObjectRelationship?: (value: ObjectRelationship | null) => void;
 }
 export declare function ModalDeleteObjectRelationship({
 	handleOnClose,
 	objectRelationship,
+	onAfterSubmit,
+	reload,
 	setObjectRelationship,
 }: ModalDeleteObjectRelationshipProps): JSX.Element;
 export {};

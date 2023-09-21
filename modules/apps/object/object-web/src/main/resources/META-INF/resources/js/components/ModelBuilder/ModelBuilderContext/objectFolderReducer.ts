@@ -389,7 +389,11 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 		}
 
 		case TYPES.UPDATE_MODEL_BUILDER_STRUCTURE: {
-			const {objectFolders, selectedObjectFolder} = action.payload;
+			const {
+				objectFolders,
+				rightSidebarType,
+				selectedObjectFolder,
+			} = action.payload;
 
 			const newLeftSidebarItems = objectFolders.map((objectFolder) => {
 				const leftSidebarObjectDefinitionItems = objectFolder.objectDefinitions?.map(
@@ -552,7 +556,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 
 			const newObjectRelationshipEdges = getNonOverlappingEdges(allEdges);
 
-			return {
+			let newModelBuilderState = {
 				...state,
 				elements: [
 					...newObjectDefinitionNodes,
@@ -561,6 +565,15 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				leftSidebarItems: newLeftSidebarItems,
 				selectedObjectFolder,
 			};
+
+			if (rightSidebarType) {
+				newModelBuilderState = {
+					...newModelBuilderState,
+					rightSidebarType,
+				};
+			}
+
+			return newModelBuilderState;
 		}
 
 		case TYPES.SET_ELEMENTS: {

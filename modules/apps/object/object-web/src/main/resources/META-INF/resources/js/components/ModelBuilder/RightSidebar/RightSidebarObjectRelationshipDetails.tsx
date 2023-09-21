@@ -21,10 +21,12 @@ import {
 } from '@liferay/object-js-components-web';
 import {InputLocalized} from 'frontend-js-components-web';
 
+import {defaultLanguageId} from '../../../utils/constants';
 import {firstLetterUppercase} from '../../../utils/string';
 import {ModalDeleteObjectRelationship} from '../../ObjectRelationship/ModalDeleteObjectRelationship';
 import {useObjectRelationshipForm} from '../../ObjectRelationship/ObjectRelationshipFormBase';
 import SelectObjectRelationship from '../../ObjectRelationship/SelectObjectRelationship';
+import {getUpdatedModelBuilderStructurePayload} from '../../ViewObjectDefinitions/objectDefinitionUtil';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {ObjectRelationshipEdgeData} from '../types';
 
@@ -35,7 +37,10 @@ interface RightSidebarObjectRelationshipDetailsProps {
 export function RightSidebarObjectRelationshipDetails({
 	objectRelationshipDeletionTypes,
 }: RightSidebarObjectRelationshipDetailsProps) {
-	const [{baseResourceURL, elements}, dispatch] = useObjectFolderContext();
+	const [
+		{baseResourceURL, elements, selectedObjectFolder},
+		dispatch,
+	] = useObjectFolderContext();
 	const [objectDefinition1, setObjectDefinition1] = useState<
 		Partial<ObjectDefinition>
 	>();
@@ -51,12 +56,10 @@ export function RightSidebarObjectRelationshipDetails({
 		setObjectRelationshipRestContextPath,
 	] = useState('');
 	const [readOnly, setReadOnly] = useState(true);
-	const [
-		showModalDeleteObjectRelationship,
-		setShowModalDeleteObjectRelationship,
-	] = useState(false);
 
-	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+	const [showModal, setShowModal] = useState<Partial<ModelBuilderModals>>({
+		deleteObjectRelationship: false,
+	});
 
 	const selectedObjectRelationshipEdge = elements.find((element) => {
 		if (isEdge(element)) {
@@ -197,6 +200,17 @@ export function RightSidebarObjectRelationshipDetails({
 		}
 	};
 
+	const updateModelBuilderStructure = async () => {
+		const payload = await getUpdatedModelBuilderStructurePayload(
+			selectedObjectFolder.name
+		);
+
+		dispatch({
+			payload: {...payload, rightSidebarType: 'empty'},
+			type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE,
+		});
+	};
+
 	return (
 		<>
 			<div className="lfr-objects__model-builder-right-sidebar-relationship-title-container">
@@ -223,7 +237,9 @@ export function RightSidebarObjectRelationshipDetails({
 						aria-label={Liferay.Language.get('delete-relationship')}
 						displayType="secondary"
 						onClick={() =>
-							setShowModalDeleteObjectRelationship(true)
+							setShowModal({
+								deleteObjectRelationship: true,
+							})
 						}
 						symbol="trash"
 						title={Liferay.Language.get('delete-relationship')}
@@ -307,12 +323,16 @@ export function RightSidebarObjectRelationshipDetails({
 					)}
 			</div>
 
-			{showModalDeleteObjectRelationship && (
+			{showModal.deleteObjectRelationship && (
 				<ModalDeleteObjectRelationship
 					handleOnClose={() =>
-						setShowModalDeleteObjectRelationship(false)
+						setShowModal({
+							deleteObjectRelationship: false,
+						})
 					}
 					objectRelationship={values as ObjectRelationship}
+					onAfterSubmit={() => updateModelBuilderStructure()}
+					reload={false}
 				/>
 			)}
 		</>

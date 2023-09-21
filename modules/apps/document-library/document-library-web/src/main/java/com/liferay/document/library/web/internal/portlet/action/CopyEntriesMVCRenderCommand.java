@@ -13,7 +13,7 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.document.library.web.internal.exception.FolderSizeLimitExceededException;
+import com.liferay.document.library.web.internal.exception.EntrySizeLimitExceededException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -61,8 +61,8 @@ public class CopyEntriesMVCRenderCommand implements MVCRenderCommand {
 
 			return "/document_library/copy_entries.jsp";
 		}
-		catch (FolderSizeLimitExceededException
-					folderSizeLimitExceededException) {
+		catch (EntrySizeLimitExceededException
+					entrySizeLimitExceededException) {
 
 			HttpServletRequest originalHttpServletRequest =
 				_portal.getOriginalServletRequest(
@@ -70,8 +70,8 @@ public class CopyEntriesMVCRenderCommand implements MVCRenderCommand {
 
 			SessionErrors.add(
 				originalHttpServletRequest.getSession(),
-				FolderSizeLimitExceededException.class,
-				folderSizeLimitExceededException);
+				EntrySizeLimitExceededException.class,
+				entrySizeLimitExceededException);
 
 			_sendRedirect(renderRequest, renderResponse);
 
@@ -150,11 +150,9 @@ public class CopyEntriesMVCRenderCommand implements MVCRenderCommand {
 				_dlSizeLimitConfigurationProvider.getSystemMaxSizeToCopy(),
 				size)) {
 
-			throw new FolderSizeLimitExceededException(
-				_language.format(
+			throw new EntrySizeLimitExceededException(
+				_language.get(
 					themeDisplay.getLocale(),
-					"folder-cannot-be-copied-because-it-exceeds-the-limit-" +
-						"defined-in-x-Settings-x",
 					DLCopyValidationUtil.getCopyToValidationMessage(
 						_dlSizeLimitConfigurationProvider.
 							getCompanyMaxSizeToCopy(

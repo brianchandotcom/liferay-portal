@@ -5,14 +5,17 @@
 
 package com.liferay.asset.auto.tagger.internal.model.listener;
 
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration;
+import com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfigurationFactory;
 import com.liferay.asset.auto.tagger.internal.constants.AssetAutoTaggerDestinationNames;
-import com.liferay.asset.auto.tagger.internal.helper.AssetAutoTaggerHelper;
+import com.liferay.asset.auto.tagger.internal.util.AssetAutoTaggerUtil;
 import com.liferay.asset.auto.tagger.model.AssetAutoTaggerEntry;
 import com.liferay.asset.auto.tagger.service.AssetAutoTaggerEntryLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
@@ -20,6 +23,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
@@ -78,7 +82,9 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 					if (!updateAutoTags &&
 						((assetEntry.getPublishDate() == null) ||
 						 ListUtil.isNotEmpty(assetEntry.getTags()) ||
-						 !_assetAutoTaggerHelper.isAutoTaggable(assetEntry))) {
+						 !AssetAutoTaggerUtil.isAutoTaggable(
+							 _getAssetAutoTaggerConfiguration(assetEntry),
+							 assetEntry))) {
 
 						return null;
 					}
@@ -117,6 +123,15 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 		_destinationServiceRegistration.unregister();
 	}
 
+	private AssetAutoTaggerConfiguration _getAssetAutoTaggerConfiguration(
+			AssetEntry assetEntry)
+		throws PortalException {
+
+		return _assetAutoTaggerConfigurationFactory.
+			getGroupAssetAutoTaggerConfiguration(
+				_groupLocalService.getGroup(assetEntry.getGroupId()));
+	}
+
 	private boolean _isUpdateAutoTags() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -130,10 +145,11 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 	}
 
 	@Reference
-	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
+	private AssetAutoTaggerConfigurationFactory
+		_assetAutoTaggerConfigurationFactory;
 
 	@Reference
-	private AssetAutoTaggerHelper _assetAutoTaggerHelper;
+	private AssetAutoTaggerEntryLocalService _assetAutoTaggerEntryLocalService;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
@@ -142,6 +158,9 @@ public class AssetEntryModelListener extends BaseModelListener<AssetEntry> {
 	private DestinationFactory _destinationFactory;
 
 	private ServiceRegistration<Destination> _destinationServiceRegistration;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private MessageBus _messageBus;

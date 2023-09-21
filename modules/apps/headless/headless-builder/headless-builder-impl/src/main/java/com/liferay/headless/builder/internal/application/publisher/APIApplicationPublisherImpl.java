@@ -252,8 +252,6 @@ public class APIApplicationPublisherImpl
 
 			},
 			HashMapDictionaryBuilder.<String, Object>put(
-				"api.version", "v1.0"
-			).put(
 				"osgi.jaxrs.application.select",
 				"(osgi.jaxrs.name=" + apiApplication.getBaseURL() + ")"
 			).put(

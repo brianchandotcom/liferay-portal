@@ -40,7 +40,7 @@ public class CreateJobEventHandler extends BaseObjectEventHandler {
 			for (int i = 0; i < buildsJSONArray.length(); i++) {
 				JSONObject buildJSONObject = buildsJSONArray.getJSONObject(i);
 
-				BuildEntity buildEntity = buildEntityRepository.add(
+				BuildEntity buildEntity = buildEntityRepository.create(
 					jobEntity, buildJSONObject);
 
 				JSONObject parametersJSONObject = buildJSONObject.optJSONObject(
@@ -48,7 +48,7 @@ public class CreateJobEventHandler extends BaseObjectEventHandler {
 
 				if (parametersJSONObject != null) {
 					for (String key : parametersJSONObject.keySet()) {
-						buildParameterEntityRepository.add(
+						buildParameterEntityRepository.create(
 							buildEntity, key,
 							parametersJSONObject.getString(key));
 					}
@@ -102,7 +102,7 @@ public class CreateJobEventHandler extends BaseObjectEventHandler {
 	private JobEntity _createJobEntity(JSONObject jobJSONObject) {
 		JobEntityRepository jobEntityRepository = getJobEntityRepository();
 
-		return jobEntityRepository.add(jobJSONObject);
+		return jobEntityRepository.create(jobJSONObject);
 	}
 
 }

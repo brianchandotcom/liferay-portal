@@ -40,16 +40,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class JobRestController {
 
-	@PostMapping("/add")
-	public ResponseEntity<String> addJob(
+	@PostMapping("/create")
+	public ResponseEntity<String> createJob(
 		@AuthenticationPrincipal Jwt jwt, @RequestBody String body) {
 
-		JobEntity jobEntity = _jobEntityRepository.add(new JSONObject(body));
+		JobEntity jobEntity = _jobEntityRepository.create(new JSONObject(body));
 
 		for (JSONObject initialBuildJSONObject :
 				jobEntity.getInitialBuildJSONObjects()) {
 
-			BuildEntity buildEntity = _buildEntityRepository.add(
+			BuildEntity buildEntity = _buildEntityRepository.create(
 				jobEntity, initialBuildJSONObject);
 
 			JSONArray buildParametersJSONArray =
@@ -59,7 +59,7 @@ public class JobRestController {
 				JSONObject buildParameterJSONObject =
 					buildParametersJSONArray.getJSONObject(i);
 
-				_buildParameterEntityRepository.add(
+				_buildParameterEntityRepository.create(
 					buildEntity, buildParameterJSONObject);
 			}
 		}

@@ -56,7 +56,7 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 		BuildRunEntityRepository buildRunEntityRepository =
 			getBuildRunRepository();
 
-		BuildRunEntity buildRunEntity = buildRunEntityRepository.add(
+		BuildRunEntity buildRunEntity = buildRunEntityRepository.create(
 			buildEntity, BuildRunEntity.State.QUEUED);
 
 		EventJmsController eventJmsController = getEventJmsController();

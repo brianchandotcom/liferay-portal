@@ -45,10 +45,10 @@ public class CreateJenkinsCohortEventHandler extends BaseObjectEventHandler {
 					jenkinsServersJSONArray.getJSONObject(i);
 
 				JenkinsServerEntity jenkinsServerEntity =
-					jenkinsServerEntityRepository.add(
+					jenkinsServerEntityRepository.create(
 						jenkinsCohortEntity, jenkinsServerJSONObject);
 
-				jenkinsNodeEntityRepository.addAll(jenkinsServerEntity);
+				jenkinsNodeEntityRepository.createAll(jenkinsServerEntity);
 			}
 		}
 
@@ -67,7 +67,7 @@ public class CreateJenkinsCohortEventHandler extends BaseObjectEventHandler {
 		JenkinsCohortEntityRepository jenkinsCohortEntityRepository =
 			getJenkinsCohortEntityRepository();
 
-		return jenkinsCohortEntityRepository.add(jenkinsCohortJSONObject);
+		return jenkinsCohortEntityRepository.create(jenkinsCohortJSONObject);
 	}
 
 }

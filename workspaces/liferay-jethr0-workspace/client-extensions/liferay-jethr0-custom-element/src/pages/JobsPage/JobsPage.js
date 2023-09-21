@@ -30,7 +30,7 @@ function JobsPage() {
 							Jobs
 						</Heading>
 						<Jethr0ButtonsRow
-							buttons={[{link: '/jobs/add', title: 'Add Job'}]}
+							buttons={[{link: '/jobs/create', title: 'Create Job'}]}
 						/>
 					</ClayLayout.Row>
 				</ClayLayout.ContainerFluid>

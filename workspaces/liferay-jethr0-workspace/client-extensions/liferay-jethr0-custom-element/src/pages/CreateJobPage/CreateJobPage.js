@@ -15,7 +15,7 @@ import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0Navi
 import postSpringBootData from '../../services/postSpringBootData';
 import useSpringBootData from '../../services/useSpringBootData';
 
-function JobsPage() {
+function CreateJobPage() {
 	const [jenkinsGitHubURL, setJenkinsGitHubURL] = useState(null);
 	const [jobName, setJobName] = useState(null);
 	const [jobPriority, setJobPriority] = useState(4);
@@ -44,7 +44,7 @@ function JobsPage() {
 	const breadcrumbs = [
 		{active: false, link: '/', name: 'Home'},
 		{active: false, link: '/jobs', name: 'Jobs'},
-		{active: true, link: '/jobs/add', name: 'Add Job'},
+		{active: true, link: '/jobs/create', name: 'Create Job'},
 	];
 
 	useSpringBootData({
@@ -84,7 +84,7 @@ function JobsPage() {
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
 
 				<Heading level={3} weight="lighter">
-					Add Job
+					Create Job
 				</Heading>
 
 				<ClayForm.Group>
@@ -168,7 +168,7 @@ function JobsPage() {
 								postSpringBootData({
 									data: jobData,
 									redirect: redirectToJobPage,
-									urlPath: '/jobs/add',
+									urlPath: '/jobs/create',
 								});
 							},
 							title: 'Save',
@@ -180,7 +180,7 @@ function JobsPage() {
 								postSpringBootData({
 									data: jobData,
 									redirect: redirectToJobPage,
-									urlPath: '/jobs/add',
+									urlPath: '/jobs/create',
 								});
 							},
 							title: 'Save & Start',
@@ -192,4 +192,4 @@ function JobsPage() {
 	);
 }
 
-export default JobsPage;
+export default CreateJobPage;

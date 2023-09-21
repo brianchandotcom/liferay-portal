@@ -86,8 +86,9 @@ public class JenkinsQueue {
 
 				buildEntity.setState(BuildEntity.State.QUEUED);
 
-				BuildRunEntity buildRunEntity = _buildRunEntityRepository.add(
-					buildEntity, BuildRunEntity.State.QUEUED);
+				BuildRunEntity buildRunEntity =
+					_buildRunEntityRepository.create(
+						buildEntity, BuildRunEntity.State.QUEUED);
 
 				_eventJmsController.send(
 					jenkinsServerEntity,

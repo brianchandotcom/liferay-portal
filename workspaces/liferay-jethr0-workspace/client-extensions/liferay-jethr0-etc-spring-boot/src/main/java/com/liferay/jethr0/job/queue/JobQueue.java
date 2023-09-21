@@ -209,16 +209,16 @@ public class JobQueue {
 			return jobPrioritizerEntity;
 		}
 
-		jobPrioritizerEntity = _jobPrioritizerEntityRepository.add(
+		jobPrioritizerEntity = _jobPrioritizerEntityRepository.create(
 			_liferayJobPrioritizer);
 
-		_jobComparatorEntityRepository.add(
+		_jobComparatorEntityRepository.create(
 			jobPrioritizerEntity, 1, JobComparatorEntity.Type.JOB_START_DATE,
 			null);
-		_jobComparatorEntityRepository.add(
+		_jobComparatorEntityRepository.create(
 			jobPrioritizerEntity, 2, JobComparatorEntity.Type.JOB_PRIORITY,
 			null);
-		_jobComparatorEntityRepository.add(
+		_jobComparatorEntityRepository.create(
 			jobPrioritizerEntity, 3, JobComparatorEntity.Type.FIFO, null);
 
 		return jobPrioritizerEntity;

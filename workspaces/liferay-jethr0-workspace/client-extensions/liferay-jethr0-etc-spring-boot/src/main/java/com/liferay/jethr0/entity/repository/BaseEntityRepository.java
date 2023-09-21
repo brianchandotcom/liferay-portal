@@ -23,42 +23,10 @@ public abstract class BaseEntityRepository<T extends Entity>
 	implements EntityRepository<T> {
 
 	@Override
-	public T add(JSONObject jsonObject) {
+	public T create(JSONObject jsonObject) {
 		EntityDALO<T> entityDALO = getEntityDALO();
 
-		T entity = entityDALO.create(jsonObject);
-
-		addAll(Collections.singleton(entity));
-
-		return entity;
-	}
-
-	@Override
-	public T add(T entity) {
-		addAll(Collections.singleton(entity));
-
-		return entity;
-	}
-
-	@Override
-	public Set<T> addAll(Set<T> entities) {
-		if (entities == null) {
-			return entities;
-		}
-
-		entities.removeAll(Collections.singleton(null));
-
-		EntityDALO<T> entityDALO = getEntityDALO();
-
-		for (T entity : entities) {
-			if (entity.getId() == 0) {
-				entity = entityDALO.create(entity);
-			}
-
-			_entitiesMap.put(entity.getId(), entity);
-		}
-
-		return entities;
+		return add(entityDALO.create(jsonObject));
 	}
 
 	@Override
@@ -68,22 +36,13 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 	@Override
 	public T getById(long id) {
-		if (hasEntity(id)) {
+		if (_entitiesMap.containsKey(id)) {
 			return _entitiesMap.get(id);
 		}
 
 		EntityDALO<T> entityDALO = getEntityDALO();
 
 		return add(entityDALO.get(id));
-	}
-
-	@Override
-	public boolean hasEntity(long id) {
-		if (_entitiesMap.containsKey(id)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Override
@@ -131,6 +90,44 @@ public abstract class BaseEntityRepository<T extends Entity>
 		_entitiesMap.put(entity.getId(), entity);
 
 		return entity;
+	}
+
+	protected T add(T entity) {
+		addAll(Collections.singleton(entity));
+
+		return entity;
+	}
+
+	protected Set<T> addAll(Set<T> entities) {
+		if (entities == null) {
+			return entities;
+		}
+
+		entities.removeAll(Collections.singleton(null));
+
+		if (entities.isEmpty()) {
+			return entities;
+		}
+
+		for (T entity : entities) {
+			if (entity.getId() == 0) {
+				throw new RuntimeException("Unable to add entity");
+			}
+
+			_entitiesMap.put(entity.getId(), entity);
+		}
+
+		return entities;
+	}
+
+	protected abstract EntityDALO<T> getEntityDALO();
+
+	protected boolean hasEntity(long id) {
+		if (_entitiesMap.containsKey(id)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private final Map<Long, T> _entitiesMap = new HashMap<>();

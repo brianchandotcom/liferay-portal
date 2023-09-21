@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 
-	public BuildEntity add(
+	public BuildEntity create(
 		JobEntity jobEntity, boolean initialBuild, String jenkinsJobName,
 		String name, BuildEntity.State state) {
 
@@ -43,19 +43,19 @@ public class BuildEntityRepository extends BaseEntityRepository<BuildEntity> {
 			"state", state.getJSONObject()
 		);
 
-		return add(jobEntity, jsonObject);
+		return create(jobEntity, jsonObject);
 	}
 
-	public BuildEntity add(JobEntity jobEntity, JSONObject jsonObject) {
+	public BuildEntity create(JobEntity jobEntity, JSONObject jsonObject) {
 		jsonObject.put("r_jobToBuilds_c_jobId", jobEntity.getId());
 
-		BuildEntity buildEntity = add(jsonObject);
+		BuildEntity buildEntity = create(jsonObject);
 
 		buildEntity.setJobEntity(jobEntity);
 
 		jobEntity.addBuildEntity(buildEntity);
 
-		return buildEntity;
+		return add(buildEntity);
 	}
 
 	public Set<BuildEntity> getAll(JobEntity jobEntity) {

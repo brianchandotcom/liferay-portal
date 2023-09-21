@@ -30,14 +30,14 @@ import org.springframework.context.annotation.Configuration;
 public class JenkinsServerEntityRepository
 	extends BaseEntityRepository<JenkinsServerEntity> {
 
-	public JenkinsServerEntity add(
+	public JenkinsServerEntity create(
 		JenkinsCohortEntity jenkinsCohortEntity, JSONObject jsonObject) {
 
 		jsonObject.put(
 			"r_jenkinsCohortToJenkinsServers_c_jenkinsCohortId",
 			jenkinsCohortEntity.getId());
 
-		JenkinsServerEntity jenkinsServerEntity = add(jsonObject);
+		JenkinsServerEntity jenkinsServerEntity = create(jsonObject);
 
 		jenkinsServerEntity.setJenkinsCohortEntity(jenkinsCohortEntity);
 
@@ -47,7 +47,7 @@ public class JenkinsServerEntityRepository
 	}
 
 	@Override
-	public JenkinsServerEntity add(JSONObject jsonObject) {
+	public JenkinsServerEntity create(JSONObject jsonObject) {
 		URL url = StringUtil.toURL(jsonObject.getString("url"));
 
 		Matcher jenkinsURLMatcher = _jenkinsURLPattern.matcher(
@@ -63,10 +63,10 @@ public class JenkinsServerEntityRepository
 			jsonObject.put("name", jenkinsURLMatcher.group("name"));
 		}
 
-		return super.add(jsonObject);
+		return super.create(jsonObject);
 	}
 
-	public JenkinsServerEntity add(
+	public JenkinsServerEntity create(
 		String jenkinsUserName, String jenkinsUserPassword, String name,
 		URL url) {
 
@@ -82,10 +82,10 @@ public class JenkinsServerEntityRepository
 			"url", String.valueOf(url)
 		);
 
-		return add(jsonObject);
+		return create(jsonObject);
 	}
 
-	public JenkinsServerEntity add(URL url) {
+	public JenkinsServerEntity create(URL url) {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
@@ -96,7 +96,7 @@ public class JenkinsServerEntityRepository
 			"url", String.valueOf(url)
 		);
 
-		return add(jsonObject);
+		return create(jsonObject);
 	}
 
 	public JenkinsServerEntity getByURL(URL url) {

@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
 public class BuildRunEntityRepository
 	extends BaseEntityRepository<BuildRunEntity> {
 
-	public BuildRunEntity add(
+	public BuildRunEntity create(
 		BuildEntity buildEntity, BuildRunEntity.State state) {
 
 		JSONObject jsonObject = new JSONObject();
@@ -42,7 +42,7 @@ public class BuildRunEntityRepository
 			"state", state.getJSONObject()
 		);
 
-		BuildRunEntity buildRunEntity = _buildRunEntityDALO.create(jsonObject);
+		BuildRunEntity buildRunEntity = create(jsonObject);
 
 		buildRunEntity.setBuildEntity(buildEntity);
 

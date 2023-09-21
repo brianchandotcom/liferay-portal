@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Configuration;
 public class JenkinsCohortEntityRepository
 	extends BaseEntityRepository<JenkinsCohortEntity> {
 
-	public JenkinsCohortEntity add(String name) {
+	public JenkinsCohortEntity create(String name) {
 		if (StringUtil.isNullOrEmpty(name)) {
 			throw new RuntimeException("Invalid Jenkins cohort name: " + name);
 		}
@@ -34,7 +34,7 @@ public class JenkinsCohortEntityRepository
 
 		jsonObject.put("name", name);
 
-		return add(jsonObject);
+		return create(jsonObject);
 	}
 
 	public JenkinsCohortEntity getByName(String name) {

@@ -26,7 +26,7 @@ import org.springframework.context.annotation.Configuration;
 public class JobComparatorEntityRepository
 	extends BaseEntityRepository<JobComparatorEntity> {
 
-	public JobComparatorEntity add(
+	public JobComparatorEntity create(
 		JobPrioritizerEntity jobPrioritizerEntity, long position,
 		JobComparatorEntity.Type type, String value) {
 
@@ -43,7 +43,7 @@ public class JobComparatorEntityRepository
 			"value", value
 		);
 
-		JobComparatorEntity jobComparatorEntity = add(jsonObject);
+		JobComparatorEntity jobComparatorEntity = create(jsonObject);
 
 		jobComparatorEntity.setJobPrioritizerEntity(jobPrioritizerEntity);
 

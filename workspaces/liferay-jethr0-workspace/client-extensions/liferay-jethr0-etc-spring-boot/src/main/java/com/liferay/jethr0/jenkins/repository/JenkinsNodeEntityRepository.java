@@ -32,7 +32,19 @@ import org.springframework.context.annotation.Configuration;
 public class JenkinsNodeEntityRepository
 	extends BaseEntityRepository<JenkinsNodeEntity> {
 
-	public void addAll(JenkinsServerEntity jenkinsServerEntity) {
+	public JenkinsNodeEntity create(
+		JenkinsServerEntity jenkinsServerEntity, JSONObject nodeJSONObject) {
+
+		JenkinsNodeEntity jenkinsNodeEntity = create(nodeJSONObject);
+
+		jenkinsNodeEntity.setJenkinsServerEntity(jenkinsServerEntity);
+
+		jenkinsServerEntity.addJenkinsNodeEntity(jenkinsNodeEntity);
+
+		return add(jenkinsNodeEntity);
+	}
+
+	public void createAll(JenkinsServerEntity jenkinsServerEntity) {
 		JSONObject jsonObject = jenkinsServerEntity.getComputerJSONObject();
 
 		JSONArray computerJSONArray = jsonObject.getJSONArray("computer");
@@ -129,14 +141,7 @@ public class JenkinsNodeEntityRepository
 
 			nodeJSONObject.put("primaryLabel", primaryLabel);
 
-			JenkinsNodeEntity jenkinsNodeEntity = _jenkinsNodeEntityDALO.create(
-				nodeJSONObject);
-
-			jenkinsNodeEntity.setJenkinsServerEntity(jenkinsServerEntity);
-
-			jenkinsServerEntity.addJenkinsNodeEntity(jenkinsNodeEntity);
-
-			add(jenkinsNodeEntity);
+			create(jenkinsServerEntity, nodeJSONObject);
 		}
 	}
 

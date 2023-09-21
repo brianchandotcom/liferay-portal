@@ -33,7 +33,7 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 		JSONObject buildJSONObject = validateBuildJSONObject(
 			messageJSONObject.optJSONObject("build"));
 
-		BuildEntity buildEntity = buildEntityRepository.add(
+		BuildEntity buildEntity = buildEntityRepository.create(
 			jobEntity, buildJSONObject);
 
 		JSONObject parametersJSONObject = buildJSONObject.optJSONObject(
@@ -45,7 +45,7 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 
 			for (String key : parametersJSONObject.keySet()) {
 				BuildParameterEntity buildParameterEntity =
-					buildParameterEntityRepository.add(
+					buildParameterEntityRepository.create(
 						buildEntity, key, parametersJSONObject.getString(key));
 
 				buildEntity.addBuildParameterEntity(buildParameterEntity);

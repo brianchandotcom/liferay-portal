@@ -25,12 +25,12 @@ import org.springframework.context.annotation.Configuration;
 public class JobPrioritizerEntityRepository
 	extends BaseEntityRepository<JobPrioritizerEntity> {
 
-	public JobPrioritizerEntity add(String name) {
+	public JobPrioritizerEntity create(String name) {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("name", name);
 
-		return add(jsonObject);
+		return create(jsonObject);
 	}
 
 	public JobPrioritizerEntity getByName(String name) {

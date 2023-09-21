@@ -27,7 +27,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 
-	public JobEntity add(
+	public JobEntity create(
 		String name, int priority, Date startDate, JobEntity.State state,
 		JobEntity.Type type) {
 
@@ -53,7 +53,7 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 			"type", type.getJSONObject()
 		);
 
-		return add(jsonObject);
+		return create(jsonObject);
 	}
 
 	@Override

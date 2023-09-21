@@ -273,6 +273,7 @@ function VariantTable({
 									<ClayTable.Cell>
 										<ClayButton
 											borderless
+											data-testid={`publish-button-${name}`}
 											data-title={Liferay.Language.get(
 												'publish'
 											)}

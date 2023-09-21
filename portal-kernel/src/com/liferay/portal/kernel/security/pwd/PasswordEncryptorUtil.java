@@ -47,7 +47,7 @@ public class PasswordEncryptorUtil {
 
 		try {
 			return encrypt(
-				getDefaultPasswordEncryptionAlgorithm(), plainTextPassword,
+				_PASSWORDS_ENCRYPTION_ALGORITHM, plainTextPassword,
 				encryptedPassword);
 		}
 		finally {
@@ -80,10 +80,6 @@ public class PasswordEncryptorUtil {
 		return _encrypt(algorithm, plainTextPassword, encryptedPassword, false);
 	}
 
-	public static String getDefaultPasswordEncryptionAlgorithm() {
-		return _PASSWORDS_ENCRYPTION_ALGORITHM;
-	}
-
 	private static String _encrypt(
 			String algorithm, String plainTextPassword,
 			String encryptedPassword, boolean upgradeHashSecurity)
@@ -97,7 +93,7 @@ public class PasswordEncryptorUtil {
 		boolean prependAlgorithm = true;
 
 		if (upgradeHashSecurity) {
-			algorithm = getDefaultPasswordEncryptionAlgorithm();
+			algorithm = _PASSWORDS_ENCRYPTION_ALGORITHM;
 			encryptedPassword = null;
 		}
 		else {
@@ -126,7 +122,7 @@ public class PasswordEncryptorUtil {
 			}
 
 			if (Validator.isNull(algorithm)) {
-				algorithm = getDefaultPasswordEncryptionAlgorithm();
+				algorithm = _PASSWORDS_ENCRYPTION_ALGORITHM;
 			}
 		}
 
@@ -197,7 +193,7 @@ public class PasswordEncryptorUtil {
 				return legacyAlgorithm;
 			}
 
-			return getDefaultPasswordEncryptionAlgorithm();
+			return _PASSWORDS_ENCRYPTION_ALGORITHM;
 		}
 		else if (Validator.isNotNull(encryptedPassword) &&
 				 (encryptedPassword.charAt(0) == CharPool.OPEN_CURLY_BRACE)) {

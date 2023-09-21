@@ -870,6 +870,130 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-191389. The administrator could only update value of object entry’s field displayed on associated display page."
+	@priority = 4
+	test OnlyUpdateFieldOnAssociatedDisplayPage {
+		property custom.properties = "feature.flag.LPS-195205=true${line.separator}feature.flag.LPS-183727=true";
+
+		task ("Given a site administrater has a display page template for Object with fields") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Region",
+				fieldName = "region",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = ${randomObjectName});
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "LongText",
+				fieldLabelName = "Address",
+				fieldName = "address",
+				fieldType = "Clob",
+				isRequired = "false",
+				objectName = ${randomObjectName});
+
+			ObjectAdmin.publishObjectViaAPI(objectName = ${randomObjectName});
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "${randomLabelName}s");
+
+			var objectEntryId = ObjectAdmin.addObjectEntryViaAPI(
+				fieldNameList = "region,address",
+				objectName = ${randomObjectName},
+				valueList = "Dalian,Huangpu Rd 537");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+
+			DisplayPageTemplatesAdmin.addDisplayPage(
+				contentType = ${randomLabelName},
+				displayPageName = "Display Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "${randomLabelName} (Default)");
+
+			PageEditor.removeFragment(fragmentName = "Text Input");
+
+			PageEditor.publish();
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "${randomLabelName}s");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Sample Collection Item",
+				fragmentName = "Button");
+
+			PageEditorEditableLink.gotoEditableFieldLink(
+				fragmentName = "Button",
+				id = "link");
+
+			PageEditorEditableLink.mapURLToAsset(field = "Default");
+
+			PageEditor.publish();
+		}
+
+		task ("When the site administrater accesses to the associated display page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			Button.click(button = "Go Somewhere");
+
+			ControlMenu.viewHeaderTitle(headerTitle = ${objectEntryId});
+
+			WaitForPageLoad();
+		}
+
+		task ("Then the site administrater should only see the Textarea fragment on associated display page") {
+			FormFields.viewTextAreaValue(
+				fieldName = "address",
+				fieldValue = "Huangpu Rd 537");
+
+			AssertElementNotPresent(
+				key_text = "Region",
+				locator1 = "TextInput#ANY");
+		}
+
+		task ("When the site administrater update the value in Long Text field then submit") {
+			FormFields.editTextArea(
+				fieldName = "address",
+				fieldValue = "Taide Building");
+
+			Button.clickSubmitButton();
+
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+		}
+
+		task ("Then the value of Long Text field from object entry should be updated but Text field not") {
+			ObjectAdmin.goToCustomObject(objectName = ${randomObjectName});
+
+			ObjectPortlet.viewEntry(entry = "Dalian");
+
+			ObjectPortlet.viewEntry(entry = "Taide Building");
+		}
+	}
+
 	@description = "This is a test for LPS-191532. The administrator could submit form on associated display page of another object."
 	@priority = 4
 	test SubmitFormOnAssociatedDisplayPageOfAnotherObject {

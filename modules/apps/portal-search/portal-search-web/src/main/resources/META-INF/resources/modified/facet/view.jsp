@@ -183,30 +183,30 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 							/>
 						</li>
 					</ul>
+
+					<aui:script use="liferay-search-modified-facet">
+						new Liferay.Search.ModifiedFacetFilter({
+							form: A.one('#<portlet:namespace />fm'),
+							fromInputDatePicker: Liferay.component(
+								'<portlet:namespace />fromInputDatePicker'
+							),
+							fromInputName: '<portlet:namespace />fromInput',
+							namespace: '<portlet:namespace />',
+							searchCustomRangeButton: A.one(
+								'#<portlet:namespace />searchCustomRangeButton'
+							),
+							toInputDatePicker: Liferay.component(
+								'<portlet:namespace />toInputDatePicker'
+							),
+							toInputName: '<portlet:namespace />toInput',
+						});
+
+						Liferay.Search.FacetUtil.enableInputs(
+							document.querySelectorAll('#<portlet:namespace />fm .facet-term')
+						);
+					</aui:script>
 				</clay:panel>
 			</clay:panel-group>
 		</liferay-ddm:template-renderer>
 	</aui:form>
-
-	<aui:script use="liferay-search-modified-facet">
-		new Liferay.Search.ModifiedFacetFilter({
-			form: A.one('#<portlet:namespace />fm'),
-			fromInputDatePicker: Liferay.component(
-				'<portlet:namespace />fromInputDatePicker'
-			),
-			fromInputName: '<portlet:namespace />fromInput',
-			namespace: '<portlet:namespace />',
-			searchCustomRangeButton: A.one(
-				'#<portlet:namespace />searchCustomRangeButton'
-			),
-			toInputDatePicker: Liferay.component(
-				'<portlet:namespace />toInputDatePicker'
-			),
-			toInputName: '<portlet:namespace />toInput',
-		});
-
-		Liferay.Search.FacetUtil.enableInputs(
-			document.querySelectorAll('#<portlet:namespace />fm .facet-term')
-		);
-	</aui:script>
 </c:if>

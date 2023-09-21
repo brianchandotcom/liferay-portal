@@ -63,12 +63,12 @@ CustomFilterPortletInstanceConfiguration customFilterPortletInstanceConfiguratio
 						small="<%= true %>"
 						type="submit"
 					/>
+
+					<aui:script use="liferay-search-custom-filter">
+						new Liferay.Search.CustomFilter(A.one('#<portlet:namespace />fm'));
+					</aui:script>
 				</clay:panel>
 			</clay:panel-group>
 		</liferay-ddm:template-renderer>
 	</aui:form>
-
-	<aui:script use="liferay-search-custom-filter">
-		new Liferay.Search.CustomFilter(A.one('#<portlet:namespace />fm'));
-	</aui:script>
 </c:if>

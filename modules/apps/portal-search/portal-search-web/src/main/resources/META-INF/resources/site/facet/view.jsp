@@ -127,15 +127,15 @@ SiteFacetPortletInstanceConfiguration siteFacetPortletInstanceConfiguration = sc
 							%>
 
 						</ul>
+
+						<aui:script use="liferay-search-facet-util">
+							Liferay.Search.FacetUtil.enableInputs(
+								document.querySelectorAll('#<portlet:namespace />fm .facet-term')
+							);
+						</aui:script>
 					</clay:panel>
 				</clay:panel-group>
 			</liferay-ddm:template-renderer>
 		</aui:form>
 	</c:otherwise>
 </c:choose>
-
-<aui:script use="liferay-search-facet-util">
-	Liferay.Search.FacetUtil.enableInputs(
-		document.querySelectorAll('#<portlet:namespace />fm .facet-term')
-	);
-</aui:script>

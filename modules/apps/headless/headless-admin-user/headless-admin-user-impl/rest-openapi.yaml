@@ -1053,11 +1053,9 @@ components:
                     readOnly: true
                     type: array
                 status:
-                    # @review
                     description:
                         The user's status.
                     enum: [Active, Inactive]
-                    readOnly: true
                     type: string
                 userAccountContactInformation:
                     description:

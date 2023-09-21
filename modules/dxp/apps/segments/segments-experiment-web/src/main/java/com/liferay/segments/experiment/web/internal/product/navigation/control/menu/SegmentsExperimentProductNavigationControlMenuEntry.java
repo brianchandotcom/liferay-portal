@@ -405,7 +405,7 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 			if (panelStateOpen) {
 				sb.append(
-					"lfr-has-segments-experiment-panel open-admin-panel ");
+					"lfr-has-segments-experiment-panel open-admin-panel open ");
 			}
 
 			sb.append("cadmin d-print-none lfr-admin-panel ");

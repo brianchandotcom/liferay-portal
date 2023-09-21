@@ -322,7 +322,8 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 					ProductNavigationControlMenuEntryConstants.
 						SESSION_CLICKS_KEY)) {
 
-				sb.append("lfr-has-analytics-reports-panel open-admin-panel ");
+				sb.append(
+					"lfr-has-analytics-reports-panel open-admin-panel open ");
 			}
 
 			sb.append(

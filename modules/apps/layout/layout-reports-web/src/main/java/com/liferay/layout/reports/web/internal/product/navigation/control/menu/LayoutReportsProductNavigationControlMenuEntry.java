@@ -288,7 +288,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 					ProductNavigationControlMenuEntryConstants.
 						SESSION_CLICKS_KEY)) {
 
-				sb.append("lfr-has-layout-reports-panel open-admin-panel ");
+				sb.append(
+					"lfr-has-layout-reports-panel open-admin-panel open ");
 			}
 
 			sb.append("cadmin d-print-none lfr-admin-panel ");

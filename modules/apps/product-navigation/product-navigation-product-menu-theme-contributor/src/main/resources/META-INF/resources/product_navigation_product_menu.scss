@@ -18,7 +18,7 @@ html#{$cadmin-selector} {
 		}
 	}
 
-	body.open {
+	body.product-menu-open {
 		#wrapper,
 		.cadmin.control-menu-container {
 			@include media-breakpoint-up(sm, $cadmin-grid-breakpoints) {

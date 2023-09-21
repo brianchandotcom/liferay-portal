@@ -58,7 +58,8 @@ public class AnalyticsReportsTemplateContextContributor
 
 			contextObjects.put(
 				"bodyCssClass",
-				cssClass + " lfr-has-analytics-reports-panel open-admin-panel");
+				cssClass +
+					" lfr-has-analytics-reports-panel open-admin-panel open");
 		}
 	}
 

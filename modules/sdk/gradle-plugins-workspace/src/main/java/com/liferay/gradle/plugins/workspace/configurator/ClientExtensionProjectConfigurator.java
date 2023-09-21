@@ -19,6 +19,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.node.task.ExecuteNodeTask;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.client.extension.ClientExtension;
@@ -36,8 +37,6 @@ import groovy.lang.Closure;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-
-import java.lang.reflect.Method;
 
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -65,10 +64,13 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
+import org.gradle.api.execution.TaskExecutionGraph;
+import org.gradle.api.execution.TaskExecutionListener;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.initialization.Settings;
+import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.ExtensionAware;
@@ -79,8 +81,10 @@ import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskProvider;
+import org.gradle.api.tasks.TaskState;
 import org.gradle.api.tasks.bundling.Zip;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
+import org.gradle.process.ProcessForkOptions;
 
 /**
  * @author Gregory Amerson
@@ -788,16 +792,36 @@ public class ClientExtensionProjectConfigurator
 				"%s/routes/%s/dxp", workspaceExtension.getHomeDir(),
 				liferayVirtualInstanceId));
 
-		project.afterEvaluate(
-			project1 -> {
-				for (Task task : project.getTasks()) {
-					Class<? extends Task> clazz = task.getClass();
+		Gradle gradle = project.getGradle();
 
-					try {
-						Method environment = clazz.getMethod(
-							"environment", Map.class);
+		TaskExecutionGraph taskGraph = gradle.getTaskGraph();
 
-						environment.invoke(task, environmentVariables);
+		taskGraph.addTaskExecutionListener(
+			new TaskExecutionListener() {
+
+				@Override
+				public void afterExecute(Task task, TaskState taskState) {
+				}
+
+				@Override
+				public void beforeExecute(Task task) {
+					if (Objects.equals(project, task.getProject()) &&
+						(task instanceof ExecuteNodeTask ||
+						 task instanceof ProcessForkOptions)) {
+
+						if (task instanceof ProcessForkOptions) {
+							ProcessForkOptions processForkOptions =
+								(ProcessForkOptions)task;
+
+							processForkOptions.environment(
+								environmentVariables);
+						}
+						else {
+							ExecuteNodeTask executeNodeTask =
+								(ExecuteNodeTask)task;
+
+							executeNodeTask.environment(environmentVariables);
+						}
 
 						Logger logger = task.getLogger();
 
@@ -806,8 +830,8 @@ public class ClientExtensionProjectConfigurator
 								StringBundler.concat(
 									"Injecting Liferay Routes configuration ",
 									"paths as environment variables into the ",
-									"process invoked by the task {}"),
-								task.getPath());
+									"process invoked by the task ",
+									task.getPath()));
 
 							for (Map.Entry<String, String> entry :
 									environmentVariables.entrySet()) {
@@ -817,9 +841,8 @@ public class ClientExtensionProjectConfigurator
 							}
 						}
 					}
-					catch (Exception exception) {
-					}
 				}
+
 			});
 	}
 

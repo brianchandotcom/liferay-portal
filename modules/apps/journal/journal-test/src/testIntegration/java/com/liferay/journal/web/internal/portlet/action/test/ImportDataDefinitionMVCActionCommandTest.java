@@ -44,8 +44,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.List;
 import java.util.Objects;
 
-import javax.servlet.ServletException;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -145,7 +143,7 @@ public class ImportDataDefinitionMVCActionCommandTest {
 
 	@Test
 	public void testProcessActionWithDataDefinitionFromPreviousVersion()
-		throws Exception, ServletException {
+		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_createMockLiferayPortletActionRequest(

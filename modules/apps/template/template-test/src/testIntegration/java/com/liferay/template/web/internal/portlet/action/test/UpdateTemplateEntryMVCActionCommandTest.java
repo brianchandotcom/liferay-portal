@@ -52,8 +52,6 @@ import java.util.Objects;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import javax.servlet.ServletException;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -97,7 +95,7 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 	}
 
 	@Test
-	public void testUpdateTemplateEntry() throws Exception, ServletException {
+	public void testUpdateTemplateEntry() throws Exception {
 		String script = "<#-- Modified script content -->";
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =

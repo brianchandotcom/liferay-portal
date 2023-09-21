@@ -42,8 +42,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import java.util.List;
 import java.util.Objects;
 
-import javax.servlet.ServletException;
-
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -201,7 +199,7 @@ public class ExportImportObjectDefinitionTest {
 
 	private void _testExportImportObjectDefinition(
 			String fileName, String objectDefinitionName, boolean system)
-		throws Exception, ServletException {
+		throws Exception {
 
 		String externalReferenceCode = null;
 		ObjectDefinition objectDefinition = null;

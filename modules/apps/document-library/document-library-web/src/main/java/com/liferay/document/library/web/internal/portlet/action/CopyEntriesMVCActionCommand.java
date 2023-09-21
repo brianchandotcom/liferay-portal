@@ -209,7 +209,7 @@ public class CopyEntriesMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return _dlFileEntryLocalService.getFileEntryTypeIds(
-			folder.getCompanyId(), folder.getGroupId(), folder.getTreePath());
+			folder.getCompanyId(), groupIds, folder.getTreePath());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

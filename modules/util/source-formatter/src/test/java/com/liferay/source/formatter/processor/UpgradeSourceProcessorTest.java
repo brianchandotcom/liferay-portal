@@ -43,6 +43,16 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeCatchAllCheck() throws Exception {
+		test(
+			"upgrade/UpgradeCatchAllCheck.testjava",
+			StringBundler.concat(
+				"Unable to format searchVocabularies method from ",
+				"AssetVocabularyService, AssetVocabularyLocalService. Fill ",
+				"the new parameters manually, see LPS-189866"));
+	}
+
+	@Test
 	public void testUpgradeDLUtilCheck() throws Exception {
 		test("upgrade/UpgradeJavaDLUtilCheck.testjava");
 		test("upgrade/UpgradeJSPDLUtilCheck.testjsp");

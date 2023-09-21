@@ -20,21 +20,23 @@ boolean priceOnApplication = BeanParamUtil.getBoolean(commercePriceEntry, reques
 		</div>
 	</c:if>
 
-	<aui:select label="unit-of-measure" name="unitOfMeasureKey" showEmptyOption="<%= true %>">
+	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("COMMERCE-11287") %>'>
+		<aui:select label="unit-of-measure" name="unitOfMeasureKey" showEmptyOption="<%= true %>">
 
-		<%
-		String unitOfMeasureKey = commercePriceEntry.getUnitOfMeasureKey();
+			<%
+			String unitOfMeasureKey = commercePriceEntry.getUnitOfMeasureKey();
 
-		for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure : commercePriceEntryDisplayContext.getCPInstanceUnitOfMeasures()) {
-		%>
+			for (CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure : commercePriceEntryDisplayContext.getCPInstanceUnitOfMeasures()) {
+			%>
 
-			<aui:option label="<%= cpInstanceUnitOfMeasure.getKey() %>" selected="<%= unitOfMeasureKey.equals(cpInstanceUnitOfMeasure.getKey()) %>" value="<%= cpInstanceUnitOfMeasure.getKey() %>" />
+				<aui:option label="<%= cpInstanceUnitOfMeasure.getKey() %>" selected="<%= unitOfMeasureKey.equals(cpInstanceUnitOfMeasure.getKey()) %>" value="<%= cpInstanceUnitOfMeasure.getKey() %>" />
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
-	</aui:select>
+		</aui:select>
+	</c:if>
 
 	<aui:fieldset collapsible="<%= false %>" cssClass='<%= "price-entry-price-settings " + (priceOnApplication ? "disabled" : StringPool.BLANK) %>' id='<%= liferayPortletResponse.getNamespace() + "price-entry-price-settings" %>'>
 		<liferay-ui:error exception="<%= CommercePriceListMaxPriceValueException.class %>">

@@ -266,6 +266,14 @@ public interface CommerceDiscountRelLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceDiscountRel> getCommerceDiscountRels(
+		long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscountRel> getCommerceDiscountRels(
+		long classNameId, long classPK, String unitOfMeasureKey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceDiscountRel> getCommerceDiscountRels(
 		long commerceDiscountId, String className);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

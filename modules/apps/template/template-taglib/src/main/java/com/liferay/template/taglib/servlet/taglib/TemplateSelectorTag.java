@@ -9,23 +9,37 @@ import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CollatorUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.display.template.util.PortletDisplayTemplateUtil;
 import com.liferay.taglib.util.IncludeTag;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.taglib.internal.security.permission.resource.DDMTemplatePermission;
 import com.liferay.template.taglib.internal.servlet.ServletContextUtil;
 
-import java.util.Collections;
+import java.text.Collator;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -80,8 +94,35 @@ public class TemplateSelectorTag extends IncludeTag {
 		return themeDisplay.getScopeGroupId();
 	}
 
-	public List<String> getDisplayStyles() {
-		return _displayStyles;
+	public List<Map<String, Object>> getDisplayStyles() {
+		List<Map<String, Object>> displayStyles = new ArrayList<>();
+		HttpServletRequest httpServletRequest = getRequest();
+
+		if (_displayStyles != null) {
+			for (String style : _displayStyles) {
+				displayStyles.add(
+					HashMapBuilder.<String, Object>put(
+						"label", LanguageUtil.get(httpServletRequest, style)
+					).put(
+						"value", style
+					).build());
+			}
+		}
+
+		if (isShowEmptyOption()) {
+			displayStyles.add(
+				HashMapBuilder.<String, Object>put(
+					"label", LanguageUtil.get(httpServletRequest, "default")
+				).put(
+					"value", "default"
+				).build());
+		}
+
+		displayStyles.sort(
+			Comparator.comparing(
+				displayStyle -> (String)displayStyle.get("label")));
+
+		return displayStyles;
 	}
 
 	public String getRefreshURL() {
@@ -160,31 +201,11 @@ public class TemplateSelectorTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		setNamespacedAttribute(
-			httpServletRequest, "classNameId",
-			String.valueOf(PortalUtil.getClassNameId(getClassName())));
-		setNamespacedAttribute(
-			httpServletRequest, "defaultDisplayStyle",
-			getDefaultDisplayStyle());
-		setNamespacedAttribute(
-			httpServletRequest, "ddmTemplates",
-			_getDDMTemplates(httpServletRequest));
-		setNamespacedAttribute(
-			httpServletRequest, "displayStyle", getDisplayStyle());
-		setNamespacedAttribute(
-			httpServletRequest, "displayStyleGroupId",
-			getDisplayStyleGroupId());
-		setNamespacedAttribute(
-			httpServletRequest, "displayStyles", getDisplayStyles());
-		setNamespacedAttribute(
-			httpServletRequest, "refreshURL", getRefreshURL());
-		setNamespacedAttribute(
-			httpServletRequest, "portletDisplayDDMTemplate",
-			getPortletDisplayDDMTemplate());
-		setNamespacedAttribute(
-			httpServletRequest, "showEmptyOption", isShowEmptyOption());
+			httpServletRequest, "templateSelectorProps",
+			_getTemplateSelectorProps(httpServletRequest));
 	}
 
-	private List<DDMTemplate> _getDDMTemplates(
+	private Map<String, List<Map<String, Object>>> _getDDMTemplates(
 		HttpServletRequest httpServletRequest) {
 
 		ThemeDisplay themeDisplay =
@@ -197,7 +218,7 @@ public class TemplateSelectorTag extends IncludeTag {
 					_getGroupIds(themeDisplay.getScopeGroup()),
 					PortalUtil.getClassNameId(getClassName()), 0L);
 
-			return ListUtil.filter(
+			List<DDMTemplate> ddmTemplatesFiltered = ListUtil.filter(
 				ddmTemplates,
 				ddmTemplate -> {
 					try {
@@ -220,13 +241,79 @@ public class TemplateSelectorTag extends IncludeTag {
 
 					return true;
 				});
+
+			List<Map<String, Object>> ddmTemplatesValues = new ArrayList<>();
+
+			if (ddmTemplates != null) {
+				for (DDMTemplate ddmTemplate : ddmTemplatesFiltered) {
+					Group group = GroupLocalServiceUtil.fetchGroup(
+						ddmTemplate.getGroupId());
+
+					ddmTemplatesValues.add(
+						HashMapBuilder.<String, Object>put(
+							"groupId", ddmTemplate.getGroupId()
+						).put(
+							"label",
+							ddmTemplate.getName(themeDisplay.getLocale())
+						).put(
+							"siteName",
+							StringUtil.toLowerCase(group.getDescriptiveName())
+						).put(
+							"value",
+							PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+								ddmTemplate.getTemplateKey()
+						).build());
+				}
+			}
+
+			Collator collator = CollatorUtil.getInstance(
+				themeDisplay.getLocale());
+
+			ddmTemplatesValues.sort(
+				(map1, map2) -> {
+					int siteNameComparison = collator.compare(
+						MapUtil.getString(map1, "siteName"),
+						MapUtil.getString(map2, "siteName"));
+
+					if (siteNameComparison == 0) {
+						return collator.compare(
+							MapUtil.getString(map1, "label"),
+							MapUtil.getString(map2, "label"));
+					}
+
+					return siteNameComparison;
+				});
+
+			Map<String, List<Map<String, Object>>> ddmTemplatesBySiteName =
+				new HashMap<>();
+
+			for (Map<String, Object> ddmTemplate : ddmTemplatesValues) {
+				String siteName = (String)ddmTemplate.get("siteName");
+
+				if (ddmTemplatesBySiteName.containsKey(siteName)) {
+					List<Map<String, Object>> innerList =
+						ddmTemplatesBySiteName.get(siteName);
+
+					innerList.add(ddmTemplate);
+				}
+				else {
+					ddmTemplatesBySiteName.put(
+						siteName, ListUtil.fromArray(ddmTemplate));
+				}
+			}
+
+			return TreeMapBuilder.<String, List<Map<String, Object>>>create(
+				String.CASE_INSENSITIVE_ORDER
+			).putAll(
+				ddmTemplatesBySiteName
+			).build();
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
 
-			return Collections.emptyList();
+			return new TreeMap<>();
 		}
 	}
 
@@ -246,6 +333,55 @@ public class TemplateSelectorTag extends IncludeTag {
 		}
 
 		return PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId);
+	}
+
+	private Map<String, Object> _getTemplateSelectorProps(
+		HttpServletRequest httpServletRequest) {
+
+		Map<String, List<Map<String, Object>>> ddmTemplates = _getDDMTemplates(
+			httpServletRequest);
+
+		List<Map<String, Object>> getDisplayStyles = getDisplayStyles();
+
+		List<Map<String, Object>> templateSelectorItems = new ArrayList<>();
+
+		if (!getDisplayStyles.isEmpty()) {
+			templateSelectorItems.add(
+				HashMapBuilder.<String, Object>put(
+					"items", getDisplayStyles
+				).put(
+					"label", LanguageUtil.get(httpServletRequest, "default")
+				).build());
+		}
+
+		for (Map.Entry<String, List<Map<String, Object>>> ddmTemplate :
+				ddmTemplates.entrySet()) {
+
+			templateSelectorItems.add(
+				HashMapBuilder.<String, Object>put(
+					"items", ddmTemplate.getValue()
+				).put(
+					"label", ddmTemplate.getKey()
+				).build());
+		}
+
+		return HashMapBuilder.<String, Object>put(
+			"displayStyle", getDisplayStyle()
+		).put(
+			"displayStyleGroupId",
+			() -> {
+				DDMTemplate portletDisplayDDMTemplate =
+					getPortletDisplayDDMTemplate();
+
+				if (portletDisplayDDMTemplate != null) {
+					return portletDisplayDDMTemplate.getGroupId();
+				}
+
+				return getDisplayStyleGroupId();
+			}
+		).put(
+			"items", templateSelectorItems
+		).build();
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =

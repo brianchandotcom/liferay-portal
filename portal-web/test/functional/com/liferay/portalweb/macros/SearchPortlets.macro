@@ -535,7 +535,7 @@ definition {
 		var key_searchAssetTitle = ${searchAssetTitle};
 
 		AssertClick(
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
+			locator1 = "SearchResults#RESULT_TITLE",
 			value1 = ${searchAssetTitle});
 	}
 

@@ -42,65 +42,65 @@
 	<td></td>
 </tr>
 
-<!--ASSET_ENTRY_TABLE-->
+<!--RESULT-->
 
 <tr>
-	<td>ASSET_ENTRY_TABLE_DOCUMENT_DETAILS_BUTTON</td>
+	<td>RESULT_DOCUMENT_DETAILS_BUTTON</td>
 	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//a[contains(.,'Details...')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_ENTRY_TABLE_DOCUMENT_DETAILS_COLLAPSED</td>
+	<td>RESULT_DOCUMENT_DETAILS_COLLAPSED</td>
 	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//div[contains(@class,'table-details') and contains(@class,'hide')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_ENTRY_TABLE_DOCUMENT_DETAILS_KEY</td>
+	<td>RESULT_DOCUMENT_DETAILS_KEY</td>
 	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//td[contains(@class,'table-cell-text-end') and contains(.,'${key_documentDetailKey}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_ENTRY_TABLE_DOCUMENT_DETAILS_KEY_VALUE</td>
+	<td>RESULT_DOCUMENT_DETAILS_KEY_VALUE</td>
 	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//tr[./td[contains(@class,'table-cell-text-end') and contains(.,'${key_documentDetailKey}')]]/td[contains(@class,'table-details-content')][./code]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_ENTRY_TABLE_TITLE</td>
+	<td>RESULT_TITLE</td>
 	<td>//li[contains(@class,'list-group-item')]//a[contains(.,'${key_searchAssetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_ENTRY_TABLE_TITLE_SPECIFIC</td>
+	<td>RESULT_TITLE_SPECIFIC</td>
 	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')][.//span[@class='subtext-item' and contains(.,'${key_searchAssetType}')]]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_ENTRY_TABLE_TITLE_SPECIFIC_HIGHLIGHT</td>
+	<td>RESULT_TITLE_SPECIFIC_HIGHLIGHT</td>
 	<td>//span[contains(@class,'highlight') and contains(.,'${key_searchAssetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER</td>
+	<td>RESULT_TITLE_SPECIFIC_ORDER</td>
 	<td>//div[contains(@id,'SearchResultsPortlet')]//li[${resultOrder}]/div//a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_ENTRY_TABLE_TYPE</td>
+	<td>RESULT_TYPE</td>
 	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//span[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_ENTRY_TABLE_TYPE_SPECIFIC_DATE</td>
+	<td>RESULT_TYPE_SPECIFIC_DATE</td>
 	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//span[contains(.,'${key_searchAssetType}')]/../span[3]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_ENTRY_TABLE_SUMMARY</td>
+	<td>RESULT_SUMMARY</td>
 	<td>xpath=(//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')])span[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC</td>
+	<td>RESULT_SUMMARY_SPECIFIC</td>
 	<td>//li[contains(@class,'list-group-item') and contains(.,'${key_searchAssetTitle}')]//span[contains(.,'${searchAssetSummary}')]</td>
 	<td></td>
 </tr>

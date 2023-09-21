@@ -321,7 +321,7 @@ definition {
 		SearchPortlets.searchEmbedded(searchTerm = "Journal");
 
 		AssertTextNotEquals.assertNotPartialText(
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC_ORDER",
+			locator1 = "SearchResults#RESULT_TITLE_SPECIFIC_ORDER",
 			resultOrder = 1,
 			value1 = "Journal 2");
 

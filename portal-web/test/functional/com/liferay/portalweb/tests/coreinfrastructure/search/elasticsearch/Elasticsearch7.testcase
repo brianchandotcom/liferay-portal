@@ -107,29 +107,29 @@ definition {
 		AssertElementPresent(
 			key_searchAssetTitle = "Blogs Entry Title",
 			key_searchAssetType = "Blogs Entry",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+			locator1 = "SearchResults#RESULT_TITLE_SPECIFIC");
 
 		AssertElementPresent(
 			key_searchAssetTitle = "DM Document Title",
 			key_searchAssetType = "Document",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+			locator1 = "SearchResults#RESULT_TITLE_SPECIFIC");
 
 		AssertElementPresent(
 			key_searchAssetTitle = "Test Test",
 			key_searchAssetType = "User",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+			locator1 = "SearchResults#RESULT_TITLE_SPECIFIC");
 
 		AssertElementPresent(
 			key_searchAssetTitle = "WC WebContent Title",
 			key_searchAssetType = "Web Content Article",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+			locator1 = "SearchResults#RESULT_TITLE_SPECIFIC");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Home");
 
 		AssertElementPresent(
 			key_searchAssetTitle = "Home",
 			key_searchAssetType = "Page",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+			locator1 = "SearchResults#RESULT_TITLE_SPECIFIC");
 	}
 
 	@priority = 5
@@ -453,7 +453,7 @@ definition {
 
 		AssertElementPresent(
 			key_searchAssetTitle = "multiple connections is cool",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
+			locator1 = "SearchResults#RESULT_TITLE");
 	}
 
 	@priority = 5
@@ -823,7 +823,7 @@ definition {
 
 		AssertElementPresent(
 			key_searchAssetTitle = "Test Test",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
+			locator1 = "SearchResults#RESULT_TITLE");
 	}
 
 	@priority = 5
@@ -875,7 +875,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			key_searchAssetTitle = "Abandoned Bicycle",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE",
+			locator1 = "SearchResults#RESULT_TITLE",
 			value1 = "Abandoned Bicycle");
 
 		AssertTextEquals.assertPartialText(

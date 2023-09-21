@@ -336,12 +336,12 @@ definition {
 		AssertElementNotPresent(
 			key_searchAssetTitle = "DM Document Title",
 			key_searchAssetType = "Document",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+			locator1 = "SearchResults#RESULT_TITLE_SPECIFIC");
 
 		AssertElementNotPresent(
 			key_searchAssetTitle = "WC WebContent Title",
 			key_searchAssetType = "Web Content Article",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC");
+			locator1 = "SearchResults#RESULT_TITLE_SPECIFIC");
 	}
 
 	@description = "This ensures that a depot web content cannot be searched on a connected site when searching is disabled."

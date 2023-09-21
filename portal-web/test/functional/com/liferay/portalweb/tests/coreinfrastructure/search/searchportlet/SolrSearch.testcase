@@ -204,7 +204,7 @@ definition {
 
 		WaitForElementPresent(
 			key_searchAssetTitle = "WC Title 1",
-			locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE");
+			locator1 = "SearchResults#RESULT_TITLE");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",

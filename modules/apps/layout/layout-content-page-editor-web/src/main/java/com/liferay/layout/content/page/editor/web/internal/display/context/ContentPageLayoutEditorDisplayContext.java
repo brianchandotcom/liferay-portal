@@ -415,6 +415,12 @@ public class ContentPageLayoutEditorDisplayContext
 			_editSegmentsEntryURL = layoutLockManager.getUnlockDraftLayoutURL(
 				portal.getLiferayPortletResponse(renderResponse),
 				() -> {
+					Layout layout = themeDisplay.getLayout();
+
+					portletURL.setParameter(
+						"backURLTitle",
+						layout.getName(themeDisplay.getLocale()));
+
 					portletURL.setParameter(
 						"redirect", themeDisplay.getURLCurrent());
 

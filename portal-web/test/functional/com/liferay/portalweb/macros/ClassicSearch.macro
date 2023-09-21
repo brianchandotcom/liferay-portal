@@ -50,7 +50,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		Uncheck(locator1 = "ClassicSearch#BASIC_DISPLAY_USER_FACET_CHECKBOX");
+		Uncheck(locator1 = "ClassicSearch#SEARCH_BAR_CONFIG_BASIC_DISPLAY_USER_FACET_CHECKBOX");
 
 		Button.clickSave();
 

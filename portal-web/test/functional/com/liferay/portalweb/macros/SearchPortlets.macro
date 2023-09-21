@@ -194,7 +194,7 @@ definition {
 			var destinationPage = StringUtil.toLowerCase(${destinationPage});
 
 			Type(
-				locator1 = "SearchConfiguration#DESTINATION_PAGE",
+				locator1 = "Search#SEARCH_BAR_CONFIG_DESTINATION_PAGE",
 				value1 = ${destinationPage});
 		}
 
@@ -291,13 +291,13 @@ definition {
 			var destinationPage = StringUtil.toLowerCase(${destinationPage});
 
 			Type(
-				locator1 = "SearchConfiguration#DESTINATION_PAGE",
+				locator1 = "Search#SEARCH_BAR_CONFIG_DESTINATION_PAGE",
 				value1 = ${destinationPage});
 		}
 
 		if (isSet(keywordsParameterName)) {
 			Type(
-				locator1 = "SearchConfiguration#KEYWORDS_PARAMETER_NAME",
+				locator1 = "Search#SEARCH_BAR_CONFIG_KEYWORDS_PARAMETER_NAME",
 				value1 = ${keywordsParameterName});
 		}
 
@@ -314,7 +314,7 @@ definition {
 
 		if (isSet(scopeParameterName)) {
 			Type(
-				locator1 = "SearchConfiguration#SCOPE_PARAMETER_NAME",
+				locator1 = "Search#SEARCH_BAR_CONFIG_SCOPE_PARAMETER_NAME",
 				value1 = ${scopeParameterName});
 		}
 

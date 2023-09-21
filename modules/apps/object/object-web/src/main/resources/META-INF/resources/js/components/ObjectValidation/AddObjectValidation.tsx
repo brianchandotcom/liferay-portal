@@ -81,7 +81,7 @@ function ModalAddObjectValidation({
 			try {
 				await API.save({
 					item: {
-						active: false,
+						active: typeSelection.name === 'compositeKey',
 						engine: typeSelection.name,
 						name: {
 							[defaultLanguageId]: labelInput[defaultLanguageId],

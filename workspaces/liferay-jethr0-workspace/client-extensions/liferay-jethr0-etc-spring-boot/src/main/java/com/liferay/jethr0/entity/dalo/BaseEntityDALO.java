@@ -73,15 +73,7 @@ public abstract class BaseEntityDALO<T extends Entity>
 
 	@Override
 	public T get(long id) {
-		for (T entity : getAll("id eq " + id, null)) {
-			if (!Objects.equals(entity.getId(), id)) {
-				continue;
-			}
-
-			return entity;
-		}
-
-		return null;
+		return newEntity(_get(id));
 	}
 
 	@Override
@@ -244,6 +236,58 @@ public abstract class BaseEntityDALO<T extends Entity>
 		};
 
 		retryable.executeWithRetries();
+	}
+
+	private JSONObject _get(final long id) {
+		Retryable<JSONObject> retryable = new BaseRetryable<JSONObject>() {
+
+			@Override
+			public JSONObject execute() {
+				String response;
+
+				try {
+					response = WebClient.create(
+						StringUtil.combine(
+							_liferayPortalURL, _getEntityURLPath(), "/", id)
+					).get(
+					).accept(
+						MediaType.APPLICATION_JSON
+					).header(
+						"Authorization", getAuthorization()
+					).retrieve(
+					).bodyToMono(
+						String.class
+					).block();
+				}
+				catch (Exception exception) {
+					refresh();
+
+					throw new RuntimeException(exception);
+				}
+
+				if (response == null) {
+					throw new RuntimeException("No response");
+				}
+
+				return new JSONObject(response);
+			}
+
+			@Override
+			protected String getRetryMessage(int retryCount) {
+				return StringUtil.combine(
+					"Unable to retrieve ", _getEntityPluralLabel(),
+					". Retry attempt ", retryCount, " of ", maxRetries);
+			}
+
+		};
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringUtil.combine(
+					"Retrieved ", _getEntityLabel(), " with id " + id));
+		}
+
+		return retryable.executeWithRetries();
 	}
 
 	private Set<JSONObject> _get(String filter, String search) {

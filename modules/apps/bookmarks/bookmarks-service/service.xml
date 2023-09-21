@@ -23,13 +23,13 @@
 
 		<!-- Other fields -->
 
-		<column name="folderId" type="long" />
-		<column name="treePath" type="String" />
-		<column name="name" type="String" uad-nonanonymizable="true" />
-		<column name="url" type="String" uad-nonanonymizable="true" />
-		<column name="description" type="String" uad-nonanonymizable="true" />
-		<column name="priority" type="int" />
-		<column name="lastPublishDate" type="Date" />
+		<column change-tracking-resolution-type="merge" name="folderId" type="long" />
+		<column change-tracking-resolution-type="merge" name="treePath" type="String" />
+		<column change-tracking-resolution-type="merge" name="name" type="String" uad-nonanonymizable="true" />
+		<column change-tracking-resolution-type="merge" name="url" type="String" uad-nonanonymizable="true" />
+		<column change-tracking-resolution-type="merge" name="description" type="String" uad-nonanonymizable="true" />
+		<column change-tracking-resolution-type="merge" name="priority" type="int" />
+		<column change-tracking-resolution-type="merge" name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" uad-anonymize-field-name="screenName" />
@@ -110,11 +110,11 @@
 
 		<!-- Other fields -->
 
-		<column name="parentFolderId" parent-container-model="true" type="long" />
-		<column name="treePath" type="String" uad-nonanonymizable="true" />
-		<column name="name" type="String" uad-nonanonymizable="true" />
-		<column name="description" type="String" uad-nonanonymizable="true" />
-		<column name="lastPublishDate" type="Date" />
+		<column change-tracking-resolution-type="merge" name="parentFolderId" parent-container-model="true" type="long" />
+		<column change-tracking-resolution-type="merge" name="treePath" type="String" uad-nonanonymizable="true" />
+		<column change-tracking-resolution-type="merge" name="name" type="String" uad-nonanonymizable="true" />
+		<column change-tracking-resolution-type="merge" name="description" type="String" uad-nonanonymizable="true" />
+		<column change-tracking-resolution-type="merge" name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
 		<column name="statusByUserName" type="String" uad-anonymize-field-name="fullName" />

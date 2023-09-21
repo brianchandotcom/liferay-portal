@@ -61,7 +61,7 @@ public class PasswordEncryptorUtil {
 
 	public static String encrypt(
 			String plainTextPassword, String encryptedPassword,
-			Boolean upgradeHashSecurity)
+			boolean upgradeHashSecurity)
 		throws PwdEncryptorException {
 
 		if (upgradeHashSecurity) {

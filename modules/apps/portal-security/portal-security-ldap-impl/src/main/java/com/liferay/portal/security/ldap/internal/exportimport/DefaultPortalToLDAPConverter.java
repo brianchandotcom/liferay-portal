@@ -558,7 +558,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 			try {
 				password = PasswordEncryptorUtil.encrypt(
-					algorithm, password, (String)null);
+					algorithm, password, null);
 			}
 			catch (PwdEncryptorException pwdEncryptorException) {
 				throw new SystemException(pwdEncryptorException);

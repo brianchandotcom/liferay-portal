@@ -8,13 +8,8 @@ import {Option, Picker} from '@clayui/core';
 import {SearchForm} from '@liferay/layout-js-components-web';
 import React from 'react';
 
-export default function ContentFilter({
-	contentTypes,
-	onChangeInput,
-	onChangeSelect,
-	selectedType,
-}) {
-	const Trigger = React.forwardRef(({className, ...otherProps}, ref) => (
+const Trigger = React.forwardRef(
+	({className, selectedItem, ...otherProps}, ref) => (
 		<ClayButton
 			{...otherProps}
 			aria-label={Liferay.Language.get('filter-by-content-type')}
@@ -22,10 +17,17 @@ export default function ContentFilter({
 			displayType="unstyled"
 			ref={ref}
 		>
-			<span>{selectedType}</span>
+			<span>{selectedItem}</span>
 		</ClayButton>
-	));
+	)
+);
 
+export default function ContentFilter({
+	contentTypes,
+	onChangeInput,
+	onChangeSelect,
+	selectedType,
+}) {
 	return (
 		<div className="flex-shrink-0 page-editor__page-contents__content-filter px-3">
 			<p className="mb-4 page-editor__page-contents__content-filter__help">
@@ -37,6 +39,7 @@ export default function ContentFilter({
 				as={Trigger}
 				items={contentTypes}
 				onSelectionChange={onChangeSelect}
+				selectedItem={selectedType}
 				selectedKey={selectedType}
 			>
 				{(type) => <Option key={type}>{type}</Option>}

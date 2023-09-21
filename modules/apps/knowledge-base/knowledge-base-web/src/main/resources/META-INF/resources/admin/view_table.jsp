@@ -95,6 +95,7 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-minw-150"
 					name="status"
 					value="--"
 				/>
@@ -175,6 +176,7 @@ KBArticleViewDisplayContext kbArticleViewDisplayContext = new KBArticleViewDispl
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
+					cssClass="table-cell-minw-150"
 					name="status"
 				>
 					<c:choose>

@@ -34,6 +34,7 @@ import {
 	TooltipMetric
 } from './types';
 import {getDate as getDateUtil} from 'shared/util/date';
+import {IActionProps} from 'shared/components/base-page/Header';
 import {round} from 'lodash';
 import {toRounded, toThousands, toThousandsBase} from 'shared/util/numbers';
 import {useStateValue} from 'experiments/state';
@@ -457,3 +458,107 @@ export const sortOrderExperiment: SortOrderExperiment = (
 	{control: experimentControlA},
 	{control: experimentControlB}
 ) => Number(experimentControlB) - Number(experimentControlA);
+
+export const getActions = (
+	status: string,
+	{id, onDelete, pageURL, publishable} = null
+): IActionProps[] => {
+	const deleteButton = {
+		displayType: 'secondary',
+		label: Liferay.Language.get('delete'),
+		onClick: onDelete
+	};
+
+	switch (status) {
+		case 'COMPLETED': {
+			return [deleteButton];
+		}
+		case 'DRAFT': {
+			return [
+				{
+					displayType: 'primary',
+					label: Liferay.Language.get('review'),
+					redirectURL: getExperimentLink({
+						action: 'reviewAndRun',
+						id,
+						pageURL
+					})
+				},
+				{
+					displayType: 'secondary',
+					label: Liferay.Language.get('delete'),
+					redirectURL: getExperimentLink({
+						action: 'delete',
+						id,
+						pageURL
+					})
+				}
+			];
+		}
+		case 'FINISHED_NO_WINNER':
+		case 'FINISHED_WINNER': {
+			return [
+				{
+					displayType: 'primary',
+					label: Liferay.Language.get('publish'),
+					redirectURL: getExperimentLink({
+						action: 'publish',
+						id,
+						pageURL
+					})
+				},
+				{
+					displayType: 'secondary',
+					label: Liferay.Language.get('delete'),
+					redirectURL: getExperimentLink({
+						action: 'delete',
+						id,
+						pageURL
+					})
+				}
+			];
+		}
+		case 'TERMINATED': {
+			if (publishable) {
+				return [
+					{
+						displayType: 'primary',
+						label: Liferay.Language.get('publish'),
+						redirectURL: getExperimentLink({
+							action: 'publish',
+							id,
+							pageURL
+						})
+					},
+					{
+						displayType: 'secondary',
+						label: Liferay.Language.get('delete'),
+						redirectURL: getExperimentLink({
+							action: 'delete',
+							id,
+							pageURL
+						})
+					}
+				];
+			}
+
+			return [deleteButton];
+		}
+		case 'RUNNING': {
+			return [
+				{
+					displayType: 'secondary',
+					label: Liferay.Language.get('terminate'),
+					redirectURL: getExperimentLink({
+						action: 'terminate',
+						id,
+						pageURL
+					})
+				}
+			];
+		}
+		default: {
+			return [];
+		}
+	}
+};

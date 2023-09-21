@@ -9,7 +9,7 @@ import TextTruncate from 'shared/components/TextTruncate';
 import VariantCard from 'experiments/components/variant-card/index';
 import {connect, ConnectedProps} from 'react-redux';
 import {EXPERIMENT_ROOT_QUERY} from 'experiments/queries/ExperimentQuery';
-import {getExperimentLink, useAddRefetch} from 'experiments/util/experiments';
+import {getActions, useAddRefetch} from 'experiments/util/experiments';
 import {RootState} from 'shared/store';
 import {Router} from 'shared/types';
 import {Routes, toRoute} from 'shared/util/router';
@@ -66,125 +66,21 @@ interface IExperimentActionsProps extends React.HTMLAttributes<HTMLElement> {
 const ExperimentActions: React.FC<IExperimentActionsProps> = ({
 	experiment: {id, pageURL, publishable, status}
 }) => {
-	const actions = [];
 	const [visibleDeleteModal, setVisibleDeleteModal] = useState(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleDeleteModal(false)
 	});
 
-	if (status === 'DRAFT') {
-		actions.push(
-			...[
-				{
-					displayType: 'primary',
-					label: Liferay.Language.get('review'),
-					redirectURL: getExperimentLink({
-						action: 'reviewAndRun',
-						id,
-						pageURL
-					})
-				},
-				{
-					displayType: 'secondary',
-					label: Liferay.Language.get('delete'),
-					redirectURL: getExperimentLink({
-						action: 'delete',
-						id,
-						pageURL
-					})
-				}
-			]
-		);
-	} else if (status === 'FINISHED_NO_WINNER') {
-		actions.push(
-			...[
-				{
-					displayType: 'primary',
-					label: Liferay.Language.get('publish'),
-					redirectURL: getExperimentLink({
-						action: 'publish',
-						id,
-						pageURL
-					})
-				},
-				{
-					displayType: 'secondary',
-					label: Liferay.Language.get('delete'),
-					redirectURL: getExperimentLink({
-						action: 'delete',
-						id,
-						pageURL
-					})
-				}
-			]
-		);
-	} else if (status === 'FINISHED_WINNER') {
-		actions.push(
-			...[
-				{
-					displayType: 'primary',
-					label: Liferay.Language.get('publish'),
-					redirectURL: getExperimentLink({
-						action: 'publish',
-						id,
-						pageURL
-					})
-				},
-				{
-					displayType: 'secondary',
-					label: Liferay.Language.get('delete'),
-					redirectURL: getExperimentLink({
-						action: 'delete',
-						id,
-						pageURL
-					})
-				}
-			]
-		);
-	} else if (status === 'RUNNING') {
-		actions.push({
-			displayType: 'secondary',
-			label: Liferay.Language.get('terminate'),
-			redirectURL: getExperimentLink({
-				action: 'terminate',
-				id,
-				pageURL
-			})
-		});
-	} else if (status === 'TERMINATED') {
-		if (publishable) {
-			actions.push(
-				{
-					displayType: 'primary',
-					label: Liferay.Language.get('publish'),
-					redirectURL: getExperimentLink({
-						action: 'publish',
-						id,
-						pageURL
-					})
-				},
-				{
-					displayType: 'secondary',
-					label: Liferay.Language.get('delete'),
-					redirectURL: getExperimentLink({
-						action: 'delete',
-						id,
-						pageURL
-					})
-				}
-			);
-		} else {
-			actions.push({
-				displayType: 'secondary',
-				label: Liferay.Language.get('delete'),
-				onClick: () => setVisibleDeleteModal(true)
-			});
-		}
-	}
-
 	return (
 		<>
-			<BasePage.Header.Actions actions={actions} />
+			<BasePage.Header.Actions
+				actions={getActions(status, {
+					id,
+					onDelete: () => setVisibleDeleteModal(true),
+					pageURL,
+					publishable
+				})}
+			/>
 
 			{visibleDeleteModal && (
 				<DeleteExperimentModal

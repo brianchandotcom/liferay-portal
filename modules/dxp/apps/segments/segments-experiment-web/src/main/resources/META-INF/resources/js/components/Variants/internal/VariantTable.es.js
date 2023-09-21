@@ -148,15 +148,15 @@ function VariantTable({
 											)
 										}
 									>
-										{winner && (
-											<ClayIcon
-												className="mr-1 text-success"
-												symbol="check-circle-full"
-											/>
-										)}
-
 										{control ? (
 											<span className="align-items-center d-flex">
+												{winner && (
+													<ClayIcon
+														className="mr-1 text-success"
+														symbol="check-circle-full"
+													/>
+												)}
+
 												{name}
 
 												<ClayIcon

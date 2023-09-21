@@ -44,6 +44,7 @@ import {
 	navigateToExperience,
 } from '../util/navigation.es';
 import {
+	STATUS_COMPLETED,
 	STATUS_DRAFT,
 	STATUS_FINISHED_NO_WINNER,
 	STATUS_FINISHED_WINNER,
@@ -474,7 +475,10 @@ function SegmentsExperimentsSidebar({
 	function _handlePublishSegmentExperiment({experienceId, experienceName}) {
 		APIService.publishExperience({
 			segmentsExperimentId: experiment.segmentsExperimentId,
-			status: experiment.status.value,
+			status:
+				experiment.status.value === STATUS_TERMINATED
+					? STATUS_TERMINATED
+					: STATUS_COMPLETED,
 			winnerSegmentsExperienceId: experienceId,
 		})
 			.then(() => {

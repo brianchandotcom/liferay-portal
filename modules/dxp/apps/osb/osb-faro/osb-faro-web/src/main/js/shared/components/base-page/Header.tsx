@@ -146,11 +146,11 @@ interface ITitleSectionProps extends React.HTMLAttributes<HTMLDivElement> {
 	title?: string;
 }
 
-interface IActionProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface IActionProps extends React.HTMLAttributes<HTMLDivElement> {
 	displayType: string;
 	label: string;
-	redirectURL: string;
-	onClick: () => void;
+	redirectURL?: string;
+	onClick?: () => void;
 }
 
 interface IActionsProps extends React.HTMLAttributes<HTMLDivElement> {

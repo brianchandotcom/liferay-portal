@@ -170,7 +170,8 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "The API endpoint already has an associated API filter"
+				"title",
+				"The API endpoint already has an associated API filter."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

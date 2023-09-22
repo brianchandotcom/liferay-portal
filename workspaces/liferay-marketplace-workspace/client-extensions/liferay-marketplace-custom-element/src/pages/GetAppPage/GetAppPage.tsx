@@ -4,15 +4,29 @@
  */
 
 import ClayButton from '@clayui/button';
-import {useState} from 'react';
-import {useForm} from 'react-hook-form';
+import {  useState } from "react";
+import { useForm } from "react-hook-form";
 
 import {getSiteURL} from '../../components/InviteMemberModal/services';
 import {Liferay} from '../../liferay/liferay';
-import {getUrlParam} from '../../utils/getUrlParam';
-import AccountSelection from './components/AccountSelection';
-import ProductCard from './components/ProductCard';
-import {StepType} from './enums/stepType';
+import {
+  postCheckoutCart,
+} from "../../utils/api";
+import { getUrlParam } from "../../utils/getUrlParam";
+import AccountSelection from "./components/AccountSelection";
+import ProductFooter from "./components/Footer";
+import ProductCard from "./components/ProductCard";
+import { SelectPaymentMethod } from "./components/SelectPaymentMethod";
+import { initialBillingAddress } from "./constants/initialBillingAddress";
+import { StepType } from "./enums/stepType";
+import useGetAddresses from "./hooks/useGetAddresses";
+import useGetChannelInfo from "./hooks/useGetChannelInfo";
+import useGetProductSkus from "./hooks/useGetProductSkus";
+import useProductPriceModel from "./hooks/useProductPriceModel";
+import buildNewCart from "./utils/buildNewCart";
+import { getProductOrderTypes } from "./utils/getProductOrderTypes";
+import { getProductSpecificationValues } from "./utils/getProductSpecificationValues";
+import { postCartByPaymentMethod } from "./utils/postCartByPaymentMethod";
 
 type StepComponent = {
 	[key in StepType]?: JSX.Element;
@@ -24,25 +38,38 @@ type getAppProps = {
 };
 
 const sectionProperties = {
-	[StepType.ACCOUNT]: {
-		backStep: StepType.ACCOUNT,
-		nextStep: StepType.LICENSES,
-		title: 'Account Selection',
-	},
-	[StepType.LICENSES]: {
-		backStep: StepType.ACCOUNT,
-		nextStep: StepType.PAYMENT,
-		title: 'License Selection',
-	},
-	[StepType.PAYMENT]: {
-		backStep: StepType.LICENSES,
-		nextStep: StepType.PAYMENT,
-		title: 'Payment Method',
-	},
+  [StepType.ACCOUNT]: {
+    backStep: StepType.ACCOUNT,
+    nextStep: StepType.LICENSES,
+    title: "Account Selection",
+  },
+  [StepType.LICENSES]: {
+    backStep: StepType.ACCOUNT,
+    nextStep: StepType.PAYMENT,
+    title: "License Selection",
+  },
+  [StepType.PAYMENT]: {
+    backStep: StepType.LICENSES,
+    nextStep: StepType.PAYMENT,
+    title: "Payment Method",
+  }
 };
 
 const GetAppFlow = () => {
-	const [step, setStep] = useState<StepType>(StepType.ACCOUNT);
+  const [step, setStep] = useState<StepType>(StepType.ACCOUNT);
+  const [showAccount, setShowAccount] = useState<boolean>(false);
+  const [enablePurchaseButton, setEnablePurchaseButton] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [purchaseOrderNumber, setPurchaseOrderNumber] = useState<string>("");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
+    PaymentMethodSelector
+  >("pay");
+  const [enableTrialMethod, setEnableTrialMethod] = useState<boolean>(false);
+  const [billingAddress, setBillingAddress] = useState<BillingAddress>(
+    initialBillingAddress
+  );
+  const [userAccount, setUserAccount] = useState<UserAccount>();
+  const [cartId, setCartId] = useState<number>(0);
 
 	const {getValues, setValue, watch} = useForm<getAppProps>({
 		defaultValues: {
@@ -51,82 +78,98 @@ const GetAppFlow = () => {
 		},
 	});
 
-	const onCancel = () => {
-		Liferay.Util.navigate(getSiteURL());
-	};
+  const { product, selectedAccount } = getValues();
+  const productId = product?.productId;
 
-	const onContinue = async (nextStep: StepType) => {
-		setStep(nextStep);
+  const {sku} = useGetProductSkus(product, setEnableTrialMethod);
+  const {channel} = useGetChannelInfo();
+  const {addresses} = useGetAddresses(selectedAccount);
+  const {isFreeApp} = useProductPriceModel(product);
 
-		return;
-	};
+  async function handleGetApp() {
+    const productSpecificationValues = await getProductSpecificationValues(
+      productId
+    );
 
-	const onPrevious = async (previousStep: StepType) => {
-		setStep(previousStep);
+    const orderType = await getProductOrderTypes(productSpecificationValues);
+    const cart = buildNewCart(
+      billingAddress,
+      channel,
+      email,
+      isFreeApp,
+      orderType,
+      product,
+      purchaseOrderNumber,
+      selectedAccount,
+      selectedPaymentMethod,
+      sku
+    );
 
-		return;
-	};
+    const cartResponse = await postCartByPaymentMethod(cart, channel.id);
+    setCartId(cartResponse.id);
 
-	const StepFormComponent: StepComponent = {
-		[StepType.ACCOUNT]: (
-			<AccountSelection
-				onSelectAccount={(account: Account) => {
-					setValue('selectedAccount', account);
-				}}
-				selectedAccount={getValues('selectedAccount')}
-			/>
-		),
-	};
+    await postCheckoutCart({ cartId: cartResponse.id });
+  }
 
-	return (
-		<>
-			<ProductCard
+  const StepFormComponent: StepComponent = {
+    [StepType.ACCOUNT]: (
+      <AccountSelection
+        onSelectAccount={(account: Account) => {
+          setValue("selectedAccount", account);
+        }}
+        selectedAccount={getValues('selected')}
+      />
+    ),
+    [StepType.PAYMENT]: (
+      <SelectPaymentMethod
+        addresses={addresses}
+        billingAddress={billingAddress}
+        email={email}
+        enableTrialMethod={enableTrialMethod}
+        purchaseOrderNumber={purchaseOrderNumber}
+        selectedPaymentMethod={selectedPaymentMethod}
+        setBillingAddress={setBillingAddress}
+        setEmail={setEmail}
+        setEnablePurchaseButton={setEnablePurchaseButton}
+        setPurchaseOrderNumber={setPurchaseOrderNumber}
+        setSelectedPaymentMethod={setSelectedPaymentMethod}
+      />
+    ),
+  };
+
+  return (
+    <>
+     <ProductCard
 				productId={Number(getUrlParam('productId'))}
 				selectedAccount={watch('selectedAccount')}
 				setProductToForm={(product: Product) =>
 					setValue('product', product)
 				}
 			/>
-			<div className="border d-flex flex-column mt-7 p-5 rounded">
-				<div className="d-flex flex-column">
-					<div className="align-self-center h1 mb-6">
-						{sectionProperties[step].title}
-					</div>
 
-					<div>{StepFormComponent[step]}</div>
-				</div>
-				<div className="d-flex justify-content-between mt-5 pt-2">
-					<ClayButton displayType={null} onClick={() => onCancel()}>
-						Cancel
-					</ClayButton>
-					<div className="align-self-end">
-						{sectionProperties[step].backStep !== step && (
-							<ClayButton
-								displayType="secondary"
-								onClick={() =>
-									onPrevious(sectionProperties[step].backStep)
-								}
-							>
-								Back
-							</ClayButton>
-						)}
-						{sectionProperties[step].nextStep && (
-							<ClayButton
-								className="ml-5"
-								onClick={() => {
-									onContinue(
-										sectionProperties[step].nextStep
-									);
-								}}
-							>
-								Continue
-							</ClayButton>
-						)}
-					</div>
-				</div>
-			</div>
-		</>
-	);
+      <div className="border d-flex flex-column mt-7 p-5 rounded">
+        <div className="d-flex flex-column">
+          <div className="align-self-center h1 mb-6">
+            {sectionProperties[step].title}
+          </div>
+          <div>{StepFormComponent[step]}</div>
+        </div>
+        <ProductFooter
+          addresses={addresses}
+          cartId={cartId}
+          enablePurchaseButton={enablePurchaseButton}
+          handleGetApp={handleGetApp}
+          isFreeApp={isFreeApp}
+          sectionProperties={sectionProperties}
+          selectedAccount={selectedAccount}
+          selectedPaymentMethod={selectedPaymentMethod}
+          setStep={setStep}
+          sku={sku}
+          step={step}
+        />
+      </div>
+    </>
+  );
 };
 
 export default GetAppFlow;

@@ -167,8 +167,6 @@ definition {
 			selenium.selectFrame("//*[contains(@class,'modal-body')]/iframe[not(contains(@class,'hidden'))]");
 		}
 
-		selenium.pause(3000);
-
 		Click();
 
 		selenium.assertJavaScriptErrors();

@@ -48,8 +48,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface CTEntryResource {
 
 	public Page<CTEntry> getCtCollectionCTEntriesPage(
-			Long ctCollectionId, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long ctCollectionId, Boolean showHideable, String search,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public CTEntry getCTEntry(Long ctEntryId) throws Exception;

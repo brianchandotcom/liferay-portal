@@ -139,11 +139,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {ctCollectionCTEntries(ctCollectionId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {ctCollectionCTEntries(ctCollectionId: ___, filter: ___, page: ___, pageSize: ___, search: ___, showHideable: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public CTEntryPage ctCollectionCTEntries(
 			@GraphQLName("ctCollectionId") Long ctCollectionId,
+			@GraphQLName("showHideable") Boolean showHideable,
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
@@ -156,7 +157,7 @@ public class Query {
 			this::_populateResourceContext,
 			ctEntryResource -> new CTEntryPage(
 				ctEntryResource.getCtCollectionCTEntriesPage(
-					ctCollectionId, search,
+					ctCollectionId, showHideable, search,
 					_filterBiFunction.apply(ctEntryResource, filterString),
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(ctEntryResource, sortsString))));
@@ -284,6 +285,7 @@ public class Query {
 
 		@GraphQLField
 		public CTEntryPage ctCollectionCTEntries(
+				@GraphQLName("showHideable") Boolean showHideable,
 				@GraphQLName("search") String search,
 				@GraphQLName("filter") String filterString,
 				@GraphQLName("pageSize") int pageSize,
@@ -296,7 +298,7 @@ public class Query {
 				Query.this::_populateResourceContext,
 				ctEntryResource -> new CTEntryPage(
 					ctEntryResource.getCtCollectionCTEntriesPage(
-						_cTCollection.getId(), search,
+						_cTCollection.getId(), showHideable, search,
 						_filterBiFunction.apply(ctEntryResource, filterString),
 						Pagination.of(page, pageSize),
 						_sortsBiFunction.apply(ctEntryResource, sortsString))));

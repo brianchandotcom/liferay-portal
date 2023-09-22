@@ -33,13 +33,13 @@ public interface CTEntryResource {
 	}
 
 	public Page<CTEntry> getCtCollectionCTEntriesPage(
-			Long ctCollectionId, String search, String filterString,
-			Pagination pagination, String sortString)
+			Long ctCollectionId, Boolean showHideable, String search,
+			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getCtCollectionCTEntriesPageHttpResponse(
-			Long ctCollectionId, String search, String filterString,
-			Pagination pagination, String sortString)
+			Long ctCollectionId, Boolean showHideable, String search,
+			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public CTEntry getCTEntry(Long ctEntryId) throws Exception;
@@ -152,14 +152,14 @@ public interface CTEntryResource {
 	public static class CTEntryResourceImpl implements CTEntryResource {
 
 		public Page<CTEntry> getCtCollectionCTEntriesPage(
-				Long ctCollectionId, String search, String filterString,
-				Pagination pagination, String sortString)
+				Long ctCollectionId, Boolean showHideable, String search,
+				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getCtCollectionCTEntriesPageHttpResponse(
-					ctCollectionId, search, filterString, pagination,
-					sortString);
+					ctCollectionId, showHideable, search, filterString,
+					pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -222,8 +222,9 @@ public interface CTEntryResource {
 
 		public HttpInvoker.HttpResponse
 				getCtCollectionCTEntriesPageHttpResponse(
-					Long ctCollectionId, String search, String filterString,
-					Pagination pagination, String sortString)
+					Long ctCollectionId, Boolean showHideable, String search,
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -246,6 +247,11 @@ public interface CTEntryResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (showHideable != null) {
+				httpInvoker.parameter(
+					"showHideable", String.valueOf(showHideable));
+			}
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));

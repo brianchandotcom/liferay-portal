@@ -80,6 +80,10 @@ public abstract class BaseCTEntryResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "showHideable"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "filter"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -112,6 +116,9 @@ public abstract class BaseCTEntryResourceImpl
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("ctCollectionId")
 			Long ctCollectionId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("showHideable")
+			Boolean showHideable,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("search")
 			String search,

@@ -238,6 +238,7 @@ public class DisplayPageActionDropdownItemsProvider {
 					"layoutPageTemplateEntryId",
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 				).buildString());
+			dropdownItem.setDisabled(_layoutPageTemplateEntry.isDraft());
 			dropdownItem.setIcon("copy");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "make-a-copy"));

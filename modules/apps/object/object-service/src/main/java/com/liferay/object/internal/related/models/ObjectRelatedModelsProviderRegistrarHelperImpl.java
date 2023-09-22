@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Carlos Correa
  */
 @Component(service = ObjectRelatedModelsProviderRegistrarHelper.class)
-public class ObjectEntryRelatedModelsProviderRegistrarHelper
+public class ObjectRelatedModelsProviderRegistrarHelperImpl
 	implements ObjectRelatedModelsProviderRegistrarHelper {
 
 	@Override

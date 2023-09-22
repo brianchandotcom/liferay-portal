@@ -7,8 +7,5 @@ Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\
 		uri="http://liferay.com/tld/commerce-ui";\
-		version:Version="${Bundle-Version}",\
-	soy;\
-		type="commerce-frontend-taglib";\
 		version:Version="${Bundle-Version}"
 Web-ContextPath: /commerce-frontend-taglib

@@ -60,10 +60,6 @@ public class PublicationsChangesTableFDSView extends BaseTableFDSView {
 			"changeType", "change-type",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
-			"hideable", "system",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"boolean")
-		).add(
 			"dateModified", "last-modified",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"dateTime"

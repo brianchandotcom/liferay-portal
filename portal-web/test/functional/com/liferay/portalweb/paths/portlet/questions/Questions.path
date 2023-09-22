@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>EMPTY_STATE_MESSAGE</td>
-	<td>//div[contains(@class,'questions-container')]//div[contains(@class,'empty')]//span[contains(text(),'${key_emptyInfo}')]</td>
+	<td>//div[contains(@class,'questions')]//div[contains(@class,'empty')]//span[contains(text(),'${key_emptyInfo}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -83,6 +83,11 @@
 <tr>
 	<td>MODAL_ITEM_BUTTON</td>
 	<td>//div[contains(@class,'modal-item')]//button[contains(@type,'button') and contains(.,'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DROPDOWN_ITEM_BUTTON</td>
+	<td>//*[contains(@class,'dropdown')]//*[contains(@class,'dropdown') and contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -162,7 +167,7 @@
 </tr>
 <tr>
 	<td>QUESTIONS_ELLIPSIS_ICON</td>
-	<td>//div[contains(@class,'questions-container row') and contains(.,'${key_questionTitle}')]//li//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td>//div[contains(@class,'question') and contains(.,'${key_questionTitle}')]//li//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

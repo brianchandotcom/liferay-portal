@@ -30,9 +30,9 @@ definition {
 				title = "WC Title ${count}");
 		}
 
-		SearchPortlets.setupSimilarResultsPage();
+		SearchPage.setupSimilarResultsPage();
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
 			minimumDocumentFrequency = 1,
@@ -48,7 +48,7 @@ definition {
 			key_linkResultTitle = "WC Title 3",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
-		SearchPortlets.configureSimilarResults(displayTemplate = "List Layout");
+		SearchPage.configureSimilarResults(displayTemplate = "List Layout");
 
 		AssertElementPresent(
 			key_listResultTitle = "WC Title 2",
@@ -58,7 +58,7 @@ definition {
 			key_listResultTitle = "WC Title 3",
 			locator1 = "Search#SIMILAR_RESULTS_LIST_TITLE");
 
-		SearchPortlets.configureSimilarResults(displayTemplate = "Card Layout");
+		SearchPage.configureSimilarResults(displayTemplate = "Card Layout");
 
 		AssertElementPresent(
 			key_cardResultTitle = "WC Title 2",
@@ -81,7 +81,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Similar Results Page");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Similar Results Page",
 			searchPortletList = "Similar Results");
 
@@ -93,7 +93,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Similar Results Page");
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
 			minimumDocumentFrequency = 1,
@@ -126,7 +126,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Similar Results Page");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Similar Results Page",
 			searchPortletList = "Similar Results");
 
@@ -138,7 +138,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Similar Results Page");
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
 			minimumDocumentFrequency = 1,
@@ -188,9 +188,9 @@ definition {
 				wikiPageTitle = "Similar Results Wiki Title ${count}");
 		}
 
-		SearchPortlets.setupSimilarResultsPage();
+		SearchPage.setupSimilarResultsPage();
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
 			minimumDocumentFrequency = 1,
@@ -356,7 +356,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Similar Results Page");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Similar Results Page",
 			searchPortletList = "Similar Results");
 
@@ -368,7 +368,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Similar Results Page");
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
 			minimumDocumentFrequency = 1,
@@ -397,7 +397,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Similar Results Page");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Similar Results Page",
 			searchPortletList = "Similar Results");
 
@@ -409,15 +409,15 @@ definition {
 
 		Navigator.gotoPage(pageName = "Similar Results Page");
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
 			minimumDocumentFrequency = 1,
 			minimumTermFrequency = 1);
 
-		SearchPortlets.searchEmbedded(searchTerm = "DM Document Title");
+		SearchPage.searchEmbedded(searchTerm = "DM Document Title");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "DM Document Title 1");
+		SearchPage.gotoResultDetails(searchAssetTitle = "DM Document Title 1");
 
 		for (var count : list "2,3") {
 			AssertElementPresent(
@@ -455,9 +455,9 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.setupSimilarResultsPage();
+		SearchPage.setupSimilarResultsPage();
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
 			minimumDocumentFrequency = 3,
@@ -477,7 +477,7 @@ definition {
 			key_linkResultTitle = "Charlie",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			maximumDocumentFrequency = 2,
 			minimumDocumentFrequency = 1);
 
@@ -514,9 +514,9 @@ definition {
 			entryTitle = "Similar Results Blogs Title",
 			tagName = "Apple");
 
-		SearchPortlets.setupSimilarResultsPage();
+		SearchPage.setupSimilarResultsPage();
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "content_en_US",
 			minimumDocumentFrequency = 1,
@@ -532,7 +532,7 @@ definition {
 			key_linkResultTitle = "No Match Tag",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
-		SearchPortlets.configureSimilarResults(fields = "assetTagNames,content_en_US");
+		SearchPage.configureSimilarResults(fields = "assetTagNames,content_en_US");
 
 		AssertElementPresent(
 			key_linkResultTitle = "No Match Content",
@@ -557,9 +557,9 @@ definition {
 			groupName = "Guest",
 			title = "Alpha Bravo Charlie Delta Echo Foxtrot");
 
-		SearchPortlets.setupSimilarResultsPage();
+		SearchPage.setupSimilarResultsPage();
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
 			maximumItemDisplay = 0,
@@ -573,7 +573,7 @@ definition {
 			locator1 = "Message#INFO_SPECIFIC_WIDGET",
 			value1 = "no similar results available");
 
-		SearchPortlets.configureSimilarResults(maximumItemDisplay = 5);
+		SearchPage.configureSimilarResults(maximumItemDisplay = 5);
 
 		AssertElementPresent(
 			key_resultPosition = 5,
@@ -598,9 +598,9 @@ definition {
 			groupName = "Guest",
 			title = "One Two Three");
 
-		SearchPortlets.setupSimilarResultsPage();
+		SearchPage.setupSimilarResultsPage();
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
 			maximumQueryTerms = 2,
@@ -640,9 +640,9 @@ definition {
 			groupName = "Guest",
 			title = "Similar Results Web Content");
 
-		SearchPortlets.setupSimilarResultsPage();
+		SearchPage.setupSimilarResultsPage();
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
 			minimumDocumentFrequency = 1,
@@ -663,7 +663,7 @@ definition {
 			key_linkResultTitle = "Similar Results Web 1",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
-		SearchPortlets.configureSimilarResults(minimumShouldMatch = "75%");
+		SearchPage.configureSimilarResults(minimumShouldMatch = "75%");
 
 		AssertElementPresent(
 			key_linkResultTitle = "Similar Results Web 1",
@@ -700,9 +700,9 @@ definition {
 			groupName = "Guest",
 			title = "No Match");
 
-		SearchPortlets.setupSimilarResultsPage();
+		SearchPage.setupSimilarResultsPage();
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "content_en_US,localized_title_en_US",
 			minimumDocumentFrequency = 1,
@@ -723,7 +723,7 @@ definition {
 			key_linkResultTitle = "Alpha",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
-		SearchPortlets.configureSimilarResults(stopWords = "Alpha,Bravo");
+		SearchPage.configureSimilarResults(stopWords = "Alpha,Bravo");
 
 		AssertElementPresent(
 			key_linkResultTitle = "Charlie",
@@ -752,9 +752,9 @@ definition {
 			groupName = "Guest",
 			title = "One Two Two Three Three Three");
 
-		SearchPortlets.setupSimilarResultsPage();
+		SearchPage.setupSimilarResultsPage();
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
 			minimumDocumentFrequency = 1,
@@ -768,7 +768,7 @@ definition {
 				locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 		}
 
-		SearchPortlets.configureSimilarResults(minimumTermFrequency = 3);
+		SearchPage.configureSimilarResults(minimumTermFrequency = 3);
 
 		AssertElementPresent(
 			key_linkResultTitle = "Three",
@@ -782,7 +782,7 @@ definition {
 			key_linkResultTitle = "Two",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
-		SearchPortlets.configureSimilarResults(minimumTermFrequency = 4);
+		SearchPage.configureSimilarResults(minimumTermFrequency = 4);
 
 		AssertElementNotPresent(
 			key_linkResultTitle = "One",
@@ -831,7 +831,7 @@ definition {
 
 		PageEditor.addWidget(portletName = "Similar Results");
 
-		SearchPortlets.configureSimilarResults(linkBehavior = "View in Context");
+		SearchPage.configureSimilarResults(linkBehavior = "View in Context");
 
 		Refresh();
 
@@ -885,9 +885,9 @@ definition {
 			groupName = "Guest",
 			title = "Charlie");
 
-		SearchPortlets.setupSimilarResultsPage();
+		SearchPage.setupSimilarResultsPage();
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
 			minimumDocumentFrequency = 1,
@@ -904,7 +904,7 @@ definition {
 			key_linkResultTitle = "Alpha Bravo",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
-		SearchPortlets.configureSimilarResults(minimumWordLength = 8);
+		SearchPage.configureSimilarResults(minimumWordLength = 8);
 
 		AssertElementNotPresent(
 			key_linkResultTitle = "Alpha Bravo",
@@ -914,7 +914,7 @@ definition {
 			key_linkResultTitle = "Charlie",
 			locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			maximumWordLength = 5,
 			minimumWordLength = 5);
 
@@ -955,7 +955,7 @@ definition {
 			portletName = "Similar Results",
 			targetFragmentName = "Asset Publisher");
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
 			minimumDocumentFrequency = 1,
@@ -1016,9 +1016,9 @@ definition {
 			var count = ${count} + 1;
 		}
 
-		SearchPortlets.setupSimilarResultsPage();
+		SearchPage.setupSimilarResultsPage();
 
-		SearchPortlets.configureSimilarResults(
+		SearchPage.configureSimilarResults(
 			displayTemplate = "Compact Layout",
 			fields = "localized_title_en_US",
 			minimumDocumentFrequency = 1,

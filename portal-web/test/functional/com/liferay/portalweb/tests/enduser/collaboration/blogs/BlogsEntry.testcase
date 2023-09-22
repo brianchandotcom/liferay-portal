@@ -870,9 +870,9 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Blogs Entry Title");
+		SearchPage.searchEmbedded(searchTerm = "Blogs Entry Title");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "Blogs Entry Title");
+		SearchPage.gotoResultDetails(searchAssetTitle = "Blogs Entry Title");
 
 		Blogs.editEntryViaSearchResultDetails(
 			entryContent = "Blogs Entry Content",
@@ -1532,7 +1532,7 @@ definition {
 		for (var searchTerm : list "Unique,Unique Content") {
 			Navigator.gotoPage(pageName = "Search Page");
 
-			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
+			SearchPage.searchEmbedded(searchTerm = ${searchTerm});
 
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "Blogs Entry Title",
@@ -1556,7 +1556,7 @@ definition {
 		for (var searchTerm : list "Blogs,Blogs Entry Title") {
 			Navigator.gotoPage(pageName = "Search Page");
 
-			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
+			SearchPage.searchEmbedded(searchTerm = ${searchTerm});
 
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "Blogs Entry Title",

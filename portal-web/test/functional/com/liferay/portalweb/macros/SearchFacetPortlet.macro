@@ -164,7 +164,7 @@ definition {
 
 	macro generateFacetCheckedURL {
 		if (!(isSet(searchURL))) {
-			var searchURL = SearchPortlets.getSearchTermURL(
+			var searchURL = SearchPage.getSearchTermURL(
 				searchPage = ${searchPage},
 				searchTerm = ${searchTerm});
 		}

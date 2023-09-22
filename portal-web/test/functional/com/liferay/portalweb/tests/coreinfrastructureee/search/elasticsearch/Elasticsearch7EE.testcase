@@ -48,7 +48,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "alien");
+		SearchPage.searchEmbedded(searchTerm = "alien");
 
 		var assetEntryTitleListNoLtr = "";
 		var iterator = 1;
@@ -80,7 +80,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "alien");
+		SearchPage.searchEmbedded(searchTerm = "alien");
 
 		var assetEntryTitleListLtr = "";
 		var iterator = 1;
@@ -134,7 +134,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+		SearchPage.searchEmbedded(searchTerm = "Apple");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
@@ -146,7 +146,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Orange");
+		SearchPage.searchEmbedded(searchTerm = "Orange");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
@@ -167,7 +167,7 @@ definition {
 
 		Clustering.shutdownSpecificServer(nodePort = 8080);
 
-		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+		SearchPage.searchEmbedded(searchTerm = "Apple");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
@@ -179,7 +179,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://localhost:9080");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Orange");
+		SearchPage.searchEmbedded(searchTerm = "Orange");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple",
@@ -208,7 +208,7 @@ definition {
 			layoutName = "Elasticsearch Monitoring Page",
 			layoutTemplate = "1 Column");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Elasticsearch Monitoring Page",
 			searchPortletList = "Elasticsearch Monitoring");
 
@@ -240,7 +240,7 @@ definition {
 			layoutName = "Elasticsearch Monitoring Page",
 			layoutTemplate = "1 Column");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Elasticsearch Monitoring Page",
 			searchPortletList = "Elasticsearch Monitoring");
 
@@ -262,7 +262,7 @@ definition {
 			groupName = "Guest",
 			title = "WC Title");
 
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",
@@ -277,7 +277,7 @@ definition {
 			layoutName = "Elasticsearch Monitoring Page",
 			layoutTemplate = "1 Column");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Elasticsearch Monitoring Page",
 			searchPortletList = "Elasticsearch Monitoring");
 
@@ -311,7 +311,7 @@ definition {
 			groupName = "Guest",
 			title = "WC Title");
 
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",
@@ -326,7 +326,7 @@ definition {
 			layoutName = "Elasticsearch Monitoring Page",
 			layoutTemplate = "1 Column");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Elasticsearch Monitoring Page",
 			searchPortletList = "Elasticsearch Monitoring");
 
@@ -360,7 +360,7 @@ definition {
 			layoutName = "Elasticsearch Monitoring Page",
 			layoutTemplate = "1 Column");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Elasticsearch Monitoring Page",
 			searchPortletList = "Elasticsearch Monitoring");
 

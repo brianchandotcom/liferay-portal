@@ -83,11 +83,11 @@ definition {
 		}
 
 		task ("Add a Custom Facet widget to the search page") {
-			SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+			SearchPage.addWidgets(searchPortletList = "Custom Facet");
 		}
 
 		task ("Go to the search page and execute a search for the object entries") {
-			SearchPortlets.openSearchPage(searchTerm = "fruit");
+			SearchPage.openSearchPage(searchTerm = "fruit");
 		}
 
 		task ("Configure the Custom Facet widget to aggregate by the 'title' custom Object field") {
@@ -202,11 +202,11 @@ definition {
 		}
 
 		task ("Add Custom Facet widget to the Search Page") {
-			SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+			SearchPage.addWidgets(searchPortletList = "Custom Facet");
 		}
 
 		task ("Go to the Search page and execute a search for the web content articles") {
-			SearchPortlets.openSearchPage(searchTerm = "WC Title");
+			SearchPage.openSearchPage(searchTerm = "WC Title");
 		}
 
 		task ("Curl the Elasticsearch index to retrieve the DDM field name of the text field for the web content structure") {
@@ -273,7 +273,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Options",
@@ -315,9 +315,9 @@ definition {
 			checkboxName = "fruit",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		SearchPortlets.configureSearchOptions(basicFacetSelection = "true");
+		SearchPage.configureSearchOptions(basicFacetSelection = "true");
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
 		AssertElementPresent(
 			checkboxName = "fruit",
@@ -373,7 +373,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title 1");
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			displayTemplate = "Cloud Layout",
@@ -430,9 +430,9 @@ definition {
 	@description = "This is a use case for LPS-138720."
 	@priority = 4
 	test AssertCustomFacetNoXSS {
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		SearchPage.addWidgets(searchPortletList = "Custom Facet");
 
-		SearchPortlets.openSearchPage();
+		SearchPage.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(
 			aggregationField = "title_sortable",
@@ -457,9 +457,9 @@ definition {
 				sourceFileName = "Document_${count}.docx");
 		}
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		SearchPage.addWidgets(searchPortletList = "Custom Facet");
 
-		SearchPortlets.searchEmbedded(searchTerm = "title");
+		SearchPage.searchEmbedded(searchTerm = "title");
 
 		SearchFacetPortlet.configureCustomFacet(
 			aggregationField = "title_sortable",
@@ -512,7 +512,7 @@ definition {
 			}
 		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		task ("Assert that the three folders are present in Compact Layout Template") {
 			SearchFacetPortlet.updateFacetConfiguration(
@@ -548,7 +548,7 @@ definition {
 	@description = "This is a use case for LPS-147397."
 	@priority = 4
 	test AssertModifiedFacetNoXSS {
-		SearchPortlets.openSearchPage();
+		SearchPage.openSearchPage();
 
 		Portlet.gotoPortletOptions(
 			portletName = "Modified Facet",
@@ -567,7 +567,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		AssertAlertNotPresent();
 	}
@@ -585,7 +585,7 @@ definition {
 			}
 		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "Web Content");
+		SearchPage.searchEmbedded(searchTerm = "Web Content");
 
 		task ("Change Display Template to 'Radio Layout' and assert the Web Contents are present") {
 			SearchFacetPortlet.updateFacetConfiguration(
@@ -678,7 +678,7 @@ definition {
 				sourceFileName = "Document_${count}.txt");
 		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "Category Name");
+		SearchPage.searchEmbedded(searchTerm = "Category Name");
 
 		SearchResultPortlet.configureSearchResults(paginationDelta = 2);
 
@@ -720,9 +720,9 @@ definition {
 				title = "Web Content");
 		}
 
-		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Everything");
+		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Web Content");
+		SearchPage.searchEmbedded(searchTerm = "Web Content");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			displayTemplate = "Compact Layout",
@@ -761,7 +761,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title 1");
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			displayTemplate = "Cloud Layout",
@@ -822,7 +822,7 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
-		SearchPortlets.searchEmbedded(searchTerm = "title");
+		SearchPage.searchEmbedded(searchTerm = "title");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			displayTemplate = "Compact Layout",
@@ -867,7 +867,7 @@ definition {
 				userEmailAddress = "userea${count}@liferay.com");
 		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "user");
+		SearchPage.searchEmbedded(searchTerm = "user");
 
 		SearchFacetPortlet.updateFacetConfiguration(
 			displayTemplate = "Compact Layout",
@@ -1022,7 +1022,7 @@ definition {
 			groupName = "Guest",
 			title = "WC WebContent Title 4");
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		SearchFacetPortlet.viewFacetTermsSpecificOrder(
 			facetName = "Category Facet",
@@ -1085,9 +1085,9 @@ definition {
 			mimeType = "image/png",
 			sourceFileName = "Document_1.png");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		SearchPage.addWidgets(searchPortletList = "Custom Facet");
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = "extension");
 
@@ -1168,7 +1168,7 @@ definition {
 			}
 		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		task ("Assert that the Folder facet sorts by term frequency descending by default") {
 			SearchFacetPortlet.viewFacetTermsSpecificOrder(
@@ -1215,7 +1215,7 @@ definition {
 
 	@priority = 3
 	test CanOrderModifiedFacetRanges {
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		task ("Add and enable a new modified facet label to have no assets") {
 			Portlet.gotoPortletOptions(
@@ -1310,11 +1310,11 @@ definition {
 			}
 		}
 
-		SearchPortlets.openSearchPage();
+		SearchPage.openSearchPage();
 
-		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Everything");
+		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
 
-		SearchPortlets.searchEmbedded(searchTerm = "web content");
+		SearchPage.searchEmbedded(searchTerm = "web content");
 
 		task ("Assert the order of site facet by term frequency descending by default") {
 			SearchFacetPortlet.viewFacetTermsSpecificOrder(
@@ -1387,7 +1387,7 @@ definition {
 				title = "WC WebContent Title 4");
 		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		task ("Assert the order of tag facet by term frequency descending by default") {
 			SearchFacetPortlet.viewFacetTermsSpecificOrder(
@@ -1460,7 +1460,7 @@ definition {
 			}
 		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		task ("Assert that the Type facet sorts by term frequency descending by default") {
 			SearchFacetPortlet.viewFacetTermsSpecificOrder(
@@ -1558,7 +1558,7 @@ definition {
 			userEmailAddress = "jonathan.franklin@liferay.com",
 			userPassword = "test");
 
-		SearchPortlets.openSearchPage(searchTerm = "test");
+		SearchPage.openSearchPage(searchTerm = "test");
 
 		SearchFacetPortlet.viewFacetTermsSpecificOrder(
 			facetName = "User Facet",
@@ -1627,9 +1627,9 @@ definition {
 		}
 
 		task ("Navigate to the search page and add a Custom Facet with Aggregation Field 'entryClassName' and Frequency Threshold '0'") {
-			SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+			SearchPage.addWidgets(searchPortletList = "Custom Facet");
 
-			SearchPortlets.openSearchPage();
+			SearchPage.openSearchPage();
 
 			SearchFacetPortlet.configureCustomFacet(aggregationField = "entryClassName");
 
@@ -1645,7 +1645,7 @@ definition {
 		}
 
 		task ("Search for the Web Content articles") {
-			SearchPortlets.openSearchPage(searchTerm = "test");
+			SearchPage.openSearchPage(searchTerm = "test");
 		}
 
 		task ("Assert that the appropriate facet values show up in the custom facet") {
@@ -1691,11 +1691,11 @@ definition {
 		}
 
 		task ("Add the Custom Facet to the search page") {
-			SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+			SearchPage.addWidgets(searchPortletList = "Custom Facet");
 		}
 
 		task ("Go to the Search page and execute a search for the web content article") {
-			SearchPortlets.openSearchPage(searchTerm = "WC Title");
+			SearchPage.openSearchPage(searchTerm = "WC Title");
 		}
 
 		task ("Curl the Elasticsearch index to retrieve the DDM field name of the text field for the web content structure") {
@@ -1735,7 +1735,7 @@ definition {
 		}
 
 		task ("Perform a search and assert that the Custom Facet does not display any facet terms for the web content article since its repeatable text field is empty") {
-			SearchPortlets.openSearchPage(searchTerm = "WC Title");
+			SearchPage.openSearchPage(searchTerm = "WC Title");
 
 			AssertElementNotPresent(
 				key_facetType = "Custom Facet",
@@ -1798,7 +1798,7 @@ definition {
 				title = "wc6");
 		}
 
-		SearchPortlets.searchEmbedded(searchTerm = "wc");
+		SearchPage.searchEmbedded(searchTerm = "wc");
 
 		task ("Assert the search results after 'wc' search and after applying any search filter") {
 			SearchResultPortlet.viewMultipleSearchResults(
@@ -1854,7 +1854,7 @@ definition {
 			folderName = "fruit",
 			groupName = "Guest");
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
 		SearchFacetPortlet.checkFacetTerm(
 			facetName = "Category Facet",
@@ -1874,13 +1874,13 @@ definition {
 			groupName = "Guest",
 			title = "WebContent Title 1");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		SearchPage.addWidgets(searchPortletList = "Custom Facet");
 
-		SearchPortlets.openSearchPage();
+		SearchPage.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = "version");
 
-		SearchPortlets.searchEmbedded(searchTerm = "WebContent");
+		SearchPage.searchEmbedded(searchTerm = "WebContent");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1",
@@ -1918,7 +1918,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "WebContent");
+		SearchPage.searchEmbedded(searchTerm = "WebContent");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1.1",
@@ -1987,13 +1987,13 @@ definition {
 
 		var aggregationField = RegexUtil.replace(${journalArticleDocumentType}, "ddmFieldName\":\"(.*)\",\"ddmFieldValueKeyword\"", 1);
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		SearchPage.addWidgets(searchPortletList = "Custom Facet");
 
-		SearchPortlets.openSearchPage();
+		SearchPage.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
 
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
 		AssertElementPresent(
 			key_checkboxName = "Unlocalized text field",
@@ -2052,7 +2052,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Search Page",
 			searchPortletList = "Search Bar,Search Results,Category Facet");
 
@@ -2062,7 +2062,7 @@ definition {
 			groupName = "Guest",
 			vocabularyScope = "All Vocabularies");
 
-		SearchPortlets.searchWidget(searchTerm = "WC Title");
+		SearchPage.searchWidget(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "WC Title 1,WC Title 2,WC Title 3",
@@ -2152,7 +2152,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Search Page",
 			searchPortletList = "Search Bar,Search Results,Category Facet");
 
@@ -2164,7 +2164,7 @@ definition {
 			vocabularyName = "Vocabulary Name 1,Vocabulary Name 2",
 			vocabularyScope = "Select Vocabularies");
 
-		SearchPortlets.searchWidget(searchTerm = "WC Title");
+		SearchPage.searchWidget(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "WC Title 1,WC Title 2,WC Title 3",
@@ -2254,7 +2254,7 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Search Page",
 			searchPortletList = "Search Bar,Search Results,Category Facet,Category Facet");
 
@@ -2272,7 +2272,7 @@ definition {
 			vocabularyName = "Vocabulary Name 2",
 			vocabularyScope = "Select Vocabularies");
 
-		SearchPortlets.searchWidget(searchTerm = "WC Title");
+		SearchPage.searchWidget(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "WC Title 1,WC Title 2,WC Title 3",
@@ -2330,7 +2330,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "DM");
+		SearchPage.searchEmbedded(searchTerm = "DM");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "DM Document Title 1,DM Document Title 2",
@@ -2383,7 +2383,7 @@ definition {
 			groupName = "Guest",
 			title = "WC Title");
 
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Modified Facet",
@@ -2521,7 +2521,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+		SearchPage.searchEmbedded(searchTerm = "Apple");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "Apple/Web Content Article,Apple/Document,Apple/Blogs Entry",
@@ -2571,9 +2571,9 @@ definition {
 		}
 
 		task ("Go to Search Page, select the 'Select Vocabularies' option in the category facet and assert vocabulary 21 can be selected") {
-			SearchPortlets.addWidgets(searchPortletList = "Category Facet");
+			SearchPage.addWidgets(searchPortletList = "Category Facet");
 
-			SearchPortlets.openSearchPage();
+			SearchPage.openSearchPage();
 
 			SearchFacetPortlet.configureCategoryFacet(
 				groupName = "Guest",
@@ -2587,7 +2587,7 @@ definition {
 	@priority = 4
 	test ViewDefaultEmptySearchResultsAndPaginationConfiguration {
 		task ("Assert 'Show Default Empty Result Message' and 'Show Default Pagination' are checked by default within the Search Results widget configuration") {
-			SearchPortlets.openSearchPage();
+			SearchPage.openSearchPage();
 
 			Portlet.gotoPortletOptions(
 				portletName = "Search Results",
@@ -2607,7 +2607,7 @@ definition {
 		}
 
 		task ("Assert the default empty results display is used") {
-			SearchPortlets.searchEmbedded(searchTerm = "apple");
+			SearchPage.searchEmbedded(searchTerm = "apple");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#EMPTY_INFO",
@@ -2619,7 +2619,7 @@ definition {
 		}
 
 		task ("Assert the default pagination toolbar is used") {
-			SearchPortlets.searchEmbedded(searchTerm = "test");
+			SearchPage.searchEmbedded(searchTerm = "test");
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Pagination#RESULTS",
@@ -2634,15 +2634,15 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Search Page",
 			searchPortletList = "Site Facet,Search Results,Search Bar");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.configureSearchBarWidget(searchScope = "Everything");
+		SearchPage.configureSearchBarWidget(searchScope = "Everything");
 
-		SearchPortlets.searchWidget(searchTerm = "*");
+		SearchPage.searchWidget(searchTerm = "*");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Test Test",
@@ -2654,7 +2654,7 @@ definition {
 			facetName = "Site Facet",
 			facetTerm = ${siteName});
 
-		SearchPortlets.searchWidget(searchTerm = "test");
+		SearchPage.searchWidget(searchTerm = "test");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Test Test",
@@ -2739,24 +2739,24 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Search Page",
 			searchPortletList = "Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			column = 2,
 			layoutName = "Search Page",
 			searchPortletList = "Search Bar,Search Options,Search Results");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.configureSearchBarWidget(searchScope = "Everything");
+		SearchPage.configureSearchBarWidget(searchScope = "Everything");
 
-		SearchPortlets.configureSearchOptions(
+		SearchPage.configureSearchOptions(
 			allowEmptySearches = "true",
 			basicFacetSelection = "true");
 
-		SearchPortlets.searchWidget(searchTerm = "apple");
+		SearchPage.searchWidget(searchTerm = "apple");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,apple/Web Content Article",
@@ -2802,9 +2802,9 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = ${testSearchURL});
 
-		SearchPortlets.searchWidget(searchTerm = "test");
+		SearchPage.searchWidget(searchTerm = "test");
 
-		var testSearchURL = SearchPortlets.getSearchTermURL(
+		var testSearchURL = SearchPage.getSearchTermURL(
 			searchPage = "Search Page",
 			searchTerm = "test");
 
@@ -2851,9 +2851,9 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = ${testSearchURL});
 
-		SearchPortlets.searchWidget(searchTerm = "test");
+		SearchPage.searchWidget(searchTerm = "test");
 
-		var testSearchURL = SearchPortlets.getSearchTermURL(
+		var testSearchURL = SearchPage.getSearchTermURL(
 			searchPage = "Search Page",
 			searchTerm = "test");
 
@@ -2963,9 +2963,9 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = ${testSearchURL});
 
-		SearchPortlets.searchWidget(searchTerm = "organic");
+		SearchPage.searchWidget(searchTerm = "organic");
 
-		var testSearchURL = SearchPortlets.getSearchTermURL(
+		var testSearchURL = SearchPage.getSearchTermURL(
 			searchPage = "Search Page",
 			searchTerm = "organic");
 

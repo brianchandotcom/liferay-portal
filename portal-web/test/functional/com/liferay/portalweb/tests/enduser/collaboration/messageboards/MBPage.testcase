@@ -401,7 +401,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Category Name");
+		SearchPage.searchEmbedded(searchTerm = "Category Name");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "MB Thread Message Body",

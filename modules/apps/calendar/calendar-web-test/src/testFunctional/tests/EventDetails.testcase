@@ -893,7 +893,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "tag1");
+		SearchPage.searchEmbedded(searchTerm = "tag1");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Calendar Event Title",

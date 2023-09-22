@@ -1116,9 +1116,9 @@ definition {
 	test ViewSearchPageKeywordsParameterWithStaging {
 		Portlet.addPG(portletName = "Search Bar");
 
-		SearchPortlets.configureSearchBarWidget(keywordsParameterName = "query");
+		SearchPage.configureSearchBarWidget(keywordsParameterName = "query");
 
-		SearchPortlets.searchWidget(searchTerm = "test");
+		SearchPage.searchWidget(searchTerm = "test");
 
 		var currentURL = Navigator.getCurrentURL();
 

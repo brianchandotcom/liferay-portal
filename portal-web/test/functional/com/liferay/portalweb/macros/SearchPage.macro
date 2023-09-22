@@ -1,9 +1,5 @@
 definition {
 
-	/*
-		For searches that do not use the search portlet (e.g. searches within the product menu), use the macros within Search.macro instead.'Embedded' refers to the search bar in the page header whereas 'Widget' refers to the search bar within the page.
-	 */
-
 	macro addSortOption {
 		Click(
 			key_text = "Add Option",
@@ -171,7 +167,7 @@ definition {
 	}
 
 	macro configureEmbeddedSearchBar {
-		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
+		SearchPage.gotoEmbeddedOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -273,12 +269,12 @@ definition {
 
 	macro configureSearchBarWidget {
 		if (isSet(index)) {
-			SearchPortlets.gotoSearchBarWidgetOptionsSpecific(
+			SearchPage.gotoSearchBarWidgetOptionsSpecific(
 				index = ${index},
 				portletOption = "Configuration");
 		}
 		else {
-			SearchPortlets.gotoSearchBarWidgetOptions(portletOption = "Configuration");
+			SearchPage.gotoSearchBarWidgetOptions(portletOption = "Configuration");
 		}
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -474,7 +470,7 @@ definition {
 	}
 
 	macro configureWidgetScope {
-		SearchPortlets.gotoSearchBarWidgetOptions(portletOption = "Configuration");
+		SearchPage.gotoSearchBarWidgetOptions(portletOption = "Configuration");
 
 		if ((${searchScope} == "Everything") || (${searchScope} == "Let the User Choose") || (${searchScope} == "This Site")) {
 			SelectFrame(locator1 = "IFrame#CONFIGURATION");

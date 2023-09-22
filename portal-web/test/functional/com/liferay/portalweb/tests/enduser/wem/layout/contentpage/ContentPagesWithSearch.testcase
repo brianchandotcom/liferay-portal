@@ -70,7 +70,7 @@ definition {
 				pageName = "Search",
 				siteName = ${randomSiteName});
 
-			SearchPortlets.searchEmbedded(searchTerm = "Content Page");
+			SearchPage.searchEmbedded(searchTerm = "Content Page");
 		}
 
 		task ("Then the page creator should view empty search results") {
@@ -78,7 +78,7 @@ definition {
 		}
 
 		task ("When the page creator search the content on content page in Search Bar") {
-			SearchPortlets.searchEmbedded(searchTerm = "Heading Example");
+			SearchPage.searchEmbedded(searchTerm = "Heading Example");
 		}
 
 		task ("Then the page creator should view empty search results") {

@@ -40,7 +40,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+		SearchPage.searchEmbedded(searchTerm = "Apple");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple1",
@@ -55,7 +55,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+		SearchPage.searchEmbedded(searchTerm = "Apple");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "Apple1,Apple2",
@@ -184,7 +184,7 @@ definition {
 		task ("Assert that the web content shows up after the concurrent reindex completes") {
 			Navigator.openURL();
 
-			SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+			SearchPage.searchEmbedded(searchTerm = "WC Title");
 
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "WC Title",
@@ -485,7 +485,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Blogs");
+		SearchPage.searchEmbedded(searchTerm = "Blogs");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Blogs Entry Title",
@@ -527,7 +527,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title 3,WC Title 1");
 
@@ -576,7 +576,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Apple");
+		SearchPage.searchEmbedded(searchTerm = "Apple");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Apple 2",
@@ -619,7 +619,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "DM");
+		SearchPage.searchEmbedded(searchTerm = "DM");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Title 1",
@@ -648,7 +648,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "DM");
+		SearchPage.searchEmbedded(searchTerm = "DM");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Title 1",
@@ -679,7 +679,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "DM");
+		SearchPage.searchEmbedded(searchTerm = "DM");
 
 		SearchResultPortlet.viewSearchResultNotPresent(searchTerm = "DM");
 	}

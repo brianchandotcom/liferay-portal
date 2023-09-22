@@ -407,7 +407,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
+		SearchPage.searchEmbedded(searchTerm = "Wiki");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "Wiki Page Production,Wiki Page Content Edit,Wiki Page Publication 2",
@@ -417,7 +417,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
+		SearchPage.searchEmbedded(searchTerm = "Wiki");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "Wiki Page Production,Original content,Wiki Page Publication 1",
@@ -427,7 +427,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Wiki");
+		SearchPage.searchEmbedded(searchTerm = "Wiki");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Original content",

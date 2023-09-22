@@ -1534,7 +1534,7 @@ definition {
 		task ("Go to Home page and assert no web content displayed after searching") {
 			Navigator.openURL();
 
-			SearchPortlets.searchEmbedded(searchTerm = "WC WebContent Title");
+			SearchPage.searchEmbedded(searchTerm = "WC WebContent Title");
 
 			SearchResultPortlet.viewNoSearchResults(searchTerm = "WC WebContent Title");
 		}
@@ -1544,7 +1544,7 @@ definition {
 
 			Navigator.openURL();
 
-			SearchPortlets.searchEmbedded(searchTerm = "WC WebContent Title");
+			SearchPage.searchEmbedded(searchTerm = "WC WebContent Title");
 
 			SearchResultPortlet.viewNoSearchResults(searchTerm = "WC WebContent Title");
 		}

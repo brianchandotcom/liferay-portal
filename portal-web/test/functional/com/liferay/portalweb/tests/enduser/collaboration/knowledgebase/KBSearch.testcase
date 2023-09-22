@@ -183,7 +183,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Child");
+		SearchPage.searchEmbedded(searchTerm = "Child");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Knowledge Base Child Article Content",
@@ -229,7 +229,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Knowledge");
+		SearchPage.searchEmbedded(searchTerm = "Knowledge");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Knowledge Base Article 2 Content",
@@ -253,7 +253,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Knowledge");
+		SearchPage.searchEmbedded(searchTerm = "Knowledge");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Knowledge Base Article Content",
@@ -277,7 +277,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Knowledge Base");
+		SearchPage.searchEmbedded(searchTerm = "Knowledge Base");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Knowledge Base Article",

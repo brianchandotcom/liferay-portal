@@ -42,13 +42,13 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "abc");
+		SearchPage.searchEmbedded(searchTerm = "abc");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.searchEmbedded(searchTerm = "ABC");
+		SearchPage.searchEmbedded(searchTerm = "ABC");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title",
@@ -152,7 +152,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Article");
+		SearchPage.searchEmbedded(searchTerm = "Article");
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 3,Article 1");
 
@@ -170,7 +170,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Article");
+		SearchPage.searchEmbedded(searchTerm = "Article");
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 1,Article 2,Article 3");
 	}
@@ -302,7 +302,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Article");
+		SearchPage.searchEmbedded(searchTerm = "Article");
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Journal 2");
 
@@ -318,7 +318,7 @@ definition {
 			searchAssetTitle = "Article 2",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Journal");
+		SearchPage.searchEmbedded(searchTerm = "Journal");
 
 		AssertTextNotEquals.assertNotPartialText(
 			locator1 = "SearchResults#RESULT_TITLE_SPECIFIC_ORDER",
@@ -351,13 +351,13 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Article");
+		SearchPage.searchEmbedded(searchTerm = "Article");
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Journal 2,Article 1");
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 2,Journal 1");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Journal");
+		SearchPage.searchEmbedded(searchTerm = "Journal");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Journal 1",
@@ -389,7 +389,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Article");
+		SearchPage.searchEmbedded(searchTerm = "Article");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Article 1",
@@ -434,7 +434,7 @@ definition {
 		Navigator.openURL();
 
 		for (var searchTerm : list "Article,Journal") {
-			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
+			SearchPage.searchEmbedded(searchTerm = ${searchTerm});
 
 			SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Journal 2");
 
@@ -603,7 +603,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Article");
+		SearchPage.searchEmbedded(searchTerm = "Article");
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 3,Article 1,Article 4");
 
@@ -613,7 +613,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "orange");
+		SearchPage.searchEmbedded(searchTerm = "orange");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Article 3",
@@ -623,7 +623,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "apple");
 
@@ -662,13 +662,13 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Article");
+		SearchPage.searchEmbedded(searchTerm = "Article");
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 4,Article 1,Article 2,Article 3");
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Article 4",
@@ -678,7 +678,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "orange");
+		SearchPage.searchEmbedded(searchTerm = "orange");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "orange");
 	}
@@ -738,7 +738,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title 3,WC Title 1");
 
@@ -746,7 +746,7 @@ definition {
 			searchAssetTitle = "WC Title 2",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title 3",
@@ -754,7 +754,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1,WC Title 2");
 
-		SearchPortlets.searchEmbedded(searchTerm = "banana");
+		SearchPage.searchEmbedded(searchTerm = "banana");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title 3",
@@ -776,7 +776,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title 3,WC Title 1");
 
@@ -784,7 +784,7 @@ definition {
 			searchAssetTitle = "WC Title 2",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC Title 2",
@@ -792,7 +792,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1,WC Title 3");
 
-		SearchPortlets.searchEmbedded(searchTerm = "banana");
+		SearchPage.searchEmbedded(searchTerm = "banana");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "banana");
 
@@ -810,7 +810,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "WC Title 1,WC Title 2,WC Title 3");
 	}
@@ -1103,7 +1103,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Article");
+		SearchPage.searchEmbedded(searchTerm = "Article");
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Liferay Journal,New Site Article,New Site Journal,Liferay Article");
 
@@ -1121,7 +1121,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Article");
+		SearchPage.searchEmbedded(searchTerm = "Article");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Liferay Article",
@@ -1150,7 +1150,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = 11);
+		SearchPage.searchEmbedded(searchTerm = 11);
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "eleven",
@@ -1181,7 +1181,7 @@ definition {
 		var searchTerms = "banana,red apple,blue.berry!,\"xigua\",fruit,sweet";
 
 		for (var searchTerm : list ${searchTerms}) {
-			SearchPortlets.searchEmbedded(searchTerm = ${searchTerm});
+			SearchPage.searchEmbedded(searchTerm = ${searchTerm});
 
 			SearchResultPortlet.viewMultipleSearchResults(
 				resultsList = "banana,red apple,blue.berry!,\"xigua\"",
@@ -1201,13 +1201,13 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "banana");
+		SearchPage.searchEmbedded(searchTerm = "banana");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "banana",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.searchEmbedded(searchTerm = "pear");
+		SearchPage.searchEmbedded(searchTerm = "pear");
 
 		SearchResultPortlet.viewSearchResultNotPresent(
 			searchAssetTitle = "banana",
@@ -1217,7 +1217,7 @@ definition {
 			resultsList = "red apple,blue.berry!,\"xigua\"",
 			searchTerm = "pear");
 
-		SearchPortlets.searchEmbedded(searchTerm = "red apple");
+		SearchPage.searchEmbedded(searchTerm = "red apple");
 
 		SearchResultPortlet.viewSearchResultNotPresent(
 			searchAssetTitle = "banana",
@@ -1237,13 +1237,13 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "red apple");
+		SearchPage.searchEmbedded(searchTerm = "red apple");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "red apple,blue.berry!,\"xigua\",citrus-orange",
 			searchTerm = "red apple");
 
-		SearchPortlets.searchEmbedded(searchTerm = "citrus-orange");
+		SearchPage.searchEmbedded(searchTerm = "citrus-orange");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "red apple,citrus-orange",
@@ -1255,7 +1255,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "fruit");
+		SearchPage.searchEmbedded(searchTerm = "fruit");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "fruit");
 	}

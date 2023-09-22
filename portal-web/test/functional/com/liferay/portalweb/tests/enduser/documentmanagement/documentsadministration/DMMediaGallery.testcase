@@ -244,7 +244,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "DM Document Title");
+		SearchPage.searchEmbedded(searchTerm = "DM Document Title");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
@@ -252,7 +252,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = '''"DM Document Title"''');
+		SearchPage.searchEmbedded(searchTerm = '''"DM Document Title"''');
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "DM Document Title",
@@ -395,7 +395,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Media Gallery Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "asdf");
+		SearchPage.searchEmbedded(searchTerm = "asdf");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "asdf");
 	}

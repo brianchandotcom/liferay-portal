@@ -47,13 +47,13 @@ definition {
 			fail("Clicking the in-page back button should take the user to the page they came from");
 		}
 
-		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "New Search Page");
+		SearchPage.configureEmbeddedSearchBar(destinationPage = "New Search Page");
 
 		SearchBarSuggestions.viewSuggestionResultDetailsURL(
 			expectedURL = "/new-search-page",
 			searchAssetTitle = "Apple");
 
-		SearchPortlets.configureEmbeddedSearchBar(destinationPage = "");
+		SearchPage.configureEmbeddedSearchBar(destinationPage = "");
 
 		SearchBarSuggestions.viewSuggestionResultDetailsURL(
 			expectedURL = "/new-search-page",
@@ -91,7 +91,7 @@ definition {
 
 	@priority = 4
 	test CanCopyPasteInputFields {
-		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
+		SearchPage.gotoEmbeddedOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -357,19 +357,19 @@ definition {
 		}
 
 		task ("Populate AC with data") {
-			SearchPortlets.searchEmbedded(searchTerm = "Apple Pie");
+			SearchPage.searchEmbedded(searchTerm = "Apple Pie");
 
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "Apple Pie",
 				searchAssetType = "Web Content Article");
 
-			SearchPortlets.searchEmbedded(searchTerm = "Apple Pie");
+			SearchPage.searchEmbedded(searchTerm = "Apple Pie");
 
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "Apple Pie",
 				searchAssetType = "Web Content Article");
 
-			SearchPortlets.searchEmbedded(searchTerm = "Apple Strudel");
+			SearchPage.searchEmbedded(searchTerm = "Apple Strudel");
 
 			SearchResultPortlet.viewSearchResults(
 				searchAssetTitle = "Apple Strudel",
@@ -451,7 +451,7 @@ definition {
 		}
 
 		task ("Set language to match translation language and assert Apple Strudel translated result") {
-			SearchPortlets.openSearchPage(locale = "pt-BR");
+			SearchPage.openSearchPage(locale = "pt-BR");
 
 			Navigator.openURL();
 
@@ -551,9 +551,9 @@ definition {
 			groupName = "Global",
 			title = "Banana Web Content");
 
-		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Let the User Choose");
+		SearchPage.configureEmbeddedSearchBar(searchScope = "Let the User Choose");
 
-		SearchPortlets.chooseEmbeddedScope(searchScope = "Everything");
+		SearchPage.chooseEmbeddedScope(searchScope = "Everything");
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
@@ -569,7 +569,7 @@ definition {
 
 		Refresh();
 
-		SearchPortlets.chooseEmbeddedScope(searchScope = "This Site");
+		SearchPage.chooseEmbeddedScope(searchScope = "This Site");
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
@@ -659,7 +659,7 @@ definition {
 
 		Refresh();
 
-		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Everything");
+		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
@@ -788,7 +788,7 @@ definition {
 
 		SearchBarSuggestions.viewNoResultAssetTitle(searchAssetTitle = "Apple Pie Site Name");
 
-		SearchPortlets.configureEmbeddedSearchBar(searchScope = "Everything");
+		SearchPage.configureEmbeddedSearchBar(searchScope = "Everything");
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
@@ -816,7 +816,7 @@ definition {
 			groupName = "Guest",
 			titleMap = "en_US:Title,es_ES:Título,de_DE:Titel");
 
-		SearchPortlets.openSearchPage(locale = "es-ES");
+		SearchPage.openSearchPage(locale = "es-ES");
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
@@ -833,7 +833,7 @@ definition {
 			key_suggestionContributorDisplayGroupName = "Sugerencias",
 			locator1 = "SearchBarSuggestions#RESULTS_LIST_ITEM_DESCRIPTION");
 
-		SearchPortlets.openSearchPage(locale = "de-DE");
+		SearchPage.openSearchPage(locale = "de-DE");
 
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",

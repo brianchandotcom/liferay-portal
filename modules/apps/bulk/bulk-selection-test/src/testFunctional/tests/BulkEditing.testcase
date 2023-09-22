@@ -111,7 +111,7 @@ definition {
 
 		DMDocument.viewTagInfo(tagName = "newtag");
 
-		SearchPortlets.searchEmbedded(searchTerm = "newtag");
+		SearchPage.searchEmbedded(searchTerm = "newtag");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Document_1",

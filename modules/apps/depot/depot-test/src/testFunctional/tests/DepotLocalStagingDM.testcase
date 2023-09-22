@@ -1696,9 +1696,9 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		SearchPortlets.addWidgetsViaUI(searchPortletList = "Search Results,Search Bar");
+		SearchPage.addWidgetsViaUI(searchPortletList = "Search Results,Search Bar");
 
-		SearchPortlets.searchWidget(searchTerm = "DM Document Title");
+		SearchPage.searchWidget(searchTerm = "DM Document Title");
 
 		SearchResultPortlet.viewSearchResultNotPresent(
 			searchAssetTitle = "DM Document Title",

@@ -423,25 +423,25 @@ definition {
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs\"");
+		SearchPage.searchEmbedded(searchTerm = "\"Blogs\"");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Entry Title",
 			searchAssetType = "Blogs Entry",
 			searchTerm = "\"Blogs\"");
 
-		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs Entry Content\"");
+		SearchPage.searchEmbedded(searchTerm = "\"Blogs Entry Content\"");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Entry Title",
 			searchAssetType = "Blogs Entry",
 			searchTerm = "\"Blogs Entry Content\"");
 
-		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs1\"");
+		SearchPage.searchEmbedded(searchTerm = "\"Blogs1\"");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"Blogs1\"");
 
-		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs1 Entry1 Content1\"");
+		SearchPage.searchEmbedded(searchTerm = "\"Blogs1 Entry1 Content1\"");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"Blogs1 Entry1 Content1\"");
 	}
@@ -460,25 +460,25 @@ definition {
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs\"");
+		SearchPage.searchEmbedded(searchTerm = "\"Blogs\"");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Blogs Entry Title",
 			searchAssetType = "Blogs Entry",
 			searchTerm = "\"Blogs\"");
 
-		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs Entry Title\"");
+		SearchPage.searchEmbedded(searchTerm = "\"Blogs Entry Title\"");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Blogs Entry Title",
 			searchAssetType = "Blogs Entry",
 			searchTerm = "\"Blogs Entry Title\"");
 
-		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs1\"");
+		SearchPage.searchEmbedded(searchTerm = "\"Blogs1\"");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"Blogs1\"");
 
-		SearchPortlets.searchEmbedded(searchTerm = "\"Blogs Entry Title1\"");
+		SearchPage.searchEmbedded(searchTerm = "\"Blogs Entry Title1\"");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"Blogs Entry Title1\"");
 	}

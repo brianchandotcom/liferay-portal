@@ -2868,13 +2868,13 @@ definition {
 			locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM",
 			value1 = "My Profile");
 
-		SearchPortlets.viewUserResultDetails(
+		SearchPage.viewUserResultDetails(
 			pageName = "My Profile",
 			userName = "userfn userln");
 
 		UserBar.gotoDropdownItem(dropdownItem = "Be yourself again.");
 
-		SearchPortlets.viewUserResultDetails(
+		SearchPage.viewUserResultDetails(
 			pageName = "My Profile",
 			userName = "Test Test");
 	}

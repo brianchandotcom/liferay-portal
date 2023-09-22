@@ -438,9 +438,9 @@ definition {
 				locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 		}
 
-		SearchPortlets.openSearchPage();
+		SearchPage.openSearchPage();
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		AssertElementNotPresent(locator1 = "Message#ERROR");
 

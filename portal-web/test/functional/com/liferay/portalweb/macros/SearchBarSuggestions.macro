@@ -1,7 +1,7 @@
 definition {
 
 	macro configureEmbeddedSearchBarSuggestions {
-		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
+		SearchPage.gotoEmbeddedOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

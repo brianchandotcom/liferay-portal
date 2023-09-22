@@ -474,7 +474,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		SearchPortlets.searchWidget(searchTerm = "Category Name");
+		SearchPage.searchWidget(searchTerm = "Category Name");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC WebContent Title",
@@ -488,7 +488,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		SearchPortlets.searchWidget(searchTerm = "Category Name");
+		SearchPage.searchWidget(searchTerm = "Category Name");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WC WebContent Title",

@@ -35,7 +35,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Options",
@@ -77,9 +77,9 @@ definition {
 			checkboxName = "fruit",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		SearchPortlets.configureSearchOptions(basicFacetSelection = "true");
+		SearchPage.configureSearchOptions(basicFacetSelection = "true");
 
-		SearchPortlets.searchEmbedded(searchTerm = "apple");
+		SearchPage.searchEmbedded(searchTerm = "apple");
 
 		AssertElementPresent(
 			checkboxName = "fruit",
@@ -119,16 +119,16 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/search-page");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Search Page",
 			searchPortletList = "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Site Facet,Suggestions,Tag Facet,Type Facet,User Facet,Search Bar");
 
-		SearchPortlets.addWidgetsViaUI(searchPortletList = "Sort");
+		SearchPage.addWidgetsViaUI(searchPortletList = "Sort");
 
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
 		if (${testRunEnvironment} == "EE") {
-			SearchPortlets.addWidgets(
+			SearchPage.addWidgets(
 				column = 2,
 				layoutName = "Search Page",
 				searchPortletList = "Similar Results");
@@ -142,7 +142,7 @@ definition {
 
 		User.logoutPG();
 
-		SearchPortlets.openSearchPage();
+		SearchPage.openSearchPage();
 
 		for (var portletName : list "Category Facet,Custom Facet,Custom Filter,Folder Facet,Low Level Search Options,Modified Facet,Search Insights,Search Options,Search Results,Similar Results,Site Facet,Sort,Suggestions,Tag Facet,Type Facet,User Facet") {
 			Portlet.viewNoSpecificPG(portletName = ${portletName});
@@ -206,13 +206,13 @@ definition {
 			version = "1.0",
 			webContentTitle = "WebContent Title 1");
 
-		SearchPortlets.addWidgets(searchPortletList = "Custom Facet");
+		SearchPage.addWidgets(searchPortletList = "Custom Facet");
 
-		SearchPortlets.openSearchPage();
+		SearchPage.openSearchPage();
 
 		SearchFacetPortlet.configureCustomFacet(aggregationField = "version");
 
-		SearchPortlets.searchEmbedded(searchTerm = "WebContent");
+		SearchPage.searchEmbedded(searchTerm = "WebContent");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1",
@@ -250,7 +250,7 @@ definition {
 
 		Navigator.openURL();
 
-		SearchPortlets.searchEmbedded(searchTerm = "WebContent");
+		SearchPage.searchEmbedded(searchTerm = "WebContent");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "WebContent Title 1.1",
@@ -280,7 +280,7 @@ definition {
 			groupName = "Guest",
 			title = "WC Title");
 
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Modified Facet",
@@ -401,15 +401,15 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Search Page",
 			searchPortletList = "Site Facet,Search Results,Search Bar");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.configureSearchBarWidget(searchScope = "Everything");
+		SearchPage.configureSearchBarWidget(searchScope = "Everything");
 
-		SearchPortlets.searchWidget(searchTerm = "*");
+		SearchPage.searchWidget(searchTerm = "*");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Test Test",
@@ -421,7 +421,7 @@ definition {
 			facetName = "Site Facet",
 			facetTerm = ${siteName});
 
-		SearchPortlets.searchWidget(searchTerm = "test");
+		SearchPage.searchWidget(searchTerm = "test");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Test Test",
@@ -506,24 +506,24 @@ definition {
 			groupName = "Guest",
 			layoutName = "Search Page");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			layoutName = "Search Page",
 			searchPortletList = "Category Facet,Folder Facet,Site Facet,Tag Facet,Type Facet,User Facet");
 
-		SearchPortlets.addWidgets(
+		SearchPage.addWidgets(
 			column = 2,
 			layoutName = "Search Page",
 			searchPortletList = "Search Bar,Search Options,Search Results");
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchPortlets.configureSearchBarWidget(searchScope = "Everything");
+		SearchPage.configureSearchBarWidget(searchScope = "Everything");
 
-		SearchPortlets.configureSearchOptions(
+		SearchPage.configureSearchOptions(
 			allowEmptySearches = "true",
 			basicFacetSelection = "true");
 
-		SearchPortlets.searchWidget(searchTerm = "apple");
+		SearchPage.searchWidget(searchTerm = "apple");
 
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "apple/Blogs Entry,apple/Web Content Article",
@@ -569,9 +569,9 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = ${testSearchURL});
 
-		SearchPortlets.searchWidget(searchTerm = "test");
+		SearchPage.searchWidget(searchTerm = "test");
 
-		var testSearchURL = SearchPortlets.getSearchTermURL(
+		var testSearchURL = SearchPage.getSearchTermURL(
 			searchPage = "Search Page",
 			searchTerm = "test");
 
@@ -618,9 +618,9 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = ${testSearchURL});
 
-		SearchPortlets.searchWidget(searchTerm = "test");
+		SearchPage.searchWidget(searchTerm = "test");
 
-		var testSearchURL = SearchPortlets.getSearchTermURL(
+		var testSearchURL = SearchPage.getSearchTermURL(
 			searchPage = "Search Page",
 			searchTerm = "test");
 
@@ -730,9 +730,9 @@ definition {
 
 		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = ${testSearchURL});
 
-		SearchPortlets.searchWidget(searchTerm = "organic");
+		SearchPage.searchWidget(searchTerm = "organic");
 
-		var testSearchURL = SearchPortlets.getSearchTermURL(
+		var testSearchURL = SearchPage.getSearchTermURL(
 			searchPage = "Search Page",
 			searchTerm = "organic");
 

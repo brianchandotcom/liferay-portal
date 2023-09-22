@@ -821,9 +821,9 @@ definition {
 			searchAssetTitle = "Test YouTube Video",
 			searchAssetType = "Document");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "Test YouTube Video");
+		SearchPage.gotoResultDetails(searchAssetTitle = "Test YouTube Video");
 
-		SearchPortlets.viewResultDetails(searchAssetTitle = "Test YouTube Video");
+		SearchPage.viewResultDetails(searchAssetTitle = "Test YouTube Video");
 
 		WaitForElementPresent(
 			key_videoShortcutPreview = "https://www.youtube.com",

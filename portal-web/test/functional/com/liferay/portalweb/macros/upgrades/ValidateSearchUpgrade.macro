@@ -84,7 +84,7 @@ definition {
 			pageName = "Site Page",
 			siteName = "Site Name");
 
-		SearchPortlets.gotoEmbeddedOptions(portletOption = "Configuration");
+		SearchPage.gotoEmbeddedOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -136,7 +136,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
 		Pagination.viewResults(results = "Showing 1 to 2 of 3 entries.");
 

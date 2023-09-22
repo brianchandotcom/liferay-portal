@@ -319,11 +319,11 @@ definition {
 
 		PortletEntry.save();
 
-		SearchPortlets.openSearchPage();
+		SearchPage.openSearchPage();
 
 		Blueprints.applyBlueprintViaOptionsWidget(blueprintTitle = "Test Blueprint");
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Test Web Content",
@@ -363,11 +363,11 @@ definition {
 			wikiPageContent = "",
 			wikiPageName = "Test Wiki Page");
 
-		SearchPortlets.openSearchPage();
+		SearchPage.openSearchPage();
 
 		SearchResultPortlet.configureSearchResults(displayDocumentForm = "true");
 
-		SearchPortlets.searchEmbedded(searchTerm = "test");
+		SearchPage.searchEmbedded(searchTerm = "test");
 
 		for (var assetTitle : list "Test Web Content,Test Blog,Test Knowledge Base Article,Test Message Board Thread,Test Wiki Page") {
 			SearchResultPortlet.viewDocumentDetailValue(

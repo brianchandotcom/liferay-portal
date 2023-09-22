@@ -753,13 +753,13 @@ definition {
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Record Text");
+		SearchPage.searchEmbedded(searchTerm = "Record Text");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Record for Dynamic Data List:",
 			searchAssetType = "Dynamic Data Lists Record");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "Record for Dynamic Data List: DDL List Name");
+		SearchPage.gotoResultDetails(searchAssetTitle = "Record for Dynamic Data List: DDL List Name");
 
 		DDLRecord.viewFirstRecordSearchResult(
 			ddlListName = "DDL List Name",
@@ -768,13 +768,13 @@ definition {
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = 123);
+		SearchPage.searchEmbedded(searchTerm = 123);
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Record for Dynamic Data List:",
 			searchAssetType = "Dynamic Data Lists Record");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "Record for Dynamic Data List: DDL List Name");
+		SearchPage.gotoResultDetails(searchAssetTitle = "Record for Dynamic Data List: DDL List Name");
 
 		DDLRecord.viewSecondRecordSearchResult(
 			ddlListName = "DDL List Name",
@@ -852,13 +852,13 @@ definition {
 
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Record Text");
+		SearchPage.searchEmbedded(searchTerm = "Record Text");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Record for Dynamic Data List:",
 			searchAssetType = "Dynamic Data Lists Record");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "Record for Dynamic Data List: DDL List Name");
+		SearchPage.gotoResultDetails(searchAssetTitle = "Record for Dynamic Data List: DDL List Name");
 
 		DDLRecord.viewFirstRecordSearchResult(
 			ddlListName = "DDL List Name",
@@ -869,7 +869,7 @@ definition {
 			userLoginEmailAddress = "user@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Record Text");
+		SearchPage.searchEmbedded(searchTerm = "Record Text");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "Record Text");
 	}

@@ -1290,11 +1290,11 @@ definition {
 				pageName = "Search",
 				siteName = ${randomSiteName});
 
-			SearchPortlets.searchEmbedded(searchTerm = "Web Content");
+			SearchPage.searchEmbedded(searchTerm = "Web Content");
 		}
 
 		task ("Then the user could access to the display page via search results") {
-			SearchPortlets.gotoResultDetails(searchAssetTitle = "Web Content Title");
+			SearchPage.gotoResultDetails(searchAssetTitle = "Web Content Title");
 
 			AssetPublisherPortlet.viewAssetPG(
 				assetContent = "Web Content Content",

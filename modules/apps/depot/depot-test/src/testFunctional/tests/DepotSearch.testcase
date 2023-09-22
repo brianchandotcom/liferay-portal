@@ -108,9 +108,9 @@ definition {
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "WC WebContent Title");
+		SearchPage.gotoResultDetails(searchAssetTitle = "WC WebContent Title");
 
-		SearchPortlets.viewResultDetails(searchAssetTitle = "WC WebContent Title");
+		SearchPage.viewResultDetails(searchAssetTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that users can search for depot document from connected site."
@@ -136,9 +136,9 @@ definition {
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "DM Document Title");
+		SearchPage.gotoResultDetails(searchAssetTitle = "DM Document Title");
 
-		SearchPortlets.viewResultDetails(searchAssetTitle = "DM Document Title");
+		SearchPage.viewResultDetails(searchAssetTitle = "DM Document Title");
 	}
 
 	@description = "This ensures that a depot document associated with a tag can be searched from the connected site."
@@ -167,9 +167,9 @@ definition {
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "DM Document Title");
+		SearchPage.gotoResultDetails(searchAssetTitle = "DM Document Title");
 
-		SearchPortlets.viewResultDetails(searchAssetTitle = "DM Document Title");
+		SearchPage.viewResultDetails(searchAssetTitle = "DM Document Title");
 	}
 
 	@description = "This ensures that a depot content associated with the user can be searched with from the connected site."
@@ -232,9 +232,9 @@ definition {
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content Article");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "WC WebContent Title");
+		SearchPage.gotoResultDetails(searchAssetTitle = "WC WebContent Title");
 
-		SearchPortlets.viewResultDetails(searchAssetTitle = "WC WebContent Title");
+		SearchPage.viewResultDetails(searchAssetTitle = "WC WebContent Title");
 	}
 
 	@description = "This ensures that a depot document cannot be searched on a connected site when searching is disabled."

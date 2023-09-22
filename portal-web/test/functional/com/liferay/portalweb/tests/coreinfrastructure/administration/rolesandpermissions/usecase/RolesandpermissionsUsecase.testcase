@@ -979,14 +979,14 @@ definition {
 			pageName = "Search Page",
 			siteName = "Organization Name");
 
-		SearchPortlets.searchWidget(searchTerm = "Test Blog");
+		SearchPage.searchWidget(searchTerm = "Test Blog");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blog Entry Content.",
 			searchAssetTitle = "Test Blog",
 			searchAssetType = "Blogs Entry");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "Test Blog");
+		SearchPage.gotoResultDetails(searchAssetTitle = "Test Blog");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blog Entry Content.",
@@ -1018,7 +1018,7 @@ definition {
 			pageName = "Search Page",
 			siteName = "Organization Name");
 
-		SearchPortlets.searchWidget(searchTerm = "\"Test Blog\"");
+		SearchPage.searchWidget(searchTerm = "\"Test Blog\"");
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "\"Test Blog\"");
 
@@ -1040,14 +1040,14 @@ definition {
 			pageName = "Search Page",
 			siteName = "Organization Name");
 
-		SearchPortlets.searchWidget(searchTerm = "Test Blog");
+		SearchPage.searchWidget(searchTerm = "Test Blog");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetSummary = "Blog Entry Content.",
 			searchAssetTitle = "Test Blog",
 			searchAssetType = "Blogs Entry");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "Test Blog");
+		SearchPage.gotoResultDetails(searchAssetTitle = "Test Blog");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blog Entry Content.",
@@ -1133,13 +1133,13 @@ definition {
 
 		Navigator.gotoPage(pageName = "Blogs Page");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Test Blog");
+		SearchPage.searchEmbedded(searchTerm = "Test Blog");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Test Blog",
 			searchAssetType = "Blogs Entry");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "Test Blog");
+		SearchPage.gotoResultDetails(searchAssetTitle = "Test Blog");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blog Entry Content.",
@@ -1165,7 +1165,7 @@ definition {
 
 		Blogs.viewNoEntryCP();
 
-		SearchPortlets.searchEmbedded(searchTerm = "Test Blog");
+		SearchPage.searchEmbedded(searchTerm = "Test Blog");
 
 		SearchResultPortlet.viewSearchResultNotPresent(
 			searchAssetTitle = "Test Blog",
@@ -1183,13 +1183,13 @@ definition {
 			entryContent = "Blog Entry Content.",
 			entryTitle = "Test Blog");
 
-		SearchPortlets.searchEmbedded(searchTerm = "Test Blog");
+		SearchPage.searchEmbedded(searchTerm = "Test Blog");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "Test Blog",
 			searchAssetType = "Blogs Entry");
 
-		SearchPortlets.gotoResultDetails(searchAssetTitle = "Test Blog");
+		SearchPage.gotoResultDetails(searchAssetTitle = "Test Blog");
 
 		BlogsEntry.viewPG(
 			entryContent = "Blog Entry Content.",

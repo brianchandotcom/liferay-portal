@@ -804,7 +804,7 @@ class ResultRankingsForm extends Component {
 									: this.props
 											.initialSXPBlueprintExternalReferenceCode
 									? Liferay.Language.get('blueprint')
-									: Liferay.Language.get('everywhere')
+									: Liferay.Language.get('everything')
 							}`}
 
 							{!!scopeDisplayName && ` (${scopeDisplayName})`}

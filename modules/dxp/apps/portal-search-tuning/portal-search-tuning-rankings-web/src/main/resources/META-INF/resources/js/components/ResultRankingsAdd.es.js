@@ -17,14 +17,14 @@ import {sub} from '../utils/language.es';
 import ScopeSelect from './scope/ScopeSelect.es';
 
 const SCOPE_LABELS = {
-	[SCOPE_TYPES.EVERYWHERE]: Liferay.Language.get('everywhere'),
+	[SCOPE_TYPES.EVERYTHING]: Liferay.Language.get('everything'),
 	[SCOPE_TYPES.SITE]: Liferay.Language.get('site'),
 	[SCOPE_TYPES.SXP_BLUEPRINT]: Liferay.Language.get('blueprint'),
 };
 
 function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 	const [errors, setErrors] = useState({});
-	const [scopeType, setScopeType] = useState(SCOPE_TYPES.EVERYWHERE);
+	const [scopeType, setScopeType] = useState(SCOPE_TYPES.EVERYTHING);
 	const [scope, setScope] = useState('');
 	const [searchQuery, setSearchQuery] = useState('');
 	const [touched, setTouched] = useState({});
@@ -39,7 +39,7 @@ function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 			);
 		}
 
-		if (scopeType !== SCOPE_TYPES.EVERYWHERE && !scope) {
+		if (scopeType !== SCOPE_TYPES.EVERYTHING && !scope) {
 			errors['scope'] = sub(
 				Liferay.Language.get('the-x-field-is-required'),
 				[Liferay.Language.get('scope')]
@@ -50,7 +50,7 @@ function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 	};
 
 	const _getScopeTypeOptions = () => {
-		const options = [SCOPE_TYPES.EVERYWHERE];
+		const options = [SCOPE_TYPES.EVERYTHING];
 
 		if (Liferay.FeatureFlags['LPS-157988']) {
 			options.push(SCOPE_TYPES.SITE);

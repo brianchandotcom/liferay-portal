@@ -9,7 +9,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.facet.RangeFacet;
+import com.liferay.portal.kernel.search.facet.DateRangeFacet;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -23,7 +23,7 @@ import com.liferay.portal.search.filter.FilterBuilders;
 /**
  * @author Petteri Karttunen
  */
-public class DateRangeFacetImpl extends RangeFacet implements Facet {
+public class DateRangeFacetImpl extends DateRangeFacet implements Facet {
 
 	public DateRangeFacetImpl(
 		SearchContext searchContext, FilterBuilders filterBuilders) {

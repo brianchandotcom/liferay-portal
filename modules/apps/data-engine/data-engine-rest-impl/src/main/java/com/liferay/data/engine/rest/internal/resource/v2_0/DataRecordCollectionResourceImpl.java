@@ -81,7 +81,8 @@ public class DataRecordCollectionResourceImpl
 		throws Exception {
 
 		_dataDefinitionModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(), dataDefinitionId,
+			PermissionThreadLocal.getPermissionChecker(),
+			_ddmStructureLocalService.getDDMStructure(dataDefinitionId),
 			ActionKeys.VIEW);
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
@@ -99,7 +100,8 @@ public class DataRecordCollectionResourceImpl
 		throws Exception {
 
 		_dataDefinitionModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(), dataDefinitionId,
+			PermissionThreadLocal.getPermissionChecker(),
+			_ddmStructureLocalService.getDDMStructure(dataDefinitionId),
 			ActionKeys.VIEW);
 
 		return _getDataRecordCollections(
@@ -159,7 +161,9 @@ public class DataRecordCollectionResourceImpl
 
 		_dataDefinitionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			dataRecordCollection.getDataDefinitionId(), ActionKeys.PERMISSIONS);
+			_ddmStructureLocalService.getDDMStructure(
+				dataRecordCollection.getDataDefinitionId()),
+			ActionKeys.PERMISSIONS);
 
 		String resourceName = getPermissionCheckerResourceName(
 			dataRecordCollectionId);

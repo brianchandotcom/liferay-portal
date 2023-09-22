@@ -8,13 +8,10 @@ package com.liferay.data.engine.rest.internal.security.permission.resource;
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeRegistryUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
@@ -27,10 +24,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure",
 	service = DataDefinitionModelResourcePermission.class
 )
-public class DataDefinitionModelResourcePermission
-	implements ModelResourcePermission<DDMStructure> {
+public class DataDefinitionModelResourcePermission {
 
-	@Override
 	public void check(
 			PermissionChecker permissionChecker, DDMStructure ddmStructure,
 			String actionId)
@@ -43,23 +38,12 @@ public class DataDefinitionModelResourcePermission
 		}
 	}
 
-	@Override
-	public void check(
-			PermissionChecker permissionChecker, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		check(
-			permissionChecker,
-			_ddmStructureLocalService.getDDMStructure(primaryKey), actionId);
-	}
-
 	public void checkPortletPermission(
 			PermissionChecker permissionChecker, DDMStructure ddmStructure,
 			String actionId)
 		throws PortalException {
 
-		checkPortletPermission(
+		_checkPortletPermission(
 			permissionChecker,
 			DataDefinitionContentTypeRegistryUtil.getDataDefinitionContentType(
 				ddmStructure.getClassNameId()),
@@ -71,14 +55,13 @@ public class DataDefinitionModelResourcePermission
 			long groupId, String actionId)
 		throws Exception {
 
-		checkPortletPermission(
+		_checkPortletPermission(
 			permissionChecker,
 			DataDefinitionContentTypeRegistryUtil.getDataDefinitionContentType(
 				contentType),
 			groupId, actionId);
 	}
 
-	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, DDMStructure ddmStructure,
 			String actionId)
@@ -98,28 +81,7 @@ public class DataDefinitionModelResourcePermission
 			ddmStructure.getStructureId(), ddmStructure.getUserId(), actionId);
 	}
 
-	@Override
-	public boolean contains(
-			PermissionChecker permissionChecker, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		return contains(
-			permissionChecker,
-			_ddmStructureLocalService.getDDMStructure(primaryKey), actionId);
-	}
-
-	@Override
-	public String getModelName() {
-		return DDMStructure.class.getName();
-	}
-
-	@Override
-	public PortletResourcePermission getPortletResourcePermission() {
-		return null;
-	}
-
-	protected void checkPortletPermission(
+	private void _checkPortletPermission(
 			PermissionChecker permissionChecker,
 			DataDefinitionContentType dataDefinitionContentType, long groupId,
 			String actionId)
@@ -142,11 +104,8 @@ public class DataDefinitionModelResourcePermission
 	private String _getModelResourceName(DDMStructure ddmStructure) {
 		return ResourceActionsUtil.getCompositeModelName(
 			_portal.getClassName(ddmStructure.getClassNameId()),
-			getModelName());
+			DDMStructure.class.getName());
 	}
-
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private Portal _portal;

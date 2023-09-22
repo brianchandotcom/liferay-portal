@@ -87,7 +87,7 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 	public void deleteDataListView(Long dataListViewId) throws Exception {
 		_dataDefinitionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			_getDDMStructureId(
+			_getDDMStructure(
 				_deDataListViewLocalService.getDEDataListView(dataListViewId)),
 			ActionKeys.DELETE);
 
@@ -161,7 +161,7 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 	public DataListView getDataListView(Long dataListViewId) throws Exception {
 		_dataDefinitionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			_getDDMStructureId(
+			_getDDMStructure(
 				_deDataListViewLocalService.getDEDataListView(dataListViewId)),
 			ActionKeys.VIEW);
 
@@ -215,7 +215,7 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 
 		_dataDefinitionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			_getDDMStructureId(
+			_getDDMStructure(
 				_deDataListViewLocalService.getDEDataListView(dataListViewId)),
 			ActionKeys.UPDATE);
 
@@ -319,8 +319,11 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 		return _portal.getClassNameId(DEDataListView.class);
 	}
 
-	private long _getDDMStructureId(DEDataListView deDataListView) {
-		return deDataListView.getDdmStructureId();
+	private DDMStructure _getDDMStructure(DEDataListView deDataListView)
+		throws Exception {
+
+		return _ddmStructureLocalService.getDDMStructure(
+			deDataListView.getDdmStructureId());
 	}
 
 	private DataListView _toDataListView(DEDataListView deDataListView)

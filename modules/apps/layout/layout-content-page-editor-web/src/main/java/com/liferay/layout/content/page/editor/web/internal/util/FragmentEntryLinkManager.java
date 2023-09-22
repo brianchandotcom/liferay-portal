@@ -340,8 +340,13 @@ public class FragmentEntryLinkManager {
 				themeDisplay.getCompanyId(), portletId);
 
 			if ((portlet == null) || portlet.isUndeployedPortlet()) {
-				return "<div class=\"alert alert-danger\">" +
-					_language.get(httpServletRequest, "undeployed") + "</div>";
+				String message = _language.get(
+					httpServletRequest,
+					"this-portlet-could-not-be-found.-please-redeploy-it-or-" +
+						"remove-it-from-the-page");
+
+				return "<div class=\"alert alert-info\">" + message +
+					"</div>";
 			}
 		}
 

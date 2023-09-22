@@ -10,8 +10,6 @@ import React, {useContext, useEffect, useReducer} from 'react';
 
 import SegmentsExperimentsContext from '../context.es';
 import {
-	addSegmentsExperiment,
-	addVariant,
 	closeCreationModal,
 	closeDeletionModal,
 	closeEditionModal,
@@ -26,7 +24,6 @@ import {
 	reviewClickTargetElement,
 	updateSegmentsExperimentStatus,
 	updateSegmentsExperimentTarget,
-	updateVariants,
 } from '../state/actions.es';
 import {
 	DispatchContext,
@@ -325,47 +322,12 @@ function SegmentsExperimentsSidebar({
 		};
 
 		return APIService.createExperiment(body)
-			.then(function _successCallback(objectResponse) {
-				const {
-					segmentsExperiment,
-					segmentsExperimentRel,
-				} = objectResponse;
-
-				const {
-					confidenceLevel,
-					description,
-					detailsURL,
-					editable,
-					goal,
-					name,
-					segmentsEntryName,
-					segmentsExperienceId,
-					segmentsExperimentId,
-					status,
-				} = segmentsExperiment;
+			.then(function _successCallback({
+				segmentsExperiment: {segmentsExperienceId},
+			}) {
+				navigateToExperience(segmentsExperienceId);
 
 				openSuccessToast();
-
-				dispatch(updateVariants([]));
-
-				dispatch(addVariant(segmentsExperimentRel));
-
-				dispatch(closeCreationModal());
-
-				dispatch(
-					addSegmentsExperiment({
-						confidenceLevel,
-						description,
-						detailsURL,
-						editable,
-						goal,
-						name,
-						segmentsEntryName,
-						segmentsExperienceId,
-						segmentsExperimentId,
-						status,
-					})
-				);
 			})
 			.catch(function _errorCallback() {
 				dispatch(

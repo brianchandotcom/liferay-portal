@@ -141,7 +141,9 @@ definition {
 
 			Button.clickSubmitButton();
 
-			Alert.viewErrorMessage(errorMessage = "CAPTCHA verification failed. Please try again.");
+			Alert.viewFieldErrorMessage(
+				errorMessage = "CAPTCHA verification failed. Please try again.",
+				fieldLabel = "Text Verification");
 		}
 	}
 
@@ -214,7 +216,9 @@ definition {
 				name = "captchaText",
 				value1 = "\ENTER");
 
-			Alert.viewErrorMessage(errorMessage = "CAPTCHA verification failed. Please try again.");
+			Alert.viewFieldErrorMessage(
+				errorMessage = "CAPTCHA verification failed. Please try again.",
+				fieldLabel = "Text Verification");
 		}
 	}
 
@@ -305,7 +309,9 @@ definition {
 
 			Button.clickSubmitButton();
 
-			Alert.viewErrorMessage(errorMessage = "CAPTCHA verification failed. Please try again.");
+			Alert.viewFieldErrorMessage(
+				errorMessage = "CAPTCHA verification failed. Please try again.",
+				fieldLabel = "Text Verification");
 		}
 	}
 

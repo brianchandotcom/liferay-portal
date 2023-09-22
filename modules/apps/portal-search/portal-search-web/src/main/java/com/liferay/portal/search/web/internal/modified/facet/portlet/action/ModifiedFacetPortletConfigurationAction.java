@@ -6,6 +6,7 @@
 package com.liferay.portal.search.web.internal.modified.facet.portlet.action;
 
 import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -18,7 +19,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
+import com.liferay.portal.search.web.internal.date.range.DateRangeFactory;
 import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
 import com.liferay.portal.search.web.internal.modified.facet.display.context.builder.ModifiedFacetDisplayContextBuilder;
 
@@ -33,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Lino Alves
@@ -82,7 +84,7 @@ public class ModifiedFacetPortletConfigurationAction
 
 		try {
 			DateRangeFactory dateRangeFactory = new DateRangeFactory(
-				DateFormatFactoryUtil.getDateFormatFactory());
+				DateFormatFactoryUtil.getDateFormatFactory(), _jsonFactory);
 
 			dateRangeFactory.validateRange(ranges);
 		}
@@ -124,5 +126,8 @@ public class ModifiedFacetPortletConfigurationAction
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ModifiedFacetPortletConfigurationAction.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

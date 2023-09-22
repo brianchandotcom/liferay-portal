@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
 import com.liferay.portal.search.web.facet.BaseJSPSearchFacet;
 import com.liferay.portal.search.web.facet.SearchFacet;
-import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
+import com.liferay.portal.search.web.internal.date.range.DateRangeFactory;
 
 import javax.portlet.ActionRequest;
 
@@ -154,10 +154,10 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 	private JSONArray _replaceAliases(JSONArray rangesJSONArray) {
 		DateRangeFactory dateRangeFactory = new DateRangeFactory(
-			_dateFormatFactory);
+			_dateFormatFactory, _jsonFactory);
 
 		return dateRangeFactory.replaceAliases(
-			rangesJSONArray, CalendarFactoryUtil.getCalendar(), _jsonFactory);
+			rangesJSONArray, CalendarFactoryUtil.getCalendar());
 	}
 
 	private static final String[] _LABELS = {

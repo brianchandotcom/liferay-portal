@@ -205,12 +205,15 @@ definition {
 
 		if (isSet(entryDate)) {
 			AssertTextEquals.assertPartialText(
+				key_searchAssetTitle = ${searchAssetTitle},
+				key_searchAssetType = ${searchAssetType},
 				locator1 = "SearchPage#RESULT_TYPE_SPECIFIC_DATE",
 				value1 = ${entryDate});
 		}
 
 		if (isSet(searchAssetSummary)) {
 			AssertTextEquals.assertPartialText(
+				key_searchAssetTitle = ${searchAssetTitle},
 				locator1 = "SearchPage#RESULT_SUMMARY_SPECIFIC",
 				value1 = ${searchAssetSummary});
 		}

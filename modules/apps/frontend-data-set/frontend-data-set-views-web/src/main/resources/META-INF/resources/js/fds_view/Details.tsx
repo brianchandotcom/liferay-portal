@@ -13,7 +13,7 @@ import {fetch, navigate} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 import {API_URL} from '../Constants';
-import {IFDSViewSectionInterface} from '../FDSView';
+import {IFDSViewSectionProps} from '../FDSView';
 import RequiredMark from '../components/RequiredMark';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
@@ -23,7 +23,7 @@ const Details = ({
 	fdsViewsURL,
 	namespace,
 	onFDSViewUpdate,
-}: IFDSViewSectionInterface) => {
+}: IFDSViewSectionProps) => {
 	const [labelValidationError, setLabelValidationError] = useState(false);
 
 	const fdsViewDescriptionRef = useRef<HTMLInputElement>(null);

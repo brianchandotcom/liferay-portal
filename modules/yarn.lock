@@ -1799,10 +1799,10 @@
   dependencies:
     "@lezer/common" "^0.15.0"
 
-"@liferay/amd-loader@5.4.1":
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/@liferay/amd-loader/-/amd-loader-5.4.1.tgz#85df6600131ae83542414e89ed8b3648af461ecc"
-  integrity sha512-ZeBwwc/0KmuCkY49P8xS0FAVW6q8jWj7Jk3soaPvAcXV/RQCbT0FCs1W+g8/nj6aMnr0KM7JWz8FbSky3YIFew==
+"@liferay/amd-loader@5.4.2":
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/@liferay/amd-loader/-/amd-loader-5.4.2.tgz#f9202f5c041d8a27e719de31dce527435bb4c0f3"
+  integrity sha512-Q2lWf6nejdoy8DLrTWzvnWNc/nmJ1293j8ze9ODKLTmEurEvfSz1pYTvhpJ8anDz/G8+ufLQmmgcPYbZJmb1uQ==
   dependencies:
     webpack-cli "^3.0.0"
     webpack-dev-server "^3.0.0"

@@ -8,7 +8,7 @@ interface IHTMLElementBuilder {
 }
 
 export interface IClientExtensionRenderer {
-	erc?: string;
+	externalReferenceCode?: string;
 	htmlElementBuilder?: IHTMLElementBuilder;
 	name?: string;
 	type: 'clientExtension';

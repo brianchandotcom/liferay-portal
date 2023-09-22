@@ -6,10 +6,10 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayPopover, {ALIGN_POSITIONS} from '@clayui/popover';
-import {useId} from '@clayui/shared';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
+import useId from '../hooks/useId';
 import LearnMessage, {
 	LearnResourcesContext,
 } from '../learn_message/LearnMessage';

@@ -66,7 +66,8 @@ public class FDSViewsDisplayContext {
 				ClientExtensionEntryConstants.TYPE_FDS_CELL_RENDERER,
 				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null),
 			fdsCellRendererCET -> JSONUtil.put(
-				"erc", fdsCellRendererCET.getExternalReferenceCode()
+				"externalReferenceCode",
+				fdsCellRendererCET.getExternalReferenceCode()
 			).put(
 				"name", fdsCellRendererCET.getName(themeDisplay.getLocale())
 			));
@@ -103,6 +104,22 @@ public class FDSViewsDisplayContext {
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
+	}
+
+	public JSONArray getFDSFilterCETsJSONArray() throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return JSONUtil.toJSONArray(
+			_cetManager.getCETs(
+				themeDisplay.getCompanyId(), null,
+				ClientExtensionEntryConstants.TYPE_FDS_FILTER,
+				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS), null),
+			fdsFilterCET -> JSONUtil.put(
+				"externalReferenceCode", fdsFilterCET.getExternalReferenceCode()
+			).put(
+				"name", fdsFilterCET.getName(themeDisplay.getLocale())
+			));
 	}
 
 	public String getFDSViewsURL() {

@@ -5,11 +5,11 @@
 
 /// <reference types="react" />
 
-import {IFDSViewSectionInterface} from '../FDSView';
+import {IFDSViewSectionProps} from '../FDSView';
 declare const Details: ({
 	fdsView,
 	fdsViewsURL,
 	namespace,
 	onFDSViewUpdate,
-}: IFDSViewSectionInterface) => JSX.Element;
+}: IFDSViewSectionProps) => JSX.Element;
 export default Details;

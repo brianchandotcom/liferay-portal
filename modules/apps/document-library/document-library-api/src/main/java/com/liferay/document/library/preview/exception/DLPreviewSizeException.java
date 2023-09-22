@@ -17,32 +17,32 @@ public class DLPreviewSizeException extends PortalException {
 		this(0);
 	}
 
-	public DLPreviewSizeException(long maxSize) {
-		_maxSize = maxSize;
+	public DLPreviewSizeException(long maxFileSize) {
+		_maxFileSize = maxFileSize;
 	}
 
-	public DLPreviewSizeException(long maxSize, Throwable throwable) {
+	public DLPreviewSizeException(long maxFileSize, Throwable throwable) {
 		super(throwable);
 
-		_maxSize = maxSize;
+		_maxFileSize = maxFileSize;
 	}
 
 	public DLPreviewSizeException(String msg) {
 		this(msg, 0);
 	}
 
-	public DLPreviewSizeException(String msg, long maxSize) {
+	public DLPreviewSizeException(String msg, long maxFileSize) {
 		super(msg);
 
-		_maxSize = maxSize;
+		_maxFileSize = maxFileSize;
 	}
 
 	public DLPreviewSizeException(
-		String msg, long maxSize, Throwable throwable) {
+		String msg, long maxFileSize, Throwable throwable) {
 
 		super(msg, throwable);
 
-		_maxSize = maxSize;
+		_maxFileSize = maxFileSize;
 	}
 
 	public DLPreviewSizeException(String msg, Throwable throwable) {
@@ -53,14 +53,14 @@ public class DLPreviewSizeException extends PortalException {
 		this(0, throwable);
 	}
 
-	public long getMaxSize() {
-		if (_maxSize != 0) {
-			return _maxSize;
+	public long getMaxFileSize() {
+		if (_maxFileSize != 0) {
+			return _maxFileSize;
 		}
 
 		return DLProcessorRegistryUtil.getPreviewableProcessorMaxSize();
 	}
 
-	private final long _maxSize;
+	private final long _maxFileSize;
 
 }

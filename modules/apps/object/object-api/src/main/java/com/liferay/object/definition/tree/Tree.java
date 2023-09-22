@@ -12,7 +12,9 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
+import java.util.Stack;
 
 /**
  * @author Feliphe Marinho
@@ -64,11 +66,19 @@ public class Tree {
 	}
 
 	public Iterator<Node> iterator() {
-		return new BreadthFirstIterator(rootNode);
+		return iterator("breadth-first");
 	}
 
 	public Iterator<Node> iterator(long objectDefinitionId) {
 		return new BreadthFirstIterator(getNode(objectDefinitionId));
+	}
+
+	public Iterator<Node> iterator(String iteratorStrategy) {
+		if (Objects.equals(iteratorStrategy, "breadth-first")) {
+			return new BreadthFirstIterator(rootNode);
+		}
+
+		return new PostOrderIterator(rootNode);
 	}
 
 	protected final Node rootNode;
@@ -98,6 +108,34 @@ public class Tree {
 		}
 
 		private Queue<Node> _queue = new LinkedList<>();
+
+	}
+
+	private static class PostOrderIterator implements Iterator<Node> {
+
+		public PostOrderIterator(Node node) {
+			_fillStack(_stack.push(node));
+		}
+
+		@Override
+		public boolean hasNext() {
+			return !_stack.isEmpty();
+		}
+
+		@Override
+		public Node next() {
+			return _stack.pop();
+		}
+
+		private void _fillStack(Node node) {
+			List<Node> childNodes = node.getChildNodes();
+
+			for (int i = childNodes.size() - 1; i >= 0; i--) {
+				_fillStack(_stack.push(childNodes.get(i)));
+			}
+		}
+
+		private final Stack<Node> _stack = new Stack<>();
 
 	}
 

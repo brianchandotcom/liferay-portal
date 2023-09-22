@@ -158,7 +158,19 @@ public class TreeTestUtil {
 			UnsafeConsumer<ObjectDefinition, Exception> unsafeConsumer)
 		throws Exception {
 
-		Iterator<Node> iterator = tree.iterator();
+		unsafeForEach(
+			"breadth-first", objectDefinitionLocalService, tree,
+			unsafeConsumer);
+	}
+
+	public static void unsafeForEach(
+			String iteratorStrategy,
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			Tree tree,
+			UnsafeConsumer<ObjectDefinition, Exception> unsafeConsumer)
+		throws Exception {
+
+		Iterator<Node> iterator = tree.iterator(iteratorStrategy);
 
 		while (iterator.hasNext()) {
 			Node node = iterator.next();

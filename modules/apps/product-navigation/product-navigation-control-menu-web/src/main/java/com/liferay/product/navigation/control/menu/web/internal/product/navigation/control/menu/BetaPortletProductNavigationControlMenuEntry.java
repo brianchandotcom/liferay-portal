@@ -5,11 +5,12 @@
 
 package com.liferay.product.navigation.control.menu.web.internal.product.navigation.control.menu;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuWebKeys;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -38,9 +39,21 @@ public class BetaPortletProductNavigationControlMenuEntry
 
 	@Override
 	public boolean isShow(HttpServletRequest httpServletRequest) {
-		return GetterUtil.getBoolean(
-			httpServletRequest.getAttribute(
-				ProductNavigationControlMenuWebKeys.BETA));
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			return false;
+		}
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		if (portletDisplay == null) {
+			return false;
+		}
+
+		return portletDisplay.isBeta();
 	}
 
 	@Override

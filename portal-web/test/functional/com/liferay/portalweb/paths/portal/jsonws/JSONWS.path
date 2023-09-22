@@ -15,7 +15,7 @@
 
 <tr>
 	<td>ADDRESS_ADD_ADDRESS</td>
-	<td>//div[@id='apiServiceAddressServiceImplPanelContent']/div/ul/li/a[contains(.,'add-address')]</td>
+	<td>//div[@class='panel-collapse']/div/ul/li/a[contains(.,'add-address')]</td>
 	<td></td>
 </tr>
 <tr>

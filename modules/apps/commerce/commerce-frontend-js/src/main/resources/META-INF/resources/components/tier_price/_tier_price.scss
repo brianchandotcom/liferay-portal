@@ -1,0 +1,49 @@
+.tier-price-table {
+	margin-bottom: 20px;
+
+	.paginator {
+		background-color: $white;
+		border: 1px solid $gray-300;
+		cursor: pointer;
+		line-height: 40px;
+		text-align: center;
+	}
+
+	.table-container.expanded {
+		.table-responsive {
+			max-height: 396px;
+		}
+	}
+
+	.table-responsive {
+		margin-bottom: 0;
+		max-height: 216px;
+	}
+
+	.table {
+		background-color: $white;
+		border-collapse: collapse;
+		margin: 0;
+
+		td {
+			border-top: 1px solid $gray-300 !important;
+			font-size: 13px;
+			padding-bottom: 5px;
+			padding-top: 5px;
+
+			&.price-col.price-on-application {
+				color: $info-primary;
+			}
+		}
+		th {
+			background-color: $gray-300 !important;
+			border-radius: 0 !important;
+			font-size: 13px;
+			font-weight: bold;
+			text-transform: none;
+		}
+		tbody tr {
+			height: 36px;
+		}
+	}
+}

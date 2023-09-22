@@ -373,23 +373,31 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		['<portlet:namespace />selectSchedule', '<portlet:namespace />addButton'],
 		'<portlet:namespace />publishButton'
 	);
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll', '', [
-		'<portlet:namespace />startEndDate',
-		'<portlet:namespace />rangeLastInputs',
-	]);
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />rangeAll',
+		'<portlet:namespace />warningSection',
+		[
+			'<portlet:namespace />startEndDate',
+			'<portlet:namespace />rangeLastInputs',
+		]
+	);
 	Liferay.Util.toggleRadio(
 		'<portlet:namespace />rangeDateRange',
 		'<portlet:namespace />startEndDate',
-		'<portlet:namespace />rangeLastInputs'
+		[
+			'<portlet:namespace />rangeLastInputs',
+			'<portlet:namespace />warningSection',
+		]
 	);
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeLastPublish', '', [
 		'<portlet:namespace />startEndDate',
 		'<portlet:namespace />rangeLastInputs',
+		'<portlet:namespace />warningSection',
 	]);
 	Liferay.Util.toggleRadio(
 		'<portlet:namespace />rangeLast',
 		'<portlet:namespace />rangeLastInputs',
-		['<portlet:namespace />startEndDate']
+		['<portlet:namespace />startEndDate', '<portlet:namespace />warningSection']
 	);
 </aui:script>
 

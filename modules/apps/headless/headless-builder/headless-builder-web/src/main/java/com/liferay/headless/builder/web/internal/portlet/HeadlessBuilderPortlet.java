@@ -60,12 +60,12 @@ public class HeadlessBuilderPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
+			ProductNavigationControlMenuWebKeys.BETA, Boolean.TRUE);
+		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new HeadlessBuilderWebDisplayContext(
 				_editorConfigurationFactory,
 				_portal.getHttpServletRequest(renderRequest)));
-		renderRequest.setAttribute(
-			ProductNavigationControlMenuWebKeys.BETA, Boolean.TRUE);
 
 		super.render(renderRequest, renderResponse);
 	}

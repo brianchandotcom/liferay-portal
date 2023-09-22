@@ -68,7 +68,7 @@ renderResponse.setTitle(categoryDisplayName);
 	ConfigurationModelListenerException cmle = (ConfigurationModelListenerException)errorException;
 	%>
 
-	<liferay-ui:message key="<%= cmle.causeMessage %>" localizeKey="<%= false %>" />
+ 	<liferay-ui:message key="<%= HtmlUtil.escape(cmle.causeMessage) %>" localizeKey="<%= false %>" />
 </liferay-ui:error>
 
 <portlet:actionURL name="/configuration_admin/bind_configuration" var="bindConfigurationActionURL" />

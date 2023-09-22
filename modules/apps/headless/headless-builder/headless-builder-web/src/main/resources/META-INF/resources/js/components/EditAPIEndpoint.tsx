@@ -327,14 +327,16 @@ export default function EditAPIEndpoint({
 						className="info-tab"
 					>
 						<ClayCard.Body>
-							<BaseAPIEndpointFields
-								apiApplicationBaseURL={apiApplicationBaseURL}
-								basePath={basePath}
-								data={localUIData}
-								displayError={displayError}
-								editMode={true}
-								setData={setLocalUIData}
-							/>
+							<div className="endpoints-fields-card-body">
+								<BaseAPIEndpointFields
+									apiApplicationBaseURL={apiApplicationBaseURL}
+									basePath={basePath}
+									data={localUIData}
+									displayError={displayError}
+									editMode={true}
+									setData={setLocalUIData}
+								/>
+							</div>
 						</ClayCard.Body>
 					</ClayTabs.TabPane>
 				</ClayTabs.Content>

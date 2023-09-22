@@ -27,7 +27,7 @@
 				padding-top: 24px;
 			}
 
-			.schema-fields-card-body {
+			.endpoints-fields-card-body, .schema-fields-card-body {
 				padding-bottom: 1px;
 				padding-left: 24px;
 				padding-right: 24px;
@@ -55,8 +55,10 @@
 				margin-bottom: 7px !important;
 			}
 		}
+	}
 
-		.schema-tabs {
+	.tab-content {
+		.tab-pane {
 			padding: 0 !important;
 		}
 	}

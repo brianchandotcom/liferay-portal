@@ -140,17 +140,33 @@ export default function CartQuickAdd() {
 					price,
 					productConfiguration: replacementConfiguration,
 					sku: replacementSKU,
+					skuUnitOfMeasures: replacementUnitOfMeasures,
 					urls: productURLs,
 				} = replacementSKUData;
+
+				if (
+					replacementUnitOfMeasures &&
+					replacementUnitOfMeasures.length
+				) {
+					replacementSKUData.skuUnitOfMeasure =
+						replacementUnitOfMeasures[0];
+				}
 
 				return {
 					...replacementSKUData,
 					price,
 					productURLs,
 					quantity: getCorrectedQuantity(
-						replacementConfiguration,
+						{
+							...replacementConfiguration,
+							multipleOrderQuantity:
+								replacementSKUData.skuUnitOfMeasure
+									?.incrementalOrderQuantity ||
+								replacementConfiguration.multipleOrderQuantity,
+						},
 						replacementSKU,
-						cartItems
+						cartItems,
+						replacementSKUData.skuUnitOfMeasure?.precision || 0
 					),
 					replacedSkuId: selectedId,
 					settings: replacementConfiguration,
@@ -170,7 +186,7 @@ export default function CartQuickAdd() {
 					},
 					selectedSKU,
 					cartItems,
-					selectedSKUData.skuUnitOfMeasure?.precision || 1
+					selectedSKUData.skuUnitOfMeasure?.precision || 0
 				),
 				settings: selectedConfiguration,
 				skuId: selectedId,

@@ -22,12 +22,15 @@ function ItemInfoViewBundle({childItems}) {
 	return (
 		<div className="child-items">
 			{childItems.map((item, index) => {
-				const {name, quantity} = item;
+				const {name, quantity, skuUnitOfMeasure} = item;
 
 				return (
 					<div className="child-item" key={index}>
 						<span>
-							{quantity} &times; {name}
+							<>
+								{quantity} &times; {name}
+							</>
+							<> {skuUnitOfMeasure?.key || ''}</>
 						</span>
 					</div>
 				);

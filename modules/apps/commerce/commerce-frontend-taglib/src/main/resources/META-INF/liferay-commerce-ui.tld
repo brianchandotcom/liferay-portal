@@ -566,11 +566,6 @@
 		<name>search-results</name>
 		<tag-class>com.liferay.commerce.frontend.taglib.servlet.taglib.SearchResultsTag</tag-class>
 		<body-content>empty</body-content>
-		<attribute>
-			<name>id</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
 	</tag>
 	<tag>
 		<name>step-tracker</name>

@@ -18,6 +18,7 @@ create table ObjectAction (
 	objectActionExecutorKey VARCHAR(255) null,
 	objectActionTriggerKey VARCHAR(75) null,
 	parameters TEXT null,
+	system_ BOOLEAN,
 	status INTEGER
 );
 

@@ -87,6 +87,27 @@ export default function BaseAPIEndpointFields({
 
 	return (
 		<ClayForm>
+			{(editMode ?? false) && (
+				<ClayForm.Group>
+					<label htmlFor="selectTrigger">
+						{Liferay.Language.get('method')}
+
+						<span className="ml-1 reference-mark text-warning">
+							<ClayIcon symbol="asterisk" />
+						</span>
+					</label>
+
+					<Select
+						disabled={true}
+						onClick={() => {}}
+						options={[{label: 'GET', value: 'get'}]}
+						required
+						searchable={false}
+						selectedOption={{label: 'GET', value: 'get'}}
+					/>
+				</ClayForm.Group>
+			)}
+
 			<ClayForm.Group
 				className={classNames({
 					'has-error': displayError.scope,

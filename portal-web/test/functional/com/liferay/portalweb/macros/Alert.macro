@@ -75,6 +75,13 @@ definition {
 			value1 = "Please enter a valid expiration date.");
 	}
 
+	macro viewFieldErrorMessage {
+		AssertTextEquals(
+			fieldLabel = ${fieldLabel},
+			locator1 = "Message#ERROR_FIELD",
+			value1 = ${errorMessage});
+	}
+
 	macro viewInfoMessage {
 		AssertTextEquals(
 			locator1 = "Message#INFO_2",

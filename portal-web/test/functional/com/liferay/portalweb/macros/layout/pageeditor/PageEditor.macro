@@ -2902,12 +2902,6 @@ definition {
 				}
 
 				PageEditor.waitForAutoSave();
-
-				if (${previewSuccessState} == "true") {
-					Check.checkNotVisible(
-						checkboxName = "Preview Embedded Message",
-						locator1 = "Checkbox#ANY_CHECKBOX");
-				}
 			}
 			else if (${successMessage} == "Go to Page") {
 				Select(
@@ -3019,12 +3013,6 @@ definition {
 						locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 					PageEditor.waitForAutoSave();
-				}
-
-				if (${previewSuccessNotification} == "true") {
-					Check.checkNotVisible(
-						checkboxName = "Preview Success Notification",
-						locator1 = "Checkbox#ANY_CHECKBOX");
 				}
 			}
 		}
@@ -4546,10 +4534,22 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 			locator1 = "Button#ANY");
 	}
 
+	macro previewEmbeddedMessage {
+		Check.checkNotVisible(
+			checkboxName = "Preview Embedded Message",
+			locator1 = "Checkbox#ANY_CHECKBOX");
+	}
+
 	macro previewInANewTab {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Preview in a New Tab");
 
 		SelectWindow.selectPopUp(locator1 = "null");
+	}
+
+	macro previewSuccessNotification {
+		Click(
+			ariaLabel = "Preview Success Notification",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 	}
 
 	macro prioritizeExperience {

@@ -82,6 +82,10 @@ export default function APIEndpointsTable({
 		itemData,
 		loadData,
 	}: FDSItem<APIEndpointItem>) {
+		if (action.id === 'editAPIEndpoint') {
+			setMainEndpointNav({edit: itemData.id});
+		}
+
 		if (action.id === 'copyEndpointURL') {
 			navigator.clipboard.writeText(
 				`${window.location.origin}/o/${apiApplicationBaseURL}${itemData.path}/`
@@ -100,7 +104,11 @@ export default function APIEndpointsTable({
 
 	return (
 		<FrontendDataSet
-			{...getAPIEndpointsFDSProps(endpointAPIURLPath, portletId)}
+			{...getAPIEndpointsFDSProps(
+				endpointAPIURLPath,
+				portletId,
+				setMainEndpointNav
+			)}
 			creationMenu={{
 				primaryItems: [createAPIEndpoint],
 			}}

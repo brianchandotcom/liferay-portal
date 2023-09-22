@@ -184,7 +184,7 @@ definition {
 	@description = "Verify that not eligible default shipping method cannot be selected into the checkout."
 	@priority = 3
 	test CheckIfNotEligibleDefaultShippingMethodIntoTheCheckoutCanNotBeSelected {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a buyer user associated with the Commerce Account") {
@@ -464,7 +464,7 @@ definition {
 	@description = "Verify the eligible shipping option with the highest priority is used at checkout if the default shipping option is not linked to the order type of the order."
 	@priority = 3
 	test UseANotEligibleDefaultShippingOptionIntoTheCheckoutWithOrderType {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a buyer user associated with the Commerce Account") {
@@ -580,7 +580,7 @@ definition {
 	@description = "Verify the default account shipping option is pre-selected at checkout."
 	@priority = 5
 	test UseDefaultShippingOptionIntoTheCheckout {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a buyer user associated with the Commerce Account") {

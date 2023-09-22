@@ -64,7 +64,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanReceiveEmailNotificationForNewComment {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
+		property custom.properties = "dl.actions.visible=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property test.smtp.server.enabled = "true";
 
@@ -138,7 +138,7 @@ definition {
 	@description = "This is a test for LPS-136816. It checks that custom fields can be rendered properly when a DM notification email is sent."
 	@priority = 3
 	test CanViewCustomFieldsInEmail {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
+		property custom.properties = "dl.actions.visible=true${line.separator}jsonws.web.service.paths.excludes=";
 		property test.smtp.server.enabled = "true";
 
 		DMDocument.configureDocumentEmailTemplate(
@@ -180,7 +180,7 @@ The DM file [$DOCUMENT_TITLE$] has been added to Home folder.
 	@priority = 5
 	@refactordone
 	test CanViewEmailNotificationForNewDocumentInFolder {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
+		property custom.properties = "dl.actions.visible=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 		property test.smtp.server.enabled = "true";
 

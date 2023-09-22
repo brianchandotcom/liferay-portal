@@ -231,7 +231,7 @@ definition {
 	@description = "COMMERCE-11821 | Discount is applied correctly when a tax category is enabled"
 	@priority = 4
 	test CanApplyDiscountWithTaxCategoryEnabled {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site is created") {
@@ -354,7 +354,7 @@ definition {
 	@description = "COMMERCE-9787 | Apply a discount with eligibility only to account groups that are eligible"
 	@priority = 5
 	test CanApplySpecificAccountGroupCouponCodeDiscount {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site") {
@@ -689,7 +689,7 @@ definition {
 	@description = "COMMERCE-9789 | Apply coupon code discount to not eligible account group and assert the coupon is not applicable"
 	@priority = 5
 	test CanAssertNotEligibleAccountGroupCouponCodeDiscountNotApplied {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site") {
@@ -781,7 +781,7 @@ definition {
 	@description = "This is a test case for COMMERCE-10819. User with Discount Manager role can access Discounts from Control Panel"
 	@priority = 3
 	test CanDiscountManagerAccessDiscountsPanel {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site") {
@@ -1155,7 +1155,7 @@ definition {
 	@description = "This is a test for COMMERCE-9592."
 	@priority = 5
 	test CanViewErrorNotificationWhenApplyingCouponCodeToWrongProduct {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {

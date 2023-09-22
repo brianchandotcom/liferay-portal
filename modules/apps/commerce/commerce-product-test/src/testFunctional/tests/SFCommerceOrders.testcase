@@ -153,7 +153,7 @@ definition {
 	@description = "Verify the external reference code (ERC) of an order is present in the placed order details."
 	@priority = 3
 	test AssertERCInPlacedOrderDetails {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a buyer user connected to the Commerce Account") {
@@ -213,7 +213,7 @@ definition {
 	@description = "Verify the shipping and billing addresses of an order are present in the placed order details."
 	@priority = 5
 	test AssertNameOfTheShippingAndBillingAddressInPlacedOrderDetails {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a buyer user connected to the Commerce Account") {
@@ -308,7 +308,7 @@ definition {
 	@description = "Verify the status of an order is shown in the placed order details."
 	@priority = 5
 	test AssertOrderStatusInPlacedOrderDetails {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a buyer user connected to the Commerce Account") {
@@ -364,7 +364,7 @@ definition {
 	@description = "Verify the selected order type for an order is displayed in the Open Carts widget."
 	@priority = 5
 	test AssertOrderTypeInOpenCartsWidgetList {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a buyer user connected to the Commerce Account") {
@@ -418,7 +418,7 @@ definition {
 	@description = "Verify the selected order type for an order is displayed in the Placed Orders list."
 	@priority = 5
 	test AssertOrderTypeInPlacedOrdersList {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a buyer user connected to the Commerce Account") {
@@ -493,7 +493,7 @@ definition {
 	@description = "This is a test for COMMERCE-9450. If a product in the open order is removed from the account visibility, the buyer cannot checkout with the product, can be redirected to the catalog page by viewing the product in both order detail and mini-cart, and no other can be added to the cart"
 	@priority = 3
 	test CanManageOpenOrderCorrectlyIfAccountVisibilityForAProductIsRemoved {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given an account with a buyer user is created") {
@@ -613,7 +613,7 @@ definition {
 	@description = "This is a test for COMMERCE-11355. As a user, I cannot reorder an unavailable product."
 	@priority = 5
 	test CannotReorderUnavailableProduct {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given an account with a buyer user is created") {
@@ -696,7 +696,7 @@ definition {
 	@description = "COMMERCE-9877. A user can search orders by account name"
 	@priority = 5
 	test CanReturnOrdersBySearchForAccountName {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given 2 accounts associated with a buyer user") {
@@ -835,7 +835,7 @@ definition {
 	@description = "This is a use case for COMMERCE-3111. Assert that user can see an open order after deleting the product, and the product is no longer in the order."
 	@priority = 5
 	test CanSeeAPlacedOrderWithDeletedProduct {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a minium site with a buyer user and creating an order with a product") {
@@ -916,7 +916,7 @@ definition {
 	@description = "This is a test for COMMERCE-11913. User can search for a product and view the correct pagination for the search result in a placed order"
 	@priority = 5
 	test CanViewSearchedProductWithPaginationInPlacedOrderDetails {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a buyer user connected to the Commerce Account") {
@@ -1171,7 +1171,7 @@ definition {
 	@description = "Verify the order time is shown in the order date when the Show Order Creation Time checkbox is checked in global settings."
 	@priority = 3
 	test GlobalSettingsForOrderDateConfiguration {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -1286,7 +1286,7 @@ definition {
 	@description = "Verify the order date formats shown in the Placed Orders list and details pages are localized."
 	@priority = 3
 	test LocalDateFormat {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property osgi.module.configuration.file.names = "com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOrderContentPortletInstanceConfiguration.config";
 		property osgi.module.configurations = "showCommerceOrderCreateTime=\"false\"";
 		property portal.acceptance = "false";

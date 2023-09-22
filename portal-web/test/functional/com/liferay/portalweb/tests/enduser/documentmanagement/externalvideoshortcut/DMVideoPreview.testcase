@@ -215,7 +215,7 @@ definition {
 	@priority = 3
 	@refactorneeded
 	test CanConfigureFFmpegVideoPreviewSizePG {
-		property custom.properties = "dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0";
+		property custom.properties = "dl.file.entry.preview.video.height=0${line.separator}dl.file.entry.preview.video.width=0";
 		property test.assert.warning.exceptions = "false";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

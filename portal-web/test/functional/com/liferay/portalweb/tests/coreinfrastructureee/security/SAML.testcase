@@ -773,7 +773,7 @@ definition {
 	@description = "This is a use case for LRQA-35866. Assert SSO idle session takes precedence over IdP session time out."
 	@priority = 4
 	test AssertSSOIdleSessionTakesPrecedenceOverIdPSessionTimeout {
-		property custom.properties = "session.timeout=2${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}session.timeout=2";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 		property web.xml.timeout = "2";
@@ -962,7 +962,7 @@ definition {
 	@description = "This is a use case for LRQA-35784. Assert SSO session exists after SP session timeout."
 	@priority = 4
 	test AssertSSOSessionExistsAfterSPSessionTimeout {
-		property custom.properties = "session.timeout=2${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}session.timeout=2";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 		property web.xml.timeout = "2";
@@ -1009,7 +1009,7 @@ definition {
 	@description = "This is a use case for LRQA-35833. Assert SSO expires after maximum session age."
 	@priority = 4
 	test AssertSSOSessionExpiresAfterMaximumSessionAge {
-		property custom.properties = "session.timeout=2${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}session.timeout=2";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 		property web.xml.timeout = "2";
@@ -5311,7 +5311,7 @@ definition {
 	@priority = 4
 	test ViewSPInitiatedSSOWithOktaAndUserGroups {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-180198=true";
+		property custom.properties = "feature.flag.LPS-180198=true${line.separator}jsonws.web.service.paths.excludes=";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
@@ -5373,7 +5373,7 @@ definition {
 	@priority = 4
 	test ViewSPInitiatedSSOWithOktaUserGroupCanBeAssignedLater {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-180198=true";
+		property custom.properties = "feature.flag.LPS-180198=true${line.separator}jsonws.web.service.paths.excludes=";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
@@ -5453,7 +5453,7 @@ definition {
 	@priority = 4
 	test ViewSPInitiatedSSOWithOktaUserGroupsAreNotCreatedDuringLogin {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-180198=true";
+		property custom.properties = "feature.flag.LPS-180198=true${line.separator}jsonws.web.service.paths.excludes=";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";
@@ -5513,7 +5513,7 @@ definition {
 	@priority = 4
 	test ViewSPInitiatedSSOWithOktaWithMultipleUserGroups {
 		property app.server.types = "jboss,tcserver,tomcat,wildfly";
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}feature.flag.LPS-180198=true";
+		property custom.properties = "feature.flag.LPS-180198=true${line.separator}jsonws.web.service.paths.excludes=";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.release = "false";
 		property portal.ssl.enabled = "true";

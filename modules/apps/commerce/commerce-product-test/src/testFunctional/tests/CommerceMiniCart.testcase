@@ -404,7 +404,7 @@ definition {
 	@description = "Verify products with long names are truncated in the mini-cart."
 	@priority = 3
 	test CanSeeProductNameTruncated {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a buyer user") {
@@ -456,7 +456,7 @@ definition {
 	@description = "This is a test for COMMERCE-7870. CanUpdateSubscriptionProductQuantity"
 	@priority = 4
 	test CanUpdateSubscriptionProductQuantity {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with an account and buyer user") {
@@ -571,7 +571,7 @@ definition {
 	@description = "COMMERCE-10247 Verify that the buyer can complete the checkout using the mini cart widget"
 	@priority = 4
 	test CanUseMiniCartWidgetToCheckout {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium Site is created") {
@@ -828,7 +828,7 @@ definition {
 	@description = "COMMERCE-6335. As a buyer, I want to edit the quantity of an bundled product in the mini-cart using it's quantity selector and I want to view the changes applied to the mini-cart summary and the bundled items to change their quantity"
 	@priority = 5
 	test EditBundledProductQuantityFromMiniCart {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Commerce Account with a buyer user") {
@@ -989,7 +989,7 @@ definition {
 	@description = "COMMERCE-6333. As a buyer, I want to edit the quantity of an item in the mini-cart using the quantity selector and I want to view the changes applied to the mini-cart summary"
 	@priority = 5
 	test EditCartItemQuantityFromMiniCart {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Commerce account with a buyer user") {
@@ -1086,7 +1086,7 @@ definition {
 	@description = "COMMERCE-6330. As a buyer, I want to be able to empty my open cart after clicking on 'Remove All Items'(Yes/No)"
 	@priority = 3
 	test RemoveAllItemsFromMiniCart {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a Commerce Account with a buyer user") {
@@ -1209,7 +1209,7 @@ definition {
 	@description = "COMMERCE-6331. As a buyer, I want to be able to remove an item from cart by clicking on the delete button('x')"
 	@priority = 3
 	test RemoveSingleCartItemFromMiniCart {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a Commerce Account with a buyer user") {
@@ -1559,7 +1559,7 @@ definition {
 	@description = "COMMERCE-6334. The user is able to view a bundled product details in the mini cart(Name, SKU, Bundled Items, Quantity, List Price, Image)"
 	@priority = 3
 	test ViewMiniCartBundledProductDetails {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a Commerce Account with a buyer user") {
@@ -1702,7 +1702,7 @@ definition {
 	@description = "COMMERCE-6332. As a buyer, I want to view cart item details in the mini-cart(Name, SKU, Quantity, Options(if present), List Price, Image) and I want to be able to view the number of different products I have in my cart"
 	@priority = 5
 	test ViewMiniCartItemDetails {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a Commerce Account with a buyer user") {

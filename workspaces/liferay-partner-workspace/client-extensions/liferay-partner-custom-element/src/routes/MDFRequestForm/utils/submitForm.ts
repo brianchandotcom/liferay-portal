@@ -122,7 +122,7 @@ export default async function submitForm(
 
 		if (values.id) {
 			Liferay.Util.navigate(
-				`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}`
+				`${siteURL}/${PRMPageRoute.CONFIRMATION_MDF_REQUEST}`
 			);
 
 			Liferay.Util.openToast({
@@ -135,7 +135,7 @@ export default async function submitForm(
 
 		if (values.mdfRequestStatus.key === Status.DRAFT.key) {
 			Liferay.Util.navigate(
-				`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}`
+				`${siteURL}/${PRMPageRoute.CONFIRMATION_MDF_REQUEST}`
 			);
 
 			Liferay.Util.openToast({
@@ -152,7 +152,7 @@ export default async function submitForm(
 		});
 
 		Liferay.Util.navigate(
-			`${siteURL}/${PRMPageRoute.MDF_REQUESTS_LISTING}`
+			`${siteURL}/${PRMPageRoute.CONFIRMATION_MDF_REQUEST}`
 		);
 	}
 	catch (error: unknown) {

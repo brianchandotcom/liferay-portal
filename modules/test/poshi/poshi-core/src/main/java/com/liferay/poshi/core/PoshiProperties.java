@@ -262,14 +262,15 @@ public class PoshiProperties extends Properties {
 		return _poshiProperties;
 	}
 
-	public static void validateProperties(
+	public static void validateProperty(
 		String propertyName, String propertyValue) {
 
-		if (!_poshiPropertiesMap.containsKey(propertyName)) {
+		if (!_validPoshiPropertyValues.containsKey(propertyName)) {
 			return;
 		}
 
-		String[] possiblePropertyValues = _poshiPropertiesMap.get(propertyName);
+		String[] possiblePropertyValues = _validPoshiPropertyValues.get(
+			propertyName);
 
 		for (String possiblePropertyValue : possiblePropertyValues) {
 			System.out.println(possiblePropertyValue);
@@ -431,7 +432,10 @@ public class PoshiProperties extends Properties {
 
 	private static final Properties _classProperties = new Properties();
 	private static final PoshiProperties _poshiProperties;
-	private static final Map<String, String[]> _poshiPropertiesMap =
+	private static final Map<String, PoshiProperties>
+		_threadBasedPoshiProperties = Collections.synchronizedMap(
+			new HashMap<>());
+	private static final Map<String, String[]> _validPoshiPropertyValues =
 		new HashMap<String, String[]>() {
 			{
 				put(
@@ -469,9 +473,6 @@ public class PoshiProperties extends Properties {
 					new String[] {"path", "function", "macro", "testcase"});
 			}
 		};
-	private static final Map<String, PoshiProperties>
-		_threadBasedPoshiProperties = Collections.synchronizedMap(
-			new HashMap<>());
 
 	static {
 		Class<?> clazz = PoshiProperties.class;
@@ -518,12 +519,12 @@ public class PoshiProperties extends Properties {
 							for (String possiblePropertyValue :
 									propertyValues) {
 
-								validateProperties(
+								validateProperty(
 									propertyName, possiblePropertyValue);
 							}
 						}
 						else {
-							validateProperties(propertyName, propertyValue);
+							validateProperty(propertyName, propertyValue);
 						}
 
 						properties.setProperty(propertyName, propertyValue);

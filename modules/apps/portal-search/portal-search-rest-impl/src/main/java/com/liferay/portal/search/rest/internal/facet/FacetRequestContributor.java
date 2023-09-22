@@ -5,13 +5,28 @@
 
 package com.liferay.portal.search.rest.internal.facet;
 
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.aggregation.Aggregation;
+import com.liferay.portal.search.aggregation.Aggregations;
+import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
+import com.liferay.portal.search.aggregation.bucket.Range;
 import com.liferay.portal.search.facet.category.CategoryFacetSearchContributor;
 import com.liferay.portal.search.facet.custom.CustomFacetSearchContributor;
 import com.liferay.portal.search.facet.date.range.DateRangeFacetSearchContributor;
@@ -21,11 +36,14 @@ import com.liferay.portal.search.facet.site.SiteFacetSearchContributor;
 import com.liferay.portal.search.facet.tag.TagFacetSearchContributor;
 import com.liferay.portal.search.facet.type.TypeFacetSearchContributor;
 import com.liferay.portal.search.facet.user.UserFacetSearchContributor;
+import com.liferay.portal.search.filter.DateRangeFilterBuilder;
+import com.liferay.portal.search.filter.FilterBuilders;
 import com.liferay.portal.search.rest.dto.v1_0.FacetConfiguration;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -139,19 +157,46 @@ public class FacetRequestContributor {
 			return;
 		}
 
+		String field = GetterUtil.getString(
+			_getAttribute(facetConfiguration, "field"));
+
+		if (!_ddmIndexer.isLegacyDDMIndexFieldsEnabled() &&
+			field.startsWith(DDMIndexer.DDM_FIELD_ARRAY)) {
+
+			_contributeDateRangeFacetWithDDMFieldArray(
+				facetConfiguration, field, searchRequestBuilder);
+		}
+		else if (!_ddmIndexer.isLegacyDDMIndexFieldsEnabled() &&
+				 field.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
+
+			_contributeDateRangeFacetWithDDMField(
+				facetConfiguration, field, searchRequestBuilder);
+		}
+		else if (field.startsWith("nestedFieldArray")) {
+			_contributeDateRangeFacetWithNestedFieldArray(
+				facetConfiguration, field, searchRequestBuilder);
+		}
+		else {
+			_contributeDateRangeFacet(
+				facetConfiguration, field, searchRequestBuilder);
+		}
+	}
+
+	private void _contributeDateRangeFacet(
+		FacetConfiguration facetConfiguration, String field,
+		SearchRequestBuilder searchRequestBuilder) {
+
 		_dateRangeFacetSearchContributor.contribute(
 			searchRequestBuilder,
 			dateRangeFacetBuilder -> dateRangeFacetBuilder.aggregationName(
 				facetConfiguration.getAggregationName()
 			).field(
-				GetterUtil.getString(_getAttribute(facetConfiguration, "field"))
+				field
 			).format(
 				GetterUtil.getString(
 					_getAttribute(facetConfiguration, "format"))
 			).frequencyThreshold(
 				facetConfiguration.getFrequencyThreshold()
-			).maxTerms(
-				facetConfiguration.getMaxTerms()
 			).rangesJSONArray(
 				_jsonFactory.createJSONArray(
 					(List<Map<String, Object>>)_getAttribute(
@@ -159,6 +204,99 @@ public class FacetRequestContributor {
 			).selectedRanges(
 				_toStringArray(facetConfiguration.getValues())
 			));
+	}
+
+	private void _contributeDateRangeFacetWithDDMField(
+		FacetConfiguration facetConfiguration, String field,
+		SearchRequestBuilder searchRequestBuilder) {
+
+		String[] ddmFieldParts = StringUtil.split(
+			field, DDMIndexer.DDM_FIELD_SEPARATOR);
+
+		if ((ddmFieldParts.length != 4) &&
+			!ddmFieldParts[3].startsWith("Date")) {
+
+			return;
+		}
+
+		_contributeDateRangeFacetWithNestedField(
+			facetConfiguration,
+			_getDDMDateValueFieldName(ddmFieldParts[1], ddmFieldParts[3]),
+			DDMIndexer.DDM_FIELD_NAME, field, DDMIndexer.DDM_FIELD_ARRAY,
+			searchRequestBuilder);
+	}
+
+	private void _contributeDateRangeFacetWithDDMFieldArray(
+		FacetConfiguration facetConfiguration, String field,
+		SearchRequestBuilder searchRequestBuilder) {
+
+		String[] fieldParts = StringUtil.split(field, StringPool.PERIOD);
+
+		if (fieldParts.length != 3) {
+			return;
+		}
+
+		_contributeDateRangeFacetWithNestedField(
+			facetConfiguration, fieldParts[2], DDMIndexer.DDM_FIELD_NAME,
+			fieldParts[1], DDMIndexer.DDM_FIELD_ARRAY, searchRequestBuilder);
+	}
+
+	private void _contributeDateRangeFacetWithNestedField(
+		FacetConfiguration facetConfiguration, String fieldToAggregate,
+		String filterField, String filterValue, String path,
+		SearchRequestBuilder searchRequestBuilder) {
+
+		String fieldToAggregateWithPath = StringBundler.concat(
+			path, StringPool.PERIOD, fieldToAggregate);
+
+		JSONArray rangesJSONArray = _jsonFactory.createJSONArray(
+			(List<Map<String, Object>>)_getAttribute(
+				facetConfiguration, "ranges"));
+
+		String[] selectedValues = _toStringArray(
+			facetConfiguration.getValues());
+
+		_nestedFacetSearchContributor.contribute(
+			searchRequestBuilder,
+			nestedFacetBuilder -> nestedFacetBuilder.aggregationName(
+				facetConfiguration.getAggregationName()
+			).additionalFacetConfigurationData(
+				JSONUtil.put("ranges", rangesJSONArray)
+			).childAggregation(
+				_getDateRangeChildAggregation(
+					facetConfiguration, fieldToAggregateWithPath,
+					rangesJSONArray)
+			).childAggregationValuesFilter(
+				_getDateRangeChildAggregationFilter(
+					fieldToAggregateWithPath, Arrays.asList(selectedValues))
+			).fieldToAggregate(
+				fieldToAggregateWithPath
+			).filterField(
+				StringBundler.concat(path, StringPool.PERIOD, filterField)
+			).filterValue(
+				filterValue
+			).frequencyThreshold(
+				facetConfiguration.getFrequencyThreshold()
+			).path(
+				path
+			).selectedValues(
+				_toStringArray(facetConfiguration.getValues())
+			));
+	}
+
+	private void _contributeDateRangeFacetWithNestedFieldArray(
+		FacetConfiguration facetConfiguration, String field,
+		SearchRequestBuilder searchRequestBuilder) {
+
+		String[] fieldParts = StringUtil.split(field, StringPool.PERIOD);
+
+		if (fieldParts.length != 3) {
+			return;
+		}
+
+		_contributeDateRangeFacetWithNestedField(
+			facetConfiguration, fieldParts[2], "fieldName", fieldParts[1],
+			"nestedFieldArray", searchRequestBuilder);
 	}
 
 	private void _contributeFolderFacet(
@@ -286,6 +424,97 @@ public class FacetRequestContributor {
 		return attributes.get(key);
 	}
 
+	private Aggregation _getDateRangeChildAggregation(
+		FacetConfiguration facetConfiguration, String fieldToAggregate,
+		JSONArray rangesJSONArray) {
+
+		DateRangeAggregation dateRangeAggregation = _aggregations.dateRange(
+			facetConfiguration.getAggregationName(), fieldToAggregate);
+
+		dateRangeAggregation.setFormat(
+			GetterUtil.getString(_getAttribute(facetConfiguration, "format")));
+
+		for (int i = 0; i < rangesJSONArray.length(); i++) {
+			JSONObject rangeJSONObject = rangesJSONArray.getJSONObject(i);
+
+			String range = rangeJSONObject.getString("range");
+
+			String[] rangeParts = RangeParserUtil.parserRange(range);
+
+			dateRangeAggregation.addRange(
+				new Range(range, rangeParts[0], rangeParts[1]));
+		}
+
+		return dateRangeAggregation;
+	}
+
+	private Filter _getDateRangeChildAggregationFilter(
+		String fieldName, List<String> selectedRangeStrings) {
+
+		if (selectedRangeStrings.isEmpty()) {
+			return null;
+		}
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		for (String selection : selectedRangeStrings) {
+			String start = StringPool.BLANK;
+			String end = StringPool.BLANK;
+
+			if (Validator.isNotNull(selection)) {
+				String[] range = RangeParserUtil.parserRange(selection);
+
+				start = range[0];
+				end = range[1];
+			}
+
+			if (Validator.isNull(start) && Validator.isNull(end)) {
+				return null;
+			}
+
+			DateRangeFilterBuilder dateRangeFilterBuilder =
+				_filterBuilders.dateRangeFilterBuilder();
+
+			dateRangeFilterBuilder.setFieldName(fieldName);
+
+			if (Validator.isNotNull(start)) {
+				dateRangeFilterBuilder.setFrom(start);
+			}
+
+			dateRangeFilterBuilder.setIncludeLower(true);
+			dateRangeFilterBuilder.setIncludeUpper(true);
+
+			if (Validator.isNotNull(end)) {
+				dateRangeFilterBuilder.setTo(end);
+			}
+
+			booleanFilter.add(
+				dateRangeFilterBuilder.build(), BooleanClauseOccur.SHOULD);
+		}
+
+		return booleanFilter;
+	}
+
+	private String _getDDMDateValueFieldName(String indexType, String suffix) {
+		String valueFieldName = _ddmIndexer.getValueFieldName(
+			indexType, _getLocaleFromSuffix(suffix));
+
+		return valueFieldName + "_date";
+	}
+
+	private Locale _getLocaleFromSuffix(String string) {
+		for (Locale availableLocale : _language.getAvailableLocales()) {
+			String availableLanguageId = _language.getLanguageId(
+				availableLocale);
+
+			if (string.endsWith(availableLanguageId)) {
+				return availableLocale;
+			}
+		}
+
+		return null;
+	}
+
 	private String[] _getVocabularyIdsAttribute(
 		FacetConfiguration facetConfiguration) {
 
@@ -355,6 +584,9 @@ public class FacetRequestContributor {
 	}
 
 	@Reference
+	private Aggregations _aggregations;
+
+	@Reference
 	private CategoryFacetSearchContributor _categoryFacetSearchContributor;
 
 	@Reference
@@ -364,10 +596,19 @@ public class FacetRequestContributor {
 	private DateRangeFacetSearchContributor _dateRangeFacetSearchContributor;
 
 	@Reference
+	private DDMIndexer _ddmIndexer;
+
+	@Reference
+	private FilterBuilders _filterBuilders;
+
+	@Reference
 	private FolderFacetSearchContributor _folderFacetSearchContributor;
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private NestedFacetSearchContributor _nestedFacetSearchContributor;

@@ -73,7 +73,7 @@ arguments[0].dispatchEvent(event);
 
 		selenium.waitForElementPresent();
 
-		selenium.waitForElementPresent("//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]");
+		selenium.waitForElementPresent("//script[contains(@src,'/o/frontend-js-loader-modules-extender/loader.js')]");
 
 		selenium.mouseOver();
 

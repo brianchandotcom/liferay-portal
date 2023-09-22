@@ -266,7 +266,7 @@ definition {
 
 		Click.clickAtNotVisible(locator1 = "//div[@id='navigationCollapse']");
 
-		WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]");
+		WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-loader-modules-extender/loader.js')]");
 
 		MouseOver.javaScriptMouseOver(locator1 = "Home#PAGE_2");
 

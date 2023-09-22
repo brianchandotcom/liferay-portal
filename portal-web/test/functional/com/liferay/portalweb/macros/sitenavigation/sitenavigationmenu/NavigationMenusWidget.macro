@@ -39,7 +39,7 @@ definition {
 	}
 
 	macro gotoNavigationMenuWidgetConfig {
-		WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]");
+		WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-loader-modules-extender/loader.js')]");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -52,7 +52,7 @@ definition {
 
 	macro gotoSublevel {
 		if (${type} == "Drop Down") {
-			WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-aui-web/liferay/menu_toggle.js')]");
+			WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-loader-modules-extender/loader.js')]");
 
 			MouseOver.javaScriptMouseOver(
 				key_pageName = ${pageName},

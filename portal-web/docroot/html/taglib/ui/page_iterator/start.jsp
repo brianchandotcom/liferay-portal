@@ -79,17 +79,19 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 		<%
 		String ariaPaginationResults = namespace + id + "_ariaPaginationResults";
+
+		String ariaPaginationPicker = namespace + id + "_ariaPaginationPicker";
 		%>
 
 		<c:if test="<%= deltaConfigurable %>">
 			<div class="dropdown pagination-items-per-page">
-				<button aria-describedby="<%= ariaPaginationResults %>" aria-haspopup="true" class="dropdown-toggle page-link" data-toggle="liferay-dropdown">
+				<button aria-describedby="<%= ariaPaginationResults %>" aria-expanded="false" aria-controls="<%= ariaPaginationPicker %>" aria-haspopup="listbox" class="dropdown-toggle page-link" data-attribute="<%= delta %>" data-toggle="liferay-dropdown" role="combobox">
 					<liferay-ui:message arguments="<%= delta %>" key="x-entries" /><span class="sr-only"><%= StringPool.NBSP %><liferay-ui:message key="per-page" /></span>
 
 					<aui:icon image="caret-double-l" markupView="lexicon" />
 				</button>
 
-				<ul class="dropdown-menu dropdown-menu-top">
+				<ul class="dropdown-menu dropdown-menu-top" id="<%= ariaPaginationPicker %>" role="listbox" tabindex="-1">
 
 					<%
 					for (int curDelta : PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES) {
@@ -100,8 +102,8 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 						String curDeltaURL = HttpComponentsUtil.setParameter(url + urlAnchor, namespace + deltaParam, curDelta);
 					%>
 
-						<li>
-							<a class="dropdown-item" href="<%= HtmlUtil.escapeHREF(curDeltaURL) %>" onClick="<%= forcePost ? _getOnClick(namespace, deltaParam, curDelta) : "" %>">
+						<li role="option">
+							<a class="dropdown-item <%= (delta == curDelta) ? "active" : "" %>" href="<%= HtmlUtil.escapeHREF(curDeltaURL) %>" id="<%= String.valueOf(curDelta) %>" onClick="<%= forcePost ? _getOnClick(namespace, deltaParam, curDelta) : "" %>">
 								<%= String.valueOf(curDelta) %><span class="sr-only"><%= StringPool.NBSP %><liferay-ui:message key="entries-per-page" /></span>
 							</a>
 						</li>
@@ -408,6 +410,67 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			}
 		);
 	}
+</script>
+
+<script type="text/javascript">
+
+	var dropdown = document.querySelector('.pagination-items-per-page');
+	var button = dropdown.querySelector('.dropdown-toggle');
+	var list = dropdown.querySelector('.dropdown-menu');
+	var options = list.querySelectorAll('.dropdown-item');
+	var selectedItemValue = button.dataset.attribute;
+
+	button.addEventListener('keydown', function(event) {
+		if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === 'Space') {
+		event.preventDefault();
+		list.classList.add('show');
+		button.setAttribute('aria-expanded', 'true');
+
+			if (list.classList.contains('show')) {
+				var selectedOption = null;
+
+				Array.from(options).find(function(option) {
+					if (option.id == selectedItemValue) {
+						selectedOption = option;
+					}
+				});
+
+				if (selectedOption) {
+					selectedOption.focus();
+				}
+			}
+		}
+	});
+
+	options.forEach(function(option, index) {
+		option.addEventListener('keydown', function(event) {
+			if (event.key === 'ArrowDown') {
+				event.preventDefault();
+
+				if (index < options.length - 1) {
+					options[index + 1].focus();
+				}
+			} else if (event.key === 'ArrowUp') {
+				event.preventDefault();
+
+				if (index > 0) {
+					options[index - 1].focus();
+				}
+			}
+		});
+	});
+
+	function closeDropdown() {
+		list.classList.remove('show');
+		button.setAttribute('aria-expanded', 'false');
+	}
+
+	document.addEventListener('focusout', function(event) {
+		if (!dropdown.contains(event.relatedTarget)) {
+			closeDropdown();
+		}
+	});
+
 </script>
 
 <%!

@@ -46,16 +46,12 @@ public class UploadFragmentCompositionPreviewMVCActionCommand
 		throws Exception {
 
 		uploadHandler.upload(
-			fragmentEntryPreviewImageEditorUploadFileEntryHandler,
+			_fragmentEntryPreviewImageEditorUploadFileEntryHandler,
 			itemSelectorUploadResponseHandler, actionRequest, actionResponse);
 	}
 
 	@Reference
 	protected DLAppService dlAppService;
-
-	protected FragmentEntryPreviewImageEditorUploadFileEntryHandler
-		fragmentEntryPreviewImageEditorUploadFileEntryHandler =
-			new FragmentEntryPreviewImageEditorUploadFileEntryHandler();
 
 	@Reference
 	protected ItemSelectorUploadResponseHandler
@@ -71,6 +67,10 @@ public class UploadFragmentCompositionPreviewMVCActionCommand
 
 	@Reference
 	protected UploadHandler uploadHandler;
+
+	private final FragmentEntryPreviewImageEditorUploadFileEntryHandler
+		_fragmentEntryPreviewImageEditorUploadFileEntryHandler =
+			new FragmentEntryPreviewImageEditorUploadFileEntryHandler();
 
 	private class FragmentEntryPreviewImageEditorUploadFileEntryHandler
 		extends BaseImageEditorUploadFileEntryHandler {

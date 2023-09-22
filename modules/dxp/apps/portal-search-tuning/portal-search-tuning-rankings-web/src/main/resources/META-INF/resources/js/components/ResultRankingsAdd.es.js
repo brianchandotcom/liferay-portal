@@ -10,24 +10,40 @@ import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
 import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
-import {PORTAL_TOOLTIP_TRIGGER_CLASS, SCOPE_TYPES} from '../utils/constants.es';
+import {SCOPE_TYPES} from '../utils/constants.es';
 import {sub} from '../utils/language.es';
 import ScopeSelect from './scope/ScopeSelect.es';
 
-const SCOPE_LABELS = {
-	[SCOPE_TYPES.EVERYTHING]: Liferay.Language.get('everything'),
-	[SCOPE_TYPES.SITE]: Liferay.Language.get('site'),
-	[SCOPE_TYPES.SXP_BLUEPRINT]: Liferay.Language.get('blueprint'),
+const SCOPE_INFO = {
+	[SCOPE_TYPES.EVERYTHING]: {
+		description: Liferay.Language.get(
+			'result-rankings-scope-everything-help'
+		),
+		label: Liferay.Language.get('everything'),
+	},
+	[SCOPE_TYPES.SITE]: {
+		description: Liferay.Language.get('result-rankings-scope-site-help'),
+		label: Liferay.Language.get('site'),
+	},
+	[SCOPE_TYPES.SXP_BLUEPRINT]: {
+		description: Liferay.Language.get(
+			'result-rankings-scope-blueprint-help'
+		),
+		label: Liferay.Language.get('blueprint'),
+	},
 };
 
 function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 	const [errors, setErrors] = useState({});
 	const [scopeType, setScopeType] = useState(SCOPE_TYPES.EVERYTHING);
 	const [scope, setScope] = useState('');
+	const [scopeDropdownActive, setScopeDropdownActive] = useState(false);
 	const [searchQuery, setSearchQuery] = useState('');
 	const [touched, setTouched] = useState({});
+
+	const alignElementRef = useRef();
 
 	const _getErrors = (searchQuery, scopeType, scope) => {
 		const errors = {};
@@ -79,10 +95,16 @@ function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 		setScope(value);
 	};
 
+	const _handleScopeDropdownChange = () => {
+		setScopeDropdownActive(!scopeDropdownActive);
+	};
+
 	const _handleScopeTypeChange = (value) => {
 		setScopeType(value);
 		setScope('');
 		setTouched({...touched, scope: false});
+
+		setScopeDropdownActive(false);
 	};
 
 	const _handleSubmit = (event) => {
@@ -155,36 +177,29 @@ function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 							className="c-ml-1 reference-mark"
 							symbol="asterisk"
 						/>
-
-						<span
-							className={getCN(
-								'input-label-help-icon',
-								PORTAL_TOOLTIP_TRIGGER_CLASS
-							)}
-							data-title={Liferay.Language.get(
-								'result-rankings-scope-help'
-							)}
-						>
-							<ClayIcon
-								className="c-ml-1 text-secondary"
-								symbol="question-circle-full"
-							/>
-						</span>
 					</label>
 
-					<ClayDropDown
-						closeOnClick
+					<ClayButton
+						aria-label={Liferay.Language.get('scope')}
+						className="form-control form-control-select"
+						displayType="unstyled"
+						onClick={_handleScopeDropdownChange}
+						ref={alignElementRef}
+					>
+						{SCOPE_INFO[scopeType].label}
+					</ClayButton>
+
+					<ClayDropDown.Menu
+						active={scopeDropdownActive}
+						alignElementRef={alignElementRef}
 						closeOnClickOutside
-						menuWidth="sm"
-						trigger={
-							<ClayButton
-								aria-label={Liferay.Language.get('scope')}
-								className="form-control form-control-select"
-								displayType="unstyled"
-							>
-								{SCOPE_LABELS[scopeType]}
-							</ClayButton>
-						}
+						onActiveChange={setScopeDropdownActive}
+						style={{
+							maxWidth: '100%',
+							width:
+								alignElementRef.current &&
+								alignElementRef.current.clientWidth + 'px',
+						}}
 					>
 						<ClayDropDown.ItemList items={_getScopeTypeOptions()}>
 							{(item) => (
@@ -194,11 +209,19 @@ function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 										_handleScopeTypeChange(item);
 									}}
 								>
-									{SCOPE_LABELS[item]}
+									<div className="autofit-col-expand">
+										<div className="list-group-text text-dark">
+											{SCOPE_INFO[item].label}
+										</div>
+
+										<div className="c-mt-0 list-group-subtext text-2">
+											{SCOPE_INFO[item].description}
+										</div>
+									</div>
 								</ClayDropDown.Item>
 							)}
 						</ClayDropDown.ItemList>
-					</ClayDropDown>
+					</ClayDropDown.Menu>
 
 					<div className="c-mt-1 sheet-text text-3">
 						<span className="text-secondary">

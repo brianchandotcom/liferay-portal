@@ -5,7 +5,7 @@
 
 import { useState } from "react";
 
-import { Input } from "../../components/Input/Input";
+import { Input } from "../../../components/Input/Input";
 import { BillingAddress } from "./BillingAddress";
 import { PaymentMethodMode } from "./PaymentMethodMode";
 import { PaymentMethodSelector } from "./PaymentMethodSelector";

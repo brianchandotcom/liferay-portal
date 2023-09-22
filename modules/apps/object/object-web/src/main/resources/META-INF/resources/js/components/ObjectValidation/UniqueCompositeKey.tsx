@@ -15,6 +15,24 @@ import React, {useEffect, useState} from 'react';
 import {ErrorMessage} from './ErrorMessage';
 import {ObjectValidationErrors} from './useObjectValidationForm';
 
+interface isMatchingObjectFieldObjectValidationRuleSettingProps {
+	objectField: ObjectField;
+	objectValidationRuleSetting: ObjectValidationRuleSetting;
+	objectValidationRuleSettingNameMatches:
+		| 'compositeKeyObjectFieldExternalReferenceCode'
+		| 'outputObjectFieldExternalReferenceCode';
+}
+
+interface ModalSelectObjectFieldItem extends ObjectField {
+	checked: boolean;
+}
+
+interface MultipleSelectOption {
+	checked: boolean;
+	externalReferenceCode: string;
+	label: string;
+}
+
 export interface UniqueCompositeKeyProps {
 	creationLanguageId: Liferay.Language.Locale;
 	customObjectFields: ObjectField[];
@@ -25,6 +43,19 @@ export interface UniqueCompositeKeyProps {
 	showUniqueCompositeKeyAlert: boolean;
 	values: Partial<ObjectValidation>;
 }
+
+const isMatchingObjectFieldObjectValidationRuleSetting = ({
+	objectField,
+	objectValidationRuleSetting,
+	objectValidationRuleSettingNameMatches,
+}: isMatchingObjectFieldObjectValidationRuleSettingProps) => {
+	return (
+		objectField.externalReferenceCode ===
+			objectValidationRuleSetting.value &&
+		objectValidationRuleSetting.name ===
+			objectValidationRuleSettingNameMatches
+	);
+};
 
 export function UniqueCompositeKey({
 	creationLanguageId,
@@ -39,10 +70,13 @@ export function UniqueCompositeKey({
 	const [builderScreenItems, setBuilderScreenItems] = useState<
 		TBuilderScreenItem[]
 	>([]);
-	const [multipleSelectOptions, setMultipleSelectOptions] = useState<IItem[]>(
-		[]
-	);
-
+	const [
+		modalSelectObjectFieldsItems,
+		setModalSelectObjectFieldsItems,
+	] = useState<ModalSelectObjectFieldItem[]>([]);
+	const [multipleSelectOptions, setMultipleSelectOptions] = useState<
+		MultipleSelectOption[]
+	>([]);
 	const filteredCustomObjectFields = customObjectFields.filter(
 		(customObjectField) =>
 			customObjectField.businessType === 'Integer' ||
@@ -58,58 +92,116 @@ export function UniqueCompositeKey({
 			getName: ({label, name}: ObjectField) =>
 				getLocalizableLabel(creationLanguageId, label, name),
 			header: Liferay.Language.get('add-fields-to-unique-composite-key'),
-			items: filteredCustomObjectFields.map(
-				(filteredCustomObjectField) => ({
-					...filteredCustomObjectField,
-					checked: false,
-				})
-			),
+			items: modalSelectObjectFieldsItems,
 			onSave: (selectedObjectFields: ObjectField[]) => {
-				const newObjectValidationRuleSettings = selectedObjectFields.map(
-					(selectedObjectField) => ({
+				const objectValidationRuleSetting = values.objectValidationRuleSettings?.filter(
+					(objectValidationRuleSetting) =>
+						selectedObjectFields.some((selectedObjectField) => {
+							return (
+								selectedObjectField.externalReferenceCode ===
+									objectValidationRuleSetting.value &&
+								objectValidationRuleSetting.name ===
+									'outputObjectFieldExternalReferenceCode'
+							);
+						})
+				);
+				selectedObjectFields.map((selectedObjectField) =>
+					objectValidationRuleSetting?.push({
 						name: 'compositeKeyObjectFieldExternalReferenceCode',
 						value: selectedObjectField.externalReferenceCode,
 					})
-				) as ObjectValidationRuleSetting[];
+				);
 
 				setValues({
-					objectValidationRuleSettings: newObjectValidationRuleSettings,
+					objectValidationRuleSettings: objectValidationRuleSetting,
 				});
 			},
-			selected: [],
+			selected: modalSelectObjectFieldsItems.filter(
+				(modalSelectObjectFieldsItem) =>
+					modalSelectObjectFieldsItem.checked
+			),
 			title: Liferay.Language.get('select-the-fields'),
 		});
 	};
 
 	useEffect(() => {
-		const newBuilderScreenItems = values?.objectValidationRuleSettings?.map(
+		if (!values.objectValidationRuleSettings) {
+			return;
+		}
+
+		const newBuilderScreenItems: TBuilderScreenItem[] = [];
+		const newModalSelectObjectFieldsItems: ModalSelectObjectFieldItem[] = [];
+		const newMultipleSelectOptions: MultipleSelectOption[] = [];
+
+		values.objectValidationRuleSettings.forEach(
 			(objectValidationRuleSetting) => {
-				const filteredCustomObjectFieldsInValidationRuleSetting = filteredCustomObjectFields.find(
-					(filteredCustomObjectField) => {
-						return (
-							filteredCustomObjectField.externalReferenceCode ===
-							objectValidationRuleSetting.value
-						);
-					}
+				const filteredObjectFieldObjectValidationRuleSetting = filteredCustomObjectFields.find(
+					(filteredCustomObjectField) =>
+						isMatchingObjectFieldObjectValidationRuleSetting({
+							objectField: filteredCustomObjectField,
+							objectValidationRuleSetting,
+							objectValidationRuleSettingNameMatches:
+								'compositeKeyObjectFieldExternalReferenceCode',
+						})
 				);
 
-				return {
-					fieldLabel: getLocalizableLabel(
+				if (filteredObjectFieldObjectValidationRuleSetting) {
+					const label = getLocalizableLabel(
 						creationLanguageId,
-						filteredCustomObjectFieldsInValidationRuleSetting?.label,
-						filteredCustomObjectFieldsInValidationRuleSetting?.name
-					),
-					label:
-						filteredCustomObjectFieldsInValidationRuleSetting?.label,
-					objectFieldBusinessType:
-						filteredCustomObjectFieldsInValidationRuleSetting?.businessType,
-					objectFieldName:
-						filteredCustomObjectFieldsInValidationRuleSetting?.name,
-				};
+						filteredObjectFieldObjectValidationRuleSetting.label,
+						filteredObjectFieldObjectValidationRuleSetting.name
+					);
+
+					newBuilderScreenItems.push({
+						externalReferenceCode:
+							filteredObjectFieldObjectValidationRuleSetting.externalReferenceCode,
+						fieldLabel: label,
+						label:
+							filteredObjectFieldObjectValidationRuleSetting.label,
+						objectFieldBusinessType:
+							filteredObjectFieldObjectValidationRuleSetting.businessType,
+						objectFieldName:
+							filteredObjectFieldObjectValidationRuleSetting.name,
+					});
+
+					newMultipleSelectOptions.push({
+						checked: !!values.objectValidationRuleSettings?.find(
+							(objectValidationRuleSetting) =>
+								isMatchingObjectFieldObjectValidationRuleSetting(
+									{
+										objectField: filteredObjectFieldObjectValidationRuleSetting,
+										objectValidationRuleSetting,
+										objectValidationRuleSettingNameMatches:
+											'outputObjectFieldExternalReferenceCode',
+									}
+								)
+						),
+						externalReferenceCode:
+							filteredObjectFieldObjectValidationRuleSetting.externalReferenceCode,
+						label,
+					});
+				}
 			}
-		) as TBuilderScreenItem[];
+		);
+
+		filteredCustomObjectFields.forEach((filteredCustomObjectField) =>
+			newModalSelectObjectFieldsItems.push({
+				...filteredCustomObjectField,
+				checked: !!values.objectValidationRuleSettings?.find(
+					(objectValidationRuleSetting) =>
+						isMatchingObjectFieldObjectValidationRuleSetting({
+							objectField: filteredCustomObjectField,
+							objectValidationRuleSetting,
+							objectValidationRuleSettingNameMatches:
+								'compositeKeyObjectFieldExternalReferenceCode',
+						})
+				),
+			})
+		);
 
 		setBuilderScreenItems(newBuilderScreenItems);
+		setModalSelectObjectFieldsItems(newModalSelectObjectFieldsItems);
+		setMultipleSelectOptions(newMultipleSelectOptions);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.objectValidationRuleSettings]);
@@ -155,11 +247,34 @@ export function UniqueCompositeKey({
 				setValues={setValues}
 				values={values}
 			>
-				<MultipleSelect
+				<MultipleSelect<MultipleSelectOption>
+					disabled={!builderScreenItems.length}
 					error={errors.errorLabel}
 					label={Liferay.Language.get('field')}
-					options={multipleSelectOptions}
-					setOptions={setMultipleSelectOptions}
+					options={multipleSelectOptions ?? []}
+					setOptions={(newOutputObjectFieldOptions) => {
+						const objectValidationRuleSettings = values.objectValidationRuleSettings?.filter(
+							(objectValidationRuleSetting) =>
+								objectValidationRuleSetting.name !==
+								'outputObjectFieldExternalReferenceCode'
+						);
+
+						newOutputObjectFieldOptions.forEach(
+							(newOutputObjectFieldOption) => {
+								if (newOutputObjectFieldOption.checked) {
+									objectValidationRuleSettings?.push({
+										name:
+											'outputObjectFieldExternalReferenceCode',
+										value:
+											newOutputObjectFieldOption.externalReferenceCode,
+									});
+								}
+							}
+						);
+
+						setValues({objectValidationRuleSettings});
+						setMultipleSelectOptions(newOutputObjectFieldOptions);
+					}}
 				/>
 			</ErrorMessage>
 		</>

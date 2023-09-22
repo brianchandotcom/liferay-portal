@@ -192,6 +192,7 @@ type TLabelValueObject = {
 export type TBuilderScreenItem = {
 	defaultSort?: boolean;
 	disableEdit?: boolean;
+	externalReferenceCode?: string;
 	fieldLabel?: string;
 	filterBy?: string;
 	label: LocalizedValue<string>;

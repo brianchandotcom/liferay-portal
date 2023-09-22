@@ -5,6 +5,8 @@
 
 const API_URL = {
 	FDS_ACTIONS: '/o/data-set-manager/actions',
+	FDS_CLIENT_EXTENSION_FILTERS:
+		'/o/data-set-manager/client-extension-filters',
 	FDS_DATE_FILTERS: '/o/data-set-manager/date-filters',
 	FDS_DYNAMIC_FILTERS: '/o/data-set-manager/dynamic-filters',
 	FDS_ENTRIES: '/o/data-set-manager/entries',
@@ -23,6 +25,9 @@ const OBJECT_RELATIONSHIP = {
 	FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId',
 	FDS_VIEW_FDS_ACTION: 'fdsViewFDSActionRelationship',
 	FDS_VIEW_FDS_ACTION_ID: 'r_fdsViewFDSActionRelationship_c_fdsViewId',
+	FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER: 'fdsViewFDSClientExtensionFilter',
+	FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER_ID:
+		'r_fdsViewFDSClientExtensionFilter_c_fdsViewId',
 	FDS_VIEW_FDS_DATE_FILTER: 'fdsViewFDSDateFilterRelationship',
 	FDS_VIEW_FDS_DATE_FILTER_ID:
 		'r_fdsViewFDSDateFilterRelationship_c_fdsViewId',

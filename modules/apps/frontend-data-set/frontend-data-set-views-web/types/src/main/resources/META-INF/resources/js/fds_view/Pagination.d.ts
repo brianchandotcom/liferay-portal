@@ -5,11 +5,11 @@
 
 /// <reference types="react" />
 
-import {IFDSViewSectionInterface} from '../FDSView';
+import {IFDSViewSectionProps} from '../FDSView';
 declare function Pagination({
 	fdsView,
 	fdsViewsURL,
 	namespace,
 	onFDSViewUpdate,
-}: IFDSViewSectionInterface): JSX.Element;
+}: IFDSViewSectionProps): JSX.Element;
 export default Pagination;

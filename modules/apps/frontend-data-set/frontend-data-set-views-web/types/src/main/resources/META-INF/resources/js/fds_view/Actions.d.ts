@@ -6,7 +6,7 @@
 /// <reference types="react" />
 
 import {OBJECT_RELATIONSHIP} from '../Constants';
-import {IFDSViewSectionInterface} from '../FDSView';
+import {IFDSViewSectionProps} from '../FDSView';
 interface IFDSAction {
 	[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION]: any;
 	actions: {
@@ -32,6 +32,6 @@ declare const Actions: ({
 	fdsView,
 	namespace,
 	spritemap,
-}: IFDSViewSectionInterface) => JSX.Element;
+}: IFDSViewSectionProps) => JSX.Element;
 export {IFDSAction};
 export default Actions;

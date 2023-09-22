@@ -22,7 +22,7 @@ import fuzzy from 'fuzzy';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP} from '../Constants';
-import {IFDSViewSectionInterface} from '../FDSView';
+import {IFDSViewSectionProps} from '../FDSView';
 import {FDSViewType} from '../FDSViews';
 import {getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
@@ -84,7 +84,7 @@ const getRendererLabel = ({
 	else {
 		clientExtensionRenderer = cetRenderers.find(
 			(renderer: IClientExtensionRenderer) => {
-				return renderer.erc === rendererName;
+				return renderer.externalReferenceCode === rendererName;
 			}
 		);
 
@@ -494,7 +494,7 @@ const EditFDSFieldModalContent = ({
 	options.push(
 		...fdsClientExtensionCellRenderers.map((item) => ({
 			label: item.name!,
-			value: item.erc!,
+			value: item.externalReferenceCode!,
 		}))
 	);
 
@@ -511,7 +511,7 @@ const EditFDSFieldModalContent = ({
 		onItemClick: Function;
 	}) => {
 		const fdsClientExtensionCellRenderersERCs = fdsClientExtensionCellRenderers.map(
-			(cellRendererCET) => cellRendererCET.erc
+			(cellRendererCET) => cellRendererCET.externalReferenceCode
 		);
 
 		return (
@@ -661,7 +661,7 @@ const Fields = ({
 	fdsView,
 	namespace,
 	saveFDSFieldsURL,
-}: IFDSViewSectionInterface) => {
+}: IFDSViewSectionProps) => {
 	const [fdsFields, setFDSFields] = useState<Array<IFDSField> | null>(null);
 
 	const getFDSFields = async () => {

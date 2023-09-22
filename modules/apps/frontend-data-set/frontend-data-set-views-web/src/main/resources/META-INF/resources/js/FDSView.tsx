@@ -62,8 +62,9 @@ NAVIGATION_BAR_ITEMS = [
 	},
 ];
 
-interface IFDSViewSectionInterface {
+interface IFDSViewSectionProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
+	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsView: FDSViewType;
 	fdsViewsURL: string;
 	namespace: string;
@@ -72,8 +73,9 @@ interface IFDSViewSectionInterface {
 	spritemap: string;
 }
 
-interface IFDSViewInterface {
+interface IFDSViewProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];
+	fdsFilterClientExtensions: IClientExtensionRenderer[];
 	fdsViewId: string;
 	fdsViewsURL: string;
 	namespace: string;
@@ -83,12 +85,13 @@ interface IFDSViewInterface {
 
 const FDSView = ({
 	fdsClientExtensionCellRenderers,
+	fdsFilterClientExtensions,
 	fdsViewId,
 	fdsViewsURL,
 	namespace,
 	saveFDSFieldsURL,
 	spritemap,
-}: IFDSViewInterface) => {
+}: IFDSViewProps) => {
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [fdsView, setFDSView] = useState<FDSViewType>();
 	const [loading, setLoading] = useState(true);
@@ -146,6 +149,7 @@ const FDSView = ({
 						fdsClientExtensionCellRenderers={
 							fdsClientExtensionCellRenderers
 						}
+						fdsFilterClientExtensions={fdsFilterClientExtensions}
 						fdsView={fdsView}
 						fdsViewsURL={fdsViewsURL}
 						namespace={namespace}
@@ -161,5 +165,5 @@ const FDSView = ({
 	);
 };
 
-export {IFDSViewSectionInterface};
+export {IFDSViewSectionProps};
 export default FDSView;

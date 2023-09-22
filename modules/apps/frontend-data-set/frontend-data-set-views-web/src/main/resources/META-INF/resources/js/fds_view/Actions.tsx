@@ -11,7 +11,7 @@ import {fetch, openModal} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';
-import {IFDSViewSectionInterface} from '../FDSView';
+import {IFDSViewSectionProps} from '../FDSView';
 import OrderableTable from '../components/OrderableTable';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
@@ -45,7 +45,7 @@ interface IFDSAction {
 	url: string;
 }
 
-const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionInterface) => {
+const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 	const [activeSection, setActiveSection] = useState(SECTIONS.ACTIONS);
 	const [activeTab, setActiveTab] = useState(0);
 	const [fdsActions, setFDSActions] = useState<Array<IFDSAction>>([]);

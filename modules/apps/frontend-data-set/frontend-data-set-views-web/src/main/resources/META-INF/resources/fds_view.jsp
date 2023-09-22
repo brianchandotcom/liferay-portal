@@ -22,6 +22,8 @@ renderResponse.setTitle(ParamUtil.getString(request, "fdsViewLabel"));
 		HashMapBuilder.<String, Object>put(
 			"fdsClientExtensionCellRenderers", fdsViewsDisplayContext.getFDSCellRendererCETsJSONArray()
 		).put(
+			"fdsFilterClientExtensions", fdsViewsDisplayContext.getFDSFilterCETsJSONArray()
+		).put(
 			"fdsViewId", ParamUtil.getString(request, "fdsViewId")
 		).put(
 			"fdsViewsURL", fdsViewsURL

@@ -23,6 +23,7 @@ import {hasDataChanged, resetToFetched} from './utils/dataUtils';
 import {fetchJSON, updateData} from './utils/fetchUtil';
 
 import '../../css/main.scss';
+import {beginStringWithForwardSlash} from './utils/string';
 
 interface EditAPIEndpointProps {
 	apiApplicationBaseURL: string;
@@ -98,7 +99,7 @@ export default function EditAPIEndpoint({
 
 	function validateData() {
 		let isDataValid = true;
-		const mandatoryFields = ['name'];
+		const mandatoryFields = ['description', 'path', 'scope'];
 
 		if (!Object.keys(localUIData!).length) {
 			const errors = mandatoryFields.reduce(
@@ -138,7 +139,7 @@ export default function EditAPIEndpoint({
 				updateData<APIEndpointUIData>({
 					dataToUpdate: {
 						description: localUIData.description,
-						path: localUIData.path,
+						path: beginStringWithForwardSlash(localUIData.path),
 						scope: localUIData.scope,
 					},
 					method: 'PATCH',

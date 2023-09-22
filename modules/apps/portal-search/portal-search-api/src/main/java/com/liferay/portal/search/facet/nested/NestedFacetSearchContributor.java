@@ -5,6 +5,9 @@
 
 package com.liferay.portal.search.facet.nested;
 
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 
 import java.util.function.Consumer;
@@ -13,6 +16,7 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jorge Díaz
+ * @author Petteri Karttunen
  */
 @ProviderType
 public interface NestedFacetSearchContributor {
@@ -24,7 +28,16 @@ public interface NestedFacetSearchContributor {
 	@ProviderType
 	public interface NestedFacetBuilder {
 
+		public NestedFacetBuilder additionalFacetConfigurationData(
+			JSONObject additionalFacetConfigurationDataJSONObject);
+
 		public NestedFacetBuilder aggregationName(String aggregationName);
+
+		public NestedFacetBuilder childAggregation(
+			Aggregation childAggregation);
+
+		public NestedFacetBuilder childAggregationValuesFilter(
+			Filter childAggregationValuesFilter);
 
 		public NestedFacetBuilder fieldToAggregate(String fieldToAggregate);
 

@@ -5,15 +5,22 @@
 
 package com.liferay.portal.search.facet.nested;
 
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.facet.Facet;
 
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Jorge Díaz
+ * @author Petteri Karttunen
  */
 @ProviderType
 public interface NestedFacet extends Facet {
+
+	public Aggregation getChildAggregation();
+
+	public Filter getChildAggregationValuesFilter();
 
 	public String getFilterField();
 

@@ -88,7 +88,9 @@ export default function APIEndpointsTable({
 
 		if (action.id === 'copyEndpointURL') {
 			navigator.clipboard.writeText(
-				`${window.location.origin}/o/${apiApplicationBaseURL}${itemData.path}/`
+				itemData.scope.key === 'group'
+					? `${window.location.origin}${basePath}${apiApplicationBaseURL}/scopes/group${itemData.path}`
+					: `${window.location.origin}${basePath}${apiApplicationBaseURL}${itemData.path}`
 			);
 		}
 

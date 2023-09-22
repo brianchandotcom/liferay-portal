@@ -81,7 +81,7 @@ export default function BaseAPIEndpointFields({
 
 	const endpointPathHostTextPreview =
 		selectedScope?.value === 'group'
-			? `${window.location.origin}${basePath}${apiApplicationBaseURL}/sites/{siteId}`
+			? `${window.location.origin}${basePath}${apiApplicationBaseURL}/scopes/${selectedScope.value}`
 			: `${window.location.origin}${basePath}${apiApplicationBaseURL}`;
 	const endpointPathLabel = Liferay.Language.get('enter-path');
 

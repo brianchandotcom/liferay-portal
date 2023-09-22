@@ -13,9 +13,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchAdminDisplayContextBuilder;
-import com.liferay.portal.search.cluster.StatsClusterInformation;
+import com.liferay.portal.search.cluster.StatsInformation;
+import com.liferay.portal.search.cluster.StatsInformationFactory;
 import com.liferay.portal.search.index.IndexInformation;
-import com.liferay.portal.search.index.StatsIndexInformation;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderResponse;
@@ -55,12 +55,6 @@ public class SearchAdminDisplayContextTest {
 		searchAdminDisplayContextBuilder.setIndexInformation(
 			Mockito.mock(IndexInformation.class));
 
-		searchAdminDisplayContextBuilder.setStatsClusterInformation(
-			Mockito.mock(StatsClusterInformation.class));
-
-		searchAdminDisplayContextBuilder.setStatsIndexInformation(
-			Mockito.mock(StatsIndexInformation.class));
-
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
 
@@ -80,12 +74,6 @@ public class SearchAdminDisplayContextTest {
 
 		searchAdminDisplayContextBuilder.setIndexInformation(null);
 
-		searchAdminDisplayContextBuilder.setStatsClusterInformation(
-			Mockito.mock(StatsClusterInformation.class));
-
-		searchAdminDisplayContextBuilder.setStatsIndexInformation(
-			Mockito.mock(StatsIndexInformation.class));
-
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
 
@@ -97,7 +85,7 @@ public class SearchAdminDisplayContextTest {
 	}
 
 	@Test
-	public void testGetStatsClusterInformation() {
+	public void testGetStatsInformation() {
 		SearchAdminDisplayContextBuilder searchAdminDisplayContextBuilder =
 			new SearchAdminDisplayContextBuilder(
 				_language, _portal, new MockRenderRequest(),
@@ -106,11 +94,8 @@ public class SearchAdminDisplayContextTest {
 		searchAdminDisplayContextBuilder.setIndexInformation(
 			Mockito.mock(IndexInformation.class));
 
-		searchAdminDisplayContextBuilder.setStatsClusterInformation(
-			getStatsClusterInformation());
-
-		searchAdminDisplayContextBuilder.setStatsIndexInformation(
-			Mockito.mock(StatsIndexInformation.class));
+		searchAdminDisplayContextBuilder.setStatsInformationFactory(
+			getStatsInformationFactory(100.0, 50.0, 80.0));
 
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
@@ -123,31 +108,21 @@ public class SearchAdminDisplayContextTest {
 
 		Assert.assertEquals(100.0, availableDiskSpace, 0);
 
-		Assert.assertEquals(50.0, currentDiskSpaceUsed, 0);
-	}
+		Assert.assertEquals(80.0, currentDiskSpaceUsed, 0);
 
-	@Test
-	public void testGetStatsIndexInformation() {
-		SearchAdminDisplayContextBuilder searchAdminDisplayContextBuilder =
-			new SearchAdminDisplayContextBuilder(
-				_language, _portal, new MockRenderRequest(),
-				new MockRenderResponse());
+		searchAdminDisplayContextBuilder.setStatsInformationFactory(
+			getStatsInformationFactory(16.0, 10.0, 10.0));
 
-		searchAdminDisplayContextBuilder.setIndexInformation(
-			Mockito.mock(IndexInformation.class));
+		searchAdminDisplayContext = searchAdminDisplayContextBuilder.build();
 
-		searchAdminDisplayContextBuilder.setStatsClusterInformation(
-			getStatsClusterInformation());
+		Assert.assertFalse(searchAdminDisplayContext.isLowOnDiskSpace());
 
-		searchAdminDisplayContextBuilder.setStatsIndexInformation(
-			getStatsIndexInformation());
+		searchAdminDisplayContextBuilder.setStatsInformationFactory(
+			getStatsInformationFactory(14.0, 10.0, 10.0));
 
-		SearchAdminDisplayContext searchAdminDisplayContext =
-			searchAdminDisplayContextBuilder.build();
+		searchAdminDisplayContext = searchAdminDisplayContextBuilder.build();
 
-		boolean lowOnDiskSpace = searchAdminDisplayContext.isLowOnDiskSpace();
-
-		Assert.assertTrue(lowOnDiskSpace);
+		Assert.assertTrue(searchAdminDisplayContext.isLowOnDiskSpace());
 	}
 
 	@Test
@@ -160,12 +135,6 @@ public class SearchAdminDisplayContextTest {
 
 		searchAdminDisplayContextBuilder.setIndexInformation(
 			Mockito.mock(IndexInformation.class));
-
-		searchAdminDisplayContextBuilder.setStatsClusterInformation(
-			Mockito.mock(StatsClusterInformation.class));
-
-		searchAdminDisplayContextBuilder.setStatsIndexInformation(
-			Mockito.mock(StatsIndexInformation.class));
 
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
@@ -183,12 +152,6 @@ public class SearchAdminDisplayContextTest {
 
 		searchAdminDisplayContextBuilder.setIndexInformation(
 			Mockito.mock(IndexInformation.class));
-
-		searchAdminDisplayContextBuilder.setStatsClusterInformation(
-			Mockito.mock(StatsClusterInformation.class));
-
-		searchAdminDisplayContextBuilder.setStatsIndexInformation(
-			Mockito.mock(StatsIndexInformation.class));
 
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
@@ -208,12 +171,6 @@ public class SearchAdminDisplayContextTest {
 		searchAdminDisplayContextBuilder.setIndexInformation(
 			Mockito.mock(IndexInformation.class));
 
-		searchAdminDisplayContextBuilder.setStatsClusterInformation(
-			Mockito.mock(StatsClusterInformation.class));
-
-		searchAdminDisplayContextBuilder.setStatsIndexInformation(
-			Mockito.mock(StatsIndexInformation.class));
-
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
 
@@ -230,12 +187,6 @@ public class SearchAdminDisplayContextTest {
 				new MockRenderResponse());
 
 		searchAdminDisplayContextBuilder.setIndexInformation(null);
-
-		searchAdminDisplayContextBuilder.setStatsClusterInformation(
-			Mockito.mock(StatsClusterInformation.class));
-
-		searchAdminDisplayContextBuilder.setStatsIndexInformation(
-			Mockito.mock(StatsIndexInformation.class));
 
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
@@ -255,12 +206,6 @@ public class SearchAdminDisplayContextTest {
 		searchAdminDisplayContextBuilder.setIndexInformation(
 			Mockito.mock(IndexInformation.class));
 
-		searchAdminDisplayContextBuilder.setStatsClusterInformation(
-			Mockito.mock(StatsClusterInformation.class));
-
-		searchAdminDisplayContextBuilder.setStatsIndexInformation(
-			Mockito.mock(StatsIndexInformation.class));
-
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
 
@@ -279,12 +224,6 @@ public class SearchAdminDisplayContextTest {
 		searchAdminDisplayContextBuilder.setIndexInformation(
 			Mockito.mock(IndexInformation.class));
 
-		searchAdminDisplayContextBuilder.setStatsClusterInformation(
-			Mockito.mock(StatsClusterInformation.class));
-
-		searchAdminDisplayContextBuilder.setStatsIndexInformation(
-			Mockito.mock(StatsIndexInformation.class));
-
 		SearchAdminDisplayContext searchAdminDisplayContext =
 			searchAdminDisplayContextBuilder.build();
 
@@ -292,36 +231,40 @@ public class SearchAdminDisplayContextTest {
 			"connections", searchAdminDisplayContext.getSelectedTab());
 	}
 
-	protected StatsClusterInformation getStatsClusterInformation() {
-		StatsClusterInformation statsClusterInformation = Mockito.mock(
-			StatsClusterInformation.class);
+	protected StatsInformationFactory getStatsInformationFactory(
+		double available, double largest, double used) {
+
+		StatsInformationFactory statsInformationFactory = Mockito.mock(
+			StatsInformationFactory.class);
+
+		StatsInformation statsInformation = Mockito.mock(
+			StatsInformation.class);
 
 		Mockito.when(
-			statsClusterInformation.getAvailableDiskSpace()
+			statsInformation.getAvailableDiskSpace()
 		).thenReturn(
-			100.0
+			available
 		);
 
 		Mockito.when(
-			statsClusterInformation.getUsedDiskSpace()
+			statsInformation.getSizeOfLargestIndex()
 		).thenReturn(
-			50.0
+			largest
 		);
-
-		return statsClusterInformation;
-	}
-
-	protected StatsIndexInformation getStatsIndexInformation() {
-		StatsIndexInformation statsIndexInformation = Mockito.mock(
-			StatsIndexInformation.class);
 
 		Mockito.when(
-			statsIndexInformation.getLargestIndexSize(Mockito.any())
+			statsInformation.getUsedDiskSpace()
 		).thenReturn(
-			80.0
+			used
 		);
 
-		return statsIndexInformation;
+		Mockito.when(
+			statsInformationFactory.getStatsInformation()
+		).thenReturn(
+			statsInformation
+		);
+
+		return statsInformationFactory;
 	}
 
 	protected void setUpIndexInformation() {

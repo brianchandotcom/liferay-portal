@@ -51,7 +51,7 @@ import org.junit.runner.RunWith;
  * @author Alicia García
  */
 @RunWith(Arquillian.class)
-public class DLAppServiceWhenCopyingWithDocumentTypesTest
+public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 	extends BaseDLAppTestCase {
 
 	@ClassRule

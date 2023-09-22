@@ -15,7 +15,8 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+<%@ page import="com.liferay.learn.LearnMessageUtil" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
@@ -74,6 +75,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 					"cancelUrl", redirect
 				).put(
 					"formName", formName
+				).put(
+					"learnResources", LearnMessageUtil.getReactDataJSONObject("portal-search-tuning-rankings-web")
 				).put(
 					"namespace", liferayPortletResponse.getNamespace()
 				).build()

@@ -8,7 +8,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import getCN from 'classnames';
-import {LearnMessage} from 'frontend-js-components-web';
+import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -22,7 +22,7 @@ const SCOPE_LABELS = {
 	[SCOPE_TYPES.SXP_BLUEPRINT]: Liferay.Language.get('blueprint'),
 };
 
-export default function ResultRankingsAdd({cancelUrl, formName, namespace}) {
+function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 	const [errors, setErrors] = useState({});
 	const [scopeType, setScopeType] = useState(SCOPE_TYPES.EVERYWHERE);
 	const [scope, setScope] = useState('');
@@ -278,5 +278,17 @@ export default function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 				</ClayButton>
 			</div>
 		</div>
+	);
+}
+
+export default function ({cancelUrl, formName, learnResources, namespace}) {
+	return (
+		<LearnResourcesContext.Provider value={learnResources}>
+			<ResultRankingsAdd
+				cancelUrl={cancelUrl}
+				formName={formName}
+				namespace={namespace}
+			/>
+		</LearnResourcesContext.Provider>
 	);
 }

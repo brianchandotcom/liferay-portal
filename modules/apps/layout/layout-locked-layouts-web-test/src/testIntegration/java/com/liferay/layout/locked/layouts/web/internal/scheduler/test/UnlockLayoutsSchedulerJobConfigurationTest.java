@@ -102,6 +102,21 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 	}
 
 	@Test
+	public void testUnlockLayoutWithGroupConfigurationTimeWithoutAutosaveGreaterThanLockedPageCreateDate()
+		throws Exception {
+
+		_configurationProvider.saveGroupConfiguration(
+			LockedLayoutsGroupConfiguration.class, _group.getGroupId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"allowAutomaticUnlockingProcess", true
+			).put(
+				"timeWithoutAutosave", _LOCK_MINUTE_ADDITION + 1
+			).build());
+
+		_testUnlockLayouts(true, _lock, 100);
+	}
+
+	@Test
 	public void testUnlockLayoutWithGroupConfigurationTimeWithoutAutosaveLessThanLockedPageCreateDate()
 		throws Exception {
 

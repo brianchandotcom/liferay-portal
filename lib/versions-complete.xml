@@ -2618,7 +2618,7 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.portal.scripting.groovy.jar!groovy.jar</file-name>
+				<file-name>com.liferay.portal.scripting.groovy.jar!groovy-all.jar</file-name>
 				<version>2.4.21</version>
 				<project-name>Groovy Runtime</project-name>
 				<project-url>http://groovy-lang.org</project-url>
@@ -4552,7 +4552,7 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.server.admin.web.jar!groovy.jar</file-name>
+				<file-name>com.liferay.server.admin.web.jar!groovy-all.jar</file-name>
 				<version>2.4.21</version>
 				<project-name>Groovy Runtime</project-name>
 				<project-url>http://groovy-lang.org</project-url>

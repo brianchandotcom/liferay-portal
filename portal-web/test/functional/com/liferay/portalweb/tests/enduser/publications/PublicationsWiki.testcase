@@ -409,8 +409,13 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Wiki");
 
-		SearchResults.viewMultipleSearchResults(
-			resultsList = "Wiki Page Production,Wiki Page Content Edit,Wiki Page Publication 2",
+		SearchResults.viewSearchResults(
+			searchAssetSummary = "Wiki Page Content Edit",
+			searchAssetTitle = "Wiki Page Production",
+			searchTerm = "Wiki");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "Wiki Page Publication 2",
 			searchTerm = "Wiki");
 
 		JSONPublications.selectPublication(publicationName = "Publication 1");
@@ -419,8 +424,13 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Wiki");
 
-		SearchResults.viewMultipleSearchResults(
-			resultsList = "Wiki Page Production,Original content,Wiki Page Publication 1",
+		SearchResults.viewSearchResults(
+			searchAssetSummary = "Original content",
+			searchAssetTitle = "Wiki Page Production",
+			searchTerm = "Wiki");
+
+		SearchResults.viewSearchResults(
+			searchAssetTitle = "Wiki Page Publication 1",
 			searchTerm = "Wiki");
 
 		Publications.workOnProduction();

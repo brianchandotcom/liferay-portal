@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
@@ -51,7 +52,11 @@ public class DLVideoDLPreviewRendererProvider
 	public DLPreviewRenderer getPreviewDLPreviewRenderer(
 		FileVersion fileVersion) {
 
-		if (!_videoProcessor.hasVideo(fileVersion) &&
+		if ((fileVersion != null) && !_videoProcessor.hasVideo(fileVersion) &&
+			!Objects.equals(
+				fileVersion.getMimeType(),
+				ContentTypes.
+					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML) &&
 			!_videoProcessor.isVideoSupported(fileVersion.getMimeType())) {
 
 			return null;
@@ -80,6 +85,14 @@ public class DLVideoDLPreviewRendererProvider
 
 	private void _checkForPreviewGenerationExceptions(FileVersion fileVersion)
 		throws PortalException {
+
+		if (Objects.equals(
+				fileVersion.getMimeType(),
+				ContentTypes.
+					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML)) {
+
+			return;
+		}
 
 		if (_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),

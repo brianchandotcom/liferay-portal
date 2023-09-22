@@ -6,19 +6,14 @@
 package com.liferay.portal.search.internal.background.task;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
 import com.liferay.portal.search.spi.reindexer.IndexReindexerRegistry;
 
-import java.io.Serializable;
-
 import java.util.Collection;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,27 +28,9 @@ import org.osgi.service.component.annotations.Reference;
 public class ReindexIndexReindexerBackgroundTaskExecutor
 	extends BaseReindexBackgroundTaskExecutor {
 
-	public ReindexIndexReindexerBackgroundTaskExecutor() {
-		setIsolationLevel(BackgroundTaskConstants.ISOLATION_LEVEL_TASK_NAME);
-	}
-
 	@Override
 	public BackgroundTaskExecutor clone() {
 		return this;
-	}
-
-	@Override
-	public String generateLockKey(BackgroundTask backgroundTask) {
-		Map<String, Serializable> taskContextMap =
-			backgroundTask.getTaskContextMap();
-
-		String className = (String)taskContextMap.get("className");
-
-		if (Validator.isNotNull(className)) {
-			return className;
-		}
-
-		return super.generateLockKey(backgroundTask);
 	}
 
 	@Override

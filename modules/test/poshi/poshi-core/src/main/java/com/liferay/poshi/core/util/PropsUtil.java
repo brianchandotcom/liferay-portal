@@ -52,6 +52,8 @@ public class PropsUtil {
 	public static void set(String key, String value) {
 		PoshiProperties poshiProperties = PoshiProperties.getPoshiProperties();
 
+		PoshiProperties.validateProperty(key, value);
+
 		poshiProperties.setProperty(key, value);
 
 		if (poshiProperties.debugStacktrace) {

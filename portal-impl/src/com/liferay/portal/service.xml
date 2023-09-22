@@ -249,7 +249,7 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="Country" remote-service="true" uuid="true">
+	<entity change-tracking-enabled="true" local-service="true" name="Country" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -265,19 +265,19 @@
 
 		<!-- Other fields -->
 
-		<column name="a2" type="String" />
-		<column name="a3" type="String" />
-		<column name="active" type="boolean" />
-		<column name="billingAllowed" type="boolean" />
+		<column change-tracking-resolution-type="merge" name="a2" type="String" />
+		<column change-tracking-resolution-type="merge" name="a3" type="String" />
+		<column change-tracking-resolution-type="merge" name="active" type="boolean" />
+		<column change-tracking-resolution-type="merge" name="billingAllowed" type="boolean" />
 		<column name="groupFilterEnabled" type="boolean" />
-		<column name="idd" type="String" />
-		<column name="name" type="String" />
-		<column name="number" type="String" />
-		<column name="position" type="double" />
-		<column name="shippingAllowed" type="boolean" />
-		<column name="subjectToVAT" type="boolean" />
+		<column change-tracking-resolution-type="merge" name="idd" type="String" />
+		<column change-tracking-resolution-type="merge" name="name" type="String" />
+		<column change-tracking-resolution-type="merge" name="number" type="String" />
+		<column change-tracking-resolution-type="merge" name="position" type="double" />
+		<column change-tracking-resolution-type="merge" name="shippingAllowed" type="boolean" />
+		<column change-tracking-resolution-type="merge" name="subjectToVAT" type="boolean" />
 		<column name="zipRequired" type="boolean" />
-		<column name="lastPublishDate" type="Date" />
+		<column change-tracking-resolution-type="merge" name="lastPublishDate" type="Date" />
 
 		<!-- Localized entity -->
 
@@ -1883,7 +1883,7 @@
 			<finder-column name="layoutSetId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="Region" remote-service="true" uuid="true">
+	<entity change-tracking-enabled="true" local-service="true" name="Region" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 
@@ -1900,11 +1900,11 @@
 		<!-- Other fields -->
 
 		<column name="countryId" type="long" />
-		<column name="active" type="boolean" />
-		<column name="name" type="String" />
-		<column name="position" type="double" />
-		<column name="regionCode" type="String" />
-		<column name="lastPublishDate" type="Date" />
+		<column change-tracking-resolution-type="merge" name="active" type="boolean" />
+		<column change-tracking-resolution-type="merge" name="name" type="String" />
+		<column change-tracking-resolution-type="merge" name="position" type="double" />
+		<column change-tracking-resolution-type="merge" name="regionCode" type="String" />
+		<column change-tracking-resolution-type="merge" name="lastPublishDate" type="Date" />
 
 		<!-- Localized entity -->
 

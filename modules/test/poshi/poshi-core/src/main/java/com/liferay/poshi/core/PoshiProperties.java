@@ -439,9 +439,6 @@ public class PoshiProperties extends Properties {
 		new HashMap<String, String[]>() {
 			{
 				put(
-					ACCESSIBILITY_STANDARDS_TAGS,
-					new String[] {"wcag2a", "wcag2aa", "wcag21a", "wcag21aa"});
-				put(
 					BROWSER_TYPE,
 					new String[] {
 						"android", "androidchrome", "chrome", "edge", "firefox",
@@ -466,7 +463,9 @@ public class PoshiProperties extends Properties {
 					TEST_POSHI_SCRIPT_VALIDATION,
 					new String[] {"false", "true"});
 				put(TEST_RUN_LOCALLY, new String[] {"false", "true"});
-				put(TEST_RUN_TYPE, new String[] {"parallel", "sequential"});
+				put(
+					TEST_RUN_TYPE,
+					new String[] {"parallel", "sequential", "single"});
 				put(TEST_SKIP_TEAR_DOWN, new String[] {"false", "true"});
 				put(
 					VALIDATION_RESOURCE_FILE_TYPES,

@@ -5,6 +5,7 @@
 
 import {FormikHelpers} from 'formik';
 
+import { PRMPageRoute } from '../../../common/enums/prmPageRoute';
 import MDFRequestDTO from '../../../common/interfaces/dto/mdfRequestDTO';
 import LiferayPicklist from '../../../common/interfaces/liferayPicklist';
 import MDFClaim from '../../../common/interfaces/mdfClaim';
@@ -111,7 +112,7 @@ export default async function submitForm(
 		formikHelpers.setValues(submitValues);
 
 		if (values.dateCreated) {
-			Liferay.Util.navigate(`${siteURL}/l/${mdfRequest.id}`);
+			Liferay.Util.navigate(`${siteURL}/${PRMPageRoute.CONFIRMATION_MDF_CLAIM}`);
 
 			Liferay.Util.openToast({
 				message: 'MDF Claim was successfully edited.',
@@ -122,7 +123,7 @@ export default async function submitForm(
 		}
 
 		if (submitValues.mdfClaimStatus.key === Status.DRAFT.key) {
-			Liferay.Util.navigate(`${siteURL}/l/${mdfRequest.id}`);
+			Liferay.Util.navigate(`${siteURL}/${PRMPageRoute.CONFIRMATION_MDF_CLAIM}`);
 
 			Liferay.Util.openToast({
 				message: 'MDF Claim was successfully saved as draft.',
@@ -132,7 +133,7 @@ export default async function submitForm(
 			return;
 		}
 
-		Liferay.Util.navigate(`${siteURL}/l/${mdfRequest.id}`);
+		Liferay.Util.navigate(`${siteURL}/${PRMPageRoute.CONFIRMATION_MDF_CLAIM}`);
 
 		Liferay.Util.openToast({
 			message: 'MDF Claim was successfully submitted.',

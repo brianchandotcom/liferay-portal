@@ -34,6 +34,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:portal:portal-verify-test-util")
 	testIntegrationImplementation project(":apps:ratings:ratings-test-util")
 	testIntegrationImplementation project(":apps:social:social-activity-test-util")
+	testIntegrationImplementation project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	testIntegrationImplementation project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationImplementation project(":apps:subscription:subscription-api")
 	testIntegrationImplementation project(":apps:subscription:subscription-test-util")

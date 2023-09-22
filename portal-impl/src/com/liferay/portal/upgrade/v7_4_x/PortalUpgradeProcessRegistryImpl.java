@@ -346,6 +346,12 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeVersionTreeMap.put(
 			new Version(29, 0, 0), new UpgradeListTypeCompanyId());
+
+		upgradeVersionTreeMap.put(
+			new Version(29, 1, 0),
+			new CTModelUpgradeProcess(
+				"Country", "CountryLocalization", "Region",
+				"RegionLocalization"));
 	}
 
 }

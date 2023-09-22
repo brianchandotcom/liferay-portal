@@ -17,10 +17,12 @@ import {
 	getAccountInfoFromCommerce,
 	getCart,
 	getCartItems,
+	getProductById,
 } from '../../utils/api';
-import {showAccountImage, showAppImage} from '../../utils/util';
+import {getThumbnailByProductAttachment, showAccountImage, showAppImage} from '../../utils/util';
 
 import './NextStepPage.scss';
+import { TypeLicense } from '../GetAppPage/enums/TypeLicense';
 
 interface NextStepPageProps {
 	children?: ReactNode;
@@ -34,16 +36,18 @@ interface NextStepPageProps {
 	showBackButton?: boolean;
 	showOrderId?: boolean;
 	size?: 'lg';
-}
+};
+
+type TypeNextStepBody = {
+	[key in string]?: ReactNode;
+};
 
 export function NextStepPage({
 	children,
 	continueButtonText,
-	header,
 	linkText,
 	onClickContinue,
 	showBackButton,
-	showOrderId = true,
 	size,
 }: NextStepPageProps) {
 	const queryString = window.location.search;
@@ -57,7 +61,8 @@ export function NextStepPage({
 		urlParams.get('accountName')
 	);
 	const [appName, setAppName] = useState(urlParams.get('appName'));
-	const appLogo = urlParams.get('appLogoURL');
+	const [appLogo, setAppLogo] = useState<string>('');
+	const [paymentStatus, setPaymentStatus] = useState<string>('');
 
 	let cart;
 	let cartItems;
@@ -69,6 +74,20 @@ export function NextStepPage({
 
 			const item = cartItems.items[0];
 
+			setPaymentStatus(cart.paymentStatusLabel)			
+
+			const productId = item.productId;
+
+			const product = await getProductById({
+				nestedFields: 'attachments',
+				productId,
+			});
+
+			const appIcon = getThumbnailByProductAttachment(product.attachments)
+
+			const formattedIcon = showAppImage(appIcon as string).replace((appIcon as string)?.split('/o')[0], baseURL)
+						
+			setAppLogo(formattedIcon);
 			setAppName(item.name);
 
 			const currentAccountCommerce = await getAccountInfoFromCommerce(
@@ -81,6 +100,109 @@ export function NextStepPage({
 	};
 
 	getCartInfo();
+
+	const nextStepBody: TypeNextStepBody = {
+		[TypeLicense.PAID]: (
+		  <Header
+			description={
+			  <>
+				<p>
+				  Congratulations on the purchase of <b>{appName}</b>. You will need
+				  to create a license your app before deploying to your DXP
+				  instance.
+				</p>
+				<p>
+				  {orderId && (
+					<span>
+					  Your Order ID is: <strong>{orderId}</strong>
+					</span>
+				  )}
+				</p>
+				<p>
+				  To license your app, you can click Continue Configuration below.
+				  Find your Order ID and choose Create License Key. To create a
+				  license, you must have at least one your instance details
+				  available - IP address, MAC address or hostname.
+				</p>
+			  </>
+			}
+			title="Next steps"
+		  />
+		),
+		[TypeLicense.FREE]: (
+		  <Header
+			description={
+			  <>
+				<p>
+				  Your <b>{appName}</b> app is ready for download.
+				</p>
+				<p>
+				  {orderId && (
+					<span>
+					  Your Order ID is: <strong>{orderId}</strong>
+					</span>
+				  )}
+				</p>
+				<p>
+				  To download your app, you can click Continue Configuration below.
+				  To find your app download, find your Order ID and choose Manage →
+				  Download LPKG.
+				</p>
+			  </>
+			}
+			title="Next steps"
+		  />
+		),
+		[TypeLicense.TRIAL]: (
+		  <Header
+			description={
+			  <>
+				<p>
+				  You will need to create a license for your app before deploying it
+				  to your DXP instance.
+				</p>
+				<p>
+				  {orderId && (
+					<span>
+					  Your Order ID is: <strong>{orderId}</strong>
+					</span>
+				  )}
+				</p>
+				<p>
+				  To license your app, you can click Continue Configuration below.
+				  Find your Order ID and choose Create License Key. To create a
+				  license, you must have at least one your instance details
+				  available - IP address, MAC address or hostname.
+				</p>
+			  </>
+			}
+			title="Next steps"
+		  />
+		),
+		[TypeLicense.PAYMENT_PENDING]: (
+		  <Header
+			description={
+			  <>
+				<p>
+				  Congratulations on agreeing to purchase <b>{appName}</b>. Payment
+				  is required before licensing the app. An invoice will be sent to
+				  the email address listed in the order. Once payment is processed,
+				  you will be notified as to the next steps to license your app.
+				  Your <b>{appName}</b> app is ready for download.
+				</p>
+				<p>
+				  {orderId && (
+					<span>
+					  Your Order ID is: <strong>{orderId}</strong>
+					</span>
+				  )}
+				</p>
+			  </>
+			}
+			title="Next steps"
+		  />
+		),
+	  };
 
 	return (
 		<>
@@ -96,15 +218,7 @@ export function NextStepPage({
 								<AccountAndAppCard
 									category="Application"
 									logo={
-										appLogo
-											? showAppImage(
-													appLogo as string
-											  ).replace(
-													(appLogo as string)?.split(
-														'/o'
-													)[0],
-													baseURL
-											  )
+										appLogo ? appLogo
 											: catalogIcon
 									}
 									title={appName ?? ''}
@@ -127,30 +241,11 @@ export function NextStepPage({
 					)}
 
 					<div className="next-step-page-text">
-						<Header
-							description={
-								header?.description ?? (
-									<>
-										Congratulations on the purchase of&nbsp;
-										<b>{appName}</b>. You will now need to
-										configure the app in the Cloud Console.
-										To access the Cloud Console, click the
-										button below and provide your Order ID
-										when prompted.
-									</>
-								)
-							}
-							title={header?.title ?? 'Next steps'}
-						/>
-
-						{showOrderId && (
-							<span>
-								Your Order ID is: <strong>{orderId}</strong>
-							</span>
-						)}
+						<div className="border-bottom next-step-page-text">
+							{nextStepBody[String(paymentStatus) || ""]}
+						</div>
 					</div>
 
-					{children}
 
 					<NewAppPageFooterButtons
 						backButtonText="Go Back to Dashboard"

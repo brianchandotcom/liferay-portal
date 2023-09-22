@@ -280,9 +280,7 @@ public class EditInfoItemStrutsActionTest {
 			null, null);
 	}
 
-	@FeatureFlags(
-		{"LPS-183727", "LPS-187754", "LPS-181663", "LPS-187846", "LPS-195205"}
-	)
+	@FeatureFlags({"LPS-183727", "LPS-187754", "LPS-181663", "LPS-195205"})
 	@Test
 	public void testAddInfoItemWithDraftStatus() throws Exception {
 		_testAddInfoItem(

@@ -490,7 +490,7 @@ definition {
 		FormFields.viewFieldLabelNotPresent(fieldLabel = "Image");
 	}
 
-	@description = "LPS-186215 - Verify if not possible to submit the form with a file larger than 5MB"
+	@description = "LPS-186215 - Verify if not possible to submit the form with a file larger than 5 MB"
 	@priority = 4
 	test NotPossibleSubmitLargeImage {
 		task ("Given a Form with an upload field created in a virtual instance") {
@@ -565,7 +565,7 @@ definition {
 			SystemSettings.saveConfiguration();
 		}
 
-		task ("and When the Guest user uploads a file larger than 5MB") {
+		task ("and When the Guest user uploads a file larger than 5 MB") {
 			User.logoutPG(specificURL = "http://www.able.com:8080");
 
 			Navigator.gotoPage(
@@ -574,7 +574,7 @@ definition {
 
 			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
-				value1 = "image_larger_than_5MB.jpg");
+				value1 = "image_larger_than_5_MB.jpg");
 		}
 
 		task ("Then the Guest user should not be able to submit the form with a file larger than 5.0 MB") {

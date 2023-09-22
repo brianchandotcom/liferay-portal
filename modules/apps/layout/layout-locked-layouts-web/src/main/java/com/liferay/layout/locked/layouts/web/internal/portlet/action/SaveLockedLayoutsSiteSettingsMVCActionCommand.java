@@ -66,9 +66,6 @@ public class SaveLockedLayoutsSiteSettingsMVCActionCommand
 				ParamUtil.getBoolean(
 					actionRequest, "allowAutomaticUnlockingProcess")
 			).put(
-				"lockReviewFrequency",
-				ParamUtil.getInteger(actionRequest, "lockReviewFrequency")
-			).put(
 				"timeWithoutAutosave",
 				ParamUtil.getInteger(actionRequest, "timeWithoutAutosave")
 			).build());

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuWebKeys;
 
 import java.io.IOException;
 
@@ -44,8 +43,6 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -115,13 +112,6 @@ public class FDSViewsPortlet extends MVCPortlet {
 			new FDSViewsDisplayContext(
 				_cetManager, _objectDefinitionLocalService, renderRequest,
 				renderResponse, _serviceTrackerList));
-
-		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(
-				_portal.getHttpServletRequest(renderRequest));
-
-		originalHttpServletRequest.setAttribute(
-			ProductNavigationControlMenuWebKeys.BETA, Boolean.TRUE);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

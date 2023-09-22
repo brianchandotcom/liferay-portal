@@ -154,6 +154,12 @@ public class ObjectActionLocalServiceImpl
 				ObjectActionTriggerConstants.KEY_STANDALONE)) {
 
 			try {
+				if (objectDefinition.isRootDescendantNode()) {
+					objectDefinition =
+						_objectDefinitionPersistence.findByPrimaryKey(
+							objectDefinition.getRootObjectDefinitionId());
+				}
+
 				ObjectDefinitionResourcePermissionUtil.populateResourceActions(
 					objectActionLocalService, objectDefinition,
 					_objectDefinitionPersistence, _portletLocalService,

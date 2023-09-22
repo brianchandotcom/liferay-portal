@@ -35,6 +35,13 @@ definition {
 
 		var displayDateMinuteFuture = ${displayDateMinute} + ${minuteIncreaseValue};
 
+		var minuteExceededValidator = MathUtil.isGreaterThanOrEqualTo(${displayDateMinuteFuture}, 60);
+
+		if (${minuteExceededValidator} == "true") {
+			var displayDateHour = ${displayDateHour} + 1;
+			var displayDateMinuteFuture = ${displayDateMinuteFuture} - 60;
+		}
+
 		var displayTime = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAmpm}";
 
 		return ${displayTime};

@@ -200,7 +200,7 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 						message="robots-can-only-be-defined-for-display-page-templates-marked-as-default"
 					/>
 
-					<aui:input disabled="<%= true %>" label="robots" name="" placeholder="robots" type="textarea" value="noindex, nofollow" />
+					<aui:input disabled="<%= true %>" id="<%= StringUtil.randomId() %>" label="robots" name="" placeholder="robots" type="textarea" value="noindex, nofollow" />
 				</c:if>
 
 				<div class="<%= nondefaultAssetDisplayPage ? "d-none" : StringPool.BLANK %>">
@@ -235,17 +235,17 @@ boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsS
 								message="only-display-page-templates-that-are-marked-as-default-for-an-asset-type-will-be-indexed-in-order-to-avoid-duplicity"
 							/>
 
-							<aui:select cssClass="propagatable-field" disabled="<%= true %>" label="include" name="">
+							<aui:select cssClass="propagatable-field" disabled="<%= true %>" id="<%= StringUtil.randomId() %>" label="include" name="">
 								<aui:option label="yes" value="1" />
 								<aui:option label="no" selected="<%= true %>" value="0" />
 							</aui:select>
 
-							<aui:input cssClass="propagatable-field" disabled="<%= true %>" helpMessage="page-priority-help" label="page-priority" name="" placeholder="0.0" size="3" type="text" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-priority", PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY) %>'>
+							<aui:input cssClass="propagatable-field" disabled="<%= true %>" helpMessage="page-priority-help" id="<%= StringUtil.randomId() %>" label="page-priority" name="" placeholder="0.0" size="3" type="text" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-priority", PropsValues.SITES_SITEMAP_DEFAULT_PRIORITY) %>'>
 								<aui:validator name="number" />
 								<aui:validator errorMessage="please-enter-a-valid-page-priority" name="range">[0,1]</aui:validator>
 							</aui:input>
 
-							<aui:select cssClass="propagatable-field" disabled="<%= true %>" label="change-frequency" name="" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-changefreq", PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY) %>'>
+							<aui:select cssClass="propagatable-field" disabled="<%= true %>" id="<%= StringUtil.randomId() %>" label="change-frequency" name="" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("sitemap-changefreq", PropsValues.SITES_SITEMAP_DEFAULT_CHANGE_FREQUENCY) %>'>
 								<aui:option label="always" />
 								<aui:option label="hourly" />
 								<aui:option label="daily" />

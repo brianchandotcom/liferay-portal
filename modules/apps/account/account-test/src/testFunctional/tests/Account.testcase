@@ -2838,6 +2838,7 @@ definition {
 	@description = "This test removes an organization as an assignee of a business account."
 	@priority = 5
 	test CanRemoveOrganizationFromBusinessAccount {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		JSONOrganization.addOrganization(

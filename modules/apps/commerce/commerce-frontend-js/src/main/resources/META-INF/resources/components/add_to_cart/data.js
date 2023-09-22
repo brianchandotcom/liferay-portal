@@ -26,6 +26,15 @@ function formatCartItem(
 		}));
 	}
 
+	if (cpInstance.skuUnitOfMeasure) {
+		cpInstance.skuUnitOfMeasure = {
+			incrementalOrderQuantity:
+				cpInstance.skuUnitOfMeasure.incrementalOrderQuantity,
+			key: cpInstance.skuUnitOfMeasure.key,
+			precision: cpInstance.skuUnitOfMeasure.precision,
+		};
+	}
+
 	return {
 		options: JSON.stringify(optionsJSON),
 		quantity: Number(

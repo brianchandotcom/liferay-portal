@@ -23,9 +23,14 @@ const getYearlyTerms = ({endDate, startDate}) => {
 				const hasLastElement = index + 1 === array.length;
 
 				if (hasLastElement) {
+					const lastTermStartDate = new Date(yearNumStartDate);
+					if (lastTermStartDate > new Date(endDate)) {
+						return null;
+					}
+
 					return {
 						endDate: new Date(endDate),
-						startDate: new Date(yearNumStartDate),
+						startDate: lastTermStartDate,
 					};
 				}
 

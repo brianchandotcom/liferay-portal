@@ -94,7 +94,7 @@ definition {
 
 		if (isSet(saveAsDraft)) {
 			Button.click(button = "Save as Draft");
-		} 
+		}
 		else {
 			Button.click(button = "Submit");
 
@@ -340,6 +340,19 @@ definition {
 		return ${nextDayDate};
 	}
 
+	macro getRequestID {
+		var key_index = ${requestIndex};
+		var key_mdfType = ${mdfType};
+
+		WaitForElementPresent(locator1 = "PRMMDFRequest#MDF_ID_BY_INDEX");
+
+		var requestID = selenium.getText("PRMMDFRequest#MDF_ID_BY_INDEX");
+
+		var requestID = StringUtil.extractLast(${requestID}, "-");
+
+		return ${requestID};
+	}
+
 	macro getValueByFieldName {
 		Click.pauseClickAt(
 			key_fieldName = ${fieldName},
@@ -356,19 +369,6 @@ definition {
 		var fieldDigits = StringUtil.extractDigits(${fieldValue});
 
 		return ${fieldDigits};
-	}
-
-	macro getRequestID {
-		var key_index = ${requestIndex};
-		var key_mdfType = ${mdfType};
-
-		WaitForElementPresent(locator1 = "PRMMDFRequest#MDF_ID_BY_INDEX");
-
-		var requestID = selenium.getText("PRMMDFRequest#MDF_ID_BY_INDEX");
-
-		var requestID = StringUtil.extractLast(${requestID}, "-");
-
-		return ${requestID};
 	}
 
 	macro goToMDF {

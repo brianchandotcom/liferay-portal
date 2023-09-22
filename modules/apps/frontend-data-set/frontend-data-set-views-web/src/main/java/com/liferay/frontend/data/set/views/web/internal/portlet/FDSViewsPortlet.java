@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -43,6 +44,8 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -112,7 +115,12 @@ public class FDSViewsPortlet extends MVCPortlet {
 			new FDSViewsDisplayContext(
 				_cetManager, _objectDefinitionLocalService, renderRequest,
 				renderResponse, _serviceTrackerList));
-		renderRequest.setAttribute(
+
+		HttpServletRequest originalHttpServletRequest =
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(renderRequest));
+
+		originalHttpServletRequest.setAttribute(
 			ProductNavigationControlMenuWebKeys.BETA, Boolean.TRUE);
 
 		super.doDispatch(renderRequest, renderResponse);
@@ -525,6 +533,9 @@ public class FDSViewsPortlet extends MVCPortlet {
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	private ServiceTrackerList<String> _serviceTrackerList;
 

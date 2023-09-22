@@ -59,7 +59,7 @@ export default function EditAPIEndpoint({
 	const [localUIData, setLocalUIData] = useState<APIEndpointUIData>({
 		description: '',
 		path: '',
-		scope: {key: '', name: ''},
+		scope: {key: ''},
 	});
 	const [displayError, setDisplayError] = useState<EndpointDataError>({
 		description: false,

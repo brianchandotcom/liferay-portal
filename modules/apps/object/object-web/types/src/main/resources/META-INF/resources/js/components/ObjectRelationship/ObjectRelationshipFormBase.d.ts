@@ -9,6 +9,7 @@ interface ObjectRelationshipFormBaseProps {
 	baseResourceURL: string;
 	errors: FormError<ObjectRelationship>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	hasDefinedObjectDefinitionTarget?: boolean;
 	objectDefinitionExternalReferenceCode1: string;
 	objectDefinitionExternalReferenceCode2?: string;
 	readonly?: boolean;
@@ -41,6 +42,7 @@ export declare function ObjectRelationshipFormBase({
 	baseResourceURL,
 	errors,
 	handleChange,
+	hasDefinedObjectDefinitionTarget,
 	objectDefinitionExternalReferenceCode1,
 	objectDefinitionExternalReferenceCode2,
 	readonly,

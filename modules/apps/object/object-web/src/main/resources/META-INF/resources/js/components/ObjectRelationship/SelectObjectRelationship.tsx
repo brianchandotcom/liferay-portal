@@ -28,11 +28,11 @@ export default function SelectRelationship({
 	const [creationLanguageId, setCreationLanguageId] = useState<
 		Liferay.Language.Locale
 	>();
-	const [fields, setFields] = useState<ObjectField[]>([]);
+	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
 	const [query, setQuery] = useState<string>('');
 	const options = useMemo(
 		() =>
-			fields.map(({label, name}) => {
+			objectFields.map(({label, name}) => {
 				return {
 					label: getLocalizableLabel(
 						creationLanguageId as Liferay.Language.Locale,
@@ -42,7 +42,7 @@ export default function SelectRelationship({
 					name,
 				};
 			}),
-		[creationLanguageId, fields]
+		[creationLanguageId, objectFields]
 	);
 
 	const filteredOptions = useMemo(() => {
@@ -54,8 +54,8 @@ export default function SelectRelationship({
 	}, [options, query]);
 
 	const selectedValue = useMemo(() => {
-		return fields.find(({name}) => name === value);
-	}, [fields, value]);
+		return objectFields.find(({name}) => name === value);
+	}, [objectFields, value]);
 
 	useEffect(() => {
 		if (objectDefinitionExternalReferenceCode1) {
@@ -76,13 +76,13 @@ export default function SelectRelationship({
 
 				setCreationLanguageId(objectDefinition.defaultLanguageId);
 
-				setFields(objectFieldOptions);
+				setObjectFields(objectFieldOptions);
 			};
 
 			makeFetch();
 		}
 		else {
-			setFields([]);
+			setObjectFields([]);
 		}
 	}, [objectDefinitionExternalReferenceCode1]);
 
@@ -96,7 +96,7 @@ export default function SelectRelationship({
 			onChangeQuery={setQuery}
 			onSelectItem={({name}) => {
 				onChange(
-					fields.find(({name: fieldName}) => fieldName === name)
+					objectFields.find(({name: fieldName}) => fieldName === name)
 						?.name!
 				);
 			}}

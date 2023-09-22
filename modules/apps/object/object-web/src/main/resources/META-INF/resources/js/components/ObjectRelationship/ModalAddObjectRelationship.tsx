@@ -24,6 +24,7 @@ import './ModalAddObjectRelationship.scss';
 interface ModalAddObjectRelationshipProps {
 	baseResourceURL: string;
 	handleOnClose: () => void;
+	hasDefinedObjectDefinitionTarget?: boolean;
 	objectDefinitionExternalReferenceCode1: string;
 	objectDefinitionExternalReferenceCode2?: string;
 	objectRelationshipParameterRequired: boolean;
@@ -34,6 +35,7 @@ interface ModalAddObjectRelationshipProps {
 export function ModalAddObjectRelationship({
 	baseResourceURL,
 	handleOnClose,
+	hasDefinedObjectDefinitionTarget,
 	objectDefinitionExternalReferenceCode1,
 	objectDefinitionExternalReferenceCode2,
 	objectRelationshipParameterRequired,
@@ -128,6 +130,9 @@ export function ModalAddObjectRelationship({
 							baseResourceURL={baseResourceURL}
 							errors={errors}
 							handleChange={handleChange}
+							hasDefinedObjectDefinitionTarget={
+								hasDefinedObjectDefinitionTarget
+							}
 							objectDefinitionExternalReferenceCode1={
 								objectDefinitionExternalReferenceCode1
 							}

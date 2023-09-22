@@ -56,8 +56,14 @@ function DiagramBuilder({
 		dispatch,
 	] = useObjectFolderContext();
 
-	const [showAddModal, setShowAddModal] = useState(false);
-	const [nodesProps, setNodesProps] = useState<{
+	const [
+		showAddObjectRelationshipModal,
+		setShowAddObjectRelationshipModal,
+	] = useState(false);
+	const [
+		newObjectRelationshipSourceNodeProps,
+		setNewObjectRelationshipSourceNodeProps,
+	] = useState<{
 		parameterRequired: boolean;
 		sourceNode: {
 			erc: string;
@@ -103,8 +109,8 @@ function DiagramBuilder({
 				return;
 			}
 
-			setShowAddModal(true);
-			setNodesProps({
+			setShowAddObjectRelationshipModal(true);
+			setNewObjectRelationshipSourceNodeProps({
 				parameterRequired: sourceNode?.data?.parameterRequired!,
 				sourceNode: {
 					erc: sourceNode?.data?.externalReferenceCode!,
@@ -179,18 +185,21 @@ function DiagramBuilder({
 
 	return (
 		<div className="lfr-objects__model-builder-diagram-area">
-			{showAddModal && (
+			{showAddObjectRelationshipModal && (
 				<ModalAddObjectRelationship
 					baseResourceURL={baseResourceURL}
-					handleOnClose={() => setShowAddModal(false)}
+					handleOnClose={() =>
+						setShowAddObjectRelationshipModal(false)
+					}
+					hasDefinedObjectDefinitionTarget
 					objectDefinitionExternalReferenceCode1={
-						nodesProps?.sourceNode.erc!
+						newObjectRelationshipSourceNodeProps?.sourceNode.erc!
 					}
 					objectDefinitionExternalReferenceCode2={
-						nodesProps?.targetNode.erc!
+						newObjectRelationshipSourceNodeProps?.targetNode.erc!
 					}
 					objectRelationshipParameterRequired={
-						nodesProps?.parameterRequired!
+						newObjectRelationshipSourceNodeProps?.parameterRequired!
 					}
 					onAfterSubmit={(newObjectRelationshipId: number) =>
 						updateModelBuilderStructure(newObjectRelationshipId)

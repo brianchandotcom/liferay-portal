@@ -41,6 +41,7 @@ export default function EditObjectFolder({
 	] = useObjectFolderContext();
 
 	const store = useStore();
+
 	const {nodes} = store.getState();
 
 	const [showModal, setShowModal] = useState<ModelBuilderModals>({

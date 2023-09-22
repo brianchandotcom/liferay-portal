@@ -25,6 +25,7 @@ interface ObjectRelationshipFormBaseProps {
 	baseResourceURL: string;
 	errors: FormError<ObjectRelationship>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	hasDefinedObjectDefinitionTarget?: boolean;
 	objectDefinitionExternalReferenceCode1: string;
 	objectDefinitionExternalReferenceCode2?: string;
 	readonly?: boolean;
@@ -150,6 +151,7 @@ export function ObjectRelationshipFormBase({
 	baseResourceURL,
 	errors,
 	handleChange,
+	hasDefinedObjectDefinitionTarget,
 	objectDefinitionExternalReferenceCode1,
 	objectDefinitionExternalReferenceCode2,
 	readonly,
@@ -413,7 +415,8 @@ export function ObjectRelationshipFormBase({
 								)?.objectInputLabel1
 							}
 						/>
-						{objectDefinition2?.label ? (
+						{objectDefinition2?.label &&
+						hasDefinedObjectDefinitionTarget ? (
 							<Input
 								label={
 									OBJECT_RELATIONSHIP_TYPES.find(
@@ -457,7 +460,8 @@ export function ObjectRelationshipFormBase({
 					</>
 				) : (
 					<>
-						{objectDefinition1?.label ? (
+						{objectDefinition1?.label &&
+						hasDefinedObjectDefinitionTarget ? (
 							<Input
 								label={
 									OBJECT_RELATIONSHIP_TYPES.find(

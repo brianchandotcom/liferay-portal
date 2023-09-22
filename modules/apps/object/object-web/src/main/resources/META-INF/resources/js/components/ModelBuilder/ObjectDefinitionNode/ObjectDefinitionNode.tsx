@@ -101,6 +101,7 @@ export function ObjectDefinitionNode({
 	const displayNodeHandles = (display: boolean) => {
 		for (const key in nodeHandleRefs) {
 			const handleRef = nodeHandleRefs[key].current;
+
 			if (handleRef) {
 				handleRef.style.opacity = display ? '1' : '0';
 			}

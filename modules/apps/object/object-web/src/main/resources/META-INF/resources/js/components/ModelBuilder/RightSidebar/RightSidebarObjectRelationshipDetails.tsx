@@ -49,7 +49,7 @@ export function RightSidebarObjectRelationshipDetails({
 	>();
 	const [
 		objectRelationshipParameterRequired,
-		setobjectRelationshipParameterRequired,
+		setObjectRelationshipParameterRequired,
 	] = useState(false);
 	const [
 		objectRelationshipRestContextPath,
@@ -117,7 +117,7 @@ export function RightSidebarObjectRelationshipDetails({
 					restContextPath: string;
 				}>(url);
 
-				setobjectRelationshipParameterRequired(parameterRequired);
+				setObjectRelationshipParameterRequired(parameterRequired);
 				setObjectRelationshipRestContextPath(restContextPath ?? '');
 
 				const nodeObjectDefinition1 = elements.find(
@@ -213,8 +213,8 @@ export function RightSidebarObjectRelationshipDetails({
 
 	return (
 		<>
-			<div className="lfr-objects__model-builder-right-sidebar-relationship-title-container">
-				<div className="lfr-objects__model-builder-right-sidebar-relationship-title">
+			<div className="lfr-objects__model-builder-right-sidebar-object-relationship-title-container">
+				<div className="lfr-objects__model-builder-right-sidebar-object-relationship-title">
 					<span>
 						{sub(
 							Liferay.Language.get('x-details'),
@@ -223,10 +223,10 @@ export function RightSidebarObjectRelationshipDetails({
 					</span>
 				</div>
 
-				<div className="lfr-objects__model-builder-right-sidebar-relationship-title-buttons-container">
+				<div className="lfr-objects__model-builder-right-sidebar-object-relationship-title-buttons-container">
 					<ClayButton
 						aria-label={Liferay.Language.get('save-relationship')}
-						className="lfr-objects__model-builder-right-sidebar-relationship-title-save-button"
+						className="lfr-objects__model-builder-right-sidebar-object-relationship-title-save-button"
 						displayType="primary"
 						onClick={() => onSubmit()}
 					>
@@ -247,7 +247,7 @@ export function RightSidebarObjectRelationshipDetails({
 				</div>
 			</div>
 
-			<div className="lfr-objects__model-builder-right-sidebar-relationship-content">
+			<div className="lfr-objects__model-builder-right-sidebar-object-relationship-content">
 				<InputLocalized
 					disableFlag={readOnly}
 					disabled={readOnly}

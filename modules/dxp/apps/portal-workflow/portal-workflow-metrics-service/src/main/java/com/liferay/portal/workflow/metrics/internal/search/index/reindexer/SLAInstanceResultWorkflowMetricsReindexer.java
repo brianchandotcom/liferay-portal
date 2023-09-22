@@ -5,8 +5,8 @@
 
 package com.liferay.portal.workflow.metrics.internal.search.index.reindexer;
 
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.capabilities.SearchCapabilities;

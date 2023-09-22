@@ -5,7 +5,7 @@
 
 package com.liferay.dynamic.data.mapping.render;
 
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Marcellus Tavares

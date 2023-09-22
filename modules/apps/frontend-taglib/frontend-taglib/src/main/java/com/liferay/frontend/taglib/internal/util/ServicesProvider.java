@@ -5,8 +5,8 @@
 
 package com.liferay.frontend.taglib.internal.util;
 
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
 import java.util.Map;

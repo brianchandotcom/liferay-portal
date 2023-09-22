@@ -5,7 +5,7 @@
 
 package com.liferay.journal.web.internal.util;
 
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.site.util.RecentGroupManager;
 
 /**

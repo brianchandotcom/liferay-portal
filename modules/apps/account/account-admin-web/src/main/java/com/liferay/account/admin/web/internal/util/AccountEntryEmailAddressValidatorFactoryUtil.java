@@ -7,7 +7,7 @@ package com.liferay.account.admin.web.internal.util;
 
 import com.liferay.account.validator.AccountEntryEmailAddressValidator;
 import com.liferay.account.validator.AccountEntryEmailAddressValidatorFactory;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Drew Brokke

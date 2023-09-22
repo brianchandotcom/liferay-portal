@@ -5,7 +5,7 @@
 
 package com.liferay.expando.taglib.internal.servlet;
 
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import javax.servlet.ServletContext;
 

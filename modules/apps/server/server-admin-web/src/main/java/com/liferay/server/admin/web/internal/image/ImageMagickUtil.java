@@ -6,7 +6,7 @@
 package com.liferay.server.admin.web.internal.image;
 
 import com.liferay.image.ImageMagick;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.Properties;
 

@@ -7,7 +7,7 @@ package com.liferay.document.library.taglib.internal.display.context;
 
 import com.liferay.document.library.display.context.DLDisplayContextProvider;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import javax.servlet.http.HttpServletRequest;

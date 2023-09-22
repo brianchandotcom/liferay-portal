@@ -6,7 +6,7 @@
 package com.liferay.fragment.web.internal.security.permission.resource;
 
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 

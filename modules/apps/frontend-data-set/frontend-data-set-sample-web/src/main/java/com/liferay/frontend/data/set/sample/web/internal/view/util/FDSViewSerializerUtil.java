@@ -6,7 +6,7 @@
 package com.liferay.frontend.data.set.sample.web.internal.view.util;
 
 import com.liferay.frontend.data.set.view.FDSViewSerializer;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Marko Cikos

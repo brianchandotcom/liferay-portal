@@ -5,8 +5,8 @@
 
 package com.liferay.comment.taglib.internal.permission.util;
 
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Jiaxu Wei

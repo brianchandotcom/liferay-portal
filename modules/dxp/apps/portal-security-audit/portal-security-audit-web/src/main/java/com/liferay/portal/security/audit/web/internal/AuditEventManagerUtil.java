@@ -5,8 +5,8 @@
 
 package com.liferay.portal.security.audit.web.internal;
 
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.audit.AuditMessage;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.audit.AuditEvent;
 import com.liferay.portal.security.audit.AuditEventManager;

@@ -6,7 +6,7 @@
 package com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Chema Balsas

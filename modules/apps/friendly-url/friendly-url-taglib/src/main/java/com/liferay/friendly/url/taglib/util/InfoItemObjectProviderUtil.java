@@ -8,9 +8,9 @@ package com.liferay.friendly.url.taglib.util;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Adolfo Pérez

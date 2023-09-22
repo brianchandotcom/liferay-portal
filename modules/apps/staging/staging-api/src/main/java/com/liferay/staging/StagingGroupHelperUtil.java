@@ -5,7 +5,7 @@
 
 package com.liferay.staging;
 
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Máté Thurzó

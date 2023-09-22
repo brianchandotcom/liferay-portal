@@ -6,8 +6,8 @@
 package com.liferay.commerce.product.options.web.internal.security.permission.resource;
 
 import com.liferay.commerce.product.model.CPOptionCategory;
-import com.liferay.osgi.util.service.Snapshot;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 

@@ -6,7 +6,7 @@
 package com.liferay.asset.taglib.internal.info.display.contributor;
 
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Alejandro Tardín

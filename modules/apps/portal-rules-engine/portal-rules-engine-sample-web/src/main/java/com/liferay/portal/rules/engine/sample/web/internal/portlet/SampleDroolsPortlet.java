@@ -5,7 +5,7 @@
 
 package com.liferay.portal.rules.engine.sample.web.internal.portlet;
 
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.rules.engine.RulesEngine;
 import com.liferay.portal.rules.engine.sample.web.internal.constants.SampleDroolsPortletKeys;

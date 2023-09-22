@@ -6,7 +6,7 @@
 package com.liferay.microblogs.web.internal.security.permission.resource;
 
 import com.liferay.microblogs.constants.MicroblogsConstants;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 

@@ -6,7 +6,7 @@
 package com.liferay.item.selector.taglib.internal.servlet.item.selector;
 
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Roberto Díaz

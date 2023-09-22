@@ -6,7 +6,7 @@
 package com.liferay.frontend.taglib.soy.internal.util;
 
 import com.liferay.frontend.taglib.soy.internal.template.SoyComponentRenderer;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Iván Zaera Avellón

@@ -6,7 +6,7 @@
 package com.liferay.site.navigation.taglib.internal.servlet;
 
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;

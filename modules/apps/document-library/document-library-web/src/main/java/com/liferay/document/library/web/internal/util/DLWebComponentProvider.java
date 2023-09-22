@@ -8,7 +8,7 @@ package com.liferay.document.library.web.internal.util;
 import com.liferay.document.library.display.context.DLDisplayContextProvider;
 import com.liferay.document.library.web.internal.display.context.DLAdminDisplayContextProvider;
 import com.liferay.document.library.web.internal.display.context.IGDisplayContextProvider;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Iván Zaera

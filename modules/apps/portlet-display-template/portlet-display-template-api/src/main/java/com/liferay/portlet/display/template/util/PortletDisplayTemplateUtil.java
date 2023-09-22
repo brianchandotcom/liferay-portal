@@ -6,7 +6,7 @@
 package com.liferay.portlet.display.template.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.osgi.util.service.Snapshot;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 

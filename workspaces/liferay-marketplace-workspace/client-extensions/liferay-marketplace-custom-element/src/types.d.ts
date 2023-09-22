@@ -121,7 +121,7 @@ type CartItem = {
 		finalPrice: number;
 		price: number;
 	};
-	productId: number;
+	productId?: number;
 	quantity: number;
 	settings: {
 		maxQuantity: number;
@@ -303,10 +303,12 @@ interface Product {
 	customFields?: CustomField[];
 	description: {[key: string]: string};
 	externalReferenceCode: string;
-	id: number;
+	finalPrice: any;
+	id?: number;
 	images: ProductImages[];
 	modifiedDate: string;
 	name: {[key: string]: string};
+	price: any;
 	productChannels: Channel[];
 	productId: number;
 	productSpecifications: ProductSpecification[];

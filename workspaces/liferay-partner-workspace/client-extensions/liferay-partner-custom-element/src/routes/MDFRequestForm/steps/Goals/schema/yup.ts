@@ -37,7 +37,7 @@ const goalsSchema = object({
 		.required('Required'),
 	overallCampaignName: string()
 		.trim()
-		.max(24, 'You have exceeded the character limit')
+		.max(80, 'You have exceeded the 80 characters limit')
 		.required('Required'),
 	partnerCountry: object({
 		key: string(),

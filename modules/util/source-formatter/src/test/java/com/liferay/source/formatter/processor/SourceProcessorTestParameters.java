@@ -40,6 +40,16 @@ public class SourceProcessorTestParameters {
 		return this;
 	}
 
+	public SourceProcessorTestParameters addExpectedMessages(
+		String[] messages) {
+
+		for (String message : messages) {
+			addExpectedMessage(message, -1);
+		}
+
+		return this;
+	}
+
 	public Set<String> getDependentFileNames() {
 		return _dependentFileNames;
 	}

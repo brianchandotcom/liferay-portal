@@ -24,6 +24,7 @@ import {API} from '@liferay/object-js-components-web';
 import React, {MouseEvent, useCallback, useState} from 'react';
 
 import {ModalAddObjectRelationship} from '../../ObjectRelationship/ModalAddObjectRelationship';
+import {getUpdatedModelBuilderStructurePayload} from '../../ViewObjectDefinitions/objectDefinitionUtil';
 import DefaultObjectRelationshipEdge from '../Edges/DefaultObjectRelationshipEdge';
 import SelfObjectRelationshipEdge from '../Edges/SelfObjectRelationshipEdge';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
@@ -159,6 +160,23 @@ function DiagramBuilder({
 		}
 	};
 
+	const updateModelBuilderStructure = async (
+		newObjectRelationshipId: number
+	) => {
+		const payload = await getUpdatedModelBuilderStructurePayload(
+			selectedObjectFolder.name
+		);
+
+		dispatch({
+			payload: {
+				...payload,
+				rightSidebarType: 'objectRelationshipDetails',
+				selectedObjectRelationshipEdgeId: newObjectRelationshipId,
+			},
+			type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE,
+		});
+	};
+
 	return (
 		<div className="lfr-objects__model-builder-diagram-area">
 			{showAddModal && (
@@ -174,6 +192,10 @@ function DiagramBuilder({
 					objectRelationshipParameterRequired={
 						nodesProps?.parameterRequired!
 					}
+					onAfterSubmit={(newObjectRelationshipId: number) =>
+						updateModelBuilderStructure(newObjectRelationshipId)
+					}
+					reload={false}
 				/>
 			)}
 

@@ -73,6 +73,7 @@ export declare type TAction =
 				objectFolders: ObjectFolder[];
 				rightSidebarType?: RightSidebarType;
 				selectedObjectFolder: ObjectFolder;
+				selectedObjectRelationshipEdgeId?: number;
 			};
 			type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE;
 	  }
@@ -124,6 +125,13 @@ export declare type TAction =
 				updatedObjectDefinitionNode: Partial<ObjectDefinition>;
 			};
 			type: TYPES.UPDATE_OBJECT_DEFINITION_NODE;
+	  }
+	| {
+			payload: {
+				objectFolders: ObjectFolder[];
+				selectedObjectFolder: ObjectFolder;
+			};
+			type: TYPES.ADD_NEW_OBJECT_RELATIONSHIP;
 	  };
 export declare type TState = {
 	baseResourceURL: string;

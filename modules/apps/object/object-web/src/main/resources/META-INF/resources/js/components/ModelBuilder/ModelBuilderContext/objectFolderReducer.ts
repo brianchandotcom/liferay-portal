@@ -393,6 +393,7 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				objectFolders,
 				rightSidebarType,
 				selectedObjectFolder,
+				selectedObjectRelationshipEdgeId,
 			} = action.payload;
 
 			const newLeftSidebarItems = objectFolders.map((objectFolder) => {
@@ -487,7 +488,9 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 														: oneMarkerId,
 												objectRelationshipId:
 													objectRelationship.id,
-												selected: false,
+												selected:
+													selectedObjectRelationshipEdgeId ===
+													objectRelationship.id,
 												selfObjectRelationships,
 												sourceY: 0,
 												targetY: 0,
@@ -797,6 +800,181 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			return {
 				...state,
 				leftSidebarItems: newLeftSidebarItems,
+			};
+		}
+
+		case TYPES.ADD_NEW_OBJECT_RELATIONSHIP: {
+			const {objectFolders, selectedObjectFolder} = action.payload;
+
+			const newLeftSidebarItems = objectFolders.map((objectFolder) => {
+				const leftSidebarObjectDefinitionItems = objectFolder.objectDefinitions?.map(
+					(objectDefinition) => {
+						return {
+							externalReferenceCode:
+								objectDefinition.externalReferenceCode,
+							hiddenObjectDefinitionNode: false,
+							id: objectDefinition.id,
+							label: getLocalizableLabel(
+								objectDefinition.defaultLanguageId,
+								objectDefinition.label,
+								objectDefinition.name
+							),
+							name: objectDefinition.name,
+							selected: false,
+							type: objectDefinition.linkedObjectDefinition
+								? 'linkedObjectDefinition'
+								: 'objectDefinition',
+						} as LeftSidebarObjectDefinitionItem;
+					}
+				);
+
+				return {
+					hiddenObjectFolderObjectDefinitionNodes: false,
+					leftSidebarObjectDefinitionItems,
+					name: getLocalizableLabel(
+						defaultLanguageId,
+						objectFolder.label,
+						objectFolder.name
+					),
+					objectFolderName: objectFolder.name,
+					type: 'objectFolder',
+				} as LeftSidebarItem;
+			});
+
+			const currentObjectFolder = objectFolders.find(
+				(objectFolder) =>
+					objectFolder.name === selectedObjectFolder.name
+			);
+
+			let newObjectDefinitionNodes: Node<ObjectDefinitionNodeData>[] = [];
+			const allEdges: Edge<ObjectRelationshipEdgeData>[] = [];
+
+			if (currentObjectFolder) {
+				const positionColumn = {positionX: 0, positionY: 0};
+
+				newObjectDefinitionNodes = currentObjectFolder.objectDefinitions!.map(
+					(objectDefinition, index) => {
+						let selfObjectRelationships: ObjectRelationship[] = objectDefinition.objectRelationships.filter(
+							(objectRelationship) =>
+								objectRelationship.objectDefinitionName2 ===
+								objectDefinition.name
+						);
+
+						selfObjectRelationships = selfObjectRelationships.filter(
+							(selfObjectRelationship) =>
+								!selfObjectRelationship.reverse
+						);
+
+						const hasOneSelfObjectRelationship =
+							selfObjectRelationships?.length === 1;
+
+						if (objectDefinition.objectRelationships.length) {
+							objectDefinition.objectRelationships.forEach(
+								(objectRelationship) => {
+									if (!objectRelationship.reverse) {
+										const isSelfObjectRelationship =
+											objectDefinition.name ===
+											objectRelationship.objectDefinitionName2;
+
+										allEdges.push({
+											data: {
+												defaultLanguageId:
+													objectDefinition.defaultLanguageId,
+												label:
+													!isSelfObjectRelationship ||
+													(isSelfObjectRelationship &&
+														hasOneSelfObjectRelationship)
+														? getLocalizableLabel(
+																objectDefinition.defaultLanguageId,
+																objectRelationship.label,
+																objectRelationship.name
+														  )
+														: selfObjectRelationships.length.toString(),
+												markerEndId: manyMarkerId,
+												markerStartId:
+													objectRelationship.type ===
+													'manyToMany'
+														? manyMarkerId
+														: oneMarkerId,
+												objectRelationshipId:
+													objectRelationship.id,
+												selected: false,
+												selfObjectRelationships,
+												sourceY: 0,
+												targetY: 0,
+												type: objectRelationship.type,
+											},
+											id: `reactflow__edge-object-relationship-${objectRelationship.name}-parent-${objectRelationship.objectDefinitionId1}-child-${objectRelationship.objectDefinitionId2}`,
+											source: `${objectDefinition.id}`,
+											sourceHandle: isSelfObjectRelationship
+												? 'fixedLeftHandle'
+												: `${objectDefinition.id}`,
+											target: `${objectRelationship.objectDefinitionId2}`,
+											targetHandle: isSelfObjectRelationship
+												? 'fixedRightHandle'
+												: `${objectRelationship.objectDefinitionId2}`,
+											type: isSelfObjectRelationship
+												? 'selfObjectRelationshipEdge'
+												: 'defaultObjectRelationshipEdge',
+										});
+									}
+								}
+							);
+						}
+
+						const objectFolderItem = currentObjectFolder.objectFolderItems.find(
+							(objectFolderItem) =>
+								objectFolderItem.objectDefinitionExternalReferenceCode ===
+								objectDefinition.externalReferenceCode
+						);
+
+						let {
+							positionX,
+							positionY,
+						} = objectFolderItem as ObjectFolderItem;
+
+						if (positionX === 0 && positionY === 0) {
+							positionX = positionColumn.positionX * 300 + 200;
+							positionY = positionColumn.positionY * 400 + 100;
+
+							positionColumn.positionX++;
+						}
+
+						if (index % 4 === 0 && index !== 0) {
+							positionColumn.positionY++;
+							positionColumn.positionX = 0;
+						}
+
+						return {
+							data: {
+								...objectDefinition,
+								hasSelfObjectRelationships:
+									selfObjectRelationships?.length > 0,
+								objectFields: objectFieldsCustomSort(
+									objectDefinition.objectFields
+								),
+							},
+							id: objectDefinition.id.toString(),
+							position: {
+								x: positionX,
+								y: positionY,
+							},
+							type: 'objectDefinitionNode',
+						} as Node<ObjectDefinitionNodeData>;
+					}
+				);
+			}
+
+			const newObjectRelationshipEdges = getNonOverlappingEdges(allEdges);
+
+			return {
+				...state,
+				elements: [
+					...newObjectDefinitionNodes,
+					...newObjectRelationshipEdges,
+				],
+				leftSidebarItems: newLeftSidebarItems,
+				selectedObjectFolder,
 			};
 		}
 

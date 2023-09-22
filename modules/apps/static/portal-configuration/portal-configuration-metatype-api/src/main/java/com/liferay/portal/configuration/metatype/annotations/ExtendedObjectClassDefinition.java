@@ -77,6 +77,16 @@ public @interface ExtendedObjectClassDefinition {
 			"portletInstanceKey", "portletInstanceId", "portlet-instance"),
 		SYSTEM(null, null, "system");
 
+		public static Scope getScope(String value) {
+			for (Scope scope : values()) {
+				if (scope._value.equals(value)) {
+					return scope;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid value " + value);
+		}
+
 		public boolean equals(Scope scope) {
 			return equals(scope.getValue());
 		}

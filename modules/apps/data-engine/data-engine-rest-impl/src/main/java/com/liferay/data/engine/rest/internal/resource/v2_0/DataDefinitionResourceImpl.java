@@ -25,7 +25,7 @@ import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentT
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataDefinitionUtil;
 import com.liferay.data.engine.rest.internal.dto.v2_0.util.DataLayoutUtil;
 import com.liferay.data.engine.rest.internal.odata.entity.v2_0.DataDefinitionEntityModel;
-import com.liferay.data.engine.rest.internal.security.permission.resource.DataDefinitionModelResourcePermission;
+import com.liferay.data.engine.rest.internal.security.permission.resource.util.DataDefinitionPermissionUtil;
 import com.liferay.data.engine.rest.resource.exception.DataDefinitionValidationException;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
@@ -147,7 +147,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 	@Override
 	public void deleteDataDefinition(Long dataDefinitionId) throws Exception {
-		_dataDefinitionModelResourcePermission.check(
+		DataDefinitionPermissionUtil.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			_ddmStructureLocalService.getDDMStructure(dataDefinitionId),
 			ActionKeys.DELETE);
@@ -258,7 +258,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 	public DataDefinition getDataDefinition(Long dataDefinitionId)
 		throws Exception {
 
-		_dataDefinitionModelResourcePermission.check(
+		DataDefinitionPermissionUtil.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			_ddmStructureLocalService.getDDMStructure(dataDefinitionId),
 			ActionKeys.VIEW);
@@ -305,7 +305,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			Long dataDefinitionId, String roleNames)
 		throws Exception {
 
-		_dataDefinitionModelResourcePermission.check(
+		DataDefinitionPermissionUtil.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			_ddmStructureLocalService.getDDMStructure(dataDefinitionId),
 			ActionKeys.PERMISSIONS);
@@ -341,7 +341,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			DataDefinitionContentTypeRegistryUtil.getClassNameId(contentType),
 			dataDefinitionKey);
 
-		_dataDefinitionModelResourcePermission.check(
+		DataDefinitionPermissionUtil.check(
 			PermissionThreadLocal.getPermissionChecker(), ddmStructure,
 			ActionKeys.VIEW);
 
@@ -458,7 +458,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			Long dataDefinitionId, DataDefinition dataDefinition)
 		throws Exception {
 
-		_dataDefinitionModelResourcePermission.check(
+		DataDefinitionPermissionUtil.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			_ddmStructureLocalService.getDDMStructure(dataDefinitionId),
 			ActionKeys.UPDATE);
@@ -949,7 +949,7 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			boolean copyPermissions)
 		throws Exception {
 
-		_dataDefinitionModelResourcePermission.checkPortletPermission(
+		DataDefinitionPermissionUtil.checkPortletPermission(
 			PermissionThreadLocal.getPermissionChecker(), contentType, siteId,
 			DataActionKeys.ADD_DATA_DEFINITION);
 
@@ -1693,10 +1693,6 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 
 	private static final EntityModel _entityModel =
 		new DataDefinitionEntityModel();
-
-	@Reference
-	private DataDefinitionModelResourcePermission
-		_dataDefinitionModelResourcePermission;
 
 	@Reference
 	private DataLayoutResource.Factory _dataLayoutResourceFactory;

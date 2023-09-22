@@ -11,7 +11,7 @@ import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.rest.dto.v2_0.DataListView;
 import com.liferay.data.engine.rest.internal.odata.entity.v2_0.DataDefinitionEntityModel;
-import com.liferay.data.engine.rest.internal.security.permission.resource.DataDefinitionModelResourcePermission;
+import com.liferay.data.engine.rest.internal.security.permission.resource.util.DataDefinitionPermissionUtil;
 import com.liferay.data.engine.rest.resource.v2_0.DataListViewResource;
 import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
@@ -85,7 +85,7 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 
 	@Override
 	public void deleteDataListView(Long dataListViewId) throws Exception {
-		_dataDefinitionModelResourcePermission.check(
+		DataDefinitionPermissionUtil.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			_getDDMStructure(
 				_deDataListViewLocalService.getDEDataListView(dataListViewId)),
@@ -159,7 +159,7 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 
 	@Override
 	public DataListView getDataListView(Long dataListViewId) throws Exception {
-		_dataDefinitionModelResourcePermission.check(
+		DataDefinitionPermissionUtil.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			_getDDMStructure(
 				_deDataListViewLocalService.getDEDataListView(dataListViewId)),
@@ -188,7 +188,7 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			dataDefinitionId);
 
-		_dataDefinitionModelResourcePermission.checkPortletPermission(
+		DataDefinitionPermissionUtil.checkPortletPermission(
 			PermissionThreadLocal.getPermissionChecker(), ddmStructure,
 			DataActionKeys.ADD_DATA_DEFINITION);
 
@@ -213,7 +213,7 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 			Long dataListViewId, DataListView dataListView)
 		throws Exception {
 
-		_dataDefinitionModelResourcePermission.check(
+		DataDefinitionPermissionUtil.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			_getDDMStructure(
 				_deDataListViewLocalService.getDEDataListView(dataListViewId)),
@@ -407,10 +407,6 @@ public class DataListViewResourceImpl extends BaseDataListViewResourceImpl {
 
 	private static final EntityModel _entityModel =
 		new DataDefinitionEntityModel();
-
-	@Reference
-	private DataDefinitionModelResourcePermission
-		_dataDefinitionModelResourcePermission;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

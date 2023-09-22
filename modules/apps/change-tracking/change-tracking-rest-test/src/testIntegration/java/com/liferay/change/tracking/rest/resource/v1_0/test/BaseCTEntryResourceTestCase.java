@@ -201,7 +201,7 @@ public abstract class BaseCTEntryResourceTestCase {
 			testGetCtCollectionCTEntriesPage_getIrrelevantCtCollectionId();
 
 		Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
-			ctCollectionId, null, null, Pagination.of(1, 10), null);
+			ctCollectionId, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -211,7 +211,7 @@ public abstract class BaseCTEntryResourceTestCase {
 					irrelevantCtCollectionId, randomIrrelevantCTEntry());
 
 			page = ctEntryResource.getCtCollectionCTEntriesPage(
-				irrelevantCtCollectionId, null, null, Pagination.of(1, 2),
+				irrelevantCtCollectionId, null, null, null, Pagination.of(1, 2),
 				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
@@ -232,7 +232,7 @@ public abstract class BaseCTEntryResourceTestCase {
 			ctCollectionId, randomCTEntry());
 
 		page = ctEntryResource.getCtCollectionCTEntriesPage(
-			ctCollectionId, null, null, Pagination.of(1, 10), null);
+			ctCollectionId, null, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -275,7 +275,7 @@ public abstract class BaseCTEntryResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
-				ctCollectionId, null,
+				ctCollectionId, null, null,
 				getFilterString(entityField, "between", ctEntry1),
 				Pagination.of(1, 2), null);
 
@@ -339,7 +339,7 @@ public abstract class BaseCTEntryResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
-				ctCollectionId, null,
+				ctCollectionId, null, null,
 				getFilterString(entityField, operator, ctEntry1),
 				Pagination.of(1, 2), null);
 
@@ -366,14 +366,14 @@ public abstract class BaseCTEntryResourceTestCase {
 			ctCollectionId, randomCTEntry());
 
 		Page<CTEntry> page1 = ctEntryResource.getCtCollectionCTEntriesPage(
-			ctCollectionId, null, null, Pagination.of(1, 2), null);
+			ctCollectionId, null, null, null, Pagination.of(1, 2), null);
 
 		List<CTEntry> ctEntries1 = (List<CTEntry>)page1.getItems();
 
 		Assert.assertEquals(ctEntries1.toString(), 2, ctEntries1.size());
 
 		Page<CTEntry> page2 = ctEntryResource.getCtCollectionCTEntriesPage(
-			ctCollectionId, null, null, Pagination.of(2, 2), null);
+			ctCollectionId, null, null, null, Pagination.of(2, 2), null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -382,7 +382,7 @@ public abstract class BaseCTEntryResourceTestCase {
 		Assert.assertEquals(ctEntries2.toString(), 1, ctEntries2.size());
 
 		Page<CTEntry> page3 = ctEntryResource.getCtCollectionCTEntriesPage(
-			ctCollectionId, null, null, Pagination.of(1, 3), null);
+			ctCollectionId, null, null, null, Pagination.of(1, 3), null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(ctEntry1, ctEntry2, ctEntry3),
@@ -510,7 +510,7 @@ public abstract class BaseCTEntryResourceTestCase {
 		for (EntityField entityField : entityFields) {
 			Page<CTEntry> ascPage =
 				ctEntryResource.getCtCollectionCTEntriesPage(
-					ctCollectionId, null, null, Pagination.of(1, 2),
+					ctCollectionId, null, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":asc");
 
 			assertEquals(
@@ -519,7 +519,7 @@ public abstract class BaseCTEntryResourceTestCase {
 
 			Page<CTEntry> descPage =
 				ctEntryResource.getCtCollectionCTEntriesPage(
-					ctCollectionId, null, null, Pagination.of(1, 2),
+					ctCollectionId, null, null, null, Pagination.of(1, 2),
 					entityField.getName() + ":desc");
 
 			assertEquals(

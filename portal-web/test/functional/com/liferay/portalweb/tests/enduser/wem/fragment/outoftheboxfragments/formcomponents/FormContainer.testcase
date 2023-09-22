@@ -526,15 +526,12 @@ definition {
 		task ("When the page creator enables the Show Notification when Form Is Submitted") {
 			PageEditor.editFormContainer(
 				panel = "General",
-				showNotificationWhenFormIsSubmitted = "true");
+				showNotificationWhenFormIsSubmitted = "true",
+				successNotificationText = "Your form was successfully submitted.");
 		}
 
 		task ("Then the page creator could preview the success notification") {
-			PageEditor.editFormContainer(
-				panel = "General",
-				previewSuccessNotification = "true",
-				showNotificationWhenFormIsSubmitted = "true",
-				successNotificationText = "Your form was successfully submitted.");
+			PageEditor.previewSuccessNotification();
 
 			Alert.viewSuccessMessageText(successMessage = "Your form was successfully submitted.");
 		}
@@ -693,10 +690,7 @@ definition {
 		}
 
 		task ("When the page designer previews success state") {
-			PageEditor.editFormContainer(
-				panel = "General",
-				previewSuccessState = "true",
-				successMessage = "Show Embedded Message");
+			PageEditor.previewEmbeddedMessage();
 		}
 
 		task ("Then the page designer can see sucess text under Form Container") {
@@ -742,12 +736,13 @@ definition {
 
 			PageEditor.editFormContainer(
 				panel = "General",
-				previewSuccessState = "true",
 				successMessage = "Show Embedded Message",
 				successText = "We are glad to receive your Form!");
 		}
 
 		task ("Then the page designer can see custom sucess text under Form Container") {
+			PageEditor.previewEmbeddedMessage();
+
 			AssertTextPresent(value1 = "We are glad to receive your Form!");
 		}
 
@@ -1048,10 +1043,7 @@ definition {
 		}
 
 		task ("Then the page designer can see Portuguese translation on preview success state") {
-			PageEditor.editFormContainer(
-				panel = "General",
-				previewSuccessState = "true",
-				successMessage = "Show Embedded Message");
+			PageEditor.previewEmbeddedMessage();
 
 			AssertTextPresent(value1 = "Obrigado por nos enviar seu formulario!");
 		}

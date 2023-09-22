@@ -150,10 +150,7 @@ definition {
 		}
 
 		task ("When the page designer checks preview success state toggle") {
-			PageEditor.editFormContainer(
-				panel = "General",
-				previewSuccessState = "true",
-				successMessage = "Show Embedded Message");
+			PageEditor.previewEmbeddedMessage();
 		}
 
 		task ("Then the page designer can see sucess text under Form Container") {

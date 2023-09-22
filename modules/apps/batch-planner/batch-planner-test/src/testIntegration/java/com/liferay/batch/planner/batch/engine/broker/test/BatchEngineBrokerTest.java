@@ -124,6 +124,8 @@ import java.math.MathContext;
 
 import java.net.URI;
 
+import java.nio.file.Files;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -304,7 +306,7 @@ public class BatchEngineBrokerTest {
 				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
 				RandomTestUtil.randomString(), 0, null, false);
 
-		for (String fieldName : _objectDefinitionFieldNames) {
+		for (String fieldName : _objectDefinitionExportFieldNames) {
 			_batchPlannerMappingLocalService.addBatchPlannerMapping(
 				TestPropsValues.getUserId(),
 				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
@@ -323,7 +325,8 @@ public class BatchEngineBrokerTest {
 					addFilter(
 						"Liferay.Vulcan",
 						VulcanPropertyFilter.of(
-							new HashSet<>(_objectDefinitionFieldNames), null));
+							new HashSet<>(_objectDefinitionExportFieldNames),
+							null));
 				}
 			});
 
@@ -343,7 +346,8 @@ public class BatchEngineBrokerTest {
 			"TestObject1 object definition is not exported", actualJsonNode);
 
 		_assertEquals(
-			expectedJsonNode, _objectDefinitionFieldNames, actualJsonNode);
+			expectedJsonNode, _objectDefinitionExportFieldNames,
+			actualJsonNode);
 	}
 
 	@Test
@@ -400,6 +404,57 @@ public class BatchEngineBrokerTest {
 			_getExpectedJsonNode(
 				_objectDefinition1, objectEntry.getObjectEntryId()),
 			_objectEntryImportFieldNames, jsonNode.get(0));
+	}
+
+	@Test
+	public void testImportObjectDefinition() throws Exception {
+		File file = _createImportFile("object_definition_import.json");
+
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanLocalService.addBatchPlannerPlan(
+				TestPropsValues.getUserId(), false,
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
+				"file:" + file.getAbsolutePath(),
+				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+				RandomTestUtil.randomString(), 0, "DEFAULT", false);
+
+		for (String fieldName : _objectDefinitionExportFieldNames) {
+			_batchPlannerMappingLocalService.addBatchPlannerMapping(
+				TestPropsValues.getUserId(),
+				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
+				fieldName, "String", StringPool.BLANK);
+		}
+
+		_batchPlannerPolicyLocalService.addBatchPlannerPolicy(
+			TestPropsValues.getUserId(),
+			batchPlannerPlan.getBatchPlannerPlanId(), "onErrorFail", "true");
+
+		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+
+		BatchEngineImportTask batchEngineImportTask =
+			_getFinishedBatchEngineImportTask(
+				batchPlannerPlan.getBatchPlannerPlanId());
+
+		_objectMapper.setFilterProvider(
+			new SimpleFilterProvider() {
+				{
+					addFilter(
+						"Liferay.Vulcan",
+						VulcanPropertyFilter.of(
+							new HashSet<>(_objectDefinitionImportFieldNames),
+							null));
+				}
+			});
+
+		JsonNode jsonNode = _objectMapper.readTree(
+			_getZipInputStream(
+				_batchEngineImportTaskLocalService.openContentInputStream(
+					batchEngineImportTask.getBatchEngineImportTaskId())));
+
+		Assert.assertTrue(jsonNode.isArray());
+		Assert.assertEquals(1, jsonNode.size());
+
+		_assertEquals(_getActualJsonNode(jsonNode, "TestObject"));
 	}
 
 	private DLFileEntry _addDLFileEntry() throws Exception {
@@ -467,6 +522,26 @@ public class BatchEngineBrokerTest {
 		JsonNode jsonNode = fieldJsonNode.get(fieldName);
 
 		Assert.assertTrue(!jsonNode.isEmpty());
+	}
+
+	private void _assertEquals(JsonNode jsonNode) {
+		for (String objectFieldName : _objectDefinitionFieldNames) {
+			JsonNode fieldJsonNode = jsonNode.get(objectFieldName);
+
+			if (Objects.equals(objectFieldName, "actions")) {
+				_assertActions(fieldJsonNode, "delete");
+				_assertActions(fieldJsonNode, "get");
+				_assertActions(fieldJsonNode, "permissions");
+				_assertActions(fieldJsonNode, "update");
+			}
+			else {
+				if (fieldJsonNode == null) {
+					continue;
+				}
+
+				Assert.assertNotNull(fieldJsonNode.toString());
+			}
+		}
 	}
 
 	private void _assertEquals(
@@ -543,6 +618,24 @@ public class BatchEngineBrokerTest {
 		}
 
 		return file;
+	}
+
+	private File _createImportFile() throws Exception {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		java.io.File tempFile = FileUtil.createTempFile("json");
+
+		FileUtil.write(
+			tempFile,
+			FileUtil.getBytes(
+				classLoader.getResourceAsStream(
+					"com/liferay/batch/planner/batch/engine/broker/test" +
+					"/dependencies/import_object_definition.json")),
+			false);
+
+		return tempFile;
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(
@@ -873,7 +966,7 @@ public class BatchEngineBrokerTest {
 
 	private static final String _OBJECT_ENTRY_ERC = "TEST-OBJECT-ENTRY";
 
-	private static final List<String> _objectDefinitionFieldNames =
+	private static final List<String> _objectDefinitionExportFieldNames =
 		Arrays.asList(
 			"accountEntryRestricted", "accountEntryRestrictedObjectFieldName",
 			"active", "dateCreated", "dateModified", "defaultLanguageId",
@@ -886,6 +979,13 @@ public class BatchEngineBrokerTest {
 			"pluralLabel", "portlet", "restContextPath",
 			"rootObjectDefinitionExternalReferenceCode", "scope", "status",
 			"storageType", "system", "titleObjectFieldName");
+	private static final List<String> _objectDefinitionImportFieldNames =
+		Arrays.asList(
+			"creator", "createDate", "externalReferenceCode", "id",
+			"modifiedDate", "status", "testAttachmentField", "testBooleanField",
+			"testDateField", "testDateTimeField", "testDecimalField",
+			"testIntegerField", "testLongIntegerField", "testLongTextField",
+			"testPrecisionDecimalField", "testRichTextField", "testTextField");
 	private static final List<String> _objectEntryExportFieldNames =
 		Arrays.asList(
 			"actions", "dateCreated", "dateModified", "externalReferenceCode",

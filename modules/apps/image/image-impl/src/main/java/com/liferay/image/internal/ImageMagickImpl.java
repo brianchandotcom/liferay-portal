@@ -227,15 +227,10 @@ public class ImageMagickImpl implements ImageMagick {
 
 			Future<?> future = convert(arguments);
 
-			if (_log.isDebugEnabled()) {
-				ProcessEvent processEvent = (ProcessEvent)future.get();
+			ProcessEvent processEvent = (ProcessEvent)future.get();
 
-				if (processEvent.getException() != null) {
-					_log.debug(processEvent.getException());
-				}
-			}
-			else {
-				future.get();
+			if (_log.isDebugEnabled() && processEvent.getException() != null) {
+				_log.debug(processEvent.getException());
 			}
 
 			return _file.getBytes(scaledImageFile);

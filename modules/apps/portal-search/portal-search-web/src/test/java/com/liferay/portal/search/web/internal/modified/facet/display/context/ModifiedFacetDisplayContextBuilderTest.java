@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
+import com.liferay.portal.search.web.internal.date.range.DateRangeFactory;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
-import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
 import com.liferay.portal.search.web.internal.modified.facet.configuration.ModifiedFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.modified.facet.display.context.builder.ModifiedFacetDisplayContextBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -58,9 +58,10 @@ public class ModifiedFacetDisplayContextBuilderTest
 	public void setUp() throws Exception {
 		_dateFormatFactory = new DateFormatFactoryImpl();
 
-		_dateRangeFactory = new DateRangeFactory(_dateFormatFactory);
-
 		_jsonFactoryImpl = new JSONFactoryImpl();
+
+		_dateRangeFactory = new DateRangeFactory(
+			_dateFormatFactory, _jsonFactoryImpl);
 
 		_setUpPortalUtil();
 
@@ -112,7 +113,7 @@ public class ModifiedFacetDisplayContextBuilderTest
 		String to = "2018-01-31";
 
 		TermCollector termCollector = _mockTermCollector(
-			_dateRangeFactory.getRangeString(from, to));
+			_dateRangeFactory.getRangeString(from, to, TimeZoneUtil.GMT));
 
 		int frequency = RandomTestUtil.randomInt();
 

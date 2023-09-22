@@ -5,6 +5,9 @@
 
 package com.liferay.portal.search.web.internal.modified.facet.builder;
 
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.search.web.internal.date.range.DateRangeFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.DateFormatFactoryImpl;
 
@@ -32,7 +35,8 @@ public class DateRangeFactoryTest {
 	public void testBoundedRange() {
 		Assert.assertEquals(
 			"[20180131000000 TO 20180228235959]",
-			_dateRangeFactory.getRangeString("2018-01-31", "2018-02-28"));
+			_dateRangeFactory.getRangeString(
+				"2018-01-31", "2018-02-28", TimeZoneUtil.GMT));
 	}
 
 	@Test(expected = ParseException.class)
@@ -121,6 +125,6 @@ public class DateRangeFactoryTest {
 	}
 
 	private final DateRangeFactory _dateRangeFactory = new DateRangeFactory(
-		new DateFormatFactoryImpl());
+		new DateFormatFactoryImpl(), new JSONFactoryImpl());
 
 }

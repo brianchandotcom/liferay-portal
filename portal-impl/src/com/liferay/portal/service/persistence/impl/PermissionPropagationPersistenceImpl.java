@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchPermissionPropagationException;
@@ -29,10 +30,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.impl.PermissionPropagationImpl;
 import com.liferay.portal.model.impl.PermissionPropagationModelImpl;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,6 +79,303 @@ public class PermissionPropagationPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathFetchByG_C_C_C;
+	private FinderPath _finderPathCountByG_C_C_C;
+
+	/**
+	 * Returns the permission propagation where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchPermissionPropagationException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching permission propagation
+	 * @throws NoSuchPermissionPropagationException if a matching permission propagation could not be found
+	 */
+	@Override
+	public PermissionPropagation findByG_C_C_C(
+			long groupId, long companyId, long classNameId, long classPK)
+		throws NoSuchPermissionPropagationException {
+
+		PermissionPropagation permissionPropagation = fetchByG_C_C_C(
+			groupId, companyId, classNameId, classPK);
+
+		if (permissionPropagation == null) {
+			StringBundler sb = new StringBundler(10);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("groupId=");
+			sb.append(groupId);
+
+			sb.append(", companyId=");
+			sb.append(companyId);
+
+			sb.append(", classNameId=");
+			sb.append(classNameId);
+
+			sb.append(", classPK=");
+			sb.append(classPK);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchPermissionPropagationException(sb.toString());
+		}
+
+		return permissionPropagation;
+	}
+
+	/**
+	 * Returns the permission propagation where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching permission propagation, or <code>null</code> if a matching permission propagation could not be found
+	 */
+	@Override
+	public PermissionPropagation fetchByG_C_C_C(
+		long groupId, long companyId, long classNameId, long classPK) {
+
+		return fetchByG_C_C_C(groupId, companyId, classNameId, classPK, true);
+	}
+
+	/**
+	 * Returns the permission propagation where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching permission propagation, or <code>null</code> if a matching permission propagation could not be found
+	 */
+	@Override
+	public PermissionPropagation fetchByG_C_C_C(
+		long groupId, long companyId, long classNameId, long classPK,
+		boolean useFinderCache) {
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				groupId, companyId, classNameId, classPK
+			};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = FinderCacheUtil.getResult(
+				_finderPathFetchByG_C_C_C, finderArgs, this);
+		}
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			PermissionPropagation.class);
+
+		if (result instanceof PermissionPropagation) {
+			PermissionPropagation permissionPropagation =
+				(PermissionPropagation)result;
+
+			if ((groupId != permissionPropagation.getGroupId()) ||
+				(companyId != permissionPropagation.getCompanyId()) ||
+				(classNameId != permissionPropagation.getClassNameId()) ||
+				(classPK != permissionPropagation.getClassPK())) {
+
+				result = null;
+			}
+			else if (!CTPersistenceHelperUtil.isProductionMode(
+						PermissionPropagation.class,
+						permissionPropagation.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_SQL_SELECT_PERMISSIONPROPAGATION_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_C_C_C_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_C_C_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_C_C_CLASSNAMEID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_C_C_CLASSPK_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(companyId);
+
+				queryPos.add(classNameId);
+
+				queryPos.add(classPK);
+
+				List<PermissionPropagation> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache && productionMode) {
+						FinderCacheUtil.putResult(
+							_finderPathFetchByG_C_C_C, finderArgs, list);
+					}
+				}
+				else {
+					PermissionPropagation permissionPropagation = list.get(0);
+
+					result = permissionPropagation;
+
+					cacheResult(permissionPropagation);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (PermissionPropagation)result;
+		}
+	}
+
+	/**
+	 * Removes the permission propagation where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the permission propagation that was removed
+	 */
+	@Override
+	public PermissionPropagation removeByG_C_C_C(
+			long groupId, long companyId, long classNameId, long classPK)
+		throws NoSuchPermissionPropagationException {
+
+		PermissionPropagation permissionPropagation = findByG_C_C_C(
+			groupId, companyId, classNameId, classPK);
+
+		return remove(permissionPropagation);
+	}
+
+	/**
+	 * Returns the number of permission propagations where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching permission propagations
+	 */
+	@Override
+	public int countByG_C_C_C(
+		long groupId, long companyId, long classNameId, long classPK) {
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			PermissionPropagation.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_C_C_C;
+
+			finderArgs = new Object[] {
+				groupId, companyId, classNameId, classPK
+			};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_COUNT_PERMISSIONPROPAGATION_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_C_C_C_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_C_C_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_C_C_CLASSNAMEID_2);
+
+			sb.append(_FINDER_COLUMN_G_C_C_C_CLASSPK_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(companyId);
+
+				queryPos.add(classNameId);
+
+				queryPos.add(classPK);
+
+				count = (Long)query.uniqueResult();
+
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_C_C_GROUPID_2 =
+		"permissionPropagation.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_C_C_COMPANYID_2 =
+		"permissionPropagation.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_C_C_CLASSNAMEID_2 =
+		"permissionPropagation.classNameId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_C_C_C_CLASSPK_2 =
+		"permissionPropagation.classPK = ?";
 
 	public PermissionPropagationPersistenceImpl() {
 		setModelClass(PermissionPropagation.class);
@@ -99,6 +400,16 @@ public class PermissionPropagationPersistenceImpl
 		EntityCacheUtil.putResult(
 			PermissionPropagationImpl.class,
 			permissionPropagation.getPrimaryKey(), permissionPropagation);
+
+		FinderCacheUtil.putResult(
+			_finderPathFetchByG_C_C_C,
+			new Object[] {
+				permissionPropagation.getGroupId(),
+				permissionPropagation.getCompanyId(),
+				permissionPropagation.getClassNameId(),
+				permissionPropagation.getClassPK()
+			},
+			permissionPropagation);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -181,6 +492,22 @@ public class PermissionPropagationPersistenceImpl
 			EntityCacheUtil.removeResult(
 				PermissionPropagationImpl.class, primaryKey);
 		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		PermissionPropagationModelImpl permissionPropagationModelImpl) {
+
+		Object[] args = new Object[] {
+			permissionPropagationModelImpl.getGroupId(),
+			permissionPropagationModelImpl.getCompanyId(),
+			permissionPropagationModelImpl.getClassNameId(),
+			permissionPropagationModelImpl.getClassPK()
+		};
+
+		FinderCacheUtil.putResult(
+			_finderPathCountByG_C_C_C, args, Long.valueOf(1));
+		FinderCacheUtil.putResult(
+			_finderPathFetchByG_C_C_C, args, permissionPropagationModelImpl);
 	}
 
 	/**
@@ -299,6 +626,28 @@ public class PermissionPropagationPersistenceImpl
 
 		boolean isNew = permissionPropagation.isNew();
 
+		if (!(permissionPropagation instanceof
+				PermissionPropagationModelImpl)) {
+
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(permissionPropagation.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(
+					permissionPropagation);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in permissionPropagation proxy " +
+						invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom PermissionPropagation implementation " +
+					permissionPropagation.getClass());
+		}
+
+		PermissionPropagationModelImpl permissionPropagationModelImpl =
+			(PermissionPropagationModelImpl)permissionPropagation;
+
 		Session session = null;
 
 		try {
@@ -336,8 +685,10 @@ public class PermissionPropagationPersistenceImpl
 		}
 
 		EntityCacheUtil.putResult(
-			PermissionPropagationImpl.class, permissionPropagation, false,
-			true);
+			PermissionPropagationImpl.class, permissionPropagationModelImpl,
+			false, true);
+
+		cacheUniqueFindersCache(permissionPropagationModelImpl);
 
 		if (isNew) {
 			permissionPropagation.setNew(false);
@@ -801,6 +1152,9 @@ public class PermissionPropagationPersistenceImpl
 			Collections.singleton("permissionPropagationId"));
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"groupId", "companyId", "classNameId", "classPK"});
 	}
 
 	/**
@@ -822,6 +1176,24 @@ public class PermissionPropagationPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
+		_finderPathFetchByG_C_C_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"groupId", "companyId", "classNameId", "classPK"},
+			true);
+
+		_finderPathCountByG_C_C_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"groupId", "companyId", "classNameId", "classPK"},
+			false);
+
 		PermissionPropagationUtil.setPersistence(this);
 	}
 
@@ -834,14 +1206,23 @@ public class PermissionPropagationPersistenceImpl
 	private static final String _SQL_SELECT_PERMISSIONPROPAGATION =
 		"SELECT permissionPropagation FROM PermissionPropagation permissionPropagation";
 
+	private static final String _SQL_SELECT_PERMISSIONPROPAGATION_WHERE =
+		"SELECT permissionPropagation FROM PermissionPropagation permissionPropagation WHERE ";
+
 	private static final String _SQL_COUNT_PERMISSIONPROPAGATION =
 		"SELECT COUNT(permissionPropagation) FROM PermissionPropagation permissionPropagation";
+
+	private static final String _SQL_COUNT_PERMISSIONPROPAGATION_WHERE =
+		"SELECT COUNT(permissionPropagation) FROM PermissionPropagation permissionPropagation WHERE ";
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"permissionPropagation.";
 
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
 		"No PermissionPropagation exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No PermissionPropagation exists with the key {";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PermissionPropagationPersistenceImpl.class);

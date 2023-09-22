@@ -117,11 +117,35 @@ public class PermissionPropagationModelImpl
 	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long COMPANYID_COLUMN_BITMASK = 4L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PERMISSIONPROPAGATIONID_COLUMN_BITMASK = 1L;
+	public static final long PERMISSIONPROPAGATIONID_COLUMN_BITMASK = 16L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(
@@ -356,6 +380,15 @@ public class PermissionPropagationModelImpl
 		_groupId = groupId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalGroupId() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
+	}
+
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -368,6 +401,16 @@ public class PermissionPropagationModelImpl
 		}
 
 		_companyId = companyId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalCompanyId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
 	@Override
@@ -404,6 +447,16 @@ public class PermissionPropagationModelImpl
 		_classNameId = classNameId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalClassNameId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("classNameId"));
+	}
+
 	@Override
 	public long getClassPK() {
 		return _classPK;
@@ -416,6 +469,15 @@ public class PermissionPropagationModelImpl
 		}
 
 		_classPK = classPK;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalClassPK() {
+		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
 	@Override

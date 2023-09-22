@@ -510,26 +510,30 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Test
 	public void testUpgradeReportDirectory() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "UPGRADE_REPORT_DIRECTORY",
-			"./custom_upgrade_report");
+		String originalUpgradeReportDirectory =
+			ReflectionTestUtil.getAndSetFieldValue(
+				PropsValues.class, "UPGRADE_REPORT_DIRECTORY",
+				"./custom_upgrade_report");
 
-		_upgradeReportDirectory = PropsValues.UPGRADE_REPORT_DIRECTORY;
+		try {
+			_upgradeReportDirectory = PropsValues.UPGRADE_REPORT_DIRECTORY;
 
-		_appender.start();
+			_appender.start();
 
-		Log log = LogFactoryUtil.getLog(UpgradeProcess.class);
+			Log log = LogFactoryUtil.getLog(UpgradeProcess.class);
 
-		log.warn("Upgrade report generated in " + _upgradeReportDirectory);
+			log.warn("Upgrade report generated in " + _upgradeReportDirectory);
 
-		_appender.stop();
+			_appender.stop();
 
-		String reportContent = _getReportContent();
-
-		_assertReport("Upgrade report generated in " + _upgradeReportDirectory);
-
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "UPGRADE_REPORT_DIRECTORY", "");
+			_assertReport(
+				"Upgrade report generated in " + _upgradeReportDirectory);
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "UPGRADE_REPORT_DIRECTORY",
+				originalUpgradeReportDirectory);
+		}
 	}
 
 	protected static void setUpClass(boolean upgradeClient) throws Exception {

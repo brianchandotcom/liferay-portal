@@ -16,6 +16,8 @@ public interface FilterVisitor<T>
 
 	public T visit(DateRangeFilter dateRangeFilter);
 
+	public T visit(RangeFilter rangeFilter);
+
 	public T visit(TermsSetFilter termsSetFilter);
 
 }

@@ -15,6 +15,8 @@ public interface FilterBuilders {
 
 	public DateRangeFilterBuilder dateRangeFilterBuilder();
 
+	public RangeFilterBuilder rangeFilterBuilder();
+
 	public TermsSetFilterBuilder termsSetFilterBuilder();
 
 }

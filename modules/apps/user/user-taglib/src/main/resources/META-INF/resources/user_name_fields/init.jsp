@@ -29,7 +29,7 @@ page import="com.liferay.portal.kernel.util.CamelCaseUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
+page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %>
 
 <%@ page import="java.util.Locale" %>
 

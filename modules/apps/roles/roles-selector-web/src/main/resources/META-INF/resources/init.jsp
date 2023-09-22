@@ -39,11 +39,11 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.service.persistence.constants.UserGroupFinderConstants" %><%@
+page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %><%@
 page import="com.liferay.roles.selector.web.internal.constants.RolesSelectorPortletKeys" %><%@
 page import="com.liferay.roles.selector.web.internal.display.context.EditRolesDisplayContext" %><%@
 page import="com.liferay.roles.selector.web.internal.display.context.EditRolesUsersDisplayContext" %><%@
-page import="com.liferay.site.search.UserGroupGroupRoleUserGroupChecker" %><%@
-page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
+page import="com.liferay.site.search.UserGroupGroupRoleUserGroupChecker" %>
 
 <%@ page import="java.util.LinkedHashMap" %>
 

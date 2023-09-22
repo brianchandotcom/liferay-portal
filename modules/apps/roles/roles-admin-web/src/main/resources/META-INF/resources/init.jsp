@@ -88,6 +88,7 @@ page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
+page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %><%@
 page import="com.liferay.roles.admin.constants.RolesAdminPortletKeys" %><%@
 page import="com.liferay.roles.admin.constants.RolesAdminWebKeys" %><%@
 page import="com.liferay.roles.admin.role.type.contributor.RoleTypeContributor" %><%@
@@ -107,8 +108,7 @@ page import="com.liferay.roles.admin.web.internal.frontend.taglib.clay.servlet.t
 page import="com.liferay.roles.admin.web.internal.role.type.contributor.util.RoleTypeContributorRetrieverUtil" %><%@
 page import="com.liferay.site.search.GroupSearch" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.template.constants.TemplatePortletKeys" %><%@
-page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
+page import="com.liferay.template.constants.TemplatePortletKeys" %>
 
 <%@ page import="java.io.Serializable" %>
 

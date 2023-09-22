@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.Locale;
 

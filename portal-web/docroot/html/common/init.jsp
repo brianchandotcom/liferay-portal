@@ -139,12 +139,12 @@ page import="com.liferay.portlet.RenderParametersPool" %><%@
 page import="com.liferay.portlet.RenderRequestFactory" %><%@
 page import="com.liferay.portlet.RenderResponseFactory" %><%@
 page import="com.liferay.portlet.configuration.kernel.util.PortletConfigurationUtil" %><%@
+page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %><%@
 page import="com.liferay.sites.kernel.util.Sites" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.search.SearchEntry" %><%@
 page import="com.liferay.taglib.search.TextSearchEntry" %><%@
-page import="com.liferay.taglib.util.OutputTag" %><%@
-page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
+page import="com.liferay.taglib.util.OutputTag" %>
 
 <%@ page import="java.text.DateFormat" %><%@
 page import="java.text.Format" %><%@

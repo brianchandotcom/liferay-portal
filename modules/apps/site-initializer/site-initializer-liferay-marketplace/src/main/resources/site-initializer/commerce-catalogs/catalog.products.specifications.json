@@ -116,8 +116,8 @@
 		"cpDefinitionExternalReferenceCode": "MKT-PRICE",
 		"description": "Whether the app is Free, Paid or Bundled",
 		"facetable": true,
-		"key": "price",
-		"title": "Price"
+		"key": "price-model",
+		"title": "Price Model"
 	},
 	{
 		"categoryKey": "app-support-and-help",

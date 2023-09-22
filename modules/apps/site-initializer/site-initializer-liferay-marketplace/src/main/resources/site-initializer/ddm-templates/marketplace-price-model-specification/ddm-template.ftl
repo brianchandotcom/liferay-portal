@@ -35,7 +35,7 @@
 		id="${namespace + 'facetPriceModelCategoriesPanel'}"
 		markupView="lexicon"
 		persistState=true
-		title="${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()?replace('-', ' ')?upper_case}">
+		title="${cpSpecificationOptionsSearchFacetDisplayContext.getParameterName()?split('-')[0]?upper_case}">
 		<ul class="list-unstyled">
 			<#list entries as entry>
 				<li class="color-neutral-2 facet-value py-1">

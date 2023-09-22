@@ -29,6 +29,26 @@ function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 	const [searchQuery, setSearchQuery] = useState('');
 	const [touched, setTouched] = useState({});
 
+	const _getErrors = (searchQuery, scopeType, scope) => {
+		const errors = {};
+
+		if (!searchQuery.trim()) {
+			errors['searchQuery'] = sub(
+				Liferay.Language.get('the-x-field-is-required'),
+				[Liferay.Language.get('search-query')]
+			);
+		}
+
+		if (scopeType !== SCOPE_TYPES.EVERYWHERE && !scope) {
+			errors['scope'] = sub(
+				Liferay.Language.get('the-x-field-is-required'),
+				[Liferay.Language.get('scope')]
+			);
+		}
+
+		return errors;
+	};
+
 	const _getScopeTypeOptions = () => {
 		const options = [SCOPE_TYPES.EVERYWHERE];
 
@@ -68,32 +88,21 @@ function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 	const _handleSubmit = (event) => {
 		event.preventDefault();
 
-		if (!Object.keys(errors).length) {
-			submitForm(document[namespace + formName]);
+		const newErrors = _getErrors(searchQuery, scopeType, scope);
+
+		if (Object.keys(newErrors).length) {
+			setErrors(newErrors);
+
+			setTouched({scope: true, searchQuery: true});
+
+			return;
 		}
+
+		submitForm(document[namespace + formName]);
 	};
 
 	useEffect(() => {
-		const _handleValidate = () => {
-			const errors = {};
-
-			if (!searchQuery.trim()) {
-				errors['searchQuery'] = sub(
-					Liferay.Language.get('the-x-field-is-required'),
-					[Liferay.Language.get('search-query')]
-				);
-			}
-
-			if (scopeType !== SCOPE_TYPES.EVERYWHERE && !scope) {
-				errors['scope'] = Liferay.Language.get(
-					'this-field-is-required'
-				);
-			}
-
-			setErrors(errors);
-		};
-
-		_handleValidate();
+		setErrors(_getErrors(searchQuery, scopeType, scope));
 	}, [scope, searchQuery, scopeType]);
 
 	return (
@@ -211,7 +220,6 @@ function ResultRankingsAdd({cancelUrl, formName, namespace}) {
 						disabled={false}
 						error={errors.scope}
 						fetchItemsUrl="/o/headless-admin-user/v1.0/sites"
-						hidden={scopeType !== SCOPE_TYPES.SITE}
 						locator={{
 							id: 'externalReferenceCode',
 							label: 'descriptiveName',

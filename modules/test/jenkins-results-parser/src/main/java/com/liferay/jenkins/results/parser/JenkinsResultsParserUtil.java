@@ -1404,7 +1404,7 @@ public class JenkinsResultsParserUtil {
 	public static Properties getBuildProperties(boolean checkCache)
 		throws IOException {
 
-		Properties properties = new Properties();
+		Properties properties = new SecureProperties();
 
 		synchronized (_buildProperties) {
 			if (checkCache && !_buildProperties.isEmpty()) {

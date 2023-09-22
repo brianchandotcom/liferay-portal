@@ -60,68 +60,70 @@ CustomFacetPortletInstanceConfiguration customFacetPortletInstanceConfiguration 
 						displayTitle="<%= customFacetDisplayContext.getDisplayCaption() %>"
 						expanded="<%= true %>"
 					>
-						<c:if test="<%= !customFacetDisplayContext.isNothingSelected() %>">
-							<clay:button
-								cssClass="btn-unstyled c-mb-4 facet-clear-btn"
-								displayType="link"
-								id='<%= liferayPortletResponse.getNamespace() + "facetCustomClear" %>'
-								onClick="Liferay.Search.FacetUtil.clearSelections(event);"
-							>
-								<strong><liferay-ui:message key="clear" /></strong>
-							</clay:button>
-						</c:if>
+						<div class="panel-body">
+							<c:if test="<%= !customFacetDisplayContext.isNothingSelected() %>">
+								<clay:button
+									cssClass="btn-unstyled c-mb-4 facet-clear-btn"
+									displayType="link"
+									id='<%= liferayPortletResponse.getNamespace() + "facetCustomClear" %>'
+									onClick="Liferay.Search.FacetUtil.clearSelections(event);"
+								>
+									<strong><liferay-ui:message key="clear" /></strong>
+								</clay:button>
+							</c:if>
 
-						<ul class="list-unstyled">
+							<ul class="list-unstyled">
 
-							<%
-							int i = 0;
+								<%
+								int i = 0;
 
-							for (BucketDisplayContext bucketDisplayContext : customFacetDisplayContext.getBucketDisplayContexts()) {
-								i++;
-							%>
+								for (BucketDisplayContext bucketDisplayContext : customFacetDisplayContext.getBucketDisplayContexts()) {
+									i++;
+								%>
 
-								<li class="facet-value">
-									<div class="custom-checkbox custom-control">
-										<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
-											<input class="custom-control-input facet-term" data-term-id="<%= HtmlUtil.escapeAttribute(bucketDisplayContext.getFilterValue()) %>" disabled id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= bucketDisplayContext.isSelected() ? "checked" : StringPool.BLANK %> />
+									<li class="facet-value">
+										<div class="custom-checkbox custom-control">
+											<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
+												<input class="custom-control-input facet-term" data-term-id="<%= HtmlUtil.escapeAttribute(bucketDisplayContext.getFilterValue()) %>" disabled id="<portlet:namespace />term_<%= i %>" name="<portlet:namespace />term_<%= i %>" onChange="Liferay.Search.FacetUtil.changeSelection(event);" type="checkbox" <%= bucketDisplayContext.isSelected() ? "checked" : StringPool.BLANK %> />
 
-											<span class="custom-control-label term-name <%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
-												<span class="custom-control-label-text">
-													<c:choose>
-														<c:when test="<%= bucketDisplayContext.isSelected() %>">
-															<strong><%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %></strong>
-														</c:when>
-														<c:otherwise>
-															<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>
-														</c:otherwise>
-													</c:choose>
+												<span class="custom-control-label term-name <%= bucketDisplayContext.isSelected() ? "facet-term-selected" : "facet-term-unselected" %>">
+													<span class="custom-control-label-text">
+														<c:choose>
+															<c:when test="<%= bucketDisplayContext.isSelected() %>">
+																<strong><%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %></strong>
+															</c:when>
+															<c:otherwise>
+																<%= HtmlUtil.escape(bucketDisplayContext.getBucketText()) %>
+															</c:otherwise>
+														</c:choose>
+													</span>
 												</span>
-											</span>
 
-											<c:if test="<%= bucketDisplayContext.isFrequencyVisible() %>">
-												<small class="term-count">
-													(<%= bucketDisplayContext.getFrequency() %>)
-												</small>
-											</c:if>
-										</label>
-									</div>
-								</li>
+												<c:if test="<%= bucketDisplayContext.isFrequencyVisible() %>">
+													<small class="term-count">
+														(<%= bucketDisplayContext.getFrequency() %>)
+													</small>
+												</c:if>
+											</label>
+										</div>
+									</li>
 
-							<%
-							}
-							%>
+								<%
+								}
+								%>
 
-						</ul>
+							</ul>
 
-						<aui:script use="liferay-search-facet-util">
-							var facetTerms = document.querySelectorAll(
-								'#<portlet:namespace />fm .facet-term'
-							);
+							<aui:script use="liferay-search-facet-util">
+								var facetTerms = document.querySelectorAll(
+									'#<portlet:namespace />fm .facet-term'
+								);
 
-							facetTerms.forEach((term) => {
-								Liferay.Util.toggleDisabled(term, false);
-							});
-						</aui:script>
+								facetTerms.forEach((term) => {
+									Liferay.Util.toggleDisabled(term, false);
+								});
+							</aui:script>
+						</div>
 					</clay:panel>
 				</clay:panel-group>
 			</liferay-ddm:template-renderer>

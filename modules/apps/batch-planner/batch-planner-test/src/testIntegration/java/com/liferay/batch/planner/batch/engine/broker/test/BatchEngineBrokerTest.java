@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
@@ -129,6 +130,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipInputStream;
 
@@ -230,7 +232,7 @@ public class BatchEngineBrokerTest {
 		Assert.assertTrue(jsonNode.isArray());
 		Assert.assertEquals(1, jsonNode.size());
 
-		_assertEquals(
+		_assertEqualsExport(
 			expectedJsonNode, _objectEntryExportFieldNames, jsonNode.get(0));
 	}
 
@@ -344,7 +346,7 @@ public class BatchEngineBrokerTest {
 		Assert.assertNotNull(
 			"TestObject1 object definition is not exported", actualJsonNode);
 
-		_assertEquals(
+		_assertEqualsExport(
 			expectedJsonNode, _objectDefinitionExportFieldNames,
 			actualJsonNode);
 	}
@@ -399,7 +401,7 @@ public class BatchEngineBrokerTest {
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
 			_OBJECT_ENTRY_ERC, _objectDefinition1.getObjectDefinitionId());
 
-		_assertEquals(
+		_assertEqualsImport(
 			_getExpectedJsonNode(
 				_objectDefinition1, objectEntry.getObjectEntryId()),
 			_objectEntryImportFieldNames, jsonNode.get(0));
@@ -418,7 +420,7 @@ public class BatchEngineBrokerTest {
 				"com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
 				RandomTestUtil.randomString(), 0, "DEFAULT", false);
 
-		for (String fieldName : _objectDefinitionExportFieldNames) {
+		for (String fieldName : _objectDefinitionImportFieldNames) {
 			_batchPlannerMappingLocalService.addBatchPlannerMapping(
 				TestPropsValues.getUserId(),
 				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
@@ -429,11 +431,14 @@ public class BatchEngineBrokerTest {
 			TestPropsValues.getUserId(),
 			batchPlannerPlan.getBatchPlannerPlanId(), "onErrorFail", "true");
 
-		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+		_objectDefinition2 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), "TestObject2",
+			TestPropsValues.getUser());
 
-		BatchEngineImportTask batchEngineImportTask =
-			_getFinishedBatchEngineImportTask(
-				batchPlannerPlan.getBatchPlannerPlanId());
+		_objectDefinition2 =
+			_objectDefinitionLocalService.updateExternalReferenceCode(
+				_objectDefinition2.getObjectDefinitionId(),
+				_OBJECT_DEFINITION_2_ERC);
 
 		_objectMapper.setFilterProvider(
 			new SimpleFilterProvider() {
@@ -446,15 +451,21 @@ public class BatchEngineBrokerTest {
 				}
 			});
 
-		JsonNode jsonNode = _objectMapper.readTree(
-			_getZipInputStream(
-				_batchEngineImportTaskLocalService.openContentInputStream(
-					batchEngineImportTask.getBatchEngineImportTaskId())));
+		JsonNode jsonNode = _objectMapper.readTree(file);
 
-		Assert.assertTrue(jsonNode.isArray());
-		Assert.assertEquals(1, jsonNode.size());
+		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
 
-		_assertEquals(_getActualJsonNode(jsonNode, "TestObject"));
+		_getFinishedBatchEngineImportTask(
+			batchPlannerPlan.getBatchPlannerPlanId());
+
+		_objectDefinition1 =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					_OBJECT_DEFINITION_1_ERC, TestPropsValues.getCompanyId());
+
+		_assertEqualsImport(
+			_getExpectedJsonNode(_objectDefinition1),
+			_objectDefinitionImportFieldNames, jsonNode.get(0));
 	}
 
 	private DLFileEntry _addDLFileEntry() throws Exception {
@@ -524,27 +535,7 @@ public class BatchEngineBrokerTest {
 		Assert.assertTrue(!jsonNode.isEmpty());
 	}
 
-	private void _assertEquals(JsonNode jsonNode) {
-		for (String objectFieldName : _objectDefinitionFieldNames) {
-			JsonNode fieldJsonNode = jsonNode.get(objectFieldName);
-
-			if (Objects.equals(objectFieldName, "actions")) {
-				_assertActions(fieldJsonNode, "delete");
-				_assertActions(fieldJsonNode, "get");
-				_assertActions(fieldJsonNode, "permissions");
-				_assertActions(fieldJsonNode, "update");
-			}
-			else {
-				if (fieldJsonNode == null) {
-					continue;
-				}
-
-				Assert.assertNotNull(fieldJsonNode.toString());
-			}
-		}
-	}
-
-	private void _assertEquals(
+	private void _assertEqualsExport(
 		JsonNode expectedJsonNode, List<String> fieldNames, JsonNode jsonNode) {
 
 		for (String fieldName : fieldNames) {
@@ -569,6 +560,26 @@ public class BatchEngineBrokerTest {
 					fieldName + " value mismatch",
 					expectedFieldJsonNode.toString(), fieldJsonNode.toString());
 			}
+		}
+	}
+
+	private void _assertEqualsImport(
+		JsonNode expectedJsonNode, List<String> fieldNames, JsonNode jsonNode) {
+
+		for (String fieldName : fieldNames) {
+			JsonNode expectedFieldJsonNode = _removeBackendGeneratedFields(
+				fieldName, expectedJsonNode.get(fieldName));
+
+			JsonNode fieldJsonNode = _removeBackendGeneratedFields(
+				fieldName, jsonNode.get(fieldName));
+
+			if ((expectedFieldJsonNode == null) && (fieldJsonNode == null)) {
+				continue;
+			}
+
+			Assert.assertEquals(
+				fieldName + " value mismatch", expectedFieldJsonNode.toString(),
+				fieldJsonNode.toString());
 		}
 	}
 
@@ -950,8 +961,61 @@ public class BatchEngineBrokerTest {
 		}
 	}
 
+	private JsonNode _removeBackendGeneratedFields(
+		String fieldName, JsonNode jsonNode) {
+
+		if (jsonNode == null) {
+			return null;
+		}
+
+		if (!jsonNode.isArray()) {
+			return jsonNode;
+		}
+
+		for (JsonNode itemJsonNode : jsonNode) {
+			if (itemJsonNode.isObject() &&
+				_ignoredImportFields.containsKey(fieldName)) {
+
+				((ObjectNode)itemJsonNode).remove(
+					_ignoredImportFields.get(fieldName));
+			}
+		}
+
+		return jsonNode;
+	}
+
+	private static final String _OBJECT_DEFINITION_1_ERC =
+		"TEST-OBJECT-DEFINITION-1";
+
+	private static final String _OBJECT_DEFINITION_2_ERC =
+		"TEST-OBJECT-DEFINITION-2";
+
 	private static final String _OBJECT_ENTRY_ERC = "TEST-OBJECT-ENTRY";
 
+	private static final Map<String, List<String>> _ignoredImportFields =
+		HashMapBuilder.<String, List<String>>put(
+			"objectActions", Arrays.asList("dateCreated", "dateModified", "id")
+		).put(
+			"objectFields",
+			Arrays.asList(
+				"dateCreated", "dateModified", "externalReferenceCode", "id",
+				"localized")
+		).put(
+			"objectLayouts",
+			Arrays.asList(
+				"dateCreated", "dateModified", "id", "objectDefinitionId")
+		).put(
+			"objectRelationships",
+			Arrays.asList("id", "objectDefinitionId1", "objectDefinitionId2")
+		).put(
+			"objectValidationRules",
+			Arrays.asList(
+				"dateCreated", "dateModified", "id", "objectDefinitionId")
+		).put(
+			"objectViews",
+			Arrays.asList(
+				"dateCreated", "dateModified", "id", "objectDefinitionId")
+		).build();
 	private static final List<String> _objectDefinitionExportFieldNames =
 		Arrays.asList(
 			"accountEntryRestricted", "accountEntryRestrictedObjectFieldName",
@@ -967,11 +1031,17 @@ public class BatchEngineBrokerTest {
 			"storageType", "system", "titleObjectFieldName");
 	private static final List<String> _objectDefinitionImportFieldNames =
 		Arrays.asList(
-			"creator", "createDate", "externalReferenceCode", "id",
-			"modifiedDate", "status", "testAttachmentField", "testBooleanField",
-			"testDateField", "testDateTimeField", "testDecimalField",
-			"testIntegerField", "testLongIntegerField", "testLongTextField",
-			"testPrecisionDecimalField", "testRichTextField", "testTextField");
+			"accountEntryRestricted", "accountEntryRestrictedObjectFieldName",
+			"active", "defaultLanguageId", "enableCategorization",
+			"enableComments", "enableLocalization", "enableObjectEntryHistory",
+			"externalReferenceCode", "label", "modifiable", "name",
+			"objectActions", "objectFields",
+			"objectFolderExternalReferenceCode", "objectLayouts",
+			"objectRelationships", "objectValidationRules", "objectViews",
+			"panelAppOrder", "panelCategoryKey", "parameterRequired",
+			"pluralLabel", "portlet",
+			"rootObjectDefinitionExternalReferenceCode", "scope", "status",
+			"storageType", "system", "titleObjectFieldName");
 	private static final List<String> _objectEntryExportFieldNames =
 		Arrays.asList(
 			"actions", "dateCreated", "dateModified", "externalReferenceCode",

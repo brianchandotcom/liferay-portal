@@ -1209,4 +1209,49 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-195724. Verify that it's possible to delete the MDF Request while in draft status."
+	@priority = 5
+	test CanDeleteInDraftStatus {
+		task ("Given the PMU Fill MDF Request and save as draft") {
+			PRMMarketing.gotoAddNewMDF();
+
+			PRMMDFRequest.createNewRequest(
+				saveAsDraft = "true",
+				accountName = "Company Name 1",
+				activityDescription = "Activity Description",
+				activityName = "Activity Name 1",
+				budgetList = "Sponsorship Fee-2000",
+				campaignDescription = "Campaign Description",
+				campaignName = "Campaign Name 1",
+				followUpStrategy = "test",
+				goalsOptions = "Lead generation",
+				leadFollowUpList = "Other",
+				leadList = "No",
+				tactic = "Other",
+				targetMarketOptions = "Education,Energy",
+				targetOfLeads = 03,
+				targetRolesOptions = "Administrator",
+				typeOfActivity = "Miscellaneous Marketing");
+		}
+
+		task ("When the PMU open the Request Draft") {
+			var firstID = PRMMDFRequest.getRequestID(
+				mdfType = "Request",
+				requestIndex = 1);
+
+			PRMMDFRequest.searchMDF(requestID = ${firstID});
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
+		}
+
+		task ("And the PMU delete the Request Draft") {
+			PRMUtils.deleteMDF();
+		}
+
+		task ("Then the MDF Request Draft should not be present"){
+			PRMUtils.assertMDFNotPresent(
+				mdfType = "Request",
+				requestID = ${firstID});
+		}
+	}
 }

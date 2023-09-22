@@ -8,6 +8,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+portletDisplay.setBeta(true);
+
 HeadlessBuilderWebDisplayContext headlessBuilderWebDisplayContext = (HeadlessBuilderWebDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 

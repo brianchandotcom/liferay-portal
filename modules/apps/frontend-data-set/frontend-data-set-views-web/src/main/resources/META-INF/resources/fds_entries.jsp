@@ -7,6 +7,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+portletDisplay.setBeta(true);
+%>
+
 <react:component
 	module="js/FDSEntries"
 	props='<%=

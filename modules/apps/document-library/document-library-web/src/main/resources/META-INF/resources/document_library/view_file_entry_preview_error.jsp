@@ -23,7 +23,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 			<h3><liferay-ui:message key="no-preview-available" /></h3>
 
 			<p class="text-secondary">
-				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(dlPreviewSizeException.getMaxSize(), locale) %>" key="this-file-is-too-large-to-preview.-the-maximum-file-size-for-previews-is-x" />
+				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(dlPreviewSizeException.getMaxFileSize(), locale) %>" key="this-file-is-too-large-to-preview.-the-maximum-file-size-for-previews-is-x" />
 			</p>
 
 			<clay:link

@@ -269,21 +269,19 @@ public class PoshiProperties extends Properties {
 			return;
 		}
 
-		String[] possiblePropertyValues = _validPoshiPropertyValues.get(
+		String[] validPoshiPropertyValues = _validPoshiPropertyValues.get(
 			propertyName);
 
-		for (String possiblePropertyValue : possiblePropertyValues) {
-			System.out.println(possiblePropertyValue);
-
-			if (possiblePropertyValue.equals(propertyValue.trim())) {
+		for (String validPoshiPropertyValue : validPoshiPropertyValues) {
+			if (validPoshiPropertyValue.equals(propertyValue.trim())) {
 				return;
 			}
 		}
 
 		throw new IllegalArgumentException(
-			"Illegal value " + propertyValue + " for " + propertyName +
-				"\nPossible property values: " +
-					possiblePropertyValues.toString());
+			"Illegal value \"" + propertyValue + "\" for property: " +
+				propertyName + "\nValid property values: " +
+					validPoshiPropertyValues.toString());
 	}
 
 	public PoshiProperties() {

@@ -86,6 +86,21 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 		_testUnlockLayouts(true, _lock, 1);
 	}
 
+	@Test
+	public void testUnlockLayoutWithGroupConfigurationAllowAutomaticUnlockEnabled()
+		throws Exception {
+
+		_configurationProvider.saveGroupConfiguration(
+			LockedLayoutsGroupConfiguration.class, _group.getGroupId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"allowAutomaticUnlockingProcess", true
+			).put(
+				"timeWithoutAutosave", 1
+			).build());
+
+		_testUnlockLayouts(true, null, 100);
+	}
+
 	private Layout _getDraftLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 

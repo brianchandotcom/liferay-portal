@@ -608,6 +608,227 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12324. The admin can verify the inventory information from the SKU/UOM combination on the Inventory admin page"
+	@priority = 5
+	test CanVerifyUOMInventoryInfoOnInventoryPage {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium Site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("When the admin searches for MIN93015 on the inventory admin page") {
+			CommerceInventory.openInventoryAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "MIN93015");
+		}
+
+		task ("Then the new column for UOM can be viewed next to the SKU column with an empty value") {
+			AssertElementPresent(
+				key_field = "UOM",
+				locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
+
+			AssertTextEquals(
+				key_cellName1 = "MIN93015",
+				key_cellName2 = "",
+				key_columnNumber = 2,
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+				value1 = "");
+
+			Pagination.viewResults(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("When 2 UOMs are added to the SKU MIN93015") {
+			for (var index : list "1,2") {
+				CommerceJSONSKUsAPI._addCommerceUOM(
+					basePrice = ${index},
+					productSKU = "MIN93015",
+					uomKey = "uomKey${index}",
+					uomName = "uomName${index}");
+			}
+		}
+
+		task ("Then two separate line items for each SKU/UOM combination can be viewed") {
+			CommerceInventory.openInventoryAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "MIN93015");
+
+			for (var index : list "1,2") {
+				AssertTextEquals(
+					key_cellName1 = "MIN93015",
+					key_cellName2 = "uomKey${index}",
+					key_columnNumber = 2,
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = "uomKey${index}");
+			}
+
+			Pagination.viewResults(results = "Showing 1 to 2 of 2 entries.");
+		}
+
+		task ("And the default quantities for UOM1 are On Hand:140, Available:140, On Order:0, Incoming:0, for UOM2 are all 0") {
+			for (var uomQuantityList : list "3:140,4:140,5:0,6:0") {
+				var uomIndex = StringUtil.extractFirst(${uomQuantityList}, ":");
+				var uomQuantity = StringUtil.extractLast(${uomQuantityList}, ":");
+
+				AssertTextEquals(
+					key_cellName1 = "MIN93015",
+					key_cellName2 = "uomKey1",
+					key_columnNumber = ${uomIndex},
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = ${uomQuantity});
+			}
+
+			for (var uomQuantityList : list "3:0,4:0,5:0,6:0") {
+				var uomIndex = StringUtil.extractFirst(${uomQuantityList}, ":");
+				var uomQuantity = StringUtil.extractLast(${uomQuantityList}, ":");
+
+				AssertTextEquals(
+					key_cellName1 = "MIN93015",
+					key_cellName2 = "uomKey2",
+					key_columnNumber = ${uomIndex},
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = ${uomQuantity});
+			}
+		}
+
+		task ("And the admin can edit the warehouse inventory for each SKU/UOM combination") {
+			for (var uomQuantityList : list "1:10,2:20") {
+				var uomIndex = StringUtil.extractFirst(${uomQuantityList}, ":");
+				var uomQuantity = StringUtil.extractLast(${uomQuantityList}, ":");
+
+				CommerceInventory.editInventoryByWarehouse(
+					index = ${uomIndex},
+					quantityOnHand = ${uomQuantity},
+					sku = "MIN93015",
+					warehouse = "Italy,United States - Northeast,United States - Southwest");
+
+				for (var index : list "2,4") {
+					CommerceInventory.viewInventoryByWarehouse(
+						index = ${index},
+						inventory = ${uomQuantity},
+						warehouse = "Italy,United States - Northeast,United States - Southwest");
+				}
+
+				task ("And the SKU and UOM Key are shown in the header") {
+					AssertElementPresent(
+						key_title = "MIN93015 uomKey${uomIndex}",
+						locator1 = "Header#H3_TITLE");
+				}
+			}
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12324. The admin can verify the inventory information of the SKU/UOM combination on the Product's SKU page"
+	@priority = 5
+	test CanVerifyUOMInventoryInfoOnSKUPage {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium Site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("When the admin goes to the MIN93015's SKU panel -> Inventory tab on the product admin page") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+		}
+
+		task ("Then the new column of UOM can be viewed next to the warehouse column with an empty value") {
+			AssertTextEquals(
+				key_index = 2,
+				locator1 = "WorkflowSubmissions#HEADER_INDEX",
+				value1 = "UOM");
+
+			CommerceSKUs.viewSkuUomWarehouse(
+				uomKey = "",
+				uomLists = "0:Italy,1:United States - Northeast,2:United States - Southwest");
+
+			CommerceSKUs.viewSkuUomInventory(uomQuantityLists = "0:20,1:60,2:60");
+		}
+
+		task ("When one UOM is added to the SKU MIN93015") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 10,
+				productSKU = "MIN93015",
+				uomKey = "uomKey1",
+				uomName = "uomName1");
+		}
+
+		task ("Then the three warehouses with quantities of SKU associated with the SKU/UOM combination are updated") {
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+			CommerceSKUs.viewSkuUomWarehouse(
+				uomKey = "uomKey1",
+				uomLists = "0:Italy,1:United States - Northeast,2:United States - Southwest");
+
+			CommerceSKUs.viewSkuUomInventory(uomQuantityLists = "0:20,1:60,2:60");
+		}
+
+		task ("When 2nd UOM is added to the SKU MIN93015") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 20,
+				productSKU = "MIN93015",
+				uomKey = "uomKey2",
+				uomName = "uomName2");
+		}
+
+		task ("Then the warehouses are shown correctly for each SKU/UOM combination") {
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+			CommerceSKUs.viewSkuUomWarehouse(
+				uomKey = "uomKey1",
+				uomLists = "0:Italy,2:United States - Northeast,4:United States - Southwest");
+
+			CommerceSKUs.viewSkuUomWarehouse(
+				uomKey = "uomKey2",
+				uomLists = "1:Italy,3:United States - Northeast,5:United States - Southwest");
+		}
+
+		task ("And the 2nd SKU/UOM combination quantities are set to 0 by default") {
+			CommerceSKUs.viewSkuUomInventory(uomQuantityLists = "1:0,3:0,5:0");
+		}
+
+		task ("And the admin can edit the warehouse inventory for each SKU/UOM combination") {
+			CommerceSKUs.setSkuUomInventory(uomQuantityLists = "0:1,1:2,2:3,3:4,4:5,5:6");
+
+			CommerceSKUs.viewSkuUomInventory(uomQuantityLists = "0:1,1:2,2:3,3:4,4:5,5:6");
+		}
+
+		task ("But if the UOMs are deleted") {
+			CommerceJSONSKUsAPI._deleteAllCommerceUOMs(productSKU = "MIN93015");
+		}
+
+		task ("Then the quantities of warehouses are updated based on the order of deletion of UOM (Keep the last deleted UOM quantity values as SKU default)") {
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+			CommerceSKUs.viewSkuUomWarehouse(
+				uomKey = "",
+				uomLists = "0:Italy,1:United States - Northeast,2:United States - Southwest");
+
+			CommerceSKUs.viewSkuUomInventory(uomQuantityLists = "0:2,1:4,2:6");
+		}
+	}
+
 	@description = "COMMERCE-12342. As an admin, I can view default price informations of a SKU like its price lists and promotions without creating any UOM."
 	@priority = 5
 	test CanViewDefaultPriceInfoOnTablesEntriesWhenNoUOMsAreCreated {

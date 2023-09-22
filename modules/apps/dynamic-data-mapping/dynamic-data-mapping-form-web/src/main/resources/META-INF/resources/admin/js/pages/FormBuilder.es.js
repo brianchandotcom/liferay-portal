@@ -534,7 +534,7 @@ export default function FormBuilder() {
 								)
 							}
 						>
-							{Liferay.Language.get('Save')}
+							{Liferay.Language.get('save')}
 						</ClayButton>
 
 						<ClayLink button displayType="link" href={redirectURL}>

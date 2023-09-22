@@ -11,14 +11,13 @@ import {ContentCol} from '@clayui/layout';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {DragObjectWithType, useDrag, useDrop} from 'react-dnd';
-import {getEmptyImage} from 'react-dnd-html5-backend';
+import React, {RefObject} from 'react';
 
 import {
 	DRAG_OVER_POSITIONS,
 	DragOverPosition,
 } from '../../config/constants/dragOverPositions';
+import {useKeyboardDragItem} from './KeyboardDragAndDropContext';
 import {useMouseDragItem, useMouseDropTarget} from './MouseDragAndDropContext';
 
 export interface Item {
@@ -48,22 +47,39 @@ export function Item({index, item, numberOfItems, onDropItem}: ItemProps) {
 	} = useMouseDragItem(item);
 
 	const {
+		dragOverPosition: keyboardDragOverPosition,
+		handlerRef: keyboardDragHandlerRef,
+		isDragging: isKeyboardDragging,
+		targetRef: keyboardDropTargetRef,
+	} = useKeyboardDragItem(item, onDropItem);
+
+	const {
 		dragOverPosition: mouseDragOverPosition,
 		targetRef: mouseDropTargetRef,
 	} = useMouseDropTarget(item.id, index, onDropItem);
 
+	const targetRef = (element: HTMLDivElement | null) => {
+		keyboardDropTargetRef(element);
+		mouseDropTargetRef(element);
+	};
+
 	return (
-		<div className="c-pb-3" ref={mouseDropTargetRef} role="listitem">
+		<div className="c-pb-3" ref={targetRef} role="listitem">
 			<div ref={mouseDragHandlerRef}>
 				<ClayCard
 					className={classNames('c-mb-0', {
-						dragging: isMouseDragging,
-						draggingOver: mouseDragOverPosition,
+						dragging: isMouseDragging || isKeyboardDragging,
+						draggingOver:
+							mouseDragOverPosition || keyboardDragOverPosition,
 						draggingOverBottom:
 							mouseDragOverPosition ===
-							DRAG_OVER_POSITIONS.bottom,
+								DRAG_OVER_POSITIONS.bottom ||
+							keyboardDragOverPosition ===
+								DRAG_OVER_POSITIONS.bottom,
 						draggingOverTop:
-							mouseDragOverPosition === DRAG_OVER_POSITIONS.top,
+							mouseDragOverPosition === DRAG_OVER_POSITIONS.top ||
+							keyboardDragOverPosition ===
+								DRAG_OVER_POSITIONS.top,
 					})}
 				>
 					<ClayCard.Body className="px-0">
@@ -72,8 +88,14 @@ export function Item({index, item, numberOfItems, onDropItem}: ItemProps) {
 								{Liferay.FeatureFlags['LPS-196420'] ? (
 									<ClayButton
 										aria-labelledby={`${dragButtonDescriptionId} ${itemDescriptionId}`}
+										aria-pressed={isKeyboardDragging}
 										displayType="unstyled"
 										monospaced
+										ref={
+											(keyboardDragHandlerRef as unknown) as RefObject<
+												HTMLButtonElement
+											>
+										}
 										size="xs"
 									>
 										<ClayIcon

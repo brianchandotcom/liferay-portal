@@ -11,6 +11,7 @@ import {
 } from '../../config/constants/dragOverPositions';
 import {TabId} from '../../config/constants/tabsIds';
 import {Item} from './Item';
+import {KeyboardDragAndDropContextProvider} from './KeyboardDragAndDropContext';
 
 interface ItemListProps {
 	items: Item[];
@@ -61,15 +62,17 @@ export function ItemList({
 
 	return (
 		<div aria-orientation="vertical" className="p-4" role="list">
-			{items.map((item, index) => (
-				<Item
-					index={index}
-					item={item}
-					key={item.id}
-					numberOfItems={items.length}
-					onDropItem={onDropItem}
-				/>
-			))}
+			<KeyboardDragAndDropContextProvider itemList={items}>
+				{items.map((item, index) => (
+					<Item
+						index={index}
+						item={item}
+						key={item.id}
+						numberOfItems={items.length}
+						onDropItem={onDropItem}
+					/>
+				))}
+			</KeyboardDragAndDropContextProvider>
 		</div>
 	);
 }

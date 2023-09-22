@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.servlet.PortletSessionListenerManager;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.osgi.web.http.servlet.HttpServletEndpoint;
 import com.liferay.portal.osgi.web.http.servlet.internal.HttpServletEndpointControllerImpl;
 import com.liferay.portal.osgi.web.http.servlet.internal.servlet.HttpServletEndpointServlet;
@@ -29,7 +30,6 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionTracker;
 
 import org.osgi.framework.BundleActivator;
@@ -38,9 +38,6 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.http.runtime.HttpServiceRuntime;
 import org.osgi.service.http.runtime.HttpServiceRuntimeConstants;
-import org.osgi.service.http.runtime.dto.RequestInfoDTO;
-import org.osgi.service.http.runtime.dto.RuntimeDTO;
-import org.osgi.service.http.runtime.dto.ServletContextDTO;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -188,37 +185,7 @@ public class HttpServletImplBundleActivator implements BundleActivator {
 					httpServletEndpoint.getProperties()),
 				_bundleContext.registerService(
 					HttpServiceRuntime.class,
-					new HttpServiceRuntime() {
-
-						@Override
-						public RequestInfoDTO calculateRequestInfoDTO(
-							String path) {
-
-							throw new UnsupportedOperationException();
-						}
-
-						@Override
-						public RuntimeDTO getRuntimeDTO() {
-							RuntimeDTO runtimeDTO = new RuntimeDTO();
-
-							runtimeDTO.serviceDTO = null;
-							runtimeDTO.failedErrorPageDTOs = null;
-							runtimeDTO.failedFilterDTOs = null;
-							runtimeDTO.failedListenerDTOs = null;
-							runtimeDTO.failedResourceDTOs = null;
-							runtimeDTO.failedServletContextDTOs = null;
-							runtimeDTO.failedServletDTOs = null;
-							runtimeDTO.servletContextDTOs =
-								TransformUtil.transformToArray(
-									httpServletEndpointController.
-										getContextControllers(),
-									ContextController::getServletContextDTO,
-									ServletContextDTO.class);
-
-							return runtimeDTO;
-						}
-
-					},
+					ProxyFactory.newDummyInstance(HttpServiceRuntime.class),
 					HashMapDictionaryBuilder.putAll(
 						attributesMap
 					).build()));

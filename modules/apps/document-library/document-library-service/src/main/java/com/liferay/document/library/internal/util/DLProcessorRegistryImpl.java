@@ -5,7 +5,7 @@
 
 package com.liferay.document.library.internal.util;
 
-import com.liferay.document.library.configuration.DLFileEntryConfiguration;
+import com.liferay.document.library.configuration.DLFileEntryConfigurationProvider;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.util.DLProcessor;
@@ -16,7 +16,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -38,15 +37,12 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
  */
-@Component(
-	configurationPid = "com.liferay.document.library.configuration.DLFileEntryConfiguration",
-	immediate = true, service = DLProcessorRegistry.class
-)
+@Component(immediate = true, service = DLProcessorRegistry.class)
 public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 	@Override
@@ -105,8 +101,9 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	}
 
 	@Override
-	public long getPreviewableProcessorMaxSize() {
-		return _dlFileEntryConfiguration.previewableProcessorMaxSize();
+	public long getPreviewableProcessorMaxSize(long groupId) {
+		return _dlFileEntryConfigurationProvider.
+			getGroupPreviewableProcessorMaxSize(groupId);
 	}
 
 	@Override
@@ -136,7 +133,9 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 	@Override
 	public boolean isPreviewableSize(FileVersion fileVersion) {
-		long previewableProcessorMaxSize = getPreviewableProcessorMaxSize();
+		long previewableProcessorMaxSize =
+			_dlFileEntryConfigurationProvider.
+				getGroupPreviewableProcessorMaxSize(fileVersion.getGroupId());
 
 		if ((previewableProcessorMaxSize == 0) ||
 			((previewableProcessorMaxSize > 0) &&
@@ -146,12 +145,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 
 		return true;
-	}
-
-	@Modified
-	public void modified(Map<String, Object> properties) {
-		_dlFileEntryConfiguration = ConfigurableUtil.createConfigurable(
-			DLFileEntryConfiguration.class, properties);
 	}
 
 	@Override
@@ -219,9 +212,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 			BundleContext bundleContext, Map<String, Object> properties)
 		throws Exception {
 
-		_dlFileEntryConfiguration = ConfigurableUtil.createConfigurable(
-			DLFileEntryConfiguration.class, properties);
-
 		_bundleContext = bundleContext;
 
 		_dlProcessorServiceTrackerMap =
@@ -287,7 +277,10 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		DLProcessorRegistryImpl.class);
 
 	private BundleContext _bundleContext;
-	private volatile DLFileEntryConfiguration _dlFileEntryConfiguration;
+
+	@Reference
+	private DLFileEntryConfigurationProvider _dlFileEntryConfigurationProvider;
+
 	private final List<DLProcessor> _dlProcessors = new ArrayList<>(
 		_DL_FILE_ENTRY_PROCESSORS.length);
 	private ServiceTrackerMap<String, DLProcessor>

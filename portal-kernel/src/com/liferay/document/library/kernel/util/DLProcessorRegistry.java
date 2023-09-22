@@ -26,7 +26,7 @@ public interface DLProcessorRegistry {
 
 	public DLProcessor getDLProcessor(String dlProcessorType);
 
-	public long getPreviewableProcessorMaxSize();
+	public long getPreviewableProcessorMaxSize(long groupId);
 
 	public void importGeneratedFiles(
 			PortletDataContext portletDataContext, FileEntry fileEntry,

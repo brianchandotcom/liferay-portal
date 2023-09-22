@@ -5,10 +5,9 @@
 
 package com.liferay.document.library.preview.background.task;
 
-import com.liferay.document.library.configuration.DLFileEntryConfiguration;
+import com.liferay.document.library.configuration.DLFileEntryConfigurationProvider;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
@@ -29,8 +28,6 @@ import java.io.Serializable;
 
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -70,13 +67,6 @@ public abstract class BasePreviewBackgroundTaskExecutor
 		return null;
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		dlFileEntryConfiguration = ConfigurableUtil.createConfigurable(
-			DLFileEntryConfiguration.class, properties);
-	}
-
 	protected abstract void generatePreview(FileVersion fileVersion)
 		throws Exception;
 
@@ -100,8 +90,8 @@ public abstract class BasePreviewBackgroundTaskExecutor
 
 				dynamicQuery.add(
 					sizeProperty.le(
-						dlFileEntryConfiguration.
-							previewableProcessorMaxSize()));
+						dlFileEntryConfigurationProvider.
+							getCompanyPreviewableProcessorMaxSize(companyId)));
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(DLFileEntry dlFileEntry) -> {
@@ -125,7 +115,8 @@ public abstract class BasePreviewBackgroundTaskExecutor
 
 	protected abstract String[] getMimeTypes();
 
-	protected volatile DLFileEntryConfiguration dlFileEntryConfiguration;
+	@Reference
+	protected DLFileEntryConfigurationProvider dlFileEntryConfigurationProvider;
 
 	@Reference
 	protected DLFileEntryLocalService dlFileEntryLocalService;

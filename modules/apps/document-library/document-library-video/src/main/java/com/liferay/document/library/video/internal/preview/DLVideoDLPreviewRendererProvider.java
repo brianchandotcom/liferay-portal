@@ -104,7 +104,8 @@ public class DLVideoDLPreviewRendererProvider
 		if (!_videoProcessor.hasVideo(fileVersion)) {
 			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
 				throw new DLPreviewSizeException(
-					DLProcessorRegistryUtil.getPreviewableProcessorMaxSize());
+					DLProcessorRegistryUtil.getPreviewableProcessorMaxSize(
+						fileVersion.getGroupId()));
 			}
 
 			throw new DLPreviewGenerationInProcessException();

@@ -30,7 +30,7 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 		/>
 
 		<clay:sheet-section>
-			<h3 class="c-mb-2 sheet-subtitle text-2 text-secondary"><liferay-ui:message key="upload-limit" /></h3>
+			<h3 class="c-mb-2 sheet-subtitle text-secondary"><liferay-ui:message key="upload-limit" /></h3>
 
 			<p class="c-mb-4 text-3 text-secondary">
 				<liferay-ui:message arguments="<%= dlSizeLimitConfigurationDisplayContext.getFileMaxSizeHelpArguments() %>" key="maximum-file-upload-size-help" />
@@ -40,7 +40,7 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 		</clay:sheet-section>
 
 		<clay:sheet-section>
-			<h3 class="c-mb-2 sheet-subtitle text-2 text-secondary"><liferay-ui:message key="mime-type-limit" /></h3>
+			<h3 class="c-mb-2 sheet-subtitle text-secondary"><liferay-ui:message key="mime-type-limit" /></h3>
 
 			<div>
 				<span aria-hidden="true" class="loading-animation"></span>
@@ -53,7 +53,7 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 		</clay:sheet-section>
 
 		<clay:sheet-section>
-			<h3 class="c-mb-2 sheet-subtitle text-2 text-secondary"><liferay-ui:message key="copy-limit-title" /></h3>
+			<h3 class="c-mb-2 sheet-subtitle text-secondary"><liferay-ui:message key="copy-limit-title" /></h3>
 
 			<p class="c-mb-4 text-3 text-secondary">
 				<liferay-ui:message key="copy-limit-help" />

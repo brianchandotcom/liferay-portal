@@ -12,14 +12,22 @@ import java.util.Map;
  */
 public class StatsIndexResponse implements IndexResponse {
 
-	public StatsIndexResponse(Map<String, Long> indexSizes) {
+	public StatsIndexResponse(
+		Map<String, Long> indexSizes, long sizeOfLargestIndex) {
+
 		_indexSizes = indexSizes;
+		_sizeOfLargestIndex = sizeOfLargestIndex;
 	}
 
-	public long getIndexSize(String indexName) {
+	public long getIndexSizeInBytes(String indexName) {
 		return _indexSizes.get(indexName);
 	}
 
+	public long getSizeOfLargestIndexInBytes() {
+		return _sizeOfLargestIndex;
+	}
+
 	private final Map<String, Long> _indexSizes;
+	private final long _sizeOfLargestIndex;
 
 }

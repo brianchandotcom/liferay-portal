@@ -39,8 +39,6 @@ definition {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 		property testray.component.names = "Training";
 
 		task ("Add an organization") {
@@ -877,8 +875,6 @@ definition {
 		property osgi.module.configurations = "promptEnabled=\"true\"";
 		property portal.release = "true";
 		property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 		property testray.component.names = "Sites Administration,Page Administration";
 
 		var portalURL = PropsUtil.get("portal.url");

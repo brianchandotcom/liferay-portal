@@ -569,9 +569,6 @@ definition {
 	@description = "This is a test for LPS-177286. Able to enable and disable the propagation of Contributed Fragments on the instance startup."
 	@priority = 4
 	test ManuallyPropagateChanges {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given a site administrator accesses to the Page Fragments configuration of Instance Settings") {
 			PortalSettings.gotoConfiguration(
 				configurationCategory = "Page Fragments",
@@ -912,9 +909,6 @@ definition {
 	@description = "This is a test for LPS-180331. The new site should inherit form fragment displayed by default per field type from the global site."
 	@priority = 4
 	test ViewDefaultFormFragmentOfTextFieldAddedInGlobalSiteInheritesInNewSite {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given a Text Input fragment copied from Form Components in global site") {
 			task ("Add a fragment set") {
 				JSONFragment.addFragmentCollection(
@@ -1161,9 +1155,6 @@ definition {
 	@description = "This is a test for LPS-177286. View error alert and feedback message when failing to Propagate Contributed Fragments Changes During Deploy Process Automatically."
 	@priority = 3
 	test ViewErrorMessageWhenFailToPropagateChanges {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Given a site administrator unchecks the Propagate Default Fragments Changes During Deploy Process Automatically") {
 			PortalSettings.gotoConfiguration(
 				configurationCategory = "Page Fragments",

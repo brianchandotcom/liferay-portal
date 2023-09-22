@@ -46,9 +46,6 @@ definition {
 	@description = "The user can choose which languages will be available to site via Language Selector widget."
 	@priority = 4
 	test ChooseCurrentLanguagesViaLanguageSelector {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Define English, German and Spanish as current languages via Language Selector") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -176,9 +173,6 @@ definition {
 	@description = "View current languages via Language Selector after being removed in the portal settings."
 	@priority = 4
 	test ViewRemovedCurrentPortalLanguagesViaLanguageSelector {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Define English, Chinese and French as current languages in portal settings") {
 			PortalSettings.gotoConfiguration(
 				configurationCategory = "Localization",
@@ -215,9 +209,6 @@ definition {
 	@description = "View current languages via Language Selector after being removed in the site settings."
 	@priority = 4
 	test ViewRemovedCurrentSiteLanguagesViaLanguageSelector {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Define English, German and Spanish as current languages in site settings") {
 			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 

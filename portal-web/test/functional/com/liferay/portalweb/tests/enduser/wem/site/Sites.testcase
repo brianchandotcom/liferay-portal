@@ -411,9 +411,6 @@ definition {
 	@description = "This is a test case for LRQA-5853. Disbale Content Sharing in instance level and view child Sites doesn't display content from parent Sites."
 	@priority = 4
 	test ViewContentSharingDisabledAcrossSitesViaAP {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 		var randomChildSiteName = StringUtil.randomString(8);
 
@@ -521,9 +518,6 @@ definition {
 	@description = "This is a test case for LRQA-6014. Enable Content Sharing in instance level and view child Sites display content from parent Sites."
 	@priority = 4
 	test ViewContentSharingEnabledAcrossSitesViaAP {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		PortalSettings.gotoConfiguration(

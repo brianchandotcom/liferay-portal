@@ -1087,9 +1087,6 @@ definition {
 	@description = "This is a test for LPS-96545. Cancel reset and reset the default values when edit default values in imported web content structure."
 	@priority = 4
 	test ResetImportedStructureDefaultValues {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Add a web content based on Basic Web Content") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content",

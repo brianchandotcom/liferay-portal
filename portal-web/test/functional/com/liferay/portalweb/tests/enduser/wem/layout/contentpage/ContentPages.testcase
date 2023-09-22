@@ -574,9 +574,6 @@ definition {
 	@description = "This is a test for LPS-159751. The page editor should be rendered after reset changes from site template."
 	@priority = 4
 	test EditContentPageAfterResetChangesFromSiteTemplate {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		var siteName = StringUtil.randomString(8);
 
 		var siteURLKey = StringUtil.toLowerCase(${siteName});

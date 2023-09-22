@@ -551,9 +551,6 @@ definition {
 	@description = "View page template in Spanish and English."
 	@priority = 4
 	test LocalizeGlobalDefaultPageTemplates {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Edit Department Landing Page and add several widgets") {
 			PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 

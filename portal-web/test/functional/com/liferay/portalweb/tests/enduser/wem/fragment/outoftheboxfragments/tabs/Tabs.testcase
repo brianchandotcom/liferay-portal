@@ -41,8 +41,6 @@ definition {
 	@uitest
 	test AddElementToEachPanel {
 		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		task ("Add a Tabs fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -97,8 +95,6 @@ definition {
 	@description = "This is for LPS-109298. Each tab of Tabs fragment is able to contain any elements in custom master."
 	@priority = 4
 	test AddElementToEachPanelInMasterPageTemplate {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 		property testray.main.component.name = "Master Page Templates";
 
 		task ("Add a custom master") {
@@ -239,8 +235,6 @@ definition {
 	@description = "This is for LPS-109298. If move the Drop Zone of master to one tab, only can add elements to that tab in content page."
 	@priority = 4
 	test MoveDropZoneIntoPanel {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 		property testray.main.component.name = "Master Page Templates";
 
 		task ("Add a custom master") {
@@ -478,8 +472,6 @@ definition {
 	@description = "This is for LPS-109298. Can not add elements to each tab of Tabs fragment that is inherited from custom master in content page."
 	@priority = 4
 	test ViewInheriatedTabsWithoutDropzoneInContentPage {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 		property testray.main.component.name = "Master Page Templates";
 
 		task ("Add a custom master") {

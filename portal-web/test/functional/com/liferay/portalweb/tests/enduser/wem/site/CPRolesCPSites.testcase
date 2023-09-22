@@ -363,9 +363,6 @@ definition {
 	@description = "Assert could manage pages with Manage Pages	regular role and could not after removing."
 	@priority = 4
 	test ViewSiteManagePagesRegRole {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Get site name") {
 			Navigator.openURL();
 

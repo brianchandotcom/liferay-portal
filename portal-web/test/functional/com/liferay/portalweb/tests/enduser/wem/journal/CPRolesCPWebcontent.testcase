@@ -93,8 +93,6 @@ definition {
 	@priority = 5
 	test AddFolderSiteRoleDefinePermission {
 		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		Permissions.definePermissionsViaJSONAPI(
 			resourceNameActionList = "com.liferay.journal,ADD_FOLDER,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL",
@@ -190,8 +188,6 @@ definition {
 	@priority = 5
 	test AddStructureSiteRoleDefinePermission {
 		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		Permissions.definePermissionsViaJSONAPI(
 			resourceNameActionList = "com.liferay.journal,ADD_STRUCTURE,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL",
@@ -245,8 +241,6 @@ definition {
 	@priority = 5
 	test AddTemplateSiteRoleDefaultPermission {
 		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		Permissions.definePermissionsViaJSONAPI(
 			resourceNameActionList = "com.liferay.journal,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL",
@@ -270,8 +264,6 @@ definition {
 	@priority = 5
 	test AddTemplateSiteRoleDefinePermission {
 		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		Permissions.definePermissionsViaJSONAPI(
 			resourceNameActionList = "com.liferay.journal,ADD_TEMPLATE,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL",
@@ -342,8 +334,6 @@ definition {
 	@priority = 5
 	test AddWebContentSiteRoleDefinePermission {
 		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		Permissions.definePermissionsViaJSONAPI(
 			resourceNameActionList = "com.liferay.journal,ADD_ARTICLE,VIEW:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_journal_web_portlet_JournalPortlet,ACCESS_IN_CONTROL_PANEL",

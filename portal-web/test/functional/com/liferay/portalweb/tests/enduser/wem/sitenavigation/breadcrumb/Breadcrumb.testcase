@@ -468,9 +468,6 @@ definition {
 	@description = "View Breadcrumb when navigate to page via IP address."
 	@priority = 4
 	test ViewBreadcrumbWhenNavigateToPageViaIPAddress {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		task ("Add a Breadcrumb widget to page") {

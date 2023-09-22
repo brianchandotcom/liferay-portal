@@ -157,9 +157,6 @@ definition {
 	@description = "This is a use case for LPS-121695. Assert imported DDMStructures in Global Staging are not published in Global Live."
 	@priority = 4
 	test ImportedDDMStructuresInGlobalStagingNotPublishedInLive {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Access Global Site") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "global");
 		}
@@ -549,8 +546,6 @@ definition {
 	@priority = 5
 	test PublishWebContentWithImportedStructureDefaultValues {
 		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 
 		task ("Create a basic web content") {
 			JSONWebcontent.addWebContent(

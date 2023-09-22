@@ -676,9 +676,6 @@ definition {
 	@description = "This is a use case for LPS-182999. The page designer could see mapped image from attachment field on associated display page template."
 	@priority = 4
 	test MapPreviewURLOfImageAttachmentToFragment {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		var labelName = StringUtil.randomString(8);
 
 		var objectName = "A${labelName}";

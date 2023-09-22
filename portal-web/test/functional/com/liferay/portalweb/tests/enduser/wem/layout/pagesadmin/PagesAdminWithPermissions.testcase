@@ -51,9 +51,6 @@ definition {
 	@description = "This is a test for LPS-136413. The global page template is invisible to user without permission in page creation."
 	@priority = 4
 	test GlobalTemplateIsInvisibleToUserWithoutPermissionInPageCreation {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		var roleKey = StringUtil.randomString(8);
 
 		task ("Add a regular role") {

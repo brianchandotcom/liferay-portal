@@ -607,9 +607,6 @@ definition {
 	@description = "This is a use case for LPS-146029. View the defined layout style of Grid in the non-desktop viewport."
 	@priority = 4
 	test ViewDefinedGridLayoutStyleInNonDesktopViewport {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
 		task ("Add a Grid to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",

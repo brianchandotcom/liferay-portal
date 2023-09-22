@@ -193,7 +193,7 @@ function Actions({actions, itemData, itemId, menuActive, onMenuActiveChange}) {
 			});
 		}
 		else {
-			doAction();
+			doAction({defaultPrevented: false});
 		}
 
 		if (closeMenu) {
@@ -239,7 +239,7 @@ const actionType = PropTypes.shape({
 	}),
 	href: PropTypes.string,
 	icon: PropTypes.string,
-	label: PropTypes.string.isRequired,
+	label: PropTypes.string,
 	method: PropTypes.oneOf(['delete', 'get', 'patch', 'post']),
 	onClick: PropTypes.func,
 	target: PropTypes.oneOf([

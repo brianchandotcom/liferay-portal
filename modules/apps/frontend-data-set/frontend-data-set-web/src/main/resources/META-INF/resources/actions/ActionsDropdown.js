@@ -164,7 +164,7 @@ function ActionsDropdown({
 		items.map(({items: nestedItems = [], separator, type, ...item}, i) => {
 			if (type === 'group') {
 				return (
-					<ClayDropDown.Group {...item}>
+					<ClayDropDown.Group {...item} key={i}>
 						{separator && <ClayDropDown.Divider />}
 
 						{renderItems(nestedItems)}

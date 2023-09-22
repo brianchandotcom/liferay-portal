@@ -22,11 +22,10 @@ import com.liferay.portal.search.admin.web.internal.display.context.builder.Sear
 import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchEngineDisplayContextBuilder;
 import com.liferay.portal.search.admin.web.internal.reindexer.IndexReindexerRegistryUtil;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
-import com.liferay.portal.search.cluster.StatsClusterInformation;
+import com.liferay.portal.search.cluster.StatsInformationFactory;
 import com.liferay.portal.search.configuration.ReindexConfiguration;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexInformation;
-import com.liferay.portal.search.index.StatsIndexInformation;
 
 import java.io.IOException;
 
@@ -83,12 +82,8 @@ public class SearchAdminPortlet extends MVCPortlet {
 
 		searchAdminDisplayContextBuilder.setIndexInformation(
 			_indexInformationSnapshot.get());
-
-		searchAdminDisplayContextBuilder.setStatsClusterInformation(
-			_statsClusterInformationSnapshot.get());
-
-		searchAdminDisplayContextBuilder.setStatsIndexInformation(
-			_statsIndexInformationSnapshot.get());
+		searchAdminDisplayContextBuilder.setStatsInformationFactory(
+			_statsInformationFactorySnapshot.get());
 
 		List<String> indexReindexerClassNames = ListUtil.fromCollection(
 			IndexReindexerRegistryUtil.getIndexReindexerClassNames());
@@ -166,13 +161,10 @@ public class SearchAdminPortlet extends MVCPortlet {
 		_searchEngineInformationSnapshot = new Snapshot<>(
 			SearchAdminPortlet.class, SearchEngineInformation.class, null,
 			true);
-	private static final Snapshot<StatsClusterInformation>
-		_statsClusterInformationSnapshot = new Snapshot<>(
-			SearchAdminPortlet.class, StatsClusterInformation.class, null,
+	private static final Snapshot<StatsInformationFactory>
+		_statsInformationFactorySnapshot = new Snapshot<>(
+			SearchAdminPortlet.class, StatsInformationFactory.class, null,
 			true);
-	private static final Snapshot<StatsIndexInformation>
-		_statsIndexInformationSnapshot = new Snapshot<>(
-			SearchAdminPortlet.class, StatsIndexInformation.class, null, true);
 
 	@Reference
 	private Language _language;

@@ -6,7 +6,6 @@
 package com.liferay.portal.search.admin.web.internal.display.context.builder;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -18,9 +17,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext;
-import com.liferay.portal.search.cluster.StatsClusterInformation;
+import com.liferay.portal.search.cluster.StatsInformation;
+import com.liferay.portal.search.cluster.StatsInformationFactory;
 import com.liferay.portal.search.index.IndexInformation;
-import com.liferay.portal.search.index.StatsIndexInformation;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -59,23 +58,18 @@ public class SearchAdminDisplayContextBuilder {
 		searchAdminDisplayContext.setIndexReindexerClassNames(
 			_indexReindexerClassNames);
 
-		if (_isStatsClusterInformationAvailable()) {
+		if (_isStatsInformationAvailable()) {
+			StatsInformation statsInformation =
+				_statsInformationFactory.getStatsInformation();
+
 			searchAdminDisplayContext.setAvailableDiskSpace(
-				_statsClusterInformation.getAvailableDiskSpace());
-
+				statsInformation.getAvailableDiskSpace());
 			searchAdminDisplayContext.setCurrentDiskSpaceUsed(
-				_statsClusterInformation.getUsedDiskSpace());
-
-			String[] indexNames = StringPool.EMPTY_ARRAY;
-
-			if (_isIndexInformationAvailable()) {
-				indexNames = _indexInformation.getIndexNames();
-			}
-
+				statsInformation.getUsedDiskSpace());
 			searchAdminDisplayContext.setIsLowOnDiskSpace(
 				_isLowOnDiskSpace(
-					searchAdminDisplayContext.getAvailableDiskSpace(),
-					_statsIndexInformation.getLargestIndexSize(indexNames)));
+					statsInformation.getAvailableDiskSpace(),
+					statsInformation.getSizeOfLargestIndex()));
 		}
 
 		NavigationItemList navigationItemList = new NavigationItemList();
@@ -108,16 +102,10 @@ public class SearchAdminDisplayContextBuilder {
 		_indexReindexerClassNames = indexReindexerClassNames;
 	}
 
-	public void setStatsClusterInformation(
-		StatsClusterInformation statsClusterInformation) {
+	public void setStatsInformationFactory(
+		StatsInformationFactory statsInformationFactory) {
 
-		_statsClusterInformation = statsClusterInformation;
-	}
-
-	public void setStatsIndexInformation(
-		StatsIndexInformation statsIndexInformation) {
-
-		_statsIndexInformation = statsIndexInformation;
+		_statsInformationFactory = statsInformationFactory;
 	}
 
 	protected Map<String, List<Indexer<?>>> getIndexersMap() {
@@ -221,8 +209,8 @@ public class SearchAdminDisplayContextBuilder {
 		return false;
 	}
 
-	private boolean _isStatsClusterInformationAvailable() {
-		if (_statsClusterInformation != null) {
+	private boolean _isStatsInformationAvailable() {
+		if (_statsInformationFactory != null) {
 			return true;
 		}
 
@@ -241,7 +229,6 @@ public class SearchAdminDisplayContextBuilder {
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private StatsClusterInformation _statsClusterInformation;
-	private StatsIndexInformation _statsIndexInformation;
+	private StatsInformationFactory _statsInformationFactory;
 
 }

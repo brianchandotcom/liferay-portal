@@ -1388,7 +1388,7 @@ definition {
 
 			Button.clickNoError(button = "Save");
 
-			AssertConfirm.waitForConfirmation(value1 = "If the actual unit of measure is changed, all conversion rates to primary units of measure already set may become incorrect. Are you sure you want to change the Primary UOM ?");
+			AssertConfirm.waitForConfirmation(value1 = "If the actual unit of measure is changed, all conversion rates to primary units of measure already set may become incorrect. Are you sure you want to change the primary unit of measure?");
 		}
 		else {
 			Button.clickSave();

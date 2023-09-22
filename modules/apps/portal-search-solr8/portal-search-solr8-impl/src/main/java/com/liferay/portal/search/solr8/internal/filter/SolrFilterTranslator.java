@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.search.filter.DateRangeFilter;
 import com.liferay.portal.search.filter.FilterVisitor;
+import com.liferay.portal.search.filter.RangeFilter;
 import com.liferay.portal.search.filter.TermsSetFilter;
 
 import org.apache.lucene.search.Query;
@@ -110,6 +111,11 @@ public class SolrFilterTranslator
 	}
 
 	@Override
+	public Query visit(RangeFilter rangeFilter) {
+		return _rangeFilterTranslator.translate(rangeFilter);
+	}
+
+	@Override
 	public Query visit(RangeTermFilter rangeTermFilter) {
 		return _rangeTermFilterTranslator.translate(rangeTermFilter);
 	}
@@ -161,6 +167,9 @@ public class SolrFilterTranslator
 
 	@Reference
 	private QueryFilterTranslator _queryFilterTranslator;
+
+	@Reference
+	private RangeFilterTranslator _rangeFilterTranslator;
 
 	@Reference
 	private RangeTermFilterTranslator _rangeTermFilterTranslator;

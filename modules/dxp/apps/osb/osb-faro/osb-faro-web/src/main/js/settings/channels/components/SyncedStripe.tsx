@@ -7,32 +7,40 @@ interface ISyncedStripeProps {
 	sitesSyncedCount: number;
 }
 
-function getTitle(sitesSyncedCount: number, channelsSyncedCount: number) {
-	let language = null;
-
+export function getTitle(
+	sitesSyncedCount: number,
+	channelsSyncedCount: number
+): string | any[] {
 	if (sitesSyncedCount === 1) {
 		if (channelsSyncedCount === 1) {
-			language = Liferay.Language.get(
-				'there-is-x-site-and-x-channel-synced-to-this-property'
-			);
-		} else {
-			language = Liferay.Language.get(
-				'there-is-x-site-and-x-channels-synced-to-this-property'
+			return Liferay.Language.get(
+				'there-is-1-site-and-1-channel-synced-to-this-property'
 			);
 		}
-	} else {
-		if (channelsSyncedCount === 1) {
-			language = Liferay.Language.get(
-				'there-are-x-sites-and-x-channel-synced-to-this-property'
-			);
-		} else {
-			language = Liferay.Language.get(
-				'there-are-x-sites-and-x-channels-synced-to-this-property'
-			);
-		}
+
+		return sub(
+			Liferay.Language.get(
+				'there-is-1-site-and-x-channels-synced-to-this-property'
+			),
+			[channelsSyncedCount]
+		);
 	}
 
-	return sub(language, [sitesSyncedCount, channelsSyncedCount]);
+	if (channelsSyncedCount === 1) {
+		return sub(
+			Liferay.Language.get(
+				'there-are-x-sites-and-1-channel-synced-to-this-property'
+			),
+			[sitesSyncedCount]
+		);
+	}
+
+	return sub(
+		Liferay.Language.get(
+			'there-are-x-sites-and-x-channels-synced-to-this-property'
+		),
+		[sitesSyncedCount, channelsSyncedCount]
+	);
 }
 
 const SyncedStripe: React.FC<ISyncedStripeProps> = ({

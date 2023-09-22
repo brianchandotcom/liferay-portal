@@ -7,13 +7,20 @@ package com.liferay.headless.builder.internal.model.listener;
 
 import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -51,13 +58,41 @@ public class APISortRelevantObjectEntryModelListener
 		try {
 			Map<String, Serializable> values = objectEntry.getValues();
 
+			long apiEndpointId = (long)values.get(
+				"r_apiEndpointToAPISorts_c_apiEndpointId");
+
 			if (!_objectEntryHelper.isValidObjectEntry(
-					(long)values.get("r_apiEndpointToAPISorts_c_apiEndpointId"),
-					"L_API_ENDPOINT")) {
+					apiEndpointId, "L_API_ENDPOINT")) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null, "An API sort must be related to an API endpoint",
 					"an-api-sort-must-be-related-to-an-api-endpoint");
+			}
+
+			if (Validator.isNotNull(
+					_objectEntryHelper.getObjectEntry(
+						objectEntry.getCompanyId(),
+						StringBundler.concat(
+							"id ne '", objectEntry.getObjectEntryId(),
+							"' and r_apiEndpointToAPISorts_c_apiEndpointId eq ",
+							"'", apiEndpointId, "'"),
+						getObjectDefinitionExternalReferenceCode()))) {
+
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.
+						getObjectDefinitionByExternalReferenceCode(
+							getObjectDefinitionExternalReferenceCode(),
+							objectEntry.getCompanyId());
+
+				User user = _userLocalService.getUser(objectEntry.getUserId());
+
+				String label = objectDefinition.getLabel(user.getLocale());
+
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					Collections.singletonList(label),
+					String.format(
+						"The API Endpoint already has an associated %s", label),
+					"the-api-endpoint-already-has-an-associated-x");
 			}
 		}
 		catch (Exception exception) {
@@ -66,6 +101,12 @@ public class APISortRelevantObjectEntryModelListener
 	}
 
 	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
 	private ObjectEntryHelper _objectEntryHelper;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

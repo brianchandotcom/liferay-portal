@@ -37,8 +37,8 @@ public class DLProcessorRegistryUtil {
 		return _dlProcessorRegistry.getDLProcessor(dlProcessorType);
 	}
 
-	public static long getPreviewableProcessorMaxSize() {
-		return _dlProcessorRegistry.getPreviewableProcessorMaxSize();
+	public static long getPreviewableProcessorMaxSize(long groupId) {
+		return _dlProcessorRegistry.getPreviewableProcessorMaxSize(groupId);
 	}
 
 	public static void importGeneratedFiles(

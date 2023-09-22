@@ -125,6 +125,35 @@ definition {
 			configurationScope = "System Scope");
 	}
 
+	@description = "This is a use case for LPS-102027. Verify JSP fragment module is still in Resolved status after removing osgi/state folder on LPKG bundle."
+	@priority = 3
+	test JSPFragmentModuleStillResolvedAfterRemovingStateFolderOnLPKGBundle {
+		property license.required = "true";
+		property portal.upstream = "false";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		FileInstall.deployFileOnServer(jarFile = "com.liferay.login.web.jsp.override.sample.jar");
+
+		WaitForConsoleTextPresent(value1 = "STOPPED com.liferay.login.web");
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.executeCommand(commandName = "lb | grep com.liferay.login.web.jsp.override.sample");
+
+		GogoShell.viewOutput(outputContent = "Resolved");
+
+		Portlet.shutdownServer();
+
+		Portlet.startServer();
+
+		GogoShell.openGogoShellAdmin();
+
+		GogoShell.executeCommand(commandName = "lb | grep com.liferay.login.web.jsp.override.sample");
+
+		GogoShell.viewOutput(outputContent = "Resolved");
+	}
+
 	@priority = 4
 	test RestartingPortalDuplicatesOSGiConfiguration {
 		property database.types = "mysql";

@@ -447,30 +447,30 @@ public class PoshiProperties extends Properties {
 						"android", "androidchrome", "chrome", "edge", "firefox",
 						"internetexplorer", "iossafari", "safari"
 					});
-				put(DEBUG_STACKTRACE, new String[] {"true", "false"});
-				put(GENERATE_COMMAND_SIGNATURE, new String[] {"true", "false"});
-				put(PROXY_SERVER_ENABLED, new String[] {"true", "false"});
-				put(REPORT_TYPE, new String[] {"test-properties,usage"});
-				put(SAVE_SCREENSHOT, new String[] {"true", "false"});
-				put(SAVE_WEB_PAGE, new String[] {"true", "false"});
-				put(TCAT_ENABLED, new String[] {"true", "false"});
-				put(TEST_ASSERT_CONSOLE_ERRORS, new String[] {"true", "false"});
+				put(DEBUG_STACKTRACE, new String[] {"false", "true"});
+				put(GENERATE_COMMAND_SIGNATURE, new String[] {"false", "true"});
+				put(PROXY_SERVER_ENABLED, new String[] {"false", "true"});
+				put(REPORT_TYPE, new String[] {"test-properties", "usage"});
+				put(SAVE_SCREENSHOT, new String[] {"false", "true"});
+				put(SAVE_WEB_PAGE, new String[] {"false", "true"});
+				put(TCAT_ENABLED, new String[] {"false", "true"});
+				put(TEST_ASSERT_CONSOLE_ERRORS, new String[] {"false", "true"});
 				put(
 					TEST_ASSERT_JAVASCRIPT_ERRORS,
-					new String[] {"true", "false"});
+					new String[] {"false", "true"});
 				put(
 					TEST_ASSERT_WARNING_EXCEPTIONS,
-					new String[] {"true", "false"});
+					new String[] {"false", "true"});
 				put(TEST_BATCH_RUN_TYPE, new String[] {"sequential", "single"});
 				put(
 					TEST_POSHI_SCRIPT_VALIDATION,
-					new String[] {"true", "false"});
-				put(TEST_RUN_LOCALLY, new String[] {"true", "false"});
+					new String[] {"false", "true"});
+				put(TEST_RUN_LOCALLY, new String[] {"false", "true"});
 				put(TEST_RUN_TYPE, new String[] {"parallel", "sequential"});
-				put(TEST_SKIP_TEAR_DOWN, new String[] {"true", "false"});
+				put(TEST_SKIP_TEAR_DOWN, new String[] {"false", "true"});
 				put(
 					VALIDATION_RESOURCE_FILE_TYPES,
-					new String[] {"path", "function", "macro", "testcase"});
+					new String[] {"function", "macro", "path", "testcase"});
 			}
 		};
 

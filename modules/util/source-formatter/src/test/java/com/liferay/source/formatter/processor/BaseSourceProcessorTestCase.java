@@ -23,6 +23,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -172,6 +173,19 @@ public abstract class BaseSourceProcessorTestCase {
 				fileName
 			).addExpectedMessage(
 				expectedMessage, lineNumber
+			));
+	}
+
+	protected void test(String fileName, String[] expectedMessages)
+		throws Exception {
+
+		Arrays.sort(expectedMessages);
+
+		test(
+			SourceProcessorTestParameters.create(
+				fileName
+			).addExpectedMessages(
+				expectedMessages
 			));
 	}
 

@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>ANY_TITLE</td>
-	<td>//button[@title='${key_title}'] | //button//span[@*='${key_title}']</td>
+	<td>//button[@*='${key_title}'] | //button//span[@*='${key_title}']</td>
 	<td></td>
 </tr>
 <tr>

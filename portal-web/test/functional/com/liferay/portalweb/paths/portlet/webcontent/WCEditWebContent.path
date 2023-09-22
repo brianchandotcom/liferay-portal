@@ -110,12 +110,12 @@
 </tr>
 <tr>
 	<td>SELECT_FEATURED_IMAGE_TYPE</td>
-	<td>//div[contains(@class,'input-select-wrapper')]/select[contains(@id,'smallImageSource')]</td>
+	<td>//select[contains(@id,'smallImageSource')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_FEATURED_IMAGE_INPUT</td>
-	<td>//div[contains(@id,'smallFileContainer')]//input[contains(@id,'smallFile')]</td>
+	<td>//div[contains(@id,'smallFileContainer')]//input[contains(@id,'smallFile')] | //input[contains(@id,'smallImageId')][contains(@type,'text')]</td>
 	<td></td>
 </tr>
 <tr>

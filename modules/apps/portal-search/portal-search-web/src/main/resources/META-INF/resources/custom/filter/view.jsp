@@ -52,21 +52,23 @@ CustomFilterPortletInstanceConfiguration customFilterPortletInstanceConfiguratio
 					displayTitle="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getHeading()) %>"
 					expanded="<%= true %>"
 				>
-					<aui:input cssClass="custom-filter-value-input" data-qa-id="customFilterValueInput" disabled="<%= customFilterDisplayContext.isImmutable() %>" id="<%= liferayPortletResponse.getNamespace() + StringUtil.randomId() %>" label="" name="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getParameterName()) %>" useNamespace="<%= false %>" value="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getFilterValue()) %>" />
+					<div class="panel-body">
+						<aui:input cssClass="custom-filter-value-input" data-qa-id="customFilterValueInput" disabled="<%= customFilterDisplayContext.isImmutable() %>" id="<%= liferayPortletResponse.getNamespace() + StringUtil.randomId() %>" label="" name="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getParameterName()) %>" useNamespace="<%= false %>" value="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getFilterValue()) %>" />
 
-					<clay:button
-						aria-label='<%= LanguageUtil.get(request, "apply") %>'
-						cssClass="custom-filter-apply-button"
-						disabled="<%= customFilterDisplayContext.isImmutable() %>"
-						displayType="secondary"
-						label="apply"
-						small="<%= true %>"
-						type="submit"
-					/>
+						<clay:button
+							aria-label='<%= LanguageUtil.get(request, "apply") %>'
+							cssClass="custom-filter-apply-button"
+							disabled="<%= customFilterDisplayContext.isImmutable() %>"
+							displayType="secondary"
+							label="apply"
+							small="<%= true %>"
+							type="submit"
+						/>
 
-					<aui:script use="liferay-search-custom-filter">
-						new Liferay.Search.CustomFilter(A.one('#<portlet:namespace />fm'));
-					</aui:script>
+						<aui:script use="liferay-search-custom-filter">
+							new Liferay.Search.CustomFilter(A.one('#<portlet:namespace />fm'));
+						</aui:script>
+					</div>
 				</clay:panel>
 			</clay:panel-group>
 		</liferay-ddm:template-renderer>

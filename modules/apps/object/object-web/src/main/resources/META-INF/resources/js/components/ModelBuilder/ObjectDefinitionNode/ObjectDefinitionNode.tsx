@@ -4,7 +4,7 @@
  */
 
 import classNames from 'classnames';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
 	Elements,
 	Handle,
@@ -30,7 +30,10 @@ import {ModalAddObjectField} from '../../ObjectField/ModalAddObjectField';
 import {ModalAddObjectRelationship} from '../../ObjectRelationship/ModalAddObjectRelationship';
 import {ModalDeleteObjectDefinition} from '../../ViewObjectDefinitions/ModalDeleteObjectDefinition';
 import {DeletedObjectDefinition} from '../../ViewObjectDefinitions/ViewObjectDefinitions';
-import {getObjectDefinitionNodeActions} from '../../ViewObjectDefinitions/objectDefinitionUtil';
+import {
+	getObjectDefinitionNodeActions,
+	getUpdatedModelBuilderStructurePayload,
+} from '../../ViewObjectDefinitions/objectDefinitionUtil';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 import ObjectDefinitionNodeFooter from './ObjectDefinitionNodeFooter';
@@ -71,6 +74,7 @@ export function ObjectDefinitionNode({
 			elements,
 			objectDefinitionPermissionsURL,
 			selectedObjectDefinitionNode,
+			selectedObjectFolder,
 		},
 		dispatch,
 	] = useObjectFolderContext();
@@ -141,26 +145,22 @@ export function ObjectDefinitionNode({
 
 	const viewObjectDetailsURL = formatActionURL(editObjectDefinitionURL, id);
 
-	useEffect(() => {
-		const makeFetch = async () => {
-			if (selectedObjectDefinitionNode) {
-				const url = createResourceURL(baseResourceURL, {
-					objectDefinitionId: selectedObjectDefinitionNode.id,
-					p_p_resource_id:
-						'/object_definitions/get_object_relationship_info',
-				}).href;
+	const updateModelBuilderStructure = async (
+		newObjectRelationshipId: number
+	) => {
+		const payload = await getUpdatedModelBuilderStructurePayload(
+			selectedObjectFolder.name
+		);
 
-				const {parameterRequired} = await API.fetchJSON<{
-					parameterRequired: boolean;
-				}>(url);
-
-				setObjectRelationshipParameterRequired(parameterRequired);
-			}
-		};
-
-		makeFetch();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedObjectDefinitionNode]);
+		dispatch({
+			payload: {
+				...payload,
+				rightSidebarType: 'objectRelationshipDetails',
+				selectedObjectRelationshipEdgeId: newObjectRelationshipId,
+			},
+			type: TYPES.UPDATE_MODEL_BUILDER_STRUCTURE,
+		});
+	};
 
 	return (
 		<>
@@ -183,6 +183,27 @@ export function ObjectDefinitionNode({
 						},
 						type: TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE,
 					});
+
+					const makeFetch = async () => {
+						if (selectedObjectDefinitionNode) {
+							const url = createResourceURL(baseResourceURL, {
+								objectDefinitionId:
+									selectedObjectDefinitionNode.id,
+								p_p_resource_id:
+									'/object_definitions/get_object_relationship_info',
+							}).href;
+
+							const {parameterRequired} = await API.fetchJSON<{
+								parameterRequired: boolean;
+							}>(url);
+
+							setObjectRelationshipParameterRequired(
+								parameterRequired
+							);
+						}
+					};
+
+					makeFetch();
 				}}
 				onMouseEnter={() => {
 					displayNodeHandles(true);
@@ -339,6 +360,10 @@ export function ObjectDefinitionNode({
 					objectRelationshipParameterRequired={
 						objectRelationshipParameterRequired
 					}
+					onAfterSubmit={(newObjectRelationshipId: number) =>
+						updateModelBuilderStructure(newObjectRelationshipId)
+					}
+					reload={false}
 				/>
 			)}
 

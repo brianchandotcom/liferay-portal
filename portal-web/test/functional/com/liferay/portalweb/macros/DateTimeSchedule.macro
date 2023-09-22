@@ -10,12 +10,25 @@ definition {
 
 	macro getCurrentDisplayTime {
 		var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
+
+		var displayDateHourLength = StringUtil.length(${displayDateHour});
+
+		if (${displayDateHourLength} == 1) {
+			var displayDateHour = "0${displayDateHour}";
+		}
+
 		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
 
 		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
 
 		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
 		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
+
+		var displayDateMinuteLength = StringUtil.length(${displayDateMinute});
+
+		if (${displayDateMinuteLength} == 1) {
+			var displayDateMinute = "0${displayDateMinute}";
+		}
 
 		var currentTime = "${displayDateHour}:${displayDateMinute} ${displayDateAmpm}";
 
@@ -40,6 +53,18 @@ definition {
 		if (${minuteExceededValidator} == "true") {
 			var displayDateHour = ${displayDateHour} + 1;
 			var displayDateMinuteFuture = ${displayDateMinuteFuture} - 60;
+		}
+
+		var displayDateHourLength = StringUtil.length(${displayDateHour});
+
+		if (${displayDateHourLength} == 1) {
+			var displayDateHour = "0${displayDateHour}";
+		}
+
+		var displayDateMinuteFutureLength = StringUtil.length(${displayDateMinuteFuture});
+
+		if (${displayDateMinuteFutureLength} == 1) {
+			var displayDateMinuteFuture = "0${displayDateMinuteFuture}";
 		}
 
 		var displayTime = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAmpm}";

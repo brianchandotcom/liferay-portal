@@ -11,10 +11,12 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Felipe Lorenz
  */
 @ProviderType
-public interface StatsClusterInformation {
+public interface StatsInformation {
 
-	public double getAvailableDiskSpace(String... nodeIds);
+	public double getAvailableDiskSpace();
 
-	public double getUsedDiskSpace(String... nodeIds);
+	public double getSizeOfLargestIndex();
+
+	public double getUsedDiskSpace();
 
 }

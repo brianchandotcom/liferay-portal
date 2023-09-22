@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.service.base.CompanyServiceBaseImpl;
+import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.io.InputStream;
 

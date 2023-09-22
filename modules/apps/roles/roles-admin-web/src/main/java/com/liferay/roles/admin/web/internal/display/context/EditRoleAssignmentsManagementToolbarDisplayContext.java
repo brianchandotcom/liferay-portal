@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.persistence.constants.UserGroupFinderConstants;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.roles.admin.constants.RolesAdminPortletKeys;
 import com.liferay.roles.admin.constants.RolesAdminWebKeys;
 import com.liferay.roles.admin.search.GroupRoleChecker;
@@ -57,7 +58,6 @@ import com.liferay.roles.admin.search.UserGroupRoleChecker;
 import com.liferay.roles.admin.web.internal.dao.search.SegmentsEntrySearchContainerFactory;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.site.search.GroupSearch;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 import com.liferay.users.admin.search.UserSearch;
 import com.liferay.users.admin.search.UserSearchTerms;
 

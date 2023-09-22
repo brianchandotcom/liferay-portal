@@ -64,6 +64,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
+page import="com.liferay.portlet.usersadmin.util.UsersAdminUtil" %><%@
 page import="com.liferay.site.memberships.web.internal.constants.SiteMembershipWebKeys" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.OrganizationsDisplayContext" %><%@
 page import="com.liferay.site.memberships.web.internal.display.context.OrganizationsManagementToolbarDisplayContext" %><%@
@@ -95,8 +96,7 @@ page import="com.liferay.site.memberships.web.internal.servlet.taglib.util.Organ
 page import="com.liferay.site.memberships.web.internal.servlet.taglib.util.UserActionDropdownItemsProvider" %><%@
 page import="com.liferay.site.memberships.web.internal.servlet.taglib.util.UserGroupActionDropdownItemsProvider" %><%@
 page import="com.liferay.site.memberships.web.internal.util.GroupUtil" %><%@
-page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %><%@
-page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
+page import="com.liferay.site.navigation.taglib.servlet.taglib.util.BreadcrumbEntriesUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Date" %><%@

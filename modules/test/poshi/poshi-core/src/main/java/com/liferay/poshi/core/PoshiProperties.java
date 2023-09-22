@@ -262,6 +262,23 @@ public class PoshiProperties extends Properties {
 		return _poshiProperties;
 	}
 
+	public static void validateProperties(Properties properties) {
+		for (String propertyName : properties.stringPropertyNames()) {
+			String propertyValue = properties.getProperty(propertyName);
+
+			if (propertyValue.contains(",")) {
+				for (String additionalPropertyValue :
+						ListUtil.newListFromString(propertyValue)) {
+
+					validateProperty(propertyName, additionalPropertyValue);
+				}
+			}
+			else {
+				validateProperty(propertyName, propertyValue);
+			}
+		}
+	}
+
 	public static void validateProperty(
 		String propertyName, String propertyValue) {
 
@@ -291,6 +308,8 @@ public class PoshiProperties extends Properties {
 		super(properties);
 
 		printProperties(false);
+
+		validateProperties(properties);
 	}
 
 	public void printProperties(boolean update) {
@@ -509,21 +528,6 @@ public class PoshiProperties extends Properties {
 					}
 
 					if (Validator.isNotNull(propertyValue)) {
-						if (propertyValue.contains(",")) {
-							List<String> propertyValues =
-								ListUtil.newListFromString(propertyValue);
-
-							for (String possiblePropertyValue :
-									propertyValues) {
-
-								validateProperty(
-									propertyName, possiblePropertyValue);
-							}
-						}
-						else {
-							validateProperty(propertyName, propertyValue);
-						}
-
 						properties.setProperty(propertyName, propertyValue);
 					}
 				}

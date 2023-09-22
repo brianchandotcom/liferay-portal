@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>DETAILS_TOGGLE</td>
-	<td>//div[@id='templateDetailsSectionPanel']//a/span</td>
+	<td>//button[@role='tab']/span[contains(text(), 'Details')]</td>
 	<td></td>
 </tr>
 <tr>

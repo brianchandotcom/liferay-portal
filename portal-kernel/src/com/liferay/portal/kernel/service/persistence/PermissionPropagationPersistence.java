@@ -34,6 +34,71 @@ public interface PermissionPropagationPersistence
 	 */
 
 	/**
+	 * Returns the permission propagation where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchPermissionPropagationException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching permission propagation
+	 * @throws NoSuchPermissionPropagationException if a matching permission propagation could not be found
+	 */
+	public PermissionPropagation findByG_C_C_C(
+			long groupId, long companyId, long classNameId, long classPK)
+		throws NoSuchPermissionPropagationException;
+
+	/**
+	 * Returns the permission propagation where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching permission propagation, or <code>null</code> if a matching permission propagation could not be found
+	 */
+	public PermissionPropagation fetchByG_C_C_C(
+		long groupId, long companyId, long classNameId, long classPK);
+
+	/**
+	 * Returns the permission propagation where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching permission propagation, or <code>null</code> if a matching permission propagation could not be found
+	 */
+	public PermissionPropagation fetchByG_C_C_C(
+		long groupId, long companyId, long classNameId, long classPK,
+		boolean useFinderCache);
+
+	/**
+	 * Removes the permission propagation where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the permission propagation that was removed
+	 */
+	public PermissionPropagation removeByG_C_C_C(
+			long groupId, long companyId, long classNameId, long classPK)
+		throws NoSuchPermissionPropagationException;
+
+	/**
+	 * Returns the number of permission propagations where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching permission propagations
+	 */
+	public int countByG_C_C_C(
+		long groupId, long companyId, long classNameId, long classPK);
+
+	/**
 	 * Caches the permission propagation in the entity cache if it is enabled.
 	 *
 	 * @param permissionPropagation the permission propagation

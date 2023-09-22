@@ -35,6 +35,13 @@ public class PermissionPropagationLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.PermissionPropagationLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static PermissionPropagation addPermissionPropagation(
+		long companyId, long groupId, String className, long classPK,
+		boolean propagate) {
+
+		return getService().addPermissionPropagation(
+			companyId, groupId, className, classPK, propagate);
+	}
 
 	/**
 	 * Adds the permission propagation to the database. Also notifies the appropriate model listeners.
@@ -211,6 +218,13 @@ public class PermissionPropagationLocalServiceUtil {
 		return getService().fetchPermissionPropagation(permissionPropagationId);
 	}
 
+	public static PermissionPropagation fetchPermissionPropagation(
+		long companyId, long groupId, String className, long classPK) {
+
+		return getService().fetchPermissionPropagation(
+			companyId, groupId, className, classPK);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -280,6 +294,14 @@ public class PermissionPropagationLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static PermissionPropagation updatePermissionPropagation(
+		long companyId, long groupId, String className, long classPK,
+		boolean propagate) {
+
+		return getService().updatePermissionPropagation(
+			companyId, groupId, className, classPK, propagate);
 	}
 
 	/**

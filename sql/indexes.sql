@@ -348,6 +348,8 @@ create index IX_CD25266E on PasswordPolicyRel (passwordPolicyId);
 
 create index IX_326F75BD on PasswordTracker (userId);
 
+create unique index IX_72E2E894 on PermissionPropagation (groupId, companyId, classNameId, classPK, ctCollectionId);
+
 create index IX_F5B219C7 on Phone (companyId, classNameId, classPK, ctCollectionId);
 create index IX_51CB82D8 on Phone (companyId, classNameId, classPK, primary_, ctCollectionId);
 create index IX_AA7CD218 on Phone (companyId, classNameId, ctCollectionId);

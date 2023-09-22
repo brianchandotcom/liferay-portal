@@ -12,11 +12,13 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchPermissionPropagationException;
 import com.liferay.portal.kernel.model.PermissionPropagation;
 import com.liferay.portal.kernel.service.PermissionPropagationLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.PermissionPropagationPersistence;
 import com.liferay.portal.kernel.service.persistence.PermissionPropagationUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -160,6 +162,15 @@ public class PermissionPropagationPersistenceTest {
 		Assert.assertEquals(
 			existingPermissionPropagation.isPropagate(),
 			newPermissionPropagation.isPropagate());
+	}
+
+	@Test
+	public void testCountByG_C_C_C() throws Exception {
+		_persistence.countByG_C_C_C(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_C_C_C(0L, 0L, 0L, 0L);
 	}
 
 	@Test
@@ -429,6 +440,85 @@ public class PermissionPropagationPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		PermissionPropagation newPermissionPropagation =
+			addPermissionPropagation();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(
+				newPermissionPropagation.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		PermissionPropagation newPermissionPropagation =
+			addPermissionPropagation();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			PermissionPropagation.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"permissionPropagationId",
+				newPermissionPropagation.getPermissionPropagationId()));
+
+		List<PermissionPropagation> result = _persistence.findWithDynamicQuery(
+			dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		PermissionPropagation permissionPropagation) {
+
+		Assert.assertEquals(
+			Long.valueOf(permissionPropagation.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				permissionPropagation, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			Long.valueOf(permissionPropagation.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				permissionPropagation, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
+			Long.valueOf(permissionPropagation.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				permissionPropagation, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
+		Assert.assertEquals(
+			Long.valueOf(permissionPropagation.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(
+				permissionPropagation, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
 	}
 
 	protected PermissionPropagation addPermissionPropagation()

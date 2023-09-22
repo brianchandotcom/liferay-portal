@@ -506,6 +506,45 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-195725. Verify that it's possible to delete the MDF Claim while in draft status"
+	@priority = 4
+	test PMUUserCanDeleteMDFClaimInDraftStatus {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given that the PMU user goes to the created MDF") {
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
+		}
+
+		task ("And creates a draft Claim") {
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				saveAsDraft = "true",
+				thirdInvoice = "Document_1.png");
+
+			PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+		}
+
+		task ("When the PMU goes to the created draft Claim") {
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("And delete the draft Claim") {
+			PRMUtils.deleteMDF();
+		}
+
+		task ("Then the draft Claim should not be present") {
+			PRMNavigator.openSitePage(pageName = "MDF Claims");
+
+			PRMUtils.assertMDFNotPresent(
+				mdfType = "Claim",
+				requestID = ${staticClaimId1});
+		}
+	}
+
 	@description = "This is a test for LPS-179371. Verify that the Total Claim Amount reflects the value claimed per budget"
 	@priority = 5
 	test TotalClaimAmountReflectsBudgetValue {
@@ -546,44 +585,5 @@ definition {
 				expected = ${expectedTotalClaimAmountValue});
 		}
 	}
-
-	@description = "This is a test for LPS-195725. Verify that it's possible to delete the MDF Claim while in draft status"
-    @priority = 4
-    test PMUUserCanDeleteMDFClaimInDraftStatus {
-        property test.liferay.virtual.instance = "false";
-        property test.run.type = "single";
-
-        task ("Given that the PMU user goes to the created MDF") {
-            PRMNavigator.openSitePage(pageName = "MDF Requests");
-
-            PRMMDFRequest.goToMDF(campaignName = "Campaign Name");
-        }
-
-        task ("And creates a draft Claim") {
-            PRMMDFClaim.createNewClaim(
-                listLeads = "Document_1.xlsx",
-                reimbursementInvoice = "Document_1.png",
-                saveAsDraft = "true",
-                thirdInvoice = "Document_1.png");
-
-            PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
-        }
-
-        task ("When the PMU goes to the created draft Claim") {
-            PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
-        }
-
-        task ("And delete the draft Claim") {
-            PRMUtils.deleteMDF();
-        }
-
-        task ("Then the draft Claim should not be present") {
-            PRMNavigator.openSitePage(pageName = "MDF Claims");
-
-            PRMUtils.assertMDFNotPresent(
-                mdfType = "Claim",
-                requestID = ${staticClaimId1});
-        }
-    }
 
 }

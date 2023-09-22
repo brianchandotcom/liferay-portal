@@ -9,29 +9,36 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.frontend.taglib.soy.servlet.taglib.ComponentRendererTag;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Marco Leo
  */
-public class SearchResultsTag extends ComponentRendererTag {
+public class SearchResultsTag extends IncludeTag {
 
 	@Override
-	public int doStartTag() {
-		putValue("queryString", StringPool.BLANK);
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
 
-		HttpServletRequest httpServletRequest = getRequest();
+		setServletContext(ServletContextUtil.getServletContext());
+	}
 
+	@Override
+	protected String getPage() {
+		return _PAGE;
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		CommerceContext commerceContext =
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
@@ -40,42 +47,32 @@ public class SearchResultsTag extends ComponentRendererTag {
 			AccountEntry accountEntry = commerceContext.getAccountEntry();
 
 			if (accountEntry != null) {
-				putValue("commerceAccountId", accountEntry.getAccountEntryId());
+				httpServletRequest.setAttribute(
+					"liferay-commerce-ui:search-results:commerceAccountId",
+					accountEntry.getAccountEntryId());
 			}
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
 		}
 
-		putValue(
-			"searchAPI",
-			PortalUtil.getPortalURL(httpServletRequest) +
-				PortalUtil.getPathContext() + "/o/commerce-ui/search/");
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		putValue("spritemap", themeDisplay.getPathThemeSpritemap());
+		httpServletRequest.setAttribute(
+			"liferay-commerce-ui:search-results:groupId",
+			themeDisplay.getScopeGroupId());
+		httpServletRequest.setAttribute(
+			"liferay-commerce-ui:search-results:plid", themeDisplay.getPlid());
 
-		putValue("visible", false);
-
-		setTemplateNamespace("SearchResults.render");
-
-		return super.doStartTag();
+		httpServletRequest.setAttribute(
+			"liferay-commerce-ui:search-results:searchURL",
+			PortalUtil.getPortalURL(httpServletRequest) +
+				PortalUtil.getPathContext() + "/o/commerce-ui/search/");
 	}
 
-	@Override
-	public String getModule() {
-		NPMResolver npmResolver = ServletContextUtil.getNPMResolver();
-
-		if (npmResolver == null) {
-			return StringPool.BLANK;
-		}
-
-		return npmResolver.resolveModuleName(
-			"commerce-frontend-taglib/search_results/SearchResults.es");
-	}
+	private static final String _PAGE = "/search_results/page.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchResultsTag.class);

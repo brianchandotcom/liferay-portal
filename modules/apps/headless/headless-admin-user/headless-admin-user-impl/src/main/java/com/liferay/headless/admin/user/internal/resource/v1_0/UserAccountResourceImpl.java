@@ -771,6 +771,24 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			Long userAccountId, UserAccount userAccount)
 		throws Exception {
 
+		String status = userAccount.getStatusAsString();
+
+		Integer workflowStatus = null;
+
+		if (StringUtil.equalsIgnoreCase(
+				UserAccount.Status.ACTIVE.getValue(), status)) {
+
+			workflowStatus = WorkflowConstants.STATUS_APPROVED;
+		}
+		else if (StringUtil.equalsIgnoreCase(
+					UserAccount.Status.INACTIVE.getValue(), status)) {
+
+			workflowStatus = WorkflowConstants.STATUS_INACTIVE;
+		}
+		else {
+			throw new BadRequestException("Status is invalid");
+		}
+
 		AccountBrief[] accountBriefs = userAccount.getAccountBriefs();
 
 		if (accountBriefs != null) {
@@ -818,6 +836,11 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		_updatePassword(
 			user, userAccount.getCurrentPassword(), userAccount.getPassword());
 
+		ServiceContext serviceContext = _createServiceContext(userAccount);
+
+		_userService.updateStatus(
+			userAccountId, workflowStatus, serviceContext);
+
 		return _toUserAccount(
 			_userService.updateUser(
 				userAccountId, null, null, null, false, null, null,
@@ -838,7 +861,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				_getWebsites(userAccount),
 				_announcementsDeliveryLocalService.getUserDeliveries(
 					userAccountId),
-				_createServiceContext(userAccount)));
+				serviceContext));
 	}
 
 	@Override

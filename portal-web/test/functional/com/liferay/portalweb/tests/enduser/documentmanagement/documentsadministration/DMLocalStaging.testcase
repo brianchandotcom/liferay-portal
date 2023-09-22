@@ -1248,7 +1248,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanShareDocumentOnLiveSite {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
+		property custom.properties = "dl.actions.visible=true${line.separator}jsonws.web.service.paths.excludes=";
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = 1,

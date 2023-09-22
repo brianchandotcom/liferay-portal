@@ -664,7 +664,7 @@ definition {
 	@description = "Verify users without edit permission cannot change the currency of a channel."
 	@priority = 5
 	test CanNotEditChannelCurrencyAsUserWithoutEditPermission {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Commerce account with a buyer user") {
@@ -1018,7 +1018,7 @@ definition {
 	@description = "This is a test for COMMERCE-10602. Verify that the user can see the channel entries only if the 'Channels > Commerce Channel: View' is present"
 	@priority = 3
 	test CanUserWithChannelViewPermissionSeeChannelEntries {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given the User role has all the required permissions to see the product and channel") {
@@ -1701,7 +1701,7 @@ definition {
 	@description = "Verify users can configure payment method eligibility to specific payment terms."
 	@priority = 5
 	test PaymentMethodEligibleForSpecificPaymentTerms {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given an account with a buyer user") {
@@ -2410,7 +2410,7 @@ definition {
 	@description = "Verify all shipping options are available when orders are made using different order types given shipping option eligibility is set to All Order Types."
 	@priority = 5
 	test ShippingOptionEligibleForAnyOrderType {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given an account with a buyer user") {
@@ -2527,7 +2527,7 @@ definition {
 	@description = "Verify users can configure shipping option eligibility to specific delivery terms."
 	@priority = 5
 	test ShippingOptionEligibleForSpecificDeliveryTerms {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given an account with a buyer user") {
@@ -2619,7 +2619,7 @@ definition {
 	@description = "Verify users can configure shipping option eligibility to specific order types."
 	@priority = 5
 	test ShippingOptionEligibleForSpecificOrderType {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given an account with a buyer user") {
@@ -2992,7 +2992,7 @@ definition {
 	@description = "This is a test for COMMERCE-8300. The buyer can view the order preview with the uploaded template"
 	@priority = 5
 	test ViewOrderPreviewWithJasperTemplate {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a channel with a Print Order Template jasper file ") {

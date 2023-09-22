@@ -530,7 +530,7 @@ definition {
 	@description = "This is a test for COMMERCE-9253. CanCheckTheApprovedStatusForSingleApproverWorkflow"
 	@priority = 5
 	test CanCheckApprovedProductWorkflowStatusWithSingleApproverWorkflow {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -780,7 +780,7 @@ definition {
 	@description = "This is a test for COMMERCE-9182. VerifyDraftProductNotAppearOnMiniumCatalogPage"
 	@priority = 5
 	test CanCheckDraftProductVisibilityOnMiniumCatalogPage {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -901,7 +901,7 @@ definition {
 	@description = "This is a test for COMMERCE-9290. CanCheckTheDraftStatusForSingleApproverWorkflow"
 	@priority = 5
 	test CanCheckDraftProductWorkflowStatusWithSingleApproverWorkflow {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1082,7 +1082,7 @@ definition {
 	@description = "This is a test for COMMERCE-9292. CanCheckThePendingReviewStatusForSingleApproverWorkflow"
 	@priority = 5
 	test CanCheckPendingProductWorkflowStatusWithSingleApproverWorkflow {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
@@ -1305,7 +1305,7 @@ definition {
 	@description = "This is a test for the COMMERCE-10763, to verify that a buyer user can download the virtual product by the URL retrieved using API"
 	@priority = 4
 	test CanDownloadConfiguredVirtualProduct {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		var baseURL = PropsUtil.get("portal.url");
@@ -1453,7 +1453,7 @@ definition {
 	@description = "This is a test for the COMMERCE-10763, to verify that a buyer user can not download the virtual product by the URL retrieved using API without permissions"
 	@priority = 4
 	test CanDownloadConfiguredVirtualProductWithoutPermissions {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		var baseURL = PropsUtil.get("portal.url");
@@ -2124,7 +2124,7 @@ definition {
 	@description = "This is a test for bug COMMERCE-9999. Verify a product image can be uploaded via headless API with CDN."
 	@priority = 3
 	test CanUploadProductImageViaAPIUsingCDN {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium Site is created") {

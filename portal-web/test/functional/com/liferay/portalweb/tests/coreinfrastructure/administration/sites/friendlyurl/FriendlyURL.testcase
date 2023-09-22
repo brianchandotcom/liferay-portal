@@ -30,7 +30,7 @@ definition {
 	@description = "If virtual.hosts.strict.access=true is set, do not redirect to a default instance if there is no associated company"
 	@priority = 4
 	test DoNotRedirectToDefaultInstanceWithNoCompany {
-		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com${line.separator}virtual.hosts.strict.access=true";
+		property custom.properties = "virtual.hosts.strict.access=true${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

@@ -17,7 +17,7 @@ definition {
 	@description = "Verify all products sharing a partial sku are populated in the catalog when the user searches products by partial sku"
 	@priority = 3
 	test AssertMultipleProductsPopulatedSharingSamePartialSKUThatIsSearchedFor {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a buyer user") {
@@ -68,7 +68,7 @@ definition {
 	@description = "This is a test for COMMERCE-11848. Users can search fields and see the corresponding search suggestions language override (if previously set)"
 	@priority = 5
 	test CanGlobalSearchViewSearchSuggestionsWithLanguageOverride {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a user without a role is created") {
@@ -129,7 +129,7 @@ definition {
 	@description = "This is a test for COMMERCE-9998 We can see all order results on the Global Search by email"
 	@priority = 3
 	test CanSeeAllOrdersOnTheGlobalSearchByEmail {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site with a buyer user") {
@@ -951,7 +951,7 @@ definition {
 	@description = "Verify users can search products by partial SKU in the catalog"
 	@priority = 5
 	test SearchProductsByPartialSKU {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {

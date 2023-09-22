@@ -1,7 +1,7 @@
 @component-name = "portal-lima"
 definition {
 
-	property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}dl.actions.visible=true";
+	property custom.properties = "dl.actions.visible=true${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Asset Sharing";

@@ -26,7 +26,7 @@ definition {
 	@description = "This is a use case for LPS-92222."
 	@priority = 5
 	test AddFormWithSpanishAsOnlyLocale {
-		property custom.properties = "company.default.locale=es_ES${line.separator}locales.enabled=es_ES${line.separator}locales=es_ES";
+		property custom.properties = "company.default.locale=es_ES${line.separator}locales=es_ES${line.separator}locales.enabled=es_ES";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -288,7 +288,7 @@ definition {
 
 	@priority = 3
 	test ConfigureURLToAlwaysShowLocale {
-		property custom.properties = "locales.enabled=fr_FR,en_US,zh_CN,es_ES${line.separator}locale.prepend.friendly.url.style=2";
+		property custom.properties = "locale.prepend.friendly.url.style=2${line.separator}locales.enabled=fr_FR,en_US,zh_CN,es_ES";
 		property custom.system.properties = "user.country=FR${line.separator}user.language=fr";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -306,7 +306,7 @@ definition {
 
 	@priority = 4
 	test EnableRedirectToDefaultLocale {
-		property custom.properties = "locales.enabled=en_US,zh_CN,fr_FR${line.separator}locale.use.default.if.not.available=true";
+		property custom.properties = "locale.use.default.if.not.available=true${line.separator}locales.enabled=en_US,zh_CN,fr_FR";
 		property custom.system.properties = "user.country=US${line.separator}user.language=en";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -726,7 +726,7 @@ definition {
 
 	@priority = 4
 	test RestrictEnabledLocales {
-		property custom.properties = "locales.enabled=zh_CN,en_US,fr_FR,de_DE,es_ES${line.separator}locales=zh_CN,en_US,fr_FR,de_DE,es_ES,pt_BR,hu_HU";
+		property custom.properties = "locales=zh_CN,en_US,fr_FR,de_DE,es_ES,pt_BR,hu_HU${line.separator}locales.enabled=zh_CN,en_US,fr_FR,de_DE,es_ES";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

@@ -17,7 +17,7 @@ definition {
 	@description = "This is a test for COMMERCE-9633. CanAddToCartGeneratedProductSkus"
 	@priority = 5
 	test CanAddToCartGeneratedProductSkus {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site is created") {
@@ -209,7 +209,7 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test CanAssertDefaultOptionValuesAreChecked {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site is created") {
@@ -367,7 +367,7 @@ definition {
 	@description = "This is a test for COMMERCE-9815. CanAssertDefaultOptionValuesAreSave"
 	@priority = 3
 	test CanAssertDefaultOptionValuesAreSavedUsingToggleSwitch {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site is created") {
@@ -674,7 +674,7 @@ definition {
 	@description = "This is a test for COMMERCE-9837. CanChangeOptionAndOptionValuePositions"
 	@priority = 5
 	test CanChangeOptionAndOptionValuePositions {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site is created") {
@@ -795,7 +795,7 @@ definition {
 	@description = "This is a test for COMMERCE-10798. As buyer user, I can place an order with a bundled product that has a linked SKU from different catalog to the option."
 	@priority = 4
 	test CanCheckoutBundledProductWithDifferentCatalogSkuLinked {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site is created") {
@@ -906,7 +906,7 @@ definition {
 	@description = "This is a test for COMMERCE-9833. CanCheckoutProductWithEveryOptionFieldType"
 	@priority = 5
 	test CanCheckoutProductWithEveryOptionFieldType {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site is created") {
@@ -1226,7 +1226,7 @@ definition {
 	@description = "COMMERCE-11491. Can delete product option from the option admin page"
 	@priority = 4
 	test CanDeleteProductOptionFromOptionAdminPage {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site is created") {
@@ -1282,7 +1282,7 @@ definition {
 	@description = "COMMERCE-11494. Can delete product option with all skus generated"
 	@priority = 4
 	test CanDeleteProductOptionWithGeneratedSkus {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "false";
 
 		task ("Given a Minium site is created") {
@@ -1695,7 +1695,7 @@ definition {
 	@description = "This is a test for COMMERCE-12167.User can see SKU updated on the product details page when values are selected from multiple options."
 	@priority = 5
 	test CanSKUUpdateSuccessfullyWhenSelectingValuesFromMultipleOptions {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site is created") {
@@ -1867,7 +1867,7 @@ definition {
 	@description = "This is a test for COMMERCE-9830. CanViewOptionOnTheOptionFacetWidget"
 	@priority = 5
 	test CanViewOptionOnTheOptionFacetWidget {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site is created") {
@@ -1992,7 +1992,7 @@ definition {
 	@description = "This is a test for COMMERCE-12118. As buyer user, I can view the image related to the option that I selected."
 	@priority = 5
 	test CanViewProductImageWithOptionSelected {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site is created") {
@@ -2093,7 +2093,7 @@ definition {
 	@description = "This is a test for COMMERCE-12118. As buyer user, I can view the image related to the option using the Image Gallery."
 	@priority = 5
 	test CanViewProductWithImageUsingImageGallery {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site is created") {
@@ -2231,7 +2231,7 @@ definition {
 	@description = "This is a test for COMMERCE-11553. If a product with variants follows a product without stock, only the product without stock shows the unavailable label"
 	@priority = 5
 	test CanViewProductWithStockAvailableWhenItFollowsAProductWithoutStock {
-		property custom.properties = "jsonws.web.service.paths.excludes=${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user is created") {

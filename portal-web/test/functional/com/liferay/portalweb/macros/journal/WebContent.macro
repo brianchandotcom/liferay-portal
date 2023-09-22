@@ -219,6 +219,29 @@ definition {
 			value1 = ${uploadFileName});
 	}
 
+	macro addFeaturedImageFromDocumentsAndMedia {
+		Panel.expandPanel(panel = "Featured Image");
+
+		Select(
+			locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_TYPE",
+			value1 = "From Documents and Media");
+
+		if (IsTextEqual(locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_INPUT", value1 = "")) {
+			Click(
+				key_title = "Select Image",
+				locator1 = "Button#ANY_TITLE");
+		}
+		else {
+			Click(
+				key_title = "Change Image",
+				locator1 = "Button#ANY_TITLE");
+		}
+
+		ItemSelector.selectDMImage(
+			dmFolderName = ${dmFolderName},
+			imageFileName = ${imageFileName});
+	}
+
 	macro addFeaturedImageFromURL {
 		Panel.expandPanel(panel = "Featured Image");
 

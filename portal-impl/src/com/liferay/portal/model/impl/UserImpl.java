@@ -868,7 +868,7 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public boolean isReminderQueryComplete() {
-		if (isGuestUser()) {
+		if (isGuestUser() || isOnDemandUser()) {
 			return true;
 		}
 

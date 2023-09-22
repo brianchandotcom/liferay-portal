@@ -26,19 +26,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			ObjectAdmin.deleteObjectViaAPI(objectName = "PurchaseOrder");
-		}
-	}
-
 	@description = "This is a test for LPS-155168. The page creator cannot input Text Verification and reload the Simple Captcha in page editor."
 	@priority = 4
 	test CannotInputTextVerificationAndReloadSimpleCaptchaInPageEditor {

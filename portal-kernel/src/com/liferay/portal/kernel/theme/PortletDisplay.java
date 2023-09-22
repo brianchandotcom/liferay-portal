@@ -358,6 +358,10 @@ public class PortletDisplay implements Cloneable, Serializable {
 		return _active;
 	}
 
+	public boolean isBeta() {
+		return _beta;
+	}
+
 	public boolean isFocused() {
 		return _id.equals(_themeDisplay.getPpid());
 	}
@@ -611,6 +615,10 @@ public class PortletDisplay implements Cloneable, Serializable {
 
 	public void setActive(boolean active) {
 		_active = active;
+	}
+
+	public void setBeta(boolean beta) {
+		_beta = beta;
 	}
 
 	public void setColumnCount(int columnCount) {
@@ -919,6 +927,7 @@ public class PortletDisplay implements Cloneable, Serializable {
 		StringPool.BLANK);
 
 	private boolean _active;
+	private boolean _beta;
 	private int _columnCount;
 	private String _columnId = StringPool.BLANK;
 	private int _columnPos;

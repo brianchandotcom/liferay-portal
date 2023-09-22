@@ -62,7 +62,7 @@ export const FETCH_OPTIONS = {
 export const PORTAL_TOOLTIP_TRIGGER_CLASS = 'lfr-portal-tooltip';
 
 export const SCOPE_TYPES = {
-	EVERYWHERE: 'everywhere',
+	EVERYTHING: 'everything',
 	SITE: 'site',
 	SXP_BLUEPRINT: 'sxpBlueprint',
 };

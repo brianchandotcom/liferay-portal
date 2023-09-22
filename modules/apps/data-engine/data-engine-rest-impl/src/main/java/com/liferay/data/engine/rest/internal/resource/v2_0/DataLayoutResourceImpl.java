@@ -127,11 +127,9 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		DDMStructureLayout ddmStructureLayout =
 			_ddmStructureLayoutLocalService.getStructureLayout(dataLayoutId);
 
-		DDMStructure ddmStructure = ddmStructureLayout.getDDMStructure();
-
 		_dataDefinitionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			ddmStructure.getStructureId(), ActionKeys.DELETE);
+			ddmStructureLayout.getDDMStructure(), ActionKeys.DELETE);
 
 		_deleteDataLayout(dataLayoutId);
 	}
@@ -154,7 +152,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 		_dataDefinitionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			ddmStructureLayout.getDDMStructureId(), ActionKeys.VIEW);
+			ddmStructureLayout.getDDMStructure(), ActionKeys.VIEW);
 
 		return _getDataLayout(dataLayoutId);
 	}
@@ -180,7 +178,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 		_dataDefinitionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			ddmStructureLayout.getDDMStructureId(), ActionKeys.VIEW);
+			ddmStructureLayout.getDDMStructure(), ActionKeys.VIEW);
 
 		return _getDataLayout(
 			DataDefinitionContentTypeRegistryUtil.getClassNameId(contentType),
@@ -231,8 +229,8 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 		DDMStructure ddmStructure = ddmStructureLayout.getDDMStructure();
 
 		_dataDefinitionModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(),
-			ddmStructure.getStructureId(), ActionKeys.VIEW);
+			PermissionThreadLocal.getPermissionChecker(), ddmStructure,
+			ActionKeys.VIEW);
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
@@ -294,7 +292,7 @@ public class DataLayoutResourceImpl extends BaseDataLayoutResourceImpl {
 
 		_dataDefinitionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			ddmStructureLayout.getDDMStructureId(), ActionKeys.UPDATE);
+			ddmStructureLayout.getDDMStructure(), ActionKeys.UPDATE);
 
 		_validate(dataLayout, ddmStructureLayout.getDDMStructure());
 

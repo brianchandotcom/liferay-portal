@@ -609,6 +609,7 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Country">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="countryId" type="long" />
@@ -1261,6 +1262,7 @@
 	</model>
 	<model name="com.liferay.portal.kernel.model.Region">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="regionId" type="long" />

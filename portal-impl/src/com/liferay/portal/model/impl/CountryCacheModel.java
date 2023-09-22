@@ -67,10 +67,12 @@ public class CountryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", defaultLanguageId=");
@@ -123,6 +125,7 @@ public class CountryCacheModel
 		CountryImpl countryImpl = new CountryImpl();
 
 		countryImpl.setMvccVersion(mvccVersion);
+		countryImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			countryImpl.setUuid("");
@@ -222,6 +225,8 @@ public class CountryCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		defaultLanguageId = objectInput.readUTF();
 
@@ -258,6 +263,8 @@ public class CountryCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -341,6 +348,7 @@ public class CountryCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public String defaultLanguageId;
 	public long countryId;

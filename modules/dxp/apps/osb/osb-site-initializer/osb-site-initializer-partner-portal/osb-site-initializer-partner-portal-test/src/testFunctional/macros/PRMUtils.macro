@@ -9,6 +9,13 @@ definition {
 			templateType = "Site Initializer");
 	}
 
+	macro assertMDFNotPresent {
+		AssertElementNotPresent(
+			key_mdfType = ${mdfType},
+			key_requestID = ${requestID},
+			locator1 = "PRMMDFRequest#MDF_ID");
+	}
+
 	macro assertPageTitle {
 		AssertElementPresent(
 			key_title = ${pageTitle},
@@ -95,6 +102,12 @@ definition {
 			locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
 
 		Button.clickSave();
+	}
+
+	macro deleteMDF {
+		Button.click(button = "Delete");
+
+		Confirm(value1 = "Are you sure?");
 	}
 
 	macro downloadFileViaCurl {

@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.search.facet.RangeFacet;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.aggregation.Aggregation;
+import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
 import com.liferay.portal.search.facet.nested.NestedFacet;
 
 import java.util.ArrayList;
@@ -55,6 +57,32 @@ public class AggregationFilteringFacetProcessorContext
 		return aggregationBuilder;
 	}
 
+	private static void _addNestedFacetChildAggregationFilters(
+		BoolQueryBuilder boolQueryBuilder, String fieldName,
+		NestedFacet nestedFacet) {
+
+		if (nestedFacet.getChildAggregation() instanceof DateRangeAggregation) {
+			for (String value : nestedFacet.getSelections()) {
+				DateRangeAggregation dateRangeAggregation =
+					(DateRangeAggregation)nestedFacet.getChildAggregation();
+
+				boolQueryBuilder.must(
+					_rangeQuery(
+						fieldName, dateRangeAggregation.getFormat(),
+						RangeParserUtil.parserRange(value)));
+			}
+		}
+		else {
+			Aggregation childAggregation = nestedFacet.getChildAggregation();
+
+			Class<?> clazz = childAggregation.getClass();
+
+			throw new UnsupportedOperationException(
+				"Nested facet does not support child aggregation " +
+					clazz.getName());
+		}
+	}
+
 	private static List<QueryBuilder> _getSelectionFilters(
 		com.liferay.portal.search.facet.Facet facet) {
 
@@ -74,9 +102,15 @@ public class AggregationFilteringFacetProcessorContext
 						nestedFacet.getFilterValue()));
 			}
 
-			boolQueryBuilder.must(
-				QueryBuilders.termsQuery(
-					facet.getFieldName(), facet.getSelections()));
+			if (nestedFacet.getChildAggregation() != null) {
+				_addNestedFacetChildAggregationFilters(
+					boolQueryBuilder, fieldName, nestedFacet);
+			}
+			else {
+				boolQueryBuilder.must(
+					QueryBuilders.termsQuery(
+						facet.getFieldName(), facet.getSelections()));
+			}
 
 			queryBuilders.add(
 				QueryBuilders.nestedQuery(
@@ -85,7 +119,8 @@ public class AggregationFilteringFacetProcessorContext
 		else if (facet instanceof RangeFacet) {
 			for (String value : facet.getSelections()) {
 				queryBuilders.add(
-					_rangeQuery(fieldName, RangeParserUtil.parserRange(value)));
+					_rangeQuery(
+						fieldName, null, RangeParserUtil.parserRange(value)));
 			}
 		}
 		else {
@@ -119,9 +154,15 @@ public class AggregationFilteringFacetProcessorContext
 		return map;
 	}
 
-	private static QueryBuilder _rangeQuery(String fieldName, String[] ranges) {
+	private static QueryBuilder _rangeQuery(
+		String fieldName, String format, String[] ranges) {
+
 		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
 			fieldName);
+
+		if (!Validator.isBlank(format)) {
+			rangeQueryBuilder.format(format);
+		}
 
 		rangeQueryBuilder.gte(ranges[0]);
 		rangeQueryBuilder.lte(ranges[1]);

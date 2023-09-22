@@ -1,7 +1,9 @@
 definition {
 
 	macro getCurrentDisplayDate {
-		var displayDate = selenium.getAttribute("//input[contains(@id,'displayDate')]@value");
+		var key_field = ${field};
+
+		var displayDate = selenium.getAttribute("//input[contains(@id,'${key_field}Date')]@value");
 
 		echo("Current display date is: ${displayDate}");
 
@@ -9,7 +11,9 @@ definition {
 	}
 
 	macro getCurrentDisplayTime {
-		var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
+		var key_field = ${field};
+
+		var displayDateHour = selenium.getAttribute("//input[contains(@id,'${key_field}DateHour')]@value");
 
 		var displayDateHourLength = StringUtil.length(${displayDateHour});
 
@@ -17,12 +21,12 @@ definition {
 			var displayDateHour = "0${displayDateHour}";
 		}
 
-		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
+		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'${key_field}DateAmPm')]@value");
 
 		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
 
 		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
-		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
+		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'${key_field}DateMinute')]@value");
 
 		var displayDateMinuteLength = StringUtil.length(${displayDateMinute});
 
@@ -38,13 +42,15 @@ definition {
 	}
 
 	macro increaseDisplayTime {
-		var displayDateHour = selenium.getAttribute("//input[contains(@id,'displayDateHour')]@value");
-		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'displayDateAmPm')]@value");
+		var key_field = ${field};
+
+		var displayDateHour = selenium.getAttribute("//input[contains(@id,'${key_field}DateHour')]@value");
+		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'${key_field}DateAmPm')]@value");
 
 		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
 
 		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
-		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'displayDateMinute')]@value");
+		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'${key_field}DateMinute')]@value");
 
 		var displayDateMinuteFuture = ${displayDateMinute} + ${minuteIncreaseValue};
 

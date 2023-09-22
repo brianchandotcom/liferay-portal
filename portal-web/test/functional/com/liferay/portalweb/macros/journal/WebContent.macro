@@ -1541,11 +1541,13 @@ definition {
 	}
 
 	macro increaseDisplayDate {
-		var displayDate = DateTimeSchedule.getCurrentDisplayDate();
+		var displayDate = DateTimeSchedule.getCurrentDisplayDate(field = "display");
 
-		DateTimeSchedule.getCurrentDisplayTime();
+		DateTimeSchedule.getCurrentDisplayTime(field = "display");
 
-		var displayTime = DateTimeSchedule.increaseDisplayTime(minuteIncreaseValue = ${minuteIncrease});
+		var displayTime = DateTimeSchedule.increaseDisplayTime(
+			field = "display",
+			minuteIncreaseValue = ${minuteIncrease});
 
 		WebContent.editDisplayDate(
 			displayDate = ${displayDate},

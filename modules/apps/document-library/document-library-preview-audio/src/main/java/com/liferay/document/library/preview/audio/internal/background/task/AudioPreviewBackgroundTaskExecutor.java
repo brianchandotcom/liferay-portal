@@ -18,7 +18,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(
-	configurationPid = "com.liferay.document.library.configuration.DLFileEntryConfiguration",
 	property = "background.task.executor.class.name=com.liferay.document.library.preview.audio.internal.background.task.AudioPreviewBackgroundTaskExecutor",
 	service = BackgroundTaskExecutor.class
 )

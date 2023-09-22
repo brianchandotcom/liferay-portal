@@ -19,7 +19,6 @@ const DropdownChildren = ({
 	onSearch,
 	searching,
 	selectedKoroneikiAccount,
-	totalCount,
 }: any) => {
 	const [trackedRef, isIntersecting] = useIntersectionObserver();
 
@@ -75,15 +74,9 @@ const DropdownChildren = ({
 						selectedKoroneikiAccount={selectedKoroneikiAccount}
 					/>
 
-					{koroneikiAccountsItems?.length < totalCount && !fetching && (
-						<ClayDropDown.Section className="px-3">
-							<div className="font-weight-semi-bold text-neutral-5 text-paragraph-sm">
-								{i18n.translate('loading')}
-							</div>
-						</ClayDropDown.Section>
-					)}
-
-					<div ref={trackedRef as any}></div>
+					<ClayDropDown.Section className="px-3">
+						<div ref={trackedRef as any}>&nbsp;</div>
+					</ClayDropDown.Section>
 				</ClayDropDown.ItemList>
 			)}
 		</>

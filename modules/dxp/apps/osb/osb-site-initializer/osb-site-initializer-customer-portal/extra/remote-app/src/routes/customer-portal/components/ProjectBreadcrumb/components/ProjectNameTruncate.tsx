@@ -10,7 +10,7 @@ type ProjectNameTruncateProps = {
 	children: string;
 };
 
-export const PROJECT_NAME_LIMIT = 30; // CHANGE ME
+export const PROJECT_NAME_LIMIT = 16;
 
 const ProjectNameTruncate: React.FC<ProjectNameTruncateProps> = ({
 	children,

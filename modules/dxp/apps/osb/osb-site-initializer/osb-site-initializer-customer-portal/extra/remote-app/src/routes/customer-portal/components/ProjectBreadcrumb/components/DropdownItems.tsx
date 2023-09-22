@@ -10,8 +10,6 @@ import {Liferay} from '~/common/services/liferay';
 import ProjectNameTruncate from './ProjectNameTruncate';
 
 type DropdownItemsProps = {
-	error?: Error;
-	isLoading?: boolean;
 	koroneikiAccounts: any[];
 	selectedKoroneikiAccount: any;
 };
@@ -26,8 +24,6 @@ const getHref = (accountKey: string) => {
 };
 
 const DropdownItems: React.FC<DropdownItemsProps> = ({
-	error,
-	isLoading = false,
 	koroneikiAccounts,
 	selectedKoroneikiAccount,
 }) => {
@@ -63,10 +59,6 @@ const DropdownItems: React.FC<DropdownItemsProps> = ({
 								</ProjectNameTruncate>
 							</div>
 						</ClayDropDown.Item>
-
-						{isLoading && <p>Loading...</p>}
-
-						{error && <p>Error: {error.message}</p>}
 					</Fragment>
 				);
 			})}

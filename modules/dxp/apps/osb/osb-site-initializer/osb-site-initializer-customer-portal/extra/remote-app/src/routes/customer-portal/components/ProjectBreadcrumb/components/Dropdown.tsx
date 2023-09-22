@@ -11,17 +11,22 @@ import {useState} from 'react';
 import DropdownChildren from './DropdownChildren';
 import ProjectNameTruncate from './ProjectNameTruncate';
 
+type KoroneikiAccountsType = {
+	items: any[];
+	lastPage: number;
+	page: number;
+	pageSize: number;
+	totalCount: number;
+};
+
 type DropdownProps = {
-	fetching: any;
-	initialTotalCount: any;
-	koroneikiAccounts: any;
-	onIntersecting: any;
-	onSearch: any;
-	page: any;
-	searching: any;
+	fetching: boolean;
+	initialTotalCount: number;
+	koroneikiAccounts: KoroneikiAccountsType;
+	onIntersecting: () => void;
+	onSearch: () => void;
+	searching: boolean;
 	selectedKoroneikiAccount: any;
-	setPage: any;
-	totalCount: any;
 };
 
 const MAX_ITEM_BEFORE_FILTER = 5;
@@ -32,15 +37,8 @@ const Dropdown: React.FC<DropdownProps> = ({
 	koroneikiAccounts,
 	onIntersecting,
 	onSearch,
-
-	// page,
-
 	searching,
 	selectedKoroneikiAccount,
-
-	// setPage,
-
-	totalCount,
 }) => {
 	const [active, setActive] = useState(false);
 
@@ -88,7 +86,6 @@ const Dropdown: React.FC<DropdownProps> = ({
 				onSearch={onSearch}
 				searching={searching}
 				selectedKoroneikiAccount={selectedKoroneikiAccount}
-				totalCount={totalCount}
 			/>
 		</ClayDropDown>
 	);

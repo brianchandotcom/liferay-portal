@@ -5,22 +5,17 @@
 
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
-
 import {IconBreadcrumbs} from '~/common/icons';
-
 import i18n from '../../../../common/I18n';
 import Skeleton from '../../../../common/components/Skeleton';
 import useCurrentKoroneikiAccount from '../../../../common/hooks/useCurrentKoroneikiAccount';
-
 import useKoroneikiAccounts from '../../../../common/hooks/useKoroneikiAccounts';
-
 import PopoverIcon from '../ActivationStatus/DXPCloud/components/PopoverIcon';
 import Dropdown from './components/Dropdown';
 
 const ProjectBreadcrumb = () => {
 	const [initialTotalCount, setInitialTotalCount] = useState(0);
 	const [projectStatus, setProjectStatus] = useState('');
-	const [page, setPage] = useState(1);
 
 	const {
 		data: currentKoroneikiAccountData,
@@ -78,10 +73,8 @@ const ProjectBreadcrumb = () => {
 						})
 					}
 					onSearch={onSearch}
-					page={page}
 					searching={searching}
 					selectedKoroneikiAccount={selectedKoroneikiAccount}
-					setPage={setPage}
 				/>
 
 				<div

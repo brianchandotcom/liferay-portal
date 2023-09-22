@@ -33,6 +33,10 @@ public interface DateRangeFacetSearchContributor {
 
 		public DateRangeFacetBuilder frequencyThreshold(int frequencyThreshold);
 
+		/**
+		 * @deprecated As of Cavanaugh (7.4.x), with no replacement
+		 */
+		@Deprecated
 		public DateRangeFacetBuilder maxTerms(int maxTerms);
 
 		public DateRangeFacetBuilder order(String order);

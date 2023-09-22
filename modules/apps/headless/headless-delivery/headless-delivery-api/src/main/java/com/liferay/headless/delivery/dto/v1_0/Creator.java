@@ -280,23 +280,21 @@ public class Creator implements Serializable {
 
 	@Schema(description = "A list of userGroups information.")
 	@Valid
-	public UserGroupInformation[] getUserGroupInformations() {
-		return userGroupInformations;
+	public UserGroupBrief[] getUserGroupBriefs() {
+		return userGroupBriefs;
 	}
 
-	public void setUserGroupInformations(
-		UserGroupInformation[] userGroupInformations) {
-
-		this.userGroupInformations = userGroupInformations;
+	public void setUserGroupBriefs(UserGroupBrief[] userGroupBriefs) {
+		this.userGroupBriefs = userGroupBriefs;
 	}
 
 	@JsonIgnore
-	public void setUserGroupInformations(
-		UnsafeSupplier<UserGroupInformation[], Exception>
-			userGroupInformationsUnsafeSupplier) {
+	public void setUserGroupBriefs(
+		UnsafeSupplier<UserGroupBrief[], Exception>
+			userGroupBriefsUnsafeSupplier) {
 
 		try {
-			userGroupInformations = userGroupInformationsUnsafeSupplier.get();
+			userGroupBriefs = userGroupBriefsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -308,7 +306,7 @@ public class Creator implements Serializable {
 
 	@GraphQLField(description = "A list of userGroups information.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected UserGroupInformation[] userGroupInformations;
+	protected UserGroupBrief[] userGroupBriefs;
 
 	@Override
 	public boolean equals(Object object) {
@@ -445,19 +443,19 @@ public class Creator implements Serializable {
 			sb.append("\"");
 		}
 
-		if (userGroupInformations != null) {
+		if (userGroupBriefs != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"userGroupInformations\": ");
+			sb.append("\"userGroupBriefs\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < userGroupInformations.length; i++) {
-				sb.append(String.valueOf(userGroupInformations[i]));
+			for (int i = 0; i < userGroupBriefs.length; i++) {
+				sb.append(String.valueOf(userGroupBriefs[i]));
 
-				if ((i + 1) < userGroupInformations.length) {
+				if ((i + 1) < userGroupBriefs.length) {
 					sb.append(", ");
 				}
 			}

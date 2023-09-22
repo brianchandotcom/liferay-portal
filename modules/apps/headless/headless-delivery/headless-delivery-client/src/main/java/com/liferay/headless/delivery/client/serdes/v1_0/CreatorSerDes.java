@@ -6,7 +6,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.Creator;
-import com.liferay.headless.delivery.client.dto.v1_0.UserGroupInformation;
+import com.liferay.headless.delivery.client.dto.v1_0.UserGroupBrief;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -153,22 +153,19 @@ public class CreatorSerDes {
 			sb.append("\"");
 		}
 
-		if (creator.getUserGroupInformations() != null) {
+		if (creator.getUserGroupBriefs() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"userGroupInformations\": ");
+			sb.append("\"userGroupBriefs\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < creator.getUserGroupInformations().length;
-				 i++) {
+			for (int i = 0; i < creator.getUserGroupBriefs().length; i++) {
+				sb.append(String.valueOf(creator.getUserGroupBriefs()[i]));
 
-				sb.append(
-					String.valueOf(creator.getUserGroupInformations()[i]));
-
-				if ((i + 1) < creator.getUserGroupInformations().length) {
+				if ((i + 1) < creator.getUserGroupBriefs().length) {
 					sb.append(", ");
 				}
 			}
@@ -251,13 +248,13 @@ public class CreatorSerDes {
 			map.put("profileURL", String.valueOf(creator.getProfileURL()));
 		}
 
-		if (creator.getUserGroupInformations() == null) {
-			map.put("userGroupInformations", null);
+		if (creator.getUserGroupBriefs() == null) {
+			map.put("userGroupBriefs", null);
 		}
 		else {
 			map.put(
-				"userGroupInformations",
-				String.valueOf(creator.getUserGroupInformations()));
+				"userGroupBriefs",
+				String.valueOf(creator.getUserGroupBriefs()));
 		}
 
 		return map;
@@ -320,26 +317,20 @@ public class CreatorSerDes {
 					creator.setProfileURL((String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "userGroupInformations")) {
-
+			else if (Objects.equals(jsonParserFieldName, "userGroupBriefs")) {
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
 						(Object[])jsonParserFieldValue;
 
-					UserGroupInformation[] userGroupInformationsArray =
-						new UserGroupInformation[jsonParserFieldValues.length];
+					UserGroupBrief[] userGroupBriefsArray =
+						new UserGroupBrief[jsonParserFieldValues.length];
 
-					for (int i = 0; i < userGroupInformationsArray.length;
-						 i++) {
-
-						userGroupInformationsArray[i] =
-							UserGroupInformationSerDes.toDTO(
-								(String)jsonParserFieldValues[i]);
+					for (int i = 0; i < userGroupBriefsArray.length; i++) {
+						userGroupBriefsArray[i] = UserGroupBriefSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
 					}
 
-					creator.setUserGroupInformations(
-						userGroupInformationsArray);
+					creator.setUserGroupBriefs(userGroupBriefsArray);
 				}
 			}
 		}

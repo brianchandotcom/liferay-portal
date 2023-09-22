@@ -1,20 +1,11 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
-import com.liferay.headless.delivery.client.dto.v1_0.UserGroupInformation;
+import com.liferay.headless.delivery.client.dto.v1_0.UserGroupBrief;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -30,24 +21,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class UserGroupInformationSerDes {
+public class UserGroupBriefSerDes {
 
-	public static UserGroupInformation toDTO(String json) {
-		UserGroupInformationJSONParser userGroupInformationJSONParser =
-			new UserGroupInformationJSONParser();
+	public static UserGroupBrief toDTO(String json) {
+		UserGroupBriefJSONParser userGroupBriefJSONParser =
+			new UserGroupBriefJSONParser();
 
-		return userGroupInformationJSONParser.parseToDTO(json);
+		return userGroupBriefJSONParser.parseToDTO(json);
 	}
 
-	public static UserGroupInformation[] toDTOs(String json) {
-		UserGroupInformationJSONParser userGroupInformationJSONParser =
-			new UserGroupInformationJSONParser();
+	public static UserGroupBrief[] toDTOs(String json) {
+		UserGroupBriefJSONParser userGroupBriefJSONParser =
+			new UserGroupBriefJSONParser();
 
-		return userGroupInformationJSONParser.parseToDTOs(json);
+		return userGroupBriefJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(UserGroupInformation userGroupInformation) {
-		if (userGroupInformation == null) {
+	public static String toJSON(UserGroupBrief userGroupBrief) {
+		if (userGroupBrief == null) {
 			return "null";
 		}
 
@@ -55,17 +46,17 @@ public class UserGroupInformationSerDes {
 
 		sb.append("{");
 
-		if (userGroupInformation.getId() != null) {
+		if (userGroupBrief.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"id\": ");
 
-			sb.append(userGroupInformation.getId());
+			sb.append(userGroupBrief.getId());
 		}
 
-		if (userGroupInformation.getName() != null) {
+		if (userGroupBrief.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -74,7 +65,7 @@ public class UserGroupInformationSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(userGroupInformation.getName()));
+			sb.append(_escape(userGroupBrief.getName()));
 
 			sb.append("\"");
 		}
@@ -85,65 +76,63 @@ public class UserGroupInformationSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		UserGroupInformationJSONParser userGroupInformationJSONParser =
-			new UserGroupInformationJSONParser();
+		UserGroupBriefJSONParser userGroupBriefJSONParser =
+			new UserGroupBriefJSONParser();
 
-		return userGroupInformationJSONParser.parseToMap(json);
+		return userGroupBriefJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(
-		UserGroupInformation userGroupInformation) {
-
-		if (userGroupInformation == null) {
+	public static Map<String, String> toMap(UserGroupBrief userGroupBrief) {
+		if (userGroupBrief == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (userGroupInformation.getId() == null) {
+		if (userGroupBrief.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(userGroupInformation.getId()));
+			map.put("id", String.valueOf(userGroupBrief.getId()));
 		}
 
-		if (userGroupInformation.getName() == null) {
+		if (userGroupBrief.getName() == null) {
 			map.put("name", null);
 		}
 		else {
-			map.put("name", String.valueOf(userGroupInformation.getName()));
+			map.put("name", String.valueOf(userGroupBrief.getName()));
 		}
 
 		return map;
 	}
 
-	public static class UserGroupInformationJSONParser
-		extends BaseJSONParser<UserGroupInformation> {
+	public static class UserGroupBriefJSONParser
+		extends BaseJSONParser<UserGroupBrief> {
 
 		@Override
-		protected UserGroupInformation createDTO() {
-			return new UserGroupInformation();
+		protected UserGroupBrief createDTO() {
+			return new UserGroupBrief();
 		}
 
 		@Override
-		protected UserGroupInformation[] createDTOArray(int size) {
-			return new UserGroupInformation[size];
+		protected UserGroupBrief[] createDTOArray(int size) {
+			return new UserGroupBrief[size];
 		}
 
 		@Override
 		protected void setField(
-			UserGroupInformation userGroupInformation,
-			String jsonParserFieldName, Object jsonParserFieldValue) {
+			UserGroupBrief userGroupBrief, String jsonParserFieldName,
+			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					userGroupInformation.setId(
+					userGroupBrief.setId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
-					userGroupInformation.setName((String)jsonParserFieldValue);
+					userGroupBrief.setName((String)jsonParserFieldValue);
 				}
 			}
 		}

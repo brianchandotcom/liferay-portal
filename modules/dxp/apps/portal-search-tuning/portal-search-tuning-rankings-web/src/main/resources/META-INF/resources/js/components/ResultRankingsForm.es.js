@@ -302,7 +302,7 @@ class ResultRankingsForm extends Component {
 				  }
 				: {
 						fetchItemByIdUrl:
-							'/o/headless-admin-user/v1.0/sxp-blueprints/by-external-reference-code/',
+							'/o/search-experiences-rest/v1.0/sxp-blueprints/by-external-reference-code/',
 						label: 'title',
 						value: this.props
 							.initialSXPBlueprintExternalReferenceCode,

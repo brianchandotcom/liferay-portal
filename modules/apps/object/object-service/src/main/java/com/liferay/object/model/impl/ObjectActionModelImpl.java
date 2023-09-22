@@ -81,7 +81,7 @@ public class ObjectActionModelImpl
 		{"errorMessage", Types.VARCHAR}, {"label", Types.VARCHAR},
 		{"name", Types.VARCHAR}, {"objectActionExecutorKey", Types.VARCHAR},
 		{"objectActionTriggerKey", Types.VARCHAR}, {"parameters", Types.CLOB},
-		{"status", Types.INTEGER}
+		{"system_", Types.BOOLEAN}, {"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -107,11 +107,12 @@ public class ObjectActionModelImpl
 		TABLE_COLUMNS_MAP.put("objectActionExecutorKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("objectActionTriggerKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("parameters", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectAction (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,objectActionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,active_ BOOLEAN,conditionExpression TEXT null,description VARCHAR(75) null,errorMessage STRING null,label STRING null,name VARCHAR(75) null,objectActionExecutorKey VARCHAR(255) null,objectActionTriggerKey VARCHAR(75) null,parameters TEXT null,status INTEGER)";
+		"create table ObjectAction (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,objectActionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,active_ BOOLEAN,conditionExpression TEXT null,description VARCHAR(75) null,errorMessage STRING null,label STRING null,name VARCHAR(75) null,objectActionExecutorKey VARCHAR(255) null,objectActionTriggerKey VARCHAR(75) null,parameters TEXT null,system_ BOOLEAN,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectAction";
 
@@ -320,6 +321,7 @@ public class ObjectActionModelImpl
 				ObjectAction::getObjectActionTriggerKey);
 			attributeGetterFunctions.put(
 				"parameters", ObjectAction::getParameters);
+			attributeGetterFunctions.put("system", ObjectAction::getSystem);
 			attributeGetterFunctions.put("status", ObjectAction::getStatus);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
@@ -402,6 +404,9 @@ public class ObjectActionModelImpl
 			attributeSetterBiConsumers.put(
 				"parameters",
 				(BiConsumer<ObjectAction, String>)ObjectAction::setParameters);
+			attributeSetterBiConsumers.put(
+				"system",
+				(BiConsumer<ObjectAction, Boolean>)ObjectAction::setSystem);
 			attributeSetterBiConsumers.put(
 				"status",
 				(BiConsumer<ObjectAction, Integer>)ObjectAction::setStatus);
@@ -1029,6 +1034,27 @@ public class ObjectActionModelImpl
 
 	@JSON
 	@Override
+	public boolean getSystem() {
+		return _system;
+	}
+
+	@JSON
+	@Override
+	public boolean isSystem() {
+		return _system;
+	}
+
+	@Override
+	public void setSystem(boolean system) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_system = system;
+	}
+
+	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -1212,6 +1238,7 @@ public class ObjectActionModelImpl
 			getObjectActionExecutorKey());
 		objectActionImpl.setObjectActionTriggerKey(getObjectActionTriggerKey());
 		objectActionImpl.setParameters(getParameters());
+		objectActionImpl.setSystem(isSystem());
 		objectActionImpl.setStatus(getStatus());
 
 		objectActionImpl.resetOriginalValues();
@@ -1257,6 +1284,8 @@ public class ObjectActionModelImpl
 			this.<String>getColumnOriginalValue("objectActionTriggerKey"));
 		objectActionImpl.setParameters(
 			this.<String>getColumnOriginalValue("parameters"));
+		objectActionImpl.setSystem(
+			this.<Boolean>getColumnOriginalValue("system_"));
 		objectActionImpl.setStatus(
 			this.<Integer>getColumnOriginalValue("status"));
 
@@ -1469,6 +1498,8 @@ public class ObjectActionModelImpl
 			objectActionCacheModel.parameters = null;
 		}
 
+		objectActionCacheModel.system = isSystem();
+
 		objectActionCacheModel.status = getStatus();
 
 		return objectActionCacheModel;
@@ -1554,6 +1585,7 @@ public class ObjectActionModelImpl
 	private String _objectActionExecutorKey;
 	private String _objectActionTriggerKey;
 	private String _parameters;
+	private boolean _system;
 	private int _status;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1608,6 +1640,7 @@ public class ObjectActionModelImpl
 		_columnOriginalValues.put(
 			"objectActionTriggerKey", _objectActionTriggerKey);
 		_columnOriginalValues.put("parameters", _parameters);
+		_columnOriginalValues.put("system_", _system);
 		_columnOriginalValues.put("status", _status);
 	}
 
@@ -1618,6 +1651,7 @@ public class ObjectActionModelImpl
 
 		attributeNames.put("uuid_", "uuid");
 		attributeNames.put("active_", "active");
+		attributeNames.put("system_", "system");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -1671,7 +1705,9 @@ public class ObjectActionModelImpl
 
 		columnBitmasks.put("parameters", 262144L);
 
-		columnBitmasks.put("status", 524288L);
+		columnBitmasks.put("system_", 524288L);
+
+		columnBitmasks.put("status", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

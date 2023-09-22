@@ -53,6 +53,7 @@ public class ObjectActionWrapper
 		attributes.put("objectActionExecutorKey", getObjectActionExecutorKey());
 		attributes.put("objectActionTriggerKey", getObjectActionTriggerKey());
 		attributes.put("parameters", getParameters());
+		attributes.put("system", isSystem());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -176,6 +177,12 @@ public class ObjectActionWrapper
 
 		if (parameters != null) {
 			setParameters(parameters);
+		}
+
+		Boolean system = (Boolean)attributes.get("system");
+
+		if (system != null) {
+			setSystem(system);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -520,6 +527,16 @@ public class ObjectActionWrapper
 	}
 
 	/**
+	 * Returns the system of this object action.
+	 *
+	 * @return the system of this object action
+	 */
+	@Override
+	public boolean getSystem() {
+		return model.getSystem();
+	}
+
+	/**
 	 * Returns the user ID of this object action.
 	 *
 	 * @return the user ID of this object action
@@ -567,6 +584,16 @@ public class ObjectActionWrapper
 	@Override
 	public boolean isActive() {
 		return model.isActive();
+	}
+
+	/**
+	 * Returns <code>true</code> if this object action is system.
+	 *
+	 * @return <code>true</code> if this object action is system; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isSystem() {
+		return model.isSystem();
 	}
 
 	@Override
@@ -878,6 +905,16 @@ public class ObjectActionWrapper
 	@Override
 	public void setStatus(int status) {
 		model.setStatus(status);
+	}
+
+	/**
+	 * Sets whether this object action is system.
+	 *
+	 * @param system the system of this object action
+	 */
+	@Override
+	public void setSystem(boolean system) {
+		model.setSystem(system);
 	}
 
 	/**

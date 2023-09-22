@@ -130,10 +130,13 @@ public abstract class ObjectActionLocalServiceBaseImpl
 	 *
 	 * @param objectAction the object action
 	 * @return the object action that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public ObjectAction deleteObjectAction(ObjectAction objectAction) {
+	public ObjectAction deleteObjectAction(ObjectAction objectAction)
+		throws PortalException {
+
 		return objectActionPersistence.remove(objectAction);
 	}
 

@@ -5,16 +5,36 @@ definition {
 
 		var baseURL = ${baseURL};
 
+		if (!(isSet(active))) {
+			var active = "true";
+		}
+
 		if (!(isSet(baseURL))) {
 			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(incrementalOrderQuantity))) {
+			var incrementalOrderQuantity = 1;
+		}
+
+		if (!(isSet(precision))) {
+			var precision = 1;
+		}
+
+		if (!(isSet(primary))) {
+			var primary = "false";
+		}
+
+		if (!(isSet(promoPrice))) {
+			var promoPrice = 0;
 		}
 
 		if (!(isSet(priority))) {
 			var priority = 0;
 		}
 
-		if (!(isSet(promoPrice))) {
-			var promoPrice = 0;
+		if (!(isSet(rate))) {
+			var rate = 1;
 		}
 
 		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
@@ -26,13 +46,18 @@ definition {
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
+					"active": ${active},
 					"basePrice": ${basePrice},
+					"incrementalOrderQuantity": ${incrementalOrderQuantity},
 					"key": "${uomKey}",
 					"name": {
 						"en_US": "${uomName}"
 					},
+					"precision": ${precision},
+					"primary": ${primary},
 					"priority": ${priority},
-					"promoPrice": ${promoPrice}
+					"promoPrice": ${promoPrice},
+					"rate": ${rate}
 				}'
 		''';
 

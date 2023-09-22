@@ -519,36 +519,9 @@ definition {
 				value1 = ${scheduleTitleName});
 		}
 
-		var displayDateHour = selenium.getAttribute("//input[contains(@id,'schedulerStartDateHour')]@value");
-		var displayDateAmpm = selenium.getAttribute("//input[contains(@id,'schedulerStartDateAmPm')]@value");
-
-		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 0, "AM");
-
-		var displayDateAmpm = StringUtil.replace(${displayDateAmpm}, 1, "PM");
-		var displayDateMinute = selenium.getAttribute("//input[contains(@id,'schedulerStartDateMinute')]@value");
-
-		var displayDateMinuteFuture = ${displayDateMinute} + 5;
-
-		var result = MathUtil.isGreaterThan(${displayDateMinuteFuture}, 60);
-
-		if (${result} == "true") {
-			var displayDateHour = ${displayDateHour} + 1;
-			var displayDateMinuteFuture = ${displayDateMinuteFuture} - 60;
-		}
-
-		var displayDateHourLength = StringUtil.length(${displayDateHour});
-
-		if (${displayDateHourLength} == 1) {
-			var displayDateHour = "0${displayDateHour}";
-		}
-
-		var displayDateMinuteFutureLength = StringUtil.length(${displayDateMinuteFuture});
-
-		if (${displayDateMinuteFutureLength} == 1) {
-			var displayDateMinuteFuture = "0${displayDateMinuteFuture}";
-		}
-
-		var displayDate = "${displayDateHour}:${displayDateMinuteFuture} ${displayDateAmpm}";
+		var displayDate = DateTimeSchedule.increaseDisplayTime(
+			field = "start",
+			minuteIncreaseValue = 5);
 
 		Type.sendKeys(
 			locator1 = "StagingPublishToLive#DATE_SCHEDULE_TIME_INPUT",

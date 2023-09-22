@@ -46,6 +46,7 @@ import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -183,6 +184,32 @@ public class LayoutLockManagerTest {
 		Assert.assertEquals(draftLayout.getPlid(), lockedLayout.getPlid());
 	}
 
+	@Test
+	public void testGetLockedLayoutsFilterByDisplayPageTemplate()
+		throws Exception {
+
+		Layout draftLayout = _getDraftLayout(
+			LayoutConstants.TYPE_ASSET_DISPLAY);
+
+		_addLayoutPageTemplateEntry(
+			draftLayout.getClassPK(),
+			LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+
+		_lockLayout(draftLayout, _user);
+
+		_lockLayout(_getDraftLayout(), _user);
+
+		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
+			TestPropsValues.getCompanyId(), _group.getGroupId(), null,
+			LockedLayoutType.DISPLAY_PAGE_TEMPLATE);
+
+		Assert.assertEquals(lockedLayouts.toString(), 1, lockedLayouts.size());
+
+		LockedLayout lockedLayout = lockedLayouts.get(0);
+
+		Assert.assertEquals(draftLayout.getPlid(), lockedLayout.getPlid());
+	}
+
 	@Test(expected = LockedLayoutException.class)
 	public void testGetLockWithDifferentUser() throws Exception {
 		Layout draftLayout = _getDraftLayout();
@@ -271,6 +298,11 @@ public class LayoutLockManagerTest {
 	}
 
 	private Layout _getDraftLayout(String type) throws Exception {
+		if (Objects.equals(LayoutConstants.TYPE_ASSET_DISPLAY, type)) {
+			_serviceContext.setAttribute(
+				"layout.instanceable.allowed", Boolean.TRUE);
+		}
+
 		Layout layout = _layoutLocalService.addLayout(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
@@ -280,9 +312,7 @@ public class LayoutLockManagerTest {
 			UnicodePropertiesBuilder.put(
 				"published", "true"
 			).buildString(),
-			false, false, Collections.emptyMap(), 0,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getCompanyId(), _group.getGroupId(), _user.getUserId()));
+			false, false, Collections.emptyMap(), 0, _serviceContext);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 

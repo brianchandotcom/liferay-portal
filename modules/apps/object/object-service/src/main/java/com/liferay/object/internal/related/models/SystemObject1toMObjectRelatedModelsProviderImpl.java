@@ -125,11 +125,7 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 					deletionType,
 					ObjectRelationshipConstants.DELETION_TYPE_PREVENT)) {
 
-			throw new RequiredObjectRelationshipException(
-				StringBundler.concat(
-					"Object relationship ",
-					objectRelationship.getObjectRelationshipId(),
-					" does not allow deletes"));
+			throw new RequiredObjectRelationshipException(objectRelationship);
 		}
 	}
 

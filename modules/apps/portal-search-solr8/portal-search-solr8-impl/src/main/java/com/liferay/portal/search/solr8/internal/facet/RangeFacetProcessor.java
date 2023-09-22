@@ -34,7 +34,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"class.name=com.liferay.portal.kernel.search.facet.RangeFacet",
-		"class.name=com.liferay.portal.search.internal.facet.ModifiedFacetImpl"
+		"class.name=com.liferay.portal.search.internal.facet.ModifiedFacetImpl",
+		"class.name=com.liferay.portal.search.internal.facet.RangeFacetImpl"
 	},
 	service = FacetProcessor.class
 )
@@ -80,9 +81,10 @@ public class RangeFacetProcessor implements FacetProcessor<SolrQuery> {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject rangeJSONObject = jsonArray.getJSONObject(i);
 
+			String label = rangeJSONObject.getString("label");
 			String range = rangeJSONObject.getString("range");
 
-			putFacetParameters(map, facet, range);
+			putFacetParameters(map, facet, label, range);
 		}
 	}
 
@@ -96,7 +98,7 @@ public class RangeFacetProcessor implements FacetProcessor<SolrQuery> {
 			return;
 		}
 
-		putFacetParameters(map, facet, range);
+		putFacetParameters(map, facet, "custom-range", range);
 	}
 
 	protected JSONObject getFacetParametersJSONObject(
@@ -114,10 +116,10 @@ public class RangeFacetProcessor implements FacetProcessor<SolrQuery> {
 	}
 
 	protected void putFacetParameters(
-		Map<String, JSONObject> map, Facet facet, String range) {
+		Map<String, JSONObject> map, Facet facet, String label, String range) {
 
 		String name =
-			FacetUtil.getAggregationName(facet) + StringPool.UNDERLINE + range;
+			FacetUtil.getAggregationName(facet) + StringPool.UNDERLINE + label;
 
 		JSONObject jsonObject = getFacetParametersJSONObject(facet, range);
 

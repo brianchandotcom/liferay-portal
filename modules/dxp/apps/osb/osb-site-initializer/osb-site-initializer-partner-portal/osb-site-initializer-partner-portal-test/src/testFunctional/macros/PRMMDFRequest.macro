@@ -353,6 +353,19 @@ definition {
 		return ${fieldDigits};
 	}
 
+	macro getRequestID {
+		var key_index = ${requestIndex};
+		var key_mdfType = ${mdfType};
+
+		WaitForElementPresent(locator1 = "PRMMDFRequest#MDF_ID_BY_INDEX");
+
+		var requestID = selenium.getText("PRMMDFRequest#MDF_ID_BY_INDEX");
+
+		var requestID = StringUtil.extractLast(${requestID}, "-");
+
+		return ${requestID};
+	}
+
 	macro goToMDF {
 		Click(
 			key_campaignName = ${campaignName},

@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 import java.util.Map;
@@ -25,7 +26,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CountryModel
-	extends BaseModel<Country>, MVCCModel, ShardedModel, StagedAuditedModel {
+	extends BaseModel<Country>, CTModel<Country>, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -38,6 +40,7 @@ public interface CountryModel
 	 *
 	 * @return the primary key of this country
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -45,6 +48,7 @@ public interface CountryModel
 	 *
 	 * @param primaryKey the primary key of this country
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -62,6 +66,22 @@ public interface CountryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this country.
+	 *
+	 * @return the ct collection ID of this country
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this country.
+	 *
+	 * @param ctCollectionId the ct collection ID of this country
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this country.

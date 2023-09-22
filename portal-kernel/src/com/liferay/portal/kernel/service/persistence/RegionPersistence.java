@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -22,7 +23,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface RegionPersistence extends BasePersistence<Region> {
+public interface RegionPersistence
+	extends BasePersistence<Region>, CTPersistence<Region> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

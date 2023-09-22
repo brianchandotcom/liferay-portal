@@ -117,6 +117,8 @@ public class CountryPersistenceTest {
 
 		newCountry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCountry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newCountry.setUuid(RandomTestUtil.randomString());
 
 		newCountry.setDefaultLanguageId(RandomTestUtil.randomString());
@@ -164,6 +166,9 @@ public class CountryPersistenceTest {
 
 		Assert.assertEquals(
 			existingCountry.getMvccVersion(), newCountry.getMvccVersion());
+		Assert.assertEquals(
+			existingCountry.getCtCollectionId(),
+			newCountry.getCtCollectionId());
 		Assert.assertEquals(existingCountry.getUuid(), newCountry.getUuid());
 		Assert.assertEquals(
 			existingCountry.getDefaultLanguageId(),
@@ -329,13 +334,14 @@ public class CountryPersistenceTest {
 
 	protected OrderByComparator<Country> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"Country", "mvccVersion", true, "uuid", true, "defaultLanguageId",
-			true, "countryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "a2",
-			true, "a3", true, "active", true, "billingAllowed", true,
-			"groupFilterEnabled", true, "idd", true, "name", true, "number",
-			true, "position", true, "shippingAllowed", true, "subjectToVAT",
-			true, "zipRequired", true, "lastPublishDate", true);
+			"Country", "mvccVersion", true, "ctCollectionId", true, "uuid",
+			true, "defaultLanguageId", true, "countryId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "a2", true, "a3", true, "active", true,
+			"billingAllowed", true, "groupFilterEnabled", true, "idd", true,
+			"name", true, "number", true, "position", true, "shippingAllowed",
+			true, "subjectToVAT", true, "zipRequired", true, "lastPublishDate",
+			true);
 	}
 
 	@Test
@@ -641,6 +647,8 @@ public class CountryPersistenceTest {
 		Country country = _persistence.create(pk);
 
 		country.setMvccVersion(RandomTestUtil.nextLong());
+
+		country.setCtCollectionId(RandomTestUtil.nextLong());
 
 		country.setUuid(RandomTestUtil.randomString());
 

@@ -117,6 +117,8 @@ public class RegionPersistenceTest {
 
 		newRegion.setMvccVersion(RandomTestUtil.nextLong());
 
+		newRegion.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newRegion.setUuid(RandomTestUtil.randomString());
 
 		newRegion.setDefaultLanguageId(RandomTestUtil.randomString());
@@ -150,6 +152,8 @@ public class RegionPersistenceTest {
 
 		Assert.assertEquals(
 			existingRegion.getMvccVersion(), newRegion.getMvccVersion());
+		Assert.assertEquals(
+			existingRegion.getCtCollectionId(), newRegion.getCtCollectionId());
 		Assert.assertEquals(existingRegion.getUuid(), newRegion.getUuid());
 		Assert.assertEquals(
 			existingRegion.getDefaultLanguageId(),
@@ -254,11 +258,12 @@ public class RegionPersistenceTest {
 
 	protected OrderByComparator<Region> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"Region", "mvccVersion", true, "uuid", true, "defaultLanguageId",
-			true, "regionId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"countryId", true, "active", true, "name", true, "position", true,
-			"regionCode", true, "lastPublishDate", true);
+			"Region", "mvccVersion", true, "ctCollectionId", true, "uuid", true,
+			"defaultLanguageId", true, "regionId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "countryId", true, "active", true, "name",
+			true, "position", true, "regionCode", true, "lastPublishDate",
+			true);
 	}
 
 	@Test
@@ -528,6 +533,8 @@ public class RegionPersistenceTest {
 		Region region = _persistence.create(pk);
 
 		region.setMvccVersion(RandomTestUtil.nextLong());
+
+		region.setCtCollectionId(RandomTestUtil.nextLong());
 
 		region.setUuid(RandomTestUtil.randomString());
 

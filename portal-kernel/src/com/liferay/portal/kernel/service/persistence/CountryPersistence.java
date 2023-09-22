@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.service.persistence;
 
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -22,7 +23,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface CountryPersistence extends BasePersistence<Country> {
+public interface CountryPersistence
+	extends BasePersistence<Country>, CTPersistence<Country> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

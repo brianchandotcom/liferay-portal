@@ -169,6 +169,10 @@ public class JenkinsResultsParserUtil {
 			_initializeRedactTokens();
 		}
 
+		if (_forbiddenRedactTokens.contains(token)) {
+			return;
+		}
+
 		_redactTokens.add(token);
 	}
 
@@ -6325,6 +6329,8 @@ public class JenkinsResultsParserUtil {
 	private static Long _currentTimeMillisDelta;
 	private static final Pattern _dockerFilePattern = Pattern.compile(
 		".*FROM (?<dockerImageName>[^\\s]+)( AS builder)?\\n[\\s\\S]*");
+	private static final List<String> _forbiddenRedactTokens = Arrays.asList(
+		"test");
 	private static JSONArray _gitDirectoriesJSONArray;
 	private static final DateFormat _gitHubDateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ss");

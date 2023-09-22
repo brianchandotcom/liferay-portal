@@ -449,6 +449,10 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: showHideable
+                  schema:
+                      type: boolean
+                - in: query
                   name: filter
                   schema:
                       type: string

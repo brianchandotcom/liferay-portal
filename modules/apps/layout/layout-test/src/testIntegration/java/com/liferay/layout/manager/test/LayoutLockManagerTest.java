@@ -9,6 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.constants.LockedLayoutType;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.model.LockedLayout;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -19,6 +21,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -70,6 +73,9 @@ public class LayoutLockManagerTest {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addUser();
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getCompanyId(), _group.getGroupId(), _user.getUserId());
 	}
 
 	@Test
@@ -152,6 +158,31 @@ public class LayoutLockManagerTest {
 		Assert.assertEquals(draftLayout.getPlid(), lockedLayout.getPlid());
 	}
 
+	@Test
+	public void testGetLockedLayoutsFilterByContentPageTemplate()
+		throws Exception {
+
+		Layout draftLayout = _getDraftLayout();
+
+		_addLayoutPageTemplateEntry(
+			draftLayout.getClassPK(),
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+
+		_lockLayout(draftLayout, _user);
+
+		_lockLayout(_getDraftLayout(), _user);
+
+		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
+			TestPropsValues.getCompanyId(), _group.getGroupId(), null,
+			LockedLayoutType.CONTENT_PAGE_TEMPLATE);
+
+		Assert.assertEquals(lockedLayouts.toString(), 1, lockedLayouts.size());
+
+		LockedLayout lockedLayout = lockedLayouts.get(0);
+
+		Assert.assertEquals(draftLayout.getPlid(), lockedLayout.getPlid());
+	}
+
 	@Test(expected = LockedLayoutException.class)
 	public void testGetLockWithDifferentUser() throws Exception {
 		Layout draftLayout = _getDraftLayout();
@@ -226,6 +257,15 @@ public class LayoutLockManagerTest {
 		Assert.assertNull(lock);
 	}
 
+	private void _addLayoutPageTemplateEntry(long plid, int type)
+		throws Exception {
+
+		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), 0, 0, 0,
+			RandomTestUtil.randomString(), type, 0, true, 0, plid, 0,
+			WorkflowConstants.STATUS_APPROVED, _serviceContext);
+	}
+
 	private Layout _getDraftLayout() throws Exception {
 		return _getDraftLayout(LayoutConstants.TYPE_CONTENT);
 	}
@@ -274,7 +314,13 @@ public class LayoutLockManagerTest {
 	private LayoutLockManager _layoutLockManager;
 
 	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Inject
 	private LockManager _lockManager;
+
+	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun
 	private User _user;

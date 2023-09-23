@@ -6,7 +6,6 @@
 package com.liferay.jethr0.event.handler;
 
 import com.liferay.jethr0.bui1d.BuildEntity;
-import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.util.StringUtil;
@@ -42,13 +41,7 @@ public abstract class BaseObjectEventHandler extends BaseEventHandler {
 
 		JobEntityRepository jobEntityRepository = getJobEntityRepository();
 
-		JobEntity jobEntity = jobEntityRepository.getById(jobEntityId);
-
-		BuildEntityRepository buildEntityRepository = getBuildRepository();
-
-		buildEntityRepository.getAll(jobEntity);
-
-		return jobEntity;
+		return jobEntityRepository.getById(jobEntityId);
 	}
 
 	protected JSONObject validateBuildJSONObject(JSONObject buildJSONObject)

@@ -28,7 +28,9 @@ public class CreateJobEventHandler extends BaseObjectEventHandler {
 		JSONObject jobJSONObject = validateJobJSONObject(
 			messageJSONObject.optJSONObject("job"));
 
-		JobEntity jobEntity = _createJobEntity(jobJSONObject);
+		JobEntityRepository jobEntityRepository = getJobEntityRepository();
+
+		JobEntity jobEntity = jobEntityRepository.create(jobJSONObject);
 
 		JSONArray buildsJSONArray = jobJSONObject.optJSONArray("builds");
 
@@ -53,6 +55,8 @@ public class CreateJobEventHandler extends BaseObjectEventHandler {
 							parametersJSONObject.getString(key));
 					}
 				}
+
+				buildEntityRepository.update(buildEntity);
 			}
 		}
 
@@ -90,6 +94,8 @@ public class CreateJobEventHandler extends BaseObjectEventHandler {
 			}
 		}
 
+		jobEntityRepository.update(jobEntity);
+
 		return jobEntity.toString();
 	}
 
@@ -97,12 +103,6 @@ public class CreateJobEventHandler extends BaseObjectEventHandler {
 		EventHandlerContext eventHandlerContext, JSONObject messageJSONObject) {
 
 		super(eventHandlerContext, messageJSONObject);
-	}
-
-	private JobEntity _createJobEntity(JSONObject jobJSONObject) {
-		JobEntityRepository jobEntityRepository = getJobEntityRepository();
-
-		return jobEntityRepository.create(jobJSONObject);
 	}
 
 }

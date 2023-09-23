@@ -176,12 +176,11 @@ public class JobQueue {
 						continue;
 					}
 
-					Set<BuildRunEntity> buildRunEntities =
-						_buildRunEntityRepository.getAll(buildEntity);
-
 					boolean blocked = false;
 
-					for (BuildRunEntity buildRunEntity : buildRunEntities) {
+					for (BuildRunEntity buildRunEntity :
+							buildEntity.getBuildRunEntities()) {
+
 						if (buildRunEntity.isBlocked()) {
 							blocked = true;
 

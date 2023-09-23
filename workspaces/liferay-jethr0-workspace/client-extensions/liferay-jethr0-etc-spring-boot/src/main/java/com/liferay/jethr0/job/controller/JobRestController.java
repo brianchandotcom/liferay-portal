@@ -12,7 +12,6 @@ import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.job.JobEntity;
-import com.liferay.jethr0.job.dalo.JobEntityDALO;
 import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 
@@ -104,8 +103,11 @@ public class JobRestController {
 						historyBuildRunEntities.size() - 1);
 
 				buildJSONObject.put(
+					"latestDuration", latestBuildRunEntity.getDuration()
+				).put(
 					"latestJenkinsBuildURL",
-					latestBuildRunEntity.getJenkinsBuildURL());
+					latestBuildRunEntity.getJenkinsBuildURL()
+				);
 			}
 
 			buildsJSONArray.put(buildJSONObject);
@@ -170,7 +172,9 @@ public class JobRestController {
 	public ResponseEntity<String> jobs(@AuthenticationPrincipal Jwt jwt) {
 		JSONArray jobsJSONArray = new JSONArray();
 
-		for (JobEntity jobEntity : _jobEntityDALO.getAll()) {
+		for (JobEntity jobEntity :
+				_jobEntityRepository.getByState(JobEntity.State.COMPLETED)) {
+
 			jobsJSONArray.put(jobEntity.getJSONObject());
 		}
 
@@ -200,9 +204,6 @@ public class JobRestController {
 
 	@Autowired
 	private JenkinsQueue _jenkinsQueue;
-
-	@Autowired
-	private JobEntityDALO _jobEntityDALO;
 
 	@Autowired
 	private JobEntityRepository _jobEntityRepository;

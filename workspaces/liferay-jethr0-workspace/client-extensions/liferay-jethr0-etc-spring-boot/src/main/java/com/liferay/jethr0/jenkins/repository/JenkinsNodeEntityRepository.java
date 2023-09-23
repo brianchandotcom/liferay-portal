@@ -7,15 +7,11 @@ package com.liferay.jethr0.jenkins.repository;
 
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.jenkins.dalo.JenkinsNodeEntityDALO;
-import com.liferay.jethr0.jenkins.dalo.JenkinsServerEntityDALO;
-import com.liferay.jethr0.jenkins.dalo.JenkinsServerToJenkinsNodesEntityRelationshipDALO;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
 import com.liferay.jethr0.util.StringUtil;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,13 +31,11 @@ public class JenkinsNodeEntityRepository
 	public JenkinsNodeEntity create(
 		JenkinsServerEntity jenkinsServerEntity, JSONObject nodeJSONObject) {
 
-		JenkinsNodeEntity jenkinsNodeEntity = create(nodeJSONObject);
+		nodeJSONObject.put(
+			"r_jenkinsServerToJenkinsNodes_c_jenkinsServerId",
+			jenkinsServerEntity.getId());
 
-		jenkinsNodeEntity.setJenkinsServerEntity(jenkinsServerEntity);
-
-		jenkinsServerEntity.addJenkinsNodeEntity(jenkinsNodeEntity);
-
-		return add(jenkinsNodeEntity);
+		return create(nodeJSONObject);
 	}
 
 	public void createAll(JenkinsServerEntity jenkinsServerEntity) {
@@ -141,42 +135,8 @@ public class JenkinsNodeEntityRepository
 
 			nodeJSONObject.put("primaryLabel", primaryLabel);
 
-			create(jenkinsServerEntity, nodeJSONObject);
+			create(nodeJSONObject);
 		}
-	}
-
-	public JenkinsNodeEntity get(String jenkinsNodeName) {
-		for (JenkinsNodeEntity jenkinsNodeEntity : getAll()) {
-			if (Objects.equals(jenkinsNodeName, jenkinsNodeEntity.getName())) {
-				return jenkinsNodeEntity;
-			}
-		}
-
-		return null;
-	}
-
-	public Set<JenkinsNodeEntity> getAll(
-		JenkinsServerEntity jenkinsServerEntity) {
-
-		Set<JenkinsNodeEntity> jenkinsNodeEntities = new HashSet<>();
-
-		Set<Long> jenkinsNodeIds =
-			_jenkinsServerToJenkinsNodesEntityRelationshipDALO.
-				getChildEntityIds(jenkinsServerEntity);
-
-		for (JenkinsNodeEntity jenkinsNodeEntity : getAll()) {
-			if (!jenkinsNodeIds.contains(jenkinsNodeEntity.getId())) {
-				continue;
-			}
-
-			jenkinsNodeEntity.setJenkinsServerEntity(jenkinsServerEntity);
-
-			jenkinsServerEntity.addJenkinsNodeEntity(jenkinsNodeEntity);
-
-			jenkinsNodeEntities.add(jenkinsNodeEntity);
-		}
-
-		return jenkinsNodeEntities;
 	}
 
 	@Override
@@ -186,24 +146,24 @@ public class JenkinsNodeEntityRepository
 
 	@Override
 	public void initializeRelationships() {
-		for (JenkinsNodeEntity jenkinsNodeEntity : getAll()) {
-			JenkinsServerEntity jenkinsServerEntity = null;
-
-			long jenkinsServerId = jenkinsNodeEntity.getJenkinsServerEntityId();
-
-			if (jenkinsServerId != 0) {
-				jenkinsServerEntity = _jenkinsServerEntityRepository.getById(
-					jenkinsServerId);
-			}
-
-			jenkinsNodeEntity.setJenkinsServerEntity(jenkinsServerEntity);
-		}
 	}
 
 	public void setJenkinsServerEntityRepository(
 		JenkinsServerEntityRepository jenkinsServerEntityRepository) {
 
 		_jenkinsServerEntityRepository = jenkinsServerEntityRepository;
+	}
+
+	@Override
+	protected JenkinsNodeEntity updateRelationshipsFromDALO(
+		JenkinsNodeEntity jenkinsNodeEntity) {
+
+		_jenkinsServerEntityRepository.relateJenkinsServerToJenkinsNode(
+			_jenkinsServerEntityRepository.getById(
+				jenkinsNodeEntity.getJenkinsServerEntityId()),
+			jenkinsNodeEntity);
+
+		return jenkinsNodeEntity;
 	}
 
 	private static final Pattern _goodBatteryPattern = Pattern.compile(
@@ -216,13 +176,6 @@ public class JenkinsNodeEntityRepository
 	@Autowired
 	private JenkinsNodeEntityDALO _jenkinsNodeEntityDALO;
 
-	@Autowired
-	private JenkinsServerEntityDALO _jenkinsServerEntityDALO;
-
 	private JenkinsServerEntityRepository _jenkinsServerEntityRepository;
-
-	@Autowired
-	private JenkinsServerToJenkinsNodesEntityRelationshipDALO
-		_jenkinsServerToJenkinsNodesEntityRelationshipDALO;
 
 }

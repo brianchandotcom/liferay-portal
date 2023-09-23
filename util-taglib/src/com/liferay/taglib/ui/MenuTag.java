@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Sergio González
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
+@Deprecated
 public class MenuTag extends IncludeTag {
 
 	@Override

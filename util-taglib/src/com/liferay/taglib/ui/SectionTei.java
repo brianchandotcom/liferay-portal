@@ -11,7 +11,10 @@ import javax.servlet.jsp.tagext.VariableInfo;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ *             com.liferay.frontend.taglib.clay.servlet.taglib.TabsPanelTag}
  */
+@Deprecated
 public class SectionTei extends TagExtraInfo {
 
 	@Override

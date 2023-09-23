@@ -1692,6 +1692,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 		<name>menu</name>
 		<tag-class>com.liferay.taglib.ui.MenuTag</tag-class>
 		<body-content>JSP</body-content>
@@ -1702,6 +1703,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.4.0, with no direct replacement.</description>
 		<name>menu-item</name>
 		<tag-class>com.liferay.taglib.ui.MenuItemTag</tag-class>
 		<body-content>JSP</body-content>
@@ -2966,6 +2968,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.4.0, replaced by the <![CDATA[<code>clay:tabs-panel</code>]]> tag.</description>
 		<name>section</name>
 		<tag-class>com.liferay.taglib.ui.SectionTag</tag-class>
 		<tei-class>com.liferay.taglib.ui.SectionTei</tei-class>
@@ -3018,7 +3021,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a tabbed UI of section dividers that each house their own content.<![CDATA[<br /><br />Example:<br /><img src="../images/liferay-ui/tabs.png"/>]]>.</description>
+		<description>Creates a tabbed UI of section dividers that each house their own content.<![CDATA[<br /><br />Example:<br /><img src="../images/liferay-ui/tabs.png"/>]]>. Deprecated as of 7.4.0, replaced by the <![CDATA[<code>clay:tabs</code>]]> tag.</description>
 		<name>tabs</name>
 		<tag-class>com.liferay.taglib.ui.TabsTag</tag-class>
 		<body-content>JSP</body-content>

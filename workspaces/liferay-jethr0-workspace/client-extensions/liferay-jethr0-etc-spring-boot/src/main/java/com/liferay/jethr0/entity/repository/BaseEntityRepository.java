@@ -7,12 +7,15 @@ package com.liferay.jethr0.entity.repository;
 
 import com.liferay.jethr0.entity.Entity;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
+import com.liferay.jethr0.entity.dalo.EntityRelationshipDALO;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import org.json.JSONObject;
 
@@ -26,7 +29,11 @@ public abstract class BaseEntityRepository<T extends Entity>
 	public T create(JSONObject jsonObject) {
 		EntityDALO<T> entityDALO = getEntityDALO();
 
-		return add(entityDALO.create(jsonObject));
+		T entity = entityDALO.create(jsonObject);
+
+		add(entity);
+
+		return entity;
 	}
 
 	@Override
@@ -42,7 +49,11 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 		EntityDALO<T> entityDALO = getEntityDALO();
 
-		return add(entityDALO.get(id));
+		T entity = entityDALO.get(id);
+
+		add(entity);
+
+		return entity;
 	}
 
 	@Override
@@ -52,6 +63,7 @@ public abstract class BaseEntityRepository<T extends Entity>
 		addAll(entityDALO.getAll());
 	}
 
+	@Override
 	public void initializeRelationships() {
 	}
 
@@ -87,6 +99,8 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 		entity = entityDALO.update(entity);
 
+		entity = updateRelationshipsToDALO(entity);
+
 		_entitiesMap.put(entity.getId(), entity);
 
 		return entity;
@@ -114,7 +128,13 @@ public abstract class BaseEntityRepository<T extends Entity>
 				throw new RuntimeException("Unable to add entity");
 			}
 
+			if (_entitiesMap.containsKey(entity.getId())) {
+				continue;
+			}
+
 			_entitiesMap.put(entity.getId(), entity);
+
+			updateRelationshipsFromDALO(entity);
 		}
 
 		return entities;
@@ -122,12 +142,45 @@ public abstract class BaseEntityRepository<T extends Entity>
 
 	protected abstract EntityDALO<T> getEntityDALO();
 
-	protected boolean hasEntity(long id) {
-		if (_entitiesMap.containsKey(id)) {
-			return true;
+	protected <U extends Entity> T updateParentToChildRelationshipsFromDALO(
+		T parentEntity,
+		EntityRelationshipDALO<T, U> parentToChildEntityRelationshipDALO,
+		EntityRepository<U> childEntityRepository,
+		BiConsumer<T, U> associateEntities,
+		Function<T, Set<U>> getChildEntities,
+		BiConsumer<T, U> removeChildEntities) {
+
+		Set<U> daloChildEntities =
+			parentToChildEntityRelationshipDALO.getChildEntities(parentEntity);
+
+		Set<U> childEntities = getChildEntities.apply(parentEntity);
+
+		for (U childEntity : childEntities) {
+			if (!daloChildEntities.contains(childEntity)) {
+				removeChildEntities.accept(parentEntity, childEntity);
+			}
 		}
 
-		return false;
+		childEntities = getChildEntities.apply(parentEntity);
+
+		for (U daloChildEntity : daloChildEntities) {
+			if (!childEntities.contains(daloChildEntity)) {
+				U childEntity = childEntityRepository.getById(
+					daloChildEntity.getId());
+
+				associateEntities.accept(parentEntity, childEntity);
+			}
+		}
+
+		return parentEntity;
+	}
+
+	protected T updateRelationshipsFromDALO(T entity) {
+		return entity;
+	}
+
+	protected T updateRelationshipsToDALO(T entity) {
+		return entity;
 	}
 
 	private final Map<Long, T> _entitiesMap = new HashMap<>();

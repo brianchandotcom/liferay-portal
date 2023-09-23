@@ -220,6 +220,8 @@ public class JobQueue {
 		_jobComparatorEntityRepository.create(
 			jobPrioritizerEntity, 3, JobComparatorEntity.Type.FIFO, null);
 
+		_jobPrioritizerEntityRepository.update(jobPrioritizerEntity);
+
 		return jobPrioritizerEntity;
 	}
 

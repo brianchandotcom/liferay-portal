@@ -103,9 +103,11 @@ public class JenkinsCohortEntityRepository
 			(jenkinsCohortEntity, jenkinsServerEntity) ->
 				relateJenkinsCohortToJenkinsServer(
 					jenkinsCohortEntity, jenkinsServerEntity),
-			jobEntity -> jobEntity.getJenkinsServerEntities(),
-			(jobEntity, jenkinsServerEntity) ->
-				jobEntity.removeJenkinsServerEntity(jenkinsServerEntity));
+			jenkinsCohortEntity ->
+				jenkinsCohortEntity.getJenkinsServerEntities(),
+			(jenkinsCohortEntity, jenkinsServerEntity) ->
+				jenkinsCohortEntity.removeJenkinsServerEntity(
+					jenkinsServerEntity));
 	}
 
 	@Autowired

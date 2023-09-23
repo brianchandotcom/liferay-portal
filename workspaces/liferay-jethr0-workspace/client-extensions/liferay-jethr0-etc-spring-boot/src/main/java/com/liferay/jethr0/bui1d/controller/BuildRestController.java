@@ -30,17 +30,21 @@ public class BuildRestController {
 
 	@GetMapping("/runs/{id}")
 	public ResponseEntity<String> jobBuilds(
-		@AuthenticationPrincipal Jwt jwt, @PathVariable("id") int buildEntityId) {
+		@AuthenticationPrincipal Jwt jwt,
+		@PathVariable("id") int buildEntityId) {
 
 		BuildEntity buildEntity = _buildEntityRepository.getById(buildEntityId);
 
 		JSONArray buildRunsJSONArray = new JSONArray();
 
-		for (BuildRunEntity buildRunEntity : buildEntity.getBuildRunEntities()) {
+		for (BuildRunEntity buildRunEntity :
+				buildEntity.getBuildRunEntities()) {
+
 			buildRunsJSONArray.put(buildRunEntity.getJSONObject());
 		}
 
-		return new ResponseEntity<>(buildRunsJSONArray.toString(), HttpStatus.OK);
+		return new ResponseEntity<>(
+			buildRunsJSONArray.toString(), HttpStatus.OK);
 	}
 
 	@Autowired

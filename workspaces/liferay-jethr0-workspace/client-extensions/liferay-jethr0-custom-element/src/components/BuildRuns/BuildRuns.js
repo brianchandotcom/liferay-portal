@@ -62,10 +62,14 @@ function BuildRuns({buildId}) {
 										</td>
 										<td>{buildRun.state.name}</td>
 										<td>
-											{buildRun.result ? buildRun.result.name : '-'}
+											{buildRun.result
+												? buildRun.result.name
+												: '-'}
 										</td>
 										<td>
-											{toDurationString(buildRun.duration)}
+											{toDurationString(
+												buildRun.duration
+											)}
 										</td>
 										<td>
 											{buildRun.jenkinsBuildURL ? (

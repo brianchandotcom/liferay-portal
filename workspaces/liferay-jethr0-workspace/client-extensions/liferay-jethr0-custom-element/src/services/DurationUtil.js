@@ -5,7 +5,7 @@
 
 export function toDurationString(duration) {
 	if (!duration) {
-		return "-";
+		return '-';
 	}
 
 	const milliseconds = Math.trunc(duration % 1000);
@@ -22,21 +22,21 @@ export function toDurationString(duration) {
 
 	const hours = Math.trunc(duration % 60);
 
-	let durationString = "";
+	let durationString = '';
 
 	if (hours > 0) {
-		durationString += hours + "hrs ";
+		durationString += hours + 'hrs ';
 	}
 
 	if (minutes > 0) {
-		durationString += minutes + "mins ";
+		durationString += minutes + 'mins ';
 	}
 
 	if (seconds > 0) {
-		durationString += seconds + "secs ";
+		durationString += seconds + 'secs ';
 	}
 
-	durationString += milliseconds + "ms";
+	durationString += milliseconds + 'ms';
 
 	return durationString;
 }

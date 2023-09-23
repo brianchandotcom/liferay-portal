@@ -51,10 +51,14 @@ function JobBuilds({jobId}) {
 							jobBuilds.map((jobBuild) => {
 								return (
 									<tr key={jobBuild.id}>
-										<th
-											className="font-weight-semi-bold"
-										>
-											<Link title={jobBuild.id} to={'/jobs/builds/' + jobBuild.id}>
+										<th className="font-weight-semi-bold">
+											<Link
+												title={jobBuild.id}
+												to={
+													'/jobs/builds/' +
+													jobBuild.id
+												}
+											>
 												{jobBuild.id}
 											</Link>
 										</th>
@@ -69,7 +73,9 @@ function JobBuilds({jobId}) {
 											{jobBuild.initialBuild.toString()}
 										</td>
 										<td>
-											{toDurationString(jobBuild.latestDuration)}
+											{toDurationString(
+												jobBuild.latestDuration
+											)}
 										</td>
 										<td>
 											{jobBuild.latestJenkinsBuildURL ? (

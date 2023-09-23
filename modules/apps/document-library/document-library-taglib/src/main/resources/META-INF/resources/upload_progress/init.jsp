@@ -5,6 +5,10 @@
  */
 --%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.util.ProgressTracker" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+
+<%@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.ProgressTracker" %>

@@ -5,29 +5,21 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/progress/init.jsp" %>
+<%@ include file="/upload_progress/init.jsp" %>
 
 <%
-Integer height = (Integer)request.getAttribute("liferay-ui:progress:height");
-String id = (String)request.getAttribute("liferay-ui:progress:id");
-String message = (String)request.getAttribute("liferay-ui:progress:message");
-String sessionKey = GetterUtil.getString(request.getAttribute("liferay-ui:progress:sessionKey"), ProgressTracker.PERCENT);
+String id = (String)request.getAttribute("liferay-document-library:upload-progressprogress:id");
+String message = (String)request.getAttribute("liferay-document-library:upload-progressprogress:message");
 %>
 
 <div id="<%= id %>Bar"></div>
 
 <aui:script use="liferay-progress">
-	A.config.win['<%= id %>'] = new Liferay.Progress(
-		{
-			boundingBox: '#<%= id %>Bar',
-
-			<c:if test="<%= height != null %>">
-				height: <%= height %>,
-			</c:if>
-
-			id: '<%= id %>',
-			label: '<%= UnicodeLanguageUtil.get(resourceBundle, message) %>',
-			sessionKey: '<%= HtmlUtil.escapeJS(sessionKey) %>'
-		}
-	);
+	A.config.win['<%= id %>'] = new Liferay.Progress({
+		boundingBox: '#<%= id %>Bar',
+		height: 25,
+		id: '<%= id %>',
+		label: '<%= UnicodeLanguageUtil.get(request, message) %>',
+		sessionKey: '<%= HtmlUtil.escapeJS(ProgressTracker.PERCENT) %>',
+	});
 </aui:script>

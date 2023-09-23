@@ -1542,9 +1542,7 @@ definition {
 
 	macro increaseDisplayDate {
 		var displayDate = DateTimeSchedule.getCurrentDisplayDate(field = "display");
-
-		DateTimeSchedule.getCurrentDisplayTime(field = "display");
-
+		var currentTime = DateTimeSchedule.getCurrentDisplayTime(field = "display");
 		var displayTime = DateTimeSchedule.increaseDisplayTime(
 			field = "display",
 			minuteIncreaseValue = ${minuteIncrease});
@@ -1553,7 +1551,7 @@ definition {
 			displayDate = ${displayDate},
 			displayTime = ${displayTime});
 
-		echo("Web Content display time increased ${minuteIncrease} minutes, changed to: ${displayTime}");
+		echo("Web Content display time increased ${minuteIncrease} minutes, changed from ${currentTime} to ${displayTime}");
 	}
 
 	macro moveArticlesToFolderCP {

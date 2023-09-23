@@ -39,26 +39,10 @@ export default function ChangeTrackingIndicator({
 	const COLUMN_MODIFIED_DATE = 'modifiedDate';
 	const COLUMN_NAME = 'name';
 
-	let initialAscending = false;
-
-	if (orderByAscending === true.toString()) {
-		initialAscending = true;
-	}
-
-	const [ascending, setAscending] = useState(initialAscending);
-
-	let initialColumn = orderByColumn;
-
-	if (
-		!initialColumn ||
-		(initialColumn !== COLUMN_NAME &&
-			initialColumn !== COLUMN_MODIFIED_DATE)
-	) {
-		initialColumn = COLUMN_MODIFIED_DATE;
-	}
-
-	const [column, setColumn] = useState(initialColumn);
-
+	const [ascending, setAscending] = useState(orderByAscending === 'true');
+	const [column, setColumn] = useState(
+		orderByColumn === COLUMN_NAME ? COLUMN_NAME : COLUMN_MODIFIED_DATE
+	);
 	const [showModal, setShowModal] = useState(false);
 
 	const navigate = (url, action) => {
@@ -125,78 +109,32 @@ export default function ChangeTrackingIndicator({
 	});
 
 	const filterEntries = (ascending, column, delta, entries, page) => {
-		const filteredEntries = entries.slice(0);
-
-		if (column === COLUMN_MODIFIED_DATE) {
-			filteredEntries.sort((a, b) => {
+		const sortedEntries = entries.slice(0).sort((a, b) => {
+			if (column === COLUMN_MODIFIED_DATE) {
 				if (a.modifiedDate < b.modifiedDate) {
-					if (ascending) {
-						return -1;
-					}
-
-					return 1;
+					return ascending ? -1 : 1;
 				}
-
-				if (a.modifiedDate > b.modifiedDate) {
-					if (ascending) {
-						return 1;
-					}
-
-					return -1;
+				else if (a.modifiedDate > b.modifiedDate) {
+					return ascending ? 1 : -1;
 				}
-
+			}
+			else if (column === COLUMN_NAME) {
 				const nameA = a.name.toLowerCase();
 				const nameB = b.name.toLowerCase();
-
 				if (nameA < nameB) {
-					return -1;
+					return ascending ? -1 : 1;
 				}
-
-				if (nameA > nameB) {
-					return 1;
+				else if (nameA > nameB) {
+					return ascending ? 1 : -1;
 				}
+			}
 
-				return 0;
-			});
-		}
-		else if (column === COLUMN_NAME) {
-			filteredEntries.sort((a, b) => {
-				const nameA = a.name.toLowerCase();
-				const nameB = b.name.toLowerCase();
+			return 0;
+		});
 
-				if (nameA < nameB) {
-					if (ascending) {
-						return -1;
-					}
-
-					return 1;
-				}
-
-				if (nameA > nameB) {
-					if (ascending) {
-						return 1;
-					}
-
-					return -1;
-				}
-
-				if (a.modifiedDate < b.modifiedDate) {
-					return -1;
-				}
-
-				if (a.modifiedDate > b.modifiedDate) {
-					return 1;
-				}
-
-				return 0;
-			});
-		}
-
-		if (entries.length > 5) {
-			return filteredEntries.slice(delta * (page - 1), delta * page);
-		}
-
-		return filteredEntries;
+		return entries.length > 5
+			? sortedEntries.slice(delta * (page - 1), delta * page)
+			: sortedEntries;
 	};
 
 	const renderUserPortrait = (entry, userInfo) => {
@@ -207,14 +145,18 @@ export default function ChangeTrackingIndicator({
 				className={`sticker-user-icon ${
 					user.portraitURL
 						? ''
-						: 'user-icon-color-' + (entry.userId % 10)
+						: `user-icon-color-${entry.userId % 10}`
 				}`}
 				data-tooltip-align="top"
 				title={user.userName}
 			>
 				{user.portraitURL ? (
 					<div className="sticker-overlay">
-						<img className="sticker-img" src={user.portraitURL} />
+						<img
+							alt=""
+							className="sticker-img"
+							src={user.portraitURL}
+						/>
 					</div>
 				) : (
 					<ClayIcon symbol="user" />
@@ -396,7 +338,7 @@ export default function ChangeTrackingIndicator({
 		);
 	};
 
-	const renderConflictIcon = (conflictIconClass, conflictIconName) => {
+	const renderConflictIcon = () => {
 		if (conflictIconClass && conflictIconName) {
 			return (
 				<ClayIcon
@@ -408,7 +350,7 @@ export default function ChangeTrackingIndicator({
 		}
 	};
 
-	const renderTimeline = (timelineItems) => {
+	const renderTimeline = () => {
 		if (timelineItems) {
 			return (
 				<ClayDropDown
@@ -447,10 +389,7 @@ export default function ChangeTrackingIndicator({
 						tabIndex="-1"
 						title={conflictIconLabel}
 					>
-						{renderConflictIcon(
-							conflictIconClass,
-							conflictIconName
-						)}
+						{renderConflictIcon()}
 					</div>
 				</ClayLayout.ContentCol>
 
@@ -485,7 +424,7 @@ export default function ChangeTrackingIndicator({
 						tabIndex="-1"
 						title="Timeline"
 					>
-						{renderTimeline(timelineItems)}
+						{renderTimeline()}
 					</div>
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>

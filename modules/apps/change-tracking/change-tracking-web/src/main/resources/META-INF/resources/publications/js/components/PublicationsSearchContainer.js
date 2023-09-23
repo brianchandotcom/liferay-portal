@@ -67,11 +67,10 @@ const PublicationsSearchContainer = ({
 						),
 					};
 
-					setState({
-						delta: state.delta,
+					setState((prevState) => ({
+						...prevState,
 						fetchData,
-						page: state.page,
-					});
+					}));
 
 					setLoading(false);
 
@@ -106,11 +105,10 @@ const PublicationsSearchContainer = ({
 					),
 				};
 
-				setState({
-					delta: state.delta,
+				setState((prevState) => ({
+					...prevState,
 					fetchData,
-					page: state.page,
-				});
+				}));
 
 				setLoading(false);
 			});
@@ -176,11 +174,10 @@ const PublicationsSearchContainer = ({
 								),
 							};
 
-							setState({
-								delta: state.delta,
+							setState((prevState) => ({
+								...prevState,
 								fetchData,
-								page: state.page,
-							});
+							}));
 
 							setLoading(false);
 
@@ -215,17 +212,16 @@ const PublicationsSearchContainer = ({
 							),
 						};
 
-						setState({
-							delta: state.delta,
+						setState((prevState) => ({
+							...prevState,
 							fetchData,
-							page: state.page,
-						});
+						}));
 
 						setLoading(false);
 					});
 			});
 		},
-		[fetchDataURL, state]
+		[fetchDataURL]
 	);
 
 	const format = (key, args) => {
@@ -290,25 +286,13 @@ const PublicationsSearchContainer = ({
 			state.fetchData.entries &&
 			!state.fetchData.entries.length;
 
-		const items = [];
-
-		for (let i = 0; i < orderByItems.length; i++) {
-			const orderByItem = orderByItems[i];
-
-			items.push({
+		const items = orderByItems
+			.map((orderByItem) => ({
 				active: column === orderByItem.value,
 				label: orderByItem.label,
 				onClick: () => setColumn(orderByItem.value),
-			});
-		}
-
-		items.sort((a, b) => {
-			if (a.label < b.label) {
-				return -1;
-			}
-
-			return 1;
-		});
+			}))
+			.sort((a, b) => (a.label < b.label ? -1 : 1));
 
 		const viewTypeItems = [];
 
@@ -614,11 +598,9 @@ const PublicationsSearchContainer = ({
 		);
 
 		if (viewType === VIEW_TYPE_LIST) {
-			const items = [];
-
-			for (let i = 0; i < entries.length; i++) {
-				items.push(getListItem(entries[i], state.fetchData));
-			}
+			const items = entries.map((entry) =>
+				getListItem(entry, state.fetchData)
+			);
 
 			return (
 				<div
@@ -645,11 +627,9 @@ const PublicationsSearchContainer = ({
 			);
 		}
 		else if (viewType === VIEW_TYPE_TABLE) {
-			const rows = [];
-
-			for (let i = 0; i < entries.length; i++) {
-				rows.push(getTableRow(entries[i], state.fetchData));
-			}
+			const rows = entries.map((entry) =>
+				getTableRow(entry, state.fetchData)
+			);
 
 			return (
 				<div

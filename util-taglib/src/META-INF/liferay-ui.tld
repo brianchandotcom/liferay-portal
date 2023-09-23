@@ -3114,7 +3114,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a progress bar for items being uploaded.</description>
+		<description>Creates a progress bar for items being uploaded. Deprecated as of 7.4.0, replaced by the <![CDATA[<code>liferay-document-library:upload-progress</code>]]> tag.</description>
 		<name>upload-progress</name>
 		<tag-class>com.liferay.taglib.ui.UploadProgressTag</tag-class>
 		<body-content>JSP</body-content>

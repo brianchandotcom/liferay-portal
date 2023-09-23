@@ -14,6 +14,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Locale;
+
 import javax.servlet.http.Cookie;
 
 import org.junit.Assert;
@@ -37,6 +39,18 @@ public class LanguageImplUpdateCookieTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
+	public void testUpdateCookieAddsCookieOnFirstCall() {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_language.updateCookie(
+			new MockHttpServletRequest(), mockHttpServletResponse,
+			LocaleUtil.US);
+
+		_assertGuestLanguageIdCookie(LocaleUtil.US, mockHttpServletResponse);
+	}
+
+	@Test
 	public void testUpdateCookieOnlyAddsCookieOnLocaleUpdate() {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -53,6 +67,12 @@ public class LanguageImplUpdateCookieTest {
 			mockHttpServletRequest, mockHttpServletResponse, LocaleUtil.US);
 		_language.updateCookie(
 			mockHttpServletRequest, mockHttpServletResponse, LocaleUtil.SPAIN);
+
+		_assertGuestLanguageIdCookie(LocaleUtil.SPAIN, mockHttpServletResponse);
+	}
+
+	private void _assertGuestLanguageIdCookie(
+		Locale locale, MockHttpServletResponse mockHttpServletResponse) {
 
 		Cookie validCookie = null;
 		int total = 0;
@@ -71,7 +91,7 @@ public class LanguageImplUpdateCookieTest {
 
 		Assert.assertNotEquals(0, validCookie.getMaxAge());
 		Assert.assertEquals(
-			LocaleUtil.toLanguageId(LocaleUtil.SPAIN), validCookie.getValue());
+			LocaleUtil.toLanguageId(locale), validCookie.getValue());
 	}
 
 	@Inject

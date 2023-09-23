@@ -119,7 +119,7 @@ definition {
 
 		FormsAdminNavigator.openFormsAdmin(siteURLKey = ${lowerCaseGroupName});
 
-		LexiconEntry.gotoAdd();	
+		LexiconEntry.gotoAdd();
 	}
 
 	macro gotoPermissions {

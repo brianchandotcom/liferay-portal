@@ -12,9 +12,6 @@ import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.entity.dalo.EntityDALO;
 import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,21 +51,7 @@ public class BuildParameterEntityRepository
 
 		buildParameterEntity.setBuildEntity(buildEntity);
 
-		return add(buildParameterEntity);
-	}
-
-	public Set<BuildParameterEntity> getAll(BuildEntity buildEntity) {
-		Set<BuildParameterEntity> buildParameterEntities = new HashSet<>(
-			_buildToBuildParametersEntityRelationshipDALO.getChildEntities(
-				buildEntity));
-
-		for (BuildParameterEntity buildParameterEntity :
-				buildParameterEntities) {
-
-			buildParameterEntity.setBuildEntity(buildEntity);
-		}
-
-		return addAll(buildParameterEntities);
+		return buildParameterEntity;
 	}
 
 	@Override
@@ -82,25 +65,24 @@ public class BuildParameterEntityRepository
 
 	@Override
 	public synchronized void initializeRelationships() {
-		_buildEntityRepository.initializeRelationships();
-
-		for (BuildParameterEntity buildParameterEntity : getAll()) {
-			BuildEntity buildEntity = null;
-
-			long buildEntityId = buildParameterEntity.getBuildEntityId();
-
-			if (buildEntityId != 0) {
-				buildEntity = _buildEntityRepository.getById(buildEntityId);
-			}
-
-			buildParameterEntity.setBuildEntity(buildEntity);
-		}
 	}
 
 	public void setBuildRepository(
 		BuildEntityRepository buildEntityRepository) {
 
 		_buildEntityRepository = buildEntityRepository;
+	}
+
+	@Override
+	protected BuildParameterEntity updateRelationshipsFromDALO(
+		BuildParameterEntity buildParameterEntity) {
+
+		_buildEntityRepository.relateBuildToBuildParameter(
+			_buildEntityRepository.getById(
+				buildParameterEntity.getBuildEntityId()),
+			buildParameterEntity);
+
+		return buildParameterEntity;
 	}
 
 	private BuildEntityRepository _buildEntityRepository;

@@ -31,8 +31,6 @@ definition {
 			specificURL = "http://localhost:8080",
 			userEmailAddress = "test@liferay.com");
 
-		HeadlessSite.addSite(siteName = "Site Name");
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Web Content");

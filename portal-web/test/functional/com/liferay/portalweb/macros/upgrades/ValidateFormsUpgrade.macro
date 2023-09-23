@@ -10,7 +10,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB");
 
-		LexiconEntry.gotoAdd();
+		FormsAdminNavigator.gotoAddForm();
 
 		Form.editName(formName = "Form Name");
 

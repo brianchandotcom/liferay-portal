@@ -40,7 +40,7 @@ definition {
 			category = "Contenido",
 			portlet = "Formularios");
 
-		LexiconEntry.gotoAdd();
+		FormsAdminNavigator.gotoAddForm();
 
 		Form.editName();
 

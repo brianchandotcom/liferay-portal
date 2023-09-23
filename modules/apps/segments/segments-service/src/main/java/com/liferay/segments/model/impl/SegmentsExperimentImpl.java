@@ -147,6 +147,13 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 		return winnerSegmentsExperience.getSegmentsExperienceKey();
 	}
 
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		super.setTypeSettings(typeSettings);
+
+		_typeSettingsUnicodeProperties = null;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsExperimentImpl.class);
 

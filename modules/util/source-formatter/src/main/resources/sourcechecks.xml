@@ -1360,7 +1360,6 @@
 		<check name="PoshiPauseUsageCheck">
 			<category name="Performance" />
 			<description name="Finds missing comment with JIRA project when using `Pause`." />
-			<property name="enabled" value="false" />
 		</check>
 		<check name="PoshiSmokeTestCheck">
 			<category name="Bug Prevention" />

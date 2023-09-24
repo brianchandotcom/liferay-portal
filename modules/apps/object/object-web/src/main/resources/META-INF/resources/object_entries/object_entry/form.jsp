@@ -175,15 +175,15 @@ portletDisplay.setURLBack(backURL);
 								values = Object.assign(
 									values,
 									{
-										['taxonomyCategoryIds']: <portlet:namespace />getInputValues(
-											categoriesContent,
-											'input[name^="<portlet:namespace />assetCategoryIds"]'
-										),
-									},
-									{
 										['keywords']: <portlet:namespace />getInputValues(
 											categoriesContent,
 											'input[name^="<portlet:namespace />assetTagNames"]'
+										),
+									},
+									{
+										['taxonomyCategoryIds']: <portlet:namespace />getInputValues(
+											categoriesContent,
+											'input[name^="<portlet:namespace />assetCategoryIds"]'
 										),
 									}
 								);

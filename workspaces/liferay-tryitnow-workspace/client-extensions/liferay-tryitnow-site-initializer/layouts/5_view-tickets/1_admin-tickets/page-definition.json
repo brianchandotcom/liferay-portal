@@ -1,0 +1,207 @@
+{
+    "pageElement": {
+        "pageElements": [
+            {
+                "definition": {
+                    "fragmentStyle": {
+                        "borderWidth": "0",
+                        "marginBottom": "5",
+                        "marginTop": "5"
+                    },
+                    "indexed": true,
+                    "layout": {
+                        "borderWidth": 0,
+                        "marginBottom": 4,
+                        "marginLeft": 0,
+                        "marginRight": 0,
+                        "marginTop": 4,
+                        "opacity": 100,
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "widthType": "Fixed"
+                    }
+                },
+                "pageElements": [
+                    {
+                        "definition": {
+                            "fragmentStyle": {
+                                "borderWidth": "0"
+                            },
+                            "indexed": true,
+                            "layout": {
+                                "align": "Baseline",
+                                "borderWidth": 0,
+                                "contentDisplay": "FlexRow",
+                                "justify": "SpaceBetween",
+                                "marginBottom": 0,
+                                "marginLeft": 0,
+                                "marginRight": 0,
+                                "marginTop": 0,
+                                "opacity": 100,
+                                "paddingBottom": 0,
+                                "paddingLeft": 0,
+                                "paddingRight": 0,
+                                "paddingTop": 0,
+                                "widthType": "Fluid"
+                            }
+                        },
+                        "pageElements": [
+                            {
+                                "definition": {
+                                    "fragment": {
+                                        "key": "DIALECT-dialect-text",
+                                        "siteKey": "[$GROUP_KEY$]"
+                                    },
+                                    "fragmentConfig": {
+                                        "textType": "h1"
+                                    },
+                                    "fragmentFields": [
+                                        {
+                                            "id": "element-text",
+                                            "value": {
+                                                "fragmentLink": {},
+                                                "text": {
+                                                    "value_i18n": {
+                                                        "en_US": "Tickets"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "fragmentStyle": {
+                                        "marginBottom": "2"
+                                    },
+                                    "indexed": true
+                                },
+                                "type": "Fragment"
+                            },
+                            {
+                                "definition": {
+                                    "fragmentStyle": {
+                                        "borderWidth": "0"
+                                    },
+                                    "indexed": true,
+                                    "layout": {
+                                        "borderWidth": 0,
+                                        "contentDisplay": "FlexRow",
+                                        "marginBottom": 0,
+                                        "marginLeft": 0,
+                                        "marginRight": 0,
+                                        "marginTop": 0,
+                                        "opacity": 100,
+                                        "paddingBottom": 0,
+                                        "paddingLeft": 0,
+                                        "paddingRight": 0,
+                                        "paddingTop": 0,
+                                        "widthType": "Fluid"
+                                    }
+                                },
+                                "pageElements": [
+                                    {
+                                        "definition": {
+                                            "fragment": {
+                                                "key": "BASIC_COMPONENT-button"
+                                            },
+                                            "fragmentConfig": {
+                                                "buttonType": "outline-primary",
+                                                "buttonSize": "nm"
+                                            },
+                                            "fragmentFields": [
+                                                {
+                                                    "id": "link",
+                                                    "value": {
+                                                        "fragmentLink": {
+                                                            "value": {
+                                                                "href": {
+                                                                    "mapping": {
+                                                                        "itemReference": {
+                                                                            "className": "com.liferay.portal.kernel.model.Layout",
+                                                                            "fields": [
+                                                                                {
+                                                                                    "fieldName": "friendlyURL",
+                                                                                    "fieldValue": "/tickets-dashboard"
+                                                                                },
+                                                                                {
+                                                                                    "fieldName": "privatePage",
+                                                                                    "fieldValue": "false"
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        "text": {
+                                                            "value_i18n": {
+                                                                "en_US": "View Dashboard"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "id": "action",
+                                                    "value": {
+                                                        "fragmentLink": {}
+                                                    }
+                                                }
+                                            ],
+                                            "indexed": true
+                                        },
+                                        "type": "Fragment"
+                                    }
+                                ],
+                                "type": "Section"
+                            }
+                        ],
+                        "type": "Section"
+                    }
+                ],
+                "type": "Section"
+            },
+            {
+                "definition": {
+                    "fragmentStyle": {
+                        "paddingBottom": "7"
+                    },
+                    "indexed": true,
+                    "layout": {
+                        "borderWidth": 0,
+                        "marginBottom": 0,
+                        "marginLeft": 0,
+                        "marginRight": 0,
+                        "marginTop": 0,
+                        "opacity": 100,
+                        "paddingBottom": 8,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "widthType": "Fixed"
+                    }
+                },
+                "pageElements": [
+                    {
+                        "definition": {
+                            "widgetInstance": {
+                                "widgetConfig": {
+                                    "displayStyleGroupId": "[$GROUP_ID$]"
+                                },
+                                "widgetName": "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_[$OBJECT_DEFINITION_ID:Ticket$]"
+                            }
+                        },
+                        "type": "Widget"
+                    }
+                ],
+                "type": "Section"
+            }
+        ],
+        "type": "Root"
+    },
+    "version": 1.1,
+    "settings": {
+        "masterPage": {
+            "key": "main"
+        }
+    }
+}

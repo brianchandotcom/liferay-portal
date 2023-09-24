@@ -1,0 +1,71 @@
+.fragment_1101 .login-card {
+    border-radius: 10px;
+    border: 1px solid var(--neutral-02, #DCDFDF);
+    background: var(--neutral-00, #FFF);
+    box-shadow: 0px 10px 30px 0px rgba(4, 21, 21, 0.09);
+
+}
+
+.fragment_1101 .login-card .col {
+    padding: 16px;
+}
+
+.fragment_1101 .login-card img {
+    width: 72px;
+    height: 72px;
+    border-radius: 72px;
+}
+
+.fragment_1101 .border-right {
+    border-right: 1px solid #DCDFDF;
+}
+
+.fragment_1101 .flex-grow-2 {
+    flex-grow: 2;
+}
+
+.fragment_1101 td {
+    vertical-align: baseline;
+    padding-right: 16px;
+    border: 0;
+}
+
+.fragment_1101 td.label {
+    color: var(--neutral-08, #3A4747);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.fragment_1101 td.value {
+	  cursor: pointer;
+    border-radius: 8px;
+    background: var(--neutral-01, #F8F8F8);
+    color: var(--neutral-07, #556161);
+
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    padding: 4px 16px;
+}
+
+.fragment_1101 td.value img {
+    width: 25px;
+    height: 25px;
+    margin-left: 30px;
+}
+
+.fragment_1101 td.value:hover {
+    transform: scale(1.05);
+}
+
+.fragment_1101 .spacer {
+    padding: 4px;
+}
+
+.fragment_1101 p {
+    padding: 0;
+    margin: 0;
+}

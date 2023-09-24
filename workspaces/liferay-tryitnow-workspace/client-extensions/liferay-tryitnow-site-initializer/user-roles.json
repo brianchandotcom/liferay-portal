@@ -1,0 +1,26 @@
+[
+    {
+        "emailAddress": "admin.adam@liferay.com",
+        "roles": [
+            "Administrator",
+            "Power User",
+            "User",
+            "Ticket_solvers"
+        ]
+    },
+    {
+        "emailAddress": "customer.carl@liferay.com",
+        "roles": [
+            "Publications User",
+            "User",
+            "Petitionaries"
+        ]
+    },
+    {
+        "emailAddress": "support.sam@liferay.com",
+        "roles": [
+            "User",
+            "Ticket_solvers"
+        ]
+    }
+]

@@ -1,0 +1,162 @@
+.fragment_1025 {}
+
+
+.fragment_1025 .panel {
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid var(--neutral-02, #DCDFDF);
+    background: var(--neutral-00, #FFF);
+    margin-bottom:2rem !important;
+    max-height: 65px;
+}
+
+.fragment_1025 .panel-header {
+    display: flex;
+    justify-content: space-between;
+	  cursor: pointer;
+}
+
+.fragment_1025 .panel-header-left {
+    display: flex;
+
+    align-items: center;
+}
+
+.fragment_1025 .panel-header-right {
+    display: flex;
+
+    align-items: center;
+}
+
+.fragment_1025 .panel-header-right p {
+    font-size: 16px !important;
+    margin: 0;
+}
+
+.fragment_1025 .panel-step {
+    align-items: center;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 72px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    margin-right: 16px;
+}
+
+.fragment_1025 .panel-toggle {
+    box-shadow: 0px 2px 7px 0px rgba(29, 140, 140, 0.24);
+    height: 30px;
+    width: 30px;
+    border-radius: 32px;
+    margin-left: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px !important;
+}
+
+.fragment_1025 .arrow {
+    padding-top: 8px;
+
+}
+
+.fragment_1025 .arrow-expand {
+    transform: rotate(0);
+    animation-name: arrow-expand;
+    animation-duration: 500ms;
+}
+
+.fragment_1025 .arrow-collapse {
+    transform: rotate(180deg);
+    animation-name: arrow-collapse;
+    animation-duration: 500ms;
+}
+
+@keyframes arrow-expand {
+    from {
+        transform: rotate(180deg);
+    }
+
+    to {
+        transform: rotate(0);
+    }
+}
+
+@keyframes arrow-collapse {
+    from {
+        transform: rotate(0);
+    }
+
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+.fragment_1025 .panel-body {
+    opacity: 0;
+}
+
+.fragment_1025 .panel-body-expand {
+    animation: panel-body-expand 700ms ease-in;
+    opacity: 1;
+}
+
+.fragment_1025 .panel-body-collapse {
+    animation: panel-body-collapse 700ms ease-out;
+    opacity: 0;
+}
+
+@keyframes panel-body-expand {
+    from {
+        opacity: 0;
+    }
+
+
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes panel-body-collapse {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.fragment_1025 .panel-expand {
+    animation: panel-expand 600ms ease-in;
+    max-height: 2000px;
+}
+
+.fragment_1025 .panel-collapse {
+    animation: panel-collapse 600ms ease-in-out;
+}
+
+@keyframes panel-expand {
+    from {
+        max-height: 65px;
+    }
+
+    to {
+        max-height: 2000px;
+    }
+}
+
+@keyframes panel-collapse {
+    from {
+        max-height: 2000px;
+    }
+
+    to {
+        max-height: 65px;
+    }
+}
+

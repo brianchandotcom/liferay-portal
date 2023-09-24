@@ -1,0 +1,42 @@
+<div class="clarity-tabs">
+	<div class="[#if ('nav-vertical' == 'nav-vertical')]align-items-md-stretch d-md-flex [/#if]">
+	<div class="tab-panel">
+		[#list 0..configuration.numberOfTabs-1 as i]
+			<div aria-labelledby="tab${i+1}-custom-clarity-tabs" class="d-none tab-panel-item" data-fragment-namespace="custom-clarity-tabs" id="tabPanel${i+1}-custom-clarity-tabs" role="tabpanel" tabindex="0">
+				<lfr-drop-zone data-lfr-drop-zone-id="${i+1}" data-lfr-priority="${i+1}" />
+			</div>
+		[/#list]
+	</div>
+	<nav class="navbar navbar-collapse-absolute navbar-expand-md p-0">
+		<div class="d-md-none nav nav-tertiary ${configuration.tabActiveBarPosition} nav-vertical">
+			<button aria-controls="navigationBarCollapse-custom-clarity-tabs" aria-expanded="false" aria-label="Tabs Toggle Navigation" class="active collapsed nav-link navbar-toggler navbar-toggler-link" data-toggle="collapse">
+				<span class="navbar-text-truncate">Tab 1</span>
+
+				[@clay["icon"] symbol="caret-bottom" /]
+			</button>
+		</div>
+
+		<div class="bg-white collapse navbar-collapse p-0" id="navigationBarCollapse-custom-clarity-tabs">
+			<ul class="navbar-nav nav nav-tertiary ${configuration.tabActiveBarPosition} nav-vertical" role="tablist">
+				[#list 0..configuration.numberOfTabs-1 as i]
+					<li class="nav-item">
+						<button aria-controls="tabPanel${i+1}-custom-clarity-tabs" aria-selected="false" class="active nav-link w-100 clarity-nav-button" data-fragment-namespace="custom-clarity-tabs" id="tab${i+1}-custom-clarity-tabs" role="tab">
+							[#if configuration.iconAlignment == 'left']
+									<img alt="Responsive Image" class="icon-img ${configuration.imageSize}"  src="[resources:Image.svg]" />
+							[/#if]
+
+							<span data-lfr-editable-id="title${i+1}" data-lfr-editable-type="text" data-lfr-priority="${i+1}" tabindex="-1">
+								Tab ${i+1}
+							</span>
+
+							[#if configuration.iconAlignment == 'right']
+									<img alt="Responsive Image" class="icon-img ${configuration.imageSize}"  src="[resources:Image.svg]" />
+							[/#if]
+						</button>
+					</li>
+				[/#list]
+			</ul>
+		</div>
+	</nav>
+</div>
+</div>

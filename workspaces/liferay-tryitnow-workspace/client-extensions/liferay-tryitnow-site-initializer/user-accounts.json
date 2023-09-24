@@ -1,0 +1,50 @@
+[
+    {
+        "accountBriefs": [
+            {
+                "externalReferenceCode": "SolutionCreatorAccount_1"
+            }
+        ],
+        "alternateName": "adminadam",
+        "birthDate": "1970-01-01T00:00:00Z",
+        "emailAddress": "admin.adam@liferay.com",
+        "externalReferenceCode": "ADMIN_ADAM",
+        "familyName": "Adam",
+        "givenName": "Admin",
+        "jobTitle": "Technical Administrator",
+        "name": "Admin Adam",
+        "password": "test"
+    },
+    {
+        "accountBriefs": [
+            {
+                "externalReferenceCode": "SolutionCreatorAccount_2"
+            }
+        ],
+        "alternateName": "customer.carl",
+        "birthDate": "1970-01-01T00:00:00Z",
+        "emailAddress": "customer.carl@liferay.com",
+        "externalReferenceCode": "CUSTOMER_CARL",
+        "familyName": "Carl",
+        "givenName": "Customer",
+        "jobTitle": "Customer",
+        "name": "Customer Carl",
+        "password": "test"
+    },
+    {
+        "accountBriefs": [
+            {
+                "externalReferenceCode": "SolutionCreatorAccount_3"
+            }
+        ],
+        "alternateName": "support.sam",
+        "birthDate": "1970-01-01T00:00:00Z",
+        "emailAddress": "support.sam@liferay.com",
+        "externalReferenceCode": "SUPPORT_SAM",
+        "familyName": "Sam",
+        "givenName": "Support",
+        "jobTitle": "Technical Support",
+        "name": "Support Sam",
+        "password": "test"
+    }
+]

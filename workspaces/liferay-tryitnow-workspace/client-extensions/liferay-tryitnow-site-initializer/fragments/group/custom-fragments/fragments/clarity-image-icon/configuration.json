@@ -1,0 +1,44 @@
+{
+    "fieldSets": [
+        {
+            "fields": [
+							{
+                    "name": "containerWidthAndHeight",
+                    "label": "Container Width And Height",
+                    "type": "text",
+                    "defaultValue": "80px",
+                },
+								{
+                    "name": "containerPadding",
+                    "label": "Container Padding",
+                    "type": "text",
+                    "defaultValue": "6px",
+                },
+								{
+                    "name": "iconWidthAndHeight",
+                    "label": "Icon Width And Height",
+                    "type": "text",
+                    "defaultValue": "68px",
+                },
+								{
+                    "name": "imageWidthAndHeight",
+                    "label": "Image Width And Height",
+                    "type": "text",
+                    "defaultValue": "36px",
+                },
+                {
+                    "name": "containerBackgroundColor",
+                    "label": "Container Background color",
+                    "type": "colorPicker",
+                    "defaultValue": "var(--color-brand-primary)",
+                },
+                {
+                    "name": "iconBackgroundColor",
+                    "label": "Icon Background color",
+                    "type": "colorPicker",
+                    "defaultValue": "var(--color-brand-primary)",
+                }
+            ]
+        }
+    ]
+}

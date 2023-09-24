@@ -1,0 +1,116 @@
+{
+    "definition": {
+        "customCSS": ".[$FRAGMENT_CLASS$] {\n    background-position: 0 -64px !important;\n    background-repeat: no-repeat;\n}\n",
+        "fragmentStyle": {
+            "backgroundFragmentImage": {
+                "title": {
+                    "value": "header-background-svg"
+                },
+                "url": {
+                    "value": "/documents/d/guest/header-background-1?download=true"
+                }
+            }
+        },
+        "indexed": true,
+        "layout": {
+            "borderWidth": 0,
+            "marginBottom": 0,
+            "marginLeft": 0,
+            "marginRight": 0,
+            "marginTop": 0,
+            "opacity": 100,
+            "paddingBottom": 0,
+            "paddingLeft": 0,
+            "paddingRight": 0,
+            "paddingTop": 0,
+            "widthType": "Fluid"
+        }
+    },
+    "pageElements": [
+        {
+            "definition": {
+                "fragmentStyle": {
+                    "backgroundFragmentImage": {}
+                },
+                "indexed": true,
+                "layout": {
+                    "borderWidth": 0,
+                    "marginBottom": 0,
+                    "marginLeft": 0,
+                    "marginRight": 0,
+                    "marginTop": 0,
+                    "opacity": 100,
+                    "paddingBottom": 0,
+                    "paddingLeft": 0,
+                    "paddingRight": 0,
+                    "paddingTop": 0,
+                    "widthType": "Fixed"
+                }
+            },
+            "pageElements": [
+                {
+                    "definition": {
+                        "fragment": {
+                            "key": "DIALECT-dialect-text",
+                            "siteKey": "Guest"
+                        },
+                        "fragmentConfig": {
+                            "textType": "display-4"
+                        },
+                        "fragmentFields": [
+                            {
+                                "id": "element-text",
+                                "value": {
+                                    "fragmentLink": {},
+                                    "text": {
+                                        "value_i18n": {
+                                            "en_US": "How can we help?"
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "fragmentStyle": {
+                            "fontSize": "1.125rem",
+                            "fontWeight": "fontWeightNormal",
+                            "marginBottom": "2",
+                            "paddingBottom": "4",
+                            "paddingTop": "8",
+                            "textAlign": "center",
+                            "textColor": "colorBrandPrimaryLighten6"
+                        },
+                        "indexed": true
+                    },
+                    "type": "Fragment"
+                },
+                {
+                    "definition": {
+                        "fragmentStyle": {
+                            "paddingBottom": "8",
+                            "paddingLeft": "10",
+                            "paddingRight": "10"
+                        },
+                        "widgetInstance": {
+                            "widgetConfig": {
+                                "federatedSearchKey": "",
+                                "displayStyle": "ddmTemplate_51273",
+                                "scopeParameterName": "scope",
+                                "showStagedResults": "false",
+                                "searchScope": "this-site",
+                                "keywordsParameterName": "q",
+                                "destination": "/search",
+                                "invisible": "false",
+                                "displayStyleGroupId": "39353",
+                                "useAdvancedSearchSyntax": "false"
+                            },
+                            "widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+                        }
+                    },
+                    "type": "Widget"
+                }
+            ],
+            "type": "Section"
+        }
+    ],
+    "type": "Section"
+}

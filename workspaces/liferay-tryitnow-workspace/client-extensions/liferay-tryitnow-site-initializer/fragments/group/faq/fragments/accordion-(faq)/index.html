@@ -1,0 +1,49 @@
+<div class="fragment_1025">
+    <div class="panel" onclick="toggle(this)" id="panel">
+        <div class="panel-header">
+            <div class="panel-header-left">
+                <h5 class="m-0 text-brand-primary">
+                     <lfr-editable id="txt-header" type="text">Customer of Clarity</lfr-editable>
+                </h5>
+            </div>
+            <div class="panel-header-right">
+                <div class="panel-toggle ">
+                    <span id="arrow" class="arrow arrow-collapse">^</span>
+                </div>
+            </div>
+        </div>
+        <div id="panel-body" class="panel-body">
+            <lfr-drop-zone></lfr-drop-zone>
+        </div>
+    </div>
+</div>
+<script>
+    function toggle(panel) {
+			console.log(panel);
+        const arrow = panel.querySelector('#arrow');
+			
+        const panelBody = panel.querySelector('#panel-body');
+			
+        if (arrow.classList.contains('arrow-expand')) {
+            arrow.classList.remove('arrow-expand');
+            arrow.classList.add('arrow-collapse');
+
+            panelBody.classList.remove('panel-body-expand');
+            panelBody.classList.add('panel-body-collapse');
+
+            panel.classList.remove('panel-expand');
+            panel.classList.add('panel-collapse');
+
+        } else if (arrow.classList.contains('arrow-collapse')) {
+            arrow.classList.remove('arrow-collapse');
+            arrow.classList.add('arrow-expand');
+
+            panelBody.classList.remove('panel-body-collapse');
+            panelBody.classList.add('panel-body-expand');
+
+            panel.classList.remove('panel-collapse');
+            panel.classList.add('panel-expand');
+
+        }
+    }
+</script>

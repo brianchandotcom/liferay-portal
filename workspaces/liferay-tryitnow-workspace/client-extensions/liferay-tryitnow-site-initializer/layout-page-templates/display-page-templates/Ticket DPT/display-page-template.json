@@ -1,0 +1,7 @@
+{
+    "contentType" : {
+      "className" : "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Ticket$]"
+    },
+    "name" : "Ticket DPT",
+    "defaultTemplate" : true
+  }

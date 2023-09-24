@@ -1,0 +1,7 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "ATTACHMENT-LINK",
+	"infoItemClassName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Ticket$]",
+	"name": "Attachment Link",
+	"resourceClassName": "com.liferay.template.model.TemplateEntry"
+}

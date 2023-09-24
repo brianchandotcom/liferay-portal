@@ -1,0 +1,379 @@
+{
+    "pageElement": {
+        "pageElements": [
+            {
+                "definition": {
+                    "fragmentStyle": {
+                        "minHeight": "100vh",
+                        "paddingBottom": "5"
+                    },
+                    "indexed": true,
+                    "layout": {
+                        "borderWidth": 0,
+                        "marginBottom": 0,
+                        "marginLeft": 0,
+                        "marginRight": 0,
+                        "marginTop": 0,
+                        "opacity": 100,
+                        "paddingBottom": 4,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "widthType": "Fixed"
+                    }
+                },
+                "pageElements": [
+                    {
+                        "definition": {
+                            "fragmentStyle": {
+                                "backgroundColor": "colorBrandPrimaryLighten5",
+                                "borderRadius": "borderRadiusLg",
+                                "marginTop": "3",
+                                "paddingBottom": "4",
+                                "paddingLeft": "5",
+                                "paddingTop": "4",
+                                "width": "65%"
+                            },
+                            "indexed": true,
+                            "layout": {
+                                "borderWidth": 0,
+                                "marginBottom": 0,
+                                "marginLeft": 0,
+                                "marginRight": 0,
+                                "marginTop": 1,
+                                "opacity": 100,
+                                "paddingBottom": 2,
+                                "paddingLeft": 4,
+                                "paddingRight": 0,
+                                "paddingTop": 2,
+                                "widthType": "Fixed"
+                            }
+                        },
+                        "pageElements": [
+                            {
+                                "definition": {
+                                    "fragment": {
+                                        "key": "DIALECT-dialect-text",
+                                        "siteKey": "[$GROUP_KEY$]"
+                                    },
+                                    "fragmentConfig": {
+                                        "textType": "text-small-caps"
+                                    },
+                                    "fragmentFields": [
+                                        {
+                                            "id": "element-text",
+                                            "value": {
+                                                "fragmentLink": {},
+                                                "text": {
+                                                    "value_i18n": {
+                                                        "en_US": "Welcome"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "fragmentStyle": {
+                                        "fontWeight": "fontWeightBolder",
+                                        "marginBottom": "1",
+                                        "textColor": "colorBrandPrimary"
+                                    },
+                                    "indexed": true
+                                },
+                                "type": "Fragment"
+                            },
+                            {
+                                "definition": {
+                                    "fragment": {
+                                        "key": "DIALECT-dialect-text",
+                                        "siteKey": "[$GROUP_KEY$]"
+                                    },
+                                    "fragmentConfig": {
+                                        "textType": "h1"
+                                    },
+                                    "fragmentFields": [
+                                        {
+                                            "id": "element-text",
+                                            "value": {
+                                                "fragmentLink": {},
+                                                "text": {
+                                                    "value_i18n": {
+                                                        "en_US": "Sign In"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "fragmentStyle": {
+                                        "marginBottom": "2"
+                                    },
+                                    "indexed": true
+                                },
+                                "type": "Fragment"
+                            },
+                            {
+                                "definition": {
+                                    "customCSS": ".[$FRAGMENT_CLASS$] input[type='text'],input[type='password'] {\n     width: 400px;\n}\n\n.[$FRAGMENT_CLASS$] .panel-body{\n  padding : 0;\n}\n\n.[$FRAGMENT_CLASS$] .panel-body label{\n  margin-left : 0;\n} input[type='text'],input[type='password'] {\n width: 400px; \n} label{\n color : white; \n}",
+                                    "widgetInstance": {
+                                        "widgetConfig": {
+                                            "displayStyleGroupId": "[$GROUP_ID$]"
+                                        },
+                                        "widgetName": "com_liferay_login_web_portlet_LoginPortlet"
+                                    }
+                                },
+                                "type": "Widget"
+                            }
+                        ],
+                        "type": "Section"
+                    },
+                    {
+                        "definition": {
+                            "fragmentStyle": {
+                                "marginTop": "5",
+                                "width": "65%"
+                            },
+                            "indexed": true,
+                            "layout": {
+                                "borderWidth": 0,
+                                "marginBottom": 0,
+                                "marginLeft": 0,
+                                "marginRight": 0,
+                                "marginTop": 4,
+                                "opacity": 100,
+                                "paddingBottom": 0,
+                                "paddingLeft": 0,
+                                "paddingRight": 0,
+                                "paddingTop": 0,
+                                "widthType": "Fixed"
+                            }
+                        },
+                        "pageElements": [
+                            {
+                                "definition": {
+                                    "fragment": {
+                                        "key": "login-helper",
+                                        "siteKey": "[$GROUP_KEY$]"
+                                    },
+                                    "fragmentConfig": {
+                                        "person": "carl"
+                                    },
+                                    "fragmentFields": [
+                                        {
+                                            "id": "txtSummary",
+                                            "value": {
+                                                "fragmentLink": {}
+                                            }
+                                        },
+                                        {
+                                            "id": "password",
+                                            "value": {
+                                                "fragmentLink": {}
+                                            }
+                                        },
+                                        {
+                                            "id": "txtTitle",
+                                            "value": {
+                                                "fragmentLink": {}
+                                            }
+                                        },
+                                        {
+                                            "id": "email",
+                                            "value": {
+                                                "fragmentLink": {}
+                                            }
+                                        }
+                                    ],
+                                    "indexed": true
+                                },
+                                "type": "Fragment"
+                            }
+                        ],
+                        "type": "Section"
+                    },
+                    {
+                        "definition": {
+                            "fragmentStyle": {
+                                "marginTop": "5",
+                                "width": "65%"
+                            },
+                            "indexed": true,
+                            "layout": {
+                                "borderWidth": 0,
+                                "marginBottom": 0,
+                                "marginLeft": 0,
+                                "marginRight": 0,
+                                "marginTop": 4,
+                                "opacity": 100,
+                                "paddingBottom": 0,
+                                "paddingLeft": 0,
+                                "paddingRight": 0,
+                                "paddingTop": 0,
+                                "widthType": "Fixed"
+                            }
+                        },
+                        "pageElements": [
+                            {
+                                "definition": {
+                                    "fragment": {
+                                        "key": "login-helper",
+                                        "siteKey": "[$GROUP_KEY$]"
+                                    },
+                                    "fragmentConfig": {
+                                        "person": "sam"
+                                    },
+                                    "fragmentFields": [
+                                        {
+                                            "id": "txtSummary",
+                                            "value": {
+                                                "fragmentLink": {},
+                                                "text": {
+                                                    "value_i18n": {
+                                                        "en_US": "Sam works in Clarity’s Support department as a Customer Support Representative"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "id": "email",
+                                            "value": {
+                                                "fragmentLink": {},
+                                                "text": {
+                                                    "value_i18n": {
+                                                        "en_US": "support.sam@liferay.com"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "id": "password",
+                                            "value": {
+                                                "fragmentLink": {}
+                                            }
+                                        },
+                                        {
+                                            "id": "txtTitle",
+                                            "value": {
+                                                "fragmentLink": {},
+                                                "text": {
+                                                    "value_i18n": {
+                                                        "en_US": "Support Sam"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "indexed": true
+                                },
+                                "type": "Fragment"
+                            }
+                        ],
+                        "type": "Section"
+                    },
+                    {
+                        "definition": {
+                            "fragmentStyle": {
+                                "marginTop": "5",
+                                "width": "65%"
+                            },
+                            "indexed": true,
+                            "layout": {
+                                "borderWidth": 0,
+                                "marginBottom": 0,
+                                "marginLeft": 0,
+                                "marginRight": 0,
+                                "marginTop": 4,
+                                "opacity": 100,
+                                "paddingBottom": 0,
+                                "paddingLeft": 0,
+                                "paddingRight": 0,
+                                "paddingTop": 0,
+                                "widthType": "Fixed"
+                            }
+                        },
+                        "pageElements": [
+                            {
+                                "definition": {
+                                    "fragment": {
+                                        "key": "login-helper",
+                                        "siteKey": "[$GROUP_KEY$]"
+                                    },
+                                    "fragmentConfig": {
+                                        "person": "adam"
+                                    },
+                                    "fragmentFields": [
+                                        {
+                                            "id": "txtSummary",
+                                            "value": {
+                                                "fragmentLink": {},
+                                                "text": {
+                                                    "value_i18n": {
+                                                        "en_US": "Adam is the Admin User and has access to all the settings and customizations on the platform."
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "id": "email",
+                                            "value": {
+                                                "fragmentLink": {},
+                                                "text": {
+                                                    "value_i18n": {
+                                                        "en_US": "admin.adam@liferay.com"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "id": "password",
+                                            "value": {
+                                                "fragmentLink": {}
+                                            }
+                                        },
+                                        {
+                                            "id": "txtTitle",
+                                            "value": {
+                                                "fragmentLink": {},
+                                                "text": {
+                                                    "value_i18n": {
+                                                        "en_US": "Admin Adam"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "indexed": true
+                                },
+                                "type": "Fragment"
+                            }
+                        ],
+                        "type": "Section"
+                    },
+                    {
+                        "definition": {
+                            "fragment": {
+                                "key": "loggedusersredirect",
+                                "siteKey": "[$GROUP_KEY$]"
+                            },
+                            "fragmentConfig": {
+                                "groupKey" : "[$GROUP_KEY$]"
+                            },
+                            "fragmentFields": [],
+                            "fragmentStyle": {
+                                "hidden": true
+                            },
+                            "indexed": true
+                        },
+                        "type": "Fragment"
+                    }
+                ],
+                "type": "Section"
+            }
+        ],
+        "type": "Root"
+    },
+    "version": 1.1,
+    "settings": {
+        "masterPage": {
+            "key": "sign-in"
+        }
+    }
+}

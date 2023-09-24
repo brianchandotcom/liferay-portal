@@ -1,0 +1,24 @@
+{
+	"friendlyURL": "/sign-in",
+	"hidden": false,
+	"name_i18n": {"en_US": "Sign In"},
+	"private": false,
+	"system": false,
+	"type": "Content",
+    "permissions": [
+		{
+			"actionIds": [
+                "VIEW"
+			],
+			"roleName": "Guest",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+                "VIEW"
+			],
+			"roleName": "Site Member",
+			"scope": 4
+		}
+	]
+}

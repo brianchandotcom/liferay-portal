@@ -1,0 +1,14 @@
+
+    <?xml version="1.0"?>
+
+<root>
+	<structure>
+		<name>FAQ</name>
+		<description></description>
+		<definition>
+			<![CDATA[
+				{"definitionSchemaVersion":"2.0","availableLanguageIds":["en_US"],"successPage":{"body":{},"title":{},"enabled":false},"defaultLanguageId":"en_US","fields":[{"labelAtStructureLevel":true,"predefinedValue":{"en_US":""},"tooltip":{"en_US":""},"requireConfirmation":false,"type":"text","showLabel":true,"required":false,"displayStyle":"singleline","requiredErrorMessage":{"en_US":""},"objectFieldName":"","repeatable":false,"nativeField":false,"confirmationLabel":{"en_US":""},"fieldReference":"question","tip":{"en_US":""},"placeholder":{"en_US":""},"direction":["vertical"],"hideField":false,"confirmationErrorMessage":{"en_US":""},"dataType":"string","readOnly":false,"label":{"en_US":"Question"},"indexType":"keyword","fieldNamespace":"","visibilityExpression":"","name":"question","localizable":true},{"labelAtStructureLevel":true,"predefinedValue":{"en_US":""},"tooltip":{"en_US":""},"requireConfirmation":false,"type":"text","showLabel":true,"required":false,"displayStyle":"multiline","requiredErrorMessage":{"en_US":""},"objectFieldName":"","repeatable":false,"nativeField":false,"confirmationLabel":{"en_US":""},"fieldReference":"answer","tip":{"en_US":""},"placeholder":{"en_US":""},"direction":["vertical"],"hideField":false,"confirmationErrorMessage":{"en_US":""},"dataType":"string","readOnly":false,"label":{"en_US":"Answer"},"indexType":"keyword","fieldNamespace":"","visibilityExpression":"","name":"answer","localizable":true}]}
+			]]>
+		</definition>
+	</structure>
+</root>

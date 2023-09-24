@@ -1,0 +1,69 @@
+/* ----------------------- VERTICAL NAVIGATION ----------------------- */
+.clarity-vertical-nav {
+    margin-top: var(--spacer-4, 1.5rem);
+}
+
+.clarity-vertical-nav .nav-link.active {
+    background-color: transparent;
+}
+
+.clarity-vertical-nav a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.clarity-vertical-nav .nav-pills .nav-link {
+    font-weight: 700;
+    font-size: 1rem;
+    color: white;
+    text-underline-offset: 5px;
+}
+
+.clarity-vertical-nav .portlet-navigation .nav-pills>li.active>a {
+    text-decoration: underline;
+    background-color: transparent;
+    color: #fff;
+}
+
+/* ----------------------- VERTICAL NAVIGATION ----------------------- */
+
+/* ----------------------- HORIZONTAL NAVIGATION ----------------------- */
+
+.clarity-horizontal-nav .active{
+    text-underline-offset: 5px;
+}
+
+.clarity-horizontal-nav .dropdown-menu{
+    min-height: 36px;
+}
+
+.clarity-horizontal-nav a{
+    font-weight: 800;
+    font-size: 1rem;
+    color: white;
+    text-underline-offset: 5px;
+}
+
+.clarity-horizontal-nav .active{
+    text-decoration: underline;
+}
+
+.clarity-horizontal-nav a:hover{
+    text-decoration: underline;
+}
+
+.clarity-horizontal-nav li.open ul{
+    line-height: 1.5;
+}
+
+.clarity-horizontal-nav li.open ul li a{
+    font-weight: 500;
+    color: #707A7A;
+    font-size: 0.875rem;
+}
+
+.clarity-horizontal-nav li.open ul li a:hover{
+    text-decoration: none;
+}
+
+/* ----------------------- HORIZONTAL NAVIGATION ----------------------- */

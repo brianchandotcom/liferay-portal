@@ -1,0 +1,142 @@
+{
+    "pageElement": {
+        "pageElements": [
+            {
+                "definition": {
+                    "customCSS": ".[$FRAGMENT_CLASS$] {\n    background-position: 0 -64px !important;\n    background-repeat: no-repeat;\n}\n",
+                    "fragmentStyle": {
+                        "backgroundFragmentImage": {
+                            "title": {
+                                "value": "header-background-svg"
+                            },
+                            "url": {
+                                "value": "[$DOCUMENT_URL:/site-initializer/documents/group/Assets/header-background.svg$]"
+                            }
+                        },
+                        "borderWidth": "0"
+                    },
+                    "indexed": true,
+                    "layout": {
+                        "borderWidth": 0,
+                        "marginBottom": 0,
+                        "marginLeft": 0,
+                        "marginRight": 0,
+                        "marginTop": 0,
+                        "opacity": 100,
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "widthType": "Fluid"
+                    }
+                },
+                "pageElements": [
+                    {
+                        "definition": {
+                            "fragmentStyle": {
+                                "borderWidth": "0"
+                            },
+                            "indexed": true,
+                            "layout": {
+                                "borderWidth": 0,
+                                "marginBottom": 0,
+                                "marginLeft": 0,
+                                "marginRight": 0,
+                                "marginTop": 0,
+                                "opacity": 100,
+                                "paddingBottom": 0,
+                                "paddingLeft": 0,
+                                "paddingRight": 0,
+                                "paddingTop": 0,
+                                "widthType": "Fixed"
+                            }
+                        },
+                        "pageElements": [
+                            {
+                                "definition": {
+                                    "fragment": {
+                                        "key": "DIALECT-dialect-text",
+                                        "siteKey": "[$GROUP_KEY$]"
+                                    },
+                                    "fragmentConfig": {
+                                        "textType": "h1"
+                                    },
+                                    "fragmentFields": [
+                                        {
+                                            "id": "element-text",
+                                            "value": {
+                                                "fragmentLink": {},
+                                                "text": {
+                                                    "value_i18n": {
+                                                        "en_US": "Tickets Dashboard"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ],
+                                    "fragmentStyle": {
+                                        "fontSize": "1.125rem",
+                                        "fontWeight": "fontWeightNormal",
+                                        "marginBottom": "2",
+                                        "paddingBottom": "4",
+                                        "paddingTop": "4",
+                                        "textAlign": "center",
+                                        "textColor": "colorBrandPrimaryLighten6"
+                                    },
+                                    "indexed": true
+                                },
+                                "type": "Fragment"
+                            }
+                        ],
+                        "type": "Section"
+                    }
+                ],
+                "type": "Section"
+            },
+            {
+                "definition": {
+                    "fragmentStyle": {
+                        "minHeight": "505px",
+                        "paddingBottom": "4",
+                        "paddingTop": "4"
+                    },
+                    "indexed": true,
+                    "layout": {
+                        "borderWidth": 0,
+                        "marginBottom": 0,
+                        "marginLeft": 0,
+                        "marginRight": 0,
+                        "marginTop": 0,
+                        "opacity": 100,
+                        "paddingBottom": 2,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 2,
+                        "widthType": "Fluid"
+                    }
+                },
+                "pageElements": [
+                    {
+                        "definition": {
+                            "widgetInstance": {
+                                "widgetConfig": {
+                                    "displayStyleGroupId": "[$GROUP_ID$]"
+                                },
+                                "widgetName": "[$CLIENT_EXTENSION_ENTRY_ID:REMOTE_APPS$]"
+                            }
+                        },
+                        "type": "Widget"
+                    }
+                ],
+                "type": "Section"
+            }
+        ],
+        "type": "Root"
+    },
+    "version": 1.1,
+    "settings": {
+        "masterPage": {
+            "key": "main"
+        }
+    }
+}

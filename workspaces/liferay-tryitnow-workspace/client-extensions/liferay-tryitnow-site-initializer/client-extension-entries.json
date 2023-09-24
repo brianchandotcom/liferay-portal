@@ -1,0 +1,18 @@
+[
+	{
+		"clientExtensionEntryKey": "REMOTE_APPS",
+		"cssURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/group/Client Extensions/Tickets Dashboard/styles.css$]"
+		],
+		"elementURLs": [
+			"[$DOCUMENT_URL:/site-initializer/documents/group/Client Extensions/Tickets Dashboard/main-full.js$]"
+		],
+		"externalReferenceCode": "REMOTEAPPS",
+		"htmlElementName": "remote-apps",
+		"name_i18n": {
+			"en_US": "Tickets Dashboard"
+		},
+		"portletCategoryName": "category.client-extensions",
+		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$CLIENT_EXTENSION_ENTRY_ID:REMOTE_APPS$]"
+	}
+]

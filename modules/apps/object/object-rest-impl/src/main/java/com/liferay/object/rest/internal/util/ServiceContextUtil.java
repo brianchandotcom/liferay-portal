@@ -43,13 +43,6 @@ public class ServiceContextUtil {
 					Long::parseLong));
 		}
 
-		if (properties.get("taxonomyCategoryIds") != null) {
-			serviceContext.setAssetCategoryIds(
-				ListUtil.toLongArray(
-					(List<Integer>)properties.get("taxonomyCategoryIds"),
-					Long::valueOf));
-		}
-
 		if (Validator.isNotNull(objectEntry.getKeywords())) {
 			serviceContext.setAssetTagNames(objectEntry.getKeywords());
 		}
@@ -58,12 +51,6 @@ public class ServiceContextUtil {
 			serviceContext.setAssetTagNames(
 				ArrayUtil.toStringArray(
 					(List<String>)properties.get("tagNames")));
-		}
-
-		if (properties.get("keywords") != null) {
-			serviceContext.setAssetTagNames(
-				ArrayUtil.toStringArray(
-					(List<String>)properties.get("keywords")));
 		}
 
 		serviceContext.setUserId(userId);

@@ -61,6 +61,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
@@ -148,20 +149,10 @@ public class ObjectEntryServiceTest {
 		_assertPrincipalException(
 			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition, null);
 
-		TreeTestUtil.unsafeForEach(
-			_objectDefinitionLocalService, _tree,
-			objectDefinition -> _assertPrincipalException(
-				ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, null));
-
 		_setUser(_user);
 
 		_assertPrincipalException(
 			ObjectActionKeys.ADD_OBJECT_ENTRY, _objectDefinition, null);
-
-		TreeTestUtil.unsafeForEach(
-			_objectDefinitionLocalService, _tree,
-			objectDefinition -> _assertPrincipalException(
-				ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, null));
 
 		_setUser(_guestUser);
 
@@ -183,6 +174,64 @@ public class ObjectEntryServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _guestUser.getUserId())));
 
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(),
+			_rootObjectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		_setUser(_user);
+
+		Assert.assertNotNull(
+			_objectEntryService.addObjectEntry(
+				0, _objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", RandomStringUtils.randomAlphabetic(5)
+				).build(),
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId(), _guestUser.getUserId())));
+	}
+
+	@Test
+	public void testAddObjectEntryHierarchy() throws Exception {
+
+		// Root company permissions must be inherited
+
+		_setUser(_user);
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.USER);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(),
+			_rootObjectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		Map<Long, ObjectEntry> objectEntries1 = _createObjectEntryHierarchy(
+			_tree);
+
+		ObjectEntry rootObjectEntry = objectEntries1.get(
+			_rootObjectDefinition.getObjectDefinitionId());
+
+		_setUser(_adminUser);
+
+		_objectEntryService.deleteObjectEntry(
+			rootObjectEntry.getObjectEntryId());
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			TestPropsValues.getCompanyId(),
+			_rootObjectDefinition.getResourceName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			ObjectActionKeys.ADD_OBJECT_ENTRY);
+
+		// Root descendant permissions must not be considered
+
+		_setUser(_user);
+
 		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
@@ -195,71 +244,12 @@ public class ObjectEntryServiceTest {
 					objectDefinition.getResourceName(),
 					ResourceConstants.SCOPE_COMPANY,
 					String.valueOf(TestPropsValues.getCompanyId()),
-					guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
+					role.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
 
 				_assertPrincipalException(
 					ObjectActionKeys.ADD_OBJECT_ENTRY, objectDefinition, null);
 			});
-
-		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(),
-			_rootObjectDefinition.getResourceName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()),
-			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
-
-		TreeTestUtil.unsafeForEach(
-			_objectDefinitionLocalService, _tree,
-			objectDefinition -> Assert.assertNotNull(
-				_objectEntryService.addObjectEntry(
-					0, objectDefinition.getObjectDefinitionId(),
-					HashMapBuilder.<String, Serializable>put(
-						"able", RandomStringUtils.randomAlphabetic(5)
-					).build(),
-					ServiceContextTestUtil.getServiceContext(
-						TestPropsValues.getGroupId(),
-						_guestUser.getUserId()))));
-
-		_setUser(_user);
-
-		Assert.assertNotNull(
-			_objectEntryService.addObjectEntry(
-				0, _objectDefinition.getObjectDefinitionId(),
-				HashMapBuilder.<String, Serializable>put(
-					"firstName", RandomStringUtils.randomAlphabetic(5)
-				).build(),
-				ServiceContextTestUtil.getServiceContext(
-					TestPropsValues.getGroupId(), _guestUser.getUserId())));
-
-		TreeTestUtil.unsafeForEach(
-			_objectDefinitionLocalService, _tree,
-			objectDefinition -> Assert.assertNotNull(
-				_objectEntryService.addObjectEntry(
-					0, objectDefinition.getObjectDefinitionId(),
-					HashMapBuilder.<String, Serializable>put(
-						"able", RandomStringUtils.randomAlphabetic(5)
-					).build(),
-					ServiceContextTestUtil.getServiceContext(
-						TestPropsValues.getGroupId(),
-						_guestUser.getUserId()))));
 	}
-
-	/*@Test
-	public void testAddObjectEntryHierarchy() throws Exception {
-		_setUser(_user);
-
-		TreeTestUtil.unsafeForEach(
-			_objectDefinitionLocalService, _tree,
-			objectDefinition -> Assert.assertNotNull(
-				_objectEntryService.addObjectEntry(
-					0, objectDefinition.getObjectDefinitionId(),
-					HashMapBuilder.<String, Serializable>put(
-						"able", RandomStringUtils.randomAlphabetic(5)
-					).build(),
-					ServiceContextTestUtil.getServiceContext(
-						TestPropsValues.getGroupId(),
-						_adminUser.getUserId()))));
-	}*/
 
 	@Test
 	public void testDeleteObjectEntry() throws Exception {
@@ -650,9 +640,7 @@ public class ObjectEntryServiceTest {
 			else {
 				_objectEntryService.addObjectEntry(
 					0, objectDefinition.getObjectDefinitionId(),
-					HashMapBuilder.<String, Serializable>put(
-						"firstName", RandomStringUtils.randomAlphabetic(5)
-					).build(),
+					Collections.emptyMap(),
 					ServiceContextTestUtil.getServiceContext(
 						TestPropsValues.getGroupId(),
 						permissionChecker.getUserId()));

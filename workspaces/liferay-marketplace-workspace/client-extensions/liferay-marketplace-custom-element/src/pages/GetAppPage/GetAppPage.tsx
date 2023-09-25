@@ -12,7 +12,7 @@ import { getUrlParam } from "../../utils/getUrlParam";
 import AccountSelection from "./components/AccountSelection";
 import ProductFooter from "./components/Footer";
 import ProductCard from "./components/ProductCard";
-import { SelectPaymentMethod } from "./components/SelectPaymentMethod";
+import { SelectPaymentMethod } from "./components/SelectPaymentMethod/SelectPaymentMethod";
 import { initialBillingAddress } from "./constants/initialBillingAddress";
 import { StepType } from "./enums/stepType";
 import useGetAddresses from "./hooks/useGetAddresses";

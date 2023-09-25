@@ -6,10 +6,10 @@
 import ClayIcon from "@clayui/icon";
 import { useEffect } from "react";
 
-import { Input } from "../../../components/Input/Input";
-import { RadioCard } from "../../../components/RadioCard/RadioCard";
-import { Section } from "../../../components/Section/Section";
-import getPostalAddressDescription from "../utils/getPostalAddressDescription";
+import { Input } from "../../../../../../components/Input/Input";
+import { RadioCard } from "../../../../../../components/RadioCard/RadioCard";
+import { Section } from "../../../../../../components/Section/Section";
+import getPostalAddressDescription from "./utils/getPostalAddressDescription";
 
 interface BillingAddressProps {
   addresses: BillingAddress[];

@@ -5,11 +5,11 @@
 
 import { useState } from "react";
 
-import { Input } from "../../../components/Input/Input";
-import { BillingAddress } from "./BillingAddress";
-import { PaymentMethodMode } from "./PaymentMethodMode";
-import { PaymentMethodSelector } from "./PaymentMethodSelector";
-import { TrialTimeline } from "./TrialTimeline";
+import { Input } from "../../../../components/Input/Input";
+import { BillingAddress } from "./components/BillingAddress/BillingAddress";
+import { PaymentMethodMode } from "./components/PaymentMethodMode/PaymentMethodMode";
+import { PaymentMethodSelector } from "./components/PaymentMethodSelector/PaymentMethodSelector";
+import { TrialTimeline } from "./components/TrialTimeLine/TrialTimeline";
 
 interface SelectPaymentMethodProps {
   addresses: BillingAddress[];

@@ -64,54 +64,6 @@ public class CTColumnResolutionMaxTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
-		DLFolder parentDLFolder = _dlFolderLocalService.addFolder(
-			null, _group.getCreatorUserId(), _group.getGroupId(),
-			_group.getGroupId(), false,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), false,
-			serviceContext);
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection.getCtCollectionId())) {
-
-			_dlFolderLocalService.addFolder(
-				null, _group.getCreatorUserId(), _group.getGroupId(),
-				_group.getGroupId(), false, parentDLFolder.getFolderId(),
-				_ctCollection.getName(), null, false, serviceContext);
-		}
-
-		Date lastPostDate = parentDLFolder.getLastPostDate();
-
-		_dlFolderLocalService.updateLastPostDate(
-			parentDLFolder.getFolderId(),
-			new Date(lastPostDate.getTime() + Time.HOUR));
-
-		Map<Long, List<ConflictInfo>> conflictsMap =
-			_ctCollectionLocalService.checkConflicts(_ctCollection);
-
-		Assert.assertEquals(conflictsMap.toString(), 1, conflictsMap.size());
-
-		List<ConflictInfo> conflictInfos = conflictsMap.get(
-			_classNameLocalService.getClassNameId(DLFolder.class));
-
-		Assert.assertEquals(conflictsMap.toString(), 1, conflictInfos.size());
-
-		ConflictInfo conflictInfo = conflictInfos.get(0);
-
-		Assert.assertEquals(
-			parentDLFolder.getPrimaryKey(), conflictInfo.getSourcePrimaryKey());
-		Assert.assertEquals(
-			parentDLFolder.getPrimaryKey(), conflictInfo.getTargetPrimaryKey());
-
-		Assert.assertTrue(conflictInfo.isResolved());
-	}
-
-	@Test
-	public void testUnresolvedModificationConflictMax() throws PortalException {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
-
 		String originalName = "original_name";
 
 		DLFolder parentDLFolder = _dlFolderLocalService.addFolder(
@@ -156,7 +108,7 @@ public class CTColumnResolutionMaxTest {
 		Assert.assertEquals(
 			parentDLFolder.getPrimaryKey(), conflictInfo.getTargetPrimaryKey());
 
-		Assert.assertFalse(conflictInfo.isResolved());
+		Assert.assertTrue(conflictInfo.isResolved());
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(

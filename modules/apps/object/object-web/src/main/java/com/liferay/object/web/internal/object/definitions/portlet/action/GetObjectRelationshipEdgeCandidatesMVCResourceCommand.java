@@ -10,6 +10,7 @@ import com.liferay.object.definition.tree.Edge;
 import com.liferay.object.definition.tree.Node;
 import com.liferay.object.definition.tree.Tree;
 import com.liferay.object.definition.tree.TreeFactory;
+import com.liferay.object.definition.tree.constants.TreeConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -167,7 +168,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 
 		Node node = tree.getNode(objectDefinition.getObjectDefinitionId());
 
-		if ((node.getDepth() + depth + 1) > Tree.MAX_HEIGHT) {
+		if ((node.getDepth() + depth + 1) > TreeConstants.MAX_HEIGHT) {
 			return false;
 		}
 

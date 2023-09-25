@@ -14,4 +14,6 @@ public class TreeConstants {
 
 	public static final String ITERATOR_TYPE_POST_ORDER = "postOrder";
 
+	public static final int MAX_HEIGHT = 4;
+
 }

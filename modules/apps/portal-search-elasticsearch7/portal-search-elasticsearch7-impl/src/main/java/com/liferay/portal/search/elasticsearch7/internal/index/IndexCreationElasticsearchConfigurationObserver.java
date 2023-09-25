@@ -93,12 +93,14 @@ public class IndexCreationElasticsearchConfigurationObserver
 				Deserializer deserializer = new Deserializer(
 					ByteBuffer.wrap(FileUtil.getBytes(dataFile)));
 
-				if (deserializer.readBoolean() !=
+				if (deserializer.readBoolean() ==
 						_elasticsearchConfigurationWrapper.
 							productionModeEnabled()) {
 
-					_createApplicationAndExternalIndexes();
+					return;
 				}
+
+				_createApplicationAndExternalIndexes();
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

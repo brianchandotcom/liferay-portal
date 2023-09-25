@@ -10,6 +10,11 @@ import com.liferay.feature.flag.web.internal.model.DependencyAwareFeatureFlag;
 import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
 import com.liferay.feature.flag.web.internal.model.LanguageAwareFeatureFlag;
 import com.liferay.feature.flag.web.internal.model.PreferenceAwareFeatureFlag;
+import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -17,6 +22,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -24,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -38,10 +45,15 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -74,6 +86,42 @@ public class FeatureFlagsBagProviderImpl
 		long companyId, Function<FeatureFlagsBag, T> function) {
 
 		return function.apply(getOrCreateFeatureFlagsBag(companyId));
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_featureFlagListenerServiceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				bundleContext, FeatureFlagListener.class, null,
+				(serviceReference, emitter) -> {
+					if (Objects.isNull(
+							serviceReference.getProperty(
+								_FEATURE_FLAG_LISTENER_PROPERTY_KEY))) {
+
+						FeatureFlagListener featureFlagListener =
+							bundleContext.getService(serviceReference);
+
+						Class<? extends FeatureFlagListener> clazz =
+							featureFlagListener.getClass();
+
+						_log.error(
+							StringBundler.concat(
+								"No featureFlagKey property found for ",
+								clazz.getName(), ". Skipping registration."));
+
+						return;
+					}
+
+					_featureFlagKeyPropertyServiceReferenceMapper.map(
+						serviceReference, emitter);
+				},
+				new FeatureFlagListenerEagerServiceTrackerCustomizer(
+					bundleContext));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_featureFlagListenerServiceTrackerMap.close();
 	}
 
 	private FeatureFlagsBag _createFeatureFlagsBag(long companyId) {
@@ -205,7 +253,21 @@ public class FeatureFlagsBagProviderImpl
 		}
 
 		featureFlagsBag.setEnabled(key, enabled);
+
+		if (_featureFlagListenerServiceTrackerMap.containsKey(key)) {
+			List<FeatureFlagListener> featureFlagListeners =
+				_featureFlagListenerServiceTrackerMap.getService(key);
+
+			for (FeatureFlagListener featureFlagListener :
+					featureFlagListeners) {
+
+				featureFlagListener.onValue(companyId, key, enabled);
+			}
+		}
 	}
+
+	private static final String _FEATURE_FLAG_LISTENER_PROPERTY_KEY =
+		"featureFlagKey";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FeatureFlagsBagProviderImpl.class);
@@ -215,9 +277,88 @@ public class FeatureFlagsBagProviderImpl
 	private static final Pattern _pattern = Pattern.compile("^([A-Z\\-0-9]+)$");
 
 	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	private final PropertyServiceReferenceMapper<String, FeatureFlagListener>
+		_featureFlagKeyPropertyServiceReferenceMapper =
+			new PropertyServiceReferenceMapper<>(
+				_FEATURE_FLAG_LISTENER_PROPERTY_KEY);
+	private ServiceTrackerMap<String, List<FeatureFlagListener>>
+		_featureFlagListenerServiceTrackerMap;
+
+	@Reference
 	private FeatureFlagPreferencesManager _featureFlagPreferencesManager;
 
 	@Reference
 	private Language _language;
+
+	private class FeatureFlagListenerEagerServiceTrackerCustomizer
+		implements EagerServiceTrackerCustomizer
+			<FeatureFlagListener, FeatureFlagListener> {
+
+		public FeatureFlagListenerEagerServiceTrackerCustomizer(
+			BundleContext bundleContext) {
+
+			_bundleContext = bundleContext;
+		}
+
+		@Override
+		public FeatureFlagListener addingService(
+			ServiceReference<FeatureFlagListener> serviceReference) {
+
+			FeatureFlagListener featureFlagListener = _bundleContext.getService(
+				serviceReference);
+
+			List<String> featureFlagKeys = new ArrayList<>();
+
+			_featureFlagKeyPropertyServiceReferenceMapper.map(
+				serviceReference, featureFlagKeys::add);
+
+			Predicate<FeatureFlag> predicate =
+				featureFlag -> featureFlagKeys.contains(featureFlag.getKey());
+
+			UnsafeConsumer<Long, Exception> companyIdUnsafeConsumer =
+				companyId -> {
+					FeatureFlagsBag featureFlagsBag =
+						getOrCreateFeatureFlagsBag(companyId);
+
+					for (FeatureFlag featureFlag :
+							featureFlagsBag.getFeatureFlags(predicate)) {
+
+						featureFlagListener.onValue(
+							companyId, featureFlag.getKey(),
+							featureFlag.isEnabled());
+					}
+				};
+
+			try {
+				_companyLocalService.forEachCompanyId(companyIdUnsafeConsumer);
+
+				companyIdUnsafeConsumer.accept(CompanyConstants.SYSTEM);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
+
+			return featureFlagListener;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<FeatureFlagListener> serviceReference,
+			FeatureFlagListener featureFlagListener) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<FeatureFlagListener> serviceReference,
+			FeatureFlagListener featureFlagListener) {
+
+			_bundleContext.ungetService(serviceReference);
+		}
+
+		private final BundleContext _bundleContext;
+
+	}
 
 }

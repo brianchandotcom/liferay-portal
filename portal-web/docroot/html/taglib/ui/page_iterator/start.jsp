@@ -84,7 +84,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 		%>
 
 		<c:if test="<%= deltaConfigurable %>">
-			<div class="dropdown pagination-items-per-page">
+			<div class="dropdown pagination-items-per-page" id="<%= namespace %>">
 				<button aria-describedby="<%= ariaPaginationResults %>" aria-expanded="false" aria-controls="<%= ariaPaginationPicker %>" aria-haspopup="listbox" class="dropdown-toggle page-link" data-attribute="<%= delta %>" data-toggle="liferay-dropdown" role="combobox">
 					<liferay-ui:message arguments="<%= delta %>" key="x-entries" /><span class="sr-only"><%= StringPool.NBSP %><liferay-ui:message key="per-page" /></span>
 
@@ -412,38 +412,46 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 	}
 </script>
 
-<script type="text/javascript">
+<script data-senna-track="temporary" type="text/javascript">
 
-	var dropdown = document.querySelector('.pagination-items-per-page');
+	var dropdown = document.getElementById("<%= namespace %>");
 	var button = dropdown.querySelector('.dropdown-toggle');
 	var list = dropdown.querySelector('.dropdown-menu');
 	var options = list.querySelectorAll('.dropdown-item');
 	var selectedItemValue = button.dataset.attribute;
 
-	button.addEventListener('keydown', function(event) {
+	function onButtonKeyDown(event) {
 		if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === 'Space') {
-		event.preventDefault();
-		list.classList.add('show');
-		button.setAttribute('aria-expanded', 'true');
+			event.preventDefault();
+			list.classList.add('show');
+			button.setAttribute('aria-expanded', 'true');
+			var selectedOption = null;
 
-			if (list.classList.contains('show')) {
-				var selectedOption = null;
-
-				Array.from(options).find(function(option) {
-					if (option.id == selectedItemValue) {
-						selectedOption = option;
-					}
-				});
-
-				if (selectedOption) {
-					selectedOption.focus();
+			Array.from(options).find(function(option) {
+				if (option.id == selectedItemValue) {
+					selectedOption = option;
 				}
+			});
+
+			if (selectedOption) {
+				selectedOption.focus();
 			}
 		}
-	});
+	}
+
+	button.addEventListener('keydown',onButtonKeyDown );
+
+	var destroyDropDownPagination = function () {
+		button.removeEventListener('keydown', onButtonKeyDown);
+
+		Liferay.detach('beforeScreenFlip', destroyDropDownPagination);
+	};
+
+	Liferay.on('beforeScreenFlip', destroyDropDownPagination);
 
 	options.forEach(function(option, index) {
-		option.addEventListener('keydown', function(event) {
+
+		function handleKeyEvents(event) {
 			if (event.key === 'ArrowDown') {
 				event.preventDefault();
 
@@ -457,7 +465,18 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 					options[index - 1].focus();
 				}
 			}
-		});
+		}
+
+		option.addEventListener('keydown', handleKeyEvents);
+
+		var destroyKeyEvents = function () {
+			option.removeEventListener('keydown', handleKeyEvents);
+
+			Liferay.detach('beforeScreenFlip', destroyKeyEvents);
+		};
+
+		Liferay.on('beforeScreenFlip', destroyKeyEvents);
+
 	});
 
 	function closeDropdown() {

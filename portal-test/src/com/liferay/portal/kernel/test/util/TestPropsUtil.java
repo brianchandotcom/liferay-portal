@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.test.util;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.IOException;
@@ -49,7 +50,9 @@ public class TestPropsUtil {
 			ReflectionUtil.throwException(ioException);
 		}
 
-		try (InputStream inputStream = TestPropsUtil.class.getResourceAsStream(
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		try (InputStream inputStream = classLoader.getResourceAsStream(
 				"/test-portal-impl-ext.properties")) {
 
 			if (inputStream != null) {

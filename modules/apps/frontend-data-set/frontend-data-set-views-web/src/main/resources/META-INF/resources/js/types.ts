@@ -29,7 +29,7 @@ export interface IFilter {
 	filterType?: EFilterType;
 	id: number;
 	label: string;
-	label_i18n: LocalizedValue<string>; 
+	label_i18n: LocalizedValue<string>;
 	type: string;
 }
 

@@ -1,0 +1,11 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+task patch(type: PatchTask)
+
+patch {
+	fileNames "testpath1/test/child/TestD.java"
+	fileNames "testpath1/test/child/TestC.java"
+	fileNames "testpath1/test/TestB.java"
+	fileNames "testpath1/test/TestA.java"
+	fileNames "**/test/TestAll.java"
+}

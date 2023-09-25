@@ -164,6 +164,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 			loading:
 				koroneikiAccountLoading ||
 				networkStatus === NetworkStatus.loading,
+			refetch,
 			remove,
 			search: onSearch,
 			searching: networkStatus === NetworkStatus.setVariables,

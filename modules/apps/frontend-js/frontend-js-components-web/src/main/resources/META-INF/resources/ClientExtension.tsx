@@ -22,7 +22,7 @@ export default function ClientExtension<T>({
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [htmlElementBuilder]);
 
 	return <div ref={containerRef}></div>;
 }

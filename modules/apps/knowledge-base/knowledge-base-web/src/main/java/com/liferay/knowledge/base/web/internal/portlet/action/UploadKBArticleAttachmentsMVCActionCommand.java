@@ -63,8 +63,7 @@ public class UploadKBArticleAttachmentsMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UploadKBArticleAttachmentsMVCActionCommand.
-			KBArticleAttachmentKBUploadFileEntryHandler.class);
+		UploadKBArticleAttachmentsMVCActionCommand.class);
 
 	@Reference
 	private DLAppService _dlAppService;

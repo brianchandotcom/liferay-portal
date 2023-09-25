@@ -1756,6 +1756,11 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		objectDefinition.setActive(true);
+
+		if (objectDefinition.isRootDescendantNode()) {
+			objectDefinition.setPanelCategoryKey(StringPool.BLANK);
+		}
+
 		objectDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);

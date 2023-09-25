@@ -199,7 +199,7 @@ public class DLFolderItemSelectorView
 
 		try {
 			return ListUtil.toList(
-				_depotEntryService.getGroupConnectedDepotEntries(
+				_depotEntryService.getCurrentAndGroupConnectedDepotEntries(
 					themeDisplay.getRefererGroupId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS),
 				DepotEntry::getGroupId);

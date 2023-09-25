@@ -129,6 +129,10 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 										_renderResponse
 									).setTabs1(
 										tabs1
+									).setParameter(
+										"layoutPageTemplateCollectionId",
+										layoutPageTemplateCollection.
+											getParentLayoutPageTemplateCollectionId()
 									).buildString()
 								).setParameter(
 									"layoutPageTemplateCollectionId",

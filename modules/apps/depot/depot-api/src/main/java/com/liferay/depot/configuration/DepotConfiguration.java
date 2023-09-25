@@ -6,7 +6,7 @@
 package com.liferay.depot.configuration;
 
 /**
- * @author Alejandro Tardín
+ * @author     Alejandro Tardín
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
 @Deprecated

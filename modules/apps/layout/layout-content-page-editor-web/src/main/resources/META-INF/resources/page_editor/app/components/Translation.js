@@ -151,6 +151,28 @@ const TranslationItem = ({
 	);
 };
 
+const Trigger = React.forwardRef(
+	({languageIcon, w3cLanguageId, ...otherProps}, ref) => (
+		<ClayButton
+			{...otherProps}
+			aria-label={sub(
+				Liferay.Language.get('select-a-language.-current-language-x'),
+				w3cLanguageId
+			)}
+			className=""
+			data-title={sub(
+				Liferay.Language.get('select-x'),
+				Liferay.Language.get('language')
+			)}
+			displayType="secondary"
+			monospaced
+			ref={ref}
+			size="sm"
+		>
+			<ClayIcon symbol={languageIcon} />
+		</ClayButton>
+	)
+);
 export default function Translation({
 	availableLanguages,
 	defaultLanguageId,
@@ -198,32 +220,12 @@ export default function Translation({
 
 	const {languageIcon, w3cLanguageId} = availableLanguages[languageId];
 
-	const Trigger = React.forwardRef((otherProps, ref) => (
-		<ClayButton
-			{...otherProps}
-			aria-label={sub(
-				Liferay.Language.get('select-a-language.-current-language-x'),
-				w3cLanguageId
-			)}
-			className=""
-			data-title={sub(
-				Liferay.Language.get('select-x'),
-				Liferay.Language.get('language')
-			)}
-			displayType="secondary"
-			monospaced
-			ref={ref}
-			size="sm"
-		>
-			<ClayIcon symbol={languageIcon} />
-		</ClayButton>
-	));
-
 	return (
 		<Picker
 			UNSAFE_menuClassName="cadmin translation-picker"
 			as={Trigger}
 			items={languageValues}
+			languageIcon={languageIcon}
 			onSelectionChange={(key) => {
 				dispatch(
 					updateLanguageId({
@@ -232,6 +234,7 @@ export default function Translation({
 				);
 			}}
 			selectedKey={languageId}
+			w3cLanguageId={w3cLanguageId}
 		>
 			{(language) => (
 				<Option

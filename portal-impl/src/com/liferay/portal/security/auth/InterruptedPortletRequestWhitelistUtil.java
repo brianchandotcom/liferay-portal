@@ -23,14 +23,6 @@ import java.util.Set;
  */
 public class InterruptedPortletRequestWhitelistUtil {
 
-	public static Set<String> getPortletInvocationWhitelist() {
-		return _portletInvocationWhitelist;
-	}
-
-	public static Set<String> getPortletInvocationWhitelistActions() {
-		return _portletInvocationWhitelistActions;
-	}
-
 	public static String[] getWhitelistActionsPropsValues() {
 		return PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST_ACTIONS;
 	}

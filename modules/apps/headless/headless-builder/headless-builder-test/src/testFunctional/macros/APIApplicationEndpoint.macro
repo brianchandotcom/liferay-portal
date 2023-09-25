@@ -1,0 +1,43 @@
+definition {
+
+	macro _curlAPIEndpoint {
+		Variables.assertDefined(parameterList = "${baseURL},${path}");
+
+		if (isSet(virtualHost)) {
+			if (!(isSet(port))) {
+				var port = 8080;
+			}
+
+			var portalURL = "http://${virtualHost}:${port}";
+		}
+		else {
+			if (!(isSet(portalURL))) {
+				var portalURL = JSONCompany.getPortalURL();
+			}
+		}
+
+		var api = "${baseURL}${path}";
+
+		var curl = '''
+			${portalURL}/o/c/${api} \
+				-u test@liferay.com:test \
+				-H Content-Type: application/json
+		''';
+
+		return ${curl};
+	}
+
+	macro getEndpoint {
+		Variables.assertDefined(parameterList = "${baseURL},${path}");
+
+		var curl = APIApplicationEndpoint._curlAPIEndpoint(
+			baseURL = ${baseURL},
+			path = ${path},
+			portalURL = ${portalURL});
+
+		var response = JSONCurlUtil.get(${curl});
+
+		return ${response};
+	}
+
+}

@@ -75,6 +75,22 @@ definition {
 		return ${response};
 	}
 
+	macro setUpGlobalObjectFieldErcByObjectDefinitionId {
+		Variables.assertDefined(parameterList = "${name},${objectDefinitionId}");
+
+		var objectFields = ObjectFieldAPI.getObjectFieldsByObjectId(objectDefinitionId = ${objectDefinitionId});
+
+		var objectFieldErc = JSONUtil.getWithJSONPath(${objectFields}, "$..items[?(@.name=='${name}')].externalReferenceCode");
+
+		echo("MY OBJECT FIELD ERC");
+
+		echo(${objectFieldErc});
+
+		static var staticObjectFieldErc = ${objectFieldErc};
+
+		return ${staticObjectFieldErc};
+	}
+
 	macro setUpGlobalObjectFieldId {
 		var objectFieldId = ObjectFieldAPI.getIdOfCreatedObjectField(
 			dbType = ${dbType},

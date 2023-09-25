@@ -9,7 +9,9 @@ definition {
 			var portalURL = "http://${virtualHost}:${port}";
 		}
 		else {
-			var portalURL = JSONCompany.getPortalURL();
+			if (!(isSet(portalURL))) {
+				var portalURL = JSONCompany.getPortalURL();
+			}
 		}
 
 		if (isSet(aPIApplicationId)) {
@@ -32,6 +34,13 @@ definition {
 		Variables.assertDefined(parameterList = "${baseURL},${status},${title}");
 
 		var curl = ApplicationAPI._curlAPIApplication(virtualHost = ${virtualHost});
+
+		if (!(isSet(externalReferenceCodeApp))) {
+			var title = StringUtil.removeSpaces(${title});
+
+			var externalReferenceCodeApp = ${title};
+		}
+
 		var body = '''
 			"applicationStatus": {"key": "${status}","name": "${status}"},
 			"baseURL": "${baseURL}",
@@ -43,8 +52,13 @@ definition {
 				var scopeKey = "company";
 			}
 
+			if (!(isSet(externalReferenceCodeEndpoint))) {
+				var externalReferenceCodeEndpoint = ${endpointName};
+			}
+
 			var relatedEndpoint = '''
 				"apiApplicationToAPIEndpoints": [{
+					"externalReferenceCode": "${externalReferenceCodeEndpoint}",
 					"httpMethod": "get",
 					"name": "${endpointName}",
 					"path": "${endpointPath}",
@@ -56,12 +70,37 @@ definition {
 		}
 
 		if (isSet(relatedSchema)) {
-			var relatedSchema = '''
+			if (isSet(objectFieldErc) && isSet(mainObjectDefinitionErc)) {
+				if (!(isSet(externalReferenceCodeSchema))) {
+					var externalReferenceCodeSchema = ${schemaName};
+				}
+
+				var relatedSchema = '''
+				"apiApplicationToAPISchemas": [
+    				{
+    				  "apiSchemaToAPIProperties": [
+    				    {
+    				      "objectFieldERC": "${objectFieldErc}",
+    				      "name": "${objectFieldErc}",
+    				      "description": "description"
+    				    }
+    				  ],
+					  "externalReferenceCode": "${externalReferenceCodeSchema}",
+    				  "mainObjectDefinitionERC": "${mainObjectDefinitionErc}",
+    				  "name": "${schemaName}",
+    				  "description": "description"
+    				}
+  				]
+				''';
+			}
+			else {
+				var relatedSchema = '''
 				"apiApplicationToAPISchemas": [{
 					"mainObjectDefinitionERC": "${mainObjectDefinitionErc}",
 					"name": "${schemaName}"
 				}]
-			''';
+				''';
+			}
 
 			var body = StringUtil.add(${body}, ", ${relatedSchema}", "");
 		}

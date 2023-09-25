@@ -534,6 +534,14 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 							themeDisplay.getCompanyId(),
 							fdsFilterClientExtensionERC);
 
+					if (fdsFilterCET == null) {
+						_log.error(
+							"Unable to load data set filter client extension " +
+								fdsFilterClientExtensionERC);
+
+						return null;
+					}
+
 					return JSONUtil.put(
 						"entityFieldType", FDSEntityFieldTypes.STRING
 					).put(

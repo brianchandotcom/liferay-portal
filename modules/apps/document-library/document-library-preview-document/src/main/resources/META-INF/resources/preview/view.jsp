@@ -35,7 +35,7 @@ String previewFileURL = previewFileURLs[0];
 	<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/preview/css/main.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<clay:alert
+<clay:stripe
 	dismissible="<%= true %>"
 	displayType="info"
 	message="the-document-preview-may-not-show-all-pages"

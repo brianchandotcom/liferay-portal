@@ -1713,6 +1713,10 @@
 			<description name="Reorder parameters in the getItems and getItemsCount methods of the FDSDataProvider interface" />
 			<weight>1</weight>
 		</check>
+		<check name="UpgradeJavaFetchAssetCategoryByExternalReferenceCodeCheck">
+			<category name="Upgrade" />
+			<description name="Adds a message about the breaking change made on method `fetchAssetCategoryByExternalReferenceCode` of `AssetCategoryLocalService` and `AssetCategoryLocalServiceUtil` classes." />
+		</check>
 		<check name="UpgradeJavaGetFileMethodCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration of method from 'getFile' to 'getFileAsStream', and include a method 'FileUtil.createTempFile'" />

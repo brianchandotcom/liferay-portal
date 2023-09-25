@@ -63,7 +63,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  * @author Brian Wing Shun Chan
  */
-@Component(service = PortalInstanceLifecycleListener.class)
+@Component(
+	property = "type=liferay.objects",
+	service = PortalInstanceLifecycleListener.class
+)
 public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener
 	implements EveryNodeEveryStartup {

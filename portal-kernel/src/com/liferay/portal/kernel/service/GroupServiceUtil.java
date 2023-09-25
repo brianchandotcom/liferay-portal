@@ -127,6 +127,14 @@ public class GroupServiceUtil {
 		getService().enableStaging(groupId);
 	}
 
+	public static Group fetchGroupByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the company group.
 	 *

@@ -113,6 +113,11 @@ public interface GroupService extends BaseService {
 
 	public void enableStaging(long groupId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Group fetchGroupByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
+
 	/**
 	 * Returns the company group.
 	 *

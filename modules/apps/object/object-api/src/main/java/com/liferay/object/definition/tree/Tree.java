@@ -130,6 +130,10 @@ public class Tree {
 		private void _fillStack(Node node) {
 			List<Node> childNodes = node.getChildNodes();
 
+			if (childNodes == null) {
+				return;
+			}
+
 			for (int i = childNodes.size() - 1; i >= 0; i--) {
 				_fillStack(_stack.push(childNodes.get(i)));
 			}

@@ -65,7 +65,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 		if (!_equals(
 				originalObjectEntry.getValues(), objectEntry.getValues(),
-				"httpMethod", "path",
+				"httpMethod", "path", "pathParameter",
 				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 				"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
 				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId")) {

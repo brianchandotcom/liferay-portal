@@ -29,7 +29,7 @@ definition {
 
 		// This pause is required to allow the test to wait for the scheduled Publication to be published. See LRQA-70977 for more details.
 
-		Pause(locator1 = 240000);
+		Pause(value1 = 240000);
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

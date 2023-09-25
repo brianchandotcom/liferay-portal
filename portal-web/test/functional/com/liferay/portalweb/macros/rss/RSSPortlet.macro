@@ -233,7 +233,7 @@ definition {
 
 			// We need this pause to check issue due to the minimum feed time is 1 min
 
-			Pause(locator1 = 60000);
+			Pause(value1 = 60000);
 
 			Navigator._gotoPage(pageName = ${pageName});
 		}

@@ -1410,7 +1410,7 @@ definition {
 
 		// Pausing 60 seconds due to LPS-159468
 
-		Pause(locator1 = 60000);
+		Pause(value1 = 60000);
 
 		FormsAdminNavigator.gotoBack();
 

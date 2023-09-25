@@ -9,7 +9,7 @@ definition {
 
 		// We need this pause to make sure fragment zip finish deployment
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 	}
 
 }

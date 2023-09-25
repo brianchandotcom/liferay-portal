@@ -726,7 +726,7 @@ definition {
 
 		// This pause is required to wait for the One Drive document to expire. See LPS-157957.
 
-		Pause(locator1 = 90000);
+		Pause(value1 = 90000);
 
 		Refresh();
 

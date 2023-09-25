@@ -846,7 +846,7 @@ definition {
 
 			// This pause is waiting to test how the login behaves when timeout is reached. See LRQA-35814 for more details.
 
-			Pause(locator1 = 60000);
+			Pause(value1 = 60000);
 
 			SAML.executeIdPInitiatedSSO(
 				autoLogin = "true",

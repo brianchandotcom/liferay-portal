@@ -142,7 +142,7 @@ definition {
 	macro gotoPage {
 		Navigator.openURL(baseURL = ${baseURL});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Navigator._gotoPage(pageName = ${pageName});
 	}

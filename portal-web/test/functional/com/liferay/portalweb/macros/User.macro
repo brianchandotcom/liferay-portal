@@ -1874,7 +1874,7 @@ definition {
 
 			// Pausing 2 seconds due to LPS-159595
 
-			Pause(locator1 = 2000);
+			Pause(value1 = 2000);
 		}
 
 		if (isSet(virtualHostsURL)) {

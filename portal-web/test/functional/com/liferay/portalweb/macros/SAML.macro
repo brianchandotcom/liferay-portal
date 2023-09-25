@@ -907,7 +907,7 @@ definition {
 
 		// This pause is required to allow the test to wait for the session to expire.
 
-		Pause(locator1 = ${timer});
+		Pause(value1 = ${timer});
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",

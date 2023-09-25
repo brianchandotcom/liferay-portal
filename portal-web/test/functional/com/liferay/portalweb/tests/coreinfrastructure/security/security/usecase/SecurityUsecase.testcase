@@ -43,7 +43,7 @@ definition {
 
 		task ("Assert message present in HTML source") {
 			while (IsElementPresent(locator1 = "JSONWS#SECURITY_RESULT", value1 = "Welcome ${userfn} ${userln}!")) {
-				Pause(locator1 = 500);
+				Pause(value1 = 500);
 			}
 		}
 

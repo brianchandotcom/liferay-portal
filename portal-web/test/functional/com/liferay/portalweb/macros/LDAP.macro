@@ -162,7 +162,7 @@ definition {
 
 		// Wait for the amount of the import interval time. Needed for LRQA-75138.
 
-		Pause(locator1 = ${intervalTime});
+		Pause(value1 = ${intervalTime});
 
 		User.openUsersAdmin();
 

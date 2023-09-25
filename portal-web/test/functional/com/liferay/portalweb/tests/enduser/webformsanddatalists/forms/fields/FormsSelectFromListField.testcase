@@ -929,7 +929,7 @@ definition {
 
 			// Pause for 40 seconds for the entry to be automatically saved. See LPS-185648
 
-			Pause(locator1 = 40000);
+			Pause(value1 = 40000);
 
 			Open.openInTheNewTab(value1 = "http://localhost:8080");
 

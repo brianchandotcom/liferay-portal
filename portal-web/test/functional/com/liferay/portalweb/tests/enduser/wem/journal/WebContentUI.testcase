@@ -220,7 +220,7 @@ definition {
 
 			// We need this pause to view if kebab icon of the web content exists to test LPS-155805
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			AssertCssValue(
 				locator1 = "//dd//button[contains(@class, 'dropdown-toggle')]",

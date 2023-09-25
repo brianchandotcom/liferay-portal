@@ -471,7 +471,7 @@ definition {
 
 		// It needs a 30 second pause which is the time required for the command to be executed. For more information about pause see LRAC-9518
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 	}
 
 	macro closeModal {
@@ -787,7 +787,7 @@ definition {
 
 		// Pause is necessary because poshi logs in from one user to another quickly. For more information about pause see LRAC-9514
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 	}
 
 	macro navigateToSitePage {
@@ -1180,14 +1180,14 @@ definition {
 
 		// The pause is necessary because the bar takes a while to load into the chart. For more information about pause see LRAC-9517
 
-		Pause(locator1 = 2000);
+		Pause(value1 = 2000);
 	}
 
 	macro waitForClearProperty {
 
 		// This pause is necessary as it takes time for the data to be cleared from the property. See LRAC-11595
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 	}
 
 	macro waitForLoading {
@@ -1198,7 +1198,7 @@ definition {
 
 		// Pausing is necessary for poshi to scroll down to specific element. For more info see LRAC-11569
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 	}
 
 	macro waitForSendingRequest {
@@ -1206,13 +1206,13 @@ definition {
 
 			// Pausing for harRecording test for reuse purpose, see LRAC-10600
 
-			Pause(locator1 = ${time});
+			Pause(value1 = ${time});
 		}
 		else if (!(isSet(time))) {
 
 			// Pausing for harRecording tests, see LRAC-10600
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 		}
 	}
 

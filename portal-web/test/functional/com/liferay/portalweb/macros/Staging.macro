@@ -1024,7 +1024,7 @@ definition {
 
 			// Set a minium pause to wait for the publication process completed.
 
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 
 		if (IsElementPresent(locator1 = "Staging#PROCESS_SUCCESSFUL")) {
@@ -1180,7 +1180,7 @@ definition {
 
 			// Set a long pause to wait for creating 400 web content articles.
 
-			Pause(locator1 = 4000);
+			Pause(value1 = 4000);
 		}
 	}
 
@@ -1195,7 +1195,7 @@ definition {
 
 			// Set a minium pause to wait for the publication process completed.
 
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 
 		AssertTextEquals(
@@ -1228,7 +1228,7 @@ definition {
 
 			// This pause has been optimized. See details in LRQA-66660.
 
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 
 		if (IsElementPresent(locator1 = "Button#CLOSE_MESSAGE")) {
@@ -1282,7 +1282,7 @@ definition {
 
 		// We split a long pause which is a 5-minute scheduled event into smaller one and there is another 3-minute pause in testcases.
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 	}
 
 	macro searchPublishTemplate {
@@ -1480,7 +1480,7 @@ definition {
 
 			// This pause has been optimized. See details in LPS-135924.
 
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 
 		if (isSet(failureExpected)) {

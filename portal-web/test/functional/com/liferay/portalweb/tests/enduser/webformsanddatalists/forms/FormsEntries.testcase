@@ -68,7 +68,7 @@ definition {
 		}
 
 		task ("and Given that a user submits another entry after two minutes") {
-			Pause(locator1 = 120000);
+			Pause(value1 = 120000);
 
 			Navigator.openSpecificURL(url = ${publishFormURL});
 

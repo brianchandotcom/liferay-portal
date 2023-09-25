@@ -304,7 +304,7 @@ definition {
 
 			// This pause is required to wait for the Knowledge Base Article to expire according to the steps in LPS-171314.
 
-			Pause(locator1 = 120000);
+			Pause(value1 = 120000);
 
 			Refresh();
 		}

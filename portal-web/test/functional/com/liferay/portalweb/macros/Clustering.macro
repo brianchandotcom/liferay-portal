@@ -152,7 +152,7 @@ definition {
 
 		AntCommands.runCommand("build-test.xml", "cluster-session-replication-log -Dapp.server.bundle.index=${bundleIndex}");
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
@@ -283,7 +283,7 @@ definition {
 
 		var mstoExpire = ${minutestoExpire} * 60000;
 
-		Pause(locator1 = "${mstoExpire} ");
+		Pause(value1 = "${mstoExpire} ");
 	}
 
 	@description = "This will wait 5 minutes for node at port ${nodePort} to shutdown"

@@ -111,7 +111,7 @@ definition {
 
 			// Pausing 60 seconds due to LRQA-80725
 
-			Pause(locator1 = 60000);
+			Pause(value1 = 60000);
 
 			MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
 

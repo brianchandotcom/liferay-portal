@@ -55,13 +55,13 @@ definition {
 
 			// For LPS-170578, need this to pause until right before auto close time of the fail message
 
-			Pause(locator1 = 19000);
+			Pause(value1 = 19000);
 
 			if (IsElementPresent.isElementPresentNoSPARefresh(key_type = "dismissible alert-danger", locator1 = "ClayAlertToast#ALERT_TOAST")) {
 
 				// For LPS-170578, need this to pause longer than the auto close time of the fail message
 
-				Pause(locator1 = 1100);
+				Pause(value1 = 1100);
 
 				if (IsElementPresent.isElementPresentNoSPARefresh(key_type = "dismissible alert-danger", locator1 = "ClayAlertToast#ALERT_TOAST")) {
 					fail("Alert message did not disappear after 20 seconds");
@@ -176,7 +176,7 @@ definition {
 
 			// For LPS-170575, need this pause to see if after 5 seconds, the alert is not showing anymore
 
-			Pause(locator1 = 5000);
+			Pause(value1 = 5000);
 
 			AssertElementNotPresent(
 				key_type = "dismissible alert-danger",
@@ -201,7 +201,7 @@ definition {
 
 			// For LPS-170577, need this pause to see if after 10 seconds, the alert is not showing anymore
 
-			Pause(locator1 = 10000);
+			Pause(value1 = 10000);
 
 			if (!(IsElementPresent.isElementPresentNoSPARefresh(key_type = "info", locator1 = "ClayAlertToast#ALERT_TOAST"))) {
 				TestUtils.pass(message = "Test passed: Alert toast with action disappeared after 10 seconds");
@@ -235,7 +235,7 @@ definition {
 
 			// For LPS-170578, need this to pause longer than the auto close time of the fail message
 
-			Pause(locator1 = 20100);
+			Pause(value1 = 20100);
 
 			AssertElementPresent(locator1 = "Message#ERROR_DISMISSIBLE");
 		}

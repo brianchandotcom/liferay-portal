@@ -198,7 +198,7 @@ definition {
 
 		AntCommands.runCommand("build-test.xml", "redeploy-osgi-module -Dmodule.base.dir=modules/test/upgrade/revert-schema-version-service -Dupdate.properties=2.1.0 -Dupdate.properties.original=2.1.1");
 
-		Pause(locator1 = 15000);
+		Pause(value1 = 15000);
 
 		GogoShell.openGogoShellAdmin();
 
@@ -210,7 +210,7 @@ definition {
 
 		AntCommands.runCommand("build-test.xml", "redeploy-osgi-module -Dmodule.base.dir=modules/test/upgrade/revert-schema-version-service -Dupdate.properties=2.0.0 -Dupdate.properties.original=2.1.0");
 
-		Pause(locator1 = 15000);
+		Pause(value1 = 15000);
 
 		GogoShell.openGogoShellAdmin();
 
@@ -222,7 +222,7 @@ definition {
 
 		AntCommands.runCommand("build-test.xml", "redeploy-osgi-module -Dmodule.base.dir=modules/test/upgrade/revert-schema-version-service -Dupdate.properties=1.0.0 -Dupdate.properties.original=2.0.0");
 
-		Pause(locator1 = 15000);
+		Pause(value1 = 15000);
 
 		GogoShell.openGogoShellAdmin();
 

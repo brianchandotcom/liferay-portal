@@ -2297,7 +2297,7 @@ definition {
 		}
 
 		task ("Then there's warning message inside Friendly URL section") {
-			Pause(locator1 = 60000);
+			Pause(value1 = 60000);
 
 			AssertTextEquals(
 				locator1 = "Message#ERROR_3",

@@ -149,7 +149,7 @@ definition {
 
 				// Pausing due to LRQA-78807, waiting for the config file deploy.
 
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 
 				Refresh();
 
@@ -221,12 +221,12 @@ definition {
 
 			// This pause is required to allow the test to wait for the access token to expire.
 
-			Pause(locator1 = 60000);
+			Pause(value1 = 60000);
 		}
 
 		task ("Assert that user is logged out as OIDC provider session is over") {
 			while (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 
 				Refresh();
 			}
@@ -603,7 +603,7 @@ definition {
 
 				// Pausing due to LRQA-78807, waiting for the config file deploy.
 
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 
 				Refresh();
 
@@ -778,7 +778,7 @@ definition {
 
 				// Pausing due to LRQA-78807, waiting for the config file deploy.
 
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 
 				Refresh();
 
@@ -835,7 +835,7 @@ definition {
 
 				// Pausing due to LRQA-78807, waiting for the config file deploy.
 
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 
 				Refresh();
 
@@ -929,7 +929,7 @@ definition {
 
 				// Pausing due to LRQA-78807, waiting for the config file deploy.
 
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 
 				Refresh();
 
@@ -1013,7 +1013,7 @@ definition {
 
 			// This pause is required to allow the test to wait for the new access token to be generated.
 
-			Pause(locator1 = 60000);
+			Pause(value1 = 60000);
 
 			Refresh();
 
@@ -1409,7 +1409,7 @@ definition {
 
 				// Pausing due to LRQA-78807, waiting for the config file deploy.
 
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 
 				Refresh();
 
@@ -1465,7 +1465,7 @@ definition {
 
 				// Pausing due to LRQA-78807, waiting for the config file deploy.
 
-				Pause(locator1 = 1000);
+				Pause(value1 = 1000);
 
 				Refresh();
 
@@ -1484,7 +1484,7 @@ definition {
 
 			// This pause is required to allow the test to wait for the new access token to be generated.
 
-			Pause(locator1 = 60000);
+			Pause(value1 = 60000);
 
 			Refresh();
 

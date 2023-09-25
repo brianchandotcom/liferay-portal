@@ -49,7 +49,7 @@ definition {
 
 			// This pause is required to allow the test to wait for the warning message of a session expiring soon.
 
-			Pause(locator1 = 60000);
+			Pause(value1 = 60000);
 		}
 
 		task ("Assert expired session error message") {
@@ -60,7 +60,7 @@ definition {
 
 			// This pause is required to allow the test to wait for the session to expire.
 
-			Pause(locator1 = 60000);
+			Pause(value1 = 60000);
 
 			User.viewSignInPresent();
 		}
@@ -88,7 +88,7 @@ definition {
 
 			// This pause is required to allow the test to wait for the session to expire.
 
-			Pause(locator1 = 120000);
+			Pause(value1 = 120000);
 		}
 
 		task ("Assert session expired message") {
@@ -111,7 +111,7 @@ definition {
 
 			// This pause is required to allow the test to wait for the session to expire.
 
-			Pause(locator1 = 120000);
+			Pause(value1 = 120000);
 
 			User.viewSessionNotExpired(sigin = "False");
 		}
@@ -136,7 +136,7 @@ definition {
 
 			// This pause is required to allow the test to wait for the session to expire.
 
-			Pause(locator1 = 120000);
+			Pause(value1 = 120000);
 
 			User.viewExpiredSessionErrorMessage(message = "Danger:Due to inactivity, your session has expired. Before you continue, make sure your entered data is saved locally.");
 		}

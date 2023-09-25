@@ -68,7 +68,7 @@ definition {
 
 		// Pausing 30 seconds due to LRQA-75909
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 
 		for (var nodeNumber : list "8,9") {
 			User.loginPG(
@@ -423,7 +423,7 @@ definition {
 
 		// Pausing 30 seconds due to LRQA-75909
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 
 		for (var nodeNumber : list "8,9") {
 			User.loginPG(

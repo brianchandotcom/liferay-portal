@@ -1019,7 +1019,7 @@ definition {
 
 			Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_TITLE");
 
-			Pause(locator1 = 80000);
+			Pause(value1 = 80000);
 
 			while ((IsElementNotPresent(locator1 = "WorkflowAllItems#DETAIL_PAGE_SLA_NAME")) && (maxIterations = "25")) {
 				Refresh();

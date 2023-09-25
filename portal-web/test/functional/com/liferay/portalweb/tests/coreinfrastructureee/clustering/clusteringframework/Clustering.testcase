@@ -1277,7 +1277,7 @@ definition {
 
 		// Pausing 300 seconds due to LRQA-75909
 
-		Pause(locator1 = 300000);
+		Pause(value1 = 300000);
 
 		Navigator.gotoSpecificURLPage(
 			pageName = "Home",

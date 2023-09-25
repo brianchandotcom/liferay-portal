@@ -696,7 +696,7 @@ definition {
 	}
 
 	macro launchRequestNotAuthorized {
-		Pause(locator1 = 8000);
+		Pause(value1 = 8000);
 
 		Click(locator1 = "OAuth2#OAUTH2_TESTER_BTN_GET_USER");
 

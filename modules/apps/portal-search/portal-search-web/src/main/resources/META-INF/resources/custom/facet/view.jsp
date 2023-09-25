@@ -54,11 +54,19 @@ CustomFacetPortletInstanceConfiguration customFacetPortletInstanceConfiguration 
 				displayStyleGroupId="<%= customFacetDisplayContext.getDisplayStyleGroupId() %>"
 				entries="<%= customFacetDisplayContext.getBucketDisplayContexts() %>"
 			>
-				<clay:panel-group>
-					<clay:panel
-						collapseClassNames="search-facet"
-						displayTitle="<%= customFacetDisplayContext.getDisplayCaption() %>"
-						expanded="<%= true %>"
+				<liferay-ui:panel-container
+					extended="<%= true %>"
+					id='<%= liferayPortletResponse.getNamespace() + "facetCustomPanelContainer" %>'
+					markupView="lexicon"
+					persistState="<%= true %>"
+				>
+					<liferay-ui:panel
+						collapsible="<%= true %>"
+						cssClass="search-facet"
+						id='<%= liferayPortletResponse.getNamespace() + "facetCustomPanel" %>'
+						markupView="lexicon"
+						persistState="<%= true %>"
+						title="<%= customFacetDisplayContext.getDisplayCaption() %>"
 					>
 						<div class="panel-body">
 							<c:if test="<%= !customFacetDisplayContext.isNothingSelected() %>">
@@ -112,21 +120,20 @@ CustomFacetPortletInstanceConfiguration customFacetPortletInstanceConfiguration 
 								}
 								%>
 
-							</ul>
-
-							<aui:script use="liferay-search-facet-util">
-								var facetTerms = document.querySelectorAll(
-									'#<portlet:namespace />fm .facet-term'
-								);
-
-								facetTerms.forEach((term) => {
-									Liferay.Util.toggleDisabled(term, false);
-								});
-							</aui:script>
-						</div>
-					</clay:panel>
-				</clay:panel-group>
+						</ul>
+					</liferay-ui:panel>
+				</liferay-ui:panel-container>
 			</liferay-ddm:template-renderer>
 		</aui:form>
 	</c:otherwise>
 </c:choose>
+
+<aui:script use="liferay-search-facet-util">
+	var facetTerms = document.querySelectorAll(
+		'#<portlet:namespace />fm .facet-term'
+	);
+
+	facetTerms.forEach((term) => {
+		Liferay.Util.toggleDisabled(term, false);
+	});
+</aui:script>

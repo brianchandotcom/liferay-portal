@@ -284,6 +284,59 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@description = "This is a use case for LPS-195717. Expire link when sharing is disabled."
+	@priority = 3
+	test ExpireLinkWhenSharingIsDisabled {
+		property custom.properties = "feature.flag.LPS-187436=true";
+
+		task ("Create Web Content and Publication") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Guest",
+				title = "WC WebContent Title");
+		}
+
+		task ("Go to Publication Review Changes") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Web Content Article",
+				changeSite = "Guest",
+				changeTitle = "WC WebContent Title",
+				changeType = "Added",
+				changeUser = "Test Test");
+		}
+
+		task ("Enable Share Publication Link and copy URL") {
+			Publications.enablePublicationSharing();
+
+			var shareLinkURL = Publications.getShareLinkURL();
+		}
+
+		task ("Disable Share Publication Link") {
+			Publications.disablePublicationSharing();
+		}
+
+		task ("Sign out and access to the URL") {
+			SignOut.signOut();
+
+			Navigator.openSpecificURL(url = ${shareLinkURL});
+		}
+
+		task ("Assert 404 page shows up indicating the link is expired") {
+			ContentPages.viewFragmentText(
+				fragmentName = "heading",
+				id = "element-text",
+				text = 404);
+		}
+	}
+
 	@priority = 3
 	test ExplainEachRoleInInviteUsers {
 		JSONPublications.addPublication(publicationName = "Publication Name");

@@ -788,8 +788,8 @@ function Filters({fdsFilterClientExtensions, fdsView, namespace}: IProps) {
 				]}
 				fields={[
 					{
-						label: Liferay.Language.get('name'),
-						name: 'name',
+						label: Liferay.Language.get('label'),
+						name: 'label',
 					},
 					{
 						label: Liferay.Language.get('Field Name'),

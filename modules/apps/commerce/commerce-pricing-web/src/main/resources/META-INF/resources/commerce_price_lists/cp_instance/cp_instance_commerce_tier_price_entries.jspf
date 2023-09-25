@@ -1,0 +1,22 @@
+<%--
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+--%>
+
+<aui:fieldset collapsible="<%= false %>" cssClass="price-entry-price-settings" label="entries">
+	<frontend-data-set:classic-display
+		contextParams='<%=
+			HashMapBuilder.<String, String>put(
+				"commercePriceEntryId", String.valueOf(commercePriceEntryId)
+			).build()
+		%>'
+		creationMenu="<%= cpInstanceCommercePriceEntryDisplayContext.getTierPriceEntryCreationMenu() %>"
+		dataProviderKey="<%= CommercePricingFDSNames.INSTANCE_TIER_PRICE_ENTRIES %>"
+		formName="fm"
+		id="<%= CommercePricingFDSNames.INSTANCE_TIER_PRICE_ENTRIES %>"
+		itemsPerPage="<%= 10 %>"
+		style="stacked"
+	/>
+</aui:fieldset>

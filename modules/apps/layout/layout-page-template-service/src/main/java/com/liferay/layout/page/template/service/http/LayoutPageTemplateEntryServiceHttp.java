@@ -140,7 +140,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 			copyLayoutPageTemplateEntry(
 				HttpPrincipal httpPrincipal, long groupId,
 				long layoutPageTemplateCollectionId,
-				long sourceLayoutPageTemplateEntryId,
+				long sourceLayoutPageTemplateEntryId, boolean copyPermissions,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws Exception {
 
@@ -152,7 +152,8 @@ public class LayoutPageTemplateEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, layoutPageTemplateCollectionId,
-				sourceLayoutPageTemplateEntryId, serviceContext);
+				sourceLayoutPageTemplateEntryId, copyPermissions,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -2330,7 +2331,7 @@ public class LayoutPageTemplateEntryServiceHttp {
 		};
 	private static final Class<?>[]
 		_copyLayoutPageTemplateEntryParameterTypes2 = new Class[] {
-			long.class, long.class, long.class,
+			long.class, long.class, long.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]

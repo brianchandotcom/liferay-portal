@@ -577,6 +577,14 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.object.model.ObjectDefinition>
+		getUnmodifiableSystemObjectDefinitions(long companyId) {
+
+		return _objectDefinitionLocalService.
+			getUnmodifiableSystemObjectDefinitions(companyId);
+	}
+
+	@Override
 	public boolean hasObjectRelationship(long objectDefinitionId) {
 		return _objectDefinitionLocalService.hasObjectRelationship(
 			objectDefinitionId);

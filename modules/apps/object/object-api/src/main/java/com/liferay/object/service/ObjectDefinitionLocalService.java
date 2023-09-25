@@ -389,6 +389,10 @@ public interface ObjectDefinitionLocalService
 	public List<ObjectDefinition> getSystemObjectDefinitions();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectDefinition> getUnmodifiableSystemObjectDefinitions(
+		long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasObjectRelationship(long objectDefinitionId);
 
 	public ObjectDefinition publishCustomObjectDefinition(

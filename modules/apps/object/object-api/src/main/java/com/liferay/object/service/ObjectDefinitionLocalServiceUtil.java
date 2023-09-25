@@ -494,6 +494,12 @@ public class ObjectDefinitionLocalServiceUtil {
 		return getService().getSystemObjectDefinitions();
 	}
 
+	public static List<ObjectDefinition> getUnmodifiableSystemObjectDefinitions(
+		long companyId) {
+
+		return getService().getUnmodifiableSystemObjectDefinitions(companyId);
+	}
+
 	public static boolean hasObjectRelationship(long objectDefinitionId) {
 		return getService().hasObjectRelationship(objectDefinitionId);
 	}

@@ -935,17 +935,17 @@ public class FileSystemImporter extends BaseImporter {
 					false, JournalArticleConstants.VERSION_DEFAULT, titleMap,
 					descriptionMap, titleMap, content, ddmStructureId,
 					ddmTemplateKey, StringPool.BLANK, 1, 1, 2010, 0, 0, 0, 0, 0,
-					0, 0, true, 0, 0, 0, 0, 0, true, indexable, smallImage,
-					smallImageURL, null, new HashMap<String, byte[]>(),
+					0, 0, true, 0, 0, 0, 0, 0, true, indexable, smallImage, 0,
+					0, smallImageURL, null, new HashMap<String, byte[]>(),
 					StringPool.BLANK, serviceContext);
 			}
 			else {
 				journalArticle = journalArticleLocalService.updateArticle(
 					userId, groupId, folderId, journalArticleId,
-					journalArticle.getVersion(), titleMap, descriptionMap,
+					journalArticle.getVersion(), titleMap, descriptionMap, null,
 					content, ddmTemplateKey, StringPool.BLANK, 1, 1, 2010, 0, 0,
 					0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, indexable,
-					smallImage, smallImageURL, null,
+					smallImage, 0, 0, smallImageURL, null,
 					new HashMap<String, byte[]>(), StringPool.BLANK,
 					serviceContext);
 			}

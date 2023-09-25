@@ -554,6 +554,8 @@ public class ObjectDefinitionResourceImpl
 
 		List<ObjectField> objectFields = ListUtil.fromArray(
 			objectDefinition.getObjectFields());
+		List<ObjectValidationRule> objectValidationRules = ListUtil.fromArray(
+			objectDefinition.getObjectValidationRules());
 
 		List<com.liferay.object.model.ObjectField> serviceBuilderObjectFields =
 			new ArrayList<>(
@@ -569,6 +571,9 @@ public class ObjectDefinitionResourceImpl
 
 			objectFields.removeIf(
 				objectField -> !GetterUtil.getBoolean(objectField.getSystem()));
+			objectValidationRules.removeIf(
+				objectValidationRule -> !GetterUtil.getBoolean(
+					objectValidationRule.getSystem()));
 
 			serviceBuilderObjectFields.removeIf(
 				serviceBuilderObjectField ->
@@ -581,6 +586,9 @@ public class ObjectDefinitionResourceImpl
 		else {
 			objectFields.removeIf(
 				objectField -> GetterUtil.getBoolean(objectField.getSystem()));
+			objectValidationRules.removeIf(
+				objectValidationRule -> GetterUtil.getBoolean(
+					objectValidationRule.getSystem()));
 
 			serviceBuilderObjectFields.removeIf(ObjectFieldModel::isSystem);
 			serviceBuilderObjectValidationRules.removeIf(
@@ -651,17 +659,22 @@ public class ObjectDefinitionResourceImpl
 			_getAccountEntryRestrictedObjectRelationshipsNames(
 				serviceBuilderObjectDefinition, objectRelationships);
 
-		ObjectValidationRule[] objectValidationRules =
-			objectDefinition.getObjectValidationRules();
+		Set<String> deleteObjectValidationRulesERCs =
+			SetUtil.asymmetricDifference(
+				transform(
+					serviceBuilderObjectValidationRules,
+					com.liferay.object.model.ObjectValidationRule::
+						getExternalReferenceCode),
+				transform(
+					objectValidationRules,
+					ObjectValidationRule::getExternalReferenceCode));
 
-		if (objectValidationRules != null) {
-			for (com.liferay.object.model.ObjectValidationRule
-					serviceBuilderObjectValidationRule :
-						serviceBuilderObjectValidationRules) {
+		for (String deleteObjectValidationRulesERC :
+				deleteObjectValidationRulesERCs) {
 
-				_objectValidationRuleLocalService.deleteObjectValidationRule(
-					serviceBuilderObjectValidationRule);
-			}
+			_objectValidationRuleLocalService.deleteObjectValidationRule(
+				_objectValidationRuleLocalService.fetchObjectValidationRule(
+					deleteObjectValidationRulesERC, objectDefinitionId));
 		}
 
 		ObjectView[] objectViews = objectDefinition.getObjectViews();
@@ -673,7 +686,8 @@ public class ObjectDefinitionResourceImpl
 		_addObjectDefinitionResources(
 			accountEntryRestrictedObjectRelationshipsNames, objectActions,
 			objectDefinitionId, objectLayouts, objectRelationships,
-			objectValidationRules, objectViews);
+			objectValidationRules.toArray(new ObjectValidationRule[0]),
+			objectViews);
 
 		return _toObjectDefinition(serviceBuilderObjectDefinition);
 	}
@@ -828,6 +842,22 @@ public class ObjectDefinitionResourceImpl
 
 			for (ObjectValidationRule objectValidationRule :
 					objectValidationRules) {
+
+				com.liferay.object.model.ObjectValidationRule
+					serviceBuilderObjectValidationRule =
+						_objectValidationRuleLocalService.
+							fetchObjectValidationRule(
+								objectValidationRule.getExternalReferenceCode(),
+								objectDefinitionId);
+
+				if (serviceBuilderObjectValidationRule != null) {
+					objectValidationRuleResource.putObjectValidationRule(
+						serviceBuilderObjectValidationRule.
+							getObjectValidationRuleId(),
+						objectValidationRule);
+
+					continue;
+				}
 
 				objectValidationRuleResource.
 					postObjectDefinitionObjectValidationRule(

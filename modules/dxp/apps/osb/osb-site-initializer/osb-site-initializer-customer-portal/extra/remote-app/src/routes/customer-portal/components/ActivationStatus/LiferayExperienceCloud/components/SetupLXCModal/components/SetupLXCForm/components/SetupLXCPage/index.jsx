@@ -39,14 +39,10 @@ const SetupLiferayExperienceCloudPage = ({
 	const {featureFlags} = useAppPropertiesContext();
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] = useState(false);
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
-	const [
-		addHighPriorityContactList,
-		setAddHighPriorityContactList,
-	] = useState([]);
-	const [
-		removeHighPriorityContactList,
-		setRemoveHighPriorityContactList,
-	] = useState([]);
+	const [addHighPriorityContact, setAddHighPriorityContact] = useState([]);
+	const [removeHighPriorityContact, setRemoveHighPriorityContact] = useState(
+		[]
+	);
 	const [inputErrors, setInputErrors] = useState({});
 	const [step, setStep] = useState(1);
 
@@ -68,13 +64,16 @@ const SetupLiferayExperienceCloudPage = ({
 	};
 
 	const addHighPriorityContacts = (contactList) => {
-		setAddHighPriorityContactList((oldList) => {
+		setAddHighPriorityContact((oldList) => {
 			const uniqueContacts = [
 				...oldList,
 				...contactList.filter(
 					(contact) =>
 						!oldList.some(
-							(oldContact) => oldContact.id === contact.id
+							(oldContact) =>
+								oldContact.category?.role ===
+									contact.category?.role &&
+								oldContact?.id === contact?.id
 						)
 				),
 			];
@@ -84,13 +83,16 @@ const SetupLiferayExperienceCloudPage = ({
 	};
 
 	const removeHighPriorityContacts = (contactList) => {
-		setRemoveHighPriorityContactList((oldList) => {
+		setRemoveHighPriorityContact((oldList) => {
 			const uniqueContacts = [
 				...oldList,
 				...contactList.filter(
 					(contact) =>
 						!oldList.some(
-							(oldContact) => oldContact.id === contact.id
+							(oldContact) =>
+								oldContact.category?.role ===
+									contact.category?.role &&
+								oldContact?.id === contact?.id
 						)
 				),
 			];
@@ -122,8 +124,8 @@ const SetupLiferayExperienceCloudPage = ({
 		handleChangeForm,
 		project,
 		setFormAlreadySubmitted,
-		addHighPriorityContactList,
-		removeHighPriorityContactList,
+		addHighPriorityContact,
+		removeHighPriorityContact,
 		subscriptionGroupLxcId,
 		handleLoadingSubmitButton,
 		values

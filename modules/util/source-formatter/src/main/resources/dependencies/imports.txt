@@ -643,7 +643,6 @@ com.liferay.portal.security.auth.FullNameValidator=com.liferay.portal.kernel.sec
 com.liferay.portal.security.auth.InterruptedPortletRequestWhitelistUtil=com.liferay.portal.kernel.security.auth.InterruptedPortletRequestWhitelistUtil
 com.liferay.portal.security.auth.LiberalEmailAddressValidator=com.liferay.portal.kernel.security.auth.LiberalEmailAddressValidator
 com.liferay.portal.security.auth.LiberalScreenNameValidator=com.liferay.portal.kernel.security.auth.LiberalScreenNameValidator
-com.liferay.portal.security.auth.PortletRequestWhitelist=com.liferay.portal.kernel.security.auth.PortletRequestWhitelist
 com.liferay.portal.security.auth.PrincipalException=com.liferay.portal.kernel.security.auth.PrincipalException
 com.liferay.portal.security.auth.PrincipalThreadLocal=com.liferay.portal.kernel.security.auth.PrincipalThreadLocal
 com.liferay.portal.security.auth.RemoteAuthException=com.liferay.portal.kernel.security.auth.RemoteAuthException

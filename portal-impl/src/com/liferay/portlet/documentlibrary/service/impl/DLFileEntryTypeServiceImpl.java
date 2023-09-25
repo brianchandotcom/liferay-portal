@@ -70,8 +70,12 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 	public DLFileEntryType getFileEntryType(long fileEntryTypeId)
 		throws PortalException {
 
-		_dlFileEntryTypeModelResourcePermission.check(
-			getPermissionChecker(), fileEntryTypeId, ActionKeys.VIEW);
+		if (fileEntryTypeId !=
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+			_dlFileEntryTypeModelResourcePermission.check(
+				getPermissionChecker(), fileEntryTypeId, ActionKeys.VIEW);
+		}
 
 		return dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
 	}

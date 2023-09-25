@@ -11802,6 +11802,8 @@ dl.store.antivirus.enabled=true</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="store.migration.test" />
+
 		<if>
 			<or>
 				<equals arg1="gcs.store.enabled" arg2="" />
@@ -11859,7 +11861,12 @@ pop.server.notifications.enabled=true
 		</if>
 
 		<if>
-			<equals arg1="${gcs.store.enabled}" arg2="true" />
+			<and>
+				<equals arg1="${gcs.store.enabled}" arg2="true" />
+				<not>
+					<equals arg1="${store.migration.test}" arg2="true" />
+				</not>
+			</and>
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 dl.store.impl=com.liferay.portal.store.gcs.GCSStore</echo>
@@ -15750,7 +15757,14 @@ mail.send.blacklist=</echo>
 
 				<ant antfile="build-test-gcs-store.xml" target="create-gcs-bucket" />
 
-				<prepare-gcs-store-configuration />
+				<if>
+					<not>
+						<equals arg1="${store.migration.test}" arg2="true" />
+					</not>
+					<then>
+						<prepare-gcs-store-configuration />
+					</then>
+				</if>
 			</then>
 		</if>
 

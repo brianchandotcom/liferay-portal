@@ -28,7 +28,7 @@ const AccountSelection = ({
 	const getUserAccountList = async () => {
 		const userAccount: UserAccount = await getUserAccount();
 
-		setUserAccount(userAccount);
+		setUserAccount(userAccount);	
 
 		const radioAccountList: RadioCardContent<Account>[] = [];
 
@@ -52,7 +52,7 @@ const AccountSelection = ({
 			if (displayAccount) {
 				const accountInfo: Account = await getAccountInfo({
 					accountId: Number(accountBrief.id),
-				});
+				});				
 
 				radioAccountList.push({
 					imageURL: accountInfo.logoURL,

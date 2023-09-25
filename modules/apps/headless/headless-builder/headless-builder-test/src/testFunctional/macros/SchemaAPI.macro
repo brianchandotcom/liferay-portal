@@ -22,6 +22,14 @@ definition {
 			var api = "${api}/${responseSchemaId}/responseAPISchemaToAPIEndpoints/${endpointId}";
 		}
 
+		if (isSet(responseSchemaErc) && isSet(endpointErc)) {
+			var api = "${api}/by-external-reference-code/${responseSchemaErc}/responseAPISchemaToAPIEndpoints/${endpointErc}";
+		}
+
+		if (isSet(requestSchemaErc) && isSet(endpointErc)) {
+			var api = "${api}/by-external-reference-code/${requestSchemaErc}/requestAPISchemaToAPIEndpoints/${endpointErc}";
+		}
+
 		var curl = '''
 			${portalURL}/o/${api} \
 				-u test@liferay.com:test \
@@ -73,6 +81,22 @@ definition {
 		return ${response};
 	}
 
+	macro relateRequestSchemaToEndpointByErc {
+		Variables.assertDefined(parameterList = "${endpointErc},${requestSchemaErc}");
+
+		var curl = SchemaAPI._curlAPISchema(
+			endpointErc = ${endpointErc},
+			requestSchemaErc = ${requestSchemaErc});
+
+		var response = JSONCurlUtil.put(${curl});
+
+		var schemaErc = JSONUtil.getWithJSONPath(${response}, "$.r_requestAPISchemaToAPIEndpoints_c_apiSchemaERC");
+
+		TestUtils.assertEquals(
+			actual = ${schemaErc},
+			expected = ${requestSchemaErc});
+	}
+
 	macro relateRequestSchemaToEndpointByIds {
 		Variables.assertDefined(parameterList = "${requestSchemaId},${endpointId}");
 
@@ -87,6 +111,22 @@ definition {
 		TestUtils.assertEquals(
 			actual = ${schemaId},
 			expected = ${requestSchemaId});
+	}
+
+	macro relateResponseSchemaToEndpointByErc {
+		Variables.assertDefined(parameterList = "${endpointErc},${responseSchemaErc}");
+
+		var curl = SchemaAPI._curlAPISchema(
+			endpointErc = ${endpointErc},
+			responseSchemaErc = ${responseSchemaErc});
+
+		var response = JSONCurlUtil.put(${curl});
+
+		var schemaErc = JSONUtil.getWithJSONPath(${response}, "$.r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC");
+
+		TestUtils.assertEquals(
+			actual = ${schemaErc},
+			expected = ${responseSchemaErc});
 	}
 
 	macro relateResponseSchemaToEndpointByIds {

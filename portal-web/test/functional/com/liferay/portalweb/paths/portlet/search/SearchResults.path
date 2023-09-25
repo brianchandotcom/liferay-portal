@@ -256,6 +256,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FACET_PORTLET_ITEMS_SPECIFIC_ORDER_VOCABULARY_LAYOUT</td>
+	<td>xpath=(//div[contains(@id,'CategoryFacet')]//span[contains(@class,'custom-control-label-text')])[${resultOrder}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FACET_PORTLET_WITH_CLEAR_BUTTON</td>
 	<td>//div[contains(@class,'facet_portlet')][.//button[contains(.,'Clear')]]//h2[contains(@class,'portlet-title-text')]</td>
 	<td></td>

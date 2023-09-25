@@ -34,7 +34,8 @@ const getEventFieldsValidation = (tactic: TacticKeys) => {
 			...basicEventFields,
 			liferayBranding: string()
 				.trim()
-				.max(255, 'You have exceeded the character limit'),
+				.max(255, 'You have exceeded the character limit')
+				.required('Required'),
 			webinarHostPlatform: string()
 				.trim()
 				.max(255, 'You have exceeded the character limit')

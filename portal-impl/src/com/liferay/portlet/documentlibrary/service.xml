@@ -514,6 +514,7 @@
 		<exception>InvalidFileEntryType</exception>
 		<exception>InvalidFileVersion</exception>
 		<exception>InvalidFolder</exception>
+		<exception>MismatchedExtension</exception>
 		<exception>NoSuchFile</exception>
 		<exception>NoSuchMetadataSet</exception>
 		<exception>RepositoryName</exception>

@@ -181,7 +181,6 @@ public class AnalyticsConfigurationRegistryImpl
 				"com.liferay.analytics.settings.configuration." +
 					"AnalyticsConfiguration.scoped"
 			).build());
-
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext,
 			(Class<EntityModelListener<?>>)(Class<?>)EntityModelListener.class,

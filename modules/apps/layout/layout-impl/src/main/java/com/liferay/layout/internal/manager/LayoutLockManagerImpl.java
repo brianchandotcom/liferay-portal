@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManager;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -303,7 +301,9 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	}
 
 	@Override
-	public void unlockLayouts(long companyId, long timeWithoutAutosave) {
+	public void unlockLayouts(long companyId, long timeWithoutAutosave)
+		throws LockedLayoutException {
+
 		Map<Long, LockedLayoutsGroupConfiguration>
 			lockedLayoutsGroupConfigurations =
 				_getLockedLayoutsGroupConfigurations(companyId);
@@ -615,7 +615,8 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	}
 
 	private Map<Long, LockedLayoutsGroupConfiguration>
-		_getLockedLayoutsGroupConfigurations(long companyId) {
+			_getLockedLayoutsGroupConfigurations(long companyId)
+		throws LockedLayoutException {
 
 		Map<Long, LockedLayoutsGroupConfiguration>
 			lockedLayoutsGroupConfigurations = new HashMap<>();
@@ -644,11 +645,8 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 			}
 		}
 		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get LockedLayoutsGroupConfigurations",
-					exception);
-			}
+			throw new LockedLayoutException(
+				"Unable to get LockedLayoutsGroupConfigurations", exception);
 		}
 
 		return lockedLayoutsGroupConfigurations;
@@ -796,9 +794,6 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 			}
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutLockManagerImpl.class);
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

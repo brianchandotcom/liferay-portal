@@ -232,6 +232,7 @@ renderResponse.setTitle(headerTitle);
 
 			<liferay-ui:error exception="<%= FileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 			<liferay-ui:error exception="<%= FileNameExtensionException.class %>" message="the-file-name-cannot-be-empty-or-without-extension" />
+			<liferay-ui:error exception="<%= FileNameExtensionMismatchException.class %>" message="the-file-extension-cannot-be-different-from-the-file-name-extension" />
 			<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />
 			<liferay-ui:error exception="<%= RequiredFileException.class %>" message="please-select-the-file-again" />
 			<liferay-ui:error exception="<%= ValueDataException.MustInformDefaultLocale.class %>" message="please-enter-a-value-for-the-default-locale-of-custom-attributes" />

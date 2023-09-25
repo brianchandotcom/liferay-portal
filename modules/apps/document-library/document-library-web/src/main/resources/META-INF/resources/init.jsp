@@ -56,6 +56,7 @@ page import="com.liferay.document.library.kernel.exception.FileEntryLockExceptio
 page import="com.liferay.document.library.kernel.exception.FileExtensionException" %><%@
 page import="com.liferay.document.library.kernel.exception.FileMimeTypeException" %><%@
 page import="com.liferay.document.library.kernel.exception.FileNameException" %><%@
+page import="com.liferay.document.library.kernel.exception.FileNameExtensionMismatchException" %><%@
 page import="com.liferay.document.library.kernel.exception.FileShortcutPermissionException" %><%@
 page import="com.liferay.document.library.kernel.exception.FileSizeException" %><%@
 page import="com.liferay.document.library.kernel.exception.FolderNameException" %><%@

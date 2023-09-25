@@ -244,7 +244,7 @@ export default function ActionBuilder({
 					viewMode="inline"
 				>
 					<SingleSelect
-						disabled={isApproved}
+						disabled={isApproved || values.system}
 						error={errors.objectActionTriggerKey}
 						onChange={({value}) =>
 							setValues({
@@ -323,6 +323,7 @@ export default function ActionBuilder({
 			{values.objectActionTriggerKey === 'standalone' && (
 				<Card title={Liferay.Language.get('error-message')}>
 					<InputLocalized
+						disabled={values.system}
 						error={errors.errorMessage}
 						label={Liferay.Language.get('message')}
 						name="label"

@@ -274,6 +274,7 @@ export function ActionContainer({
 			{values.objectActionExecutorKey === 'webhook' && (
 				<>
 					<Input
+						disabled={values.system}
 						error={errors.url}
 						label={Liferay.Language.get('url')}
 						name="url"
@@ -290,6 +291,7 @@ export function ActionContainer({
 					/>
 
 					<Input
+						disabled={values.system}
 						label={Liferay.Language.get('secret')}
 						name="secret"
 						onChange={({target: {value}}) => {
@@ -318,9 +320,11 @@ export function ActionContainer({
 							},
 						})
 					}
+					readOnly={values.system}
 					sidebarElements={objectActionCodeEditorElements.filter(
 						(element) => element.label === 'Fields'
 					)}
+					sidebarElementsDisabled={values.system}
 					value={values.parameters?.script ?? ''}
 				/>
 			)}

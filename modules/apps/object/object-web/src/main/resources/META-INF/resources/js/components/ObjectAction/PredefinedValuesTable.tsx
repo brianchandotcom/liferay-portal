@@ -60,7 +60,7 @@ export default function PredefinedValuesTable({
 						<div className="lfr-object-web__predefined-values-table-input-method">
 							<ClayCheckbox
 								checked={inputAsValue}
-								disabled={isDateTime}
+								disabled={isDateTime || values.system}
 								label={Liferay.Language.get('input-as-a-value')}
 								onChange={({target: {checked}}) => {
 									const newPredefinedValues = predefinedValues.map(
@@ -120,6 +120,7 @@ export default function PredefinedValuesTable({
 						<div className="lfr-object-web__predefined-values-table-new-value">
 							{renderDatePicker ? (
 								<DatePicker
+									disabled={values.system}
 									error={predefinedErrors.get(name)}
 									hideFeedback
 									name={name}
@@ -139,7 +140,10 @@ export default function PredefinedValuesTable({
 								/>
 							) : (
 								<ExpressionBuilder
-									buttonDisabled={inputAsValue}
+									buttonDisabled={
+										inputAsValue || values.system
+									}
+									disabled={values.system}
 									error={predefinedErrors.get(name)}
 									hideFeedback
 									onChange={({target: {value}}) => {
@@ -203,6 +207,7 @@ export default function PredefinedValuesTable({
 		setValues,
 		validateExpressionURL,
 		values.parameters,
+		values.system,
 	]);
 
 	useEffect(() => {
@@ -324,26 +329,36 @@ export default function PredefinedValuesTable({
 				<div className="lfr-object-web__predefined-values-table">
 					<FrontendDataSet
 						creationMenu={{
-							primaryItems: [
-								{
-									href: 'handleAddFields',
-									id: 'handleAddFields',
-									label: Liferay.Language.get('add-fields'),
-									target: 'event',
-								},
-							],
+							primaryItems: !values.system
+								? [
+										{
+											href: 'handleAddFields',
+											id: 'handleAddFields',
+											label: Liferay.Language.get(
+												'add-fields'
+											),
+											target: 'event',
+										},
+								  ]
+								: [],
 						}}
 						id="PredefinedValuesTable"
 						items={items}
-						itemsActions={[
-							{
-								href: 'deletePredefinedValueField',
-								icon: 'trash',
-								id: 'deletePredefinedValueField',
-								label: Liferay.Language.get('delete'),
-								target: 'event',
-							},
-						]}
+						itemsActions={
+							!values.system
+								? [
+										{
+											href: 'deletePredefinedValueField',
+											icon: 'trash',
+											id: 'deletePredefinedValueField',
+											label: Liferay.Language.get(
+												'delete'
+											),
+											target: 'event',
+										},
+								  ]
+								: []
+						}
 						onActionDropdownItemClick={onActionDropdownItemClick}
 						selectedItemsKey="name"
 						showManagementBar={true}

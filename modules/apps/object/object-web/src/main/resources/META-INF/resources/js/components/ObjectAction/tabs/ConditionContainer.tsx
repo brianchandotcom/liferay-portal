@@ -36,7 +36,10 @@ export function ConditionContainer({
 		>
 			<ClayForm.Group>
 				<Toggle
-					disabled={values.objectActionTriggerKey === 'standalone'}
+					disabled={
+						values.system ||
+						values.objectActionTriggerKey === 'standalone'
+					}
 					label={Liferay.Language.get('enable-condition')}
 					name="condition"
 					onToggle={(enable) =>
@@ -50,6 +53,7 @@ export function ConditionContainer({
 
 			{values.conditionExpression !== undefined && (
 				<ExpressionBuilder
+					disabled={values.system}
 					error={errors.conditionExpression}
 					feedbackMessage={Liferay.Language.get(
 						'use-expressions-to-create-a-condition'

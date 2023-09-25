@@ -205,10 +205,10 @@ public class AgentPortalK8sConfigMapModifier
 			return Result.UNCHANGED;
 		}
 
-		Map<String, String> annotations = new TreeMap<>();
-		Map<String, String> binaryData = new TreeMap<>();
-		Map<String, String> data = new TreeMap<>();
-		Map<String, String> labels = new TreeMap<>();
+		Map<String, String> annotations = _getMapImpl();
+		Map<String, String> binaryData = _getMapImpl();
+		Map<String, String> data = _getMapImpl();
+		Map<String, String> labels = _getMapImpl();
 
 		configMapModelConsumer.accept(
 			new ConfigMapModel() {
@@ -363,7 +363,7 @@ public class AgentPortalK8sConfigMapModifier
 	}
 
 	private Map<String, String> _getAnnotations(ConfigMap configMap) {
-		Map<String, String> annotations = Collections.emptyMap();
+		Map<String, String> annotations = _getMapImpl();
 
 		ObjectMeta objectMeta = configMap.getMetadata();
 
@@ -378,7 +378,7 @@ public class AgentPortalK8sConfigMapModifier
 		Map<String, String> binaryData = configMap.getBinaryData();
 
 		if (binaryData == null) {
-			binaryData = Collections.emptyMap();
+			binaryData = _getMapImpl();
 		}
 
 		return binaryData;
@@ -415,14 +415,14 @@ public class AgentPortalK8sConfigMapModifier
 		Map<String, String> data = configMap.getData();
 
 		if (data == null) {
-			data = Collections.emptyMap();
+			data = _getMapImpl();
 		}
 
 		return data;
 	}
 
 	private Map<String, String> _getLabels(ConfigMap configMap) {
-		Map<String, String> labels = Collections.emptyMap();
+		Map<String, String> labels = _getMapImpl();
 
 		ObjectMeta objectMeta = configMap.getMetadata();
 
@@ -431,6 +431,10 @@ public class AgentPortalK8sConfigMapModifier
 		}
 
 		return labels;
+	}
+
+	private Map<String, String> _getMapImpl() {
+		return new TreeMap<>();
 	}
 
 	private String _getVirtualInstancePid(

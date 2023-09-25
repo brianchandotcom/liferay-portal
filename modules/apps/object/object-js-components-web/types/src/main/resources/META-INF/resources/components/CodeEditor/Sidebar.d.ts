@@ -20,11 +20,13 @@ interface IProps {
 	CustomSidebarContent?: ReactNode;
 	editorRef: RefObject<CodeMirror.Editor>;
 	elements: SidebarCategory[];
+	elementsDisabled?: boolean;
 	otherProps?: unknown;
 }
 export declare function Sidebar({
 	CustomSidebarContent,
 	editorRef,
 	elements,
+	elementsDisabled,
 }: IProps): JSX.Element;
 export {};

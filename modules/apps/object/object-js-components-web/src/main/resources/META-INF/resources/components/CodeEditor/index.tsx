@@ -23,6 +23,7 @@ interface CodeEditorProps extends ICodeMirrorEditor {
 	className?: string;
 	error?: string;
 	sidebarElements?: SidebarCategory[];
+	sidebarElementsDisabled?: boolean;
 }
 
 const CodeEditor = React.forwardRef<CodeMirror.Editor, CodeEditorProps>(
@@ -33,6 +34,7 @@ const CodeEditor = React.forwardRef<CodeMirror.Editor, CodeEditorProps>(
 			error,
 			mode,
 			sidebarElements,
+			sidebarElementsDisabled,
 			...options
 		},
 		ref
@@ -75,6 +77,7 @@ const CodeEditor = React.forwardRef<CodeMirror.Editor, CodeEditorProps>(
 							CustomSidebarContent={CustomSidebarContent}
 							editorRef={editorRef}
 							elements={sidebarElements}
+							elementsDisabled={sidebarElementsDisabled}
 						/>
 					)}
 				</div>

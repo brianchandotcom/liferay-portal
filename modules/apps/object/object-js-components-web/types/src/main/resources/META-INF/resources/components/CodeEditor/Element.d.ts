@@ -5,11 +5,13 @@
 
 import {MouseEventHandler} from 'react';
 export declare function Element({
+	disabled,
 	helpText,
 	label,
 	onClick,
 }: IProps): JSX.Element;
 interface IProps {
+	disabled?: boolean;
 	helpText: string;
 	label: string;
 	onClick?: MouseEventHandler;

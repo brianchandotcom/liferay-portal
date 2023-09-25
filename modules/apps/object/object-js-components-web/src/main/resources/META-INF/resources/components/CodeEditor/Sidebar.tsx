@@ -26,10 +26,16 @@ interface IProps {
 	CustomSidebarContent?: ReactNode;
 	editorRef: RefObject<CodeMirror.Editor>;
 	elements: SidebarCategory[];
+	elementsDisabled?: boolean;
 	otherProps?: unknown;
 }
 
-export function Sidebar({CustomSidebarContent, editorRef, elements}: IProps) {
+export function Sidebar({
+	CustomSidebarContent,
+	editorRef,
+	elements,
+	elementsDisabled,
+}: IProps) {
 	const handleClick = (item: SidebarElement) =>
 		editorRef.current?.replaceSelection(item.content);
 
@@ -44,6 +50,7 @@ export function Sidebar({CustomSidebarContent, editorRef, elements}: IProps) {
 					<Collapsible key={label} label={label}>
 						{items.map((item) => (
 							<Element
+								disabled={elementsDisabled}
 								helpText={
 									(item.helpText ?? item.tooltip) as string
 								}

@@ -31,6 +31,7 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
 import com.liferay.layout.admin.web.internal.util.FaviconUtil;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -1940,7 +1941,8 @@ public class LayoutsAdminDisplayContext {
 
 		if (GetterUtil.getBoolean(
 				typeSettingsUnicodeProperties.getProperty(
-					"designConfigurationModified"))) {
+					LayoutTypeSettingsConstants.
+						KEY_DESIGN_CONFIGURATION_MODIFIED))) {
 
 			return true;
 		}

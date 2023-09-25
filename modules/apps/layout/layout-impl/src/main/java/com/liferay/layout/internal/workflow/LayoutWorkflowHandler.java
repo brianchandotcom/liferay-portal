@@ -6,6 +6,7 @@
 package com.liferay.layout.internal.workflow;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.content.LayoutContentProvider;
 import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.internal.configuration.LayoutWorkflowHandlerConfiguration;
@@ -149,7 +150,8 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 		UnicodeProperties typeSettingsUnicodeProperties =
 			draftLayout.getTypeSettingsProperties();
 
-		typeSettingsUnicodeProperties.remove("designConfigurationModified");
+		typeSettingsUnicodeProperties.remove(
+			LayoutTypeSettingsConstants.KEY_DESIGN_CONFIGURATION_MODIFIED);
 
 		draftLayout = _layoutLocalService.updateLayout(
 			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),

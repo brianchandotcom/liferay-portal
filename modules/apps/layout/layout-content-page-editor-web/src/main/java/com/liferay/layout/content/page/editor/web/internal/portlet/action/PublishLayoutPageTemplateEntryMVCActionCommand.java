@@ -5,6 +5,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.helper.LayoutCopyHelper;
@@ -128,7 +129,7 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 		draftLayoutypeSettingsUnicodeProperties.put(
 			"published", Boolean.TRUE.toString());
 		draftLayoutypeSettingsUnicodeProperties.remove(
-			"designConfigurationModified");
+			LayoutTypeSettingsConstants.KEY_DESIGN_CONFIGURATION_MODIFIED);
 
 		draftLayout.setTypeSettingsProperties(
 			draftLayoutypeSettingsUnicodeProperties);

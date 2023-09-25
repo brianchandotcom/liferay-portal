@@ -6,6 +6,7 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.content.LayoutContentProvider;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
@@ -138,7 +139,8 @@ public class PublishLayoutMVCActionCommand
 			UnicodeProperties typeSettingsUnicodeProperties =
 				draftLayout.getTypeSettingsProperties();
 
-			typeSettingsUnicodeProperties.remove("designConfigurationModified");
+			typeSettingsUnicodeProperties.remove(
+				LayoutTypeSettingsConstants.KEY_DESIGN_CONFIGURATION_MODIFIED);
 
 			String layoutPrototypeUuid = layout.getLayoutPrototypeUuid();
 

@@ -12,6 +12,7 @@ import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -176,7 +177,9 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 
 			if (layout.isDraftLayout()) {
 				layoutTypeSettingsUnicodeProperties.put(
-					"designConfigurationModified", Boolean.TRUE.toString());
+					LayoutTypeSettingsConstants.
+						KEY_DESIGN_CONFIGURATION_MODIFIED,
+					Boolean.TRUE.toString());
 			}
 
 			layout = _layoutService.updateLayout(

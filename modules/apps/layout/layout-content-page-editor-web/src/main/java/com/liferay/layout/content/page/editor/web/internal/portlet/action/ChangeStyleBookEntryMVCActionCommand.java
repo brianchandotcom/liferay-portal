@@ -7,6 +7,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -70,7 +71,8 @@ public class ChangeStyleBookEntryMVCActionCommand
 				layout.getTypeSettingsProperties();
 
 			layoutTypeSettingsUnicodeProperties.put(
-				"designConfigurationModified", Boolean.TRUE.toString());
+				LayoutTypeSettingsConstants.KEY_DESIGN_CONFIGURATION_MODIFIED,
+				Boolean.TRUE.toString());
 
 			updatedLayout = _layoutLocalService.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),

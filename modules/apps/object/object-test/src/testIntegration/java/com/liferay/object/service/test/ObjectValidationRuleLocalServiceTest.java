@@ -107,7 +107,7 @@ public class ObjectValidationRuleLocalServiceTest {
 			() -> _addObjectValidationRule(
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				RandomTestUtil.randomString(),
+				StringPool.BLANK,
 				LocalizedMapUtil.getLocalizedMap(StringPool.BLANK),
 				_VALID_DDM_SCRIPT));
 		AssertUtils.assertFailure(
@@ -116,7 +116,7 @@ public class ObjectValidationRuleLocalServiceTest {
 			() -> _addObjectValidationRule(
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				RandomTestUtil.randomString(), null, _VALID_DDM_SCRIPT));
+				StringPool.BLANK, null, _VALID_DDM_SCRIPT));
 
 		Map<Locale, String> errorLabelMap = LocalizedMapUtil.getLocalizedMap(
 			RandomTestUtil.randomString());
@@ -153,7 +153,7 @@ public class ObjectValidationRuleLocalServiceTest {
 					NAME_OUTPUT_OBJECT_FIELD_ID),
 			() -> _addObjectValidationRule(
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM, errorLabelMap,
-				RandomTestUtil.randomString(), nameLabelMap,
+				StringPool.BLANK, nameLabelMap,
 				ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
 				_VALID_DDM_SCRIPT, Collections.emptyList()));
 		AssertUtils.assertFailure(
@@ -293,7 +293,7 @@ public class ObjectValidationRuleLocalServiceTest {
 				"No ObjectValidationRule exists with the primary key %s",
 				randomId),
 			() -> _objectValidationRuleLocalService.updateObjectValidationRule(
-				RandomTestUtil.randomString(), randomId, false,
+				StringPool.BLANK, randomId, false,
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

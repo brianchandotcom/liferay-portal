@@ -467,15 +467,17 @@ const EditFDSFieldModalContent = ({
 	};
 
 	const validateFDSField = function () {
-		const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+		if (Liferay.FeatureFlags['LPS-172017']) {
+			const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
-		if (!i18nFieldLabels[defaultLanguageId]) {
-			setErrorMessage(Liferay.Language.get('required'));
+			if (!i18nFieldLabels[defaultLanguageId]) {
+				setErrorMessage(Liferay.Language.get('required'));
 
-			return;
+				return;
+			}
+
+			setErrorMessage('');
 		}
-
-		setErrorMessage('');
 
 		editFDSField();
 	};

@@ -4,12 +4,15 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {ClientExtension} from 'frontend-js-components-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {getComponentByModuleURL} from '../../../utils/modules';
 import ViewsContext from '../../../views/ViewsContext';
 import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
+import ClientExtensionFilter, {
+	getOdataString as getClientExtensionFilterOdataString,
+	getSelectedItemsLabel as getClientExtensionFilterSelectedItemsLabel,
+} from './ClientExtensionFilter';
 import DateRangeFilter, {
 	getOdataString as getDateRangeFilterOdataString,
 	getSelectedItemsLabel as getDateRangeFilterSelectedItemsLabel,
@@ -20,12 +23,15 @@ import SelectionFilter, {
 } from './SelectionFilter';
 
 const FILTER_TYPE_COMPONENT = {
+	clientExtension: ClientExtensionFilter,
 	dateRange: DateRangeFilter,
 	selection: SelectionFilter,
 };
 
 const getFilterSelectedItemsLabel = (filter) => {
 	switch (filter.type) {
+		case 'clientExtension':
+			return getClientExtensionFilterSelectedItemsLabel(filter);
 		case 'dateRange':
 			return getDateRangeFilterSelectedItemsLabel(filter);
 		case 'selection':
@@ -37,6 +43,8 @@ const getFilterSelectedItemsLabel = (filter) => {
 
 const getOdataFilterString = (filter) => {
 	switch (filter.type) {
+		case 'clientExtension':
+			return getClientExtensionFilterOdataString(filter);
 		case 'dateRange':
 			return getDateRangeFilterOdataString(filter);
 		case 'selection':
@@ -66,24 +74,11 @@ const Filter = ({moduleURL, type, ...otherProps}) => {
 
 	useEffect(() => {
 		if (moduleURL) {
-			if (type === 'clientExtension') {
-				const getModule = async () => {
-					const cetModule = await import(
-						/* webpackIgnore: true */ moduleURL
-					);
-
-					setComponent(() => cetModule['default']);
-				};
-
-				getModule();
-			}
-			else {
-				getComponentByModuleURL(moduleURL).then((FetchedComponent) =>
-					setComponent(() => FetchedComponent)
-				);
-			}
+			getComponentByModuleURL(moduleURL).then((FetchedComponent) =>
+				setComponent(() => FetchedComponent)
+			);
 		}
-	}, [moduleURL, type]);
+	}, [moduleURL]);
 
 	const setFilter = ({id, ...otherProps}) => {
 		viewsDispatch({
@@ -97,22 +92,7 @@ const Filter = ({moduleURL, type, ...otherProps}) => {
 
 	return Component ? (
 		<div className="data-set-filter">
-			{type === 'clientExtension' ? (
-				<ClientExtension
-					args={{
-						filter: otherProps,
-						setFilter: (filter) =>
-							setFilter({
-								active: true,
-								id: otherProps.id,
-								...filter,
-							}),
-					}}
-					htmlElementBuilder={Component}
-				/>
-			) : (
-				<Component setFilter={setFilter} {...otherProps} />
-			)}
+			<Component setFilter={setFilter} {...otherProps} />
 		</div>
 	) : (
 		<ClayLoadingIndicator size="sm" />

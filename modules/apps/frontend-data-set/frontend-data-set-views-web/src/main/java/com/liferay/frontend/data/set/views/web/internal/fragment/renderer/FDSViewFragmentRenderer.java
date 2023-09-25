@@ -618,13 +618,13 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					}
 
 					return JSONUtil.put(
+						"cxFilterURL", fdsFilterCET.getURL()
+					).put(
 						"entityFieldType", FDSEntityFieldTypes.STRING
 					).put(
 						"id", properties.get("fieldName")
 					).put(
 						"label", _getValue("label", "fieldName", properties)
-					).put(
-						"moduleURL", fdsFilterCET.getURL()
 					).put(
 						"type", "clientExtension"
 					);

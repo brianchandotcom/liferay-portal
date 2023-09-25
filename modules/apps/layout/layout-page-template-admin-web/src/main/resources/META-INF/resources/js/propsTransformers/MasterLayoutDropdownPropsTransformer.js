@@ -126,27 +126,30 @@ export default function MasterLayoutDropdownPropsTransformer({
 	portletNamespace,
 	...otherProps
 }) {
+	const updateItem = (item) => {
+		const newItem = {
+			...item,
+			onClick(event) {
+				const action = item.data?.action;
+
+				if (action) {
+					event.preventDefault();
+
+					ACTIONS[action](item.data, portletNamespace);
+				}
+			},
+		};
+
+		if (Array.isArray(item.items)) {
+			newItem.items = newItem.items.map(updateItem);
+		}
+
+		return newItem;
+	};
+
 	return {
 		...otherProps,
-		actions: actions?.map((item) => {
-			return {
-				...item,
-				items: item.items?.map((child) => {
-					return {
-						...child,
-						onClick(event) {
-							const action = child.data?.action;
-
-							if (action) {
-								event.preventDefault();
-
-								ACTIONS[action](child.data, portletNamespace);
-							}
-						},
-					};
-				}),
-			};
-		}),
+		actions: actions?.map(updateItem),
 		portletNamespace,
 	};
 }

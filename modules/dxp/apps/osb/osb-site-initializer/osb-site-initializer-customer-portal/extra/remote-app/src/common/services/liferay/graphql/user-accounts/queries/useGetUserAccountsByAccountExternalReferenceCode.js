@@ -38,7 +38,11 @@ const GET_USER_ACCOUNTS_BY_ACCOUNT_EXTERNAL_REFERENCE_CODE = gql`
 					hasSupportSeatRole
 					roleBriefs
 				}
+				userAccountContactInformation {
+					telephones
+				}
 			}
+
 			page
 			pageSize
 			totalCount

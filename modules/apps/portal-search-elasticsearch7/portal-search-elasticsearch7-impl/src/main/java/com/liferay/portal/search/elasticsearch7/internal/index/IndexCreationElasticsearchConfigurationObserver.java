@@ -69,6 +69,8 @@ public class IndexCreationElasticsearchConfigurationObserver
 
 	@Deactivate
 	protected void deactivate() {
+		_serviceTrackerList.close();
+
 		_elasticsearchConfigurationWrapper.unregister(this);
 	}
 

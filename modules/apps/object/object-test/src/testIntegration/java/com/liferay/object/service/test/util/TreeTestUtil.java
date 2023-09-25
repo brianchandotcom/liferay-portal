@@ -9,7 +9,6 @@ import com.liferay.object.definition.tree.Edge;
 import com.liferay.object.definition.tree.Node;
 import com.liferay.object.definition.tree.Tree;
 import com.liferay.object.definition.tree.TreeFactory;
-import com.liferay.object.definition.tree.constants.TreeConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -127,24 +126,10 @@ public class TreeTestUtil {
 	}
 
 	public static void forEachNodeObjectDefinition(
+			Iterator<Node> iterator,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
-			Tree tree,
 			UnsafeConsumer<ObjectDefinition, Exception> unsafeConsumer)
 		throws Exception {
-
-		forEachNodeObjectDefinition(
-			TreeConstants.ITERATOR_TYPE_BREADTH_FIRST,
-			objectDefinitionLocalService, tree, unsafeConsumer);
-	}
-
-	public static void forEachNodeObjectDefinition(
-			String iteratorType,
-			ObjectDefinitionLocalService objectDefinitionLocalService,
-			Tree tree,
-			UnsafeConsumer<ObjectDefinition, Exception> unsafeConsumer)
-		throws Exception {
-
-		Iterator<Node> iterator = tree.iterator(iteratorType);
 
 		while (iterator.hasNext()) {
 			Node node = iterator.next();

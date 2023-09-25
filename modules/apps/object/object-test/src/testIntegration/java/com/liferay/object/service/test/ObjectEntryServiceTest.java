@@ -233,7 +233,7 @@ public class ObjectEntryServiceTest {
 		_setUser(_user);
 
 		TreeTestUtil.forEachNodeObjectDefinition(
-			_objectDefinitionLocalService, _tree,
+			_tree.iterator(), _objectDefinitionLocalService,
 			objectDefinition -> {
 				if (objectDefinition.isRootNode()) {
 					return;
@@ -291,8 +291,8 @@ public class ObjectEntryServiceTest {
 			ActionKeys.DELETE);
 
 		TreeTestUtil.forEachNodeObjectDefinition(
-			TreeConstants.ITERATOR_TYPE_POST_ORDER,
-			_objectDefinitionLocalService, _tree,
+			_tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
+			_objectDefinitionLocalService,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries1.get(
 					objectDefinition.getObjectDefinitionId());
@@ -314,8 +314,8 @@ public class ObjectEntryServiceTest {
 		Map<Long, ObjectEntry> objectEntries2 = _addObjectEntryHierarchy(_tree);
 
 		TreeTestUtil.forEachNodeObjectDefinition(
-			TreeConstants.ITERATOR_TYPE_POST_ORDER,
-			_objectDefinitionLocalService, _tree,
+			_tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
+			_objectDefinitionLocalService,
 			objectDefinition -> {
 				if (objectDefinition.isRootNode()) {
 					return;
@@ -366,8 +366,8 @@ public class ObjectEntryServiceTest {
 			role.getRoleId(), new String[] {ActionKeys.DELETE});
 
 		TreeTestUtil.forEachNodeObjectDefinition(
-			TreeConstants.ITERATOR_TYPE_POST_ORDER,
-			_objectDefinitionLocalService, _tree,
+			_tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
+			_objectDefinitionLocalService,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries3.get(
 					objectDefinition.getObjectDefinitionId());
@@ -440,7 +440,7 @@ public class ObjectEntryServiceTest {
 			ActionKeys.VIEW);
 
 		TreeTestUtil.forEachNodeObjectDefinition(
-			_objectDefinitionLocalService, _tree,
+			_tree.iterator(), _objectDefinitionLocalService,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries1.get(
 					objectDefinition.getObjectDefinitionId());
@@ -472,7 +472,7 @@ public class ObjectEntryServiceTest {
 		_setUser(_user);
 
 		TreeTestUtil.forEachNodeObjectDefinition(
-			_objectDefinitionLocalService, _tree,
+			_tree.iterator(), _objectDefinitionLocalService,
 			objectDefinition -> {
 				if (objectDefinition.isRootNode()) {
 					return;
@@ -523,7 +523,7 @@ public class ObjectEntryServiceTest {
 			role.getRoleId(), new String[] {ActionKeys.VIEW});
 
 		TreeTestUtil.forEachNodeObjectDefinition(
-			_objectDefinitionLocalService, _tree,
+			_tree.iterator(), _objectDefinitionLocalService,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries3.get(
 					objectDefinition.getObjectDefinitionId());

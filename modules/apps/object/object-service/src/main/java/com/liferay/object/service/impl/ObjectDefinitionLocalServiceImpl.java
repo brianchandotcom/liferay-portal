@@ -784,6 +784,13 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public List<ObjectDefinition> getUnmodifiableSystemObjectDefinitions(
+		long companyId) {
+
+		return objectDefinitionPersistence.findByC_M_S(companyId, false, true);
+	}
+
+	@Override
 	public boolean hasObjectRelationship(long objectDefinitionId) {
 		int countByObjectDefinitionId1 =
 			_objectRelationshipPersistence.countByObjectDefinitionId1(

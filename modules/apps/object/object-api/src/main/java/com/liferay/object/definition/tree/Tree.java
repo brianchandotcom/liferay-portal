@@ -107,7 +107,7 @@ public class Tree {
 			return node;
 		}
 
-		private Queue<Node> _queue = new LinkedList<>();
+		private final Queue<Node> _queue = new LinkedList<>();
 
 	}
 

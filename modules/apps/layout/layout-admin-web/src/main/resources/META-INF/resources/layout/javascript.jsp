@@ -39,14 +39,16 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 	/>
 </liferay-frontend:fieldset>
 
-<liferay-frontend:fieldset
-	collapsed="<%= false %>"
-	collapsible="<%= true %>"
-	label="custom-javascript"
->
-	<aui:input cssClass="propagatable-field" disabled="<%= layoutsAdminDisplayContext.isReadOnly() || selLayout.isLayoutPrototypeLinkActive() %>" label="javascript" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("javascript") %>' wrap="soft" wrapperCssClass="c-mb-0" />
+<c:if test="<%= PropsValues.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUT_JAVASCRIPT %>">
+	<liferay-frontend:fieldset
+		collapsed="<%= false %>"
+		collapsible="<%= true %>"
+		label="custom-javascript"
+	>
+		<aui:input cssClass="propagatable-field" disabled="<%= layoutsAdminDisplayContext.isReadOnly() || selLayout.isLayoutPrototypeLinkActive() %>" label="javascript" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutTypeSettingsUnicodeProperties.getProperty("javascript") %>' wrap="soft" wrapperCssClass="c-mb-0" />
 
-	<p class="text-secondary">
-		<liferay-ui:message key="this-javascript-code-is-executed-at-the-bottom-of-the-page" />
-	</p>
-</liferay-frontend:fieldset>
+		<p class="text-secondary">
+			<liferay-ui:message key="this-javascript-code-is-executed-at-the-bottom-of-the-page" />
+		</p>
+	</liferay-frontend:fieldset>
+</c:if>

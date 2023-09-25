@@ -93,7 +93,8 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 	@Override
 	public void deleteDataRecord(Long dataRecordId) throws Exception {
 		_dataRecordModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(), dataRecordId,
+			PermissionThreadLocal.getPermissionChecker(),
+			_ddlRecordLocalService.getDDLRecord(dataRecordId),
 			DataActionKeys.DELETE_DATA_RECORD);
 
 		DDLRecord ddlRecord = _ddlRecordLocalService.getDDLRecord(dataRecordId);
@@ -127,7 +128,8 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 	@Override
 	public DataRecord getDataRecord(Long dataRecordId) throws Exception {
 		_dataRecordModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(), dataRecordId,
+			PermissionThreadLocal.getPermissionChecker(),
+			_ddlRecordLocalService.getDDLRecord(dataRecordId),
 			DataActionKeys.VIEW_DATA_RECORD);
 
 		return _toDataRecord(_ddlRecordLocalService.getDDLRecord(dataRecordId));
@@ -328,7 +330,8 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 		throws Exception {
 
 		_dataRecordModelResourcePermission.check(
-			PermissionThreadLocal.getPermissionChecker(), dataRecordId,
+			PermissionThreadLocal.getPermissionChecker(),
+			_ddlRecordLocalService.getDDLRecord(dataRecordId),
 			DataActionKeys.UPDATE_DATA_RECORD);
 
 		DDLRecord ddlRecord = _ddlRecordLocalService.getRecord(dataRecordId);

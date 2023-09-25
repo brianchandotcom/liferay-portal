@@ -10,14 +10,11 @@ import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentT
 import com.liferay.data.engine.rest.internal.security.permission.resource.util.DataRecordCollectionPermissionUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,10 +27,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord",
 	service = DataRecordModelResourcePermission.class
 )
-public class DataRecordModelResourcePermission
-	implements ModelResourcePermission<DDLRecord> {
+public class DataRecordModelResourcePermission {
 
-	@Override
 	public void check(
 			PermissionChecker permissionChecker, DDLRecord ddlRecord,
 			String actionId)
@@ -46,18 +41,6 @@ public class DataRecordModelResourcePermission
 		}
 	}
 
-	@Override
-	public void check(
-			PermissionChecker permissionChecker, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		check(
-			permissionChecker, _ddlRecordLocalService.getDDLRecord(primaryKey),
-			actionId);
-	}
-
-	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, DDLRecord ddlRecord,
 			String actionId)
@@ -88,27 +71,6 @@ public class DataRecordModelResourcePermission
 			ddlRecord.getUserId(), actionId);
 	}
 
-	@Override
-	public boolean contains(
-			PermissionChecker permissionChecker, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		return contains(
-			permissionChecker, _ddlRecordLocalService.getDDLRecord(primaryKey),
-			actionId);
-	}
-
-	@Override
-	public String getModelName() {
-		return DDLRecord.class.getName();
-	}
-
-	@Override
-	public PortletResourcePermission getPortletResourcePermission() {
-		return null;
-	}
-
 	private String _getModelResourceName(DDLRecord ddlRecord)
 		throws PortalException {
 
@@ -120,9 +82,6 @@ public class DataRecordModelResourcePermission
 			_portal.getClassName(ddmStructure.getClassNameId()),
 			DDLRecord.class.getName());
 	}
-
-	@Reference
-	private DDLRecordLocalService _ddlRecordLocalService;
 
 	@Reference
 	private Portal _portal;

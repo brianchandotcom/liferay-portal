@@ -647,9 +647,7 @@ public class ObjectEntryServiceTest {
 				rootNode.getObjectDefinitionId(),
 				_objectEntryLocalService.addObjectEntry(
 					_adminUser.getUserId(), 0, rootNode.getObjectDefinitionId(),
-					HashMapBuilder.<String, Serializable>put(
-						"able", RandomStringUtils.randomAlphabetic(5)
-					).build(),
+					Collections.emptyMap(),
 					ServiceContextTestUtil.getServiceContext(
 						TestPropsValues.getGroupId(), _adminUser.getUserId()))
 			).build();
@@ -662,8 +660,6 @@ public class ObjectEntryServiceTest {
 				_objectEntryLocalService.addObjectEntry(
 					_adminUser.getUserId(), 0, node.getObjectDefinitionId(),
 					HashMapBuilder.<String, Serializable>put(
-						"able", RandomStringUtils.randomAlphabetic(5)
-					).put(
 						() -> {
 							Edge edge = node.getEdge();
 

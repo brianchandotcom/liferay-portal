@@ -119,7 +119,14 @@ public class ObjectEntryServiceTest {
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			_treeFactory);
 
-		_rootObjectDefinition = _publishRootObjectDefinition();
+		ObjectDefinition rootObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_A");
+
+		_rootObjectDefinition =
+			_objectDefinitionLocalService.publishCustomObjectDefinition(
+				_adminUser.getUserId(),
+				rootObjectDefinition.getObjectDefinitionId());
 
 		_user = UserTestUtil.addUser();
 	}
@@ -748,16 +755,6 @@ public class ObjectEntryServiceTest {
 		}
 
 		return objectEntries;
-	}
-
-	private ObjectDefinition _publishRootObjectDefinition() throws Exception {
-		ObjectDefinition rootObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_A");
-
-		return _objectDefinitionLocalService.publishCustomObjectDefinition(
-			_adminUser.getUserId(),
-			rootObjectDefinition.getObjectDefinitionId());
 	}
 
 	private void _setUser(User user) throws Exception {

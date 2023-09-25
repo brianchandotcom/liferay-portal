@@ -38,6 +38,15 @@ public class ObjectFieldNameException extends PortalException {
 
 	}
 
+	public static class MustNotBeEqualToObjectRelationshipName
+		extends ObjectFieldNameException {
+
+		public MustNotBeEqualToObjectRelationshipName(String name) {
+			super("Name must not be equal to object relationship name " + name);
+		}
+
+	}
+
 	public static class MustNotBeNull extends ObjectFieldNameException {
 
 		public MustNotBeNull() {

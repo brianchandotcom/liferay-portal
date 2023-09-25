@@ -13,21 +13,20 @@ import com.liferay.feature.flag.web.internal.model.PreferenceAwareFeatureFlag;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.cluster.ClusterExecutor;
-import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.ArrayList;
@@ -48,8 +47,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(service = FeatureFlagsBagProviderImpl.class)
-public class FeatureFlagsBagProviderImpl implements FeatureFlagsBagProvider {
+@Component(service = AopService.class)
+public class FeatureFlagsBagProviderImpl
+	implements AopService, FeatureFlagsBagProvider, IdentifiableOSGiService {
 
 	@Override
 	public FeatureFlagsBag getOrCreateFeatureFlagsBag(long companyId) {
@@ -58,24 +58,15 @@ public class FeatureFlagsBagProviderImpl implements FeatureFlagsBagProvider {
 	}
 
 	@Override
+	public String getOSGiServiceIdentifier() {
+		return FeatureFlagsBagProviderImpl.class.getName();
+	}
+
+	@Override
 	public void setEnabled(long companyId, String key, boolean enabled) {
 		_featureFlagPreferencesManager.setEnabled(companyId, key, enabled);
 
 		_setEnabled(companyId, key, enabled);
-
-		if (!_clusterExecutor.isEnabled()) {
-			return;
-		}
-
-		MethodHandler methodHandler = new MethodHandler(
-			_setEnabledMethodKey, companyId, key, enabled);
-
-		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
-			methodHandler, true);
-
-		clusterRequest.setFireAndForget(true);
-
-		_clusterExecutor.execute(clusterRequest);
 	}
 
 	@Override
@@ -83,18 +74,6 @@ public class FeatureFlagsBagProviderImpl implements FeatureFlagsBagProvider {
 		long companyId, Function<FeatureFlagsBag, T> function) {
 
 		return function.apply(getOrCreateFeatureFlagsBag(companyId));
-	}
-
-	private static void _setEnabled(
-		long companyId, String key, boolean enabled) {
-
-		FeatureFlagsBag featureFlagsBag = _featureFlagsBagMap.get(companyId);
-
-		if (featureFlagsBag == null) {
-			return;
-		}
-
-		featureFlagsBag.setEnabled(key, enabled);
 	}
 
 	private FeatureFlagsBag _createFeatureFlagsBag(long companyId) {
@@ -217,18 +196,23 @@ public class FeatureFlagsBagProviderImpl implements FeatureFlagsBagProvider {
 		}
 	}
 
+	@Clusterable
+	private void _setEnabled(long companyId, String key, boolean enabled) {
+		FeatureFlagsBag featureFlagsBag = _featureFlagsBagMap.get(companyId);
+
+		if (featureFlagsBag == null) {
+			return;
+		}
+
+		featureFlagsBag.setEnabled(key, enabled);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		FeatureFlagsBagProviderImpl.class);
 
 	private static final Map<Long, FeatureFlagsBag> _featureFlagsBagMap =
 		new ConcurrentHashMap<>();
 	private static final Pattern _pattern = Pattern.compile("^([A-Z\\-0-9]+)$");
-	private static final MethodKey _setEnabledMethodKey = new MethodKey(
-		FeatureFlagsBagProviderImpl.class, "_setEnabled", long.class,
-		String.class, boolean.class);
-
-	@Reference
-	private ClusterExecutor _clusterExecutor;
 
 	@Reference
 	private FeatureFlagPreferencesManager _featureFlagPreferencesManager;

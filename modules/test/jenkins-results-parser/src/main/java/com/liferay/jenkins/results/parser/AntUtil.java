@@ -11,6 +11,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.RuntimeConfigurable;
@@ -206,6 +213,53 @@ public class AntUtil {
 			exception.printStackTrace();
 
 			throw new AntException(exception);
+		}
+	}
+
+	public static void callTargetWithTimeout(
+			final File baseDir, final String buildFileName,
+			final String targetName, final Map<String, String> parameters,
+			int timeout, boolean runningModulesTests)
+		throws AntException, IOException {
+
+		ExecutorService executor = Executors.newSingleThreadExecutor();
+
+		Future<String> future = executor.submit(
+			new Callable() {
+
+				public String call() throws Exception {
+					callTarget(baseDir, buildFileName, targetName, parameters);
+
+					return "";
+				}
+
+			});
+
+		try {
+			future.get(timeout, TimeUnit.MINUTES);
+		}
+		catch (TimeoutException timeoutException) {
+			System.err.println(
+				"FAILURE: Unable to run " + targetName + " with " + parameters +
+					" in " + timeout + " minutes.");
+		}
+		catch (ExecutionException executionException) {
+			executionException.printStackTrace();
+		}
+		catch (InterruptedException interruptedException) {
+			interruptedException.printStackTrace();
+		}
+		finally {
+			if (runningModulesTests) {
+				String projectName = parameters.get("test.task");
+
+				JenkinsResultsParserUtil.moveTestResultFiles(
+					JenkinsResultsParserUtil.getProjectTestResultDir(
+						projectName, baseDir),
+					baseDir);
+			}
+
+			executor.shutdownNow();
 		}
 	}
 

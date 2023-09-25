@@ -115,11 +115,6 @@ export default function EditObjectDetails({
 		const validationErrors = handleValidate();
 
 		if (!Object.keys(validationErrors).length) {
-			delete values.objectRelationships;
-			delete values.objectActions;
-			delete values.objectLayouts;
-			delete values.objectViews;
-
 			let objectDefinition = values;
 
 			if (values.accountEntryRestricted) {

@@ -20,24 +20,23 @@ export function PaymentMethodSelector({
 	enableTrial: boolean;
 	selectedPaymentMethod: string;
 	setSelectedPaymentMethod: (value: PaymentMethodSelector) => void;
-}) {	
-
+}) {
 	const paymentMethods: PaymentMethodInfo[] = [
 		{
 			description: 'Try Now. Pay Later.',
 			disabled: !enableTrial,
 			method: 'trial',
-			title: '30-day trial'
+			title: '30-day trial',
 		},
 		{
 			description: 'Pay Today',
 			method: 'pay',
-			title: 'Pay Now'
+			title: 'Pay Now',
 		},
 		{
 			description: 'Requires a PO Number',
 			method: 'order',
-			title: 'Invoice'
+			title: 'Invoice',
 		},
 	];
 
@@ -51,9 +50,7 @@ export function PaymentMethodSelector({
 						key={methodInfo.method}
 						onClick={() => {
 							if (!methodInfo.disabled) {
-								setSelectedPaymentMethod(
-									methodInfo.method
-								);
+								setSelectedPaymentMethod(methodInfo.method);
 							}
 						}}
 						selected={methodInfo.method === selectedPaymentMethod}

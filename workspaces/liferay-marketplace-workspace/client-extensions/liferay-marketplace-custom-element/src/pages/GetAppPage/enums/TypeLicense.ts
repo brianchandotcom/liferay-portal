@@ -4,8 +4,8 @@
  */
 
 export enum TypeLicense {
-  FREE = "free",
-  PAID = "completed",
-  TRIAL = "trial",
-  PAYMENT_PENDING = "pending",
+	FREE = 'free',
+	PAID = 'completed',
+	TRIAL = 'trial',
+	PAYMENT_PENDING = 'pending',
 }

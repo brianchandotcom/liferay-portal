@@ -3,88 +3,92 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { useState } from "react";
+import {useState} from 'react';
 
-import { Input } from "../../components/Input/Input";
-import { BillingAddress } from "./BillingAddress";
-import { PaymentMethodMode } from "./PaymentMethodMode";
-import { PaymentMethodSelector } from "./PaymentMethodSelector";
-import { TrialTimeline } from "./TrialTimeline";
+import {Input} from '../../components/Input/Input';
+import {BillingAddress} from './BillingAddress';
+import {PaymentMethodMode} from './PaymentMethodMode';
+import {PaymentMethodSelector} from './PaymentMethodSelector';
+import {TrialTimeline} from './TrialTimeline';
 
 interface SelectPaymentMethodProps {
-  addresses: BillingAddress[];
-  billingAddress: BillingAddress;
-  email: string;
-  enableTrialMethod: boolean;
-  purchaseOrderNumber: string;
-  selectedPaymentMethod: PaymentMethodSelector;
-  setBillingAddress: (value: BillingAddress) => void;
-  setEmail: (value: string) => void;
-  setEnablePurchaseButton: (value: boolean) => void;
-  setPurchaseOrderNumber: (value: string) => void;
-  setSelectedPaymentMethod: (value: PaymentMethodSelector) => void;
+	addresses: BillingAddress[];
+	billingAddress: BillingAddress;
+	email: string;
+	enableTrialMethod: boolean;
+	purchaseOrderNumber: string;
+	selectedPaymentMethod: PaymentMethodSelector;
+	setBillingAddress: (value: BillingAddress) => void;
+	setEmail: (value: string) => void;
+	setEnablePurchaseButton: (value: boolean) => void;
+	setPurchaseOrderNumber: (value: string) => void;
+	setSelectedPaymentMethod: (value: PaymentMethodSelector) => void;
 }
 
 export function SelectPaymentMethod({
-  addresses,
-  billingAddress,
-  email,
-  enableTrialMethod,
-  purchaseOrderNumber,
-  selectedPaymentMethod,
-  setBillingAddress,
-  setEmail,
-  setEnablePurchaseButton,
-  setPurchaseOrderNumber,
-  setSelectedPaymentMethod,
+	addresses,
+	billingAddress,
+	email,
+	enableTrialMethod,
+	purchaseOrderNumber,
+	selectedPaymentMethod,
+	setBillingAddress,
+	setEmail,
+	setEnablePurchaseButton,
+	setPurchaseOrderNumber,
+	setSelectedPaymentMethod,
 }: SelectPaymentMethodProps) {
-  const [selectedAddress, setSelectedAddress] = useState("");
-  const [showNewAddressButton, setShowNewAddressButton] = useState(true);
+	const [selectedAddress, setSelectedAddress] = useState('');
+	const [showNewAddressButton, setShowNewAddressButton] = useState(true);
 
-  return (
-    <div>
-      <div className="d-flex justify-content-between mb-6">
-        <PaymentMethodSelector
-          enableTrial={enableTrialMethod}
-          selectedPaymentMethod={selectedPaymentMethod as string}
-          setSelectedPaymentMethod={setSelectedPaymentMethod}
-        />
-      </div>
+	return (
+		<div>
+			<div className="d-flex justify-content-between mb-6">
+				<PaymentMethodSelector
+					enableTrial={enableTrialMethod}
+					selectedPaymentMethod={selectedPaymentMethod as string}
+					setSelectedPaymentMethod={setSelectedPaymentMethod}
+				/>
+			</div>
 
-      {selectedPaymentMethod === "trial" && <TrialTimeline />}
+			{selectedPaymentMethod === 'trial' && <TrialTimeline />}
 
-      {selectedPaymentMethod === "pay" && (
-        <PaymentMethodMode selectedPaymentMethod={selectedPaymentMethod} />
-      )}
+			{selectedPaymentMethod === 'pay' && (
+				<PaymentMethodMode
+					selectedPaymentMethod={selectedPaymentMethod}
+				/>
+			)}
 
-      {selectedPaymentMethod === "order" && (
-        <>
-          <Input
-            label="Purchase order number"
-            onChange={({ target }) => setPurchaseOrderNumber(target.value)}
-            required
-            value={purchaseOrderNumber}
-          />
+			{selectedPaymentMethod === 'order' && (
+				<>
+					<Input
+						label="Purchase order number"
+						onChange={({target}) =>
+							setPurchaseOrderNumber(target.value)
+						}
+						required
+						value={purchaseOrderNumber}
+					/>
 
-          <Input
-            label="Email Address"
-            onChange={({ target }) => setEmail(target.value)}
-            required
-            value={email}
-          />
-        </>
-      )}
+					<Input
+						label="Email Address"
+						onChange={({target}) => setEmail(target.value)}
+						required
+						value={email}
+					/>
+				</>
+			)}
 
-      <BillingAddress
-        addresses={addresses}
-        billingAddress={billingAddress}
-        selectedAddress={selectedAddress}
-        setBillingAddress={setBillingAddress}
-        setEnablePurchaseButton={setEnablePurchaseButton}
-        setSelectedAddress={setSelectedAddress}
-        setShowNewAddressButton={setShowNewAddressButton}
-        showNewAddressButton={showNewAddressButton}
-      />
-    </div>
-  );
+			<BillingAddress
+				addresses={addresses}
+				billingAddress={billingAddress}
+				selectedAddress={selectedAddress}
+				setBillingAddress={setBillingAddress}
+				setEnablePurchaseButton={setEnablePurchaseButton}
+				setSelectedAddress={setSelectedAddress}
+				setShowNewAddressButton={setShowNewAddressButton}
+				showNewAddressButton={showNewAddressButton}
+			/>
+		</div>
+	);
 }

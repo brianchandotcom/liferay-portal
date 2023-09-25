@@ -5,10 +5,12 @@
 
 package com.liferay.knowledge.base.web.internal.info.item.provider;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
 import com.liferay.expando.info.item.provider.ExpandoInfoItemFieldSetProvider;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
@@ -16,12 +18,14 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.web.internal.info.item.KBArticleInfoItemFields;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.ArrayList;
@@ -68,6 +72,25 @@ public class KBArticleInfoItemFieldValuesProvider
 			throw new RuntimeException(
 				"Caught unexpected exception", noSuchInfoItemException);
 		}
+	}
+
+	private String _getDisplayPageURL(
+			KBArticle kbArticle, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		String friendlyURL =
+			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
+				new InfoItemReference(
+					KBArticle.class.getName(),
+					new ClassPKInfoItemIdentifier(
+						kbArticle.getResourcePrimKey())),
+				themeDisplay);
+
+		if (Validator.isNotNull(friendlyURL)) {
+			return friendlyURL;
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private List<InfoFieldValue<Object>> _getKBArticleInfoFieldValues(
@@ -121,6 +144,13 @@ public class KBArticleInfoItemFieldValuesProvider
 					KBArticleInfoItemFields.contentInfoField,
 					kbArticle.getContent()));
 
+			if (themeDisplay != null) {
+				kbArticleFieldValues.add(
+					new InfoFieldValue<>(
+						KBArticleInfoItemFields.displayPageURLInfoField,
+						_getDisplayPageURL(kbArticle, themeDisplay)));
+			}
+
 			return kbArticleFieldValues;
 		}
 		catch (PortalException portalException) {
@@ -138,6 +168,10 @@ public class KBArticleInfoItemFieldValuesProvider
 
 		return null;
 	}
+
+	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private AssetEntryInfoItemFieldSetProvider

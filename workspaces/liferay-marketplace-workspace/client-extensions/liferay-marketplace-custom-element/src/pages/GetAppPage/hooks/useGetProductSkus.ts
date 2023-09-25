@@ -3,45 +3,45 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { useEffect, useState } from "react";
+import {useEffect, useState} from 'react';
 
-const useGetProductSkus = (product: Product | undefined, setEnableTrialMethod: (value: boolean) => void) => {
-    const [sku, setSku] = useState<SKU>({
-        cost: 0,
-        externalReferenceCode: "",
-        id: 0,
-        price: 0,
-        sku: "",
-        skuOptions: [],
-      });
+const useGetProductSkus = (
+	product: Product | undefined,
+	setEnableTrialMethod: (value: boolean) => void
+) => {
+	const [sku, setSku] = useState<SKU>({
+		cost: 0,
+		externalReferenceCode: '',
+		id: 0,
+		price: 0,
+		sku: '',
+		skuOptions: [],
+	});
 
+	useEffect(() => {
+		let newSku;
 
-    useEffect(() => {
-        let newSku;
+		if (product && product?.skus?.length > 1) {
+			const isTrial = !!product?.skus?.find(
+				({sku, skuOptions: [skuOption]}) =>
+					sku.endsWith('ts') && skuOption.value === 'yes'
+			);
+			setEnableTrialMethod(isTrial);
 
-        if (product && product?.skus?.length > 1) {
-            const isTrial = !!product?.skus?.find(
-              ({ sku, skuOptions: [skuOption] }) =>
-                sku.endsWith("ts") && skuOption.value === "yes"
-            );
-            setEnableTrialMethod(isTrial);
-      
-            newSku = product?.skus?.find((sku: { price: number }) => sku.price !== 0);
-          } else {
-            newSku = product?.skus[0];
-          }
-      
-          setSku(newSku as SKU);
-      
-        
-    }, [product, setEnableTrialMethod])
-   
+			newSku = product?.skus?.find(
+				(sku: {price: number}) => sku.price !== 0
+			);
+		}
+		else {
+			newSku = product?.skus[0];
+		}
 
-   
-    return {
-        sku
-    }
-   
+		setSku(newSku as SKU);
+	}, [product, setEnableTrialMethod]);
+
+	return {
+		sku,
+	};
 };
 
 export default useGetProductSkus;

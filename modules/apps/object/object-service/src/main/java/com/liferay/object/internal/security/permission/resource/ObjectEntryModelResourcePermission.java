@@ -10,14 +10,10 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
-import com.liferay.object.definition.tree.Edge;
-import com.liferay.object.definition.tree.Node;
-import com.liferay.object.definition.tree.Tree;
 import com.liferay.object.definition.tree.TreeFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -129,7 +125,10 @@ public class ObjectEntryModelResourcePermission
 
 		User user = permissionChecker.getUser();
 
-		objectEntry = _getContextObjectEntry(objectEntry);
+		if (objectEntry.getRootObjectEntryId() != 0) {
+			objectEntry = _objectEntryLocalService.getObjectEntry(
+				objectEntry.getRootObjectEntryId());
+		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
@@ -258,48 +257,15 @@ public class ObjectEntryModelResourcePermission
 		return _portletResourcePermission;
 	}
 
-	private ObjectEntry _getContextObjectEntry(ObjectEntry objectEntry)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		if (!objectDefinition.isRootDescendantNode()) {
-			return objectEntry;
-		}
-
-		Tree tree = _treeFactory.create(
-			objectDefinition.getRootObjectDefinitionId());
-
-		Node node = tree.getNode(objectDefinition.getObjectDefinitionId());
-
-		while (!node.isRoot()) {
-			Edge edge = node.getEdge();
-
-			ObjectRelationship objectRelationship =
-				_objectRelationshipLocalService.getObjectRelationship(
-					edge.getObjectRelationshipId());
-
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				objectRelationship.getObjectFieldId2());
-
-			objectEntry = _objectEntryLocalService.getObjectEntry(
-				MapUtil.getLong(
-					objectEntry.getValues(), objectField.getName()));
-
-			node = tree.getNode(objectEntry.getObjectDefinitionId());
-		}
-
-		return objectEntry;
-	}
-
 	private void _throwPrincipalException(
 			String actionId, ObjectEntry objectEntry,
 			PermissionChecker permissionChecker)
 		throws PortalException {
 
-		objectEntry = _getContextObjectEntry(objectEntry);
+		if (objectEntry.getRootObjectEntryId() != 0) {
+			objectEntry = _objectEntryLocalService.getObjectEntry(
+				objectEntry.getRootObjectEntryId());
+		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(

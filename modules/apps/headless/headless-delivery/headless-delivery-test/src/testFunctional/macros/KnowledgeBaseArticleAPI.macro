@@ -24,12 +24,16 @@ definition {
 			var externalReferenceCode = "";
 		}
 
+		if (!(isSet(datePublished))) {
+			var datePublished = "2020-01-01T01:01:00Z";
+		}
+
 		var curl = '''
 			${portalURL}/o/headless-delivery/v1.0/${api} \
 				-u test@liferay.com:test \
 				-H Content-Type: application/json \
 		''';
-		var body = '''"articleBody": "${articleBody}","externalReferenceCode": "${externalReferenceCode}","title": "${title}"''';
+		var body = '''"articleBody": "${articleBody}","externalReferenceCode": "${externalReferenceCode}","title": "${title}","datePublished": "${datePublished}"''';
 
 		if (isSet(title)) {
 			var curl = StringUtil.add(${curl}, "-d {${body}}", " ");
@@ -43,6 +47,7 @@ definition {
 
 		var curl = KnowledgeBaseArticleAPI._curlKnowledgeBaseArticle(
 			articleBody = ${articleBody},
+			datePublished = ${datePublished},
 			externalReferenceCode = ${externalReferenceCode},
 			knowledgeBaseFolderId = ${knowledgeBaseFolderId},
 			parentKnowledgeBaseArticleId = ${parentKnowledgeBaseArticleId},
@@ -64,6 +69,7 @@ definition {
 	macro setUpGlobalKnowledgeBaseArticleIdAndErc {
 		var response = KnowledgeBaseArticleAPI.createKnowledgeBaseArticle(
 			articleBody = ${articleBody},
+			datePublished = ${datePublished},
 			externalReferenceCode = ${externalReferenceCode},
 			knowledgeBaseFolderId = ${knowledgeBaseFolderId},
 			parentKnowledgeBaseArticleId = ${parentKnowledgeBaseArticleId},

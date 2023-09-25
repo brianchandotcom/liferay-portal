@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.test.rule.AbstractTestRule;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -62,6 +63,8 @@ public class InitializeKernelUtilTestRule
 	@Override
 	protected Void beforeClass(Description description)
 		throws ReflectiveOperationException {
+
+		_setUpPortalClassLoader();
 
 		Class<?> clazz = description.getTestClass();
 
@@ -158,6 +161,15 @@ public class InitializeKernelUtilTestRule
 		Constructor<?> constructor = clazz.getDeclaredConstructor();
 
 		jsonFactoryUtil.setJSONFactory((JSONFactory)constructor.newInstance());
+	}
+
+	private void _setUpPortalClassLoader() {
+		ClassLoader portalClassLoader = PortalClassLoaderUtil.getClassLoader();
+
+		if (portalClassLoader == null) {
+			PortalClassLoaderUtil.setClassLoader(
+				InitializeKernelUtilTestRule.class.getClassLoader());
+		}
 	}
 
 	private Properties _setUpPropsUtil(Map<String, String> map)

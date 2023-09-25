@@ -10,7 +10,7 @@ definition {
 	@description = "This is a use case for LPS-107347. It asserts that an admin is still required to change password with Setup Wizard disabled."
 	@priority = 4
 	test AdminIsRequiredToChangePasswordWithSetupWizardDisabled {
-		property custom.properties = "setup.wizard.enabled=false${line.separator}passwords.default.policy.change.required=true";
+		property custom.properties = "passwords.default.policy.change.required=true${line.separator}setup.wizard.enabled=false";
 		property database.types = "mysql";
 		property test.prepare.bundle.properties = "true";
 		property testray.main.component.name = "Users and Organizations";
@@ -126,7 +126,7 @@ definition {
 	@description = "This is a use case for LPS-187661. Verify there are no errors after configuring a non liferay domain via editing the admin email."
 	@priority = 5
 	test ConfigureNonLiferayDomainViaUserEdit {
-		property custom.properties = "setup.wizard.enabled=false${line.separator}company.security.strangers.verify=false";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}setup.wizard.enabled=false";
 		property test.assert.warning.exceptions = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.prepare.bundle.properties = "true";

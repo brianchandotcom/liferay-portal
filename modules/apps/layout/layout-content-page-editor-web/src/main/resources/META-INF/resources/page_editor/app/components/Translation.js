@@ -110,9 +110,13 @@ const TranslationItem = ({
 	return (
 		<Layout.ContentRow>
 			<span className="sr-only">
-				{`${Liferay.Language.get(
-					'language'
-				)} ${languageLabel}: ${statusText}`}
+				{`${sub(
+					Liferay.Language.get(
+						'language-option-label-and-status-x-x'
+					),
+					languageLabel,
+					statusText
+				)}`}
 			</span>
 
 			<Layout.ContentCol expand>

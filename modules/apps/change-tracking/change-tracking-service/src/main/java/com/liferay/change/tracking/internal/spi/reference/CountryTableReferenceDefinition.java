@@ -8,6 +8,7 @@ package com.liferay.change.tracking.internal.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.CountryTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.CountryPersistence;
@@ -32,6 +33,9 @@ public class CountryTableReferenceDefinition
 	public void defineParentTableReferences(
 		ParentTableReferenceInfoBuilder<CountryTable>
 			parentTableReferenceInfoBuilder) {
+
+		parentTableReferenceInfoBuilder.singleColumnReference(
+			CountryTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId);
 	}
 
 	@Override

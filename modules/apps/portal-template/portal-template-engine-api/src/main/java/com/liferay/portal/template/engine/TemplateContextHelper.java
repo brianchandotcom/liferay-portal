@@ -740,7 +740,7 @@ public class TemplateContextHelper {
 
 		try {
 			variables.put(
-				"rolePermissionUtil", RolePermissionUtil_IW.getInstance());
+				"rolePermission", RolePermissionUtil_IW.getInstance());
 		}
 		catch (SecurityException securityException) {
 			_log.error(securityException);

@@ -85,7 +85,7 @@ public class CopyEntriesMVCActionCommand extends BaseMVCActionCommand {
 
 		if (group.isStaged() && !group.isStagingGroup()) {
 			throw new PortalException(
-				"cannot-copy-to-the-live-version-of-a-group");
+				"cannot-copy-to-the-live-version-of-a-site");
 		}
 
 		Group sourceGroup = _groupLocalService.getGroup(sourceGroupId);

@@ -135,6 +135,15 @@ public class GroupServiceWrapper
 		_groupService.enableStaging(groupId);
 	}
 
+	@Override
+	public Group fetchGroupByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _groupService.fetchGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the company group.
 	 *

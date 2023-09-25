@@ -23,14 +23,6 @@ import java.util.Set;
  */
 public class InterruptedPortletRequestWhitelistUtil {
 
-	public static String[] getWhitelistActionsPropsValues() {
-		return PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST_ACTIONS;
-	}
-
-	public static String[] getWhitelistPropsValues() {
-		return PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST;
-	}
-
 	public static boolean isPortletInvocationWhitelisted(
 		long companyId, String portletId, String strutsAction) {
 
@@ -50,7 +42,7 @@ public class InterruptedPortletRequestWhitelistUtil {
 
 	public static Set<String> resetPortletInvocationWhitelist() {
 		_portletInvocationWhitelist = SetUtil.fromArray(
-			getWhitelistPropsValues());
+			PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST);
 
 		if (_portletInvocationWhitelist.isEmpty()) {
 			_portletInvocationWhitelist = Collections.emptySet();
@@ -65,7 +57,7 @@ public class InterruptedPortletRequestWhitelistUtil {
 
 	public static Set<String> resetPortletInvocationWhitelistActions() {
 		_portletInvocationWhitelistActions = SetUtil.fromArray(
-			getWhitelistActionsPropsValues());
+			PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST_ACTIONS);
 
 		if (_portletInvocationWhitelistActions.isEmpty()) {
 			_portletInvocationWhitelistActions = Collections.emptySet();

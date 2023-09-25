@@ -123,6 +123,58 @@ definition {
 		PublicationsPermissions.assertEditorPermissions(publicationName = "Publication Name 2");
 	}
 
+	@description = "This is a use case for LPS-195716. Can enable and disable share access link."
+	@priority = 3
+	test CanEnableAndDisableShareAccessLink {
+		property custom.properties = "feature.flag.LPS-187436=true";
+
+		task ("Create Web Content and Publication") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Guest",
+				title = "WC WebContent Title");
+		}
+
+		task ("Go to Publication Review Changes") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Web Content Article",
+				changeSite = "Guest",
+				changeTitle = "WC WebContent Title",
+				changeType = "Added",
+				changeUser = "Test Test");
+		}
+
+		task ("Enable Share Publication Link and copy URL") {
+			Publications.enablePublicationSharing();
+
+			var shareLinkURL = Publications.getShareLinkURL();
+		}
+
+		task ("Disable Share Publication Link and then enable") {
+			Publications.disablePublicationSharing();
+
+			Check.checkToggleSwitch(locator1 = "PublicationsChanges#ENABLE_SHARE_LINK_TOGGLE_SWITCH");
+		}
+
+		task ("Copy the second URL") {
+			var shareLinkURL2 = Publications.getShareLinkURL();
+		}
+
+		task ("Assert URL1 and URL2 are different") {
+			TestUtils.assertNotEquals(
+				actual = ${shareLinkURL2},
+				expected = ${shareLinkURL1});
+		}
+	}
+
 	@description = "This is a use case for LPS-195715. Can view Publication with link as Guest user."
 	@priority = 3
 	test CanReviewPublicationWithLinkAsGuest {

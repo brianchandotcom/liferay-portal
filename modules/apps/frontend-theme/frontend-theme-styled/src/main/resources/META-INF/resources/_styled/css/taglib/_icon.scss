@@ -16,6 +16,15 @@
 	}
 }
 
+.taglib-icon-help {
+	color: $secondary !important;
+
+	&:hover,
+	&:active {
+		color: $dark !important;
+	}
+}
+
 .icon-monospaced {
 	color: inherit;
 	display: inline-block;

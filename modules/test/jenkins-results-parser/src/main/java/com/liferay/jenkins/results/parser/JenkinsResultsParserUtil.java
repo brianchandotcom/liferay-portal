@@ -2705,6 +2705,22 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static File getProjectTestResultDir(
+		String projectName, File baseDir) {
+
+		Matcher matcher = _projectNamePattern.matcher(projectName);
+
+		if (matcher.find()) {
+			String testProjectName = matcher.group(1);
+
+			testProjectName = testProjectName.replaceAll(":", "/");
+
+			return new File(baseDir.toString() + "/modules/" + testProjectName);
+		}
+
+		return null;
+	}
+
 	public static Properties getProperties(File... propertiesFiles) {
 		Properties properties = new Properties();
 
@@ -3237,6 +3253,16 @@ public class JenkinsResultsParserUtil {
 		return subdirectories;
 	}
 
+	public static String getTestResultFileName(File file) {
+		Matcher matcher = _testResultFileNamePattern.matcher(file.toString());
+
+		if (matcher.find()) {
+			return matcher.group(0);
+		}
+
+		return null;
+	}
+
 	public static File getUserHomeDir() {
 		return _userHomeDir;
 	}
@@ -3678,6 +3704,31 @@ public class JenkinsResultsParserUtil {
 
 		if (!delete(sourceFile)) {
 			throw new IOException("Unable to delete " + sourceFile);
+		}
+	}
+
+	public static void moveTestResultFiles(
+			File testProjectResultsDir, File baseDir)
+		throws IOException {
+
+		String[] globList = {"**/TEST-**.xml"};
+
+		List<File> fileList = getIncludedFiles(
+			testProjectResultsDir, null, globList);
+
+		String testResultsDir = baseDir.toString() + "/modules/test-results";
+
+		for (File resultFile : fileList) {
+			String testResultFileName = getTestResultFileName(resultFile);
+
+			File destinationFile = new File(
+				testResultsDir + "/" + testResultFileName);
+
+			copy(resultFile, destinationFile);
+
+			if (resultFile.delete()) {
+				System.out.println("Deleted result file:" + resultFile);
+			}
 		}
 	}
 
@@ -6215,6 +6266,8 @@ public class JenkinsResultsParserUtil {
 		"\\$\\{([^\\}]+)\\}");
 	private static final Pattern _poshiFileNamePattern = Pattern.compile(
 		".*\\.(function|macro|path|prose|testcase)");
+	private static final Pattern _projectNamePattern = Pattern.compile(
+		"(:.*)(:test|testIntegration)");
 	private static final Set<String> _redactTokens = new HashSet<>();
 	private static final Pattern _remoteURLAuthorityPattern1 = Pattern.compile(
 		"https://(test).liferay.com/([0-9]+)/");
@@ -6236,6 +6289,8 @@ public class JenkinsResultsParserUtil {
 		}
 	};
 
+	private static final Pattern _testResultFileNamePattern = Pattern.compile(
+		"TEST-.*.xml");
 	private static final Set<String> _timeStamps = new HashSet<>();
 	private static final Pattern _urlQueryStringPattern = Pattern.compile(
 		"\\&??(\\w++)=([^\\&]*)");

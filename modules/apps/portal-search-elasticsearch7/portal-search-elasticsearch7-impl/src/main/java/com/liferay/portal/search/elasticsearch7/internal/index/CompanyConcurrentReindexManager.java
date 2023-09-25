@@ -6,7 +6,6 @@
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -48,9 +47,7 @@ public class CompanyConcurrentReindexManager
 
 	@Override
 	public void createNextIndex(long companyId) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-183661") ||
-			(companyId == CompanyConstants.SYSTEM)) {
-
+		if (companyId == CompanyConstants.SYSTEM) {
 			return;
 		}
 
@@ -83,10 +80,6 @@ public class CompanyConcurrentReindexManager
 
 	@Override
 	public void deleteNextIndex(long companyId) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-183661")) {
-			return;
-		}
-
 		Company company = _companyLocalService.fetchCompany(companyId);
 
 		if (company == null) {
@@ -112,9 +105,7 @@ public class CompanyConcurrentReindexManager
 	public void replaceCurrentIndexWithNextIndex(long companyId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-183661") ||
-			(companyId == CompanyConstants.SYSTEM)) {
-
+		if (companyId == CompanyConstants.SYSTEM) {
 			return;
 		}
 

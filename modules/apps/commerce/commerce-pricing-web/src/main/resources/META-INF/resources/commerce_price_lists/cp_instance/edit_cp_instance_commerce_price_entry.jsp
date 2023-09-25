@@ -19,5 +19,5 @@ CommercePriceList commercePriceList = commercePriceEntry.getCommercePriceList();
 	screenNavigatorKey="<%= CommercePriceListScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_INSTANCE_PRICE_ENTRY_GENERAL %>"
 	screenNavigatorModelBean="<%= commercePriceEntry %>"
 	screenNavigatorPortletURL="<%= currentURLObj %>"
-	title="<%= commercePriceList.getName() %>"
+	title='<%= LanguageUtil.format(request, "edit-x", commercePriceList.getName()) %>'
 />

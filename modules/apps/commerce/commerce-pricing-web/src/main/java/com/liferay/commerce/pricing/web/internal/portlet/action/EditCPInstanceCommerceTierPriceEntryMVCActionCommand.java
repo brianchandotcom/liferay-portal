@@ -7,7 +7,9 @@ package com.liferay.commerce.pricing.web.internal.portlet.action;
 
 import com.liferay.commerce.price.list.exception.DuplicateCommerceTierPriceEntryException;
 import com.liferay.commerce.price.list.exception.NoSuchTierPriceEntryException;
+import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
+import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommerceTierPriceEntryService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -16,11 +18,15 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -123,35 +129,105 @@ public class EditCPInstanceCommerceTierPriceEntryMVCActionCommand
 			long commerceTierPriceEntryId, ActionRequest actionRequest)
 		throws Exception {
 
+		long commercePriceEntryId = ParamUtil.getLong(
+			actionRequest, "commercePriceEntryId");
+
+		CommercePriceEntry commercePriceEntry =
+			_commercePriceEntryService.getCommercePriceEntry(
+				commercePriceEntryId);
+
 		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "price", BigDecimal.ZERO);
-		BigDecimal promoPrice = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "promoPrice", BigDecimal.ZERO);
 		BigDecimal minQuantity = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "minQuantity", BigDecimal.ZERO);
+		boolean overrideDiscount = ParamUtil.getBoolean(
+			actionRequest, "overrideDiscount");
+		BigDecimal discountLevel1 = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "discountLevel1", BigDecimal.ZERO);
+		BigDecimal discountLevel2 = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "discountLevel2", BigDecimal.ZERO);
+		BigDecimal discountLevel3 = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "discountLevel3", BigDecimal.ZERO);
+		BigDecimal discountLevel4 = (BigDecimal)ParamUtil.getNumber(
+			actionRequest, "discountLevel4", BigDecimal.ZERO);
+
+		Date date = new Date();
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(date.getTime());
+
+		int displayDateMonth = ParamUtil.getInteger(
+			actionRequest, "displayDateMonth", calendar.get(Calendar.MONTH));
+		int displayDateDay = ParamUtil.getInteger(
+			actionRequest, "displayDateDay",
+			calendar.get(Calendar.DAY_OF_MONTH));
+		int displayDateYear = ParamUtil.getInteger(
+			actionRequest, "displayDateYear", calendar.get(Calendar.YEAR));
+		int displayDateHour = ParamUtil.getInteger(
+			actionRequest, "displayDateHour", calendar.get(Calendar.HOUR));
+		int displayDateMinute = ParamUtil.getInteger(
+			actionRequest, "displayDateMinute", calendar.get(Calendar.MINUTE));
+		int displayDateAmPm = ParamUtil.getInteger(
+			actionRequest, "displayDateAmPm", calendar.get(Calendar.AM_PM));
+
+		if (displayDateAmPm == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		int expirationDateMonth = ParamUtil.getInteger(
+			actionRequest, "expirationDateMonth");
+		int expirationDateDay = ParamUtil.getInteger(
+			actionRequest, "expirationDateDay");
+		int expirationDateYear = ParamUtil.getInteger(
+			actionRequest, "expirationDateYear");
+		int expirationDateHour = ParamUtil.getInteger(
+			actionRequest, "expirationDateHour");
+		int expirationDateMinute = ParamUtil.getInteger(
+			actionRequest, "expirationDateMinute");
+		int expirationDateAmPm = ParamUtil.getInteger(
+			actionRequest, "expirationDateAmPm");
+
+		if (expirationDateAmPm == Calendar.PM) {
+			expirationDateHour += 12;
+		}
+
+		boolean neverExpire = ParamUtil.getBoolean(
+			actionRequest, "neverExpire", true);
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceTierPriceEntry.class.getName(), actionRequest);
 
 		CommerceTierPriceEntry commerceTierPriceEntry = null;
 
 		if (commerceTierPriceEntryId <= 0) {
-			long commercePriceEntryId = ParamUtil.getLong(
-				actionRequest, "commercePriceEntryId");
-
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.addCommerceTierPriceEntry(
-					commercePriceEntryId, price, promoPrice, minQuantity,
+					null, commercePriceEntryId, price, minQuantity,
+					commercePriceEntry.isBulkPricing(), !overrideDiscount,
+					discountLevel1, discountLevel2, discountLevel3,
+					discountLevel4, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
 					serviceContext);
 		}
 		else {
 			commerceTierPriceEntry =
 				_commerceTierPriceEntryService.updateCommerceTierPriceEntry(
-					commerceTierPriceEntryId, price, promoPrice, minQuantity,
+					commerceTierPriceEntryId, price, minQuantity,
+					commercePriceEntry.isBulkPricing(), !overrideDiscount,
+					discountLevel1, discountLevel2, discountLevel3,
+					discountLevel4, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
 					serviceContext);
 		}
 
 		return commerceTierPriceEntry;
 	}
+
+	@Reference
+	private CommercePriceEntryService _commercePriceEntryService;
 
 	@Reference
 	private CommerceTierPriceEntryService _commerceTierPriceEntryService;

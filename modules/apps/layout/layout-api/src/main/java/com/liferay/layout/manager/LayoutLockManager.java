@@ -8,6 +8,7 @@ package com.liferay.layout.manager;
 import com.liferay.layout.constants.LockedLayoutType;
 import com.liferay.layout.model.LockedLayout;
 import com.liferay.layout.model.LockedLayoutOrder;
+import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -45,7 +46,8 @@ public interface LayoutLockManager {
 
 	public void unlock(Layout layout, long userId);
 
-	public void unlockLayouts(long companyId, long timeWithoutAutosave);
+	public void unlockLayouts(long companyId, long timeWithoutAutosave)
+		throws LockedLayoutException;
 
 	public void unlockLayoutsByUserId(long companyId, long userId);
 

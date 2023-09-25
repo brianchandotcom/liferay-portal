@@ -8,12 +8,12 @@ import ClayButton from "@clayui/button";
 import infoCircleIcon from "../../../assets/icons/info_circle_icon.svg";
 import { getSiteURL } from "../../../components/InviteMemberModal/services";
 import { Liferay } from "../../../liferay/liferay";
-import { getPaymentMethodURL } from "../../../utils/api";
 import { StepType } from "../enums/stepType";
+
 
 interface ProductFooterProps {
   addresses: BillingAddress[];
-  cartId: number;
+  cartId?: number;
   enablePurchaseButton: boolean;
   handleGetApp: () => void;
   isFreeApp: boolean;
@@ -34,7 +34,6 @@ type SectionPropertiesType = {
 
 const ProductFooter = ({
   addresses,
-  cartId,
   enablePurchaseButton,
   handleGetApp,
   isFreeApp,
@@ -78,6 +77,7 @@ const ProductFooter = ({
     return;
   };
 
+
   const onContinue = async (nextStep: StepType) => {
     const isAccountStep = step === "account";
     const isPaymentStep = step === "payment";
@@ -89,28 +89,14 @@ const ProductFooter = ({
       return;
     }
 
+   
     if (
       (isFreeApp && selectedAccount) ||
       (isPaymentStep && enablePurchaseButton && addresses)
     ) {
+      
+
       handleGetApp();
-
-      const nextStepsCallbackURL = `${Liferay.ThemeDisplay.getCanonicalURL().replace(
-        "/get-app",
-        ""
-      )}/next-steps?orderId=${encodeURIComponent(cartId)}`;
-
-      if (selectedPaymentMethod === "pay") {
-        const paymentMethodURL = await getPaymentMethodURL(
-          cartId,
-          nextStepsCallbackURL
-        );
-
-        window.location.href = paymentMethodURL;
-
-      } else {
-        window.location.href = nextStepsCallbackURL;
-      };
     };
   };
 

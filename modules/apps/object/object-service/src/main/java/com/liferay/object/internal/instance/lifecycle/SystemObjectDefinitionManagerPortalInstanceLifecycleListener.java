@@ -77,10 +77,15 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 			_log.debug("Registered portal instance " + company);
 		}
 
+		ObjectFolder objectFolder = _getUncategorizedObjectFolder(
+			company.getCompanyId());
+
 		for (SystemObjectDefinitionManager systemObjectDefinitionManager :
 				_serviceTrackerList) {
 
-			_apply(company.getCompanyId(), systemObjectDefinitionManager);
+			_apply(
+				company.getCompanyId(), objectFolder,
+				systemObjectDefinitionManager);
 		}
 	}
 
@@ -117,7 +122,9 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 					if (!_openingThreadLocal.get()) {
 						_companyLocalService.forEachCompanyId(
 							companyId -> _apply(
-								companyId, systemObjectDefinitionManager));
+								companyId,
+								_getUncategorizedObjectFolder(companyId),
+								systemObjectDefinitionManager));
 					}
 
 					return systemObjectDefinitionManager;
@@ -152,7 +159,7 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 	}
 
 	private void _apply(
-		long companyId,
+		long companyId, ObjectFolder objectFolder,
 		SystemObjectDefinitionManager systemObjectDefinitionManager) {
 
 		if (_log.isDebugEnabled()) {
@@ -170,10 +177,6 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 			if ((objectDefinition == null) ||
 				(objectDefinition.getVersion() !=
 					systemObjectDefinitionManager.getVersion())) {
-
-				ObjectFolder objectFolder =
-					_objectFolderLocalService.addOrGetUncategorizedObjectFolder(
-						companyId);
 
 				objectDefinition =
 					_objectDefinitionLocalService.
@@ -245,6 +248,16 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
+		}
+	}
+
+	private ObjectFolder _getUncategorizedObjectFolder(long companyId) {
+		try {
+			return _objectFolderLocalService.addOrGetUncategorizedObjectFolder(
+				companyId);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

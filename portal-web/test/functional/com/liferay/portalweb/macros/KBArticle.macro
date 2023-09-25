@@ -1426,7 +1426,7 @@ definition {
 			if (isSet(kbDescription)) {
 				AssertTextEquals(
 					key_title = "Description",
-					locator1 = "Header#H3_TITLE",
+					locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION_HEADER",
 					value1 = "Description");
 
 				AssertTextEquals(
@@ -1792,14 +1792,14 @@ definition {
 			if (${description} == "Disabled") {
 				AssertElementNotPresent(
 					key_title = "Description",
-					locator1 = "Header#H3_TITLE");
+					locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION_HEADER");
 
 				AssertElementNotPresent(locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION");
 			}
 			else {
 				AssertTextEquals(
 					key_title = "Description",
-					locator1 = "Header#H3_TITLE",
+					locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION_HEADER",
 					value1 = "Description");
 
 				AssertTextEquals(

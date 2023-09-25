@@ -12,6 +12,7 @@ declare module 'warning';
 type Account = {
 	customFields?: CustomField[];
 	description: string;
+	emailAddress: string;
 	externalReferenceCode: string;
 	id: number;
 	logoURL?: string;

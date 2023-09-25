@@ -8,9 +8,11 @@ package com.liferay.portal.workflow.metrics.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.service.WorkflowMetricsSLADefinitionVersionLocalServiceUtil;
 import com.liferay.portal.workflow.metrics.service.util.BaseWorkflowMetricsTestCase;
@@ -18,6 +20,7 @@ import com.liferay.portal.workflow.metrics.service.util.BaseWorkflowMetricsTestC
 import java.util.Date;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,6 +40,12 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest
 		super.setUp();
 
 		_company = CompanyTestUtil.addCompany();
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		_companyLocalService.deleteCompany(_company.getCompanyId());
 	}
 
 	@Test
@@ -162,5 +171,8 @@ public class WorkflowMetricsSLADefinitionVersionLocalServiceTest
 	}
 
 	private Company _company;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 }

@@ -102,7 +102,6 @@ function AddFDSFilterModalContent({
 	const [label, setLabel] = useState(filter?.label || '');
 	const [picklists, setPicklists] = useState<IPickList[]>([]);
 	const [preselectedValues, setPreselectedValues] = useState<any[]>([]);
-	const [preselectedValueInput, setPreselectedValueInput] = useState('');
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>();
 	const [selectedField, setSelectedField] = useState<IField | null>(
 		fields.find((item) => item.name === filter?.fieldName) || null

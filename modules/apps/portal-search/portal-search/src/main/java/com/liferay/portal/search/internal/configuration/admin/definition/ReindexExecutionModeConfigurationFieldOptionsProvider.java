@@ -6,7 +6,6 @@
 package com.liferay.portal.search.internal.configuration.admin.definition;
 
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 
 import java.util.ArrayList;
@@ -36,11 +35,8 @@ public class ReindexExecutionModeConfigurationFieldOptionsProvider
 		List<String> executionModes = new ArrayList<>();
 
 		executionModes.add("full");
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-183661")) {
-			executionModes.add("concurrent");
-			executionModes.add("sync");
-		}
+		executionModes.add("concurrent");
+		executionModes.add("sync");
 
 		for (String executionMode : executionModes) {
 			Option option = new Option() {

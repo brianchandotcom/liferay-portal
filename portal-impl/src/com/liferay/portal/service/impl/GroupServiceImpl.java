@@ -237,6 +237,22 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		groupLocalService.enableStaging(groupId);
 	}
 
+	@Override
+	public Group fetchGroupByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		Group group = groupLocalService.fetchGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
+
+		if (group != null) {
+			GroupPermissionUtil.check(
+				getPermissionChecker(), group, ActionKeys.VIEW);
+		}
+
+		return group;
+	}
+
 	/**
 	 * Returns the company group.
 	 *

@@ -252,7 +252,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	@Override
 	public LayoutPageTemplateEntry copyLayoutPageTemplateEntry(
 			long userId, long groupId, long layoutPageTemplateCollectionId,
-			long sourceLayoutPageTemplateEntryId, ServiceContext serviceContext)
+			long sourceLayoutPageTemplateEntryId, boolean copyPermissions,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		LayoutPageTemplateEntry sourceLayoutPageTemplateEntry =
@@ -282,6 +283,19 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				sourceLayoutPageTemplateEntry.getLayoutPrototypeId(), 0,
 				masterLayoutPlid, WorkflowConstants.STATUS_DRAFT,
 				serviceContext);
+
+		if (copyPermissions) {
+			_resourceLocalService.deleteResource(
+				targetLayoutPageTemplateEntry.getCompanyId(),
+				LayoutPageTemplateEntry.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				targetLayoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+			_resourceLocalService.copyModelResources(
+				sourceLayoutPageTemplateEntry.getCompanyId(),
+				LayoutPageTemplateEntry.class.getName(),
+				sourceLayoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				targetLayoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		}
 
 		FileEntry targetPreviewFileEntry = _copyPreviewFileEntry(
 			sourceLayoutPageTemplateEntry, targetLayoutPageTemplateEntry,

@@ -84,6 +84,9 @@ public class LanguageFilter extends BasePortalFilter {
 
 		String eTagKey = _getETagKey(httpServletRequest);
 
+		httpServletResponse.setHeader(
+			HttpHeaders.CACHE_CONTROL, "private, no-cache");
+
 		if ((ifNoneMatch != null) &&
 			ifNoneMatch.equals(_eTagValues.get(eTagKey))) {
 
@@ -106,9 +109,6 @@ public class LanguageFilter extends BasePortalFilter {
 
 			_log.debug("Translating response " + completeURL);
 		}
-
-		httpServletResponse.setHeader(
-			HttpHeaders.CACHE_CONTROL, "private, no-cache");
 
 		String content = bufferCacheServletResponse.getString();
 

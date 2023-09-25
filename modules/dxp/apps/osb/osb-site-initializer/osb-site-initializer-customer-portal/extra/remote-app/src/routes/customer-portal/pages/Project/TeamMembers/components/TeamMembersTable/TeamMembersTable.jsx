@@ -6,9 +6,8 @@
 import {useModal} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useEffect, useState} from 'react';
-import SearchBuilder from '~/common/core/SearchBuilder';
-import {getHighPriorityContacts} from '~/common/services/liferay/api';
 import {getRolesFiltered} from '~/common/utils/getProjectRoles';
+import {rolesHighPriorityContacts} from '~/routes/customer-portal/utils/getHighPriorityContacts';
 import i18n from '../../../../../../../common/I18n';
 import StatusTag from '../../../../../../../common/components/StatusTag';
 import Table from '../../../../../../../common/components/Table';
@@ -110,79 +109,49 @@ const TeamMembersTable = ({
 		userAccounts
 	);
 
-	const mapFilterToContactsCategory = (filter) => {
-		const lowerCaseFirstLetter =
-			filter.charAt(0).toLowerCase() + filter.slice(1);
-
-		return {
-			contactsCategory: {
-				key: lowerCaseFirstLetter.replace(/\s/g, ''),
-				name: filter,
-			},
-			filterRequest: new SearchBuilder()
-				.eq('contactsCategory', lowerCaseFirstLetter.replace(/\s/g, ''))
-				.and()
-				.eq(
-					'r_accountEntryToHighPriorityContacts_accountEntryERC',
-					koroneikiAccount.accountKey
-				)
-				.build(),
-		};
-	};
-
 	const getHighPriorityContactsByFilter = async (filter) => {
-		try {
-			const {filterRequest} = mapFilterToContactsCategory(filter);
-			const response = await getHighPriorityContacts(filterRequest);
-			const highPriorityContactsFiltered = response?.items;
-			const mappedContacts = highPriorityContactsFiltered?.map(
-				(contact, index) => {
-					const {r_userToHighPriorityContacts_user} = contact;
+		return userAccountsData?.accountUserAccountsByExternalReferenceCode?.items
+			.filter((account) => {
+				return account?.selectedAccountSummary?.roleBriefs?.some(
+					(role) => role?.name === filter
+				);
+			})
+			.map((account) => {
+				const {emailAddress} = account;
 
-					return {
-						label: `${r_userToHighPriorityContacts_user?.givenName} ${r_userToHighPriorityContacts_user?.familyName}`,
-						value: (index + 1).toString(),
-					};
-				}
-			);
-
-			return mappedContacts;
-		} catch (error) {
-			console.error(
-				i18n.translate('error-high-priority-contacts'),
-				error
-			);
-		}
+				return {
+					email: emailAddress,
+				};
+			});
 	};
 
 	useEffect(() => {
 		const fetchHighPriorityContacts = async () => {
+			const highPriorityContactsPromises = rolesHighPriorityContacts.map(
+				(role) => getHighPriorityContactsByFilter(role)
+			);
+
 			try {
-				const updatedFilteredContacts = {};
-
-				for (const filter of Object.keys(
-					HIGH_PRIORITY_CONTACT_CATEGORIES
-				)) {
-					updatedFilteredContacts[
-						filter
-					] = await getHighPriorityContactsByFilter(filter);
-				}
-
-				setHighPriorityContactsNames(
-					Object.values(updatedFilteredContacts).flatMap((contacts) =>
-						contacts.map((contact) => contact.label)
-					)
+				const highPriorityContactsResults = await Promise.all(
+					highPriorityContactsPromises
 				);
+
+				const flattenedHighPriorityContacts = highPriorityContactsResults
+					.flat()
+					.filter((contact) => contact);
+
+				const highPriorityEmails = flattenedHighPriorityContacts.map(
+					(contact) => contact.email
+				);
+
+				setHighPriorityContactsNames(highPriorityEmails);
 			} catch (error) {
-				console.error(
-					i18n.translate('error-fetching-high-priority-contacts'),
-					error
-				);
+				console.error('Error:', error);
 			}
 		};
 
 		fetchHighPriorityContacts();
-	}, []);
+	}, [userAccountsData]);
 
 	const {
 		data: accountRolesData,

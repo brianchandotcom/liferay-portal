@@ -411,6 +411,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>FOLDER_LABEL</td>
+		<td>//span[contains(@class,'view-object-definitions-title') and contains(text(),'${folderLabel}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>VIEW_OBJECT_FIELD_LABEL</td>
 		<td>//div[(@class = 'dnd-td') and contains (.,'${key_fieldLabel}')]</td>
 		<td></td>

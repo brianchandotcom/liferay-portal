@@ -2003,9 +2003,8 @@ public class DDMStructureLocalServiceImpl
 			() -> {
 				Message message = new Message();
 
-				message.put("structureId", structure.getStructureId());
-
 				message.put("ddmStructureIndexer", ddmStructureIndexer);
+				message.put("structureId", structure.getStructureId());
 
 				_messageBus.sendMessage(
 					DDMDestinationNames.DDM_STRUCTURE_REINDEX, message);

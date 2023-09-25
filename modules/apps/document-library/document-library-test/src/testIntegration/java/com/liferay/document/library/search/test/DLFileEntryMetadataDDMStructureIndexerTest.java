@@ -91,9 +91,8 @@ public class DLFileEntryMetadataDDMStructureIndexerTest
 
 		Message message = new Message();
 
-		message.put("structureId", ddmStructure.getStructureId());
-
 		message.put("ddmStructureIndexer", _ddmStructureIndexer);
+		message.put("structureId", ddmStructure.getStructureId());
 
 		_messageBus.sendMessage("liferay/ddm_structure_reindex", message);
 

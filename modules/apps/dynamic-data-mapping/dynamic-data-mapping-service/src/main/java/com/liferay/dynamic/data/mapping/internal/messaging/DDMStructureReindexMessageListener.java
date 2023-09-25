@@ -30,10 +30,11 @@ public class DDMStructureReindexMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		long structureId = message.getLong("structureId");
+		DDMStructureIndexer ddmStructureIndexer =
+			(DDMStructureIndexer)message.get(
+				"ddmStructureIndexer");
 
-		DDMStructureIndexer structureIndexer = (DDMStructureIndexer)message.get(
-			"ddmStructureIndexer");
+		long structureId = message.getLong("structureId");
 
 		List<Long> ddmStructureIds = new ArrayList<>();
 
@@ -41,7 +42,7 @@ public class DDMStructureReindexMessageListener extends BaseMessageListener {
 
 		_collectChildrenStructureIds(ddmStructureIds, structureId);
 
-		structureIndexer.reindexDDMStructures(ddmStructureIds);
+		ddmStructureIndexer.reindexDDMStructures(ddmStructureIds);
 	}
 
 	private void _collectChildrenStructureIds(

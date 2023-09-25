@@ -118,9 +118,8 @@ public class JournalArticleDDMStructureIndexerTest {
 
 		Message message = new Message();
 
-		message.put("structureId", structure.getStructureId());
-
 		message.put("ddmStructureIndexer", _ddmStructureIndexer);
+		message.put("structureId", structure.getStructureId());
 
 		_messageBus.sendMessage("liferay/ddm_structure_reindex", message);
 

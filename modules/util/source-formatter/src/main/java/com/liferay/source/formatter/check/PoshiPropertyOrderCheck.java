@@ -32,35 +32,32 @@ public class PoshiPropertyOrderCheck extends BaseFileCheck {
 
 		outLooper:
 		while (matcher.find()) {
-			String[] propertiesArray = StringUtil.split(
+			String[] properties = StringUtil.split(
 				matcher.group(1), "${line.separator}");
 
-			if (propertiesArray.length == 1) {
+			if (properties.length == 1) {
 				continue;
 			}
 
-			Map<String, String> messagesMap = new TreeMap<>(
+			Map<String, String> propertiesMap = new TreeMap<>(
 				new NaturalOrderStringComparator());
 
-			for (String property : propertiesArray) {
+			for (String property : properties) {
 				int index = property.indexOf(StringPool.EQUAL);
 
 				if (index == -1) {
 					continue outLooper;
 				}
 
-				messagesMap.put(property.substring(0, index), property);
+				propertiesMap.put(property.substring(0, index), property);
 			}
 
-			String newCustomPropertiesValue = StringUtil.merge(
-				messagesMap.values(), "${line.separator}");
+			String newProperties = StringUtil.merge(
+				propertiesMap.values(), "${line.separator}");
 
-			if (!StringUtil.equals(
-					matcher.group(1), newCustomPropertiesValue)) {
-
+			if (!StringUtil.equals(matcher.group(1), newProperties)) {
 				return StringUtil.replaceFirst(
-					content, matcher.group(1), newCustomPropertiesValue,
-					matcher.start(1));
+					content, matcher.group(1), newProperties, matcher.start(1));
 			}
 		}
 

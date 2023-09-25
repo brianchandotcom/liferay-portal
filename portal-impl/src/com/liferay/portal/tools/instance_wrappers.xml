@@ -11,6 +11,10 @@
 	/>
 	<instance-wrapper
 		parent-dir="../portal-kernel/src"
+		src-file="com/liferay/portal/kernel/service/permission/GroupPermissionUtil.java"
+	/>
+	<instance-wrapper
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/service/permission/RolePermissionUtil.java"
 	/>
 	<instance-wrapper
@@ -20,10 +24,6 @@
 	<instance-wrapper
 		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/util/ArrayUtil.java"
-	/>
-	<instance-wrapper
-		parent-dir="../portal-kernel/src"
-		src-file="com/liferay/portal/kernel/service/permission/GroupPermissionUtil.java"
 	/>
 	<instance-wrapper
 		parent-dir="../portal-kernel/src"

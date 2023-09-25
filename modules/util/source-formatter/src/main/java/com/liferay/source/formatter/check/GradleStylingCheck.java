@@ -14,6 +14,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
@@ -32,6 +34,7 @@ public class GradleStylingCheck extends BaseFileCheck {
 		content = _sortMapKeys("transformKeys", content);
 		content = _stylingCheck(content, _stylingPattern1, "$1$2 {\n\t$3\n}$4");
 		content = _stylingCheck(content, _stylingPattern2, "$1$2 = $3$4");
+		content = _sortFileNames(content);
 
 		return content;
 	}
@@ -186,6 +189,43 @@ public class GradleStylingCheck extends BaseFileCheck {
 		return false;
 	}
 
+	private String _sortFileNames(String content) {
+		Matcher matcher = _fileNamespattern.matcher(content);
+
+		List<String> fileNames = new ArrayList<>();
+
+		while (matcher.find()) {
+			for (String fileName : StringUtil.splitLines(matcher.group())) {
+				String fileNamePath = fileName.substring(
+					fileName.indexOf("fileNames ") + 10);
+
+				fileNames.add(StringUtil.unquote(fileNamePath));
+			}
+
+			fileNames.sort(new FileNameComparator());
+
+			StringBundler sb = new StringBundler();
+
+			for (String fileName : fileNames) {
+				sb.append(matcher.group(1));
+				sb.append("fileNames \"");
+				sb.append(fileName);
+				sb.append(StringPool.QUOTE);
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			String newFileNamesContent = sb.toString();
+
+			if (!StringUtil.equals(newFileNamesContent, matcher.group())) {
+				return StringUtil.replaceFirst(
+					content, matcher.group(), newFileNamesContent,
+					matcher.start());
+			}
+		}
+
+		return content;
+	}
+
 	private String _sortMapKeys(String mapName, String content) {
 		Pattern pattern = Pattern.compile(
 			"\n(\t*)(" + mapName + ") = \\[([\\s\\S]*?)\\]\n");
@@ -262,6 +302,8 @@ public class GradleStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
+	private static final Pattern _fileNamespattern = Pattern.compile(
+		"(\t*)(\t*fileNames .+\n){2,}");
 	private static final Pattern _mapKeyPattern = Pattern.compile(
 		"(\".+?\") *: *(\".+?\")");
 	private static final Pattern _multiLineStringsPattern = Pattern.compile(
@@ -270,5 +312,33 @@ public class GradleStylingCheck extends BaseFileCheck {
 		"(\\A|\n)(\\w+)\\.(\\w+ = \\w+)(\n|\\Z)");
 	private static final Pattern _stylingPattern2 = Pattern.compile(
 		"(\\A|\n)(\t*\\w+)(?! = .) *=(?!~) *(.*?)(\n|\\Z)");
+
+	private static class FileNameComparator
+		extends NaturalOrderStringComparator {
+
+		@Override
+		public int compare(String fileName1, String fileName2) {
+			int index1 = fileName1.lastIndexOf(StringPool.SLASH);
+			int index2 = fileName2.lastIndexOf(StringPool.SLASH);
+
+			if ((index1 == -1) && (index2 != -1)) {
+				return -1;
+			}
+			else if ((index1 != -1) && (index2 == -1)) {
+				return 1;
+			}
+
+			int result = super.compare(
+				fileName1.substring(0, index1), fileName2.substring(0, index2));
+
+			if (result == 0) {
+				return super.compare(
+					fileName1.substring(index1), fileName2.substring(index2));
+			}
+
+			return result;
+		}
+
+	}
 
 }

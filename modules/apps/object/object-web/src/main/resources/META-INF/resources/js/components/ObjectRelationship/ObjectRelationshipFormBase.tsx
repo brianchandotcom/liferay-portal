@@ -261,28 +261,31 @@ export function ObjectRelationshipFormBase({
 			const objectDefinition1 = await API.getObjectDefinitionByExternalReferenceCode(
 				objectDefinitionExternalReferenceCode1 as string
 			);
-			let objectDefinition2 = null;
+			let newObjectRelationshipValues: Partial<ObjectRelationship> = {
+				objectDefinitionExternalReferenceCode1:
+					objectDefinition1.externalReferenceCode,
+				objectDefinitionId1: objectDefinition1.id,
+			};
 
 			if (objectDefinitionExternalReferenceCode2) {
-				objectDefinition2 = await API.getObjectDefinitionByExternalReferenceCode(
+				const objectDefinition2 = await API.getObjectDefinitionByExternalReferenceCode(
 					objectDefinitionExternalReferenceCode2 as string
 				);
 
 				setObjectDefinition2(objectDefinition2);
+
+				newObjectRelationshipValues = {
+					...newObjectRelationshipValues,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition2?.externalReferenceCode,
+					objectDefinitionId2: objectDefinition2?.id,
+				};
 			}
 			setCurrentObjectDefinition(objectDefinition1);
 			setCreationLanguageId(objectDefinition1.defaultLanguageId);
 			setObjectDefinition1(objectDefinition1);
 
-			setValues({
-				objectDefinitionExternalReferenceCode1:
-					objectDefinition1.externalReferenceCode,
-
-				objectDefinitionExternalReferenceCode2:
-					objectDefinition2?.externalReferenceCode,
-				objectDefinitionId1: objectDefinition1.id,
-				objectDefinitionId2: objectDefinition2?.id,
-			});
+			setValues(newObjectRelationshipValues);
 
 			handleObjectRelationshipTypes(objectDefinition1);
 		};

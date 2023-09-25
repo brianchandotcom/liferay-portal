@@ -1357,9 +1357,9 @@
 			<category name="Performance" />
 			<description name="Finds missing comment with JIRA project when using `Pause`." />
 		</check>
-		<check name="PoshiPropertyOrderCheck">
+		<check name="PoshiPropertiesOrderCheck">
 			<category name="Styling" />
-			<description name="Sort feature flags in `custom.properties` attribute." />
+			<description name="Sorts the values of properties in `.testcase` file." />
 		</check>
 		<check name="PoshiSmokeTestCheck">
 			<category name="Bug Prevention" />

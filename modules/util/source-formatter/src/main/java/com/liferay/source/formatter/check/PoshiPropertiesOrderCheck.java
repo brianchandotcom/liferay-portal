@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 /**
  * @author Qi Zhang
  */
-public class PoshiPropertyOrderCheck extends BaseFileCheck {
+public class PoshiPropertiesOrderCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(

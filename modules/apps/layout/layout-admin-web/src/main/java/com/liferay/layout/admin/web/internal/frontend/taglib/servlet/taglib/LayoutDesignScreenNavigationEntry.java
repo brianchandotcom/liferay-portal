@@ -12,6 +12,7 @@ import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstan
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
@@ -79,7 +80,8 @@ public class LayoutDesignScreenNavigationEntry
 
 		if (GetterUtil.getBoolean(
 				typeSettingsUnicodeProperties.getProperty(
-					"designConfigurationModified"))) {
+					LayoutTypeSettingsConstants.
+						DESIGN_CONFIGURATION_MODIFIED))) {
 
 			return _language.get(_getResourceBundle(locale), "draft");
 		}

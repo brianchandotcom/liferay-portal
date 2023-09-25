@@ -8,6 +8,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.StyleBookEntryUtil;
@@ -77,7 +78,8 @@ public class ChangeMasterLayoutMVCActionCommand
 				layout.getTypeSettingsProperties();
 
 			layoutTypeSettingsUnicodeProperties.put(
-				"designConfigurationModified", Boolean.TRUE.toString());
+				LayoutTypeSettingsConstants.DESIGN_CONFIGURATION_MODIFIED,
+				Boolean.TRUE.toString());
 
 			updatedLayout = _layoutLocalService.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),

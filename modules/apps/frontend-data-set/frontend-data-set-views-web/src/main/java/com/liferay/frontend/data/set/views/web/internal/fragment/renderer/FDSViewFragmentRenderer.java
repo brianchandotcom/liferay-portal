@@ -465,10 +465,10 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					);
 				}
 
-				String listTypeDefinitionId = MapUtil.getString(
-					properties, "listTypeDefinitionId");
+				String listTypeDefinitionERC = MapUtil.getString(
+					properties, "listTypeDefinitionERC");
 
-				if (Validator.isNotNull(listTypeDefinitionId)) {
+				if (Validator.isNotNull(listTypeDefinitionERC)) {
 					ThemeDisplay themeDisplay =
 						(ThemeDisplay)httpServletRequest.getAttribute(
 							WebKeys.THEME_DISPLAY);
@@ -476,7 +476,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					ListTypeDefinition listTypeDefinition =
 						_listTypeDefinitionLocalService.
 							getListTypeDefinitionByExternalReferenceCode(
-								listTypeDefinitionId,
+								listTypeDefinitionERC,
 								themeDisplay.getCompanyId());
 
 					List<ListTypeEntry> listTypeEntries =

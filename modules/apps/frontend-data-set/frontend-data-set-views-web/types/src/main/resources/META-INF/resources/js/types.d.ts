@@ -36,7 +36,7 @@ export interface IDateFilter extends IFilter {
 }
 export interface ISelectionFilter extends IFilter {
 	include: boolean;
-	listTypeDefinitionId: string;
+	listTypeDefinitionERC: string;
 	multiple: boolean;
 	preselectedValues: string;
 }

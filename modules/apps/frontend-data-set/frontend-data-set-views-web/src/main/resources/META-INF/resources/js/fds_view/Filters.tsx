@@ -112,7 +112,8 @@ function AddFDSFilterModalContent({
 
 			const newVal = items.find(
 				(item) =>
-					String(item.id) === (filter as any)?.listTypeDefinitionId
+					String(item.externalReferenceCode) ===
+					(filter as any)?.listTypeDefinitionERC
 			);
 
 			if (newVal) {
@@ -123,7 +124,7 @@ function AddFDSFilterModalContent({
 						JSON.parse(
 							(filter as ISelectionFilter).preselectedValues ||
 								'[]'
-						).includes(item.id)
+						).includes(item.externalReferenceCode)
 					)
 				);
 			}
@@ -168,9 +169,11 @@ function AddFDSFilterModalContent({
 				[OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER_ID]:
 					fdsView.id,
 				include: includeMode === 'include',
-				listTypeDefinitionId: selectedPicklist?.id,
+				listTypeDefinitionERC: selectedPicklist?.externalReferenceCode,
 				multiple,
-				preselectedValues: preselectedValues.map((item) => item.id),
+				preselectedValues: preselectedValues.map(
+					(item) => item.externalReferenceCode
+				),
 			};
 
 			displayType = Liferay.Language.get('dynamic-filter');

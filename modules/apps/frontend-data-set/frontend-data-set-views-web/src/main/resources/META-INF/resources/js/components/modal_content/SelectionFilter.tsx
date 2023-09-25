@@ -62,7 +62,7 @@ function Body({
 				.filter((item) => fuzzy.match(preselectedValueInput, item.name))
 				.map((item) => ({
 					label: item.name,
-					value: String(item.id),
+					value: String(item.externalReferenceCode),
 				}));
 
 	if (!picklists.length) {
@@ -97,7 +97,9 @@ function Body({
 					onChange={(event) => {
 						onSelectedPicklistChange(
 							picklists.find(
-								(item) => String(item.id) === event.target.value
+								(item) =>
+									String(item.externalReferenceCode) ===
+									event.target.value
 							)
 						);
 
@@ -112,11 +114,11 @@ function Body({
 						},
 						...picklists.map((item) => ({
 							label: item.name,
-							value: item.id,
+							value: item.externalReferenceCode,
 						})),
 					]}
 					title={Liferay.Language.get('source-options')}
-					value={selectedPicklist?.id}
+					value={selectedPicklist?.externalReferenceCode}
 				/>
 			</ClayForm.Group>
 
@@ -180,7 +182,7 @@ function Body({
 							inputName={preselectedValuesFormElementId}
 							items={preselectedValues.map((item) => ({
 								label: item.name,
-								value: String(item.id),
+								value: String(item.externalReferenceCode),
 							}))}
 							loadingState={4}
 							onChange={setPreselectedValueInput}
@@ -189,8 +191,9 @@ function Body({
 									selectedItems.map(({value}: any) => {
 										return selectedPicklist.listTypeEntries.find(
 											(item) =>
-												String(item.id) ===
-												String(value)
+												String(
+													item.externalReferenceCode
+												) === String(value)
 										);
 									})
 								)

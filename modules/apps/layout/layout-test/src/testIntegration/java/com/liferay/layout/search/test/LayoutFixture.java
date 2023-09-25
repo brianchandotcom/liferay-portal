@@ -5,6 +5,7 @@
 
 package com.liferay.layout.search.test;
 
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -57,7 +58,7 @@ public class LayoutFixture {
 			titleMap.getValues(), null, null, null,
 			LayoutConstants.TYPE_CONTENT,
 			UnicodePropertiesBuilder.put(
-				"published", "true"
+				LayoutTypeSettingsConstants.KEY_PUBLISHED, "true"
 			).buildString(),
 			false, friendlyUrlMap.getValues(),
 			ServiceContextTestUtil.getServiceContext());

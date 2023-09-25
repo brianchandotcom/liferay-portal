@@ -13,4 +13,6 @@ public class LayoutTypeSettingsConstants {
 	public static final String KEY_DESIGN_CONFIGURATION_MODIFIED =
 		"designConfigurationModified";
 
+	public static final String KEY_PUBLISHED = "published";
+
 }

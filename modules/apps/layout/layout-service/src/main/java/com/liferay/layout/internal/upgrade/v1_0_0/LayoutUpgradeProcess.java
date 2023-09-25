@@ -5,6 +5,7 @@
 
 package com.liferay.layout.internal.upgrade.v1_0_0;
 
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -52,7 +53,8 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 						).build();
 
 					boolean published = GetterUtil.getBoolean(
-						unicodeProperties.getProperty("published"));
+						unicodeProperties.getProperty(
+							LayoutTypeSettingsConstants.KEY_PUBLISHED));
 
 					if (published) {
 						preparedStatement2.setInt(

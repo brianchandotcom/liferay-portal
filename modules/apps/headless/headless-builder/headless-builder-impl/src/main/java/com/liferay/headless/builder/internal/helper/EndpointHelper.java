@@ -62,11 +62,10 @@ public class EndpointHelper {
 					pathParameter,
 					HeadlessBuilderConstants.PATH_PARAMETER_ERC)) {
 
-			objectEntry =
-				_objectEntryHelper.getObjectEntry(
-					companyId, ListUtil.fromCollection(relationshipsNames),
-					schema.getMainObjectDefinitionExternalReferenceCode(),
-					pathParameterValue, scopeKey);
+			objectEntry = _objectEntryHelper.getObjectEntry(
+				companyId, ListUtil.fromCollection(relationshipsNames),
+				schema.getMainObjectDefinitionExternalReferenceCode(),
+				pathParameterValue, scopeKey);
 		}
 		else {
 			List<ObjectEntry> objectEntries =

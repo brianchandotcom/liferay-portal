@@ -29,14 +29,18 @@ public class ETagUtil {
 			return false;
 		}
 
-		int hashCode = _hashCode(
-			byteBuffer.array(), byteBuffer.position(), byteBuffer.limit());
+		String eTag = httpServletResponse.getHeader(HttpHeaders.ETAG);
 
-		String eTag = StringBundler.concat(
-			StringPool.QUOTE, StringUtil.toHexString(hashCode),
-			StringPool.QUOTE);
+		if (eTag == null) {
+			int hashCode = _hashCode(
+				byteBuffer.array(), byteBuffer.position(), byteBuffer.limit());
 
-		httpServletResponse.setHeader(HttpHeaders.ETAG, eTag);
+			eTag = StringBundler.concat(
+				StringPool.QUOTE, StringUtil.toHexString(hashCode),
+				StringPool.QUOTE);
+
+			httpServletResponse.setHeader(HttpHeaders.ETAG, eTag);
+		}
 
 		String ifNoneMatch = httpServletRequest.getHeader(
 			HttpHeaders.IF_NONE_MATCH);

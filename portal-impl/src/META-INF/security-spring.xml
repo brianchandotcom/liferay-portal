@@ -26,11 +26,6 @@
 	<bean class="com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory" id="com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory">
 		<property name="fullNameGenerator" ref="com.liferay.portal.kernel.security.auth.DefaultFullNameGenerator" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.security.auth.InterruptedPortletRequestWhitelistUtil" id="com.liferay.portal.kernel.security.auth.InterruptedPortletRequestWhitelistUtil">
-		<property name="interruptedPortletRequestWhitelist">
-			<bean class="com.liferay.portal.security.auth.InterruptedPortletRequestWhitelistImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.security.auth.LiberalEmailAddressValidator" id="com.liferay.portal.kernel.security.auth.LiberalEmailAddressValidator" />
 	<bean class="com.liferay.portal.kernel.security.auth.LiberalScreenNameValidator" id="com.liferay.portal.kernel.security.auth.LiberalScreenNameValidator" />
 	<bean class="com.liferay.portal.security.auth.http.HttpAuthManagerImpl" id="com.liferay.portal.kernel.security.auth.http.HttpAuthManager" />

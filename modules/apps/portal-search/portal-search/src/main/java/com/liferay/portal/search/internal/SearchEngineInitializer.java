@@ -12,7 +12,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -99,8 +98,7 @@ public class SearchEngineInitializer implements Runnable {
 	}
 
 	private boolean _isExecuteConcurrentReindex() {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-183661") &&
-			(_concurrentReindexManager != null) && (_executionMode != null) &&
+		if ((_concurrentReindexManager != null) && (_executionMode != null) &&
 			_executionMode.equals("concurrent") &&
 			(_companyId != CompanyConstants.SYSTEM)) {
 

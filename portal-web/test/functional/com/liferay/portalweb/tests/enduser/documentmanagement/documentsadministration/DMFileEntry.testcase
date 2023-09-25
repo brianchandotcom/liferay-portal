@@ -2423,9 +2423,9 @@ definition {
 			groupName = "Guest",
 			siteURLKey = "guest");
 
-		AssertVisible(
-			key_title = "File too big to preview",
-			locator1 = "Header#H3_TITLE");
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUBTITLE",
+			value1 = "This file is too large to preview. The maximum file size for previews is 1 KB.");
 	}
 
 	@description = "This test ensures that a user cannot set a previous expiration date."

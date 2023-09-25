@@ -127,23 +127,6 @@ public class ObjectDefinitionLocalServiceTest {
 	@Test
 	public void testAddCustomObjectDefinition() throws Exception {
 
-		// Object folder does not exist
-
-		long objectFolderId = RandomTestUtil.randomLong();
-
-		AssertUtils.assertFailure(
-			NoSuchObjectFolderException.class,
-			"No ObjectFolder exists with the primary key " + objectFolderId,
-			() -> _objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), objectFolderId, false, false,
-				false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"A" + RandomTestUtil.randomString(), null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				Collections.emptyList()));
-
 		// Label is null
 
 		AssertUtils.assertFailure(
@@ -182,10 +165,6 @@ public class ObjectDefinitionLocalServiceTest {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING,
 						RandomTestUtil.randomString(), StringUtil.randomId())));
-
-		Assert.assertEquals(
-			_uncategorizedObjectFolder.getObjectFolderId(),
-			objectDefinition.getObjectFolderId());
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -274,14 +253,11 @@ public class ObjectDefinitionLocalServiceTest {
 						RandomTestUtil.randomString(),
 						StringUtil.randomId()))));
 
-		// Name, database table, objectFolderId, resources, and status
-
-		ObjectFolder objectFolder = _addObjectFolder();
+		// Name, database table, resources, and status
 
 		objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				TestPropsValues.getUserId(), objectFolder.getObjectFolderId(),
-				false, false, false,
+				TestPropsValues.getUserId(), 0, false, false, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -334,12 +310,6 @@ public class ObjectDefinitionLocalServiceTest {
 				Assert.assertFalse(
 					_hasTable(nodeObjectDefinition.getExtensionDBTableName()));
 			});
-
-		// Before publish, object folder
-
-		Assert.assertEquals(
-			objectFolder.getObjectFolderId(),
-			objectDefinition.getObjectFolderId());
 
 		// Before publish, resources
 
@@ -536,8 +506,6 @@ public class ObjectDefinitionLocalServiceTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
-		_objectFolderLocalService.deleteObjectFolder(objectFolder);
-
 		_deleteObjectDefinitionHierarchy();
 	}
 
@@ -558,6 +526,47 @@ public class ObjectDefinitionLocalServiceTest {
 
 		_testAddObjectDefinition(true, false);
 		_testAddObjectDefinition(true, true);
+	}
+
+	@Test
+	public void testAddObjectDefinitionIntoObjectFolder() throws Exception {
+
+		// Object folder does not exist
+
+		long objectFolderId = RandomTestUtil.randomLong();
+
+		AssertUtils.assertFailure(
+			NoSuchObjectFolderException.class,
+			"No ObjectFolder exists with the primary key " + objectFolderId,
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				objectFolderId, _objectDefinitionLocalService));
+
+		// Add object definition to uncategorized object folder
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				0, _objectDefinitionLocalService);
+
+		Assert.assertEquals(
+			_uncategorizedObjectFolder.getObjectFolderId(),
+			objectDefinition.getObjectFolderId());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		// Add object definition to an existing object folder
+
+		ObjectFolder objectFolder = _addObjectFolder();
+
+		objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
+			objectFolder.getObjectFolderId(), _objectDefinitionLocalService);
+
+		Assert.assertEquals(
+			objectFolder.getObjectFolderId(),
+			objectDefinition.getObjectFolderId());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		_objectFolderLocalService.deleteObjectFolder(objectFolder);
 	}
 
 	@Test

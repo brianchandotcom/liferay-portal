@@ -189,6 +189,10 @@
 				${mdfClaim.mdfClaimStatus.name} [@clay.icon symbol="caret-bottom" /]
 		</button>
 
+		[#if hasApproveAction & mdfClaimStatusKey == 'pendingMarketingReview' | mdfClaimStatusKey == 'inDirectorReview']
+			<p class="mb-0 mt-2 text-neutral-8 text-paragraph-sm">Select <strong>In Finance Review</strong> to approve the claim </p>
+		[/#if]
+
 		<ul aria-labelledby="dropdownMDFClaimStatus" class="dropdown-menu" x-placement="bottom-start">
 			[#if mdfClaimStatusKey == 'pendingMarketingReview']
 				[#if hasRequestMoreInfoAction]
@@ -200,12 +204,6 @@
 				[#if hasRejectAction]
 					<li class="dropdown-item" onclick="callMDFClaimModal('rejected')">
 						Rejected
-					</li>
-				[/#if]
-
-				[#if hasApproveAction]
-					<li class="dropdown-item" onclick="callMDFClaimModal('approved')">
-						Approved
 					</li>
 				[/#if]
 
@@ -305,12 +303,6 @@
 			[/#if]
 
 			[#if mdfClaimStatusKey == 'inDirectorReview']
-				[#if hasApproveAction]
-					<li class="dropdown-item" onclick="callMDFClaimModal('approved')">
-						Approved
-					</li>
-				[/#if]
-
 				[#if hasFinanceReviewAction]
 					<li class="dropdown-item" onclick="callMDFClaimModal('inFinanceReview')">
 						In Finance Review

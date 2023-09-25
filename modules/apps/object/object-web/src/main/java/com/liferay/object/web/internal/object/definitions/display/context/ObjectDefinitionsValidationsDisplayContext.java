@@ -113,6 +113,9 @@ public class ObjectDefinitionsValidationsDisplayContext
 			"learnResources",
 			LearnMessageUtil.getReactDataJSONObject("object-web")
 		).put(
+			"objectDefinitionExternalReferenceCode",
+			objectDefinition.getExternalReferenceCode()
+		).put(
 			"objectDefinitionId", objectDefinition.getObjectDefinitionId()
 		).put(
 			"objectValidationRuleElements",

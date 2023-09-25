@@ -328,6 +328,10 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 	}
 
 	private JSONObject _getDateJSONObject(Object object) {
+		if (object == null) {
+			return null;
+		}
+
 		Calendar calendar = Calendar.getInstance();
 
 		Timestamp timestamp = (Timestamp)object;
@@ -440,17 +444,11 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				String type = MapUtil.getString(properties, "type");
 
 				if (Objects.equals(type, "date")) {
-					boolean hasPreloadedData;
+					String from = _getDateJSONObject(properties.get("from"));
+					String to = _getDateJSONObject(properties.get("to"));
 
-					String from = MapUtil.getString(properties, "from");
-					String to = MapUtil.getString(properties, "to");
-
-					if (Validator.isNotNull(to) || Validator.isNotNull(from)) {
-						hasPreloadedData = true;
-					}
-					else {
-						hasPreloadedData = false;
-					}
+					boolean hasPreloadedData =
+						Validator.isNotNull(to) || Validator.isNotNull(from);
 
 					return JSONUtil.put(
 						"active", hasPreloadedData
@@ -468,25 +466,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 							}
 
 							return JSONUtil.put(
-								"from",
-								() -> {
-									if (Validator.isNull(from)) {
-										return null;
-									}
-
-									return _getDateJSONObject(
-										properties.get("from"));
-								}
+								"from", from
 							).put(
-								"to",
-								() -> {
-									if (Validator.isNull(to)) {
-										return null;
-									}
-
-									return _getDateJSONObject(
-										properties.get("to"));
-								}
+								"to", to
 							);
 						}
 					).put(

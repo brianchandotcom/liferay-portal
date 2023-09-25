@@ -76,8 +76,13 @@ public class Tree {
 
 			return new BreadthFirstIterator(rootNode);
 		}
+		else if (Objects.equals(
+					iteratorType, TreeConstants.ITERATOR_TYPE_POST_ORDER)) {
 
-		return new PostOrderIterator(rootNode);
+			return new PostOrderIterator(rootNode);
+		}
+
+		return null;
 	}
 
 	protected final Node rootNode;

@@ -17,6 +17,7 @@ import com.liferay.object.definition.tree.Edge;
 import com.liferay.object.definition.tree.Node;
 import com.liferay.object.definition.tree.Tree;
 import com.liferay.object.definition.tree.TreeFactory;
+import com.liferay.object.definition.tree.constants.TreeConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -290,7 +291,8 @@ public class ObjectEntryServiceTest {
 			ActionKeys.DELETE);
 
 		TreeTestUtil.unsafeForEach(
-			"post-order", _objectDefinitionLocalService, _tree,
+			TreeConstants.ITERATOR_TYPE_POST_ORDER,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries1.get(
 					objectDefinition.getObjectDefinitionId());
@@ -312,7 +314,8 @@ public class ObjectEntryServiceTest {
 		Map<Long, ObjectEntry> objectEntries2 = _addObjectEntryHierarchy(_tree);
 
 		TreeTestUtil.unsafeForEach(
-			"post-order", _objectDefinitionLocalService, _tree,
+			TreeConstants.ITERATOR_TYPE_POST_ORDER,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				if (objectDefinition.isRootNode()) {
 					return;
@@ -363,7 +366,8 @@ public class ObjectEntryServiceTest {
 			role.getRoleId(), new String[] {ActionKeys.DELETE});
 
 		TreeTestUtil.unsafeForEach(
-			"post-order", _objectDefinitionLocalService, _tree,
+			TreeConstants.ITERATOR_TYPE_POST_ORDER,
+			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries3.get(
 					objectDefinition.getObjectDefinitionId());

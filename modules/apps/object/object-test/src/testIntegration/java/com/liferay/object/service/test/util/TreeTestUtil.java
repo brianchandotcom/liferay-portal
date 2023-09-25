@@ -9,6 +9,7 @@ import com.liferay.object.definition.tree.Edge;
 import com.liferay.object.definition.tree.Node;
 import com.liferay.object.definition.tree.Tree;
 import com.liferay.object.definition.tree.TreeFactory;
+import com.liferay.object.definition.tree.constants.TreeConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -159,18 +160,18 @@ public class TreeTestUtil {
 		throws Exception {
 
 		unsafeForEach(
-			"breadth-first", objectDefinitionLocalService, tree,
-			unsafeConsumer);
+			TreeConstants.ITERATOR_TYPE_BREADTH_FIRST,
+			objectDefinitionLocalService, tree, unsafeConsumer);
 	}
 
 	public static void unsafeForEach(
-			String iteratorStrategy,
+			String iteratorType,
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			Tree tree,
 			UnsafeConsumer<ObjectDefinition, Exception> unsafeConsumer)
 		throws Exception {
 
-		Iterator<Node> iterator = tree.iterator(iteratorStrategy);
+		Iterator<Node> iterator = tree.iterator(iteratorType);
 
 		while (iterator.hasNext()) {
 			Node node = iterator.next();

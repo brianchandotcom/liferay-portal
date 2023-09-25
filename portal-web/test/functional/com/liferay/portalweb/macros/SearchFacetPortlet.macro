@@ -350,6 +350,16 @@ definition {
 					value1 = ${facetItem});
 			}
 		}
+		else if (${portletName} == "Category Facet") {
+			for (var facetItem : list ${facetList}) {
+				var resultOrder = ${resultOrder} + 1;
+
+				AssertTextEquals.assertPartialText(
+					locator1 = "SearchResults#FACET_PORTLET_ITEMS_SPECIFIC_ORDER_VOCABULARY_LAYOUT",
+					resultOrder = ${resultOrder},
+					value1 = ${facetItem});
+			}
+		}
 		else {
 			for (var facetItem : list ${facetList}) {
 				var resultOrder = ${resultOrder} + 1;

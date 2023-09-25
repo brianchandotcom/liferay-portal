@@ -46,23 +46,29 @@ definition {
 	test CanAddMultipleSubTopics {
 		property solutions.acceptance = "true";
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "トピック記述",
-			categoryName = "質問トピック",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a Questions category with non-Latin characters") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "トピック記述",
+				categoryName = "質問トピック",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		for (var subTopicName : list "かながわけん,奈良県") {
-			Navigator.gotoPage(pageName = "Questions Page");
+		task ("When the user navigates to the category") {
+			for (var subTopicName : list "かながわけん,奈良県") {
+				Navigator.gotoPage(pageName = "Questions Page");
 
-			Questions.gotoCategory(categoryName = "質問トピック");
+				Questions.gotoCategory(categoryName = "質問トピック");
 
-			Questions.addSubTopic(
-				subTopicDescription = "トピック記述",
-				subTopicName = ${subTopicName});
+				Questions.addSubTopic(
+					subTopicDescription = "トピック記述",
+					subTopicName = ${subTopicName});
 
-			Questions.changeTopic(
-				parentTopicName = "質問トピック",
-				subTopicName = ${subTopicName});
+				task ("Then subtopics with non-Latin characters can be created and viewed") {
+					Questions.changeTopic(
+						parentTopicName = "質問トピック",
+						subTopicName = ${subTopicName});
+				}
+			}
 		}
 	}
 
@@ -70,59 +76,71 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanAddQuestionViaSubTopic {
-		JSONMBMessage.addCategory(
-			categoryDescription = "トピック記述",
-			categoryName = "質問トピック",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a Questions category and subtopic with non-Latin characters") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "トピック記述",
+				categoryName = "質問トピック",
+				userEmailAddress = "test@liferay.com");
 
-		Navigator.gotoPage(pageName = "Questions Page");
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoCategory(categoryName = "質問トピック");
+			Questions.gotoCategory(categoryName = "質問トピック");
 
-		Questions.addSubTopic(
-			subTopicDescription = "トピック記述",
-			subTopicName = "サブテーマ");
+			Questions.addSubTopic(
+				subTopicDescription = "トピック記述",
+				subTopicName = "サブテーマ");
 
-		Questions.changeTopic(
-			parentTopicName = "質問トピック",
-			subTopicName = "サブテーマ");
+			Questions.changeTopic(
+				parentTopicName = "質問トピック",
+				subTopicName = "サブテーマ");
+		}
 
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "私の好きな日本料理は寿司とすき焼きです",
-			titleField = "あなたの好きな日本料理は何ですか");
+		task ("When a user creates a question with non-Latin characters") {
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "私の好きな日本料理は寿司とすき焼きです",
+				titleField = "あなたの好きな日本料理は何ですか");
+		}
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		task ("Then the question with the non-Latin characters should persist") {
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoCategory(categoryName = "質問トピック");
+			Questions.gotoCategory(categoryName = "質問トピック");
 
-		Questions.changeTopic(
-			parentTopicName = "質問トピック",
-			subTopicName = "サブテーマ");
+			Questions.changeTopic(
+				parentTopicName = "質問トピック",
+				subTopicName = "サブテーマ");
 
-		Questions.viewList(listedQuestions = "あなたの好きな日本料理は何ですか");
+			Questions.viewList(listedQuestions = "あなたの好きな日本料理は何ですか");
+		}
 	}
 
 	@description = "Validate if the user can post a question with multiple tags that contain non-Latin characters."
 	@priority = 3
 	@refactordone
 	test CanAddQuestionWithMultipleTags {
-		JSONMBMessage.addCategory(
-			categoryDescription = "トピック記述",
-			categoryName = "質問トピック",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a Questions category") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "トピック記述",
+				categoryName = "質問トピック",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "私の好きな日本料理は寿司とすき焼きです",
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			tagLocatorList = "いち,に,さん,し,ご",
-			titleField = "あなたの好きな日本料理は何ですか",
-			topicName = "質問トピック");
+		task ("When the user adds a Question with multiple localized tags") {
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "私の好きな日本料理は寿司とすき焼きです",
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				tagLocatorList = "いち,に,さん,し,ご",
+				titleField = "あなたの好きな日本料理は何ですか",
+				topicName = "質問トピック");
+		}
 
-		AssertTextEquals(
-			key_questionTitle = "あなたの好きな日本料理は何ですか",
-			locator1 = "Questions#QUESTIONS_TITLE",
-			value1 = "あなたの好きな日本料理は何ですか");
+		task ("Then the question should be created") {
+			AssertTextEquals(
+				key_questionTitle = "あなたの好きな日本料理は何ですか",
+				locator1 = "Questions#QUESTIONS_TITLE",
+				value1 = "あなたの好きな日本料理は何ですか");
+		}
 	}
 
 	@description = "Validate if the user can post a question with non-Latin characters， it also covers LPS-128639."
@@ -130,293 +148,368 @@ definition {
 	@refactordone
 	@uitest
 	test CanAddQuestionWithNonLatinCharacters {
-		Navigator.openURL();
+		task ("Given a new root topic") {
+			Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+			ProductMenu.gotoPortlet(
+				category = "Site Builder",
+				portlet = "Pages");
 
-		PagesAdmin.gotoPageEllipsisMenuItem(
-			menuItem = "View",
-			pageName = "Questions Page");
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "Questions Page");
 
-		ScrollWebElementIntoView(
-			key_text = "New Topic",
-			locator1 = "Button#ANY");
+			ScrollWebElementIntoView(
+				key_text = "New Topic",
+				locator1 = "Button#ANY");
 
-		Button.click(button = "New Topic");
+			Button.click(button = "New Topic");
 
-		Questions.addRootTopic(
-			rootTopicDescription = "トピック記述",
-			rootTopicName = "質問トピック");
+			Questions.addRootTopic(
+				rootTopicDescription = "トピック記述",
+				rootTopicName = "質問トピック");
+		}
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		task ("When a Question is added with non-Latin characters") {
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoCategory(categoryName = "質問トピック");
+			Questions.gotoCategory(categoryName = "質問トピック");
 
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "私の好きな日本料理は寿司とすき焼きです",
-			titleField = "あなたの好きな日本料理は何ですか");
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "私の好きな日本料理は寿司とすき焼きです",
+				titleField = "あなたの好きな日本料理は何ですか");
+		}
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		task ("Then the Question should be posted") {
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoCategory(categoryName = "質問トピック");
+			Questions.gotoCategory(categoryName = "質問トピック");
 
-		Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
+			Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
+		}
 	}
 
 	@description = "Validate if the user can cancel the deletions that contain non-Latin characters."
 	@priority = 4
 	@refactordone
 	test CanCancelDeletions {
-		JSONMBMessage.addCategory(
-			categoryDescription = "トピック記述",
-			categoryName = "質問トピック",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a Question and a comment") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "トピック記述",
+				categoryName = "質問トピック",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
-			categoryName = "質問トピック",
-			groupName = "Guest",
-			titleField = "あなたの好きな日本料理は何ですか");
+			JSONQuestions.addQuestion(
+				bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
+				categoryName = "質問トピック",
+				groupName = "Guest",
+				titleField = "あなたの好きな日本料理は何ですか");
 
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			localization = "true",
-			siteURLKey = "guest",
-			topicName = "質問トピック");
+			Questions.openToQuestionDetails(
+				layoutName = "questions-page",
+				localization = "true",
+				siteURLKey = "guest",
+				topicName = "質問トピック");
 
-		Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
+			Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
 
-		Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+			Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+		}
 
-		Questions.deleteComment(
-			cancel = "true",
-			commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+		task ("When the user deletes and cancels deleting the comment") {
+			Questions.deleteComment(
+				cancel = "true",
+				commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+		}
 
-		Questions.deleteAnswer(
-			cancel = "true",
-			contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
+		task ("Then the comment should not be deleted") {
+			AssertVisible(
+				key_replyBodyContent = "私の好きな日本料理は焼肉と鮭の刺身です",
+				locator1 = "Questions#REPLY_BODY");
+		}
 
-		Questions.deleteQuestion(
-			cancel = "true",
-			questionTitle = "あなたの好きな日本料理は何ですか");
+		task ("When the user deletes and cancels deleting the answer") {
+			Questions.deleteAnswer(
+				cancel = "true",
+				contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
+		}
+
+		task ("Then the answer should not be deleted") {
+			AssertVisible(
+				key_answerBodyContent = "私の好きな日本料理はフグ刺しと天ぷらです",
+				locator1 = "Questions#ANSWER_BODY");
+		}
+
+		task ("When the user deletes and cancels deleting the Question") {
+			Questions.deleteQuestion(
+				cancel = "true",
+				questionTitle = "あなたの好きな日本料理は何ですか");
+		}
+
+		task ("Then the answer should not be deleted") {
+			AssertTextEquals(
+				key_questionTitle = "あなたの好きな日本料理は何ですか",
+				locator1 = "Questions#QUESTIONS_DETAILS_TITLE",
+				value1 = "あなたの好きな日本料理は何ですか");
+		}
 	}
 
 	@description = "Validate if the user can delete a comment that contains non-Latin characters to an answer."
 	@priority = 4
 	@refactordone
 	test CanDeleteCommentWithNonLatinCharacters {
-		JSONMBMessage.addCategory(
-			categoryDescription = "トピック記述",
-			categoryName = "質問トピック",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a Question with an answer") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "トピック記述",
+				categoryName = "質問トピック",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
-			categoryName = "質問トピック",
-			groupName = "Guest",
-			titleField = "あなたの好きな日本料理は何ですか");
+			JSONQuestions.addQuestion(
+				bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
+				categoryName = "質問トピック",
+				groupName = "Guest",
+				titleField = "あなたの好きな日本料理は何ですか");
 
-		JSONQuestions.addAnswer(
-			categoryName = "質問トピック",
-			groupName = "Guest",
-			replyBody = "私の好きな日本料理はフグ刺しと天ぷらです",
-			threadSubject = "あなたの好きな日本料理は何ですか",
-			titleField = "あなたの好きな日本料理は何ですか");
+			JSONQuestions.addAnswer(
+				categoryName = "質問トピック",
+				groupName = "Guest",
+				replyBody = "私の好きな日本料理はフグ刺しと天ぷらです",
+				threadSubject = "あなたの好きな日本料理は何ですか",
+				titleField = "あなたの好きな日本料理は何ですか");
+		}
 
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			localization = "true",
-			siteURLKey = "guest",
-			topicName = "質問トピック");
+		task ("When the user deletes the comment that contains non-Latin characters") {
+			Questions.openToQuestionDetails(
+				layoutName = "questions-page",
+				localization = "true",
+				siteURLKey = "guest",
+				topicName = "質問トピック");
 
-		Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+			Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
 
-		Questions.deleteComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+			Questions.deleteComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+		}
+
+		task ("Then the comment should not be deleted") {
+			AssertElementNotPresent(
+				key_replyBodyContent = "私の好きな日本料理は焼肉と鮭の刺身です",
+				locator1 = "Questions#REPLY_BODY");
+		}
 	}
 
 	@description = "Validate if the user can delete an edited answer that contains non-Latin characters."
 	@priority = 4
 	@refactordone
 	test CanDeleteEditedAnswer {
-		JSONMBMessage.addCategory(
-			categoryDescription = "トピック記述",
-			categoryName = "質問トピック",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a category and a question") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "トピック記述",
+				categoryName = "質問トピック",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
-			categoryName = "質問トピック",
-			groupName = "Guest",
-			titleField = "あなたの好きな日本料理は何ですか");
+			JSONQuestions.addQuestion(
+				bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
+				categoryName = "質問トピック",
+				groupName = "Guest",
+				titleField = "あなたの好きな日本料理は何ですか");
+		}
 
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			localization = "true",
-			siteURLKey = "guest",
-			topicName = "質問トピック");
+		task ("When the user creates an answer with non-Latin characters and edits the answer") {
+			Questions.openToQuestionDetails(
+				layoutName = "questions-page",
+				localization = "true",
+				siteURLKey = "guest",
+				topicName = "質問トピック");
 
-		Questions.answerQuestion(contentField = "私の好きな日本料理は焼肉と鮭の刺身です");
+			Questions.answerQuestion(contentField = "私の好きな日本料理は焼肉と鮭の刺身です");
 
-		Questions.editAnswer(contentField = "私の好きな日本料理は焼肉と鮭の刺身です");
+			Questions.editAnswer(contentField = "私の好きな日本料理は焼肉と鮭の刺身です");
+		}
 
-		Questions.deleteAnswer(contentField = "私の好きな日本料理は焼肉と鮭の刺身です");
+		task ("Then the answer can be deleted") {
+			Questions.deleteAnswer(contentField = "私の好きな日本料理は焼肉と鮭の刺身です");
+		}
 	}
 
 	@description = "Validate if the user can delete a question that contains non-Latin characters."
 	@priority = 4
 	@refactordone
 	test CanDeleteQuestionWithComment {
-		JSONMBMessage.addCategory(
-			categoryDescription = "トピック記述",
-			categoryName = "質問トピック",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a posted Question with an answer") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "トピック記述",
+				categoryName = "質問トピック",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
-			categoryName = "質問トピック",
-			groupName = "Guest",
-			titleField = "あなたの好きな日本料理は何ですか");
+			JSONQuestions.addQuestion(
+				bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
+				categoryName = "質問トピック",
+				groupName = "Guest",
+				titleField = "あなたの好きな日本料理は何ですか");
 
-		JSONQuestions.addAnswer(
-			categoryName = "質問トピック",
-			groupName = "Guest",
-			replyBody = "私の好きな日本料理はフグ刺しと天ぷらです",
-			threadSubject = "あなたの好きな日本料理は何ですか",
-			titleField = "あなたの好きな日本料理は何ですか");
+			JSONQuestions.addAnswer(
+				categoryName = "質問トピック",
+				groupName = "Guest",
+				replyBody = "私の好きな日本料理はフグ刺しと天ぷらです",
+				threadSubject = "あなたの好きな日本料理は何ですか",
+				titleField = "あなたの好きな日本料理は何ですか");
+		}
 
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			localization = "true",
-			siteURLKey = "guest",
-			topicName = "質問トピック");
+		task ("When a comment with non-Latin characters is added") {
+			Questions.openToQuestionDetails(
+				layoutName = "questions-page",
+				localization = "true",
+				siteURLKey = "guest",
+				topicName = "質問トピック");
 
-		Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+			Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+		}
 
-		Questions.deleteQuestion();
+		task ("Then the user should be able to delete the Question") {
+			Questions.deleteQuestion();
+		}
 	}
 
 	@description = "Validate if the user can delete a topic that contains non-Latin characters."
 	@priority = 5
 	@refactordone
 	test CanDeleteTopicWithNonLatinCharacters {
-		JSONMBMessage.addCategory(
-			categoryDescription = "トピック記述",
-			categoryName = "質問トピック",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a Category with non-Latin characters") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "トピック記述",
+				categoryName = "質問トピック",
+				userEmailAddress = "test@liferay.com");
+		}
 
-		JSONMBMessage.deleteCategory(
-			categoryName = "質問トピック",
-			groupName = "Guest");
+		task ("When the Category is deleted") {
+			JSONMBMessage.deleteCategory(
+				categoryName = "質問トピック",
+				groupName = "Guest");
+		}
 
-		Navigator.gotoPage(pageName = "Questions Page");
+		task ("Then the Category should be deleted and there are no other categories") {
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.viewDefault();
+			Questions.viewDefault();
+		}
 	}
 
 	@description = "Validate if the user can add a comment to an answer with non-Latin characters."
 	@priority = 4
 	@refactordone
 	test CanReplyToAnAnswerWithNonLatinCharacters {
-		JSONMBMessage.addCategory(
-			categoryDescription = "トピック記述",
-			categoryName = "質問トピック",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a Category and a Question") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "トピック記述",
+				categoryName = "質問トピック",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
-			categoryName = "質問トピック",
-			groupName = "Guest",
-			titleField = "あなたの好きな日本料理は何ですか");
+			JSONQuestions.addQuestion(
+				bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
+				categoryName = "質問トピック",
+				groupName = "Guest",
+				titleField = "あなたの好きな日本料理は何ですか");
 
-		JSONQuestions.addAnswer(
-			categoryName = "質問トピック",
-			groupName = "Guest",
-			replyBody = "私の好きな日本料理はフグ刺しと天ぷらです",
-			threadSubject = "あなたの好きな日本料理は何ですか",
-			titleField = "あなたの好きな日本料理は何ですか");
+			JSONQuestions.addAnswer(
+				categoryName = "質問トピック",
+				groupName = "Guest",
+				replyBody = "私の好きな日本料理はフグ刺しと天ぷらです",
+				threadSubject = "あなたの好きな日本料理は何ですか",
+				titleField = "あなたの好きな日本料理は何ですか");
+		}
 
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			localization = "true",
-			siteURLKey = "guest",
-			topicName = "質問トピック");
+		task ("When the user adds a comment to an answer, then the comment should persist") {
+			Questions.openToQuestionDetails(
+				layoutName = "questions-page",
+				localization = "true",
+				siteURLKey = "guest",
+				topicName = "質問トピック");
 
-		Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+			Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
+		}
 	}
 
 	@description = "Validate if the user can view the sorted tags that contain non-Latin characters."
 	@priority = 4
 	@refactordone
 	test CanViewSortedTags {
-		JSONMBMessage.addCategory(
-			categoryDescription = "トピック記述",
-			categoryName = "質問トピック",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a category and questions with multiple tags that have non-Latin characters") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "トピック記述",
+				categoryName = "質問トピック",
+				userEmailAddress = "test@liferay.com");
 
-		for (var num : list "1,2") {
+			for (var num : list "1,2") {
+				JSONQuestions.addQuestionWithTag(
+					bodyField = "Question Body ${num}",
+					categoryName = "質問トピック",
+					groupName = "Guest",
+					tagField = "おおさか",
+					titleField = "Question ${num}");
+			}
+
 			JSONQuestions.addQuestionWithTag(
-				bodyField = "Question Body ${num}",
+				bodyField = "Question Body 3",
 				categoryName = "質問トピック",
 				groupName = "Guest",
-				tagField = "おおさか",
-				titleField = "Question ${num}");
+				tagField = "とうきょう",
+				titleField = "Question 3");
 		}
 
-		JSONQuestions.addQuestionWithTag(
-			bodyField = "Question Body 3",
-			categoryName = "質問トピック",
-			groupName = "Guest",
-			tagField = "とうきょう",
-			titleField = "Question 3");
+		task ("When a user filters by tag, then the user can view the sorted tags") {
+			Questions.openToTagsTab(
+				layoutName = "questions-page",
+				siteURLKey = "guest");
 
-		Questions.openToTagsTab(
-			layoutName = "questions-page",
-			siteURLKey = "guest");
+			Questions.viewTagsFilterResults(
+				position = 1,
+				tagName = "おおさか",
+				usedTimes = "Used 2 Times");
 
-		Questions.viewTagsFilterResults(
-			position = 1,
-			tagName = "おおさか",
-			usedTimes = "Used 2 Times");
-
-		Questions.viewTagsFilterResults(
-			position = 2,
-			tagName = "とうきょう",
-			usedTimes = "Used 1 Times");
+			Questions.viewTagsFilterResults(
+				position = 2,
+				tagName = "とうきょう",
+				usedTimes = "Used 1 Times");
+		}
 	}
 
 	@description = "Validate if the user can view a question via an edited topic that contains non-Latin characters."
 	@priority = 4
 	@refactordone
 	test QuestionCanBeViewedAfterEditingTopic {
-		JSONMBMessage.addCategory(
-			categoryDescription = "トピック記述",
-			categoryName = "質問トピック",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a category and a question with non-Latin characters") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "トピック記述",
+				categoryName = "質問トピック",
+				userEmailAddress = "test@liferay.com");
 
-		JSONQuestions.addQuestion(
-			bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
-			categoryName = "質問トピック",
-			groupName = "Guest",
-			titleField = "あなたの好きな日本料理は何ですか");
+			JSONQuestions.addQuestion(
+				bodyField = "あなたの好きな日本料理は寿司とすき焼きですか",
+				categoryName = "質問トピック",
+				groupName = "Guest",
+				titleField = "あなたの好きな日本料理は何ですか");
+		}
 
-		Questions.editRootTopic(
-			categoryName = "質問トピック",
-			categoryNameEdit = "質問トピックを編集する",
-			groupName = "Guest",
-			siteURLKey = "guest");
+		task ("When a user edits the Root Topic") {
+			Questions.editRootTopic(
+				categoryName = "質問トピック",
+				categoryNameEdit = "質問トピックを編集する",
+				groupName = "Guest",
+				siteURLKey = "guest");
 
-		Questions.openToQuestionDetails(
-			layoutName = "questions-page",
-			localization = "true",
-			siteURLKey = "guest",
-			topicName = "質問トピックを編集する");
+			Questions.openToQuestionDetails(
+				layoutName = "questions-page",
+				localization = "true",
+				siteURLKey = "guest",
+				topicName = "質問トピックを編集する");
+		}
 
-		AssertTextEquals(
-			key_questionTitle = "あなたの好きな日本料理は何ですか",
-			locator1 = "Questions#QUESTIONS_DETAILS_TITLE",
-			value1 = "あなたの好きな日本料理は何ですか");
+		task ("Then the edited Question should be available") {
+			AssertTextEquals(
+				key_questionTitle = "あなたの好きな日本料理は何ですか",
+				locator1 = "Questions#QUESTIONS_DETAILS_TITLE",
+				value1 = "あなたの好きな日本料理は何ですか");
+		}
 	}
 
 	@description = "Validate if the user can redirect to the question after clicking a tag that contains non-Latin characters."
@@ -425,40 +518,48 @@ definition {
 	test QuestionCanBeViewedViaTag {
 		property portal.acceptance = "true";
 
-		JSONMBMessage.addCategory(
-			categoryDescription = "トピック記述",
-			categoryName = "質問トピック",
-			userEmailAddress = "test@liferay.com");
+		task ("Given a category and a question that has tags with non-Latin characters") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "トピック記述",
+				categoryName = "質問トピック",
+				userEmailAddress = "test@liferay.com");
 
-		Questions.askQuestionFillingTheMandatoryFields(
-			contentField = "私の好きな日本料理は寿司とすき焼きです",
-			layoutName = "questions-page",
-			siteURLKey = "guest",
-			tagLocatorList = "おおさか,とうきょう",
-			titleField = "あなたの好きな日本料理は何ですか",
-			topicName = "質問トピック");
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "私の好きな日本料理は寿司とすき焼きです",
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				tagLocatorList = "おおさか,とうきょう",
+				titleField = "あなたの好きな日本料理は何ですか",
+				topicName = "質問トピック");
 
-		Navigator.gotoPage(pageName = "Questions Page");
+			Navigator.gotoPage(pageName = "Questions Page");
 
-		Questions.gotoTab(questionTabField = "Tags");
+			Questions.gotoTab(questionTabField = "Tags");
 
-		for (var tagName : list "おおさか,とうきょう") {
-			AssertElementPresent(
-				key_tagName = ${tagName},
-				locator1 = "Questions#TAGS_LIST_TAB_NAMES");
+			for (var tagName : list "おおさか,とうきょう") {
+				AssertElementPresent(
+					key_tagName = ${tagName},
+					locator1 = "Questions#TAGS_LIST_TAB_NAMES");
+			}
 		}
 
-		Questions.search(
-			searchKey = "おおさか",
-			searchTag = "true");
+		task ("When a user searches for the tag") {
+			Questions.search(
+				searchKey = "おおさか",
+				searchTag = "true");
+		}
 
-		Questions.viewTags(tagName = "おおさか");
+		task ("Then the user can click the tag") {
+			Questions.viewTags(tagName = "おおさか");
 
-		Questions.viewNoTags(tagsList = "とうきょう");
+			Questions.viewNoTags(tagsList = "とうきょう");
+		}
 
-		Questions.viewQuestionViaTag(
-			questionTitle = "あなたの好きな日本料理は何ですか",
-			tagName = "おおさか");
+		task ("and is redirected to the question") {
+			Questions.viewQuestionViaTag(
+				questionTitle = "あなたの好きな日本料理は何ですか",
+				tagName = "おおさか");
+		}
 	}
 
 }

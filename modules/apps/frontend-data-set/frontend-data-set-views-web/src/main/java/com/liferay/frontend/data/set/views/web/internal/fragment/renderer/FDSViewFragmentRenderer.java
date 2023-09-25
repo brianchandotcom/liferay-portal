@@ -457,7 +457,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 						"label",
 						() -> {
 							String label = String.valueOf(
-								properties.get("name"));
+								properties.get("label"));
 
 							if (Validator.isNotNull(label)) {
 								return label;
@@ -514,7 +514,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 						"label",
 						() -> {
 							String label = String.valueOf(
-								properties.get("name"));
+								properties.get("label"));
 
 							if (Validator.isNotNull(label)) {
 								return label;

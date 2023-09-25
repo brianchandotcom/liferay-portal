@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+declare type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 export declare enum EFilterType {
 	CLIENT_EXTENSION = 'CLIENT_EXTENSION',
 	DATE_RANGE = 'DATE_RANGE',
@@ -24,7 +25,7 @@ export interface IFilter {
 	filterType?: EFilterType;
 	id: number;
 	label: string;
-	name: string;
+	label_i18n: LocalizedValue<string>;
 	type: string;
 }
 export interface IClientExtensionFilter extends IFilter {
@@ -58,3 +59,4 @@ export interface IListTypeEntry {
 		[key: string]: string;
 	};
 }
+export {};

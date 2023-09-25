@@ -83,14 +83,12 @@ function AddFDSFilterModalContent({
 		boolean
 	>();
 	const [errorMessage, setErrorMessage] = useState('');
-	const fdsFilterNameTranslations = filter?.name_i18n || {
-		[defaultLanguageId]: filter?.name || '',
-	};
+	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
 	const [from, setFrom] = useState<string>(
 		(filter as IDateFilter)?.from ?? format(new Date(), 'yyyy-MM-dd')
 	);
-	const [i18nFilterNames, setI18nFilterNames] = useState(
-		fdsFilterNameTranslations
+	const [i18nFilterLabels, setI18nFilterLabels] = useState(
+		fdsFilterLabelTranslations
 	);
 	const [includeMode, setIncludeMode] = useState<string>(
 		filter
@@ -104,7 +102,7 @@ function AddFDSFilterModalContent({
 	const [multiple, setMultiple] = useState<boolean>(
 		(filter as ISelectionFilter)?.multiple ?? true
 	);
-	const [name, setName] = useState(filter?.name || '');
+	const [label, setLabel] = useState(filter?.label || '');
 	const [picklists, setPicklists] = useState<IPickList[]>([]);
 	const [preselectedValues, setPreselectedValues] = useState<any[]>([]);
 	const [selectedField, setSelectedField] = useState<IField | null>(
@@ -143,7 +141,7 @@ function AddFDSFilterModalContent({
 		setSaveButtonDisabled(true);
 
 		if (Liferay.FeatureFlags['LPS-172017']) {
-			if (!i18nFilterNames[defaultLanguageId]) {
+			if (!i18nFilterLabels[defaultLanguageId]) {
 				setErrorMessage(Liferay.Language.get('required'));
 
 				setSaveButtonDisabled(false);
@@ -165,10 +163,10 @@ function AddFDSFilterModalContent({
 		};
 
 		if (Liferay.FeatureFlags['LPS-172017']) {
-			body = {...body, name_i18n: i18nFilterNames};
+			body = {...body, label_i18n: i18nFilterLabels};
 		}
 		else {
-			body = {...body, name: name || selectedField.label};
+			body = {...body, label: label || selectedField.label};
 		}
 
 		let displayType: string = '';
@@ -319,7 +317,7 @@ function AddFDSFilterModalContent({
 		<>
 			<ClayModal.Header>
 				{filter &&
-					sub(Liferay.Language.get('edit-x-filter'), [filter.name])}
+					sub(Liferay.Language.get('edit-x-filter'), [filter.label])}
 
 				{!filter && (
 					<>
@@ -344,22 +342,22 @@ function AddFDSFilterModalContent({
 						<InputLocalized
 							error={errorMessage}
 							id={nameFormElementId}
-							label={Liferay.Language.get('name')}
-							name="name"
+							label={Liferay.Language.get('label')}
+							name="label"
 							onChange={(newFieldLabel) => {
-								setI18nFilterNames({
-									...i18nFilterNames,
+								setI18nFilterLabels({
+									...i18nFilterLabels,
 									...newFieldLabel,
 								});
 							}}
 							required
-							translations={i18nFilterNames}
+							translations={i18nFilterLabels}
 						/>
 					</ClayForm.Group>
 				) : (
 					<ClayForm.Group>
 						<label htmlFor={nameFormElementId}>
-							{Liferay.Language.get('name')}
+							{Liferay.Language.get('label')}
 
 							<span
 								className="label-icon lfr-portal-tooltip ml-2"
@@ -372,14 +370,14 @@ function AddFDSFilterModalContent({
 						</label>
 
 						<ClayInput
-							aria-label={Liferay.Language.get('name')}
+							aria-label={Liferay.Language.get('label')}
 							name={nameFormElementId}
-							onChange={(event) => setName(event.target.value)}
+							onChange={(event) => setLabel(event.target.value)}
 							placeholder={
 								selectedField?.label ||
-								Liferay.Language.get('name')
+								Liferay.Language.get('label')
 							}
-							value={name}
+							value={label}
 						/>
 					</ClayForm.Group>
 				)}

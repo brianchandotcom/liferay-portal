@@ -150,7 +150,7 @@ public class PublishLayoutMVCActionCommand
 			}
 
 			typeSettingsUnicodeProperties.put(
-				"published", Boolean.TRUE.toString());
+				LayoutTypeSettingsConstants.PUBLISHED, Boolean.TRUE.toString());
 
 			draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 

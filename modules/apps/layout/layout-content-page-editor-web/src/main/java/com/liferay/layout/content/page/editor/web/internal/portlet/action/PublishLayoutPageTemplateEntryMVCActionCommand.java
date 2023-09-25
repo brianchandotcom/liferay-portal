@@ -127,7 +127,7 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 			draftLayout.getTypeSettingsProperties();
 
 		draftLayoutypeSettingsUnicodeProperties.put(
-			"published", Boolean.TRUE.toString());
+			LayoutTypeSettingsConstants.PUBLISHED, Boolean.TRUE.toString());
 		draftLayoutypeSettingsUnicodeProperties.remove(
 			LayoutTypeSettingsConstants.DESIGN_CONFIGURATION_MODIFIED);
 

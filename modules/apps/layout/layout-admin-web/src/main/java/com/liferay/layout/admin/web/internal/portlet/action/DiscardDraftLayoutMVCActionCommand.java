@@ -7,6 +7,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -111,7 +112,8 @@ public class DiscardDraftLayoutMVCActionCommand
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				Layout.class.getName(), actionRequest);
 
-			serviceContext.setAttribute("published", published);
+			serviceContext.setAttribute(
+				LayoutTypeSettingsConstants.PUBLISHED, published);
 
 			_layoutLocalService.updateStatus(
 				themeDisplay.getUserId(), draftLayout.getPlid(),

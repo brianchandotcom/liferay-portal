@@ -13,6 +13,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
@@ -802,7 +803,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			new UnicodeProperties();
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			typeSettingsUnicodeProperties.put("published", "true");
+			typeSettingsUnicodeProperties.put(
+				LayoutTypeSettingsConstants.PUBLISHED, "true");
 		}
 
 		if ((type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) ||

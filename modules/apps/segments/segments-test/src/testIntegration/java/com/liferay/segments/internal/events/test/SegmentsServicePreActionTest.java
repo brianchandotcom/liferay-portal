@@ -6,6 +6,7 @@
 package com.liferay.segments.internal.events.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
@@ -111,7 +112,7 @@ public class SegmentsServicePreActionTest {
 					nameMap, Collections.emptyMap(), Collections.emptyMap(),
 					Collections.emptyMap(), LayoutConstants.TYPE_COLLECTION,
 					UnicodePropertiesBuilder.put(
-						"published", "true"
+						LayoutTypeSettingsConstants.PUBLISHED, "true"
 					).buildString(),
 					false, false, Collections.emptyMap(), 0, serviceContext);
 
@@ -168,7 +169,7 @@ public class SegmentsServicePreActionTest {
 					nameMap, Collections.emptyMap(), Collections.emptyMap(),
 					Collections.emptyMap(), LayoutConstants.TYPE_COLLECTION,
 					UnicodePropertiesBuilder.put(
-						"published", "true"
+						LayoutTypeSettingsConstants.PUBLISHED, "true"
 					).buildString(),
 					false, false, Collections.emptyMap(), 0, serviceContext);
 
@@ -312,7 +313,7 @@ public class SegmentsServicePreActionTest {
 					nameMap, Collections.emptyMap(), Collections.emptyMap(),
 					Collections.emptyMap(), LayoutConstants.TYPE_COLLECTION,
 					UnicodePropertiesBuilder.put(
-						"published", "true"
+						LayoutTypeSettingsConstants.PUBLISHED, "true"
 					).buildString(),
 					false, false, Collections.emptyMap(), 0, serviceContext);
 

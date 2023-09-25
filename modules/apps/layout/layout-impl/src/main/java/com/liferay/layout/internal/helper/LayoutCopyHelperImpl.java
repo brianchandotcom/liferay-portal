@@ -13,6 +13,7 @@ import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -677,7 +678,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			).fastLoad(
 				sourceLayout.getTypeSettings()
 			).setProperty(
-				"published", Boolean.FALSE.toString()
+				LayoutTypeSettingsConstants.PUBLISHED, Boolean.FALSE.toString()
 			).setProperty(
 				"query-string",
 				typeSettingsUnicodeProperties.getProperty("query-string")

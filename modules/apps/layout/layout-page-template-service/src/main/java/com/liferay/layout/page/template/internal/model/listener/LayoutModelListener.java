@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.internal.model.listener;
 
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -204,7 +205,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		UnicodeProperties unicodeProperties =
 			draftLayout.getTypeSettingsProperties();
 
-		unicodeProperties.put("published", Boolean.FALSE.toString());
+		unicodeProperties.put(
+			LayoutTypeSettingsConstants.PUBLISHED, Boolean.FALSE.toString());
 
 		_copySiteNavigationMenuId(layout, unicodeProperties);
 

@@ -5,6 +5,7 @@
 
 package com.liferay.layout.internal.util;
 
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.exception.LayoutConvertException;
 import com.liferay.layout.helper.LayoutCopyHelper;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -264,7 +265,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 				draftLayout.getTypeSettingsProperties();
 
 			typeSettingsUnicodeProperties.put(
-				"published", Boolean.TRUE.toString());
+				LayoutTypeSettingsConstants.PUBLISHED, Boolean.TRUE.toString());
 
 			draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 

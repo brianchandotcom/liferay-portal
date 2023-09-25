@@ -10,6 +10,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.helper.LayoutActionsHelper;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -477,7 +478,8 @@ public class LayoutActionDropdownItemsProvider {
 		return dropdownItem -> {
 			if (layout.isTypeContent() &&
 				!GetterUtil.getBoolean(
-					draftLayout.getTypeSettingsProperty("published"))) {
+					draftLayout.getTypeSettingsProperty(
+						LayoutTypeSettingsConstants.PUBLISHED))) {
 
 				dropdownItem.setDisabled(true);
 			}

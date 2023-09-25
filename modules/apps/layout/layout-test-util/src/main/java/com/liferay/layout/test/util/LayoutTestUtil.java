@@ -5,6 +5,7 @@
 
 package com.liferay.layout.test.util;
 
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
@@ -241,7 +242,8 @@ public class LayoutTestUtil {
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 
-		serviceContext.setAttribute("published", Boolean.TRUE);
+		serviceContext.setAttribute(
+			LayoutTypeSettingsConstants.PUBLISHED, Boolean.TRUE);
 
 		if (draftLayout != null) {
 			LayoutLocalServiceUtil.updateStatus(

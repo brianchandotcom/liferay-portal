@@ -5,6 +5,7 @@
 
 package com.liferay.layout.internal.service;
 
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -54,7 +55,8 @@ public class DefaultLayoutLayoutSetPrototypeLocalServiceWrapper
 			UnicodeProperties unicodeProperties =
 				defaultLayout.getTypeSettingsProperties();
 
-			unicodeProperties.setProperty("published", Boolean.TRUE.toString());
+			unicodeProperties.setProperty(
+				LayoutTypeSettingsConstants.PUBLISHED, Boolean.TRUE.toString());
 
 			draftLayout.setTypeSettingsProperties(unicodeProperties);
 

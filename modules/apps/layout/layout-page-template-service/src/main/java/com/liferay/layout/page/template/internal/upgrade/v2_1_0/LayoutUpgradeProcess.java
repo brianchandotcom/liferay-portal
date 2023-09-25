@@ -7,6 +7,7 @@ package com.liferay.layout.page.template.internal.upgrade.v2_1_0;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringBundler;
@@ -90,7 +91,7 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 			PortalUtil.getValidUserId(companyId, userId), groupId,
 			privateLayout, 0, titleMap, titleMap, null, null, null, layoutType,
 			UnicodePropertiesBuilder.put(
-				"published", "true"
+				LayoutTypeSettingsConstants.PUBLISHED, "true"
 			).buildString(),
 			true, true, new HashMap<>(), serviceContext);
 

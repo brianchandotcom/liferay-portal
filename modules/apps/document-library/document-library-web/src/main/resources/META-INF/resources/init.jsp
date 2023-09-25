@@ -60,6 +60,7 @@ page import="com.liferay.document.library.kernel.exception.FileShortcutPermissio
 page import="com.liferay.document.library.kernel.exception.FileSizeException" %><%@
 page import="com.liferay.document.library.kernel.exception.FolderNameException" %><%@
 page import="com.liferay.document.library.kernel.exception.InvalidFileVersionException" %><%@
+page import="com.liferay.document.library.kernel.exception.MismatchedExtensionException" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFileEntryException" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFileException" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFileShortcutException" %><%@

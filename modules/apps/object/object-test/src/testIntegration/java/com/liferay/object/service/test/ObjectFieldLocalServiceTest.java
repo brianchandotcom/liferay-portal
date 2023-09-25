@@ -281,6 +281,43 @@ public class ObjectFieldLocalServiceTest {
 						true
 					).build())));
 
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				_objectDefinitionLocalService);
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				_objectDefinitionLocalService);
+
+		String objectRelationshipName = "a" + RandomTestUtil.randomString();
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			objectDefinition1.getObjectDefinitionId(),
+			objectDefinition2.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			objectRelationshipName, false,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		AssertUtils.assertFailure(
+			ObjectFieldNameException.MustNotBeEqualToObjectRelationshipName.
+				class,
+			"Name must not be equal to object relationship name " +
+				objectRelationshipName,
+			() -> _addCustomObjectField(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					objectRelationshipName
+				).objectDefinitionId(
+					objectDefinition1.getObjectDefinitionId()
+				).build()));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
+
 		String[] reservedNames = {
 			"actions", "companyId", "createDate", "creator", "dateCreated",
 			"dateModified", "externalReferenceCode", "groupId", "id",

@@ -35,7 +35,7 @@ public class ReindexExecutionModeConfigurationFieldOptionsProvider
 
 		List<String> executionModes = new ArrayList<>();
 
-		executionModes.add("regular");
+		executionModes.add("full");
 
 		if (FeatureFlagManagerUtil.isEnabled("LPS-183661")) {
 			executionModes.add("concurrent");

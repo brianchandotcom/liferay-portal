@@ -26,12 +26,12 @@ const EXECUTION_MODES = {
 		symbol: 'change-list',
 		value: 'concurrent',
 	},
-	REGULAR: {
+	FULL: {
 		description: Liferay.Language.get('reindex-mode-full-description'),
 		label: Liferay.Language.get('full'),
 		showBetaBadge: false,
 		symbol: 'globe-lines',
-		value: 'regular',
+		value: 'full',
 	},
 	SYNC: {
 		description: Liferay.Language.get('reindex-mode-sync-description'),
@@ -64,7 +64,7 @@ function ExecutionOptions({
 	virtualInstances = [],
 }) {
 	const [executionMode, setExecutionMode] = useState(
-		initialExecutionMode || EXECUTION_MODES.REGULAR.value
+		initialExecutionMode || EXECUTION_MODES.FULL.value
 	);
 	const [
 		executionModeDropdownActive,
@@ -159,7 +159,7 @@ function ExecutionOptions({
 						>
 							<ClayDropDown.ItemList>
 								{[
-									EXECUTION_MODES.REGULAR,
+									EXECUTION_MODES.FULL,
 									EXECUTION_MODES.CONCURRENT,
 									EXECUTION_MODES.SYNC,
 								].map(

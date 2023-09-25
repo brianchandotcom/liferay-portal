@@ -506,6 +506,7 @@
 		<exception>FileExtension</exception>
 		<exception>FileMimeType</exception>
 		<exception>FileName</exception>
+		<exception>FileNameExtensionMismatch</exception>
 		<exception>FileShortcutPermission</exception>
 		<exception>FileSize</exception>
 		<exception>FolderName</exception>

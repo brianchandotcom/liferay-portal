@@ -68,6 +68,24 @@ public class DepotEntryServiceImpl extends DepotEntryServiceBaseImpl {
 	}
 
 	@Override
+	public List<DepotEntry> getCurrentAndGroupConnectedDepotEntries(
+			long groupId, int start, int end)
+		throws PortalException {
+
+		List<DepotEntry> filteredDepotEntries = getGroupConnectedDepotEntries(
+			groupId, start, end);
+
+		DepotEntry depotEntry = depotEntryLocalService.fetchGroupDepotEntry(
+			groupId);
+
+		if (depotEntry != null) {
+			filteredDepotEntries.add(depotEntry);
+		}
+
+		return filteredDepotEntries;
+	}
+
+	@Override
 	public DepotEntry getDepotEntry(long depotEntryId) throws PortalException {
 		if (!_depotEntryModelResourcePermission.contains(
 				getPermissionChecker(), depotEntryId, ActionKeys.VIEW) &&

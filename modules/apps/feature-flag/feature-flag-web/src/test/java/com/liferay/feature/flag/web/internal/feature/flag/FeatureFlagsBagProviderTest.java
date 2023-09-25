@@ -44,7 +44,7 @@ public class FeatureFlagsBagProviderTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_featureFlagsBagProvider = new FeatureFlagsBagProvider();
+		_featureFlagsBagProvider = new FeatureFlagsBagProviderImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			_featureFlagsBagProvider, "_featureFlagPreferencesManager",
@@ -68,7 +68,7 @@ public class FeatureFlagsBagProviderTest {
 		PropsUtil.set(FeatureFlagConstants.getKey(key, "dependencies"), key);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
-				FeatureFlagsBagProvider.class.getName(), Level.SEVERE)) {
+				FeatureFlagsBagProviderImpl.class.getName(), Level.SEVERE)) {
 
 			_featureFlagsBagProvider.getOrCreateFeatureFlagsBag(companyId);
 
@@ -138,7 +138,7 @@ public class FeatureFlagsBagProviderTest {
 		PropsUtil.set(FeatureFlagConstants.getKey(key2), "true");
 
 		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
-				FeatureFlagsBagProvider.class.getName(), Level.SEVERE)) {
+				FeatureFlagsBagProviderImpl.class.getName(), Level.SEVERE)) {
 
 			_featureFlagsBagProvider.getOrCreateFeatureFlagsBag(companyId);
 

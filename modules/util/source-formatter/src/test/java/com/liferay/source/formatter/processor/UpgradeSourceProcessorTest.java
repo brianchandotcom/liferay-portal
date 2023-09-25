@@ -78,6 +78,11 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testUpgradeJavaAccountPortletKeysCheck() throws Exception {
+		test("upgrade/UpgradeJavaAccountPortletKeysCheck.testjava");
+	}
+
+	@Test
 	public void testUpgradeJavaAddAddressMethodCheck() throws Exception {
 		test(
 			"upgrade/UpgradeJavaAddAddressMethodCheck.testjava",

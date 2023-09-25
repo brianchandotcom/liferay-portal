@@ -105,6 +105,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -144,6 +145,12 @@ import org.junit.runner.RunWith;
 /**
  * @author Matija Petanjek
  */
+@FeatureFlags(
+	{
+		"LPS-135430", "LPS-148856", "LPS-167253", "LPS-172017", "LPS-181663",
+		"LPS-187142"
+	}
+)
 @RunWith(Arquillian.class)
 public class BatchEngineBrokerTest {
 

@@ -397,7 +397,7 @@ definition {
 		task ("Import the fragment collection") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name-staging");
 
-			FragmentsAdmin.importCollectionFromTempFolder();
+			FragmentsAdmin.importCollectionFromTempFolder(importOption = "Overwrite Existing Items");
 		}
 
 		task ("Publish to Live via Staging admin") {

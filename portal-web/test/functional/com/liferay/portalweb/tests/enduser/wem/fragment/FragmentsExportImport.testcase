@@ -1506,21 +1506,19 @@ definition {
 		}
 
 		task ("When import fragment collection again with different Fragment resource") {
-			task ("Import fragment collection again with different Fragment resource") {
-				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-				FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragments-plant.zip");
-			}
+			FragmentsAdmin.importCollectionFromDependenciesFolder(
+				collectionZipFile = "fragments-plant.zip",
+				importOption = "Overwrite Existing Items");
 		}
 
 		task ("Then the old frgment resource in content does not change") {
-			task ("View the image in fragment does not change on content page") {
-				ContentPagesNavigator.openViewContentPage(
-					pageName = "Test Page Name",
-					siteName = "Test Site Name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-				AssertVisible(locator1 = "//img[contains(@src,'image-jpg')]");
-			}
+			AssertVisible(locator1 = "//img[contains(@src,'image-jpg')]");
 		}
 	}
 
@@ -1660,7 +1658,7 @@ definition {
 		}
 
 		task ("Import the fragment collection") {
-			FragmentsAdmin.importCollectionFromTempFolder();
+			FragmentsAdmin.importCollectionFromTempFolder(importOption = "Overwrite Existing Items");
 		}
 
 		task ("Navigate to the content page in edit mode") {

@@ -693,7 +693,24 @@ definition {
 		task ("Given a fragment admin has a read-only fragment without field type") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "form-fragments.zip");
+			FragmentsAdminNavigator.gotoImportCollection();
+
+			WaitForPageLoad();
+
+			UploadDependencyFile.uploadArchiveFile(fileName = "form-fragments.zip");
+
+			Button.clickImport();
+
+			AssertTextEquals(
+				locator1 = "Message#WARNING_IMPORT",
+				value1 = "1 item was imported with warnings.");
+
+			AssertTextEquals.assertPartialText(
+				itemName = "Fragment Example",
+				locator1 = "Message#WARNING_IMPORT_SUBTEXT",
+				value1 = "Fragment type input must have at least one field type");
+
+			Button.clickDone();
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Form Fragments");
 		}

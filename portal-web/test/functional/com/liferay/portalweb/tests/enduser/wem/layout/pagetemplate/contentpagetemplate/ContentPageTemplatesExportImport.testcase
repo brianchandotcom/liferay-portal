@@ -945,19 +945,34 @@ definition {
 
 			MenuItem.click(menuItem = "Import");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			WaitForPageLoad();
 
 			var pageTemplateZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "page-template-*.zip");
 
-			UploadTempFile(
+			UploadTempFile.uploadTempFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
 				value1 = ${pageTemplateZipFileName});
 
 			Button.clickImport();
 
-			Alert.viewSuccessMessage();
+			Check.checkNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Overwrite Existing Items");
 
-			Alert.viewWarningSpecific(warningMessage = "Some page templates were imported with warnings");
+			Click(
+				key_text = "Import",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
+			AssertTextEquals(
+				locator1 = "Message#WARNING_IMPORT",
+				value1 = "1 item was imported with warnings.");
+
+			AssertTextEquals.assertPartialText(
+				itemName = "Page Template Name",
+				locator1 = "Message#WARNING_IMPORT_SUBTEXT",
+				value1 = "Fragment with key fragment-name was ignored because it does not exist.");
+
+			Button.clickDone();
 		}
 
 		task ("Assert Template has been imported without the deleted fragment.") {
@@ -1148,27 +1163,28 @@ definition {
 
 			MenuItem.click(menuItem = "Import");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
 			var pageTemplateZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "page-template-*.zip");
 
-			UploadTempFile(
+			UploadTempFile.uploadTempFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
 				value1 = ${pageTemplateZipFileName});
 
 			Button.clickImport();
-
-			Alert.viewSuccessMessage();
 		}
 
 		task ("Assert specific warning message is shown in Import popup") {
-			Alert.viewWarningSpecific(warningMessage = "Some page templates were imported with warnings.");
+			AssertTextEquals(
+				locator1 = "Message#WARNING_IMPORT",
+				value1 = "1 item was imported with warnings.");
 
-			Alert.viewWarningSpecific(warningMessage = "Role with key Account Manager was ignored because it does not exist.");
+			AssertTextEquals.assertPartialText(
+				itemName = "Page Template Name",
+				locator1 = "Message#WARNING_IMPORT_SUBTEXT",
+				value1 = "Role with key Account Manager was ignored because it does not exist.");
 		}
 
 		task ("Assert Account Manager is not shown in permissions panel of RSS Publisher") {
-			IFrame.closeFrame();
+			Button.clickDone();
 
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 

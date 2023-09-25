@@ -12,12 +12,12 @@
 <tbody>
 <tr>
 	<td>DETAILS_PANEL_COLLAPSED</td>
-	<td>//a[@aria-expanded='false' and contains(@aria-controls,'calendarResourceDetailsPanelContent')]</td>
+	<td>//button[@aria-expanded='false']//*[contains(@class,'panel-title') and contains(.,'Details')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_PANEL_EXPANDED</td>
-	<td>//a[@aria-expanded='true' and contains(@aria-controls,'calendarResourceDetailsPanelContent')]</td>
+	<td>//button//*[contains(@class,'panel-title') and contains(.,'Details')]</td>
 	<td></td>
 </tr>
 <tr>

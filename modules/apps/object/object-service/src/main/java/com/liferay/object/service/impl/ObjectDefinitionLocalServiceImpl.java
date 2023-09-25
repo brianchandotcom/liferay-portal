@@ -62,7 +62,6 @@ import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
-import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
@@ -859,8 +858,7 @@ public class ObjectDefinitionLocalServiceImpl
 				_assetEntryLocalService, _bundleContext,
 				_dynamicQueryBatchIndexingActionableFactory, _groupLocalService,
 				_listTypeLocalService, _modelSearchRegistrarHelper,
-				_objectActionLocalService,
-				(ObjectDefinitionLocalService)aopProxy,
+				_objectActionLocalService, objectDefinitionLocalService,
 				_objectEntryLocalService, _objectEntryService,
 				_objectFieldLocalService, _objectLayoutLocalService,
 				_objectLayoutTabLocalService, _objectRelationshipLocalService,

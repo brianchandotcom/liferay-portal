@@ -123,6 +123,57 @@ definition {
 		PublicationsPermissions.assertEditorPermissions(publicationName = "Publication Name 2");
 	}
 
+	@description = "This is a use case for LPS-195715. Can view Publication with link as Guest user."
+	@priority = 3
+	test CanReviewPublicationWithLinkAsGuest {
+		property custom.properties = "feature.flag.LPS-187436=true";
+
+		task ("Create Web Content and Publication") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Guest",
+				title = "WC WebContent Title");
+		}
+
+		task ("Go to Publication Review Changes") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication Name");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Web Content Article",
+				changeSite = "Guest",
+				changeTitle = "WC WebContent Title",
+				changeType = "Added",
+				changeUser = "Test Test");
+		}
+
+		task ("Enable Share Publication Link and copy URL") {
+			Publications.enablePublicationSharing();
+
+			var shareLinkURL = Publications.getShareLinkURL();
+		}
+
+		task ("Sign out and access to URL as guest user") {
+			SignOut.signOut();
+
+			Navigator.openSpecificURL(url = ${shareLinkURL});
+		}
+
+		task ("Assert guest user can view Publication with link") {
+			PublicationsChanges.viewChanges(
+				changeCategory = "Web Content Article",
+				changeSite = "Guest",
+				changeTitle = "WC WebContent Title",
+				changeType = "Added",
+				changeUser = "Test Test");
+		}
+	}
+
 	@description = "This is a use case for LPS-168508. Switching Publications invitee between roles shouldn't remove it from the invitee list."
 	@priority = 3
 	test CanSwitchInviteeRoles {

@@ -210,8 +210,7 @@ public class ObjectEntryServiceTest {
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ObjectActionKeys.ADD_OBJECT_ENTRY);
 
-		Map<Long, ObjectEntry> objectEntries1 = _createObjectEntryHierarchy(
-			_tree);
+		Map<Long, ObjectEntry> objectEntries1 = _addObjectEntryHierarchy(_tree);
 
 		ObjectEntry rootObjectEntry = objectEntries1.get(
 			_rootObjectDefinition.getObjectDefinitionId());
@@ -276,8 +275,7 @@ public class ObjectEntryServiceTest {
 
 		// Root company permissions must be inherited
 
-		Map<Long, ObjectEntry> objectEntries1 = _createObjectEntryHierarchy(
-			_tree);
+		Map<Long, ObjectEntry> objectEntries1 = _addObjectEntryHierarchy(_tree);
 
 		_setUser(_user);
 
@@ -311,8 +309,7 @@ public class ObjectEntryServiceTest {
 
 		// Root descendant permissions must not be considered
 
-		Map<Long, ObjectEntry> objectEntries2 = _createObjectEntryHierarchy(
-			_tree);
+		Map<Long, ObjectEntry> objectEntries2 = _addObjectEntryHierarchy(_tree);
 
 		TreeTestUtil.unsafeForEach(
 			"post-order", _objectDefinitionLocalService, _tree,
@@ -353,8 +350,7 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_user);
 
-		Map<Long, ObjectEntry> objectEntries3 = _createObjectEntryHierarchy(
-			_tree);
+		Map<Long, ObjectEntry> objectEntries3 = _addObjectEntryHierarchy(_tree);
 
 		rootObjectEntry = objectEntries3.get(
 			_rootObjectDefinition.getObjectDefinitionId());
@@ -424,8 +420,7 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_user);
 
-		Map<Long, ObjectEntry> objectEntries1 = _createObjectEntryHierarchy(
-			_tree);
+		Map<Long, ObjectEntry> objectEntries1 = _addObjectEntryHierarchy(_tree);
 
 		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
@@ -481,8 +476,7 @@ public class ObjectEntryServiceTest {
 				).build(),
 				_rootObjectDefinition.getClassName()));
 
-		Map<Long, ObjectEntry> objectEntries2 = _createObjectEntryHierarchy(
-			_tree);
+		Map<Long, ObjectEntry> objectEntries2 = _addObjectEntryHierarchy(_tree);
 
 		TreeTestUtil.unsafeForEach(
 			_objectDefinitionLocalService, _tree,
@@ -620,46 +614,7 @@ public class ObjectEntryServiceTest {
 				TestPropsValues.getGroupId(), user.getUserId()));
 	}
 
-	private void _assertPrincipalException(
-			String action, ObjectDefinition objectDefinition,
-			ObjectEntry objectEntry)
-		throws Exception {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			if (Objects.equals(action, ActionKeys.DELETE)) {
-				_objectEntryService.deleteObjectEntry(
-					objectEntry.getObjectEntryId());
-			}
-			else if (Objects.equals(action, ActionKeys.VIEW)) {
-				_objectEntryService.getObjectEntry(
-					objectEntry.getObjectEntryId());
-			}
-			else {
-				_objectEntryService.addObjectEntry(
-					0, objectDefinition.getObjectDefinitionId(),
-					Collections.emptyMap(),
-					ServiceContextTestUtil.getServiceContext(
-						TestPropsValues.getGroupId(),
-						permissionChecker.getUserId()));
-			}
-
-			Assert.fail();
-		}
-		catch (PrincipalException.MustHavePermission principalException) {
-			String message = principalException.getMessage();
-
-			Assert.assertTrue(
-				message.contains(
-					StringBundler.concat(
-						"User ", permissionChecker.getUserId(), " must have ",
-						action, " permission for")));
-		}
-	}
-
-	private Map<Long, ObjectEntry> _createObjectEntryHierarchy(Tree tree)
+	private Map<Long, ObjectEntry> _addObjectEntryHierarchy(Tree tree)
 		throws Exception {
 
 		Iterator<Node> iterator = tree.iterator();
@@ -716,6 +671,45 @@ public class ObjectEntryServiceTest {
 		}
 
 		return objectEntries;
+	}
+
+	private void _assertPrincipalException(
+			String action, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			if (Objects.equals(action, ActionKeys.DELETE)) {
+				_objectEntryService.deleteObjectEntry(
+					objectEntry.getObjectEntryId());
+			}
+			else if (Objects.equals(action, ActionKeys.VIEW)) {
+				_objectEntryService.getObjectEntry(
+					objectEntry.getObjectEntryId());
+			}
+			else {
+				_objectEntryService.addObjectEntry(
+					0, objectDefinition.getObjectDefinitionId(),
+					Collections.emptyMap(),
+					ServiceContextTestUtil.getServiceContext(
+						TestPropsValues.getGroupId(),
+						permissionChecker.getUserId()));
+			}
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			String message = principalException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					StringBundler.concat(
+						"User ", permissionChecker.getUserId(), " must have ",
+						action, " permission for")));
+		}
 	}
 
 	private ObjectDefinition _publishRootObjectDefinition() throws Exception {

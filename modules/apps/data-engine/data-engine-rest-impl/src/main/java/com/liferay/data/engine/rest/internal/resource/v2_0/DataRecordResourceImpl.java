@@ -9,8 +9,8 @@ import com.liferay.data.engine.constants.DataActionKeys;
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.internal.odata.entity.v2_0.DataRecordEntityModel;
-import com.liferay.data.engine.rest.internal.security.permission.resource.DataRecordCollectionModelResourcePermission;
 import com.liferay.data.engine.rest.internal.security.permission.resource.DataRecordModelResourcePermission;
+import com.liferay.data.engine.rest.internal.security.permission.resource.util.DataRecordCollectionPermissionUtil;
 import com.liferay.data.engine.rest.internal.storage.DataRecordExporter;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
@@ -145,7 +145,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 					"page-size-is-greater-than-x", 250));
 		}
 
-		_dataRecordCollectionModelResourcePermission.check(
+		DataRecordCollectionPermissionUtil.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			_ddlRecordSetLocalService.getDDLRecordSet(dataRecordCollectionId),
 			DataActionKeys.EXPORT_DATA_RECORDS);
@@ -175,7 +175,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 					"page-size-is-greater-than-x", 250));
 		}
 
-		_dataRecordCollectionModelResourcePermission.check(
+		DataRecordCollectionPermissionUtil.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			_ddlRecordSetLocalService.getDDLRecordSet(dataRecordCollectionId),
 			DataActionKeys.VIEW_DATA_RECORD);
@@ -287,7 +287,7 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			Long dataRecordCollectionId, DataRecord dataRecord)
 		throws Exception {
 
-		_dataRecordCollectionModelResourcePermission.check(
+		DataRecordCollectionPermissionUtil.check(
 			PermissionThreadLocal.getPermissionChecker(),
 			_ddlRecordSetLocalService.getDDLRecordSet(dataRecordCollectionId),
 			DataActionKeys.ADD_DATA_RECORD);
@@ -529,10 +529,6 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 			}
 		};
 	}
-
-	@Reference
-	private DataRecordCollectionModelResourcePermission
-		_dataRecordCollectionModelResourcePermission;
 
 	@Reference
 	private DataRecordModelResourcePermission

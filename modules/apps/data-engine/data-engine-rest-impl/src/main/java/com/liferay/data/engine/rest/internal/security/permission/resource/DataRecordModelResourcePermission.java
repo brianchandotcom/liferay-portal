@@ -7,6 +7,7 @@ package com.liferay.data.engine.rest.internal.security.permission.resource;
 
 import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.rest.internal.content.type.DataDefinitionContentTypeRegistryUtil;
+import com.liferay.data.engine.rest.internal.security.permission.resource.util.DataRecordCollectionPermissionUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
@@ -64,9 +65,8 @@ public class DataRecordModelResourcePermission
 
 		DDLRecordSet recordSet = ddlRecord.getRecordSet();
 
-		boolean hasPermission =
-			_dataRecordCollectionModelResourcePermission.contains(
-				permissionChecker, recordSet, actionId);
+		boolean hasPermission = DataRecordCollectionPermissionUtil.contains(
+			permissionChecker, recordSet, actionId);
 
 		if (hasPermission) {
 			return true;
@@ -120,10 +120,6 @@ public class DataRecordModelResourcePermission
 			_portal.getClassName(ddmStructure.getClassNameId()),
 			DDLRecord.class.getName());
 	}
-
-	@Reference
-	private DataRecordCollectionModelResourcePermission
-		_dataRecordCollectionModelResourcePermission;
 
 	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;

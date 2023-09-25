@@ -8,10 +8,13 @@ package com.liferay.document.library.web.internal.portlet.action;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,6 +27,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -146,7 +150,10 @@ public class CopyEntriesMVCActionCommand extends BaseMVCActionCommand {
 					_dlAppService.copyFileEntry(
 						dlFileEntry.getFileEntryId(), destinationFolderId,
 						destinationRepositoryId,
-						dlFileEntry.getFileEntryTypeId(), groupIds,
+						_getFileEntryTypeId(
+							destinationRepositoryId,
+							dlFileEntry.getFileEntryId()),
+						groupIds,
 						ServiceContextFactory.getInstance(
 							DLFileEntry.class.getName(), actionRequest));
 
@@ -193,6 +200,36 @@ public class CopyEntriesMVCActionCommand extends BaseMVCActionCommand {
 		return errorMessages;
 	}
 
+	private long _getFileEntryTypeId(long groupId, long fileEntryId)
+		throws PortalException {
+
+		long[] groupIds =
+			_siteConnectedGroupGroupProvider.
+				getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true);
+
+		if (ArrayUtil.isEmpty(groupIds)) {
+			return DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
+		}
+
+		FileEntry fileEntry = _dlAppService.getFileEntry(fileEntryId);
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		if (ArrayUtil.contains(groupIds, fileEntry.getGroupId())) {
+			return dlFileEntry.getFileEntryTypeId();
+		}
+
+		DLFileEntryType fileEntryType =
+			_dlFileEntryTypeService.getFileEntryType(
+				dlFileEntry.getFileEntryTypeId());
+
+		if (ArrayUtil.contains(groupIds, fileEntryType.getGroupId())) {
+			return dlFileEntry.getFileEntryTypeId();
+		}
+
+		return DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
+	}
+
 	private Map<Long, Long> _getFileEntryTypeIds(long groupId, long folderId)
 		throws PortalException {
 
@@ -220,6 +257,9 @@ public class CopyEntriesMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private DLFileEntryTypeService _dlFileEntryTypeService;
 
 	@Reference
 	private DLFileShortcutLocalService _dlFileShortcutLocalService;

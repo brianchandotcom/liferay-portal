@@ -11,7 +11,6 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
-
 import {format} from 'date-fns';
 import {InputLocalized} from 'frontend-js-components-web';
 import {IClientExtensionRenderer, fetch, openModal, sub} from 'frontend-js-web';

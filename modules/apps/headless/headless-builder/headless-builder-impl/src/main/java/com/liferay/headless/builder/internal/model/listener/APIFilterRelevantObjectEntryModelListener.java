@@ -7,15 +7,20 @@ package com.liferay.headless.builder.internal.model.listener;
 
 import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -73,10 +78,21 @@ public class APIFilterRelevantObjectEntryModelListener
 							"eq '", apiEndpointId, "'"),
 						getObjectDefinitionExternalReferenceCode()))) {
 
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.
+						getObjectDefinitionByExternalReferenceCode(
+							getObjectDefinitionExternalReferenceCode(),
+							objectEntry.getCompanyId());
+
+				User user = _userLocalService.getUser(objectEntry.getUserId());
+
+				String label = objectDefinition.getLabel(user.getLocale());
+
 				throw new ObjectEntryValuesException.InvalidObjectField(
-					null,
-					"The API endpoint already has an associated API filter",
-					"the-api-endpoint-already-has-an-associated-api-filter");
+					Collections.singletonList(label),
+					String.format(
+						"The API Endpoint already has an associated %s", label),
+					"the-api-endpoint-already-has-an-associated-x");
 			}
 		}
 		catch (Exception exception) {
@@ -85,6 +101,12 @@ public class APIFilterRelevantObjectEntryModelListener
 	}
 
 	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
 	private ObjectEntryHelper _objectEntryHelper;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

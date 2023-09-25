@@ -8,6 +8,7 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -23,7 +24,7 @@ public class PoshiPropertyOrderCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!fileName.endsWith(".testcase")) {
+		if (!fileName.endsWith(".testcase") || SourceUtil.isXML(content)) {
 			return content;
 		}
 

@@ -24,9 +24,7 @@ import java.io.OutputStream;
 
 import java.nio.ByteBuffer;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -54,21 +52,19 @@ public class IndexCreationElasticsearchConfigurationObserver
 
 	@Override
 	public void onElasticsearchConfigurationUpdate() {
-		Bundle bundle = FrameworkUtil.getBundle(
-			IndexCreationElasticsearchConfigurationObserver.class);
-
-		_createIndexesOnElasticsearchConfigurationChange(
-			bundle.getBundleContext());
+		_createIndexesOnElasticsearchConfigurationChange();
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
 		_elasticsearchConfigurationWrapper.register(this);
 
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, IndexLifecycleManager.class);
 
-		_createIndexesOnElasticsearchConfigurationChange(bundleContext);
+		_createIndexesOnElasticsearchConfigurationChange();
 	}
 
 	@Deactivate
@@ -88,10 +84,8 @@ public class IndexCreationElasticsearchConfigurationObserver
 		}
 	}
 
-	private void _createIndexesOnElasticsearchConfigurationChange(
-		BundleContext bundleContext) {
-
-		File dataFile = bundleContext.getDataFile(
+	private void _createIndexesOnElasticsearchConfigurationChange() {
+		File dataFile = _bundleContext.getDataFile(
 			"elasticsearch_configuration_state.data");
 
 		if (dataFile.exists() && !StartupHelperUtil.isDBNew()) {
@@ -135,6 +129,8 @@ public class IndexCreationElasticsearchConfigurationObserver
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexCreationElasticsearchConfigurationObserver.class);
+
+	private BundleContext _bundleContext;
 
 	@Reference
 	private volatile ElasticsearchConfigurationWrapper

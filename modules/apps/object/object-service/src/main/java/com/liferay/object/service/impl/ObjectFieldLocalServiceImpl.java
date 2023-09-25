@@ -708,6 +708,14 @@ public class ObjectFieldLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
+		if (Validator.isNull(dbTableName)) {
+			dbTableName = objectDefinition.getDBTableName();
+
+			if (objectDefinition.isApproved()) {
+				dbTableName = objectDefinition.getExtensionDBTableName();
+			}
+		}
+
 		_validateExternalReferenceCode(
 			externalReferenceCode, 0, objectDefinition.getCompanyId(),
 			objectDefinitionId);
@@ -739,15 +747,6 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setListTypeDefinitionId(listTypeDefinitionId);
 		objectField.setObjectDefinitionId(objectDefinitionId);
 		objectField.setDBColumnName(dbColumnName);
-
-		if (Validator.isNull(dbTableName)) {
-			dbTableName = objectDefinition.getDBTableName();
-
-			if (objectDefinition.isApproved()) {
-				dbTableName = objectDefinition.getExtensionDBTableName();
-			}
-		}
-
 		objectField.setDBTableName(dbTableName);
 		objectField.setIndexed(indexed);
 		objectField.setIndexedAsKeyword(indexedAsKeyword);

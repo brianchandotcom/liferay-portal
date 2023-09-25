@@ -18,8 +18,10 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.web.internal.info.item.KBArticleInfoItemFields;
+import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -55,6 +57,13 @@ public class KBArticleInfoItemFieldValuesProvider
 				_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(
 					KBArticle.class.getName(), kbArticle.getResourcePrimKey())
 			).infoFieldValues(
+				_displayPageInfoItemFieldSetProvider.getInfoFieldValues(
+					new InfoItemReference(
+						KBArticle.class.getName(),
+						kbArticle.getResourcePrimKey()),
+					StringPool.BLANK, KBArticle.class.getSimpleName(),
+					_getThemeDisplay())
+			).infoFieldValues(
 				_expandoInfoItemFieldSetProvider.getInfoFieldValues(
 					KBArticle.class.getName(), kbArticle)
 			).infoFieldValues(
@@ -71,6 +80,9 @@ public class KBArticleInfoItemFieldValuesProvider
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			throw new RuntimeException(
 				"Caught unexpected exception", noSuchInfoItemException);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException("Unexpected exception", exception);
 		}
 	}
 
@@ -144,7 +156,9 @@ public class KBArticleInfoItemFieldValuesProvider
 					KBArticleInfoItemFields.contentInfoField,
 					kbArticle.getContent()));
 
-			if (themeDisplay != null) {
+			if ((themeDisplay != null) &&
+				!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
+
 				kbArticleFieldValues.add(
 					new InfoFieldValue<>(
 						KBArticleInfoItemFields.displayPageURLInfoField,
@@ -176,6 +190,10 @@ public class KBArticleInfoItemFieldValuesProvider
 	@Reference
 	private AssetEntryInfoItemFieldSetProvider
 		_assetEntryInfoItemFieldSetProvider;
+
+	@Reference
+	private DisplayPageInfoItemFieldSetProvider
+		_displayPageInfoItemFieldSetProvider;
 
 	@Reference
 	private ExpandoInfoItemFieldSetProvider _expandoInfoItemFieldSetProvider;

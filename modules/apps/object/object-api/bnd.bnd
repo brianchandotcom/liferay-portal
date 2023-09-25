@@ -9,6 +9,7 @@ Export-Package:\
 	com.liferay.object.constants,\
 	com.liferay.object.definition.notification.term.util,\
 	com.liferay.object.definition.tree,\
+	com.liferay.object.definition.tree.constants,\
 	com.liferay.object.definition.util,\
 	com.liferay.object.deployer,\
 	com.liferay.object.display.context,\

@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.InvalidFileEntryTypeException;
 import com.liferay.document.library.kernel.exception.InvalidFileVersionException;
+import com.liferay.document.library.kernel.exception.MismatchedExtensionException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.exception.RequiredFileException;
@@ -1400,7 +1401,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private void _validateFileName(String sourceFileName, String extension)
-		throws FileNameExtensionException {
+		throws PortalException {
 
 		if (Validator.isNotNull(extension) &&
 			(Validator.isNull(sourceFileName) ||
@@ -1408,6 +1409,13 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			throw new FileNameExtensionException(
 				"The file name cannot be empty or without extension");
+		}
+
+		if (Validator.isNotNull(extension) &&
+			!extension.equals(FileUtil.getExtension(sourceFileName))) {
+
+			throw new MismatchedExtensionException(
+				"The file name extension should match file extension");
 		}
 	}
 

@@ -202,7 +202,7 @@ public class ProjectTemplatesSimulationPanelEntryTest
 				return "dxp-7.4-u72";
 			}
 
-			return "portal-7.4-ga36";
+			return "portal-7.4-ga56";
 		}
 
 		return null;

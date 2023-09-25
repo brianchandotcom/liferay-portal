@@ -15,10 +15,12 @@ import getKebabCase from '../../../../../../common/utils/getKebabCase';
 import {useCustomerPortal} from '../../../../../../routes/customer-portal/context';
 import {
 	HIGH_PRIORITY_CONTACT_CATEGORIES,
-	addHighPriorityContactsList,
-	associateContactRole,
-	removeContactRole,
-	removeHighPriorityContactsList,
+	actLiferayContact,
+	actRaysourceContact,
+	associateContactRoleLiferay,
+	associateContactRoleRaysource,
+	removeContactRoleLiferay,
+	removeContactRoleRaysource,
 } from '../../../../utils/getHighPriorityContacts';
 
 const IncidentContactEditModal = ({
@@ -31,28 +33,17 @@ const IncidentContactEditModal = ({
 }) => {
 	const [{project, sessionId}] = useCustomerPortal();
 
+	const [addHighPriorityContact, setAddHighPriorityContacts] = useState([]);
+
 	const [
-		addHighPriorityContactList,
-		setAddHighPriorityContactList,
+		removeHighPriorityContacts,
+		setRemoveHighPriorityContacts,
 	] = useState([]);
-	const [
-		removeHighPriorityContactList,
-		setRemoveHighPriorityContactList,
-	] = useState([]);
+
 	const [isMultiSelectEmpty, setIsMultiSelectEmpty] = useState(false);
 
 	const {client, provisioningServerAPI} = useAppPropertiesContext();
 	const [isLoadingSaveButton, setIsLoadingSaveButton] = useState(false);
-
-	const addHighPriorityContacts = (contactList) => {
-		const contactsList = contactList.map((item) => item);
-
-		setAddHighPriorityContactList(contactsList);
-	};
-	const removeHighPriorityContacts = (contactList) => {
-		const contactsList = contactList.map((item) => item);
-		setRemoveHighPriorityContactList(contactsList);
-	};
 
 	const updateMultiSelectEmpty = (error) => {
 		setIsMultiSelectEmpty(error);
@@ -61,50 +52,42 @@ const IncidentContactEditModal = ({
 	const handleSubmit = async () => {
 		try {
 			setIsLoadingSaveButton(true);
-
-			await Promise.all(
-				addHighPriorityContactList?.map(async (item) => {
-					return associateContactRole(
-						item,
-						project,
-						sessionId,
-						provisioningServerAPI
-					);
-				})
+			await actRaysourceContact(
+				removeContactRoleRaysource,
+				removeHighPriorityContacts,
+				project,
+				sessionId,
+				provisioningServerAPI
+			);
+			await actRaysourceContact(
+				associateContactRoleRaysource,
+				addHighPriorityContact,
+				project,
+				sessionId,
+				provisioningServerAPI
+			);
+			await actLiferayContact(
+				addHighPriorityContact,
+				associateContactRoleLiferay,
+				project,
+				client
+			);
+			await actLiferayContact(
+				removeHighPriorityContacts,
+				removeContactRoleLiferay,
+				project,
+				client
 			);
 
-			await Promise.all(
-				removeHighPriorityContactList?.map(async (item) => {
-					return removeContactRole(
-						item,
-						project,
-						sessionId,
-						provisioningServerAPI
-					);
-				})
-			);
-
-			await Promise.all(
-				addHighPriorityContactList?.map((item) => {
-					return addHighPriorityContactsList(client, item, project);
-				})
-			);
-
-			await Promise.all(
-				removeHighPriorityContactList?.map((item) => {
-					return removeHighPriorityContactsList(client, item);
-				})
-			);
-
-			removeHighPriorityContactList?.map((item) => {
+			removeHighPriorityContacts?.map((item) => {
 				openToast(
 					`${item.label}`,
 					`${i18n.translate('high-priority-contact-removed')} 
-					<b>${i18n.translate(`${getKebabCase(item.filter.name)}-contact`)}</b>`
+					<b>${i18n.translate(`${getKebabCase(item.filter)}`)}</b>`
 				);
 			});
 
-			addHighPriorityContactList?.map((item) => {
+			addHighPriorityContact?.map((item) => {
 				openToast(
 					`${item.label}`,
 					`${i18n.translate('high-priority-contact-added')} 
@@ -184,11 +167,11 @@ const IncidentContactEditModal = ({
 			}}
 		>
 			<SetupHighPriorityContactForm
-				addContactList={addHighPriorityContacts}
+				addContactList={setAddHighPriorityContacts}
 				disableSubmit={updateMultiSelectEmpty}
 				filter={modalFilter}
 				isCriticalIncidentCard
-				removedContactList={removeHighPriorityContacts}
+				removedContactList={setRemoveHighPriorityContacts}
 			/>
 		</Layout>
 	);

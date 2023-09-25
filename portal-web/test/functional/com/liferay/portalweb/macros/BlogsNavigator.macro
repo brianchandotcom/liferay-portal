@@ -227,10 +227,10 @@ definition {
 		// Entries accessed in site pages will be redirected back to the page after publishing. Those accessed in admin will stay in admin after publishing.
 
 		if (isSet(layoutName)) {
-			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet&_com_liferay_blogs_web_portlet_BlogsAdminPortlet_mvcRenderCommandName=%2Fblogs%2Fedit_entry&_com_liferay_blogs_web_portlet_BlogsAdminPortlet_redirect=http%3A%2F%2F${baseURL}%3A8080%2Fweb%2F${siteURLKey}%2F${layoutName}");
+			Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet&_com_liferay_blogs_web_portlet_BlogsAdminPortlet_mvcRenderCommandName=%2Fblogs%2Fedit_entry&_com_liferay_blogs_web_portlet_BlogsAdminPortlet_redirect=http%3A%2F%2F${baseURL}%3A8080%2Fweb%2F${siteURLKey}%2F${layoutName}");
 		}
 		else {
-			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet&_com_liferay_blogs_web_portlet_BlogsAdminPortlet_mvcRenderCommandName=%2Fblogs%2Fedit_entry");
+			Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet&_com_liferay_blogs_web_portlet_BlogsAdminPortlet_mvcRenderCommandName=%2Fblogs%2Fedit_entry");
 		}
 	}
 
@@ -247,7 +247,7 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/web/${siteURLKey}/${layoutName}/-/blogs/${entryTitle}");
+		Open(value1 = "${baseURL}/web/${siteURLKey}/${layoutName}/-/blogs/${entryTitle}");
 	}
 
 	macro openToConfigInInstanceSettings {
@@ -261,7 +261,7 @@ definition {
 			var portletId = "com.liferay.blogs.configuration.BlogsGroupServiceConfiguration";
 		}
 
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
+		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
 	macro openToEditEntryInSite {
@@ -276,7 +276,7 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&refererPlid=12&_com_liferay_blogs_web_portlet_BlogsAdminPortlet_mvcRenderCommandName=%2Fblogs%2Fedit_entry&_com_liferay_blogs_web_portlet_BlogsAdminPortlet_entryId=${entryId}");
+		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&refererPlid=12&_com_liferay_blogs_web_portlet_BlogsAdminPortlet_mvcRenderCommandName=%2Fblogs%2Fedit_entry&_com_liferay_blogs_web_portlet_BlogsAdminPortlet_entryId=${entryId}");
 	}
 
 	macro openToNotPublishedTab {
@@ -297,7 +297,7 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet&p_v_l_s_g_id=${stagingId}");
+		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet&p_v_l_s_g_id=${stagingId}");
 	}
 
 }

@@ -3,7 +3,7 @@ definition {
 		if ((IsElementPresent(locator1 = "ProductMenu#PAGE_PLUS_ICON_COLLAPSED")) && (IsVisible(locator1 = "ProductMenu#PAGE_PLUS_ICON_COLLAPSED"))) {
 			Click(locator1 = "ProductMenu#TOGGLE");
 
-            Open(locator1 = "https://localhost:8080/web/guest/home");
+            Open(value1 = "https://localhost:8080/web/guest/home");
 		}
 	}
 }

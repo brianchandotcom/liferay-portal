@@ -142,7 +142,7 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcPath=%2Fadmin%2Fcommon%2Fedit_kb_template.jsp");
+		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcPath=%2Fadmin%2Fcommon%2Fedit_kb_template.jsp");
 	}
 
 	macro previewTemplate {

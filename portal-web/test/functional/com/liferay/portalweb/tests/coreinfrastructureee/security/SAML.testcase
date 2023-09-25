@@ -703,7 +703,7 @@ definition {
 		}
 
 		task ("Assert ds:Signature present in HTML source text") {
-			Open.openNoError(locator1 = "http://localhost:8080/c/portal/saml/metadata");
+			Open.openNoError(value1 = "http://localhost:8080/c/portal/saml/metadata");
 
 			AssertHTMLSourceTextPresent.assertHTMLSourceTextPresentNoSPARefresh(value1 = "ds:Signature");
 
@@ -717,7 +717,7 @@ definition {
 		}
 
 		task ("Assert ds:Signature not present in HTML source text") {
-			Open.openNoError(locator1 = "http://localhost:8080/c/portal/saml/metadata");
+			Open.openNoError(value1 = "http://localhost:8080/c/portal/saml/metadata");
 
 			AssertHTMLSourceTextNotPresent.assertHTMLSourceTextNotPresentNoSPARefresh(value1 = "ds:Signature");
 		}
@@ -742,7 +742,7 @@ definition {
 		}
 
 		task ("Assert http://www.w3.org/2000/09/xmldsig#rsa-sha1 not present in able.com:9080 HTML source text ") {
-			Open.openNoError(locator1 = "http://www.able.com:9080/c/portal/saml/metadata");
+			Open.openNoError(value1 = "http://www.able.com:9080/c/portal/saml/metadata");
 
 			AssertHTMLSourceTextNotPresent.assertHTMLSourceTextNotPresentNoSPARefresh(value1 = "http://www.w3.org/2000/09/xmldsig#rsa-sha1");
 		}
@@ -762,7 +762,7 @@ definition {
 
 			User.viewLoggedOutPG();
 
-			Open.openNoError(locator1 = "http://www.able.com:9080");
+			Open.openNoError(value1 = "http://www.able.com:9080");
 		}
 
 		task ("Assert console message: validation of protocol message signature failed") {

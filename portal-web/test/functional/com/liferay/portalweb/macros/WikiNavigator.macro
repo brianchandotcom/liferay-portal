@@ -190,10 +190,10 @@ definition {
 			name = ${wikiNodeName});
 
 		if (isSet(layoutURLKey)) {
-			Open(locator1 = "${baseURL}/web/${siteURLKey}/${layoutURLKey}?p_p_id=com_liferay_wiki_web_portlet_WikiPortlet&_com_liferay_wiki_web_portlet_WikiPortlet_mvcRenderCommandName=%2Fwiki%2Fedit_page&_com_liferay_wiki_web_portlet_WikiPortlet_editTitle=1&p_r_p_http%3A%2F%2Fwww.liferay.com%2Fpublic-render-parameters%2Fwiki_nodeId=${nodeId}&_com_liferay_wiki_web_portlet_WikiPortlet_parentTitle=${wikiParentPageTitle}");
+			Open(value1 = "${baseURL}/web/${siteURLKey}/${layoutURLKey}?p_p_id=com_liferay_wiki_web_portlet_WikiPortlet&_com_liferay_wiki_web_portlet_WikiPortlet_mvcRenderCommandName=%2Fwiki%2Fedit_page&_com_liferay_wiki_web_portlet_WikiPortlet_editTitle=1&p_r_p_http%3A%2F%2Fwww.liferay.com%2Fpublic-render-parameters%2Fwiki_nodeId=${nodeId}&_com_liferay_wiki_web_portlet_WikiPortlet_parentTitle=${wikiParentPageTitle}");
 		}
 		else {
-			Open(locator1 = "${baseURL}/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_wiki_web_portlet_WikiAdminPortlet&_com_liferay_wiki_web_portlet_WikiAdminPortlet_mvcRenderCommandName=%2Fwiki%2Fedit_page&_com_liferay_wiki_web_portlet_WikiAdminPortlet_editTitle=1&_com_liferay_wiki_web_portlet_WikiAdminPortlet_nodeId=${nodeId}&_com_liferay_wiki_web_portlet_WikiAdminPortlet_parentTitle=${wikiParentPageTitle}");
+			Open(value1 = "${baseURL}/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_wiki_web_portlet_WikiAdminPortlet&_com_liferay_wiki_web_portlet_WikiAdminPortlet_mvcRenderCommandName=%2Fwiki%2Fedit_page&_com_liferay_wiki_web_portlet_WikiAdminPortlet_editTitle=1&_com_liferay_wiki_web_portlet_WikiAdminPortlet_nodeId=${nodeId}&_com_liferay_wiki_web_portlet_WikiAdminPortlet_parentTitle=${wikiParentPageTitle}");
 		}
 	}
 
@@ -211,10 +211,10 @@ definition {
 		// Pages accessed in site pages will be redirected back to the page after publishing. Those accessed in admin will stay in admin after publishing.
 
 		if (isSet(layoutURLKey)) {
-			Open(locator1 = "${baseURL}/web/guest/${layoutURLKey}?p_p_id=com_liferay_wiki_web_portlet_WikiPortlet&_com_liferay_wiki_web_portlet_WikiPortlet_mvcRenderCommandName=%2Fwiki%2Fedit_page&_com_liferay_wiki_web_portlet_WikiPortlet_editTitle=1&p_r_p_http%3A%2F%2Fwww.liferay.com%2Fpublic-render-parameters%2Fwiki_nodeId=${nodeId}&p_r_p_http%3A%2F%2Fwww.liferay.com%2Fpublic-render-parameters%2Fwiki_title=");
+			Open(value1 = "${baseURL}/web/guest/${layoutURLKey}?p_p_id=com_liferay_wiki_web_portlet_WikiPortlet&_com_liferay_wiki_web_portlet_WikiPortlet_mvcRenderCommandName=%2Fwiki%2Fedit_page&_com_liferay_wiki_web_portlet_WikiPortlet_editTitle=1&p_r_p_http%3A%2F%2Fwww.liferay.com%2Fpublic-render-parameters%2Fwiki_nodeId=${nodeId}&p_r_p_http%3A%2F%2Fwww.liferay.com%2Fpublic-render-parameters%2Fwiki_title=");
 		}
 		else {
-			Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_wiki_web_portlet_WikiAdminPortlet&_com_liferay_wiki_web_portlet_WikiAdminPortlet_mvcRenderCommandName=%2Fwiki%2Fedit_page&_com_liferay_wiki_web_portlet_WikiAdminPortlet_redirect=&_com_liferay_wiki_web_portlet_WikiAdminPortlet_editTitle=1&_com_liferay_wiki_web_portlet_WikiAdminPortlet_nodeId=${nodeId}");
+			Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_wiki_web_portlet_WikiAdminPortlet&_com_liferay_wiki_web_portlet_WikiAdminPortlet_mvcRenderCommandName=%2Fwiki%2Fedit_page&_com_liferay_wiki_web_portlet_WikiAdminPortlet_redirect=&_com_liferay_wiki_web_portlet_WikiAdminPortlet_editTitle=1&_com_liferay_wiki_web_portlet_WikiAdminPortlet_nodeId=${nodeId}");
 		}
 	}
 

@@ -364,7 +364,7 @@ definition {
 			var companyId = JSONCompany.getCompanyId();
 			var baseURL = PropsUtil.get("portal.url");
 
-			Open.openNoError(locator1 = "${baseURL}/o/company-log/${companyId}/invalidLog.log");
+			Open.openNoError(value1 = "${baseURL}/o/company-log/${companyId}/invalidLog.log");
 		}
 
 		task ("Then an error message is shown which indicates the log was not found and no log is downloaded") {

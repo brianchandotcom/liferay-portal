@@ -763,7 +763,7 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 			var taxCategoryId = selenium.getText("CommerceEntry#HEADER_ID");
 
-			Open.openInTheNewTab(locator1 = "${baseURL}/group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet_mvcRenderCommandName=%2Fcp_tax_category%2Fedit_cp_tax_category&_com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet_redirect=%22%3E%3Cscript%3Ealert(111)%3C/script%3E&_com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet_cpTaxCategoryId=${taxCategoryId}");
+			Open.openInTheNewTab(value1 = "${baseURL}/group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet_mvcRenderCommandName=%2Fcp_tax_category%2Fedit_cp_tax_category&_com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet_redirect=%22%3E%3Cscript%3Ealert(111)%3C/script%3E&_com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet_cpTaxCategoryId=${taxCategoryId}");
 		}
 
 		task ("Then no XSS alert is present") {

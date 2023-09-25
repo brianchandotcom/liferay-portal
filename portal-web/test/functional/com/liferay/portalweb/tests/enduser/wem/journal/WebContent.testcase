@@ -439,7 +439,7 @@ definition {
 		task ("Open a second tab and select it") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Open.openInTheNewTab(locator1 = "${baseURL}/group/test-site-name/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
+			Open.openInTheNewTab(value1 = "${baseURL}/group/test-site-name/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
 		}
 
 		task ("Edit Web Content article in the second tab") {

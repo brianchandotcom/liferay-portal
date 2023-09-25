@@ -398,7 +398,7 @@ definition {
 		}
 
 		task ("Assert confirm 123") {
-			Open.openNoError(locator1 = ${portalURL});
+			Open.openNoError(value1 = ${portalURL});
 
 			AssertConfirm(value1 = 123);
 		}

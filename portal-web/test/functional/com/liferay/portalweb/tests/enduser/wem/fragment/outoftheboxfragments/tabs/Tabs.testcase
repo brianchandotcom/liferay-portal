@@ -645,7 +645,7 @@ definition {
 		task ("Then the Tab 1 should be selected after accessing to page on a new window") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Open.openInTheNewTab(locator1 = "${baseURL}/web/test-site-name/content-page-name?p_l_mode=edit");
+			Open.openInTheNewTab(value1 = "${baseURL}/web/test-site-name/content-page-name?p_l_mode=edit");
 
 			PageEditor.assertFragmentSidebarLoaded();
 

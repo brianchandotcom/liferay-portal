@@ -325,7 +325,7 @@ definition {
 		task ("Navigate to the Home page") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Open.openNoError(locator1 = "${baseURL}/web/guest/home");
+			Open.openNoError(value1 = "${baseURL}/web/guest/home");
 		}
 
 		task ("Assert an alert pops up that reads 'Sample Global JS deployed.'") {

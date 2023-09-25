@@ -80,7 +80,7 @@ definition {
 		task ("And I open a new tab, go to the Set up modal, fill out the whole form and send it") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Open.openInTheNewTab(locator1 = "${baseURL}/web/${testSiteURL}/project/#/ERC-003/activation/analytics-cloud");
+			Open.openInTheNewTab(value1 = "${baseURL}/web/${testSiteURL}/project/#/ERC-003/activation/analytics-cloud");
 
 			WaitForElementPresent(locator1 = "CustomerPortalSite#FINISH_ACTIVATION");
 

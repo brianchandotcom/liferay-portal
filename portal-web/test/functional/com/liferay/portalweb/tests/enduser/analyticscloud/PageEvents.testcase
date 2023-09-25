@@ -924,7 +924,7 @@ definition {
 		}
 
 		task ("Open the BBC home page in a new tab") {
-			Open.openInTheNewTab(locator1 = "https://www.bbc.com");
+			Open.openInTheNewTab(value1 = "https://www.bbc.com");
 		}
 
 		task ("Switch to the previous tab") {
@@ -1001,7 +1001,7 @@ definition {
 		}
 
 		task ("Open the BBC home page in a new tab") {
-			Open.openInTheNewTab(locator1 = "https://www.bbc.com");
+			Open.openInTheNewTab(value1 = "https://www.bbc.com");
 		}
 
 		task ("Switch to the DXP tab") {

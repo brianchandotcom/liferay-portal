@@ -192,7 +192,7 @@ definition {
 		var oauth2URL = PropsUtil.get("oauth2.url");
 
 		if (${newTab} == "true") {
-			Open.openInTheNewTab(locator1 = "${oauth2URL}/grant-type-authorization-code");
+			Open.openInTheNewTab(value1 = "${oauth2URL}/grant-type-authorization-code");
 		}
 		else {
 			Navigator.openSpecificURL(url = "${oauth2URL}/grant-type-authorization-code");

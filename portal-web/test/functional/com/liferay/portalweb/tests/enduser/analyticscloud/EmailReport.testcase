@@ -346,7 +346,7 @@ definition {
 		task ("Launch AC") {
 			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
-			Open(locator1 = ${analyticsCloudURL});
+			Open(value1 = ${analyticsCloudURL});
 		}
 
 		task ("Go to admin page") {

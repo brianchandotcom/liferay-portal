@@ -211,7 +211,7 @@ definition {
 	}
 
 	macro openNodePort {
-		Open(locator1 = "http://localhost:${nodePort}");
+		Open(value1 = "http://localhost:${nodePort}");
 	}
 
 	macro openPrivateSitePageURL {
@@ -227,7 +227,7 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteNameURL}/${pageNameURL}");
+		Open(value1 = "${baseURL}/group/${siteNameURL}/${pageNameURL}");
 	}
 
 	macro openPrivateSiteURL {
@@ -240,7 +240,7 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteNameURL}");
+		Open(value1 = "${baseURL}/group/${siteNameURL}");
 	}
 
 	macro openPrivateStagedSiteURL {
@@ -253,7 +253,7 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteNameURL}-staging");
+		Open(value1 = "${baseURL}/group/${siteNameURL}-staging");
 	}
 
 	macro openPrivateURL {
@@ -263,7 +263,7 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/guest");
+		Open(value1 = "${baseURL}/group/guest");
 	}
 
 	macro openSitePage {
@@ -280,7 +280,7 @@ definition {
 
 		var pageNameURL = StringUtil.lowerCase(${pageNameURL});
 
-		Open(locator1 = "${baseURL}/web/${siteNameURL}/${pageNameURL}");
+		Open(value1 = "${baseURL}/web/${siteNameURL}/${pageNameURL}");
 	}
 
 	macro openSiteStagingConfiguration {
@@ -306,11 +306,11 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/web/${siteNameURL}");
+		Open(value1 = "${baseURL}/web/${siteNameURL}");
 	}
 
 	macro openSpecificURL {
-		Open(locator1 = ${url});
+		Open(value1 = ${url});
 
 		Alert.confirmSecurity(domain = ${domain});
 	}
@@ -326,10 +326,10 @@ definition {
 		}
 
 		if (isSet(defaultSite)) {
-			Open(locator1 = "${baseURL}/web/guest-staging");
+			Open(value1 = "${baseURL}/web/guest-staging");
 		}
 		else {
-			Open(locator1 = "${baseURL}/web/${siteNameURL}-staging");
+			Open(value1 = "${baseURL}/web/${siteNameURL}-staging");
 		}
 	}
 
@@ -362,7 +362,7 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=pages&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_displayStyle=miller-columns&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcRenderCommandName=%2Flayout_admin%2Fedit_layout&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_portletResource=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&p_r_p_selPlid=${plid}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_screenNavigationEntryKey=${screenNavigationEntryKey}");
+		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=pages&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_displayStyle=miller-columns&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcRenderCommandName=%2Flayout_admin%2Fedit_layout&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_portletResource=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&p_r_p_selPlid=${plid}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_screenNavigationEntryKey=${screenNavigationEntryKey}");
 	}
 
 	macro openURL {
@@ -374,7 +374,7 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/web/guest/home");
+		Open(value1 = "${baseURL}/web/guest/home");
 	}
 
 	macro openWithAppendToBaseURL {
@@ -382,7 +382,7 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/${urlAppend}");
+		Open(value1 = "${baseURL}/${urlAppend}");
 	}
 
 	macro selectSpecificWindow {

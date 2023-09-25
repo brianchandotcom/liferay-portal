@@ -8,7 +8,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		Default.Open(locator1 = ${portalURL});
+		Default.Open(value1 = ${portalURL});
 	}
 
 }

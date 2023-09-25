@@ -925,7 +925,7 @@ definition {
 			License.deployLicenseFile();
 		}
 
-		Open.openInTheNewTab(locator1 = "http://localhost:8080");
+		Open.openInTheNewTab(value1 = "http://localhost:8080");
 
 		takeScreenshot();
 
@@ -1036,7 +1036,7 @@ definition {
 			License.deployLicenseFile();
 		}
 
-		Open.openInTheNewTab(locator1 = "http://localhost:8080");
+		Open.openInTheNewTab(value1 = "http://localhost:8080");
 
 		takeScreenshot();
 

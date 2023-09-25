@@ -230,7 +230,7 @@ definition {
 			var portlet = "InstanceSettingsPortlet";
 		}
 
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_${portlet}&_com_liferay_configuration_admin_web_portlet_${portlet}_factoryPid=com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration&_com_liferay_configuration_admin_web_portlet_${portlet}_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_${portlet}_pid=com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration");
+		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_${portlet}&_com_liferay_configuration_admin_web_portlet_${portlet}_factoryPid=com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration&_com_liferay_configuration_admin_web_portlet_${portlet}_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_${portlet}_pid=com.liferay.friendly.url.configuration.FriendlyURLRedirectionConfiguration");
 
 		Click(locator1 = "Dropdown#TRIGGER");
 
@@ -353,7 +353,7 @@ definition {
 		var baseURL = PropsUtil.get("portal.url");
 
 		if (isSet(navigateFromJavaScriptSEODynamicRendering)) {
-			Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.layout.seo.web.internal.configuration.LayoutSEODynamicRenderingConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.layout.seo.web.internal.configuration.LayoutSEODynamicRenderingConfiguration");
+			Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.layout.seo.web.internal.configuration.LayoutSEODynamicRenderingConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.layout.seo.web.internal.configuration.LayoutSEODynamicRenderingConfiguration");
 
 			Alert.viewWarningSpecific(key_warningMessage = "To set up the user agents, go to System Settings > Pages > Crawler User Agents.");
 
@@ -363,7 +363,7 @@ definition {
 				locator1 = "Link#ANY_HREF_2");
 		}
 		else {
-			Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.redirect.configuration.CrawlerUserAgentsConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.redirect.configuration.CrawlerUserAgentsConfiguration");
+			Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.redirect.configuration.CrawlerUserAgentsConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.redirect.configuration.CrawlerUserAgentsConfiguration");
 		}
 
 		AssertVisible(
@@ -444,13 +444,13 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_mvcRenderCommandName=%2Fredirect%2Fedit_redirect_entry&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirect=http%3A%2F%2F${baseURL}%3A8080%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_redirect_web_internal_portlet_RedirectPortlet");
+		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_mvcRenderCommandName=%2Fredirect%2Fedit_redirect_entry&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirect=http%3A%2F%2F${baseURL}%3A8080%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_redirect_web_internal_portlet_RedirectPortlet");
 	}
 
 	macro openToConfigInSystemSettings {
 		var baseURL = PropsUtil.get("portal.url");
 
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.redirect.internal.configuration.RedirectConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
+		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.redirect.internal.configuration.RedirectConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
 	macro openToEditEntry {
@@ -463,7 +463,7 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_mvcRenderCommandName=%2Fredirect%2Fedit_redirect_entry&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirect=http%3A%2F%2F${baseURL}%3A8080%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_redirect_web_internal_portlet_RedirectPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirectEntryId=${redirectEntryId}");
+		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_mvcRenderCommandName=%2Fredirect%2Fedit_redirect_entry&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirect=http%3A%2F%2F${baseURL}%3A8080%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_redirect_web_internal_portlet_RedirectPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirectEntryId=${redirectEntryId}");
 	}
 
 	macro openToPatterns {

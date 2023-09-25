@@ -875,7 +875,7 @@ definition {
 				site = "true");
 			var basePortalURL = PropsUtil.get("portal.url");
 
-			Open.openNoError(locator1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
+			Open.openNoError(value1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
 
 			var responseToParse = CommerceJSONProductsAPI._getCommerceFieldValue(
 				field = "uuid",
@@ -968,7 +968,7 @@ definition {
 				site = "true");
 			var basePortalURL = PropsUtil.get("portal.url");
 
-			Open.openNoError(locator1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
+			Open.openNoError(value1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
 
 			var responseToParse = CommerceJSONProductsAPI._getCommerceFieldValue(
 				field = "uuid",
@@ -1149,7 +1149,7 @@ definition {
 				groupName = "Minium",
 				site = "true");
 
-			Open.openNoError(locator1 = "http://www.able.com:8080/sitemap.xml?groupId=${groupId}");
+			Open.openNoError(value1 = "http://www.able.com:8080/sitemap.xml?groupId=${groupId}");
 
 			var responseToParse = CommerceJSONProductsAPI._getCommerceFieldValue(
 				field = "uuid",
@@ -2068,7 +2068,7 @@ definition {
 				groupName = "Minium",
 				site = "true");
 
-			Open.openNoError(locator1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
+			Open.openNoError(value1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
 
 			var responseToParse = CommerceJSONProductsAPI._getCommerceFieldValue(
 				field = "uuid",
@@ -2149,7 +2149,7 @@ definition {
 				site = "true");
 			var basePortalURL = PropsUtil.get("portal.url");
 
-			Open.openNoError(locator1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
+			Open.openNoError(value1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
 
 			var responseToParse = CommerceJSONProductsAPI._getCommerceFieldValue(
 				field = "uuid",

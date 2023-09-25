@@ -37,7 +37,7 @@ definition {
 		var pageNameURL = StringUtil.lowerCase(${pageNameURL});
 
 		if ((${pageName} == "Customer Dashboard") || (${pageName} == "Publisher Dashboard")) {
-			Open(locator1 = "${baseURL}/web/${siteNameURL}/${pageNameURL}");
+			Open(value1 = "${baseURL}/web/${siteNameURL}/${pageNameURL}");
 		}
 	}
 

@@ -423,7 +423,7 @@ definition {
 	macro openPageInTheNewTab {
 		var baseURL = PropsUtil.get("portal.url");
 
-		Open.openInTheNewTab(locator1 = "${baseURL}/web/customer-portal-site/${pageURL}");
+		Open.openInTheNewTab(value1 = "${baseURL}/web/customer-portal-site/${pageURL}");
 	}
 
 	macro openPageLiferayExperienceCloudViaURL {

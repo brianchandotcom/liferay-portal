@@ -796,7 +796,7 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet");
+		Open(value1 = "${baseURL}/group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet");
 	}
 
 	macro openDepotImportAdmin {
@@ -807,7 +807,7 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet");
+		Open(value1 = "${baseURL}/group/asset-library-${depotId}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet");
 	}
 
 	macro openExportAdmin {
@@ -820,7 +820,7 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteNameURL}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet");
+		Open(value1 = "${baseURL}/group/${siteNameURL}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ExportPortlet");
 	}
 
 	macro openImportAdmin {
@@ -833,7 +833,7 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteNameURL}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet");
+		Open(value1 = "${baseURL}/group/${siteNameURL}/~/control_panel/manage?p_p_id=com_liferay_exportimport_web_portlet_ImportPortlet");
 	}
 
 	macro relaunchCurrentAndPreviousProcess {

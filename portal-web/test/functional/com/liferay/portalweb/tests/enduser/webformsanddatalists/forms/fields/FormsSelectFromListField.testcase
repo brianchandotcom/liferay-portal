@@ -931,7 +931,7 @@ definition {
 
 			Pause(locator1 = 40000);
 
-			Open.openInTheNewTab(locator1 = "http://localhost:8080");
+			Open.openInTheNewTab(value1 = "http://localhost:8080");
 
 			SelectWindow(locator1 = "title=Home - Liferay DXP");
 

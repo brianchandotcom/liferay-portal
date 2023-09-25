@@ -1372,7 +1372,7 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Italy");
 
-		Open.openInTheNewTab(locator1 = ${portalURL});
+		Open.openInTheNewTab(value1 = ${portalURL});
 
 		CommerceNavigator.gotoPortlet(
 			category = "Inventory Management",

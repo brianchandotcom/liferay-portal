@@ -30,7 +30,7 @@ public class PoshiPropertyOrderCheck extends BaseFileCheck {
 
 		Matcher matcher = _customPropertiesPattern.matcher(content);
 
-		outLooper:
+		outerLoop:
 		while (matcher.find()) {
 			String[] properties = StringUtil.split(
 				matcher.group(1), "${line.separator}");
@@ -46,7 +46,7 @@ public class PoshiPropertyOrderCheck extends BaseFileCheck {
 				int index = property.indexOf(StringPool.EQUAL);
 
 				if (index == -1) {
-					continue outLooper;
+					continue outerLoop;
 				}
 
 				propertiesMap.put(property.substring(0, index), property);

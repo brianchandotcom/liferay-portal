@@ -157,7 +157,6 @@ public class ObjectDefinitionServiceTest {
 				"User ", _user1.getUserId(), " must have ",
 				"ADD_OBJECT_DEFINITION permission for com.liferay.object "),
 			() -> _testAddSystemObjectDefinition(0, _user1));
-
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(

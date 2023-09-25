@@ -4,6 +4,7 @@
  */
 
 import {
+	API,
 	BuilderScreen,
 	Card,
 	MultipleSelect,
@@ -38,6 +39,7 @@ export interface UniqueCompositeKeyProps {
 	customObjectFields: ObjectField[];
 	disabled: boolean;
 	errors: ObjectValidationErrors;
+	objectDefinitionExternalReferenceCode: string;
 	setShowUniqueCompositeKeyAlert: (value: boolean) => void;
 	setValues: (values: Partial<ObjectValidation>) => void;
 	showUniqueCompositeKeyAlert: boolean;
@@ -62,6 +64,7 @@ export function UniqueCompositeKey({
 	customObjectFields,
 	disabled,
 	errors,
+	objectDefinitionExternalReferenceCode,
 	setShowUniqueCompositeKeyAlert,
 	setValues,
 	showUniqueCompositeKeyAlert,
@@ -77,6 +80,10 @@ export function UniqueCompositeKey({
 	const [multipleSelectOptions, setMultipleSelectOptions] = useState<
 		MultipleSelectOption[]
 	>([]);
+	const [objectDefinition, setObjectDefinition] = useState<
+		ObjectDefinition
+	>();
+
 	const filteredCustomObjectFields = customObjectFields.filter(
 		(customObjectField) =>
 			customObjectField.businessType === 'Integer' ||
@@ -123,6 +130,20 @@ export function UniqueCompositeKey({
 			title: Liferay.Language.get('select-the-fields'),
 		});
 	};
+
+	useEffect(() => {
+		const makeFetch = async () => {
+			const objectDefinitionResponse = await API.getObjectDefinitionByExternalReferenceCode(
+				objectDefinitionExternalReferenceCode
+			);
+
+			setObjectDefinition(objectDefinitionResponse);
+		};
+
+		makeFetch();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		if (!values.objectValidationRuleSettings) {
@@ -226,6 +247,7 @@ export function UniqueCompositeKey({
 				<BuilderScreen
 					builderScreenItems={builderScreenItems}
 					defaultSort={false}
+					disableEdit={true}
 					emptyState={{
 						buttonText: Liferay.Language.get('add-fields'),
 						description: Liferay.Language.get(
@@ -235,7 +257,70 @@ export function UniqueCompositeKey({
 					}}
 					filter={true}
 					firstColumnHeader={Liferay.Language.get('label')}
-					onDeleteColumn={() => {}}
+					onDeleteColumn={(objectFieldName) => {
+						const makeFetch = async () => {
+							const objectValidation: ObjectValidation = await API.getObjectValidationRuleById(
+								values.id as number
+							);
+
+							const canNotDeleteObjectField = builderScreenItems.some(
+								(builderScreenItem) =>
+									(objectValidation.objectValidationRuleSettings as ObjectValidationRuleSetting[]).some(
+										(objectValidationRuleSetting) =>
+											objectValidationRuleSetting.value ===
+											builderScreenItem.externalReferenceCode
+									) &&
+									builderScreenItem.objectFieldName ===
+										objectFieldName &&
+									(objectDefinition as ObjectDefinition)
+										.status.label === 'approved'
+							);
+
+							if (canNotDeleteObjectField) {
+								const parentWindow = Liferay.Util.getOpener();
+
+								parentWindow.Liferay.fire(
+									'openModalDeletionNotAllowed',
+									{
+										contentLiferayFire: (
+											<span>
+												{Liferay.Language.get(
+													'fields-cannot-be-deleted-from-unique-composite-keys-after-object-publication'
+												)}
+											</span>
+										),
+									}
+								);
+							}
+							else {
+								let removedBuilderScreenItem: TBuilderScreenItem[];
+
+								builderScreenItems.forEach(
+									(builderScreenItem, index) => {
+										if (
+											builderScreenItem.objectFieldName ===
+											objectFieldName
+										) {
+											removedBuilderScreenItem = builderScreenItems.splice(
+												index,
+												1
+											);
+										}
+									}
+								);
+								setValues({
+									objectValidationRuleSettings: values.objectValidationRuleSettings?.filter(
+										(objectValidationRuleSetting) =>
+											objectValidationRuleSetting.value !==
+											removedBuilderScreenItem[0]
+												.externalReferenceCode
+									),
+								});
+							}
+						};
+
+						makeFetch();
+					}}
 					openModal={handleAddObjectFields}
 					secondColumnHeader={Liferay.Language.get('type')}
 				/>
@@ -249,9 +334,8 @@ export function UniqueCompositeKey({
 			>
 				<MultipleSelect<MultipleSelectOption>
 					disabled={!builderScreenItems.length}
-					error={errors.errorLabel}
 					label={Liferay.Language.get('field')}
-					options={multipleSelectOptions ?? []}
+					options={multipleSelectOptions}
 					setOptions={(newOutputObjectFieldOptions) => {
 						const objectValidationRuleSettings = values.objectValidationRuleSettings?.filter(
 							(objectValidationRuleSetting) =>

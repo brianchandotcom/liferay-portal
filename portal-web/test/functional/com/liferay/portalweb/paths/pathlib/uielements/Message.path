@@ -332,7 +332,7 @@
 </tr>
 <tr>
 	<td>INFO_SPECIFIC</td>
-	<td>//div[contains(@class,'alert alert-info') and not(contains(@class,'hide'))][contains(.,'${key_infoMessage}')]</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info') and not(contains(@class,'hide'))][contains(.,'${key_infoMessage}')]</td>
 	<td></td>
 </tr>
 <tr>

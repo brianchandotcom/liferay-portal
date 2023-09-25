@@ -66,22 +66,26 @@ public class HeaderFilter extends BasePortalFilter {
 			}
 		}
 
-		long lastModified = getLastModified(httpServletRequest);
+		String ifNoneMatch = httpServletRequest.getHeader(HttpHeaders.IF_NONE_MATCH);
 
-		if (lastModified > 0) {
-			long ifModifiedSince = httpServletRequest.getDateHeader(
-				HttpHeaders.IF_MODIFIED_SINCE);
+		if (ifNoneMatch == null) {
+			long lastModified = getLastModified(httpServletRequest);
 
-			httpServletResponse.setDateHeader(
-				HttpHeaders.LAST_MODIFIED, lastModified);
+			if (lastModified > 0) {
+				long ifModifiedSince = httpServletRequest.getDateHeader(
+					HttpHeaders.IF_MODIFIED_SINCE);
 
-			if (lastModified <= ifModifiedSince) {
 				httpServletResponse.setDateHeader(
-					HttpHeaders.LAST_MODIFIED, ifModifiedSince);
-				httpServletResponse.setStatus(
-					HttpServletResponse.SC_NOT_MODIFIED);
+					HttpHeaders.LAST_MODIFIED, lastModified);
 
-				return;
+				if (lastModified <= ifModifiedSince) {
+					httpServletResponse.setDateHeader(
+						HttpHeaders.LAST_MODIFIED, ifModifiedSince);
+					httpServletResponse.setStatus(
+						HttpServletResponse.SC_NOT_MODIFIED);
+
+					return;
+				}
 			}
 		}
 

@@ -48,19 +48,17 @@ definition {
 		}
 
 		task ("Attempt to import a non-zip file") {
-			UploadCommonFile(
+			WaitForPageLoad();
+
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 				locator1 = "TextInput#FILE",
 				value1 = "Document_1.doc");
 		}
 
 		task ("Assert the form validator displays an error that the file is not a zip file") {
-			WaitForElementPresent(locator1 = "Message#ERROR_FORM_VALIDATION");
-
 			AssertTextEquals(
-				locator1 = "Message#ERROR_FORM_VALIDATION",
-				value1 = "Please enter a file with a valid extension (zip).");
-
-			IFrame.closeFrame();
+				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+				value1 = "Only zip files are allowed.");
 		}
 	}
 
@@ -1535,21 +1533,21 @@ definition {
 		task ("Import a fragment collection") {
 			FragmentsAdminNavigator.gotoImportCollection();
 
-			UploadDependencyFile.uploadArchiveFile(fileName = "fragment-collection.zip");
+			WaitForPageLoad();
 
-			SelectFrameTop();
+			UploadDependencyFile.uploadArchiveFile(fileName = "fragment-collection.zip");
 
 			Button.clickImport();
 		}
 
 		task ("Assert the zip imported properly") {
-			AssertElementNotPresent(locator1 = "Message#ERROR");
+			AssertVisible(locator1 = "Message#SUCCESS_IMPORT");
 		}
 
 		task ("Assert that all fragments validated") {
-			AssertElementNotPresent(
-				key_infoMessage = "The following fragments have validation issues",
-				locator1 = "Message#INFO_SPECIFIC");
+			AssertElementNotPresent(locator1 = "Message#WARNING_IMPORT");
+
+			AssertElementNotPresent(locator1 = "Message#ERROR_IMPORT");
 		}
 	}
 

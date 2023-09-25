@@ -656,27 +656,7 @@ definition {
 		task ("Import masters page template in the current site") {
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
-			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
-
-			MenuItem.click(menuItem = "Import");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-			var mastersZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "master-page-*.zip");
-
-			UploadTempFile(
-				locator1 = "TextInput#FILE",
-				value1 = ${mastersZipFileName});
-
-			AssertChecked(
-				checkboxName = "Overwrite Existing Page Templates",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
-			Button.clickImport();
-
-			Alert.viewSuccessMessage();
-
-			IFrame.closeFrame();
+			MastersPageTemplatesAdmin.importMastersFromTempFolder(importOption = "Overwrite Existing Items");
 		}
 
 		task ("Assert the thumbnail of custom master is imported") {
@@ -696,7 +676,7 @@ definition {
 
 			MenuItem.click(menuItem = "Import");
 
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			WaitForPageLoad();
 
 			UploadDependencyFile.uploadArchiveFile(fileName = "master-page-invalid-value.zip");
 
@@ -704,15 +684,20 @@ definition {
 		}
 
 		task ("Assert the specific error message is shown on Import popup") {
-			Alert.viewErrorMessage(errorMessage = "No page template could be imported.");
+			AssertTextEquals(
+				locator1 = "Message#ERROR_IMPORT",
+				value1 = "1 item could not be imported.");
 
-			Alert.viewErrorMessage(errorMessage = "master-page.json could not be imported because its page definition is invalid.");
+			AssertTextEquals.assertPartialText(
+				itemName = "Custom Master Page Template",
+				locator1 = "Message#ERROR_IMPORT_SUBTEXT",
+				value1 = "master-page.json could not be imported because its page definition is invalid.");
 		}
 
 		task ("Assert custom master is not imported") {
-			IFrame.closeFrame();
+			Button.clickDone();
 
-			LexiconCard.viewCardNotPresent(card = "Custom Masters Page Template");
+			LexiconCard.viewCardNotPresent(card = "Custom Master Page Template");
 		}
 	}
 

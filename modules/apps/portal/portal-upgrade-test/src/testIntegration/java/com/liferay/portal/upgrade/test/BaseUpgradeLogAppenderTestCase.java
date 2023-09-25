@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -513,7 +514,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		String originalUpgradeReportDirectory =
 			ReflectionTestUtil.getAndSetFieldValue(
 				PropsValues.class, "UPGRADE_REPORT_DIRECTORY",
-				"./custom_upgrade_report");
+				"./test_reports");
 
 		try {
 			_upgradeReportDirectory = PropsValues.UPGRADE_REPORT_DIRECTORY;
@@ -640,7 +641,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	private String _getReportContent() throws Exception {
 		File reportsDir;
 
-		if (_upgradeReportDirectory.isEmpty()) {
+		if (Validator.isBlank(_upgradeReportDirectory)) {
 			reportsDir = new File(getFilePath(), "reports");
 		}
 		else {

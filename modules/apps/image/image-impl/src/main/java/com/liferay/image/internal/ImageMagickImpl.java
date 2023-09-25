@@ -229,7 +229,9 @@ public class ImageMagickImpl implements ImageMagick {
 
 			ProcessEvent processEvent = (ProcessEvent)future.get();
 
-			if (_log.isDebugEnabled() && processEvent.getException() != null) {
+			if (_log.isDebugEnabled() &&
+				(processEvent.getException() != null)) {
+
 				_log.debug(processEvent.getException());
 			}
 

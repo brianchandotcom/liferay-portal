@@ -232,7 +232,7 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_user);
 
-		TreeTestUtil.unsafeForEach(
+		TreeTestUtil.forEachNodeObjectDefinition(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				if (objectDefinition.isRootNode()) {
@@ -290,7 +290,7 @@ public class ObjectEntryServiceTest {
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ActionKeys.DELETE);
 
-		TreeTestUtil.unsafeForEach(
+		TreeTestUtil.forEachNodeObjectDefinition(
 			TreeConstants.ITERATOR_TYPE_POST_ORDER,
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
@@ -313,7 +313,7 @@ public class ObjectEntryServiceTest {
 
 		Map<Long, ObjectEntry> objectEntries2 = _addObjectEntryHierarchy(_tree);
 
-		TreeTestUtil.unsafeForEach(
+		TreeTestUtil.forEachNodeObjectDefinition(
 			TreeConstants.ITERATOR_TYPE_POST_ORDER,
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
@@ -365,7 +365,7 @@ public class ObjectEntryServiceTest {
 			String.valueOf(rootObjectEntry.getObjectEntryId()),
 			role.getRoleId(), new String[] {ActionKeys.DELETE});
 
-		TreeTestUtil.unsafeForEach(
+		TreeTestUtil.forEachNodeObjectDefinition(
 			TreeConstants.ITERATOR_TYPE_POST_ORDER,
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
@@ -439,7 +439,7 @@ public class ObjectEntryServiceTest {
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ActionKeys.VIEW);
 
-		TreeTestUtil.unsafeForEach(
+		TreeTestUtil.forEachNodeObjectDefinition(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries1.get(
@@ -471,7 +471,7 @@ public class ObjectEntryServiceTest {
 
 		_setUser(_user);
 
-		TreeTestUtil.unsafeForEach(
+		TreeTestUtil.forEachNodeObjectDefinition(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				if (objectDefinition.isRootNode()) {
@@ -522,7 +522,7 @@ public class ObjectEntryServiceTest {
 			String.valueOf(rootObjectEntry.getObjectEntryId()),
 			role.getRoleId(), new String[] {ActionKeys.VIEW});
 
-		TreeTestUtil.unsafeForEach(
+		TreeTestUtil.forEachNodeObjectDefinition(
 			_objectDefinitionLocalService, _tree,
 			objectDefinition -> {
 				ObjectEntry objectEntry = objectEntries3.get(

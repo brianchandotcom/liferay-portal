@@ -126,6 +126,35 @@ public class TreeTestUtil {
 		}
 	}
 
+	public static void forEachNodeObjectDefinition(
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			Tree tree,
+			UnsafeConsumer<ObjectDefinition, Exception> unsafeConsumer)
+		throws Exception {
+
+		forEachNodeObjectDefinition(
+			TreeConstants.ITERATOR_TYPE_BREADTH_FIRST,
+			objectDefinitionLocalService, tree, unsafeConsumer);
+	}
+
+	public static void forEachNodeObjectDefinition(
+			String iteratorType,
+			ObjectDefinitionLocalService objectDefinitionLocalService,
+			Tree tree,
+			UnsafeConsumer<ObjectDefinition, Exception> unsafeConsumer)
+		throws Exception {
+
+		Iterator<Node> iterator = tree.iterator(iteratorType);
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			unsafeConsumer.accept(
+				objectDefinitionLocalService.getObjectDefinition(
+					node.getObjectDefinitionId()));
+		}
+	}
+
 	public static ObjectRelationship getEdgeObjectRelationship(
 			ObjectDefinition objectDefinition,
 			ObjectRelationshipLocalService objectRelationshipLocalService,
@@ -151,35 +180,6 @@ public class TreeTestUtil {
 
 		objectDefinitionLocalService.unbindObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
-	}
-
-	public static void unsafeForEach(
-			ObjectDefinitionLocalService objectDefinitionLocalService,
-			Tree tree,
-			UnsafeConsumer<ObjectDefinition, Exception> unsafeConsumer)
-		throws Exception {
-
-		unsafeForEach(
-			TreeConstants.ITERATOR_TYPE_BREADTH_FIRST,
-			objectDefinitionLocalService, tree, unsafeConsumer);
-	}
-
-	public static void unsafeForEach(
-			String iteratorType,
-			ObjectDefinitionLocalService objectDefinitionLocalService,
-			Tree tree,
-			UnsafeConsumer<ObjectDefinition, Exception> unsafeConsumer)
-		throws Exception {
-
-		Iterator<Node> iterator = tree.iterator(iteratorType);
-
-		while (iterator.hasNext()) {
-			Node node = iterator.next();
-
-			unsafeConsumer.accept(
-				objectDefinitionLocalService.getObjectDefinition(
-					node.getObjectDefinitionId()));
-		}
 	}
 
 	private static String _getShortName(

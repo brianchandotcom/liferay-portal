@@ -472,8 +472,6 @@ public class ObjectDefinitionResourceTest
 				Collections.singletonList(objectDefinition1),
 				getFilterString(entityField, operator, objectDefinition1));
 
-			// Test reindex objectDefinition when updating an objectFolder
-
 			_objectFolder1 = _objectFolderLocalService.updateObjectFolder(
 				RandomTestUtil.randomString(),
 				_objectFolder1.getObjectFolderId(),
@@ -545,12 +543,13 @@ public class ObjectDefinitionResourceTest
 	}
 
 	private void _assertGetObjectDefinitionsPageWithFilter(
-			List<ObjectDefinition> expectedObjectDefinitions, String filter)
+			List<ObjectDefinition> expectedObjectDefinitions,
+			String filterString)
 		throws Exception {
 
 		Page<ObjectDefinition> page =
 			objectDefinitionResource.getObjectDefinitionsPage(
-				null, null, filter, Pagination.of(1, 2), null);
+				null, null, filterString, Pagination.of(1, 2), null);
 
 		assertEquals(
 			expectedObjectDefinitions, (List<ObjectDefinition>)page.getItems());

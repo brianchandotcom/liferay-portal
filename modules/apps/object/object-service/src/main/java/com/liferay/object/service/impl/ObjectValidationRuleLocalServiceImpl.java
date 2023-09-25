@@ -107,11 +107,9 @@ public class ObjectValidationRuleLocalServiceImpl
 		}
 
 		objectValidationRule.setExternalReferenceCode(externalReferenceCode);
-
 		objectValidationRule.setCompanyId(user.getCompanyId());
 		objectValidationRule.setUserId(user.getUserId());
 		objectValidationRule.setUserName(user.getFullName());
-
 		objectValidationRule.setObjectDefinitionId(objectDefinitionId);
 		objectValidationRule.setActive(active);
 		objectValidationRule.setEngine(engine);

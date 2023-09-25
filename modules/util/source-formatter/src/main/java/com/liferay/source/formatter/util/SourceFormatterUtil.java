@@ -735,8 +735,8 @@ public class SourceFormatterUtil {
 
 				if (_gitTopLevelFolder == null) {
 					List<String> lines = git(
-						Arrays.asList("rev-parse", "--show-toplevel"), null,
-						null, false);
+						Arrays.asList("rev-parse", "--show-toplevel"),
+						baseDirName, null, false);
 
 					_gitTopLevelFolder = new File(lines.get(0));
 				}

@@ -55,8 +55,8 @@ public class PoshiSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testSortPropertiesValue() throws Exception {
-		test("SortPropertiesValue.testtestcase");
+	public void testSortPropertiesValues() throws Exception {
+		test("SortPropertiesValues.testtestcase");
 	}
 
 }

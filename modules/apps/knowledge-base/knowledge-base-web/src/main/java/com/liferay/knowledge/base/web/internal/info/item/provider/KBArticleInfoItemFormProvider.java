@@ -101,6 +101,17 @@ public class KBArticleInfoItemFormProvider
 		).build();
 	}
 
+	private InfoFieldSet _getDisplayPageInfoFieldSet() {
+		return InfoFieldSet.builder(
+		).infoFieldSetEntry(
+			KBArticleInfoItemFields.displayPageURLInfoField
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "display-page")
+		).name(
+			"display-page"
+		).build();
+	}
+
 	private InfoForm _getInfoForm(InfoFieldSet assetEntryInfoFieldSet) {
 		return InfoForm.builder(
 		).infoFieldSetEntry(
@@ -115,6 +126,8 @@ public class KBArticleInfoItemFormProvider
 				KBArticle.class.getName())
 		).infoFieldSetEntry(
 			_getConfigurationInfoFieldSet()
+		).infoFieldSetEntry(
+			_getDisplayPageInfoFieldSet()
 		).infoFieldSetEntry(
 			assetEntryInfoFieldSet
 		).infoFieldSetEntry(

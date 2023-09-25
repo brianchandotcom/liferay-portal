@@ -34,7 +34,7 @@
 		"faker": "^5.1.0",
 		"fetch-mock": "5.13.1",
 		"html-webpack-plugin": "5.5.0",
-		"webpack": "5.70.0"
+		"webpack": "5.76.0"
 	},
 	"jest": {
 		"collectCoverageFrom": [

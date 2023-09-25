@@ -450,7 +450,7 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "DM Document Title Edit",
-			warningMessage = "The conflict cannot be automatically resolved.");
+			warningMessage = "Entity Recently Updated");
 
 		PublicationsNavigator.gotoViewConflictingChangeDetails(entryTitle = "DM Document Title Edit");
 

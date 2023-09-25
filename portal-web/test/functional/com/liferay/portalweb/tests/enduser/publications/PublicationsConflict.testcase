@@ -85,7 +85,7 @@ definition {
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "DM Document Title Edit 2",
-			warningMessage = "Modification Conflict");
+			warningMessage = "Entity Recently Updated");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "DM Document Title Edit 2",

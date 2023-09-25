@@ -40,6 +40,10 @@ import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 
 import '../../css/Filters.scss';
 
+const translationExists = ({translations}: {translations: any}) => {
+	return Boolean(Object.keys(translations).find((key) => translations[key]));
+};
+
 type FilterCollection = Array<
 	IClientExtensionFilter | IDateFilter | ISelectionFilter
 >;
@@ -82,7 +86,6 @@ function AddFDSFilterModalContent({
 	const [fieldInUseValidationError, setFieldInUseValidationError] = useState<
 		boolean
 	>();
-	const [errorMessage, setErrorMessage] = useState('');
 	const fdsFilterLabelTranslations = filter?.label_i18n ?? {};
 	const [from, setFrom] = useState<string>(
 		(filter as IDateFilter)?.from ?? format(new Date(), 'yyyy-MM-dd')
@@ -103,6 +106,7 @@ function AddFDSFilterModalContent({
 		(filter as ISelectionFilter)?.multiple ?? true
 	);
 	const [label, setLabel] = useState(filter?.label || '');
+	const [labelValidationError, setLabelValidationError] = useState(false);
 	const [picklists, setPicklists] = useState<IPickList[]>([]);
 	const [preselectedValues, setPreselectedValues] = useState<any[]>([]);
 	const [selectedField, setSelectedField] = useState<IField | null>(
@@ -139,18 +143,6 @@ function AddFDSFilterModalContent({
 
 	const handleFilterSave = async () => {
 		setSaveButtonDisabled(true);
-
-		if (Liferay.FeatureFlags['LPS-172017']) {
-			if (!i18nFilterLabels[defaultLanguageId]) {
-				setErrorMessage(Liferay.Language.get('required'));
-
-				setSaveButtonDisabled(false);
-
-				return;
-			}
-
-			setErrorMessage('');
-		}
 
 		if (!selectedField) {
 			openDefaultFailureToast();
@@ -250,6 +242,19 @@ function AddFDSFilterModalContent({
 		closeModal();
 	};
 
+	const validateForm = () => {
+		let valid = true;
+
+		if (
+			Liferay.FeatureFlags['LPS-172017'] &&
+			!translationExists({translations: i18nFilterLabels})
+		) {
+			valid = false;
+		}
+
+		setSaveButtonDisabled(!valid);
+	};
+
 	const nameFormElementId = `${namespace}Name`;
 	const selectedFieldFormElementId = `${namespace}SelectedField`;
 
@@ -340,16 +345,26 @@ function AddFDSFilterModalContent({
 				{Liferay.FeatureFlags['LPS-172017'] ? (
 					<ClayForm.Group>
 						<InputLocalized
-							error={errorMessage}
+							error={
+								labelValidationError
+									? Liferay.Language.get(
+											'this-field-is-required'
+									  )
+									: undefined
+							}
 							id={nameFormElementId}
 							label={Liferay.Language.get('label')}
 							name="label"
-							onChange={(newFieldLabel) => {
-								setI18nFilterLabels({
-									...i18nFilterLabels,
-									...newFieldLabel,
-								});
+							onBlur={() => {
+								setLabelValidationError(
+									!translationExists({
+										translations: i18nFilterLabels,
+									})
+								);
+
+								validateForm();
 							}}
+							onChange={setI18nFilterLabels}
 							required
 							translations={i18nFilterLabels}
 						/>

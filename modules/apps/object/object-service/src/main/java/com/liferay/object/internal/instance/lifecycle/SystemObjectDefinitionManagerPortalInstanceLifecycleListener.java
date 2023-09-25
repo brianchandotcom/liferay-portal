@@ -252,8 +252,15 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 	}
 
 	private ObjectFolder _getUncategorizedObjectFolder(long companyId) {
+		ObjectFolder objectFolder =
+			_objectFolderLocalService.fetchUncategorizedObjectFolder(companyId);
+
+		if (objectFolder != null) {
+			return objectFolder;
+		}
+
 		try {
-			return _objectFolderLocalService.addOrGetUncategorizedObjectFolder(
+			return _objectFolderLocalService.addUncategorizedObjectFolder(
 				companyId);
 		}
 		catch (Exception exception) {

@@ -22,6 +22,11 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Drew Brokke
+ *
+ * FeatureFlagManagerUtil.isEnabled("TEST-123");
+ * FeatureFlagManagerUtil.isEnabled("TEST-456");
+ * FeatureFlagManagerUtil.isEnabled("TEST-789");
+ * FeatureFlagManagerUtil.isEnabled("TEST-000");
  */
 @Component(service = FeatureFlagManager.class)
 public class FeatureFlagManagerImpl implements FeatureFlagManager {

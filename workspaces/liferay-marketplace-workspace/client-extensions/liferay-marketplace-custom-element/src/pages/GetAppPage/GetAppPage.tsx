@@ -3,15 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
-import {  useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import {getSiteURL} from '../../components/InviteMemberModal/services';
-import {Liferay} from '../../liferay/liferay';
-import {
-  postCheckoutCart,
-} from "../../utils/api";
+import { Liferay } from "../../liferay/liferay";
+import { getPaymentMethodURL, postCheckoutCart } from "../../utils/api";
 import { getUrlParam } from "../../utils/getUrlParam";
 import AccountSelection from "./components/AccountSelection";
 import ProductFooter from "./components/Footer";
@@ -52,13 +48,15 @@ const sectionProperties = {
     backStep: StepType.LICENSES,
     nextStep: StepType.PAYMENT,
     title: "Payment Method",
-  }
+  },
 };
 
 const GetAppFlow = () => {
   const [step, setStep] = useState<StepType>(StepType.ACCOUNT);
   const [showAccount, setShowAccount] = useState<boolean>(false);
-  const [enablePurchaseButton, setEnablePurchaseButton] = useState<boolean>(false);
+  const [enablePurchaseButton, setEnablePurchaseButton] = useState<boolean>(
+    false
+  );
   const [email, setEmail] = useState<string>("");
   const [purchaseOrderNumber, setPurchaseOrderNumber] = useState<string>("");
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<
@@ -69,7 +67,6 @@ const GetAppFlow = () => {
     initialBillingAddress
   );
   const [userAccount, setUserAccount] = useState<UserAccount>();
-  const [cartId, setCartId] = useState<number>(0);
 
 	const {getValues, setValue, watch} = useForm<getAppProps>({
 		defaultValues: {
@@ -81,10 +78,11 @@ const GetAppFlow = () => {
   const { product, selectedAccount } = getValues();
   const productId = product?.productId;
 
-  const {sku} = useGetProductSkus(product, setEnableTrialMethod);
-  const {channel} = useGetChannelInfo();
-  const {addresses} = useGetAddresses(selectedAccount);
-  const {isFreeApp} = useProductPriceModel(product);
+  const { sku } = useGetProductSkus(product, setEnableTrialMethod);
+  const { channel } = useGetChannelInfo();
+  const { addresses } = useGetAddresses(selectedAccount);
+  const { isFreeApp } = useProductPriceModel(product);
+
 
   async function handleGetApp() {
     const productSpecificationValues = await getProductSpecificationValues(
@@ -106,9 +104,24 @@ const GetAppFlow = () => {
     );
 
     const cartResponse = await postCartByPaymentMethod(cart, channel.id);
-    setCartId(cartResponse.id);
 
     await postCheckoutCart({ cartId: cartResponse.id });
+
+    const nextStepsCallbackURL = `${Liferay.ThemeDisplay.getCanonicalURL().replace(
+      "/get-app",
+      ""
+    )}/next-steps?orderId=${encodeURIComponent(cartResponse.id)}`;
+
+    if (selectedPaymentMethod === "pay") {
+      const paymentMethodURL = await getPaymentMethodURL(
+        cartResponse.id,
+        nextStepsCallbackURL
+      );
+
+      window.location.href = paymentMethodURL;
+    } else {
+      window.location.href = nextStepsCallbackURL;
+    }
   }
 
   const StepFormComponent: StepComponent = {
@@ -156,7 +169,6 @@ const GetAppFlow = () => {
         </div>
         <ProductFooter
           addresses={addresses}
-          cartId={cartId}
           enablePurchaseButton={enablePurchaseButton}
           handleGetApp={handleGetApp}
           isFreeApp={isFreeApp}

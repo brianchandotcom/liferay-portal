@@ -133,7 +133,7 @@ public class AddLayoutPrototypeMVCActionCommand extends BaseMVCActionCommand {
 			if (Validator.isNotNull(backURL)) {
 				redirectURL = HttpComponentsUtil.addParameters(
 					redirectURL, "p_l_back_url", backURL, "p_l_back_url_title",
-					_language.get(themeDisplay.getLocale(), "pages"));
+					_language.get(themeDisplay.getLocale(), "page-templates"));
 			}
 
 			JSONPortletResponseUtil.writeJSON(

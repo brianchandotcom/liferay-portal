@@ -27,9 +27,9 @@ patch {
 	fileNames "**/freemarker/ext/jsp/JspTagModelBase.java"
 	fileNames "**/freemarker/ext/jsp/JspWriterAdapter.java"
 	fileNames "**/freemarker/ext/jsp/TagTransformModel.java"
-	fileNames "**/freemarker/log/Logger.java"
 	fileNames "**/freemarker/log/_Log4jLoggerFactory.java"
 	fileNames "**/freemarker/log/_Log4jOverSLF4JTester.java"
+	fileNames "**/freemarker/log/Logger.java"
 
 	originalLibModuleName = "freemarker"
 }

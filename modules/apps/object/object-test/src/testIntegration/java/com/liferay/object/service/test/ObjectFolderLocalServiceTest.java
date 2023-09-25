@@ -79,14 +79,12 @@ public class ObjectFolderLocalServiceTest {
 				TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				RandomTestUtil.randomString()));
-
 		AssertUtils.assertFailure(
 			ObjectFolderLabelException.class,
 			"Label is null for locale " + LocaleUtil.US.getDisplayName(),
 			() -> _objectFolderLocalService.addObjectFolder(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				null, RandomTestUtil.randomString()));
-
 		AssertUtils.assertFailure(
 			ObjectFolderNameException.MustBeLessThan41Characters.class,
 			"Name must be less than 41 characters",
@@ -94,7 +92,6 @@ public class ObjectFolderLocalServiceTest {
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				RandomTestUtil.randomString(42)));
-
 		AssertUtils.assertFailure(
 			ObjectFolderNameException.MustNotBeDuplicate.class,
 			"Duplicate name " + _uncategorizedObjectFolder.getName(),
@@ -102,14 +99,12 @@ public class ObjectFolderLocalServiceTest {
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				_uncategorizedObjectFolder.getName()));
-
 		AssertUtils.assertFailure(
 			ObjectFolderNameException.MustNotBeNull.class, "Name is null",
 			() -> _objectFolderLocalService.addObjectFolder(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				null));
-
 		AssertUtils.assertFailure(
 			ObjectFolderNameException.MustOnlyContainLettersAndDigits.class,
 			"Name must only contain letters and digits",
@@ -117,7 +112,6 @@ public class ObjectFolderLocalServiceTest {
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Abl e"));
-
 		AssertUtils.assertFailure(
 			ObjectFolderNameException.MustOnlyContainLettersAndDigits.class,
 			"Name must only contain letters and digits",
@@ -217,7 +211,7 @@ public class ObjectFolderLocalServiceTest {
 		ObjectDefinitionTestUtil.addCustomObjectDefinition(
 			objectFolder.getObjectFolderId(), _objectDefinitionLocalService);
 
-		int uncategorizedObjectFolderObjectDefinitionsCount =
+		int count =
 			_objectDefinitionLocalService.getObjectFolderObjectDefinitionsCount(
 				_uncategorizedObjectFolder.getObjectFolderId());
 
@@ -227,14 +221,13 @@ public class ObjectFolderLocalServiceTest {
 		Assert.assertNull(
 			_objectFolderLocalService.fetchObjectFolder(
 				objectFolder.getObjectFolderId()));
-
 		Assert.assertEquals(
 			0,
 			_objectDefinitionLocalService.getObjectFolderObjectDefinitionsCount(
 				objectFolder.getObjectFolderId()));
 
 		Assert.assertEquals(
-			uncategorizedObjectFolderObjectDefinitionsCount + 2,
+			count + 2,
 			_objectDefinitionLocalService.getObjectFolderObjectDefinitionsCount(
 				_uncategorizedObjectFolder.getObjectFolderId()));
 	}
@@ -255,7 +248,6 @@ public class ObjectFolderLocalServiceTest {
 				objectFolder1.getObjectFolderId(),
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Collections.emptyList()));
-
 		AssertUtils.assertFailure(
 			ObjectFolderLabelException.class,
 			"Label is null for locale " + LocaleUtil.US.getDisplayName(),

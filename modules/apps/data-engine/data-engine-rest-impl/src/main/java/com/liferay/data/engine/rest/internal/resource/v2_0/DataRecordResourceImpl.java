@@ -147,7 +147,8 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 		_dataRecordCollectionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			dataRecordCollectionId, DataActionKeys.EXPORT_DATA_RECORDS);
+			_ddlRecordSetLocalService.getDDLRecordSet(dataRecordCollectionId),
+			DataActionKeys.EXPORT_DATA_RECORDS);
 
 		DataRecordExporter dataRecordExporter = new DataRecordExporter(
 			_ddlRecordSetLocalService, _ddmFormFieldTypeServicesRegistry,
@@ -176,7 +177,8 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 		_dataRecordCollectionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			dataRecordCollectionId, DataActionKeys.VIEW_DATA_RECORD);
+			_ddlRecordSetLocalService.getDDLRecordSet(dataRecordCollectionId),
+			DataActionKeys.VIEW_DATA_RECORD);
 
 		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getDDLRecordSet(
 			dataRecordCollectionId);
@@ -287,7 +289,8 @@ public class DataRecordResourceImpl extends BaseDataRecordResourceImpl {
 
 		_dataRecordCollectionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			dataRecordCollectionId, DataActionKeys.ADD_DATA_RECORD);
+			_ddlRecordSetLocalService.getDDLRecordSet(dataRecordCollectionId),
+			DataActionKeys.ADD_DATA_RECORD);
 
 		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
 			dataRecordCollectionId);

@@ -70,7 +70,8 @@ public class DataRecordCollectionResourceImpl
 
 		_dataRecordCollectionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			dataRecordCollectionId, ActionKeys.DELETE);
+			_ddlRecordSetLocalService.getDDLRecordSet(dataRecordCollectionId),
+			ActionKeys.DELETE);
 
 		_deleteDataRecordCollection(dataRecordCollectionId);
 	}
@@ -116,7 +117,8 @@ public class DataRecordCollectionResourceImpl
 
 		_dataRecordCollectionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			dataRecordCollectionId, ActionKeys.VIEW);
+			_ddlRecordSetLocalService.getDDLRecordSet(dataRecordCollectionId),
+			ActionKeys.VIEW);
 
 		return _getDataRecordCollection(dataRecordCollectionId);
 	}
@@ -190,7 +192,9 @@ public class DataRecordCollectionResourceImpl
 
 		_dataRecordCollectionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			ddlRecordSet.getRecordSetId(), ActionKeys.VIEW);
+			_ddlRecordSetLocalService.getDDLRecordSet(
+				ddlRecordSet.getRecordSetId()),
+			ActionKeys.VIEW);
 
 		return _getSiteDataRecordCollection(dataRecordCollectionKey, siteId);
 	}
@@ -228,7 +232,8 @@ public class DataRecordCollectionResourceImpl
 
 		_dataRecordCollectionModelResourcePermission.check(
 			PermissionThreadLocal.getPermissionChecker(),
-			dataRecordCollectionId, ActionKeys.UPDATE);
+			_ddlRecordSetLocalService.getDDLRecordSet(dataRecordCollectionId),
+			ActionKeys.UPDATE);
 
 		return _updateDataRecordCollection(
 			dataRecordCollectionId, dataRecordCollection.getDescription(),

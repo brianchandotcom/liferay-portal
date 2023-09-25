@@ -6,6 +6,7 @@
 package com.liferay.layout.page.template.admin.web.internal.servlet.taglib.util;
 
 import com.liferay.asset.display.page.service.AssetDisplayPageEntryServiceUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownContextItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
@@ -135,7 +136,7 @@ public class DisplayPageActionDropdownItemsProvider {
 		).addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
-					DropdownItemListBuilder.add(
+					DropdownItemListBuilder.addContext(
 						() ->
 							FeatureFlagManagerUtil.isEnabled("LPS-195263") &&
 							hasUpdatePermission,
@@ -217,32 +218,54 @@ public class DisplayPageActionDropdownItemsProvider {
 		};
 	}
 
-	private UnsafeConsumer<DropdownItem, Exception>
+	private UnsafeConsumer<DropdownContextItem, Exception>
 		_getCopyDisplayPageActionUnsafeConsumer() {
 
-		return dropdownItem -> {
-			dropdownItem.putData("action", "copyDisplayPage");
-			dropdownItem.putData(
-				"copyDisplayPageURL",
-				PortletURLBuilder.createActionURL(
-					_renderResponse
-				).setActionName(
-					"/layout_page_template_admin" +
-						"/copy_layout_page_template_entry"
-				).setRedirect(
-					_themeDisplay.getURLCurrent()
-				).setParameter(
-					"layoutPageTemplateCollectionId",
-					_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()
-				).setParameter(
-					"layoutPageTemplateEntryId",
-					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-				).buildString());
-			dropdownItem.setDisabled(_layoutPageTemplateEntry.isDraft());
-			dropdownItem.setIcon("copy");
-			dropdownItem.setLabel(
+		return dropdownContextItem -> {
+			dropdownContextItem.setDropdownItems(
+				DropdownItemListBuilder.add(
+					dropdownItem -> {
+						dropdownItem.putData("action", "copyDisplayPage");
+						dropdownItem.putData(
+							"copyDisplayPageURL", _getCopyURL(false));
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest, "display-page"));
+					}
+				).add(
+					dropdownItem -> {
+						dropdownItem.putData("action", "copyDisplayPage");
+						dropdownItem.putData(
+							"copyDisplayPageURL", _getCopyURL(true));
+						dropdownItem.setLabel(
+							LanguageUtil.get(
+								_httpServletRequest,
+								"display-page-with-permissions"));
+					}
+				).build());
+			dropdownContextItem.setIcon("copy");
+			dropdownContextItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
+			dropdownContextItem.setDisabled(_layoutPageTemplateEntry.isDraft());
 		};
+	}
+
+	private String _getCopyURL(boolean copyPermissions) {
+		return PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/layout_page_template_admin/copy_layout_page_template_entry"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"copyPermissions", copyPermissions
+		).setParameter(
+			"layoutPageTemplateCollectionId",
+			_layoutPageTemplateEntry.getLayoutPageTemplateCollectionId()
+		).setParameter(
+			"layoutPageTemplateEntryId",
+			_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		).buildString();
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

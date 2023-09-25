@@ -87,6 +87,8 @@ public class CopyLayoutPageTemplateEntryMVCActionCommand
 			actionRequest, "layoutPageTemplateCollectionId");
 		long layoutPageTemplateEntryId = ParamUtil.getLong(
 			actionRequest, "layoutPageTemplateEntryId");
+		boolean copyPermissions = ParamUtil.getBoolean(
+			actionRequest, "copyPermissions");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
@@ -94,7 +96,7 @@ public class CopyLayoutPageTemplateEntryMVCActionCommand
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.copyLayoutPageTemplateEntry(
 				themeDisplay.getScopeGroupId(), layoutPageTemplateCollectionId,
-				layoutPageTemplateEntryId, serviceContext);
+				layoutPageTemplateEntryId, copyPermissions, serviceContext);
 
 		LayoutPageTemplateEntry sourceLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(

@@ -3224,7 +3224,7 @@ definition {
 	@priority = 4
 	test ImportJSONFileToConfigureSAMLIDP {
 		property app.server.bundles.size = "0";
-		property custom.properties = "feature.flag.COMMERCE-8087=true";
+		property custom.properties = "feature.flag.COMMERCE-8087=true${line.separator}feature.flag.LPS-186620=true";
 		property keystore.enabled = "true";
 		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
@@ -3279,7 +3279,7 @@ definition {
 	@priority = 4
 	test ImportJSONFileToConfigureSAMLSP {
 		property app.server.bundles.size = "0";
-		property custom.properties = "feature.flag.COMMERCE-8087=true";
+		property custom.properties = "feature.flag.COMMERCE-8087=true${line.separator}feature.flag.LPS-186620=true";
 		property keystore.enabled = "true";
 		property portal.release = "false";
 		property test.liferay.virtual.instance = "false";
@@ -3333,7 +3333,7 @@ definition {
 	@description = "LPS-152122 TC7. Import JSON file to configure the SAML SP provider via Import/Export Center in a non-default port."
 	@priority = 4
 	test ImportJSONFileToConfigureSAMLSPOnNonDefaultPort {
-		property custom.properties = "feature.flag.COMMERCE-8087=true";
+		property custom.properties = "feature.flag.COMMERCE-8087=true${line.separator}feature.flag.LPS-186620=true";
 		property keystore.enabled = "true";
 		property portal.release = "false";
 		property skip.start.app.server.index = "1";

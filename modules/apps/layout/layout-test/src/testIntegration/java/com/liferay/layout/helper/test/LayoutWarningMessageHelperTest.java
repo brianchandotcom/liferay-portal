@@ -174,12 +174,9 @@ public class LayoutWarningMessageHelperTest {
 				collectionStyledLayoutStructureItem)
 		throws Exception {
 
-		JSONObject collectionWarningMessageJSONObject =
+		JSONObject actualCollectionWarningMessageJSONObject =
 			_getCollectionWarningMessageJSONObject(
 				collectionStyledLayoutStructureItem, Constants.EDIT);
-
-		String actualCollectionWarningMessage =
-			collectionWarningMessageJSONObject.getString("description");
 
 		String expectedCollectionWarningMessage = _language.format(
 			LocaleUtil.getDefault(),
@@ -189,7 +186,8 @@ public class LayoutWarningMessageHelperTest {
 			PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA);
 
 		Assert.assertEquals(
-			expectedCollectionWarningMessage, actualCollectionWarningMessage);
+			expectedCollectionWarningMessage,
+			actualCollectionWarningMessageJSONObject.getString("description"));
 	}
 
 	private void _assertDefaultViewCollectionWarningMessage(

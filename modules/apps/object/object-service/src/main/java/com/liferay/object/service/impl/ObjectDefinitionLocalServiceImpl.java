@@ -1170,7 +1170,13 @@ public class ObjectDefinitionLocalServiceImpl
 			return objectDefinitionPersistence.update(objectDefinition);
 		}
 
-		if (objectDefinition.isRootDescendantNode()) {
+		ObjectDefinition rootObjectDefinition =
+			objectDefinitionPersistence.findByPrimaryKey(
+				rootObjectDefinitionId);
+
+		if (!rootObjectDefinition.isRootNode() &&
+			(objectDefinitionId != rootObjectDefinitionId)) {
+
 			throw new ObjectDefinitionRootObjectDefinitionIdException(
 				"Object definition " + rootObjectDefinitionId +
 					" is not a root object definition");

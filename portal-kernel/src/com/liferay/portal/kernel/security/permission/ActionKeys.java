@@ -167,6 +167,8 @@ public class ActionKeys {
 
 	public static final String IMPORT = "IMPORT";
 
+	public static final String LAYOUT_RULE_BUILDER = "LAYOUT_RULE_BUILDER";
+
 	public static final String LOCK_THREAD = "LOCK_THREAD";
 
 	public static final String MANAGE = "MANAGE";

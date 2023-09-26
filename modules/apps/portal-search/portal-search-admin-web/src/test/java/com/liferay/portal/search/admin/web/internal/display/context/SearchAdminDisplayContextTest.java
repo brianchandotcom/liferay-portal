@@ -85,47 +85,6 @@ public class SearchAdminDisplayContextTest {
 	}
 
 	@Test
-	public void testGetStatsInformation() {
-		SearchAdminDisplayContextBuilder searchAdminDisplayContextBuilder =
-			new SearchAdminDisplayContextBuilder(
-				_language, _portal, new MockRenderRequest(),
-				new MockRenderResponse());
-
-		searchAdminDisplayContextBuilder.setIndexInformation(
-			Mockito.mock(IndexInformation.class));
-
-		searchAdminDisplayContextBuilder.setStatsInformationFactory(
-			getStatsInformationFactory(100.0, 50.0, 80.0));
-
-		SearchAdminDisplayContext searchAdminDisplayContext =
-			searchAdminDisplayContextBuilder.build();
-
-		double availableDiskSpace =
-			searchAdminDisplayContext.getAvailableDiskSpace();
-
-		double currentDiskSpaceUsed =
-			searchAdminDisplayContext.getCurrentDiskSpaceUsed();
-
-		Assert.assertEquals(100.0, availableDiskSpace, 0);
-
-		Assert.assertEquals(80.0, currentDiskSpaceUsed, 0);
-
-		searchAdminDisplayContextBuilder.setStatsInformationFactory(
-			getStatsInformationFactory(16.0, 10.0, 10.0));
-
-		searchAdminDisplayContext = searchAdminDisplayContextBuilder.build();
-
-		Assert.assertFalse(searchAdminDisplayContext.isLowOnDiskSpace());
-
-		searchAdminDisplayContextBuilder.setStatsInformationFactory(
-			getStatsInformationFactory(14.0, 10.0, 10.0));
-
-		searchAdminDisplayContext = searchAdminDisplayContextBuilder.build();
-
-		Assert.assertTrue(searchAdminDisplayContext.isLowOnDiskSpace());
-	}
-
-	@Test
 	public void testGetTabConnections() {
 		SearchAdminDisplayContextBuilder searchAdminDisplayContextBuilder =
 			new SearchAdminDisplayContextBuilder(

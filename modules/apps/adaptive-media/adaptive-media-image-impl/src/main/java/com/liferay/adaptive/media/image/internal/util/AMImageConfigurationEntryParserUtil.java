@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.adaptive.media.image.internal.configuration;
+package com.liferay.adaptive.media.image.internal.util;
 
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
+import com.liferay.adaptive.media.image.internal.configuration.AMImageConfigurationEntryImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -17,8 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * Parses ConfigAdmin configuration entries.
@@ -64,10 +63,9 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Adolfo Pérez
  */
-@Component(service = AMImageConfigurationEntryParser.class)
-public class AMImageConfigurationEntryParser {
+public class AMImageConfigurationEntryParserUtil {
 
-	public String getConfigurationString(
+	public static String getConfigurationString(
 		AMImageConfigurationEntry amImageConfigurationEntry) {
 
 		StringBundler sb = new StringBundler(14);
@@ -115,7 +113,7 @@ public class AMImageConfigurationEntryParser {
 	 * @param  s the configuration line to parse
 	 * @return a {@link AMImageConfigurationEntry} with the line data
 	 */
-	public AMImageConfigurationEntry parse(String s) {
+	public static AMImageConfigurationEntry parse(String s) {
 		if (Validator.isNull(s)) {
 			throw new IllegalArgumentException(
 				"Invalid image adaptive media configuration: " + s);

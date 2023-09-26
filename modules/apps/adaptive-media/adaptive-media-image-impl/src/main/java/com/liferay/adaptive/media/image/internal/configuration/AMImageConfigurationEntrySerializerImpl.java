@@ -7,9 +7,9 @@ package com.liferay.adaptive.media.image.internal.configuration;
 
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntry;
 import com.liferay.adaptive.media.image.configuration.AMImageConfigurationEntrySerializer;
+import com.liferay.adaptive.media.image.internal.util.AMImageConfigurationEntryParserUtil;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -20,18 +20,15 @@ public class AMImageConfigurationEntrySerializerImpl
 
 	@Override
 	public AMImageConfigurationEntry deserialize(String s) {
-		return _amImageConfigurationEntryParser.parse(s);
+		return AMImageConfigurationEntryParserUtil.parse(s);
 	}
 
 	@Override
 	public String serialize(
 		AMImageConfigurationEntry amImageConfigurationEntry) {
 
-		return _amImageConfigurationEntryParser.getConfigurationString(
+		return AMImageConfigurationEntryParserUtil.getConfigurationString(
 			amImageConfigurationEntry);
 	}
-
-	@Reference
-	private AMImageConfigurationEntryParser _amImageConfigurationEntryParser;
 
 }

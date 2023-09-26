@@ -6,7 +6,6 @@
 package com.liferay.portal.security.permission.internal.converter;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Permission;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -16,7 +15,6 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.PermissionConversionFilter;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.model.impl.PermissionImpl;
 import com.liferay.portal.security.permission.converter.PermissionConverter;
 
@@ -31,22 +29,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = PermissionConverter.class)
 public class PermissionConverterImpl implements PermissionConverter {
-
-	@Override
-	public List<Permission> convertPermissions(long roleId)
-		throws PortalException {
-
-		return convertPermissions(roleId, null);
-	}
-
-	@Override
-	public List<Permission> convertPermissions(
-			long roleId, PermissionConversionFilter permissionConversionFilter)
-		throws PortalException {
-
-		return convertPermissions(
-			_roleLocalService.getRole(roleId), permissionConversionFilter);
-	}
 
 	@Override
 	public List<Permission> convertPermissions(Role role) {
@@ -125,8 +107,5 @@ public class PermissionConverterImpl implements PermissionConverter {
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
 
 }

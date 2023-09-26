@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.commerce.admin.site.setting.internal.mapper.v1_0;
+package com.liferay.headless.commerce.admin.site.setting.internal.mapper.v1_0.util;
 
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
@@ -13,16 +13,13 @@ import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.TaxCategory;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Alessio Antonio Rendina
  * @author Zoltán Takács
  */
-@Component(service = DTOMapper.class)
-public class DTOMapper {
+public class DTOMapperUtil {
 
-	public AvailabilityEstimate modelToDTO(
+	public static AvailabilityEstimate modelToDTO(
 		CommerceAvailabilityEstimate commerceAvailabilityEstimate) {
 
 		AvailabilityEstimate availabilityEstimate = new AvailabilityEstimate();
@@ -42,7 +39,7 @@ public class DTOMapper {
 		return availabilityEstimate;
 	}
 
-	public Warehouse modelToDTO(
+	public static Warehouse modelToDTO(
 		CommerceInventoryWarehouse commerceInventoryWarehouse) {
 
 		Warehouse warehouse = new Warehouse();
@@ -71,7 +68,7 @@ public class DTOMapper {
 		return warehouse;
 	}
 
-	public TaxCategory modelToDTO(CPTaxCategory cpTaxCategory) {
+	public static TaxCategory modelToDTO(CPTaxCategory cpTaxCategory) {
 		TaxCategory taxCategory = new TaxCategory();
 
 		if (cpTaxCategory == null) {

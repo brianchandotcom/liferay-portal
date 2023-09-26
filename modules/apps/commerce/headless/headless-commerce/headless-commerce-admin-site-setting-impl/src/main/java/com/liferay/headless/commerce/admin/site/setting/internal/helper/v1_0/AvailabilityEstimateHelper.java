@@ -9,7 +9,7 @@ import com.liferay.commerce.exception.NoSuchAvailabilityEstimateException;
 import com.liferay.commerce.model.CommerceAvailabilityEstimate;
 import com.liferay.commerce.service.CommerceAvailabilityEstimateService;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.AvailabilityEstimate;
-import com.liferay.headless.commerce.admin.site.setting.internal.mapper.v1_0.DTOMapper;
+import com.liferay.headless.commerce.admin.site.setting.internal.mapper.v1_0.util.DTOMapperUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -42,7 +42,7 @@ public class AvailabilityEstimateHelper {
 				updateAvailabilityEstimate(
 					availabilityEstimate.getId(), availabilityEstimate, user);
 
-			return _dtoMapper.modelToDTO(commerceAvailabilityEstimate);
+			return DTOMapperUtil.modelToDTO(commerceAvailabilityEstimate);
 		}
 		catch (NoSuchAvailabilityEstimateException
 					noSuchAvailabilityEstimateException) {
@@ -64,7 +64,7 @@ public class AvailabilityEstimateHelper {
 					_serviceContextHelper.getServiceContext(
 						groupId, new long[0], user, true));
 
-		return _dtoMapper.modelToDTO(commerceAvailabilityEstimate);
+		return DTOMapperUtil.modelToDTO(commerceAvailabilityEstimate);
 	}
 
 	public void deleteAvailabilityEstimate(Long id) throws PortalException {
@@ -75,7 +75,7 @@ public class AvailabilityEstimateHelper {
 	public AvailabilityEstimate getAvailabilityEstimate(Long id)
 		throws PortalException {
 
-		return _dtoMapper.modelToDTO(
+		return DTOMapperUtil.modelToDTO(
 			_commerceAvailabilityEstimateService.
 				getCommerceAvailabilityEstimate(id));
 	}
@@ -100,7 +100,7 @@ public class AvailabilityEstimateHelper {
 				commerceAvailabilityEstimates) {
 
 			availabilityEstimates.add(
-				_dtoMapper.modelToDTO(commerceAvailabilityEstimate));
+				DTOMapperUtil.modelToDTO(commerceAvailabilityEstimate));
 		}
 
 		return Page.of(availabilityEstimates, pagination, count);
@@ -132,9 +132,6 @@ public class AvailabilityEstimateHelper {
 	@Reference
 	private CommerceAvailabilityEstimateService
 		_commerceAvailabilityEstimateService;
-
-	@Reference
-	private DTOMapper _dtoMapper;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

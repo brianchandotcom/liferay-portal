@@ -9,7 +9,7 @@ import com.liferay.commerce.exception.NoSuchWarehouseException;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseService;
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.Warehouse;
-import com.liferay.headless.commerce.admin.site.setting.internal.mapper.v1_0.DTOMapper;
+import com.liferay.headless.commerce.admin.site.setting.internal.mapper.v1_0.util.DTOMapperUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,7 +38,7 @@ public class WarehouseHelper {
 			CommerceInventoryWarehouse commerceInventoryWarehouse =
 				updateWarehouse(warehouse.getId(), warehouse, user);
 
-			return _dtoMapper.modelToDTO(commerceInventoryWarehouse);
+			return DTOMapperUtil.modelToDTO(commerceInventoryWarehouse);
 		}
 		catch (NoSuchWarehouseException noSuchWarehouseException) {
 			if (_log.isDebugEnabled()) {
@@ -61,7 +61,7 @@ public class WarehouseHelper {
 				_serviceContextHelper.getServiceContext(
 					groupId, new long[0], user, true));
 
-		return _dtoMapper.modelToDTO(commerceInventoryWarehouse);
+		return DTOMapperUtil.modelToDTO(commerceInventoryWarehouse);
 	}
 
 	public void deleteWarehouse(Long id) throws PortalException {
@@ -69,7 +69,7 @@ public class WarehouseHelper {
 	}
 
 	public Warehouse getWarehouse(Long id) throws PortalException {
-		return _dtoMapper.modelToDTO(
+		return DTOMapperUtil.modelToDTO(
 			_commerceInventoryWarehouseService.getCommerceInventoryWarehouse(
 				id));
 	}
@@ -162,9 +162,6 @@ public class WarehouseHelper {
 	@Reference
 	private CommerceInventoryWarehouseService
 		_commerceInventoryWarehouseService;
-
-	@Reference
-	private DTOMapper _dtoMapper;
 
 	@Reference
 	private ServiceContextHelper _serviceContextHelper;

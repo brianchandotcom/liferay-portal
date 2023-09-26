@@ -668,7 +668,7 @@ public abstract class BaseBuild implements Build {
 				messageElement, getGitHubMessageJobResultsElement());
 		}
 
-		if (result.equals("ABORTED") && (getDownstreamBuildCount(null) == 0)) {
+		if (result.equals("ABORTED") && !hasDownstreamBuilds()) {
 			messageElement.add(
 				Dom4JUtil.toCodeSnippetElement("Build was aborted"));
 
@@ -1506,6 +1506,11 @@ public abstract class BaseBuild implements Build {
 			}
 		}
 
+		return false;
+	}
+
+	@Override
+	public boolean hasDownstreamBuilds() {
 		return false;
 	}
 

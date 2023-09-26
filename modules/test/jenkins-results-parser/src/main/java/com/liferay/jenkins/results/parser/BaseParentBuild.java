@@ -97,6 +97,15 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	}
 
 	@Override
+	public boolean hasDownstreamBuilds() {
+		if (getDownstreamBuildCount(null, null) > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public void removeDownstreamBuild(Build build) {
 		downstreamBuilds.remove(build);
 	}

@@ -131,7 +131,14 @@ public class DBUpgrader {
 				PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN));
 		}
 
-		return _UPGRADE_DATABASE_AUTO_RUN;
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() == DBType.HYPERSONIC) {
+			return false;
+		}
+
+		return GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN));
 	}
 
 	public static void main(String[] args) {
@@ -412,8 +419,6 @@ public class DBUpgrader {
 		db.runSQL("update CompanyInfo set key_ = null");
 	}
 
-	private static final boolean _UPGRADE_DATABASE_AUTO_RUN;
-
 	private static final Version _VERSION_7010 = new Version(0, 0, 6);
 
 	private static final Log _log = LogFactoryUtil.getLog(DBUpgrader.class);
@@ -423,17 +428,5 @@ public class DBUpgrader {
 		_appenderServiceReference;
 	private static volatile StopWatch _stopWatch;
 	private static volatile boolean _upgradeClient;
-
-	static {
-		DB db = DBManagerUtil.getDB();
-
-		if (db.getDBType() == DBType.HYPERSONIC) {
-			_UPGRADE_DATABASE_AUTO_RUN = false;
-		}
-		else {
-			_UPGRADE_DATABASE_AUTO_RUN = GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN));
-		}
-	}
 
 }

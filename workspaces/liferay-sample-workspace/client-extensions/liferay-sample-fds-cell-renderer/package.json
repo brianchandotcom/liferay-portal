@@ -8,7 +8,7 @@
 		"typescript": "^5.0.4"
 	},
 	"main": "./src/index.tsx",
-	"name": "liferay-sample-fds-cell-renderer",
+	"name": "@liferay/liferay-sample-fds-cell-renderer",
 	"scripts": {
 		"build": "tsc",
 		"start": "PORT=3000 serve --cors",

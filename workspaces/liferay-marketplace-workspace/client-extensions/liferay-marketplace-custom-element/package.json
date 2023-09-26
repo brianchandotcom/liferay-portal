@@ -51,7 +51,7 @@
 		}
 	},
 	"license": "LGPL",
-	"name": "liferay-marketplace-custom-element",
+	"name": "@liferay/liferay-marketplace-custom-element",
 	"private": true,
 	"scripts": {
 		"build": "tsc && vite build",

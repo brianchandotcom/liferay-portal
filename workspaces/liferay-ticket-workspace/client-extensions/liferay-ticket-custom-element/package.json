@@ -17,7 +17,7 @@
 		"vite": "^4.3.9",
 		"vite-plugin-eslint": "^1.8.1"
 	},
-	"name": "liferay-ticket-custom-element",
+	"name": "@liferay/liferay-ticket-custom-element",
 	"private": true,
 	"scripts": {
 		"build": "vite build",

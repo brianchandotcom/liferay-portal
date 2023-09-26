@@ -8,7 +8,7 @@
 		"typescript": "^5.0.4"
 	},
 	"main": "./src/index.ts",
-	"name": "liferay-sample-fds-filter",
+	"name": "@liferay/liferay-sample-fds-filter",
 	"scripts": {
 		"build": "tsc",
 		"start": "PORT=3000 serve --cors",

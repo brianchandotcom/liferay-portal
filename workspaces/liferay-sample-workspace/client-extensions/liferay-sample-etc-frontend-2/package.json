@@ -2,7 +2,7 @@
 	"devDependencies": {
 		"serve": "^14.2.0"
 	},
-	"name": "liferay-sample-etc-frontend-2",
+	"name": "@liferay/liferay-sample-etc-frontend-2",
 	"scripts": {
 		"start": "PORT=3000 serve --cors"
 	},

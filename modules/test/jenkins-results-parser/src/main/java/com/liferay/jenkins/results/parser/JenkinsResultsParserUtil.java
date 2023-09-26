@@ -3717,17 +3717,16 @@ public class JenkinsResultsParserUtil {
 		List<File> fileList = getIncludedFiles(
 			testProjectResultsDir, null, globList);
 
-		String testResultsDir = baseDir.toString() + "/modules/test-results";
+		File testResultsDir = new File(baseDir, "modules/test-results");
 
 		for (File resultFile : fileList) {
 			String testResultFileName = getTestResultFileName(resultFile);
 
-			File destinationFile = new File(
-				testResultsDir + "/" + testResultFileName);
+			File destinationFile = new File(testResultsDir, testResultFileName);
 
-			copy(resultFile, destinationFile);
+			move(resultFile, destinationFile);
 
-			if (resultFile.delete()) {
+			if (!resultFile.exists()) {
 				System.out.println("Deleted result file:" + resultFile);
 			}
 		}

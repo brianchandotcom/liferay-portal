@@ -16,14 +16,6 @@ import java.util.Map;
  */
 public class SearchAdminDisplayContext {
 
-	public double getAvailableDiskSpace() {
-		return _availableDiskSpace;
-	}
-
-	public double getCurrentDiskSpaceUsed() {
-		return _currentDiskSpaceUsed;
-	}
-
 	public Map<String, List<Indexer<?>>> getIndexersMap() {
 		return _indexersMap;
 	}
@@ -40,18 +32,6 @@ public class SearchAdminDisplayContext {
 		return _selectedTab;
 	}
 
-	public boolean isLowOnDiskSpace() {
-		return _lowOnDiskSpace;
-	}
-
-	public void setAvailableDiskSpace(double availableDiskSpace) {
-		_availableDiskSpace = availableDiskSpace;
-	}
-
-	public void setCurrentDiskSpaceUsed(double currentDiskSpaceUsed) {
-		_currentDiskSpaceUsed = currentDiskSpaceUsed;
-	}
-
 	public void setIndexersMap(Map<String, List<Indexer<?>>> indexersMap) {
 		_indexersMap = indexersMap;
 	}
@@ -62,10 +42,6 @@ public class SearchAdminDisplayContext {
 		_indexReindexerClassNames = indexReindexerClassNames;
 	}
 
-	public void setIsLowOnDiskSpace(boolean lowOnDiskSpace) {
-		_lowOnDiskSpace = lowOnDiskSpace;
-	}
-
 	public void setNavigationItemList(NavigationItemList navigationItemList) {
 		_navigationItemList = navigationItemList;
 	}
@@ -74,11 +50,8 @@ public class SearchAdminDisplayContext {
 		_selectedTab = selectedTab;
 	}
 
-	private double _availableDiskSpace;
-	private double _currentDiskSpaceUsed;
 	private Map<String, List<Indexer<?>>> _indexersMap;
 	private List<String> _indexReindexerClassNames;
-	private boolean _lowOnDiskSpace;
 	private NavigationItemList _navigationItemList;
 	private String _selectedTab;
 

@@ -70,6 +70,36 @@ definition {
 
 	}
 
+	@priority = 4
+	test CannnotUseTestConnectionWithInvalidDriverClass {
+		property database.types = "mysql";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		SetupWizard.configureAdministratorUserPG(
+			administratorEmail = "test@liferay.com",
+			administratorFirstName = "Test",
+			administratorLastName = "Test");
+
+		AssertClick(
+			locator1 = "SetupWizard#DATABASE_CHANGE_LINK",
+			value1 = "(Change)");
+
+		Type(
+			locator1 = "SetupWizard#DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_FIELD",
+			value1 = "java.lang.String");
+
+		TestUtils.changeElementValueById(
+			elementId = "cmd",
+			newValue = "test");
+
+		SetupWizard.finishConfigurationPG();
+
+		WaitForConsoleTextPresent(value1 = "java.lang.String is not specified in the portal property \"setup.database.driverClassName\"");
+
+		AssertElementNotPresent(locator1 = "//body[contains(.,'Database connection was established successfully')]");
+	}
+
 	@description = "This is a use case for LPS-187661. Verify the admin user can be configured to a non liferay domain via setup wizard."
 	@priority = 5
 	test ConfigureNonLiferayDomain {

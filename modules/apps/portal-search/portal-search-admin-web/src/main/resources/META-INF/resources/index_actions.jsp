@@ -50,6 +50,7 @@ page import="java.util.Map" %>
 </portlet:renderURL>
 
 <%
+IndexActionsDisplayContext indexActionsDisplayContext = (IndexActionsDisplayContext)request.getAttribute(SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT);
 SearchAdminDisplayContext searchAdminDisplayContext = (SearchAdminDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
@@ -82,8 +83,6 @@ SearchAdminDisplayContext searchAdminDisplayContext = (SearchAdminDisplayContext
 			classNameToBackgroundTaskDisplayMap.put(className, BackgroundTaskDisplayFactoryUtil.getBackgroundTaskDisplay(backgroundTask));
 		}
 	}
-
-	IndexActionsDisplayContext indexActionsDisplayContext = (IndexActionsDisplayContext)request.getAttribute(SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT);
 	%>
 
 	<clay:container-fluid
@@ -354,9 +353,9 @@ SearchAdminDisplayContext searchAdminDisplayContext = (SearchAdminDisplayContext
 		controlMenuCategoryKey:
 			'<%= ProductNavigationControlMenuCategoryKeys.TOOLS %>',
 		elasticSearchDiskSpace: {
-			availableDiskSpace: <%= searchAdminDisplayContext.getAvailableDiskSpace() %>,
-			currentDiskSpaceUsed: <%= searchAdminDisplayContext.getCurrentDiskSpaceUsed() %>,
-			isLowOnDiskSpace: <%= searchAdminDisplayContext.isLowOnDiskSpace() %>,
+			availableDiskSpace: <%= indexActionsDisplayContext.getAvailableDiskSpace() %>,
+			currentDiskSpaceUsed: <%= indexActionsDisplayContext.getCurrentDiskSpaceUsed() %>,
+			isLowOnDiskSpace: <%= indexActionsDisplayContext.isLowOnDiskSpace() %>,
 		},
 		form: document.<portlet:namespace />fm,
 		indexActionWrapperSelector: '.index-action-wrapper',

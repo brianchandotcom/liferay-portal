@@ -39,7 +39,7 @@ boolean customizable = layoutTypePortlet.isCustomizable();
 
 PortletPreferences portletPreferences = PortletPreferencesLocalServiceUtil.getStrictPreferences(PortletPreferencesFactoryUtil.getPortletPreferencesIds(request, portletId));
 
-PortletPreferences portletPreferences = themeDisplay.getStrictLayoutPortletSetup(layout, portletId);
+PortletPreferences setupPortletPreferences = themeDisplay.getStrictLayoutPortletSetup(layout, portletId);
 
 Group group = null;
 boolean privateLayout = false;
@@ -234,7 +234,7 @@ if (portlet.hasPortletMode(responseContentType, PortletMode.HELP) && PortletPerm
 boolean supportsMimeType = portlet.hasPortletMode(responseContentType, portletMode);
 
 if (responseContentType.equals(ContentTypes.XHTML_MP) && portlet.hasMultipleMimeTypes()) {
-	supportsMimeType = GetterUtil.getBoolean(portletPreferences.getValue("portletSetupSupportedClientsMobileDevices_" + portletMode, String.valueOf(supportsMimeType)));
+	supportsMimeType = GetterUtil.getBoolean(setupPortletPreferences.getValue("portletSetupSupportedClientsMobileDevices_" + portletMode, String.valueOf(supportsMimeType)));
 }
 
 // Only authenticated with the correct permissions can update a layout. If
@@ -362,12 +362,12 @@ portletDisplay.setStateMax(stateMax);
 portletDisplay.setStateMin(stateMin);
 portletDisplay.setStateNormal(windowState.equals(WindowState.NORMAL));
 portletDisplay.setStatePopUp(themeDisplay.isStatePopUp());
-portletDisplay.setPortletSetup(portletPreferences);
+portletDisplay.setPortletSetup(setupPortletPreferences);
 portletDisplay.setWebDAVEnabled(portlet.getWebDAVStorageInstance() != null);
 
 // Portlet custom CSS class name
 
-String customCSSClassName = PortletConfigurationUtil.getPortletCustomCSSClassName(portletPreferences);
+String customCSSClassName = PortletConfigurationUtil.getPortletCustomCSSClassName(setupPortletPreferences);
 
 portletDisplay.setCustomCSSClassName(customCSSClassName);
 
@@ -875,7 +875,7 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 
 	// Portlet decorator
 
-	String portletDecoratorId = portletPreferences.getValue("portletSetupPortletDecoratorId", StringPool.BLANK);
+	String portletDecoratorId = setupPortletPreferences.getValue("portletSetupPortletDecoratorId", StringPool.BLANK);
 
 	PortletDecorator portletDecorator = ThemeLocalServiceUtil.getPortletDecorator(company.getCompanyId(), theme.getThemeId(), portletDecoratorId);
 

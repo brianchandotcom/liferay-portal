@@ -37,7 +37,7 @@ import org.json.JSONObject;
 public class BatchBuild extends BaseBuild {
 
 	@Override
-	public void addTimelineData(BaseBuild.TimelineData timelineData) {
+	public void addTimelineData(TimelineData timelineData) {
 		addDownstreamBuildsTimelineData(timelineData);
 	}
 

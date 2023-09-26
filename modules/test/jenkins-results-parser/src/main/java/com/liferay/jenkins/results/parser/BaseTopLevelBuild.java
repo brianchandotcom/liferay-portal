@@ -75,7 +75,7 @@ public abstract class BaseTopLevelBuild
 	}
 
 	@Override
-	public void addTimelineData(BaseBuild.TimelineData timelineData) {
+	public void addTimelineData(TimelineData timelineData) {
 		timelineData.addTimelineData(this);
 
 		if (getTopLevelBuild() == this) {
@@ -631,8 +631,8 @@ public abstract class BaseTopLevelBuild
 		return testSuiteName;
 	}
 
-	public BaseBuild.TimelineData getTimelineData() {
-		return new BaseBuild.TimelineData(500, this);
+	public TimelineData getTimelineData() {
+		return new TimelineData(500, this);
 	}
 
 	public URL getUserContentURL() {
@@ -1532,7 +1532,7 @@ public abstract class BaseTopLevelBuild
 		scriptElement.addAttribute("src", _URL_CHART_JS);
 		scriptElement.addText("");
 
-		BaseBuild.TimelineData timelineData = getTimelineData();
+		TimelineData timelineData = getTimelineData();
 
 		Element chartJSScriptElement = getJenkinsReportChartJsScriptElement(
 			Arrays.toString(timelineData.getIndexData()),

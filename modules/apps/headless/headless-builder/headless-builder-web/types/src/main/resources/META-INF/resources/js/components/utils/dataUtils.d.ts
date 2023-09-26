@@ -22,7 +22,7 @@ export declare function hasDataChanged({
 	localUIData,
 }: {
 	fetchedEntityData: APIApplicationItem | APIEndpointItem | APISchemaItem;
-	localUIData: LocalUIData;
+	localUIData: Partial<LocalUIData>;
 }): boolean;
 export declare function hasPropertiesDataChanged({
 	fetchedPropertiesData,

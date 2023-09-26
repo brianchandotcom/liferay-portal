@@ -6,8 +6,8 @@
 /**
  * If string does not start with a forward slash, add it.
  */
-export function beginStringWithForwardSlash(str: string) {
-	if (Array.from(str)[0] !== '/') {
+export function beginStringWithForwardSlash(str?: string) {
+	if (str && Array.from(str)[0] !== '/') {
 		str = '/' + str;
 	}
 
@@ -17,8 +17,8 @@ export function beginStringWithForwardSlash(str: string) {
 /**
  * If string does not end with a forward slash, add it.
  */
-export function endStringWithForwardSlash(str: string) {
-	if (str.slice(-1) !== '/') {
+export function endStringWithForwardSlash(str?: string) {
+	if (str && str.slice(-1) !== '/') {
 		str = str + '/';
 	}
 

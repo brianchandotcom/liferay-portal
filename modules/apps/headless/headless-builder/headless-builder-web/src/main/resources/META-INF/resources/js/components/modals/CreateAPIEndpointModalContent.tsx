@@ -31,11 +31,9 @@ export function CreateAPIEndpointModalContent({
 	loadData,
 	setMainEndpointNav,
 }: CreateAPIEndpointModalProps) {
-	const [localUIData, setLocalUIData] = useState<APIEndpointUIData>({
-		description: '',
-		path: '',
-		scope: {key: '', name: ''},
-	});
+	const [localUIData, setLocalUIData] = useState<Partial<APIEndpointUIData>>(
+		{}
+	);
 	const [displayError, setDisplayError] = useState<EndpointDataError>({
 		path: false,
 		scope: false,
@@ -58,9 +56,13 @@ export function CreateAPIEndpointModalContent({
 				...localUIData,
 				applicationStatus: {key: 'unpublished'},
 				name: localUIData.path,
-				path: beginStringWithForwardSlash(localUIData.path),
+				...(localUIData.path && {
+					path: beginStringWithForwardSlash(localUIData.path),
+				}),
 				r_apiApplicationToAPIEndpoints_c_apiApplicationId: currentAPIApplicationId,
-				scope: {key: localUIData.scope.key},
+				...(localUIData.scope?.key && {
+					scope: {key: localUIData.scope.key},
+				}),
 				version: '1.0',
 			}),
 			headers,

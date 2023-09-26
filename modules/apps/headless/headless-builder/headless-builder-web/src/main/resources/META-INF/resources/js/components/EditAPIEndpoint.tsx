@@ -56,11 +56,9 @@ export default function EditAPIEndpoint({
 	} = useContext(EditAPIApplicationContext);
 
 	const [activeTab, setActiveTab] = useState(0);
-	const [localUIData, setLocalUIData] = useState<APIEndpointUIData>({
-		description: '',
-		path: '',
-		scope: {key: ''},
-	});
+	const [localUIData, setLocalUIData] = useState<Partial<APIEndpointUIData>>(
+		{}
+	);
 	const [displayError, setDisplayError] = useState<EndpointDataError>({
 		path: false,
 		scope: false,
@@ -77,7 +75,9 @@ export default function EditAPIEndpoint({
 				}));
 
 				setLocalUIData({
-					description: response.description,
+					...(response.description && {
+						description: response.description,
+					}),
 					path: response.path,
 					scope: response.scope,
 				});
@@ -88,7 +88,7 @@ export default function EditAPIEndpoint({
 	const resetLocalUIData = () => {
 		if (fetchedData.apiEndpoint) {
 			setLocalUIData(
-				resetToFetched<APIEndpointItem, APIEndpointUIData>({
+				resetToFetched<APIEndpointItem, Partial<APIEndpointUIData>>({
 					fetchedEntityData: fetchedData.apiEndpoint,
 					localUIData,
 				})
@@ -98,7 +98,7 @@ export default function EditAPIEndpoint({
 
 	function validateData() {
 		let isDataValid = true;
-		const mandatoryFields = ['description', 'path', 'scope'];
+		const mandatoryFields = ['path', 'scope'];
 
 		if (!Object.keys(localUIData!).length) {
 			const errors = mandatoryFields.reduce(

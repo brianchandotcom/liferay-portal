@@ -91,7 +91,7 @@ export function hasDataChanged({
 	localUIData,
 }: {
 	fetchedEntityData: APIApplicationItem | APIEndpointItem | APISchemaItem;
-	localUIData: LocalUIData;
+	localUIData: Partial<LocalUIData>;
 }) {
 	for (const [key, value] of Object.entries(localUIData)) {
 		if (fetchedEntityData?.[key as keyof LocalUIData] !== value) {

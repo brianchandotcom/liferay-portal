@@ -25,4 +25,4 @@ export declare function itemStatusRenderer({
 }: FDSItem<APIApplicationItem>): JSX.Element;
 export declare function itemURLRenderer({
 	itemData,
-}: FDSItem<APIApplicationItem>): string;
+}: FDSItem<APIApplicationItem>): string | undefined;

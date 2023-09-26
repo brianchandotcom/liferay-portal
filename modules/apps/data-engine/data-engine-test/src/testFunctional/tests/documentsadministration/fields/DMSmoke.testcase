@@ -71,6 +71,8 @@ definition {
 
 		DMDocument.expandInfo();
 
+		DDLList.expandCollapsedIcon(className = "DM Document Type Name");
+
 		DMDocument.viewFieldLabels(labels = "Text,Select from List,Single Selection,Multiple Selection,Grid,Date,Numeric,Image,Rich Text,Upload,Color,Geolocation,Link to Page,Separator");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");

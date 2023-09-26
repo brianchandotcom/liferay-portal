@@ -28,6 +28,7 @@ const getContactRoleByFilter = (filter) => {
 	if (filter.includes('security')) {
 		return 'Security Incident Contact';
 	}
+
 	if (filter.includes('critical')) {
 		return 'Critical Incident Contact';
 	}

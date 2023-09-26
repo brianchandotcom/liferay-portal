@@ -1940,7 +1940,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 			checkCompanyKey(company.getCompanyId());
 
-			// Check ResourceActions
+			// Resource actions
 
 			if (DBPartition.isPartitionEnabled()) {
 				_resourceActionLocalService.checkResourceActions();

@@ -38,18 +38,9 @@ public class EmptyOnClickRowChecker extends RowChecker {
 		boolean disabled, String name, String value, String checkBoxRowIds,
 		String checkBoxAllRowIds, String checkBoxPostOnClick) {
 
-		StringBundler sb = new StringBundler(18);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("<input ");
-
-		String rowElementId = (String)httpServletRequest.getAttribute(
-			"liferay-ui:search-container-row:rowElementId");
-
-		if (rowElementId != null) {
-			sb.append("aria-labelledby=\"");
-			sb.append(rowElementId);
-			sb.append("\" ");
-		}
 
 		if (checked) {
 			sb.append("checked ");

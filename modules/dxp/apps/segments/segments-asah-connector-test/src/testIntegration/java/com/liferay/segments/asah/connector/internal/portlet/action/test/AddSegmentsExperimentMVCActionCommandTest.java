@@ -279,7 +279,7 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 	}
 
 	@Test
-	public void testAddSegmentsExperimentWithSecondaryExperienceSelected()
+	public void testAddSegmentsExperimentWithSecondarySegmentsExperienceSelected()
 		throws Exception {
 
 		String liferayAnalyticsURL = "http://localhost:8080/";

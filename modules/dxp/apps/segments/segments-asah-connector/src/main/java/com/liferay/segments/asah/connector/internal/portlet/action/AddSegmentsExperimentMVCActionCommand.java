@@ -161,7 +161,7 @@ public class AddSegmentsExperimentMVCActionCommand
 				_segmentsExperimentService.deleteSegmentsExperiment(
 					segmentsExperiment, false);
 
-				segmentsExperienceId = _getActiveExperienceId(
+				segmentsExperienceId = _getActiveSegmentsExperienceId(
 					serviceContext.getScopeGroupId(), plid,
 					segmentsExperienceId);
 			}
@@ -170,7 +170,7 @@ public class AddSegmentsExperimentMVCActionCommand
 			}
 		}
 		else {
-			segmentsExperienceId = _getActiveExperienceId(
+			segmentsExperienceId = _getActiveSegmentsExperienceId(
 				serviceContext.getScopeGroupId(), plid, segmentsExperienceId);
 		}
 
@@ -201,7 +201,7 @@ public class AddSegmentsExperimentMVCActionCommand
 		);
 	}
 
-	private long _getActiveExperienceId(
+	private long _getActiveSegmentsExperienceId(
 			long groupId, long plid, long segmentsExperienceId)
 		throws Exception {
 

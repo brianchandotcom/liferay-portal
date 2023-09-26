@@ -142,44 +142,11 @@ export function useKeyboardDragItem(
 			return;
 		}
 
-		const onClick = () => {
-			if (sourceItemRef.current === item) {
-				const dragOverPosition = dragOverPositionRef.current;
-				const itemList = itemListRef.current;
-				const onDropItem = onDropItemRef.current;
-				const targetItem = targetItemRef.current;
-
-				if (
-					!dragOverPosition ||
-					!itemList ||
-					!onDropItem ||
-					!targetItem
-				) {
-					return;
-				}
-
-				const targetIndex = itemList.indexOf(targetItem);
-
-				if (targetIndex < 0) {
-					return;
-				}
-
-				onDropItem(item.id, targetIndex, dragOverPosition);
-
-				setDragOverPosition(null);
-				setSourceItem(null);
-				setTargetItem(null);
-			}
-			else {
-				setDragOverPosition(DRAG_OVER_POSITIONS.top);
-				setSourceItem(item);
-				setTargetItem(item);
-			}
-		};
-
 		const onKeyDown = (event: KeyboardEvent) => {
 			if (
-				['ArrowDown', 'ArrowUp', 'Enter', 'Escape'].includes(event.key)
+				['ArrowDown', 'ArrowUp', 'Enter', 'Escape', ' '].includes(
+					event.key
+				)
 			) {
 				event.preventDefault();
 				event.stopImmediatePropagation();
@@ -198,16 +165,15 @@ export function useKeyboardDragItem(
 
 			const itemList = itemListRef.current;
 			const position = dragOverPositionRef.current;
-			const sourceItem = sourceItemRef.current;
 			const targetItem = targetItemRef.current;
 
-			if (!itemList || !position || !sourceItem || !targetItem) {
+			if (!itemList) {
 				return;
 			}
 
-			const targetItemIndex = itemList.indexOf(targetItem);
+			if (event.key === 'ArrowUp' && targetItem) {
+				const targetItemIndex = itemList.indexOf(targetItem);
 
-			if (event.key === 'ArrowUp') {
 				if (position === DRAG_OVER_POSITIONS.bottom) {
 					setDragOverPosition(DRAG_OVER_POSITIONS.top);
 				}
@@ -216,7 +182,9 @@ export function useKeyboardDragItem(
 					setTargetItem(itemListRef.current[targetItemIndex - 1]);
 				}
 			}
-			else if (event.key === 'ArrowDown') {
+			else if (event.key === 'ArrowDown' && targetItem) {
+				const targetItemIndex = itemList.indexOf(targetItem);
+
 				if (targetItemIndex < itemList.length - 1) {
 					setDragOverPosition(DRAG_OVER_POSITIONS.top);
 					setTargetItem(itemListRef.current[targetItemIndex + 1]);
@@ -225,8 +193,39 @@ export function useKeyboardDragItem(
 					setDragOverPosition(DRAG_OVER_POSITIONS.bottom);
 				}
 			}
-			else if (event.key === 'Enter') {
-				onClick();
+			else if (event.key === 'Enter' || event.key === ' ') {
+				if (sourceItemRef.current === item) {
+					const dragOverPosition = dragOverPositionRef.current;
+					const itemList = itemListRef.current;
+					const onDropItem = onDropItemRef.current;
+					const targetItem = targetItemRef.current;
+
+					if (
+						!dragOverPosition ||
+						!itemList ||
+						!onDropItem ||
+						!targetItem
+					) {
+						return;
+					}
+
+					const targetIndex = itemList.indexOf(targetItem);
+
+					if (targetIndex < 0) {
+						return;
+					}
+
+					onDropItem(item.id, targetIndex, dragOverPosition);
+
+					setDragOverPosition(null);
+					setSourceItem(null);
+					setTargetItem(null);
+				}
+				else {
+					setDragOverPosition(DRAG_OVER_POSITIONS.top);
+					setSourceItem(item);
+					setTargetItem(item);
+				}
 			}
 		};
 
@@ -237,12 +236,10 @@ export function useKeyboardDragItem(
 		};
 
 		button.addEventListener('blur', onBlur);
-		button.addEventListener('click', onClick);
 		button.addEventListener('keydown', onKeyDown);
 
 		return () => {
 			button.removeEventListener('blur', onBlur);
-			button.removeEventListener('click', onClick);
 			button.removeEventListener('keydown', onKeyDown);
 		};
 	}, [item, itemListRef, setDragOverPosition, setSourceItem, setTargetItem]);

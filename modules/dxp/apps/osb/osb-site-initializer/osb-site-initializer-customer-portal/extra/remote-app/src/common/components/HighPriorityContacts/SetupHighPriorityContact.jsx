@@ -29,7 +29,11 @@ const mapFilterToContactsCategory = (filter) => ({
 	},
 });
 
-const getHighPriorityContactsByFilterRaysource = (userAccounts, filter) =>
+const getHighPriorityContactsByFilterRaysource = (
+	highPriorityContactsCategory,
+	userAccounts,
+	filter
+) =>
 	userAccounts
 		.filter((account) =>
 			account?.selectedAccountSummary?.roleBriefs?.some(
@@ -50,6 +54,7 @@ const getHighPriorityContactsByFilterRaysource = (userAccounts, filter) =>
 					) ?? [],
 				email,
 				id,
+				labelRole: highPriorityContactsCategory?.contactsCategory.name,
 				name,
 				role: selectedAccountSummary?.roleBriefs.filter(
 					({name}) => name === filter
@@ -68,8 +73,6 @@ const SetupHighPriorityContact = ({
 	isCriticalIncidentCard,
 	removedContactList,
 }) => {
-	const highPriorityContactsCategory = mapFilterToContactsCategory(filter);
-
 	const [
 		currentHighPriorityContacts,
 		setCurrentHighPriorityContacts,
@@ -81,14 +84,10 @@ const SetupHighPriorityContact = ({
 	const projectOnboarding = useOnboarding();
 	const projectPortal = useCustomerPortal();
 
-	const {updateContacts} = useHighPriorityContacts({
-		addContactList,
-		currentHighPriorityContacts,
-		highPriorityContactsCategory,
-		removedContactList,
-		rolesId,
-	});
-
+	const highPriorityContactsCategory = useMemo(
+		() => mapFilterToContactsCategory(filter),
+		[filter]
+	);
 	const project = useMemo(
 		() => projectPortal?.[0].project || projectOnboarding?.[0].project,
 		[projectOnboarding, projectPortal]
@@ -98,6 +97,14 @@ const SetupHighPriorityContact = ({
 		() => data?.koroneikiAccountByExternalReferenceCode,
 		[data?.koroneikiAccountByExternalReferenceCode]
 	);
+
+	const {updateContacts} = useHighPriorityContacts({
+		addContactList,
+		currentHighPriorityContacts,
+		highPriorityContactsCategory,
+		removedContactList,
+		rolesId,
+	});
 
 	useEffect(() => {
 		getAccountRolesId(project, client)
@@ -113,18 +120,20 @@ const SetupHighPriorityContact = ({
 	useEffect(() => {
 		const highPriorityContacts =
 			getHighPriorityContactsByFilterRaysource(
+				highPriorityContactsCategory,
 				userAccountsData?.accountUserAccountsByExternalReferenceCode
 					?.items ?? [],
 				highPriorityContactsCategory.contactsCategory.role
 			) ?? [];
-
 		setCurrentHighPriorityContacts(
 			highPriorityContacts.map((highPriorityContact, index) => ({
 				email: highPriorityContact?.email,
 				filter: highPriorityContact.role,
 				filterId: highPriorityContact.roleId,
+				filterLabel: highPriorityContact.name,
 				id: highPriorityContact?.id,
 				label: highPriorityContact?.name,
+				labelRole: highPriorityContact?.labelRole,
 				value: (index + 1).toString(),
 			}))
 		);
@@ -132,6 +141,7 @@ const SetupHighPriorityContact = ({
 		highPriorityContactsCategory.contactsCategory.role,
 		project,
 		userAccountsData,
+		highPriorityContactsCategory,
 	]);
 
 	const handleMetaErrorChange = (error, inputName) => {

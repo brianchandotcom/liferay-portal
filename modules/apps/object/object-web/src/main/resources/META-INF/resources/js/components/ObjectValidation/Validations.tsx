@@ -28,6 +28,57 @@ interface ItemData {
 	id: number;
 }
 
+function objectFieldActiveDataRenderer({itemData}: {itemData: ItemData}) {
+	return itemData.active
+		? Liferay.Language.get('yes')
+		: Liferay.Language.get('no');
+}
+
+const fdsSchemaFields = [
+	{
+		contentRenderer: 'objectFieldLabelDataRenderer',
+		expand: false,
+		fieldName: 'name',
+		label: Liferay.Language.get('label'),
+		localizeLabel: true,
+		sortable: true,
+	},
+	{
+		expand: false,
+		fieldName: 'engineLabel',
+		label: Liferay.Language.get('type'),
+		localizeLabel: true,
+		sortable: false,
+	},
+	{
+		contentRenderer: 'objectFieldActiveDataRenderer',
+		expand: false,
+		fieldName: 'active',
+		label: Liferay.Language.get('active'),
+		localizeLabel: true,
+		sortable: false,
+	},
+	{
+		contentRenderer: 'objectFieldModifiedDateDataRenderer',
+		expand: false,
+		fieldName: 'dateModified',
+		label: Liferay.Language.get('modified-date'),
+		localizeLabel: true,
+		sortable: false,
+	},
+];
+
+if (Liferay.FeatureFlags['LPS-193355']) {
+	fdsSchemaFields.push({
+		contentRenderer: 'FDSSourceDataRenderer',
+		expand: false,
+		fieldName: 'system',
+		label: Liferay.Language.get('source'),
+		localizeLabel: true,
+		sortable: false,
+	});
+}
+
 const language = Liferay.ThemeDisplay.getBCP47LanguageId();
 
 export default function Validations({
@@ -39,12 +90,6 @@ export default function Validations({
 	style,
 	url,
 }: IFDSTableProps) {
-	function objectFieldActiveDataRenderer({itemData}: {itemData: ItemData}) {
-		return itemData.active
-			? Liferay.Language.get('yes')
-			: Liferay.Language.get('no');
-	}
-
 	function objectFieldLabelDataRenderer({
 		itemData,
 		openSidePanel,
@@ -69,51 +114,6 @@ export default function Validations({
 		moment.locale(language);
 
 		return moment().format('MMMM D, YYYY, h:mm:ss A');
-	}
-
-	const fdsSchemaFields = [
-		{
-			contentRenderer: 'objectFieldLabelDataRenderer',
-			expand: false,
-			fieldName: 'name',
-			label: Liferay.Language.get('label'),
-			localizeLabel: true,
-			sortable: true,
-		},
-		{
-			expand: false,
-			fieldName: 'engineLabel',
-			label: Liferay.Language.get('type'),
-			localizeLabel: true,
-			sortable: false,
-		},
-		{
-			contentRenderer: 'objectFieldActiveDataRenderer',
-			expand: false,
-			fieldName: 'active',
-			label: Liferay.Language.get('active'),
-			localizeLabel: true,
-			sortable: false,
-		},
-		{
-			contentRenderer: 'objectFieldModifiedDateDataRenderer',
-			expand: false,
-			fieldName: 'dateModified',
-			label: Liferay.Language.get('modified-date'),
-			localizeLabel: true,
-			sortable: false,
-		},
-	];
-
-	if (Liferay.FeatureFlags['LPS-193355']) {
-		fdsSchemaFields.push({
-			contentRenderer: 'FDSSourceDataRenderer',
-			expand: false,
-			fieldName: 'system',
-			label: Liferay.Language.get('source'),
-			localizeLabel: true,
-			sortable: false,
-		});
 	}
 
 	const dataSetProps = {

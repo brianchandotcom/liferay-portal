@@ -32,6 +32,37 @@ interface ItemData {
 	status: Status;
 }
 
+function objectActionActiveDataRenderer({itemData}: {itemData: ItemData}) {
+	return itemData.active
+		? Liferay.Language.get('yes')
+		: Liferay.Language.get('no');
+}
+
+function objectActionLastExecutionDataRenderer({
+	itemData,
+}: {
+	itemData: ItemData;
+}) {
+	return (
+		<strong
+			className={classNames(
+				'label',
+				itemData.status.label === 'never-ran'
+					? 'label-info'
+					: itemData.status.label === 'failed'
+					? 'label-danger'
+					: 'label-success'
+			)}
+		>
+			{itemData.status.label === 'never-ran'
+				? Liferay.Language.get('never-ran')
+				: itemData.status.label === 'failed'
+				? Liferay.Language.get('failed')
+				: Liferay.Language.get('success')}
+		</strong>
+	);
+}
+
 export default function Actions({
 	apiURL,
 	creationMenu,
@@ -41,12 +72,6 @@ export default function Actions({
 	style,
 	url,
 }: IFDSTableProps) {
-	function objectActionActiveDataRenderer({itemData}: {itemData: ItemData}) {
-		return itemData.active
-			? Liferay.Language.get('yes')
-			: Liferay.Language.get('no');
-	}
-
 	function objectActionLabelDataRenderer({
 		itemData,
 		openSidePanel,
@@ -64,31 +89,6 @@ export default function Actions({
 					{value}
 				</a>
 			</div>
-		);
-	}
-
-	function objectActionLastExecutionDataRenderer({
-		itemData,
-	}: {
-		itemData: ItemData;
-	}) {
-		return (
-			<strong
-				className={classNames(
-					'label',
-					itemData.status.label === 'never-ran'
-						? 'label-info'
-						: itemData.status.label === 'failed'
-						? 'label-danger'
-						: 'label-success'
-				)}
-			>
-				{itemData.status.label === 'never-ran'
-					? Liferay.Language.get('never-ran')
-					: itemData.status.label === 'failed'
-					? Liferay.Language.get('failed')
-					: Liferay.Language.get('success')}
-			</strong>
 		);
 	}
 

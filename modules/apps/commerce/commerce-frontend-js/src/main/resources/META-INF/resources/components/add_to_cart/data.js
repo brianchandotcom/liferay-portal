@@ -8,7 +8,7 @@ import {CURRENT_ORDER_UPDATED} from '../../utilities/eventsDefinitions';
 
 const CartResource = ServiceProvider.DeliveryCartAPI('v1');
 
-function formatCartItem(
+export function formatCartItem(
 	cpInstance,
 	namespace,
 	skuOptions,

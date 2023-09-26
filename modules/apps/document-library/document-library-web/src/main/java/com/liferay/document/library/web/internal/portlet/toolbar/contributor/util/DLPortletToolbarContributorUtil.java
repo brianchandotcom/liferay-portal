@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper;
+package com.liferay.document.library.web.internal.portlet.toolbar.contributor.util;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
@@ -22,17 +22,14 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Roberto Díaz
  */
-@Component(service = DLPortletToolbarContributorHelper.class)
-public class DLPortletToolbarContributorHelper {
+public class DLPortletToolbarContributorUtil {
 
-	public Folder getFolder(
-		ThemeDisplay themeDisplay, PortletRequest portletRequest) {
+	public static Folder getFolder(
+		DLAppLocalService dlAppLocalService, ThemeDisplay themeDisplay,
+		PortletRequest portletRequest) {
 
 		Folder folder = (Folder)portletRequest.getAttribute(
 			WebKeys.DOCUMENT_LIBRARY_FOLDER);
@@ -45,7 +42,7 @@ public class DLPortletToolbarContributorHelper {
 			long folderId = ParamUtil.getLong(portletRequest, "folderId");
 
 			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				folder = _dlAppLocalService.getFolder(folderId);
+				folder = dlAppLocalService.getFolder(folderId);
 			}
 
 			if (folder != null) {
@@ -78,7 +75,7 @@ public class DLPortletToolbarContributorHelper {
 
 		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			try {
-				folder = _dlAppLocalService.getFolder(rootFolderId);
+				folder = dlAppLocalService.getFolder(rootFolderId);
 			}
 			catch (NoSuchFolderException | PrincipalException exception) {
 
@@ -98,7 +95,7 @@ public class DLPortletToolbarContributorHelper {
 		return folder;
 	}
 
-	public Boolean isShowActionsEnabled(
+	public static Boolean isShowActionsEnabled(
 		ThemeDisplay themeDisplay, PortletRequest portletRequest) {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
@@ -124,9 +121,6 @@ public class DLPortletToolbarContributorHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DLPortletToolbarContributorHelper.class);
-
-	@Reference
-	private DLAppLocalService _dlAppLocalService;
+		DLPortletToolbarContributorUtil.class);
 
 }

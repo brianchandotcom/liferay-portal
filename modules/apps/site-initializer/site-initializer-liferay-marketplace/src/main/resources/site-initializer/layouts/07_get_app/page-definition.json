@@ -4,6 +4,7 @@
 			{
 				"definition": {
 					"fragmentStyle": {
+						"borderWidth": "0",
 						"marginLeft": "9",
 						"marginRight": "9"
 					},
@@ -26,12 +27,16 @@
 					{
 						"definition": {
 							"fragmentStyle": {
+								"borderWidth": "0",
 								"marginBottom": "9",
 								"marginTop": "9"
 							},
 							"indexed": true,
 							"layout": {
+								"align": "Center",
 								"borderWidth": 0,
+								"contentDisplay": "FlexColumn",
+								"justify": "Center",
 								"marginBottom": 0,
 								"marginLeft": 0,
 								"marginRight": 0,
@@ -47,6 +52,9 @@
 						"pageElements": [
 							{
 								"definition": {
+									"fragmentStyle": {
+										"width": "600px"
+									},
 									"widgetInstance": {
 										"widgetConfig": {
 										},

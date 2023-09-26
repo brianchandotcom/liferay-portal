@@ -219,7 +219,7 @@ public class AntUtil {
 	public static void callTargetWithTimeout(
 			final File baseDir, final String buildFileName,
 			final String targetName, final Map<String, String> parameters,
-			int timeout, boolean runningModulesTests)
+			int timeoutMinutes, boolean runningModulesTests)
 		throws AntException, IOException {
 
 		ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -236,12 +236,12 @@ public class AntUtil {
 			});
 
 		try {
-			future.get(timeout, TimeUnit.MINUTES);
+			future.get(timeoutMinutes, TimeUnit.MINUTES);
 		}
 		catch (TimeoutException timeoutException) {
 			System.err.println(
 				"FAILURE: Unable to run " + targetName + " with " + parameters +
-					" in " + timeout + " minutes.");
+					" in " + timeoutMinutes + " minutes.");
 		}
 		catch (ExecutionException executionException) {
 			executionException.printStackTrace();

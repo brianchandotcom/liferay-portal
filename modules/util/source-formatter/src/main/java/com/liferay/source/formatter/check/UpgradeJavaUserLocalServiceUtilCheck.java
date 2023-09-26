@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
-import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaMethod;
@@ -42,7 +41,7 @@ public class UpgradeJavaUserLocalServiceUtilCheck extends BaseUpgradeCheck {
 
 			content = StringUtil.replace(
 				content, javaMethodContent,
-				_checkAddUser(javaMethodContent, content));
+				_checkAddUser(javaMethodContent, content, fileName));
 
 			content = StringUtil.replace(
 				content, javaMethodContent,
@@ -59,34 +58,74 @@ public class UpgradeJavaUserLocalServiceUtilCheck extends BaseUpgradeCheck {
 		};
 	}
 
-	private String _checkAddUser(String content, String fileContent) {
+	private String _checkAddUser(
+		String content, String fileContent, String fileName) {
+
+		String newContent = content;
+
 		Matcher addUserMatcher = _addUserPattern.matcher(content);
 
 		while (addUserMatcher.find()) {
-			String methodCall = addUserMatcher.group();
+			String methodCall = JavaSourceUtil.getMethodCall(
+				content, addUserMatcher.start());
 
-			List<String> parameterList = JavaSourceUtil.getParameterList(
-				methodCall);
-
-			if (!_checkMethodCall(content, fileContent, methodCall) ||
-				!((parameterList.size() == 26) ||
-				  (parameterList.size() == 31))) {
+			if (!_checkMethodCall(
+					content, fileContent, addUserMatcher.group(2))) {
 
 				continue;
 			}
 
-			String line = getLine(
-				content, getLineNumber(content, addUserMatcher.start()));
-			String variableName = getVariableName(methodCall);
+			String message = StringBundler.concat(
+				"Unable to format method addUser from UserLocalService, ",
+				"UserLocalServiceUtil, UserService and UserServiceUtil. Fill ",
+				"the new parameter manually, see LPS-192661 and LPS-196617.");
 
-			content = StringUtil.replace(
-				content, methodCall,
+			List<String> parameterList = JavaSourceUtil.getParameterList(
+				methodCall);
+
+			if (!hasValidParameters(
+					26, fileName, content, message, parameterList,
+					new String[] {
+						"long", "boolean", "String", "String", "boolean",
+						"String", "String", "long", "String", "Locale",
+						"String", "String", "String", "long", "long", "boolean",
+						"int", "int", "int", "String", "long[]", "long[]",
+						"long[]", "long[]", "boolean", "ServiceContext"
+					}) &&
+				!hasValidParameters(
+					27, fileName, content, message, parameterList,
+					new String[] {
+						"long", "long", "boolean", "String", "String",
+						"boolean", "String", "String", "long", "String",
+						"Locale", "String", "String", "String", "long", "long",
+						"boolean", "int", "int", "int", "String", "long[]",
+						"long[]", "long[]", "long[]", "boolean",
+						"ServiceContext"
+					}) &&
+				!hasValidParameters(
+					31, fileName, content, message, parameterList,
+					new String[] {
+						"long", "boolean", "String", "String", "boolean",
+						"String", "String", "long", "String", "Locale",
+						"String", "String", "String", "long", "long", "boolean",
+						"int", "int", "int", "String", "long[]", "long[]",
+						"long[]", "long[]", "List<Address>",
+						"List<EmailAddress>", "List<Phone>", "List<Website>",
+						"List<AnnouncementsDelivery>", "boolean",
+						"ServiceContext"
+					})) {
+
+				continue;
+			}
+
+			newContent = StringUtil.replace(
+				newContent, methodCall,
 				_removeParameters(
-					SourceUtil.getIndent(line), methodCall, parameterList,
-					variableName));
+					JavaSourceUtil.getIndent(methodCall), methodCall,
+					parameterList, getVariableName(methodCall)));
 		}
 
-		return content;
+		return newContent;
 	}
 
 	private boolean _checkMethodCall(
@@ -110,19 +149,20 @@ public class UpgradeJavaUserLocalServiceUtilCheck extends BaseUpgradeCheck {
 	private String _checkUpdateStatus(
 		String content, String fileContent, String fileName) {
 
-		Matcher updateStatusMatcher = _updateStatusPattern.matcher(content);
-
 		String newContent = content;
+
+		Matcher updateStatusMatcher = _updateStatusPattern.matcher(content);
 
 		while (updateStatusMatcher.find()) {
 			String methodCall = JavaSourceUtil.getMethodCall(
 				content, updateStatusMatcher.start());
 
 			String message = StringBundler.concat(
-				"Could not resolve types of updateStatus method. The method ",
-				"signature has changed to updateStatus(long userId,",
+				"Unable to format method updateStatus from UserLocalService, ",
+				"UserLocalServiceUtil, UserService and UserServiceUtil. The ",
+				"method signature has changed to updateStatus(long userId, ",
 				"int status, ServiceContext serviceContext). Fill the new ",
-				"parameter manually.");
+				"parameter manually, see LPS-191999.");
 
 			List<String> parameterList = JavaSourceUtil.getParameterList(
 				methodCall);
@@ -136,14 +176,15 @@ public class UpgradeJavaUserLocalServiceUtilCheck extends BaseUpgradeCheck {
 				continue;
 			}
 
-			String newMethodCall = JavaSourceUtil.addMethodNewParameters(
-				JavaSourceUtil.getIndent(methodCall), new int[] {2},
-				updateStatusMatcher.group(),
-				new String[] {"ServiceContextThreadLocal.getServiceContext()"},
-				parameterList);
-
 			newContent = StringUtil.replace(
-				newContent, methodCall, newMethodCall);
+				newContent, methodCall,
+				JavaSourceUtil.addMethodNewParameters(
+					JavaSourceUtil.getIndent(methodCall), new int[] {2},
+					updateStatusMatcher.group(),
+					new String[] {
+						"ServiceContextThreadLocal.getServiceContext()"
+					},
+					parameterList));
 		}
 
 		return newContent;
@@ -153,8 +194,16 @@ public class UpgradeJavaUserLocalServiceUtilCheck extends BaseUpgradeCheck {
 		String indent, String methodCall, List<String> parameterList,
 		String variableName) {
 
-		parameterList.remove(7);
-		parameterList.remove(7);
+		if (parameterList.size() == 27) {
+			parameterList.remove(8);
+			parameterList.remove(8);
+
+			parameterList.add(19, "0");
+		}
+		else {
+			parameterList.remove(7);
+			parameterList.remove(7);
+		}
 
 		StringBundler sb = new StringBundler();
 
@@ -185,8 +234,9 @@ public class UpgradeJavaUserLocalServiceUtilCheck extends BaseUpgradeCheck {
 	}
 
 	private static final Pattern _addUserPattern = Pattern.compile(
-		"(\\w+)\\.\\s*addUser\\(\\s*.+(,\\s*.+)+\\)");
+		"(|\\t*\\w*\\s*\\w+\\s*\\=|\\t*return?)\\t*\\s?(\\w+\\.addUser\\()");
 	private static final Pattern _updateStatusPattern = Pattern.compile(
-		"(|\\t*\\w+\\s*\\=|\\t*return?)\\t*\\s?(\\w+\\.updateStatus\\()");
+		"(|\\t*\\w*\\s*\\w+\\s*\\=|\\t*return?)\\t*\\s?" +
+			"(\\w+\\.updateStatus\\()");
 
 }

@@ -175,9 +175,9 @@ public class CheckboxTag extends BaseContainerTag {
 
 		jspWriter.write(" /><span class=\"custom-control-label\">");
 
-		if (Validator.isNotNull(_label)) {
+		if (Validator.isNotNull(getLabel())) {
 			jspWriter.write("<span class=\"custom-control-label-text\">");
-			jspWriter.write(_label);
+			jspWriter.write(getLabel());
 			jspWriter.write("</span>");
 		}
 

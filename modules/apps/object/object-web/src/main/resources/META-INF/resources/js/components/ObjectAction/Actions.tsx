@@ -32,13 +32,13 @@ interface ItemData {
 	status: Status;
 }
 
-function objectActionActiveDataRenderer({itemData}: {itemData: ItemData}) {
+function ObjectActionActiveDataRenderer({itemData}: {itemData: ItemData}) {
 	return itemData.active
 		? Liferay.Language.get('yes')
 		: Liferay.Language.get('no');
 }
 
-function objectActionLastExecutionDataRenderer({
+function ObjectActionLastExecutionDataRenderer({
 	itemData,
 }: {
 	itemData: ItemData;
@@ -72,7 +72,7 @@ export default function Actions({
 	style,
 	url,
 }: IFDSTableProps) {
-	function objectActionLabelDataRenderer({
+	function ObjectActionLabelDataRenderer({
 		itemData,
 		openSidePanel,
 		value,
@@ -97,9 +97,9 @@ export default function Actions({
 		apiURL,
 		creationMenu,
 		customDataRenderers: {
-			objectActionActiveDataRenderer,
-			objectActionLabelDataRenderer,
-			objectActionLastExecutionDataRenderer,
+			ObjectActionActiveDataRenderer,
+			ObjectActionLabelDataRenderer,
+			ObjectActionLastExecutionDataRenderer,
 		},
 		formName,
 		id,
@@ -117,7 +117,7 @@ export default function Actions({
 				schema: {
 					fields: [
 						{
-							contentRenderer: 'objectActionLabelDataRenderer',
+							contentRenderer: 'ObjectActionLabelDataRenderer',
 							expand: false,
 							fieldName: 'label',
 							label: Liferay.Language.get('label'),
@@ -132,7 +132,7 @@ export default function Actions({
 							sortable: false,
 						},
 						{
-							contentRenderer: 'objectActionActiveDataRenderer',
+							contentRenderer: 'ObjectActionActiveDataRenderer',
 							expand: false,
 							fieldName: 'active',
 							label: Liferay.Language.get('active'),
@@ -141,7 +141,7 @@ export default function Actions({
 						},
 						{
 							contentRenderer:
-								'objectActionLastExecutionDataRenderer',
+								'ObjectActionLastExecutionDataRenderer',
 							expand: false,
 							fieldName: 'status',
 							label: Liferay.Language.get('last-execution'),

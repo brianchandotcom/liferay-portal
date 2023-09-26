@@ -28,7 +28,7 @@ interface ItemData {
 	id: number;
 }
 
-function objectFieldActiveDataRenderer({itemData}: {itemData: ItemData}) {
+function ObjectFieldActiveDataRenderer({itemData}: {itemData: ItemData}) {
 	return itemData.active
 		? Liferay.Language.get('yes')
 		: Liferay.Language.get('no');
@@ -36,7 +36,7 @@ function objectFieldActiveDataRenderer({itemData}: {itemData: ItemData}) {
 
 const fdsSchemaFields = [
 	{
-		contentRenderer: 'objectFieldLabelDataRenderer',
+		contentRenderer: 'ObjectFieldLabelDataRenderer',
 		expand: false,
 		fieldName: 'name',
 		label: Liferay.Language.get('label'),
@@ -51,7 +51,7 @@ const fdsSchemaFields = [
 		sortable: false,
 	},
 	{
-		contentRenderer: 'objectFieldActiveDataRenderer',
+		contentRenderer: 'ObjectFieldActiveDataRenderer',
 		expand: false,
 		fieldName: 'active',
 		label: Liferay.Language.get('active'),
@@ -59,7 +59,7 @@ const fdsSchemaFields = [
 		sortable: false,
 	},
 	{
-		contentRenderer: 'objectFieldModifiedDateDataRenderer',
+		contentRenderer: 'ObjectFieldModifiedDateDataRenderer',
 		expand: false,
 		fieldName: 'dateModified',
 		label: Liferay.Language.get('modified-date'),
@@ -90,7 +90,7 @@ export default function Validations({
 	style,
 	url,
 }: IFDSTableProps) {
-	function objectFieldLabelDataRenderer({
+	function ObjectFieldLabelDataRenderer({
 		itemData,
 		openSidePanel,
 		value,
@@ -110,7 +110,7 @@ export default function Validations({
 		);
 	}
 
-	function objectFieldModifiedDateDataRenderer() {
+	function ObjectFieldModifiedDateDataRenderer() {
 		moment.locale(language);
 
 		return moment().format('MMMM D, YYYY, h:mm:ss A');
@@ -122,9 +122,9 @@ export default function Validations({
 		creationMenu,
 		customDataRenderers: {
 			FDSSourceDataRenderer,
-			objectFieldActiveDataRenderer,
-			objectFieldLabelDataRenderer,
-			objectFieldModifiedDateDataRenderer,
+			ObjectFieldActiveDataRenderer,
+			ObjectFieldLabelDataRenderer,
+			ObjectFieldModifiedDateDataRenderer,
 		},
 		formName,
 		id,

@@ -73,14 +73,6 @@ public interface Build {
 
 	public String getDisplayName();
 
-	public int getDownstreamBuildCount(String status);
-
-	public int getDownstreamBuildCount(String result, String status);
-
-	public List<Build> getDownstreamBuilds(String status);
-
-	public List<Build> getDownstreamBuilds(String result, String status);
-
 	public long getDuration();
 
 	public String getFailureMessage();

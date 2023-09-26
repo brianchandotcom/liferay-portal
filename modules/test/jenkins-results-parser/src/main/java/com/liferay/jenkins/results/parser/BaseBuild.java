@@ -513,47 +513,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public int getDownstreamBuildCount(String status) {
-		return getDownstreamBuildCount(null, status);
-	}
-
-	@Override
-	public int getDownstreamBuildCount(String result, String status) {
-		List<Build> downstreamBuilds = getDownstreamBuilds(result, status);
-
-		return downstreamBuilds.size();
-	}
-
-	@Override
-	public List<Build> getDownstreamBuilds(String status) {
-		return getDownstreamBuilds(null, status);
-	}
-
-	@Override
-	public List<Build> getDownstreamBuilds(String result, String status) {
-		List<Build> filteredDownstreamBuilds = Collections.synchronizedList(
-			new ArrayList<Build>());
-
-		if ((result == null) && (status == null)) {
-			filteredDownstreamBuilds.addAll(downstreamBuilds);
-
-			return filteredDownstreamBuilds;
-		}
-
-		for (Build downstreamBuild : downstreamBuilds) {
-			if (((status == null) ||
-				 status.equals(downstreamBuild.getStatus())) &&
-				((result == null) ||
-				 result.equals(downstreamBuild.getResult()))) {
-
-				filteredDownstreamBuilds.add(downstreamBuild);
-			}
-		}
-
-		return filteredDownstreamBuilds;
-	}
-
-	@Override
 	public long getDuration() {
 		if (_duration != null) {
 			return _duration;
@@ -1653,11 +1612,15 @@ public abstract class BaseBuild implements Build {
 
 					String result = getResult();
 
-					if ((downstreamBuilds.size() == getDownstreamBuildCount(
-							"completed")) &&
-						(result != null)) {
+					if ((result != null) && (this instanceof ParentBuild)) {
+						ParentBuild parentBuild = (ParentBuild)this;
 
-						setResult(result);
+						if (downstreamBuilds.size() ==
+								parentBuild.getDownstreamBuildCount(
+									"completed")) {
+
+							setResult(result);
+						}
 					}
 
 					findDownstreamBuilds();

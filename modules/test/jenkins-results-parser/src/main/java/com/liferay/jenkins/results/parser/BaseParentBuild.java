@@ -102,6 +102,47 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	}
 
 	@Override
+	public int getDownstreamBuildCount(String status) {
+		return getDownstreamBuildCount(null, status);
+	}
+
+	@Override
+	public int getDownstreamBuildCount(String result, String status) {
+		List<Build> downstreamBuilds = getDownstreamBuilds(result, status);
+
+		return downstreamBuilds.size();
+	}
+
+	@Override
+	public List<Build> getDownstreamBuilds(String status) {
+		return getDownstreamBuilds(null, status);
+	}
+
+	@Override
+	public List<Build> getDownstreamBuilds(String result, String status) {
+		List<Build> filteredDownstreamBuilds = Collections.synchronizedList(
+			new ArrayList<Build>());
+
+		if ((result == null) && (status == null)) {
+			filteredDownstreamBuilds.addAll(downstreamBuilds);
+
+			return filteredDownstreamBuilds;
+		}
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (((status == null) ||
+				 status.equals(downstreamBuild.getStatus())) &&
+				((result == null) ||
+				 result.equals(downstreamBuild.getResult()))) {
+
+				filteredDownstreamBuilds.add(downstreamBuild);
+			}
+		}
+
+		return filteredDownstreamBuilds;
+	}
+
+	@Override
 	public Long getLatestStartTimestamp() {
 		Long latestStartTimestamp = getStartTime();
 

@@ -1084,7 +1084,14 @@ public class JenkinsResultsParserUtil {
 		for (Build build : builds) {
 			flattenedBuilds.add(build);
 
-			List<Build> downstreamBuilds = build.getDownstreamBuilds(null);
+			if (!(build instanceof ParentBuild)) {
+				continue;
+			}
+
+			ParentBuild parentBuild = (ParentBuild)build;
+
+			List<Build> downstreamBuilds = parentBuild.getDownstreamBuilds(
+				null);
 
 			if (!downstreamBuilds.isEmpty()) {
 				flattenedBuilds.addAll(flatten(downstreamBuilds));

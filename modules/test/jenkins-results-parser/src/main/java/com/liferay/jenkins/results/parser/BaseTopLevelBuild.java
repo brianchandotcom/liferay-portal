@@ -99,6 +99,7 @@ public abstract class BaseTopLevelBuild
 		return "";
 	}
 
+	@Override
 	public String getAcceptanceUpstreamJobURL() {
 		String upstreamAcceptanceJenkinsMaster = null;
 
@@ -218,6 +219,7 @@ public abstract class BaseTopLevelBuild
 		return null;
 	}
 
+	@Override
 	public Map<String, String> getBaseGitRepositoryDetailsTempMap() {
 		String gitRepositoryType = getBaseGitRepositoryType();
 
@@ -296,6 +298,7 @@ public abstract class BaseTopLevelBuild
 		return buildResultsJSONObject;
 	}
 
+	@Override
 	public Build getControllerBuild() {
 		if (_controllerBuild != null) {
 			return _controllerBuild;
@@ -330,6 +333,7 @@ public abstract class BaseTopLevelBuild
 		return sb.toString();
 	}
 
+	@Override
 	public AxisBuild getDownstreamAxisBuild(String axisName) {
 		AxisBuild targetAxisBuild = _downstreamAxisBuilds.get(axisName);
 
@@ -449,6 +453,7 @@ public abstract class BaseTopLevelBuild
 		return downstreamBatchBuilds;
 	}
 
+	@Override
 	public DownstreamBuild getDownstreamBuild(String axisName) {
 		for (Build downstreamBuild : getDownstreamBuilds(null)) {
 			String downstreamAxisName = downstreamBuild.getParameterValue(
@@ -504,6 +509,7 @@ public abstract class BaseTopLevelBuild
 		}
 	}
 
+	@Override
 	public synchronized Element getJenkinsReportElement() {
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
@@ -520,6 +526,7 @@ public abstract class BaseTopLevelBuild
 		}
 	}
 
+	@Override
 	public String getJenkinsReportURL() {
 		if (fromArchive) {
 			return getBuildURL() + "/jenkins-report.html";
@@ -533,6 +540,7 @@ public abstract class BaseTopLevelBuild
 			String.valueOf(getBuildNumber()), "/jenkins-report.html");
 	}
 
+	@Override
 	public File getJobSummaryDir() {
 		File jobSummaryDir = new File(getBuildDirPath(), "job-summary");
 
@@ -559,6 +567,7 @@ public abstract class BaseTopLevelBuild
 		return metricLabels;
 	}
 
+	@Override
 	public List<String> getProjectNames() {
 		return Collections.emptyList();
 	}

@@ -5,8 +5,34 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+
+import java.util.List;
+import java.util.Map;
+
+import org.dom4j.Element;
+
 /**
  * @author Michael Hashimoto
  */
 public interface TopLevelBuild extends Build {
+
+	public String getAcceptanceUpstreamJobURL();
+
+	public Map<String, String> getBaseGitRepositoryDetailsTempMap();
+
+	public Build getControllerBuild();
+
+	public AxisBuild getDownstreamAxisBuild(String axisName);
+
+	public DownstreamBuild getDownstreamBuild(String axisName);
+
+	public Element getJenkinsReportElement();
+
+	public String getJenkinsReportURL();
+
+	public File getJobSummaryDir();
+
+	public List<String> getProjectNames();
+
 }

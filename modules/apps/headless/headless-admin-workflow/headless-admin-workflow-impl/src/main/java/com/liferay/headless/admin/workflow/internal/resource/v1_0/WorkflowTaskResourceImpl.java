@@ -654,7 +654,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 	private WorkflowTaskManager _workflowTaskManager;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.workflow.WorkflowTask)"
+		target = "(model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken)"
 	)
 	private ModelResourcePermission<?> _workflowTaskModelResourcePermission;
 

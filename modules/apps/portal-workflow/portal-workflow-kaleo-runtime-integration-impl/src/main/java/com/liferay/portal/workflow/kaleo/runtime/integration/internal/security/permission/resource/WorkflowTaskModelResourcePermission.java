@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rafael Praxedes
  */
 @Component(
-	property = "model.class.name=com.liferay.portal.kernel.workflow.WorkflowTask",
+	property = "model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken",
 	service = ModelResourcePermission.class
 )
 public class WorkflowTaskModelResourcePermission

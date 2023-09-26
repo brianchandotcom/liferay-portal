@@ -102,8 +102,8 @@ export default function Relationships({
 	] = useState<ObjectRelationship>();
 
 	const [
-		showDelitionNotAllowedModal,
-		setShowDelitionNotAllowedModal,
+		showDeletionNotAllowedModal,
+		setShowDeletionNotAllowedModal,
 	] = useState(false);
 
 	useEffect(() => {
@@ -162,7 +162,7 @@ export default function Relationships({
 			if (action.data.id === 'deleteObjectRelationship') {
 				if (itemData.edge && Liferay.FeatureFlags['LPS-187142']) {
 					setSelectedObjectRelationship(itemData);
-					setShowDelitionNotAllowedModal(true);
+					setShowDeletionNotAllowedModal(true);
 
 					return;
 				}
@@ -266,11 +266,11 @@ export default function Relationships({
 				/>
 			)}
 
-			{showDelitionNotAllowedModal &&
+			{showDeletionNotAllowedModal &&
 				Liferay.FeatureFlags['LPS-187142'] && (
 					<ModalDeletionNotAllowed
 						onVisibilityChange={() =>
-							setShowDelitionNotAllowedModal(false)
+							setShowDeletionNotAllowedModal(false)
 						}
 						selectedItemLabel={getLocalizableLabel(
 							creationLanguageId as Liferay.Language.Locale,

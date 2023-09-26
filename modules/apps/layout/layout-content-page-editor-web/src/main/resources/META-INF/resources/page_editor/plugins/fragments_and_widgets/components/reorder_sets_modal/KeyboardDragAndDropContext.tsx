@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {sub} from 'frontend-js-web';
 import React, {
 	Dispatch,
 	PropsWithChildren,
@@ -19,6 +20,7 @@ import React, {
 
 import {
 	DRAG_OVER_POSITIONS,
+	DRAG_OVER_POSITIONS_LABELS,
 	DragOverPosition,
 } from '../../config/constants/dragOverPositions';
 import {Item} from './Item';
@@ -27,6 +29,7 @@ interface Context {
 	dragOverPosition: DragOverPosition | null;
 	itemElementMap: Map<string, HTMLDivElement | null>;
 	itemListRef: RefObject<Item[]>;
+	sendMessage: (message: string) => void;
 	setDragOverPosition: Dispatch<SetStateAction<DragOverPosition | null>>;
 	setSourceItem: Dispatch<SetStateAction<Item | null>>;
 	setTargetItem: Dispatch<SetStateAction<Item | null>>;
@@ -38,6 +41,7 @@ const KeyboardDragAndDropContext = createContext<Context>({
 	dragOverPosition: null,
 	itemElementMap: new Map(),
 	itemListRef: {current: []},
+	sendMessage: () => {},
 	setDragOverPosition: () => {},
 	setSourceItem: () => {},
 	setTargetItem: () => {},
@@ -59,14 +63,34 @@ export function KeyboardDragAndDropContextProvider({
 	);
 	const [sourceItem, setSourceItem] = useState<Item | null>(null);
 	const [targetItem, setTargetItem] = useState<Item | null>(null);
+	const [text, setText] = useState('');
 
 	const itemListRef = useRef(itemList);
 	itemListRef.current = itemList;
+
+	const clearMessageTimeoutRef = useRef<NodeJS.Timeout>();
+
+	const sendMessage = useCallback((message: string) => {
+		setText(message);
+
+		if (clearMessageTimeoutRef.current) {
+			clearTimeout(clearMessageTimeoutRef.current);
+
+			clearMessageTimeoutRef.current = undefined;
+		}
+
+		if (message) {
+			clearMessageTimeoutRef.current = setTimeout(() => {
+				setText('');
+			}, 1000);
+		}
+	}, []);
 
 	const contextValue: Context = {
 		dragOverPosition,
 		itemElementMap,
 		itemListRef,
+		sendMessage,
 		setDragOverPosition,
 		setSourceItem,
 		setTargetItem,
@@ -93,6 +117,10 @@ export function KeyboardDragAndDropContextProvider({
 
 	return (
 		<KeyboardDragAndDropContext.Provider value={contextValue}>
+			<span aria-live="assertive" className="sr-only">
+				{text}
+			</span>
+
 			{children}
 		</KeyboardDragAndDropContext.Provider>
 	);
@@ -110,6 +138,7 @@ export function useKeyboardDragItem(
 		dragOverPosition,
 		itemElementMap,
 		itemListRef,
+		sendMessage,
 		setDragOverPosition,
 		setSourceItem,
 		setTargetItem,
@@ -220,6 +249,14 @@ export function useKeyboardDragItem(
 
 					onDropItem(item.id, targetIndex, position);
 
+					sendMessage(
+						sub(Liferay.Language.get('x-placed-on-x-of-x'), [
+							item.name,
+							DRAG_OVER_POSITIONS_LABELS[position],
+							targetItem.name,
+						])
+					);
+
 					setDragOverPosition(null);
 					setSourceItem(null);
 					setTargetItem(null);
@@ -228,6 +265,15 @@ export function useKeyboardDragItem(
 					setDragOverPosition(DRAG_OVER_POSITIONS.top);
 					setSourceItem(item);
 					setTargetItem(item);
+
+					sendMessage(
+						sub(
+							Liferay.Language.get(
+								'use-up-and-down-arrows-to-move-the-set-and-press-enter-to-place-it-in-desired-position.-currently-targeting-x-of-x'
+							),
+							[DRAG_OVER_POSITIONS_LABELS.top, item.name]
+						)
+					);
 				}
 			}
 		};
@@ -247,7 +293,25 @@ export function useKeyboardDragItem(
 			button.removeEventListener('keydown', onKeyDown);
 			button.removeEventListener('keyup', onKeyUp);
 		};
-	}, [item, itemListRef, setDragOverPosition, setSourceItem, setTargetItem]);
+	}, [
+		item,
+		itemListRef,
+		sendMessage,
+		setDragOverPosition,
+		setSourceItem,
+		setTargetItem,
+	]);
+
+	useEffect(() => {
+		if (dragOverPosition && sourceItem && targetItem) {
+			sendMessage(
+				sub(Liferay.Language.get('targeting-x-of-x'), [
+					DRAG_OVER_POSITIONS_LABELS[dragOverPosition],
+					targetItem.name,
+				])
+			);
+		}
+	}, [dragOverPosition, sendMessage, sourceItem, targetItem]);
 
 	return {
 		dragOverPosition: targetItem === item ? dragOverPosition : null,

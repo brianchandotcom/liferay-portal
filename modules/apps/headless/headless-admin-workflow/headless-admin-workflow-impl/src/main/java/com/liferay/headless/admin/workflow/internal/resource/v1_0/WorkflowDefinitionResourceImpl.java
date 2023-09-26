@@ -384,7 +384,7 @@ public class WorkflowDefinitionResourceImpl
 	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.workflow.WorkflowDefinition)"
+		target = "(model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoDefinition)"
 	)
 	private ModelResourcePermission<?>
 		_workflowDefinitionModelResourcePermission;

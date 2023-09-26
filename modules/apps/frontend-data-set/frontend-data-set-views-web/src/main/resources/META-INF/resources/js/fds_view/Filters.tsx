@@ -520,8 +520,6 @@ function Filters({fdsFilterClientExtensions, fdsView, namespace}: IProps) {
 				OBJECT_RELATIONSHIP.FDS_VIEW_FDS_DYNAMIC_FILTER
 			] as ISelectionFilter[];
 
-			// TODO: set a default filter name
-
 			let filtersOrdered: FilterCollection = [
 				...clientExtensionFiltersOrderer.map((item) => ({
 					...item,

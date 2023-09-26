@@ -5,13 +5,21 @@
 
 import {isObject} from 'frontend-js-web/index';
 
-const getInitialProductOptionValue = (productOption) => {
+const getInitialProductOptionValue = ({
+	currentJSONObject,
+	isFromMiniCart,
+	productOption,
+}) => {
 	if (!productOption.productOptionValues) {
 		return;
 	}
 
+	const getSelectedProductOptionValue = isFromMiniCart
+		? ({key}) => key === currentJSONObject?.skuOptionValueKey
+		: ({preselected}) => preselected === true;
+
 	const selectedProductOptionValue = productOption.productOptionValues.find(
-		(productOptionValue) => productOptionValue.preselected === true
+		getSelectedProductOptionValue
 	);
 
 	if (selectedProductOptionValue) {
@@ -63,21 +71,31 @@ const getProductOptionName = (name) => {
 	return name;
 };
 
-const getSkuOptionsErrors = (hasErrors, productOption, skuOptionsAtomState) =>
-	hasErrors
+const getSkuOptionsErrors = (
+	hasErrors,
+	isFromMiniCart = false,
+	productOption,
+	skuOptionsAtomState
+) => {
+	const errorsKey = isFromMiniCart ? 'miniCartErrors' : 'errors';
+
+	return hasErrors
 		? [
-				...skuOptionsAtomState.errors,
+				...skuOptionsAtomState[errorsKey],
 				{
 					hasErrors: true,
 					id: productOption.id,
 				},
 		  ]
-		: skuOptionsAtomState.errors.filter(
+		: skuOptionsAtomState[errorsKey]?.filter(
 				(error) => error.id !== productOption.id
 		  );
+};
 
 const initialSkuOptionsAtomState = {
 	errors: [],
+	miniCartErrors: [],
+	miniCartSkuOptions: [],
 	namespace: '',
 	skuOptions: [],
 	updating: false,

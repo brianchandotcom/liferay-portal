@@ -92,21 +92,23 @@ export async function addToCart(
 					cpInstance.skuUnitOfMeasure?.key;
 
 			if (includedCartItem) {
-				optionsJSON.forEach((optionJSON) => {
+				optionsJSON.forEach((option) => {
 					if (!includedCartItem) {
 						return;
 					}
 
 					const currentSkuOption = cpInstance.skuOptions?.find(
 						(skuOption) =>
-							optionJSON.skuOptionKey === skuOption.skuOptionKey
+							option.skuOptionKey === skuOption.skuOptionKey
 					);
 
 					// eslint-disable-next-line no-unused-expressions
 					currentSkuOption
-						? (includedCartItem =
-								optionJSON.skuOptionValueKey ===
-								currentSkuOption.skuOptionValueKey)
+						? (includedCartItem = Array.isArray(option.value)
+								? option.value === []
+								: option.value === currentSkuOption.value ||
+								  option.skuOptionValueKey ===
+										currentSkuOption.skuOptionValueKey)
 						: (includedCartItem = false);
 				});
 			}

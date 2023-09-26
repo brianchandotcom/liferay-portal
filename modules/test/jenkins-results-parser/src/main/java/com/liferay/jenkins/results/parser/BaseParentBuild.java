@@ -266,6 +266,30 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	}
 
 	@Override
+	public List<TestResult> getUniqueFailureTestResults() {
+		List<TestResult> uniqueFailureTestResults = new ArrayList<>();
+
+		for (Build downstreamBuild : getFailedDownstreamBuilds()) {
+			uniqueFailureTestResults.addAll(
+				downstreamBuild.getUniqueFailureTestResults());
+		}
+
+		return uniqueFailureTestResults;
+	}
+
+	@Override
+	public List<TestResult> getUpstreamJobFailureTestResults() {
+		List<TestResult> upstreamFailureTestResults = new ArrayList<>();
+
+		for (Build downstreamBuild : getFailedDownstreamBuilds()) {
+			upstreamFailureTestResults.addAll(
+				downstreamBuild.getUpstreamJobFailureTestResults());
+		}
+
+		return upstreamFailureTestResults;
+	}
+
+	@Override
 	public boolean hasDownstreamBuilds() {
 		if (getDownstreamBuildCount(null, null) > 0) {
 			return true;

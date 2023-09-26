@@ -91,11 +91,11 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 				companyIds);
 
 			if (_log.isInfoEnabled()) {
-				String logMessage = StringBundler.concat(
-					"Start reindexing company ", companyId, " for class name ",
-					className, " with execution mode ", executionMode);
-
-				_log.info(logMessage);
+				_log.info(
+					StringBundler.concat(
+						"Start reindexing company ", companyId,
+						" for class name ", className, " with execution mode ",
+						executionMode));
 			}
 
 			CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
@@ -143,12 +143,11 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 					companyIds);
 
 				if (_log.isInfoEnabled()) {
-					String logMessage = StringBundler.concat(
-						"Finished reindexing company ", companyId,
-						" for class name ", className, " with execution mode ",
-						executionMode);
-
-					_log.info(logMessage);
+					_log.info(
+						StringBundler.concat(
+							"Finished reindexing company ", companyId,
+							" for class name ", className,
+							" with execution mode ", executionMode));
 				}
 			}
 		}

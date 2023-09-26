@@ -166,18 +166,9 @@ public class EntriesChecker extends RowChecker {
 		String checkBoxAllRowIds, String checkBoxPostOnClick,
 		Map<String, Object> data) {
 
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("<input ");
-
-		String rowElementId = (String)httpServletRequest.getAttribute(
-			"liferay-ui:search-container-row:rowElementId");
-
-		if (rowElementId != null) {
-			sb.append("aria-labelledby=\"");
-			sb.append(rowElementId);
-			sb.append("\" ");
-		}
 
 		if (checked) {
 			sb.append("checked ");

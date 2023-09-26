@@ -14,18 +14,22 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.PermissionConversionFilter;
-import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.model.impl.PermissionImpl;
 import com.liferay.portal.security.permission.converter.PermissionConverter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(service = PermissionConverter.class)
 public class PermissionConverterImpl implements PermissionConverter {
 
 	@Override
@@ -41,7 +45,7 @@ public class PermissionConverterImpl implements PermissionConverter {
 		throws PortalException {
 
 		return convertPermissions(
-			RoleLocalServiceUtil.getRole(roleId), permissionConversionFilter);
+			_roleLocalService.getRole(roleId), permissionConversionFilter);
 	}
 
 	@Override
@@ -83,7 +87,7 @@ public class PermissionConverterImpl implements PermissionConverter {
 		List<Permission> permissions = new ArrayList<>();
 
 		List<ResourcePermission> resourcePermissions =
-			ResourcePermissionLocalServiceUtil.getRoleResourcePermissions(
+			_resourcePermissionLocalService.getRoleResourcePermissions(
 				role.getRoleId(), scopes, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
@@ -94,11 +98,11 @@ public class PermissionConverterImpl implements PermissionConverter {
 			}
 
 			List<ResourceAction> resourceActions =
-				ResourceActionLocalServiceUtil.getResourceActions(
+				_resourceActionLocalService.getResourceActions(
 					resourcePermission.getName());
 
 			for (ResourceAction resourceAction : resourceActions) {
-				if (ResourcePermissionLocalServiceUtil.hasActionId(
+				if (_resourcePermissionLocalService.hasActionId(
 						resourcePermission, resourceAction)) {
 
 					Permission permission = new PermissionImpl();
@@ -115,5 +119,14 @@ public class PermissionConverterImpl implements PermissionConverter {
 
 		return permissions;
 	}
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

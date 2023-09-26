@@ -82,8 +82,6 @@ public class SearchAdminPortlet extends MVCPortlet {
 
 		searchAdminDisplayContextBuilder.setIndexInformation(
 			_indexInformationSnapshot.get());
-		searchAdminDisplayContextBuilder.setStatsInformationFactory(
-			_statsInformationFactorySnapshot.get());
 
 		List<String> indexReindexerClassNames = ListUtil.fromCollection(
 			IndexReindexerRegistryUtil.getIndexReindexerClassNames());
@@ -139,6 +137,9 @@ public class SearchAdminPortlet extends MVCPortlet {
 					new IndexActionsDisplayContextBuilder(
 						_language, _portal, _reindexConfiguration,
 						renderRequest, _searchCapabilities);
+
+			indexActionsDisplayContextBuilder.setStatsInformationFactory(
+				_statsInformationFactorySnapshot.get());
 
 			renderRequest.setAttribute(
 				SearchAdminWebKeys.INDEX_ACTIONS_DISPLAY_CONTEXT,

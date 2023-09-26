@@ -16,52 +16,70 @@ import com.liferay.portal.kernel.service.UserServiceUtil;
  */
 public class UpgradeJavaUserLocalServiceUtilCheck {
 
-	public void method1() {
+	public void method1(
+		long creatorUserId, long companyId, boolean autoPassword,
+		String password1, String password2, boolean autoScreenName,
+		String screenName, String emailAddress, long facebookId, String openId,
+		Locale locale, String firstName, String middleName, String lastName,
+		long prefixId, long suffixId, boolean male, int birthdayMonth,
+		int birthdayDay, int birthdayYear, String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds, long[] userGroupIds,
+		List<Address> addresses, List<EmailAddress> emailAddresses,
+		List<Phone> phones, List<Website> websites,
+		List<AnnouncementsDelivery> announcementsDelivers, boolean sendEmail,
+		ServiceContext serviceContext) {
 
-		User user1 = UserLocalServiceUtil.addUser(
-			themeDisplay.getCompanyId(), autoPassword, password1, password2,
+		User user1 = _userLocalService.addUser(
+			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
-			LocaleUtil.fromLanguageId(languageId), firstName, middleName,
-			lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendEmail, serviceContext);
+			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
 		User user2 = UserLocalServiceUtil.addUser(
-			themeDisplay.getCompanyId(), autoPassword, password1, password2,
+			creatorUserId, companyId, autoPassword, password1, password2,
 			autoScreenName, screenName, emailAddress, facebookId, openId,
-			LocaleUtil.fromLanguageId(languageId), firstName, middleName,
-			lastName, prefixListTypeId, suffixListTypeId, male, birthdayMonth,
+			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+
+		User user3 = _userService.addUser(
+			companyId, autoPassword, password1, password2, autoScreenName,
+			screenName, emailAddress, facebookId, openId, locale, firstName,
+			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
 			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
 			roleIds, userGroupIds, addresses, emailAddresses, phones, websites,
 			announcementsDelivers, sendEmail, serviceContext);
 
+		User user4 = UserServiceUtil.addUser(
+			companyId, autoPassword, password1, password2, autoScreenName,
+			screenName, emailAddress, facebookId, openId, locale, firstName,
+			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, serviceContext);
+
+		User user5 = UserServiceUtil.addUser(
+			54321, autoPassword, password1, password2, autoScreenName,
+			screenName, emailAddress, facebookId, openId, locale, firstName,
+			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
+			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
+			roleIds, userGroupIds, sendEmail, serviceContext);
 	}
 
-	public void method2(long userId, int status){
-
-		// UserLocalService
+	public void method2(long userId, int status) {
 
 		user = _userLocalService.updateStatus(userId, status);
 
-		// UserLocalServiceUtil
-
 		UserLocalServiceUtil.updateStatus(userId, status);
-
-		// UserService
 
 		return _userService.updateStatus(userId, status);
 
-		// UserServiceUtil
-
 		UserServiceUtil.updateStatus(userId, status);
 
-		// Message case
-
 		UserServiceUtil.updateStatus(12344, 1);
-
 	}
 
 	private UserLocalService _userLocalService;
-    private UserService _userService;
+	private UserService _userService;
 
 }

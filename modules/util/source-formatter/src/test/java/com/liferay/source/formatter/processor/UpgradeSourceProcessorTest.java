@@ -368,11 +368,20 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testUpgradeJavaUserLocalServiceUtilCheck() throws Exception {
 		test(
 			"upgrade/UpgradeJavaUserLocalServiceUtilCheck.testjava",
-			StringBundler.concat(
-				"Could not resolve types of updateStatus method. The method ",
-				"signature has changed to updateStatus(long userId,",
-				"int status, ServiceContext serviceContext). Fill the new ",
-				"parameter manually."));
+			new String[] {
+				StringBundler.concat(
+					"Unable to format method addUser from UserLocalService, ",
+					"UserLocalServiceUtil, UserService and UserServiceUtil. ",
+					"Fill the new parameter manually, see LPS-192661 and ",
+					"LPS-196617."),
+				StringBundler.concat(
+					"Unable to format method updateStatus from ",
+					"UserLocalService, UserLocalServiceUtil, UserService and ",
+					"UserServiceUtil. The method signature has changed to ",
+					"updateStatus(long userId, int status, ServiceContext ",
+					"serviceContext). Fill the new parameter manually, see ",
+					"LPS-191999.")
+			});
 	}
 
 	@Test

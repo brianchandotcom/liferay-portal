@@ -17,9 +17,11 @@ import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
+import com.liferay.batch.engine.unit.BundleBatchEngineUnit;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,24 +32,29 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.File;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
@@ -217,6 +224,14 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		serviceTracker.close();
 	}
 
+	private Bundle _getBundle(BatchEngineUnit batchEngineUnit) {
+		if (!(batchEngineUnit instanceof BundleBatchEngineUnit)) {
+			return null;
+		}
+
+		return ((BundleBatchEngineUnit)batchEngineUnit).getBundle();
+	}
+
 	private String _getObjectEntryClassName(
 		BatchEngineUnitConfiguration batchEngineUnitConfiguration) {
 
@@ -231,6 +246,52 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		}
 
 		return className;
+	}
+
+	private boolean _isProcessed(BatchEngineUnit batchEngineUnit) {
+		Bundle bundle = _getBundle(batchEngineUnit);
+
+		if (bundle == null) {
+			return false;
+		}
+
+		try {
+			BatchEngineUnitConfiguration batchEngineUnitConfiguration =
+				batchEngineUnit.getBatchEngineUnitConfiguration();
+
+			String dataFileName = batchEngineUnit.getDataFileName();
+
+			java.io.File batchMarkerFile = bundle.getDataFile(
+				com.liferay.petra.string.StringUtil.merge(
+					Arrays.asList(
+						dataFileName.replaceAll("\\W+", "."),
+						batchEngineUnitConfiguration.getCompanyId(),
+						"processed"),
+					"."));
+
+			String lastModifiedString = String.valueOf(
+				bundle.getLastModified());
+
+			if ((batchMarkerFile != null) && batchMarkerFile.exists() &&
+				Objects.equals(
+					FileUtil.read(batchMarkerFile), lastModifiedString)) {
+
+				return true;
+			}
+
+			if (!batchMarkerFile.exists()) {
+				batchMarkerFile.createNewFile();
+			}
+
+			FileUtil.write(batchMarkerFile, lastModifiedString, true);
+
+			return false;
+		}
+		catch (IOException ioException) {
+			ReflectionUtil.throwException(ioException);
+		}
+
+		return false;
 	}
 
 	private CompletableFuture<Void> _processBatchEngineUnit(
@@ -277,8 +338,9 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 		String featureFlag = (String)parameters.get("featureFlag");
 
-		if (Validator.isNotNull(featureFlag) &&
-			!FeatureFlagManagerUtil.isEnabled(featureFlag)) {
+		if ((Validator.isNotNull(featureFlag) &&
+			 !FeatureFlagManagerUtil.isEnabled(featureFlag)) ||
+			_isProcessed(batchEngineUnit)) {
 
 			return null;
 		}

@@ -43,15 +43,12 @@ public class MultiCompanyBatchEngineUnitProcessor {
 	}
 
 	public void registerBatchEngineUnits(
-		Bundle bundle, List<BatchEngineUnit> batchEngineUnits,
-		boolean process) {
+		Bundle bundle, List<BatchEngineUnit> batchEngineUnits) {
 
 		_bundleBatchEngineUnits.put(bundle, batchEngineUnits);
 
-		if (process) {
-			_companyLocalService.forEachCompany(
-				company -> _processBatchEngineUnits(bundle, company));
-		}
+		_companyLocalService.forEachCompany(
+			company -> _processBatchEngineUnits(bundle, company));
 	}
 
 	public void unregister(Bundle bundle) {

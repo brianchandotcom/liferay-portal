@@ -61,7 +61,7 @@ import org.json.JSONObject;
  * @author Kevin Yen
  */
 public abstract class BaseTopLevelBuild
-	extends BaseBuild implements TopLevelBuild {
+	extends BaseParentBuild implements TopLevelBuild {
 
 	@Override
 	public void addDownstreamBuilds(String... urls) {

@@ -34,7 +34,7 @@ import org.json.JSONObject;
 /**
  * @author Kevin Yen
  */
-public class BatchBuild extends BaseBuild {
+public class BatchBuild extends BaseParentBuild {
 
 	@Override
 	public void addTimelineData(TimelineData timelineData) {

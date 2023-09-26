@@ -225,17 +225,9 @@ export default function BaseAPIEndpointFields({
 				)}
 			</ClayForm.Group>
 
-			<ClayForm.Group
-				className={classNames({
-					'has-error': displayError.description,
-				})}
-			>
+			<ClayForm.Group>
 				<label htmlFor="endpointDescriptionField">
 					{Liferay.Language.get('description')}
-
-					<span className="ml-1 reference-mark text-warning">
-						<ClayIcon symbol="asterisk" />
-					</span>
 				</label>
 
 				<textarea
@@ -255,9 +247,7 @@ export default function BaseAPIEndpointFields({
 			</ClayForm.Group>
 
 			<div aria-live="assertive" className="sr-only">
-				{(displayError.scope ||
-					displayError.path ||
-					displayError.description) && (
+				{(displayError.scope || displayError.path) && (
 					<span>
 						{Liferay.Language.get(
 							'there-are-errors-on-the-form-please-check-if-any-mandatory-fields-have-not-been-completed'

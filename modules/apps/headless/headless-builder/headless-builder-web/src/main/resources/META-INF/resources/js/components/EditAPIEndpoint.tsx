@@ -62,7 +62,6 @@ export default function EditAPIEndpoint({
 		scope: {key: ''},
 	});
 	const [displayError, setDisplayError] = useState<EndpointDataError>({
-		description: false,
 		path: false,
 		scope: false,
 	});

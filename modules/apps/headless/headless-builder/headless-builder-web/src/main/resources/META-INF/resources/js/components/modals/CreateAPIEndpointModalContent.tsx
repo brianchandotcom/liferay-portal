@@ -37,7 +37,6 @@ export function CreateAPIEndpointModalContent({
 		scope: {key: '', name: ''},
 	});
 	const [displayError, setDisplayError] = useState<EndpointDataError>({
-		description: false,
 		path: false,
 		scope: false,
 	});
@@ -100,7 +99,7 @@ export function CreateAPIEndpointModalContent({
 
 	function validateData() {
 		let isDataValid = true;
-		const mandatoryFields = ['scope', 'path', 'description'];
+		const mandatoryFields = ['scope', 'path'];
 
 		if (!Object.keys(localUIData).length) {
 			const errors = mandatoryFields.reduce(

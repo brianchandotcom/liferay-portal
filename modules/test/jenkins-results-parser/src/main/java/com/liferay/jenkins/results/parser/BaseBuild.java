@@ -2084,12 +2084,6 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
-	protected void addDownstreamBuildsTimelineData(TimelineData timelineData) {
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			downstreamBuild.addTimelineData(timelineData);
-		}
-	}
-
 	protected void archiveFileElements(
 		String urlSuffix, List<Element> elements) {
 

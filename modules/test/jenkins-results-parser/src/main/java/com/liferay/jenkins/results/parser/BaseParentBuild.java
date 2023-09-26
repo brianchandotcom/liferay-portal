@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.regex.Matcher;
 
 /**
  * @author Michael Hashimoto
@@ -360,6 +359,12 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 	protected BaseParentBuild(String url, Build parentBuild) {
 		super(url, parentBuild);
+	}
+
+	protected void addDownstreamBuildsTimelineData(TimelineData timelineData) {
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			downstreamBuild.addTimelineData(timelineData);
+		}
 	}
 
 }

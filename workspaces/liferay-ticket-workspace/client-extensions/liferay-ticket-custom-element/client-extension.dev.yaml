@@ -1,6 +1,3 @@
-assemble:
-    - from: assets
-      into: static
 liferay-ticket-custom-element:
     urls:
         - http://localhost:5173/@vite/client

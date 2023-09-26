@@ -151,7 +151,9 @@ export function normalizeValue(
 
 	value = dedupValue(fields, value, currentField.id, generateValueUsingLabel);
 
-	return allowSpecialCharacters ? value : normalizeFieldName(value);
+	return allowSpecialCharacters || !currentField.newField
+		? value
+		: normalizeFieldName(value);
 }
 
 export function normalizeFields(

@@ -386,6 +386,8 @@ const Options = ({
 	const add = (fields, index, property, value) => {
 		fields[index][property] = value;
 
+		fields[index]['newField'] = true;
+
 		if (defaultLanguageId !== editingLanguageId) {
 			fields[index]['edited'] = true;
 		}

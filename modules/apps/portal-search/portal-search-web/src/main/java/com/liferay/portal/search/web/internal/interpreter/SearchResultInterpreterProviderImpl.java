@@ -14,7 +14,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Wade Cao
@@ -48,10 +47,9 @@ public class SearchResultInterpreterProviderImpl
 		_serviceTrackerMap.close();
 	}
 
-	@Reference
-	private AssetRendererSearchResultInterpreter
-		_assetRendererSearchResultInterpreter;
-
+	private final AssetRendererSearchResultInterpreter
+		_assetRendererSearchResultInterpreter =
+			new AssetRendererSearchResultInterpreter();
 	private ServiceTrackerMap<String, SearchResultInterpreter>
 		_serviceTrackerMap;
 

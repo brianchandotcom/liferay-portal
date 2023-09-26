@@ -31,12 +31,9 @@ import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Wade Cao
  */
-@Component(service = AssetRendererSearchResultInterpreter.class)
 public class AssetRendererSearchResultInterpreter
 	implements SearchResultInterpreter {
 

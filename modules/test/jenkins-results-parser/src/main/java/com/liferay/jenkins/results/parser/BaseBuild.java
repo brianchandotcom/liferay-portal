@@ -24,7 +24,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2419,57 +2418,6 @@ public abstract class BaseBuild implements Build {
 			JenkinsResultsParserUtil.toDurationString(diffDuration));
 	}
 
-	protected int getDownstreamBuildCountByResult(String result) {
-		List<Build> downstreamBuilds = getDownstreamBuilds(null);
-
-		if (result == null) {
-			return downstreamBuilds.size();
-		}
-
-		int count = 0;
-
-		for (Build downstreamBuild : downstreamBuilds) {
-			String downstreamBuildResult = downstreamBuild.getResult();
-
-			if (Objects.equals(downstreamBuildResult, result)) {
-				count++;
-			}
-		}
-
-		return count;
-	}
-
-	protected Map<Build, Element> getDownstreamBuildMessages(
-		List<Build> downstreamBuilds) {
-
-		List<Callable<Element>> callables = new ArrayList<>();
-
-		for (final Build downstreamBuild : downstreamBuilds) {
-			Callable<Element> callable = new Callable<Element>() {
-
-				public Element call() {
-					return downstreamBuild.getGitHubMessageElement();
-				}
-
-			};
-
-			callables.add(callable);
-		}
-
-		ParallelExecutor<Element> parallelExecutor = new ParallelExecutor<>(
-			callables, getExecutorService());
-
-		List<Element> elements = parallelExecutor.execute();
-
-		Map<Build, Element> elementsMap = new LinkedHashMap<>();
-
-		for (int i = 0; i < elements.size(); i++) {
-			elementsMap.put(downstreamBuilds.get(i), elements.get(i));
-		}
-
-		return elementsMap;
-	}
-
 	protected ExecutorService getExecutorService() {
 		return null;
 	}
@@ -2493,16 +2441,6 @@ public abstract class BaseBuild implements Build {
 			"font-family: monospace, monospace; text-decoration: none");
 
 		return expanderAnchorElement;
-	}
-
-	protected List<Build> getFailedDownstreamBuilds() {
-		List<Build> failedDownstreamBuilds = new ArrayList<>();
-
-		failedDownstreamBuilds.addAll(getDownstreamBuilds("ABORTED", null));
-		failedDownstreamBuilds.addAll(getDownstreamBuilds("FAILURE", null));
-		failedDownstreamBuilds.addAll(getDownstreamBuilds("UNSTABLE", null));
-
-		return failedDownstreamBuilds;
 	}
 
 	protected Element getFailureMessageElement() {

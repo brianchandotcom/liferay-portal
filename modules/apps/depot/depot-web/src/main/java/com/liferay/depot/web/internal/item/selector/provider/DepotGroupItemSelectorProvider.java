@@ -59,7 +59,7 @@ public class DepotGroupItemSelectorProvider
 			List<Group> groups = new ArrayList<>();
 
 			for (DepotEntry depotEntry :
-					_depotEntryService.getGroupConnectedDepotEntries(
+					_depotEntryService.getCurrentAndGroupConnectedDepotEntries(
 						_getGroupId(groupId), start, end)) {
 
 				groups.add(depotEntry.getGroup());

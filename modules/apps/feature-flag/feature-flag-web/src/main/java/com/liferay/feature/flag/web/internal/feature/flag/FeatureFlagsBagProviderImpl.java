@@ -127,16 +127,10 @@ public class FeatureFlagsBagProviderImpl
 					List<String> keys = _getFeatureFlagKeys(serviceReference);
 
 					if (keys == null) {
-						FeatureFlagListener featureFlagListener =
-							bundleContext.getService(serviceReference);
-
-						Class<? extends FeatureFlagListener> clazz =
-							featureFlagListener.getClass();
-
 						_log.error(
 							StringBundler.concat(
 								"No featureFlagKey property found for ",
-								clazz.getName(), ". Skipping registration."));
+								serviceReference, ". Skipping registration."));
 
 						return;
 					}

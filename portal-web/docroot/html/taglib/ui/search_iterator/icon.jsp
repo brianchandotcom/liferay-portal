@@ -86,12 +86,11 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 			request.setAttribute("liferay-ui:search-container-row:rowId", id.concat(StringPool.UNDERLINE.concat(row.getRowId())));
 
 			Map<String, Object> data = row.getData();
+			String rowCssClass = row.getCssClass();
 
 			if (data == null) {
 				data = new HashMap<String, Object>();
 			}
-
-			String rowCssClass = row.getCssClass();
 
 			if (Validator.isNull(rowCssClass)) {
 				rowCssClass = "card-page-item card-page-item-asset";

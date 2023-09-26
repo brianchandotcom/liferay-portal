@@ -11,6 +11,8 @@ import {RadioCard} from '../../../../../../components/RadioCard/RadioCard';
 import {Section} from '../../../../../../components/Section/Section';
 import getPostalAddressDescription from './utils/getPostalAddressDescription';
 
+import './BillingAddress.scss';
+
 interface BillingAddressProps {
 	addresses: BillingAddress[];
 	billingAddress: BillingAddress;
@@ -49,8 +51,8 @@ export function BillingAddress({
 	}, [billingAddress, setEnablePurchaseButton]);
 
 	return (
-		<Section className="get-app-modal-section" label="Billing Address">
-			<div className="get-app-modal-section-card-addresses">
+		<Section className="billing-address-section w-100" label="Billing Address">
+			<div className="billing-address-section-card-addresses">
 				{addresses.map((address, i) => {
 					const {description, title} = getPostalAddressDescription(
 						address
@@ -93,7 +95,7 @@ export function BillingAddress({
 			{showNewAddressButton ? (
 				<>
 					<button
-						className="card-new-address"
+						className="align-items-center billing-address-section-card-new-address d-flex justify-content-center mt-4 w-100"
 						onClick={() => setShowNewAddressButton(false)}
 					>
 						<ClayIcon symbol="plus" />
@@ -102,13 +104,14 @@ export function BillingAddress({
 					</button>
 				</>
 			) : (
-				<div className="get-app-modal-body-card-container">
-					<div className="get-app-modal-body-card-header">
-						<span className="get-app-modal-body-card-header-left-content">
+				<div className="billing-address-section-card-container h-auto w-100">
+					<div className="align-items-center billing-address-section-card-header d-flex justify-content-between w-100">
+						<span className="billing-address-section-card-header-left-content">
 							New Address
 						</span>
 
 						<button
+							className='px-4 py-2'
 							onClick={() => {
 								setShowNewAddressButton(true);
 								setSelectedAddress('');
@@ -132,7 +135,7 @@ export function BillingAddress({
 						</button>
 					</div>
 
-					<div className="get-app-modal-body-container">
+					<div className="billing-address-section-container d-flex flex-column p-4 w-100">
 						<Input
 							label="Full Name"
 							onChange={({target}) => {
@@ -167,7 +170,7 @@ export function BillingAddress({
 							value={billingAddress?.street2}
 						/>
 
-						<div className="get-app-modal-double-input">
+						<div className="billing-address-double-input">
 							<Input
 								label="City"
 								onChange={({target}) => {
@@ -193,7 +196,7 @@ export function BillingAddress({
 							/>
 						</div>
 
-						<div className="get-app-modal-double-input">
+						<div className="billing-address-double-input">
 							<Input
 								label="Zip/Area Code"
 								onChange={({target}) => {

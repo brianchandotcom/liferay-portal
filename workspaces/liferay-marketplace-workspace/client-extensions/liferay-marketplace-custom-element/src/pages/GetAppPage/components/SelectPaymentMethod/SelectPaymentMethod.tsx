@@ -43,7 +43,7 @@ export function SelectPaymentMethod({
 	const [showNewAddressButton, setShowNewAddressButton] = useState(true);
 
 	return (
-		<div>
+		<div className='select-payment-step'>
 			<div className="d-flex justify-content-between mb-6">
 				<PaymentMethodSelector
 					enableTrial={enableTrialMethod}

@@ -6,19 +6,19 @@
 import classNames from 'classnames';
 import {MouseEvent} from 'react';
 
-import arrowLeft from '../../assets/icons/guide_icon.svg';
-
 import './CardButton.scss';
 
 export function CardButton({
 	description,
 	disabled,
+	icon,
 	onClick,
 	selected,
 	title,
 }: {
 	description: string;
 	disabled: boolean;
+	icon: string;
 	onClick: (event: MouseEvent) => void;
 	selected: boolean;
 	title: string;
@@ -31,7 +31,7 @@ export function CardButton({
 			})}
 			onClick={onClick}
 		>
-			<img alt="trial" className="card-button-icon" src={arrowLeft} />
+			<img alt="trial" className="card-button-icon" src={icon} />
 
 			<div className="card-button-info">
 				<div className="card-button-title">

@@ -11,7 +11,6 @@ import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
 import com.liferay.feature.flag.web.internal.model.LanguageAwareFeatureFlag;
 import com.liferay.feature.flag.web.internal.model.PreferenceAwareFeatureFlag;
 import com.liferay.osgi.service.tracker.collections.EagerServiceTrackerCustomizer;
-import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -124,10 +124,9 @@ public class FeatureFlagsBagProviderImpl
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, FeatureFlagListener.class, null,
 				(serviceReference, emitter) -> {
-					if (Objects.isNull(
-							serviceReference.getProperty(
-								_FEATURE_FLAG_LISTENER_PROPERTY_KEY))) {
+					List<String> keys = _getFeatureFlagKeys(serviceReference);
 
+					if (keys == null) {
 						FeatureFlagListener featureFlagListener =
 							bundleContext.getService(serviceReference);
 
@@ -142,8 +141,9 @@ public class FeatureFlagsBagProviderImpl
 						return;
 					}
 
-					_featureFlagKeyPropertyServiceReferenceMapper.map(
-						serviceReference, emitter);
+					for (String key : keys) {
+						emitter.emit(key);
+					}
 				},
 				new FeatureFlagListenerEagerServiceTrackerCustomizer(
 					bundleContext));
@@ -274,6 +274,23 @@ public class FeatureFlagsBagProviderImpl
 		}
 	}
 
+	private List<String> _getFeatureFlagKeys(
+		ServiceReference<?> serviceReference) {
+
+		Object value = serviceReference.getProperty(
+			_FEATURE_FLAG_LISTENER_PROPERTY_KEY);
+
+		if (value == null) {
+			return null;
+		}
+
+		if (value instanceof String[]) {
+			return Arrays.asList((String[])value);
+		}
+
+		return Arrays.asList(String.valueOf(value));
+	}
+
 	private static final String _FEATURE_FLAG_LISTENER_PROPERTY_KEY =
 		"featureFlagKey";
 
@@ -287,10 +304,6 @@ public class FeatureFlagsBagProviderImpl
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
-	private final PropertyServiceReferenceMapper<String, FeatureFlagListener>
-		_featureFlagKeyPropertyServiceReferenceMapper =
-			new PropertyServiceReferenceMapper<>(
-				_FEATURE_FLAG_LISTENER_PROPERTY_KEY);
 	private ServiceTrackerMap<String, List<FeatureFlagListener>>
 		_featureFlagListenerServiceTrackerMap;
 
@@ -317,10 +330,8 @@ public class FeatureFlagsBagProviderImpl
 			FeatureFlagListener featureFlagListener = _bundleContext.getService(
 				serviceReference);
 
-			List<String> featureFlagKeys = new ArrayList<>();
-
-			_featureFlagKeyPropertyServiceReferenceMapper.map(
-				serviceReference, featureFlagKeys::add);
+			List<String> featureFlagKeys = _getFeatureFlagKeys(
+				serviceReference);
 
 			Predicate<FeatureFlag> predicate =
 				featureFlag -> featureFlagKeys.contains(featureFlag.getKey());

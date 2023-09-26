@@ -115,9 +115,10 @@ if (portletTitleBasedNavigation) {
 		</c:if>
 
 		<c:if test="<%= dlViewFileEntryDisplayContext.isShowLockInfo() %>">
-			<div class="alert <%= dlViewFileEntryDisplayContext.getLockInfoCssClass() %>">
-				<%= dlViewFileEntryDisplayContext.getLockInfoMessage(locale) %>
-			</div>
+			<clay:stripe
+				displayType="<%= dlViewFileEntryDisplayContext.getLockInfoDisplayType() %>"
+				message="<%= dlViewFileEntryDisplayContext.getLockInfoMessage(locale) %>"
+			/>
 		</c:if>
 
 		<div class="body-row">

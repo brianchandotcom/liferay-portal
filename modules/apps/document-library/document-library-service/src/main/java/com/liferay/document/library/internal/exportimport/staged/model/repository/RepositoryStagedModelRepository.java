@@ -6,7 +6,7 @@
 package com.liferay.document.library.internal.exportimport.staged.model.repository;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.internal.helper.DLExportableRepositoryPublisherHelper;
+import com.liferay.document.library.internal.util.DLExportableRepositoryPublisherUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -96,7 +96,7 @@ public class RepositoryStagedModelRepository
 		PortletDataContext portletDataContext) {
 
 		Collection<Long> exportableRepositoryIds =
-			_dlExportableRepositoryPublisherHelper.publish(
+			DLExportableRepositoryPublisherUtil.publish(
 				portletDataContext.getScopeGroupId());
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
@@ -186,10 +186,6 @@ public class RepositoryStagedModelRepository
 
 		throw new UnsupportedOperationException();
 	}
-
-	@Reference
-	private DLExportableRepositoryPublisherHelper
-		_dlExportableRepositoryPublisherHelper;
 
 	@Reference
 	private Portal _portal;

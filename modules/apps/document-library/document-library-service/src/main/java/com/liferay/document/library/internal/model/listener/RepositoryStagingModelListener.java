@@ -6,7 +6,7 @@
 package com.liferay.document.library.internal.model.listener;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.internal.helper.DLExportableRepositoryPublisherHelper;
+import com.liferay.document.library.internal.util.DLExportableRepositoryPublisherUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -77,7 +77,7 @@ public class RepositoryStagingModelListener
 		}
 
 		Collection<Long> exportableRepositoryIds =
-			_dlExportableRepositoryPublisherHelper.publish(
+			DLExportableRepositoryPublisherUtil.publish(
 				repository.getGroupId());
 		String portletId = repository.getPortletId();
 
@@ -91,10 +91,6 @@ public class RepositoryStagingModelListener
 
 		return true;
 	}
-
-	@Reference
-	private DLExportableRepositoryPublisherHelper
-		_dlExportableRepositoryPublisherHelper;
 
 	@Reference
 	private Portal _portal;

@@ -5,7 +5,7 @@
 
 package com.liferay.document.library.internal.exportimport.staged.model.repository;
 
-import com.liferay.document.library.internal.helper.DLExportableRepositoryPublisherHelper;
+import com.liferay.document.library.internal.util.DLExportableRepositoryPublisherUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -99,7 +99,7 @@ public class FileEntryStagedModelRepository
 		PortletDataContext portletDataContext) {
 
 		Collection<Long> exportableRepositoryIds =
-			_dlExportableRepositoryPublisherHelper.publish(
+			DLExportableRepositoryPublisherUtil.publish(
 				portletDataContext.getScopeGroupId());
 
 		ExportActionableDynamicQuery exportActionableDynamicQuery =
@@ -213,10 +213,6 @@ public class FileEntryStagedModelRepository
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
-	private DLExportableRepositoryPublisherHelper
-		_dlExportableRepositoryPublisherHelper;
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

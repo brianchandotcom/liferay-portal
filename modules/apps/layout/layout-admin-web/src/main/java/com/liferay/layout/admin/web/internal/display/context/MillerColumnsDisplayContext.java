@@ -164,8 +164,7 @@ public class MillerColumnsDisplayContext {
 			).put(
 				"layoutColumns", getLayoutColumnsJSONArray()
 			).put(
-				"moveItemURL",
-				_layoutsAdminDisplayContext.getMoveLayoutColumnItemURL()
+				"moveItemURL", _getMoveLayoutColumnItemURL()
 			).put(
 				"searchContainerId", "pages"
 			).build()
@@ -593,6 +592,16 @@ public class MillerColumnsDisplayContext {
 		}
 
 		return jsonArray;
+	}
+
+	private String _getMoveLayoutColumnItemURL() {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/layout_admin/move_layout"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).buildString();
 	}
 
 	private JSONArray _getQuickActionsJSONArray(Layout layout)

@@ -833,16 +833,6 @@ public class LayoutsAdminDisplayContext {
 		return _groupDisplayContextHelper.getLiveGroupId();
 	}
 
-	public String getMoveLayoutColumnItemURL() {
-		return PortletURLBuilder.createActionURL(
-			_liferayPortletResponse
-		).setActionName(
-			"/layout_admin/move_layout"
-		).setRedirect(
-			themeDisplay.getURLCurrent()
-		).buildString();
-	}
-
 	public String getNameMapAsXML() {
 		Layout layout = getSelLayout();
 

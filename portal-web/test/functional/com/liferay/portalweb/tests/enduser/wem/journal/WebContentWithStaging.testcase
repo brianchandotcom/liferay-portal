@@ -334,6 +334,81 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-192836. Assert can select feature image from Document and Media in web content creation in staging."
+	@priority = 3
+	test PublishWebContentWithFeaturedImageFromDocumentsAndMediaToLive {
+		property custom.properties = "feature.flag.LPS-180855=true";
+
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Given a user has a web content with a featured image from Documents and Media in staging site") {
+			HeadlessSite.addSite(
+				siteName = ${siteName},
+				templateName = "Welcome",
+				templateType = "Site Initializer");
+
+			Staging.openStagingAdmin(siteURLKey = ${siteURLKey});
+
+			Staging.activateStagingCP(siteName = ${siteName});
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-staging");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(webContentTitle = "Web Content Title");
+
+			WebContent.addFeaturedImageFromDocumentsAndMedia(
+				dmFolderName = "Provided by Liferay",
+				imageFileName = "earth.png");
+
+			PortletEntry.publish();
+		}
+
+		task ("When the user publishes the web content to the live site") {
+			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Then the user could see the web content with featured image in live site") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+			LexiconCard.viewSpecificCardThumbnail(
+				card = "Web Content Title",
+				imageFileName = "earth.png");
+		}
+
+		task ("When the user changes the featured image of web content in staging site") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "${siteURLKey}-staging");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.addFeaturedImageFromDocumentsAndMedia(
+				dmFolderName = "Provided by Liferay",
+				imageFileName = "moon.png");
+
+			PortletEntry.publish();
+		}
+
+		task ("Then the user could publish changes to the live site") {
+			Staging.openStagingAdmin(siteURLKey = "${siteURLKey}-staging");
+
+			Staging.publishCustomPublication();
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+			LexiconCard.viewSpecificCardThumbnail(
+				card = "Web Content Title",
+				imageFileName = "moon.png");
+		}
+	}
+
 	@description = "This is a use case for LPS-82757. The feedId should be different between staging and live."
 	@priority = 3
 	test PublishWebContentWithFeeds {

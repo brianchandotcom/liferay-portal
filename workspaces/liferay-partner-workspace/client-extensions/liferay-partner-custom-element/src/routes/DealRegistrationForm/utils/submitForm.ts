@@ -22,7 +22,7 @@ export default async function submitForm(
 		await createDealRegistrationProxyAPI(values);
 
 		Liferay.Util.navigate(
-			`${siteURL}/${PRMPageRoute.DEAL_REGISTRATION_LISTING}`
+			`${siteURL}/${PRMPageRoute.CONFIRMATION_DEAL_REGISTRATION}`
 		);
 
 		Liferay.Util.openToast({

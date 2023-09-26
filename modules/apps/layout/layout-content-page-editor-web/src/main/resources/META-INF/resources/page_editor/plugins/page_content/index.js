@@ -9,7 +9,7 @@ import {Component} from '../../common/AppContext';
 import ContentsSidebar from './components/ContentsSidebar';
 
 /**
- * Entry-point for "Mapping" (sidebar pane) functionality.
+ * Entry-point for "Page Content" (sidebar pane) functionality.
  */
 export default class PageContent {
 	constructor({app, panel}) {

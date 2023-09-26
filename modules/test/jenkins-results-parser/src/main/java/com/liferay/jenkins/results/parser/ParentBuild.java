@@ -37,6 +37,8 @@ public interface ParentBuild extends Build {
 	public int getTotalSlavesUsedCount(
 		String status, boolean modifiedBuildsOnly, boolean ignoreCurrentBuild);
 
+	public boolean hasModifiedDownstreamBuilds();
+
 	public void removeDownstreamBuild(Build build);
 
 }

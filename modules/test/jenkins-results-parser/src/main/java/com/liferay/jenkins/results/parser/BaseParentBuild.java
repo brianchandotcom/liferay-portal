@@ -191,10 +191,20 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		List<Build> modifiedDownstreamBuilds = new ArrayList<>();
 
 		for (Build downstreamBuild : downstreamBuilds) {
-			if (downstreamBuild.isBuildModified() ||
-				downstreamBuild.hasModifiedDownstreamBuilds()) {
-
+			if (downstreamBuild.isBuildModified()) {
 				modifiedDownstreamBuilds.add(downstreamBuild);
+
+				continue;
+			}
+
+			if (!(downstreamBuild instanceof ParentBuild)) {
+				continue;
+			}
+
+			ParentBuild parentBuild = (ParentBuild)downstreamBuild;
+
+			if (parentBuild.hasModifiedDownstreamBuilds()) {
+				modifiedDownstreamBuilds.add(parentBuild);
 			}
 		}
 
@@ -293,6 +303,27 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	public boolean hasDownstreamBuilds() {
 		if (getDownstreamBuildCount(null, null) > 0) {
 			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean hasModifiedDownstreamBuilds() {
+		for (Build build : downstreamBuilds) {
+			if (build.isBuildModified()) {
+				return true;
+			}
+
+			if (!(build instanceof ParentBuild)) {
+				continue;
+			}
+
+			ParentBuild parentBuild = (ParentBuild)build;
+
+			if (parentBuild.hasModifiedDownstreamBuilds()) {
+				return true;
+			}
 		}
 
 		return false;

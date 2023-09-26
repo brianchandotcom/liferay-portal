@@ -1329,19 +1329,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public boolean hasModifiedDownstreamBuilds() {
-		for (Build downstreamBuild : downstreamBuilds) {
-			if (downstreamBuild.isBuildModified() ||
-				downstreamBuild.hasModifiedDownstreamBuilds()) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isBuildModified() {
 		return !status.equals(_previousStatus);
 	}
@@ -1610,8 +1597,17 @@ public abstract class BaseBuild implements Build {
 
 		String status = getStatus();
 
+		boolean hasModifiedDownstreamBuilds = false;
+
+		if (this instanceof ParentBuild) {
+			ParentBuild parentBuild = (ParentBuild)this;
+
+			hasModifiedDownstreamBuilds =
+				parentBuild.hasModifiedDownstreamBuilds();
+		}
+
 		if ((status.equals("completed") &&
-			 (isBuildModified() || hasModifiedDownstreamBuilds())) ||
+			 (isBuildModified() || hasModifiedDownstreamBuilds)) ||
 			!status.equals("completed")) {
 
 			_previousStatus = this.status;

@@ -164,8 +164,6 @@ public interface Build {
 
 	public boolean hasGenericCIFailure();
 
-	public boolean hasModifiedDownstreamBuilds();
-
 	public boolean isBuildModified();
 
 	public boolean isCompareToUpstream();

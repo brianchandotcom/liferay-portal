@@ -5,25 +5,46 @@
 
 package com.liferay.sharing.notifications.internal.service;
 
+import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.template.URLTemplateResource;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.sharing.constants.SharingPortletKeys;
+import com.liferay.sharing.interpreter.SharingEntryInterpreter;
+import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.model.SharingEntry;
-import com.liferay.sharing.notifications.internal.helper.SharingNotificationHelper;
 import com.liferay.sharing.notifications.internal.util.SharingNotificationSubcriptionSender;
 import com.liferay.sharing.security.permission.SharingEntryAction;
+import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.sharing.service.SharingEntryLocalServiceWrapper;
+
+import java.text.Format;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -95,6 +116,204 @@ public class NotificationsSharingEntryLocalServiceWrapper
 		return sharingEntry;
 	}
 
+	private String _getActionName(
+		SharingEntry sharingEntry, ResourceBundle resourceBundle) {
+
+		if (sharingEntry.hasSharingPermission(SharingEntryAction.UPDATE)) {
+			return ResourceBundleUtil.getString(resourceBundle, "updating");
+		}
+		else if (sharingEntry.hasSharingPermission(
+					SharingEntryAction.ADD_DISCUSSION)) {
+
+			return ResourceBundleUtil.getString(resourceBundle, "commenting");
+		}
+		else if (sharingEntry.hasSharingPermission(SharingEntryAction.VIEW)) {
+			return ResourceBundleUtil.getString(resourceBundle, "viewing");
+		}
+
+		return ResourceBundleUtil.getString(resourceBundle, "nothing");
+	}
+
+	private String _getEmailActionTitle(
+			SharingEntry sharingEntry, ResourceBundle resourceBundle)
+		throws Exception {
+
+		SharingEntryInterpreter sharingEntryInterpreter =
+			_getSharingEntryInterpreter(sharingEntry);
+
+		if (sharingEntryInterpreter != null) {
+			return ResourceBundleUtil.getString(
+				resourceBundle, "view-x",
+				sharingEntryInterpreter.getAssetTypeTitle(
+					sharingEntry, resourceBundle.getLocale()));
+		}
+
+		return ResourceBundleUtil.getString(resourceBundle, "view");
+	}
+
+	private String _getExpirationDateText(
+		SharingEntry sharingEntry, Locale locale) {
+
+		if (sharingEntry.getExpirationDate() == null) {
+			return null;
+		}
+
+		Format expirationDateFormat = DateFormatFactoryUtil.getDate(locale);
+
+		return expirationDateFormat.format(sharingEntry.getExpirationDate());
+	}
+
+	private String _getFromUserName(
+		SharingEntry sharingEntry, ResourceBundle resourceBundle) {
+
+		User user = _userLocalService.fetchUser(sharingEntry.getUserId());
+
+		return _getUserName(user, resourceBundle);
+	}
+
+	private Locale _getLocale(User toUser) {
+		if (toUser != null) {
+			return toUser.getLocale();
+		}
+
+		return LocaleUtil.getDefault();
+	}
+
+	private String _getNotificationEmailBody(
+			SharingEntry sharingEntry, PortletRequest portletRequest)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		String templateId =
+			"/com/liferay/sharing/notifications/dependencies" +
+				"/sharing_entry_added_email_body.ftl";
+
+		URLTemplateResource templateResource = new URLTemplateResource(
+			templateId, clazz.getResource(templateId));
+
+		Template template = TemplateManagerUtil.getTemplate(
+			TemplateConstants.LANG_TYPE_FTL, templateResource, false);
+
+		User toUser = _userLocalService.fetchUser(sharingEntry.getToUserId());
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			_getLocale(toUser), getClass());
+
+		template.put(
+			"actionTitle", _getEmailActionTitle(sharingEntry, resourceBundle));
+
+		template.put(
+			"content",
+			_getNotificationMessage(
+				sharingEntry, resourceBundle.getLocale(), portletRequest));
+
+		if (portletRequest != null) {
+			template.put(
+				"sharingEntryURL",
+				_getNotificationURL(sharingEntry, portletRequest));
+		}
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		template.processTemplate(unsyncStringWriter);
+
+		return unsyncStringWriter.toString();
+	}
+
+	private String _getNotificationMessage(
+			SharingEntry sharingEntry, Locale locale)
+		throws PortalException {
+
+		return _getNotificationMessage(sharingEntry, locale, null);
+	}
+
+	private String _getNotificationMessage(
+			SharingEntry sharingEntry, Locale locale,
+			PortletRequest portletRequest)
+		throws PortalException {
+
+		String languageKey = "x-has-shared-x-with-you-for-x";
+
+		if (sharingEntry.getExpirationDate() != null) {
+			languageKey = "x-has-shared-x-with-you-for-x-until-x";
+		}
+
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
+
+		return ResourceBundleUtil.getString(
+			resourceBundle, languageKey,
+			_getFromUserName(sharingEntry, resourceBundle),
+			_getSharingEntryObjectTitle(
+				sharingEntry, resourceBundle, portletRequest),
+			_getActionName(sharingEntry, resourceBundle),
+			_getExpirationDateText(sharingEntry, locale));
+	}
+
+	private String _getNotificationURL(
+			SharingEntry sharingEntry, PortletRequest portletRequest)
+		throws PortalException {
+
+		if (portletRequest != null) {
+			return PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					portletRequest, SharingEntry.class.getName(),
+					PortletProvider.Action.PREVIEW)
+			).setParameter(
+				"classNameId", sharingEntry.getClassNameId()
+			).setParameter(
+				"classPK", sharingEntry.getClassPK()
+			).setParameter(
+				"sharingEntryId", sharingEntry.getSharingEntryId()
+			).buildString();
+		}
+
+		return null;
+	}
+
+	private SharingEntryInterpreter _getSharingEntryInterpreter(
+		SharingEntry sharingEntry) {
+
+		return _sharingEntryInterpreterProvider.getSharingEntryInterpreter(
+			sharingEntry);
+	}
+
+	private String _getSharingEntryObjectTitle(
+			SharingEntry sharingEntry, ResourceBundle resourceBundle,
+			PortletRequest portletRequest)
+		throws PortalException {
+
+		SharingEntryInterpreter sharingEntryInterpreter =
+			_getSharingEntryInterpreter(sharingEntry);
+
+		String title;
+
+		if (sharingEntryInterpreter != null) {
+			title = sharingEntryInterpreter.getTitle(sharingEntry);
+		}
+		else {
+			title = ResourceBundleUtil.getString(resourceBundle, "something");
+		}
+
+		if (portletRequest != null) {
+			return StringBundler.concat(
+				"<a href=\"", _getNotificationURL(sharingEntry, portletRequest),
+				"\" style=\"color: #0b5fff; text-decoration: none;\">",
+				HtmlUtil.escape(title), "</a>");
+		}
+
+		return title;
+	}
+
+	private String _getUserName(User user, ResourceBundle resourceBundle) {
+		if (user != null) {
+			return HtmlUtil.escape(user.getFullName());
+		}
+
+		return ResourceBundleUtil.getString(resourceBundle, "someone");
+	}
+
 	private void _sendNotificationEvent(
 		SharingEntry sharingEntry, int notificationType,
 		ServiceContext serviceContext) {
@@ -107,14 +326,13 @@ public class NotificationsSharingEntryLocalServiceWrapper
 					new SharingNotificationSubcriptionSender();
 
 			sharingNotificationSubcriptionSender.setSubject(
-				_sharingNotificationHelper.getNotificationMessage(
-					sharingEntry, user.getLocale()));
+				_getNotificationMessage(sharingEntry, user.getLocale()));
 
-			String entryURL = _sharingNotificationHelper.getNotificationURL(
+			String entryURL = _getNotificationURL(
 				sharingEntry, serviceContext.getLiferayPortletRequest());
 
 			sharingNotificationSubcriptionSender.setBody(
-				_sharingNotificationHelper.getNotificationEmailBody(
+				_getNotificationEmailBody(
 					sharingEntry, serviceContext.getLiferayPortletRequest()));
 
 			sharingNotificationSubcriptionSender.setClassName(
@@ -163,7 +381,10 @@ public class NotificationsSharingEntryLocalServiceWrapper
 		NotificationsSharingEntryLocalServiceWrapper.class);
 
 	@Reference
-	private SharingNotificationHelper _sharingNotificationHelper;
+	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;
+
+	@Reference
+	private SharingEntryLocalService _sharingEntryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

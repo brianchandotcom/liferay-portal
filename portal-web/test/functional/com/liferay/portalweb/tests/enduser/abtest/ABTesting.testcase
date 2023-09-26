@@ -1470,7 +1470,9 @@ definition {
 
 			MenuItem.clickNoError(menuItem = "Delete");
 
-			Confirm.dismissAlert();
+			Click(
+				key_text = "Cancel",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
 
 		task ("Assert that variant is not deleted") {

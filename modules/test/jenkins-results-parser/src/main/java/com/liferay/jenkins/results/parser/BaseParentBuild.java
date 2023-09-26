@@ -182,6 +182,53 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	}
 
 	@Override
+	public int getTotalSlavesUsedCount() {
+		return getTotalSlavesUsedCount(null, false);
+	}
+
+	@Override
+	public int getTotalSlavesUsedCount(
+		String status, boolean modifiedBuildsOnly) {
+
+		return getTotalSlavesUsedCount(status, modifiedBuildsOnly, false);
+	}
+
+	@Override
+	public int getTotalSlavesUsedCount(
+		String status, boolean modifiedBuildsOnly, boolean ignoreCurrentBuild) {
+
+		int totalSlavesUsedCount = 1;
+
+		if (ignoreCurrentBuild || (modifiedBuildsOnly && !isBuildModified()) ||
+			((status != null) && !this.status.equals(status))) {
+
+			totalSlavesUsedCount = 0;
+		}
+
+		List<Build> downstreamBuilds;
+
+		if (modifiedBuildsOnly) {
+			downstreamBuilds = getModifiedDownstreamBuildsByStatus(status);
+		}
+		else {
+			downstreamBuilds = getDownstreamBuilds(status);
+		}
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (!(downstreamBuild instanceof ParentBuild)) {
+				continue;
+			}
+
+			ParentBuild parentBuild = (ParentBuild)downstreamBuild;
+
+			totalSlavesUsedCount += parentBuild.getTotalSlavesUsedCount(
+				status, modifiedBuildsOnly);
+		}
+
+		return totalSlavesUsedCount;
+	}
+
+	@Override
 	public boolean hasDownstreamBuilds() {
 		if (getDownstreamBuildCount(null, null) > 0) {
 			return true;

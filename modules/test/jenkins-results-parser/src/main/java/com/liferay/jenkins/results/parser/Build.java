@@ -162,14 +162,6 @@ public interface Build {
 
 	public long getTotalDuration();
 
-	public int getTotalSlavesUsedCount();
-
-	public int getTotalSlavesUsedCount(
-		String status, boolean modifiedBuildsOnly);
-
-	public int getTotalSlavesUsedCount(
-		String status, boolean modifiedBuildsOnly, boolean ignoreCurrentBuild);
-
 	public List<TestResult> getUniqueFailureTestResults();
 
 	public List<TestResult> getUpstreamJobFailureTestResults();

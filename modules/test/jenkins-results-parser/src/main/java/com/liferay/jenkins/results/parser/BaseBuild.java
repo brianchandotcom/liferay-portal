@@ -1587,7 +1587,12 @@ public abstract class BaseBuild implements Build {
 					}
 				}
 
-				if (downstreamBuilds != null) {
+				if (this instanceof ParentBuild) {
+					ParentBuild parentBuild = (ParentBuild)this;
+
+					List<Build> downstreamBuilds =
+						parentBuild.getDownstreamBuilds(null);
+
 					List<Callable<Object>> callables = new ArrayList<>();
 
 					for (final Build downstreamBuild : downstreamBuilds) {
@@ -1612,15 +1617,11 @@ public abstract class BaseBuild implements Build {
 
 					String result = getResult();
 
-					if ((result != null) && (this instanceof ParentBuild)) {
-						ParentBuild parentBuild = (ParentBuild)this;
+					if ((result != null) &&
+						(downstreamBuilds.size() ==
+							parentBuild.getDownstreamBuildCount("completed"))) {
 
-						if (downstreamBuilds.size() ==
-								parentBuild.getDownstreamBuildCount(
-									"completed")) {
-
-							setResult(result);
-						}
+						setResult(result);
 					}
 
 					findDownstreamBuilds();
@@ -3234,7 +3235,6 @@ public abstract class BaseBuild implements Build {
 	protected List<Integer> badBuildNumbers = new ArrayList<>();
 	protected String branchName;
 	protected int consoleReadCursor;
-	protected List<Build> downstreamBuilds = new ArrayList<>();
 	protected boolean fromArchive;
 	protected boolean fromCompletedBuild;
 	protected String gitRepositoryName;

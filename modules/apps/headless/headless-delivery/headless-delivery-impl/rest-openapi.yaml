@@ -1051,11 +1051,11 @@ components:
                     format: uri
                     readOnly: true
                     type: string
-                userGroupInformations:
+                userGroupBriefs:
                     description:
                         A list of userGroups information.
                     items:
-                        $ref: "#/components/schemas/UserGroupInformation"
+                        $ref: "#/components/schemas/UserGroupBrief"
                     type: array
             type: object
         CreatorStatistics:
@@ -5355,7 +5355,7 @@ components:
                     description:
                         The localized submission of URL type.
             type: object
-        UserGroupInformation:
+        UserGroupBrief:
             description:
                 The author's user groups information.
             properties:

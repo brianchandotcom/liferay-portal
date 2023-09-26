@@ -6,7 +6,7 @@
 package com.liferay.headless.delivery.dto.v1_0.util;
 
 import com.liferay.headless.delivery.dto.v1_0.Creator;
-import com.liferay.headless.delivery.dto.v1_0.UserGroupInformation;
+import com.liferay.headless.delivery.dto.v1_0.UserGroupBrief;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -73,28 +73,28 @@ public class CreatorUtil {
 
 						return group.getDisplayURL(themeDisplay);
 					});
-				setUserGroupInformations(
+				setUserGroupBriefs(
 					() -> {
 						if (!FeatureFlagManagerUtil.isEnabled("LPS-185892") ||
 							(dtoConverterContext == null) ||
 							!(GetterUtil.getBoolean(
 								dtoConverterContext.getAttribute(
-									"userGroupInformations")) ||
+									"userGroupBriefs")) ||
 							  dtoConverterContext.containsNestedFieldsValue(
-								  "userGroupInformations"))) {
+								  "userGroupBriefs"))) {
 
 							return null;
 						}
 
 						return TransformUtil.transformToArray(
 							user.getUserGroups(),
-							userGroup -> new UserGroupInformation() {
+							userGroup -> new UserGroupBrief() {
 								{
 									id = userGroup.getUserGroupId();
 									name = userGroup.getName();
 								}
 							},
-							UserGroupInformation.class);
+							UserGroupBrief.class);
 					});
 			}
 		};

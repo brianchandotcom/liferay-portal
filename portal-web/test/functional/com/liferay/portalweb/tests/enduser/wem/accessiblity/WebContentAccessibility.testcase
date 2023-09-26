@@ -186,4 +186,45 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-192836. Check the accessibility when selecting feature image from Document and Media in web content creation."
+	@priority = 3
+	test ViewAccessibilityOfFeaturedImageSection {
+		var siteName = StringUtil.randomString(8);
+
+		var siteURLKey = StringUtil.toLowerCase(${siteName});
+
+		task ("Given a user accesses to the web content editor") {
+			HeadlessSite.addSite(
+				siteName = ${siteName},
+				templateName = "Welcome",
+				templateType = "Site Initializer");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+
+			WebContentNavigator.gotoAddCP();
+		}
+
+		task ("When the user selects the From Documents and Media as Featured Image") {
+			Panel.expandPanel(panel = "Featured Image");
+
+			Select(
+				locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_TYPE",
+				value1 = "From Documents and Media");
+		}
+
+		task ("Then the featured image section should have correct accessibility") {
+			AssertElementAccessible(locator1 = "//div[contains(@id,'featuredImageContent')]");
+		}
+
+		task ("When the user selects an image from Documents and Media") {
+			WebContent.addFeaturedImageFromDocumentsAndMedia(
+				dmFolderName = "Provided by Liferay",
+				imageFileName = "earth.png");
+		}
+
+		task ("Then the featured image section should have correct accessibility") {
+			AssertElementAccessible(locator1 = "//div[contains(@id,'featuredImageContent')]");
+		}
+	}
+
 }

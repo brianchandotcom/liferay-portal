@@ -1007,12 +1007,12 @@ public class FragmentEntryLocalServiceImpl
 			fragmentEntry.getName(), copy);
 
 		for (int i = 1;; i++) {
-			FragmentEntry fragmentEntryDuplicated =
+			FragmentEntry existingFragmentEntry =
 				fragmentEntryPersistence.fetchByG_FCI_LikeN_First(
 					fragmentEntry.getGroupId(),
 					fragmentEntry.getFragmentCollectionId(), name, null);
 
-			if (fragmentEntryDuplicated == null) {
+			if (existingFragmentEntry == null) {
 				break;
 			}
 

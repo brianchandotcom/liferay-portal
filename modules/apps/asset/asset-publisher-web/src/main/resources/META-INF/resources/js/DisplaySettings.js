@@ -4,12 +4,12 @@
  */
 
 export default function ({namespace}) {
-	const displayStyleSelect = document.getElementById(
-		`${namespace}displayStyle`
+	const displayStyleValue = document.getElementById(
+		`${namespace}preferences--displayStyle--`
 	);
 
-	function showHiddenFields() {
-		const displayStyle = displayStyleSelect.value;
+	function showHiddenFields(option) {
+		const displayStyle = option || displayStyleValue.value;
 
 		const hiddenFields = document.querySelectorAll('.hidden-field');
 
@@ -43,5 +43,7 @@ export default function ({namespace}) {
 
 	showHiddenFields();
 
-	displayStyleSelect.addEventListener('change', showHiddenFields);
+	Liferay.on('templateSelector:changedTemplate', (event) => {
+		showHiddenFields(event.value);
+	});
 }

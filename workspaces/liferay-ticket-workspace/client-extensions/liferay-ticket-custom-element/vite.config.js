@@ -10,7 +10,14 @@ import {defineConfig} from 'vite';
 
 export default defineConfig({
 	build: {
-		outDir: 'build',
+		outDir: 'build/vite',
+		rollupOptions: {
+			output: {
+				assetFileNames: 'assets/[name][extname]',
+				chunkFileNames: '[name]-[hash].js',
+				entryFileNames: '[name]-[hash].js',
+			},
+		},
 	},
 	plugins: [react()],
 	server: {

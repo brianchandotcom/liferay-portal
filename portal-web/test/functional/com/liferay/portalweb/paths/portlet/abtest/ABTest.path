@@ -190,6 +190,12 @@
 	<td>//button[contains(@class, 'lfr-segments-experiment-click-goal-target-delete')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PUBLISH_VARIANT</td>
+	<td>//button[@data-title='${key_variantName}']/../../following-sibling::td[2]//button[@data-title='Publish']</td>
+	<td></td>
+</tr>
+<tr>
 </tbody>
 </table>
 </body>

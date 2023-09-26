@@ -476,7 +476,7 @@ public class LayoutPageTemplateCollectionServiceTest {
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollections(
 					_group.getGroupId(),
-					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 2, 0);
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0, 2);
 
 		Assert.assertTrue(
 			actualLayoutPageTemplateCollections.contains(

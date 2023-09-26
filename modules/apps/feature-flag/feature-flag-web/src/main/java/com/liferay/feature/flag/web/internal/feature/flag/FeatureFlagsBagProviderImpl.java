@@ -99,10 +99,10 @@ public class FeatureFlagsBagProviderImpl
 
 		featureFlagsBag.setEnabled(key, enabled);
 
-		if (_featureFlagListenerServiceTrackerMap.containsKey(key)) {
-			List<FeatureFlagListener> featureFlagListeners =
-				_featureFlagListenerServiceTrackerMap.getService(key);
+		List<FeatureFlagListener> featureFlagListeners =
+			_featureFlagListenerServiceTrackerMap.getService(key);
 
+		if (featureFlagListeners != null) {
 			for (FeatureFlagListener featureFlagListener :
 					featureFlagListeners) {
 

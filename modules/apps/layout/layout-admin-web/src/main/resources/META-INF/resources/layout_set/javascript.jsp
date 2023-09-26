@@ -28,13 +28,13 @@ LayoutLookAndFeelDisplayContext layoutLookAndFeelDisplayContext = new LayoutLook
 UnicodeProperties layoutSetTypeSettingsUnicodeProperties = selLayoutSet.getSettingsProperties();
 %>
 
-<c:if test="<%= PropsValues.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUTSET_JAVASCRIPT %>">
+<c:if test='<%= PropsValues.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUTSET_JAVASCRIPT || Validator.isNotNull(layoutSetTypeSettingsUnicodeProperties.getProperty("javascript")) %>'>
 	<liferay-frontend:fieldset
 		collapsed="<%= false %>"
 		collapsible="<%= true %>"
 		label="custom-javascript"
 	>
-		<aui:input label="javascript" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutSetTypeSettingsUnicodeProperties.getProperty("javascript") %>' wrap="soft" wrapperCssClass="c-mb-0 c-mt-4" />
+		<aui:input disabled="<%= !PropsValues.FIELD_ENABLE_COM_LIFERAY_PORTAL_KERNEL_MODEL_LAYOUTSET_JAVASCRIPT %>" label="javascript" name="TypeSettingsProperties--javascript--" placeholder="javascript" type="textarea" value='<%= layoutSetTypeSettingsUnicodeProperties.getProperty("javascript") %>' wrap="soft" wrapperCssClass="c-mb-0 c-mt-4" />
 
 		<p class="text-secondary">
 			<liferay-ui:message key="paste-javascript-code-that-is-executed-at-the-bottom-of-every-page" />

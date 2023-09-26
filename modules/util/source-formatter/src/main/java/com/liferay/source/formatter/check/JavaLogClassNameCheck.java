@@ -41,7 +41,7 @@ public class JavaLogClassNameCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _logPattern = Pattern.compile(
-		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\n*" +
-			"\t*(.+)\\.class\\)");
+		"\n\tprivate static final Log _log = LogFactoryUtil.getLog\\(\\s*" +
+			"([\\w\\s.]+)\\.class\\)");
 
 }

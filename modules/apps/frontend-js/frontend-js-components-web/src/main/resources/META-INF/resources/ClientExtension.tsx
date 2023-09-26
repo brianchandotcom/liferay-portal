@@ -17,8 +17,25 @@ export default function ClientExtension<T>({
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		if (containerRef.current) {
-			containerRef.current.appendChild(htmlElementBuilder(args));
+		const {current} = containerRef;
+
+		if (current) {
+			while (current.firstChild) {
+				current.removeChild(current.firstChild);
+			}
+
+			try {
+				current.appendChild(htmlElementBuilder(args));
+			}
+			catch (error) {
+				console.error(
+					'The client extension implemented by the function',
+					htmlElementBuilder,
+					'caused an error when trying to render its HTML content.',
+					'Please fix your client extension.',
+					error
+				);
+			}
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps

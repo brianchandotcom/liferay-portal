@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
@@ -89,7 +90,9 @@ public class FeatureFlagsBagProviderImpl
 	@Clusterable
 	@Override
 	public void setEnabled(long companyId, String key, boolean enabled) {
-		_featureFlagPreferencesManager.setEnabled(companyId, key, enabled);
+		if (ClusterInvokeThreadLocal.isEnabled()) {
+			_featureFlagPreferencesManager.setEnabled(companyId, key, enabled);
+		}
 
 		FeatureFlagsBag featureFlagsBag = _featureFlagsBagMap.get(companyId);
 

@@ -9,7 +9,7 @@
 		"@liferay/accessibility-settings-state-web": "*",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/frontend-js-state-web": "*",
-		"@liferay/js-api": "0.3.0-pre.0",
+		"@liferay/js-api": "0.5.1-pre.0",
 		"classnames": "2.3.1",
 		"lodash.groupby": "4.6.0",
 		"lodash.isequal": "4.5.0",

@@ -20,7 +20,7 @@
 		"@clayui/table": "3.106.1",
 		"@clayui/tooltip": "3.106.1",
 		"@liferay/frontend-js-react-web": "*",
-		"@liferay/js-api": "0.4.0-pre.0",
+		"@liferay/js-api": "0.5.1-pre.0",
 		"classnames": "2.3.1",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",

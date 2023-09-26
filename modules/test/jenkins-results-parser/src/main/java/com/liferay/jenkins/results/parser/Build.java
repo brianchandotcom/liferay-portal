@@ -264,7 +264,7 @@ public interface Build {
 		protected TimelineData(int size, TopLevelBuild topLevelBuild) {
 			if (topLevelBuild != topLevelBuild.getTopLevelBuild()) {
 				throw new IllegalArgumentException(
-					"Nested TopLevelBuild objects are invalid");
+					"Nested top level builds are invalid");
 			}
 
 			if (size < 1) {

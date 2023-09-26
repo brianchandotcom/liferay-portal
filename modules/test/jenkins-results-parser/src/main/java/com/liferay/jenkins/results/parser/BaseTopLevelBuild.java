@@ -586,7 +586,7 @@ public abstract class BaseTopLevelBuild
 		if ((currentTimeMillis - _MILLIS_DOWNSTREAM_BUILDS_LISTING_INTERVAL) >=
 				_lastDownstreamBuildsListingTimestamp) {
 
-			StringBuilder sb = new StringBuilder(super.getStatusSummary());
+			StringBuilder sb = new StringBuilder(_getStatusSummary());
 
 			sb.append("\nRunning Builds: ");
 
@@ -601,7 +601,7 @@ public abstract class BaseTopLevelBuild
 			return sb.toString();
 		}
 
-		return super.getStatusSummary();
+		return _getStatusSummary();
 	}
 
 	@Override
@@ -2279,6 +2279,19 @@ public abstract class BaseTopLevelBuild
 		}
 
 		return slaveUsages;
+	}
+
+	private String _getStatusSummary() {
+		return JenkinsResultsParserUtil.combine(
+			String.valueOf(getDownstreamBuildCount("starting")), " Starting  ",
+			"/ ", String.valueOf(getDownstreamBuildCount("missing")),
+			" Missing  ", "/ ",
+			String.valueOf(getDownstreamBuildCount("queued")), " Queued  ",
+			"/ ", String.valueOf(getDownstreamBuildCount("running")),
+			" Running  ", "/ ",
+			String.valueOf(getDownstreamBuildCount("completed")),
+			" Completed  ", "/ ", String.valueOf(getDownstreamBuildCount(null)),
+			" Total ");
 	}
 
 	private static final FailureMessageGenerator[] _FAILURE_MESSAGE_GENERATORS =

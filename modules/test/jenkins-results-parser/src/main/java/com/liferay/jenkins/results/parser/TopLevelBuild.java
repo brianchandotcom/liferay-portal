@@ -53,6 +53,8 @@ public interface TopLevelBuild extends ParentBuild {
 
 	public List<String> getProjectNames();
 
+	public String getStatusSummary();
+
 	public Element getValidationGitHubMessageElement();
 
 }

@@ -981,20 +981,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public String getStatusSummary() {
-		return JenkinsResultsParserUtil.combine(
-			String.valueOf(getDownstreamBuildCount("starting")), " Starting  ",
-			"/ ", String.valueOf(getDownstreamBuildCount("missing")),
-			" Missing  ", "/ ",
-			String.valueOf(getDownstreamBuildCount("queued")), " Queued  ",
-			"/ ", String.valueOf(getDownstreamBuildCount("running")),
-			" Running  ", "/ ",
-			String.valueOf(getDownstreamBuildCount("completed")),
-			" Completed  ", "/ ", String.valueOf(getDownstreamBuildCount(null)),
-			" Total ");
-	}
-
-	@Override
 	public Map<String, String> getStopPropertiesTempMap() {
 		return getTempMap("stop.properties");
 	}

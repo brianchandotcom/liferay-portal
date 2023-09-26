@@ -132,8 +132,6 @@ public interface Build {
 
 	public long getStatusDuration(String status);
 
-	public String getStatusSummary();
-
 	public Map<String, String> getStopPropertiesTempMap();
 
 	public StopWatchRecordsGroup getStopWatchRecordsGroup();

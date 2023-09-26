@@ -81,6 +81,7 @@ public class GetLayoutActionsMVCResourceCommand extends BaseMVCResourceCommand {
 			new LayoutActionDropdownItemsProvider(
 				_portal.getHttpServletRequest(resourceRequest),
 				layoutActionsHelper, layoutsAdminDisplayContext,
+				_portal.getLiferayPortletResponse(resourceResponse),
 				_translationURLProvider);
 
 		JSONPortletResponseUtil.writeJSON(

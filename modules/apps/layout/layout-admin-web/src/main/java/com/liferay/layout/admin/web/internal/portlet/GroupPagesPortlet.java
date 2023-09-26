@@ -219,6 +219,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 					new LayoutActionDropdownItemsProvider(
 						_portal.getHttpServletRequest(renderRequest),
 						layoutActionsHelper, layoutsAdminDisplayContext,
+						_portal.getLiferayPortletResponse(renderResponse),
 						_translationURLProvider);
 
 			renderRequest.setAttribute(

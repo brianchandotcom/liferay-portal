@@ -85,7 +85,9 @@ public class APIPropertyObjectDefinitionDeployerImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTracker.close();
+		if (_serviceTracker != null) {
+			_serviceTracker.close();
+		}
 	}
 
 	private boolean _isAPIPropertyObjectDefinition(

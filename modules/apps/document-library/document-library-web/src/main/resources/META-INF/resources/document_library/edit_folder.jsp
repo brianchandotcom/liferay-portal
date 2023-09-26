@@ -170,7 +170,7 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 						<c:if test="<%= dlEditFolderDisplayContext.isWorkflowEnabled() %>">
 							<c:choose>
 								<c:when test="<%= !dlEditFolderDisplayContext.isRootFolder() %>">
-									<aui:input checked="<%= dlEditFolderDisplayContext.isRestrictionTypeWorkflow() %>" id="restrictionTypeWorkflow" label='<%= LanguageUtil.format(locale, "default-workflow-for-this-folder-x", folder.getName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />
+									<aui:input checked="<%= dlEditFolderDisplayContext.isRestrictionTypeWorkflow() %>" id="restrictionTypeWorkflow" label='<%= LanguageUtil.format(locale, "set-the-default-workflow-for-the-folders-content-x", folder.getName(), false) %>' name="restrictionType" type="radio" value="<%= DLFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />
 								</c:when>
 								<c:otherwise>
 									<aui:input name="restrictionType" type="hidden" value="<%= DLFolderConstants.RESTRICTION_TYPE_WORKFLOW %>" />

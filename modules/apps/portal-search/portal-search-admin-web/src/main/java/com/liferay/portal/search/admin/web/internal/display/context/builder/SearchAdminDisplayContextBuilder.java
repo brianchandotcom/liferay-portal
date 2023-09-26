@@ -17,8 +17,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.search.admin.web.internal.display.context.SearchAdminDisplayContext;
-import com.liferay.portal.search.cluster.StatsInformation;
-import com.liferay.portal.search.cluster.StatsInformationFactory;
 import com.liferay.portal.search.index.IndexInformation;
 
 import java.util.ArrayList;
@@ -58,20 +56,6 @@ public class SearchAdminDisplayContextBuilder {
 		searchAdminDisplayContext.setIndexReindexerClassNames(
 			_indexReindexerClassNames);
 
-		if (_isStatsInformationAvailable()) {
-			StatsInformation statsInformation =
-				_statsInformationFactory.getStatsInformation();
-
-			searchAdminDisplayContext.setAvailableDiskSpace(
-				statsInformation.getAvailableDiskSpace());
-			searchAdminDisplayContext.setCurrentDiskSpaceUsed(
-				statsInformation.getUsedDiskSpace());
-			searchAdminDisplayContext.setIsLowOnDiskSpace(
-				_isLowOnDiskSpace(
-					statsInformation.getAvailableDiskSpace(),
-					statsInformation.getSizeOfLargestIndex()));
-		}
-
 		NavigationItemList navigationItemList = new NavigationItemList();
 		String selectedTab = getSelectedTab();
 
@@ -100,12 +84,6 @@ public class SearchAdminDisplayContextBuilder {
 		List<String> indexReindexerClassNames) {
 
 		_indexReindexerClassNames = indexReindexerClassNames;
-	}
-
-	public void setStatsInformationFactory(
-		StatsInformationFactory statsInformationFactory) {
-
-		_statsInformationFactory = statsInformationFactory;
 	}
 
 	protected Map<String, List<Indexer<?>>> getIndexersMap() {
@@ -199,24 +177,6 @@ public class SearchAdminDisplayContextBuilder {
 		return false;
 	}
 
-	private boolean _isLowOnDiskSpace(
-		double availableDiskSpace, double largestIndexSize) {
-
-		if (availableDiskSpace < (largestIndexSize * 1.5)) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isStatsInformationAvailable() {
-		if (_statsInformationFactory != null) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchAdminDisplayContextBuilder.class);
 
@@ -229,6 +189,5 @@ public class SearchAdminDisplayContextBuilder {
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private StatsInformationFactory _statsInformationFactory;
 
 }

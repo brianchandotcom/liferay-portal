@@ -219,6 +219,8 @@ public class ActionKeys {
 
 	public static final String REPLY_TO_MESSAGE = "REPLY_TO_MESSAGE";
 
+	public static final String RULE_BUILDER = "RULE_BUILDER";
+
 	public static final String SIGNAL = "SIGNAL";
 
 	public static final String SUBMIT = "SUBMIT";

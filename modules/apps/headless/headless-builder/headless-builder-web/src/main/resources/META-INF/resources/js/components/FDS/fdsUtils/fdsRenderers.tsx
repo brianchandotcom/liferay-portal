@@ -6,7 +6,7 @@
 import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 
 import StatusLabel from '../../StatusLabel';
 import {wrapStringInForwardSlashes} from '../../utils/string';
@@ -18,9 +18,14 @@ export function itemMethodRenderer({
 }) {
 	return <ClayLabel displayType="info">{itemData.httpMethod.name}</ClayLabel>;
 }
-
-export function itemPathRenderer({itemData}: FDSItem<APIEndpointItem>) {
-	const path = wrapStringInForwardSlashes(itemData.path);
+export function itemPathRenderer({
+	fdsItem,
+	setMainEndpointNav,
+}: {
+	fdsItem: FDSItem<APIEndpointItem>;
+	setMainEndpointNav: Dispatch<SetStateAction<MainNav>>;
+}) {
+	const path = wrapStringInForwardSlashes(fdsItem.itemData.path);
 
 	return (
 		<ClayTooltipProvider>
@@ -30,6 +35,9 @@ export function itemPathRenderer({itemData}: FDSItem<APIEndpointItem>) {
 					data-tooltip-align="top"
 					decoration="none"
 					href="#"
+					onClick={() =>
+						setMainEndpointNav({edit: fdsItem.itemData.id})
+					}
 					title={path}
 				>
 					{path}

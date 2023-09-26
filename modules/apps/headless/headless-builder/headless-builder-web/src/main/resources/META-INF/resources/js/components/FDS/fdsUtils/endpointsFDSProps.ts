@@ -4,6 +4,7 @@
  */
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
+import {Dispatch, SetStateAction} from 'react';
 
 import {baseFDSProps} from './baseFDSProps';
 import {itemMethodRenderer, itemPathRenderer} from './fdsRenderers';
@@ -11,14 +12,15 @@ import {itemMethodRenderer, itemPathRenderer} from './fdsRenderers';
 export function getAPIEndpointsFDSProps(
 	urlPath: string,
 	portletId: string,
-	setMainEndpointNav: ({edit}: {edit: number}) => void
+	setMainEndpointNav: Dispatch<SetStateAction<MainNav>>
 ): IFrontendDataSetProps {
 	return {
 		...baseFDSProps,
 		apiURL: urlPath,
 		customDataRenderers: {
 			itemMethodRenderer,
-			itemPathRenderer,
+			itemPathRenderer: (fdsItem: FDSItem<APIEndpointItem>) =>
+				itemPathRenderer({fdsItem, setMainEndpointNav}),
 		},
 		emptyState: {
 			description: '',
@@ -67,7 +69,7 @@ export function getAPIEndpointsFDSProps(
 						},
 						{
 							actionId: 'editAPIEndpoint',
-							contentRenderer: 'actionLink',
+							contentRenderer: 'itemPathRenderer',
 							expand: false,
 							fieldName: 'path',
 							label: Liferay.Language.get('path'),

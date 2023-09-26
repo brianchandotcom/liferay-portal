@@ -4,8 +4,9 @@
  */
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
+import {Dispatch, SetStateAction} from 'react';
 export declare function getAPIEndpointsFDSProps(
 	urlPath: string,
 	portletId: string,
-	setMainEndpointNav: ({edit}: {edit: number}) => void
+	setMainEndpointNav: Dispatch<SetStateAction<MainNav>>
 ): IFrontendDataSetProps;

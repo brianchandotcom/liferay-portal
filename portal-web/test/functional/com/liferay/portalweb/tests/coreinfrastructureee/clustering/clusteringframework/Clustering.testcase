@@ -305,6 +305,8 @@ definition {
 			virtualHost = "www.able.com",
 			webId = "www.able.com");
 
+		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
+
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 		User.firstLoginPG(

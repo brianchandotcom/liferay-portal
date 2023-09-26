@@ -2682,7 +2682,7 @@ public abstract class BaseBuild implements Build {
 
 		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
-		if ((topLevelBuild == null) || topLevelBuild.fromArchive) {
+		if ((topLevelBuild == null) || topLevelBuild.isFromArchive()) {
 			return;
 		}
 

@@ -72,6 +72,8 @@ public class MillerColumnsDisplayContext {
 	public String getLayoutActionsURL() {
 		return ResourceURLBuilder.createResourceURL(
 			_liferayPortletResponse
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
 		).setResourceID(
 			"/layout_admin/get_layout_actions"
 		).buildString();

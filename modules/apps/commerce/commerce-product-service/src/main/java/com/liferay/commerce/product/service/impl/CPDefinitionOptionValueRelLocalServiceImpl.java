@@ -1041,7 +1041,10 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 					curCPDefinitionOptionValueRel.getCProductId()) &&
 				BigDecimalUtil.eq(
 					cpDefinitionOptionValueRel.getQuantity(),
-					curCPDefinitionOptionValueRel.getQuantity())) {
+					curCPDefinitionOptionValueRel.getQuantity()) &&
+				Objects.equals(
+					cpDefinitionOptionValueRel.getUnitOfMeasureKey(),
+					curCPDefinitionOptionValueRel.getUnitOfMeasureKey())) {
 
 				throw new CPDefinitionOptionValueRelQuantityException();
 			}

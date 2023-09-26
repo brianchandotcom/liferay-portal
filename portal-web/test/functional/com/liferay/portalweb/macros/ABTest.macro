@@ -360,6 +360,17 @@ definition {
     }
 
 	@summary = "Default summary"
+	macro publishVariant(variantName) {
+		Click(
+			locator1 = "ABTest#PUBLISH_VARIANT",
+			key_variantName = ${variantName});
+
+		Click(
+			locator1 = "Button#ANY",
+			key_text = "Publish");
+	}
+
+	@summary = "Default summary"
 	macro viewDataInAnalyticsCloud() {
 		AssertElementPresent(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
 

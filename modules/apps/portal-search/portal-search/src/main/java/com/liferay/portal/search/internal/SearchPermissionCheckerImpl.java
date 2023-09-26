@@ -264,7 +264,9 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 						_roleLocalService.getRoles(
 							permissionChecker.getRoleIds(userId, groupId))) {
 
-					if (role.getType() == RoleConstants.TYPE_REGULAR) {
+					if ((role.getType() == RoleConstants.TYPE_DEPOT) ||
+						(role.getType() == RoleConstants.TYPE_REGULAR)) {
+
 						roles.add(role);
 					}
 				}

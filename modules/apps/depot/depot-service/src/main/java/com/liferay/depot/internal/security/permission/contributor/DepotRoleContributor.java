@@ -13,12 +13,16 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.contributor.RoleCollection;
 import com.liferay.portal.kernel.security.permission.contributor.RoleContributor;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 
 import java.util.List;
 
@@ -27,6 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Cristina González
+ * @author Roberto Díaz
  */
 @Component(service = RoleContributor.class)
 public class DepotRoleContributor implements RoleContributor {
@@ -47,7 +52,9 @@ public class DepotRoleContributor implements RoleContributor {
 
 			UserBag userBag = roleCollection.getUserBag();
 
-			if (userBag.hasUserGroup(group)) {
+			if (userBag.hasUserGroup(group) ||
+				_hasInheritedMemberships(group.getGroupId(), userBag)) {
+
 				_addRoleId(
 					roleCollection, DepotRolesConstants.ASSET_LIBRARY_MEMBER);
 			}
@@ -85,6 +92,31 @@ public class DepotRoleContributor implements RoleContributor {
 		roleCollection.addRoleId(role.getRoleId());
 	}
 
+	private boolean _hasInheritedMemberships(long groupId, UserBag userBag) {
+		List<Organization> organizations =
+			_organizationLocalService.getGroupOrganizations(groupId);
+
+		for (Organization organization : organizations) {
+			if (userBag.hasUserOrg(organization)) {
+				return true;
+			}
+		}
+
+		List<UserGroup> groupUserGroups =
+			_userGroupLocalService.getGroupUserGroups(groupId);
+
+		List<UserGroup> userUserGroups =
+			_userGroupLocalService.getUserUserGroups(userBag.getUserId());
+
+		for (UserGroup groupUserGroup : groupUserGroups) {
+			if (userUserGroups.contains(groupUserGroup)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DepotRoleContributor.class);
 
@@ -98,6 +130,12 @@ public class DepotRoleContributor implements RoleContributor {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
 	private RoleLocalService _roleLocalService;
+
+	@Reference
+	private UserGroupLocalService _userGroupLocalService;
 
 }

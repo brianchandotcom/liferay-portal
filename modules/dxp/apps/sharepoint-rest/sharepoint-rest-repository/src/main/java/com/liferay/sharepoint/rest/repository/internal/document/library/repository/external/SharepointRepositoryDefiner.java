@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
 import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.capability.SharepointRepositoryAuthorizationCapability;
-import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2.SharepointRepositoryTokenBrokerFactory;
+import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2.util.SharepointRepositoryTokenBrokerFactoryUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -87,7 +87,7 @@ public class SharepointRepositoryDefiner implements RepositoryDefiner {
 			AuthorizationCapability.class,
 			new SharepointRepositoryAuthorizationCapability(
 				_tokenStore, _sharepointRepositoryConfiguration,
-				_sharepointRepositoryTokenBrokerFactory.create(
+				SharepointRepositoryTokenBrokerFactoryUtil.create(
 					_sharepointRepositoryConfiguration)));
 	}
 
@@ -123,10 +123,6 @@ public class SharepointRepositoryDefiner implements RepositoryDefiner {
 
 	private SharepointRepositoryConfiguration
 		_sharepointRepositoryConfiguration;
-
-	@Reference
-	private SharepointRepositoryTokenBrokerFactory
-		_sharepointRepositoryTokenBrokerFactory;
 
 	@Reference
 	private TokenStore _tokenStore;

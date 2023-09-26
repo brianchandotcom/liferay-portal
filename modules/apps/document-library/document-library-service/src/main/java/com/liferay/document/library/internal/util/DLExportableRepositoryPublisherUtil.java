@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.document.library.internal.helper;
+package com.liferay.document.library.internal.util;
 
 import com.liferay.document.library.exportimport.data.handler.DLExportableRepositoryPublisher;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -12,18 +12,15 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Shuyang Zhou
  */
-@Component(service = DLExportableRepositoryPublisherHelper.class)
-public class DLExportableRepositoryPublisherHelper {
+public class DLExportableRepositoryPublisherUtil {
 
-	public Collection<Long> publish(long groupId) {
+	public static Collection<Long> publish(long groupId) {
 		Collection<Long> exportableRepositoryIds = new HashSet<>();
 
 		exportableRepositoryIds.add(groupId);
@@ -36,18 +33,15 @@ public class DLExportableRepositoryPublisherHelper {
 		return exportableRepositoryIds;
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_dlExportableRepositoryPublishers = ServiceTrackerListFactory.open(
-			bundleContext, DLExportableRepositoryPublisher.class);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_dlExportableRepositoryPublishers.close();
-	}
-
-	private ServiceTrackerList<DLExportableRepositoryPublisher>
+	private static final ServiceTrackerList<DLExportableRepositoryPublisher>
 		_dlExportableRepositoryPublishers;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			DLExportableRepositoryPublisherUtil.class);
+
+		_dlExportableRepositoryPublishers = ServiceTrackerListFactory.open(
+			bundle.getBundleContext(), DLExportableRepositoryPublisher.class);
+	}
 
 }

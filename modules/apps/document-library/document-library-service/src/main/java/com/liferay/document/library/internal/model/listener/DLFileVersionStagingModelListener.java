@@ -5,7 +5,7 @@
 
 package com.liferay.document.library.internal.model.listener;
 
-import com.liferay.document.library.internal.helper.DLExportableRepositoryPublisherHelper;
+import com.liferay.document.library.internal.util.DLExportableRepositoryPublisherUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -49,7 +49,7 @@ public class DLFileVersionStagingModelListener
 		}
 
 		Collection<Long> exportableRepositoryIds =
-			_dlExportableRepositoryPublisherHelper.publish(
+			DLExportableRepositoryPublisherUtil.publish(
 				dlFileEntry.getGroupId());
 
 		if (!exportableRepositoryIds.contains(dlFileEntry.getRepositoryId())) {
@@ -82,7 +82,7 @@ public class DLFileVersionStagingModelListener
 		}
 
 		Collection<Long> exportableRepositoryIds =
-			_dlExportableRepositoryPublisherHelper.publish(
+			DLExportableRepositoryPublisherUtil.publish(
 				dlFileEntry.getGroupId());
 
 		if (!exportableRepositoryIds.contains(dlFileEntry.getRepositoryId())) {
@@ -94,10 +94,6 @@ public class DLFileVersionStagingModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileVersionStagingModelListener.class);
-
-	@Reference
-	private DLExportableRepositoryPublisherHelper
-		_dlExportableRepositoryPublisherHelper;
 
 	@Reference
 	private StagingModelListener<DLFileEntry> _stagingModelListener;

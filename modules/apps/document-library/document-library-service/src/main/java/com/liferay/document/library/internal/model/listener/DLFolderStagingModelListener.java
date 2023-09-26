@@ -5,7 +5,7 @@
 
 package com.liferay.document.library.internal.model.listener;
 
-import com.liferay.document.library.internal.helper.DLExportableRepositoryPublisherHelper;
+import com.liferay.document.library.internal.util.DLExportableRepositoryPublisherUtil;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -26,8 +26,7 @@ public class DLFolderStagingModelListener extends BaseModelListener<DLFolder> {
 	@Override
 	public void onAfterCreate(DLFolder dlFolder) throws ModelListenerException {
 		Collection<Long> exportableRepositoryIds =
-			_dlExportableRepositoryPublisherHelper.publish(
-				dlFolder.getGroupId());
+			DLExportableRepositoryPublisherUtil.publish(dlFolder.getGroupId());
 
 		if (!exportableRepositoryIds.contains(dlFolder.getRepositoryId())) {
 			return;
@@ -46,8 +45,7 @@ public class DLFolderStagingModelListener extends BaseModelListener<DLFolder> {
 		throws ModelListenerException {
 
 		Collection<Long> exportableRepositoryIds =
-			_dlExportableRepositoryPublisherHelper.publish(
-				dlFolder.getGroupId());
+			DLExportableRepositoryPublisherUtil.publish(dlFolder.getGroupId());
 
 		if (!exportableRepositoryIds.contains(dlFolder.getRepositoryId())) {
 			return;
@@ -55,10 +53,6 @@ public class DLFolderStagingModelListener extends BaseModelListener<DLFolder> {
 
 		_stagingModelListener.onAfterUpdate(dlFolder);
 	}
-
-	@Reference
-	private DLExportableRepositoryPublisherHelper
-		_dlExportableRepositoryPublisherHelper;
 
 	@Reference
 	private StagingModelListener<DLFolder> _stagingModelListener;

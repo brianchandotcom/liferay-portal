@@ -145,12 +145,6 @@ public abstract class BaseBuild implements Build {
 
 			});
 
-		if ((downstreamBuilds != null) && !downstreamBuilds.isEmpty()) {
-			for (Build downstreamBuild : downstreamBuilds) {
-				archiveCallables.addAll(downstreamBuild.getArchiveCallables());
-			}
-		}
-
 		return archiveCallables;
 	}
 

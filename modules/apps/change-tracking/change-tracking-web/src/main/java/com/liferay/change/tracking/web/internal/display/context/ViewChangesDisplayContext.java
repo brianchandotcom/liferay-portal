@@ -907,6 +907,336 @@ public class ViewChangesDisplayContext {
 		return _reactData;
 	}
 
+	public Map<String, Object> getToolbarReactData() throws Exception {
+		if (_reactData != null) {
+			return _reactData;
+		}
+
+		int ctEntriesCount = _ctEntryLocalService.getCTCollectionCTEntriesCount(
+			_ctCollection.getCtCollectionId());
+
+		_reactData = HashMapBuilder.<String, Object>put(
+			"collaboratorsData",
+			_publicationsDisplayContext.getCollaboratorsReactData(
+				_ctCollection.getCtCollectionId(), false)
+		).put(
+			"ctMappingInfos",
+			() -> {
+				JSONArray ctMappingInfosJSONArray =
+					JSONFactoryUtil.createJSONArray();
+
+				List<CTMappingTableInfo> ctMappingTableInfos =
+					_ctCollectionLocalService.getCTMappingTableInfos(
+						_ctCollection.getCtCollectionId());
+
+				for (CTMappingTableInfo ctMappingTableInfo :
+						ctMappingTableInfos) {
+
+					String description = StringPool.BLANK;
+
+					List<Map.Entry<Long, Long>> addedMappings =
+						ctMappingTableInfo.getAddedMappings();
+
+					if (!addedMappings.isEmpty()) {
+						description = StringBundler.concat(
+							addedMappings.size(), StringPool.SPACE,
+							_language.get(_themeDisplay.getLocale(), "added"));
+					}
+
+					List<Map.Entry<Long, Long>> removedMappings =
+						ctMappingTableInfo.getRemovedMappings();
+
+					if (!removedMappings.isEmpty()) {
+						if (Validator.isNotNull(description)) {
+							description = description.concat(", ");
+						}
+
+						description = StringBundler.concat(
+							description, removedMappings.size(),
+							StringPool.SPACE,
+							_language.get(
+								_themeDisplay.getLocale(), "removed"));
+					}
+
+					ctMappingInfosJSONArray.put(
+						JSONUtil.put(
+							"description", description
+						).put(
+							"name",
+							StringBundler.concat(
+								_ctDisplayRendererRegistry.getTypeName(
+									_themeDisplay.getLocale(),
+									_portal.getClassNameId(
+										ctMappingTableInfo.
+											getLeftModelClass())),
+								" & ",
+								_ctDisplayRendererRegistry.getTypeName(
+									_themeDisplay.getLocale(),
+									_portal.getClassNameId(
+										ctMappingTableInfo.
+											getRightModelClass())))
+						).put(
+							"tableName", ctMappingTableInfo.getTableName()
+						));
+				}
+
+				return ctMappingInfosJSONArray;
+			}
+		).put(
+			"currentUserId", _themeDisplay.getUserId()
+		).put(
+			"deleteCTCommentURL",
+			() -> {
+				ResourceURL deleteCTCommentURL =
+					_renderResponse.createResourceURL();
+
+				deleteCTCommentURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(_ctCollection.getCtCollectionId()));
+				deleteCTCommentURL.setResourceID(
+					"/change_tracking/delete_ct_comment");
+
+				return deleteCTCommentURL.toString();
+			}
+		).put(
+			"description",
+			() -> {
+				if (_ctCollection.getStatus() ==
+						WorkflowConstants.STATUS_APPROVED) {
+
+					String description = _ctCollection.getDescription();
+
+					if (Validator.isNotNull(description)) {
+						description = description.concat(" | ");
+					}
+
+					Format format = FastDateFormatFactoryUtil.getDateTime(
+						_themeDisplay.getLocale(), _themeDisplay.getTimeZone());
+
+					return description.concat(
+						_language.format(
+							_httpServletRequest, "published-by-x-on-x",
+							new Object[] {
+								_ctCollection.getUserName(),
+								format.format(_ctCollection.getStatusDate())
+							},
+							false));
+				}
+				else if (_ctCollection.getStatus() ==
+							WorkflowConstants.STATUS_SCHEDULED) {
+
+					String description = _ctCollection.getDescription();
+
+					if (_publishScheduler == null) {
+						return description;
+					}
+
+					ScheduledPublishInfo scheduledPublishInfo =
+						_publishScheduler.getScheduledPublishInfo(
+							_ctCollection);
+
+					if (scheduledPublishInfo != null) {
+						Format format = FastDateFormatFactoryUtil.getDateTime(
+							_themeDisplay.getLocale(),
+							_themeDisplay.getTimeZone());
+
+						if (Validator.isNotNull(description)) {
+							description = description.concat(" | ");
+						}
+
+						description = description.concat(
+							_language.format(
+								_httpServletRequest, "publishing-x",
+								new Object[] {
+									format.format(
+										scheduledPublishInfo.getStartDate())
+								},
+								false));
+
+						User user = _userLocalService.fetchUser(
+							scheduledPublishInfo.getUserId());
+
+						if (user != null) {
+							return StringBundler.concat(
+								description, " | ",
+								_language.format(
+									_httpServletRequest, "scheduled-by-x",
+									new Object[] {user.getFullName()}, false));
+						}
+
+						return description;
+					}
+
+					return StringPool.BLANK;
+				}
+
+				return _ctCollection.getDescription();
+			}
+		).put(
+			"dropdownItems",
+			_getDropdownItemsJSONArray(_themeDisplay.getPermissionChecker())
+		).put(
+			"expired",
+			(_ctCollection.getStatus() == WorkflowConstants.STATUS_EXPIRED) ||
+			((_ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) &&
+			 !_ctSchemaVersionLocalService.isLatestCTSchemaVersion(
+				 _ctCollection.getSchemaVersionId()))
+		).put(
+			"getCTCommentsURL",
+			() -> {
+				ResourceURL getCTCommentsURL =
+					_renderResponse.createResourceURL();
+
+				getCTCommentsURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(_ctCollection.getCtCollectionId()));
+				getCTCommentsURL.setResourceID(
+					"/change_tracking/get_ct_comments");
+
+				return getCTCommentsURL.toString();
+			}
+		).put(
+			"name", _ctCollection.getName()
+		).put(
+			"namespace", _renderResponse.getNamespace()
+		).put(
+			"publishURL",
+			() -> {
+				if ((_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_DRAFT) ||
+					!CTCollectionPermission.contains(
+						_themeDisplay.getPermissionChecker(), _ctCollection,
+						CTActionKeys.PUBLISH)) {
+
+					return null;
+				}
+
+				return PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_conflicts"
+				).setParameter(
+					"ctCollectionId", _ctCollection.getCtCollectionId()
+				).buildString();
+			}
+		).put(
+			"rescheduleURL",
+			() -> {
+				if ((_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_SCHEDULED) ||
+					!CTCollectionPermission.contains(
+						_themeDisplay.getPermissionChecker(), _ctCollection,
+						CTActionKeys.PUBLISH)) {
+
+					return null;
+				}
+
+				return PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/reschedule_publication"
+				).setParameter(
+					"ctCollectionId", _ctCollection.getCtCollectionId()
+				).buildString();
+			}
+		).put(
+			"revertURL",
+			() -> {
+				if ((_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_APPROVED) ||
+					!CTPermission.contains(
+						_themeDisplay.getPermissionChecker(),
+						CTActionKeys.ADD_PUBLICATION)) {
+
+					return null;
+				}
+
+				return PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/undo_ct_collection"
+				).setParameter(
+					"ctCollectionId", _ctCollection.getCtCollectionId()
+				).setParameter(
+					"revert", true
+				).buildString();
+			}
+		).put(
+			"scheduleURL",
+			() -> {
+				if ((_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_DRAFT) ||
+					!PropsValues.SCHEDULER_ENABLED ||
+					!CTCollectionPermission.contains(
+						_themeDisplay.getPermissionChecker(), _ctCollection,
+						CTActionKeys.PUBLISH)) {
+
+					return null;
+				}
+
+				return PortletURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/change_tracking/view_conflicts"
+				).setParameter(
+					"ctCollectionId", _ctCollection.getCtCollectionId()
+				).setParameter(
+					"schedule", true
+				).buildString();
+			}
+		).put(
+			"spritemap", _themeDisplay.getPathThemeSpritemap()
+		).put(
+			"statusLabel",
+			_language.get(
+				_themeDisplay.getLocale(),
+				_publicationsDisplayContext.getStatusLabel(
+					_ctCollection.getStatus()))
+		).put(
+			"statusStyle",
+			_publicationsDisplayContext.getStatusStyle(
+				_ctCollection.getStatus())
+		).put(
+			"total", ctEntriesCount
+		).put(
+			"unscheduleURL",
+			() -> {
+				if ((_ctCollection.getStatus() !=
+						WorkflowConstants.STATUS_SCHEDULED) ||
+					!CTCollectionPermission.contains(
+						_themeDisplay.getPermissionChecker(), _ctCollection,
+						CTActionKeys.PUBLISH)) {
+
+					return null;
+				}
+
+				return PortletURLBuilder.createActionURL(
+					_renderResponse
+				).setActionName(
+					"/change_tracking/unschedule_publication"
+				).setParameter(
+					"ctCollectionId", _ctCollection.getCtCollectionId()
+				).buildString();
+			}
+		).put(
+			"updateCTCommentURL",
+			() -> {
+				ResourceURL updateCTCommentURL =
+					_renderResponse.createResourceURL();
+
+				updateCTCommentURL.setParameter(
+					"ctCollectionId",
+					String.valueOf(_ctCollection.getCtCollectionId()));
+				updateCTCommentURL.setResourceID(
+					"/change_tracking/update_ct_comment");
+
+				return updateCTCommentURL.toString();
+			}
+		).build();
+
+		return _reactData;
+	}
+
 	public List<NavigationItem> getViewNavigationItems() {
 		boolean relationshipsActive = GetterUtil.getBoolean(
 			_httpServletRequest.getParameter("relationships"));

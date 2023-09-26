@@ -10,7 +10,14 @@
 <%
 ViewChangesDisplayContext viewChangesDisplayContext = (ViewChangesDisplayContext)request.getAttribute(CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT);
 
-Map<String, Object> reactData = viewChangesDisplayContext.getReactData();
+Map<String, Object> reactData;
+
+if (FeatureFlagManagerUtil.isEnabled("LPS-179035")) {
+	reactData = viewChangesDisplayContext.getToolbarReactData();
+}
+else {
+	reactData = viewChangesDisplayContext.getReactData();
+}
 
 renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
 

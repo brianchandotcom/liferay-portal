@@ -202,7 +202,7 @@ public class WorkflowInstanceResourceImpl
 	private WorkflowInstanceManager _workflowInstanceManager;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.portal.kernel.workflow.WorkflowInstance)"
+		target = "(model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoInstance)"
 	)
 	private ModelResourcePermission<?> _workflowInstanceModelResourcePermission;
 

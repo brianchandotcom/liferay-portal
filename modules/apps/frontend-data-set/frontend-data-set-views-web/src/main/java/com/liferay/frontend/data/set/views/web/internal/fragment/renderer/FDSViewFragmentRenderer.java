@@ -536,8 +536,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 
 					if (fdsFilterCET == null) {
 						_log.error(
-							"Unable to load data set filter client extension " +
-								fdsFilterClientExtensionERC);
+							"Unable to load frontend data set filter client " +
+								"extension " +
+									fdsFilterClientExtensionERC);
 
 						return null;
 					}

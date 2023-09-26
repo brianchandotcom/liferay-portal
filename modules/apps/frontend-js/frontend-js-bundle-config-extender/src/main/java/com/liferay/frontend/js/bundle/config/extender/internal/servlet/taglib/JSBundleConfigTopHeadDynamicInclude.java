@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.js.bundle.config.extender.internal.servlet.taglib;
 
-import com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigRegistry;
+import com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigRegistryUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -72,7 +72,7 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		String bundleConfig = _getBundleConfig(StringPool.BLANK);
 
 		_objectValuePair = new ObjectValuePair<>(
-			_jsBundleConfigRegistry.getLastModified(), bundleConfig);
+			JSBundleConfigRegistryUtil.getLastModified(), bundleConfig);
 
 		_writeResponse(httpServletResponse, bundleConfig);
 	}
@@ -86,8 +86,8 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 	private String _getBundleConfig(String nonce) {
 		StringWriter stringWriter = new StringWriter();
 
-		Collection<JSBundleConfigRegistry.JSConfig> jsConfigs =
-			_jsBundleConfigRegistry.getJSConfigs();
+		Collection<JSBundleConfigRegistryUtil.JSConfig> jsConfigs =
+			JSBundleConfigRegistryUtil.getJSConfigs();
 
 		if (!jsConfigs.isEmpty()) {
 			stringWriter.write("<script");
@@ -96,7 +96,7 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 			stringWriter.write(ContentTypes.TEXT_JAVASCRIPT);
 			stringWriter.write("\">");
 
-			for (JSBundleConfigRegistry.JSConfig jsConfig : jsConfigs) {
+			for (JSBundleConfigRegistryUtil.JSConfig jsConfig : jsConfigs) {
 				try {
 					stringWriter.write("try {");
 
@@ -132,7 +132,9 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		return stringWriter.toString();
 	}
 
-	private String _getModuleMain(JSBundleConfigRegistry.JSConfig jsConfig) {
+	private String _getModuleMain(
+		JSBundleConfigRegistryUtil.JSConfig jsConfig) {
+
 		try {
 			ServletContext servletContext = jsConfig.getServletContext();
 
@@ -169,7 +171,7 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 	}
 
 	private boolean _isStale() {
-		if (_jsBundleConfigRegistry.getLastModified() >
+		if (JSBundleConfigRegistryUtil.getLastModified() >
 				_objectValuePair.getKey()) {
 
 			return true;
@@ -193,9 +195,6 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 	@Reference
 	private ContentSecurityPolicyNonceProvider
 		_contentSecurityPolicyNonceProvider;
-
-	@Reference
-	private JSBundleConfigRegistry _jsBundleConfigRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

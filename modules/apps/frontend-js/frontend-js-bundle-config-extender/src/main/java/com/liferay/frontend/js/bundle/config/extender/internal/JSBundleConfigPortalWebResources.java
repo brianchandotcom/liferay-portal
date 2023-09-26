@@ -52,9 +52,6 @@ public class JSBundleConfigPortalWebResources {
 		}
 	}
 
-	@Reference
-	private JSBundleConfigRegistry _jsBundleConfigRegistry;
-
 	@Reference(
 		target = "(component.name=com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigServlet)"
 	)
@@ -71,7 +68,7 @@ public class JSBundleConfigPortalWebResources {
 
 		@Override
 		public long getLastModified() {
-			return _jsBundleConfigRegistry.getLastModified();
+			return JSBundleConfigRegistryUtil.getLastModified();
 		}
 
 		@Override

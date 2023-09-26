@@ -78,13 +78,13 @@ public class JSBundleConfigServlet extends HttpServlet {
 
 		PrintWriter printWriter = new PrintWriter(servletOutputStream, true);
 
-		Collection<JSBundleConfigRegistry.JSConfig> jsConfigs =
-			_jsBundleConfigRegistry.getJSConfigs();
+		Collection<JSBundleConfigRegistryUtil.JSConfig> jsConfigs =
+			JSBundleConfigRegistryUtil.getJSConfigs();
 
 		if (!jsConfigs.isEmpty()) {
 			printWriter.print("(function(){");
 
-			for (JSBundleConfigRegistry.JSConfig jsConfig : jsConfigs) {
+			for (JSBundleConfigRegistryUtil.JSConfig jsConfig : jsConfigs) {
 				try {
 					printWriter.print("try{");
 
@@ -118,9 +118,6 @@ public class JSBundleConfigServlet extends HttpServlet {
 		JSBundleConfigServlet.class);
 
 	private volatile ComponentContext _componentContext;
-
-	@Reference
-	private JSBundleConfigRegistry _jsBundleConfigRegistry;
 
 	@Reference
 	private Portal _portal;

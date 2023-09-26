@@ -202,44 +202,9 @@ public class UserImpl extends UserBaseImpl {
 	@Deprecated
 	@Override
 	public String getDigest(String password) {
-		if (Validator.isNull(getScreenName())) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Screen name is required to compute the digest");
-			}
-
-			return null;
-		}
-		else if (Validator.isNull(getEmailAddress())) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Email address is required to compute the digest");
-			}
-
-			return null;
-		}
-
-		StringBundler sb = new StringBundler(5);
-
-		String digest1 = DigesterUtil.digestHex(
-			Digester.MD5, getEmailAddress(), Portal.PORTAL_REALM, password);
-
-		sb.append(digest1);
-
-		sb.append(StringPool.COMMA);
-
-		String digest2 = DigesterUtil.digestHex(
-			Digester.MD5, getScreenName(), Portal.PORTAL_REALM, password);
-
-		sb.append(digest2);
-
-		sb.append(StringPool.COMMA);
-
-		String digest3 = DigesterUtil.digestHex(
+		return DigesterUtil.digestHex(
 			Digester.MD5, String.valueOf(getUserId()), Portal.PORTAL_REALM,
 			password);
-
-		sb.append(digest3);
-
-		return sb.toString();
 	}
 
 	/**

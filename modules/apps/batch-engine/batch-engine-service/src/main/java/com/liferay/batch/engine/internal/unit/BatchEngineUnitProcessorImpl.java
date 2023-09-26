@@ -75,6 +75,18 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 		for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
 			try {
+				String featureFlag = _getFeatureFlag(
+					batchEngineUnit.getBatchEngineUnitConfiguration());
+
+				if (_isFeatureFlagDisabled(featureFlag)) {
+					_featureFlagBatchEngineUnitProcessor.
+						registerBatchEngineUnit(
+							featureFlag,
+							() -> _processBatchEngineUnit(batchEngineUnit));
+
+					continue;
+				}
+
 				CompletableFuture<Void> completableFuture =
 					_processBatchEngineUnit(batchEngineUnit);
 
@@ -234,6 +246,15 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		return bundleBatchEngineUnit.getBundle();
 	}
 
+	private String _getFeatureFlag(
+		BatchEngineUnitConfiguration batchEngineUnitConfiguration) {
+
+		Map<String, Serializable> parameters =
+			batchEngineUnitConfiguration.getParameters();
+
+		return (String)parameters.get("featureFlag");
+	}
+
 	private String _getObjectEntryClassName(
 		BatchEngineUnitConfiguration batchEngineUnitConfiguration) {
 
@@ -248,6 +269,16 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		}
 
 		return className;
+	}
+
+	private boolean _isFeatureFlagDisabled(String featureFlag) {
+		if (Validator.isNotNull(featureFlag) &&
+			!FeatureFlagManagerUtil.isEnabled(featureFlag)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isProcessed(BatchEngineUnit batchEngineUnit) {
@@ -339,19 +370,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 					" ", batchEngineUnit.getDataFileName()));
 		}
 
-		Map<String, Serializable> parameters =
-			batchEngineUnitConfiguration.getParameters();
-
-		String featureFlag = null;
-
-		if (parameters != null) {
-			featureFlag = (String)parameters.get("featureFlag");
-		}
-
-		if ((Validator.isNotNull(featureFlag) &&
-			 !FeatureFlagManagerUtil.isEnabled(featureFlag)) ||
-			_isProcessed(batchEngineUnit)) {
-
+		if (_isProcessed(batchEngineUnit)) {
 			return null;
 		}
 
@@ -424,6 +443,10 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private FeatureFlagBatchEngineUnitProcessor
+		_featureFlagBatchEngineUnitProcessor;
 
 	@Reference
 	private File _file;

@@ -1,0 +1,111 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.batch.engine.internal.unit;
+
+import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.portal.kernel.feature.flag.FeatureFlag;
+import com.liferay.portal.kernel.feature.flag.listener.FeatureFlagListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Carlos Correa
+ */
+@Component(service = FeatureFlagBatchEngineUnitProcessor.class)
+public class FeatureFlagBatchEngineUnitProcessor {
+
+	public void registerBatchEngineUnit(
+		String featureFlagKey,
+		UnsafeSupplier<CompletableFuture<Void>, Exception> unsafeSupplier) {
+
+		_unsafeSuppliers.compute(
+			featureFlagKey,
+			(key, unsafeSuppliers) -> {
+				if (unsafeSuppliers == null) {
+					unsafeSuppliers = new ArrayList<>();
+				}
+
+				unsafeSuppliers.add(unsafeSupplier);
+
+				return unsafeSuppliers;
+			});
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceRegistration = bundleContext.registerService(
+			FeatureFlagListener.class, new FeatureFlagListenerImpl(), null);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceRegistration.unregister();
+	}
+
+	@Reference
+	private PortalExecutorManager _portalExecutorManager;
+
+	private ServiceRegistration<FeatureFlagListener> _serviceRegistration;
+	private final Map
+		<String, List<UnsafeSupplier<CompletableFuture<Void>, Exception>>>
+			_unsafeSuppliers = new ConcurrentHashMap<>();
+
+	private class FeatureFlagListenerImpl implements FeatureFlagListener {
+
+		@Override
+		public void onDisabled(FeatureFlag featureFlag) {
+		}
+
+		@Override
+		public void onEnabled(FeatureFlag featureFlag) {
+			if (!_unsafeSuppliers.containsKey(featureFlag.getKey())) {
+				return;
+			}
+
+			synchronized (_unsafeSuppliers) {
+				List<UnsafeSupplier<CompletableFuture<Void>, Exception>>
+					unsafeSuppliers = _unsafeSuppliers.remove(
+						featureFlag.getKey());
+
+				ExecutorService executorService =
+					_portalExecutorManager.getPortalExecutor(
+						FeatureFlagListenerImpl.class.getName());
+
+				executorService.submit(
+					() -> {
+						for (UnsafeSupplier<CompletableFuture<Void>, Exception>
+								unsafeSupplier : unsafeSuppliers) {
+
+							try {
+								CompletableFuture<Void> completableFuture =
+									unsafeSupplier.get();
+
+								completableFuture.get();
+							}
+							catch (Exception exception) {
+								throw new RuntimeException(exception);
+							}
+						}
+					});
+			}
+		}
+
+	}
+
+}

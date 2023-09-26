@@ -23,7 +23,6 @@ import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
 import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -183,11 +182,7 @@ public class FragmentEntryLocalServiceImpl
 				publishedFragmentEntry.fetchDraftFragmentEntry();
 		}
 
-		String name = StringBundler.concat(
-			sourceFragmentEntry.getName(), StringPool.SPACE,
-			StringPool.OPEN_PARENTHESIS,
-			_language.get(LocaleUtil.getMostRelevantLocale(), "copy"),
-			StringPool.CLOSE_PARENTHESIS);
+		String name = _getUniqueCopyName(sourceFragmentEntry);
 
 		FragmentEntry copyPublishedFragmentEntry = null;
 
@@ -1003,6 +998,29 @@ public class FragmentEntryLocalServiceImpl
 		}
 
 		return repository;
+	}
+
+	private String _getUniqueCopyName(FragmentEntry fragmentEntry) {
+		String copy = _language.get(LocaleUtil.getMostRelevantLocale(), "copy");
+
+		String name = StringUtil.appendParentheticalSuffix(
+			fragmentEntry.getName(), copy);
+
+		for (int i = 1;; i++) {
+			FragmentEntry fragmentEntryDuplicated =
+				fragmentEntryPersistence.fetchByG_FCI_LikeN_First(
+					fragmentEntry.getGroupId(),
+					fragmentEntry.getFragmentCollectionId(), name, null);
+
+			if (fragmentEntryDuplicated == null) {
+				break;
+			}
+
+			name = StringUtil.appendParentheticalSuffix(
+				fragmentEntry.getName(), copy + StringPool.SPACE + i);
+		}
+
+		return name;
 	}
 
 	private void _propagateChanges(long fragmentEntryId)

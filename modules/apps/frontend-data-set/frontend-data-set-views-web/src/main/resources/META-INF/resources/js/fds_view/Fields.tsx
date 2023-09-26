@@ -418,8 +418,6 @@ const EditFDSFieldModalContent = ({
 		fdsFieldTranslations
 	);
 
-	const [errorMessage, setErrorMessage] = useState('');
-
 	const editFDSField = async () => {
 		let body;
 		const bodyTmp = {
@@ -464,22 +462,6 @@ const EditFDSFieldModalContent = ({
 		openDefaultSuccessToast();
 
 		onSave({editedFDSField});
-	};
-
-	const validateFDSField = function () {
-		if (Liferay.FeatureFlags['LPS-172017']) {
-			const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-
-			if (!i18nFieldLabels[defaultLanguageId]) {
-				setErrorMessage(Liferay.Language.get('required'));
-
-				return;
-			}
-
-			setErrorMessage('');
-		}
-
-		editFDSField();
 	};
 
 	const fdsFieldNameInputId = `${namespace}fdsFieldNameInput`;
@@ -584,17 +566,10 @@ const EditFDSFieldModalContent = ({
 				{Liferay.FeatureFlags['LPS-172017'] ? (
 					<ClayForm.Group>
 						<InputLocalized
-							error={errorMessage}
 							id={fdsFieldLabelInputId}
 							label={Liferay.Language.get('label')}
 							name="label"
-							onChange={(newFieldLabel) => {
-								setI18nFieldLabels({
-									...i18nFieldLabels,
-									...newFieldLabel,
-								});
-							}}
-							required
+							onChange={setI18nFieldLabels}
 							translations={i18nFieldLabels}
 						/>
 					</ClayForm.Group>
@@ -641,7 +616,7 @@ const EditFDSFieldModalContent = ({
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton onClick={() => validateFDSField()}>
+						<ClayButton onClick={() => editFDSField()}>
 							{Liferay.Language.get('save')}
 						</ClayButton>
 

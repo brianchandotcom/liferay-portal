@@ -17,6 +17,8 @@ import org.dom4j.Element;
  */
 public interface TopLevelBuild extends Build {
 
+	public String getAcceptanceUpstreamJobName();
+
 	public String getAcceptanceUpstreamJobURL();
 
 	public Map<String, String> getBaseGitRepositoryDetailsTempMap();
@@ -25,7 +27,15 @@ public interface TopLevelBuild extends Build {
 
 	public AxisBuild getDownstreamAxisBuild(String axisName);
 
+	public List<AxisBuild> getDownstreamAxisBuilds();
+
+	public BatchBuild getDownstreamBatchBuild(String jobVariant);
+
+	public List<BatchBuild> getDownstreamBatchBuilds();
+
 	public DownstreamBuild getDownstreamBuild(String axisName);
+
+	public String getJenkinsReport();
 
 	public Element getJenkinsReportElement();
 
@@ -34,5 +44,7 @@ public interface TopLevelBuild extends Build {
 	public File getJobSummaryDir();
 
 	public List<String> getProjectNames();
+
+	public Element getValidationGitHubMessageElement();
 
 }

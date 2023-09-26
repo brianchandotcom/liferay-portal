@@ -15,6 +15,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,8 +48,6 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -171,9 +171,7 @@ public class FeatureFlagsBagProviderImpl
 				FeatureFlagConstants.FEATURE_FLAG + StringPool.PERIOD, true);
 
 			for (String stringPropertyName : properties.stringPropertyNames()) {
-				Matcher matcher = _pattern.matcher(stringPropertyName);
-
-				if (!matcher.find()) {
+				if (!_isFeatureFlagKey(stringPropertyName)) {
 					continue;
 				}
 
@@ -285,6 +283,34 @@ public class FeatureFlagsBagProviderImpl
 		return Arrays.asList(String.valueOf(value));
 	}
 
+	private boolean _isFeatureFlagKey(String value) {
+		if (value.indexOf(CharPool.PERIOD) != -1) {
+			return false;
+		}
+
+		int index = value.indexOf(CharPool.DASH);
+
+		if (index <= 0) {
+			return false;
+		}
+
+		for (int i = 0; i < index; i++) {
+			char c = value.charAt(i);
+
+			if ((c < CharPool.UPPER_CASE_A) || (c > CharPool.UPPER_CASE_Z)) {
+				return false;
+			}
+		}
+
+		for (int i = index + 1; i < value.length(); i++) {
+			if (!Validator.isDigit(value.charAt(i))) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private static final String _FEATURE_FLAG_LISTENER_PROPERTY_KEY =
 		"featureFlagKey";
 
@@ -293,7 +319,6 @@ public class FeatureFlagsBagProviderImpl
 
 	private static final Map<Long, FeatureFlagsBag> _featureFlagsBagMap =
 		new ConcurrentHashMap<>();
-	private static final Pattern _pattern = Pattern.compile("^([A-Z\\-0-9]+)$");
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

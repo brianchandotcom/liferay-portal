@@ -253,8 +253,8 @@ public class AntUtil {
 			if (runningModulesTests) {
 				String projectName = parameters.get("test.task");
 
-				TestClassResultUtil.moveTestResultFiles(
-					TestClassResultUtil.getProjectTestResultDir(
+				TestClassResultsUtil.moveTestClassResultsFiles(
+					TestClassResultsUtil.getProjectTestClassResultsDir(
 						projectName, baseDir),
 					baseDir);
 			}

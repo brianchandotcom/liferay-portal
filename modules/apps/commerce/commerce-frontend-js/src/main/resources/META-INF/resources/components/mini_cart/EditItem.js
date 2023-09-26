@@ -4,16 +4,33 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayForm, {ClaySelect} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
+import ClayForm from '@clayui/form';
+import {useLiferayState} from '@liferay/frontend-js-state-web';
 import {fetch, sub} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
-import {CHANNEL_RESOURCE_ENDPOINT} from '../../utilities/constants';
-import {isNonnull} from '../price/util/index';
+import ServiceProvider from '../../ServiceProvider/index';
+import {CommerceContext} from '../../index';
+import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
+import {CHANNEL_RESOURCE_ENDPOINT, FIELD_TYPE} from '../../utilities/constants';
+import {
+	CP_INSTANCE_CHANGED,
+	CURRENT_ORDER_UPDATED,
+} from '../../utilities/eventsDefinitions';
+import {formatCartItem} from '../add_to_cart/data';
+import {adaptLegacyPriceModel, isNonnull} from '../price/util/index';
+import ProductOptionCheckbox from '../product_options/ProductOptionCheckbox';
+import ProductOptionCheckboxMultiple from '../product_options/ProductOptionCheckboxMultiple';
+import ProductOptionDate from '../product_options/ProductOptionDate';
+import ProductOptionNumeric from '../product_options/ProductOptionNumeric';
+import ProductOptionRadio from '../product_options/ProductOptionRadio';
+import ProductOptionSelect from '../product_options/ProductOptionSelect';
+import ProductOptionText from '../product_options/ProductOptionText';
 import MiniCartContext from './MiniCartContext';
 
-const getProductOptions = (channelId, productId) => {
+const MINI_CART_NAMESPACE = 'minicart_';
+
+const getProductOptionsURL = (channelId, productId) => {
 	const url = new URL(
 		`${themeDisplay.getPathContext()}${CHANNEL_RESOURCE_ENDPOINT}/${channelId}/products/${productId}/product-options`,
 		themeDisplay.getPortalURL()
@@ -24,11 +41,21 @@ const getProductOptions = (channelId, productId) => {
 
 function EditItem() {
 	const [options, setOptions] = useState([]);
+	const [skuOptionsAtomState, setSkuOptionsAtomState] = useLiferayState(
+		skuOptionsAtom
+	);
+	const [cpInstance, setCPInstance] = useState({});
+
+	const {miniCartErrors} = skuOptionsAtomState;
+
+	const disabled = useMemo(() => miniCartErrors?.length, [miniCartErrors]);
+
 	const {
 		cartState: {
 			cartItems,
 			channel: {channel},
 		},
+		cartState,
 		editedItem,
 		setEditedItem,
 	} = useContext(MiniCartContext);
@@ -39,20 +66,97 @@ function EditItem() {
 	);
 
 	const selectedItem = useMemo(
-		() => cartItems.find((item) => item.productId === editedItem.productId),
+		() => cartItems.find((item) => item.id === editedItem.cartItemId) || {},
 		[cartItems, editedItem]
 	);
 
-	const {price} = selectedItem;
+	useEffect(() => {
+		setCPInstance({
+			quantity: selectedItem.quantity,
+			replacedSkuId: selectedItem.replacedSkuId,
+			skuId: selectedItem.skuId,
+		});
+	}, [selectedItem]);
+
+	const handleSave = () => {
+		if (disabled) {
+			return;
+		}
+
+		const {cartItems, id: cartId} = cartState;
+
+		const formattedCartItem = formatCartItem(
+			cpInstance,
+			MINI_CART_NAMESPACE,
+			skuOptionsAtomState.miniCartSkuOptions,
+			MINI_CART_NAMESPACE
+		);
+
+		const updatedCartItems = cartItems.map((cartItem) =>
+			cartItem.id === selectedItem.id
+				? {
+						...cartItem,
+						options: formattedCartItem.options,
+						replacedSkuId: formattedCartItem.replacedSkuId,
+						skuId: formattedCartItem.skuId,
+				  }
+				: cartItem
+		);
+
+		ServiceProvider.DeliveryCartAPI('v1')
+			.updateCartById(cartId, {
+				cartItems: updatedCartItems,
+			})
+			.then((updatedCart) => {
+				Liferay.fire(CURRENT_ORDER_UPDATED, {order: updatedCart});
+
+				setEditedItem(null);
+				setSkuOptionsAtomState({
+					...skuOptionsAtomState,
+					miniCartErrors: [],
+					miniCartSkuOptions: [],
+					updating: false,
+				});
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	};
+
+	const [price, setPrice] = useState(
+		selectedItem ? selectedItem.price : null
+	);
+
+	const handleCPInstanceChanged = ({cpInstance}) => {
+		setCPInstance(cpInstance);
+		setPrice(adaptLegacyPriceModel(cpInstance.price));
+	};
 
 	useEffect(() => {
-		const url = getProductOptions(channel.id, editedItem.productId);
+		const productOptionsURL = getProductOptionsURL(
+			channel.id,
+			editedItem.productId
+		);
 
-		fetch(url)
+		fetch(productOptionsURL)
 			.then((response) => response.json())
 			.then((data) => setOptions(data))
 			.catch((error) => console.error(error));
 	}, [channel.id, editedItem.productId]);
+
+	useEffect(() => {
+		Liferay.on(
+			`${MINI_CART_NAMESPACE}${CP_INSTANCE_CHANGED}`,
+			handleCPInstanceChanged
+		);
+
+		return () => {
+			Liferay.detach(
+				`${MINI_CART_NAMESPACE}${CP_INSTANCE_CHANGED}`,
+				handleCPInstanceChanged
+			);
+		};
+	}, []);
 
 	const hasDiscount = isNonnull(price.discountPercentage);
 	const hasPromoPrice = isNonnull(price.promoPrice);
@@ -70,7 +174,7 @@ function EditItem() {
 					/>
 
 					<span className="font-weight-bold ml-2 text-5">
-						{editedItem.name}
+						{sub(Liferay.Language.get('edit-x'), editedItem.name)}
 					</span>
 				</div>
 
@@ -78,7 +182,11 @@ function EditItem() {
 					{options?.items?.length > 0 ? (
 						<ClayForm>
 							<Options
-								items={options.items}
+								cartItemId={editedItem.cartItemId}
+								channelId={channel.id}
+								namespace={MINI_CART_NAMESPACE}
+								productId={editedItem.productId}
+								productOptions={options.items}
 								selectedItem={selectedItem}
 							/>
 						</ClayForm>
@@ -86,20 +194,28 @@ function EditItem() {
 
 					<div className="mini-cart-prices pt-2">
 						<PriceRow
-							priceName={Liferay.Language.get('price-list')}
+							priceName={Liferay.Language.get('list-price')}
 						>
-							<span className="price-line-through">
-								{price.priceFormatted}
-							</span>
+							{hasPromoPrice || hasDiscount ? (
+								<span className="price-line-through">
+									{price.priceFormatted}
+								</span>
+							) : (
+								<span>{price.priceFormatted}</span>
+							)}
 						</PriceRow>
 
 						{hasPromoPrice ? (
 							<PriceRow
 								priceName={Liferay.Language.get('promo-price')}
 							>
-								<span className="price-line-through">
-									{price.promoPriceFormatted}
-								</span>
+								{hasDiscount ? (
+									<span className="price-line-through">
+										{price.promoPriceFormatted}
+									</span>
+								) : (
+									<span>{price.promoPriceFormatted}</span>
+								)}
 							</PriceRow>
 						) : null}
 
@@ -134,7 +250,9 @@ function EditItem() {
 						{Liferay.Language.get('cancel')}
 					</ClayButton>
 
-					<ClayButton>{Liferay.Language.get('save')}</ClayButton>
+					<ClayButton disabled={disabled} onClick={handleSave}>
+						{Liferay.Language.get('save')}
+					</ClayButton>
 				</div>
 			</div>
 		</>
@@ -143,45 +261,60 @@ function EditItem() {
 
 export default EditItem;
 
-const Options = ({items, selectedItem}) => {
-	const [selectedOptions, setSelectedOptions] = useState(() =>
-		JSON.parse(selectedItem.options).reduce(
-			(acc, {key, value}) => ({...acc, [key]: value}),
-			{}
-		)
-	);
+const Options = ({
+	cartItemId,
+	channelId,
+	productId,
+	productOptions,
+	selectedItem,
+}) =>
+	productOptions.map((productOption) => {
+		let Component = ProductOptionCheckbox;
+		let props = {
+			componentId: `${MINI_CART_NAMESPACE}${cartItemId}_${productOption.id}`,
+			isFromMiniCart: true,
+			json: selectedItem.options,
+			namespace: MINI_CART_NAMESPACE,
+			productOption,
+		};
 
-	return items.map(({id, key, name, productOptionValues}) => (
-		<ClayForm.Group key={id}>
-			<label htmlFor={`${id}-${name}`}>
-				{name}
+		if (productOption.fieldType === FIELD_TYPE.checkboxMultiple) {
+			Component = ProductOptionCheckboxMultiple;
+		}
+		else if (productOption.fieldType === FIELD_TYPE.date) {
+			Component = ProductOptionDate;
+		}
+		else if (productOption.fieldType === FIELD_TYPE.numeric) {
+			Component = ProductOptionNumeric;
+		}
+		else if (productOption.fieldType === FIELD_TYPE.radio) {
+			Component = ProductOptionRadio;
+			props = {
+				...props,
+				accountId: CommerceContext.account.accountId,
+				channelId,
+				minQuantity: selectedItem.quantity,
+				productId,
+				sku: {skuId: selectedItem.skuId},
+			};
+		}
+		else if (productOption.fieldType === FIELD_TYPE.select) {
+			Component = ProductOptionSelect;
+			props = {
+				...props,
+				accountId: CommerceContext.account.accountId,
+				channelId,
+				minQuantity: selectedItem.quantity,
+				productId,
+				sku: {skuId: selectedItem.skuId},
+			};
+		}
+		else if (productOption.fieldType === FIELD_TYPE.text) {
+			Component = ProductOptionText;
+		}
 
-				<span className="reference-mark">
-					<ClayIcon symbol="asterisk" />
-				</span>
-			</label>
-
-			<ClaySelect
-				id={`${id}-${name}`}
-				onChange={({target: {value}}) =>
-					setSelectedOptions((selectedOptions) => ({
-						...selectedOptions,
-						[key]: value,
-					}))
-				}
-			>
-				{productOptionValues.map((item) => (
-					<ClaySelect.Option
-						key={item.id}
-						label={item.name}
-						selected={selectedOptions[key] === item.key}
-						value={item.key}
-					/>
-				))}
-			</ClaySelect>
-		</ClayForm.Group>
-	));
-};
+		return <Component key={productOption.id} {...props} />;
+	});
 
 const PriceRow = ({children, priceName}) => {
 	return (

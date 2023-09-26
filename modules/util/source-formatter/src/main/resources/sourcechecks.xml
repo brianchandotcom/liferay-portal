@@ -1727,6 +1727,10 @@
 			<description name="Replace getLayoutDisplayPageProvider by getLayoutDisplayPageProviderByClassName" />
 			<weight>2</weight>
 		</check>
+		<check name="UpgradeJavaGetLeftCategoryIdMethodCheck">
+			<category name="Upgrade" />
+			<description name="Replace the AssetCategory's method `getLeftCategoryId` by `getCategoryId` " />
+		</check>
 		<check name="UpgradeJavaIndexerCheck">
 			<category name="Upgrade" />
 			<description name="Replace Indexer by Indexer&lt;?&gt;" />

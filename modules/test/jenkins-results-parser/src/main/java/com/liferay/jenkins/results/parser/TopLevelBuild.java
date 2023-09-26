@@ -21,6 +21,8 @@ public interface TopLevelBuild extends ParentBuild {
 
 	public String getAcceptanceUpstreamJobURL();
 
+	public long getAverageDelayTime();
+
 	public Map<String, String> getBaseGitRepositoryDetailsTempMap();
 
 	public Build getControllerBuild();

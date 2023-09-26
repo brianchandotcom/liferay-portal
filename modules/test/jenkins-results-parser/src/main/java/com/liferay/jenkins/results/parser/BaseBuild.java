@@ -200,28 +200,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public long getAverageDelayTime() {
-		if (getDownstreamBuildCount(null) == 0) {
-			return 0;
-		}
-
-		List<Build> allDownstreamBuilds = JenkinsResultsParserUtil.flatten(
-			getDownstreamBuilds(null));
-
-		if (allDownstreamBuilds.isEmpty()) {
-			return 0;
-		}
-
-		long totalDelayTime = 0;
-
-		for (Build downstreamBuild : allDownstreamBuilds) {
-			totalDelayTime += downstreamBuild.getDelayTime();
-		}
-
-		return totalDelayTime / allDownstreamBuilds.size();
-	}
-
-	@Override
 	public List<String> getBadBuildURLs() {
 		List<String> badBuildURLs = new ArrayList<>();
 

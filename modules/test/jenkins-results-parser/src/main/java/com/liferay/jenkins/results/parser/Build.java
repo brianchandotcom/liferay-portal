@@ -41,8 +41,6 @@ public interface Build {
 
 	public URL getArtifactsBaseURL();
 
-	public long getAverageDelayTime();
-
 	public List<String> getBadBuildURLs();
 
 	public String getBaseGitRepositoryName();

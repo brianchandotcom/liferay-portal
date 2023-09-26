@@ -196,6 +196,10 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLOSED_ADMIN_PANEL</td>
+	<td>//div[contains(@id,'segmentsExperimentPanelId') and not(contains(@class,'open-admin-panel'))]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

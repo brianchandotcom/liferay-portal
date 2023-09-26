@@ -260,7 +260,9 @@ definition {
 		}
 
 		task ("And clicks on Cancel button") {
-			Button.click(button = "Cancel");
+			Click(
+				key_text = "Cancel",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Then the Edit field modal is closed") {

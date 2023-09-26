@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -222,10 +221,11 @@ public class AntUtil {
 			int timeoutMinutes, boolean runningModulesTests)
 		throws AntException, IOException {
 
-		ExecutorService executor = Executors.newSingleThreadExecutor();
+		ExecutorService executor =
+			JenkinsResultsParserUtil.getNewThreadPoolExecutor(1, true);
 
 		Future<String> future = executor.submit(
-			new Callable() {
+			new Callable<String>() {
 
 				public String call() throws Exception {
 					callTarget(baseDir, buildFileName, targetName, parameters);

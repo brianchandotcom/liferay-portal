@@ -34,7 +34,7 @@ public class SourceBuild extends BaseBuild {
 	}
 
 	@Override
-	public void addTimelineData(BaseBuild.TimelineData timelineData) {
+	public void addTimelineData(TimelineData timelineData) {
 		timelineData.addTimelineData(this);
 	}
 

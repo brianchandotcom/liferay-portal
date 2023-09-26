@@ -11,7 +11,7 @@ package com.liferay.jenkins.results.parser;
 public class FreestyleBatchBuild extends BatchBuild {
 
 	@Override
-	public void addTimelineData(BaseBuild.TimelineData timelineData) {
+	public void addTimelineData(TimelineData timelineData) {
 		timelineData.addTimelineData(this);
 	}
 

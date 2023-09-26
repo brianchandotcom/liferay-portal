@@ -29,6 +29,8 @@ public interface Build {
 
 	public void addDownstreamBuilds(String... urls);
 
+	public void addTimelineData(TimelineData timelineData);
+
 	public void archive();
 
 	public void archive(String archiveName);
@@ -254,6 +256,117 @@ public interface Build {
 		public String getUpstreamBranchName();
 
 		public String getUpstreamBranchSHA();
+
+	}
+
+	public class TimelineData {
+
+		protected TimelineData(int size, TopLevelBuild topLevelBuild) {
+			if (topLevelBuild != topLevelBuild.getTopLevelBuild()) {
+				throw new IllegalArgumentException(
+					"Nested TopLevelBuild objects are invalid");
+			}
+
+			if (size < 1) {
+				throw new IllegalArgumentException("Invalid size " + size);
+			}
+
+			_duration = topLevelBuild.getDuration();
+			_startTime = topLevelBuild.getStartTime();
+
+			_timeline = new TimelineDataPoint[size];
+
+			for (int i = 0; i < size; i++) {
+				_timeline[i] = new TimelineDataPoint(
+					(int)(i * (_duration / _timeline.length)));
+			}
+
+			topLevelBuild.addTimelineData(this);
+		}
+
+		protected void addTimelineData(BaseBuild build) {
+			Long buildInvokedTime = build.getInvokedTime();
+
+			if (buildInvokedTime == null) {
+				return;
+			}
+
+			_timeline[_getIndex(buildInvokedTime)]._invocationsCount++;
+
+			Long buildStartTime = build.getStartTime();
+
+			if (buildStartTime == null) {
+				return;
+			}
+
+			int endIndex = _getIndex(buildStartTime + build.getDuration());
+			int startIndex = _getIndex(buildStartTime);
+
+			for (int i = startIndex; i <= endIndex; i++) {
+				_timeline[i]._slaveUsageCount++;
+			}
+		}
+
+		protected int[] getIndexData() {
+			int[] indexes = new int[_timeline.length];
+
+			for (int i = 0; i < _timeline.length; i++) {
+				indexes[i] = _timeline[i]._index;
+			}
+
+			return indexes;
+		}
+
+		protected int[] getInvocationsData() {
+			int[] invocationsData = new int[_timeline.length];
+
+			for (int i = 0; i < _timeline.length; i++) {
+				invocationsData[i] = _timeline[i]._invocationsCount;
+			}
+
+			return invocationsData;
+		}
+
+		protected int[] getSlaveUsageData() {
+			int[] slaveUsageData = new int[_timeline.length];
+
+			for (int i = 0; i < _timeline.length; i++) {
+				slaveUsageData[i] = _timeline[i]._slaveUsageCount;
+			}
+
+			return slaveUsageData;
+		}
+
+		private int _getIndex(long timestamp) {
+			int index =
+				(int)((timestamp - _startTime) * _timeline.length / _duration);
+
+			if (index >= _timeline.length) {
+				return _timeline.length - 1;
+			}
+
+			if (index < 0) {
+				return 0;
+			}
+
+			return index;
+		}
+
+		private final long _duration;
+		private final long _startTime;
+		private final TimelineDataPoint[] _timeline;
+
+		private static class TimelineDataPoint {
+
+			private TimelineDataPoint(int index) {
+				_index = index;
+			}
+
+			private final int _index;
+			private int _invocationsCount;
+			private int _slaveUsageCount;
+
+		}
 
 	}
 

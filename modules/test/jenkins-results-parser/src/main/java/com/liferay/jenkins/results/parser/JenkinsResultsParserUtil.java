@@ -3254,7 +3254,8 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String getTestResultFileName(File file) {
-		Matcher matcher = _testResultFileNamePattern.matcher(file.toString());
+		Matcher matcher = _testResultFileNamePattern.matcher(
+			file.getAbsolutePath());
 
 		if (matcher.find()) {
 			return matcher.group(0);

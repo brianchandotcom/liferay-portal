@@ -54,8 +54,11 @@ public class PageRulesPageEditorSidebarPanel
 		}
 
 		try {
-			if (_layoutPermission.containsLayoutUpdatePermission(
-					permissionChecker, plid) ||
+			if ((_layoutPermission.containsLayoutUpdatePermission(
+					permissionChecker, plid) &&
+				 _layoutPermission.contains(
+					 permissionChecker, plid,
+					 ActionKeys.LAYOUT_RULE_BUILDER)) ||
 				_modelResourcePermission.contains(
 					permissionChecker, plid, ActionKeys.UPDATE)) {
 

@@ -100,13 +100,9 @@
 				if (data == null) {
 					data = new HashMap<String, Object>();
 				}
-
-				String rowElementId = namespace + id + "_" + row.getRowId();
-
-				request.setAttribute("liferay-ui:search-container-row:rowElementId", rowElementId);
 			%>
 
-				<dd class="list-group-item list-group-item-flex <%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %> <%= Validator.isNotNull(row.getState()) ? "list-group-item-" + row.getState() : StringPool.BLANK %>" data-qa-id="row" id="<%= rowElementId %>" <%= AUIUtil.buildData(data) %>>
+				<dd class="list-group-item list-group-item-flex <%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %> <%= Validator.isNotNull(row.getState()) ? "list-group-item-" + row.getState() : StringPool.BLANK %>" data-qa-id="row" <%= AUIUtil.buildData(data) %>>
 					<c:if test="<%= rowChecker != null %>">
 						<div class="autofit-col">
 							<div class="checkbox">
@@ -144,7 +140,6 @@
 				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_ENTRY);
 
-				request.removeAttribute("liferay-ui:search-container-row:rowElementId");
 				request.removeAttribute("liferay-ui:search-container-row:rowId");
 			}
 			%>

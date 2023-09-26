@@ -224,10 +224,6 @@ if (iteratorURL != null) {
 
 			boolean rowIsChecked = false;
 
-			String rowElementId = namespace + id + "_" + row.getRowId();
-
-			request.setAttribute("liferay-ui:search-container-row:rowElementId", rowElementId);
-
 			if (rowChecker != null) {
 				rowIsChecked = rowChecker.isChecked(row.getObject());
 
@@ -251,7 +247,14 @@ if (iteratorURL != null) {
 			Map<String, Object> data = row.getData();
 		%>
 
-			<tr class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= row.getState() %> <%= rowIsChecked ? "info" : StringPool.BLANK %>" id="<%= rowElementId %>" <%= AUIUtil.buildData(data) %>>
+			<c:choose>
+				<c:when test="<%= Validator.isNotNull(rowIdProperty) %>">
+					<tr class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= row.getState() %> <%= rowIsChecked ? "info" : StringPool.BLANK %>" id="<portlet:namespace /><%= id %>_<%= row.getRowId() %>" <%= AUIUtil.buildData(data) %>>
+				</c:when>
+				<c:otherwise>
+					<tr class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= row.getState() %> <%= rowIsChecked ? "info" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %>>
+				</c:otherwise>
+			</c:choose>
 
 			<%
 			for (int j = 0; j < entries.size(); j++) {
@@ -310,7 +313,6 @@ if (iteratorURL != null) {
 			request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 			request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_ENTRY);
 
-			request.removeAttribute("liferay-ui:search-container-row:rowElementId");
 			request.removeAttribute("liferay-ui:search-container-row:rowId");
 		}
 		%>

@@ -230,10 +230,6 @@ if (fixedHeader) {
 					boolean rowIsChecked = false;
 					boolean rowIsDisabled = false;
 
-					String rowElementId = namespace + id + "_" + row.getRowId();
-
-					request.setAttribute("liferay-ui:search-container-row:rowElementId", rowElementId);
-
 					if (rowChecker != null) {
 						rowIsChecked = rowChecker.isChecked(row.getObject());
 						rowIsDisabled = rowChecker.isDisabled(row.getObject());
@@ -276,7 +272,14 @@ if (fixedHeader) {
 					}
 				%>
 
-					<tr class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= row.getState() %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" id="<%= rowElementId %>" <%= AUIUtil.buildData(data) %>>
+					<c:choose>
+						<c:when test="<%= Validator.isNotNull(rowIdProperty) %>">
+							<tr class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= row.getState() %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" id="<portlet:namespace /><%= id %>_<%= row.getRowId() %>" <%= AUIUtil.buildData(data) %>>
+						</c:when>
+						<c:otherwise>
+							<tr class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= row.getState() %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" <%= AUIUtil.buildData(data) %>>
+						</c:otherwise>
+					</c:choose>
 
 						<%
 						for (int j = 0; j < entries.size(); j++) {
@@ -350,7 +353,6 @@ if (fixedHeader) {
 					request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 					request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_ENTRY);
 
-					request.removeAttribute("liferay-ui:search-container-row:rowElementId");
 					request.removeAttribute("liferay-ui:search-container-row:rowId");
 				}
 			}

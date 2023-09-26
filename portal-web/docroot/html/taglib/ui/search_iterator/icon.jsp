@@ -95,13 +95,9 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 			if (Validator.isNull(rowCssClass)) {
 				rowCssClass = "card-page-item card-page-item-asset";
 			}
-
-			String rowElementId = namespace + id + "_" + row.getRowId();
-
-			request.setAttribute("liferay-ui:search-container-row:rowElementId", rowElementId);
 		%>
 
-			<dd class="<%= GetterUtil.getString(row.getClassName()) %> <%= rowCssClass %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" id="<%= rowElementId %>" <%= AUIUtil.buildData(data) %>>
+			<dd class="<%= GetterUtil.getString(row.getClassName()) %> <%= rowCssClass %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" <%= AUIUtil.buildData(data) %>>
 
 				<%
 				for (int k = 0; k < entries.size(); k++) {
@@ -121,7 +117,6 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 			request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 			request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_ENTRY);
 
-			request.removeAttribute("liferay-ui:search-container-row:rowElementId");
 			request.removeAttribute("liferay-ui:search-container-row:rowId");
 		}
 		%>

@@ -332,9 +332,10 @@ public class WebServerServlet extends HttpServlet {
 
 			_checkResourcePermission(httpServletRequest, httpServletResponse);
 
-			String ifNoneMatch = httpServletRequest.getHeader(HttpHeaders.IF_NONE_MATCH);
+			String ifNoneMatch = httpServletRequest.getHeader(
+				HttpHeaders.IF_NONE_MATCH);
 
-			if (ifNoneMatch == null && _lastModified) {
+			if ((ifNoneMatch == null) && _lastModified) {
 				long lastModified = getLastModified(httpServletRequest);
 
 				if (lastModified > 0) {

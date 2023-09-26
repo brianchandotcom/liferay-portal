@@ -266,21 +266,22 @@ public class PoshiProperties extends Properties {
 		for (String propertyName : properties.stringPropertyNames()) {
 			String propertyValue = properties.getProperty(propertyName);
 
-			if (propertyValue.contains(",")) {
-				for (String additionalPropertyValue :
-						ListUtil.newListFromString(propertyValue)) {
-
-					validateProperty(propertyName, additionalPropertyValue);
-				}
-			}
-			else {
-				validateProperty(propertyName, propertyValue);
-			}
+			validateProperty(propertyName, propertyValue);
 		}
 	}
 
 	public static void validateProperty(
 		String propertyName, String propertyValue) {
+
+		if (propertyValue.contains(",")) {
+			for (String additionalPropertyValue :
+					ListUtil.newListFromString(propertyValue)) {
+
+				validateProperty(propertyName, additionalPropertyValue);
+			}
+
+			return;
+		}
 
 		if (!_validPoshiPropertyValues.containsKey(propertyName)) {
 			return;

@@ -44,18 +44,12 @@ if (Liferay.FeatureFlags['LPS-188645']) {
 	];
 }
 
-if (Liferay.FeatureFlags['LPS-192282']) {
-	NAVIGATION_BAR_ITEMS = [
-		...NAVIGATION_BAR_ITEMS,
-		{
-			Component: Actions,
-			label: Liferay.Language.get('actions'),
-		},
-	];
-}
-
 NAVIGATION_BAR_ITEMS = [
 	...NAVIGATION_BAR_ITEMS,
+	{
+		Component: Actions,
+		label: Liferay.Language.get('actions'),
+	},
 	{
 		Component: Pagination,
 		label: Liferay.Language.get('pagination'),

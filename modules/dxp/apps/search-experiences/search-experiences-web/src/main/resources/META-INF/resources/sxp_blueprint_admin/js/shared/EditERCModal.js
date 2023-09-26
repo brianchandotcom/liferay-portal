@@ -76,31 +76,39 @@ export function ERCModal({
 			method: 'POST',
 		})
 			.then((response) => {
-				if (!response.ok) {
-					throw Error();
-				}
-
-				return response.json();
+				return response.json().then((data) => ({
+					ok: response.ok,
+					responseContent: data,
+				}));
 			})
-			.then((jsonResponse) => {
-				if (
-					jsonResponse.type ===
-						'DuplicateSXPBlueprintExternalReferenceCodeException' ||
-					jsonResponse.type ===
-						'DuplicateSXPElementExternalReferenceCodeException'
-				) {
-					setError(
-						sub(
-							Liferay.Language.get(
-								'the-x-is-already-in-use-please-enter-a-unique-x'
-							),
-							[Liferay.Language.get('external-reference-code')]
-						)
-					);
+			.then(({ok, responseContent}) => {
+				if (!ok) {
+					if (
+						responseContent.type ===
+							'DuplicateSXPBlueprintExternalReferenceCodeException' ||
+						responseContent.type ===
+							'DuplicateSXPElementExternalReferenceCodeException'
+					) {
+						setError(
+							sub(
+								Liferay.Language.get(
+									'the-x-is-already-in-use-please-enter-a-unique-x'
+								),
+								[
+									Liferay.Language.get(
+										'external-reference-code'
+									),
+								]
+							)
+						);
 
-					externalReferenceCodeInputRef.current.focus();
+						externalReferenceCodeInputRef.current.focus();
 
-					return;
+						return;
+					}
+					else {
+						throw Error();
+					}
 				}
 
 				onSubmit(externalReferenceCode.trim());

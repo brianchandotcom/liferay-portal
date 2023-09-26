@@ -101,7 +101,7 @@ definition {
 	@priority = 4
 	test ViewAccessibilityInDateAndTimeField {
 		task ("Given a web content with a date and time field") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${randomSiteName});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
 
 			NavItem.gotoStructures();
 

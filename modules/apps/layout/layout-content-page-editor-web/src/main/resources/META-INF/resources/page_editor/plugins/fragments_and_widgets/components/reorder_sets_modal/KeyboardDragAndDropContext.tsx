@@ -156,6 +156,11 @@ export function useKeyboardDragItem(
 			}
 
 			if (event.key === 'Escape') {
+				document.activeElement?.scrollIntoView({
+					behavior: 'smooth',
+					block: 'center',
+				});
+
 				setDragOverPosition(null);
 				setSourceItem(null);
 				setTargetItem(null);

@@ -269,7 +269,6 @@ type ApplicationDataError = {
 type ApplicationStatusKeys = 'published' | 'unpublished';
 
 type EndpointDataError = {
-	description: boolean;
 	path: boolean;
 	scope: boolean;
 };

@@ -146,13 +146,20 @@ public class LayoutPageTemplateCollectionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPE_COLUMN_BITMASK = 16L;
+	public static final long
+		PARENTLAYOUTPAGETEMPLATECOLLECTIONID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long TYPE_COLUMN_BITMASK = 32L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -629,6 +636,16 @@ public class LayoutPageTemplateCollectionModelImpl
 
 		_parentLayoutPageTemplateCollectionId =
 			parentLayoutPageTemplateCollectionId;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public long getOriginalParentLayoutPageTemplateCollectionId() {
+		return GetterUtil.getLong(
+			this.<Long>getColumnOriginalValue("parentLPTCollectionId"));
 	}
 
 	@JSON

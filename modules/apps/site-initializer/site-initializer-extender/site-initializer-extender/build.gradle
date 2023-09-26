@@ -20,6 +20,7 @@ dependencies {
 	compileOnly project(":apps:headless:headless-admin-workflow:headless-admin-workflow-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:headless:headless-delivery:headless-delivery-api")
+	compileOnly project(":apps:headless:headless-site:headless-site-api")
 	compileOnly project(":apps:journal:journal-api")
 	compileOnly project(":apps:layout:layout-api")
 	compileOnly project(":apps:layout:layout-page-template-api")

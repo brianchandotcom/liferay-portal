@@ -162,7 +162,11 @@ export default function BaseAPIEndpointFields({
 				</div>
 			</ClayForm.Group>
 
-			<ClayForm.Group>
+			<ClayForm.Group
+				className={classNames({
+					'has-error': displayError.path,
+				})}
+			>
 				<label htmlFor="endpointPathField">
 					{Liferay.Language.get('path')}
 
@@ -175,11 +179,7 @@ export default function BaseAPIEndpointFields({
 					{endpointPathHostTextPreview}
 				</Text>
 
-				<ClayInput.Group
-					className={classNames({
-						'has-error': displayError.path,
-					})}
-				>
+				<ClayInput.Group>
 					<ClayInput.GroupItem prepend shrink>
 						<ClayInput.GroupText>/</ClayInput.GroupText>
 					</ClayInput.GroupItem>
@@ -216,6 +216,22 @@ export default function BaseAPIEndpointFields({
 						</Text>
 					</ClayForm.FeedbackGroup>
 				)}
+
+				<div className="feedback-container">
+					<ClayForm.FeedbackGroup>
+						{displayError.path && (
+							<ClayForm.FeedbackItem className="mt-2">
+								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+								<span id="selectScopeErrorMessage">
+									{Liferay.Language.get(
+										'please-enter-a-path'
+									)}
+								</span>
+							</ClayForm.FeedbackItem>
+						)}
+					</ClayForm.FeedbackGroup>
+				</div>
 			</ClayForm.Group>
 
 			<ClayForm.Group>

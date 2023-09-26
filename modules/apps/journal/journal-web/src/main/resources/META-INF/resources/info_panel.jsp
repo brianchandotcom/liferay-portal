@@ -151,6 +151,28 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 					</ul>
 				</clay:content-col>
 			</clay:content-row>
+
+			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-197307") %>'>
+				<clay:content-row
+					cssClass="c-mt-2"
+				>
+					<clay:content-col>
+						<liferay-portal-workflow:status
+							showStatusLabel="<%= false %>"
+							status="<%= article.getStatus() %>"
+						/>
+					</clay:content-col>
+
+					<clay:content-col>
+						<div>
+							<clay:label
+								displayType="info"
+								label='<%= LanguageUtil.get(request, "version") + article.getVersion() %>'
+							/>
+						</div>
+					</clay:content-col>
+				</clay:content-row>
+			</c:if>
 		</div>
 
 		<clay:navigation-bar
@@ -164,20 +186,22 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 				<%= HtmlUtil.escape(article.getArticleId()) %>
 			</p>
 
-			<p class="sidebar-dt"><liferay-ui:message key="version" /></p>
+			<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPS-197307") %>'>
+				<p class="sidebar-dt"><liferay-ui:message key="version" /></p>
 
-			<p class="sidebar-dd">
-				<%= article.getVersion() %>
-			</p>
+				<p class="sidebar-dd">
+					<%= article.getVersion() %>
+				</p>
 
-			<p class="sidebar-dt"><liferay-ui:message key="status" /></p>
+				<p class="sidebar-dt"><liferay-ui:message key="status" /></p>
 
-			<div class="sidebar-dd">
-				<liferay-portal-workflow:status
-					showStatusLabel="<%= false %>"
-					status="<%= article.getStatus() %>"
-				/>
-			</div>
+				<div class="sidebar-dd">
+					<liferay-portal-workflow:status
+						showStatusLabel="<%= false %>"
+						status="<%= article.getStatus() %>"
+					/>
+				</div>
+			</c:if>
 
 			<p class="sidebar-dt"><liferay-ui:message key="title" /></p>
 

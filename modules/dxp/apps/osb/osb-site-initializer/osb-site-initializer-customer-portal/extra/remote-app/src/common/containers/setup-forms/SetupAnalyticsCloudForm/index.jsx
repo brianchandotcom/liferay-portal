@@ -58,11 +58,7 @@ const getAnalyticsCloudSubmittedStatus = async (client, accountKey) => {
 		},
 	});
 
-	if (data) {
-		return !!data.c?.analyticsCloudWorkspaces?.items?.length;
-	}
-
-	return false;
+	return !!data?.c?.analyticsCloudWorkspaces?.items?.length;
 };
 
 const SetupAnalyticsCloudPage = ({

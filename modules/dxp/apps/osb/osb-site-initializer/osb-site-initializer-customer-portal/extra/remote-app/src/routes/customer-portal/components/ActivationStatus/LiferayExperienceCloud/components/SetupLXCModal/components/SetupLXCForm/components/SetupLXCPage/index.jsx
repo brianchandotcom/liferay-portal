@@ -64,16 +64,16 @@ const SetupLiferayExperienceCloudPage = ({
 	};
 
 	const addHighPriorityContacts = (contactList) => {
-		setAddHighPriorityContact((oldList) => {
+		setAddHighPriorityContact((prevHighPriorityContacts) => {
 			const uniqueContacts = [
-				...oldList,
+				...prevHighPriorityContacts,
 				...contactList.filter(
 					(contact) =>
-						!oldList.some(
-							(oldContact) =>
-								oldContact.category?.role ===
+						!prevHighPriorityContacts.some(
+							(prevContact) =>
+								prevContact.category?.role ===
 									contact.category?.role &&
-								oldContact?.id === contact?.id
+								prevContact?.id === contact?.id
 						)
 				),
 			];
@@ -83,16 +83,16 @@ const SetupLiferayExperienceCloudPage = ({
 	};
 
 	const removeHighPriorityContacts = (contactList) => {
-		setRemoveHighPriorityContact((oldList) => {
+		setRemoveHighPriorityContact((prevHighPriorityContacts) => {
 			const uniqueContacts = [
-				...oldList,
+				...prevHighPriorityContacts,
 				...contactList.filter(
 					(contact) =>
-						!oldList.some(
-							(oldContact) =>
-								oldContact.category?.role ===
+						!prevHighPriorityContacts.some(
+							(prevContact) =>
+								prevContact.category?.role ===
 									contact.category?.role &&
-								oldContact?.id === contact?.id
+								prevContact?.id === contact?.id
 						)
 				),
 			];

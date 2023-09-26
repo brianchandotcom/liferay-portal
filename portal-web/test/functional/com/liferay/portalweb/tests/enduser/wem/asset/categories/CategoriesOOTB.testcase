@@ -1110,7 +1110,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-134466 When 'Categorization' in web content editor, vocabularies management application or content dashboard when empty graph, the message Learn how with a link to the documentation"
+	@description = "LPS-117015 When 'Categorization' in web content editor, vocabularies management application or content dashboard when empty graph, the message Learn how with a link to the documentation"
 	@priority = 3
 	test OpenLiferayLearnCategoriesVocabulariesPageFromContentDashboard {
 		task ("Go to content dashboard") {
@@ -1125,7 +1125,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-134466 When 'Categorization' in web content editor, vocabularies management application or content dashboard when empty graph, the message Learn how with a link to the documentation"
+	@description = "LPS-117015 When 'Categorization' in web content editor, vocabularies management application or content dashboard when empty graph, the message Learn how with a link to the documentation"
 	@priority = 3
 	test OpenLiferayLearnCategoriesVocabulariesPageFromWCEditor {
 		task ("Go to web content editor") {

@@ -122,13 +122,6 @@ export default function BaseAPIEndpointFields({
 				</label>
 
 				<Select
-					cleanUp={() =>
-						setData((previousValue) => {
-							previousValue.scope = {key: '', name: ''};
-
-							return {...previousValue};
-						})
-					}
 					disabled={false}
 					dropDownSearchAriaLabel={Liferay.Language.get(
 						'search-for-an-object-definition-or-use-the-arrow-keys-to-navigate-and-select-an-object-definition-from-the-list'

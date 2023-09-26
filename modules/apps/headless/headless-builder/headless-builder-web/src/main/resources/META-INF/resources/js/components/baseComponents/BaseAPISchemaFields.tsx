@@ -182,6 +182,7 @@ export default function BaseAPISchemaFields({
 						'select-an-object-definition'
 					)}
 					required
+					searchable
 					selectedOption={selectedObjectDefinition}
 					triggerAriaLabel={
 						!selectedObjectDefinition

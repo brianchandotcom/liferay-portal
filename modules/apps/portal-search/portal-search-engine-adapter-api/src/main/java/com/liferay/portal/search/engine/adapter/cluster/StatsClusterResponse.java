@@ -11,6 +11,16 @@ package com.liferay.portal.search.engine.adapter.cluster;
 public class StatsClusterResponse implements ClusterResponse {
 
 	public StatsClusterResponse(
+		ClusterHealthStatus clusterHealthStatus, String statsMessage) {
+
+		_clusterHealthStatus = clusterHealthStatus;
+		_statsMessage = statsMessage;
+
+		_availableSpaceInBytes = 0;
+		_usedSpaceInBytes = 0;
+	}
+
+	public StatsClusterResponse(
 		long availableSpaceInBytes, ClusterHealthStatus clusterHealthStatus,
 		String statsMessage, long usedSpaceInBytes) {
 

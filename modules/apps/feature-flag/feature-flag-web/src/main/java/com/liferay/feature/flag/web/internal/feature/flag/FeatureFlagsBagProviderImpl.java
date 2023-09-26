@@ -311,12 +311,6 @@ public class FeatureFlagsBagProviderImpl
 		implements EagerServiceTrackerCustomizer
 			<FeatureFlagListener, FeatureFlagListener> {
 
-		public FeatureFlagListenerEagerServiceTrackerCustomizer(
-			BundleContext bundleContext) {
-
-			_bundleContext = bundleContext;
-		}
-
 		@Override
 		public FeatureFlagListener addingService(
 			ServiceReference<FeatureFlagListener> serviceReference) {
@@ -368,6 +362,12 @@ public class FeatureFlagsBagProviderImpl
 			FeatureFlagListener featureFlagListener) {
 
 			_bundleContext.ungetService(serviceReference);
+		}
+
+		private FeatureFlagListenerEagerServiceTrackerCustomizer(
+			BundleContext bundleContext) {
+
+			_bundleContext = bundleContext;
 		}
 
 		private final BundleContext _bundleContext;

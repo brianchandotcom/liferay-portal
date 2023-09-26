@@ -3487,6 +3487,8 @@ definition {
 		var key_metadataData = ${metadataData};
 		var key_metadataLabel = ${metadataLabel};
 
+		Panel.expandPanel(panel = "Automatically Extracted Metadata");
+
 		AssertElementPresent(
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_EXTRACTED_METADATA_FIELD",
 			value1 = ${metadataData});

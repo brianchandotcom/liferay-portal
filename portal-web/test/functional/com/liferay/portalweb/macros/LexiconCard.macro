@@ -149,4 +149,11 @@ definition {
 			locator1 = "Card#CARD_THUMBNAIL");
 	}
 
+	macro viewSpecificCardThumbnail {
+		AssertVisible(
+			key_card = ${card},
+			key_imageFileName = ${imageFileName},
+			locator1 = "Card#CARD_THUMBNAIL");
+	}
+
 }

@@ -547,7 +547,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-101255. The edited inline contents will be reset to default value when save a composition of fragments without Save Inline Content."
+	@description = "This is a test for LPS-101255. The edited inline content will be saved when save a composition of fragments with Save Inline Content."
 	@priority = 5
 	@uitest
 	test ExportImportFragmentCompositionWithInlineContent {
@@ -1058,7 +1058,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test case for LPS-110462. The value of editable field is reset in saved composition when unchecking Save Mapping Configuration."
+	@description = "This is a test case for LPS-110462. The mapped image should also be saved when save a composition of fragments containing mapped image."
 	@priority = 4
 	test ExportImportFragmentCompositionWithoutMappingConfiguration {
 		task ("Add a web content") {

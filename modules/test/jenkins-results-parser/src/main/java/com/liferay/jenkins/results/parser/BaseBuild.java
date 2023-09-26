@@ -3228,10 +3228,7 @@ public abstract class BaseBuild implements Build {
 	protected void setResult(String result) {
 		this.result = result;
 
-		if ((result == null) ||
-			(getDownstreamBuildCount("completed") < getDownstreamBuildCount(
-				null))) {
-
+		if (result == null) {
 			setStatus("running");
 		}
 		else {

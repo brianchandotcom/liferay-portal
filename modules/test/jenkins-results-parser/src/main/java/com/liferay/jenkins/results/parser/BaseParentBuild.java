@@ -439,4 +439,19 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		downstreamBuilds.clear();
 	}
 
+	@Override
+	protected void setResult(String result) {
+		this.result = result;
+
+		if ((result == null) ||
+			(getDownstreamBuildCount("completed") < getDownstreamBuildCount(
+				null))) {
+
+			setStatus("running");
+		}
+		else {
+			setStatus("completed");
+		}
+	}
+
 }

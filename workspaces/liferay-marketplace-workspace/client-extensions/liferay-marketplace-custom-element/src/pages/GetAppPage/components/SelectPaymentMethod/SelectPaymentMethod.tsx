@@ -6,6 +6,7 @@
 import {useState} from 'react';
 
 import {Input} from '../../../../components/Input/Input';
+import { paymentMethod } from '../../enums/paymentMethod';
 import {BillingAddress} from './components/BillingAddress/BillingAddress';
 import {PaymentMethodMode} from './components/PaymentMethodMode/PaymentMethodMode';
 import {PaymentMethodSelector} from './components/PaymentMethodSelector/PaymentMethodSelector';
@@ -51,15 +52,15 @@ export function SelectPaymentMethod({
 				/>
 			</div>
 
-			{selectedPaymentMethod === 'trial' && <TrialTimeline />}
+			{selectedPaymentMethod === paymentMethod.TRIAL && <TrialTimeline />}
 
-			{selectedPaymentMethod === 'pay' && (
+			{selectedPaymentMethod === paymentMethod.PAY && (
 				<PaymentMethodMode
 					selectedPaymentMethod={selectedPaymentMethod}
 				/>
 			)}
 
-			{selectedPaymentMethod === 'order' && (
+			{selectedPaymentMethod === paymentMethod.ORDER && (
 				<>
 					<Input
 						label="Purchase order number"

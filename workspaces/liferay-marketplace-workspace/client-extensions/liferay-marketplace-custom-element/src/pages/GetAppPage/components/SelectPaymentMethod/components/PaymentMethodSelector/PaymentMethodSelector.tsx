@@ -4,6 +4,7 @@
  */
 
 import {CardButton} from '../../../../../../components/CardButton/CardButton';
+import { paymentMethod } from '../../../../enums/paymentMethod';
 
 interface PaymentMethodInfo {
 	description: string;
@@ -25,17 +26,17 @@ export function PaymentMethodSelector({
 		{
 			description: 'Try Now. Pay Later.',
 			disabled: !enableTrial,
-			method: 'trial',
+			method: paymentMethod.TRIAL,
 			title: '30-day trial',
 		},
 		{
 			description: 'Pay Today',
-			method: 'pay',
+			method: paymentMethod.PAY,
 			title: 'Pay Now',
 		},
 		{
 			description: 'Requires a PO Number',
-			method: 'order',
+			method: paymentMethod.ORDER,
 			title: 'Invoice',
 		},
 	];

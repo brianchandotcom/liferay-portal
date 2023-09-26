@@ -78,9 +78,7 @@ const DonutChart = ({
 				<span className="text-nowrap">
 					{titleChart}
 
-					<b>
-						{valueChart}
-					</b>
+					<b>{valueChart}</b>
 				</span>
 
 				<div className="d-flex">

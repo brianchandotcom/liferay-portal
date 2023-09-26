@@ -36,7 +36,7 @@ ObjectDefinition objectDefinition = viewObjectEntriesDisplayContext.getObjectDef
 				module="js/components/ModalDeleteObjectEntry"
 				props='<%=
 					HashMapBuilder.<String, Object>put(
-						"objectEntryBaseAPIURL", viewObjectEntriesDisplayContext.getAPIURL()
+						"byExternalReferenceCodePath", viewObjectEntriesDisplayContext.getByExternalReferenceCodePath()
 					).build()
 				%>'
 			/>

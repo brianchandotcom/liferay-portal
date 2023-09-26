@@ -87,6 +87,10 @@ public class ViewObjectEntriesDisplayContext {
 		return _apiURL + _getQueryString();
 	}
 
+	public String getByExternalReferenceCodePath() {
+		return _apiURL + "/by-external-reference-code";
+	}
+
 	public CreationMenu getCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 

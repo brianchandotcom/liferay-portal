@@ -982,11 +982,11 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getStatus() {
-		if ((_status == null) || !_status.equals("completed")) {
+		if ((status == null) || !status.equals("completed")) {
 			getResult();
 		}
 
-		return _status;
+		return status;
 	}
 
 	@Override
@@ -1300,47 +1300,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public int getTotalSlavesUsedCount() {
-		return getTotalSlavesUsedCount(null, false);
-	}
-
-	@Override
-	public int getTotalSlavesUsedCount(
-		String status, boolean modifiedBuildsOnly) {
-
-		return getTotalSlavesUsedCount(status, modifiedBuildsOnly, false);
-	}
-
-	@Override
-	public int getTotalSlavesUsedCount(
-		String status, boolean modifiedBuildsOnly, boolean ignoreCurrentBuild) {
-
-		int totalSlavesUsedCount = 1;
-
-		if (ignoreCurrentBuild || (modifiedBuildsOnly && !isBuildModified()) ||
-			((status != null) && !_status.equals(status))) {
-
-			totalSlavesUsedCount = 0;
-		}
-
-		List<Build> downstreamBuilds;
-
-		if (modifiedBuildsOnly) {
-			downstreamBuilds = getModifiedDownstreamBuildsByStatus(status);
-		}
-		else {
-			downstreamBuilds = getDownstreamBuilds(status);
-		}
-
-		for (Build downstreamBuild : downstreamBuilds) {
-			totalSlavesUsedCount += downstreamBuild.getTotalSlavesUsedCount(
-				status, modifiedBuildsOnly);
-		}
-
-		return totalSlavesUsedCount;
-	}
-
-	@Override
 	public List<TestResult> getUniqueFailureTestResults() {
 		List<TestResult> uniqueFailureTestResults = new ArrayList<>();
 
@@ -1453,7 +1412,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean isBuildModified() {
-		return !_status.equals(_previousStatus);
+		return !status.equals(_previousStatus);
 	}
 
 	@Override
@@ -1724,7 +1683,7 @@ public abstract class BaseBuild implements Build {
 			 (isBuildModified() || hasModifiedDownstreamBuilds())) ||
 			!status.equals("completed")) {
 
-			_previousStatus = _status;
+			_previousStatus = this.status;
 
 			try {
 				if (status.equals("missing") || status.equals("queued") ||
@@ -2834,16 +2793,17 @@ public abstract class BaseBuild implements Build {
 
 		Dom4JUtil.addToElement(buildInfoElement, diffDurationElement);
 
-		String status = getStatus();
+		String currentStatus = getStatus();
 
-		if (status != null) {
-			status = StringUtils.upperCase(status);
+		if (currentStatus != null) {
+			currentStatus = StringUtils.upperCase(currentStatus);
 		}
 		else {
-			status = "";
+			currentStatus = "";
 		}
 
-		Dom4JUtil.getNewElement(cellElementTagName, buildInfoElement, status);
+		Dom4JUtil.getNewElement(
+			cellElementTagName, buildInfoElement, currentStatus);
 
 		String result = getResult();
 
@@ -3431,8 +3391,8 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected void setStatus(String status) {
-		if (_isDifferent(status, _status)) {
-			_status = status;
+		if (_isDifferent(status, this.status)) {
+			this.status = status;
 
 			long previousStatusModifiedTime = statusModifiedTime;
 
@@ -3519,6 +3479,7 @@ public abstract class BaseBuild implements Build {
 	protected List<SlaveOfflineRule> slaveOfflineRules =
 		SlaveOfflineRule.getSlaveOfflineRules();
 	protected Long startTime;
+	protected String status;
 	protected Map<String, Long> statusDurations = new HashMap<>();
 	protected long statusModifiedTime;
 	protected Element upstreamJobFailureMessageElement;
@@ -3921,7 +3882,6 @@ public abstract class BaseBuild implements Build {
 	private final Build _parentBuild;
 	private String _previousStatus;
 	private int _reinvocationCount;
-	private String _status;
 	private StopWatchRecordsGroup _stopWatchRecordsGroup;
 	private Map<String, TestClassResult> _testClassResults;
 	private List<URL> _testrayAttachmentURLs;

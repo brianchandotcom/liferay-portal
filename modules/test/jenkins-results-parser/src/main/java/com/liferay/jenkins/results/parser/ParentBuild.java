@@ -22,6 +22,14 @@ public interface ParentBuild extends Build {
 
 	public Build getLongestRunningDownstreamBuild();
 
+	public int getTotalSlavesUsedCount();
+
+	public int getTotalSlavesUsedCount(
+		String status, boolean modifiedBuildsOnly);
+
+	public int getTotalSlavesUsedCount(
+		String status, boolean modifiedBuildsOnly, boolean ignoreCurrentBuild);
+
 	public void removeDownstreamBuild(Build build);
 
 }

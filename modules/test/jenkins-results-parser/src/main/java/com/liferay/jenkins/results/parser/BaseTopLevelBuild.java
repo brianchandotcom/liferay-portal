@@ -2266,10 +2266,14 @@ public abstract class BaseTopLevelBuild
 				slaveUsage = 0;
 			}
 
-			slaveUsage += modifiedDownstreamBuild.getTotalSlavesUsedCount(
-				"running", true);
-			slaveUsage -= modifiedDownstreamBuild.getTotalSlavesUsedCount(
-				"completed", true);
+			if (modifiedDownstreamBuild instanceof ParentBuild) {
+				ParentBuild parentBuild = (ParentBuild)modifiedDownstreamBuild;
+
+				slaveUsage += parentBuild.getTotalSlavesUsedCount(
+					"running", true);
+				slaveUsage -= parentBuild.getTotalSlavesUsedCount(
+					"completed", true);
+			}
 
 			slaveUsages.put(metricLabels, slaveUsage);
 		}

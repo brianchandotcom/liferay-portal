@@ -96,6 +96,16 @@ return (element.offsetWidth < element.scrollWidth).toString();
 		}
 	}
 
+	macro changeElementValueById {
+		WaitForSPARefresh();
+
+		var javascript = '''
+document.getElementById('${elementId}').value = '${newValue}';
+		''';
+
+		var response = selenium.getEval(${javascript});
+	}
+
 	macro fail {
 		if (!(isSet(message))) {
 			var message = "FAIL";

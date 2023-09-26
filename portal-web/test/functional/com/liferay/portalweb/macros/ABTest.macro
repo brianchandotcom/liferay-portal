@@ -349,7 +349,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro confirmTerminateTest {
+	macro assertTerminateTest {
         AssertTextEquals.assertPartialText(
             locator1 = "Modal#MODAL_CONTENT",
             value1 = "Are you sure you want to terminate this test?");

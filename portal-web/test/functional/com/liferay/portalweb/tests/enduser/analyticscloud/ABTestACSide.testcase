@@ -177,13 +177,7 @@ definition {
 		task ("Click on the new tab open and terminate the created AB test") {
 			SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
 
-			AssertTextEquals.assertPartialText(
-				locator1 = "Modal#MODAL_CONTENT",
-				value1 = "Are you sure you want to terminate this test?");
-
-			Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
-
-			Alert.viewSuccessMessageText(successMessage = "Success:Your request completed successfully.");
+			ABTest.assertTerminateTest();
 		}
 
 		task ("Check that the test status is terminated") {
@@ -229,7 +223,7 @@ definition {
         task ("Click to terminate the test") {
             Button.click(button = "Terminate Test");
 
-            ABTest.confirmTerminateTest();
+            ABTest.assertTerminateTest();
         }
 
         task ("Click to publish the variant") {
@@ -297,7 +291,7 @@ definition {
         task ("Click to terminate the test") {
             Button.click(button = "Terminate Test");
 
-            ABTest.confirmTerminateTest();
+            ABTest.assertTerminateTest();
         }
 
         task ("Click to publish the control") {
@@ -330,7 +324,7 @@ definition {
         task ("Click to terminate the test on DXP side") {
             Button.click(button = "Terminate Test");
 
-            ABTest.confirmTerminateTest();
+            ABTest.assertTerminateTest();
         }
 
         task ("Create a new AB test") {

@@ -1,4 +1,11 @@
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Paths;
+
 apply plugin: "com.liferay.maven.plugin.builder"
+
+task installStandalone(type: Copy)
+task unzipStandalone(type: Copy)
 
 buildPluginDescriptor {
 	ext {
@@ -60,6 +67,27 @@ deployDependencies {
 	rename(/checkstyle-(.+)\.jar/, "checkstyle" + renameSuffix)
 }
 
+installStandalone {
+	doLast {
+		println "Source formatter standalone is installed into ${ext.installPath}"
+	}
+
+	eachFile {
+		fileCopyDetails ->
+		FileSystem defaultFileSystem = FileSystems.getDefault()
+
+		int index = fileCopyDetails.path.indexOf(defaultFileSystem.getSeparator())
+
+		fileCopyDetails.path = fileCopyDetails.path.substring(index)
+	}
+
+	ext.installPath = Paths.get(System.properties['user.home'], ".liferay", "source-formatter-standalone")
+
+	from(unzipStandalone)
+
+	into ext.installPath
+}
+
 liferay {
 	deployDir = "../../../tools/sdk/dependencies/com.liferay.source.formatter/lib"
 }
@@ -75,6 +103,11 @@ publishing {
 			artifact distZip
 		}
 	}
+}
+
+unzipStandalone {
+	from zipTree(distZip.archiveFile)
+	into "${buildDir}/source-formatter-standalone"
 }
 
 updateFileVersions {

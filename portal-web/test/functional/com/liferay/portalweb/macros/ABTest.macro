@@ -68,12 +68,16 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createABTest(goal = null, testTitle = null) {
-		while (IsElementNotPresent(key_text = "Create Test", locator1 = "Button#ANY")) {
+	macro createABTest(goal = null, testTitle = null,) {
+		if (IsElementPresent(locator1 = "ABTest#CLOSED_ADMIN_PANEL")) {
 			Click(locator1 = "ABTest#AB_TEST_BUTTON");
+		} 
+		if (IsElementPresent(locator1 = "Button#ANY", key_text = "Create Test")) {
+			Button.click(button = "Create Test");
 		}
-
-		Button.click(button = "Create Test");
+		else {
+			Button.click(button = "Create New Test");
+		}
 
 		ABTest.fillInput(
 			key_testTitle = ${testTitle},

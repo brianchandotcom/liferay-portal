@@ -362,6 +362,21 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	}
 
 	@Override
+	public boolean hasBuildURL(String buildURL) {
+		if (super.hasBuildURL(buildURL)) {
+			return true;
+		}
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (downstreamBuild.hasBuildURL(buildURL)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean hasDownstreamBuilds() {
 		if (getDownstreamBuildCount(null, null) > 0) {
 			return true;
@@ -551,5 +566,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 			setStatus("completed");
 		}
 	}
+
+	protected List<Build> downstreamBuilds = new ArrayList<>();
 
 }

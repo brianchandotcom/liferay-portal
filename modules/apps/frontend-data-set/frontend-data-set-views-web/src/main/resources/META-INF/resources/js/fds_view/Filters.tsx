@@ -171,8 +171,8 @@ function AddFDSFilterModalContent({
 				include: includeMode === 'include',
 				listTypeDefinitionERC: selectedPicklist?.externalReferenceCode,
 				multiple,
-				preselectedValues: preselectedValues.map(
-					(item) => item.externalReferenceCode
+				preselectedValues: JSON.stringify(
+					preselectedValues.map((item) => item.externalReferenceCode)
 				),
 			};
 

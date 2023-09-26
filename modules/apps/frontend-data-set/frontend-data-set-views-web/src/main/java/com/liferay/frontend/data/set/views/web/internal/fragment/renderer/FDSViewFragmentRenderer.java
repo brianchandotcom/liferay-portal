@@ -688,7 +688,9 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 			String key = preselectedValuesJSONArray.getString(i);
 
 			for (ListTypeEntry listTypeEntry : listTypeEntries) {
-				if (Objects.equals(listTypeEntry.getKey(), key)) {
+				if (Objects.equals(
+						listTypeEntry.getExternalReferenceCode(), key)) {
+
 					jsonArray.put(
 						JSONUtil.put(
 							"label", listTypeEntry.getName(locale)

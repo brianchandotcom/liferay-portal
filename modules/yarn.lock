@@ -1840,15 +1840,10 @@
   dependencies:
     jquery ">=1.5"
 
-"@liferay/js-api@0.3.0-pre.0":
-  version "0.3.0-pre.0"
-  resolved "https://registry.yarnpkg.com/@liferay/js-api/-/js-api-0.3.0-pre.0.tgz#8bf4038878cc704eebc699617f63330b076f0aff"
-  integrity sha512-OEjqmDyziskS0frCQDZmg5wlF83yhXda+4w6t/h88LQkzPcB6VwezTRdsRtPKk94BvfEPZoA/uFNs7/tJUbCYA==
-
-"@liferay/js-api@0.4.0-pre.0":
-  version "0.4.0-pre.0"
-  resolved "https://registry.yarnpkg.com/@liferay/js-api/-/js-api-0.4.0-pre.0.tgz#94eab0b54f7fc8f5518250d80d51d837376723a5"
-  integrity sha512-3aKkybbv/WWaFHmggtWx3ndQFwqQPQuHCHDzbGjWjemi9yB7dmb72NP8Sd53xlzlF1QrXI3mcEyLurT6H4ZPrQ==
+"@liferay/js-api@0.5.1-pre.0":
+  version "0.5.1-pre.0"
+  resolved "https://registry.yarnpkg.com/@liferay/js-api/-/js-api-0.5.1-pre.0.tgz#63f083ef7056383be68c5ab3860149a9cdeb6f47"
+  integrity sha512-ylk5NpmHEx6MkZjCZ8ifxzdA10lO+ARJSNC+6kk2PQu0PTKvz87t3uVR+zAtb1TcSIUaHuI1L53O8DSGRONHAQ==
 
 "@liferay/js-toolkit-core@3.0.1":
   version "3.0.1"

@@ -1,0 +1,32 @@
+[
+	{
+		"key": "sites",
+		"value": {
+			"en-US": "Sites"
+		}
+	},
+	{
+		"key": "marketplace",
+		"value": {
+			"en-US": "Marketplace"
+		}
+	},
+	{
+		"key": "liferay-learn",
+		"value": {
+			"en-US": "Liferay Learn"
+		}
+	},
+	{
+		"key": "help-center",
+		"value": {
+			"en-US": "Help Center"
+		}
+	},
+	{
+		"key": "community",
+		"value": {
+			"en-US": "Community"
+		}
+	}
+]

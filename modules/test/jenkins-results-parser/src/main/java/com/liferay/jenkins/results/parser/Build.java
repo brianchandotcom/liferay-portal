@@ -110,12 +110,6 @@ public interface Build {
 
 	public String getJobVariant();
 
-	public int getJobVariantsDownstreamBuildCount(
-		List<String> jobVariants, String result, String status);
-
-	public List<Build> getJobVariantsDownstreamBuilds(
-		Iterable<String> jobVariants, String result, String status);
-
 	public Long getLatestStartTimestamp();
 
 	public Build getLongestDelayedDownstreamBuild();

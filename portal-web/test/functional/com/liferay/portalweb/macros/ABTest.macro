@@ -349,6 +349,16 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro confirmTerminateTest {
+        AssertTextEquals.assertPartialText(
+            locator1 = "Modal#MODAL_CONTENT",
+            value1 = "Are you sure you want to terminate this test?");
+            
+        Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
+            
+        Alert.viewSuccessMessageText(successMessage = "Success:Your request completed successfully.");
+    }
+
 	@summary = "Default summary"
 	macro viewDataInAnalyticsCloud() {
 		AssertElementPresent(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");

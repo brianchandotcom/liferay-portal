@@ -114,10 +114,6 @@ public interface Build {
 
 	public Map<String, String> getMetricLabels();
 
-	public List<Build> getModifiedDownstreamBuilds();
-
-	public List<Build> getModifiedDownstreamBuildsByStatus(String status);
-
 	public Map<String, String> getParameters();
 
 	public String getParameterValue(String name);

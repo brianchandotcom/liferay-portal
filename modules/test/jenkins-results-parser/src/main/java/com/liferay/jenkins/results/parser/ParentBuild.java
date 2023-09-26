@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +22,10 @@ public interface ParentBuild extends Build {
 	public Build getLongestDelayedDownstreamBuild();
 
 	public Build getLongestRunningDownstreamBuild();
+
+	public List<Build> getModifiedDownstreamBuilds();
+
+	public List<Build> getModifiedDownstreamBuildsByStatus(String status);
 
 	public int getTotalSlavesUsedCount();
 

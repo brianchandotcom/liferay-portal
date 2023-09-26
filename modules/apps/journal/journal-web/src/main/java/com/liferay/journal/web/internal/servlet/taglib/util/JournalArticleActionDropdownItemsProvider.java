@@ -341,6 +341,48 @@ public class JournalArticleActionDropdownItemsProvider {
 		return dropdownItems;
 	}
 
+	public List<DropdownItem> getArticleVersionTabActionDropdownItems()
+		throws Exception {
+
+		UnsafeConsumer<DropdownItem, Exception> previewContentArticleAction =
+			_getPreviewArticleActionUnsafeConsumer();
+
+		String articleId =
+			_article.getArticleId() + JournalPortlet.VERSION_SEPARATOR +
+				_article.getVersion();
+
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() ->
+							JournalArticlePermission.contains(
+								_themeDisplay.getPermissionChecker(), _article,
+								ActionKeys.VIEW) &&
+							(previewContentArticleAction != null),
+						previewContentArticleAction
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() ->
+							JournalArticlePermission.contains(
+								_themeDisplay.getPermissionChecker(), _article,
+								ActionKeys.EXPIRE) &&
+							((_article.getStatus() ==
+								WorkflowConstants.STATUS_APPROVED) ||
+							 (_article.getStatus() ==
+								 WorkflowConstants.STATUS_SCHEDULED)),
+						_getExpireArticleActionConsumer(articleId)
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).build();
+	}
+
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getAutoCopyArticleActionUnsafeConsumer() {
 

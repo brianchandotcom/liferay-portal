@@ -599,6 +599,19 @@ public class JournalDisplayContext {
 		).build();
 	}
 
+	public List<TabsItem> getInfoPanelTabsItems() {
+		return TabsItemListBuilder.add(
+			tabsItem -> {
+				tabsItem.setActive(true);
+				tabsItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "details"));
+			}
+		).add(
+			tabsItem -> tabsItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "versions"))
+		).build();
+	}
+
 	public String getKeywords() {
 		if (_keywords != null) {
 			return _keywords;

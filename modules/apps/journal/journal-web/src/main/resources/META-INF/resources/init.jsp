@@ -122,6 +122,7 @@ page import="com.liferay.journal.web.internal.display.context.JournalHistoryMana
 page import="com.liferay.journal.web.internal.display.context.JournalManagementToolbarDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalMoveEntriesDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalPreviewArticleContentTemplateDisplayContext" %><%@
+page import="com.liferay.journal.web.internal.display.context.JournalVersionTabDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalViewMoreMenuItemsDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalViewMoreMenuItemsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.helper.JournalWebRequestHelper" %><%@

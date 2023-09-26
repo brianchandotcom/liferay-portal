@@ -74,6 +74,7 @@ public class FeatureFlagsBagProviderImpl
 		return FeatureFlagsBagProviderImpl.class.getName();
 	}
 
+	@Clusterable
 	@Override
 	public void setEnabled(long companyId, String key, boolean enabled) {
 		_featureFlagPreferencesManager.setEnabled(companyId, key, enabled);
@@ -244,7 +245,6 @@ public class FeatureFlagsBagProviderImpl
 		}
 	}
 
-	@Clusterable
 	private void _setEnabled(long companyId, String key, boolean enabled) {
 		FeatureFlagsBag featureFlagsBag = _featureFlagsBagMap.get(companyId);
 

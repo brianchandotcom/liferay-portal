@@ -3,14 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-/// <reference types="react" />
-
+import React from 'react';
 interface ModalDeletionNotAllowedProps {
+	content: React.ReactNode;
 	onVisibilityChange: () => void;
-	selectedItemLabel: string;
 }
-export declare function ModalDeletionNotAllowed({
+declare function ModalDeletionNotAllowed({
+	content,
 	onVisibilityChange,
-	selectedItemLabel,
 }: ModalDeletionNotAllowedProps): JSX.Element;
-export {};
+export default ModalDeletionNotAllowed;

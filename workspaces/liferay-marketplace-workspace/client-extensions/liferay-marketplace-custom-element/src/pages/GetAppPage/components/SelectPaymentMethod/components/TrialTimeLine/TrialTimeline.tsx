@@ -35,8 +35,8 @@ export function TrialTimeline() {
 	const endOfTrialMonth = months[date.getMonth()];
 
 	return (
-		<div className="get-app-modal-trial">
-			<div className="get-app-modal-trial-timeline">
+		<div className="d-flex get-app-modal-trial">
+			<div className="d-flex flex-column get-app-modal-trial-timeline">
 				<img
 					alt="circle fill"
 					className="get-app-modal-trial-timeline-icon-selected"

@@ -1,5 +1,4 @@
 .get-app-modal-trial {
-	display: flex;
 
 	&-messages {
 		margin-left: 16px;
@@ -23,8 +22,6 @@
 	}
 
 	&-timeline {
-		display: flex;
-		flex-direction: column;
 		padding-top: 4px;
 
 		&-icon-selected {

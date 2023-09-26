@@ -11,6 +11,7 @@ import {
 	getLocalizableLabel,
 	stringToURLParameterFormat,
 } from '@liferay/object-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {
@@ -19,7 +20,7 @@ import {
 	fdsItem,
 	formatActionURL,
 } from '../../utils/fds';
-import {ModalDeletionNotAllowed} from '../ModalDeletionNotAllowed';
+import ModalDeletionNotAllowed from '../ModalDeletionNotAllowed';
 import objectDefinitionModifiedDateDataRenderer from './FDSDataRenderers/ObjectDefinitionModifiedDateDataRenderer';
 import objectDefinitionStatusDataRenderer from './FDSDataRenderers/ObjectDefinitionStatusDataRenderer';
 import objectDefinitionSystemDataRenderer from './FDSDataRenderers/ObjectDefinitionSystemDataRenderer';
@@ -439,6 +440,22 @@ export default function ViewObjectDefinitions({
 				selectedObjectDefinition &&
 				Liferay.FeatureFlags['LPS-187142'] && (
 					<ModalDeletionNotAllowed
+						content={
+							<span
+								dangerouslySetInnerHTML={{
+									__html: sub(
+										Liferay.Language.get(
+											'x-is-being-used-by-a-root-object-and-cannot-be-deleted'
+										),
+										`<strong>"${getLocalizableLabel(
+											selectedObjectDefinition.defaultLanguageId,
+											selectedObjectDefinition.label,
+											selectedObjectDefinition.name
+										)}"</strong>`
+									),
+								}}
+							/>
+						}
 						onVisibilityChange={() =>
 							setShowModal(
 								(
@@ -449,11 +466,6 @@ export default function ViewObjectDefinitions({
 								})
 							)
 						}
-						selectedItemLabel={getLocalizableLabel(
-							selectedObjectDefinition.defaultLanguageId,
-							selectedObjectDefinition.label,
-							selectedObjectDefinition.name
-						)}
 					/>
 				)}
 

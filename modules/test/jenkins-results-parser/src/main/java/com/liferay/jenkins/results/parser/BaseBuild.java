@@ -1252,26 +1252,12 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public List<TestResult> getUniqueFailureTestResults() {
-		List<TestResult> uniqueFailureTestResults = new ArrayList<>();
-
-		for (Build downstreamBuild : getFailedDownstreamBuilds()) {
-			uniqueFailureTestResults.addAll(
-				downstreamBuild.getUniqueFailureTestResults());
-		}
-
-		return uniqueFailureTestResults;
+		return Collections.emptyList();
 	}
 
 	@Override
 	public List<TestResult> getUpstreamJobFailureTestResults() {
-		List<TestResult> upstreamFailureTestResults = new ArrayList<>();
-
-		for (Build downstreamBuild : getFailedDownstreamBuilds()) {
-			upstreamFailureTestResults.addAll(
-				downstreamBuild.getUpstreamJobFailureTestResults());
-		}
-
-		return upstreamFailureTestResults;
+		return Collections.emptyList();
 	}
 
 	@Override

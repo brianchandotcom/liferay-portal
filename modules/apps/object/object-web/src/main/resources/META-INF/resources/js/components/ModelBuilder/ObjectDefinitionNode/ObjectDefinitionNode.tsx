@@ -4,7 +4,7 @@
  */
 
 import classNames from 'classnames';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
 	Elements,
 	Handle,
@@ -73,7 +73,6 @@ export function ObjectDefinitionNode({
 			editObjectDefinitionURL,
 			elements,
 			objectDefinitionPermissionsURL,
-			selectedObjectDefinitionNode,
 			selectedObjectFolder,
 		},
 		dispatch,
@@ -163,6 +162,26 @@ export function ObjectDefinitionNode({
 		});
 	};
 
+	useEffect(() => {
+		const makeFetch = async () => {
+			if (selected) {
+				const url = createResourceURL(baseResourceURL, {
+					objectDefinitionId: id,
+					p_p_resource_id:
+						'/object_definitions/get_object_relationship_info',
+				}).href;
+
+				const {parameterRequired} = await API.fetchJSON<{
+					parameterRequired: boolean;
+				}>(url);
+
+				setObjectRelationshipParameterRequired(parameterRequired);
+			}
+		};
+
+		makeFetch();
+	}, [baseResourceURL, id, selected]);
+
 	return (
 		<>
 			<div
@@ -184,27 +203,6 @@ export function ObjectDefinitionNode({
 						},
 						type: TYPES.SET_SELECTED_OBJECT_DEFINITION_NODE,
 					});
-
-					const makeFetch = async () => {
-						if (selectedObjectDefinitionNode) {
-							const url = createResourceURL(baseResourceURL, {
-								objectDefinitionId:
-									selectedObjectDefinitionNode.id,
-								p_p_resource_id:
-									'/object_definitions/get_object_relationship_info',
-							}).href;
-
-							const {parameterRequired} = await API.fetchJSON<{
-								parameterRequired: boolean;
-							}>(url);
-
-							setObjectRelationshipParameterRequired(
-								parameterRequired
-							);
-						}
-					};
-
-					makeFetch();
 				}}
 				onMouseEnter={() => {
 					displayNodeHandles(true);
@@ -355,8 +353,7 @@ export function ObjectDefinitionNode({
 						);
 					}}
 					objectDefinitionExternalReferenceCode1={
-						selectedObjectDefinitionNode?.data
-							?.externalReferenceCode as string
+						externalReferenceCode
 					}
 					objectRelationshipParameterRequired={
 						objectRelationshipParameterRequired

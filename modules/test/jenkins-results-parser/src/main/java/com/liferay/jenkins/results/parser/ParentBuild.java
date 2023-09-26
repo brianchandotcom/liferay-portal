@@ -21,6 +21,8 @@ public interface ParentBuild extends Build {
 
 	public int getDownstreamBuildCount(String result, String status);
 
+	public List<Build> getDownstreamBuilds();
+
 	public List<Build> getDownstreamBuilds(String status);
 
 	public List<Build> getDownstreamBuilds(String result, String status);

@@ -444,7 +444,7 @@ public abstract class BaseTopLevelBuild
 	@Override
 	public Element getGitHubMessageElement() {
 		Collections.sort(
-			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
+			getDownstreamBuilds(), new BaseBuild.BuildDisplayNameComparator());
 
 		if (getParentBuild() == null) {
 			return getTopGitHubMessageElement();
@@ -643,7 +643,7 @@ public abstract class BaseTopLevelBuild
 	public Element getValidationGitHubMessageElement() {
 		ValidationBuild validationBuild = null;
 
-		for (Build downstreamBuild : downstreamBuilds) {
+		for (Build downstreamBuild : getDownstreamBuilds()) {
 			if (downstreamBuild instanceof ValidationBuild) {
 				validationBuild = (ValidationBuild)downstreamBuild;
 			}
@@ -901,7 +901,7 @@ public abstract class BaseTopLevelBuild
 
 		String consoleText = getConsoleText();
 
-		for (Build downstreamBuild : downstreamBuilds) {
+		for (Build downstreamBuild : getDownstreamBuilds()) {
 			BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
 
 			downstreamBaseBuild.checkForReinvocation(consoleText);
@@ -1946,7 +1946,7 @@ public abstract class BaseTopLevelBuild
 		String result, String upstreamBranchSHA) {
 
 		if ((result != null) && !result.matches("(APPROVED|SUCCESS)") &&
-			!downstreamBuilds.isEmpty() &&
+			hasDownstreamBuilds() &&
 			!upstreamBranchSHA.equals(
 				UpstreamFailureUtil.getUpstreamJobFailuresSHA(this))) {
 

@@ -22,10 +22,10 @@ public class DefaultTopLevelBuild extends BaseTopLevelBuild {
 	public String getResult() {
 		String result = super.getResult();
 
-		if (!downstreamBuilds.isEmpty() && (result == null)) {
+		if (hasDownstreamBuilds() && (result == null)) {
 			boolean hasFailure = false;
 
-			for (Build downstreamBuild : downstreamBuilds) {
+			for (Build downstreamBuild : getDownstreamBuilds()) {
 				String downstreamBuildResult = downstreamBuild.getResult();
 
 				if (downstreamBuildResult == null) {

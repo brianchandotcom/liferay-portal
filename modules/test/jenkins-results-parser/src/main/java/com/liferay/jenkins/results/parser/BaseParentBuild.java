@@ -73,6 +73,8 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		ParallelExecutor<Build> parallelExecutor = new ParallelExecutor<>(
 			callables, true, getExecutorService());
 
+		List<Build> downstreamBuilds = getDownstreamBuilds();
+
 		downstreamBuilds.addAll(
 			parallelExecutor.execute(1000L * 60L * 60L * 3L));
 	}
@@ -91,6 +93,8 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	@Override
 	public List<Callable<Object>> getArchiveCallables() {
 		List<Callable<Object>> archiveCallables = super.getArchiveCallables();
+
+		List<Build> downstreamBuilds = getDownstreamBuilds();
 
 		if ((downstreamBuilds != null) && !downstreamBuilds.isEmpty()) {
 			for (Build downstreamBuild : downstreamBuilds) {
@@ -114,6 +118,17 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	}
 
 	@Override
+	public synchronized List<Build> getDownstreamBuilds() {
+		if (_downstreamBuilds != null) {
+			return _downstreamBuilds;
+		}
+
+		_downstreamBuilds = new ArrayList<>();
+
+		return _downstreamBuilds;
+	}
+
+	@Override
 	public List<Build> getDownstreamBuilds(String status) {
 		return getDownstreamBuilds(null, status);
 	}
@@ -122,6 +137,8 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	public List<Build> getDownstreamBuilds(String result, String status) {
 		List<Build> filteredDownstreamBuilds = Collections.synchronizedList(
 			new ArrayList<Build>());
+
+		List<Build> downstreamBuilds = getDownstreamBuilds();
 
 		if ((result == null) && (status == null)) {
 			filteredDownstreamBuilds.addAll(downstreamBuilds);
@@ -235,6 +252,8 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	@Override
 	public List<Build> getModifiedDownstreamBuildsByStatus(String status) {
 		List<Build> modifiedDownstreamBuilds = new ArrayList<>();
+
+		List<Build> downstreamBuilds = getDownstreamBuilds();
 
 		for (Build downstreamBuild : downstreamBuilds) {
 			if (downstreamBuild.isBuildModified()) {
@@ -367,6 +386,8 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 			return true;
 		}
 
+		List<Build> downstreamBuilds = getDownstreamBuilds();
+
 		for (Build downstreamBuild : downstreamBuilds) {
 			if (downstreamBuild.hasBuildURL(buildURL)) {
 				return true;
@@ -387,6 +408,8 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 	@Override
 	public boolean hasModifiedDownstreamBuilds() {
+		List<Build> downstreamBuilds = getDownstreamBuilds();
+
 		for (Build build : downstreamBuilds) {
 			if (build.isBuildModified()) {
 				return true;
@@ -408,6 +431,8 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 	@Override
 	public void removeDownstreamBuild(Build build) {
+		List<Build> downstreamBuilds = getDownstreamBuilds();
+
 		downstreamBuilds.remove(build);
 	}
 
@@ -419,12 +444,10 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 		text = super.replaceBuildURL(text);
 
-		if (downstreamBuilds != null) {
-			for (Build downstreamBuild : getDownstreamBuilds("complete")) {
-				Build downstreamBaseBuild = downstreamBuild;
+		for (Build downstreamBuild : getDownstreamBuilds("complete")) {
+			Build downstreamBaseBuild = downstreamBuild;
 
-				text = downstreamBaseBuild.replaceBuildURL(text);
-			}
+			text = downstreamBaseBuild.replaceBuildURL(text);
 		}
 
 		return super.replaceBuildURL(text);
@@ -549,6 +572,8 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	protected void reset() {
 		super.reset();
 
+		List<Build> downstreamBuilds = getDownstreamBuilds();
+
 		downstreamBuilds.clear();
 	}
 
@@ -567,6 +592,6 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		}
 	}
 
-	protected List<Build> downstreamBuilds = new ArrayList<>();
+	private List<Build> _downstreamBuilds;
 
 }

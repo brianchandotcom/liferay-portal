@@ -8,7 +8,7 @@ import ClayButton from '@clayui/button';
 import infoCircleIcon from '../../../assets/icons/info_circle_icon.svg';
 import {getSiteURL} from '../../../components/InviteMemberModal/services';
 import {Liferay} from '../../../liferay/liferay';
-import { paymentMethod } from '../enums/paymentMethod';
+import {paymentMethod} from '../enums/paymentMethod';
 import {StepType} from '../enums/stepType';
 
 interface ProductFooterProps {
@@ -48,8 +48,10 @@ const ProductFooter = ({
 		const isAccountOrLicenseStep =
 			step === 'account' || step === 'licenses';
 		const isPayMethodSelected = selectedPaymentMethod === paymentMethod.PAY;
-		const isTrialMethodSelected = selectedPaymentMethod === paymentMethod.TRIAL;
-		const isOrderMethodSelected = selectedPaymentMethod === paymentMethod.ORDER;
+		const isTrialMethodSelected =
+			selectedPaymentMethod === paymentMethod.TRIAL;
+		const isOrderMethodSelected =
+			selectedPaymentMethod === paymentMethod.ORDER;
 
 		if (isFreeApp) {
 			return 'Get This App';

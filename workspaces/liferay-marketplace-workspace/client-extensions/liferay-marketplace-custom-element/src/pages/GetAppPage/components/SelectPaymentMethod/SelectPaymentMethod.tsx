@@ -6,7 +6,7 @@
 import {useState} from 'react';
 
 import {Input} from '../../../../components/Input/Input';
-import { paymentMethod } from '../../enums/paymentMethod';
+import {paymentMethod} from '../../enums/paymentMethod';
 import {BillingAddress} from './components/BillingAddress/BillingAddress';
 import {PaymentMethodMode} from './components/PaymentMethodMode/PaymentMethodMode';
 import {PaymentMethodSelector} from './components/PaymentMethodSelector/PaymentMethodSelector';

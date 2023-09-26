@@ -4,7 +4,7 @@
  */
 
 import {CardButton} from '../../../../../../components/CardButton/CardButton';
-import { paymentMethod } from '../../../../enums/paymentMethod';
+import {paymentMethod} from '../../../../enums/paymentMethod';
 
 interface PaymentMethodInfo {
 	description: string;

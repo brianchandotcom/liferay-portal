@@ -4,7 +4,7 @@
  */
 
 export enum paymentMethod {
-    ORDER = 'order',
-    PAY = 'pay',
-    TRIAL = 'trial'
+	ORDER = 'order',
+	PAY = 'pay',
+	TRIAL = 'trial',
 }

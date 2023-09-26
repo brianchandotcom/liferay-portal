@@ -71,7 +71,7 @@ public class GetSitesMVCResourceCommand implements MVCResourceCommand {
 			WebKeys.THEME_DISPLAY);
 
 		Group group = _groupService.fetchGroupByExternalReferenceCode(
-			ParamUtil.get(resourceRequest, "externalReferenceCode", ""),
+			ParamUtil.getString(resourceRequest, "externalReferenceCode"),
 			themeDisplay.getCompanyId());
 
 		if (group == null) {

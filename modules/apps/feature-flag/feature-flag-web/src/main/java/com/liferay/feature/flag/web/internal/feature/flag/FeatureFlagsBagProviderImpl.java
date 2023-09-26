@@ -65,8 +65,20 @@ public class FeatureFlagsBagProviderImpl
 
 	@Override
 	public FeatureFlagsBag getOrCreateFeatureFlagsBag(long companyId) {
-		return _featureFlagsBagMap.computeIfAbsent(
-			companyId, this::_createFeatureFlagsBag);
+		FeatureFlagsBag featureFlagsBag = _featureFlagsBagMap.get(companyId);
+
+		if (featureFlagsBag == null) {
+			featureFlagsBag = _createFeatureFlagsBag(companyId);
+
+			FeatureFlagsBag previousFeatureFlagsBag =
+				_featureFlagsBagMap.putIfAbsent(companyId, featureFlagsBag);
+
+			if (previousFeatureFlagsBag != null) {
+				featureFlagsBag = previousFeatureFlagsBag;
+			}
+		}
+
+		return featureFlagsBag;
 	}
 
 	@Override

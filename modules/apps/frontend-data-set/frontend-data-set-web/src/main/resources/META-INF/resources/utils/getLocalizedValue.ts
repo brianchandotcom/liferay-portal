@@ -40,6 +40,7 @@ export function getLocalizedValue(
 		return null;
 	}
 
+	const i18nFieldName = `${fieldName}_i18n`;
 	const rootPropertyName =
 		typeof fieldName === 'string' ? fieldName : fieldName[0];
 	let navigatedValue = item;
@@ -67,6 +68,17 @@ export function getLocalizedValue(
 				navigatedValue = navigatedValue[formattedProperty];
 			}
 		});
+	}
+	else if (
+		typeof fieldName === 'string' &&
+		item[i18nFieldName] &&
+		Object.keys(Liferay.Language.available).includes(
+			Object.keys(item[i18nFieldName])[0]
+		)
+	) {
+		valuePath.push(fieldName);
+		navigatedValue =
+			navigatedValue[i18nFieldName][getLanguageKey(item[i18nFieldName])];
 	}
 	else if (
 		typeof fieldName === 'string' &&

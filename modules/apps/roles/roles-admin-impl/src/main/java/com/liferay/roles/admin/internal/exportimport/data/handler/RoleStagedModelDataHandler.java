@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionConversionFilter;
-import com.liferay.portal.kernel.security.permission.PermissionConverterUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.security.permission.converter.PermissionConverter;
 import com.liferay.site.model.adapter.StagedGroup;
 
 import java.util.List;
@@ -97,9 +97,8 @@ public class RoleStagedModelDataHandler
 		String permissionsPath = ExportImportPathUtil.getModelPath(
 			role, "permissions.xml");
 
-		List<Permission> permissions =
-			PermissionConverterUtil.convertPermissions(
-				role, _permissionConversionFilter);
+		List<Permission> permissions = _permissionConverter.convertPermissions(
+			role, _permissionConversionFilter);
 
 		String xml = portletDataContext.toXML(permissions);
 
@@ -298,6 +297,9 @@ public class RoleStagedModelDataHandler
 
 	private final PermissionConversionFilter _permissionConversionFilter =
 		new ImportExportPermissionConversionFilter();
+
+	@Reference
+	private PermissionConverter _permissionConverter;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

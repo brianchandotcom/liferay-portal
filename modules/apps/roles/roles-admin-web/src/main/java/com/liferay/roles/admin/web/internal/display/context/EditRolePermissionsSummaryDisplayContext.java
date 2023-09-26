@@ -17,10 +17,10 @@ import com.liferay.portal.kernel.model.PermissionDisplay;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.PermissionConverterUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.RolePermissions;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.ResourceImpl;
+import com.liferay.portal.security.permission.converter.PermissionConverter;
 import com.liferay.roles.admin.web.internal.group.type.contributor.util.GroupTypeContributorUtil;
 import com.liferay.taglib.search.ResultRow;
 
@@ -121,8 +122,11 @@ public class EditRolePermissionsSummaryDisplayContext {
 			return _permissionDisplays;
 		}
 
-		List<Permission> permissions =
-			PermissionConverterUtil.convertPermissions(_getRole());
+		PermissionConverter permissionConverter =
+			_permissionConverterSnapshot.get();
+
+		List<Permission> permissions = permissionConverter.convertPermissions(
+			_getRole());
 
 		_permissionDisplays = new ArrayList<>(permissions.size());
 
@@ -418,6 +422,11 @@ public class EditRolePermissionsSummaryDisplayContext {
 			resultRows.add(row);
 		}
 	}
+
+	private static final Snapshot<PermissionConverter>
+		_permissionConverterSnapshot = new Snapshot<>(
+			EditRolePermissionsSummaryDisplayContext.class,
+			PermissionConverter.class);
 
 	private List<String> _headerNames;
 	private final HttpServletRequest _httpServletRequest;

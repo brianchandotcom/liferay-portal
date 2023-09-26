@@ -1797,14 +1797,16 @@ definition {
 
 			ABTest.createVariant(variantName = "Variant name");
 
-			ABTest.createVariant(variantName = "Variant name 2");
+			AssertVisible(
+				key_variantName = "Variant name",
+				locator1 = "ABTest#VARIANT_TITLE");
 		}
 
 		task ("Edit variant") {
-			ABTest.editVariantName(key_index = 2);
+			ABTest.editVariantName();
 
 			ABTest.fillInput(
-				key_testTitle = "Variant name 3",
+				key_testTitle = "Variant name 2",
 				labelValue = "Name");
 
 			Click(
@@ -1813,12 +1815,12 @@ definition {
 		}
 
 		task ("Assert that variant name is changed") {
-			AssertVisible(
+			AssertElementNotPresent(
 				key_variantName = "Variant name",
 				locator1 = "ABTest#VARIANT_TITLE");
 
 			AssertVisible(
-				key_variantName = "Variant name 3",
+				key_variantName = "Variant name 2",
 				locator1 = "ABTest#VARIANT_TITLE");
 		}
 	}

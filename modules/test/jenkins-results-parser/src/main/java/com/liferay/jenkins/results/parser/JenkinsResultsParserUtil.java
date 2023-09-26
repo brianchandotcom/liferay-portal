@@ -2715,7 +2715,7 @@ public class JenkinsResultsParserUtil {
 
 			testProjectName = testProjectName.replaceAll(":", "/");
 
-			return new File(baseDir.toString() + "/modules/" + testProjectName);
+			return new File(baseDir, "modules/" + testProjectName);
 		}
 
 		return null;

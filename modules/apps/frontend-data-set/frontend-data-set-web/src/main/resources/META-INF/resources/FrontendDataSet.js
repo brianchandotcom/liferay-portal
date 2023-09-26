@@ -253,7 +253,7 @@ const FrontendDataSet = ({
 				/* webpackIgnore: true */
 				filter.cxFilterURL
 			).then((module) => {
-				filter.cxFilterImplementation = module;
+				filter.cxFilterImplementation = module['default'];
 
 				return filter;
 			});

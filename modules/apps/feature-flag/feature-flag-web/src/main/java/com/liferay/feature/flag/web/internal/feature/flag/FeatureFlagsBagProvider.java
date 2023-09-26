@@ -10,6 +10,8 @@ import com.liferay.feature.flag.web.internal.model.DependencyAwareFeatureFlag;
 import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
 import com.liferay.feature.flag.web.internal.model.LanguageAwareFeatureFlag;
 import com.liferay.feature.flag.web.internal.model.PreferenceAwareFeatureFlag;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -18,6 +20,7 @@ import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
+import com.liferay.portal.kernel.feature.flag.listener.FeatureFlagListener;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -42,7 +45,10 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -82,6 +88,17 @@ public class FeatureFlagsBagProvider {
 		return function.apply(getOrCreateFeatureFlagsBag(companyId));
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, FeatureFlagListener.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
+	}
+
 	private static void _setEnabled(
 		long companyId, String key, boolean enabled) {
 
@@ -92,6 +109,23 @@ public class FeatureFlagsBagProvider {
 		}
 
 		featureFlagsBag.setEnabled(key, enabled);
+
+		FeatureFlag featureFlag = featureFlagsBag.getFeatureFlag(key);
+
+		if (featureFlag == null) {
+			return;
+		}
+
+		for (FeatureFlagListener featureFlagListener :
+				_serviceTrackerList.toList()) {
+
+			if (!enabled) {
+				featureFlagListener.onDisabled(featureFlag);
+			}
+			else {
+				featureFlagListener.onEnabled(featureFlag);
+			}
+		}
 	}
 
 	private FeatureFlagsBag _createFeatureFlagsBag(long companyId) {
@@ -220,6 +254,7 @@ public class FeatureFlagsBagProvider {
 	private static final Map<Long, FeatureFlagsBag> _featureFlagsBagMap =
 		new ConcurrentHashMap<>();
 	private static final Pattern _pattern = Pattern.compile("^([A-Z\\-0-9]+)$");
+	private static ServiceTrackerList<FeatureFlagListener> _serviceTrackerList;
 	private static final MethodKey _setEnabledMethodKey = new MethodKey(
 		FeatureFlagsBagProvider.class, "_setEnabled", long.class, String.class,
 		boolean.class);

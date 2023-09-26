@@ -53,7 +53,6 @@ import org.apache.commons.lang.StringUtils;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -249,76 +248,6 @@ public abstract class BaseTopLevelBuild
 		String tempMapName = "git." + gitRepositoryType + ".properties";
 
 		return getTempMap(tempMapName);
-	}
-
-	@Override
-	public JSONObject getBuildResultsJSONObject(
-		String[] buildResults, String[] testStatuses, String[] dataTypes) {
-
-		if (dataTypes == null) {
-			dataTypes = new String[] {"name", "status"};
-		}
-
-		List<String> dataTypesList = Arrays.asList(dataTypes);
-
-		JSONObject buildResultsJSONObject = new JSONObject();
-
-		JSONArray downstreamBuildJSONArray = new JSONArray();
-
-		List<String> buildResultsList = Collections.emptyList();
-
-		if (buildResults != null) {
-			buildResultsList = Arrays.asList(buildResults);
-		}
-
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			if (buildResultsList.isEmpty() ||
-				buildResultsList.contains(downstreamBuild.getResult())) {
-
-				downstreamBuildJSONArray.put(
-					downstreamBuild.getBuildResultsJSONObject(
-						buildResults, testStatuses, dataTypes));
-			}
-		}
-
-		buildResultsJSONObject.put(
-			"batchResults", downstreamBuildJSONArray
-		).put(
-			"buildNumber", getBuildNumber()
-		);
-
-		if (dataTypesList.contains("duration")) {
-			buildResultsJSONObject.put("duration", getDuration());
-		}
-
-		buildResultsJSONObject.put(
-			"jobURL", getJobURL()
-		).put(
-			"result", getResult()
-		).put(
-			"startTime", getStartTime()
-		);
-
-		if (dataTypesList.contains("stopWatchRecords")) {
-			StopWatchRecordsGroup stopWatchRecordsGroup =
-				getStopWatchRecordsGroup();
-
-			JSONArray stopWatchRecordsGroupJSONArray =
-				stopWatchRecordsGroup.getJSONArray();
-
-			if (stopWatchRecordsGroupJSONArray.length() > 0) {
-				buildResultsJSONObject.put(
-					"stopWatchRecords", stopWatchRecordsGroupJSONArray);
-			}
-		}
-
-		buildResultsJSONObject.put(
-			"testSuiteName", getTestSuiteName()
-		).put(
-			"upstreamBranchSHA", getUpstreamBranchSHA()
-		);
-
-		return buildResultsJSONObject;
 	}
 
 	@Override

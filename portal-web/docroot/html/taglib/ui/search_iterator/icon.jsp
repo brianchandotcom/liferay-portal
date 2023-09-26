@@ -83,6 +83,14 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 				}
 			}
 
+			request.setAttribute("liferay-ui:search-container-row:rowId", id.concat(StringPool.UNDERLINE.concat(row.getRowId())));
+
+			Map<String, Object> data = row.getData();
+
+			if (data == null) {
+				data = new HashMap<String, Object>();
+			}
+
 			String rowCssClass = row.getCssClass();
 
 			if (Validator.isNull(rowCssClass)) {
@@ -92,14 +100,6 @@ for (int i = 0; i < resultRowSplitterEntries.size(); i++) {
 			String rowElementId = namespace + id + "_" + row.getRowId();
 
 			request.setAttribute("liferay-ui:search-container-row:rowElementId", rowElementId);
-
-			request.setAttribute("liferay-ui:search-container-row:rowId", id.concat(StringPool.UNDERLINE.concat(row.getRowId())));
-
-			Map<String, Object> data = row.getData();
-
-			if (data == null) {
-				data = new HashMap<String, Object>();
-			}
 		%>
 
 			<dd class="<%= GetterUtil.getString(row.getClassName()) %> <%= rowCssClass %> <%= rowIsChecked ? "active" : StringPool.BLANK %>" data-qa-id="row" id="<%= rowElementId %>" <%= AUIUtil.buildData(data) %>>

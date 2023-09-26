@@ -432,4 +432,11 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		return failedDownstreamBuilds;
 	}
 
+	@Override
+	protected void reset() {
+		super.reset();
+
+		downstreamBuilds.clear();
+	}
+
 }

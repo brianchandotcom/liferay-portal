@@ -3091,8 +3091,6 @@ public abstract class BaseBuild implements Build {
 		setResult(null);
 
 		setBuildNumber(-1);
-
-		downstreamBuilds.clear();
 	}
 
 	protected void setBuildNumber(int buildNumber) {

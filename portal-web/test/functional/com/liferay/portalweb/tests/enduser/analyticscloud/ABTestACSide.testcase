@@ -270,4 +270,49 @@ definition {
 	}
 
 	@description = "Story: LRAC-14070 | Automation ID: LRAC-14574 | Test Summary: Can publish control from a terminated test"
+    @priority = 5
+    test CanPublishControlFromTerminatedTest {
+        task ("Edit the variant created") {
+            ABTest.editVariant(variantName = "Variant name");
+        }
+
+        task ("Add a heading to the page to diferentiate from the control") {
+            PageEditor.addFragment(
+                collectionName = "Basic Components",
+                fragmentName = "Heading");
+        }
+
+        task ("Click to save the variant") {
+            ABTest.saveVariant();
+        }
+
+        task ("Click to open the AB test panel") {
+            ABTest.openABTestPanel();
+
+            task ("Click to review and run the test") {
+                ABTest.runTest();
+            }
+        }
+
+        task ("Click to terminate the test") {
+            Button.click(button = "Terminate Test");
+
+            ABTest.confirmTerminateTest();
+        }
+
+        task ("Click to publish the control") {
+            ABTest.publishVariant(variantName = "Control");
+        }
+
+		task ("Assert the alert is shown") {
+			Alert.viewSuccessMessageText(successMessage = "Success:Control was published successfully.");
+		}
+
+        task ("Assert the control is published") {
+			AssertElementNotPresent(
+				locator1 = "Experience#FRAGMENT_HEADING",
+				value1 = "Heading Example");
+        }
+    }
+
 }

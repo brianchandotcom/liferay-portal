@@ -175,24 +175,6 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	/**
-	 * Returns the user's digest.
-	 *
-	 * @return     the user's digest
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public String getDigest() {
-		String digest = super.getDigest();
-
-		if (Validator.isNull(digest) && !isPasswordEncrypted()) {
-			digest = getDigest(getPassword());
-		}
-
-		return digest;
-	}
-
-	/**
 	 * Returns a digest for the user, incorporating the password.
 	 *
 	 * @param      password a password to incorporate with the digest

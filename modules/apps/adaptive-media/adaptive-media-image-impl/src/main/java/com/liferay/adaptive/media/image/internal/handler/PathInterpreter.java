@@ -20,14 +20,18 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Adolfo Pérez
  */
-@Component(service = PathInterpreter.class)
 public class PathInterpreter {
+
+	public PathInterpreter(
+		AMImageConfigurationHelper amImageConfigurationHelper,
+		DLAppService dlAppService) {
+
+		_amImageConfigurationHelper = amImageConfigurationHelper;
+		_dlAppService = dlAppService;
+	}
 
 	public Tuple<FileVersion, Map<String, String>> interpretPath(
 		String pathInfo) {
@@ -100,10 +104,7 @@ public class PathInterpreter {
 	private static final Pattern _pattern = Pattern.compile(
 		"/image/(\\d+)(?:/(\\d+))?/([^/]+)/(?:[^/]+)");
 
-	@Reference
-	private AMImageConfigurationHelper _amImageConfigurationHelper;
-
-	@Reference
-	private DLAppService _dlAppService;
+	private final AMImageConfigurationHelper _amImageConfigurationHelper;
+	private final DLAppService _dlAppService;
 
 }

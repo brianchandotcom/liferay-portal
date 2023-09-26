@@ -19,6 +19,7 @@ import com.liferay.adaptive.media.image.processor.AMImageAttribute;
 import com.liferay.adaptive.media.processor.AMAsyncProcessor;
 import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;
 import com.liferay.adaptive.media.processor.AMProcessor;
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,6 +34,7 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -67,6 +69,12 @@ public class AMImageRequestHandler
 		}
 
 		return adaptiveMedia;
+	}
+
+	@Activate
+	protected void activate() {
+		_pathInterpreter = new PathInterpreter(
+			_amImageConfigurationHelper, _dlAppService);
 	}
 
 	private AdaptiveMedia<AMProcessor<FileVersion>> _createRawAdaptiveMedia(
@@ -286,6 +294,8 @@ public class AMImageRequestHandler
 	private AMImageFinder _amImageFinder;
 
 	@Reference
+	private DLAppService _dlAppService;
+
 	private PathInterpreter _pathInterpreter;
 
 }

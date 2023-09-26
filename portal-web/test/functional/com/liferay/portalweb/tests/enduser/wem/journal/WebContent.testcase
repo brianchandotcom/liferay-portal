@@ -148,6 +148,12 @@ definition {
 
 		task ("Then the user could publish the web content") {
 			PortletEntry.publish();
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+			LexiconCard.viewSpecificCardThumbnail(
+				card = "Web Content Title",
+				imageFileName = "earth.png");
 		}
 
 		task ("When the user edits the web content") {
@@ -165,11 +171,11 @@ definition {
 
 			PortletEntry.publish();
 
-			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
-			AssertTextEquals(
-				locator1 = "WCEditWebContent#SELECT_FEATURED_IMAGE_INPUT",
-				value1 = "moon.png");
+			LexiconCard.viewSpecificCardThumbnail(
+				card = "Web Content Title",
+				imageFileName = "moon.png");
 		}
 	}
 

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CountryConstants;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -46,6 +48,8 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		_defineRegionCounter();
+
 		_companyLocalService.forEachCompany(
 			company -> {
 				try {
@@ -119,7 +123,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 			Company company, long countryId, JSONObject regionJSONObject)
 		throws Exception {
 
-		long regionId = increment();
+		long regionId = increment(Region.class.getName());
 		String regionName = regionJSONObject.getString("name");
 
 		_regionPreparedStatement.setLong(1, 0L);
@@ -171,6 +175,34 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 				6, entryMap.getValue());
 
 			_regionLocalizationPreparedStatement.addBatch();
+		}
+	}
+
+	private void _defineRegionCounter() throws Exception {
+		try (Statement statement = connection.createStatement();
+			ResultSet resultSet1 = statement.executeQuery(
+				StringBundler.concat(
+					"select currentId from Counter where name = '",
+					Region.class.getName(), "'"))) {
+
+			long currentId = 0;
+
+			if (resultSet1.next()) {
+				currentId = resultSet1.getLong("currentId");
+			}
+
+			try (ResultSet resultSet2 = statement.executeQuery(
+					"select max(regionId) from Region")) {
+
+				if (resultSet2.next()) {
+					long increment = Math.max(
+						0, resultSet2.getLong(1) - currentId);
+
+					if (increment > 0) {
+						increment(Region.class.getName(), (int)increment);
+					}
+				}
+			}
 		}
 	}
 

@@ -79,8 +79,7 @@ public class UploadCSDiagramSettingImageMVCActionCommand
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UploadCSDiagramSettingImageMVCActionCommand.
-			CSDiagramSettingImageUploadFileEntryHandler.class);
+		UploadCSDiagramSettingImageMVCActionCommand.class);
 
 	private volatile CSDiagramSettingImageConfiguration
 		_csDiagramSettingImageConfiguration;

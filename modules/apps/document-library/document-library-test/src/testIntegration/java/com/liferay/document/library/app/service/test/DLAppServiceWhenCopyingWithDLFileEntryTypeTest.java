@@ -207,7 +207,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 	}
 
 	@Test(expected = InvalidFileEntryTypeException.class)
-	public void testCopyFolderFailesWhenDLFileEntryTypeFromUnrelatedGroup()
+	public void testCopyFolderFailsWhenDLFileEntryTypeFromUnrelatedGroup()
 		throws Exception {
 
 		FileEntry fileEntry = _addFileEntry(

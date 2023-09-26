@@ -113,12 +113,17 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 			long originalThemeDisplayPlid = themeDisplay.getPlid();
 
 			try {
-				httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
 				httpServletRequest.setAttribute(
 					WebKeys.SHOW_PORTLET_TOPPER, Boolean.FALSE);
 
-				themeDisplay.setLayout(layout);
-				themeDisplay.setPlid(layout.getPlid());
+				if ((layout != originalRequestLayout) ||
+					(layout != themeDisplay.getLayout())) {
+
+					httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+					themeDisplay.setLayout(layout);
+					themeDisplay.setPlid(layout.getPlid());
+				}
 
 				themeDisplay.setRequest(httpServletRequest);
 
@@ -147,12 +152,17 @@ public class LayoutContentProviderImpl implements LayoutContentProvider {
 				return _htmlParser.extractText(content);
 			}
 			finally {
-				httpServletRequest.setAttribute(
-					WebKeys.LAYOUT, originalRequestLayout);
 				httpServletRequest.removeAttribute(WebKeys.SHOW_PORTLET_TOPPER);
 
-				themeDisplay.setLayout(originalThemeDisplayLayout);
-				themeDisplay.setPlid(originalThemeDisplayPlid);
+				if ((layout != originalRequestLayout) ||
+					(layout != themeDisplay.getLayout())) {
+
+					httpServletRequest.setAttribute(
+						WebKeys.LAYOUT, originalRequestLayout);
+
+					themeDisplay.setLayout(originalThemeDisplayLayout);
+					themeDisplay.setPlid(originalThemeDisplayPlid);
+				}
 
 				themeDisplay.setRequest(originalThemeDisplayHttpServletRequest);
 			}

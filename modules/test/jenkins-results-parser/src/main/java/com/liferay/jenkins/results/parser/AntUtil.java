@@ -253,8 +253,8 @@ public class AntUtil {
 			if (runningModulesTests) {
 				String projectName = parameters.get("test.task");
 
-				JenkinsResultsParserUtil.moveTestResultFiles(
-					JenkinsResultsParserUtil.getProjectTestResultDir(
+				TestClassResultUtil.moveTestResultFiles(
+					TestClassResultUtil.getProjectTestResultDir(
 						projectName, baseDir),
 					baseDir);
 			}

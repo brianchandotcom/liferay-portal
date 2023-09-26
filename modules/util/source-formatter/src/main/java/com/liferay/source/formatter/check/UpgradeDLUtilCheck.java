@@ -17,22 +17,6 @@ import java.util.regex.Pattern;
 public class UpgradeDLUtilCheck extends BaseUpgradeMatcherReplacementCheck {
 
 	@Override
-	protected String afterFormat(
-		String fileName, String absolutePath, String content,
-		String newContent) {
-
-		if (fileName.contains("jsp") &&
-			!newContent.contains("com.liferay.portal.kernel.util.PortalUtil")) {
-
-			return StringBundler.concat(
-				newContent, "\n\n<%@ page import=\"",
-				"com.liferay.portal.kernel.util.PortalUtil\" %>");
-		}
-
-		return addNewImports(fileName, newContent);
-	}
-
-	@Override
 	protected String formatMatcherIteration(
 		String content, String newContent, Matcher matcher) {
 

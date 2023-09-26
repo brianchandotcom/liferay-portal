@@ -17,13 +17,6 @@ import java.util.List;
  */
 public interface PermissionConverter {
 
-	public List<Permission> convertPermissions(long roleId)
-		throws PortalException;
-
-	public List<Permission> convertPermissions(
-			long roleId, PermissionConversionFilter permissionConversionFilter)
-		throws PortalException;
-
 	public List<Permission> convertPermissions(Role role)
 		throws PortalException;
 

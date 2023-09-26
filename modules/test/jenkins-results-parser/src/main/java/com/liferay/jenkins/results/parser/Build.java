@@ -25,10 +25,6 @@ public interface Build {
 
 	public static final String DEPENDENCIES_URL_TOKEN = "${dependencies.url}";
 
-	public void addDownstreamBuilds(Map<String, String> urlAxisNames);
-
-	public void addDownstreamBuilds(String... urls);
-
 	public void addTimelineData(TimelineData timelineData);
 
 	public void archive();
@@ -218,8 +214,6 @@ public interface Build {
 	public void reinvoke();
 
 	public void reinvoke(ReinvokeRule reinvokeRule);
-
-	public void removeDownstreamBuild(Build build);
 
 	public String replaceBuildURL(String text);
 

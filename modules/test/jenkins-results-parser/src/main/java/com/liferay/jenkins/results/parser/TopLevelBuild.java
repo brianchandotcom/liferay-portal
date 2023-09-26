@@ -15,7 +15,7 @@ import org.dom4j.Element;
 /**
  * @author Michael Hashimoto
  */
-public interface TopLevelBuild extends Build {
+public interface TopLevelBuild extends ParentBuild {
 
 	public String getAcceptanceUpstreamJobName();
 

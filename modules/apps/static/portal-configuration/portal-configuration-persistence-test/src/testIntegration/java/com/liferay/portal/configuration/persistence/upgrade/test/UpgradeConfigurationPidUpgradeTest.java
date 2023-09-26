@@ -12,6 +12,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -32,6 +34,7 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import java.util.Dictionary;
 import java.util.Objects;
@@ -150,6 +153,35 @@ public class UpgradeConfigurationPidUpgradeTest {
 		_testUpgradeConfigurationWithFile(CharPool.PERIOD);
 		_testUpgradeConfigurationWithFile(CharPool.TILDE);
 		_testUpgradeConfigurationWithFile(CharPool.UNDERLINE);
+	}
+
+	@Test
+	public void testUpgradeConfigurationWithLongServicePidWithOracle()
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() != DBType.ORACLE) {
+			return;
+		}
+
+		try {
+			_testUpgradeConfigurationWithLongServicePid();
+		}
+		catch (SQLException sqlException1) {
+			try {
+				_testUpgradeConfigurationWithLongServicePid();
+			}
+			catch (SQLException sqlException2) {
+				Assert.assertTrue(
+					"SQLException is not ORA-00001 caused by ORA-12899",
+					(sqlException1.getErrorCode() == 12899) &&
+					(sqlException2.getErrorCode() == 1));
+			}
+		}
+		finally {
+			_removeConfiguration(_SERVICE_FACTORY_PID);
+		}
 	}
 
 	@Test
@@ -275,6 +307,55 @@ public class UpgradeConfigurationPidUpgradeTest {
 			_removeConfiguration(_SERVICE_FACTORY_PID);
 
 			Files.delete(path);
+		}
+	}
+
+	private void _testUpgradeConfigurationWithLongServicePid()
+		throws Exception {
+
+		String fileName = _SERVICE_FACTORY_PID + ".default.config";
+
+		String service_pid = _SERVICE_FACTORY_PID;
+
+		String long_service_pid = new String(
+			new char[512]
+		).replace(
+			'\0', 'P'
+		);
+
+		Dictionary<String, String> dictionary = HashMapDictionaryBuilder.put(
+			FileInstallConstants.FELIX_FILE_INSTALL_FILENAME, fileName
+		).put(
+			"service.factoryPid", _SERVICE_FACTORY_PID
+		).put(
+			"service.pid", service_pid
+		).build();
+
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
+
+		ConfigurationHandler.write(unsyncByteArrayOutputStream, dictionary);
+
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"insert into Configuration_ (configurationId, " +
+						"dictionary) values(?, ?)")) {
+
+			preparedStatement.setString(1, service_pid + ".instance1");
+			preparedStatement.setString(
+				2, unsyncByteArrayOutputStream.toString());
+
+			preparedStatement.addBatch();
+
+			preparedStatement.setString(1, long_service_pid + ".instance1");
+			preparedStatement.setString(
+				2, unsyncByteArrayOutputStream.toString());
+
+			preparedStatement.addBatch();
+
+			preparedStatement.executeBatch();
 		}
 	}
 

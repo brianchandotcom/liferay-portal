@@ -1485,16 +1485,8 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String replaceBuildURL(String text) {
-		if ((text == null) || text.isEmpty()) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(text)) {
 			return text;
-		}
-
-		if (downstreamBuilds != null) {
-			for (Build downstreamBuild : getDownstreamBuilds("complete")) {
-				Build downstreamBaseBuild = downstreamBuild;
-
-				text = downstreamBaseBuild.replaceBuildURL(text);
-			}
 		}
 
 		text = text.replaceAll(

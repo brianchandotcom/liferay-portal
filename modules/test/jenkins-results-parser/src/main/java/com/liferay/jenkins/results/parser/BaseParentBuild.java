@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.regex.Matcher;
 
 /**
  * @author Michael Hashimoto
@@ -332,6 +333,25 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	@Override
 	public void removeDownstreamBuild(Build build) {
 		downstreamBuilds.remove(build);
+	}
+
+	@Override
+	public String replaceBuildURL(String text) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(text)) {
+			return text;
+		}
+
+		text = super.replaceBuildURL(text);
+
+		if (downstreamBuilds != null) {
+			for (Build downstreamBuild : getDownstreamBuilds("complete")) {
+				Build downstreamBaseBuild = downstreamBuild;
+
+				text = downstreamBaseBuild.replaceBuildURL(text);
+			}
+		}
+
+		return super.replaceBuildURL(text);
 	}
 
 	protected BaseParentBuild(String url) {

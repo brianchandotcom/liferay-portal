@@ -221,6 +221,22 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	}
 
 	@Override
+	public List<TestResult> getTestResults(String testStatus) {
+		List<TestResult> testResults = new ArrayList<>();
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			List<TestResult> downstreamTestResults =
+				downstreamBuild.getTestResults(testStatus);
+
+			if (!(downstreamTestResults == null)) {
+				testResults.addAll(downstreamTestResults);
+			}
+		}
+
+		return testResults;
+	}
+
+	@Override
 	public long getTotalDuration() {
 		long totalDuration = getDuration();
 

@@ -1184,45 +1184,9 @@ public abstract class BaseBuild implements Build {
 		return testResults;
 	}
 
-	public List<TestResult> getTestResults(
-		Build build, JSONArray suitesJSONArray, String testStatus) {
-
-		List<TestResult> testResults = new ArrayList<>();
-
-		for (int i = 0; i < suitesJSONArray.length(); i++) {
-			JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
-
-			JSONArray casesJSONArray = suiteJSONObject.getJSONArray("cases");
-
-			for (int j = 0; j < casesJSONArray.length(); j++) {
-				TestResult testResult = TestResultFactory.newTestResult(
-					build, casesJSONArray.getJSONObject(j));
-
-				if ((testStatus == null) ||
-					testStatus.equals(testResult.getStatus())) {
-
-					testResults.add(testResult);
-				}
-			}
-		}
-
-		return testResults;
-	}
-
 	@Override
 	public List<TestResult> getTestResults(String testStatus) {
-		List<TestResult> testResults = new ArrayList<>();
-
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			List<TestResult> downstreamTestResults =
-				downstreamBuild.getTestResults(testStatus);
-
-			if (!(downstreamTestResults == null)) {
-				testResults.addAll(downstreamTestResults);
-			}
-		}
-
-		return testResults;
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -2962,6 +2926,31 @@ public abstract class BaseBuild implements Build {
 		}
 
 		throw new IllegalArgumentException("Invalid status: " + status);
+	}
+
+	protected List<TestResult> getTestResults(
+		Build build, JSONArray suitesJSONArray, String testStatus) {
+
+		List<TestResult> testResults = new ArrayList<>();
+
+		for (int i = 0; i < suitesJSONArray.length(); i++) {
+			JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
+
+			JSONArray casesJSONArray = suiteJSONObject.getJSONArray("cases");
+
+			for (int j = 0; j < casesJSONArray.length(); j++) {
+				TestResult testResult = TestResultFactory.newTestResult(
+					build, casesJSONArray.getJSONObject(j));
+
+				if ((testStatus == null) ||
+					testStatus.equals(testResult.getStatus())) {
+
+					testResults.add(testResult);
+				}
+			}
+		}
+
+		return testResults;
 	}
 
 	protected boolean isParentBuildRoot() {

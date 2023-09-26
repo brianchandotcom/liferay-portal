@@ -1293,12 +1293,6 @@ public abstract class BaseBuild implements Build {
 			}
 		}
 
-		for (Build downstreamBuild : downstreamBuilds) {
-			if (downstreamBuild.hasBuildURL(buildURL)) {
-				return true;
-			}
-		}
-
 		return false;
 	}
 

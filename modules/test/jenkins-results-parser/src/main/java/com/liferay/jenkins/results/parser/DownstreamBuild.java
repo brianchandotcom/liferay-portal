@@ -514,6 +514,21 @@ public class DownstreamBuild extends BaseBuild {
 		return warningMessages;
 	}
 
+	@Override
+	public boolean hasBuildURL(String buildURL) {
+		if (super.hasBuildURL(buildURL)) {
+			return true;
+		}
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (downstreamBuild.hasBuildURL(buildURL)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public synchronized void update() {
 		super.update();
 

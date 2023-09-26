@@ -13,7 +13,7 @@
 
 		<div class="align-items-center d-flex">
 			<div class="position-relative">
-				<button class="btn btn-secondary" id="${fragmentEntryLinkNamespace}-file-upload-button-label" type="button">[@clay["icon"] symbol="upload" /] ${htmlUtil.escape(configuration.buttonText)}</button>
+				<button class="btn btn-secondary" id="${fragmentEntryLinkNamespace}-file-upload-button-label" type="button">[@clay["icon"] className="inline-item-before" symbol="upload" /] ${htmlUtil.escape(configuration.buttonText)}</button>
 
 				<input id="${fragmentEntryLinkNamespace}-file-upload-hidden" [#if localFileUploaded]name="${input.name}"[/#if] type="hidden" value="${input.value}" />
 

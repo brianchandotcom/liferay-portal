@@ -536,7 +536,7 @@ definition {
 		SearchAdministration.executeReindex(executionScope = "All Instances");
 	}
 
-	@description = "This is a use case for LPS-194322."
+	@description = "Test that a web content article is still available both during and after a Sync Reindex"
 	@priority = 4
 	test ReindexWebContentWithSyncExecutionMode {
 		property custom.properties = "feature.flag.LPS-183661=true";

@@ -142,7 +142,7 @@ export function useKeyboardDragItem(
 			return;
 		}
 
-		const onKeyDown = (event: KeyboardEvent) => {
+		const onKeyUp = (event: KeyboardEvent) => {
 			if (
 				['ArrowDown', 'ArrowUp', 'Enter', 'Escape', ' '].includes(
 					event.key
@@ -236,11 +236,11 @@ export function useKeyboardDragItem(
 		};
 
 		button.addEventListener('blur', onBlur);
-		button.addEventListener('keydown', onKeyDown);
+		button.addEventListener('keyup', onKeyUp);
 
 		return () => {
 			button.removeEventListener('blur', onBlur);
-			button.removeEventListener('keydown', onKeyDown);
+			button.removeEventListener('keyup', onKeyUp);
 		};
 	}, [item, itemListRef, setDragOverPosition, setSourceItem, setTargetItem]);
 

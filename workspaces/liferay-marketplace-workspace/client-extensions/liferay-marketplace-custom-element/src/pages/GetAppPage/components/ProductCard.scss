@@ -1,31 +1,31 @@
 .product-banner {
-  background: var(--neutral-01, #f7f7f8);
-  border-radius: 10px;
+	background: var(--neutral-01, #f7f7f8);
+	border-radius: 10px;
 }
 
 .account-banner {
-  background: var(--neutral-01, #f7f7f8);
-  padding: 16px 24px;
+	background: var(--neutral-01, #f7f7f8);
+	padding: 16px 24px;
 }
 .sub-text {
-  color: var(--neutral-08, #54555f);
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 24px;
+	color: var(--neutral-08, #54555f);
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 24px;
 }
 .price-text {
-  color: var(--neutral-10, #282934);
-  font-size: 13px;
-  line-height: 16px;
+	color: var(--neutral-10, #282934);
+	font-size: 13px;
+	line-height: 16px;
 }
 .license-tag {
-  border-radius: 4px;
-  background: var(--status-info-lighten-2, #e6ebf5);
-  color: var(--status-info-darken-2, #1c3667);
+	border-radius: 4px;
+	background: var(--status-info-lighten-2, #e6ebf5);
+	color: var(--status-info-darken-2, #1c3667);
 
-  font-size: 11px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 16px;
+	font-size: 11px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 16px;
 }

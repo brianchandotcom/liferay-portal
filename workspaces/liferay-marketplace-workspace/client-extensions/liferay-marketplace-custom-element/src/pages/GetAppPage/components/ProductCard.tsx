@@ -3,198 +3,221 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 
 import './ProductCard.scss';
 
 import ClaySticker from '@clayui/sticker';
 
 import emptyPictureIcon from '../../../assets/icons/avatar.svg';
-import { getProductById } from '../../../utils/api';
-import { getCustomFieldValue } from '../../../utils/customFieldUtil';
+import {getProductById} from '../../../utils/api';
+import {getCustomFieldValue} from '../../../utils/customFieldUtil';
 import {
-  getThumbnailByProductAttachment,
-  getValueFromSpecifications,
+	getThumbnailByProductAttachment,
+	getValueFromSpecifications,
 } from '../../../utils/util';
-import { LicenseType } from '../enums/licenseType';
-import { Price } from '../enums/price';
-import { SkuOptions } from '../enums/skuOptions';
+import {LicenseType} from '../enums/licenseType';
+import {Price} from '../enums/price';
+import {SkuOptions} from '../enums/skuOptions';
 
 interface ProductCardProps {
-  productId: number | null;
-  selectedAccount?: Account;
-  setProductToForm: (product: Product) => void;
+	productId: number | null;
+	selectedAccount?: Account;
+	setProductToForm: (product: Product) => void;
 }
 
 const ProductCard = ({
-  productId,
-  selectedAccount,
-  setProductToForm,
+	productId,
+	selectedAccount,
+	setProductToForm,
 }: ProductCardProps) => {
-  const [product, setProduct] = useState<Product>();
-  const [hasTrial, setHasTrial] = useState<boolean>(false);
-  const [basePrice, setBasePrice] = useState<Number | undefined>(undefined);
+	const [product, setProduct] = useState<Product>();
+	const [hasTrial, setHasTrial] = useState<boolean>(false);
+	const [basePrice, setBasePrice] = useState<Number | undefined>(undefined);
 
-  const productHasTrialSKU = (skus: SKU[]) => {
-    skus.map((sku) => {
-      const licenseUsageType = sku.skuOptions.find(
-        (option) => option.key.toLowerCase() === 'dxp-license-usage-type'
-      );
-      if (
-        licenseUsageType &&
-        licenseUsageType.value.toLowerCase() === SkuOptions.TRIAL.toLowerCase()
-      ) {
-        setHasTrial(true);
+	const productHasTrialSKU = (skus: SKU[]) => {
+		skus.map((sku) => {
+			const licenseUsageType = sku.skuOptions.find(
+				(option) =>
+					option.key.toLowerCase() === 'dxp-license-usage-type'
+			);
+			if (
+				licenseUsageType &&
+				licenseUsageType.value.toLowerCase() ===
+					SkuOptions.TRIAL.toLowerCase()
+			) {
+				setHasTrial(true);
 
-        return;
-      }
+				return;
+			}
 
-      return;
-    });
-  };
+			return;
+		});
+	};
 
-  const getProductBasePrice = (product: Product) => {
-    product &&
-      product.skus.map((sku) => {
-        const licenseUsageType = sku.skuOptions.find(
-          (option) => option.key.toLowerCase() === 'dxp-license-usage-type'
-        );
-        if (
-          licenseUsageType &&
-          licenseUsageType.value.toLowerCase() ===
-            SkuOptions.STANDARD.toLowerCase()
-        ) {
-          setBasePrice(sku.price);
-        }
-      });
-  };
+	const getProductBasePrice = (product: Product) => {
+		product &&
+			product.skus.map((sku) => {
+				const licenseUsageType = sku.skuOptions.find(
+					(option) =>
+						option.key.toLowerCase() === 'dxp-license-usage-type'
+				);
+				if (
+					licenseUsageType &&
+					licenseUsageType.value.toLowerCase() ===
+						SkuOptions.STANDARD.toLowerCase()
+				) {
+					setBasePrice(sku.price);
+				}
+			});
+	};
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const productResponse =
-        productId &&
-        (await getProductById({
-          nestedFields: 'attachments,productSpecifications,skus',
-          productId,
-        }));
+	useEffect(() => {
+		const fetchData = async () => {
+			const productResponse =
+				productId &&
+				(await getProductById({
+					nestedFields: 'attachments,productSpecifications,skus',
+					productId,
+				}));
 
-      if (productResponse) {
-        setProduct(productResponse);
-        productHasTrialSKU(productResponse.skus);
-        setProductToForm(productResponse);
-        getProductBasePrice(productResponse);
-      }
-    };
+			if (productResponse) {
+				setProduct(productResponse);
+				productHasTrialSKU(productResponse.skus);
+				setProductToForm(productResponse);
+				getProductBasePrice(productResponse);
+			}
+		};
 
-    fetchData();
-  }, [productId]);
+		fetchData();
+	}, [productId, setProductToForm]);
 
-  const iconURL =
-    product &&
-    getThumbnailByProductAttachment(product.attachments)?.split('/o/');
-  const convertedIconURl = iconURL && `/o/${iconURL[1]}`;
+	const iconURL =
+		product &&
+		getThumbnailByProductAttachment(product.attachments)?.split('/o/');
+	const convertedIconURl = iconURL && `/o/${iconURL[1]}`;
 
-  const getLicenseTagText = (product: Product) => {
-    console.log(product)
-    if (
-      getValueFromSpecifications(product.productSpecifications, 'license-type').toLowerCase() === LicenseType.Perpetual
-    ) {
-      return 'One-Time';
-    } else if (
-      getValueFromSpecifications(product.productSpecifications, 'license-type').toLowerCase() === LicenseType.Subscription
-    ) {
-      return 'Annually';
-    }
+	const getLicenseTagText = (product: Product) => {
+		if (
+			getValueFromSpecifications(
+				product.productSpecifications,
+				'license-type'
+			).toLowerCase() === LicenseType.Perpetual
+		) {
+			return 'One-Time';
+		}
+		else if (
+			getValueFromSpecifications(
+				product.productSpecifications,
+				'license-type'
+			).toLowerCase() === LicenseType.Subscription
+		) {
+			return 'Annually';
+		}
 
-    return '';
-  };
+		return '';
+	};
 
-  const getPriceText = (product: Product) => {
-    if (
-      getValueFromSpecifications(
-        product.productSpecifications,
-        'price'
-      ).toLowerCase() === Price.PAID
-    ) {
-      if (hasTrial) {
-        return basePrice && `30-day trial or $${basePrice}`;
-      } else {
-        return basePrice && `$${basePrice}`;
-      }
-    } else if (
-      getValueFromSpecifications(
-        product.productSpecifications,
-        'price'
-      ).toLowerCase() === Price.FREE
-    ) {
-      return 'Free';
-    }
-  };
+	const getPriceText = (product: Product) => {
+		if (
+			getValueFromSpecifications(
+				product.productSpecifications,
+				'price'
+			).toLowerCase() === Price.PAID
+		) {
+			if (hasTrial) {
+				return basePrice && `30-day trial or $${basePrice}`;
+			}
+			else {
+				return basePrice && `$${basePrice}`;
+			}
+		}
+		else if (
+			getValueFromSpecifications(
+				product.productSpecifications,
+				'price'
+			).toLowerCase() === Price.FREE
+		) {
+			return 'Free';
+		}
+	};
 
-  return (
-    <>
-      {product && (
-        <div className="p-5 product-banner">
-          <div className="d-flex flex-row justify-content-between">
-            <div className="d-flex flex-row">
-              <img height="64px" src={convertedIconURl} width="64px" />
-              <div className="align-items-center ml-4">
-                <h1 className="text-weight-bold">{product.name.en_US}</h1>
-                <div className="sub-text">
-                  {getValueFromSpecifications(
-                    product.productSpecifications,
-                    'latest-version'
-                  )}{' '}
-                  by{' '}
-                  {product.customFields &&
-                    getCustomFieldValue(product.customFields, 'Developer Name')}
-                </div>
-              </div>
-            </div>
-            <div className="align-items-end d-flex flex-column price-text">
-              <strong className="mr-1">Price</strong>
-              <div className="mr-1 py-2">{getPriceText(product)}</div>
-              <div className="license-tag px-2">
-                {getLicenseTagText(product)}
-              </div>
-            </div>
-          </div>
-          {selectedAccount && (
-            <>
-              <hr></hr>
-              <div className="account-banner d-flex flex-row justify-content-between px-4 py-3">
-                <strong className="align-self-center sub-text">
-                  Account Selected
-                </strong>
-                <div className="align-items-center d-flex">
-                  <div className="align-items-end d-flex flex-column m-2">
-                    <strong>{selectedAccount?.name}</strong>
-                    <div className="sub-text">
-                      {selectedAccount?.customFields &&
-                        getCustomFieldValue(
-                          selectedAccount.customFields,
-                          'Contact Email'
-                        )}
-                    </div>
-                  </div>
-                  <ClaySticker shape="circle" size="lg">
-                    <ClaySticker.Image
-                      alt="placeholder"
-                      height="24"
-                      src={
-                        selectedAccount &&
-                        (selectedAccount?.logoURL ?? emptyPictureIcon)
-                      }
-                      width="24"
-                    ></ClaySticker.Image>
-                  </ClaySticker>
-                </div>
-              </div>
-            </>
-          )}
-        </div>
-      )}
-    </>
-  );
+	return (
+		<>
+			{product && (
+				<div className="p-5 product-banner">
+					<div className="d-flex flex-row justify-content-between">
+						<div className="d-flex flex-row">
+							<img
+								height="64px"
+								src={convertedIconURl}
+								width="64px"
+							/>
+							<div className="align-items-center ml-4">
+								<h1 className="text-weight-bold">
+									{product.name.en_US}
+								</h1>
+								<div className="sub-text">
+									{getValueFromSpecifications(
+										product.productSpecifications,
+										'latest-version'
+									)}{' '}
+									by{' '}
+									{product.customFields &&
+										getCustomFieldValue(
+											product.customFields,
+											'Developer Name'
+										)}
+								</div>
+							</div>
+						</div>
+						<div className="align-items-end d-flex flex-column price-text">
+							<strong className="mr-1">Price</strong>
+							<div className="mr-1 py-2">
+								{getPriceText(product)}
+							</div>
+							<div className="license-tag px-2">
+								{getLicenseTagText(product)}
+							</div>
+						</div>
+					</div>
+					{selectedAccount && (
+						<>
+							<hr></hr>
+							<div className="account-banner d-flex flex-row justify-content-between px-4 py-3">
+								<strong className="align-self-center sub-text">
+									Account Selected
+								</strong>
+								<div className="align-items-center d-flex">
+									<div className="align-items-end d-flex flex-column m-2">
+										<strong>{selectedAccount?.name}</strong>
+										<div className="sub-text">
+											{selectedAccount?.customFields &&
+												getCustomFieldValue(
+													selectedAccount.customFields,
+													'Contact Email'
+												)}
+										</div>
+									</div>
+									<ClaySticker shape="circle" size="lg">
+										<ClaySticker.Image
+											alt="placeholder"
+											height="24"
+											src={
+												selectedAccount &&
+												(selectedAccount?.logoURL ??
+													emptyPictureIcon)
+											}
+											width="24"
+										></ClaySticker.Image>
+									</ClaySticker>
+								</div>
+							</div>
+						</>
+					)}
+				</div>
+			)}
+		</>
+	);
 };
 export default ProductCard;

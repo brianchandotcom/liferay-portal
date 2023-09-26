@@ -91,7 +91,7 @@ definition {
 		}
 
 		task ("Configure the Custom Facet widget to aggregate by the 'title' custom Object field") {
-			SearchFacetPortlet.configureCustomFacet(aggregationField = "nestedFieldArray.title.value_keyword");
+			SearchFacets.configureCustomFacet(aggregationField = "nestedFieldArray.title.value_keyword");
 
 			Refresh();
 		}
@@ -117,7 +117,7 @@ definition {
 		}
 
 		task ("Configure the Custom Facet widget to aggregate by the 'siteID' custom Object field") {
-			SearchFacetPortlet.configureCustomFacet(aggregationField = "nestedFieldArray.siteID.value_integer");
+			SearchFacets.configureCustomFacet(aggregationField = "nestedFieldArray.siteID.value_integer");
 
 			Refresh();
 		}
@@ -143,7 +143,7 @@ definition {
 		}
 
 		task ("Configure the Custom Facet widget to aggregate by the 'date' custom Object field") {
-			SearchFacetPortlet.configureCustomFacet(aggregationField = "nestedFieldArray.date.value_date");
+			SearchFacets.configureCustomFacet(aggregationField = "nestedFieldArray.date.value_date");
 
 			Refresh();
 		}
@@ -219,13 +219,13 @@ definition {
 		}
 
 		task ("Configure the Custom Facet widget aggregation field with the DDM single field name") {
-			SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
+			SearchFacets.configureCustomFacet(aggregationField = ${aggregationField});
 
 			Refresh();
 		}
 
 		task ("Select one of the Custom Facet terms and assert the results") {
-			SearchFacetPortlet.checkFacetTerm(
+			SearchFacets.checkFacetTerm(
 				facetName = "Custom Facet",
 				facetTerm = "Liferay 1");
 
@@ -239,13 +239,13 @@ definition {
 		}
 
 		task ("Configure the Custom Facet widget aggregation field with the DDM nested field name") {
-			SearchFacetPortlet.configureCustomFacet(aggregationField = "ddmFieldArray.${aggregationField}.ddmFieldValueKeyword_en_US");
+			SearchFacets.configureCustomFacet(aggregationField = "ddmFieldArray.${aggregationField}.ddmFieldValueKeyword_en_US");
 
 			Refresh();
 		}
 
 		task ("Select the other Custom Facet term and assert the results") {
-			SearchFacetPortlet.checkFacetTerm(
+			SearchFacets.checkFacetTerm(
 				facetName = "Custom Facet",
 				facetTerm = "Liferay 2");
 
@@ -291,7 +291,7 @@ definition {
 			checkboxName = "fruit",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Type Facet",
 			facetTerm = "Blogs Entry");
 
@@ -307,7 +307,7 @@ definition {
 			checkboxName = "fruit",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		SearchFacetPortlet.uncheckFacetTerm(
+		SearchFacets.uncheckFacetTerm(
 			facetName = "Type Facet",
 			facetTerm = "Blogs Entry");
 
@@ -323,7 +323,7 @@ definition {
 			checkboxName = "fruit",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Type Facet",
 			facetTerm = "Blogs Entry");
 
@@ -331,7 +331,7 @@ definition {
 			checkboxName = "fruit",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Tag Facet",
 			facetTerm = "fruit");
 
@@ -375,7 +375,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "test");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Cloud Layout",
 			portletName = "Category Facet");
 
@@ -388,7 +388,7 @@ definition {
 				locator1 = "Search#FACET_CLOUD_LAYOUT_ITEM");
 		}
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Compact Layout",
 			portletName = "Category Facet");
 
@@ -401,7 +401,7 @@ definition {
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Label Layout",
 			portletName = "Category Facet");
 
@@ -414,7 +414,7 @@ definition {
 				locator1 = "Search#FACET_LABEL_LAYOUT_ITEM");
 		}
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Vocabulary Layout",
 			portletName = "Category Facet");
 
@@ -434,7 +434,7 @@ definition {
 
 		SearchPage.openSearchPage();
 
-		SearchFacetPortlet.configureCustomFacet(
+		SearchFacets.configureCustomFacet(
 			aggregationField = "title_sortable",
 			customParameterName = "title");
 
@@ -461,11 +461,11 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "title");
 
-		SearchFacetPortlet.configureCustomFacet(
+		SearchFacets.configureCustomFacet(
 			aggregationField = "title_sortable",
 			customHeading = "Title");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Compact Layout",
 			portletName = "Custom Facet");
 
@@ -478,7 +478,7 @@ definition {
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Label Layout",
 			portletName = "Custom Facet");
 
@@ -515,7 +515,7 @@ definition {
 		SearchPage.searchEmbedded(searchTerm = "test");
 
 		task ("Assert that the three folders are present in Compact Layout Template") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				displayTemplate = "Compact Layout",
 				portletName = "Folder Facet");
 
@@ -530,7 +530,7 @@ definition {
 		}
 
 		task ("Assert that the three folders are present in Label Layout Template") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				displayTemplate = "Label Layout",
 				portletName = "Folder Facet");
 
@@ -588,7 +588,7 @@ definition {
 		SearchPage.searchEmbedded(searchTerm = "Web Content");
 
 		task ("Change Display Template to 'Radio Layout' and assert the Web Contents are present") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				displayTemplate = "Radio Layout",
 				portletName = "Modified Facet");
 
@@ -684,13 +684,13 @@ definition {
 
 		Refresh();
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Category Facet",
 			facetTerm = "Category Name 2");
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Category Facet",
 			facetTerm = "Category Name 1");
 
@@ -724,7 +724,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "Web Content");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Compact Layout",
 			portletName = "Site Facet");
 
@@ -737,7 +737,7 @@ definition {
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Label Layout",
 			portletName = "Site Facet");
 
@@ -763,7 +763,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "test");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Cloud Layout",
 			portletName = "Tag Facet");
 
@@ -776,7 +776,7 @@ definition {
 				locator1 = "Search#FACET_CLOUD_LAYOUT_ITEM");
 		}
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Compact Layout",
 			portletName = "Tag Facet");
 
@@ -789,7 +789,7 @@ definition {
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Label Layout",
 			portletName = "Tag Facet");
 
@@ -824,7 +824,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "title");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Compact Layout",
 			portletName = "Type Facet");
 
@@ -837,7 +837,7 @@ definition {
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Label Layout",
 			portletName = "Type Facet");
 
@@ -869,7 +869,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "user");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Compact Layout",
 			portletName = "User Facet");
 
@@ -882,7 +882,7 @@ definition {
 				locator1 = "Search#FACET_COMPACT_LAYOUT_ITEM");
 		}
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Label Layout",
 			portletName = "User Facet");
 
@@ -1024,37 +1024,37 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "test");
 
-		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+		SearchFacets.viewFacetTermsSpecificOrder(
 			facetName = "Category Facet",
 			termList = "2022,2021,Engineering,Product");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			portletName = "Category Facet",
 			sortOption = "Term Frequency Ascending");
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+		SearchFacets.viewFacetTermsSpecificOrder(
 			facetName = "Category Facet",
 			termList = "Product,Engineering,2021,2022");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			portletName = "Category Facet",
 			sortOption = "Term Value Ascending");
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+		SearchFacets.viewFacetTermsSpecificOrder(
 			facetName = "Category Facet",
 			termList = "2021,2022,Engineering,Product");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			portletName = "Category Facet",
 			sortOption = "Term Value Descending");
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+		SearchFacets.viewFacetTermsSpecificOrder(
 			facetName = "Category Facet",
 			termList = "Product,Engineering,2022,2021");
 	}
@@ -1089,41 +1089,41 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "test");
 
-		SearchFacetPortlet.configureCustomFacet(aggregationField = "extension");
+		SearchFacets.configureCustomFacet(aggregationField = "extension");
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+		SearchFacets.viewFacetTermsSpecificOrder(
 			facetName = "Custom Facet",
 			termList = "png,doc,jpg,mp3");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			portletName = "Custom Facet",
 			sortOption = "Term Frequency Ascending");
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+		SearchFacets.viewFacetTermsSpecificOrder(
 			facetName = "Custom Facet",
 			termList = "doc,jpg,mp3,png");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			portletName = "Custom Facet",
 			sortOption = "Term Value Ascending");
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+		SearchFacets.viewFacetTermsSpecificOrder(
 			facetName = "Custom Facet",
 			termList = "doc,jpg,mp3,png");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			portletName = "Custom Facet",
 			sortOption = "Term Value Descending");
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+		SearchFacets.viewFacetTermsSpecificOrder(
 			facetName = "Custom Facet",
 			termList = "png,mp3,jpg,doc");
 	}
@@ -1171,43 +1171,43 @@ definition {
 		SearchPage.searchEmbedded(searchTerm = "test");
 
 		task ("Assert that the Folder facet sorts by term frequency descending by default") {
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Folder Facet",
 				termList = "2022,2021,Engineering,Product");
 		}
 
 		task ("Assert that the Folder facet values are correct when sorted by term frequency ascending") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				portletName = "Folder Facet",
 				sortOption = "Term Frequency Ascending");
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Folder Facet",
 				termList = "Product,Engineering,2021,2022");
 		}
 
 		task ("Assert that the Folder facet values are correct when sorted by term value ascending") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				portletName = "Folder Facet",
 				sortOption = "Term Value Ascending");
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Folder Facet",
 				termList = "2021,2022,Engineering,Product");
 		}
 
 		task ("Assert that the Folder facet values are correct when sorted by term value descending") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				portletName = "Folder Facet",
 				sortOption = "Term Value Descending");
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Folder Facet",
 				termList = "Product,Engineering,2022,2021");
 		}
@@ -1244,31 +1244,31 @@ definition {
 		}
 
 		task ("Assert the order of modified facet by Ranges Configuration by default") {
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Modified Facet",
 				termList = "Past Hour,Past 23 Hours,Past 24 Hours,Past Week,Past Month,Past Year,Custom Range…");
 		}
 
 		task ("Assert the order of modified facet by Term Frequency Descending") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				portletName = "Modified Facet",
 				sortOption = "Term Frequency Descending");
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Modified Facet",
 				termList = "Past 24 Hours,Past Hour,Past Month,Past Week,Past Year,Past 23 Hours,Custom Range…");
 		}
 
 		task ("Assert the order of modified facet by Term Frequency Ascending") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				portletName = "Modified Facet",
 				sortOption = "Term Frequency Ascending");
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Modified Facet",
 				termList = "Past 23 Hours,Past 24 Hours,Past Hour,Past Month,Past Week,Past Year,Custom Range…");
 		}
@@ -1317,43 +1317,43 @@ definition {
 		SearchPage.searchEmbedded(searchTerm = "web content");
 
 		task ("Assert the order of site facet by term frequency descending by default") {
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Site Facet",
 				termList = "Engineering,Community,Product,Sales");
 		}
 
 		task ("Assert the order of site facet by Frequency term ascending") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				portletName = "Site Facet",
 				sortOption = "Term Frequency Ascending");
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Site Facet",
 				termList = "Sales,Product,Community,Engineering");
 		}
 
 		task ("Assert the order of site facet by Term value ascending") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				portletName = "Site Facet",
 				sortOption = "Term Value Ascending");
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Site Facet",
 				termList = "Community,Engineering,Product,Sales");
 		}
 
 		task ("Assert the order of site facet by Term value descending") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				portletName = "Site Facet",
 				sortOption = "Term Value Descending");
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Site Facet",
 				termList = "Sales,Product,Engineering,Community");
 		}
@@ -1390,43 +1390,43 @@ definition {
 		SearchPage.searchEmbedded(searchTerm = "test");
 
 		task ("Assert the order of tag facet by term frequency descending by default") {
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Tag Facet",
 				termList = "2022,2021,engineering,product");
 		}
 
 		task ("Assert the order of tag facet by Frequency term ascending") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				portletName = "Tag Facet",
 				sortOption = "Term Frequency Ascending");
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Tag Facet",
 				termList = "product,engineering,2021,2022");
 		}
 
 		task ("Assert the order of tag facet by Term value ascending") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				portletName = "Tag Facet",
 				sortOption = "Term Value Ascending");
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Tag Facet",
 				termList = "2021,2022,engineering,product");
 		}
 
 		task ("Assert the order of tag facet by Term value descending") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				portletName = "Tag Facet",
 				sortOption = "Term Value Descending");
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Tag Facet",
 				termList = "product,engineering,2022,2021");
 		}
@@ -1463,43 +1463,43 @@ definition {
 		SearchPage.searchEmbedded(searchTerm = "test");
 
 		task ("Assert that the Type facet sorts by term frequency descending by default") {
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Type Facet",
 				termList = "Web Content Article,Page,Document,User");
 		}
 
 		task ("Assert that the Type facet values are correct when sorted by term frequency ascending") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				portletName = "Type Facet",
 				sortOption = "Term Frequency Ascending");
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Type Facet",
 				termList = "User,Document,Page,Web Content Article");
 		}
 
 		task ("Assert that the Type facet values are correct when sorted by term value ascending") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				portletName = "Type Facet",
 				sortOption = "Term Value Ascending");
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Type Facet",
 				termList = "Document,Page,User,Web Content Article");
 		}
 
 		task ("Assert that the Type facet values are correct when sorted by term value descending") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				portletName = "Type Facet",
 				sortOption = "Term Value Descending");
 
 			Refresh();
 
-			SearchFacetPortlet.viewFacetTermsSpecificOrder(
+			SearchFacets.viewFacetTermsSpecificOrder(
 				facetName = "Type Facet",
 				termList = "Web Content Article,User,Page,Document");
 		}
@@ -1560,37 +1560,37 @@ definition {
 
 		SearchPage.openSearchPage(searchTerm = "test");
 
-		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+		SearchFacets.viewFacetTermsSpecificOrder(
 			facetName = "User Facet",
 			termList = "Test Test,john adams,carter braxton,jonathan franklin");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			portletName = "User Facet",
 			sortOption = "Term Frequency Ascending");
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+		SearchFacets.viewFacetTermsSpecificOrder(
 			facetName = "User Facet",
 			termList = "jonathan franklin,carter braxton,john adams,Test Test");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			portletName = "User Facet",
 			sortOption = "Term Value Ascending");
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+		SearchFacets.viewFacetTermsSpecificOrder(
 			facetName = "User Facet",
 			termList = "Test Test,carter braxton,john adams,jonathan franklin");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			portletName = "User Facet",
 			sortOption = "Term Value Descending");
 
 		Refresh();
 
-		SearchFacetPortlet.viewFacetTermsSpecificOrder(
+		SearchFacets.viewFacetTermsSpecificOrder(
 			facetName = "User Facet",
 			termList = "jonathan franklin,john adams,carter braxton,Test Test");
 	}
@@ -1631,15 +1631,15 @@ definition {
 
 			SearchPage.openSearchPage();
 
-			SearchFacetPortlet.configureCustomFacet(aggregationField = "entryClassName");
+			SearchFacets.configureCustomFacet(aggregationField = "entryClassName");
 
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				frequencyThreshold = 0,
 				portletName = "Custom Facet");
 		}
 
 		task ("Set the Type Facet's Frequency Threshold to '0'") {
-			SearchFacetPortlet.updateFacetConfiguration(
+			SearchFacets.updateFacetConfiguration(
 				frequencyThreshold = 0,
 				portletName = "Type Facet");
 		}
@@ -1710,7 +1710,7 @@ definition {
 		}
 
 		task ("Configure the Custom Facet widget aggregation field with the DDM field name") {
-			SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
+			SearchFacets.configureCustomFacet(aggregationField = ${aggregationField});
 		}
 
 		task ("Refresh the page to allow the changes to take effect") {
@@ -1805,7 +1805,7 @@ definition {
 				resultsList = "wc1,wc2,wc3,wc4,wc5,wc6",
 				searchTerm = "wc");
 
-			SearchFacetPortlet.checkFacetTerm(
+			SearchFacets.checkFacetTerm(
 				facetName = "Tag Facet",
 				facetTerm = "tag1");
 
@@ -1813,7 +1813,7 @@ definition {
 				resultsList = "wc2,wc4,wc6",
 				searchTerm = "wc");
 
-			SearchFacetPortlet.checkFacetTerm(
+			SearchFacets.checkFacetTerm(
 				facetName = "Category Facet",
 				facetTerm = "cat1");
 
@@ -1856,7 +1856,7 @@ definition {
 
 		SearchPage.searchEmbedded(searchTerm = "apple");
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Category Facet",
 			facetTerm = "fuji");
 
@@ -1878,7 +1878,7 @@ definition {
 
 		SearchPage.openSearchPage();
 
-		SearchFacetPortlet.configureCustomFacet(aggregationField = "version");
+		SearchFacets.configureCustomFacet(aggregationField = "version");
 
 		SearchPage.searchEmbedded(searchTerm = "WebContent");
 
@@ -1991,7 +1991,7 @@ definition {
 
 		SearchPage.openSearchPage();
 
-		SearchFacetPortlet.configureCustomFacet(aggregationField = ${aggregationField});
+		SearchFacets.configureCustomFacet(aggregationField = ${aggregationField});
 
 		SearchPage.searchEmbedded(searchTerm = "WC Title");
 
@@ -2058,7 +2058,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchFacetPortlet.configureCategoryFacet(
+		SearchFacets.configureCategoryFacet(
 			groupName = "Guest",
 			vocabularyScope = "All Vocabularies");
 
@@ -2068,7 +2068,7 @@ definition {
 			resultsList = "WC Title 1,WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Category Facet",
 			facetTerm = "Category Name 2");
 
@@ -2076,9 +2076,9 @@ definition {
 			resultsList = "WC Title 1,WC Title 2",
 			searchTerm = "WC Title");
 
-		SearchFacetPortlet.clearFacet();
+		SearchFacets.clearFacet();
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Category Facet",
 			facetTerm = "Category Name 3");
 
@@ -2086,13 +2086,13 @@ definition {
 			resultsList = "WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
-		SearchFacetPortlet.clearFacet();
+		SearchFacets.clearFacet();
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Category Facet",
 			facetTerm = "Category Name 2");
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Category Facet",
 			facetTerm = "Category Name 3");
 
@@ -2158,7 +2158,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchFacetPortlet.configureCategoryFacet(
+		SearchFacets.configureCategoryFacet(
 			groupName = "Guest",
 			siteName = "Global",
 			vocabularyName = "Vocabulary Name 1,Vocabulary Name 2",
@@ -2170,7 +2170,7 @@ definition {
 			resultsList = "WC Title 1,WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Category Facet",
 			facetTerm = "Category Name 2");
 
@@ -2178,9 +2178,9 @@ definition {
 			resultsList = "WC Title 1,WC Title 2",
 			searchTerm = "WC Title");
 
-		SearchFacetPortlet.clearFacet();
+		SearchFacets.clearFacet();
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Category Facet",
 			facetTerm = "Category Name 3");
 
@@ -2188,13 +2188,13 @@ definition {
 			resultsList = "WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
-		SearchFacetPortlet.clearFacet();
+		SearchFacets.clearFacet();
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Category Facet",
 			facetTerm = "Category Name 2");
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Category Facet",
 			facetTerm = "Category Name 3");
 
@@ -2260,13 +2260,13 @@ definition {
 
 		Navigator.gotoPage(pageName = "Search Page");
 
-		SearchFacetPortlet.configureCategoryFacet(
+		SearchFacets.configureCategoryFacet(
 			groupName = "Guest",
 			index = 1,
 			vocabularyName = "Vocabulary Name 1",
 			vocabularyScope = "Select Vocabularies");
 
-		SearchFacetPortlet.configureCategoryFacet(
+		SearchFacets.configureCategoryFacet(
 			groupName = "Guest",
 			index = 2,
 			vocabularyName = "Vocabulary Name 2",
@@ -2278,7 +2278,7 @@ definition {
 			resultsList = "WC Title 1,WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Category Facet",
 			facetTerm = "Category Name 2");
 
@@ -2286,9 +2286,9 @@ definition {
 			resultsList = "WC Title 1,WC Title 2",
 			searchTerm = "WC Title");
 
-		SearchFacetPortlet.clearFacet();
+		SearchFacets.clearFacet();
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Category Facet",
 			facetTerm = "Category Name 3");
 
@@ -2296,13 +2296,13 @@ definition {
 			resultsList = "WC Title 2,WC Title 3",
 			searchTerm = "WC Title");
 
-		SearchFacetPortlet.clearFacet();
+		SearchFacets.clearFacet();
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Category Facet",
 			facetTerm = "Category Name 2");
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Category Facet",
 			facetTerm = "Category Name 3");
 
@@ -2336,7 +2336,7 @@ definition {
 			resultsList = "DM Document Title 1,DM Document Title 2",
 			searchTerm = "DM");
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Folder Facet",
 			facetTerm = "DM Folder Name 1");
 
@@ -2348,9 +2348,9 @@ definition {
 			searchAssetTitle = "DM Document Title 2",
 			searchAssetType = "Document");
 
-		SearchFacetPortlet.clearFacet();
+		SearchFacets.clearFacet();
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Folder Facet",
 			facetTerm = "DM Folder Name 2");
 
@@ -2362,9 +2362,9 @@ definition {
 			searchAssetTitle = "DM Document Title 1",
 			searchAssetType = "Document");
 
-		SearchFacetPortlet.clearFacet();
+		SearchFacets.clearFacet();
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayFrequencies = "disable",
 			portletName = "Folder Facet");
 
@@ -2527,7 +2527,7 @@ definition {
 			resultsList = "Apple/Web Content Article,Apple/Document,Apple/Blogs Entry",
 			searchTerm = "Apple");
 
-		SearchFacetPortlet.moveAssetTypesToAvailable(assetType = "Document");
+		SearchFacets.moveAssetTypesToAvailable(assetType = "Document");
 
 		Refresh();
 
@@ -2575,7 +2575,7 @@ definition {
 
 			SearchPage.openSearchPage();
 
-			SearchFacetPortlet.configureCategoryFacet(
+			SearchFacets.configureCategoryFacet(
 				groupName = "Guest",
 				index = 1,
 				vocabularyName = "Vocabulary 21",
@@ -2650,7 +2650,7 @@ definition {
 
 		var siteName = TestCase.getSiteName();
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Site Facet",
 			facetTerm = ${siteName});
 
@@ -2764,7 +2764,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Document,orange/Web Content Article");
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Type Facet",
 			facetTerm = "Web Content Article",
 			searchPage = "Search Page",
@@ -2777,7 +2777,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,banana/Document,orange/Web Content Article");
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Type Facet",
 			facetTerm = "Blogs Entry",
 			searchURL = ${testSearchURL});
@@ -2788,7 +2788,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "banana/Document,orange/Web Content Article");
 
-		var testSearchURL = SearchFacetPortlet.uncheckFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.uncheckFacetTermAndViewURL(
 			facetName = "Type Facet",
 			facetTerm = "Web Content Article",
 			searchURL = ${testSearchURL});
@@ -2800,7 +2800,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Web Content Article,banana/Document,orange/Web Content Article");
 
-		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = ${testSearchURL});
+		var testSearchURL = SearchFacets.clearAllFacetsAndViewURL(searchURL = ${testSearchURL});
 
 		SearchPage.searchWidget(searchTerm = "test");
 
@@ -2814,7 +2814,7 @@ definition {
 			resultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document,orange/Web Content Article",
 			searchTerm = "test");
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Category Facet",
 			facetTerm = "organic",
 			searchURL = ${testSearchURL},
@@ -2826,7 +2826,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "User Facet",
 			facetTerm = "userfn userln",
 			searchURL = ${testSearchURL});
@@ -2838,7 +2838,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,orange/Web Content Article");
 
-		var testSearchURL = SearchFacetPortlet.uncheckFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.uncheckFacetTermAndViewURL(
 			facetName = "User Facet",
 			facetTerm = "userfn userln",
 			searchURL = ${testSearchURL});
@@ -2849,7 +2849,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
-		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = ${testSearchURL});
+		var testSearchURL = SearchFacets.clearAllFacetsAndViewURL(searchURL = ${testSearchURL});
 
 		SearchPage.searchWidget(searchTerm = "test");
 
@@ -2857,12 +2857,12 @@ definition {
 			searchPage = "Search Page",
 			searchTerm = "test");
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Tag Facet",
 			facetTerm = "sweet",
 			searchURL = ${testSearchURL});
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Tag Facet",
 			facetTerm = "fresh",
 			searchURL = ${testSearchURL});
@@ -2880,7 +2880,7 @@ definition {
 			site = "true");
 		var siteName = TestCase.getSiteName();
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Site Facet",
 			facetTerm = ${siteName},
 			searchURL = ${testSearchURL},
@@ -2889,7 +2889,7 @@ definition {
 			groupName = "New Site",
 			site = "true");
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Site Facet",
 			facetTerm = "New Site",
 			searchURL = ${testSearchURL},
@@ -2903,7 +2903,7 @@ definition {
 			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article");
 
-		var testSearchURL = SearchFacetPortlet.uncheckFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.uncheckFacetTermAndViewURL(
 			facetName = "Site Facet",
 			facetTerm = "New Site",
 			searchURL = ${testSearchURL},
@@ -2919,7 +2919,7 @@ definition {
 			folderName = "WC Folder Name 2",
 			groupName = "Guest");
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Folder Facet",
 			facetTerm = "WC Folder Name 2",
 			searchURL = ${testSearchURL},
@@ -2932,7 +2932,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document");
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Tag Facet",
 			facetTerm = "ripe",
 			searchURL = ${testSearchURL});
@@ -2944,13 +2944,13 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,apple/Web Content Article,banana/Document");
 
-		var testSearchURL = SearchFacetPortlet.uncheckFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.uncheckFacetTermAndViewURL(
 			facetName = "Folder Facet",
 			facetTerm = "WC Folder Name 2",
 			searchURL = ${testSearchURL},
 			termURLValue = ${webContentFolderId2});
 
-		var testSearchURL = SearchFacetPortlet.uncheckFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.uncheckFacetTermAndViewURL(
 			facetName = "Tag Facet",
 			facetTerm = "fresh",
 			searchURL = ${testSearchURL});
@@ -2961,7 +2961,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "apple/Blogs Entry,orange/Web Content Article");
 
-		var testSearchURL = SearchFacetPortlet.clearAllFacetsAndViewURL(searchURL = ${testSearchURL});
+		var testSearchURL = SearchFacets.clearAllFacetsAndViewURL(searchURL = ${testSearchURL});
 
 		SearchPage.searchWidget(searchTerm = "organic");
 
@@ -2969,7 +2969,7 @@ definition {
 			searchPage = "Search Page",
 			searchTerm = "organic");
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Category Facet",
 			facetTerm = "organic",
 			searchURL = ${testSearchURL},
@@ -2978,29 +2978,29 @@ definition {
 			folderName = "WC Folder Name 1",
 			groupName = "Guest");
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Folder Facet",
 			facetTerm = "WC Folder Name 1",
 			searchURL = ${testSearchURL},
 			termURLValue = ${webContentFolderId1});
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Site Facet",
 			facetTerm = ${siteName},
 			searchURL = ${testSearchURL},
 			termURLValue = ${liferaySiteId});
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Tag Facet",
 			facetTerm = "ripe",
 			searchURL = ${testSearchURL});
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "Type Facet",
 			facetTerm = "Web Content Article",
 			searchURL = ${testSearchURL});
 
-		var testSearchURL = SearchFacetPortlet.checkFacetTermAndViewURL(
+		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "User Facet",
 			facetTerm = "Test Test",
 			searchURL = ${testSearchURL});

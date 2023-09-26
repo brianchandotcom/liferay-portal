@@ -79,7 +79,24 @@ public class FeatureFlagsBagProviderImpl
 	public void setEnabled(long companyId, String key, boolean enabled) {
 		_featureFlagPreferencesManager.setEnabled(companyId, key, enabled);
 
-		_setEnabled(companyId, key, enabled);
+		FeatureFlagsBag featureFlagsBag = _featureFlagsBagMap.get(companyId);
+
+		if (featureFlagsBag == null) {
+			return;
+		}
+
+		featureFlagsBag.setEnabled(key, enabled);
+
+		if (_featureFlagListenerServiceTrackerMap.containsKey(key)) {
+			List<FeatureFlagListener> featureFlagListeners =
+				_featureFlagListenerServiceTrackerMap.getService(key);
+
+			for (FeatureFlagListener featureFlagListener :
+					featureFlagListeners) {
+
+				featureFlagListener.onValue(companyId, key, enabled);
+			}
+		}
 	}
 
 	@Override
@@ -242,27 +259,6 @@ public class FeatureFlagsBagProviderImpl
 
 			return new FeatureFlagsBag(
 				companyId, Collections.unmodifiableMap(featureFlagsMap));
-		}
-	}
-
-	private void _setEnabled(long companyId, String key, boolean enabled) {
-		FeatureFlagsBag featureFlagsBag = _featureFlagsBagMap.get(companyId);
-
-		if (featureFlagsBag == null) {
-			return;
-		}
-
-		featureFlagsBag.setEnabled(key, enabled);
-
-		if (_featureFlagListenerServiceTrackerMap.containsKey(key)) {
-			List<FeatureFlagListener> featureFlagListeners =
-				_featureFlagListenerServiceTrackerMap.getService(key);
-
-			for (FeatureFlagListener featureFlagListener :
-					featureFlagListeners) {
-
-				featureFlagListener.onValue(companyId, key, enabled);
-			}
 		}
 	}
 

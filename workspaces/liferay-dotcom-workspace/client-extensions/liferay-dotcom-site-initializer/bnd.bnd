@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Site Initializer Liferay Dotcom
-Bundle-SymbolicName: com.liferay.site.initializer.liferay.dotcom
-Bundle-Version: 1.0.0
-Liferay-Site-Initializer-Name: Liferay Dotcom
-Provide-Capability: liferay.site.initializer
-Web-ContextPath: /site-initializer-liferay-dotcom

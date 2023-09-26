@@ -362,9 +362,9 @@ class ResultRankingsForm extends Component {
 			[`${namespace}keywords`]: this.props.searchQuery,
 			[`${namespace}size`]: DELTA,
 			[`${namespace}groupExternalReferenceCode`]: this.props
-				.groupExternalReferenceCode,
+				.initialGroupExternalReferenceCode,
 			[`${namespace}sxpBlueprintExternalReferenceCode`]: this.props
-				.sxpBlueprintExternalReferenceCode,
+				.initialSXPBlueprintExternalReferenceCode,
 		})
 			.then(({items, total}) => {
 				const fetchedItems = items || {};
@@ -797,17 +797,24 @@ class ResultRankingsForm extends Component {
 
 						<h2 className="c-mb-1 sheet-title">{`${searchQuery}`}</h2>
 
-						<div className="c-mb-3 text-3">
-							{`${Liferay.Language.get('scope')}: ${
-								this.props.initialGroupExternalReferenceCode
-									? Liferay.Language.get('site')
-									: this.props
-											.initialSXPBlueprintExternalReferenceCode
-									? Liferay.Language.get('blueprint')
-									: Liferay.Language.get('everything')
-							}`}
+						<div className="c-mb-3">
+							{(Liferay.FeatureFlags['LPS-157988'] ||
+								Liferay.FeatureFlags['LPS-159650']) && (
+								<span className="text-3">
+									{`${Liferay.Language.get('scope')}: ${
+										this.props
+											.initialGroupExternalReferenceCode
+											? Liferay.Language.get('site')
+											: this.props
+													.initialSXPBlueprintExternalReferenceCode
+											? Liferay.Language.get('blueprint')
+											: Liferay.Language.get('everything')
+									}`}
 
-							{!!scopeDisplayName && ` (${scopeDisplayName})`}
+									{!!scopeDisplayName &&
+										` (${scopeDisplayName})`}
+								</span>
+							)}
 						</div>
 
 						<ErrorBoundary
@@ -952,12 +959,13 @@ class ResultRankingsForm extends Component {
 							},
 							{
 								name: `${namespace}groupExternalReferenceCode`,
-								value: this.props.groupExternalReferenceCode,
+								value: this.props
+									.initialGroupExternalReferenceCode,
 							},
 							{
 								name: `${namespace}sxpBlueprintExternalReferenceCode`,
 								value: this.props
-									.sxpBlueprintExternalReferenceCode,
+									.initialSXPBlueprintExternalReferenceCode,
 							},
 						]}
 					/>

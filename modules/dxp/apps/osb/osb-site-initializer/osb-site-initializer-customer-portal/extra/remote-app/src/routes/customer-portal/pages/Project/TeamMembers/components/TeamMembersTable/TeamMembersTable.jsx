@@ -29,12 +29,6 @@ import getFilteredRoleBriefsByName from './utils/getFilteredRoleBriefsByName';
 const MAXIMUM_REQUESTORS_DEFAULT = -1;
 const UNLIMITED_RESQUESTORS = 9999;
 
-export const HIGH_PRIORITY_CONTACT_CATEGORIES = {
-	criticalIncident: i18n.translate('critical-incident'),
-	privacyBreach: i18n.translate('privacy-breach'),
-	securityBreach: i18n.translate('security-breach'),
-};
-
 const TeamMembersTable = ({
 	koroneikiAccount,
 	loading: koroneikiAccountLoading,
@@ -111,29 +105,23 @@ const TeamMembersTable = ({
 
 	const getHighPriorityContactsByFilter = async (filter) => {
 		return userAccountsData?.accountUserAccountsByExternalReferenceCode?.items
-			.filter((account) => {
-				return account?.selectedAccountSummary?.roleBriefs?.some(
+			.filter((account) =>
+				account?.selectedAccountSummary?.roleBriefs?.some(
 					(role) => role?.name === filter
-				);
-			})
-			.map((account) => {
-				const {emailAddress} = account;
-
-				return {
-					email: emailAddress,
-				};
-			});
+				)
+			)
+			.map((account) => ({
+				email: account.emailAddress,
+			}));
 	};
 
 	useEffect(() => {
 		const fetchHighPriorityContacts = async () => {
-			const highPriorityContactsPromises = rolesHighPriorityContacts.map(
-				(role) => getHighPriorityContactsByFilter(role)
-			);
-
 			try {
 				const highPriorityContactsResults = await Promise.all(
-					highPriorityContactsPromises
+					rolesHighPriorityContacts.map((role) =>
+						getHighPriorityContactsByFilter(role)
+					)
 				);
 
 				const flattenedHighPriorityContacts = highPriorityContactsResults

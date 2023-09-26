@@ -284,7 +284,7 @@ const IncidentContactCard = ({
 											<div className="col customer-portal-card-description pl-4">
 												<h3 className="pb-1">
 													{i18n.translate(
-														'security-breach'
+														'security-breach-contact'
 													)}
 
 													{hasSecurityBreachContact &&
@@ -329,7 +329,7 @@ const IncidentContactCard = ({
 											<div className="col customer-portal-card-description pl-4">
 												<h3 className="pb-1">
 													{i18n.translate(
-														'privacy-breach'
+														'privacy-breach-contact'
 													)}
 
 													{hasPrivacyBreachContact &&

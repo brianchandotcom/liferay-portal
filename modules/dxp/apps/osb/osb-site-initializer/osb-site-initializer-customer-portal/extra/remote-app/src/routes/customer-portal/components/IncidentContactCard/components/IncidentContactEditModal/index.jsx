@@ -83,7 +83,7 @@ const IncidentContactEditModal = ({
 				openToast(
 					`${item.label}`,
 					`${i18n.translate('high-priority-contact-removed')} 
-					<b>${i18n.translate(`${getKebabCase(item.filter)}`)}</b>`
+					<b>${i18n.translate(`${getKebabCase(item.labelRole)}-contact`)}</b>`
 				);
 			});
 

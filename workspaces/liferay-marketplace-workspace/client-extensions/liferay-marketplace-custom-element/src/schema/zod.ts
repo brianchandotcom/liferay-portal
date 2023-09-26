@@ -11,7 +11,7 @@ const zodSchema = {
 		agreeToTermsAndConditions: z.boolean(),
 		companyName: z
 			.string()
-			.nonempty({message: 'Please enter a company name to continue'}),
+			.min(1, {message: 'Please enter a company name to continue'}),
 		emailAddress: z.string().email('Please fill in valid email'),
 		extension: z.string().optional(),
 		familyName: z.string().nonempty({message: 'This field is required'}),
@@ -23,13 +23,7 @@ const zodSchema = {
 			code: z.string(),
 			flag: z.string(),
 		}),
-		phoneNumber: z
-			.string()
-			.nonempty()
-			.refine(
-				(value) => /^(\+)?[\d\s]+$/.test(value),
-				'Please enter a phone number to continue.'
-			),
+		phoneNumber: z.string().nonempty({message: 'This field is required'}),
 	}),
 
 	invitedNewMember: z.object({

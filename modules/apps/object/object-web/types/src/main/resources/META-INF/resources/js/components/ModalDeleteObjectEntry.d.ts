@@ -6,9 +6,9 @@
 /// <reference types="react" />
 
 interface ModalDeleteObjectEntryProps {
-	objectEntryBaseAPIURL: string;
+	byExternalReferenceCodePath: string;
 }
 export default function ModalDeleteObjectEntry({
-	objectEntryBaseAPIURL,
+	byExternalReferenceCodePath,
 }: ModalDeleteObjectEntryProps): JSX.Element | null;
 export {};

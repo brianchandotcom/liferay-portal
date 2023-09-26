@@ -9,7 +9,7 @@ import {API, openToast} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 interface ModalDeleteObjectEntryProps {
-	objectEntryBaseAPIURL: string;
+	byExternalReferenceCodePath: string;
 }
 
 interface ModalDeleteObjectEntryState {
@@ -19,7 +19,7 @@ interface ModalDeleteObjectEntryState {
 }
 
 export default function ModalDeleteObjectEntry({
-	objectEntryBaseAPIURL,
+	byExternalReferenceCodePath,
 }: ModalDeleteObjectEntryProps) {
 	const [
 		modalDeleteObjectEntryState,
@@ -43,7 +43,7 @@ export default function ModalDeleteObjectEntry({
 	const onSubmit = async () => {
 		try {
 			await API.deleteItem(
-				`${objectEntryBaseAPIURL}/by-external-reference-code/${modalDeleteObjectEntryState.objectEntry?.externalReferenceCode}`
+				`${byExternalReferenceCodePath}/${modalDeleteObjectEntryState.objectEntry?.externalReferenceCode}`
 			);
 
 			openToast({

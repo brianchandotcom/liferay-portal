@@ -154,8 +154,6 @@ public interface Build {
 
 	public TopLevelBuild getTopLevelBuild();
 
-	public long getTotalDuration();
-
 	public List<TestResult> getUniqueFailureTestResults();
 
 	public List<TestResult> getUpstreamJobFailureTestResults();

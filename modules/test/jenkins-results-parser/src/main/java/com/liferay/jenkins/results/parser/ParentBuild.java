@@ -27,6 +27,8 @@ public interface ParentBuild extends Build {
 
 	public List<Build> getModifiedDownstreamBuildsByStatus(String status);
 
+	public long getTotalDuration();
+
 	public int getTotalSlavesUsedCount();
 
 	public int getTotalSlavesUsedCount(

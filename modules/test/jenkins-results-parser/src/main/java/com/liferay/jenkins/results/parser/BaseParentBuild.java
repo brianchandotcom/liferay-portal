@@ -206,6 +206,19 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	}
 
 	@Override
+	public long getTotalDuration() {
+		long totalDuration = getDuration();
+
+		for (Build downstreamBuild :
+				JenkinsResultsParserUtil.flatten(getDownstreamBuilds(null))) {
+
+			totalDuration += downstreamBuild.getDuration();
+		}
+
+		return totalDuration;
+	}
+
+	@Override
 	public int getTotalSlavesUsedCount() {
 		return getTotalSlavesUsedCount(null, false);
 	}

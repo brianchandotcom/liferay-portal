@@ -1251,17 +1251,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public long getTotalDuration() {
-		long totalDuration = getDuration();
-
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			totalDuration += downstreamBuild.getTotalDuration();
-		}
-
-		return totalDuration;
-	}
-
-	@Override
 	public List<TestResult> getUniqueFailureTestResults() {
 		List<TestResult> uniqueFailureTestResults = new ArrayList<>();
 

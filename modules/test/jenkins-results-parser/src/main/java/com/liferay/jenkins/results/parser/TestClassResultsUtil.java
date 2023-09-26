@@ -15,9 +15,9 @@ import java.util.regex.Pattern;
 /**
  * @author Peter Yoo
  */
-public class TestClassResultUtil {
+public class TestClassResultsUtil {
 
-	public static File getProjectTestResultDir(
+	public static File getProjectTestClassResultsDir(
 		String projectName, File baseDir) {
 
 		Matcher matcher = _projectNamePattern.matcher(projectName);
@@ -33,8 +33,8 @@ public class TestClassResultUtil {
 		return null;
 	}
 
-	public static String getTestResultFileName(File file) {
-		Matcher matcher = _testResultFileNamePattern.matcher(
+	public static String getTestClassResultsFileName(File file) {
+		Matcher matcher = _testClassResultsFileNamePattern.matcher(
 			file.getAbsolutePath());
 
 		if (matcher.find()) {
@@ -44,24 +44,26 @@ public class TestClassResultUtil {
 		return null;
 	}
 
-	public static void moveTestResultFiles(
+	public static void moveTestClassResultsFiles(
 			File testProjectResultsDir, File baseDir)
 		throws IOException {
 
 		List<File> fileList = JenkinsResultsParserUtil.getIncludedFiles(
 			testProjectResultsDir, null, _INCLUDED_FILES_GLOBS);
 
-		File testResultsDir = new File(baseDir, "modules/test-results");
+		File testClassResultsDir = new File(baseDir, "modules/test-results");
 
-		for (File resultFile : fileList) {
-			String testResultFileName = getTestResultFileName(resultFile);
+		for (File resultsFile : fileList) {
+			String testClassResultsFileName = getTestClassResultsFileName(
+				resultsFile);
 
-			File destinationFile = new File(testResultsDir, testResultFileName);
+			File destinationFile = new File(
+				testClassResultsDir, testClassResultsFileName);
 
-			JenkinsResultsParserUtil.move(resultFile, destinationFile);
+			JenkinsResultsParserUtil.move(resultsFile, destinationFile);
 
-			if (!resultFile.exists()) {
-				System.out.println("Deleted result file:" + resultFile);
+			if (!resultsFile.exists()) {
+				System.out.println("Deleted results file:" + resultsFile);
 			}
 		}
 	}
@@ -70,7 +72,7 @@ public class TestClassResultUtil {
 
 	private static final Pattern _projectNamePattern = Pattern.compile(
 		"(:.*)(:test|testIntegration)");
-	private static final Pattern _testResultFileNamePattern = Pattern.compile(
-		"TEST-.*.xml");
+	private static final Pattern _testClassResultsFileNamePattern =
+		Pattern.compile("TEST-.*.xml");
 
 }

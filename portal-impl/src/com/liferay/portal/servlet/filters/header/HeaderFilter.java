@@ -66,7 +66,8 @@ public class HeaderFilter extends BasePortalFilter {
 			}
 		}
 
-		String ifNoneMatch = httpServletRequest.getHeader(HttpHeaders.IF_NONE_MATCH);
+		String ifNoneMatch = httpServletRequest.getHeader(
+			HttpHeaders.IF_NONE_MATCH);
 
 		if (ifNoneMatch == null) {
 			long lastModified = getLastModified(httpServletRequest);

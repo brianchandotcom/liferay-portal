@@ -14,7 +14,6 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -40,11 +39,8 @@ public class PathInterpreterTest {
 
 	@Before
 	public void setUp() {
-		ReflectionTestUtil.setFieldValue(
-			_pathInterpreter, "_amImageConfigurationHelper",
-			_amImageConfigurationHelper);
-		ReflectionTestUtil.setFieldValue(
-			_pathInterpreter, "_dlAppService", _dlAppService);
+		_pathInterpreter = new PathInterpreter(
+			_amImageConfigurationHelper, _dlAppService);
 	}
 
 	@Test
@@ -232,6 +228,6 @@ public class PathInterpreterTest {
 	private final DLAppService _dlAppService = Mockito.mock(DLAppService.class);
 	private final FileEntry _fileEntry = Mockito.mock(FileEntry.class);
 	private final FileVersion _fileVersion = Mockito.mock(FileVersion.class);
-	private final PathInterpreter _pathInterpreter = new PathInterpreter();
+	private PathInterpreter _pathInterpreter;
 
 }

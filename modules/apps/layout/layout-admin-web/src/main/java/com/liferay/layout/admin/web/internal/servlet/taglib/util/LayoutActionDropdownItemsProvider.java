@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -214,7 +213,7 @@ public class LayoutActionDropdownItemsProvider {
 						RequestBackedPortletURLFactoryUtil.create(
 							_httpServletRequest))
 				).setRedirect(
-					PortalUtil.getCurrentURL(_httpServletRequest)
+					_layoutsAdminDisplayContext.getRedirect()
 				).setPortletResource(
 					() -> {
 						PortletDisplay portletDisplay =
@@ -420,7 +419,7 @@ public class LayoutActionDropdownItemsProvider {
 		).setActionName(
 			"/layout_admin/discard_draft_layout"
 		).setRedirect(
-			ParamUtil.getString(_httpServletRequest, "redirect")
+			_layoutsAdminDisplayContext.getRedirect()
 		).setParameter(
 			"selPlid",
 			() -> {
@@ -465,7 +464,7 @@ public class LayoutActionDropdownItemsProvider {
 						RequestBackedPortletURLFactoryUtil.create(
 							_httpServletRequest))
 				).setRedirect(
-					PortalUtil.getCurrentURL(_httpServletRequest)
+					_layoutsAdminDisplayContext.getRedirect()
 				).setPortletResource(
 					() -> {
 						PortletDisplay portletDisplay =
@@ -496,7 +495,7 @@ public class LayoutActionDropdownItemsProvider {
 						RequestBackedPortletURLFactoryUtil.create(
 							_httpServletRequest))
 				).setRedirect(
-					PortalUtil.getCurrentURL(_httpServletRequest)
+					_layoutsAdminDisplayContext.getRedirect()
 				).setPortletResource(
 					() -> {
 						PortletDisplay portletDisplay =
@@ -517,7 +516,7 @@ public class LayoutActionDropdownItemsProvider {
 		).setActionName(
 			"/layout_admin/add_layout_conversion_preview"
 		).setRedirect(
-			_themeDisplay.getURLCurrent()
+			_layoutsAdminDisplayContext.getRedirect()
 		).setParameter(
 			"selPlid", layout.getPlid()
 		).buildString();
@@ -654,7 +653,8 @@ public class LayoutActionDropdownItemsProvider {
 			return null;
 		}
 
-		portletURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		portletURL.setParameter(
+			"redirect", _layoutsAdminDisplayContext.getRedirect());
 		portletURL.setParameter("collectionPK", collectionPK);
 		portletURL.setParameter("collectionType", collectionType);
 		portletURL.setParameter("showActions", String.valueOf(Boolean.TRUE));

@@ -385,7 +385,7 @@ public class LayoutsAdminDisplayContext {
 		).setMVCRenderCommandName(
 			"/layout_admin/edit_layout"
 		).setRedirect(
-			themeDisplay.getURLCurrent()
+			getRedirect()
 		).setBackURL(
 			_getBackURL()
 		).setPortletResource(

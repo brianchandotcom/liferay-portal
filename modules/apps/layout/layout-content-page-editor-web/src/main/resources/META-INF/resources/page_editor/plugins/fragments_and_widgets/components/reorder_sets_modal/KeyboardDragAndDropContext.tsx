@@ -142,20 +142,24 @@ export function useKeyboardDragItem(
 			return;
 		}
 
-		const onKeyUp = (event: KeyboardEvent) => {
+		const onKeyDown = (event: KeyboardEvent) => {
 			if (
 				['ArrowDown', 'ArrowUp', 'Enter', 'Escape', ' '].includes(
 					event.key
 				)
 			) {
 				event.preventDefault();
-				event.stopImmediatePropagation();
 			}
-			else {
-				return;
-			}
+		};
 
-			if (event.key === 'Escape') {
+		const onKeyUp = (event: KeyboardEvent) => {
+			const itemList = itemListRef.current;
+			const position = dragOverPositionRef.current;
+			const targetItem = targetItemRef.current;
+
+			if (event.key === 'Escape' && targetItem) {
+				event.stopImmediatePropagation();
+
 				document.activeElement?.scrollIntoView({
 					behavior: 'smooth',
 					block: 'center',
@@ -168,15 +172,13 @@ export function useKeyboardDragItem(
 				return;
 			}
 
-			const itemList = itemListRef.current;
-			const position = dragOverPositionRef.current;
-			const targetItem = targetItemRef.current;
-
 			if (!itemList) {
 				return;
 			}
 
 			if (event.key === 'ArrowUp' && targetItem) {
+				event.stopImmediatePropagation();
+
 				const targetItemIndex = itemList.indexOf(targetItem);
 
 				if (position === DRAG_OVER_POSITIONS.bottom) {
@@ -188,6 +190,8 @@ export function useKeyboardDragItem(
 				}
 			}
 			else if (event.key === 'ArrowDown' && targetItem) {
+				event.stopImmediatePropagation();
+
 				const targetItemIndex = itemList.indexOf(targetItem);
 
 				if (targetItemIndex < itemList.length - 1) {
@@ -199,18 +203,12 @@ export function useKeyboardDragItem(
 				}
 			}
 			else if (event.key === 'Enter' || event.key === ' ') {
-				if (sourceItemRef.current === item) {
-					const dragOverPosition = dragOverPositionRef.current;
-					const itemList = itemListRef.current;
-					const onDropItem = onDropItemRef.current;
-					const targetItem = targetItemRef.current;
+				event.stopImmediatePropagation();
 
-					if (
-						!dragOverPosition ||
-						!itemList ||
-						!onDropItem ||
-						!targetItem
-					) {
+				if (sourceItemRef.current === item) {
+					const onDropItem = onDropItemRef.current;
+
+					if (!position || !onDropItem || !targetItem) {
 						return;
 					}
 
@@ -220,7 +218,7 @@ export function useKeyboardDragItem(
 						return;
 					}
 
-					onDropItem(item.id, targetIndex, dragOverPosition);
+					onDropItem(item.id, targetIndex, position);
 
 					setDragOverPosition(null);
 					setSourceItem(null);
@@ -241,10 +239,12 @@ export function useKeyboardDragItem(
 		};
 
 		button.addEventListener('blur', onBlur);
+		button.addEventListener('keydown', onKeyDown);
 		button.addEventListener('keyup', onKeyUp);
 
 		return () => {
 			button.removeEventListener('blur', onBlur);
+			button.removeEventListener('keydown', onKeyDown);
 			button.removeEventListener('keyup', onKeyUp);
 		};
 	}, [item, itemListRef, setDragOverPosition, setSourceItem, setTargetItem]);

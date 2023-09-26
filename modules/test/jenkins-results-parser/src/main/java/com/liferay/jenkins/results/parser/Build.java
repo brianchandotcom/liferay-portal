@@ -110,12 +110,6 @@ public interface Build {
 
 	public String getJobVariant();
 
-	public Long getLatestStartTimestamp();
-
-	public Build getLongestDelayedDownstreamBuild();
-
-	public Build getLongestRunningDownstreamBuild();
-
 	public TestResult getLongestRunningTest();
 
 	public Map<String, String> getMetricLabels();

@@ -16,6 +16,12 @@ public interface ParentBuild extends Build {
 
 	public void addDownstreamBuilds(String... urls);
 
+	public Long getLatestStartTimestamp();
+
+	public Build getLongestDelayedDownstreamBuild();
+
+	public Build getLongestRunningDownstreamBuild();
+
 	public void removeDownstreamBuild(Build build);
 
 }

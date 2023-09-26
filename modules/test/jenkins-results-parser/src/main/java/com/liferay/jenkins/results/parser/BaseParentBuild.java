@@ -97,6 +97,91 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	}
 
 	@Override
+	public Long getLatestStartTimestamp() {
+		Long latestStartTimestamp = getStartTime();
+
+		if (latestStartTimestamp == null) {
+			return null;
+		}
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			Long downstreamBuildLatestStartTimestamp = null;
+
+			if (downstreamBuild instanceof ParentBuild) {
+				ParentBuild parentBuild = (ParentBuild)downstreamBuild;
+
+				downstreamBuildLatestStartTimestamp =
+					parentBuild.getLatestStartTimestamp();
+			}
+			else {
+				downstreamBuildLatestStartTimestamp =
+					downstreamBuild.getStartTime();
+			}
+
+			if (downstreamBuildLatestStartTimestamp == null) {
+				return null;
+			}
+
+			latestStartTimestamp = Math.max(
+				latestStartTimestamp, downstreamBuildLatestStartTimestamp);
+		}
+
+		return latestStartTimestamp;
+	}
+
+	@Override
+	public Build getLongestDelayedDownstreamBuild() {
+		List<Build> downstreamBuilds = getDownstreamBuilds(null);
+
+		if (downstreamBuilds.isEmpty()) {
+			return this;
+		}
+
+		Build longestDelayedBuild = downstreamBuilds.get(0);
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			Build longestDelayedDownstreamBuild = downstreamBuild;
+
+			if (downstreamBuild instanceof ParentBuild) {
+				ParentBuild parentBuild = (ParentBuild)downstreamBuild;
+
+				longestDelayedDownstreamBuild =
+					parentBuild.getLongestDelayedDownstreamBuild();
+			}
+
+			if (downstreamBuild.getDelayTime() >
+					longestDelayedDownstreamBuild.getDelayTime()) {
+
+				longestDelayedDownstreamBuild = downstreamBuild;
+			}
+
+			if (longestDelayedDownstreamBuild.getDelayTime() >
+					longestDelayedBuild.getDelayTime()) {
+
+				longestDelayedBuild = longestDelayedDownstreamBuild;
+			}
+		}
+
+		return longestDelayedBuild;
+	}
+
+	@Override
+	public Build getLongestRunningDownstreamBuild() {
+		Build longestRunningDownstreamBuild = null;
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			if ((longestRunningDownstreamBuild == null) ||
+				(downstreamBuild.getDuration() >
+					longestRunningDownstreamBuild.getDuration())) {
+
+				longestRunningDownstreamBuild = downstreamBuild;
+			}
+		}
+
+		return longestRunningDownstreamBuild;
+	}
+
+	@Override
 	public boolean hasDownstreamBuilds() {
 		if (getDownstreamBuildCount(null, null) > 0) {
 			return true;

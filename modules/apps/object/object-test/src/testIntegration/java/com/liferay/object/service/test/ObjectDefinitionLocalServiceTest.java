@@ -1144,12 +1144,6 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertNull(
 			_messageBus.getDestination(objectDefinition.getDestinationName()));
 
-		// Object folder
-
-		Assert.assertEquals(
-			_uncategorizedObjectFolder.getObjectFolderId(),
-			objectDefinition.getObjectFolderId());
-
 		// Resources
 
 		Assert.assertEquals(
@@ -1212,6 +1206,9 @@ public class ObjectDefinitionLocalServiceTest {
 				TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId());
 
+		Assert.assertEquals(
+			_uncategorizedObjectFolder.getObjectFolderId(),
+			objectDefinition.getObjectFolderId());
 		Assert.assertTrue(
 			StringUtil.startsWith(
 				objectDefinition.getDBTableName(),

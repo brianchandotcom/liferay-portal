@@ -1342,7 +1342,7 @@ definition {
 
 		SearchPage.searchWidget(searchTerm = "Potato");
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Type Facet",
 			facetTerm = "Blogs Entry");
 
@@ -1482,7 +1482,7 @@ definition {
 			searchAssetTitle = "Blogs Entry Title",
 			searchAssetType = "Blogs Entry");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Cloud Layout",
 			portletName = "Category Facet");
 
@@ -1678,7 +1678,7 @@ definition {
 			searchAssetTitle = "Blogs Entry Title",
 			searchAssetType = "Blogs Entry");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			displayTemplate = "Cloud Layout",
 			portletName = "Tag Facet");
 
@@ -1853,7 +1853,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Type Facet",
 			facetTerm = "Custom Object 500");
 
@@ -1981,7 +1981,7 @@ definition {
 			resultsList = "Apple/Web Content Article,Apple/Document,Apple/Blogs Entry",
 			searchTerm = "Apple");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			maxTerms = 2,
 			portletName = "Site Facet");
 
@@ -2130,7 +2130,7 @@ definition {
 			searchAssetTitle = "DM Document Title",
 			searchAssetType = "Document");
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "Tag Facet",
 			facetTerm = "moon rocks");
 
@@ -2280,13 +2280,13 @@ definition {
 			searchAssetTitle = "userfn userln",
 			searchAssetType = "User");
 
-		SearchFacetPortlet.updateFacetConfiguration(
+		SearchFacets.updateFacetConfiguration(
 			parameterName = "username",
 			portletName = "User Facet");
 
 		Refresh();
 
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = "User Facet",
 			facetTerm = "userfn userln");
 

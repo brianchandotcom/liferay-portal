@@ -1,7 +1,7 @@
 definition {
 
 	macro checkFacetTerm {
-		if (IsNotChecked.isNotCheckedNotVisible(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "FormFields#CHECKBOX")) {
+		if (IsNotChecked.isNotCheckedNotVisible(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "SearchPage#FACET_CHECKBOX_LABEL_SPECIFIC")) {
 			Click(
 				key_checkboxName = ${facetTerm},
 				key_facetName = ${facetName},
@@ -10,11 +10,11 @@ definition {
 	}
 
 	macro checkFacetTermAndViewURL {
-		SearchFacetPortlet.checkFacetTerm(
+		SearchFacets.checkFacetTerm(
 			facetName = ${facetName},
 			facetTerm = ${facetTerm});
 
-		var searchURL = SearchFacetPortlet.generateFacetCheckedURL(
+		var searchURL = SearchFacets.generateFacetCheckedURL(
 			facetName = ${facetName},
 			facetTerm = ${facetTerm},
 			searchPage = ${searchPage},
@@ -40,7 +40,7 @@ definition {
 
 			var facetName = StringUtil.concat(${firstWord}, " ${lastWord}");
 
-			var searchURL = SearchFacetPortlet.clearFacetAndViewURL(
+			var searchURL = SearchFacets.clearFacetAndViewURL(
 				facetName = ${facetName},
 				searchURL = ${searchURL});
 		}
@@ -66,9 +66,9 @@ definition {
 
 	macro clearFacetAndViewURL {
 		if (isSet(facetName)) {
-			SearchFacetPortlet.clearFacet(facetName = ${facetName});
+			SearchFacets.clearFacet(facetName = ${facetName});
 
-			var searchURL = SearchFacetPortlet.generateFacetClearedURL(
+			var searchURL = SearchFacets.generateFacetClearedURL(
 				facetName = ${facetName},
 				searchURL = ${searchURL});
 
@@ -77,19 +77,19 @@ definition {
 			return ${searchURL};
 		}
 		else {
-			SearchFacetPortlet.clearFacet();
+			SearchFacets.clearFacet();
 		}
 	}
 
 	macro configureCategoryFacet {
 		if (isSet(index)) {
-			SearchFacetPortlet.gotoSearchFacetOptionsSpecific(
+			SearchFacets.gotoSearchFacetOptionsSpecific(
 				index = ${index},
 				portletName = "Category Facet",
 				portletOption = "Configuration");
 		}
 		else {
-			SearchFacetPortlet.gotoSearchFacetOptionsSpecific(
+			SearchFacets.gotoSearchFacetOptionsSpecific(
 				index = 1,
 				portletName = "Category Facet",
 				portletOption = "Configuration");
@@ -170,10 +170,10 @@ definition {
 		}
 
 		if (${facetName} == "Type Facet") {
-			var termURLValue = SearchFacetPortlet.getTypeFacetTermURLValue(typeFacetTerm = ${facetTerm});
+			var termURLValue = SearchFacets.getTypeFacetTermURLValue(typeFacetTerm = ${facetTerm});
 		}
 		else if (${facetName} == "User Facet") {
-			var termURLValue = SearchFacetPortlet.getUserFacetTermURLValue(userFacetTerm = ${facetTerm});
+			var termURLValue = SearchFacets.getUserFacetTermURLValue(userFacetTerm = ${facetTerm});
 		}
 		else if (!(isSet(termURLValue))) {
 			var termURLValue = ${facetTerm};
@@ -227,10 +227,10 @@ definition {
 
 	macro generateFacetUncheckedURL {
 		if (${facetName} == "Type Facet") {
-			var termURLValue = SearchFacetPortlet.getTypeFacetTermURLValue(typeFacetTerm = ${facetTerm});
+			var termURLValue = SearchFacets.getTypeFacetTermURLValue(typeFacetTerm = ${facetTerm});
 		}
 		else if (${facetName} == "User Facet") {
-			var termURLValue = SearchFacetPortlet.getUserFacetTermURLValue(userFacetTerm = ${facetTerm});
+			var termURLValue = SearchFacets.getUserFacetTermURLValue(userFacetTerm = ${facetTerm});
 		}
 		else if (!(isSet(termURLValue))) {
 			var termURLValue = ${facetTerm};
@@ -342,7 +342,7 @@ definition {
 	}
 
 	macro uncheckFacetTerm {
-		if (IsChecked(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "FormFields#CHECKBOX")) {
+		if (IsChecked(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "SearchPage#FACET_CHECKBOX_LABEL_SPECIFIC")) {
 			Click(
 				key_checkboxName = ${facetTerm},
 				key_facetName = ${facetName},
@@ -351,11 +351,11 @@ definition {
 	}
 
 	macro uncheckFacetTermAndViewURL {
-		SearchFacetPortlet.uncheckFacetTerm(
+		SearchFacets.uncheckFacetTerm(
 			facetName = ${facetName},
 			facetTerm = ${facetTerm});
 
-		var searchURL = SearchFacetPortlet.generateFacetUncheckedURL(
+		var searchURL = SearchFacets.generateFacetUncheckedURL(
 			facetName = ${facetName},
 			facetTerm = ${facetTerm},
 			searchURL = ${searchURL},

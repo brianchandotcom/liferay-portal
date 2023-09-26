@@ -288,7 +288,7 @@ definition {
 		}
 
 		task ("Then the user is able to uncheck selections using Clear button") {
-			SearchFacetPortlet.clearFacet();
+			SearchFacets.clearFacet();
 
 			for (var searchFieldValue : list "48,112") {
 				FormViewBuilder.viewCheckboxNotChecked(
@@ -314,7 +314,7 @@ definition {
 		}
 
 		task ("Then the user is able to uncheck selections using Clear button") {
-			SearchFacetPortlet.clearFacet();
+			SearchFacets.clearFacet();
 
 			for (var searchFieldValue : list "Steel,Rubber") {
 				FormViewBuilder.viewCheckboxNotChecked(
@@ -340,7 +340,7 @@ definition {
 		}
 
 		task ("Then the user is able to uncheck selections using Clear button") {
-			SearchFacetPortlet.clearFacet();
+			SearchFacets.clearFacet();
 
 			for (var searchFieldValue : list "$ 0.00 - $ 49.99,$ 50.00 - $ 99.99") {
 				FormViewBuilder.viewCheckboxNotChecked(
@@ -653,7 +653,7 @@ definition {
 		}
 
 		task ("When the buyer selects the price range for the new sku's price") {
-			SearchFacetPortlet.clearFacet();
+			SearchFacets.clearFacet();
 
 			Check.checkToggleSwitch(
 				key_fieldName = "$ 500.00 - $ 999.99",

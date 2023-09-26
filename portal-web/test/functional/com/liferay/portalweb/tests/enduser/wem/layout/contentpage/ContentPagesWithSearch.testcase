@@ -138,7 +138,7 @@ definition {
 		}
 
 		task ("Check the Page type in Type Facet") {
-			SearchFacetPortlet.checkFacetTerm(
+			SearchFacets.checkFacetTerm(
 				facetName = "Type Facet",
 				facetTerm = "Page");
 		}

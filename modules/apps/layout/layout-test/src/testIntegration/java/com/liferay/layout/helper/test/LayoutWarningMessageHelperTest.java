@@ -178,15 +178,13 @@ public class LayoutWarningMessageHelperTest {
 			_getCollectionWarningMessageJSONObject(
 				collectionStyledLayoutStructureItem, Constants.EDIT);
 
-		String expectedCollectionWarningMessage = _language.format(
-			LocaleUtil.getDefault(),
-			"this-setting-can-affect-page-performance-severely-if-the-number-" +
-				"of-collection-items-is-above-x.-we-strongly-recommend-using-" +
-					"pagination-instead",
-			PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA);
-
 		Assert.assertEquals(
-			expectedCollectionWarningMessage,
+			_language.format(
+				LocaleUtil.getDefault(),
+				"this-setting-can-affect-page-performance-severely-if-the-" +
+					"number-of-collection-items-is-above-x.-we-strongly-" +
+						"recommend-using-pagination-instead",
+				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA),
 			actualCollectionWarningMessageJSONObject.getString("description"));
 	}
 
@@ -199,15 +197,13 @@ public class LayoutWarningMessageHelperTest {
 			_getCollectionWarningMessageJSONObject(
 				collectionStyledLayoutStructureItem, Constants.VIEW);
 
-		String expectedCollectionWarningMessage = _language.format(
-			LocaleUtil.getDefault(),
-			"this-setting-can-affect-page-performance-severely-if-the-number-" +
-				"of-collection-items-is-above-x.-we-strongly-recommend-using-" +
-					"pagination-instead",
-			PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA);
-
 		Assert.assertEquals(
-			expectedCollectionWarningMessage,
+			_language.format(
+				LocaleUtil.getDefault(),
+				"this-setting-can-affect-page-performance-severely-if-the-" +
+					"number-of-collection-items-is-above-x.-we-strongly-" +
+						"recommend-using-pagination-instead",
+				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA),
 			actualCollectionWarningMessageJSONObject.getString("description"));
 	}
 

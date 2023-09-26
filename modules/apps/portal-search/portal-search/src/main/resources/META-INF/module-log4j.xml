@@ -4,6 +4,7 @@
 	<Loggers>
 		<Logger level="WARN" name="com.liferay.portal.search.internal.IndexerRegistryImpl" />
 		<Logger level="INFO" name="com.liferay.portal.search.internal.SearchEngineHelperImpl" />
+		<Logger level="INFO" name="com.liferay.portal.search.internal.background.task.ReindexIndexReindexerBackgroundTaskExecutor" />
 		<Logger level="INFO" name="com.liferay.portal.search.internal.background.task.ReindexPortalBackgroundTaskExecutor" />
 		<Logger level="INFO" name="com.liferay.portal.search.internal.background.task.ReindexSingleIndexerBackgroundTaskExecutor" />
 		<Logger level="WARN" name="com.liferay.portal.search.internal.index.contributor.helper.ModelIndexerWriterDocumentHelperImpl" />

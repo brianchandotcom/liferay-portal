@@ -87,8 +87,12 @@ public class LanguageFilter extends BasePortalFilter {
 		httpServletResponse.setHeader(
 			HttpHeaders.CACHE_CONTROL, "private, no-cache");
 
+		String eTagValue = _eTagValues.get(eTagKey);
+
 		if ((ifNoneMatch != null) &&
 			ifNoneMatch.equals(_eTagValues.get(eTagKey))) {
+
+			httpServletResponse.setHeader(HttpHeaders.ETAG, eTagValue);
 
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
 
@@ -114,7 +118,7 @@ public class LanguageFilter extends BasePortalFilter {
 
 		content = translateResponse(httpServletRequest, content);
 
-		String eTagValue =
+		eTagValue =
 			StringPool.QUOTE + DigesterUtil.digest("SHA-1", content) +
 				StringPool.QUOTE;
 

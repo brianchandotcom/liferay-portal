@@ -162,108 +162,23 @@ public class FeatureFlagsBagProviderImpl
 			}
 		}
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+		Map<String, FeatureFlag> featureFlagsMap = new HashMap<>();
 
-			Map<String, FeatureFlag> featureFlagsMap = new HashMap<>();
-
-			Properties properties = PropsUtil.getProperties(
-				FeatureFlagConstants.FEATURE_FLAG + StringPool.PERIOD, true);
-
-			for (String stringPropertyName : properties.stringPropertyNames()) {
-				if (!_isFeatureFlagKey(stringPropertyName)) {
-					continue;
-				}
-
-				boolean system = GetterUtil.getBoolean(
-					properties.get(stringPropertyName + ".system"));
-
-				if ((system && (companyId == CompanyConstants.SYSTEM)) ||
-					(!system && (companyId != CompanyConstants.SYSTEM))) {
-
-					FeatureFlag featureFlag = new FeatureFlagImpl(
-						stringPropertyName);
-
-					featureFlag = new LanguageAwareFeatureFlag(
-						featureFlag, _language);
-					featureFlag = new PreferenceAwareFeatureFlag(
-						companyId, featureFlag, _featureFlagPreferencesManager);
-
-					featureFlagsMap.put(featureFlag.getKey(), featureFlag);
-				}
-			}
-
-			for (Map.Entry<String, FeatureFlag> entry :
-					featureFlagsMap.entrySet()) {
-
-				List<FeatureFlag> dependencyFeatureFlags = new ArrayList<>();
-
-				FeatureFlag featureFlag = entry.getValue();
-
-				for (String dependencyKey : featureFlag.getDependencyKeys()) {
-					if (Objects.equals(featureFlag.getKey(), dependencyKey)) {
-						_log.error(
-							"A feature flag cannot depend on itself: " +
-								dependencyKey);
-
-						continue;
-					}
-
-					if ((companyId == CompanyConstants.SYSTEM) &&
-						!GetterUtil.getBoolean(
-							properties.get(
-								FeatureFlagConstants.getKey(
-									dependencyKey,
-									ExtendedObjectClassDefinition.Scope.SYSTEM.
-										getValue())))) {
-
-						_log.error(
-							StringBundler.concat(
-								"The system feature flag ",
-								featureFlag.getKey(),
-								" cannot depend on the nonsystem feature flag ",
-								dependencyKey));
-
-						continue;
-					}
-
-					FeatureFlag dependencyFeatureFlag = featureFlagsMap.get(
-						dependencyKey);
-
-					if (dependencyFeatureFlag == null) {
-						dependencyFeatureFlag = systemFeatureFlagMap.get(
-							dependencyKey);
-					}
-
-					if (dependencyFeatureFlag != null) {
-						if (!ArrayUtil.contains(
-								dependencyFeatureFlag.getDependencyKeys(),
-								featureFlag.getKey())) {
-
-							dependencyFeatureFlags.add(dependencyFeatureFlag);
-						}
-						else {
-							_log.error(
-								StringBundler.concat(
-									"Skipping circular dependency ",
-									dependencyKey, " for feature flag ",
-									featureFlag.getKey()));
-						}
-					}
-				}
-
-				if (ListUtil.isNotEmpty(dependencyFeatureFlags)) {
-					entry.setValue(
-						new DependencyAwareFeatureFlag(
-							featureFlag,
-							dependencyFeatureFlags.toArray(
-								new FeatureFlag[0])));
-				}
-			}
-
-			return new FeatureFlagsBag(
-				companyId, Collections.unmodifiableMap(featureFlagsMap));
+		if (companyId == CompanyThreadLocal.getCompanyId()) {
+			_populateFeatureFlagsMap(
+				companyId, systemFeatureFlagMap, featureFlagsMap);
 		}
+		else {
+			try (SafeCloseable safeCloseable =
+					CompanyThreadLocal.setWithSafeCloseable(companyId)) {
+
+				_populateFeatureFlagsMap(
+					companyId, systemFeatureFlagMap, featureFlagsMap);
+			}
+		}
+
+		return new FeatureFlagsBag(
+			companyId, Collections.unmodifiableMap(featureFlagsMap));
 	}
 
 	private List<String> _getFeatureFlagKeys(
@@ -309,6 +224,102 @@ public class FeatureFlagsBagProviderImpl
 		}
 
 		return true;
+	}
+
+	private void _populateFeatureFlagsMap(
+		long companyId, Map<String, FeatureFlag> systemFeatureFlagMap,
+		Map<String, FeatureFlag> featureFlagsMap) {
+
+		Properties properties = PropsUtil.getProperties(
+			FeatureFlagConstants.FEATURE_FLAG + StringPool.PERIOD, true);
+
+		for (String stringPropertyName : properties.stringPropertyNames()) {
+			if (!_isFeatureFlagKey(stringPropertyName)) {
+				continue;
+			}
+
+			boolean system = GetterUtil.getBoolean(
+				properties.get(stringPropertyName + ".system"));
+
+			if ((system && (companyId == CompanyConstants.SYSTEM)) ||
+				(!system && (companyId != CompanyConstants.SYSTEM))) {
+
+				FeatureFlag featureFlag = new FeatureFlagImpl(
+					stringPropertyName);
+
+				featureFlag = new LanguageAwareFeatureFlag(
+					featureFlag, _language);
+				featureFlag = new PreferenceAwareFeatureFlag(
+					companyId, featureFlag, _featureFlagPreferencesManager);
+
+				featureFlagsMap.put(featureFlag.getKey(), featureFlag);
+			}
+		}
+
+		for (Map.Entry<String, FeatureFlag> entry :
+				featureFlagsMap.entrySet()) {
+
+			List<FeatureFlag> dependencyFeatureFlags = new ArrayList<>();
+
+			FeatureFlag featureFlag = entry.getValue();
+
+			for (String dependencyKey : featureFlag.getDependencyKeys()) {
+				if (Objects.equals(featureFlag.getKey(), dependencyKey)) {
+					_log.error(
+						"A feature flag cannot depend on itself: " +
+							dependencyKey);
+
+					continue;
+				}
+
+				if ((companyId == CompanyConstants.SYSTEM) &&
+					!GetterUtil.getBoolean(
+						properties.get(
+							FeatureFlagConstants.getKey(
+								dependencyKey,
+								ExtendedObjectClassDefinition.Scope.SYSTEM.
+									getValue())))) {
+
+					_log.error(
+						StringBundler.concat(
+							"The system feature flag ", featureFlag.getKey(),
+							" cannot depend on the nonsystem feature flag ",
+							dependencyKey));
+
+					continue;
+				}
+
+				FeatureFlag dependencyFeatureFlag = featureFlagsMap.get(
+					dependencyKey);
+
+				if (dependencyFeatureFlag == null) {
+					dependencyFeatureFlag = systemFeatureFlagMap.get(
+						dependencyKey);
+				}
+
+				if (dependencyFeatureFlag != null) {
+					if (!ArrayUtil.contains(
+							dependencyFeatureFlag.getDependencyKeys(),
+							featureFlag.getKey())) {
+
+						dependencyFeatureFlags.add(dependencyFeatureFlag);
+					}
+					else {
+						_log.error(
+							StringBundler.concat(
+								"Skipping circular dependency ", dependencyKey,
+								" for feature flag ", featureFlag.getKey()));
+					}
+				}
+			}
+
+			if (ListUtil.isNotEmpty(dependencyFeatureFlags)) {
+				entry.setValue(
+					new DependencyAwareFeatureFlag(
+						featureFlag,
+						dependencyFeatureFlags.toArray(new FeatureFlag[0])));
+			}
+		}
 	}
 
 	private static final String _FEATURE_FLAG_LISTENER_PROPERTY_KEY =

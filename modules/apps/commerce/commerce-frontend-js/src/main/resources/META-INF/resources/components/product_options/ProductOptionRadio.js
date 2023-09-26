@@ -6,11 +6,11 @@
 import ClayForm, {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web';
+import React, {useEffect, useState} from 'react';
+
 import ServiceProvider from '../../ServiceProvider/index';
 import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
 import {CP_INSTANCE_CHANGED} from '../../utilities/eventsDefinitions';
-import React, {useEffect, useState} from 'react';
-
 import Asterisk from './Asterisk';
 import {
 	getInitialProductOptionValue,
@@ -25,8 +25,9 @@ const ProductOptionRadio = ({
 	accountId,
 	channelId,
 	componentId,
-	forceRequired,
-	isAdmin,
+	forceRequired = false,
+	isAdmin = false,
+	isFromMiniCart = false,
 	json,
 	minQuantity,
 	namespace,
@@ -35,6 +36,8 @@ const ProductOptionRadio = ({
 	sku,
 }) => {
 	const isMounted = useIsMounted();
+	const optionIsRequired = isRequired(forceRequired, isAdmin, productOption);
+	const skuOptionsKey = isFromMiniCart ? 'miniCartSkuOptions' : 'skuOptions';
 
 	const [skuOptionsAtomState, setSkuOptionsAtomState] = useLiferayState(
 		skuOptionsAtom
@@ -53,7 +56,11 @@ const ProductOptionRadio = ({
 	const initialProductOptionValue =
 		isAdmin && currentJSONObject
 			? {key: currentJSONObject.value[0]}
-			: getInitialProductOptionValue(productOption);
+			: getInitialProductOptionValue({
+					currentJSONObject,
+					isFromMiniCart,
+					productOption,
+			  });
 
 	const defaultProductOptionValue = initialProductOptionValue
 		? initialProductOptionValue
@@ -64,26 +71,35 @@ const ProductOptionRadio = ({
 			...skuOptionsAtomState,
 			errors: getSkuOptionsErrors(
 				!defaultProductOptionValue,
+				isFromMiniCart,
 				productOption,
 				skuOptionsAtomState
 			),
-			namespace,
-			skuOptions: [
-				...skuOptionsAtomState.skuOptions,
-				{
-					key: productOption.key,
-					price: defaultProductOptionValue?.price,
-					priceType: defaultProductOptionValue?.priceType,
-					quantity: defaultProductOptionValue?.quantity,
-					skuId: defaultProductOptionValue?.skuId,
-					skuOptionKey: productOption.key,
-					skuOptionValueKey: defaultProductOptionValue?.key,
-					value: [defaultProductOptionValue?.key],
-				},
-			],
+			...(!isFromMiniCart && {namespace}),
+			[skuOptionsKey]: isFromMiniCart
+				? JSON.parse(json)
+				: [
+						...(skuOptionsAtomState[skuOptionsKey] || []),
+						{
+							key: productOption.key,
+							price: defaultProductOptionValue?.price,
+							priceType: defaultProductOptionValue?.priceType,
+							quantity: defaultProductOptionValue?.quantity,
+							skuId: defaultProductOptionValue?.skuId,
+							skuOptionKey: productOption.key,
+							skuOptionValueKey: defaultProductOptionValue?.key,
+							value: [defaultProductOptionValue?.key],
+						},
+				  ],
 		});
 
-		return () => setSkuOptionsAtomState(initialSkuOptionsAtomState);
+		return () =>
+			isFromMiniCart
+				? setSkuOptionsAtomState({
+						...skuOptionsAtomState,
+						miniCartSkuOptions: [],
+				  })
+				: setSkuOptionsAtomState(initialSkuOptionsAtomState);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -135,31 +151,33 @@ const ProductOptionRadio = ({
 			});
 		}
 
-		const currentProductOptionValue = productOptionValues.filter(
+		const currentProductOptionValue = productOptionValues.find(
 			(productOptionValue) => productOptionValue.key === valueArray[1]
-		)[0];
+		);
 
-		let currentSkuOptions = skuOptionsAtomState.skuOptions.slice();
+		let currentSkuOptions = skuOptionsAtomState[skuOptionsKey].slice();
 
 		const currentSkuOption = currentSkuOptions.filter(
 			(skuOption) => skuOption.skuOptionKey === productOption.key
 		)[0];
 
 		if (currentSkuOption) {
-			const curIndex = currentSkuOptions.findIndex(
-				(skuOption) => skuOption.skuOptionKey === productOption.key
-			);
+			currentSkuOptions = currentSkuOptions.map((skuOption) => {
+				if (skuOption.skuOptionKey === productOption.key) {
+					return {
+						key: productOption.key,
+						price: currentProductOptionValue.price,
+						priceType: currentProductOptionValue.priceType,
+						quantity: currentProductOptionValue.quantity,
+						skuId: currentProductOptionValue.skuId,
+						skuOptionKey: productOption.key,
+						skuOptionValueKey: valueArray[1],
+						value: [valueArray[1]],
+					};
+				}
 
-			currentSkuOptions[curIndex] = {
-				key: productOption.key,
-				price: currentProductOptionValue.price,
-				priceType: currentProductOptionValue.priceType,
-				quantity: currentProductOptionValue.quantity,
-				skuId: currentProductOptionValue.skuId,
-				skuOptionKey: productOption.key,
-				skuOptionValueKey: valueArray[1],
-				value: [valueArray[1]],
-			};
+				return skuOption;
+			});
 		}
 		else {
 			currentSkuOptions = [
@@ -180,7 +198,7 @@ const ProductOptionRadio = ({
 		if (!productOption.skuContributor && !currentProductOptionValue.skuId) {
 			setSkuOptionsAtomState({
 				...skuOptionsAtomState,
-				skuOptions: currentSkuOptions,
+				[skuOptionsKey]: currentSkuOptions,
 				updating: false,
 			});
 
@@ -221,7 +239,7 @@ const ProductOptionRadio = ({
 
 				setSkuOptionsAtomState({
 					...skuOptionsAtomState,
-					skuOptions: currentSkuOptions,
+					[skuOptionsKey]: currentSkuOptions,
 				});
 
 				cpInstance.skuOptions = currentSkuOptions;
@@ -241,7 +259,7 @@ const ProductOptionRadio = ({
 				if (isMounted()) {
 					setSkuOptionsAtomState({
 						...skuOptionsAtomState,
-						skuOptions: currentSkuOptions,
+						[skuOptionsKey]: currentSkuOptions,
 						updating: false,
 					});
 				}
@@ -276,9 +294,7 @@ const ProductOptionRadio = ({
 			<label htmlFor={componentId}>
 				{getProductOptionName(productOption.name)}
 
-				<Asterisk
-					required={isRequired(forceRequired, isAdmin, productOption)}
-				/>
+				<Asterisk required={optionIsRequired} />
 			</label>
 
 			<ClayRadioGroup

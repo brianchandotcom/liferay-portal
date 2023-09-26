@@ -6,9 +6,9 @@
 import ClayForm, {ClayInput} from '@clayui/form';
 import {useLiferayState} from '@liferay/frontend-js-state-web';
 import classnames from 'classnames';
-import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
 import React, {useEffect, useState} from 'react';
 
+import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
 import Asterisk from './Asterisk';
 import {
 	getProductOptionName,
@@ -20,10 +20,14 @@ import {
 const ProductOptionText = ({
 	componentId,
 	forceRequired,
+	isFromMiniCart,
+	json,
 	namespace,
 	productOption,
 }) => {
+	const errorsKey = isFromMiniCart ? 'miniCartErrors' : 'errors';
 	const [hasErrors, setHasErrors] = useState(false);
+	const skuOptionsKey = isFromMiniCart ? 'miniCartSkuOptions' : 'skuOptions';
 	const [text, setText] = useState('');
 
 	const [skuOptionsAtomState, setSkuOptionsAtomState] = useLiferayState(
@@ -34,8 +38,9 @@ const ProductOptionText = ({
 		() =>
 			setSkuOptionsAtomState({
 				...skuOptionsAtomState,
-				errors: getSkuOptionsErrors(
+				[errorsKey]: getSkuOptionsErrors(
 					hasErrors,
+					isFromMiniCart,
 					productOption,
 					skuOptionsAtomState
 				),
@@ -45,29 +50,53 @@ const ProductOptionText = ({
 	);
 
 	useEffect(() => {
-		if (productOption.required) {
+		let value = '';
+
+		if (isFromMiniCart) {
+			const option = JSON.parse(json).find(
+				({key}) => key === productOption.key
+			);
+
+			if (option) {
+				[value] = option.value;
+			}
+
+			setText(value);
+		}
+
+		if (productOption.required && !value) {
 			setHasErrors(true);
 		}
 
 		setSkuOptionsAtomState({
 			...skuOptionsAtomState,
-			errors: getSkuOptionsErrors(
+			[errorsKey]: getSkuOptionsErrors(
 				productOption.required,
+				isFromMiniCart,
 				productOption,
 				skuOptionsAtomState
 			),
-			namespace,
-			skuOptions: [
-				...skuOptionsAtomState.skuOptions,
-				{
-					key: productOption.key,
-					skuOptionKey: productOption.key,
-					value: [],
-				},
-			],
+			...(!isFromMiniCart && {namespace}),
+			[skuOptionsKey]: isFromMiniCart
+				? JSON.parse(json)
+				: [
+						...(skuOptionsAtomState.skuOptions || []),
+						{
+							key: productOption.key,
+							skuOptionKey: productOption.key,
+							value: [value],
+						},
+				  ],
 		});
 
-		return () => setSkuOptionsAtomState(initialSkuOptionsAtomState);
+		return () =>
+			isFromMiniCart
+				? setSkuOptionsAtomState({
+						...skuOptionsAtomState,
+						miniCartErrors: [],
+						miniCartSkuOptions: [],
+				  })
+				: setSkuOptionsAtomState(initialSkuOptionsAtomState);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -80,22 +109,24 @@ const ProductOptionText = ({
 
 		setText(value);
 
-		let currentSkuOptions = skuOptionsAtomState.skuOptions.slice();
+		let currentSkuOptions = skuOptionsAtomState[skuOptionsKey].slice();
 
-		const currentSkuOption = currentSkuOptions.filter(
+		const currentSkuOption = currentSkuOptions.find(
 			(skuOption) => skuOption.skuOptionKey === productOption.key
-		)[0];
+		);
 
 		if (currentSkuOption) {
-			const curIndex = currentSkuOptions.findIndex(
-				(skuOption) => skuOption.skuOptionKey === productOption.key
-			);
+			currentSkuOptions = currentSkuOptions.map((skuOption) => {
+				if (skuOption.skuOptionKey === productOption.key) {
+					return {
+						key: productOption.key,
+						skuOptionKey: productOption.key,
+						value: [value],
+					};
+				}
 
-			currentSkuOptions[curIndex] = {
-				key: productOption.key,
-				skuOptionKey: productOption.key,
-				value: [value],
-			};
+				return skuOption;
+			});
 		}
 		else {
 			currentSkuOptions = [
@@ -114,12 +145,13 @@ const ProductOptionText = ({
 
 		setSkuOptionsAtomState({
 			...skuOptionsAtomState,
-			errors: getSkuOptionsErrors(
+			[errorsKey]: getSkuOptionsErrors(
 				required,
+				isFromMiniCart,
 				productOption,
 				skuOptionsAtomState
 			),
-			skuOptions: currentSkuOptions,
+			[skuOptionsKey]: currentSkuOptions,
 			updating: false,
 		});
 	};

@@ -7,11 +7,11 @@ import ClayForm, {ClaySelect} from '@clayui/form';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {useLiferayState} from '@liferay/frontend-js-state-web';
 import classnames from 'classnames';
+import React, {useEffect, useState} from 'react';
+
 import ServiceProvider from '../../ServiceProvider/index';
 import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
 import {CP_INSTANCE_CHANGED} from '../../utilities/eventsDefinitions';
-import React, {useEffect, useState} from 'react';
-
 import Asterisk from './Asterisk';
 import {
 	getInitialProductOptionValue,
@@ -26,8 +26,9 @@ const ProductOptionSelect = ({
 	accountId,
 	channelId,
 	componentId,
-	forceRequired,
-	isAdmin,
+	forceRequired = false,
+	isAdmin = false,
+	isFromMiniCart = false,
 	json,
 	minQuantity,
 	namespace,
@@ -35,8 +36,11 @@ const ProductOptionSelect = ({
 	productOption,
 	sku,
 }) => {
+	const errorsKey = isFromMiniCart ? 'miniCartErrors' : 'errors';
 	const [hasErrors, setHasErrors] = useState(false);
 	const isMounted = useIsMounted();
+	const optionIsRequired = isRequired(forceRequired, isAdmin, productOption);
+	const skuOptionsKey = isFromMiniCart ? 'miniCartSkuOptions' : 'skuOptions';
 
 	const [skuOptionsAtomState, setSkuOptionsAtomState] = useLiferayState(
 		skuOptionsAtom
@@ -50,7 +54,11 @@ const ProductOptionSelect = ({
 
 	const initialProductOptionValue = isAdmin
 		? {key: currentJSONObject?.value[0]}
-		: getInitialProductOptionValue(productOption);
+		: getInitialProductOptionValue({
+				currentJSONObject,
+				isFromMiniCart,
+				productOption,
+		  });
 
 	const [
 		selectedProductOptionValue,
@@ -76,8 +84,9 @@ const ProductOptionSelect = ({
 		() =>
 			setSkuOptionsAtomState({
 				...skuOptionsAtomState,
-				errors: getSkuOptionsErrors(
+				[errorsKey]: getSkuOptionsErrors(
 					hasErrors,
+					isFromMiniCart,
 					productOption,
 					skuOptionsAtomState
 				),
@@ -99,28 +108,38 @@ const ProductOptionSelect = ({
 
 		setSkuOptionsAtomState({
 			...skuOptionsAtomState,
-			errors: getSkuOptionsErrors(
+			[errorsKey]: getSkuOptionsErrors(
 				required,
+				isFromMiniCart,
 				productOption,
 				skuOptionsAtomState
 			),
-			namespace,
-			skuOptions: [
-				...skuOptionsAtomState.skuOptions,
-				{
-					key: productOption.key,
-					price: initialProductOptionValue?.price,
-					priceType: initialProductOptionValue?.priceType,
-					quantity: initialProductOptionValue?.quantity,
-					skuId: initialProductOptionValue?.skuId,
-					skuOptionKey: productOption.key,
-					skuOptionValueKey: initialProductOptionValue?.key,
-					value: initialProductOptionValue?.key || '',
-				},
-			],
+			...(!isFromMiniCart && {namespace}),
+			[skuOptionsKey]: isFromMiniCart
+				? JSON.parse(json)
+				: [
+						...(skuOptionsAtomState[skuOptionsKey] || []),
+						{
+							key: productOption.key,
+							price: initialProductOptionValue?.price,
+							priceType: initialProductOptionValue?.priceType,
+							quantity: initialProductOptionValue?.quantity,
+							skuId: initialProductOptionValue?.skuId,
+							skuOptionKey: productOption.key,
+							skuOptionValueKey: initialProductOptionValue?.key,
+							value: initialProductOptionValue?.key || '',
+						},
+				  ],
 		});
 
-		return () => setSkuOptionsAtomState(initialSkuOptionsAtomState);
+		return () =>
+			isFromMiniCart
+				? setSkuOptionsAtomState({
+						...skuOptionsAtomState,
+						miniCartErrors: [],
+						miniCartSkuOptions: [],
+				  })
+				: setSkuOptionsAtomState(initialSkuOptionsAtomState);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -142,8 +161,9 @@ const ProductOptionSelect = ({
 
 			return setSkuOptionsAtomState({
 				...skuOptionsAtomState,
-				errors: getSkuOptionsErrors(
+				[errorsKey]: getSkuOptionsErrors(
 					required,
+					isFromMiniCart,
 					productOption,
 					skuOptionsAtomState
 				),
@@ -165,8 +185,9 @@ const ProductOptionSelect = ({
 
 			return setSkuOptionsAtomState({
 				...skuOptionsAtomState,
-				errors: getSkuOptionsErrors(
+				[errorsKey]: getSkuOptionsErrors(
 					required,
+					isFromMiniCart,
 					productOption,
 					skuOptionsAtomState
 				),
@@ -176,27 +197,29 @@ const ProductOptionSelect = ({
 
 		setSelectedProductOptionValueKey(valueArray[1]);
 
-		let currentSkuOptions = skuOptionsAtomState.skuOptions.slice();
+		let currentSkuOptions = skuOptionsAtomState[skuOptionsKey].slice();
 
 		const currentSkuOption = currentSkuOptions.filter(
 			(skuOption) => skuOption.skuOptionKey === productOption.key
 		)[0];
 
 		if (currentSkuOption) {
-			const curIndex = currentSkuOptions.findIndex(
-				(skuOption) => skuOption.skuOptionKey === productOption.key
-			);
+			currentSkuOptions = currentSkuOptions.map((skuOption) => {
+				if (skuOption.skuOptionKey === productOption.key) {
+					return {
+						key: productOption.key,
+						price: currentProductOptionValue.price,
+						priceType: currentProductOptionValue.priceType,
+						quantity: currentProductOptionValue.quantity,
+						skuId: currentProductOptionValue.skuId,
+						skuOptionKey: productOption.key,
+						skuOptionValueKey: valueArray[1],
+						value: valueArray[1],
+					};
+				}
 
-			currentSkuOptions[curIndex] = {
-				key: productOption.key,
-				price: currentProductOptionValue.price,
-				priceType: currentProductOptionValue.priceType,
-				quantity: currentProductOptionValue.quantity,
-				skuId: currentProductOptionValue.skuId,
-				skuOptionKey: productOption.key,
-				skuOptionValueKey: valueArray[1],
-				value: valueArray[1],
-			};
+				return skuOption;
+			});
 		}
 		else {
 			currentSkuOptions = [
@@ -219,12 +242,13 @@ const ProductOptionSelect = ({
 
 			return setSkuOptionsAtomState({
 				...skuOptionsAtomState,
-				errors: getSkuOptionsErrors(
+				[errorsKey]: getSkuOptionsErrors(
 					false,
+					isFromMiniCart,
 					productOption,
 					skuOptionsAtomState
 				),
-				skuOptions: currentSkuOptions,
+				[skuOptionsKey]: currentSkuOptions,
 				updating: false,
 			});
 		}
@@ -262,7 +286,7 @@ const ProductOptionSelect = ({
 
 				setSkuOptionsAtomState({
 					...skuOptionsAtomState,
-					skuOptions: currentSkuOptions,
+					[skuOptionsKey]: currentSkuOptions,
 				});
 
 				cpInstance.skuOptions = currentSkuOptions;
@@ -283,12 +307,13 @@ const ProductOptionSelect = ({
 					setHasErrors(false);
 					setSkuOptionsAtomState({
 						...skuOptionsAtomState,
-						errors: getSkuOptionsErrors(
+						[errorsKey]: getSkuOptionsErrors(
 							false,
+							isFromMiniCart,
 							productOption,
 							skuOptionsAtomState
 						),
-						skuOptions: currentSkuOptions,
+						[skuOptionsKey]: currentSkuOptions,
 						updating: false,
 					});
 				}
@@ -324,9 +349,7 @@ const ProductOptionSelect = ({
 			<label htmlFor={componentId}>
 				{getProductOptionName(productOption.name)}
 
-				<Asterisk
-					required={isRequired(forceRequired, isAdmin, productOption)}
-				/>
+				<Asterisk required={optionIsRequired} />
 			</label>
 
 			<ClaySelect

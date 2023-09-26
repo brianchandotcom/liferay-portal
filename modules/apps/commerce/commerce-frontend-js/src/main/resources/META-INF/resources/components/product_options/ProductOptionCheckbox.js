@@ -6,9 +6,9 @@
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {useLiferayState} from '@liferay/frontend-js-state-web';
 import classnames from 'classnames';
-import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
 import React, {useEffect, useState} from 'react';
 
+import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
 import Asterisk from './Asterisk';
 import {
 	getProductOptionName,
@@ -19,12 +19,16 @@ import {
 
 const ProductOptionCheckbox = ({
 	componentId,
-	forceRequired,
+	forceRequired = false,
+	isFromMiniCart = false,
+	json,
 	namespace,
 	productOption,
 }) => {
+	const errorsKey = isFromMiniCart ? 'miniCartErrors' : 'errors';
 	const [hasErrors, setHasErrors] = useState(false);
 	const [isChecked, setIsChecked] = useState(false);
+	const skuOptionsKey = isFromMiniCart ? 'miniCartSkuOptions' : 'skuOptions';
 
 	const [skuOptionsAtomState, setSkuOptionsAtomState] = useLiferayState(
 		skuOptionsAtom
@@ -34,8 +38,9 @@ const ProductOptionCheckbox = ({
 		() =>
 			setSkuOptionsAtomState({
 				...skuOptionsAtomState,
-				errors: getSkuOptionsErrors(
+				[errorsKey]: getSkuOptionsErrors(
 					hasErrors,
+					isFromMiniCart,
 					productOption,
 					skuOptionsAtomState
 				),
@@ -45,23 +50,55 @@ const ProductOptionCheckbox = ({
 	);
 
 	useEffect(() => {
-		setSkuOptionsAtomState({...skuOptionsAtomState, namespace});
+		let checked = false;
+		let value = '';
+
+		if (isFromMiniCart) {
+			const option = JSON.parse(json).find(
+				({key}) => key === productOption.key
+			);
+
+			if (option) {
+				checked = option.value.includes(option.key);
+				[value] = option.value;
+
+				setIsChecked(checked);
+			}
+		}
 
 		if (productOption.required) {
-			setHasErrors(true);
+			setHasErrors(checked ? !checked : productOption.required);
 		}
 
 		setSkuOptionsAtomState({
 			...skuOptionsAtomState,
-			errors: getSkuOptionsErrors(
+			[errorsKey]: getSkuOptionsErrors(
 				productOption.required,
+				isFromMiniCart,
 				productOption,
 				skuOptionsAtomState
 			),
-			namespace,
+			...(!isFromMiniCart && {namespace}),
+			[skuOptionsKey]: isFromMiniCart
+				? JSON.parse(json)
+				: [
+						...(skuOptionsAtomState[skuOptionsKey] || []),
+						{
+							key: productOption.key,
+							skuOptionKey: productOption.key,
+							value: checked ? [value] : [],
+						},
+				  ],
 		});
 
-		return () => setSkuOptionsAtomState(initialSkuOptionsAtomState);
+		return () =>
+			isFromMiniCart
+				? setSkuOptionsAtomState({
+						...skuOptionsAtomState,
+						miniCartErrors: [],
+						miniCartSkuOptions: [],
+				  })
+				: setSkuOptionsAtomState(initialSkuOptionsAtomState);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -74,22 +111,24 @@ const ProductOptionCheckbox = ({
 
 		setIsChecked(checked);
 
-		let currentSkuOptions = skuOptionsAtomState.skuOptions.slice();
+		let currentSkuOptions = skuOptionsAtomState[skuOptionsKey].slice();
 
-		const currentSkuOption = currentSkuOptions.filter(
+		const currentSkuOption = currentSkuOptions.find(
 			(skuOption) => skuOption.skuOptionKey === productOption.key
-		)[0];
+		);
 
 		if (currentSkuOption) {
-			const curIndex = currentSkuOptions.findIndex(
-				(skuOption) => skuOption.skuOptionKey === productOption.key
-			);
+			currentSkuOptions = currentSkuOptions.map((skuOption) => {
+				if (skuOption.skuOptionKey === productOption.key) {
+					return {
+						key: productOption.key,
+						skuOptionKey: productOption.key,
+						value: checked ? [value] : [],
+					};
+				}
 
-			currentSkuOptions[curIndex] = {
-				key: productOption.key,
-				skuOptionKey: productOption.key,
-				value: checked ? [value] : [],
-			};
+				return skuOption;
+			});
 		}
 		else {
 			currentSkuOptions = [
@@ -97,7 +136,7 @@ const ProductOptionCheckbox = ({
 				{
 					key: productOption.key,
 					skuOptionKey: productOption.key,
-					value: [value],
+					value: checked ? [value] : [],
 				},
 			];
 		}
@@ -108,12 +147,13 @@ const ProductOptionCheckbox = ({
 
 		setSkuOptionsAtomState({
 			...skuOptionsAtomState,
-			errors: getSkuOptionsErrors(
+			[errorsKey]: getSkuOptionsErrors(
 				required,
+				isFromMiniCart,
 				productOption,
 				skuOptionsAtomState
 			),
-			skuOptions: currentSkuOptions,
+			[skuOptionsKey]: currentSkuOptions,
 			updating: false,
 		});
 	};

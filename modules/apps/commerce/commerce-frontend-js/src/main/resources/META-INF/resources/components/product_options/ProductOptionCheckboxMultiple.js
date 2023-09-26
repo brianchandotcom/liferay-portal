@@ -6,9 +6,9 @@
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {useLiferayState} from '@liferay/frontend-js-state-web';
 import classnames from 'classnames';
-import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
 import React, {useEffect, useState} from 'react';
 
+import skuOptionsAtom from '../../utilities/atoms/skuOptionsAtom';
 import Asterisk from './Asterisk';
 import {
 	getProductOptionName,
@@ -19,10 +19,14 @@ import {
 
 const ProductOptionCheckboxMultiple = ({
 	forceRequired,
+	isFromMiniCart,
+	json,
 	namespace,
 	productOption,
 }) => {
+	const errorsKey = isFromMiniCart ? 'miniCartErrors' : 'errors';
 	const [hasErrors, setHasErrors] = useState(false);
+	const skuOptionsKey = isFromMiniCart ? 'miniCartSkuOptions' : 'skuOptions';
 	const [skuOptionsAtomState, setSkuOptionsAtomState] = useLiferayState(
 		skuOptionsAtom
 	);
@@ -31,65 +35,100 @@ const ProductOptionCheckboxMultiple = ({
 		productOption.productOptionValues
 	);
 
+	const getHasError = (optionValues, required) => {
+		const hasSelectedOptions = optionValues.some(({selected}) => selected);
+
+		return hasSelectedOptions ? !hasSelectedOptions : required;
+	};
+
 	useEffect(
 		() =>
 			setSkuOptionsAtomState({
 				...skuOptionsAtomState,
-				errors: getSkuOptionsErrors(
+				[errorsKey]: getSkuOptionsErrors(
 					hasErrors,
+					isFromMiniCart,
 					productOption,
 					skuOptionsAtomState
 				),
-				namespace,
+				...(!isFromMiniCart && {namespace}),
 			}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[hasErrors]
 	);
 
 	useEffect(() => {
-		let hasPreselected = false;
-		let initialSkuOptions = skuOptionsAtomState.skuOptions;
+		const option = json
+			? JSON.parse(json)?.find(({key}) => key === productOption.key)
+			: null;
+		let preselected = false;
 
-		setProductOptionValues(
-			productOptionValues.map((productOptionValue) => {
-				if (productOptionValue.preselected) {
-					hasPreselected = true;
+		let value = option?.value || [];
 
-					initialSkuOptions = [
-						...skuOptionsAtomState.skuOptions,
-						{
-							key: productOption.key,
-							skuOptionKey: productOption.key,
-							value: [productOptionValue.key],
-						},
-					];
+		const newProductOptionValues = productOptionValues.map(
+			(productOptionValue) => {
+				let selected = false;
+
+				if (isFromMiniCart) {
+					if (option) {
+						selected = option.value.includes(
+							productOptionValue.key
+						);
+					}
+				}
+				else {
+					if (productOptionValue.preselected) {
+						preselected = true;
+						selected = true;
+						value = [productOptionValue.key];
+					}
 				}
 
 				return {
 					...productOptionValue,
-					selected: productOptionValue.preselected,
+					selected,
 				};
-			})
+			}
 		);
 
-		const required = productOption.required && !hasPreselected;
+		setProductOptionValues(newProductOptionValues);
+
+		const required = productOption.required && !preselected;
 
 		if (required) {
-			setHasErrors(true);
+			setHasErrors(getHasError(newProductOptionValues, required));
 		}
 
 		setSkuOptionsAtomState({
 			...skuOptionsAtomState,
-			errors: getSkuOptionsErrors(
+			[errorsKey]: getSkuOptionsErrors(
 				required,
+				isFromMiniCart,
 				productOption,
 				skuOptionsAtomState
 			),
-			namespace,
-			skuOptions: initialSkuOptions,
+			...(!isFromMiniCart && {namespace}),
+			[skuOptionsKey]: isFromMiniCart
+				? JSON.parse(json)
+				: [
+						...(skuOptionsAtomState[skuOptionsKey] || []),
+						{
+							key: productOption.key,
+							skuOptionKey: productOption.key,
+							value,
+						},
+				  ],
 		});
 
-		return () => setSkuOptionsAtomState(initialSkuOptionsAtomState);
+		return () =>
+			isFromMiniCart
+				? setSkuOptionsAtomState({
+						...skuOptionsAtomState,
+						miniCartErrors: [],
+						miniCartSkuOptions: [],
+				  })
+				: setSkuOptionsAtomState(initialSkuOptionsAtomState);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -100,7 +139,7 @@ const ProductOptionCheckboxMultiple = ({
 
 		setSkuOptionsAtomState({...skuOptionsAtomState, updating: true});
 
-		let currentSkuOptions = skuOptionsAtomState.skuOptions.slice();
+		let currentSkuOptions = skuOptionsAtomState[skuOptionsKey].slice();
 
 		const curSkuOptionIndex = currentSkuOptions.findIndex(
 			(skuOption) => skuOption.skuOptionKey === productOption.key
@@ -111,15 +150,25 @@ const ProductOptionCheckboxMultiple = ({
 		)[0];
 
 		if (currentSkuOption) {
-			currentSkuOptions[curSkuOptionIndex] = {
-				key: productOption.key,
-				skuOptionKey: productOption.key,
-				value: checked
-					? [...currentSkuOptions[curSkuOptionIndex].value, value]
-					: currentSkuOptions[curSkuOptionIndex].value.filter(
-							(curVal) => !(curVal === value)
-					  ),
-			};
+			currentSkuOptions = currentSkuOptions.map((skuOption) => {
+				if (skuOption.skuOptionKey === productOption.key) {
+					return {
+						key: productOption.key,
+						skuOptionKey: productOption.key,
+						value: checked
+							? [
+									...currentSkuOptions[curSkuOptionIndex]
+										.value,
+									value,
+							  ]
+							: currentSkuOptions[curSkuOptionIndex].value.filter(
+									(curVal) => !(curVal === value)
+							  ),
+					};
+				}
+
+				return skuOption;
+			});
 		}
 		else {
 			currentSkuOptions = [
@@ -143,19 +192,20 @@ const ProductOptionCheckboxMultiple = ({
 
 		setProductOptionValues(productOptionValues);
 
-		const required =
-			(forceRequired || productOption.required) &&
-			currentSkuOptions[curSkuOptionIndex]?.value.length === 0;
+		const required = forceRequired || productOption.required;
+		const hasError = getHasError(productOptionValues, required);
 
-		setHasErrors(required);
+		setHasErrors(hasError);
+
 		setSkuOptionsAtomState({
 			...skuOptionsAtomState,
-			errors: getSkuOptionsErrors(
-				required,
+			[errorsKey]: getSkuOptionsErrors(
+				hasError,
+				isFromMiniCart,
 				productOption,
 				skuOptionsAtomState
 			),
-			skuOptions: currentSkuOptions,
+			[skuOptionsKey]: currentSkuOptions,
 			updating: false,
 		});
 	};

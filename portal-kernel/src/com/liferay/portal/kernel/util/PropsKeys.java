@@ -548,6 +548,9 @@ public interface PropsKeys {
 	public static final String DATABASE_INDEXES_UPDATE_ON_STARTUP =
 		"database.indexes.update.on.startup";
 
+	public static final String DATABASE_MAX_PARAMETERS =
+		"database.max.parameters";
+
 	public static final String DATABASE_MYSQL_ENGINE = "database.mysql.engine";
 
 	public static final String DATABASE_ORDER_BY_MAX_COLUMNS =

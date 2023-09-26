@@ -12,8 +12,8 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlag;
  */
 public interface FeatureFlagListener {
 
-	public void onDisabled(FeatureFlag featureFlag);
+	public void onDisabled(long companyId, FeatureFlag featureFlag);
 
-	public void onEnabled(FeatureFlag featureFlag);
+	public void onEnabled(long companyId, FeatureFlag featureFlag);
 
 }

@@ -75,12 +75,16 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 		for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
 			try {
+				BatchEngineUnitConfiguration batchEngineUnitConfiguration =
+					batchEngineUnit.getBatchEngineUnitConfiguration();
+
 				String featureFlag = _getFeatureFlag(
-					batchEngineUnit.getBatchEngineUnitConfiguration());
+					batchEngineUnitConfiguration);
 
 				if (_isFeatureFlagDisabled(featureFlag)) {
 					_featureFlagBatchEngineUnitProcessor.
 						registerBatchEngineUnit(
+							batchEngineUnitConfiguration.getCompanyId(),
 							featureFlag,
 							() -> _processBatchEngineUnit(batchEngineUnit));
 

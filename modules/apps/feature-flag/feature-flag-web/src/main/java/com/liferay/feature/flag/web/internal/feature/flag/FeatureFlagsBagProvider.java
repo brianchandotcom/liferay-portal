@@ -120,10 +120,10 @@ public class FeatureFlagsBagProvider {
 				_serviceTrackerList.toList()) {
 
 			if (!enabled) {
-				featureFlagListener.onDisabled(featureFlag);
+				featureFlagListener.onDisabled(companyId, featureFlag);
 			}
 			else {
-				featureFlagListener.onEnabled(featureFlag);
+				featureFlagListener.onEnabled(companyId, featureFlag);
 			}
 		}
 	}

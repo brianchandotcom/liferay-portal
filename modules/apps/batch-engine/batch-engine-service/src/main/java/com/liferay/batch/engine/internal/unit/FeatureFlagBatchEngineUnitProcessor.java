@@ -9,6 +9,7 @@ import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.listener.FeatureFlagListener;
+import com.liferay.portal.kernel.util.Tuple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +32,11 @@ import org.osgi.service.component.annotations.Reference;
 public class FeatureFlagBatchEngineUnitProcessor {
 
 	public void registerBatchEngineUnit(
-		String featureFlagKey,
+		long companyId, String featureFlagKey,
 		UnsafeSupplier<CompletableFuture<Void>, Exception> unsafeSupplier) {
 
 		_unsafeSuppliers.compute(
-			featureFlagKey,
+			_getTuple(companyId, featureFlagKey),
 			(key, unsafeSuppliers) -> {
 				if (unsafeSuppliers == null) {
 					unsafeSuppliers = new ArrayList<>();
@@ -58,30 +59,35 @@ public class FeatureFlagBatchEngineUnitProcessor {
 		_serviceRegistration.unregister();
 	}
 
+	private Tuple _getTuple(long companyId, String featureFlag) {
+		return new Tuple(companyId, featureFlag);
+	}
+
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;
 
 	private ServiceRegistration<FeatureFlagListener> _serviceRegistration;
 	private final Map
-		<String, List<UnsafeSupplier<CompletableFuture<Void>, Exception>>>
+		<Tuple, List<UnsafeSupplier<CompletableFuture<Void>, Exception>>>
 			_unsafeSuppliers = new ConcurrentHashMap<>();
 
 	private class FeatureFlagListenerImpl implements FeatureFlagListener {
 
 		@Override
-		public void onDisabled(FeatureFlag featureFlag) {
+		public void onDisabled(long companyId, FeatureFlag featureFlag) {
 		}
 
 		@Override
-		public void onEnabled(FeatureFlag featureFlag) {
-			if (!_unsafeSuppliers.containsKey(featureFlag.getKey())) {
+		public void onEnabled(long companyId, FeatureFlag featureFlag) {
+			Tuple tuple = _getTuple(companyId, featureFlag.getKey());
+
+			if (!_unsafeSuppliers.containsKey(tuple)) {
 				return;
 			}
 
 			synchronized (_unsafeSuppliers) {
 				List<UnsafeSupplier<CompletableFuture<Void>, Exception>>
-					unsafeSuppliers = _unsafeSuppliers.remove(
-						featureFlag.getKey());
+					unsafeSuppliers = _unsafeSuppliers.remove(tuple);
 
 				ExecutorService executorService =
 					_portalExecutorManager.getPortalExecutor(

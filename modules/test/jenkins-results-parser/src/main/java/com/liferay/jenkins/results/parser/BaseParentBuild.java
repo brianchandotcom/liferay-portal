@@ -8,6 +8,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -430,6 +431,46 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		failedDownstreamBuilds.addAll(getDownstreamBuilds("UNSTABLE", null));
 
 		return failedDownstreamBuilds;
+	}
+
+	protected List<Element> getJenkinsReportTableRowElements(
+		String result, String status) {
+
+		List<Element> tableRowElements = super.getJenkinsReportTableRowElements(
+			result, status);
+
+		List<Build> builds = getDownstreamBuilds(result, status);
+
+		Collections.sort(builds, new BaseBuild.BuildDisplayNameComparator());
+
+		String batchName = null;
+
+		for (Build build : builds) {
+			if (!(build instanceof BaseBuild)) {
+				continue;
+			}
+
+			if (build instanceof DownstreamBuild) {
+				DownstreamBuild downstreamBuild = (DownstreamBuild)build;
+
+				String downstreamBatchName = downstreamBuild.getBatchName();
+
+				if (!Objects.equals(batchName, downstreamBatchName)) {
+					tableRowElements.add(
+						Dom4JUtil.getNewElement(
+							"th", null, downstreamBatchName));
+
+					batchName = downstreamBatchName;
+				}
+			}
+
+			BaseBuild baseBuild = (BaseBuild)build;
+
+			tableRowElements.addAll(
+				baseBuild.getJenkinsReportTableRowElements(result, status));
+		}
+
+		return tableRowElements;
 	}
 
 	@Override

@@ -420,7 +420,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			data.put("iconClass", "change-tracking-indicator-icon-publication");
 			data.put("iconName", "radio-button");
 
-			if (productionOnlyApplication) {
+			if (FeatureFlagManagerUtil.isEnabled("LPS-147671") &&
+				productionOnlyApplication) {
+
 				data.put(
 					"title",
 					StringBundler.concat(
@@ -439,7 +441,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				data.put("warningLearnLink", null);
 				data.put("warningButton", false);
 			}
-			else if (unsupportedApplication) {
+			else if (FeatureFlagManagerUtil.isEnabled("LPS-147671") &&
+					 unsupportedApplication) {
+
 				data.put(
 					"title",
 					StringBundler.concat(

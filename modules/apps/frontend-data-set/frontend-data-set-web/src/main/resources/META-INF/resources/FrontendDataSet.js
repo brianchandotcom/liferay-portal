@@ -235,6 +235,41 @@ const FrontendDataSet = ({
 	}
 
 	useEffect(() => {
+		if (!initialFilters?.length) {
+			return;
+		}
+
+		let dispatch = false;
+
+		const filterPromises = initialFilters.map((filter) => {
+			if (!filter.cxFilterURL) {
+				return Promise.resolve(filter);
+			}
+
+			dispatch = true;
+
+			return import(
+
+				/* webpackIgnore: true */
+				filter.cxFilterURL
+			).then((module) => {
+				filter.cxFilterImplementation = module;
+
+				return filter;
+			});
+		});
+
+		if (dispatch) {
+			Promise.all(filterPromises).then((filters) => {
+				viewsDispatch({
+					type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
+					value: filters,
+				});
+			});
+		}
+	}, [initialFilters, viewsDispatch]);
+
+	useEffect(() => {
 		if (itemsProp) {
 			updateDataSetItems({items: itemsProp});
 		}

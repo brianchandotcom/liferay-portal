@@ -80,8 +80,15 @@ public class SegmentsServicePreAction extends Action {
 					_segmentsExperienceLocalService.fetchSegmentsExperience(
 						segmentsExperienceId);
 
-				segmentsExperienceIdsSegmentsEntryIds.add(
-					segmentsExperience.getSegmentsEntryId());
+				if (segmentsExperience != null) {
+					segmentsExperienceIdsSegmentsEntryIds.add(
+						segmentsExperience.getSegmentsEntryId());
+				}
+				else if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to find segments experience " +
+							segmentsExperienceId);
+				}
 			}
 
 			long[] cachedSegmentsEntryIds =

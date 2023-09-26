@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -424,7 +425,9 @@ public class DBUpgrader {
 	private static volatile boolean _upgradeClient;
 
 	static {
-		if (PropsValues.JDBC_DEFAULT_DRIVER_CLASS_NAME.contains("hsql")) {
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() == DBType.HYPERSONIC) {
 			_UPGRADE_DATABASE_AUTO_RUN = false;
 		}
 		else {

@@ -214,7 +214,7 @@ export function SelectLayoutTree({
 	);
 
 	return filteredItems.length ? (
-		<div className="pt-3 px-3">
+		<div className="cadmin pt-3 px-3">
 			{multiSelection && (
 				<p
 					className="mb-4"

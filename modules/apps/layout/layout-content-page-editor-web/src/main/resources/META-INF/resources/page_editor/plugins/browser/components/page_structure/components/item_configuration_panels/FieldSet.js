@@ -185,7 +185,10 @@ function getFieldValue({field, languageId, values}) {
 
 	const value = values[field.name];
 
-	if (isNullOrUndefined(value)) {
+	if (
+		isNullOrUndefined(value) ||
+		(field.type === 'colorPicker' && typeof value === 'object')
+	) {
 		return field.defaultValue;
 	}
 

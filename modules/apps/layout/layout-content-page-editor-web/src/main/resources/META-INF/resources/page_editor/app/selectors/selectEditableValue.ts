@@ -6,10 +6,12 @@
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
 import selectEditableValues from './selectEditableValues';
 
+import type {FragmentEntryLinkMap} from '../actions/addFragmentEntryLinks';
+
 export default function selectEditableValue(
-	{fragmentEntryLinks},
-	fragmentEntryLinkId,
-	editableId,
+	{fragmentEntryLinks}: {fragmentEntryLinks: FragmentEntryLinkMap},
+	fragmentEntryLinkId: string,
+	editableId: string,
 	processorType = EDITABLE_FRAGMENT_ENTRY_PROCESSOR
 ) {
 	const editableValues = selectEditableValues(

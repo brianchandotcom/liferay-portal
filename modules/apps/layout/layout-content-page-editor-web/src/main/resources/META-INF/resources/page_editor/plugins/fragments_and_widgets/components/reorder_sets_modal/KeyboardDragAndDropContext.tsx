@@ -6,6 +6,7 @@
 import {sub} from 'frontend-js-web';
 import React, {
 	Dispatch,
+	KeyboardEventHandler,
 	PropsWithChildren,
 	RefObject,
 	SetStateAction,
@@ -28,6 +29,7 @@ import {Item} from './Item';
 interface Context {
 	dragOverPosition: DragOverPosition | null;
 	itemElementMap: Map<string, HTMLDivElement | null>;
+	itemHandlerMap: Map<string, HTMLButtonElement | null>;
 	itemListRef: RefObject<Item[]>;
 	sendMessage: (message: string) => void;
 	setDragOverPosition: Dispatch<SetStateAction<DragOverPosition | null>>;
@@ -40,6 +42,7 @@ interface Context {
 const KeyboardDragAndDropContext = createContext<Context>({
 	dragOverPosition: null,
 	itemElementMap: new Map(),
+	itemHandlerMap: new Map(),
 	itemListRef: {current: []},
 	sendMessage: () => {},
 	setDragOverPosition: () => {},
@@ -61,6 +64,11 @@ export function KeyboardDragAndDropContextProvider({
 		() => new Map(),
 		[]
 	);
+	const itemHandlerMap: Context['itemHandlerMap'] = useMemo(
+		() => new Map(),
+		[]
+	);
+	const itemListElementRef = useRef<HTMLDivElement | null>(null);
 	const [sourceItem, setSourceItem] = useState<Item | null>(null);
 	const [targetItem, setTargetItem] = useState<Item | null>(null);
 	const [text, setText] = useState('');
@@ -89,6 +97,7 @@ export function KeyboardDragAndDropContextProvider({
 	const contextValue: Context = {
 		dragOverPosition,
 		itemElementMap,
+		itemHandlerMap,
 		itemListRef,
 		sendMessage,
 		setDragOverPosition,
@@ -115,13 +124,65 @@ export function KeyboardDragAndDropContextProvider({
 		});
 	}, [itemElementMap, dragOverPosition, targetItem]);
 
+	const onKeyDown: KeyboardEventHandler = (event) => {
+		if (
+			sourceItem ||
+			(event.key !== 'ArrowDown' && event.key !== 'ArrowUp')
+		) {
+			return;
+		}
+
+		event.preventDefault();
+
+		const currentItemId =
+			document.activeElement instanceof HTMLButtonElement
+				? document.activeElement.dataset.itemId
+				: null;
+
+		const currentItemIndex = itemList.findIndex(
+			(item) => item.id === currentItemId
+		);
+
+		if (event.key === 'ArrowDown') {
+			const nextItem = itemList[currentItemIndex + 1];
+
+			const nextItemHandler = nextItem
+				? itemHandlerMap.get(nextItem.id)
+				: itemHandlerMap.get(itemList[0].id);
+
+			if (nextItemHandler) {
+				nextItemHandler.focus();
+			}
+		}
+		else if (event.key === 'ArrowUp') {
+			const previousItem = itemList[currentItemIndex - 1];
+
+			const previousItemHandler = previousItem
+				? itemHandlerMap.get(previousItem.id)
+				: itemHandlerMap.get(itemList[itemList.length - 1].id);
+
+			if (previousItemHandler) {
+				previousItemHandler.focus();
+			}
+		}
+	};
+
 	return (
 		<KeyboardDragAndDropContext.Provider value={contextValue}>
 			<span aria-live="assertive" className="sr-only">
 				{text}
 			</span>
 
-			{children}
+			<div
+				aria-orientation="vertical"
+				className="c-p-4"
+				onKeyDown={onKeyDown}
+				ref={itemListElementRef}
+				role="list"
+				tabIndex={Liferay.FeatureFlags['LPS-196420'] ? 0 : -1}
+			>
+				{children}
+			</div>
 		</KeyboardDragAndDropContext.Provider>
 	);
 }
@@ -137,6 +198,7 @@ export function useKeyboardDragItem(
 	const {
 		dragOverPosition,
 		itemElementMap,
+		itemHandlerMap,
 		itemListRef,
 		sendMessage,
 		setDragOverPosition,
@@ -156,6 +218,14 @@ export function useKeyboardDragItem(
 	onDropItemRef.current = onDropItem;
 	sourceItemRef.current = sourceItem;
 	targetItemRef.current = targetItem;
+
+	const updateHandlerRef = useCallback(
+		(element: HTMLButtonElement | null) => {
+			handlerRef.current = element;
+			itemHandlerMap.set(item.id, element);
+		},
+		[item.id, itemHandlerMap]
+	);
 
 	const targetRef = useCallback(
 		(element: HTMLDivElement | null) => {
@@ -315,7 +385,7 @@ export function useKeyboardDragItem(
 
 	return {
 		dragOverPosition: targetItem === item ? dragOverPosition : null,
-		handlerRef,
+		handlerRef: updateHandlerRef,
 		isDragging: sourceItem === item,
 		targetRef,
 	};

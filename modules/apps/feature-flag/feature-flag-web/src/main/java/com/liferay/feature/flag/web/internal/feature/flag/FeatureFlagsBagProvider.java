@@ -169,7 +169,7 @@ public class FeatureFlagsBagProvider {
 							StringBundler.concat(
 								"The system feature flag ",
 								featureFlag.getKey(),
-								"cannot depend on the nonsystem feature flag ",
+								" cannot depend on the nonsystem feature flag ",
 								dependencyKey));
 
 						continue;

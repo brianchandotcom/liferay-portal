@@ -189,7 +189,11 @@ public class DisplayPageManagementToolbarDisplayContext
 
 	@Override
 	public String getInfoPanelId() {
-		return "infoPanelId";
+		if (FeatureFlagManagerUtil.isEnabled("LPS-189856")) {
+			return "infoPanelId";
+		}
+
+		return null;
 	}
 
 	@Override

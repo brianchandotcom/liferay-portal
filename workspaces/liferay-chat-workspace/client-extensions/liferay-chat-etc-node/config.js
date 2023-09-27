@@ -12,12 +12,16 @@
  * details.
  */
 export default {
-	'com.liferay.lxc.dxp.domains': 'localhost:8080',
-	'com.liferay.lxc.dxp.mainDomain': 'localhost:8080',
-	'com.liferay.lxc.dxp.server.protocol': 'http',
-	'configTreePath': '/etc/liferay/lxc',
+	'configTreePaths': [
+		process.env.LIFERAY_ROUTES_CLIENT_EXTENSION,
+		process.env.LIFERAY_ROUTES_DXP,
+	],
 	'liferay.oauth.application.external.reference.codes':
-		'liferay-sample-node-oauth-application-user-agent',
+		'liferay-chat-etc-node-oauth-application-server,liferay-chat-etc-node-oauth-application-user-agent',
 	'readyPath': '/ready',
-	'server.port': 3001,
+	'chat.attachments.folder.external.reference.code':'liferay-chat-attachments-folder',
+	'chat.services.main.address':'/chat/',
+	'chat.services.endpoints':'/chat/contacts,/chat/me,/chat/messages',
+	'self.initialization':process.env.Self_Initialization,
+	'server.port': 8050,
 };

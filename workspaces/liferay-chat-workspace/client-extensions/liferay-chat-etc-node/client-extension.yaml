@@ -2,15 +2,22 @@ assemble:
     - include:
           - "**/*.js"
           - package.json
+liferay-chat-etc-node-oauth-application-server:
+    .serviceAddress: localhost:8050
+    .serviceScheme: http
+    name: Liferay Chat Etc Node OAuth Application Server
+    scopes:
+        - C_ChatMessage.everything
+        - Liferay.Object.Admin.REST.everything
+        - Liferay.Headless.Admin.User.everything.read
+        - Liferay.Headless.Delivery.everything
+    type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account
 liferay-chat-etc-node-oauth-application-user-agent:
     .serviceAddress: localhost:3001
     .serviceScheme: http
-    name: Liferay Chat Etc Node OAuth Application User Agent
+    name: Liferay Chat Etc Node OAuth Application  User Agent
     scopes:
-        - Liferay.Headless.Admin.Workflow.everything
+        - Liferay.Headless.Delivery.everything.read
     type: oAuthApplicationUserAgent
-liferay-chat-etc-node-object-action-1:
-    name: Liferay Chat Etc Node Object Action 1
-    oAuth2ApplicationExternalReferenceCode: liferay-chat-etc-node-oauth-application-user-agent
-    resourcePath: /socket.io/
-    type: objectAction
+

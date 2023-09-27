@@ -1,4 +1,4 @@
-<div class="chat-window mat-elevation-z8">
+<div class="chat-window mat-elevation-z8" *ngIf="!unauthorized">
 <ngx-notifier className="notificaion" [duration]="115000">
 	</ngx-notifier>
 <div class="toolbar-container" (click)="toggleHelpMenu()">
@@ -86,4 +86,16 @@
 		</mat-tab>
 	</mat-tab-group>
 </div>
+</div>
+
+<div *ngIf="unauthorized">
+	<div class="toolbar-container">
+		<mat-toolbar>
+			<div class="custom-tool-bar">
+				<div class="title text-center w-100">
+					Liferay Chat is not available...
+				</div>
+			</div>
+		</mat-toolbar>
+	</div>
 </div>

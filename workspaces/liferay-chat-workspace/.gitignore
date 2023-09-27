@@ -5,6 +5,8 @@
 /poshi/tests
 bin
 build
+.idea
+.gradle
 dist
 node_modules
 node_modules_cache

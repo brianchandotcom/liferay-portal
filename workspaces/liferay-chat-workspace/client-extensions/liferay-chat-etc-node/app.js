@@ -14,33 +14,35 @@
 
 import express from 'express';
 import {Server} from 'http';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 import {Server as SocketServer} from 'socket.io';
 import {v4 as uuidv4} from 'uuid';
-
+import chatServices from "./services/chat-services.js";
 import config from './util/configTreePath.js';
 import {
 	corsWithReady,
 	liferayJWT,
 } from './util/liferay-oauth2-resource-server.js';
 import {logger} from './util/logger.js';
-
+import {selfInitialization} from "./util/self-initialization.js";
 // Global Variables
-
 const clientsSessions = {};
-
 const serverPort = config['server.port'];
+const chatServicesMainAddress = config['chat.services.main.address'];
+
 const app = express();
+app.use(bodyParser.json());
+app.use(corsWithReady);
+app.use(cors());
 const server = new Server(app);
 const io = new SocketServer(server, {
 	cors: {
 		origin: '*',
 	},
 });
-logger.log(`config: ${JSON.stringify(config, null, '\t')}`);
 app.use(express.json());
-app.use(corsWithReady);
 app.use(liferayJWT);
-
 function getConnectedClientsArray(clientId) {
 	const clientsId = Object.keys(clientsSessions);
 	const clientsInfoArray = [];
@@ -137,17 +139,18 @@ io.on('connection', (socket) => {
 		const [toClientId, messageId] = data;
 		sendDirectMessage(toClientId, messageId, socket.handshake.query.userId);
 	});
-
 	// Storing Clients Profiles
-
 	storeClientSession(socket, userId, userName, connectionId);
 });
 app.get(config.readyPath, (req, res) => {
-	res.send('READY');
+	res.send({"status":"UP","groups":["liveness","readiness"]});
 });
+app.use(chatServicesMainAddress, chatServices);
+
+await selfInitialization();
 server.listen(serverPort, () => {
+	logger.log(`config: ${JSON.stringify(config, null, '\t')}`);
 	// eslint-disable-next-line no-console
 	console.log(`App listening on ${serverPort}`);
 });
-
 export default server;

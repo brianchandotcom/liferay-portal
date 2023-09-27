@@ -46,6 +46,8 @@
 	"name": "liferay-chat",
 	"private": true,
 	"scripts": {
+		"build-element": "ng build && node ./build.js",
+		"publish-element": "npm run build-element && node ./server_testing.js",
 		"build": "ng build",
 		"ng": "ng",
 		"start": "ng serve",

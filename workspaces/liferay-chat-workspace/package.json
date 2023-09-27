@@ -1,0 +1,9 @@
+{
+    "private": true,
+    "workspaces": {
+        "packages": [
+            "client-extensions/liferay-chat-custom-element",
+            "client-extensions/liferay-chat-etc-node"
+        ]
+    }
+}

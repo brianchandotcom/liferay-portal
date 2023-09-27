@@ -1,0 +1,15 @@
+assemble:
+    - from: batch
+      into: batch
+liferay-chat-batch-object-definition:
+    name: Liferay Chat Batch Object Definition
+    oAuthApplicationHeadlessServer: liferay-chat-batch-object-definition-oauth-application-headless-server
+    type: batch
+liferay-chat-batch-object-definition-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Chat Batch Object Definition OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Batch.Engine.everything
+        - Liferay.Object.Admin.REST.everything
+    type: oAuthApplicationHeadlessServer

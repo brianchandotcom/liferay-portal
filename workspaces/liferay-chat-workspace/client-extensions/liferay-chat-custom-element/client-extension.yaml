@@ -1,17 +1,21 @@
 assemble:
     - from: dist/liferay-chat
       into: static
-liferay-chat-custom-element:
+liferay-chat-user-interface:
     cssURLs:
         - styles.*.css
     friendlyURLMapping: chat-ui
     htmlElementName: liferay-chat-window
     instanceable: true
-    name: Liferay Chat Custom Element
+    name: Liferay Chat Widget
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
         - main.*.js
+        - MaterialIcons-Regular.*.woff2
+        - MaterialIcons-Regular.*.ttf
+        - MaterialIcons-Regular.*.woff
+        - MaterialIcons-Regular.*.eot
         - polyfills.*.js
         - runtime.*.js
     useESM: false

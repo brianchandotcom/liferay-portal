@@ -12,7 +12,7 @@
  * details.
  */
 
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule,HTTP_INTERCEPTORS} from '@angular/common/http';
 import {Injector, NgModule} from '@angular/core';
 import {createCustomElement} from '@angular/elements';
 import {FormsModule} from '@angular/forms';
@@ -45,6 +45,7 @@ import {DirectMessageWindowComponent} from './components/chat/direct-message-win
 import {VoiceNoteComponent} from './components/chat/voice-note/voice-note.component';
 import {WindowComponent} from './components/chat/window/window.component';
 import {ScrollToBottomDirective} from './directives/scroll-to-bottom.directive';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 @NgModule({
 	bootstrap: [],
@@ -55,6 +56,7 @@ import {ScrollToBottomDirective} from './directives/scroll-to-bottom.directive';
 		DirectMessageWindowComponent,
 		AttachmentViewComponent,
 		VoiceNoteComponent,
+  UnauthorizedComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -79,10 +81,12 @@ import {ScrollToBottomDirective} from './directives/scroll-to-bottom.directive';
 		MatButtonModule,
 		MatDialogModule,
 	],
-	providers: [],
+	providers: [
+	],
 })
 export class AppModule {
 	ngDoBootstrap() {}
+
 
 	constructor(private injector: Injector, library: FaIconLibrary) {
 		library.addIconPacks(fas);

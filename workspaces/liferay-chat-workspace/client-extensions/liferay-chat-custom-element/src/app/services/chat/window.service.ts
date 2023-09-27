@@ -20,198 +20,187 @@ import {v4 as uuidv4} from 'uuid';
 declare const Liferay: any;
 
 @Injectable({
-	providedIn: 'root',
+    providedIn: 'root',
 })
 export class WindowService {
-	private message_object_serviceUrl = '/o/c/chatmessages/';
-	public folderId = '';
+    public folderId = '';
+    private message_object_serviceUrl = '/o/c/chatmessages/';
 
-	constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+    }
 
-	public async postMessage(
-		_toClientId: any,
-		_message: any,
-		file: File | any = null
-	) {
-		let fileId: string | any = null;
-		if (file) {
+    public async postMessage(
+        _toClientId: any,
+        _message: any,
+        file: File | any = null
+    ) {
+        let fileId: string | any = null;
+        if (file) {
 
-			// @ts-ignore
+            // @ts-ignore
 
-			fileId = (await this.uploadFile(file, this.folderId))['id'];
-		}
-		const messageId1 = await this.postMessageToLiferay(
-			_toClientId,
-			_message,
-			true,
-			fileId
-		);
-		const updatedMessage = await this.getMessageById(messageId1);
+            fileId = (await this.uploadFile(file, this.folderId))['id'];
+        }
+        const messageId1 = await this.postMessageToLiferay(
+            _toClientId,
+            _message,
+            true,
+            fileId
+        );
+        const updatedMessage = await this.getMessageById(messageId1);
 
-		// @ts-ignore
+        // @ts-ignore
+        const ids = {
 
-		const ids = {
+            // @ts-ignore
 
-			// @ts-ignore
+            clientMessageId: updatedMessage['id'],
+            fromMessageId: messageId1,
+        };
 
-			clientMessageId: updatedMessage['clientMessageID'],
-			fromMessageId: messageId1,
-		};
+        // @ts-ignore
 
-		// @ts-ignore
+        return ids;
+    }
 
-		return ids;
-	}
+    public getMessages(toClientId: any, pageIndex = 1) {
+        const userId = Liferay.ThemeDisplay.getUserId();
+        const prom = new Promise((resolve) => {
+            Liferay.OAuth2Client.FromUserAgentApplication('liferay-chat-etc-node-oauth-application-user-agent')
+                .fetch(`/chat/messages?clientID=${toClientId}&page=${pageIndex}`)
+                .then(
+                    (result: any) => {
+                        result['items'] = result['items'].reverse();
+                        resolve(result);
+                    });
+        });
+        return prom;
+    }
 
-	private postMessageToLiferay(
-		_toClientId: any,
-		_message: any,
-		updateOwner: boolean,
-		fileId: string | any = null
-	) {
-		const httpOptions = {
-			headers: new HttpHeaders({
-				'Content-Type': 'application/json',
-			}),
-		};
-		const prom = new Promise((resolve, reject) => {
-			const body: any = {
-				fromClientId: Liferay.ThemeDisplay.getUserId(),
-				message: _message,
-				toClientId: _toClientId,
-				updateOwner,
-			};
-			if (fileId) {
-				body['attachment'] = fileId;
-			}
-			this.http
-				.post(
-					`${this.message_object_serviceUrl}?p_auth=${Liferay.authToken}`,
-					JSON.stringify(body),
-					httpOptions
-				)
-				.subscribe(
-					(result) => {
+    public async getContacts() {
+        let prom = new Promise((resolve, reject) => {
+            Liferay.OAuth2Client.FromUserAgentApplication('liferay-chat-etc-node-oauth-application-user-agent')
+                .fetch('/chat/contacts').then((result: any) => {
+                let contacts = result.items;
+                const hashMap: any = {};
+                contacts.forEach((contact: any) => {
+                    if (
+                        Liferay.ThemeDisplay.getUserId().toString() !==
+                        contact['id'].toString()
+                    ) {
+                        hashMap[contact['id']] = {
+                            id: contact['id'],
+                            name: contact['name'],
+                        };
+                    }
+                });
+                resolve(hashMap);
+            })
+        });
+        return prom;
+    }
 
-						// @ts-ignore
+    public getMessageById(messageId: any) {
+        const prom = new Promise((resolve) => {
+            Liferay.OAuth2Client.FromUserAgentApplication('liferay-chat-etc-node-oauth-application-user-agent')
+                .fetch(`/chat/messages/${messageId}`)
+                .then(
+                    (result: any) => {
+                        resolve(result);
+                    });
+        });
+        return prom;
+    }
 
-						resolve(result['id']);
-					},
-					(error) => {
-						reject(error);
-					}
-				);
-		});
+    public async uploadFile(file: File, folderId: string) {
+        const myGuid = uuidv4();
+        let accessToken = (await Liferay.OAuth2Client.FromUserAgentApplication('liferay-chat-etc-node-oauth-application-user-agent')._getOrRequestToken()).access_token;
 
-		return prom;
-	}
+        const requestOptions = {
+            headers: new HttpHeaders({
+                'Authorization': `Bearer ${accessToken}`
+            })
+        };
+        const globalsiteId = Liferay.ThemeDisplay.getCompanyGroupId();
+        const formData = new FormData();
+        const extension = file.name.split('.').pop();
+        formData.append('file', file, `${myGuid}.${extension}`);
+        const prom = new Promise((resolve, reject) => {
+            this.http
+                .post(
+                    `${this.suggestServerUrl()}/chat/messages/attach/${globalsiteId}`,
+                    formData,
+                    requestOptions
+                )
+                .subscribe(
+                    (result) => {
+                        resolve(result);
+                    },
+                    (error) => {
+                        reject(error);
+                    }
+                );
+        });
+        return prom;
+    }
 
-	public getMessages(toClientId: any, pageIndex = 1) {
-		const userId = Liferay.ThemeDisplay.getUserId();
-		const prom = new Promise((resolve) => {
-			this.http
-				.get(
-					`${this.message_object_serviceUrl}?filter=%28creatorId%20eq%20${userId}%20and%20toClientId%20eq%20%27${toClientId}%27%20and%20fromClientId%20eq%20%27${userId}%27%29%20or%20%28creatorId%20eq%20${userId}%20and%20toClientId%20eq%20%27${userId}%27%20and%20fromClientId%20eq%20%27${toClientId}%27%29&sort=dateCreated%3Adesc&page=${pageIndex}&p_auth=${Liferay.authToken}`
-				)
-				.subscribe((result) => {
+    public async getAttachment(documentId: any) {
+        const prom = new Promise((resolve) => {
+            Liferay.OAuth2Client.FromUserAgentApplication('liferay-chat-etc-node-oauth-application-user-agent')
+                .fetch(`/chat/messages/attachment/${documentId}`)
+                .then(
+                    (result: any) => {
+                        resolve(result);
+                    });
+        });
+        return prom;
+    }
 
-					// @ts-ignore
+    private async postMessageToLiferay(
+        _toClientId: any,
+        _message: any,
+        updateOwner: boolean,
+        fileId: string | any = null
+    ) {
+        let accessToken = (await Liferay.OAuth2Client.FromUserAgentApplication('liferay-chat-etc-node-oauth-application-user-agent')._getOrRequestToken()).access_token;
 
-					result['items'] = result['items'].reverse();
-					resolve(result);
-				});
-		});
-
-		return prom;
-	}
-
-	public async getContacts() {
-		const prom = new Promise((resolve, reject) => {
-			this.http
-				.get(
-					`/o/headless-admin-user/v1.0/user-accounts?page=0&p_auth=${Liferay.authToken}`
-				)
-				.pipe(
-					map((res: any) => res.items),
-					map((contacts: any[]) => {
-						const hashMap: any = {};
-						contacts.forEach((contact: any) => {
-							if (
-								Liferay.ThemeDisplay.getUserId() !==
-								contact['id']
-							) {
-								hashMap[contact['id']] = {
-									id: contact['id'],
-									name: contact['name'],
-								};
-							}
-						});
-
-						return hashMap;
-					})
-				)
-				.subscribe(
-					(result) => {
-						resolve(result);
-					},
-					() => {
-						reject('Unable to get users list!');
-					}
-				);
-		});
-
-		return prom;
-	}
-
-	public getMessageById(messageId: any) {
-		const prom = new Promise((resolve) => {
-			this.http
-				.get(
-					`${this.message_object_serviceUrl}/${messageId}?p_auth=${Liferay.authToken}`
-				)
-				.subscribe((result) => {
-					resolve(result);
-				});
-		});
-
-		return prom;
-	}
-
-	public async uploadFile(file: File, folderId: string) {
-		const myGuid = uuidv4();
-		const formData = new FormData();
-		const extension = file.name.split('.').pop();
-		formData.append('file', file, `${myGuid}.${extension}`);
-		const prom = new Promise((resolve, reject) => {
-			this.http
-				.post(
-					`/o/headless-delivery/v1.0/document-folders/${folderId}/documents?p_auth=${Liferay.authToken}`,
-					formData
-				)
-				.subscribe(
-					(result) => {
-						resolve(result);
-					},
-					(error) => {
-						reject(error);
-					}
-				);
-		});
-
-		return prom;
-	}
-
-	public async getAttachment(documentId: any) {
-		const prom = new Promise((resolve) => {
-			this.http
-				.get(
-					`/o/headless-delivery/v1.0/documents/${documentId}?p_auth=${Liferay.authToken}`
-				)
-				.subscribe((result) => {
-					resolve(result);
-				});
-		});
-
-		return prom;
-	}
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            }),
+        };
+        const prom = new Promise((resolve, reject) => {
+            const body: any = {
+                fromClientId: Liferay.ThemeDisplay.getUserId(),
+                message: _message,
+                toClientId: _toClientId,
+                updateOwner,
+            };
+            if (fileId) {
+                body['attachment'] = fileId;
+            }
+            Liferay.OAuth2Client.FromUserAgentApplication('liferay-chat-etc-node-oauth-application-user-agent')
+                .fetch('/chat/messages', {
+                    method: 'POST',
+                    body: JSON.stringify(body),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
+                    },
+                }).then((result: any) => {
+                resolve(result['id']);
+            }, (error: any) => {
+                reject(error);
+            });
+        });
+        return prom;
+    }
+    suggestServerUrl() {
+        let OAuthApp = Liferay
+            .OAuth2Client
+            .FromUserAgentApplication('liferay-chat-etc-node-oauth-application-user-agent')
+            .homePageURL;
+        return OAuthApp;
+    }
 }

@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import cors from 'cors';
@@ -19,96 +10,241 @@ import fetch from 'node-fetch';
 
 import config from './configTreePath.js';
 import {logger} from './logger.js';
+import chatServices from "../services/chat-services.js";
+import {headless_admin_userService} from "../headless-wrapper/headless-admin-user.js";
+import {getServerToken} from "./silent-authorization.js";
 
+const chatServicesMainAddress = config['chat.services.main.address'];
+import cache from 'memory-cache';
 const domains = config['com.liferay.lxc.dxp.domains'];
-const externalReferenceCode =
-	config['liferay.oauth.application.external.reference.codes'].split(',')[0];
+const externalReferenceCode = config[
+    'liferay.oauth.application.external.reference.codes'
+    ].split(',')[0];
 const lxcDXPMainDomain = config['com.liferay.lxc.dxp.mainDomain'];
 const lxcDXPServerProtocol = config['com.liferay.lxc.dxp.server.protocol'];
 
+const agentExternalReferenceCode = config[
+    'liferay.oauth.application.external.reference.codes'
+    ].split(',')[1];
+
+const agentClientId = config[`${externalReferenceCode}.oauth2.user.agent.client.id`];
+const agentClientSecret =  config[`${externalReferenceCode}.oauth2.headless.server.client.secret`];
+
+
 const uriPath =
-	config[externalReferenceCode + '.oauth2.jwks.uri'] || '/o/oauth2/jwks';
+    config[externalReferenceCode + '.oauth2.jwks.uri'] || '/o/oauth2/jwks';
+
+const agentUriPath =
+    config[agentExternalReferenceCode + '.oauth2.jwks.uri'] || '/o/oauth2/jwks';
 
 const oauth2JWKSURI = `${lxcDXPServerProtocol}://${lxcDXPMainDomain}${uriPath}`;
 
-const allowList = domains
-	.split(',')
-	.map((domain) => `${lxcDXPServerProtocol}://${domain}`);
-
+const allowList = domains ? domains
+    .split(',')
+    .map((domain) => `${lxcDXPServerProtocol}://${domain}`) : "";
+const chatServicesEndpoints = config['chat.services.endpoints'].split(',');
 const corsOptions = {
-	origin(origin, callback) {
-		callback(null, allowList.includes(origin));
-	},
+    origin(origin, callback) {
+        callback(null, allowList.includes(origin));
+    },
 };
 
 export async function corsWithReady(req, res, next) {
-	if (req.originalUrl === config.readyPath) {
-		return next();
-	}
+    if (req.originalUrl === config.readyPath) {
+        return next();
+    }
 
-	return cors(corsOptions)(req, res, next);
+    return cors(corsOptions)(req, res, next);
 }
 
+async function downloadJWT(req, res, next)
+{
+    const bearerToken = req.query.authorization;
+    const AgentOauth2JWKSURI = `${lxcDXPServerProtocol}://${lxcDXPMainDomain}${agentUriPath}`;
+    if (!bearerToken) {
+        res.status(401).send('No authorization header');
+        return;
+    }
+    try {
+        const jwksResponse = await fetch(AgentOauth2JWKSURI);
+
+        if (jwksResponse.status === 200) {
+            const jwks = await jwksResponse.json();
+
+            const jwksPublicKey = jwktopem(jwks.keys[0]);
+
+            const decoded = verify(bearerToken, jwksPublicKey, {
+                algorithms: ['RS256'],
+                ignoreExpiration: true, // TODO we need to use refresh token
+            });
+            let client_id =
+                config['liferay-chat-etc-node-oauth-application-user-agent.oauth2.user.agent.client.id'];
+
+            if (decoded.client_id.replaceAll(' ','') === client_id.replaceAll(' ','')) {
+                req.token = bearerToken;
+                req.jwt = decoded;
+                const username = req.jwt.username;
+                let userProfile = await getUserProfile(username);
+                req.user = userProfile;
+                next();
+            } else {
+                console.log(`client token validation for the path is: ${req.url}`);
+                console.log(`client id: ${client_id} && decoded: ${decoded.client_id}`)
+                logger.log(
+                    'JWT token client_id value does not match expected client_id value.'
+                );
+
+                res.status(401).send('Invalid authorization');
+            }
+        } else {
+            logger.error(
+                'Error fetching JWKS %s %s',
+                jwksResponse.status,
+                jwksResponse.statusText
+            );
+
+            res.status(401).send('Invalid authorization header');
+        }
+    } catch (error) {
+        logger.error('Error validating JWT token\n%s', error);
+
+        res.status(401).send('Invalid authorization header');
+    }
+
+}
+async function clientLiferayJWT(req, res, next)
+{
+    const authorization = req.headers.authorization;
+    const AgentOauth2JWKSURI = `${lxcDXPServerProtocol}://${lxcDXPMainDomain}${agentUriPath}`;
+    if (!authorization) {
+        res.status(401).send('No authorization header');
+        return;
+    }
+    const [, bearerToken] = req.headers.authorization.split('Bearer ');
+    try {
+        const jwksResponse = await fetch(AgentOauth2JWKSURI);
+
+        if (jwksResponse.status === 200) {
+            const jwks = await jwksResponse.json();
+
+            const jwksPublicKey = jwktopem(jwks.keys[0]);
+
+            const decoded = verify(bearerToken, jwksPublicKey, {
+                algorithms: ['RS256'],
+                ignoreExpiration: true, // TODO we need to use refresh token
+            });
+            let client_id =
+                config['liferay-chat-etc-node-oauth-application-user-agent.oauth2.user.agent.client.id'];
+
+            if (decoded.client_id.replaceAll(' ','') === client_id.replaceAll(' ','')) {
+                req.token = bearerToken;
+                req.jwt = decoded;
+                const username = req.jwt.username;
+                req.user = await getUserProfile(username);
+                next();
+            } else {
+                console.log(`client token validation for the path is: ${req.url}`);
+                console.log(`client id: ${client_id} && decoded: ${decoded.client_id}`)
+                logger.log(
+                    'JWT token client_id value does not match expected client_id value.'
+                );
+
+                res.status(401).send('Invalid authorization');
+            }
+        } else {
+            logger.error(
+                'Error fetching JWKS %s %s',
+                jwksResponse.status,
+                jwksResponse.statusText
+            );
+
+            res.status(401).send('Invalid authorization header');
+        }
+    } catch (error) {
+        logger.error('Error validating client JWT token\n%s', error);
+
+        res.status(401).send('Invalid authorization header');
+    }
+}
+async function serverJWT(req, res, next)
+{
+    const authorization = req.headers.authorization;
+    if (!authorization) {
+        res.status(401).send('No authorization header');
+        return;
+    }
+    const [, bearerToken] = req.headers.authorization.split('Bearer ');
+    try {
+        const jwksResponse = await fetch(oauth2JWKSURI);
+
+        if (jwksResponse.status === 200) {
+            const jwks = await jwksResponse.json();
+
+            const jwksPublicKey = jwktopem(jwks.keys[0]);
+
+            const decoded = verify(bearerToken, jwksPublicKey, {
+                algorithms: ['RS256'],
+                ignoreExpiration: true, // TODO we need to use refresh token
+            });
+
+            const applicationResponse = await fetch(
+                `${lxcDXPServerProtocol}://${lxcDXPMainDomain}/o/oauth2/application?externalReferenceCode=${externalReferenceCode}`
+            );
+
+            const {client_id} = await applicationResponse.json();
+
+            if (decoded.client_id === client_id) {
+                req.jwt = decoded;
+
+                next();
+            } else {
+                logger.log(
+                    'JWT token client_id value does not match expected client_id value.'
+                );
+
+                res.status(401).send('Invalid authorization');
+            }
+        } else {
+            logger.error(
+                'Error fetching JWKS %s %s',
+                jwksResponse.status,
+                jwksResponse.statusText
+            );
+
+            res.status(401).send('Invalid authorization header');
+        }
+    } catch (error) {
+        logger.error('Error validating JWT token\n%s', error);
+
+        res.status(401).send('Invalid authorization header');
+    }
+}
 export async function liferayJWT(req, res, next) {
-	if (req.path === config.readyPath) {
-		return next();
-	}
+    if (req.path === config.readyPath) {
+        return next();
+    }else if(req.path.indexOf('/messages/attachment/download') > -1)
+    {
+        return downloadJWT(req, res, next);
+    }else
+        return clientLiferayJWT(req, res, next);
 
-	const authorization = req.headers.authorization;
+}
 
-	if (!authorization) {
-		res.status(401).send('No authorization header');
-
-		return;
-	}
-
-	const [, bearerToken] = req.headers.authorization.split('Bearer ');
-
-	try {
-		const jwksResponse = await fetch(oauth2JWKSURI);
-
-		if (jwksResponse.status === 200) {
-			const jwks = await jwksResponse.json();
-
-			const jwksPublicKey = jwktopem(jwks.keys[0]);
-
-			const decoded = verify(bearerToken, jwksPublicKey, {
-				algorithms: ['RS256'],
-				ignoreExpiration: true, // TODO we need to use refresh token
-			});
-
-			const applicationResponse = await fetch(
-				`${lxcDXPServerProtocol}://${lxcDXPMainDomain}/o/oauth2/application?externalReferenceCode=${externalReferenceCode}`
-			);
-
-			const {client_id} = await applicationResponse.json();
-
-			if (decoded.client_id === client_id) {
-				req.jwt = decoded;
-
-				next();
-			}
-			else {
-				logger.log(
-					'JWT token client_id value does not match expected client_id value.'
-				);
-
-				res.status(401).send('Invalid authorization');
-			}
-		}
-		else {
-			logger.error(
-				'Error fetching JWKS %s %s',
-				jwksResponse.status,
-				jwksResponse.statusText
-			);
-
-			res.status(401).send('Invalid authorization header');
-		}
-	}
-	catch (error) {
-		logger.error('Error validating JWT token\n%s', error);
-
-		res.status(401).send('Invalid authorization header');
-	}
+function getUserProfile(username)
+{
+    let prom = new Promise(async (resolve, reject) => {
+        let cacheKey = `user_profile_${username}`;
+        let profile = cache.get(cacheKey);
+        if (profile) {
+            resolve(profile);
+        } else {
+            const token = await getServerToken('System');
+            let usersService = new headless_admin_userService(`Bearer ${token}`);
+            const filter = `filter=emailAddress eq '${username}'`;
+            let userProfile = await usersService.getUserAccountsPage(filter);
+            cache.put(cacheKey,userProfile.items[0],((60) * 1000) *4);
+            resolve(userProfile.items[0]);
+        }
+    });
+    return prom;
 }

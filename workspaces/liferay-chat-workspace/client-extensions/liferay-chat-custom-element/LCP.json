@@ -11,12 +11,18 @@
 			"deploy": false
 		}
 	},
-	"id": "liferaychatcustomelement",
+	"ports": [
+		{
+			"port": 80,
+			"external": true
+		}
+	],
+	"id": "liferaychatui",
 	"kind": "Deployment",
 	"livenessProbe": {
 		"failureThreshold": 5,
 		"httpGet": {
-			"path": "/index.js",
+			"path": "/index.html",
 			"port": 80
 		},
 		"initialDelaySeconds": 120,
@@ -30,7 +36,7 @@
 	"memory": 50,
 	"readinessProbe": {
 		"httpGet": {
-			"path": "/index.js",
+			"path": "/index.html",
 			"port": 80
 		},
 		"initialDelaySeconds": 30,

@@ -118,7 +118,7 @@ const ProductCard = ({
 		if (
 			getValueFromSpecifications(
 				product.productSpecifications,
-				'price'
+				'price-model'
 			).toLowerCase() === Price.PAID
 		) {
 			if (basePrice) {
@@ -130,7 +130,7 @@ const ProductCard = ({
 		else if (
 			getValueFromSpecifications(
 				product.productSpecifications,
-				'price'
+				'price-model'
 			).toLowerCase() === Price.FREE
 		) {
 			return 'Free';
@@ -158,10 +158,10 @@ const ProductCard = ({
 										'latest-version'
 									)}{' '}
 									by{' '}
-									{product.customFields &&
-										getCustomFieldValue(
-											product.customFields,
-											'Developer Name'
+									{product.productSpecifications &&
+										getValueFromSpecifications(
+											product.productSpecifications,
+											'developer-name'
 										)}
 								</div>
 							</div>

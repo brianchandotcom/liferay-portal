@@ -376,8 +376,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 				).put(
 					"fieldName", String.valueOf(fdsFieldProperties.get("name"))
 				).put(
-					"label",
-					_getValue("label", "name", fdsFieldProperties)
+					"label", _getValue("label", "name", fdsFieldProperties)
 				).put(
 					"sortable", (boolean)fdsFieldProperties.get("sortable")
 				);
@@ -446,9 +445,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					).put(
 						"id", properties.get("fieldName")
 					).put(
-						"label",
-						_getValue(
-							"label", "fieldName", properties)
+						"label", _getValue("label", "fieldName", properties)
 					).put(
 						"max", _getDateJSONObject(properties.get("to"))
 					).put(
@@ -495,9 +492,7 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 								"value", listTypeEntry.getKey()
 							))
 					).put(
-						"label",
-						_getValue(
-							"label", "fieldName", properties)
+						"label", _getValue("label", "fieldName", properties)
 					).put(
 						"multiple", properties.get("multiple")
 					).put(
@@ -604,19 +599,6 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					"target", properties.get("type")
 				);
 			});
-	}
-
-	private String _getValue(
-		String defaultKey, String fallbackKey,
-		Map<String, Object> fdsFieldProperties) {
-
-		String value = String.valueOf(fdsFieldProperties.get(defaultKey));
-
-		if (Validator.isNotNull(value)) {
-			return value;
-		}
-
-		return String.valueOf(fdsFieldProperties.get(fallbackKey));
 	}
 
 	private ObjectEntry _getObjectEntry(
@@ -743,6 +725,19 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 		).put(
 			"key", fdsSortingProperties.get("fieldName")
 		);
+	}
+
+	private String _getValue(
+		String defaultKey, String fallbackKey,
+		Map<String, Object> fdsFieldProperties) {
+
+		String value = String.valueOf(fdsFieldProperties.get(defaultKey));
+
+		if (Validator.isNotNull(value)) {
+			return value;
+		}
+
+		return String.valueOf(fdsFieldProperties.get(fallbackKey));
 	}
 
 	private String _interpolateURL(

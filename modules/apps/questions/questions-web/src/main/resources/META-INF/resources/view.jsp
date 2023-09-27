@@ -13,21 +13,19 @@
 
 	<%
 	QuestionsConfiguration questionsConfiguration = ConfigurationProviderUtil.getPortletInstanceConfiguration(QuestionsConfiguration.class, themeDisplay);
-
-	String languageId = LanguageUtil.getLanguageId(request);
 	%>
 
 	<react:component
 		module="js/index.es"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
-				"askQuestionButtonText", LocalizationUtil.getLocalization(questionsConfiguration.askQuestionButtonTextAsLocalizedXML(), languageId)
+				"askQuestionButtonText", LocalizationUtil.getLocalization(questionsConfiguration.askQuestionButtonTextAsLocalizedXML(), themeDisplay.getLanguageId())
 			).put(
 				"companyName", renderRequest.getAttribute(QuestionsWebKeys.COMPANY_NAME)
 			).put(
 				"defaultRank", renderRequest.getAttribute(QuestionsWebKeys.DEFAULT_RANK)
 			).put(
-				"editQuestionPageTitle", LocalizationUtil.getLocalization(questionsConfiguration.editQuestionPageTitleAsLocalizedXML(), languageId)
+				"editQuestionPageTitle", LocalizationUtil.getLocalization(questionsConfiguration.editQuestionPageTitleAsLocalizedXML(), themeDisplay.getLanguageId())
 			).put(
 				"flagsProperties", renderRequest.getAttribute(QuestionsWebKeys.FLAGS_PROPERTIES)
 			).put(
@@ -43,11 +41,11 @@
 			).put(
 				"isOmniAdmin", permissionChecker.isOmniadmin()
 			).put(
-				"newQuestionPageTitle", LocalizationUtil.getLocalization(questionsConfiguration.newQuestionPageTitleAsLocalizedXML(), languageId)
+				"newQuestionPageTitle", LocalizationUtil.getLocalization(questionsConfiguration.newQuestionPageTitleAsLocalizedXML(), themeDisplay.getLanguageId())
 			).put(
 				"npmResolvedPackageName", npmResolvedPackageName
 			).put(
-				"postYourQuestionButtonText", LocalizationUtil.getLocalization(questionsConfiguration.postYourQuestionButtonTextAsLocalizedXML(), languageId)
+				"postYourQuestionButtonText", LocalizationUtil.getLocalization(questionsConfiguration.postYourQuestionButtonTextAsLocalizedXML(), themeDisplay.getLanguageId())
 			).put(
 				"redirectToLogin", questionsConfiguration.enableRedirectToLogin()
 			).put(
@@ -61,7 +59,7 @@
 			).put(
 				"trustedUser", renderRequest.getAttribute(QuestionsWebKeys.TRUSTED_USER)
 			).put(
-				"updateYourQuestionButtonText", LocalizationUtil.getLocalization(questionsConfiguration.updateYourQuestionButtonTextAsLocalizedXML(), languageId)
+				"updateYourQuestionButtonText", LocalizationUtil.getLocalization(questionsConfiguration.updateYourQuestionButtonTextAsLocalizedXML(), themeDisplay.getLanguageId())
 			).put(
 				"userId", String.valueOf(themeDisplay.getUserId())
 			).put(

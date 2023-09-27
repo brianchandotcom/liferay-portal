@@ -79,12 +79,15 @@ public class OrganizationTestUtil {
 	}
 
 	public static Organization addOrganization(String type) throws Exception {
+		ListType listType = ListTypeServiceUtil.getListType(
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			ListTypeConstants.ORGANIZATION_STATUS);
+
 		return OrganizationLocalServiceUtil.addOrganization(
 			null, TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-			RandomTestUtil.randomString(), type, 0, 0,
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
-			false, null);
+			RandomTestUtil.randomString(), type, 0, 0, listType.getListTypeId(),
+			StringPool.BLANK, false, null);
 	}
 
 	public static OrgLabor addOrgLabor(Organization organization)

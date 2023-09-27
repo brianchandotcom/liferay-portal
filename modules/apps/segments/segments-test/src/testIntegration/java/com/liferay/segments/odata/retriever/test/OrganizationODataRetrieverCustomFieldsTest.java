@@ -15,9 +15,11 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.test.util.ExpandoTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -1156,13 +1158,16 @@ public class OrganizationODataRetrieverCustomFieldsTest {
 				columnName, columnValue
 			).build());
 
+		ListType listType = _listTypeLocalService.getListType(
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			ListTypeConstants.ORGANIZATION_STATUS);
+
 		return OrganizationLocalServiceUtil.addOrganization(
 			null, TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(),
 			_organizationLocalService.getTypes()[0], 0, 0,
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
-			false, serviceContext);
+			listType.getListTypeId(), StringPool.BLANK, false, serviceContext);
 	}
 
 	private String _encodeName(ExpandoColumn expandoColumn) {
@@ -1185,6 +1190,9 @@ public class OrganizationODataRetrieverCustomFieldsTest {
 
 	@DeleteAfterTestRun
 	private ExpandoTable _expandoTable;
+
+	@Inject
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;

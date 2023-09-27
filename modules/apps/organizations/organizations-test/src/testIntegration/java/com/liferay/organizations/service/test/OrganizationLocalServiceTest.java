@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.OrganizationParentException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -364,20 +366,24 @@ public class OrganizationLocalServiceTest {
 			_organizationLocalService.deleteOrganization(organization);
 		}
 
+		ListType listType = _listTypeLocalService.getListType(
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			ListTypeConstants.ORGANIZATION_STATUS);
+
 		Organization organizationA = _organizationLocalService.addOrganization(
 			null, TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(),
 			OrganizationConstants.TYPE_ORGANIZATION, 0, 0,
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
-			false, new ServiceContext());
+			listType.getListTypeId(), StringPool.BLANK, false,
+			new ServiceContext());
 
 		Organization organizationB = _organizationLocalService.addOrganization(
 			null, TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, "Test2",
 			OrganizationConstants.TYPE_ORGANIZATION, 0, 0,
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
-			false, new ServiceContext());
+			listType.getListTypeId(), StringPool.BLANK, false,
+			new ServiceContext());
 
 		_organizations.add(organizationB);
 
@@ -1094,6 +1100,9 @@ public class OrganizationLocalServiceTest {
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

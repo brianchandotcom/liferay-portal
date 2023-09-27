@@ -18,10 +18,12 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -31,6 +33,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -207,13 +210,17 @@ public class AssetTagLocalServiceTest {
 
 		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
 
+		ListType listType = _listTypeLocalService.getListType(
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			ListTypeConstants.ORGANIZATION_STATUS);
+
 		_organization = OrganizationLocalServiceUtil.addOrganization(
 			null, TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(),
 			OrganizationConstants.TYPE_ORGANIZATION, 0, 0,
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-			RandomTestUtil.randomString(), true, serviceContext);
+			listType.getListTypeId(), RandomTestUtil.randomString(), true,
+			serviceContext);
 
 		TestAssetIndexer testAssetIndexer = new TestAssetIndexer();
 
@@ -273,6 +280,9 @@ public class AssetTagLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private ListTypeLocalService _listTypeLocalService;
 
 	@DeleteAfterTestRun
 	private Organization _organization;

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -237,10 +238,13 @@ public class OrganizationLocalServiceImpl
 
 		String[] types = getTypes();
 
+		ListType listType = _listTypeLocalService.getListType(
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			ListTypeConstants.ORGANIZATION_STATUS);
+
 		return addOrganization(
 			null, userId, parentOrganizationId, name, types[0], 0, 0,
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
-			site, null);
+			listType.getListTypeId(), StringPool.BLANK, site, null);
 	}
 
 	/**

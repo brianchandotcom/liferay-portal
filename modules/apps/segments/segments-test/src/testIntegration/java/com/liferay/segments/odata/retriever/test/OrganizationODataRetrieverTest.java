@@ -14,6 +14,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -145,13 +147,16 @@ public class OrganizationODataRetrieverTest {
 
 		Region region = regions.get(0);
 
+		ListType listType = _listTypeLocalService.getListType(
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			ListTypeConstants.ORGANIZATION_STATUS);
+
 		Organization organization1 = _organizationLocalService.addOrganization(
 			null, TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(),
 			OrganizationConstants.TYPE_ORGANIZATION, region.getRegionId(),
-			country.getCountryId(),
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
+			country.getCountryId(), listType.getListTypeId(), StringPool.BLANK,
 			true, new ServiceContext());
 
 		Organization organization2 = OrganizationTestUtil.addOrganization();
@@ -189,13 +194,16 @@ public class OrganizationODataRetrieverTest {
 
 		Region region = regions.get(0);
 
+		ListType listType = _listTypeLocalService.getListType(
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			ListTypeConstants.ORGANIZATION_STATUS);
+
 		Organization organization = _organizationLocalService.addOrganization(
 			null, TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(),
 			OrganizationConstants.TYPE_ORGANIZATION, region.getRegionId(),
-			country.getCountryId(),
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
+			country.getCountryId(), listType.getListTypeId(), StringPool.BLANK,
 			true, new ServiceContext());
 
 		String filterString = String.format(
@@ -678,6 +686,9 @@ public class OrganizationODataRetrieverTest {
 
 	@Inject
 	private CountryService _countryService;
+
+	@Inject
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Inject(
 		filter = "model.class.name=com.liferay.portal.kernel.model.Organization"

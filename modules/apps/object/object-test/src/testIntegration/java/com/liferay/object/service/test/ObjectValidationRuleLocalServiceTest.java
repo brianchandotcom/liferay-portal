@@ -24,7 +24,7 @@ import com.liferay.object.model.ObjectValidationRuleSetting;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
-import com.liferay.object.service.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.validation.rule.setting.builder.ObjectValidationRuleSettingBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.AssertUtils;

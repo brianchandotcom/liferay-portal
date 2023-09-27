@@ -36,7 +36,7 @@ const ProductCard = ({
 	const [basePrice, setBasePrice] = useState<Number | undefined>(undefined);
 
 	const productHasTrialSKU = (skus: SKU[]) => {
-		skus.map((sku) => {
+		skus.forEach((sku) => {
 			const licenseUsageType = sku.skuOptions.find(
 				(option) =>
 					option.key.toLowerCase() === 'dxp-license-usage-type'
@@ -47,17 +47,13 @@ const ProductCard = ({
 					SkuOptions.TRIAL.toLowerCase()
 			) {
 				setHasTrial(true);
-
-				return;
 			}
-
-			return;
 		});
 	};
 
 	const getProductBasePrice = (product: Product) => {
 		product &&
-			product.skus.map((sku) => {
+			product.skus.forEach((sku) => {
 				const licenseUsageType = sku.skuOptions.find(
 					(option) =>
 						option.key.toLowerCase() === 'dxp-license-usage-type'
@@ -95,7 +91,7 @@ const ProductCard = ({
 	const iconURL =
 		product &&
 		getThumbnailByProductAttachment(product.attachments)?.split('/o/');
-	const convertedIconURl = iconURL && `/o/${iconURL[1]}`;
+	const convertedIconURL = iconURL ? `/o/${iconURL[1]}` : '';
 
 	const getLicenseTagText = (product: Product) => {
 		if (
@@ -125,11 +121,10 @@ const ProductCard = ({
 				'price'
 			).toLowerCase() === Price.PAID
 		) {
-			if (hasTrial) {
-				return basePrice && `30-day trial or $${basePrice}`;
-			}
-			else {
-				return basePrice && `$${basePrice}`;
+			if (basePrice) {
+				return hasTrial
+					? `30-day trial or $${basePrice}`
+					: `$${basePrice}`;
 			}
 		}
 		else if (
@@ -150,7 +145,7 @@ const ProductCard = ({
 						<div className="d-flex flex-row">
 							<img
 								height="64px"
-								src={convertedIconURl}
+								src={convertedIconURL}
 								width="64px"
 							/>
 							<div className="align-items-center ml-4">

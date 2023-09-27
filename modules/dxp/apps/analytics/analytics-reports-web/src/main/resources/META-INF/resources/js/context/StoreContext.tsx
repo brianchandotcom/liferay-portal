@@ -10,6 +10,7 @@ interface Action {
 }
 
 interface State {
+	languageTag?: string;
 	publishedToday: boolean;
 	warning: boolean;
 }

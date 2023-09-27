@@ -9,13 +9,32 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import PropTypes from 'prop-types';
 import React, {useContext, useMemo, useState} from 'react';
 
-import {ChartStateContext} from '../context/ChartStateContext';
+import {ChartStateContext, TimeSpan} from '../context/ChartStateContext';
 import {StoreStateContext} from '../context/StoreContext';
 
-export default function Translation({onSelectedLanguageClick, viewURLs}) {
+interface ViewURL {
+	default: boolean;
+	languageId: string;
+	languageLabel: string;
+	selected: boolean;
+	viewURL: string;
+}
+
+interface Props {
+	onSelectedLanguageClick: (
+		url: string,
+		timeSpanKey: TimeSpan | undefined,
+		timeSpanOffset: number
+	) => void;
+	viewURLs: ViewURL[];
+}
+
+export default function Translation({
+	onSelectedLanguageClick,
+	viewURLs,
+}: Props) {
 	const {languageTag: defaultLanguage} = useContext(StoreStateContext);
 
 	const [active, setActive] = useState(false);
@@ -23,7 +42,8 @@ export default function Translation({onSelectedLanguageClick, viewURLs}) {
 	const selectedLanguage = useMemo(() => {
 		return (
 			viewURLs.find((language) => language.selected)?.languageId ||
-			defaultLanguage
+			defaultLanguage ||
+			viewURLs[0].languageId
 		);
 	}, [defaultLanguage, viewURLs]);
 
@@ -60,7 +80,7 @@ export default function Translation({onSelectedLanguageClick, viewURLs}) {
 						{Object.values(viewURLs).map((language, index) => (
 							<ClayDropDown.Item
 								active={
-									language.selected && language.languageId
+									language.selected && !!language.languageId
 								}
 								key={index}
 								onClick={() => {
@@ -88,7 +108,7 @@ export default function Translation({onSelectedLanguageClick, viewURLs}) {
 									</ClayLayout.ContentCol>
 
 									{language.default && (
-										<ClayLabel displayType="primary">
+										<ClayLabel displayType="info">
 											{Liferay.Language.get('default')}
 										</ClayLabel>
 									)}
@@ -101,15 +121,3 @@ export default function Translation({onSelectedLanguageClick, viewURLs}) {
 		</ClayLayout.ContentRow>
 	);
 }
-
-Translation.propTypes = {
-	onSelectedLanguageClick: PropTypes.func.isRequired,
-	viewURLs: PropTypes.arrayOf(
-		PropTypes.shape({
-			default: PropTypes.bool.isRequired,
-			languageId: PropTypes.string.isRequired,
-			selected: PropTypes.bool.isRequired,
-			viewURL: PropTypes.string.isRequired,
-		})
-	).isRequired,
-};

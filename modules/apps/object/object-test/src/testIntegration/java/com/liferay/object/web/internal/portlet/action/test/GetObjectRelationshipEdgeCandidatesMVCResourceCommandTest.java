@@ -223,11 +223,11 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 	@Test
 	public void testPreventBidingWithinPublishedDefinitions() throws Exception {
 		ObjectDefinition objectDefinitionPublished =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				"PUB", _objectDefinitionLocalService);
 
 		ObjectDefinition objectDefinitionA =
-			ObjectDefinitionTestUtil.addObjectDefinition(
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				"A", _objectDefinitionLocalService);
 
 		_objectRelationshipLocalService.addObjectRelationship(

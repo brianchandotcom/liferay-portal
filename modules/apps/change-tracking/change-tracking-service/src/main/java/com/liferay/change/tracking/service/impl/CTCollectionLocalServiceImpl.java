@@ -12,8 +12,10 @@ import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.exception.CTCollectionDescriptionException;
 import com.liferay.change.tracking.exception.CTCollectionNameException;
+import com.liferay.change.tracking.exception.CTCollectionStatusException;
 import com.liferay.change.tracking.exception.CTEnclosureException;
 import com.liferay.change.tracking.exception.CTLocalizedException;
+import com.liferay.change.tracking.exception.CTPublishConflictException;
 import com.liferay.change.tracking.internal.CTEnclosureUtil;
 import com.liferay.change.tracking.internal.CTServiceCopier;
 import com.liferay.change.tracking.internal.CTServiceRegistry;
@@ -765,7 +767,7 @@ public class CTCollectionLocalServiceImpl
 			(fromCTCollection.getStatus() !=
 				WorkflowConstants.STATUS_PENDING)) {
 
-			throw new PortalException(
+			throw new CTCollectionStatusException(
 				"Change tracking collection " + fromCTCollection +
 					" is read only");
 		}
@@ -776,7 +778,7 @@ public class CTCollectionLocalServiceImpl
 		if ((toCTCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
 			(toCTCollection.getStatus() != WorkflowConstants.STATUS_PENDING)) {
 
-			throw new PortalException(
+			throw new CTCollectionStatusException(
 				"Change tracking collection " + toCTCollection +
 					" is read only");
 		}
@@ -796,7 +798,7 @@ public class CTCollectionLocalServiceImpl
 			toCTCollection.getName());
 
 		if (!conflictInfoMap.isEmpty()) {
-			throw new PortalException("Conflict detected");
+			throw new CTPublishConflictException("Conflict detected");
 		}
 
 		for (Map.Entry<Long, List<CTEntry>> entry :

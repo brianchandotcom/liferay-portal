@@ -98,14 +98,20 @@ AUI.add(
 
 		const TPL_ENTRIES_CONTAINER = '<dl class="{cssClass}"></dl>';
 
-		const TPL_ENTRY_ROW_TITLE = `<div class="table-title">
-			<span class="sticker sticker-rounded sticker-document sticker-secondary file-icon-color-0">
-				<span class="sticker-overlay">
-					${Liferay.Util.getLexiconIconTpl(STR_ICON_DEFAULT)}
-				</span>
-			</span>
-			<a>{0}</a>
-		</div>`;
+		const TPL_ENTRY_ROW_TITLE = `<div class="autofit-row">
+			<div class="autofit-col pr-1">
+				<span class="sticker sticker-rounded sticker-document sticker-secondary file-icon-color-0">
+					<span class="sticker-overlay">
+						${Liferay.Util.getLexiconIconTpl(STR_ICON_DEFAULT)}
+					</span>
+					</span>
+			</div>
+			<div class="autofit-col autofit-col-expand pl-1">
+				<div class="table-title">
+					<a>{0}</a>
+				</div>
+			</div>
+			</div>`;
 
 		const TPL_ENTRY_WRAPPER =
 			'<dd class="card-page-item card-page-item-asset" data-title="{title}"></dd>';

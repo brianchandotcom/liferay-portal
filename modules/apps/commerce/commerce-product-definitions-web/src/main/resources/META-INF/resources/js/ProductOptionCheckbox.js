@@ -74,7 +74,7 @@ const ProductOptionCheckbox = ({
 
 		setIsChecked(checked);
 
-		let currentSkuOptions = skuOptionsAtomState.skuOptions;
+		let currentSkuOptions = skuOptionsAtomState.skuOptions.slice();
 
 		const currentSkuOption = currentSkuOptions.filter(
 			(skuOption) => skuOption.skuOptionKey === productOption.key

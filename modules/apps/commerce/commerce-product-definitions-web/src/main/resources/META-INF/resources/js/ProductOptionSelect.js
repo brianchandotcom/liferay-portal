@@ -176,7 +176,7 @@ const ProductOptionSelect = ({
 
 		setSelectedProductOptionValueKey(valueArray[1]);
 
-		let currentSkuOptions = skuOptionsAtomState.skuOptions;
+		let currentSkuOptions = skuOptionsAtomState.skuOptions.slice();
 
 		const currentSkuOption = currentSkuOptions.filter(
 			(skuOption) => skuOption.skuOptionKey === productOption.key

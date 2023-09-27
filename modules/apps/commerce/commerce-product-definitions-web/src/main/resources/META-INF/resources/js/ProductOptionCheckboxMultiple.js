@@ -100,7 +100,7 @@ const ProductOptionCheckboxMultiple = ({
 
 		setSkuOptionsAtomState({...skuOptionsAtomState, updating: true});
 
-		let currentSkuOptions = skuOptionsAtomState.skuOptions;
+		let currentSkuOptions = skuOptionsAtomState.skuOptions.slice();
 
 		const curSkuOptionIndex = currentSkuOptions.findIndex(
 			(skuOption) => skuOption.skuOptionKey === productOption.key

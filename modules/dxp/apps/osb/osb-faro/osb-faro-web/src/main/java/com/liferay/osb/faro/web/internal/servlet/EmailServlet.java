@@ -71,8 +71,7 @@ public class EmailServlet extends BaseAsahServlet {
 
 		url = HttpComponentsUtil.addParameter(url, "projectGroupId", groupId);
 
-		return HttpComponentsUtil.addParameter(
-			url, "filter", "batchId eq '" + batchId + "'");
+		return HttpComponentsUtil.addParameter(url, "batchId", batchId);
 	}
 
 	private void _sendEmail(JSONObject jsonObject) throws Exception {

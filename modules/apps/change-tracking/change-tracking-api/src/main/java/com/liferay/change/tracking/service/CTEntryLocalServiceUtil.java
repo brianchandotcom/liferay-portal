@@ -51,13 +51,15 @@ public class CTEntryLocalServiceUtil {
 	}
 
 	public static CTEntry addCTEntry(
-			long ctCollectionId, long modelClassNameId,
+			String externalReferenceCode, long ctCollectionId,
+			long modelClassNameId,
 			com.liferay.portal.kernel.model.change.tracking.CTModel<?> ctModel,
 			long userId, int changeType)
 		throws PortalException {
 
 		return getService().addCTEntry(
-			ctCollectionId, modelClassNameId, ctModel, userId, changeType);
+			externalReferenceCode, ctCollectionId, modelClassNameId, ctModel,
+			userId, changeType);
 	}
 
 	/**

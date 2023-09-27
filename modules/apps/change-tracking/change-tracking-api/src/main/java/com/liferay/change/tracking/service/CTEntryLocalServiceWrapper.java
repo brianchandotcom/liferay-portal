@@ -45,13 +45,15 @@ public class CTEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.change.tracking.model.CTEntry addCTEntry(
-			long ctCollectionId, long modelClassNameId,
+			String externalReferenceCode, long ctCollectionId,
+			long modelClassNameId,
 			com.liferay.portal.kernel.model.change.tracking.CTModel<?> ctModel,
 			long userId, int changeType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ctEntryLocalService.addCTEntry(
-			ctCollectionId, modelClassNameId, ctModel, userId, changeType);
+			externalReferenceCode, ctCollectionId, modelClassNameId, ctModel,
+			userId, changeType);
 	}
 
 	/**

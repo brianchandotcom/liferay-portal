@@ -7801,10 +7801,8 @@ public class JournalArticleLocalServiceImpl
 				return i - 1;
 			}
 
-			String suffix = StringBundler.concat(
-				StringPool.DASH, copy, StringPool.DASH, i);
-
-			urlTitle = prefix + suffix;
+			urlTitle = StringBundler.concat(
+				prefix, StringPool.DASH, copy, StringPool.DASH, i);
 		}
 	}
 

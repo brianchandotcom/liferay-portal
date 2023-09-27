@@ -12,18 +12,69 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {debounce, fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {
+	ChangeEvent,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
+
+// @ts-ignore
 
 import {getValueFromItem, isValuesArrayChanged} from '../../../../utils/index';
+import {FilterImplementation, FilterImplementationArgs} from '../Filter';
+
+export interface SelectionFilterImplementationArgs
+	extends FilterImplementationArgs<SelectedData> {
+	apiURL: string;
+	autocompleteEnabled: boolean;
+	entityFieldType: string;
+	inputPlaceholder: string;
+	itemKey: string;
+	itemLabel: string;
+	items: TItem[];
+	multiple: boolean;
+}
+
+interface SelectedData {
+	exclude: boolean;
+	selectedItems: TItem[];
+}
+
+interface TItem {
+	label: string;
+	value: string;
+}
+
+interface ItemArgs {
+	'aria-label': string;
+	'checked': boolean;
+	'key': string;
+	'label': string;
+	'multiple': boolean;
+	'onChange': () => void;
+	'value': string;
+}
+
+interface SearchOptions {
+	currentPage: number;
+	query: string;
+	search: string;
+}
 
 const DEFAULT_DEBOUNCE_DELAY = 300;
 const DEFAULT_PAGE_SIZE = 10;
 
-function fetchData(apiURL, searchParam, currentPage = 1) {
-	const url = new URL(apiURL, themeDisplay.getPortalURL());
+function fetchData(
+	apiURL: string,
+	searchParam: string,
+	currentPage = 1
+): Promise<any> {
+	const url = new URL(apiURL, Liferay.ThemeDisplay.getPortalURL());
 
-	url.searchParams.append('page', currentPage);
-	url.searchParams.append('pageSize', DEFAULT_PAGE_SIZE);
+	url.searchParams.append('page', String(currentPage));
+	url.searchParams.append('pageSize', String(DEFAULT_PAGE_SIZE));
 
 	if (searchParam) {
 		url.searchParams.append('search', encodeURIComponent(searchParam));
@@ -36,20 +87,26 @@ function fetchData(apiURL, searchParam, currentPage = 1) {
 	}).then((response) => response.json());
 }
 
-const getSelectedItemsLabel = ({selectedData}) => {
+function getSelectedItemsLabel({
+	selectedData,
+}: SelectionFilterImplementationArgs): string {
 	const {exclude, selectedItems} = selectedData;
 
 	return (
 		(exclude ? `(${Liferay.Language.get('exclude')}) ` : '') +
 		selectedItems.map((item) => item.label).join(', ')
 	);
-};
+}
 
-const getOdataString = ({entityFieldType, id, selectedData}) => {
+function getOdataString({
+	entityFieldType,
+	id,
+	selectedData,
+}: SelectionFilterImplementationArgs): string {
 	const {exclude, selectedItems} = selectedData;
 
 	if (!selectedItems?.length) {
-		return null;
+		return '';
 	}
 
 	const quotedSelectedItems = selectedItems.map((item) =>
@@ -75,7 +132,7 @@ const getOdataString = ({entityFieldType, id, selectedData}) => {
 
 		return expression;
 	}
-};
+}
 
 function SelectionFilter({
 	apiURL,
@@ -88,15 +145,16 @@ function SelectionFilter({
 	multiple,
 	selectedData,
 	setFilter,
-}) {
+}: SelectionFilterImplementationArgs) {
 	const [searchOptions, setSearchOptions] = useState({
 		currentPage: 1,
 		query: '',
-	});
+		search: '',
+	} as SearchOptions);
 	const [selectedItems, setSelectedItems] = useState(
 		selectedData?.selectedItems || []
 	);
-	const [items, setItems] = useState(apiURL ? null : initialItems);
+	const [items, setItems] = useState(apiURL ? [] : initialItems);
 	const [localItems, setLocalItems] = useState(
 		initialItems.length ? initialItems : []
 	);
@@ -114,9 +172,15 @@ function SelectionFilter({
 		setSelectedItems(selectedData?.selectedItems || []);
 	}, [selectedData]);
 
-	const handleAutocompleteQuery = debounce((value) => {
-		setSearchOptions({currentPage: 1, search: value});
-	}, DEFAULT_DEBOUNCE_DELAY);
+	const handleAutocompleteQuery: (value: string) => void = debounce(
+
+		// @ts-ignore
+
+		(value: string) => {
+			setSearchOptions({currentPage: 1, query: '', search: value});
+		},
+		DEFAULT_DEBOUNCE_DELAY
+	);
 
 	const isMounted = useIsMounted();
 
@@ -128,7 +192,7 @@ function SelectionFilter({
 
 			fetchData(apiURL, searchOptions.query, searchOptions.currentPage)
 				.then((response) => {
-					const selectionItems = response.items.map((item) => {
+					const selectionItems = response.items.map((item: any) => {
 						return {
 							label: itemLabel
 								? getValueFromItem(item, itemLabel)
@@ -271,7 +335,9 @@ function SelectionFilter({
 					<ClayDropDown.Caption className="pb-0">
 						<ClayAutocomplete>
 							<ClayAutocomplete.Input
-								onChange={(event) =>
+								onChange={(
+									event: ChangeEvent<HTMLInputElement>
+								) =>
 									handleAutocompleteQuery(event.target.value)
 								}
 								placeholder={inputPlaceholder}
@@ -423,7 +489,7 @@ function SelectionFilter({
 
 const Divider = () => <div className="dropdown-divider" role="separator"></div>;
 
-const Item = ({multiple, ...props}) => {
+const Item = ({multiple, ...props}: ItemArgs) => {
 	const Input = multiple ? ClayCheckbox : ClayRadio;
 
 	return (
@@ -465,8 +531,10 @@ SelectionFilter.propTypes = {
 	setFilter: PropTypes.func.isRequired,
 };
 
-export default {
+const filterImplementation: FilterImplementation<SelectionFilterImplementationArgs> = {
 	Component: SelectionFilter,
 	getOdataString,
 	getSelectedItemsLabel,
 };
+
+export default filterImplementation;

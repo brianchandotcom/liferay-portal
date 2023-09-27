@@ -4,14 +4,59 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {ReactElement, useContext, useEffect, useState} from 'react';
+
+// @ts-ignore
 
 import {getComponentByModuleURL} from '../../../utils/modules';
+
+// @ts-ignore
+
 import ViewsContext from '../../../views/ViewsContext';
+
+// @ts-ignore
+
 import {VIEWS_ACTION_TYPES} from '../../../views/viewsReducer';
 import clientExtensionFilterImplementation from './implementation/clientExtensionFilter';
+
+// @ts-ignore
+
 import dateRangeFilterImplementation from './implementation/dateRangeFilter';
+
+// @ts-ignore
+
 import selectionFilterImplementation from './implementation/selectionFilter';
+
+export interface FilterImplementation<
+	T extends FilterImplementationArgs<unknown>
+> {
+	Component: (args: T) => ReactElement;
+	getOdataString: (args: T) => string;
+	getSelectedItemsLabel: (args: T) => string;
+}
+
+export interface FilterImplementationArgs<T> {
+	id: string;
+	selectedData: T;
+	setFilter: (args: SetFilterArgs) => void;
+}
+
+export interface SetFilterArgs {
+	active?: boolean;
+	id?: string;
+	odataFilterString?: string;
+	selectedData?: unknown;
+}
+
+interface FilterConfiguration {
+	id: string;
+}
+
+interface FilterComponentArgs {
+	id: string;
+	moduleURL: string;
+	type: 'clientExtension' | 'dateRange' | 'selection';
+}
 
 const FILTER_IMPLEMENTATIONS = {
 	clientExtension: clientExtensionFilterImplementation,
@@ -19,7 +64,10 @@ const FILTER_IMPLEMENTATIONS = {
 	selection: selectionFilterImplementation,
 };
 
-const Filter = ({id, moduleURL, type, ...otherProps}) => {
+const Filter = ({id, moduleURL, type, ...otherProps}: FilterComponentArgs) => {
+
+	// @ts-ignore
+
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const filterImplementation = FILTER_IMPLEMENTATIONS[type];
@@ -29,12 +77,14 @@ const Filter = ({id, moduleURL, type, ...otherProps}) => {
 	}
 
 	const [Component, setComponent] = useState(() =>
-		moduleURL ? null : filterImplementation.Component
+		(moduleURL ? null : filterImplementation.Component) as any
 	);
 
 	useEffect(() => {
 		if (moduleURL) {
-			getComponentByModuleURL(moduleURL).then((FetchedComponent) =>
+			getComponentByModuleURL(
+				moduleURL
+			).then((FetchedComponent: React.Component) =>
 				setComponent(() => FetchedComponent)
 			);
 		}
@@ -42,7 +92,7 @@ const Filter = ({id, moduleURL, type, ...otherProps}) => {
 
 	const filterId = id;
 
-	const setFilter = ({id, selectedData, ...otherProps}) => {
+	const setFilter = ({id, selectedData, ...otherProps}: SetFilterArgs) => {
 		if (id !== undefined && id !== filterId) {
 			throw new Error(
 				`Trying to modify filter ${id} from filter ${filterId}`
@@ -50,7 +100,9 @@ const Filter = ({id, moduleURL, type, ...otherProps}) => {
 		}
 
 		const newFilter = {
-			...filters.find((filter) => filter.id === filterId),
+			...filters.find(
+				(filter: FilterConfiguration) => filter.id === filterId
+			),
 			selectedData,
 			...otherProps,
 		};
@@ -64,7 +116,7 @@ const Filter = ({id, moduleURL, type, ...otherProps}) => {
 
 		viewsDispatch({
 			type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
-			value: filters.map((filter) =>
+			value: filters.map((filter: FilterConfiguration) =>
 				filter.id === filterId ? newFilter : filter
 			),
 		});
@@ -75,7 +127,6 @@ const Filter = ({id, moduleURL, type, ...otherProps}) => {
 			<Component
 				id={id}
 				setFilter={setFilter}
-				type={type}
 				{...otherProps}
 			/>
 		</div>

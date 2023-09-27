@@ -13,9 +13,41 @@ import {
 	formatDateObject,
 	formatDateRangeObject,
 	getDateFromDateString,
+
+	// @ts-ignore
+
 } from '../../../../utils/dates';
 
-const getIsoString = ({direction, entityFieldType, objectDate}) => {
+import type {FilterImplementation, FilterImplementationArgs} from '../Filter';
+
+export interface DateRangeFilterImplementationArgs
+	extends FilterImplementationArgs<SelectedData> {
+	entityFieldType: string;
+	max: Date;
+	min: Date;
+	placeholder: string;
+}
+
+interface Date {
+	day: number;
+	month: number;
+	year: number;
+}
+
+interface SelectedData {
+	from: Date;
+	to: Date;
+}
+
+const getIsoString = ({
+	direction,
+	entityFieldType,
+	objectDate,
+}: {
+	direction: 'from' | 'to';
+	entityFieldType: string;
+	objectDate: Date;
+}) => {
 	const timestamp = Date.UTC(
 		objectDate.year,
 		objectDate.month - 1,
@@ -40,11 +72,17 @@ const getIsoString = ({direction, entityFieldType, objectDate}) => {
 	return dateISOString;
 };
 
-const getSelectedItemsLabel = ({selectedData}) => {
+function getSelectedItemsLabel({
+	selectedData,
+}: DateRangeFilterImplementationArgs): string {
 	return formatDateRangeObject(selectedData);
-};
+}
 
-const getOdataString = ({entityFieldType, id, selectedData}) => {
+function getOdataString({
+	entityFieldType,
+	id,
+	selectedData,
+}: DateRangeFilterImplementationArgs): string {
 	const {from, to} = selectedData;
 
 	const fromIsoString =
@@ -63,7 +101,9 @@ const getOdataString = ({entityFieldType, id, selectedData}) => {
 	if (to) {
 		return `${id} le ${toIsoString}`;
 	}
-};
+
+	return '';
+}
 
 const DateRangeFilter = ({
 	id,
@@ -72,7 +112,7 @@ const DateRangeFilter = ({
 	placeholder,
 	selectedData,
 	setFilter,
-}) => {
+}: DateRangeFilterImplementationArgs) => {
 	const [fromValue, setFromValue] = useState(
 		selectedData?.from && formatDateObject(selectedData.from)
 	);
@@ -205,8 +245,10 @@ DateRangeFilter.propTypes = {
 	}),
 };
 
-export default {
+const filterImplementation: FilterImplementation<DateRangeFilterImplementationArgs> = {
 	Component: DateRangeFilter,
 	getOdataString,
 	getSelectedItemsLabel,
 };
+
+export default filterImplementation;

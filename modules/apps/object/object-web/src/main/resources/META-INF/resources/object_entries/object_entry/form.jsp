@@ -95,6 +95,10 @@ portletDisplay.setURLBack(backURL);
 
 		function <portlet:namespace />getValues(fields) {
 			return fields.reduce((obj, field) => {
+				if (field.readOnly) {
+					return obj;
+				}
+
 				let value = field.value;
 				if (field.type === 'select' && !field.multiple) {
 					value = {key: value.length ? field.value[0] : ''};

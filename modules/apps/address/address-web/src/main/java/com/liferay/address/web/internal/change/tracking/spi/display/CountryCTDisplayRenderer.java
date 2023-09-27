@@ -3,15 +3,23 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.change.tracking.web.internal.spi.display;
+package com.liferay.address.web.internal.change.tracking.spi.display;
 
+import com.liferay.address.web.internal.constants.AddressPortletKeys;
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -21,6 +29,25 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = CTDisplayRenderer.class)
 public class CountryCTDisplayRenderer extends BaseCTDisplayRenderer<Country> {
+
+	@Override
+	public String getEditURL(
+			HttpServletRequest httpServletRequest, Country country)
+		throws PortalException {
+
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, null,
+				AddressPortletKeys.COUNTRIES_MANAGEMENT_ADMIN, 0, 0,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/address/edit_country"
+		).setBackURL(
+			ParamUtil.getString(httpServletRequest, "backURL")
+		).setParameter(
+			"countryId", country.getCountryId()
+		).buildString();
+	}
 
 	@Override
 	public Class<Country> getModelClass() {
@@ -46,21 +73,17 @@ public class CountryCTDisplayRenderer extends BaseCTDisplayRenderer<Country> {
 		Country country = displayBuilder.getModel();
 
 		displayBuilder.display(
-			"name", country.getTitle()
-		).display(
 			"key", country.getName()
 		).display(
-			"a2", country.getA2()
+			"two-letter-iso-code", country.getA2()
 		).display(
-			"a3", country.getA3()
-		).display(
-			"country-id", country.getCountryId()
+			"three-letter-iso-code", country.getA3()
 		).display(
 			"number", country.getNumber()
 		).display(
-			"position", country.getPosition()
+			"priority", country.getPosition()
 		).display(
-			"idd", country.getIdd()
+			"country-calling-code", country.getIdd()
 		).display(
 			"shipping", country.isShippingAllowed()
 		).display(
@@ -74,5 +97,8 @@ public class CountryCTDisplayRenderer extends BaseCTDisplayRenderer<Country> {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

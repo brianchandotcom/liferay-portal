@@ -304,7 +304,7 @@ export const getThreadQuery = `
 				id
 				image
 				name
-				userGroupInformations {
+				userGroupBriefs {
 					id
 					name
 				}
@@ -490,7 +490,7 @@ export const getSectionThreadsQuery = `
 					id
 					image
 					name
-					userGroupInformations {
+					userGroupBriefs {
 						id
 						name
 					}
@@ -550,7 +550,7 @@ export const getThreadsQuery = `
 					id
 					image
 					name
-					userGroupInformations {
+					userGroupBriefs {
 						id
 						name
 					}
@@ -769,7 +769,7 @@ export const getRelatedThreadsQuery = `
 					id
 					image
 					name
-					userGroupInformations {
+					userGroupBriefs {
 						id
 						name
 					}

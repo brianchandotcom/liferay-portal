@@ -37,7 +37,8 @@ public class OracleDBTest extends BaseDBTestCase {
 		Method method = ReflectionTestUtil.getMethod(
 			db.getClass(), "replaceTemplate", String.class);
 
-		PropsUtil.set(PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH, "-1");
+		PropsUtil.set(
+			PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH + "[oracle]", "-1");
 
 		Assert.assertEquals(
 			"create index IX on Test (cola);",
@@ -125,7 +126,8 @@ public class OracleDBTest extends BaseDBTestCase {
 				"create index IX on Test (cola, colb[$COLUMN_LENGTH:4000$], " +
 					"colc[$COLUMN_LENGTH:4000$]);"));
 
-		PropsUtil.set(PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH, "256");
+		PropsUtil.set(
+			PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH + "[oracle]", "256");
 
 		Assert.assertEquals(
 			"create index IX on Test (cola);",
@@ -232,7 +234,8 @@ public class OracleDBTest extends BaseDBTestCase {
 				"create index IX on Test (cola, colb[$COLUMN_LENGTH:4000$], " +
 					"colc[$COLUMN_LENGTH:4000$]);"));
 
-		PropsUtil.set(PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH, "4000");
+		PropsUtil.set(
+			PropsKeys.DATABASE_STRING_INDEX_MAX_LENGTH + "[oracle]", "4000");
 
 		Assert.assertEquals(
 			"create index IX on Test (cola);",

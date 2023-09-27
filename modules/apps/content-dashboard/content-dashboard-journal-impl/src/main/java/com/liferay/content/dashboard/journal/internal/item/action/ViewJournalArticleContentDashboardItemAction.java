@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -212,13 +213,17 @@ public class ViewJournalArticleContentDashboardItemAction
 
 		String backURL = ParamUtil.getString(_httpServletRequest, "backURL");
 
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		if (Validator.isNotNull(backURL)) {
-			return HttpComponentsUtil.setParameter(
-				url, "p_l_back_url", backURL);
+			return HttpComponentsUtil.addParameters(
+				url, "p_l_back_url", backURL, "p_l_back_url_title",
+				portletDisplay.getPortletDisplayName());
 		}
 
-		return HttpComponentsUtil.setParameter(
-			url, "p_l_back_url", themeDisplay.getURLCurrent());
+		return HttpComponentsUtil.addParameters(
+			url, "p_l_back_url", themeDisplay.getURLCurrent(),
+			"p_l_back_url_title", portletDisplay.getPortletDisplayName());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

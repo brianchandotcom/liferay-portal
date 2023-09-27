@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -101,13 +102,17 @@ public class ViewBlogsEntryContentDashboardItemAction
 			String backURL = ParamUtil.getString(
 				_httpServletRequest, "backURL");
 
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 			if (Validator.isNotNull(backURL)) {
-				return HttpComponentsUtil.setParameter(
-					url, "p_l_back_url", backURL);
+				return HttpComponentsUtil.addParameters(
+					url, "p_l_back_url", backURL, "p_l_back_url_title",
+					portletDisplay.getPortletDisplayName());
 			}
 
-			return HttpComponentsUtil.setParameter(
-				url, "p_l_back_url", themeDisplay.getURLCurrent());
+			return HttpComponentsUtil.addParameters(
+				url, "p_l_back_url", themeDisplay.getURLCurrent(),
+				"p_l_back_url_title", portletDisplay.getPortletDisplayName());
 		}
 		catch (CloneNotSupportedException | PortalException exception) {
 			_log.error(exception);

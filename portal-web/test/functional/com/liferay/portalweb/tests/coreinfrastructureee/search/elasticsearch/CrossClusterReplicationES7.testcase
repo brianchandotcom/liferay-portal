@@ -168,7 +168,6 @@ definition {
 
 	@priority = 4
 	test CanReindexWithConcurrentExecutionMode {
-		property custom.properties = "feature.flag.LPS-183661=true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

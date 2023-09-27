@@ -6,7 +6,7 @@
 package com.liferay.account.internal.configuration.persistence.listener;
 
 import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
-import com.liferay.account.internal.validator.DomainValidatorFactory;
+import com.liferay.account.internal.validator.util.DomainValidatorFactoryUtil;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.petra.string.CharPool;
@@ -105,7 +105,7 @@ public class AccountEntryEmailDomainsConfigurationModelListener
 			i -> StringUtil.lowerCase(
 				StringUtil.trim(blockedEmailAddressDomains[i])));
 
-		DomainValidator domainValidator = _domainValidatorFactory.create(
+		DomainValidator domainValidator = DomainValidatorFactoryUtil.create(
 			GetterUtil.getStringValues(
 				properties.get("customTLDs"), _EMPTY_STRING_ARRAY));
 
@@ -153,9 +153,6 @@ public class AccountEntryEmailDomainsConfigurationModelListener
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Reference
-	private DomainValidatorFactory _domainValidatorFactory;
 
 	@Reference
 	private Language _language;

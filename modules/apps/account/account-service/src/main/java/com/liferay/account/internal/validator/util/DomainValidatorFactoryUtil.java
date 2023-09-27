@@ -3,21 +3,18 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.account.internal.validator;
+package com.liferay.account.internal.validator.util;
 
 import java.util.Collections;
 
 import org.apache.commons.validator.routines.DomainValidator;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Drew Brokke
  */
-@Component(service = DomainValidatorFactory.class)
-public class DomainValidatorFactory {
+public class DomainValidatorFactoryUtil {
 
-	public DomainValidator create(String[] customTLDs) {
+	public static DomainValidator create(String[] customTLDs) {
 		return DomainValidator.getInstance(
 			false,
 			Collections.singletonList(

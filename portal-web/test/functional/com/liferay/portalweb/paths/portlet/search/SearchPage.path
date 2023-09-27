@@ -144,8 +144,13 @@
 <!--FACET-->
 
 <tr>
+	<td>FACET_CHECKBOX_SPECIFIC</td>
+	<td>//section[contains(@class,'portlet') and contains(.,'${key_facetName}')]//label[contains(.,'${key_checkboxName}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FACET_CHECKBOX_LABEL_SPECIFIC</td>
-	<td>//div[contains(@class,'portlet-content')][contains(.,'${key_facetName}')]//label[contains(.,'${key_checkboxName}')][input[@type='checkbox']]</td>
+	<td>//section[contains(@class,'portlet') and contains(.,'${key_facetName}')]//label[contains(.,'${key_checkboxName}')][input[@type='checkbox']]</td>
 	<td></td>
 </tr>
 <tr>

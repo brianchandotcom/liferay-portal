@@ -1,7 +1,7 @@
 definition {
 
 	macro checkFacetTerm {
-		if (IsNotChecked.isNotCheckedNotVisible(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "SearchPage#FACET_CHECKBOX_LABEL_SPECIFIC")) {
+		if (IsNotChecked.isNotCheckedNotVisible(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "SearchPage#FACET_CHECKBOX_SPECIFIC")) {
 			Click(
 				key_checkboxName = ${facetTerm},
 				key_facetName = ${facetName},
@@ -342,7 +342,7 @@ definition {
 	}
 
 	macro uncheckFacetTerm {
-		if (IsChecked(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "SearchPage#FACET_CHECKBOX_LABEL_SPECIFIC")) {
+		if (IsChecked(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "SearchPage#FACET_CHECKBOX_SPECIFIC")) {
 			Click(
 				key_checkboxName = ${facetTerm},
 				key_facetName = ${facetName},

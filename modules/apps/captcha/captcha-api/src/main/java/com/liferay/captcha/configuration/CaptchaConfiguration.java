@@ -10,6 +10,8 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Pei-Jung Lan
  */
@@ -18,6 +20,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	id = "com.liferay.captcha.configuration.CaptchaConfiguration",
 	localization = "content/Language", name = "captcha-configuration-name"
 )
+@ProviderType
 public interface CaptchaConfiguration {
 
 	@Meta.AD(

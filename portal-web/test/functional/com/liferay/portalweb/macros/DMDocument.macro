@@ -921,7 +921,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#CHECKOUT_SUCCESS",
-				value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
+				value1 = "Info:You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -944,7 +944,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#CHECKOUT_SUCCESS",
-			value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
+			value1 = "Info:You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 
 		DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Cancel Checkout");
 
@@ -986,12 +986,12 @@ definition {
 		if (${dmRepositoryName} == "true") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#CHECKOUT_SUCCESS",
-				value1 = "You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire.");
+				value1 = "Info:You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire.");
 		}
 		else {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#CHECKOUT_SUCCESS",
-				value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
+				value1 = "Info:You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 		}
 
 		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
@@ -1073,7 +1073,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#CHECKOUT_SUCCESS",
-			value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
+			value1 = "Info:You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 
 		DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Checkin");
 
@@ -1122,7 +1122,7 @@ definition {
 		if (${dmRepositoryName} == "true") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#CHECKOUT_SUCCESS",
-				value1 = "You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire.");
+				value1 = "Info:You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire.");
 		}
 		else if (isSet(editStatus)) {
 			AssertClick(
@@ -1131,12 +1131,12 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#CHECKOUT_SUCCESS",
-				value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
+				value1 = "Info:You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 		}
 		else {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#CHECKOUT_SUCCESS",
-				value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
+				value1 = "Info:You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 		}
 	}
 
@@ -1153,7 +1153,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#CHECKOUT_SUCCESS",
-			value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
+			value1 = "Info:You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 	}
 
 	macro checkoutViaManagementBar {
@@ -3245,7 +3245,7 @@ definition {
 			AssertTextNotPresent(value1 = "You now have an indefinite lock on this document. No one else can edit this document until you unlock it. This lock will never expire.");
 		}
 		else {
-			AssertTextNotPresent(value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
+			AssertTextNotPresent(value1 = "Info:You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 		}
 	}
 

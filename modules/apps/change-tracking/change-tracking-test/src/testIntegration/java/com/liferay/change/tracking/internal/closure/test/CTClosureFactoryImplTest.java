@@ -268,7 +268,7 @@ public class CTClosureFactoryImplTest {
 		throws Exception {
 
 		_ctEntryLocalService.addCTEntry(
-			_ctCollection.getCtCollectionId(),
+			null, _ctCollection.getCtCollectionId(),
 			_classNameLocalService.getClassNameId(ctModel.getModelClass()),
 			ctModel, TestPropsValues.getUserId(), changeType);
 	}

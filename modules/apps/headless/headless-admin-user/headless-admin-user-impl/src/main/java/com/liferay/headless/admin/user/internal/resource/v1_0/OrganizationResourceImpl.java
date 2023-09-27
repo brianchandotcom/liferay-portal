@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrgLaborLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
@@ -344,16 +346,20 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 		long countryId = _getCountryId(organization);
 
+		ListType listType = _listTypeLocalService.getListType(
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			ListTypeConstants.ORGANIZATION_STATUS);
+
 		com.liferay.portal.kernel.model.Organization
 			serviceBuilderOrganization = _organizationService.addOrganization(
 				organization.getExternalReferenceCode(),
 				_getDefaultParentOrganizationId(organization),
 				organization.getName(), OrganizationConstants.TYPE_ORGANIZATION,
 				_getRegionId(organization, countryId), countryId,
-				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-				organization.getComment(), false, _getAddresses(organization),
-				_getEmailAddresses(organization), _getOrgLabors(organization),
-				_getPhones(organization), _getWebsites(organization),
+				listType.getListTypeId(), organization.getComment(), false,
+				_getAddresses(organization), _getEmailAddresses(organization),
+				_getOrgLabors(organization), _getPhones(organization),
+				_getWebsites(organization),
 				_createServiceContext(organization));
 
 		return _organizationResourceDTOConverter.toDTO(
@@ -473,7 +479,12 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 		long countryId = _getCountryId(organization);
 
-		long statusListTypeId = ListTypeConstants.ORGANIZATION_STATUS_DEFAULT;
+		ListType listType = _listTypeLocalService.getListType(
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			ListTypeConstants.ORGANIZATION_STATUS);
+
+		long statusListTypeId = listType.getListTypeId();
+
 		boolean site = false;
 
 		if (serviceBuilderOrganization != null) {
@@ -977,6 +988,9 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

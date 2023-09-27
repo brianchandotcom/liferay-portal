@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.ListTypeServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationServiceUtil;
 import com.liferay.portal.kernel.service.RoleServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -84,11 +86,15 @@ public class MembershipPolicyTestUtil {
 	public static Organization addOrganization() throws Exception {
 		String name = RandomTestUtil.randomString();
 
+		ListType listType = ListTypeServiceUtil.getListType(
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			ListTypeConstants.ORGANIZATION_STATUS);
+
 		return OrganizationServiceUtil.addOrganization(
 			null, OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, name,
 			OrganizationConstants.TYPE_ORGANIZATION, 0, 0,
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
-			false, populateServiceContext(Organization.class, true));
+			listType.getListTypeId(), StringPool.BLANK, false,
+			populateServiceContext(Organization.class, true));
 	}
 
 	public static Role addRole(int type) throws Exception {

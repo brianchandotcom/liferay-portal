@@ -5,11 +5,13 @@
 
 package com.liferay.portal.scripting.groovy.context;
 
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CountryServiceUtil;
+import com.liferay.portal.kernel.service.ListTypeServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.RegionServiceUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,10 +75,14 @@ class GroovyOrganization {
 			type = OrganizationConstants.TYPE_ORGANIZATION;
 		}
 
+		ListType listType = ListTypeServiceUtil.getListType(
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			ListTypeConstants.ORGANIZATION_STATUS)
+
 		organization = OrganizationLocalServiceUtil.addOrganization(
 			groovyScriptingContext.guestUserId, parentOrganizationId, name,
 			type, regionId, countryId,
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, comments, site,
+			listType.getListTypeId(), comments, site,
 			groovyScriptingContext.getServiceContext());
 	}
 

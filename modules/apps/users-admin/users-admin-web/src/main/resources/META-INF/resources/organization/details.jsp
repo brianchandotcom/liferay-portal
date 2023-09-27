@@ -49,7 +49,7 @@ if (organization != null) {
 		<aui:select label="status" listType="<%= ListTypeConstants.ORGANIZATION_STATUS %>" listTypeFieldName="statusListTypeId" name="statusId" showEmptyOption="<%= false %>" />
 	</c:when>
 	<c:otherwise>
-		<aui:input name="statusId" type="hidden" value="<%= (organization != null) ? organization.getStatusListTypeId() : ListTypeConstants.ORGANIZATION_STATUS_DEFAULT %>" />
+		<aui:input name="statusId" type="hidden" value="<%= (organization != null) ? organization.getStatusListTypeId() : ListTypeServiceUtil.getListType(ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, ListTypeConstants.ORGANIZATION_STATUS).getListTypeId() %>" />
 	</c:otherwise>
 </c:choose>
 

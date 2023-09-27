@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -83,7 +84,8 @@ public class OrganizationIndexerIndexedFieldsTest {
 		Group group = groupSearchFixture.addGroup(new GroupBlueprint());
 
 		OrganizationFixture organizationFixture = new OrganizationFixture(
-			organizationService, countryService, regionService, language);
+			organizationService, countryService, regionService, language,
+			listTypeService);
 
 		organizationFixture.setUp();
 
@@ -178,6 +180,9 @@ public class OrganizationIndexerIndexedFieldsTest {
 
 	@Inject
 	protected Language language;
+
+	@Inject
+	protected ListTypeService listTypeService;
 
 	@Inject
 	protected OrganizationService organizationService;

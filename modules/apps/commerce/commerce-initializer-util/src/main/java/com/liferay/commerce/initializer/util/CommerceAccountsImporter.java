@@ -31,12 +31,14 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CountryLocalService;
+import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -201,11 +203,15 @@ public class CommerceAccountsImporter {
 					serviceContext.getCompanyId(), relatedOrganization);
 
 			if (organization == null) {
+				ListType listType = _listTypeLocalService.getListType(
+					ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+					ListTypeConstants.ORGANIZATION_STATUS);
+
 				organization = _organizationLocalService.addOrganization(
 					null, serviceContext.getUserId(), 0, name,
 					OrganizationConstants.TYPE_ORGANIZATION, 0, 0,
-					ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-					StringPool.BLANK, false, serviceContext);
+					listType.getListTypeId(), StringPool.BLANK, false,
+					serviceContext);
 			}
 
 			AccountEntryOrganizationRel accountEntryOrganizationRel =
@@ -346,6 +352,9 @@ public class CommerceAccountsImporter {
 
 	@Reference
 	private FriendlyURLNormalizer _friendlyURLNormalizer;
+
+	@Reference
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

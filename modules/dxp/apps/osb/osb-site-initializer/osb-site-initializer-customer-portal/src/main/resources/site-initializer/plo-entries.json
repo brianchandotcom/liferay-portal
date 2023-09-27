@@ -1,20 +1,17 @@
 [
 	{
-		"key": "sites",
+		"key": "account-settings",
 		"value": {
-			"en-US": "Sites"
+			"en-US": "Account Settings",
+			"es-ES": "Configuraciones de la cuenta",
+			"ja-JP": "アカウント設定",
+			"pt-BR": "Configurações de Conta"
 		}
 	},
 	{
-		"key": "marketplace",
+		"key": "community",
 		"value": {
-			"en-US": "Marketplace"
-		}
-	},
-	{
-		"key": "liferay-learn",
-		"value": {
-			"en-US": "Liferay Learn"
+			"en-US": "Community"
 		}
 	},
 	{
@@ -24,9 +21,30 @@
 		}
 	},
 	{
-		"key": "community",
+		"key": "liferay-learn",
 		"value": {
-			"en-US": "Community"
+			"en-US": "Liferay Learn"
+		}
+	},
+	{
+		"key": "marketplace",
+		"value": {
+			"en-US": "Marketplace"
+		}
+	},
+	{
+		"key": "notifications",
+		"value": {
+			"en-US": "Notifications",
+			"es-ES": "Notificaciones",
+			"ja-JP": "通知",
+			"pt-BR": "Notificações"
+		}
+	},
+	{
+		"key": "sites",
+		"value": {
+			"en-US": "Sites"
 		}
 	}
 ]

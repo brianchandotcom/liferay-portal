@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-security" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="prepare-openidconnect-json-configuration">
+		<property name="osgi.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies" />
+
+		<copy
+			file="${osgi.dependency.dir}/${osgi.config.file.name}"
+			todir="${liferay.home}"
+		/>
+
+		<replace
+			file="${liferay.home}/${osgi.config.file.name}"
+			token="&quot;client_secret&quot;: &quot;&quot;"
+			value="&quot;client_secret&quot;: &quot;${openIdConnectClientSecret}&quot;"
+		/>
+
+		<move
+			file="${liferay.home}/${osgi.config.file.name}"
+			todir="${osgi.dependency.dir}"
+		/>
+	</target>
+
+	<target name="prepare-openidconnect-osgi-configuration">
+		<property name="osgi.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies" />
+
+		<copy
+			file="${osgi.dependency.dir}/${osgi.config.file.name}"
+			todir="${liferay.home}"
+		/>
+
+		<replace
+			file="${liferay.home}/${osgi.config.file.name}"
+			token="openIdConnectClientId=&quot;&quot;"
+			value="openIdConnectClientId=&quot;${openIdConnectClientId}&quot;"
+		/>
+
+		<replace
+			file="${liferay.home}/${osgi.config.file.name}"
+			token="openIdConnectClientSecret=&quot;&quot;"
+			value="openIdConnectClientSecret=&quot;${openIdConnectClientSecret}&quot;"
+		/>
+
+		<move
+			file="${liferay.home}/${osgi.config.file.name}"
+			todir="${liferay.home}/osgi/configs"
+		/>
+	</target>
+</project>

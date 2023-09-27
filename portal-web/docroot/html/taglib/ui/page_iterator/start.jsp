@@ -441,54 +441,42 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 	button.addEventListener('keydown',onButtonKeyDown );
 
+	function handleKeyEvents(event) {
+		var currentIndex = Array.from(options).indexOf(document.activeElement);
+
+		if (event.key === 'ArrowDown') {
+			event.preventDefault();
+			if (currentIndex < options.length - 1) {
+				options[currentIndex + 1].focus();
+			}
+		} else if (event.key === 'ArrowUp') {
+			event.preventDefault();
+			if (currentIndex > 0) {
+				options[currentIndex - 1].focus();
+			}
+		}
+	}
+
+	list.addEventListener('keydown', handleKeyEvents);
+
+	function dropdownFocusOut(event) {
+		if (!dropdown.contains(event.relatedTarget)) {
+			list.classList.remove('show');
+			button.setAttribute('aria-expanded', 'false');
+		}
+	}
+
+	document.addEventListener('focusout', dropdownFocusOut );
+
 	var destroyDropDownPagination = function () {
 		button.removeEventListener('keydown', onButtonKeyDown);
+		document.removeEventListener('focusout', dropdownFocusOut );
+		list.removeEventListener('keydown', handleKeyEvents);
 
 		Liferay.detach('beforeScreenFlip', destroyDropDownPagination);
 	};
 
 	Liferay.on('beforeScreenFlip', destroyDropDownPagination);
-
-	options.forEach(function(option, index) {
-
-		function handleKeyEvents(event) {
-			if (event.key === 'ArrowDown') {
-				event.preventDefault();
-
-				if (index < options.length - 1) {
-					options[index + 1].focus();
-				}
-			} else if (event.key === 'ArrowUp') {
-				event.preventDefault();
-
-				if (index > 0) {
-					options[index - 1].focus();
-				}
-			}
-		}
-
-		option.addEventListener('keydown', handleKeyEvents);
-
-		var destroyKeyEvents = function () {
-			option.removeEventListener('keydown', handleKeyEvents);
-
-			Liferay.detach('beforeScreenFlip', destroyKeyEvents);
-		};
-
-		Liferay.on('beforeScreenFlip', destroyKeyEvents);
-
-	});
-
-	function closeDropdown() {
-		list.classList.remove('show');
-		button.setAttribute('aria-expanded', 'false');
-	}
-
-	document.addEventListener('focusout', function(event) {
-		if (!dropdown.contains(event.relatedTarget)) {
-			closeDropdown();
-		}
-	});
 
 </script>
 

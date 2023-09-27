@@ -78,11 +78,10 @@ public class KBArticleInfoItemFieldValuesProvider
 			).build();
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
-			throw new RuntimeException(
-				"Caught unexpected exception", noSuchInfoItemException);
+			throw new RuntimeException(noSuchInfoItemException);
 		}
 		catch (Exception exception) {
-			throw new RuntimeException("Unexpected exception", exception);
+			throw new RuntimeException(exception);
 		}
 	}
 

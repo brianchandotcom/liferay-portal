@@ -2010,6 +2010,17 @@ public class VerifyProperties {
 		"sites.form.add.miscellaneous", "sites.form.add.seo",
 		"sites.form.update.advanced", "sites.form.update.main",
 		"sites.form.update.miscellaneous", "sites.form.update.seo",
+		"sql.data.com.liferay.portal.kernel.model.Country.country.id",
+		"sql.data.com.liferay.portal.kernel.model.ListType.account.address",
+		"sql.data.com.liferay.portal.kernel.model.ListType.account.email." +
+			"address",
+		"sql.data.com.liferay.portal.kernel.model.ListType.company.address",
+		"sql.data.com.liferay.portal.kernel.model.ListType.company.email." +
+			"address",
+		"sql.data.com.liferay.portal.kernel.model.ListType.contact.email." +
+			"address",
+		"sql.data.com.liferay.portal.kernel.model.ListType.organization.status",
+		"sql.data.com.liferay.portal.kernel.model.Region.region.id",
 		"staging.lock.enabled", "social.activity.sets.bundling.enabled",
 		"social.activity.sets.enabled", "social.bookmark.display.styles",
 		"social.bookmark.types", "spring.hibernate.data.source",

@@ -1,6 +1,6 @@
 definition {
 
-	macro assertCardTeamMebersActivation {
+	macro assertCardTeamMembersActivation {
 		AssertElementPresent(
 			key_title = ${title},
 			locator1 = "CP2Utils#NEWS_TITLE");
@@ -274,7 +274,9 @@ definition {
 
 		Button.click(button = "Submit");
 
-		Button.click(button = "Done");
+		if (isSet(doneButton)) {
+			Button.click(button = "Done");
+		}
 	}
 
 	macro fulfillGuestForm {

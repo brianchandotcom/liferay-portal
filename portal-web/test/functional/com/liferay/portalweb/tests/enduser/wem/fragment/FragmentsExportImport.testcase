@@ -1543,6 +1543,14 @@ definition {
 		}
 
 		task ("When the user imports a fragment set") {
+			AssertVisible(
+				key_title = "Import File",
+				locator1 = "Header#H2_TITLE");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#SUBTITLE",
+				value1 = "Select a ZIP file containing one or multiple entries.");
+
 			UploadDependencyFile.uploadArchiveFile(fileName = "fragments-plant.zip");
 
 			AssertVisible(

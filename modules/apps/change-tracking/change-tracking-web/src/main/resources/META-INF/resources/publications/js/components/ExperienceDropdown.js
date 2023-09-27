@@ -25,7 +25,7 @@ const ExperienceDropdown = ({
 	};
 
 	return (
-		!!props.segmentsExperiences.length > 1 && (
+		props.segmentsExperiences.length > 1 && (
 			<div className="mb-2 mr-2">
 				<Picker
 					aria-label={Liferay.Language.get('experience-selector')}

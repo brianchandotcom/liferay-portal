@@ -336,7 +336,11 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		Map<String, Serializable> parameters =
 			batchEngineUnitConfiguration.getParameters();
 
-		String featureFlag = (String)parameters.get("featureFlag");
+		String featureFlag = null;
+
+		if (parameters != null) {
+			featureFlag = (String)parameters.get("featureFlag");
+		}
 
 		if ((Validator.isNotNull(featureFlag) &&
 			 !FeatureFlagManagerUtil.isEnabled(featureFlag)) ||

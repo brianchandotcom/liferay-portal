@@ -18,6 +18,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -152,8 +153,16 @@ public class EndpointHelper {
 
 		Map<String, Object> properties = objectEntry.getProperties();
 
-		ObjectEntry[] relatedObjectEntries = (ObjectEntry[])properties.get(
-			relationshipsNames.remove(0));
+		ObjectEntry[] relatedObjectEntries = new ObjectEntry[0];
+
+		Object relatedEntity = properties.get(relationshipsNames.remove(0));
+
+		if(relatedEntity instanceof ObjectEntry[]){
+			relatedObjectEntries = (ObjectEntry[]) relatedEntity;
+		} else {
+			relatedObjectEntries = Arrays.copyOf(relatedObjectEntries, relatedObjectEntries.length + 1);
+			relatedObjectEntries[relatedObjectEntries.length - 1] = (ObjectEntry) relatedEntity;
+		}
 
 		for (ObjectEntry relatedObjectEntry : relatedObjectEntries) {
 			Object value = _getRelatedObjectValue(

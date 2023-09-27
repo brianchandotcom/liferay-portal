@@ -2,7 +2,7 @@
 	"application_type": "web",
 	"client_id": "liferay-system-level",
 	"client_name": "liferay-system-level",
-	"client_secret": "449c61a0-69b5-4202-8470-202b187a9414",
+	"client_secret": "",
 	"client_secret_expires_at": 0,
 	"grant_types": [
 		"authorization_code",

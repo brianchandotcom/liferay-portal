@@ -14,6 +14,171 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-12424. The admin can add and verify the SKU/UOM combination information on the discount admin page"
+	@priority = 5
+	test CanAddSKUUOMsAndVerifyInfoOnDiscountPage {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a Discount applied to SKU target without being applied to a specific SKU is created") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 50,
+				target = "skus",
+				title = "Test Discount",
+				usePercentage = "true");
+		}
+
+		task ("When searching a SKU(e.g. MIN93015) on the discount detail admin page") {
+			CommerceNavigator.goToDiscountAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Discount");
+
+			Type(
+				key_placeHolder = "Find a SKU",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = "MIN93015");
+		}
+
+		task ("Then a new column for SKU/UOM combination for the UOM Key can be searched with uomKey column empty") {
+			AssertTextEquals(
+				key_colunmPosition = 4,
+				key_linePosition = 1,
+				locator1 = "CommerceEntry#TABLE_EXPOSE_ENTRY_BY_POSITION",
+				value1 = "");
+		}
+
+		task ("When the sku is selected into the SKU list") {
+			Click(
+				key_indexNumber = 1,
+				key_text = "Select",
+				locator1 = "Button#ANY_N");
+		}
+
+		task ("Then a new column is added to the List of SKUs selected for the UOM Key and the uomKey column is empty") {
+			SelectFrameTop();
+
+			CommerceEntry.gotoMenuTab(menuTab = "Details");
+
+			AssertElementPresent(
+				key_field = "UOM",
+				locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
+
+			AssertTextEquals(
+				key_cellName1 = "MIN93015",
+				key_cellName2 = "ABS Sensor",
+				key_columnNumber = 3,
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+				value1 = "");
+
+			Pagination.viewResults(results = "Showing 1 to 1 of 1 entries.");
+
+			Click(
+				key_value = "MIN93015",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Remove");
+		}
+
+		task ("When one UOM is added to the SKU MIN93015") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 10,
+				productSKU = "MIN93015",
+				uomKey = "uomKey1",
+				uomName = "uomName1");
+		}
+
+		task ("Then the entry for SKU/UOM combination can be searched with an updated UOM key") {
+			SelectFrameTop();
+
+			CommerceEntry.gotoMenuTab(menuTab = "Details");
+
+			Type(
+				key_placeHolder = "Find a SKU",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = "MIN93015");
+
+			AssertTextEquals(
+				key_colunmPosition = 4,
+				key_linePosition = 1,
+				locator1 = "CommerceEntry#TABLE_EXPOSE_ENTRY_BY_POSITION",
+				value1 = "uomKey1");
+		}
+
+		task ("And the UOM key is shown in the List of SKUs after selecting") {
+			Click(
+				key_indexNumber = 1,
+				key_text = "Select",
+				locator1 = "Button#ANY_N");
+
+			SelectFrameTop();
+
+			CommerceEntry.gotoMenuTab(menuTab = "Details");
+
+			AssertTextEquals(
+				key_cellName1 = "MIN93015",
+				key_cellName2 = "ABS Sensor",
+				key_columnNumber = 3,
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+				value1 = "uomKey1");
+
+			Pagination.viewResults(results = "Showing 1 to 1 of 1 entries.");
+		}
+
+		task ("When the second UOM is added to the SKU MIN93015") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 10,
+				productSKU = "MIN93015",
+				uomKey = "uomKey2",
+				uomName = "uomName2");
+		}
+
+		task ("Then two entries for each SKU/UOM combination can be searched with UOM keys") {
+			SelectFrameTop();
+
+			CommerceEntry.gotoMenuTab(menuTab = "Details");
+
+			Type(
+				key_placeHolder = "Find a SKU",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = "MIN93015");
+
+			for (var index : list "1,2") {
+				AssertTextEquals(
+					key_colunmPosition = 4,
+					key_linePosition = ${index},
+					locator1 = "CommerceEntry#TABLE_EXPOSE_ENTRY_BY_POSITION",
+					value1 = "uomKey${index}");
+			}
+		}
+
+		task ("And two entries with UOM keys are shown in the List of SKUs after selecting") {
+			Click(
+				key_indexNumber = 2,
+				key_text = "Select",
+				locator1 = "Button#ANY_N");
+
+			SelectFrameTop();
+
+			CommerceEntry.gotoMenuTab(menuTab = "Details");
+
+			for (var index : list "1,2") {
+				AssertTextEquals(
+					key_cellName1 = "MIN93015",
+					key_cellName2 = "uomKey${index}",
+					key_columnNumber = 3,
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = "uomKey${index}");
+			}
+
+			Pagination.viewResults(results = "Showing 1 to 2 of 2 entries.");
+		}
+	}
+
 	@description = "COMMERCE-12335. As admin, I can create the first UOM for an SKU verifying the info message, obligatory fields and tooltip messages on the modal."
 	@priority = 5
 	test CanAddTheFirstUOMAndVerifyInfoOnModal {
@@ -900,6 +1065,131 @@ definition {
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
 					value1 = "$ 2.00");
 			}
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12425. Buyers can view the discount for correctly applied SKU/UOM combinations on the product details page"
+	@priority = 5
+	test CanViewSKUUOMDiscountIsAppliedOnProductDetailsPage {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("When the admin adds one UOM to SKU MIN93015(for product ABS Sensor)") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 10,
+				productSKU = "MIN93015",
+				uomKey = "uomKey1",
+				uomName = "uomName1");
+		}
+
+		task ("And an active 50% discount applied to the SKU/UOM (MIN93015/uomKey1) combination is created") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 50,
+				productSKUs = "MIN93015",
+				target = "skus",
+				title = "Test Discount",
+				unitOfMeasureKey = "uomKey1",
+				usePercentage = "true");
+		}
+
+		task ("And the buyer navigates to the product ABS Sensor's details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("Then the discount is applied to product ABS Sensor directly") {
+			FrontStore.assertProductDetails(
+				discountPercentage = 50,
+				productListPriceInactive = "10.00",
+				productName = "ABS Sensor",
+				productNetPrice = "5.00",
+				productSKU = "MIN93015");
+		}
+
+		task ("When the admin adds the second SKU/UOM (MIN93015/uomKey2) combination to the discount") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 20,
+				productSKU = "MIN93015",
+				uomKey = "uomKey2",
+				uomName = "uomName2");
+
+			CommerceJSONDiscountsAPI._addDiscountSku(
+				discountTitle = "Test Discount",
+				productSKU = "MIN93015",
+				unitOfMeasureKey = "uomKey2");
+		}
+
+		task ("Then the discount for each SKU/UOM is applied to product ABS Sensor") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+
+			FrontStore.assertProductDetails(
+				discountPercentage = 50,
+				productListPriceInactive = "10.00",
+				productName = "ABS Sensor",
+				productNetPrice = "5.00",
+				productSKU = "MIN93015");
+
+			Select(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_UOM_SELECT",
+				value1 = "uomName2");
+
+			FrontStore.assertProductDetails(
+				discountPercentage = 50,
+				productListPriceInactive = "20.00",
+				productName = "ABS Sensor",
+				productNetPrice = "10.00",
+				productSKU = "MIN93015");
+		}
+
+		task ("When the admin removes the second SKU/UOM from the discount") {
+			CommerceJSONDiscountsAPI._deleteDiscountSkuUom(
+				discountTitle = "Test Discount",
+				productSKU = "MIN93015",
+				uomKey = "uomKey2");
+		}
+
+		task ("Then only the discount for the first SKU/UOM is applied to product ABS Sensor") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+
+			FrontStore.assertProductDetails(
+				discountPercentage = 50,
+				productListPriceInactive = "10.00",
+				productName = "ABS Sensor",
+				productNetPrice = "5.00",
+				productSKU = "MIN93015");
+
+			Select(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_UOM_SELECT",
+				value1 = "uomName2");
+
+			FrontStore.assertProductDetails(
+				productListPrice = "20.00",
+				productName = "ABS Sensor",
+				productSKU = "MIN93015");
 		}
 	}
 

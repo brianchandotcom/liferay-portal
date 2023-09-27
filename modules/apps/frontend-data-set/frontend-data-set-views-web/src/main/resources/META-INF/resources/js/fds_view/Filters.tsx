@@ -5,8 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import ClayForm, {ClayInput} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
+import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
@@ -98,7 +97,6 @@ function AddFDSFilterModalContent({
 	const [multiple, setMultiple] = useState<boolean>(
 		(filter as ISelectionFilter)?.multiple ?? true
 	);
-	const [label, setLabel] = useState(filter?.label || '');
 	const [picklists, setPicklists] = useState<IPickList[]>([]);
 	const [preselectedValues, setPreselectedValues] = useState<any[]>([]);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState<boolean>();
@@ -144,14 +142,8 @@ function AddFDSFilterModalContent({
 
 		let body: any = {
 			fieldName: selectedField.name,
+			label_i18n: i18nFilterLabels,
 		};
-
-		if (Liferay.FeatureFlags['LPS-172017']) {
-			body = {...body, label_i18n: i18nFilterLabels};
-		}
-		else {
-			body = {...body, label};
-		}
 
 		let displayType: string = '';
 		let url: string = '';
@@ -324,43 +316,15 @@ function AddFDSFilterModalContent({
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				{Liferay.FeatureFlags['LPS-172017'] ? (
-					<ClayForm.Group>
-						<InputLocalized
-							id={nameFormElementId}
-							label={Liferay.Language.get('name')}
-							name="label"
-							onChange={setI18nFilterLabels}
-							translations={i18nFilterLabels}
-						/>
-					</ClayForm.Group>
-				) : (
-					<ClayForm.Group>
-						<label htmlFor={nameFormElementId}>
-							{Liferay.Language.get('name')}
-
-							<span
-								className="label-icon lfr-portal-tooltip ml-2"
-								title={Liferay.Language.get(
-									'if-this-value-is-not-provided,-the-name-will-default-to-the-field-name'
-								)}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</span>
-						</label>
-
-						<ClayInput
-							aria-label={Liferay.Language.get('name')}
-							name={nameFormElementId}
-							onChange={(event) => setLabel(event.target.value)}
-							placeholder={
-								selectedField?.label ||
-								Liferay.Language.get('name')
-							}
-							value={label}
-						/>
-					</ClayForm.Group>
-				)}
+				<ClayForm.Group>
+					<InputLocalized
+						id={nameFormElementId}
+						label={Liferay.Language.get('name')}
+						name="label"
+						onChange={setI18nFilterLabels}
+						translations={i18nFilterLabels}
+					/>
+				</ClayForm.Group>
 
 				<ClayForm.Group
 					className={classNames({

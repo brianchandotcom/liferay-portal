@@ -183,23 +183,21 @@ export function BasicInfoTab({
 				</ContainerWrapper>
 			)}
 
-			{Liferay.FeatureFlags['LPS-172017'] && (
-				<ContainerWrapper
-					collapsable
-					defaultExpanded
-					displayTitle={Liferay.Language.get('translation-options')}
-					displayType="unstyled"
-					title={Liferay.Language.get('translation-options')}
-				>
-					<TranslationOptionsContainer
-						modelBuilder={modelBuilder}
-						objectDefinition={objectDefinition}
-						published={isApproved}
-						setValues={setValues}
-						values={values}
-					/>
-				</ContainerWrapper>
-			)}
+			<ContainerWrapper
+				collapsable
+				defaultExpanded
+				displayTitle={Liferay.Language.get('translation-options')}
+				displayType="unstyled"
+				title={Liferay.Language.get('translation-options')}
+			>
+				<TranslationOptionsContainer
+					modelBuilder={modelBuilder}
+					objectDefinition={objectDefinition}
+					published={isApproved}
+					setValues={setValues}
+					values={values}
+				/>
+			</ContainerWrapper>
 
 			{Liferay.FeatureFlags['LPS-135430'] && !isDefaultStorageType && (
 				<ContainerWrapper

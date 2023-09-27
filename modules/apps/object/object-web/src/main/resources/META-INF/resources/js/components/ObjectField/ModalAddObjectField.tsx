@@ -136,24 +136,11 @@ export function ModalAddObjectField({
 
 		makeFetch();
 
-		if (Liferay.FeatureFlags['LPS-172017']) {
-			if (
+		setValues({
+			localized:
 				objectDefinition?.enableLocalization &&
-				showEnableTranslationToggle
-			) {
-				setValues({
-					localized: true,
-				});
-
-				return;
-			}
-
-			setValues({
-				localized: false,
-			});
-
-			return;
-		}
+				showEnableTranslationToggle,
+		});
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinitionExternalReferenceCode, values.businessType]);
 
@@ -195,35 +182,30 @@ export function ModalAddObjectField({
 							objectFieldTypes={objectFieldTypes}
 							setValues={setValues}
 						>
-							{Liferay.FeatureFlags['LPS-172017'] &&
-								showEnableTranslationToggle && (
-									<div className="lfr-objects-add-object-field-enable-translations-toggle">
-										<Toggle
-											disabled={
-												!objectDefinition?.enableLocalization
-											}
-											label={Liferay.Language.get(
-												'enable-entry-translations'
-											)}
-											onToggle={(localized) =>
-												setValues({
-													localized,
-													required: Liferay
-														.FeatureFlags[
-														'LPS-172017'
-													]
-														? !localized &&
-														  values.required
-														: values.required,
-												})
-											}
-											toggled={values.localized}
-											tooltip={Liferay.Language.get(
-												'users-will-be-able-to-add-translations-for-the-entries-of-this-field'
-											)}
-										/>
-									</div>
-								)}
+							{showEnableTranslationToggle && (
+								<div className="lfr-objects-add-object-field-enable-translations-toggle">
+									<Toggle
+										disabled={
+											!objectDefinition?.enableLocalization
+										}
+										label={Liferay.Language.get(
+											'enable-entry-translations'
+										)}
+										onToggle={(localized) =>
+											setValues({
+												localized,
+												required:
+													!localized &&
+													values.required,
+											})
+										}
+										toggled={values.localized}
+										tooltip={Liferay.Language.get(
+											'users-will-be-able-to-add-translations-for-the-entries-of-this-field'
+										)}
+									/>
+								</div>
+							)}
 						</ObjectFieldFormBase>
 
 						{values.state && (

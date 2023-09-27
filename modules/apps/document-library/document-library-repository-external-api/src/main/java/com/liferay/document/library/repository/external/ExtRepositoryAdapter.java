@@ -96,8 +96,8 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 
 		ExtRepositoryFileEntry extRepositoryFileEntry =
 			_extRepository.addExtRepositoryFileEntry(
-				extRepositoryFolderKey, mimeType, fileName, description,
-				changeLog, inputStream);
+				extRepositoryFolderKey, sourceFileName, mimeType, fileName,
+				description, changeLog, inputStream);
 
 		return _toExtRepositoryObjectAdapter(
 			ExtRepositoryObjectAdapterType.FILE, extRepositoryFileEntry);

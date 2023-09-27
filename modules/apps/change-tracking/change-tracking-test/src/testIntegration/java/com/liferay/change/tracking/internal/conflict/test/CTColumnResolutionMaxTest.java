@@ -107,7 +107,6 @@ public class CTColumnResolutionMaxTest {
 			parentDLFolder.getPrimaryKey(), conflictInfo.getSourcePrimaryKey());
 		Assert.assertEquals(
 			parentDLFolder.getPrimaryKey(), conflictInfo.getTargetPrimaryKey());
-
 		Assert.assertTrue(conflictInfo.isResolved());
 
 		try (SafeCloseable safeCloseable =

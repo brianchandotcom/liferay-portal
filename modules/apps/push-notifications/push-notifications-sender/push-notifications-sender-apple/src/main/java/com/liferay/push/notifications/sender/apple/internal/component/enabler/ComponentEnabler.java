@@ -8,7 +8,7 @@ package com.liferay.push.notifications.sender.apple.internal.component.enabler;
 import com.liferay.osgi.util.ComponentUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.push.notifications.constants.PushNotificationsDestinationNames;
-import com.liferay.push.notifications.sender.apple.internal.messaging.ApplePushNotificationsMessagingConfigurator;
+import com.liferay.push.notifications.sender.apple.internal.messaging.ApplePushNotificationsResponseMessageListener;
 
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -28,7 +28,7 @@ public class ComponentEnabler {
 				PushNotificationsDestinationNames.PUSH_NOTIFICATION_RESPONSE +
 					")",
 			componentContext,
-			ApplePushNotificationsMessagingConfigurator.class);
+			ApplePushNotificationsResponseMessageListener.class);
 	}
 
 }

@@ -148,6 +148,52 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-193213. It is possible to access the configuration of an existing Display Page Template from the ellipsis menu of the card."
+	@priority = 4
+	test ConfigureDisplayPageTemplateInPageTemplatesAdmin {
+		task ("Given a user has a display page template") {
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Heading");
+
+			PageEditor.publish();
+		}
+
+		task ("When the user accesses to the Page Templates admin") {
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
+		}
+
+		task ("Then the user could configure display page template") {
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Configure");
+
+			Theme.configureLookAndFeelSpecificLook();
+
+			Theme.changeCurrentTheme(themeName = "Speedwell");
+
+			PortletEntry.save();
+
+			Navigator.gotoBack();
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			AssertCssValue(
+				fragmentName = "heading",
+				id = "element-text",
+				index = 1,
+				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				locator2 = "font-size",
+				value1 = "40px");
+
+			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
+
+			SelectWindow.selectPopUp(locator1 = "null");
+
+			PagesAdmin.viewCurrentTheme(themeName = "Speedwell");
+		}
+	}
+
 	@description = "This is for LPS-106813. Can set permissions for widgets in display page template."
 	@priority = 5
 	test ConfigurePermissionsOfAssetPublisher {

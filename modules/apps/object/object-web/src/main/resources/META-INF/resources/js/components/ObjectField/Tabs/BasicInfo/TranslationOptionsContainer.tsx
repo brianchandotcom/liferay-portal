@@ -68,9 +68,7 @@ export function TranslationOptionsContainer({
 					onToggle={(localized) =>
 						setValues({
 							localized,
-							required: Liferay.FeatureFlags['LPS-172017']
-								? !localized && values.required
-								: values.required,
+							required: !localized && values.required,
 						})
 					}
 					toggled={values.localized}

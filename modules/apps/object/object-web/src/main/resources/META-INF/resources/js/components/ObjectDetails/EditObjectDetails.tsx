@@ -357,21 +357,19 @@ export default function EditObjectDetails({
 						</ClayPanel.Body>
 					</ClayPanel>
 
-					{Liferay.FeatureFlags['LPS-172017'] && (
-						<ClayPanel
-							collapsable
-							defaultExpanded
-							displayTitle={Liferay.Language.get('translations')}
-							displayType="unstyled"
-						>
-							<ClayPanel.Body>
-								<TranslationsContainer
-									setValues={setValues}
-									values={values}
-								/>
-							</ClayPanel.Body>
-						</ClayPanel>
-					)}
+					<ClayPanel
+						collapsable
+						defaultExpanded
+						displayTitle={Liferay.Language.get('translations')}
+						displayType="unstyled"
+					>
+						<ClayPanel.Body>
+							<TranslationsContainer
+								setValues={setValues}
+								values={values}
+							/>
+						</ClayPanel.Body>
+					</ClayPanel>
 				</Sheet>
 			</div>
 		</>

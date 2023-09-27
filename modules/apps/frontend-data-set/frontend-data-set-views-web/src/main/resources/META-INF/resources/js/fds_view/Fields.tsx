@@ -19,7 +19,7 @@ import {
 	openModal,
 } from 'frontend-js-web';
 import fuzzy from 'fuzzy';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP} from '../Constants';
 import {IFDSViewSectionProps} from '../FDSView';
@@ -407,30 +407,19 @@ const EditFDSFieldModalContent = ({
 		fdsField.sortable ?? true
 	);
 
-	const fdsFieldLabelRef = useRef<HTMLInputElement>(null);
-
 	const fdsInternalCellRendererNames = FDS_INTERNAL_CELL_RENDERERS.map(
 		(cellRenderer: IInternalRenderer) => cellRenderer.name
 	);
 
 	const fdsFieldTranslations = fdsField.label_i18n;
 
-	let fieldLabel: string;
-
-	if (Liferay.FeatureFlags['LPS-172017']) {
-		fieldLabel = fdsField.label_i18n[defaultLanguageId] ?? fdsField.name;
-	}
-	else {
-		fieldLabel = fdsField.label;
-	}
-
 	const [i18nFieldLabels, setI18nFieldLabels] = useState(
 		fdsFieldTranslations
 	);
 
 	const editFDSField = async () => {
-		let body;
-		const bodyTmp = {
+		const body = {
+			label_i18n: i18nFieldLabels,
 			renderer: selectedFDSFieldRenderer,
 			rendererType: !fdsInternalCellRendererNames.includes(
 				selectedFDSFieldRenderer
@@ -439,13 +428,6 @@ const EditFDSFieldModalContent = ({
 				: 'internal',
 			sortable: fdsFieldSortable,
 		};
-
-		if (Liferay.FeatureFlags['LPS-172017']) {
-			body = {...bodyTmp, label_i18n: i18nFieldLabels};
-		}
-		else {
-			body = {...bodyTmp, label: fdsFieldLabelRef.current?.value};
-		}
 
 		const response = await fetch(
 			`${API_URL.FDS_FIELDS}/by-external-reference-code/${fdsField.externalReferenceCode}`,
@@ -556,7 +538,10 @@ const EditFDSFieldModalContent = ({
 	return (
 		<>
 			<ClayModal.Header>
-				{Liferay.Util.sub(Liferay.Language.get('edit-x'), fieldLabel)}
+				{Liferay.Util.sub(
+					Liferay.Language.get('edit-x'),
+					fdsField.label_i18n[defaultLanguageId] ?? fdsField.name
+				)}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
@@ -573,30 +558,15 @@ const EditFDSFieldModalContent = ({
 					/>
 				</ClayForm.Group>
 
-				{Liferay.FeatureFlags['LPS-172017'] ? (
-					<ClayForm.Group>
-						<InputLocalized
-							id={fdsFieldLabelInputId}
-							label={Liferay.Language.get('label')}
-							name="label"
-							onChange={setI18nFieldLabels}
-							translations={i18nFieldLabels}
-						/>
-					</ClayForm.Group>
-				) : (
-					<ClayForm.Group>
-						<label htmlFor={fdsFieldLabelInputId}>
-							{Liferay.Language.get('label')}
-						</label>
-
-						<ClayInput
-							defaultValue={fieldLabel}
-							id={fdsFieldLabelInputId}
-							ref={fdsFieldLabelRef}
-							type="text"
-						/>
-					</ClayForm.Group>
-				)}
+				<ClayForm.Group>
+					<InputLocalized
+						id={fdsFieldLabelInputId}
+						label={Liferay.Language.get('label')}
+						name="label"
+						onChange={setI18nFieldLabels}
+						translations={i18nFieldLabels}
+					/>
+				</ClayForm.Group>
 
 				<ClayForm.Group>
 					<label htmlFor={fdsFieldRendererSelectId}>

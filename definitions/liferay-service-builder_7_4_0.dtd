@@ -706,6 +706,19 @@ localization entity.
 >
 
 <!--
+The change-tracking-resolution-type value specifies how to resolve columns when
+a modification conflict is detected when publishing. This value is only used
+when change tracking is enabled for the entity. Some values are automatically
+determined by column. Otherwise, the default value is STRICT.
+
+See com.liferay.portal.kernel.change.tracking.CTColumnResolutionType for
+available options.
+-->
+<!ATTLIST localized-column
+	change-tracking-resolution-type CDATA #IMPLIED
+>
+
+<!--
 Set db-name to map the field to a physical database column that is different
 from the localized-column name.
 -->

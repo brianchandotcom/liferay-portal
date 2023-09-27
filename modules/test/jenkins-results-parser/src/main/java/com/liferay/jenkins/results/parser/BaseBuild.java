@@ -95,58 +95,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public List<Callable<Object>> getArchiveCallables() {
-		List<Callable<Object>> archiveCallables = new ArrayList<>();
-
-		archiveCallables.add(
-			new Callable<Object>() {
-
-				@Override
-				public Object call() {
-					_archiveBuildJSON();
-
-					return null;
-				}
-
-			});
-		archiveCallables.add(
-			new Callable<Object>() {
-
-				@Override
-				public Object call() {
-					_archiveConsoleLog();
-
-					return null;
-				}
-
-			});
-		archiveCallables.add(
-			new Callable<Object>() {
-
-				@Override
-				public Object call() {
-					_archiveMarkerFile();
-
-					return null;
-				}
-
-			});
-		archiveCallables.add(
-			new Callable<Object>() {
-
-				@Override
-				public Object call() {
-					_archiveTestReportJSON();
-
-					return null;
-				}
-
-			});
-
-		return archiveCallables;
-	}
-
-	@Override
 	public String getArchiveName() {
 		if (getParentBuild() == null) {
 			return _archiveName;
@@ -2115,6 +2063,57 @@ public abstract class BaseBuild implements Build {
 				Pattern.quote(JenkinsResultsParserUtil.urlDependenciesHttp),
 				")/*(?<archiveName>.*)/(?<master>[^/]+)/+(?<jobName>[^/]+)",
 				".*/(?<buildNumber>\\d+)/?"));
+	}
+
+	protected List<Callable<Object>> getArchiveCallables() {
+		List<Callable<Object>> archiveCallables = new ArrayList<>();
+
+		archiveCallables.add(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					_archiveBuildJSON();
+
+					return null;
+				}
+
+			});
+		archiveCallables.add(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					_archiveConsoleLog();
+
+					return null;
+				}
+
+			});
+		archiveCallables.add(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					_archiveMarkerFile();
+
+					return null;
+				}
+
+			});
+		archiveCallables.add(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					_archiveTestReportJSON();
+
+					return null;
+				}
+
+			});
+
+		return archiveCallables;
 	}
 
 	protected File getArchiveFile(String urlSuffix) {

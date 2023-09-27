@@ -91,21 +91,6 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	}
 
 	@Override
-	public List<Callable<Object>> getArchiveCallables() {
-		List<Callable<Object>> archiveCallables = super.getArchiveCallables();
-
-		List<Build> downstreamBuilds = getDownstreamBuilds();
-
-		if ((downstreamBuilds != null) && !downstreamBuilds.isEmpty()) {
-			for (Build downstreamBuild : downstreamBuilds) {
-				archiveCallables.addAll(downstreamBuild.getArchiveCallables());
-			}
-		}
-
-		return archiveCallables;
-	}
-
-	@Override
 	public int getDownstreamBuildCount(String status) {
 		return getDownstreamBuildCount(null, status);
 	}
@@ -465,6 +450,26 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		for (Build downstreamBuild : getDownstreamBuilds(null)) {
 			downstreamBuild.addTimelineData(timelineData);
 		}
+	}
+
+	@Override
+	protected List<Callable<Object>> getArchiveCallables() {
+		List<Callable<Object>> archiveCallables = super.getArchiveCallables();
+
+		List<Build> downstreamBuilds = getDownstreamBuilds();
+
+		if ((downstreamBuilds != null) && !downstreamBuilds.isEmpty()) {
+			for (Build downstreamBuild : downstreamBuilds) {
+				if (downstreamBuild instanceof BaseBuild) {
+					BaseBuild downstreamBaseBuild = (BaseBuild)downstreamBuild;
+
+					archiveCallables.addAll(
+						downstreamBaseBuild.getArchiveCallables());
+				}
+			}
+		}
+
+		return archiveCallables;
 	}
 
 	protected int getDownstreamBuildCountByResult(String result) {

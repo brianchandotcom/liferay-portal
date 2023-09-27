@@ -137,47 +137,6 @@ public abstract class BaseTopLevelBuild
 	}
 
 	@Override
-	public List<Callable<Object>> getArchiveCallables() {
-		List<Callable<Object>> archiveCallables = super.getArchiveCallables();
-
-		archiveCallables.add(
-			new Callable<Object>() {
-
-				@Override
-				public Object call() {
-					_archiveBuildDatabase();
-
-					return null;
-				}
-
-			});
-		archiveCallables.add(
-			new Callable<Object>() {
-
-				@Override
-				public Object call() {
-					_archiveJenkinsReport();
-
-					return null;
-				}
-
-			});
-		archiveCallables.add(
-			new Callable<Object>() {
-
-				@Override
-				public Object call() {
-					_archiveProperties();
-
-					return null;
-				}
-
-			});
-
-		return archiveCallables;
-	}
-
-	@Override
 	public URL getArtifactsBaseURL() {
 		StringBuilder sb = new StringBuilder();
 
@@ -906,6 +865,47 @@ public abstract class BaseTopLevelBuild
 
 			downstreamBaseBuild.checkForReinvocation(consoleText);
 		}
+	}
+
+	@Override
+	protected List<Callable<Object>> getArchiveCallables() {
+		List<Callable<Object>> archiveCallables = super.getArchiveCallables();
+
+		archiveCallables.add(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					_archiveBuildDatabase();
+
+					return null;
+				}
+
+			});
+		archiveCallables.add(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					_archiveJenkinsReport();
+
+					return null;
+				}
+
+			});
+		archiveCallables.add(
+			new Callable<Object>() {
+
+				@Override
+				public Object call() {
+					_archiveProperties();
+
+					return null;
+				}
+
+			});
+
+		return archiveCallables;
 	}
 
 	protected Element getBaseBranchDetailsElement() {

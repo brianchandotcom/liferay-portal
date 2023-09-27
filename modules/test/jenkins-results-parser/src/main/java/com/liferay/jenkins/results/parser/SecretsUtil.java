@@ -28,6 +28,10 @@ import org.json.JSONObject;
 public abstract class SecretsUtil {
 
 	public static String getSecret(String key) {
+		if (_bearerHTTPAuthorization == null) {
+			return key;
+		}
+
 		Matcher matcher = _keyPattern.matcher(key);
 
 		if (matcher.matches()) {
@@ -45,6 +49,10 @@ public abstract class SecretsUtil {
 
 	public static String getSecret(
 		String vaultName, String itemTitle, String fieldLabel) {
+
+		if (_bearerHTTPAuthorization == null) {
+			return null;
+		}
 
 		Vault vault = Vault.getInstance(vaultName);
 

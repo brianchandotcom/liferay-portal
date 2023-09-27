@@ -94,10 +94,7 @@ public class ListTypeConstants {
 	public static final String ORGANIZATION_STATUS =
 		Organization.class.getName() + ".status";
 
-	public static final int ORGANIZATION_STATUS_DEFAULT = GetterUtil.getInteger(
-		PropsUtil.get(
-			PropsKeys.
-				SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_ORGANIZATION_STATUS));
+	public static final String ORGANIZATION_STATUS_DEFAULT = "full-member";
 
 	public static final String ORGANIZATION_WEBSITE =
 		Organization.class.getName() + WEBSITE;

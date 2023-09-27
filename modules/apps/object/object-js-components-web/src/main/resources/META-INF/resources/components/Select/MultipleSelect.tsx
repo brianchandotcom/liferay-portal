@@ -30,7 +30,7 @@ interface MultiSelectItem extends LabelValueObject {
 
 export function MultipleSelect<
 	T extends CustomItem<number | string> = CustomItem
->({options, selectAllOption, setOptions, ...restProps}: IProps<T>) {
+>({options, required, selectAllOption, setOptions, ...restProps}: IProps<T>) {
 	const [selectAllChecked, setSelectAllChecked] = useState<boolean>(false);
 	const [dropdownActive, setDropdownActive] = useState<boolean>(false);
 	const [multiSelectItems, setMultiSelectItems] = useState<
@@ -73,6 +73,7 @@ export function MultipleSelect<
 		<BaseSelect
 			{...restProps}
 			dropdownActive={dropdownActive}
+			required={required}
 			setDropdownActive={setDropdownActive}
 			trigger={
 				<ClayMultiSelect

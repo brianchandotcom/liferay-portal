@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.portal.kernel.theme.NavItem",
+	"ddmTemplateKey": "USER-MENU-TEMPLATE",
+	"name": "User Menu Template",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

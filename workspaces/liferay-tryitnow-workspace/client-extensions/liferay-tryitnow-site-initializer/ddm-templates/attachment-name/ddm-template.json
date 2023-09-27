@@ -1,0 +1,7 @@
+{
+	"className": "com.liferay.template.model.TemplateEntry",
+	"ddmTemplateKey": "ATTACHMENT-NAME",
+	"infoItemClassName": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Ticket$]",
+	"name": "Attachment Name",
+	"resourceClassName": "com.liferay.template.model.TemplateEntry"
+}

@@ -16,6 +16,15 @@
 }
 
 #portlet_com_liferay_headless_builder_web_internal_portlet_HeadlessBuilderPortlet {
+	.endpoint-table-list-title > a {
+		font-weight: 400;
+		color: #272833 !important;
+	}
+
+	.endpoint-table-list-title > a:hover {
+		text-decoration: underline !important;
+	}
+
 	.card-type-asset {
 		.card-body {
 			padding: 0;

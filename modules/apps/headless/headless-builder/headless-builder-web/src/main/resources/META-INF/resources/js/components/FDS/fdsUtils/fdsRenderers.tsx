@@ -29,7 +29,7 @@ export function itemPathRenderer({
 
 	return (
 		<ClayTooltipProvider>
-			<div className="table-list-title">
+			<div className="endpoint-table-list-title table-list-title">
 				<ClayLink
 					data-senna-off
 					data-tooltip-align="top"

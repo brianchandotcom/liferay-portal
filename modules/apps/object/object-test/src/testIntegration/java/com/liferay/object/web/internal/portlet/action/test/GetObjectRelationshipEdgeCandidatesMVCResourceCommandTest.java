@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -46,6 +47,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Feliphe Marinho
  */
+@FeatureFlags("LPS-187142")
 @RunWith(Arquillian.class)
 public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 

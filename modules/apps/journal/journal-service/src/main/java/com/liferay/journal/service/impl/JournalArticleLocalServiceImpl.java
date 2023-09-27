@@ -1051,16 +1051,21 @@ public class JournalArticleLocalServiceImpl
 
 		for (Map.Entry<Locale, String> entry : newTitleMap.entrySet()) {
 			Locale locale = entry.getKey();
+			String title = entry.getValue();
 
-			String urlTitle = StringUtil.appendParentheticalSuffix(
-				entry.getValue(),
-				_language.get(locale, "copy") + StringPool.SPACE +
-					uniqueUrlTitleCount);
-
-			newTitleMap.put(locale, urlTitle);
+			newTitleMap.put(
+				locale,
+				StringBundler.concat(
+					title, StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
+					_language.get(locale, "copy"), StringPool.SPACE,
+					uniqueUrlTitleCount, StringPool.CLOSE_PARENTHESIS));
 			newUniqueURLTitleMap.put(
 				locale,
-				getUniqueUrlTitle(id, groupId, targetArticleId, urlTitle));
+				getUniqueUrlTitle(
+					id, groupId, targetArticleId,
+					StringBundler.concat(
+						title, StringPool.SPACE, _language.get(locale, "copy"),
+						StringPool.SPACE, uniqueUrlTitleCount)));
 		}
 
 		DDMFormValues ddmFormValues = sourceArticle.getDDMFormValues();

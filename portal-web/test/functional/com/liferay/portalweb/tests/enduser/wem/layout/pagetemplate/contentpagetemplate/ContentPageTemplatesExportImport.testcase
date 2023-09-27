@@ -14,17 +14,6 @@ definition {
 		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@description = "This is a use case for LPS-106212. Can not export multiple selected page templates if one of them is widget page template."
 	@priority = 4
 	test CannotExportMultipleWhenOneOfSelectedIsWidgetPageTemplate {

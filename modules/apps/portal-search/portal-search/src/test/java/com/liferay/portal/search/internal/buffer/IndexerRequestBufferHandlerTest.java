@@ -6,7 +6,6 @@
 package com.liferay.portal.search.internal.buffer;
 
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.configuration.IndexerRegistryConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -41,7 +40,7 @@ public class IndexerRequestBufferHandlerTest {
 		int maxBufferSize = 5;
 
 		_indexerRequestBufferHandler = new IndexerRequestBufferHandler(
-			_createIndexerRequestBufferOverflowHandler(),
+			new IndexerRequestBufferOverflowHandler(),
 			_createIndexerRegistryConfiguration(maxBufferSize));
 
 		_indexerRequestBuffer = IndexerRequestBuffer.create();
@@ -76,21 +75,6 @@ public class IndexerRequestBufferHandlerTest {
 		return new IndexerRequest(
 			_method, indexer, RandomTestUtil.randomString(),
 			RandomTestUtil.randomLong());
-	}
-
-	private IndexerRequestBufferOverflowHandler
-		_createIndexerRequestBufferOverflowHandler() {
-
-		IndexerRequestBufferOverflowHandler
-			indexerRequestBufferOverflowHandler =
-				new IndexerRequestBufferOverflowHandler();
-
-		ReflectionTestUtil.setFieldValue(
-			indexerRequestBufferOverflowHandler,
-			"_indexerRequestBufferExecutor",
-			new IndexerRequestBufferExecutor());
-
-		return indexerRequestBufferOverflowHandler;
 	}
 
 	private List<IndexerRequest> _createIndexerRequests(

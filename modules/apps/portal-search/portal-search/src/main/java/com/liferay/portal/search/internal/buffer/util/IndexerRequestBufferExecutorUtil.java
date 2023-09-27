@@ -3,34 +3,31 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.internal.buffer;
+package com.liferay.portal.search.internal.buffer.util;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.search.internal.buffer.BufferOverflowThreadLocal;
+import com.liferay.portal.search.internal.buffer.IndexerRequest;
+import com.liferay.portal.search.internal.buffer.IndexerRequestBuffer;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.util.tracker.ServiceTracker;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = IndexerRequestBufferExecutor.class)
-public class IndexerRequestBufferExecutor {
+public class IndexerRequestBufferExecutorUtil {
 
-	public void execute(IndexerRequestBuffer indexerRequestBuffer) {
+	public static void execute(IndexerRequestBuffer indexerRequestBuffer) {
 		execute(indexerRequestBuffer, indexerRequestBuffer.size());
 	}
 
-	public void execute(
+	public static void execute(
 		IndexerRequestBuffer indexerRequestBuffer, int numRequests) {
 
 		Collection<IndexerRequest> completedIndexerRequests = new ArrayList<>();
@@ -81,7 +78,7 @@ public class IndexerRequestBufferExecutor {
 
 		if (!BufferOverflowThreadLocal.isOverflowMode()) {
 			IndexWriterHelper indexWriterHelper =
-				_indexWriterHelperServiceTracker.getService();
+				_indexWriterHelperSnapshot.get();
 
 			if (indexWriterHelper == null) {
 				if (_log.isWarnEnabled()) {
@@ -103,23 +100,12 @@ public class IndexerRequestBufferExecutor {
 		}
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_indexWriterHelperServiceTracker = new ServiceTracker<>(
-			bundleContext, IndexWriterHelper.class, null);
-
-		_indexWriterHelperServiceTracker.open();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_indexWriterHelperServiceTracker.close();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		IndexerRequestBufferExecutor.class);
+		IndexerRequestBufferExecutorUtil.class);
 
-	private ServiceTracker<IndexWriterHelper, IndexWriterHelper>
-		_indexWriterHelperServiceTracker;
+	private static final Snapshot<IndexWriterHelper>
+		_indexWriterHelperSnapshot = new Snapshot<>(
+			IndexerRequestBufferExecutorUtil.class, IndexWriterHelper.class,
+			null, true);
 
 }

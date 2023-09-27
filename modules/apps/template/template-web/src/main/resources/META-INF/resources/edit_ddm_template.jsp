@@ -24,6 +24,7 @@ EditDDMTemplateDisplayContext editDDMTemplateDisplayContext = (EditDDMTemplateDi
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 if (ddmTemplate != null) {
 	renderResponse.setTitle(LanguageUtil.format(request, "edit-x", HtmlUtil.escape(ddmTemplate.getName(locale))));

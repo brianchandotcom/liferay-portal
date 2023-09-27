@@ -34,7 +34,7 @@ const getRetentionLabel = (milliseconds: number): string =>
 
 const fetchDownload = ({fromDate, groupId, toDate, type}) =>
 	fetch(
-		`/o/proxy/download/${type}/logs?projectGroupId=${groupId}&filter=(createDate ge '${fromDate}' and createDate le '${toDate}')`,
+		`/o/proxy/download/${type}/logs?projectGroupId=${groupId}&fromDate=${fromDate}&toDate=${toDate}`,
 		{method: 'GET'}
 	).then(({response, status}) => {
 		if (status === 200) {

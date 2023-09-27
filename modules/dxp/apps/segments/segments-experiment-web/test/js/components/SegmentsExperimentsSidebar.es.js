@@ -737,7 +737,7 @@ describe('Terminated', () => {
 		expect(within(rows[2]).getByText(/100-lift/i)).toBeInTheDocument();
 	});
 
-	it('check if the improvement value is getting worse for variant in closed status', async () => {
+	it('check if the improvement value is getting worse for variant in terminated status', async () => {
 		const {getByRole} = renderApp({
 			initialSegmentsExperiment: {
 				...segmentsExperiment,
@@ -745,6 +745,80 @@ describe('Terminated', () => {
 				status: {
 					label: 'terminated',
 					value: STATUS_TERMINATED,
+				},
+			},
+			initialSegmentsVariants: [
+				{
+					...controlVariant,
+					segmentsExperimentVariantImprovement: '-',
+				},
+				{
+					...variant,
+					segmentsExperimentVariantImprovement: '-100.00',
+				},
+			],
+		});
+
+		const table = getByRole('table');
+		const rows = within(table).getAllByRole('row');
+
+		expect(rows).toHaveLength(3);
+
+		expect(within(rows[0]).getByText(/name/i)).toBeInTheDocument();
+		expect(within(rows[0]).getByText(/improvement/i)).toBeInTheDocument();
+
+		expect(within(rows[1]).getByText(/control/i)).toBeInTheDocument();
+		expect(within(rows[1]).getByText(/0-loss/i)).toBeInTheDocument();
+
+		expect(within(rows[2]).getByText(/variant/i)).toBeInTheDocument();
+		expect(within(rows[2]).getByText(/100-loss/i)).toBeInTheDocument();
+	});
+
+	it('check if improvement value is shown in terminated status', async () => {
+		const {getByRole} = renderApp({
+			initialSegmentsExperiment: {
+				...segmentsExperiment,
+				editable: false,
+				status: {
+					label: 'winner declared',
+					value: STATUS_FINISHED_WINNER,
+				},
+			},
+			initialSegmentsVariants: [
+				{
+					...controlVariant,
+					segmentsExperimentVariantImprovement: '-',
+				},
+				{
+					...variant,
+					segmentsExperimentVariantImprovement: '100.00',
+				},
+			],
+		});
+
+		const table = getByRole('table');
+		const rows = within(table).getAllByRole('row');
+
+		expect(rows).toHaveLength(3);
+
+		expect(within(rows[0]).getByText(/name/i)).toBeInTheDocument();
+		expect(within(rows[0]).getByText(/improvement/i)).toBeInTheDocument();
+
+		expect(within(rows[1]).getByText(/control/i)).toBeInTheDocument();
+		expect(within(rows[1]).getByText(/0-loss/i)).toBeInTheDocument();
+
+		expect(within(rows[2]).getByText(/variant/i)).toBeInTheDocument();
+		expect(within(rows[2]).getByText(/100-lift/i)).toBeInTheDocument();
+	});
+
+	it('check if the improvement value is getting worse for variant in terminated status', async () => {
+		const {getByRole} = renderApp({
+			initialSegmentsExperiment: {
+				...segmentsExperiment,
+				editable: false,
+				status: {
+					label: 'winner declared',
+					value: STATUS_FINISHED_WINNER,
 				},
 			},
 			initialSegmentsVariants: [

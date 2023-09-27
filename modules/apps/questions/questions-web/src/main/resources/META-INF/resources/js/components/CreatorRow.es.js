@@ -43,10 +43,8 @@ export default withRouter(
 
 				{Liferay.FeatureFlags['LPS-185892'] &&
 					isContentReviewer &&
-					creator.userGroupInformations
-						?.map(
-							(userGroupInformation) => userGroupInformation.name
-						)
+					creator.userGroupBriefs
+						?.map((userGroupBrief) => userGroupBrief.name)
 						.join(', ')}
 			</div>
 

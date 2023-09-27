@@ -42,8 +42,8 @@ export default function QuestionRow({
 				portraitURL: question.creator.image,
 				userId: String(question.creator.id),
 				...(Liferay.FeatureFlags['LPS-185892'] && {
-					userGroups: question.creator?.userGroupInformations?.map(
-						(userGroupInformation) => userGroupInformation.name
+					userGroups: question.creator?.userGroupBriefs?.map(
+						(userGroupBrief) => userGroupBrief.name
 					),
 				}),
 		  }

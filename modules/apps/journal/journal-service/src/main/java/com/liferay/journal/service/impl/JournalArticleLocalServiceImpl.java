@@ -1089,7 +1089,7 @@ public class JournalArticleLocalServiceImpl
 		// Article localization
 
 		Map<Locale, String> friendlyURLMap = _checkFriendlyURLMap(
-			locale, new HashMap(), newTitleMap);
+			locale, new HashMap(), newUniqueURLTitleMap);
 
 		Map<String, String> newUrlTitleMap = _getURLTitleMap(
 			groupId, resourcePrimKey, friendlyURLMap, newUniqueURLTitleMap);

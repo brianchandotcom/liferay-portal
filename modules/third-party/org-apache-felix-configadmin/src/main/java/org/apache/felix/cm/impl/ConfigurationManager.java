@@ -26,6 +26,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -1595,6 +1596,8 @@ public class ConfigurationManager implements BundleListener
             }
             else
             {
+				Arrays.sort(srs, Comparator.reverseOrder());
+
                 this.listenerReferences = srs;
                 this.listeners = new ConfigurationListener[srs.length];
                 this.listenerProvider = new Bundle[srs.length];

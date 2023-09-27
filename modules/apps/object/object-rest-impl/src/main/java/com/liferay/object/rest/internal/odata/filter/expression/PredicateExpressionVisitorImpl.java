@@ -16,11 +16,11 @@ import com.liferay.object.odata.filter.expression.field.predicate.provider.Field
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProviderRegistry;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
-import com.liferay.object.rest.internal.odata.filter.expression.field.predicate.provider.FieldPredicateProviderTracker;
 import com.liferay.object.rest.internal.util.BinaryExpressionConverterUtil;
 import com.liferay.object.rest.odata.entity.v1_0.provider.EntityModelProvider;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
@@ -83,18 +83,17 @@ public class PredicateExpressionVisitorImpl
 
 	public PredicateExpressionVisitorImpl(
 		EntityModel entityModel, EntityModelProvider entityModelProvider,
-		FieldPredicateProviderTracker fieldPredicateProviderTracker,
 		ObjectDefinition objectDefinition,
 		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelatedModelsPredicateProviderRegistry
-			objectRelatedModelsPredicateProviderRegistry) {
+			objectRelatedModelsPredicateProviderRegistry,
+		ServiceTrackerMap<String, FieldPredicateProvider> serviceTrackerMap) {
 
 		this(
-			entityModel, entityModelProvider, fieldPredicateProviderTracker,
-			new HashMap<>(), objectDefinition, objectFieldBusinessTypeRegistry,
-			objectFieldLocalService,
-			objectRelatedModelsPredicateProviderRegistry);
+			entityModel, entityModelProvider, new HashMap<>(), objectDefinition,
+			objectFieldBusinessTypeRegistry, objectFieldLocalService,
+			objectRelatedModelsPredicateProviderRegistry, serviceTrackerMap);
 	}
 
 	@Override
@@ -342,18 +341,17 @@ public class PredicateExpressionVisitorImpl
 
 	private PredicateExpressionVisitorImpl(
 		EntityModel entityModel, EntityModelProvider entityModelProvider,
-		FieldPredicateProviderTracker fieldPredicateProviderTracker,
 		Map<String, String> lambdaVariableExpressionFieldNames,
 		ObjectDefinition objectDefinition,
 		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelatedModelsPredicateProviderRegistry
-			objectRelatedModelsPredicateProviderRegistry) {
+			objectRelatedModelsPredicateProviderRegistry,
+		ServiceTrackerMap<String, FieldPredicateProvider> serviceTrackerMap) {
 
 		_entityModels.put(
 			objectDefinition.getObjectDefinitionId(), entityModel);
 		_entityModelProvider = entityModelProvider;
-		_fieldPredicateProviderTracker = fieldPredicateProviderTracker;
 		_lambdaVariableExpressionFieldNames =
 			lambdaVariableExpressionFieldNames;
 		_objectDefinition = objectDefinition;
@@ -361,6 +359,7 @@ public class PredicateExpressionVisitorImpl
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelatedModelsPredicateProviderRegistry =
 			objectRelatedModelsPredicateProviderRegistry;
+		_serviceTrackerMap = serviceTrackerMap;
 	}
 
 	private Predicate _contains(Column<?, ?> column, Object value) {
@@ -372,8 +371,7 @@ public class PredicateExpressionVisitorImpl
 		ObjectDefinition objectDefinition) {
 
 		FieldPredicateProvider fieldPredicateProvider =
-			_fieldPredicateProviderTracker.getFieldPredicateProvider(
-				String.valueOf(fieldName));
+			_serviceTrackerMap.getService(String.valueOf(fieldName));
 
 		if (fieldPredicateProvider != null) {
 			return fieldPredicateProvider.getContainsPredicate(
@@ -435,8 +433,7 @@ public class PredicateExpressionVisitorImpl
 		Object left, ObjectDefinition objectDefinition, List<Object> rights) {
 
 		FieldPredicateProvider fieldPredicateProvider =
-			_fieldPredicateProviderTracker.getFieldPredicateProvider(
-				String.valueOf(left));
+			_serviceTrackerMap.getService(String.valueOf(left));
 
 		if (fieldPredicateProvider != null) {
 			return fieldPredicateProvider.getInPredicate(
@@ -594,8 +591,7 @@ public class PredicateExpressionVisitorImpl
 
 			if (objectField == null) {
 				FieldPredicateProvider fieldPredicateProvider =
-					_fieldPredicateProviderTracker.getFieldPredicateProvider(
-						String.valueOf(left));
+					_serviceTrackerMap.getService(String.valueOf(left));
 
 				if (fieldPredicateProvider != null) {
 					predicate =
@@ -747,8 +743,7 @@ public class PredicateExpressionVisitorImpl
 		ObjectDefinition objectDefinition) {
 
 		FieldPredicateProvider fieldPredicateProvider =
-			_fieldPredicateProviderTracker.getFieldPredicateProvider(
-				String.valueOf(fieldName));
+			_serviceTrackerMap.getService(String.valueOf(fieldName));
 
 		if (fieldPredicateProvider != null) {
 			return fieldPredicateProvider.getStartsWithPredicate(
@@ -771,21 +766,21 @@ public class PredicateExpressionVisitorImpl
 		return (Predicate)lambdaFunctionExpression.accept(
 			new PredicateExpressionVisitorImpl(
 				_getObjectDefinitionEntityModel(objectDefinition),
-				_entityModelProvider, _fieldPredicateProviderTracker,
+				_entityModelProvider,
 				Collections.singletonMap(
 					lambdaFunctionExpression.getVariableName(),
 					collectionPropertyExpression.getName()),
 				objectDefinition, _objectFieldBusinessTypeRegistry,
 				_objectFieldLocalService,
-				_objectRelatedModelsPredicateProviderRegistry));
+				_objectRelatedModelsPredicateProviderRegistry,
+				_serviceTrackerMap));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PredicateExpressionVisitorImpl.class);
 
-	private EntityModelProvider _entityModelProvider;
+	private final EntityModelProvider _entityModelProvider;
 	private final Map<Long, EntityModel> _entityModels = new HashMap<>();
-	private FieldPredicateProviderTracker _fieldPredicateProviderTracker;
 	private final Map<String, String> _lambdaVariableExpressionFieldNames;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectFieldBusinessTypeRegistry
@@ -793,5 +788,7 @@ public class PredicateExpressionVisitorImpl
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelatedModelsPredicateProviderRegistry
 		_objectRelatedModelsPredicateProviderRegistry;
+	private final ServiceTrackerMap<String, FieldPredicateProvider>
+		_serviceTrackerMap;
 
 }

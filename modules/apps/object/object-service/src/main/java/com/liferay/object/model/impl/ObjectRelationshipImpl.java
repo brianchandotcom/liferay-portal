@@ -10,6 +10,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Objects;
 import java.util.Set;
@@ -37,6 +38,18 @@ public class ObjectRelationshipImpl extends ObjectRelationshipBaseImpl {
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
 				getObjectDefinitionId1());
+
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
+				getObjectDefinitionId2());
+
+		if (Objects.equals(
+			objectDefinition1.getStatus(), WorkflowConstants.STATUS_APPROVED) ||
+			Objects.equals(
+				objectDefinition2.getStatus(),
+				WorkflowConstants.STATUS_APPROVED)) {
+			return false;
+		}
 
 		if (isSelf() ||
 			!Objects.equals(

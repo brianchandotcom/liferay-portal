@@ -23,7 +23,7 @@ const zodSchema = {
 			code: z.string(),
 			flag: z.string(),
 		}),
-		phoneNumber: z.string().nonempty({message: 'This field is required'}),
+		phoneNumber: z.string().min(1, {message: 'This field is required'}),
 	}),
 
 	invitedNewMember: z.object({

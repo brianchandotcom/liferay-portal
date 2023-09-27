@@ -385,6 +385,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			}
 		}
 
+		if (rules.isEmpty()) {
+			System.out.println("No accessiblity violations were found");
+
+			return;
+		}
+
 		AxeReporter.getReadableAxeResults("analyze", this, rules);
 
 		throw new Exception(AxeReporter.getAxeResultString());

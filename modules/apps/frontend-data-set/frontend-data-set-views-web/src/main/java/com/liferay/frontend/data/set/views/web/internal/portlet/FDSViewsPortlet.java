@@ -22,7 +22,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -126,19 +125,14 @@ public class FDSViewsPortlet extends MVCPortlet {
 			ObjectFieldConstants.DB_TYPE_STRING, true, false, null, label, name,
 			false);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
-			objectField.setLocalized(true);
-		}
-
 		_objectFieldLocalService.addCustomObjectField(
 			objectField.getExternalReferenceCode(), userId,
 			objectField.getListTypeDefinitionId(),
 			objectDefinition.getObjectDefinitionId(),
 			objectField.getBusinessType(), objectField.getDBType(),
 			objectField.isIndexed(), objectField.isIndexedAsKeyword(),
-			objectField.getIndexedLanguageId(), objectField.getLabelMap(),
-			objectField.isLocalized(), objectField.getName(),
-			objectField.getReadOnly(),
+			objectField.getIndexedLanguageId(), objectField.getLabelMap(), true,
+			objectField.getName(), objectField.getReadOnly(),
 			objectField.getReadOnlyConditionExpression(),
 			objectField.isRequired(), objectField.isState(),
 			objectField.getObjectFieldSettings());
@@ -578,13 +572,9 @@ public class FDSViewsPortlet extends MVCPortlet {
 	}
 
 	private void _enableLocalization(ObjectDefinition objectDefinition) {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
-			objectDefinition.setEnableLocalization(true);
+		objectDefinition.setEnableLocalization(true);
 
-			objectDefinition =
-				_objectDefinitionLocalService.updateObjectDefinition(
-					objectDefinition);
-		}
+		_objectDefinitionLocalService.updateObjectDefinition(objectDefinition);
 	}
 
 	private synchronized void _generate(

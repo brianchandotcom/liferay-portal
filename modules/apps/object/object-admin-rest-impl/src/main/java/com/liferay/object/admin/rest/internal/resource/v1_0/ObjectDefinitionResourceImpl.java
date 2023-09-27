@@ -34,7 +34,6 @@ import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
-import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectDefinitionStorageTypeException;
 import com.liferay.object.model.ObjectActionModel;
 import com.liferay.object.model.ObjectFieldModel;
@@ -234,12 +233,6 @@ public class ObjectDefinitionResourceImpl
 	public ObjectDefinition postObjectDefinition(
 			ObjectDefinition objectDefinition)
 		throws Exception {
-
-		if (Validator.isNotNull(objectDefinition.getEnableLocalization()) &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
-
-			throw new ObjectDefinitionEnableLocalizationException();
-		}
 
 		if (Validator.isNotNull(objectDefinition.getEnableObjectEntryDraft()) &&
 			!FeatureFlagManagerUtil.isEnabled("LPS-181663")) {
@@ -1130,11 +1123,7 @@ public class ObjectDefinitionResourceImpl
 				enableCategorization =
 					objectDefinition.getEnableCategorization();
 				enableComments = objectDefinition.getEnableComments();
-
-				if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
-					enableLocalization =
-						objectDefinition.getEnableLocalization();
-				}
+				enableLocalization = objectDefinition.getEnableLocalization();
 
 				if (FeatureFlagManagerUtil.isEnabled("LPS-181663")) {
 					enableObjectEntryDraft =

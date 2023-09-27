@@ -1327,9 +1327,7 @@ public class ObjectEntryDisplayContextImpl
 			ddmFormFieldValue.setValue(
 				new UnlocalizedValue(listEntry.getKey()));
 		}
-		else if (FeatureFlagManagerUtil.isEnabled("LPS-172017") &&
-				 (value instanceof Map)) {
-
+		else if (value instanceof Map) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				(Map<String, String>)value);
 

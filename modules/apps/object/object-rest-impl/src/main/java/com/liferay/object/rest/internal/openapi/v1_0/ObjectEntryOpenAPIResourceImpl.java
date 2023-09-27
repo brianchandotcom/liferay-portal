@@ -26,7 +26,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -281,9 +280,7 @@ public class ObjectEntryOpenAPIResourceImpl
 
 			dtoProperties.add(_getDTOProperty(objectField));
 
-			if (objectField.isLocalized() &&
-				FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
-
+			if (objectField.isLocalized()) {
 				dtoProperties.add(
 					new DTOProperty(
 						Collections.singletonMap("x-parent-map", "properties"),

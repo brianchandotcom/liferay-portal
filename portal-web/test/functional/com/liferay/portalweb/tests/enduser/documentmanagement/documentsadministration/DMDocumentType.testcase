@@ -199,6 +199,58 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_PREDEFINED_IMAGE");
 	}
 
+	@description = "This ensures that a document with a custom document type in asset library can be copied to the site which connected to the asset library with structures available with document type."
+	@priority = 4
+	test CanCopyFileWithCustomTypeFromDepotToConnectedSite {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		DepotNavigator.openDepotSiteSettings(depotName = "Test Depot Name");
+
+		Depot.connectSite(siteList = "Site Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		Depot.configureDDMStructures(
+			depotName = "Test Depot Name",
+			siteName = "Site Name",
+			tableEntryText = "Yes");
+
+		DepotNavigator.openDepotDocumentTypeAdmin(depotName = "Test Depot Name");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "Depot Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "Depot Document Type Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "Depot Document Type Name");
+
+		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
+
+		DMDocument.copy(
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name",
+			siteURLKey = "site-name");
+
+		DMDocument.viewCP(
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "Depot Document Type Name");
+	}
+
 	@description = "This ensures that a folder with a document with a custom document type in global scope can be copied to new site."
 	@priority = 4
 	test CanCopyFileWithGlobalTypeInFolderToOtherSite {

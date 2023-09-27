@@ -185,6 +185,24 @@ const TeamMembersTable = ({
 		[]
 	);
 
+	const checkIsValidRole = (userAccount) => {
+		const isInvalidRole = (role) => {
+			const invalidRoles = ['Security', 'Data', 'Critical'];
+
+			return invalidRoles.some((keyword) => role.name.includes(keyword));
+		};
+
+		const roles = getCurrentRoleBriefs(userAccount.selectedAccountSummary);
+
+		for (const role of roles) {
+			if (!isInvalidRole(role)) {
+				return role?.name;
+			}
+		}
+
+		return 'User';
+	};
+
 	const handleEdit = () => {
 		const currentAccountRoles =
 			currentUserEditing.selectedAccountSummary.roleBriefs;
@@ -303,11 +321,9 @@ const TeamMembersTable = ({
 											availableSupportSeatsCount={
 												availableSupportSeatsCount
 											}
-											currentRoleBriefName={
-												getCurrentRoleBriefs(
-													userAccount.selectedAccountSummary
-												)?.[0]?.name || 'User'
-											}
+											currentRoleBriefName={checkIsValidRole(
+												userAccount
+											)}
 											edit={
 												userAccount?.id ===
 												currentUserEditing?.id

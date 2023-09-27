@@ -48,22 +48,21 @@ public class TestClassResultsUtil {
 			File testProjectResultsDir, File baseDir)
 		throws IOException {
 
-		List<File> fileList = JenkinsResultsParserUtil.getIncludedFiles(
-			testProjectResultsDir, null, _INCLUDED_FILES_GLOBS);
-
 		File testClassResultsDir = new File(baseDir, "modules/test-results");
 
-		for (File resultsFile : fileList) {
-			String testClassResultsFileName = getTestClassResultsFileName(
-				resultsFile);
+		List<File> files = JenkinsResultsParserUtil.getIncludedFiles(
+			testProjectResultsDir, null, _INCLUDED_FILES_GLOBS);
+
+		for (File file : files) {
+			String testClassResultsFileName = getTestClassResultsFileName(file);
 
 			File destinationFile = new File(
 				testClassResultsDir, testClassResultsFileName);
 
-			JenkinsResultsParserUtil.move(resultsFile, destinationFile);
+			JenkinsResultsParserUtil.move(file, destinationFile);
 
-			if (!resultsFile.exists()) {
-				System.out.println("Deleted results file:" + resultsFile);
+			if (!file.exists()) {
+				System.out.println("Deleted results file:" + file);
 			}
 		}
 	}

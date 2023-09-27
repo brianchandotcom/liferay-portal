@@ -221,10 +221,10 @@ public class AntUtil {
 			int timeoutMinutes, boolean runningModulesTests)
 		throws AntException, IOException {
 
-		ExecutorService executor =
+		ExecutorService executorService =
 			JenkinsResultsParserUtil.getNewThreadPoolExecutor(1, true);
 
-		Future<String> future = executor.submit(
+		Future<String> future = executorService.submit(
 			new Callable<String>() {
 
 				public String call() throws Exception {
@@ -259,7 +259,7 @@ public class AntUtil {
 					baseDir);
 			}
 
-			executor.shutdownNow();
+			executorService.shutdownNow();
 		}
 	}
 

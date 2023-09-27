@@ -24,10 +24,6 @@ Import-Package:\
 	\
 	!com.lowagie.toolbox.*,\
 	\
-	!com.thoughtworks.*,\
-	\
-	!groovyjarjarasm.asm.tree.analysis.*,\
-	\
 	!javax.accessibility.*,\
 	\
 	!javax.crypto.*,\
@@ -37,12 +33,6 @@ Import-Package:\
 	!javax.print.*,\
 	\
 	!javax.rmi.*,\
-	\
-	!javax.swing.*,\
-	\
-	!jline.*,\
-	\
-	!junit.*,\
 	\
 	!mondrian.*,\
 	\
@@ -57,11 +47,8 @@ Import-Package:\
 	!org.apache.batik.gvt.*,\
 	!org.apache.batik.util.*,\
 	!org.apache.bcel.*,\
-	!org.apache.bsf.*,\
-	!org.apache.commons.cli.*,\
 	!org.apache.commons.javaflow.*,\
 	!org.apache.commons.jci.*,\
-	!org.apache.ivy.*,\
 	!org.apache.log.*,\
 	!org.apache.oro.*,\
 	!org.apache.poi.hdgf.*,\
@@ -96,11 +83,7 @@ Import-Package:\
 	\
 	!org.exolab.castor.*,\
 	\
-	!org.fusesource.*,\
-	\
 	!org.hibernate.*,\
-	\
-	!org.junit.*,\
 	\
 	!org.kohsuke.groovy.sandbox.*,\
 	\

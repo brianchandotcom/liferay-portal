@@ -314,7 +314,7 @@ public class ObjectRelationshipLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteObjectRelationship() {
+	public void testDeleteObjectRelationship() throws Exception {
 		AssertUtils.assertFailure(
 			ObjectRelationshipEdgeException.class,
 			"Edge object relationships cannot be deleted",
@@ -351,6 +351,25 @@ public class ObjectRelationshipLocalServiceTest {
 						fetchReverseObjectRelationship(
 							objectRelationship, true));
 			});
+
+		ObjectRelationship systemObjectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				_objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), true,
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipSystemException.class, false,
+			"Only allowed bundles can delete system object relationships",
+			() -> _objectRelationshipLocalService.deleteObjectRelationship(
+				systemObjectRelationship));
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			systemObjectRelationship);
 	}
 
 	@Test

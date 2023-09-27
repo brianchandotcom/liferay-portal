@@ -48,8 +48,9 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CTEntry addCTEntry(
-			long ctCollectionId, long modelClassNameId, CTModel<?> ctModel,
-			long userId, int changeType)
+			String externalReferenceCode, long ctCollectionId,
+			long modelClassNameId, CTModel<?> ctModel, long userId,
+			int changeType)
 		throws PortalException {
 
 		CTCollection ctCollection = _ctCollectionPersistence.findByPrimaryKey(
@@ -66,6 +67,7 @@ public class CTEntryLocalServiceImpl extends CTEntryLocalServiceBaseImpl {
 
 		CTEntry ctEntry = ctEntryPersistence.create(ctEntryId);
 
+		ctEntry.setExternalReferenceCode(externalReferenceCode);
 		ctEntry.setCompanyId(ctCollection.getCompanyId());
 		ctEntry.setUserId(userId);
 		ctEntry.setCtCollectionId(ctCollectionId);

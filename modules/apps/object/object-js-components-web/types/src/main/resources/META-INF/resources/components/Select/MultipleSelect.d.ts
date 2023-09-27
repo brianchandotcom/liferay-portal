@@ -16,5 +16,11 @@ interface IProps<T extends CustomItem<number | string> = CustomItem>
 }
 export declare function MultipleSelect<
 	T extends CustomItem<number | string> = CustomItem
->({options, selectAllOption, setOptions, ...restProps}: IProps<T>): JSX.Element;
+>({
+	options,
+	required,
+	selectAllOption,
+	setOptions,
+	...restProps
+}: IProps<T>): JSX.Element;
 export {};

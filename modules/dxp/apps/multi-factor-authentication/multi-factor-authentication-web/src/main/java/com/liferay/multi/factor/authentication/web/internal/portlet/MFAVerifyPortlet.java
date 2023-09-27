@@ -17,7 +17,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tomas Polesovsky
@@ -49,7 +48,7 @@ public class MFAVerifyPortlet extends MVCPortlet {
 			PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST,
 			MFAPortletKeys.MFA_VERIFY);
 
-		_interruptedPortletRequestWhitelistUtil.
+		InterruptedPortletRequestWhitelistUtil.
 			resetPortletInvocationWhitelist();
 	}
 
@@ -59,12 +58,8 @@ public class MFAVerifyPortlet extends MVCPortlet {
 			PropsValues.PORTLET_INTERRUPTED_REQUEST_WHITELIST,
 			MFAPortletKeys.MFA_VERIFY);
 
-		_interruptedPortletRequestWhitelistUtil.
+		InterruptedPortletRequestWhitelistUtil.
 			resetPortletInvocationWhitelist();
 	}
-
-	@Reference
-	private InterruptedPortletRequestWhitelistUtil
-		_interruptedPortletRequestWhitelistUtil;
 
 }

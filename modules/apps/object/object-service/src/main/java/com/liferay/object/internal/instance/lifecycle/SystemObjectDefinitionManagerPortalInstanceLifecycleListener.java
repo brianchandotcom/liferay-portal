@@ -52,6 +52,8 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
+import java.util.function.Supplier;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
@@ -74,14 +76,28 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 			_log.debug("Registered portal instance " + company);
 		}
 
-		ObjectFolder objectFolder = _getUncategorizedObjectFolder(
-			company.getCompanyId());
+		Supplier<ObjectFolder> objectFolderSupplier =
+			new Supplier<ObjectFolder>() {
+
+				@Override
+				public ObjectFolder get() {
+					if (_objectFolder == null) {
+						_objectFolder = _getUncategorizedObjectFolder(
+							company.getCompanyId());
+					}
+
+					return _objectFolder;
+				}
+
+				private ObjectFolder _objectFolder;
+
+			};
 
 		for (SystemObjectDefinitionManager systemObjectDefinitionManager :
 				_serviceTrackerList) {
 
 			_apply(
-				company.getCompanyId(), objectFolder,
+				company.getCompanyId(), objectFolderSupplier,
 				systemObjectDefinitionManager);
 		}
 	}
@@ -120,7 +136,7 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 						_companyLocalService.forEachCompanyId(
 							companyId -> _apply(
 								companyId,
-								_getUncategorizedObjectFolder(companyId),
+								() -> _getUncategorizedObjectFolder(companyId),
 								systemObjectDefinitionManager));
 					}
 
@@ -156,7 +172,7 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 	}
 
 	private void _apply(
-		long companyId, ObjectFolder objectFolder,
+		long companyId, Supplier<ObjectFolder> objectFolderSupplier,
 		SystemObjectDefinitionManager systemObjectDefinitionManager) {
 
 		if (_log.isDebugEnabled()) {
@@ -174,6 +190,8 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 			if ((objectDefinition == null) ||
 				(objectDefinition.getVersion() !=
 					systemObjectDefinitionManager.getVersion())) {
+
+				ObjectFolder objectFolder = objectFolderSupplier.get();
 
 				objectDefinition =
 					_objectDefinitionLocalService.

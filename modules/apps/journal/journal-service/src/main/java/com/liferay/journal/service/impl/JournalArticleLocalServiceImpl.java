@@ -1052,10 +1052,10 @@ public class JournalArticleLocalServiceImpl
 		for (Map.Entry<Locale, String> entry : newTitleMap.entrySet()) {
 			Locale locale = entry.getKey();
 
-			String urlTitle = StringBundler.concat(
-				entry.getValue(), StringPool.SPACE,
-				_language.get(locale, "duplicate"), StringPool.SPACE,
-				uniqueUrlTitleCount);
+			String urlTitle = StringUtil.appendParentheticalSuffix(
+				entry.getValue(),
+				_language.get(locale, "copy") + StringPool.SPACE +
+					uniqueUrlTitleCount);
 
 			newTitleMap.put(locale, urlTitle);
 			newUniqueURLTitleMap.put(
@@ -7789,6 +7789,9 @@ public class JournalArticleLocalServiceImpl
 	private int _getUniqueUrlTitleCount(
 		long groupId, String articleId, String urlTitle) {
 
+		String copy = _language.get(LocaleUtil.getMostRelevantLocale(), "copy");
+		String prefix = urlTitle;
+
 		for (int i = 1;; i++) {
 			JournalArticle article = fetchArticleByUrlTitle(groupId, urlTitle);
 
@@ -7798,14 +7801,8 @@ public class JournalArticleLocalServiceImpl
 				return i - 1;
 			}
 
-			String suffix = StringPool.DASH + i;
-
-			String prefix = urlTitle;
-
-			if (urlTitle.length() > suffix.length()) {
-				prefix = urlTitle.substring(
-					0, urlTitle.length() - suffix.length());
-			}
+			String suffix = StringBundler.concat(
+				StringPool.DASH, copy, StringPool.DASH, i, StringPool.DASH);
 
 			urlTitle = prefix + suffix;
 		}

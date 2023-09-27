@@ -81,7 +81,7 @@ public class SharepointExtRepository implements ExtRepository {
 
 		try {
 			String url = _sharepointURLHelper.getAddFileURL(
-				extRepositoryParentFolderKey, title);
+				extRepositoryParentFolderKey, fileName);
 
 			JSONObject jsonObject = _post(url, inputStream);
 

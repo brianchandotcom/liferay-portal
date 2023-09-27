@@ -96,6 +96,7 @@ export default function ExperienceSelector({
 			{label ? <label htmlFor={selectorId}>{label}</label> : null}
 
 			<Picker
+				UNSAFE_menuClassName="cadmin"
 				aria-label={
 					label || Liferay.Language.get('experience-selector')
 				}

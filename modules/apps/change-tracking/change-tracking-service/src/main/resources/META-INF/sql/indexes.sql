@@ -11,6 +11,8 @@ create index IX_FE644B52 on CTComment (ctCollectionId);
 create index IX_C5E592B8 on CTComment (ctEntryId);
 
 create unique index IX_295C418C on CTEntry (ctCollectionId, modelClassNameId, modelClassPK);
+create unique index IX_7FBB3312 on CTEntry (externalReferenceCode[$COLUMN_LENGTH:75$], companyId);
+create index IX_10F0C43B on CTEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 
 create index IX_9FB742FA on CTMessage (ctCollectionId);
 

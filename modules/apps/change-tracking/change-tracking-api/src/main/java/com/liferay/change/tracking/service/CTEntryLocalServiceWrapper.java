@@ -244,6 +244,30 @@ public class CTEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.change.tracking.model.CTEntry
+		fetchCTEntryByExternalReferenceCode(
+			String externalReferenceCode, long companyId) {
+
+		return _ctEntryLocalService.fetchCTEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the ct entry with the matching UUID and company.
+	 *
+	 * @param uuid the ct entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching ct entry, or <code>null</code> if a matching ct entry could not be found
+	 */
+	@Override
+	public com.liferay.change.tracking.model.CTEntry
+		fetchCTEntryByUuidAndCompanyId(String uuid, long companyId) {
+
+		return _ctEntryLocalService.fetchCTEntryByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -325,6 +349,33 @@ public class CTEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.change.tracking.model.CTEntry
+			getCTEntryByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctEntryLocalService.getCTEntryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns the ct entry with the matching UUID and company.
+	 *
+	 * @param uuid the ct entry's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching ct entry
+	 * @throws PortalException if a matching ct entry could not be found
+	 */
+	@Override
+	public com.liferay.change.tracking.model.CTEntry
+			getCTEntryByUuidAndCompanyId(String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ctEntryLocalService.getCTEntryByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	@Override
 	public long getCTRowCTCollectionId(
 			com.liferay.change.tracking.model.CTEntry ctEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -338,6 +389,16 @@ public class CTEntryLocalServiceWrapper
 
 		return _ctEntryLocalService.getExclusiveModelClassPKs(
 			ctCollectionId, modelClassNameId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return _ctEntryLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override

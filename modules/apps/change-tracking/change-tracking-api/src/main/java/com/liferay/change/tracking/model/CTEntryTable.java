@@ -25,6 +25,12 @@ public class CTEntryTable extends BaseTable<CTEntryTable> {
 
 	public final Column<CTEntryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CTEntryTable, String> uuid = createColumn(
+		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CTEntryTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CTEntryTable, Long> ctEntryId = createColumn(
 		"ctEntryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CTEntryTable, Long> companyId = createColumn(

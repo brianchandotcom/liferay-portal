@@ -6,6 +6,7 @@
 package com.liferay.change.tracking.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.exception.DuplicateCTEntryExternalReferenceCodeException;
 import com.liferay.change.tracking.exception.NoSuchEntryException;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalServiceUtil;
@@ -117,6 +118,10 @@ public class CTEntryPersistenceTest {
 
 		newCTEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCTEntry.setUuid(RandomTestUtil.randomString());
+
+		newCTEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newCTEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newCTEntry.setUserId(RandomTestUtil.nextLong());
@@ -142,6 +147,10 @@ public class CTEntryPersistenceTest {
 
 		Assert.assertEquals(
 			existingCTEntry.getMvccVersion(), newCTEntry.getMvccVersion());
+		Assert.assertEquals(existingCTEntry.getUuid(), newCTEntry.getUuid());
+		Assert.assertEquals(
+			existingCTEntry.getExternalReferenceCode(),
+			newCTEntry.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingCTEntry.getCtEntryId(), newCTEntry.getCtEntryId());
 		Assert.assertEquals(
@@ -167,6 +176,43 @@ public class CTEntryPersistenceTest {
 			newCTEntry.getModelMvccVersion());
 		Assert.assertEquals(
 			existingCTEntry.getChangeType(), newCTEntry.getChangeType());
+	}
+
+	@Test(expected = DuplicateCTEntryExternalReferenceCodeException.class)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		CTEntry ctEntry = addCTEntry();
+
+		CTEntry newCTEntry = addCTEntry();
+
+		newCTEntry.setCompanyId(ctEntry.getCompanyId());
+
+		newCTEntry = _persistence.update(newCTEntry);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newCTEntry);
+
+		newCTEntry.setExternalReferenceCode(ctEntry.getExternalReferenceCode());
+
+		_persistence.update(newCTEntry);
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -210,6 +256,15 @@ public class CTEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_C("null", 0L);
+
+		_persistence.countByERC_C((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CTEntry newCTEntry = addCTEntry();
 
@@ -234,8 +289,9 @@ public class CTEntryPersistenceTest {
 
 	protected OrderByComparator<CTEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"CTEntry", "mvccVersion", true, "ctEntryId", true, "companyId",
-			true, "userId", true, "createDate", true, "modifiedDate", true,
+			"CTEntry", "mvccVersion", true, "uuid", true,
+			"externalReferenceCode", true, "ctEntryId", true, "companyId", true,
+			"userId", true, "createDate", true, "modifiedDate", true,
 			"ctCollectionId", true, "modelClassNameId", true, "modelClassPK",
 			true, "modelMvccVersion", true, "changeType", true);
 	}
@@ -507,6 +563,17 @@ public class CTEntryPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				ctEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "modelClassPK"));
+
+		Assert.assertEquals(
+			ctEntry.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				ctEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(ctEntry.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				ctEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 	}
 
 	protected CTEntry addCTEntry() throws Exception {
@@ -515,6 +582,10 @@ public class CTEntryPersistenceTest {
 		CTEntry ctEntry = _persistence.create(pk);
 
 		ctEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		ctEntry.setUuid(RandomTestUtil.randomString());
+
+		ctEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		ctEntry.setCompanyId(RandomTestUtil.nextLong());
 

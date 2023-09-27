@@ -5,6 +5,7 @@
 
 package com.liferay.change.tracking.model;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -34,6 +35,8 @@ public class CTEntryWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("ctEntryId", getCtEntryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -54,6 +57,19 @@ public class CTEntryWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long ctEntryId = (Long)attributes.get("ctEntryId");
@@ -173,6 +189,16 @@ public class CTEntryWrapper
 	}
 
 	/**
+	 * Returns the external reference code of this ct entry.
+	 *
+	 * @return the external reference code of this ct entry
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
+	}
+
+	/**
 	 * Returns the model class name ID of this ct entry.
 	 *
 	 * @return the model class name ID of this ct entry
@@ -257,6 +283,16 @@ public class CTEntryWrapper
 		return model.getUserUuid();
 	}
 
+	/**
+	 * Returns the uuid of this ct entry.
+	 *
+	 * @return the uuid of this ct entry
+	 */
+	@Override
+	public String getUuid() {
+		return model.getUuid();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -310,6 +346,16 @@ public class CTEntryWrapper
 	@Override
 	public void setCtEntryId(long ctEntryId) {
 		model.setCtEntryId(ctEntryId);
+	}
+
+	/**
+	 * Sets the external reference code of this ct entry.
+	 *
+	 * @param externalReferenceCode the external reference code of this ct entry
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**
@@ -392,9 +438,24 @@ public class CTEntryWrapper
 		model.setUserUuid(userUuid);
 	}
 
+	/**
+	 * Sets the uuid of this ct entry.
+	 *
+	 * @param uuid the uuid of this ct entry
+	 */
+	@Override
+	public void setUuid(String uuid) {
+		model.setUuid(uuid);
+	}
+
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return model.getStagedModelType();
 	}
 
 	@Override

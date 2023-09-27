@@ -67,10 +67,14 @@ public class CTEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", uuid=");
+		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", ctEntryId=");
 		sb.append(ctEntryId);
 		sb.append(", companyId=");
@@ -101,6 +105,21 @@ public class CTEntryCacheModel
 		CTEntryImpl ctEntryImpl = new CTEntryImpl();
 
 		ctEntryImpl.setMvccVersion(mvccVersion);
+
+		if (uuid == null) {
+			ctEntryImpl.setUuid("");
+		}
+		else {
+			ctEntryImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			ctEntryImpl.setExternalReferenceCode("");
+		}
+		else {
+			ctEntryImpl.setExternalReferenceCode(externalReferenceCode);
+		}
+
 		ctEntryImpl.setCtEntryId(ctEntryId);
 		ctEntryImpl.setCompanyId(companyId);
 		ctEntryImpl.setUserId(userId);
@@ -133,6 +152,8 @@ public class CTEntryCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		ctEntryId = objectInput.readLong();
 
@@ -157,6 +178,20 @@ public class CTEntryCacheModel
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
 
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
+
 		objectOutput.writeLong(ctEntryId);
 
 		objectOutput.writeLong(companyId);
@@ -177,6 +212,8 @@ public class CTEntryCacheModel
 	}
 
 	public long mvccVersion;
+	public String uuid;
+	public String externalReferenceCode;
 	public long ctEntryId;
 	public long companyId;
 	public long userId;

@@ -465,6 +465,45 @@ definition {
 		AssertElementPresent(locator1 = "TextInput#TITLE");
 	}
 
+	@description = "This ensures that a document with a custom document type in current site scope can be copied to a new site with a basic document type."
+	@priority = 4
+	test CanNotCopyFileWithLocalTypeToOtherSite {
+		HeadlessSite.addSite(siteName = "Site Name 1");
+
+		HeadlessSite.addSite(siteName = "Site Name 2");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "site-name-1");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "Local Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "Local Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-1");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "Local Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-1");
+
+		DMDocument.copy(
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true",
+			siteName = "Site Name 2");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name 2",
+			siteURLKey = "site-name-2");
+
+		DMDocument.viewCP(
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "Basic Document");
+	}
+
 	@description = "This is a test for LPS-136815. It checks that a document type cannot be deleted when it is being used by a document."
 	@priority = 4
 	test CannotDeleteWhenBeingUsed {

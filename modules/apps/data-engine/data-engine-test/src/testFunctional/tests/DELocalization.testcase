@@ -1157,7 +1157,7 @@ definition {
 
 		DERenderer.assertDataInColorField(
 			fieldLabel = "颜色",
-			value = "ff0d0d");
+			value = "FF0D0D");
 	}
 
 	@description = "Verify that is possible to translate input data on the Date Field"

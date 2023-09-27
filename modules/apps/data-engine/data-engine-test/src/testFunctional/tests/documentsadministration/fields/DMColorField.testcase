@@ -209,7 +209,7 @@ definition {
 
 		DERenderer.assertDataInColorField(
 			fieldLabel = "Color",
-			value = "006ef8");
+			value = "006EF8");
 	}
 
 	@description = "This test validates the set of searchable property on the color field."

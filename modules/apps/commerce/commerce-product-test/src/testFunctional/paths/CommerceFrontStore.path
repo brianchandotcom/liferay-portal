@@ -111,6 +111,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FS_PRODUCT_UOM_SELECT</td>
+	<td>//select[contains(@class,'unit-of-measure-selector')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FS_PRODUCT_BOOLEAN_OPTION</td>
 	<td>//div/label[text()='${key_optionName}']/..//input[@type='checkbox']</td>
 	<td></td>

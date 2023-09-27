@@ -181,7 +181,7 @@ public class EditCPDefinitionOptionValueRelMVCActionCommand
 		BigDecimal price = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "price", BigDecimal.ZERO);
 		BigDecimal quantity = (BigDecimal)ParamUtil.getNumber(
-			actionRequest, "quantity");
+			actionRequest, "quantity", BigDecimal.ZERO);
 
 		return _cpDefinitionOptionValueRelService.
 			updateCPDefinitionOptionValueRel(

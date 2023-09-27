@@ -21,6 +21,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -456,6 +457,20 @@ public abstract class BaseCommerceOrderPriceCalculation
 					childCommerceOrderItem.getFinalPriceWithTaxAmount();
 			}
 
+			BigDecimal incrementalOrderQuantity = BigDecimal.ONE;
+
+			if (Validator.isNotNull(
+					childCommerceOrderItem.getUnitOfMeasureKey()) &&
+				BigDecimalUtil.gt(
+					childCommerceOrderItem.
+						getUnitOfMeasureIncrementalOrderQuantity(),
+					BigDecimal.ZERO)) {
+
+				incrementalOrderQuantity =
+					childCommerceOrderItem.
+						getUnitOfMeasureIncrementalOrderQuantity();
+			}
+
 			if (_equalsZero(promoPrice) && _greaterThanZero(childPromoPrice)) {
 				promoPrice = promoPrice.add(unitPrice);
 			}
@@ -464,18 +479,19 @@ public abstract class BaseCommerceOrderPriceCalculation
 
 				promoPrice = promoPrice.add(
 					_getPricePerUnit(
-						commerceCurrency, childUnitPrice,
-						childCommerceOrderItem.getQuantity(), parentQuantity));
+						commerceCurrency, incrementalOrderQuantity,
+						childUnitPrice, childCommerceOrderItem.getQuantity(),
+						parentQuantity));
 			}
 
 			unitPrice = unitPrice.add(
 				_getPricePerUnit(
-					commerceCurrency, childUnitPrice,
+					commerceCurrency, incrementalOrderQuantity, childUnitPrice,
 					childCommerceOrderItem.getQuantity(), parentQuantity));
 
 			promoPrice = promoPrice.add(
 				_getPricePerUnit(
-					commerceCurrency, childPromoPrice,
+					commerceCurrency, incrementalOrderQuantity, childPromoPrice,
 					childCommerceOrderItem.getQuantity(), parentQuantity));
 
 			discountAmount = discountAmount.add(childDiscountAmount);
@@ -532,14 +548,19 @@ public abstract class BaseCommerceOrderPriceCalculation
 	}
 
 	private BigDecimal _getPricePerUnit(
-		CommerceCurrency commerceCurrency, BigDecimal price,
-		BigDecimal quantity, BigDecimal parentQuantity) {
+		CommerceCurrency commerceCurrency, BigDecimal incrementalOrderQuantity,
+		BigDecimal price, BigDecimal quantity, BigDecimal parentQuantity) {
 
 		BigDecimal pricePerUnit = price.multiply(quantity);
 
-		return pricePerUnit.divide(
-			parentQuantity,
-			RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
+		RoundingMode roundingMode = RoundingMode.valueOf(
+			commerceCurrency.getRoundingMode());
+
+		pricePerUnit = pricePerUnit.divide(
+			incrementalOrderQuantity, commerceCurrency.getMaxFractionDigits(),
+			roundingMode);
+
+		return pricePerUnit.divide(parentQuantity, roundingMode);
 	}
 
 	private boolean _greaterThanZero(BigDecimal value) {

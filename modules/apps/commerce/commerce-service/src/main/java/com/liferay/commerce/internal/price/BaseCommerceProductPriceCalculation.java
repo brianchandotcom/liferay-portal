@@ -24,16 +24,18 @@ import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelCons
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.option.CommerceOptionValue;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.tax.CommerceTaxCalculation;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -269,7 +271,8 @@ public abstract class BaseCommerceProductPriceCalculation
 				CommerceProductPrice optionValueProductPrice =
 					getCommerceProductPrice(
 						commerceOptionValue.getCPInstanceId(),
-						optionValueQuantity, true, StringPool.BLANK,
+						optionValueQuantity, true,
+						commerceOptionValue.getUnitOfMeasureKey(),
 						commerceContext);
 
 				CommerceMoney optionValueUnitPriceCommerceMoney =
@@ -288,22 +291,61 @@ public abstract class BaseCommerceProductPriceCalculation
 						optionValueUnitPromoPriceCommerceMoney.getPrice();
 				}
 
+				BigDecimal incrementalOrderQuantity = BigDecimal.ONE;
+
+				if (Validator.isNotNull(
+						commerceOptionValue.getUnitOfMeasureKey())) {
+
+					CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+						cpInstanceUnitOfMeasureLocalService.
+							fetchCPInstanceUnitOfMeasure(
+								commerceOptionValue.getCPInstanceId(),
+								commerceOptionValue.getUnitOfMeasureKey());
+
+					if (cpInstanceUnitOfMeasure != null) {
+						incrementalOrderQuantity =
+							cpInstanceUnitOfMeasure.
+								getIncrementalOrderQuantity();
+					}
+				}
+
+				CommerceCurrency commerceCurrency =
+					optionValueUnitPriceCommerceMoney.getCommerceCurrency();
+
+				int precision = commerceCurrency.getMaxFractionDigits();
+
 				if (BigDecimalUtil.gt(
 						optionValueUnitPromoPrice, BigDecimal.ZERO) &&
 					BigDecimalUtil.isZero(promoPrice)) {
 
 					promoPrice = promoPrice.add(unitPrice);
 				}
-				else if (BigDecimalUtil.gt(promoPrice, BigDecimal.ZERO)) {
+				else if (BigDecimalUtil.isZero(optionValueUnitPromoPrice) &&
+						 BigDecimalUtil.gt(promoPrice, BigDecimal.ZERO)) {
+
+					BigDecimal price = optionValueUnitPrice.multiply(
+						optionValueQuantity);
+
 					promoPrice = promoPrice.add(
-						optionValueUnitPrice.multiply(optionValueQuantity));
+						price.divide(
+							incrementalOrderQuantity, precision,
+							RoundingMode.HALF_UP));
 				}
 
+				BigDecimal price = optionValueUnitPrice.multiply(
+					optionValueQuantity);
+
 				unitPrice = unitPrice.add(
-					optionValueUnitPrice.multiply(optionValueQuantity));
+					price.divide(
+						incrementalOrderQuantity, precision,
+						RoundingMode.HALF_UP));
+
+				price = optionValueUnitPromoPrice.multiply(optionValueQuantity);
 
 				promoPrice = promoPrice.add(
-					optionValueUnitPromoPrice.multiply(optionValueQuantity));
+					price.divide(
+						incrementalOrderQuantity, precision,
+						RoundingMode.HALF_UP));
 
 				CommerceMoney optionValueFinalPriceCommerceMoney =
 					optionValueProductPrice.getFinalPrice();
@@ -411,6 +453,10 @@ public abstract class BaseCommerceProductPriceCalculation
 
 	@Reference
 	protected CPInstanceLocalService cpInstanceLocalService;
+
+	@Reference
+	protected CPInstanceUnitOfMeasureLocalService
+		cpInstanceUnitOfMeasureLocalService;
 
 	private BigDecimal _getCPDefinitionOptionMinDynamicPrice(
 			CPDefinitionOptionRel cpDefinitionOptionRel,

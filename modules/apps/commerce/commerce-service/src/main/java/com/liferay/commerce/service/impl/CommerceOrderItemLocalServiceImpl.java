@@ -200,8 +200,8 @@ public class CommerceOrderItemLocalServiceImpl
 				commerceProductPrice, commerceOptionValueCPInstance,
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceOptionValue.toJSON(), currentQuantity, BigDecimal.ZERO,
-				BigDecimal.ZERO, commerceOptionValue.getUnitOfMeasureKey(),
-				serviceContext);
+				commerceProductPrice.getUnitOfMeasureIncrementalOrderQuantity(),
+				commerceOptionValue.getUnitOfMeasureKey(), serviceContext);
 
 			if (!_isStaticPriceType(commerceOptionValue.getPriceType())) {
 				childCommerceOrderItem = commerceOrderItemPersistence.update(
@@ -209,6 +209,9 @@ public class CommerceOrderItemLocalServiceImpl
 
 				continue;
 			}
+
+			childCommerceOrderItem.setUnitOfMeasureIncrementalOrderQuantity(
+				BigDecimal.ONE);
 
 			commerceProductPrice = _getStaticCommerceProductPrice(
 				commerceOptionValue.getCPInstanceId(),

@@ -260,8 +260,16 @@ public class CommerceProductPriceCalculationV2Impl
 					commerceMoneyFactory.priceOnApplicationCommerceMoney());
 			}
 			else {
-				commerceProductPriceImpl.setUnitPromoPrice(
-					commerceMoneyFactory.emptyCommerceMoney());
+				if (BigDecimalUtil.gt(updatedPrices[1], BigDecimal.ZERO)) {
+					commerceProductPriceImpl.setUnitPromoPrice(
+						commerceMoneyFactory.create(
+							commerceContext.getCommerceCurrency(),
+							updatedPrices[1]));
+				}
+				else {
+					commerceProductPriceImpl.setUnitPromoPrice(
+						commerceMoneyFactory.emptyCommerceMoney());
+				}
 			}
 		}
 		else {

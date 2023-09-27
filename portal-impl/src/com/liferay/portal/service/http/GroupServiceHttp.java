@@ -134,48 +134,6 @@ public class GroupServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.model.Group
-			fetchGroupByExternalReferenceCode(
-				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				GroupServiceUtil.class, "fetchGroupByExternalReferenceCode",
-				_fetchGroupByExternalReferenceCodeParameterTypes2);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, companyId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.portal.kernel.model.Group)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	public static com.liferay.portal.kernel.model.Group addOrUpdateGroup(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
 			long parentGroupId, long liveGroupId,
@@ -190,7 +148,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "addOrUpdateGroup",
-				_addOrUpdateGroupParameterTypes3);
+				_addOrUpdateGroupParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, parentGroupId, liveGroupId,
@@ -230,7 +188,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "addRoleGroups",
-				_addRoleGroupsParameterTypes4);
+				_addRoleGroupsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, roleId, groupIds);
@@ -266,7 +224,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "checkRemoteStagingGroup",
-				_checkRemoteStagingGroupParameterTypes5);
+				_checkRemoteStagingGroupParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -300,7 +258,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "deleteGroup",
-				_deleteGroupParameterTypes6);
+				_deleteGroupParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -334,7 +292,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "disableStaging",
-				_disableStagingParameterTypes7);
+				_disableStagingParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -368,7 +326,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "enableStaging",
-				_enableStagingParameterTypes8);
+				_enableStagingParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -386,6 +344,48 @@ public class GroupServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.portal.kernel.model.Group
+			fetchGroupByExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				GroupServiceUtil.class, "fetchGroupByExternalReferenceCode",
+				_fetchGroupByExternalReferenceCodeParameterTypes8);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, companyId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.model.Group)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -1756,28 +1756,28 @@ public class GroupServiceHttp {
 		int.class, boolean.class, int.class, String.class, boolean.class,
 		boolean.class, com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[]
-		_fetchGroupByExternalReferenceCodeParameterTypes2 = new Class[] {
-			String.class, long.class
-		};
-	private static final Class<?>[] _addOrUpdateGroupParameterTypes3 =
+	private static final Class<?>[] _addOrUpdateGroupParameterTypes2 =
 		new Class[] {
 			String.class, long.class, long.class, java.util.Map.class,
 			java.util.Map.class, int.class, boolean.class, int.class,
 			String.class, boolean.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _addRoleGroupsParameterTypes4 =
+	private static final Class<?>[] _addRoleGroupsParameterTypes3 =
 		new Class[] {long.class, long[].class};
-	private static final Class<?>[] _checkRemoteStagingGroupParameterTypes5 =
+	private static final Class<?>[] _checkRemoteStagingGroupParameterTypes4 =
 		new Class[] {long.class};
-	private static final Class<?>[] _deleteGroupParameterTypes6 = new Class[] {
+	private static final Class<?>[] _deleteGroupParameterTypes5 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _disableStagingParameterTypes7 =
+	private static final Class<?>[] _disableStagingParameterTypes6 =
 		new Class[] {long.class};
-	private static final Class<?>[] _enableStagingParameterTypes8 =
+	private static final Class<?>[] _enableStagingParameterTypes7 =
 		new Class[] {long.class};
+	private static final Class<?>[]
+		_fetchGroupByExternalReferenceCodeParameterTypes8 = new Class[] {
+			String.class, long.class
+		};
 	private static final Class<?>[] _getCompanyGroupParameterTypes9 =
 		new Class[] {long.class};
 	private static final Class<?>[] _getGroupParameterTypes10 = new Class[] {

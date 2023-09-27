@@ -7059,6 +7059,11 @@ public class ServiceBuilder {
 				"data-source", entity.getDataSource());
 		}
 
+		if (entity.isChangeTrackingEnabled()) {
+			newLocalizedEntityElement.addAttribute(
+				"change-tracking-enabled", "true");
+		}
+
 		if (entity.isDeprecated()) {
 			newLocalizedEntityElement.addAttribute("deprecated", "true");
 		}

@@ -417,6 +417,27 @@ public class ObjectValidationRuleLocalServiceTest {
 				objectValidationRule.getOutputType(),
 				objectValidationRule.getScript(),
 				objectValidationRule.getObjectValidationRuleSettings()));
+
+		ObjectValidationRule systemObjectValidationRule =
+			_addObjectValidationRule(
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringPool.BLANK,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				_VALID_DDM_SCRIPT, true, Collections.emptyList());
+
+		AssertUtils.assertFailure(
+			ObjectValidationRuleSystemException.class, false,
+			"Only allowed bundles can edit system object validation rules",
+			() -> _objectValidationRuleLocalService.updateObjectValidationRule(
+				StringPool.BLANK,
+				systemObjectValidationRule.getObjectValidationRuleId(), false,
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				_VALID_DDM_SCRIPT, Collections.emptyList()));
 	}
 
 	private ObjectValidationRule _addObjectValidationRule(

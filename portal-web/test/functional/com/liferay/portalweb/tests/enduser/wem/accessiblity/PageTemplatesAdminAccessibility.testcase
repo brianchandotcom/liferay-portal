@@ -1,0 +1,67 @@
+@component-name = "portal-wcm"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.accessibility = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Echo Accessibility";
+	property testray.main.component.name = "Page Templates";
+
+	setUp {
+		task ("Set up virtual instance") {
+			TestCase.setUpPortalInstance();
+		}
+
+		task ("Sign in") {
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			HeadlessSite.addSite(siteName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a test for LPS-173150. View the accessibility of page template import."
+	@priority = 3
+	test ViewAccessibilityOfPageTemplateImport {
+		task ("Given a user accesses to the Page Templates admin") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("When the user accesses to the page template import page") {
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Import");
+
+			WaitForPageLoad();
+		}
+
+		task ("Then the page template import page should have correct accessibility") {
+			AssertAccessible();
+		}
+
+		task ("When the user imports a page template set") {
+			UploadDependencyFile.uploadArchiveFile(fileName = "page-templates-with-invalid-value.zip");
+
+			Button.clickImport();
+
+			AssertTextEquals(
+				locator1 = "Message#SUCCESS_IMPORT",
+				value1 = "1 item was imported.");
+
+			AssertTextEquals(
+				locator1 = "Message#ERROR_IMPORT",
+				value1 = "1 item could not be imported.");
+		}
+
+		task ("Then the import results page should have correct accessibility") {
+			Panel.expandPanel(panel = "1 item was imported.");
+
+			AssertElementAccessible(locator1 = "//div[contains(@id,'main-content')]//div[contains(@role,'tabpanel')]");
+
+			AssertElementAccessible(locator1 = "xpath=(//div[contains(@id,'main-content')]//div[contains(@class,'panel-body')])[2]");
+		}
+	}
+
+}

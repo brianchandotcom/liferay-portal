@@ -189,6 +189,8 @@ definition {
 	@description = "This is a test for LPS-192836. Check the accessibility when selecting feature image from Document and Media in web content creation."
 	@priority = 3
 	test ViewAccessibilityOfFeaturedImageSection {
+		property custom.properties = "feature.flag.LPS-180855=true";
+
 		var siteName = StringUtil.randomString(8);
 
 		var siteURLKey = StringUtil.toLowerCase(${siteName});

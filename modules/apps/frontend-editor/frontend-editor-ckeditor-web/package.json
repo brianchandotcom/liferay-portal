@@ -3,7 +3,7 @@
 		"ckeditor4": "4.22.1",
 		"ckeditor4-react": "1.4.2",
 		"frontend-js-web": "*",
-		"liferay-ckeditor": "4.18.0-liferay.4",
+		"liferay-ckeditor": "4.21.0-liferay.1",
 		"prop-types": "15.7.2",
 		"react": "16.12.0"
 	},

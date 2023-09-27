@@ -86,6 +86,84 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			</p>
 		</div>
 	</c:when>
+	<c:when test="<%= ListUtil.isNotEmpty(layoutPageTemplateCollections) && ListUtil.isEmpty(layoutPageTemplateEntries) && (layoutPageTemplateCollections.size() == 1) %>">
+
+		<%
+		LayoutPageTemplateCollection layoutPageTemplateCollection = layoutPageTemplateCollections.get(0);
+		%>
+
+		<div class="sidebar-header">
+			<clay:content-row
+				cssClass="sidebar-section"
+			>
+				<clay:content-col
+					expand="<%= true %>"
+				>
+					<h1 class="component-title">
+						<%= (layoutPageTemplateCollection != null) ? HtmlUtil.escape(layoutPageTemplateCollection.getName()) : LanguageUtil.get(request, "home") %>
+					</h1>
+
+					<h2 class="component-subtitle">
+						<liferay-ui:message key="folder" />
+					</h2>
+				</clay:content-col>
+			</clay:content-row>
+		</div>
+
+		<div class="sidebar-body">
+			<p class="sidebar-dt">
+				<liferay-ui:message key="num-of-items" />
+			</p>
+
+			<c:if test="<%= layoutPageTemplateCollection == null %>">
+				<p class="sidebar-dd text-secondary">
+					<%= displayPageTemplateInfoPanelDisplayContext.getHomeItemsCount(scopeGroupId) %>
+				</p>
+			</c:if>
+
+			<c:if test="<%= layoutPageTemplateCollection != null %>">
+				<p class="sidebar-dd text-secondary">
+					<%= displayPageTemplateInfoPanelDisplayContext.getLayoutPageTemplateCollectionItemsCount(layoutPageTemplateCollection) %>
+				</p>
+
+				<p class="sidebar-dt">
+					<liferay-ui:message key="location" />
+				</p>
+
+				<p class="sidebar-dd text-secondary">
+					<clay:icon
+						symbol="folder"
+					/>
+
+					<%= StringUtil.merge(displayPageTemplateInfoPanelDisplayContext.getLayoutPageTemplateCollectionPath(layoutPageTemplateCollection.getParentLayoutPageTemplateCollectionId()), " > ") %>
+				</p>
+
+				<p class="sidebar-dt">
+					<liferay-ui:message key="created" />
+				</p>
+
+				<p class="sidebar-dd text-secondary">
+					<%= dateFormatDateTime.format(layoutPageTemplateCollection.getCreateDate()) %>
+				</p>
+
+				<p class="sidebar-dt">
+					<liferay-ui:message key="modified" />
+				</p>
+
+				<p class="sidebar-dd text-secondary">
+					<%= dateFormatDateTime.format(layoutPageTemplateCollection.getModifiedDate()) %>
+				</p>
+
+				<p class="sidebar-dt">
+					<liferay-ui:message key="description" />
+				</p>
+
+				<p class="sidebar-dd text-secondary">
+					<%= HtmlUtil.escape(layoutPageTemplateCollection.getDescription()) %>
+				</p>
+			</c:if>
+		</div>
+	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
 			<clay:content-row

@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.JSPSourceUtil;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -261,7 +262,23 @@ public class JSPStylingCheck extends BaseStylingCheck {
 
 		matcher = _incorrectLineBreakPattern6.matcher(content);
 
-		return matcher.replaceAll("$1\n$2\t$3\n$2$4");
+		content = matcher.replaceAll("$1\n$2\t$3\n$2$4");
+
+		matcher = _incorrectLineBreakPattern7.matcher(content);
+
+		while (matcher.find()) {
+			int lineNumber = getLineNumber(content, matcher.start(1));
+
+			String line = SourceUtil.getLine(content, lineNumber);
+
+			if (!line.endsWith("%>")) {
+				addMessage(
+					fileName, "There should be a line break after '<%'",
+					getLineNumber(content, matcher.start()));
+			}
+		}
+
+		return content;
 	}
 
 	private static final Pattern _adjacentJavaBlocksPattern = Pattern.compile(
@@ -284,6 +301,8 @@ public class JSPStylingCheck extends BaseStylingCheck {
 		"(<%=)\n\t*(.*)\n\t*(%>)");
 	private static final Pattern _incorrectLineBreakPattern6 = Pattern.compile(
 		"(\n(\t+)\\w+='<%=) (HashMapBuilder\\..*) *(%>')");
+	private static final Pattern _incorrectLineBreakPattern7 = Pattern.compile(
+		"\n(\t*)(<% )(.*)");
 	private static final Pattern _incorrectSingleLineJavaSourcePattern =
 		Pattern.compile("(\t*)(<% (.*) %>)\n");
 	private static final Pattern _jspExpressionTagPattern = Pattern.compile(

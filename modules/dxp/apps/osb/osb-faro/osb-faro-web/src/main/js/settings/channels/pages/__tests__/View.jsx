@@ -112,7 +112,7 @@ describe('View Channel', () => {
 
 		expect(
 			screen.getByText(
-				'There are 0 Sites and 5 Channels synced to this property.'
+				'There are 0 sites and 5 channels synced to this property.'
 			)
 		).toBeInTheDocument();
 
@@ -127,6 +127,10 @@ describe('View Channel', () => {
 		expect(container.querySelector('div.modal-container')).toHaveClass(
 			'show'
 		);
+
+		expect(
+			screen.getByText('Unable to Delete Property')
+		).toBeInTheDocument();
 
 		expect(
 			screen.getByText('Access our documentation to learn more.')
@@ -160,7 +164,7 @@ describe('View Channel', () => {
 
 		expect(
 			screen.getByText(
-				'There are 5 Sites and 0 Channels synced to this property.'
+				'There are 5 sites and 0 channels synced to this property.'
 			)
 		).toBeInTheDocument();
 
@@ -177,6 +181,10 @@ describe('View Channel', () => {
 		);
 
 		expect(
+			screen.getByText('Unable to Delete Property')
+		).toBeInTheDocument();
+
+		expect(
 			screen.getByText('Access our documentation to learn more.')
 		).toBeInTheDocument();
 
@@ -186,6 +194,51 @@ describe('View Channel', () => {
 			'href',
 			'https://learn.liferay.com/en/w/analytics-cloud/workspace-settings/managing-properties#adding-and-removing-users-to-a-property'
 		);
+	});
+
+	it('should check error modal message and hyperlink on deleting property that has SITES and CHANNELS NOT synced', async () => {
+		API.user.fetchCurrentUser.mockReturnValueOnce(
+			Promise.resolve(data.mockUser())
+		);
+
+		API.channels.fetch.mockReturnValueOnce(
+			Promise.resolve(
+				data.mockChannel(1, 1, {
+					commerceChannelsCount: 0,
+					groupsCount: 0
+				})
+			)
+		);
+
+		const {container} = render(<DefaultComponent />);
+
+		jest.runAllTimers();
+
+		expect(
+			screen.getByText(
+				'There are 0 sites and 0 channels synced to this property.'
+			)
+		).toBeInTheDocument();
+
+		const deleteBtn = screen.getByTestId('delete');
+
+		fireEvent.click(deleteBtn);
+
+		expect(
+			container.querySelector('div.modal-container')
+		).toBeInTheDocument();
+
+		expect(container.querySelector('div.modal-container')).toHaveClass(
+			'show'
+		);
+
+		expect(screen.getByText('Delete Channel 1?')).toBeInTheDocument();
+
+		expect(
+			screen.getByText(
+				'To delete Channel 1, copy the sentence below to confirm your intention to delete property.'
+			)
+		).toBeInTheDocument();
 	});
 
 	it('should render a warning modal when the user toggles from All User to Select User property permissions', () => {

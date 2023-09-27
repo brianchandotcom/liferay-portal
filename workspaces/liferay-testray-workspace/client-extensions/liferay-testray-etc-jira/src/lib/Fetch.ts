@@ -22,12 +22,13 @@ export async function fetcher<T = any>(
 	return response.json();
 }
 
-const baseFetcher =
-	<T = any>(baseURL: string | URL, baseOptions?: RequestInit) =>
-	(url: string | URL, options?: RequestInit) =>
-		fetcher<T>(`${baseURL}${url}`, {
-			...baseOptions,
-			...options,
-		});
+const baseFetcher = <T = any>(
+	baseURL: string | URL,
+	baseOptions?: RequestInit
+) => (url: string | URL, options?: RequestInit) =>
+	fetcher<T>(`${baseURL}${url}`, {
+		...baseOptions,
+		...options,
+	});
 
 export {baseFetcher};

@@ -113,7 +113,8 @@ class Testray extends LiferayAuth {
 
 	public async getIssues(issues: string[], httpContext: HttpContext) {
 		const searchParams = getSearchParams({
-			fields: 'id,name,issueToCaseResultsIssues.r_caseResultToCaseResultsIssues_c_caseResult.r_caseToCaseResult_c_case.name,issueToCaseResultsIssues.r_caseResultToCaseResultsIssues_c_caseResult.r_caseToCaseResult_c_case.priority',
+			fields:
+				'id,name,issueToCaseResultsIssues.r_caseResultToCaseResultsIssues_c_caseResult.r_caseToCaseResult_c_case.name,issueToCaseResultsIssues.r_caseResultToCaseResultsIssues_c_caseResult.r_caseToCaseResult_c_case.priority',
 			filter: SearchBuilder.in('name', issues),
 			nestedFields:
 				'issueToCaseResultsIssues,r_caseResultToCaseResultsIssues_c_caseResult',

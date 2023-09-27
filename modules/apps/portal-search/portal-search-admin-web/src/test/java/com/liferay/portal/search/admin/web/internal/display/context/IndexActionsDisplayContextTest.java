@@ -1,10 +1,16 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 package com.liferay.portal.search.admin.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.instances.service.PortalInstancesLocalService;
+import com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.search.admin.web.internal.display.context.builder.IndexActionsDisplayContextBuilder;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.cluster.StatsInformation;
@@ -13,12 +19,19 @@ import com.liferay.portal.search.configuration.ReindexConfiguration;
 import com.liferay.portal.search.index.IndexInformation;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
+
 import org.mockito.Mockito;
 
+/**
+ * @author Felipe Lorenz
+ */
 public class IndexActionsDisplayContextTest {
 
 	@ClassRule
@@ -27,9 +40,10 @@ public class IndexActionsDisplayContextTest {
 
 	@Before
 	public void setUp() {
-		setUpIndexInformation();
+		_setUpIndexInformation();
 		_setUpLanguage();
-		setUpPortalUtil();
+		_setUpPortalInstancesLocalServiceUtil();
+		_setUpPortalUtil();
 	}
 
 	@Test
@@ -106,23 +120,48 @@ public class IndexActionsDisplayContextTest {
 		return statsInformationFactory;
 	}
 
-	protected void setUpIndexInformation() {
-		indexInformation = Mockito.mock(IndexInformation.class);
+	private void _setUpIndexInformation() {
+		_indexInformation = Mockito.mock(IndexInformation.class);
 
 		Mockito.when(
-			indexInformation.getIndexNames()
+			_indexInformation.getIndexNames()
 		).thenReturn(
 			new String[] {"index1", "index2"}
 		);
 
 		Mockito.when(
-			indexInformation.getCompanyIndexName(Mockito.anyLong())
+			_indexInformation.getCompanyIndexName(Mockito.anyLong())
 		).thenAnswer(
 			invocation -> "index" + invocation.getArguments()[0]
 		);
 	}
 
-	protected void setUpPortalUtil() {
+	private void _setUpLanguage() {
+		_language = Mockito.mock(Language.class);
+
+		Mockito.doReturn(
+			"name"
+		).when(
+			_language
+		).get(
+			Mockito.any(HttpServletRequest.class), Mockito.anyString()
+		);
+	}
+
+	private void _setUpPortalInstancesLocalServiceUtil() {
+		PortalInstancesLocalService portalInstancesLocalService = Mockito.mock(
+			PortalInstancesLocalService.class);
+
+		Mockito.doReturn(
+			new long[0]
+		).when(
+			portalInstancesLocalService
+		).getCompanyIds();
+
+		PortalInstancesLocalServiceUtil.setService(portalInstancesLocalService);
+	}
+
+	private void _setUpPortalUtil() {
 		_portal = Mockito.mock(Portal.class);
 
 		Mockito.doAnswer(
@@ -135,20 +174,25 @@ public class IndexActionsDisplayContextTest {
 			Mockito.anyString(), Mockito.anyString()
 		);
 
+		Mockito.doReturn(
+			Mockito.mock(HttpServletRequest.class)
+		).when(
+			_portal
+		).getHttpServletRequest(
+			Mockito.any()
+		);
+
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(_portal);
 	}
 
-	protected IndexInformation indexInformation;
-
-	private void _setUpLanguage() {
-		_language = new LanguageImpl();
-	}
-
+	private IndexInformation _indexInformation;
 	private Language _language;
-	private SearchCapabilities _searchCapabilities;
-	private ReindexConfiguration _reindexConfiguration;
 	private Portal _portal;
+	private final ReindexConfiguration _reindexConfiguration = Mockito.mock(
+		ReindexConfiguration.class);
+	private final SearchCapabilities _searchCapabilities = Mockito.mock(
+		SearchCapabilities.class);
 
 }

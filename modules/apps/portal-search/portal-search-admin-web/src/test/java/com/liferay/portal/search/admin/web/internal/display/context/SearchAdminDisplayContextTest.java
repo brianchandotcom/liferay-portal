@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.search.admin.web.internal.display.context.builder.SearchAdminDisplayContextBuilder;
-import com.liferay.portal.search.cluster.StatsInformation;
-import com.liferay.portal.search.cluster.StatsInformationFactory;
 import com.liferay.portal.search.index.IndexInformation;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
@@ -188,42 +186,6 @@ public class SearchAdminDisplayContextTest {
 
 		Assert.assertEquals(
 			"connections", searchAdminDisplayContext.getSelectedTab());
-	}
-
-	protected StatsInformationFactory getStatsInformationFactory(
-		double available, double largest, double used) {
-
-		StatsInformationFactory statsInformationFactory = Mockito.mock(
-			StatsInformationFactory.class);
-
-		StatsInformation statsInformation = Mockito.mock(
-			StatsInformation.class);
-
-		Mockito.when(
-			statsInformation.getAvailableDiskSpace()
-		).thenReturn(
-			available
-		);
-
-		Mockito.when(
-			statsInformation.getSizeOfLargestIndex()
-		).thenReturn(
-			largest
-		);
-
-		Mockito.when(
-			statsInformation.getUsedDiskSpace()
-		).thenReturn(
-			used
-		);
-
-		Mockito.when(
-			statsInformationFactory.getStatsInformation()
-		).thenReturn(
-			statsInformation
-		);
-
-		return statsInformationFactory;
 	}
 
 	protected void setUpIndexInformation() {

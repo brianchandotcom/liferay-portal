@@ -22,6 +22,32 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-193213. The page should comply with WCAG 2.1 AA standard when the ellipsis menu of the card is open."
+	@priority = 3
+	test ViewAccessibilityOfDisplayPageTemplateConfigureAction {
+		property custom.properties = "feature.flag.LPS-195263=true";
+
+		task ("Given a user has a display page template") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("When the user opens the dropdown menu of display page template in the Page Templates admin") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(
+				key_card = "Display Page Name",
+				locator1 = "Card#SPECIFIC_CARD_ELLIPSIS");
+		}
+
+		task ("Then the configure action should have correct accessibility") {
+			AssertElementAccessible(locator1 = "//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//li[normalize-space()='Configure']");
+		}
+	}
+
 	@description = "This is a test for LPS-173150. View the accessibility of page template import."
 	@priority = 3
 	test ViewAccessibilityOfPageTemplateImport {

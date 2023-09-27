@@ -139,6 +139,14 @@ type Catalog = {
 	system: boolean;
 };
 
+type EmailAppInformation = {
+	dashboardLink: string;
+	orderID: number;
+	priceModel?: string;
+	productName?: string;
+	productType: string;
+};
+
 type Vocabulary = {
 	description: string;
 	externalReferenceCode: string;

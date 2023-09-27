@@ -1,7 +1,7 @@
 [
 	{
 		"active": true,
-		"conditionExpression": "productType == \"Cloud App\"",
+		"conditionExpression": "productType == \"cloud\"",
 		"externalReferenceCode": "MKT-CLOUD-EMAIL",
 		"label": {
 			"en_US": "Cloud Email Template"

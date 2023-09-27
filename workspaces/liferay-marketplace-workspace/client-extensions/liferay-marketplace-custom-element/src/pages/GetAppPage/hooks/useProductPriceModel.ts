@@ -7,21 +7,23 @@ import {useEffect, useState} from 'react';
 
 const useProductPriceModel = (product: Product | undefined) => {
 	const [isFreeApp, setIsFreeApp] = useState<boolean>(false);
+	const [priceModel, setPriceModel] = useState<string | undefined>('');
 
 	useEffect(() => {
-		const productPriceModel = product?.productSpecifications?.filter(
+		const productPriceModel = product?.productSpecifications?.find(
 			(specification) => specification?.specificationKey === 'price-model'
 		);
 
-		productPriceModel?.map((priceModel) => {
-			if (priceModel.value.en_US.toLowerCase() === 'free') {
-				setIsFreeApp(true);
-			}
-		});
+		setPriceModel(productPriceModel?.value.en_US);
+
+		if (productPriceModel?.value.en_US.toLowerCase() === 'free') {
+			setIsFreeApp(true);
+		}
 	}, [product?.productSpecifications]);
 
 	return {
 		isFreeApp,
+		priceModel,
 	};
 };
 

@@ -1071,3 +1071,11 @@ export async function postAccountByERCUserAccountByERC(
 		{headers, method: 'POST'}
 	);
 }
+
+export async function postEmailAppInformation(emailInformation: any) {
+	await fetch(`${baseURL}/o/c/getappinformations/`, {
+		body: JSON.stringify(emailInformation),
+		headers,
+		method: 'POST',
+	});
+}

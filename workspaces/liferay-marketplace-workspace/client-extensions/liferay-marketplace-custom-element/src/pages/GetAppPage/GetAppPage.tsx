@@ -6,7 +6,11 @@
 import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 
-import {getPaymentMethodURL, postCheckoutCart} from '../../utils/api';
+import {
+	getPaymentMethodURL,
+	postCheckoutCart,
+	postEmailAppInformation,
+} from '../../utils/api';
 import {getUrlParam} from '../../utils/getUrlParam';
 import AccountSelection from './components/AccountSelection';
 import ProductFooter from './components/Footer';
@@ -20,6 +24,7 @@ import useGetChannelInfo from './hooks/useGetChannelInfo';
 import useGetProductSkus from './hooks/useGetProductSkus';
 import useProductPriceModel from './hooks/useProductPriceModel';
 import buildNewCart from './utils/buildNewCart';
+import getEmailInformation from './utils/getEmailInformation';
 import {getProductOrderTypes} from './utils/getProductOrderTypes';
 import {getProductSpecificationValues} from './utils/getProductSpecificationValues';
 import getReplaceCurrentURL from './utils/getReplaceCurrentURL';
@@ -78,16 +83,19 @@ const GetAppFlow = () => {
 
 	const {product, selectedAccount} = getValues();
 	const productId = product?.productId;
+	const productName = product?.name.en_US;
 
 	const {sku} = useGetProductSkus(product, setEnableTrialMethod);
 	const {channel} = useGetChannelInfo();
 	const {addresses} = useGetAddresses(selectedAccount);
-	const {isFreeApp} = useProductPriceModel(product);
+	const {isFreeApp, priceModel} = useProductPriceModel(product);
 
 	async function handleGetApp() {
 		const productSpecificationValues = await getProductSpecificationValues(
 			productId
 		);
+
+		const productType = productSpecificationValues.en_US;
 
 		const orderType = await getProductOrderTypes(
 			productSpecificationValues
@@ -108,6 +116,21 @@ const GetAppFlow = () => {
 		const cartResponse = await postCartByPaymentMethod(cart, channel.id);
 
 		await postCheckoutCart({cartId: cartResponse.id});
+
+		const dashboardURL = getReplaceCurrentURL(
+			'get-app',
+			'customer-dashboard'
+		);
+
+		const emailAppInformation = getEmailInformation(
+			dashboardURL,
+			cartResponse.id,
+			priceModel,
+			productName,
+			productType
+		);
+
+		await postEmailAppInformation(emailAppInformation);
 
 		const encodedOrderId = `${encodeURIComponent(cartResponse.id)}`;
 

@@ -43,9 +43,9 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
-				"en-US": "Project Name"
+				"en-US": "Product Name"
 			},
-			"name": "projectName",
+			"name": "productName",
 			"required": false
 		},
 		{

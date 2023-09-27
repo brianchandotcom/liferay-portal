@@ -23,6 +23,8 @@ definition {
 	@description = "This is a test for LPS-193213. Using Keyboard navigation it is possible to access the configuration of an existing Display Page Template from the ellipsis menu of the card."
 	@priority = 3
 	test ConfigureDisplayPageTemplateInPageTemplatesAdminViaKeyboard {
+		property custom.properties = "feature.flag.LPS-195263=true";
+
 		task ("Given a user has a display page template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",

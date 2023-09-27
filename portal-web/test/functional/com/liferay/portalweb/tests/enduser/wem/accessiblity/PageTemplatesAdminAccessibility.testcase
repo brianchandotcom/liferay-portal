@@ -25,6 +25,8 @@ definition {
 	@description = "This is a test for LPS-193213. The page should comply with WCAG 2.1 AA standard when the ellipsis menu of the card is open."
 	@priority = 3
 	test ViewAccessibilityOfDisplayPageTemplateConfigureAction {
+		property custom.properties = "feature.flag.LPS-195263=true";
+
 		task ("Given a user has a display page template") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",

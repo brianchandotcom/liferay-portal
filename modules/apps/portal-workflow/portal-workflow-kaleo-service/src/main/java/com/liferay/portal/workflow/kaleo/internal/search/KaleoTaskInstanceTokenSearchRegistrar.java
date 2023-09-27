@@ -36,6 +36,7 @@ public class KaleoTaskInstanceTokenSearchRegistrar {
 					KaleoTaskInstanceTokenField.ASSET_TITLE);
 				modelSearchDefinition.setModelIndexWriteContributor(
 					modelIndexWriterContributor);
+				modelSearchDefinition.setPermissionAware(false);
 			});
 	}
 

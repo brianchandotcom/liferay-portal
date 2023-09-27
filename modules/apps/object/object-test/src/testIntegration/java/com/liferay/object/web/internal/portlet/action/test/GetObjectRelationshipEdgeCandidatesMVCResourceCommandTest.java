@@ -220,6 +220,37 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 			objectRelationshipBBB_AAAA.getObjectRelationshipId());
 	}
 
+	@Test
+	public void testPreventBidingWithinPublishedDefinitions() throws Exception {
+		ObjectDefinition objectDefinitionPublished =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				"PUB", _objectDefinitionLocalService);
+
+		ObjectDefinition objectDefinitionA =
+			ObjectDefinitionTestUtil.addObjectDefinition(
+				"A", _objectDefinitionLocalService);
+
+		_objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			objectDefinitionPublished.getObjectDefinitionId(),
+			objectDefinitionA.getObjectDefinitionId(), 0,
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.randomId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinitionPublished.getObjectDefinitionId());
+
+		Assert.assertEquals(
+			_jsonFactory.createJSONArray(
+			).toString(),
+			_getObjectRelationshipEdgeCandidatesJSONArray(
+				2, objectDefinitionA.getObjectDefinitionId()
+			).toString());
+	}
+
 	private String _getEdgeLabel(
 		ObjectDefinition objectDefinition,
 		ObjectRelationship objectRelationship) {
@@ -258,39 +289,6 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		return JSONFactoryUtil.createJSONArray(
 			byteArrayOutputStream.toString());
-	}
-
-	@Test
-	public void testPreventBidingWithinPublishedDefinitions() throws Exception {
-
-		ObjectDefinition objectDefinitionPublished =
-			ObjectDefinitionTestUtil.addObjectDefinition(
-				"PUB", _objectDefinitionLocalService);
-
-		ObjectDefinition objectDefinitionA =
-			ObjectDefinitionTestUtil.addObjectDefinition(
-				"A", _objectDefinitionLocalService);
-
-		ObjectRelationship objectRelationshipPUB_A =
-			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
-				objectDefinitionPublished.getObjectDefinitionId(),
-				objectDefinitionA.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(),
-			objectDefinitionPublished.getObjectDefinitionId());
-
-		Assert.assertEquals(
-			_jsonFactory.createJSONArray(
-			).toString(),
-			_getObjectRelationshipEdgeCandidatesJSONArray(
-				2, objectDefinitionA.getObjectDefinitionId()
-			).toString());
 	}
 
 	@Inject

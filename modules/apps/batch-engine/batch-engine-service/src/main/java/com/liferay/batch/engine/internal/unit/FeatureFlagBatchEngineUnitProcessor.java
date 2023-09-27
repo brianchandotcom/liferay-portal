@@ -59,8 +59,8 @@ public class FeatureFlagBatchEngineUnitProcessor {
 		_serviceRegistration.unregister();
 	}
 
-	private Tuple _getTuple(long companyId, String featureFlag) {
-		return new Tuple(companyId, featureFlag);
+	private Tuple _getTuple(long companyId, String featureFlagKey) {
+		return new Tuple(companyId, featureFlagKey);
 	}
 
 	@Reference

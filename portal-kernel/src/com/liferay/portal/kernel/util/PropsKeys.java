@@ -2546,30 +2546,6 @@ public interface PropsKeys {
 		"spring.infrastructure.configs";
 
 	public static final String
-		SQL_DATA_COM_LIFERAY_PORTAL_MODEL_COUNTRY_COUNTRY_ID =
-			"sql.data.com.liferay.portal.kernel.model.Country.country.id";
-
-	public static final String
-		SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_COMPANY_ADDRESS =
-			"sql.data.com.liferay.portal.kernel.model.ListType.company.address";
-
-	public static final String
-		SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_COMPANY_EMAIL_ADDRESS =
-			"sql.data.com.liferay.portal.kernel.model.ListType.company.email.address";
-
-	public static final String
-		SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_CONTACT_EMAIL_ADDRESS =
-			"sql.data.com.liferay.portal.kernel.model.ListType.contact.email.address";
-
-	public static final String
-		SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_ORGANIZATION_STATUS =
-			"sql.data.com.liferay.portal.kernel.model.ListType.organization.status";
-
-	public static final String
-		SQL_DATA_COM_LIFERAY_PORTAL_MODEL_REGION_REGION_ID =
-			"sql.data.com.liferay.portal.kernel.model.Region.region.id";
-
-	public static final String
 		STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL =
 			"staging.draft.export.import.configuration.check.interval";
 

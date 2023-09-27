@@ -5,10 +5,6 @@
 
 package com.liferay.portal.kernel.model;
 
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
-
 /**
  * @author Alexander Chow
  */
@@ -29,19 +25,8 @@ public class ListTypeConstants {
 	public static final String COMPANY_ADDRESS =
 		Company.class.getName() + ADDRESS;
 
-	public static final int COMPANY_ADDRESS_DEFAULT = GetterUtil.getInteger(
-		PropsUtil.get(
-			PropsKeys.
-				SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_COMPANY_ADDRESS));
-
 	public static final String COMPANY_EMAIL_ADDRESS =
 		Company.class.getName() + EMAIL_ADDRESS;
-
-	public static final int COMPANY_EMAIL_ADDRESS_DEFAULT =
-		GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.
-					SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_COMPANY_EMAIL_ADDRESS));
 
 	public static final String COMPANY_PHONE = Company.class.getName() + PHONE;
 
@@ -59,12 +44,6 @@ public class ListTypeConstants {
 
 	public static final String CONTACT_EMAIL_ADDRESS =
 		Contact.class.getName() + EMAIL_ADDRESS;
-
-	public static final int CONTACT_EMAIL_ADDRESS_DEFAULT =
-		GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.
-					SQL_DATA_COM_LIFERAY_PORTAL_MODEL_LISTTYPE_CONTACT_EMAIL_ADDRESS));
 
 	public static final String CONTACT_PHONE = Contact.class.getName() + PHONE;
 

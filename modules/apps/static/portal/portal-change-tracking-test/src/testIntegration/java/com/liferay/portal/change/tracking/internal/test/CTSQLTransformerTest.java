@@ -1013,7 +1013,7 @@ public class CTSQLTransformerTest {
 
 		if (addedPK != null) {
 			_ctEntryLocalService.addCTEntry(
-				ctCollection.getCtCollectionId(),
+				null, ctCollection.getCtCollectionId(),
 				_classNameLocalService.getClassNameId(modelClass),
 				_getCTModelProxy(addedPK), TestPropsValues.getUserId(),
 				CTConstants.CT_CHANGE_TYPE_ADDITION);
@@ -1021,7 +1021,7 @@ public class CTSQLTransformerTest {
 
 		if (modifiedPK != null) {
 			_ctEntryLocalService.addCTEntry(
-				ctCollection.getCtCollectionId(),
+				null, ctCollection.getCtCollectionId(),
 				_classNameLocalService.getClassNameId(modelClass),
 				_getCTModelProxy(modifiedPK), TestPropsValues.getUserId(),
 				CTConstants.CT_CHANGE_TYPE_MODIFICATION);
@@ -1029,7 +1029,7 @@ public class CTSQLTransformerTest {
 
 		if (removedPK != null) {
 			_ctEntryLocalService.addCTEntry(
-				ctCollection.getCtCollectionId(),
+				null, ctCollection.getCtCollectionId(),
 				_classNameLocalService.getClassNameId(modelClass),
 				_getCTModelProxy(removedPK), TestPropsValues.getUserId(),
 				CTConstants.CT_CHANGE_TYPE_DELETION);

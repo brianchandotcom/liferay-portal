@@ -115,7 +115,7 @@ public class CacheMissPersistenceImplTest {
 					_ctCollection.getCtCollectionId())) {
 
 			_ctEntryLocalService.addCTEntry(
-				_ctCollection.getCtCollectionId(),
+				null, _ctCollection.getCtCollectionId(),
 				_classNameLocalService.getClassNameId(
 					CacheMissEntry.class.getName()),
 				CacheMissEntryUtil.create(RandomTestUtil.nextLong()),

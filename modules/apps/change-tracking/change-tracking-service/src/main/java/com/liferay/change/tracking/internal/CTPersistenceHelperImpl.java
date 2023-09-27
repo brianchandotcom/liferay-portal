@@ -56,7 +56,7 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 				}
 
 				_ctEntryLocalService.addCTEntry(
-					ctCollectionId, modelClassNameId, ctModel, userId,
+					null, ctCollectionId, modelClassNameId, ctModel, userId,
 					changeType);
 
 				return true;
@@ -136,7 +136,7 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 		try {
 			if (ctEntry == null) {
 				_ctEntryLocalService.addCTEntry(
-					ctCollectionId, modelClassNameId, ctModel,
+					null, ctCollectionId, modelClassNameId, ctModel,
 					PrincipalThreadLocal.getUserId(),
 					CTConstants.CT_CHANGE_TYPE_DELETION);
 			}

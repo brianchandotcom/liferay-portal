@@ -475,7 +475,6 @@ definition {
 	@description = "This is a use case for LPS-188222."
 	@priority = 4
 	test PerformConcurrentReindexAndSwitchElasticsearchConnections {
-		property custom.properties = "feature.flag.LPS-183661=true";
 		property embedded.elasticsearch.only = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
@@ -554,7 +553,6 @@ definition {
 	@description = "Test that a web content article is still available both during and after a Sync Reindex"
 	@priority = 4
 	test ReindexWebContentWithSyncExecutionMode {
-		property custom.properties = "feature.flag.LPS-183661=true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -566,22 +564,10 @@ definition {
 				title = "WC Title");
 		}
 
-		task ("Begin a reindex using sync execution mode") {
-			SearchAdministration.openIndexActions();
-
-			Click(locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN");
-
-			Click(
-				key_reindexMode = "Sync",
-				locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN_ITEM");
-
-			Click(
-				key_action = "All Search Indexes",
-				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
-
-			Click(
-				key_text = "Execute",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		task ("Begin a full reindex using sync execution mode") {
+			SearchAdministration.executeReindex(
+				reindexMode = "Sync",
+				waitForReindexFinished = "false");
 		}
 
 		task ("Assert that the Web Content Article is still present within Web Content during sync reindex") {
@@ -603,13 +589,7 @@ definition {
 				key_reindexMode = "Sync",
 				locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN_ITEM");
 
-			Click(
-				key_action = "Web Content Article",
-				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
-
-			Click(
-				key_text = "Execute",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+			SearchAdministration.startReindex(action = "Web Content Article");
 		}
 
 		task ("Assert that the Web Content Article is still present within Web Content after sync reindex") {
@@ -622,7 +602,6 @@ definition {
 	@description = "This is a use case for LPS-177665."
 	@priority = 4
 	test ReindexWithConcurrentExecutionMode {
-		property custom.properties = "feature.flag.LPS-183661=true";
 		property portal.release = "false";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
@@ -637,29 +616,10 @@ definition {
 		}
 
 		task ("Begin a reindex of the primary Portal instance using concurrent execution mode") {
-			SearchAdministration.openIndexActions();
-
-			Click(locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN");
-
-			Click(
-				key_reindexMode = "Concurrent",
-				locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN_ITEM");
-
-			Check.checkNotVisible(
-				locator1 = "Radio#ANY",
-				radioLabel = "Selected Instances");
-
-			Check.checkNotVisible(
-				key_executionScope = "liferay.com",
-				locator1 = "SearchAdmin#SELECTED_INSTANCE_INDEX_CHECKBOX");
-
-			Click(
-				key_action = "All Search Indexes",
-				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
-
-			Click(
-				key_text = "Execute",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+			SearchAdministration.executeReindex(
+				executionScope = "liferay.com",
+				reindexMode = "Concurrent",
+				waitForReindexFinished = "false");
 		}
 
 		task ("Assert that the indexNameNext field is now populated in the database table 'Company'") {
@@ -710,7 +670,6 @@ definition {
 	@description = "This is a use case for LPS-177670."
 	@priority = 4
 	test ReindexWithSyncExecutionMode {
-		property custom.properties = "feature.flag.LPS-183661=true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -766,21 +725,9 @@ definition {
 		}
 
 		task ("Begin a reindex using sync execution mode") {
-			SearchAdministration.openIndexActions();
-
-			Click(locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN");
-
-			Click(
-				key_reindexMode = "Sync",
-				locator1 = "SearchAdmin#REINDEX_MODE_DROPDOWN_ITEM");
-
-			Click(
-				key_action = "All Search Indexes",
-				locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
-
-			Click(
-				key_text = "Execute",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+			SearchAdministration.executeReindex(
+				reindexMode = "Sync",
+				waitForReindexFinished = "false");
 		}
 
 		task ("Assert that search results are still returned during the reindex") {

@@ -207,7 +207,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		SearchAdministration.executeReindex(action = "Reindex Spell-Check Dictionaries");
+		SearchAdministration.executeReindex(action = "All Spell Check Dictionaries");
 
 		AssertConsoleTextPresent(value1 = "Finished indexing dictionary spellchecker/dictionary_de_DE.txt");
 

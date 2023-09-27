@@ -77,9 +77,7 @@ definition {
 			key_navItem = "Index Actions",
 			locator1 = "NavBar#NAV_ITEM_LINK");
 
-		Click(
-			key_action = "Reindex Search Indexes",
-			locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
+		SearchAdministration.startReindex(action = "All Search Indexes");
 
 		SearchAdministration.waitForReindexFinished(waitForReindexRequest = "true");
 
@@ -414,9 +412,7 @@ definition {
 			key_navItem = "Index Actions",
 			locator1 = "NavBar#NAV_ITEM_LINK");
 
-		Click(
-			key_action = "Reindex Search Indexes",
-			locator1 = "SearchAdmin#EXECUTE_REINDEX_BUTTON");
+		SearchAdministration.startReindex(action = "All Search Indexes");
 
 		SearchAdministration.waitForReindexFinished(waitForReindexRequest = "true");
 

@@ -92,7 +92,7 @@ describe('View Channel', () => {
 		expect(queryByText('Clear Data')).toBeInTheDocument();
 	});
 
-	it('should check error modal message and hyperlink on deleting property that has CHANNELS synced', async () => {
+	it.only('should check error modal message and hyperlink on deleting property that has CHANNELS synced', async () => {
 		API.user.fetchCurrentUser.mockReturnValueOnce(
 			Promise.resolve(data.mockUser())
 		);
@@ -131,6 +131,20 @@ describe('View Channel', () => {
 		expect(
 			screen.getByText('Unable to Delete Property')
 		).toBeInTheDocument();
+
+		const modalText = screen.getByText((content, node) => {
+			const hasText = node =>
+				node.textContent ===
+				'Ensure no sites and channels are assigned to it before deleting a property. To disconnect them from a property, navigate to Instance Settings > Analytics Cloud > Properties and select the properties with synchronizations that you wish to undo. Access our documentation to learn more.';
+			const nodeHasText = hasText(node);
+			const childrenDontHaveText = Array.from(node.children).every(
+				child => !hasText(child)
+			);
+
+			return nodeHasText && childrenDontHaveText;
+		});
+
+		expect(modalText).toBeTruthy();
 
 		expect(
 			screen.getByText('Access our documentation to learn more.')

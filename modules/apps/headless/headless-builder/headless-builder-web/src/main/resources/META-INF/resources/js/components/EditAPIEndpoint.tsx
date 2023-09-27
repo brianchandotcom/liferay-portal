@@ -329,7 +329,9 @@ export default function EditAPIEndpoint({
 						<ClayCard.Body>
 							<div className="endpoints-fields-card-body">
 								<BaseAPIEndpointFields
-									apiApplicationBaseURL={apiApplicationBaseURL}
+									apiApplicationBaseURL={
+										apiApplicationBaseURL
+									}
 									basePath={basePath}
 									data={localUIData}
 									displayError={displayError}

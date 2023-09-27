@@ -17,8 +17,8 @@
 
 #portlet_com_liferay_headless_builder_web_internal_portlet_HeadlessBuilderPortlet {
 	.endpoint-table-list-title > a {
-		font-weight: 400;
 		color: #272833 !important;
+		font-weight: 400;
 	}
 
 	.endpoint-table-list-title > a:hover {
@@ -36,7 +36,8 @@
 				padding-top: 24px;
 			}
 
-			.endpoints-fields-card-body, .schema-fields-card-body {
+			.endpoints-fields-card-body,
+			.schema-fields-card-body {
 				padding-bottom: 1px;
 				padding-left: 24px;
 				padding-right: 24px;

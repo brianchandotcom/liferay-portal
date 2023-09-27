@@ -9,12 +9,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CountryService;
+import com.liferay.portal.kernel.service.ListTypeService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -42,12 +44,14 @@ public class OrganizationFixture {
 
 	public OrganizationFixture(
 		OrganizationService organizationService, CountryService countryService,
-		RegionService regionService, Language language) {
+		RegionService regionService, Language language,
+		ListTypeService listTypeService) {
 
 		_organizationService = organizationService;
 		_countryService = countryService;
 		_regionService = regionService;
 		_language = language;
+		_listTypeService = listTypeService;
 	}
 
 	public Organization createOrganization(String organizationName)
@@ -90,13 +94,16 @@ public class OrganizationFixture {
 			serviceContext.setExpandoBridgeAttributes(expando);
 		}
 
+		ListType listType = _listTypeService.getListType(
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+			ListTypeConstants.ORGANIZATION_STATUS);
+
 		Organization organization = _organizationService.addOrganization(
 			null, OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			organizationName, OrganizationConstants.TYPE_ORGANIZATION,
 			region.getRegionId(), country.getCountryId(),
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean(),
-			serviceContext);
+			listType.getListTypeId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomBoolean(), serviceContext);
 
 		_organizatons.add(organization);
 
@@ -156,6 +163,7 @@ public class OrganizationFixture {
 	private final CountryService _countryService;
 	private Group _group;
 	private final Language _language;
+	private final ListTypeService _listTypeService;
 	private final OrganizationService _organizationService;
 	private final List<Organization> _organizatons = new ArrayList<>();
 	private final RegionService _regionService;

@@ -328,7 +328,7 @@ const PurchasedSolutions: React.FC = () => {
 
 	const agreeToTermsAndConditions = watch('agreeToTermsAndConditions');
 
-	const hasAllValidations = isValid && agreeToTermsAndConditions;
+	const hasAllValidations = agreeToTermsAndConditions && isValid;
 
 	return (
 		<>
@@ -553,8 +553,27 @@ const PurchasedSolutions: React.FC = () => {
 										</ClayForm.Group>
 
 										<ClayForm.Group>
-											<div className="d-flex flex-row-reverse justify-content-end">
+											<div className="d-flex justify-content-start">
 												<>
+													<ClayCheckbox
+														checked={
+															agreeToTermsAndConditions
+														}
+														className="danger"
+														id="newsSubscription"
+														onChange={() =>
+															setValue(
+																'agreeToTermsAndConditions',
+																!agreeToTermsAndConditions
+															)
+														}
+													/>
+													<label
+														className="ml-4"
+														htmlFor="agreeToTermsAndConditions"
+													>
+														I agree to the
+													</label>
 													<label className="ml-2">
 														<ClayLink
 															displayType="primary"
@@ -563,27 +582,7 @@ const PurchasedSolutions: React.FC = () => {
 															Terms & Conditions
 														</ClayLink>
 													</label>
-													<label
-														className="ml-4"
-														htmlFor="agreeToTermsAndConditions"
-													>
-														I agree to the
-													</label>
 												</>
-
-												<ClayCheckbox
-													checked={
-														agreeToTermsAndConditions
-													}
-													className="danger"
-													id="newsSubscription"
-													onChange={() =>
-														setValue(
-															'agreeToTermsAndConditions',
-															!agreeToTermsAndConditions
-														)
-													}
-												/>
 											</div>
 										</ClayForm.Group>
 

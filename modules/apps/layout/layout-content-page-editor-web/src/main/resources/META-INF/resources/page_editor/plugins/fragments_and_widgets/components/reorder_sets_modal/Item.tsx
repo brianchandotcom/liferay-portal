@@ -89,6 +89,7 @@ export function Item({index, item, numberOfItems, onDropItem}: ItemProps) {
 									<ClayButton
 										aria-labelledby={`${dragButtonDescriptionId} ${itemDescriptionId}`}
 										aria-pressed={isKeyboardDragging}
+										data-item-id={item.id}
 										displayType="unstyled"
 										monospaced
 										ref={
@@ -97,6 +98,7 @@ export function Item({index, item, numberOfItems, onDropItem}: ItemProps) {
 											>
 										}
 										size="xs"
+										tabIndex={-1}
 									>
 										<ClayIcon
 											className="text-secondary"

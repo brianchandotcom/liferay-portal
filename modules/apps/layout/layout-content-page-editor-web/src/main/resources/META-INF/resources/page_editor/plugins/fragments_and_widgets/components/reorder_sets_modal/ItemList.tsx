@@ -61,18 +61,16 @@ export function ItemList({
 	};
 
 	return (
-		<div aria-orientation="vertical" className="p-4" role="list">
-			<KeyboardDragAndDropContextProvider itemList={items}>
-				{items.map((item, index) => (
-					<Item
-						index={index}
-						item={item}
-						key={item.id}
-						numberOfItems={items.length}
-						onDropItem={onDropItem}
-					/>
-				))}
-			</KeyboardDragAndDropContextProvider>
-		</div>
+		<KeyboardDragAndDropContextProvider itemList={items}>
+			{items.map((item, index) => (
+				<Item
+					index={index}
+					item={item}
+					key={item.id}
+					numberOfItems={items.length}
+					onDropItem={onDropItem}
+				/>
+			))}
+		</KeyboardDragAndDropContextProvider>
 	);
 }

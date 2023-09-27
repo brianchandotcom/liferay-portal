@@ -15,7 +15,6 @@ import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectFieldEntityModel;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.object.exception.ObjectFieldLocalizedException;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
@@ -127,33 +126,9 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		if (Validator.isNotNull(objectField.getLocalized()) &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
-
-			throw new ObjectFieldLocalizedException();
-		}
-
 		com.liferay.object.model.ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectDefinitionId);
-
-		boolean localized = false;
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-172017") &&
-			(Objects.equals(
-				ObjectField.BusinessType.LONG_TEXT,
-				objectField.getBusinessType()) ||
-			 Objects.equals(
-				 ObjectField.BusinessType.RICH_TEXT,
-				 objectField.getBusinessType()) ||
-			 Objects.equals(
-				 ObjectField.BusinessType.TEXT,
-				 objectField.getBusinessType()))) {
-
-			localized = GetterUtil.getBoolean(
-				objectField.getLocalized(),
-				objectDefinition.isEnableLocalization());
-		}
 
 		return _toObjectField(
 			_objectFieldService.addCustomObjectField(
@@ -169,8 +144,10 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 				GetterUtil.getBoolean(objectField.getIndexedAsKeyword()),
 				objectField.getIndexedLanguageId(),
 				LocalizedMapUtil.getLocalizedMap(objectField.getLabel()),
-				localized, objectField.getName(),
-				objectField.getReadOnlyAsString(),
+				GetterUtil.getBoolean(
+					objectField.getLocalized(),
+					objectDefinition.isEnableLocalization()),
+				objectField.getName(), objectField.getReadOnlyAsString(),
 				objectField.getReadOnlyConditionExpression(),
 				objectField.getRequired(),
 				GetterUtil.getBoolean(objectField.getState()),

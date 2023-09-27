@@ -15,7 +15,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
@@ -32,7 +31,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
-@FeatureFlags("LPS-172017")
 @RunWith(Arquillian.class)
 public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 

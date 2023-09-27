@@ -11,7 +11,6 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsFDSNames;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.util.Locale;
 
@@ -33,7 +32,7 @@ public class ObjectFieldsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		fdsTableSchemaBuilder.add(
+		return fdsTableSchemaBuilder.add(
 			"label.LANG", "label",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"actionLink")
@@ -47,16 +46,11 @@ public class ObjectFieldsTableFDSView extends BaseTableFDSView {
 			"system", "source",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"objectFieldSourceDataRenderer")
-		);
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-172017")) {
-			fdsTableSchemaBuilder.add(
-				"localized", "translatable",
-				fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-					"boolean"));
-		}
-
-		return fdsTableSchemaBuilder.build();
+		).add(
+			"localized", "translatable",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"boolean")
+		).build();
 	}
 
 	@Reference

@@ -1599,9 +1599,7 @@ public class ObjectEntryLocalServiceImpl
 			dynamicObjectDefinitionLocalizationTable,
 		long objectEntryId, Map<String, Serializable> values) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-172017") ||
-			(dynamicObjectDefinitionLocalizationTable == null)) {
-
+		if (dynamicObjectDefinitionLocalizationTable == null) {
 			return;
 		}
 
@@ -2221,9 +2219,7 @@ public class ObjectEntryLocalServiceImpl
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-172017") ||
-			(dynamicObjectDefinitionLocalizationTable == null)) {
-
+		if (dynamicObjectDefinitionLocalizationTable == null) {
 			return null;
 		}
 
@@ -2696,9 +2692,7 @@ public class ObjectEntryLocalServiceImpl
 		DynamicObjectDefinitionLocalizationTable
 			dynamicObjectDefinitionLocalizationTable) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-172017") ||
-			(dynamicObjectDefinitionLocalizationTable == null)) {
-
+		if (dynamicObjectDefinitionLocalizationTable == null) {
 			return new Expression<?>[0];
 		}
 

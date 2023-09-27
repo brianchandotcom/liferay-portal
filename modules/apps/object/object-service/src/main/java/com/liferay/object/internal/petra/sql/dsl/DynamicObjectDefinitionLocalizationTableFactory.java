@@ -8,7 +8,6 @@ package com.liferay.object.internal.petra.sql.dsl;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.petra.sql.dsl.DynamicObjectDefinitionLocalizationTable;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 /**
  * @author Feliphe Marinho
@@ -19,9 +18,7 @@ public class DynamicObjectDefinitionLocalizationTableFactory {
 		ObjectDefinition objectDefinition,
 		ObjectFieldLocalService objectFieldLocalService) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-172017") ||
-			!objectDefinition.isEnableLocalization()) {
-
+		if (!objectDefinition.isEnableLocalization()) {
 			return null;
 		}
 

@@ -1,5 +1,11 @@
 definition {
 
+	macro assertCardTeamMebersActivation {
+		AssertElementPresent(
+			key_title = ${title},
+			locator1 = "CP2Utils#NEWS_TITLE");
+	}
+
 	macro assertChangeRole {
 		AssertElementPresent(
 			key_email = ${email},
@@ -232,6 +238,43 @@ definition {
 		Type(
 			locator1 = "CustomerPortalSite#FIELD_VALUE",
 			value1 = ${value});
+	}
+
+	macro finishActivation {
+		Button.click(button = "Finish Activation");
+
+		PortletEntry.inputText(
+			fieldLabel = "Project ID",
+			text = ${projectId});
+
+		Select(
+			key_fieldLabel = "Primary Region",
+			locator1 = "CP2Utils#LABEL_GENERIC_SELECT",
+			value1 = ${primaryRegion});
+
+		Type(
+			locator1 = "TextInput#ANY_WITH_NAME",
+			name = "lxc.admins[0].fullName",
+			value1 = ${fullName});
+
+		Type(
+			locator1 = "TextInput#ANY_WITH_NAME",
+			name = "lxc.admins[0].email",
+			value1 = ${email});
+
+		Type(
+			locator1 = "TextInput#ANY_WITH_NAME",
+			name = "lxc.incidentManagementFullName",
+			value1 = ${incidentManagementFullName});
+
+		Type(
+			locator1 = "TextInput#ANY_WITH_NAME",
+			name = "lxc.incidentManagementEmail",
+			value1 = ${incidentManagementEmail});
+
+		Button.click(button = "Submit");
+
+		Button.click(button = "Done");
 	}
 
 	macro fulfillGuestForm {

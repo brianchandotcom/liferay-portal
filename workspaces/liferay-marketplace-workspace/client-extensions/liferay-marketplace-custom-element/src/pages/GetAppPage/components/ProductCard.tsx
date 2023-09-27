@@ -179,14 +179,14 @@ const ProductCard = ({
 					{selectedAccount && (
 						<>
 							<hr></hr>
-							<div className="account-banner d-flex flex-row justify-content-between px-4 py-3">
-								<strong className="align-self-center sub-text">
+							<div className="d-flex flex-row justify-content-between">
+								<strong className="account-banner-title-text align-self-center">
 									Account Selected
 								</strong>
 								<div className="align-items-center d-flex">
-									<div className="align-items-end d-flex flex-column m-2">
+									<div className="account-banner-name-text align-items-end d-flex flex-column m-2">
 										<strong>{selectedAccount?.name}</strong>
-										<div className="sub-text">
+										<div className="account-banner-email-text">
 											{selectedAccount?.customFields &&
 												getCustomFieldValue(
 													selectedAccount.customFields,
@@ -194,7 +194,7 @@ const ProductCard = ({
 												)}
 										</div>
 									</div>
-									<ClaySticker shape="circle" size="lg">
+									<ClaySticker shape="circle" size="sm">
 										<ClaySticker.Image
 											alt="placeholder"
 											height="24"

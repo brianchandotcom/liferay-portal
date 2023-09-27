@@ -7185,6 +7185,10 @@ public class ServiceBuilder {
 				"column");
 
 			newLocalizedColumnElement.addAttribute("name", columnName);
+			newLocalizedColumnElement.addAttribute(
+				"change-tracking-resolution-type",
+				localizedColumnElement.attributeValue(
+					"change-tracking-resolution-type"));
 			newLocalizedColumnElement.addAttribute("db-name", columnDBName);
 			newLocalizedColumnElement.addAttribute("type", "String");
 		}

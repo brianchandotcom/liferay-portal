@@ -47,16 +47,17 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_blogsFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
-			BlogsFileUploadsConfiguration.class, properties);
+		BlogsFileUploadsConfiguration blogsFileUploadsConfiguration =
+			ConfigurableUtil.createConfigurable(
+				BlogsFileUploadsConfiguration.class, properties);
 
 		_imageBlogsUploadFileEntryHandler =
 			new ImageBlogsUploadFileEntryHandler(
-				_blogsLocalService, _blogsFileUploadsConfiguration,
+				_blogsLocalService, blogsFileUploadsConfiguration,
 				_portletFileRepository, _portletResourcePermission);
 
 		_imageBlogsUploadResponseHandler = new ImageBlogsUploadResponseHandler(
-			_blogsFileUploadsConfiguration, _itemSelectorUploadResponseHandler);
+			blogsFileUploadsConfiguration, _itemSelectorUploadResponseHandler);
 	}
 
 	@Override
@@ -68,9 +69,6 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 			_imageBlogsUploadFileEntryHandler, _imageBlogsUploadResponseHandler,
 			actionRequest, actionResponse);
 	}
-
-	private volatile BlogsFileUploadsConfiguration
-		_blogsFileUploadsConfiguration;
 
 	@Reference
 	private BlogsEntryLocalService _blogsLocalService;

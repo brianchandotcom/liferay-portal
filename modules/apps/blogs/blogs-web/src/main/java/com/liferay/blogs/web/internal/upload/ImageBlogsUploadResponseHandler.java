@@ -81,8 +81,7 @@ public class ImageBlogsUploadResponseHandler implements UploadResponseHandler {
 			uploadPortletRequest, fileEntry);
 	}
 
-	private volatile BlogsFileUploadsConfiguration
-		_blogsFileUploadsConfiguration;
+	private final BlogsFileUploadsConfiguration _blogsFileUploadsConfiguration;
 	private final ItemSelectorUploadResponseHandler
 		_itemSelectorUploadResponseHandler;
 

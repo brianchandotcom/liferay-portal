@@ -155,8 +155,7 @@ public class ImageBlogsUploadFileEntryHandler
 			"Invalid image for file name " + fileName);
 	}
 
-	private volatile BlogsFileUploadsConfiguration
-		_blogsFileUploadsConfiguration;
+	private final BlogsFileUploadsConfiguration _blogsFileUploadsConfiguration;
 	private final BlogsEntryLocalService _blogsLocalService;
 	private final PortletFileRepository _portletFileRepository;
 	private final PortletResourcePermission _portletResourcePermission;

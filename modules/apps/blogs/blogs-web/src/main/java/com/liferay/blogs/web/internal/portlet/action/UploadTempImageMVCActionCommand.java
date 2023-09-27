@@ -49,15 +49,16 @@ public class UploadTempImageMVCActionCommand extends BaseMVCActionCommand {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_blogsFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
-			BlogsFileUploadsConfiguration.class, properties);
+		BlogsFileUploadsConfiguration blogsFileUploadsConfiguration =
+			ConfigurableUtil.createConfigurable(
+				BlogsFileUploadsConfiguration.class, properties);
 
 		_imageBlogsUploadResponseHandler = new ImageBlogsUploadResponseHandler(
-			_blogsFileUploadsConfiguration, _itemSelectorUploadResponseHandler);
+			blogsFileUploadsConfiguration, _itemSelectorUploadResponseHandler);
 
 		_tempImageBlogsUploadFileEntryHandler =
 			new TempImageBlogsUploadFileEntryHandler(
-				_blogsLocalService, _blogsFileUploadsConfiguration,
+				_blogsLocalService, blogsFileUploadsConfiguration,
 				_portletFileRepository, _portletResourcePermission,
 				_uniqueFileNameProvider);
 	}
@@ -71,9 +72,6 @@ public class UploadTempImageMVCActionCommand extends BaseMVCActionCommand {
 			_tempImageBlogsUploadFileEntryHandler,
 			_imageBlogsUploadResponseHandler, actionRequest, actionResponse);
 	}
-
-	private volatile BlogsFileUploadsConfiguration
-		_blogsFileUploadsConfiguration;
 
 	@Reference
 	private BlogsEntryLocalService _blogsLocalService;

@@ -199,6 +199,54 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_PREDEFINED_IMAGE");
 	}
 
+	@description = "This ensures that a folder with a document with a custom document type in global scope can be copied to new site."
+	@priority = 4
+	test CanCopyFileWithGlobalTypeInFolderToOtherSite {
+		HeadlessSite.addSite(siteName = "Site Name 1");
+
+		HeadlessSite.addSite(siteName = "Site Name 2");
+
+		DMNavigator.openDocumentTypesAdmin(siteURLKey = "global");
+
+		DMDocumentType.add(
+			dmDocumentTypeDescription = "Global Document Type Description",
+			dmDocumentTypeFieldNames = "Text",
+			dmDocumentTypeName = "Global Document Type Name");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder",
+			groupName = "Site Name 1");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-1");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTypeName = "Global Document Type Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-1");
+
+		DMNavigator.gotoFolder(dmFolderName = "DM Folder");
+
+		DMDocument.copy(
+			dmDocumentTitle = "DM Document Title",
+			homeFolder = "true",
+			siteName = "Site Name 2");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name 2",
+			siteURLKey = "site-name-2");
+
+		DMDocument.viewCP(
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentType = "Global Document Type Name");
+	}
+
 	@description = "This ensures that a document with a custom document type in global scope can be copied to a new site with document type."
 	@priority = 4
 	test CanCopyFileWithGlobalTypeToOtherSite {

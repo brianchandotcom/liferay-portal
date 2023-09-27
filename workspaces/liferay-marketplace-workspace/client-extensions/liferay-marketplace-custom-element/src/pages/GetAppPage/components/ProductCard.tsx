@@ -94,24 +94,16 @@ const ProductCard = ({
 	const convertedIconURL = iconURL ? `/o/${iconURL[1]}` : '';
 
 	const getLicenseTagText = (product: Product) => {
-		if (
-			getValueFromSpecifications(
-				product.productSpecifications,
-				'license-type'
-			).toLowerCase() === LicenseType.Perpetual
-		) {
-			return 'One-Time';
-		}
-		else if (
-			getValueFromSpecifications(
-				product.productSpecifications,
-				'license-type'
-			).toLowerCase() === LicenseType.Subscription
-		) {
-			return 'Annually';
-		}
+		const licenseTypeSpecification = getValueFromSpecifications(
+			product.productSpecifications,
+			'license-type'
+		).toLowerCase();
 
-		return '';
+		if (licenseTypeSpecification) {
+			return licenseTypeSpecification === LicenseType.Perpetual
+				? 'One-Time'
+				: 'Annually';
+		}
 	};
 
 	const getPriceText = (product: Product) => {

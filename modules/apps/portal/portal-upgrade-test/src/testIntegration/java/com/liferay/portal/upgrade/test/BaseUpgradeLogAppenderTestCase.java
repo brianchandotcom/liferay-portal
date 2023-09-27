@@ -521,9 +521,17 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 			_appender.start();
 
-			Log log = LogFactoryUtil.getLog(UpgradeProcess.class);
+			LogEvent logEvent = Log4jLogEvent.newBuilder(
+			).setLoggerName(
+				"Warn"
+			).setLevel(
+				Level.WARN
+			).setMessage(
+				new SimpleMessage(
+					"Upgrade report generated in " + _upgradeReportDirectory)
+			).build();
 
-			log.warn("Upgrade report generated in " + _upgradeReportDirectory);
+			_appender.append(logEvent);
 
 			_appender.stop();
 

@@ -110,6 +110,14 @@ HTML reference with single quotes:
 <a href='[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]'>Link</a>
 <a href='[$GROUP_PUBLIC_PAGES_VIRTUAL_HOST$]/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]'>Link</a>
 
+JSON configuration of Image Fragment
+
+{"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor":{"image-square":{"defaultValue":"","config":{"alt":{"en_US":""},"imageConfiguration":{}},"en_US":{"classNameId":99999,"classPK":"99999","fileEntryId":"99999","title":"file1821253941895","url":"/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]"}}},"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor":{"imageSize":"w-100"}}
+{"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor":{"image-square":{"defaultValue":"","config":{"alt":{"en_US":""},"imageConfiguration":{}},"en_US":{"classNameId":99999,"classPK":"99999","fileEntryId":"99999","title":"file1821253941895","url":"/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]"}}},"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor":{"imageSize":"w-100"}}
+{"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor":{"image-square":{"defaultValue":"","config":{"alt":{"en_US":""},"imageConfiguration":{}},"en_US":{"classNameId":99999,"classPK":"99999","fileEntryId":"99999","title":"file1821253941895","url":"/documents/[$GROUP_ID$]/0/[$TITLE$]"}}},"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor":{"imageSize":"w-100"}}
+{"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor":{"image-square":{"defaultValue":"","config":{"alt":{"en_US":""},"imageConfiguration":{}},"en_US":{"classNameId":99999,"classPK":"99999","fileEntryId":"99999","title":"file1821253941895","url":"/documents/[$GROUP_ID$]/0/[$TITLE$]#page=2"}}},"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor":{"imageSize":"w-100"}}
+{"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor":{"image-square":{"defaultValue":"","config":{"alt":{"en_US":""},"imageConfiguration":{}},"en_US":{"classNameId":99999,"classPK":"99999","fileEntryId":"99999","title":"file1821253941895","url":"/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]"}}},"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor":{"imageSize":"w-100"}}
+
 Nonlegacy HTML reference with escaped double quotes:
 
 <a href=\"/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]\">Link</a>
@@ -125,11 +133,3 @@ Nonlegacy HTML reference with escaped single quotes:
 <a href=\'/documents/[$GROUP_ID$]/0/[$TITLE$]\'>Link</a>
 <a href=\'/documents/[$GROUP_ID$]/0/[$TITLE$]#page=2\'>Link</a>
 <a href=\'/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]\'>Link</a>
-
-JSON configuration of Image Fragment
-
-{"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor":{"image-square":{"defaultValue":"","config":{"alt":{"en_US":""},"imageConfiguration":{}},"en_US":{"classNameId":99999,"classPK":"99999","fileEntryId":"99999","title":"file1821253941895","url":"/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]"}}},"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor":{"imageSize":"w-100"}}
-{"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor":{"image-square":{"defaultValue":"","config":{"alt":{"en_US":""},"imageConfiguration":{}},"en_US":{"classNameId":99999,"classPK":"99999","fileEntryId":"99999","title":"file1821253941895","url":"/documents/[$GROUP_ID$]/0/[$TITLE$]/[$UUID$]"}}},"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor":{"imageSize":"w-100"}}
-{"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor":{"image-square":{"defaultValue":"","config":{"alt":{"en_US":""},"imageConfiguration":{}},"en_US":{"classNameId":99999,"classPK":"99999","fileEntryId":"99999","title":"file1821253941895","url":"/documents/[$GROUP_ID$]/0/[$TITLE$]"}}},"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor":{"imageSize":"w-100"}}
-{"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor":{"image-square":{"defaultValue":"","config":{"alt":{"en_US":""},"imageConfiguration":{}},"en_US":{"classNameId":99999,"classPK":"99999","fileEntryId":"99999","title":"file1821253941895","url":"/documents/[$GROUP_ID$]/0/[$TITLE$]#page=2"}}},"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor":{"imageSize":"w-100"}}
-{"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor":{"image-square":{"defaultValue":"","config":{"alt":{"en_US":""},"imageConfiguration":{}},"en_US":{"classNameId":99999,"classPK":"99999","fileEntryId":"99999","title":"file1821253941895","url":"/documents/portlet_file_entry/[$GROUP_ID$]/[$TITLE$]/[$UUID$][$TIMESTAMP_ONLY$]"}}},"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor":{"imageSize":"w-100"}}

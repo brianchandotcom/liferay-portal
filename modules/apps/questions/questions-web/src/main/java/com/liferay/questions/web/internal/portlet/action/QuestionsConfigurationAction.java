@@ -53,18 +53,10 @@ public class QuestionsConfigurationAction
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();
 
-		String[] fieldNames = {
-			"askQuestionButtonTextAsLocalizedXML",
-			"editQuestionPageTitleAsLocalizedXML",
-			"newQuestionPageTitleAsLocalizedXML",
-			"postYourQuestionButtonTextAsLocalizedXML",
-			"updateYourQuestionButtonTextAsLocalizedXML"
-		};
-
-		for (String fieldName : fieldNames) {
+		for (String key : _KEYS) {
 			UnicodeProperties unicodeProperties =
 				PropertiesParamUtil.getProperties(
-					actionRequest, "preferences--" + fieldName + "_");
+					actionRequest, "preferences--" + key + "_");
 
 			Map<String, String> properties = new HashMap<>();
 
@@ -75,13 +67,21 @@ public class QuestionsConfigurationAction
 			}
 
 			String xml = _localization.getXml(
-				properties, StringPool.BLANK, fieldName);
+				properties, StringPool.BLANK, key);
 
-			modifiableSettings.setValue(fieldName, xml);
+			modifiableSettings.setValue(key, xml);
 		}
 
 		modifiableSettings.store();
 	}
+
+	private static final String[] _KEYS = {
+		"askQuestionButtonTextAsLocalizedXML",
+		"editQuestionPageTitleAsLocalizedXML",
+		"newQuestionPageTitleAsLocalizedXML",
+		"postYourQuestionButtonTextAsLocalizedXML",
+		"updateYourQuestionButtonTextAsLocalizedXML"
+	};
 
 	@Reference
 	private Localization _localization;

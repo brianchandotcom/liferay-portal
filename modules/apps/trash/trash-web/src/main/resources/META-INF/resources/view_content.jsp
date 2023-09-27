@@ -155,6 +155,7 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 		<%
 		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(trashDisplayContext.getViewContentRedirectURL());
+		portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 		TrashRenderer trashRenderer = trashDisplayContext.getTrashRenderer();
 

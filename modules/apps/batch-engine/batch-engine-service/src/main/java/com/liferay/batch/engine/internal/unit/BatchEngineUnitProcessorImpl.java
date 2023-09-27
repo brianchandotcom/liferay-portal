@@ -78,14 +78,14 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				BatchEngineUnitConfiguration batchEngineUnitConfiguration =
 					batchEngineUnit.getBatchEngineUnitConfiguration();
 
-				String featureFlag = _getFeatureFlag(
+				String featureFlagKey = _getFeatureFlagKey(
 					batchEngineUnitConfiguration);
 
-				if (_isFeatureFlagDisabled(featureFlag)) {
+				if (_isFeatureFlagDisabled(featureFlagKey)) {
 					_featureFlagBatchEngineUnitProcessor.
 						registerBatchEngineUnit(
 							batchEngineUnitConfiguration.getCompanyId(),
-							featureFlag,
+							featureFlagKey,
 							() -> _processBatchEngineUnit(batchEngineUnit));
 
 					continue;
@@ -250,7 +250,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		return bundleBatchEngineUnit.getBundle();
 	}
 
-	private String _getFeatureFlag(
+	private String _getFeatureFlagKey(
 		BatchEngineUnitConfiguration batchEngineUnitConfiguration) {
 
 		Map<String, Serializable> parameters =
@@ -275,9 +275,9 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 		return className;
 	}
 
-	private boolean _isFeatureFlagDisabled(String featureFlag) {
-		if (Validator.isNotNull(featureFlag) &&
-			!FeatureFlagManagerUtil.isEnabled(featureFlag)) {
+	private boolean _isFeatureFlagDisabled(String featureFlagKey) {
+		if (Validator.isNotNull(featureFlagKey) &&
+			!FeatureFlagManagerUtil.isEnabled(featureFlagKey)) {
 
 			return true;
 		}
@@ -314,8 +314,7 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				bundle.getLastModified());
 
 			if (processedFile.exists() &&
-				Objects.equals(
-					_file.read(processedFile), lastModifiedString)) {
+				Objects.equals(_file.read(processedFile), lastModifiedString)) {
 
 				return true;
 			}

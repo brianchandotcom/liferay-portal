@@ -631,11 +631,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Dictionary<String, String> headers = _bundle.getHeaders(
 			StringPool.BLANK);
 
-		String featureFlag = headers.get(
+		String featureFlagKey = headers.get(
 			"Liferay-Site-Initializer-Feature-Flag");
 
-		if (Validator.isNotNull(featureFlag) &&
-			!FeatureFlagManagerUtil.isEnabled(featureFlag)) {
+		if (Validator.isNotNull(featureFlagKey) &&
+			!FeatureFlagManagerUtil.isEnabled(featureFlagKey)) {
 
 			return false;
 		}

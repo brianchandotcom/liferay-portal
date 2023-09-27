@@ -290,6 +290,32 @@ public class ObjectValidationRuleLocalServiceTest {
 		Assert.assertNull(
 			_objectValidationRuleLocalService.fetchObjectValidationRule(
 				objectValidationRule.getObjectValidationRuleId()));
+
+		ObjectValidationRule systemObjectValidationRule =
+			_addObjectValidationRule(
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringPool.BLANK,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				_VALID_DDM_SCRIPT, true, Collections.emptyList());
+
+		AssertUtils.assertFailure(
+			ObjectValidationRuleSystemException.class, false,
+			"Only allowed bundles can delete system object validation rules",
+			() -> _objectValidationRuleLocalService.deleteObjectValidationRule(
+				systemObjectValidationRule.getObjectValidationRuleId()));
+
+		Assert.assertNotNull(
+			_objectValidationRuleLocalService.fetchObjectValidationRule(
+				systemObjectValidationRule.getObjectValidationRuleId()));
+
+		_objectValidationRuleLocalService.deleteObjectValidationRule(
+			systemObjectValidationRule.getObjectValidationRuleId());
+
+		Assert.assertNull(
+			_objectValidationRuleLocalService.fetchObjectValidationRule(
+				systemObjectValidationRule.getObjectValidationRuleId()));
 	}
 
 	@Test

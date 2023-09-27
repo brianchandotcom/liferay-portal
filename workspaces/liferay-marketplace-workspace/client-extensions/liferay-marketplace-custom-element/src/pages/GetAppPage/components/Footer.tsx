@@ -100,54 +100,54 @@ const ProductFooter = ({
 	};
 
 	return (
-		<div className="d-flex justify-content-between mt-5 pt-2">
-			<ClayButton displayType={null} onClick={() => onCancel()}>
-				Cancel
-			</ClayButton>
-			<div>
-				{sectionProperties[step].backStep !== step && (
-					<ClayButton
-						displayType="secondary"
-						onClick={() =>
-							onPrevious(sectionProperties[step].backStep)
-						}
-					>
-						Back
-					</ClayButton>
-				)}
-				{sectionProperties[step].nextStep && (
-					<ClayButton
-						className="ml-5"
-						onClick={() => {
-							onContinue(sectionProperties[step].nextStep);
-						}}
-					>
-						{getButtonText()}
-					</ClayButton>
-				)}
-				{!isFreeApp &&
-					step === 'payment' &&
-					selectedPaymentMethod === paymentMethod.PAY && (
-						<div className="align-items-end">
-							<span>
-								You will be redirected to PayPal to complete
-								payment
-							</span>
-							<div>
-								<img
-									alt="Account icon"
-									className=""
-									src={infoCircleIcon}
-								/>
-
-								<span className="">
-									Terms, privacy, returns, or contact support.
-									All costs are in US Dollars
-								</span>
-							</div>
-						</div>
+		<div className="mt-5 pt-2 text-black-50">
+			<div className="d-flex justify-content-between">
+				<ClayButton displayType={null} onClick={() => onCancel()}>
+					Cancel
+				</ClayButton>
+				<div>
+					{sectionProperties[step].backStep !== step && (
+						<ClayButton
+							displayType="secondary"
+							onClick={() =>
+								onPrevious(sectionProperties[step].backStep)
+							}
+						>
+							Back
+						</ClayButton>
 					)}
+					{sectionProperties[step].nextStep && (
+						<ClayButton
+							className="ml-5"
+							onClick={() => {
+								onContinue(sectionProperties[step].nextStep);
+							}}
+						>
+							{getButtonText()}
+						</ClayButton>
+					)}
+				</div>
 			</div>
+			{!isFreeApp &&
+				step === 'payment' &&
+				selectedPaymentMethod === paymentMethod.PAY && (
+					<div className="align-items-end d-flex flex-column mt-4">
+						<span>
+							You will be redirected to PayPal to complete payment
+						</span>
+						<div className="mt-1">
+							<img
+								alt="Account icon"
+								className="mr-2"
+								src={infoCircleIcon}
+							/>
+							<span>
+								Terms, privacy, returns, or contact support. All
+								costs are in US Dollars
+							</span>
+						</div>
+					</div>
+				)}
 		</div>
 	);
 };

@@ -51,7 +51,10 @@ export function BillingAddress({
 	}, [billingAddress, setEnablePurchaseButton]);
 
 	return (
-		<Section className="billing-address-section w-100" label="Billing Address">
+		<Section
+			className="billing-address-section w-100"
+			label="Billing Address"
+		>
 			<div className="billing-address-section-card-addresses">
 				{addresses.map((address, i) => {
 					const {description, title} = getPostalAddressDescription(
@@ -111,7 +114,7 @@ export function BillingAddress({
 						</span>
 
 						<button
-							className='px-4 py-2'
+							className="px-4 py-2"
 							onClick={() => {
 								setShowNewAddressButton(true);
 								setSelectedAddress('');
